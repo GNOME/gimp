@@ -50,10 +50,10 @@ msgstr ""
 "les arguments de script sont\n"
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr ""
+msgstr "appelé en tant que '%s', mais '%s' n'est pas enregistré dans la PDB"
 
 msgid "argument type %s expected (not %s)"
-msgstr ""
+msgstr "le type d'argument attendu est %s, pas %s"
 
 msgid "Browse"
 msgstr "Parcourir"
@@ -68,25 +68,25 @@ msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_ : option incorrecte, essayez $0 --help\n"
 
 msgid "required callback 'run' not found\n"
-msgstr ""
+msgstr "le callback \"run\" est obligatoire mais est absent\n"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/Logos/Acier et lueur"
 
 msgid "Brush Selection Dialog"
-msgstr ""
+msgstr "Sélection de pinceau"
 
 msgid "gimp procedure '%s' not found"
-msgstr ""
+msgstr "procédure Gimp \"%s\" non trouvée"
 
 msgid "Pattern Selection Dialog"
-msgstr ""
+msgstr "Sélection de motif"
 
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr ""
+msgstr "<Image>/Filtres/Web/Perl-o-tine..."
 
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
@@ -95,22 +95,22 @@ msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are requir
 msgstr ""
 
 msgid "Load"
-msgstr ""
+msgstr "Charger"
 
 msgid "<Image>/Filters/Logulator/Basic II"
-msgstr ""
+msgstr "<Images>/Filtres/Logomatic/Basique II"
 
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
 msgid "Date/Version"
-msgstr ""
+msgstr "Date / Version"
 
 msgid "Status"
-msgstr ""
+msgstr "État"
 
 msgid "<Image>/Layers/Center Layer"
-msgstr ""
+msgstr "<Image>/Calques/Centrer"
 
 msgid "wrong authorization, aborting connection"
 msgstr ""
@@ -125,13 +125,13 @@ msgid "use'ing Gimp::PDL is no longer necessary, please remove it!\n"
 msgstr ""
 
 msgid "<Image>/Filters/Colors/Fire"
-msgstr ""
+msgstr "<Image>/Filtres/Couleurs/Feu"
 
 msgid "illegal type for colour specification"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Bricks"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/Briques"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
@@ -152,7 +152,7 @@ msgid "trying to start gimp with options \"$opt\"\n"
 msgstr ""
 
 msgid "<Image>/Filters/Noise/Ditherize"
-msgstr ""
+msgstr "<Image>/Filtres/Bruit/Tramer"
 
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
@@ -164,10 +164,10 @@ msgid "received QUIT request"
 msgstr ""
 
 msgid "<Image>/Filters/Web/Webify"
-msgstr ""
+msgstr "<Image>/Filtres/Web/Webifier"
 
 msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Explorateur PDB"
 
 msgid " = [argument error]\n"
 msgstr ""
@@ -188,14 +188,16 @@ msgid ""
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 
+# Not too sure about this one.
 msgid "<Image>/Filters/Animation/Animate Cells"
-msgstr ""
+msgstr "<Image>/Filtres/Animation/Animer (superposition)"
 
+# BOF
 msgid "<Image>/Filters/Logulator/Starburst"
-msgstr ""
+msgstr "<Image>/Filtres/Logomatic/Explosion laser"
 
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr ""
+msgstr "<Image>/Filtres/Logomatic/Super Chrome"
 
 msgid "%s: procedural database execution failed"
 msgstr ""
@@ -204,25 +206,25 @@ msgid "authorization required for tcp connections"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Perl/Serveur"
 
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "le nom de la fonction contient des tirets au lieu de soulignements"
 
 msgid "authorization ok, but: $r[1]\n"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Highlight Edges"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Souligner les contours"
 
 msgid "a color must have three components (array elements)"
-msgstr ""
+msgstr "une couleur doit avoir trois composantes (éléments de tableau)"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
 msgstr ""
 
 msgid "<Image>/Filters/Web/Prepare for GIF"
-msgstr ""
+msgstr "<Image>/Filtres/Web/Préparer pour GIF"
 
 msgid "$_: unknown/illegal file-save option"
 msgstr ""
@@ -252,7 +254,7 @@ msgid "no additional information available, use --help\n"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Brushed Metal"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Métal brossé"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr ""
@@ -261,19 +263,19 @@ msgid "Visual Scriptor"
 msgstr ""
 
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
+msgstr "Je n'ai trouvé aucun guide horizontal ou vertical. Opération annulée."
 
 msgid "<Image>/Filters/Map/Image Tile"
-msgstr ""
+msgstr "<Image>/Filtres/Carte/Carreler"
 
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr ""
+msgstr "<Image>/Filtres/Logomatic/Bande dessinée"
 
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/Guides/Supprimer les guides"
 
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr ""
@@ -294,7 +296,7 @@ msgid "unable to read '$fn': $!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Perl/Panneau de contrôle"
 
 msgid "[undefined]"
 msgstr ""
@@ -321,10 +323,10 @@ msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Chalk"
-msgstr ""
+msgstr "<Image>/Filtres/Logomatic/Craie"
 
 msgid "<Image>/Filters/Render/Stampify"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Timbre-poste"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
@@ -346,7 +348,7 @@ msgid "accepting connections on port $port"
 msgstr ""
 
 msgid "<Image>/Filters/Misc/Border Average"
-msgstr ""
+msgstr "<Image>/Filtres/Divers/Moyenne du bord"
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
@@ -357,10 +359,10 @@ msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Terral Text"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Texte à la Terral"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/POV-Ray/Texture"
 
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
@@ -372,7 +374,7 @@ msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
 
 msgid "unable to accept unix connection: $!\n"
 msgstr ""
@@ -421,13 +423,13 @@ msgid "<Toolbox>/Xtns/Gimp::Fu Example"
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr ""
+msgstr "<Image>/Filtres/Logomatic/Cristal"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
 
 msgid "<Image>/Guides/Guide Grid"
-msgstr ""
+msgstr "<Image>/Guides/Grille"
 
 msgid "unauthorized command received, aborting connection"
 msgstr ""
@@ -436,7 +438,7 @@ msgid "Defaults"
 msgstr ""
 
 msgid "<Image>/Image/Colors/Alpha2Color"
-msgstr ""
+msgstr "<Image>/Image/Couleurs/Alpha vers couleur"
 
 msgid "text string is empty"
 msgstr ""
@@ -448,13 +450,13 @@ msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
 msgstr ""
 
 msgid "<Image>/Filters/"
-msgstr ""
+msgstr "<Image>/Filtres"
 
 msgid "Image Types"
-msgstr ""
+msgstr "Types d'images"
 
 msgid "<Image>/Filters/Map/Xach Blocks"
-msgstr ""
+msgstr "<Image>/Filtres/Carte/Blocs (Xach)"
 
 msgid "Menu Path"
 msgstr ""
@@ -475,7 +477,7 @@ msgid "dunno how to return param type %d"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 msgid "only blessed scalars accepted here"
 msgstr ""
@@ -598,7 +600,7 @@ msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/Timbres"
 
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
@@ -606,14 +608,15 @@ msgid ""
 msgstr ""
 
 msgid "<Image>/Filters/Misc/Magick"
-msgstr ""
+msgstr "<Image>/Filtres/Divers/Magique"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
 
+# bof...
 msgid "<Image>/Filters/Distorts/Scratches"
-msgstr ""
+msgstr "<Image>/Filtres/Distorsions/Égratignures"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
@@ -631,13 +634,13 @@ msgid ", %d bytes data]"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Random Art #1"
-msgstr ""
+msgstr "<Toolbox>/Extensions/Synthèse/Art aléatoire n°1"
 
 msgid "unable to create listening tcp socket: $!\n"
 msgstr ""
 
 msgid "<Image>/Filters/Map/Xach Shadows"
-msgstr ""
+msgstr "<Image>/Filtres/Carte/Ombres (Xach)"
 
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
@@ -654,7 +657,7 @@ msgid "required callback 'net' not found\n"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Ajouter lueur"
 
 msgid "Author"
 msgstr ""
@@ -684,7 +687,7 @@ msgid "<Toolbox>/Xtns/Visual Scriptor"
 msgstr ""
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr ""
+msgstr "<Image>/Filtres/Bruit/Vision (Xach)..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -804,7 +807,7 @@ msgid "<Image>/Filters/Logulator/Frosty"
 msgstr ""
 
 msgid "<Image>/Filters/Render/TeX String"
-msgstr ""
+msgstr "<Image>/Filtres/Synthèse/Texte TeX"
 
 msgid "<Toolbox>/Xtns/Render/Font Table"
 msgstr ""
@@ -830,10 +833,10 @@ msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
 
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 msgid "<Image>/Edit/Repeat & Duplicate"
-msgstr ""
+msgstr "<Image>/Édition/Répéter & dupliquer"
 
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
