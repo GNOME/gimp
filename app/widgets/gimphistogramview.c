@@ -354,10 +354,11 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
       if (! (x1 == 0 && x2 == 255))
         {
-          gint k;
+          gint k = i;
 
-          for (k = i; k < j && !in_selection; k++)
-            in_selection = (x1 <= k && k <= x2);
+          do
+            in_selection |= (x1 <= k && k <= x2);
+          while (++k < j);
         }
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))

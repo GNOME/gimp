@@ -1,3 +1,8 @@
+2004-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose):
+	fixed a drawing bug I introduced earlier today.
+
 2004-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c
