@@ -4,7 +4,7 @@
  * gimppickbutton.c
  * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
  *
- * based on gtk-2-0/gtk/gtkcolorsel.c
+ * based on gtk+/gtk/gtkcolorsel.c
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -146,9 +146,7 @@ gimp_pick_button_init (GimpPickButton *button)
 static void
 gimp_pick_button_destroy (GtkObject *object)
 {
-  GimpPickButton *button;
-
-  button = GIMP_PICK_BUTTON (object);
+  GimpPickButton *button = GIMP_PICK_BUTTON (object);
 
   if (button->cursor)
     {
@@ -178,11 +176,7 @@ gimp_pick_button_destroy (GtkObject *object)
 GtkWidget *
 gimp_pick_button_new (void)
 {
-  GimpPickButton *button;
-
-  button = g_object_new (GIMP_TYPE_PICK_BUTTON, NULL);
-
-  return GTK_WIDGET (button);
+  return g_object_new (GIMP_TYPE_PICK_BUTTON, NULL);
 }
 
 
@@ -192,24 +186,28 @@ gimp_pick_button_new (void)
 /*  cursor stuff will be removed again once the gimpcursor.[ch] utility
  *  stuff has been moved to libgimpwidgets  --mitch
  */
-#define DROPPER_WIDTH 17
-#define DROPPER_HEIGHT 17
-#define DROPPER_X_HOT 2
-#define DROPPER_Y_HOT 16
+#define DROPPER_WIDTH   17
+#define DROPPER_HEIGHT  17
+#define DROPPER_X_HOT    2
+#define DROPPER_Y_HOT   16
 
-static guchar dropper_bits[] = {
+static guchar dropper_bits[] =
+{
   0xff, 0x8f, 0x01, 0xff, 0x77, 0x01, 0xff, 0xfb, 0x00, 0xff, 0xf8, 0x00,
   0x7f, 0xff, 0x00, 0xff, 0x7e, 0x01, 0xff, 0x9d, 0x01, 0xff, 0xd8, 0x01,
   0x7f, 0xd4, 0x01, 0x3f, 0xee, 0x01, 0x1f, 0xff, 0x01, 0x8f, 0xff, 0x01,
   0xc7, 0xff, 0x01, 0xe3, 0xff, 0x01, 0xf3, 0xff, 0x01, 0xfd, 0xff, 0x01,
-  0xff, 0xff, 0x01, };
+  0xff, 0xff, 0x01
+};
 
-static guchar dropper_mask[] = {
+static guchar dropper_mask[] =
+{
   0x00, 0x70, 0x00, 0x00, 0xf8, 0x00, 0x00, 0xfc, 0x01, 0x00, 0xff, 0x01,
   0x80, 0xff, 0x01, 0x00, 0xff, 0x00, 0x00, 0x7f, 0x00, 0x80, 0x3f, 0x00,
   0xc0, 0x3f, 0x00, 0xe0, 0x13, 0x00, 0xf0, 0x01, 0x00, 0xf8, 0x00, 0x00,
   0x7c, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x0d, 0x00, 0x00,
-  0x02, 0x00, 0x00, };
+  0x02, 0x00, 0x00
+};
 
 static GdkCursor *
 make_cursor (void)
@@ -228,8 +226,7 @@ make_cursor (void)
                                  DROPPER_WIDTH, DROPPER_HEIGHT);
 
   cursor = gdk_cursor_new_from_pixmap (pixmap, mask, &fg, &bg,
-                                       DROPPER_X_HOT ,DROPPER_Y_HOT
-);
+                                       DROPPER_X_HOT ,DROPPER_Y_HOT);
 
   g_object_unref (pixmap);
   g_object_unref (mask);
@@ -240,52 +237,53 @@ make_cursor (void)
 static void
 gimp_pick_button_clicked (GtkButton *gtk_button)
 {
-  GimpPickButton *button;
+  GimpPickButton *button = GIMP_PICK_BUTTON (gtk_button);
+  GtkWidget      *widget;
+  guint32         timestamp;
 
-  button = GIMP_PICK_BUTTON (gtk_button);
-
-  if (button->cursor == NULL)
+  if (! button->cursor)
     button->cursor = make_cursor ();
 
-  if (button->grab_widget == NULL)
+  if (! button->grab_widget)
     {
       button->grab_widget = gtk_invisible_new ();
 
       gtk_widget_add_events (button->grab_widget,
                              GDK_BUTTON_RELEASE_MASK |
-                             GDK_BUTTON_PRESS_MASK |
+                             GDK_BUTTON_PRESS_MASK   |
                              GDK_POINTER_MOTION_MASK);
 
       gtk_widget_show (button->grab_widget);
     }
 
-  if (gdk_keyboard_grab (button->grab_widget->window, FALSE,
-                         gtk_get_current_event_time ()) != GDK_GRAB_SUCCESS)
+  widget = button->grab_widget;
+  timestamp = gtk_get_current_event_time ();
+
+  if (gdk_keyboard_grab (widget->window, FALSE, timestamp) != GDK_GRAB_SUCCESS)
     {
       g_warning ("Failed to grab keyboard to do eyedropper");
       return;
     }
 
-  if (gdk_pointer_grab (button->grab_widget->window, FALSE,
+  if (gdk_pointer_grab (widget->window, FALSE,
                         GDK_BUTTON_RELEASE_MASK |
-                        GDK_BUTTON_PRESS_MASK |
+                        GDK_BUTTON_PRESS_MASK   |
                         GDK_POINTER_MOTION_MASK,
                         NULL,
                         button->cursor,
-                        gtk_get_current_event_time ()) != GDK_GRAB_SUCCESS)
+                        timestamp) != GDK_GRAB_SUCCESS)
     {
-      gdk_display_keyboard_ungrab (gtk_widget_get_display (button->grab_widget),
-                                   GDK_CURRENT_TIME);
+      gdk_display_keyboard_ungrab (gtk_widget_get_display (widget), timestamp);
       g_warning ("Failed to grab pointer to do eyedropper");
       return;
     }
 
-  gtk_grab_add (button->grab_widget);
+  gtk_grab_add (widget);
 
-  g_signal_connect (button->grab_widget, "button_press_event",
+  g_signal_connect (widget, "button_press_event",
                     G_CALLBACK (gimp_pick_button_mouse_press),
                     button);
-  g_signal_connect (button->grab_widget, "key_press_event",
+  g_signal_connect (widget, "key_press_event",
                     G_CALLBACK (gimp_pick_button_key_press),
                     button);
 }
@@ -310,6 +308,7 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
       g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_key_press,
                                             button);
+
       return TRUE;
     }
 
@@ -375,10 +374,11 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 static void
 gimp_pick_button_shutdown (GimpPickButton *button)
 {
-  GdkDisplay *display = gtk_widget_get_display (button->grab_widget);
+  GdkDisplay *display   = gtk_widget_get_display (button->grab_widget);
+  guint32     timestamp = gtk_get_current_event_time ();
 
-  gdk_display_keyboard_ungrab (display, gtk_get_current_event_time ());
-  gdk_display_pointer_ungrab (display, gtk_get_current_event_time ());
+  gdk_display_keyboard_ungrab (display, timestamp);
+  gdk_display_pointer_ungrab (display, timestamp);
 
   gtk_grab_remove (button->grab_widget);
 }

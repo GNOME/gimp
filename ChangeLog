@@ -1,3 +1,7 @@
+2004-02-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppickbutton.c: some code cleanup, no changes.
+
 2004-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_rotate): fixed typo:
