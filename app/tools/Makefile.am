@@ -119,8 +119,6 @@ libapptools_a_sources = \
 	gimptool.h			\
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h		\
-	gimptoolmodule.c		\
-	gimptoolmodule.h		\
 	gimptransformoptions.c     	\
 	gimptransformoptions.h     	\
 	gimptransformtool.c		\

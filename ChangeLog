@@ -1,5 +1,11 @@
 2003-04-15  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimptoolgui.[ch]
+	* app/tools/gimptoolmodule.[ch]: removed unused files.
+
+2003-04-15  Sven Neumann  <sven@gimp.org>
+
 	Removed support for pluggable tools:
 
 	* configure.in: bumped version number to 1.3.15.
