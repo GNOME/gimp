@@ -82,13 +82,13 @@ COMMENT    :
 -----------
 NAME       : animationplay
 AUTHOR     : Adam D. Moss <adam@gimp.org>
-MAINTAINER : 
+MAINTAINER : Adam D. Moss <adam@gimp.org>
 SIZE       :  43.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : animoptimize
 AUTHOR     : Adam D. Moss <adam@gimp.org>
-MAINTAINER : 
+MAINTAINER : Adam D. Moss <adam@gimp.org>
 SIZE       :  19.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -352,7 +352,7 @@ COMMENT    :
 -----------
 NAME       : gee
 AUTHOR     : Adam D. Moss <adam@gimp.org>
-MAINTAINER : 
+MAINTAINER : Adam D. Moss <adam@gimp.org>
 SIZE       :  19.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -382,13 +382,13 @@ COMMENT    :
 -----------
 NAME       : gif
 AUTHOR     : Spencer Kimball, Peter Mattis, Adam Moss, David Koblas
-MAINTAINER : 
+MAINTAINER : Adam D. Moss <adam@gimp.org>
 SIZE       :  64.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gifload
 AUTHOR     : Spencer Kimball, Peter Mattis, Adam Moss, David Koblas
-MAINTAINER : 
+MAINTAINER : Adam D. Moss <adam@gimp.org>
 SIZE       :  26.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -598,7 +598,7 @@ COMMENT    :
 -----------
 NAME       : normalize
 AUTHOR     : Adam D. Moss, Federico Mena Quintero
-MAINTAINER : 
+MAINTAINER : Adam D. Moss (adam@foxbox.org)
 SIZE       :   7.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -700,7 +700,7 @@ COMMENT    :
 -----------
 NAME       : psd
 AUTHOR     : Adam D. Moss & Torsten Martinsen
-MAINTAINER : 
+MAINTAINER : Adam D. Moss (adam@foxbox.org)
 SIZE       :  63.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -778,7 +778,7 @@ COMMENT    :
 -----------
 NAME       : semiflatten
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
-MAINTAINER : 
+MAINTAINER : Adam D. Moss (adam@foxbox.org)
 SIZE       :   5.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -910,13 +910,13 @@ COMMENT    :
 -----------
 NAME       : video
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
-MAINTAINER : 
+MAINTAINER : Adam D. Moss (adam@foxbox.org)
 SIZE       : 132.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : vinvert
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
-MAINTAINER : 
+MAINTAINER : Adam D. Moss (adam@foxbox.org)
 SIZE       :   6.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -1005,7 +1005,7 @@ SIZE       :  56.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : zealouscrop
-AUTHOR     : Adam D. Moss
+AUTHOR     : Adam D. Moss (adam@foxbox.org)
 MAINTAINER : 
 SIZE       :   6.3 kB  in  1 file  (only C files counted)
 COMMENT    : 
