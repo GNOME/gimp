@@ -987,7 +987,7 @@ xcf_load_channel (XcfInfo   *info,
 
   return channel;
 
-error:
+ error:
   g_object_unref (channel);
   return NULL;
 }
@@ -1046,7 +1046,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   return layer_mask;
 
-error:
+ error:
   g_object_unref (layer_mask);
   return NULL;
 }

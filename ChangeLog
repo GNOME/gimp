@@ -1,5 +1,10 @@
 2003-04-10  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-load.c 
+	* app/xcf/xcf-save.c: some cosmetic changes before I do any real ones.
+
+2003-04-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/interp_sliba.c
 	* plug-ins/script-fu/scripts/selection-round.scm: applied a patch
 	from Pedro Gimeno that adds the trunc() function to our scheme
