@@ -173,43 +173,6 @@ eraser_paint_func (PaintCore    *paint_core,
   return NULL;
 }
 
-
-static void
-eraser_cursor_update (Tool           *tool,
-		      GdkEventMotion *mevent,
-		      gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-  Layer *layer;
-  GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
-
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
-    {
-      int off_x, off_y;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-    if (x >= off_x && y >= off_y &&
-	x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
-      {
-	if (gimage_mask_is_empty (gdisp->gimage) || gimage_mask_value (gdisp->gimage, x, y))
-	  {
-	    if (eraser_options->anti_erase)
-	      ctype = GDK_PENCIL; 	/* ANTI_ERASER CURSOR */
-	    else
-	      ctype = GDK_PENCIL;	/* ERASER CURSOR */
-	  }
-      }
-    }
-  gdisplay_install_tool_cursor (gdisp, ctype);
-}
-
-
 Tool *
 tools_new_eraser ()
 {
@@ -228,7 +191,6 @@ tools_new_eraser ()
   private = (PaintCore *) tool->private;
   private->paint_func = eraser_paint_func;
   tool->modifier_key_func = eraser_modifier_key_func;
-  tool->cursor_update_func = eraser_cursor_update;
 
   return tool;
 }

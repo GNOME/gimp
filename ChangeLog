@@ -1,3 +1,7 @@
+Sat Sep 25 01:21:03 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/eraser.c: reenabled the line-preview for the eraser tool
+
 Fri Sep 24 23:54:26 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/paths_dialog.c
