@@ -1,3 +1,11 @@
+Sun Jun  7 12:39:56 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/libgck/gck/gcktypes.h
+	* plug-ins/libgck/gck/gckui.h
+	* plug-ins/libgck/gck/gckui.c
+	* plug-ins/ifscompose/ifscompose.c: changes for the new accelerator
+	stuff
+
 Sun Jun  7 11:04:38 1998  Tim Janik  <timj@gtk.org>
 
 	* app/gradient.c (cpopup_create_menu_item_with_label): use GtkAccelLabel

@@ -135,8 +135,8 @@ GckApplicationWindow *gck_application_window_new(char *name)
   /* Create application accelerator table */
   /* ==================================== */
   
-  appwin->accelerator_table = gtk_accelerator_table_new();
-  gtk_window_add_accelerator_table(GTK_WINDOW(appwin->widget),appwin->accelerator_table);
+  appwin->accel_group = gtk_accel_group_new();
+  gtk_window_add_accel_group(GTK_WINDOW(appwin->widget),appwin->accel_group);
 
   g_function_leave("gck_application_window_new");
   return (appwin);
@@ -1036,7 +1036,7 @@ GtkWidget *gck_option_menu_new(char *name, GtkWidget *container,
 /******************/
 
 GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
-                            GtkAcceleratorTable *acc_table)
+                            GtkAccelGroup *acc_group)
 {
   GtkWidget *menubar,*menu_item;
   gint container_type;
@@ -1069,7 +1069,7 @@ GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
     
           if (menu_items->subitems!=NULL)
 	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item),
-              gck_menu_new(menu_items->subitems,acc_table));
+              gck_menu_new(menu_items->subitems,acc_group));
     
           gtk_widget_show(menu_item);
           menu_items->widget = menu_item;
@@ -1089,7 +1089,7 @@ GtkWidget *gck_menu_bar_new(GtkWidget *container,GckMenuItem menu_items[],
 /* Create menu */
 /***************/
 
-GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
+GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAccelGroup *acc_group)
 {
   GtkWidget *menu,*menu_item;
   gint i=0;
@@ -1105,11 +1105,13 @@ GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
       else 
 	{
 	  menu_item = gtk_menu_item_new_with_label(menu_items[i].label);
-	  if (menu_items->accelerator_key && acc_table)
-            gtk_widget_install_accelerator(menu_item,acc_table,
-                                           menu_items[i].label,
-                                           menu_items[i].accelerator_key,
-					   menu_items[i].accelerator_mods);
+	  if (menu_items->accelerator_key && acc_group)
+            gtk_widget_add_accelerator(menu_item,
+                                       menu_items[i].label,
+                                       acc_group,
+                                       menu_items[i].accelerator_key,
+				       menu_items[i].accelerator_mods,
+				       GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
           gtk_object_set_data(GTK_OBJECT(menu_item),"_GckMenuItem",(gpointer)&menu_items[i]);
 
@@ -1122,7 +1124,7 @@ GtkWidget *gck_menu_new(GckMenuItem *menu_items,GtkAcceleratorTable *acc_table)
 
       if (menu_items[i].subitems!=NULL)
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item),
-          gck_menu_new(menu_items[i].subitems,acc_table));
+          gck_menu_new(menu_items[i].subitems,acc_group));
 
       gtk_widget_show(menu_item);
       menu_items[i].widget = menu_item;

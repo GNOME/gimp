@@ -119,7 +119,7 @@ typedef struct
 {
   GtkWidget *widget;
   GtkStyle *style;
-  GtkAcceleratorTable *accelerator_table;
+  GtkAccelGroup *accel_group;
   GckVisualInfo *visinfo;
 } GckApplicationWindow;
 
