@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
-"PO-Revision-Date: 2004-07-08 13:10+0900\n"
+"POT-Creation-Date: 2004-07-21 11:08+0900\n"
+"PO-Revision-Date: 2004-07-21 11:10+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4087,15 +4087,15 @@ msgstr "/Visa/Zooma/1:2  (50%)"
 
 #: app/gui/image-menu.c:412
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/Visa/Zooma/1:2  (25%)"
+msgstr "/Visa/Zooma/1:4  (25%)"
 
 #: app/gui/image-menu.c:416
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/Visa/Zooma/1:1  (12.5%)"
+msgstr "/Visa/Zooma/1:8  (12,5%)"
 
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/Visa/Zooma/1:16  (6.25%)"
+msgstr "/Visa/Zooma/1:16  (6,25%)"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"

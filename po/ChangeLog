@@ -1,3 +1,8 @@
+2004-07-21  Jan Morén  <jan.moren@lucs.lu.se>
+
+	* sv.po: fixed zoom text errors in Swedish translation as
+	reported by Robert Ögren.
+	
 2004-07-19  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from
