@@ -1,3 +1,9 @@
+1999-05-13  Martin Baulig  <martin@home-of-linux.org>
+
+	* plug-ins/screenshot/screenshot.c: Make the "after ... seconds"
+	option global since it is also useful if you want to take a shot
+	of a very large window.
+
 Wed May 12 12:13:57 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4: minor typo fix

@@ -221,7 +221,7 @@ run (gchar *name,		/* name of plugin */
 
   if (status == STATUS_SUCCESS)
   {
-    if (shootvals.root && (shootvals.delay > 0)) 
+    if (shootvals.delay > 0)
       shoot_delay(shootvals.delay);
     /* Run the main function */
     shoot();
@@ -460,9 +460,19 @@ shoot_dialog (void)
 
   gtk_widget_show (hbox);
 
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
+
   /* with delay */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
+		      frame, TRUE, TRUE, 0);
+
   shootint.delay_box = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_end (GTK_BOX (vbox), shootint.delay_box, TRUE, TRUE, 0);
+
+  gtk_container_add (GTK_CONTAINER (frame), shootint.delay_box);
 
   label = gtk_label_new ( "after " );
   gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
@@ -477,17 +487,16 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
+  gtk_widget_show (frame);
+
   gtk_widget_show (shootint.delay_box);
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
- 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.decor_button), 
 			       decorations);
   gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.root_button), 
 			       radio_pressed[1]);
-  gtk_widget_set_sensitive (shootint.delay_box, radio_pressed[1]);
+  gtk_widget_set_sensitive (shootint.delay_box, TRUE);
 
   gtk_widget_show (dialog);
 
@@ -535,12 +544,10 @@ shoot_toggle_update (GtkWidget *widget,
   if (widget == shootint.single_button)
     {
       gtk_widget_set_sensitive (shootint.decor_button, *toggle_val);
-      gtk_widget_set_sensitive (shootint.delay_box, !*toggle_val);
     }
   if (widget == shootint.root_button)
     {
       gtk_widget_set_sensitive (shootint.decor_button, !*toggle_val);
-      gtk_widget_set_sensitive (shootint.delay_box, *toggle_val);
     }    
 }
 
