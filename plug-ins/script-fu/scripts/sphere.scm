@@ -56,8 +56,8 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE  _"Radius (pixels)" "100"
-		    SF-VALUE  _"Lighting (degrees)" "45"
+		    SF-ADJUSTMENT _"Radius (pixels)" '(100 5 500 1 10 0 1)
+		    SF-ADJUSTMENT _"Lighting (degrees)" '(45 0 360 1 10 0 0)
 		    SF-TOGGLE _"Shadow" TRUE
 		    SF-COLOR  _"Background Color" '(255 255 255)
 		    SF-COLOR  _"Sphere Color" '(255 0 0))

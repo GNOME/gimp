@@ -129,6 +129,7 @@
 	 (redfrequencyshift (/ (- endredfrequency startredfrequency) num-frames))
 	 (greenfrequencyshift (/ (- endgreenfrequency startgreenfrequency) num-frames))
 	 (bluefrequencyshift (/ (- endbluefrequency startbluefrequency) num-frames))
+
          (image (car (gimp-channel-ops-duplicate img))))
    
   (gimp-image-undo-disable image)
@@ -169,6 +170,9 @@
 		 redinvert2
 		 greeninvert2
 		 blueinvert2)
+
+	; Huh ? way too much arguments???
+	; Why does no STATUS_CALLING_ERROR occur?
 	  
 	 (set! remaining-frames (- remaining-frames 1))
 	 (set! redphase (+ redphase redphaseshift))
@@ -218,31 +222,31 @@
 		    "RGB*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE  _"Number of Frames" "10"
-                    SF-VALUE  _"Start: Red Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"Start: Green Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"Start: Blue Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"End: Red Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"End: Green Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"End: Blue Intensity Factor (max. 128)" "128"
-                    SF-VALUE  _"Red Color Mode (sin:0/cos:1/none:2)" "0"
-                    SF-VALUE  _"Green Color Mode (sin:0/cos:1/none:2)" "0"
-                    SF-VALUE  _"Blue Color Mode (sin:0/cos:1/none:2)" "0"
+		    SF-ADJUSTMENT _"Number of Frames" '(10 2 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Start: Red Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"Start: Green Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"Start: Blue Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"End: Red Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"End: Green Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"End: Blue Intensity Factor" '(128 0 128 1 10 0 1)
+                    SF-ADJUSTMENT _"Red Color Mode (sin:0/cos:1/none:2)" '(0 0 2 1 1 0 1)
+                    SF-ADJUSTMENT _"Green Color Mode (sin:0/cos:1/none:2)" '(0 0 2 1 1 0 1)
+                    SF-ADJUSTMENT _"Blue Color Mode (sin:0/cos:1/none:2)" '(0 0 2 1 1 0 1)
                     SF-TOGGLE _"Red Inversion before Transformation" FALSE
                     SF-TOGGLE _"Green Inversion before Transformation" FALSE
                     SF-TOGGLE _"Blue Inversion before Transformation" FALSE
-                    SF-VALUE  _"Start: Red Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"Start: Green Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"Start: Blue Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"End: Red Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"End: Green Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"End: Blue Phase Displacement (RAD)" "0"
-                    SF-VALUE  _"Start: Red Frequency (> 0)" "1"
-                    SF-VALUE  _"Start: Green Frequency (> 0)" "1"
-                    SF-VALUE  _"Start: Blue Frequency (> 0)" "1"
-                    SF-VALUE  _"End: Red Frequency (> 0)" "1"
-                    SF-VALUE  _"End: Green Frequency (> 0)" "1"
-                    SF-VALUE  _"End: Blue Frequency (> 0)" "1"
+                    SF-ADJUSTMENT _"Start: Red Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"Start: Green Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"Start: Blue Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Red Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Green Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Blue Phase Displacement (RAD)" '(0 0 6.28 0.05 1 2 1)
+                    SF-ADJUSTMENT _"Start: Red Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
+                    SF-ADJUSTMENT _"Start: Green Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
+                    SF-ADJUSTMENT _"Start: Blue Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Red Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Green Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
+                    SF-ADJUSTMENT _"End: Blue Frequency (> 0)" '(1 0.01 5 0.05 1 2 1)
                     SF-TOGGLE _"Red Inversion after Transformation" FALSE
                     SF-TOGGLE _"Green Inversion after Transformation" FALSE
                     SF-TOGGLE _"Blue Inversion after Transformation" FALSE)

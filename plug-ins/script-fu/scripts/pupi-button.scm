@@ -205,10 +205,10 @@
 		    SF-COLOR      _"Upper Color (Active)" '(255 255 0)
 		    SF-COLOR      _"Lower Color (Active)" '(128 108 0)
 		    SF-COLOR      _"Text Color (Active)" '(0 0 192)
-		    SF-VALUE      _"Padding X" "4"
-		    SF-VALUE      _"Padding Y" "4"
-		    SF-VALUE      _"Bevel Width" "2"
-		    SF-VALUE      _"Round Ratio" "1"
+		    SF-ADJUSTMENT _"Padding X" '(4 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Padding Y" '(4 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel Width" '(2 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Round Ratio" '(1 0.05 20 0.05 1 2 1)
 		    SF-TOGGLE     _"Not Pressed" TRUE
 		    SF-TOGGLE     _"Not Pressed (Active)" TRUE
 		    SF-TOGGLE     _"Pressed" TRUE)

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
 "POT-Creation-Date: 2000-04-02 23:33+0200\n"
-"PO-Revision-Date: 2000-04-02 23:45+02:00\n"
+"PO-Revision-Date: 2000-04-03 11:46+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2224,7 +2224,7 @@ msgstr "Benutze die unterste (unsichtbare) Ebene als Basis"
 
 #: plug-ins/common/align_layers.c:531
 msgid "Grid Size:"
-msgstr "Gitter Abstand:"
+msgstr "Gitter-Abstand:"
 
 #: plug-ins/common/animationplay.c:276
 msgid "<Image>/Filters/Animation/Animation Playback..."
@@ -2716,15 +2716,15 @@ msgstr "Abschneiden"
 
 #: plug-ins/common/convmatrix.c:194
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr "<Image>/Filter/Generisch/Faltungs-Matrix..."
+msgstr "<Image>/Filter/Generisch/Faltungsmatrix..."
 
 #: plug-ins/common/convmatrix.c:267
 msgid "Applying convolution"
-msgstr "Wende Faltungs-Matrix an"
+msgstr "Wende Faltungsmatrix an"
 
 #: plug-ins/common/convmatrix.c:805
 msgid "Convolution Matrix"
-msgstr "Faltungs-Matrix"
+msgstr "Faltungsmatrix"
 
 #: plug-ins/common/convmatrix.c:831
 msgid "Matrix"
@@ -3544,7 +3544,7 @@ msgstr "Mandelbrot Parameter"
 
 #: plug-ins/common/gauss_iir.c:163
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr "<Image>/Filter/Weichzeichnen/Gaussscher Weichzeichner (IIR)..."
+msgstr "<Image>/Filter/Weichzeichnen/Gauﬂscher Weichzeichner (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:236
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -3555,7 +3555,7 @@ msgstr ""
 #: plug-ins/common/gauss_iir.c:286 plug-ins/common/gauss_iir.c:347
 #: plug-ins/common/gauss_iir.c:437
 msgid "IIR Gaussian Blur"
-msgstr "IIR Gaussscher Weichzeichner"
+msgstr "IIR Gauﬂscher Weichzeichner"
 
 #: plug-ins/common/gauss_iir.c:373 plug-ins/common/gauss_rle.c:370
 msgid "Blur Horizontally"
@@ -3587,7 +3587,7 @@ msgstr "Vertikal:"
 
 #: plug-ins/common/gauss_rle.c:160
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr "<Image>/Filter/Weichzeichnen/Gaussscher Weichzeichner (RLE)..."
+msgstr "<Image>/Filter/Weichzeichnen/Gauﬂscher Weichzeichner (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:232
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
@@ -3598,7 +3598,7 @@ msgstr ""
 #: plug-ins/common/gauss_rle.c:283 plug-ins/common/gauss_rle.c:344
 #: plug-ins/common/gauss_rle.c:434
 msgid "RLE Gaussian Blur"
-msgstr "RLE Gaussscher Weichzeichner"
+msgstr "RLE Gauﬂscher Weichzeichner"
 
 #: plug-ins/common/gbr.c:402
 #, c-format
@@ -5547,7 +5547,7 @@ msgstr "<Image>/Filter/Weichzeichnen/Selektiver Weichzeichner..."
 
 #: plug-ins/common/sel_gauss.c:198 plug-ins/common/sel_gauss.c:241
 msgid "Selective Gaussian Blur"
-msgstr "Selektiver Gauss-Weichzeichner"
+msgstr "Selektiver Gauﬂscher Weichzeichner"
 
 #: plug-ins/common/sel_gauss.c:215
 msgid "sel_gauss: Cannot operate on indexed color images"
@@ -10087,7 +10087,7 @@ msgstr "Isometrisch"
 
 #: plug-ins/gfig/gfig.c:3300
 msgid "Grid Type:"
-msgstr "Gitter Typ:"
+msgstr "Gittertyp:"
 
 #: plug-ins/gfig/gfig.c:3311
 msgid "Darker"
@@ -10103,7 +10103,7 @@ msgstr "Sehr Dunkel"
 
 #: plug-ins/gfig/gfig.c:3317
 msgid "Grid Color:"
-msgstr "Gitter Farbe:"
+msgstr "Gitterfarbe:"
 
 #: plug-ins/gfig/gfig.c:3321
 msgid "Max Undo:"
@@ -10131,7 +10131,7 @@ msgstr "Magnetisches Gitter"
 
 #: plug-ins/gfig/gfig.c:3429
 msgid "Grid Spacing:"
-msgstr "Gitter Abstand:"
+msgstr "Gitter-Abstand:"
 
 #: plug-ins/gfig/gfig.c:3494
 msgid "Object"
@@ -11721,7 +11721,7 @@ msgstr "Fehler"
 
 #: plug-ins/imagemap/imap_grid.c:143
 msgid "Grid Settings"
-msgstr "Gitter Einstellungen"
+msgstr "Gittereinstellungen"
 
 #: plug-ins/imagemap/imap_grid.c:154
 msgid "Snap-To Grid Enabled"
@@ -11749,7 +11749,7 @@ msgstr "Feinheit des Gitters"
 
 #: plug-ins/imagemap/imap_grid.c:213
 msgid "Grid Offset"
-msgstr "Gitter Versatz"
+msgstr "Gitterversatz"
 
 #: plug-ins/imagemap/imap_grid.c:224
 msgid "pixels from left"

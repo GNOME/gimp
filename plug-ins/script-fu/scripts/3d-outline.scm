@@ -89,9 +89,9 @@
                     SF-STRING  _"Text" "The Gimp"
                     SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
                     SF-FONT    _"Font" "-*-Roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-                    SF-VALUE   _"Outline Blur Radius" "5"
-                    SF-VALUE   _"Shadow Blur Radius" "10"
-                    SF-VALUE   _"Bumpmap (Alpha Layer) Blur Radius" "5"
+                    SF-ADJUSTMENT   _"Outline Blur Radius" '(5 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Shadow Blur Radius" '(10 1 200 1 10 0 1)
+                    SF-ADJUSTMENT   _"Bumpmap (Alpha Layer) Blur Radius" '(5 1 200 1 10 0 1)
 		    SF-TOGGLE  _"Default Bumpmap Settings" TRUE
-		    SF-VALUE   _"Shadow X Offset" "0"
-                    SF-VALUE   _"Shadow Y Offset" "0")
+		    SF-ADJUSTMENT   _"Shadow X Offset" '(0 0 200 1 5 0 1)
+                    SF-ADJUSTMENT   _"Shadow Y Offset" '(0 0 200 1 5 0 1))

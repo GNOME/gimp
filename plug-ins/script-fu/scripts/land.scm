@@ -58,7 +58,7 @@
 
   ;(plug-in-c-astretch 1 img layer-two)
 
-  ; uncomment the next lie if you wnat to keep a selrction of the "land"
+  ; uncomment the next line if you want to keep a selection of the "land"
   (gimp-selection-none img)
 
   (gimp-display-new img)
@@ -72,12 +72,12 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE _"Image Width" "256"
-		    SF-VALUE _"Image Height" "256"
-		    SF-VALUE _"Random Seed" "32"
-		    SF-VALUE _"Detail Level" "4"
-		    SF-VALUE _"Land Height" "60"
-		    SF-VALUE _"Sea Septh" "4"
-		    SF-VALUE _"Scale X" "4.0"
-		    SF-VALUE _"Scale Y" "4.0"
-		    SF-GRADIENT _"Gradient" "Land_1")
+		    SF-ADJUSTMENT _"Image Width" '(256 10 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Image Height" '(256 10 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Random Seed" '(32 0 15000000 1 10 0 1)
+		    SF-ADJUSTMENT _"Detail Level" '(4 1 15 1 5 0 0)
+		    SF-ADJUSTMENT _"Land Height" '(60 1 65 1 10 0 1)
+		    SF-ADJUSTMENT _"Land Height" '(4 1 65 1 10 0 1)
+		    SF-ADJUSTMENT _"Scale X" '(4 0.1 16 1 5 0.1 0)
+		    SF-ADJUSTMENT _"Scale Y" '(4 0.1 16 1 5 0.1 0)
+		    SF-GRADIENT   _"Gradient" "Land_1")

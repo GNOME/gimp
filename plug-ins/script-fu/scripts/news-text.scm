@@ -19,13 +19,13 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (script-fu-newsprint-text string font font-size cell-size density text-color bg-color)
+(define (script-fu-newsprint-text string font font-size cell-size density blur-radius text-color bg-color)
   (let* ((text-ext (gimp-text-get-extents-fontname string font-size PIXELS font))
-	 (wid (+ (car text-ext) 20))
-	 (hi  (+ (nth 1 text-ext) 20))
-	 (img (car (gimp-image-new wid hi RGB)))
-	 (bg-layer (car (gimp-layer-new img wid hi  RGB_IMAGE "Background" 100 NORMAL)))
-	 (text-layer (car (gimp-layer-new img wid hi  RGBA_IMAGE "Text layer" 100 NORMAL)))
+	 (width (+ (car text-ext) 20 blur-radius))
+	 (height  (+ (nth 1 text-ext) 20 blur-radius))
+	 (img (car (gimp-image-new width height RGB)))
+	 (bg-layer (car (gimp-layer-new img width height  RGB_IMAGE "Background" 100 NORMAL)))
+	 (text-layer (car (gimp-layer-new img width height  RGBA_IMAGE "Text layer" 100 NORMAL)))
 	 (text-mask 0)
 	 (grey (/ (* density 255) 100))
 	 (old-fg (car (gimp-palette-get-foreground)))
@@ -40,7 +40,7 @@
     (gimp-edit-clear text-layer)
 
     (gimp-palette-set-foreground text-color)
-    (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
+    (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer (/ (+ 20 blur-radius) 2) (/ (+ 20 blur-radius) 2) string 0 TRUE font-size PIXELS font)))
 
     (set! text-mask (car (gimp-layer-create-mask text-layer ALPHA-MASK)))
     (gimp-image-add-layer-mask img text-layer text-mask)
@@ -48,11 +48,15 @@
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background (list grey grey grey))
     (gimp-edit-fill text-mask BG-IMAGE-FILL)
+    (gimp-selection-clear img)
+    (if (> blur-radius 0)
+        (plug-in-gauss-iir 1 img text-mask blur-radius 1 1)
+    )
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
+    (gimp-edit-fill text-layer FG-IMAGE-FILL)
     (gimp-image-remove-layer-mask img text-layer APPLY)
-;    (gimp-selection-clear img)
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
@@ -61,8 +65,8 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-newsprint-text"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-		    "Apply a screen to text"
+	    _"<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+	    "Apply a screen to text"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"
@@ -70,7 +74,8 @@
 		    SF-STRING     _"Text" "Newsprint"
 		    SF-FONT       _"Font" "-*-Helvetica-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-VALUE      _"Cell Size (pixels)" "7"
+		    SF-ADJUSTMENT _"Cell Size (pixels)" '(7 1 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Density (%)" '(60 0 100 1 10 0 0)
+		    SF-ADJUSTMENT _"Blur Radius" '(0 0 100 1 5 0 0)
                     SF-COLOR      _"Text Color" '(0 0 0)
 		    SF-COLOR      _"Background Color" '(255 255 255))

@@ -66,6 +66,6 @@
     "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE _"Stains" "3"
+    SF-ADJUSTMENT _"Stains" '(3 1 10 1 1 0 0)
     SF-TOGGLE _"Darken Only\n(Better, but only for Images with alot of White)" TRUE
 )

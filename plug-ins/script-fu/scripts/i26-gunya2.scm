@@ -80,6 +80,7 @@
     (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-image-set-active-layer img dist-text-layer)
+    (gimp-selection-none img)
     (gimp-image-undo-enable img)
     (gimp-image-delete distortion-img)
     (gimp-display-new img)))
@@ -92,11 +93,11 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    ""
-		    SF-STRING _"Text" "The GIMP"
-		    SF-COLOR  _"Text Color" '(255 0 0)
-		    SF-COLOR  _"Frame Color" '(0 34 255)
-		    SF-FONT   _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
+		    SF-STRING     _"Text" "The GIMP"
+		    SF-COLOR      _"Text Color" '(255 0 0)
+		    SF-COLOR      _"Frame Color" '(0 34 255)
+		    SF-FONT       _"Font" "-*-Becker-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-VALUE  _"Frame Size" "2")
+		    SF-ADJUSTMENT _"Frame Size" '(2 1 20 1 5 0 1))
 
 ;;; i26-gunya2.scm ends here

@@ -83,10 +83,10 @@
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING _"Description" "Rectangle"
-            SF-VALUE  _"Width" "20"
-            SF-VALUE  _"Height" "20"
-            SF-VALUE  _"Spacing" "20"
+            SF-STRING     _"Description" "Rectangle"
+            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0)
             )
 
 
@@ -136,7 +136,7 @@
            (gimp-rect-select img 0 0 width height REPLACE FALSE 0))
           )
     (gimp-edit-fill    drawable BG-IMAGE-FILL)
-    (file-gbr-save 1 img drawable filename "" 25 desc)
+    (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
     (gimp-brushes-set-brush desc)
@@ -161,11 +161,11 @@
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING _"Description" "Rectangle"
-            SF-VALUE  _"Width" "20"
-            SF-VALUE  _"Height" "20"
-            SF-VALUE  _"Feathering" "4"
-            SF-VALUE  _"Spacing" "25"
+            SF-STRING     _"Description" "Rectangle"
+            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
+            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0)
             )
 
 (define (script-fu-make-brush-elliptical description width height spacing)
@@ -233,9 +233,9 @@
             "1997"
             ""
             SF-STRING _"Description" "Ellipse"
-            SF-VALUE  _"Width" "20"
-            SF-VALUE  _"Height" "20"
-            SF-VALUE  _"Spacing" "25"
+            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0)
             )
 
 
@@ -313,8 +313,8 @@
             "1997"
             ""
             SF-STRING _"Description" "Ellipse"
-            SF-VALUE  _"Width" "20"
-            SF-VALUE  _"Height" "20"
-            SF-VALUE  _"Feathering" "4"
-            SF-VALUE  _"Spacing" "25"
+            SF-ADJUSTMENT _"Width" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Height" '(20 1 200 1 10 0 1)
+            SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
+            SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0)
             )

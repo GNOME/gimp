@@ -1,6 +1,3 @@
-
-
-
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ; 
@@ -103,7 +100,6 @@
 ;		    SF-STRING "Home directory" "/home/aklikins/"
 		    SF-STRING _"Description" "Brush"
 		    SF-STRING _"Filename" "SlothBrush"
-;		    SF-VALUE "Spacing" "25")
 		    SF-ADJUSTMENT _"Spacing" '(25 0 1000 1 1 1 0))
 
 

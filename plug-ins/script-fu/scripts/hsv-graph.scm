@@ -280,10 +280,10 @@
     (gimp-brushes-set-opacity 70)
     (gimp-display-new gimg)
     (while (< index limit)
-      (set! rgb (car (gimp-color-picker drawable
+      (set! rgb (car (gimp-color-picker img drawable
 					(+ beg-x (* x-len (/ index limit)))
 					(+ beg-y (* y-len (/ index limit)))
-					TRUE FALSE)))
+					TRUE FALSE 0 0)))
       (fill-color-band gimg clayer index scale x-base 40 rgb)
       (rgb-to-hsv rgb hsv)
       (plot-hsv gimg hsv-layer index scale x-base y-base hsv)

@@ -1,3 +1,23 @@
+2000-04-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/camo.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/color-cycling.scm
+	* plug-ins/script-fu/scripts/hsv-graph.scm
+	* plug-ins/script-fu/scripts/i26-gunya2.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/mkbrush.scm
+	* plug-ins/script-fu/scripts/news-text.scm
+	* plug-ins/script-fu/scripts/pupi-button.scm
+	* plug-ins/script-fu/scripts/select_to_brush.scm
+	* plug-ins/script-fu/scripts/sphere.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm:
+	applied gimp-simon-20000403-0, a patch by Simon Budig that makes
+	those scripts use SF-ADJUSTMENTS instead of SF-VALUES and fixes a
+	few bugs.
+
 2000-04-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.[ch]
@@ -40,13 +60,14 @@ Sun Apr  2 15:59:25 PDT 2000 Manish Singh <yosh@gimp.org>
 	menu so the menu gets smaller
 	
 2000-04-02  Nick Lamb  <njl195@zepler.org.uk>
-	* plug-ins/common/png.c
+
+	* plug-ins/common/png.c:
 	Brown paper bag version, 1.2.1 -- that'll teach me to hurry
 	the testing process. This should fix it all image types.
 
 2000-04-02 Garry R. Osgood <gosgood@idt.net>
 
-	* gimp/app/colormap_dialog.i.c
+	* gimp/app/colormap_dialog.i.c:
 	As Mr. Lamb, report originator noted, an easy
 	fix. in ipal_set_image() line 688
 	Reorganized the initialization of the 
