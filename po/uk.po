@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2001-01-12 09:03+0200\n"
+"POT-Creation-Date: 2001-01-17 11:35+0200\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "Для додатково╖ ╕нформац╕╖ в╕дв╕дайте http://www.gimp.org/"
 msgid "Rate:"
 msgstr "Швидк╕сть:"
 
-#: app/airbrush.c:171 modules/colorsel_water.c:751
+#: app/airbrush.c:171
 msgid "Pressure:"
 msgstr "Натиск:"
 
@@ -115,15 +115,15 @@ msgstr "Вих╕д"
 
 #. the cancel button
 #: app/app_procs.c:777 app/brightness_contrast.c:237 app/channel_ops.c:103
-#: app/channels_dialog.c:2551 app/channels_dialog.c:2721
-#: app/color_balance.c:303 app/color_notebook.c:269 app/convert.c:521
+#: app/channels_dialog.c:2564 app/channels_dialog.c:2718
+#: app/color_balance.c:303 app/color_notebook.c:262 app/convert.c:521
 #: app/curves.c:602 app/file_new_dialog.c:218 app/file_new_dialog.c:368
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:124
-#: app/global_edit.c:782 app/gradient.c:1884 app/gradient.c:4944
+#: app/global_edit.c:784 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:400 app/interface.c:1054
 #: app/layers_dialog.c:3557 app/layers_dialog.c:3741 app/layers_dialog.c:3836
-#: app/layers_dialog.c:4097 app/levels.c:377 app/palette.c:1832
-#: app/posterize.c:224 app/preferences_dialog.c:1501 app/qmask.c:283
+#: app/layers_dialog.c:4099 app/levels.c:377 app/palette.c:1845
+#: app/posterize.c:224 app/preferences_dialog.c:1501 app/qmask.c:290
 #: app/resize.c:228 app/resize.c:1401 app/resolution_calibrate.c:116
 #: app/threshold.c:307 app/user_install.c:553
 msgid "Cancel"
@@ -141,7 +141,7 @@ msgstr "З╕псована крива"
 msgid "Curve not closed!"
 msgstr "Криву не закрито!"
 
-#: app/bezier_select.c:3469 app/gimage_mask.c:629
+#: app/bezier_select.c:3469 app/gimage_mask.c:638
 msgid "Paintbrush operation failed."
 msgstr "Операц╕я пензлем не вдалась."
 
@@ -217,7 +217,7 @@ msgstr "Сп╕ральний (проти годинниково╖)"
 msgid "Gradient:"
 msgstr "Град╕╓нт:"
 
-#: app/blend.c:408 app/by_color_select.c:879 app/preferences_dialog.c:1856
+#: app/blend.c:408 app/by_color_select.c:878 app/preferences_dialog.c:1856
 msgid "None"
 msgstr "Нема╓"
 
@@ -275,22 +275,22 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Яскрав╕сть-контраст не д╕╓ на ╕ндексованих зображеннях."
 
 #: app/brightness_contrast.c:233 app/channel_ops.c:101
-#: app/channels_dialog.c:2549 app/channels_dialog.c:2719
-#: app/color_balance.c:299 app/color_notebook.c:266 app/convert.c:519
+#: app/channels_dialog.c:2562 app/channels_dialog.c:2716
+#: app/color_balance.c:299 app/color_notebook.c:259 app/convert.c:519
 #: app/curves.c:598 app/file_new_dialog.c:218 app/file_new_dialog.c:364
 #: app/gimpui.c:130 app/hue_saturation.c:396 app/layers_dialog.c:3555
-#: app/layers_dialog.c:3739 app/layers_dialog.c:3834 app/layers_dialog.c:4095
-#: app/levels.c:373 app/module_db.c:314 app/posterize.c:220
-#: app/preferences_dialog.c:1497 app/qmask.c:281 app/resize.c:222
+#: app/layers_dialog.c:3739 app/layers_dialog.c:3834 app/layers_dialog.c:4097
+#: app/levels.c:373 app/module_db.c:315 app/posterize.c:220
+#: app/preferences_dialog.c:1497 app/qmask.c:288 app/resize.c:222
 #: app/resize.c:1401 app/resolution_calibrate.c:114 app/threshold.c:303
 msgid "OK"
 msgstr "Гаразд"
 
-#: app/brightness_contrast.c:235 app/by_color_select.c:756
+#: app/brightness_contrast.c:235 app/by_color_select.c:755
 #: app/color_balance.c:301 app/curves.c:600 app/file_new_dialog.c:366
 #: app/hue_saturation.c:398 app/levels.c:375 app/posterize.c:222
 #: app/resize.c:225 app/threshold.c:305 app/tools.c:1543
-#: app/transform_core.c:426 modules/colorsel_water.c:697
+#: app/transform_core.c:426
 msgid "Reset"
 msgstr "Скасувати"
 
@@ -307,41 +307,41 @@ msgstr "Контрастн╕сть:"
 #. The preview toggle
 #: app/brightness_contrast.c:319 app/color_balance.c:469 app/curves.c:722
 #: app/fileops.c:409 app/hue_saturation.c:588 app/levels.c:606
-#: app/palette.c:3233 app/posterize.c:261 app/threshold.c:380
+#: app/palette.c:3244 app/posterize.c:261 app/threshold.c:380
 msgid "Preview"
 msgstr "Попередн╕й перегляд"
 
-#: app/brush_edit.c:229
+#: app/brush_edit.c:230
 msgid "Brush Editor"
 msgstr "Редактор пензл╕в"
 
 #. The close button
-#: app/brush_edit.c:235 app/brush_select.c:291 app/by_color_select.c:758
-#: app/color_notebook.c:266 app/color_picker.c:318 app/colormap_dialog.c:254
-#: app/crop.c:1112 app/devices.c:776 app/docindex.c:780 app/errorconsole.c:287
+#: app/brush_edit.c:236 app/brush_select.c:291 app/by_color_select.c:757
+#: app/color_notebook.c:259 app/color_picker.c:331 app/colormap_dialog.c:245
+#: app/crop.c:1112 app/devices.c:759 app/docindex.c:783 app/errorconsole.c:287
 #: app/gdisplay_ops.c:313 app/gradient.c:918 app/gradient_select.c:163
-#: app/histogram_tool.c:299 app/info_window.c:264 app/lc_dialog.c:219
-#: app/measure.c:353 app/nav_window.c:1407 app/palette.c:2068
-#: app/palette.c:2084 app/palette.c:3115 app/palette_select.c:72
+#: app/histogram_tool.c:300 app/info_window.c:264 app/lc_dialog.c:219
+#: app/measure.c:353 app/nav_window.c:1407 app/palette.c:2079
+#: app/palette.c:2095 app/palette.c:3126 app/palette_select.c:72
 #: app/pattern_select.c:181 app/preferences_dialog.c:393 app/tips_dialog.c:165
 #: app/tools.c:1545 app/undo_history.c:768
 msgid "Close"
 msgstr "Закрити"
 
 #. the feather radius scale
-#: app/brush_edit.c:293 app/color_picker.c:202 app/tool_options.c:209
+#: app/brush_edit.c:294 app/color_picker.c:203 app/tool_options.c:209
 msgid "Radius:"
 msgstr "Рад╕ус:"
 
-#: app/brush_edit.c:306
+#: app/brush_edit.c:307
 msgid "Hardness:"
 msgstr "Тверд╕сть:"
 
-#: app/brush_edit.c:319
+#: app/brush_edit.c:320
 msgid "Aspect Ratio:"
 msgstr "Пропорц╕╖:"
 
-#: app/brush_edit.c:332 app/ink.c:353 app/measure.c:349 app/rotate_tool.c:109
+#: app/brush_edit.c:333 app/ink.c:353 app/measure.c:349 app/rotate_tool.c:109
 msgid "Angle:"
 msgstr "Кут:"
 
@@ -350,8 +350,8 @@ msgstr "Кут:"
 msgid "Brush Selection"
 msgstr "Виб╕р пензля"
 
-#: app/brush_select.c:289 app/gradient.c:916 app/module_db.c:354
-#: app/palette.c:2066 app/pattern_select.c:179
+#: app/brush_select.c:289 app/gradient.c:916 app/module_db.c:355
+#: app/palette.c:2077 app/pattern_select.c:179
 msgid "Refresh"
 msgstr "Оновити"
 
@@ -367,18 +367,17 @@ msgstr "Непрозор╕сть:"
 msgid "Mode:"
 msgstr "Режим:"
 
-#: app/brush_select.c:477 app/palette.c:1178 app/palette.c:2236
-#: modules/colorsel_water.c:692
+#: app/brush_select.c:477 app/palette.c:1188 app/palette.c:2247
 msgid "New"
 msgstr "Новий"
 
-#: app/brush_select.c:483 app/colormap_dialog.c:480 app/gradient_select.c:161
-#: app/palette.c:1185 app/palette.c:2082 app/palette_select.c:70
+#: app/brush_select.c:483 app/colormap_dialog.c:468 app/gradient_select.c:161
+#: app/palette.c:1195 app/palette.c:2093 app/palette_select.c:70
 msgid "Edit"
 msgstr "Редагувати"
 
-#: app/brush_select.c:489 app/global_edit.c:780 app/gradient.c:1884
-#: app/palette.c:1195 app/palette.c:1832 app/palette.c:2247
+#: app/brush_select.c:489 app/global_edit.c:782 app/gradient.c:1884
+#: app/palette.c:1205 app/palette.c:1845 app/palette.c:2258
 msgid "Delete"
 msgstr "Видалити"
 
@@ -387,16 +386,16 @@ msgid "Spacing:"
 msgstr "╤нтервал:"
 
 #. this should never happen
-#: app/brush_select.c:1864
+#: app/brush_select.c:1865
 msgid "Sorry, this brush can't be edited."
 msgstr "Нажаль цей пензель не можна редагувати."
 
 #. this should never happen
-#: app/brush_select.c:1893
+#: app/brush_select.c:1894
 msgid "Sorry, this brush can't be deleted."
 msgstr "Нажаль цей пензель не можна видаляти."
 
-#: app/bucket_fill.c:155 app/color_picker.c:177 app/tool_options.c:295
+#: app/bucket_fill.c:155 app/color_picker.c:178 app/tool_options.c:295
 msgid "Sample Merged"
 msgstr "Об'╓днан╕ зразки"
 
@@ -426,60 +425,60 @@ msgid "No available patterns for this operation."
 msgstr "Нема╓ доступних в╕зерунк╕в для ц╕╓╖ операц╕╖."
 
 #. The shell and main vbox
-#: app/by_color_select.c:751
+#: app/by_color_select.c:750
 msgid "By Color Selection"
 msgstr "Вид╕лення за кольором"
 
-#: app/by_color_select.c:807
+#: app/by_color_select.c:806
 msgid "Inactive"
 msgstr "Нед╕ючий"
 
-#: app/by_color_select.c:815
+#: app/by_color_select.c:814
 msgid "Selection Mode"
 msgstr "Режим вид╕лення"
 
-#: app/by_color_select.c:820 app/paint_funcs.c:108
+#: app/by_color_select.c:819 app/paint_funcs.c:108
 msgid "Replace"
 msgstr "Зам╕на"
 
-#: app/by_color_select.c:822 app/colormap_dialog.c:471
+#: app/by_color_select.c:821 app/colormap_dialog.c:459
 msgid "Add"
 msgstr "Додавання"
 
-#: app/by_color_select.c:823 app/layers_dialog.c:390 app/tool_options.c:960
+#: app/by_color_select.c:822 app/layers_dialog.c:390 app/tool_options.c:960
 msgid "Subtract"
 msgstr "В╕дн╕мання"
 
-#: app/by_color_select.c:824
+#: app/by_color_select.c:823
 msgid "Intersect"
 msgstr "Перетин"
 
-#: app/by_color_select.c:835
+#: app/by_color_select.c:834
 msgid "Fuzziness Threshold"
 msgstr "Пор╕г розпорошення"
 
-#: app/by_color_select.c:854
+#: app/by_color_select.c:853
 msgid "Selection"
 msgstr "Вид╕лення"
 
-#: app/by_color_select.c:865
+#: app/by_color_select.c:864
 msgid "Invert"
 msgstr "╤нвертувати"
 
-#: app/by_color_select.c:872
+#: app/by_color_select.c:871
 msgid "All"
 msgstr "Все"
 
-#: app/channel.c:193 app/channel.c:195 app/layer.c:333 app/layer.c:336
+#: app/channel.c:172 app/channel.c:174 app/layer.c:307 app/layer.c:310
 msgid "copy"
 msgstr "коп╕я"
 
-#: app/channel.c:201 app/gradient.c:1723 app/layer.c:342 app/layer.c:1810
+#: app/channel.c:180 app/gradient.c:1723 app/layer.c:316 app/layer.c:1754
 #, c-format
 msgid "%s copy"
 msgstr "коп╕я %s"
 
-#: app/channel.c:633
+#: app/channel.c:594
 msgid "Selection Mask"
 msgstr "Маска вид╕лення"
 
@@ -517,23 +516,23 @@ msgstr "Прозоре"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Зм╕щення на (x/2),(y/2)"
 
-#: app/channels_dialog.c:235 app/channels_dialog.c:2587
+#: app/channels_dialog.c:237 app/channels_dialog.c:2600
 msgid "New Channel"
 msgstr "Новий канал"
 
-#: app/channels_dialog.c:239
+#: app/channels_dialog.c:241
 msgid "Raise Channel"
 msgstr "П╕дняти канал"
 
-#: app/channels_dialog.c:243
+#: app/channels_dialog.c:245
 msgid "Lower Channel"
 msgstr "Опустити канал"
 
-#: app/channels_dialog.c:247
+#: app/channels_dialog.c:249
 msgid "Duplicate Channel"
 msgstr "Дублювати канал"
 
-#: app/channels_dialog.c:252
+#: app/channels_dialog.c:254
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
@@ -541,52 +540,52 @@ msgstr ""
 "Канал у вид╕лення \n"
 "<Shift> Додати       <Ctrl> В╕дняти       <Shift><Ctrl> Перетнути"
 
-#: app/channels_dialog.c:259
+#: app/channels_dialog.c:261
 msgid "Delete Channel"
 msgstr "Видалити канал"
 
-#: app/channels_dialog.c:1215
+#: app/channels_dialog.c:1217
 msgid "Empty Channel Copy"
 msgstr "Пуста коп╕я каналу"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:371 app/color_notebook.c:232
-#: app/curves.c:623 app/histogram_tool.c:327 app/levels.c:406
+#: app/channels_dialog.c:1445 app/color_balance.c:371 app/color_notebook.c:216
+#: app/curves.c:623 app/histogram_tool.c:328 app/levels.c:406
 msgid "Red"
 msgstr "Червоний"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:396 app/color_notebook.c:233
-#: app/curves.c:624 app/histogram_tool.c:328 app/levels.c:407
+#: app/channels_dialog.c:1449 app/color_balance.c:396 app/color_notebook.c:217
+#: app/curves.c:624 app/histogram_tool.c:329 app/levels.c:407
 msgid "Green"
 msgstr "Зелений"
 
-#: app/channels_dialog.c:1452 app/color_balance.c:421 app/color_notebook.c:234
-#: app/curves.c:625 app/histogram_tool.c:329 app/levels.c:408
+#: app/channels_dialog.c:1453 app/color_balance.c:421 app/color_notebook.c:218
+#: app/curves.c:625 app/histogram_tool.c:330 app/levels.c:408
 msgid "Blue"
 msgstr "Син╕й"
 
-#: app/channels_dialog.c:1456
+#: app/channels_dialog.c:1457
 msgid "Gray"
 msgstr "С╕рий"
 
-#: app/channels_dialog.c:1460
+#: app/channels_dialog.c:1461
 msgid "Indexed"
 msgstr "╤ндексований"
 
-#: app/channels_dialog.c:2543
+#: app/channels_dialog.c:2556
 msgid "New Channel Options"
 msgstr "Параметри нового каналу"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2576 app/channels_dialog.c:2746
+#: app/channels_dialog.c:2589 app/channels_dialog.c:2743
 msgid "Channel name:"
 msgstr "Назва каналу:"
 
 #. The opacity scale
-#: app/channels_dialog.c:2591 app/channels_dialog.c:2762
+#: app/channels_dialog.c:2604 app/channels_dialog.c:2759
 msgid "Fill Opacity:"
 msgstr "Непрозор╕сть заповнення:"
 
-#: app/channels_dialog.c:2713
+#: app/channels_dialog.c:2710
 msgid "Edit Channel Attributes"
 msgstr "Редагування атрибут╕в каналу"
 
@@ -667,127 +666,131 @@ msgstr "Жовтий"
 msgid "Preserve Luminosity"
 msgstr "Зберегти яскрав╕сть"
 
-#: app/color_notebook.c:219
+#: app/color_notebook.c:203
 msgid "H"
 msgstr "H"
 
-#: app/color_notebook.c:220
+#: app/color_notebook.c:204
 msgid "S"
 msgstr "S"
 
-#: app/color_notebook.c:221
+#: app/color_notebook.c:205
 msgid "V"
 msgstr "V"
 
-#: app/color_notebook.c:222 app/hue_saturation.c:378
+#: app/color_notebook.c:206 app/hue_saturation.c:378
 msgid "R"
 msgstr "R"
 
-#: app/color_notebook.c:223 app/hue_saturation.c:380
+#: app/color_notebook.c:207 app/hue_saturation.c:380
 msgid "G"
 msgstr "G"
 
-#: app/color_notebook.c:224 app/hue_saturation.c:382
+#: app/color_notebook.c:208 app/hue_saturation.c:382
 msgid "B"
 msgstr "B"
 
-#: app/color_notebook.c:225
+#: app/color_notebook.c:209
 msgid "A"
 msgstr "A"
 
-#: app/color_notebook.c:229 app/layers_dialog.c:393 app/paint_funcs.c:102
+#: app/color_notebook.c:213 app/layers_dialog.c:393 app/paint_funcs.c:102
 #: app/tool_options.c:963
 msgid "Hue"
 msgstr "В╕дт╕нок"
 
-#: app/color_notebook.c:230 app/layers_dialog.c:394 app/paint_funcs.c:103
+#: app/color_notebook.c:214 app/layers_dialog.c:394 app/paint_funcs.c:103
 #: app/tool_options.c:964
 msgid "Saturation"
 msgstr "Насичен╕сть"
 
-#: app/color_notebook.c:231 app/curves.c:622 app/histogram_tool.c:326
+#: app/color_notebook.c:215 app/curves.c:622 app/histogram_tool.c:327
 #: app/layers_dialog.c:396 app/levels.c:405 app/paint_funcs.c:105
 #: app/tool_options.c:966
 msgid "Value"
 msgstr "Значення"
 
-#: app/color_notebook.c:235 app/curves.c:626 app/levels.c:409
+#: app/color_notebook.c:219 app/curves.c:626 app/levels.c:409
 msgid "Alpha"
 msgstr "Альфа"
 
-#: app/color_notebook.c:261
+#: app/color_notebook.c:254
 msgid "Color Selection"
 msgstr "Виб╕р кольору"
 
-#: app/color_notebook.c:269
+#: app/color_notebook.c:262
 msgid "Revert to Old Color"
 msgstr "Повернути старий кол╕р"
 
-#: app/color_notebook.c:476 app/color_picker.c:278 app/color_picker.c:293
-#: app/colormap_dialog.c:361
+#: app/color_notebook.c:492 app/color_picker.c:281 app/color_picker.c:296
+#: app/colormap_dialog.c:352
 msgid "Hex Triplet:"
 msgstr "Ш╕стнадцятковий триплет:"
 
-#: app/color_picker.c:165 app/color_picker.c:267 app/tools.c:576
+#: app/color_notebook.c:506
+msgid "Add the current color to the color history"
+msgstr "Додати поточний кол╕р в ╕стор╕ю кольор╕в"
+
+#: app/color_picker.c:166 app/color_picker.c:270 app/tools.c:576
 msgid "Color Picker"
 msgstr "П╕петка"
 
-#: app/color_picker.c:192
+#: app/color_picker.c:193
 msgid "Sample Average"
 msgstr "Виб╕ркове середн╓"
 
-#: app/color_picker.c:235
+#: app/color_picker.c:236
 msgid "Update Active Color"
 msgstr "Поновити д╕ючий кол╕р"
 
-#: app/color_picker.c:274 app/color_picker.c:283
+#: app/color_picker.c:277 app/color_picker.c:286
 msgid "Red:"
 msgstr "Червоний:"
 
-#: app/color_picker.c:275 app/color_picker.c:284
+#: app/color_picker.c:278 app/color_picker.c:287
 msgid "Green:"
 msgstr "Зелений:"
 
-#: app/color_picker.c:276 app/color_picker.c:285
+#: app/color_picker.c:279 app/color_picker.c:288
 msgid "Blue:"
 msgstr "Син╕й:"
 
-#: app/color_picker.c:277 app/color_picker.c:286 app/color_picker.c:292
+#: app/color_picker.c:280 app/color_picker.c:289 app/color_picker.c:295
 msgid "Alpha:"
 msgstr "Альфа:"
 
-#: app/color_picker.c:282 app/colormap_dialog.c:350
+#: app/color_picker.c:285 app/colormap_dialog.c:341
 msgid "Index:"
 msgstr "╤ндекс:"
 
-#: app/color_picker.c:287
+#: app/color_picker.c:290
 msgid "Hex Triplet"
 msgstr "Ш╕стнадцятковий триплет"
 
-#: app/color_picker.c:291 app/histogram_tool.c:283
+#: app/color_picker.c:294 app/histogram_tool.c:284
 msgid "Intensity:"
 msgstr "╤нтенсивн╕сть:"
 
-#: app/color_picker.c:646 app/color_picker.c:647 app/color_picker.c:648
-#: app/color_picker.c:649 app/color_picker.c:650 app/color_picker.c:651
-#: app/color_picker.c:652 app/color_picker.c:667 app/color_picker.c:674
-#: app/color_picker.c:695 app/color_picker.c:713 app/info_window.c:194
+#: app/color_picker.c:670 app/color_picker.c:671 app/color_picker.c:672
+#: app/color_picker.c:673 app/color_picker.c:674 app/color_picker.c:675
+#: app/color_picker.c:676 app/color_picker.c:692 app/color_picker.c:699
+#: app/color_picker.c:720 app/color_picker.c:738 app/info_window.c:194
 #: app/info_window.c:200 app/info_window.c:206 app/info_window.c:212
 #: app/info_window.c:431 app/info_window.c:432 app/info_window.c:433
 #: app/info_window.c:434 app/info_window.c:456
 msgid "N/A"
 msgstr "Н/Д"
 
-#: app/colormap_dialog.c:274
+#: app/colormap_dialog.c:265
 msgid "Indexed Color Palette"
 msgstr "╤ндексована кольорова пал╕тра"
 
 #. The GIMP image option menu
-#: app/colormap_dialog.c:289 app/lc_dialog.c:151
+#: app/colormap_dialog.c:280 app/lc_dialog.c:151
 msgid "Image:"
 msgstr "Зображення:"
 
-#: app/colormap_dialog.c:1161 app/lc_dialog.c:660
+#: app/colormap_dialog.c:1142 app/lc_dialog.c:660
 msgid "none"
 msgstr "нема╓"
 
@@ -827,7 +830,7 @@ msgstr "Виб╕р облям╕вки"
 msgid "Border Selection by:"
 msgstr "Вибрати облям╕вку за:"
 
-#: app/commands.c:1365
+#: app/commands.c:1371
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Помилка зм╕ни розм╕ру: ширина ╕ висота мусять бути б╕льшими нуля."
 
@@ -1014,11 +1017,11 @@ msgstr "Гладка"
 msgid "Free"
 msgstr "В╕льна"
 
-#: app/curves.c:739 app/levels.c:634 app/module_db.c:880
+#: app/curves.c:739 app/levels.c:634 app/module_db.c:891
 msgid "Load"
 msgstr "Завантажити"
 
-#: app/curves.c:747 app/devices.c:774 app/levels.c:644 app/palette.c:2064
+#: app/curves.c:747 app/devices.c:757 app/levels.c:644 app/palette.c:2075
 #: app/preferences_dialog.c:391 app/preferences_dialog.c:1499
 msgid "Save"
 msgstr "Зберегти"
@@ -1045,9 +1048,19 @@ msgstr "Неможливо в╕дкрити файл %s"
 msgid "Desaturate operates only on RGB color drawables."
 msgstr "Знебарвлення працю╓ лише в RGB-зображеннях."
 
-#: app/devices.c:768
+#: app/devices.c:751
 msgid "Device Status"
 msgstr "Стан пристрою"
+
+#: app/devices.c:1057
+#, c-format
+msgid "Foreground: %d, %d, %d, %d"
+msgstr "Передн╕й план: %d, %d, %d, %d"
+
+#: app/devices.c:1071
+#, c-format
+msgid "Background: %d, %d, %d, %d"
+msgstr "Тло: %d, %d, %d, %d"
 
 #: app/disp_callbacks.c:856 app/global_edit.c:307 app/global_edit.c:313
 #: app/global_edit.c:385
@@ -1084,7 +1097,7 @@ msgstr ""
 msgid "Remove the selected entry from the index"
 msgstr "Вилучити вибраний елемент з покажчику"
 
-#: app/docindex.c:774
+#: app/docindex.c:777
 msgid "Document Index"
 msgstr "Покажчик документ╕в"
 
@@ -1242,7 +1255,7 @@ msgstr ""
 msgid "No Selection."
 msgstr "Н╕чого не вибрано."
 
-#: app/fileops.c:422 app/fileops.c:575
+#: app/fileops.c:422 app/fileops.c:582
 msgid "Save Image"
 msgstr "Зберегти зображення"
 
@@ -1254,7 +1267,7 @@ msgstr "Параметри збереження"
 msgid "Determine File Type:"
 msgstr "Визначити тип файлу:"
 
-#: app/fileops.c:543 app/fileops.c:1839
+#: app/fileops.c:546 app/fileops.c:1852
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1263,11 +1276,11 @@ msgstr ""
 "Збереження не вдалось.\n"
 "%s"
 
-#: app/fileops.c:631
+#: app/fileops.c:641
 msgid "Save a Copy of the Image"
 msgstr "Зберегти коп╕ю зображення"
 
-#: app/fileops.c:681
+#: app/fileops.c:694
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1275,13 +1288,13 @@ msgstr ""
 "Неможливо в╕дновити.\n"
 "Нема╓ пов'язано╖ з цим зображенням назви файлу."
 
-#: app/fileops.c:692
+#: app/fileops.c:705
 #, c-format
 msgid ""
 "Reverting %s to\n"
 "%s\n"
 "\n"
-"(You will loose all your changes\n"
+"(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
 "В╕дновлення %s до\n"
@@ -1290,19 +1303,19 @@ msgstr ""
 "(Ви втратите вс╕ зм╕ни включаючи\n"
 "всю ╕нформац╕ю про в╕дм╕ни операц╕й)"
 
-#: app/fileops.c:699
+#: app/fileops.c:712
 msgid "Revert Image?"
 msgstr "В╕дновити зображення?"
 
-#: app/fileops.c:704 app/fileops.c:1982
+#: app/fileops.c:717 app/fileops.c:1995
 msgid "Yes"
 msgstr "Так"
 
-#: app/fileops.c:704 app/fileops.c:1982
+#: app/fileops.c:717 app/fileops.c:1995
 msgid "No"
 msgstr "Н╕"
 
-#: app/fileops.c:809
+#: app/fileops.c:822
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1311,7 +1324,7 @@ msgstr ""
 "%s не вдалось.\n"
 "%s: нев╕домий тип файлу."
 
-#: app/fileops.c:826
+#: app/fileops.c:839
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1320,7 +1333,7 @@ msgstr ""
 "%s не вдалось.\n"
 "%s - незвичайний файл."
 
-#: app/fileops.c:847
+#: app/fileops.c:860
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1329,11 +1342,11 @@ msgstr ""
 "%s не вдалось.\n"
 "%s: не вистача╓ прав."
 
-#: app/fileops.c:901
+#: app/fileops.c:914
 msgid "Open"
 msgstr "В╕дкрити"
 
-#: app/fileops.c:1213
+#: app/fileops.c:1226
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1342,7 +1355,7 @@ msgstr ""
 "Запис не вдався.\n"
 "%s: нев╕домий тип файлу."
 
-#: app/fileops.c:1228
+#: app/fileops.c:1241
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1351,7 +1364,7 @@ msgstr ""
 "Запис не вдався.\n"
 "%s - незвичайний файл."
 
-#: app/fileops.c:1247
+#: app/fileops.c:1260
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1360,35 +1373,35 @@ msgstr ""
 "Збереження не вдалось.\n"
 "%s: не вистача╓ прав."
 
-#: app/fileops.c:1497
+#: app/fileops.c:1510
 msgid "(This thumbnail may be out of date)"
 msgstr "(Ця м╕н╕атюра напевно застар╕ла)"
 
-#: app/fileops.c:1498
+#: app/fileops.c:1511
 msgid "(No Information)"
 msgstr "(Нема╓ ╕нформац╕╖)"
 
-#: app/fileops.c:1508
+#: app/fileops.c:1521
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Збереження м╕н╕атюр заборонено)"
 
-#: app/fileops.c:1512
+#: app/fileops.c:1525
 msgid "(Could not write thumbnail file)"
 msgstr "(Невдалося записати файл м╕н╕атюри)"
 
-#: app/fileops.c:1516
+#: app/fileops.c:1529
 msgid "(Thumbnail file not written)"
 msgstr "(Файл м╕н╕атюри не записано)"
 
-#: app/fileops.c:1534
+#: app/fileops.c:1547
 msgid "No preview available"
 msgstr "Попередн╕й перегляд не доступний"
 
-#: app/fileops.c:1643
+#: app/fileops.c:1656
 msgid "(could not make preview)"
 msgstr "(не вдалось виконати перегляд)"
 
-#: app/fileops.c:1721 app/fileops.c:1763
+#: app/fileops.c:1734 app/fileops.c:1776
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1397,20 +1410,20 @@ msgstr ""
 "В╕дкривання не вдалось.\n"
 "%s"
 
-#: app/fileops.c:1975
+#: app/fileops.c:1988
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s ╕сну╓, переписати?"
 
-#: app/fileops.c:1977
+#: app/fileops.c:1990
 msgid "File Exists!"
 msgstr "Файл ╕сну╓!"
 
-#: app/fileops.c:2037
+#: app/fileops.c:2050
 msgid "Revert"
 msgstr "В╕дновити"
 
-#: app/fileops.c:2048
+#: app/fileops.c:2061
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1484,7 +1497,7 @@ msgstr ""
 "Були внесен╕ зм╕ни в %s.\n"
 "Закрити все-таки?"
 
-#: app/gimage_mask.c:217
+#: app/gimage_mask.c:218
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
@@ -1492,15 +1505,15 @@ msgstr ""
 "Неможливо вир╕зати/скоп╕ювати, тому що\n"
 "вид╕лена д╕лянка порожня."
 
-#: app/gimage_mask.c:355
+#: app/gimage_mask.c:360
 msgid "Float Selection: No selection to float."
 msgstr "Плаваюче вид╕лення: нема╓ вид╕лення для плавання."
 
-#: app/gimage_mask.c:367
+#: app/gimage_mask.c:374
 msgid "Floated Layer"
 msgstr "Плаваючий шар"
 
-#: app/gimage_mask.c:503
+#: app/gimage_mask.c:511
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1508,7 +1521,7 @@ msgstr ""
 "Активний шар не ма╓ альфа-каналу\n"
 "для перетворення у вид╕лення."
 
-#: app/gimage_mask.c:522
+#: app/gimage_mask.c:530
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1516,30 +1529,30 @@ msgstr ""
 "Активний шар не ма╓ маски\n"
 "для перетворення у вид╕лення."
 
-#: app/gimage_mask.c:574
+#: app/gimage_mask.c:582
 msgid "No selection to stroke!"
 msgstr "Нема╓ вид╕лення для обведення!"
 
-#: app/gimpbrush.c:305
+#: app/gimpbrush.c:266
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Нев╕дома верс╕я формату пензля #%d в \"%s\"."
 
-#: app/gimpbrush.c:325
+#: app/gimpbrush.c:286
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Помилка у файл╕ пензля GIMP \"%s\"."
 
-#: app/gimpbrush.c:332 app/patterns.c:238
+#: app/gimpbrush.c:293 app/patterns.c:238
 msgid "Unnamed"
 msgstr "Неназваний"
 
-#: app/gimpbrush.c:345 app/gimpbrush.c:390
+#: app/gimpbrush.c:306 app/gimpbrush.c:351
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "Схоже файл пензля GIMP об╕рваний: \"%s\"."
 
-#: app/gimpbrush.c:370
+#: app/gimpbrush.c:331
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "Схоже файл пензля GIMP з╕псований: \"%s\"."
@@ -1562,7 +1575,7 @@ msgstr ""
 "Увага: Не вдалося завантажити канал пензл╕в\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:291
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1571,30 +1584,30 @@ msgstr ""
 "Канал пензл╕в ма╓ мати хоча б один пензель:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:382
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
 msgstr "Не вдалось завантижати однин з пензл╕в у канал╕ пензл╕в.\"%s\""
 
-#: app/gimpdrawable.c:308
+#: app/gimpdrawable.c:327
 msgid "Can't fill unknown image type."
 msgstr "Неможливо заповнити зображення нев╕домого типу."
 
-#: app/gimpdrawable.c:557
+#: app/gimpdrawable.c:589
 msgid "parasite attach to drawable"
 msgstr "паразит причепився до зображення"
 
-#: app/gimpdrawable.c:595
+#: app/gimpdrawable.c:627
 msgid "detach parasite from drawable"
 msgstr "в╕дчепити паризита в╕д зображення"
 
-#: app/gimpdrawable.c:799
+#: app/gimpdrawable.c:831
 msgid "unnamed"
 msgstr "неназвано"
 
-#: app/gimpdrawable.c:816
+#: app/gimpdrawable.c:848
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Шари типу %d не п╕дтримуються."
@@ -1617,31 +1630,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Використати Netscape"
 
-#: app/gimpimage.c:2459
+#: app/gimpimage.c:2472
 msgid "Layer cannot be raised any further"
 msgstr "Шар неможливо п╕дняти вище"
 
-#: app/gimpimage.c:2487
+#: app/gimpimage.c:2500
 msgid "Layer cannot be lowered any further"
 msgstr "Шар неможливо опустити нижче"
 
-#: app/gimpimage.c:2513
+#: app/gimpimage.c:2526
 msgid "Layer is already on top"
 msgstr "Шар вже зверху"
 
-#: app/gimpimage.c:2519
+#: app/gimpimage.c:2532
 msgid "Can't raise Layer without alpha"
 msgstr "Неможливо п╕дняти шар, в якого нема╓ альфа-каналу"
 
-#: app/gimpimage.c:2547
+#: app/gimpimage.c:2560
 msgid "Layer is already on bottom"
 msgstr "Шар вже внизу"
 
-#: app/gimpimage.c:2602
+#: app/gimpimage.c:2615
 msgid "BG has no alpha, layer was placed above"
 msgstr "Тло не ма╓ альфа-каналу, шар буде розм╕щено вище"
 
-#: app/gimpimage.c:2676
+#: app/gimpimage.c:2689
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1649,11 +1662,11 @@ msgstr ""
 "Нема╓ видимих шар╕в для об'╓днання.\n"
 "╥х мусить бути хоча б два."
 
-#: app/gimpimage.c:2760
+#: app/gimpimage.c:2773
 msgid "There are not enough visible layers for a merge down."
 msgstr "Нема╓ видимих шар╕в для об'╓днання з попередн╕м."
 
-#: app/gimpimage.c:3220
+#: app/gimpimage.c:3235
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1661,7 +1674,7 @@ msgstr ""
 "Не вдалось додати маску шару, так як\n"
 "шар вже ма╓ маску."
 
-#: app/gimpimage.c:3226
+#: app/gimpimage.c:3241
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1669,7 +1682,7 @@ msgstr ""
 "Не вдалось додати маску шару\n"
 "до шару в ╕ндексованому зображен╕."
 
-#: app/gimpimage.c:3232
+#: app/gimpimage.c:3247
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1677,21 +1690,21 @@ msgstr ""
 "Нможливо додати маску шару\n"
 "до шару, що нема╓ альфа-каналу."
 
-#: app/gimpimage.c:3241
+#: app/gimpimage.c:3256
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Неможливо додати маску шару, що в╕др╕зня╓ться розм╕рами в╕д вказаного шару."
 
-#: app/gimpimage.c:3349
+#: app/gimpimage.c:3364
 msgid "Channel cannot be raised any further"
 msgstr "Канал не можна п╕дняти ще вище"
 
-#: app/gimpimage.c:3400
+#: app/gimpimage.c:3415
 msgid "Channel cannot be lowered any further"
 msgstr "Канал не можна опустити ще нижче"
 
-#: app/gimpimage.c:3632 app/palette.c:364 app/palette.c:942 app/palette.c:1079
-#: app/palette.c:2024 app/palette.c:2746 app/palette.c:2878
+#: app/gimpimage.c:3648 app/palette.c:365 app/palette.c:945 app/palette.c:1087
+#: app/palette.c:2035 app/palette.c:2757 app/palette.c:2889
 msgid "Untitled"
 msgstr "Неназвано"
 
@@ -1722,22 +1735,22 @@ msgstr "  неоч╕куваний символ: %s\n"
 msgid "error parsing pluginrc"
 msgstr "помилка анал╕зу pluginrc"
 
-#: app/gimprc.c:2930
+#: app/gimprc.c:2942
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Неможливо в╕дкрити %s; %s"
 
-#: app/gimprc.c:2949
+#: app/gimprc.c:2961
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Неможливо перейменувати %s в %s.old; %s"
 
-#: app/gimprc.c:2955
+#: app/gimprc.c:2967
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Не вдалося перев╕дкрити %s\n"
 
-#: app/gimprc.c:2967
+#: app/gimprc.c:2979
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Неможливо записати в %s; %s"
@@ -1770,7 +1783,7 @@ msgstr "Пов╕домлення GIMP"
 msgid "pixel"
 msgstr "п╕ксель"
 
-#: app/gimpunit.c:65 app/measure.c:536 app/measure.c:540 app/paint_core.c:543
+#: app/gimpunit.c:65 app/measure.c:536 app/measure.c:540 app/paint_core.c:544
 msgid "pixels"
 msgstr "п╕ксел╕"
 
@@ -1812,35 +1825,35 @@ msgstr "п╕ки"
 msgid "percent"
 msgstr "в╕дсоток"
 
-#: app/global_edit.c:758
+#: app/global_edit.c:760
 msgid "Paste"
 msgstr "Вставити"
 
-#: app/global_edit.c:759
+#: app/global_edit.c:761
 msgid "Paste Into"
 msgstr "Вставити в"
 
-#: app/global_edit.c:760
+#: app/global_edit.c:762
 msgid "Paste as New"
 msgstr "Вставити новий"
 
-#: app/global_edit.c:774
+#: app/global_edit.c:776
 msgid "Paste Named Buffer"
 msgstr "Вставити з названого буферу"
 
-#: app/global_edit.c:792
+#: app/global_edit.c:794
 msgid "Select a buffer to paste:"
 msgstr "Вибрати буфер для вставляння:"
 
-#: app/global_edit.c:874
+#: app/global_edit.c:876
 msgid "Cut Named"
 msgstr "Вир╕зати в буфер з назвою"
 
-#: app/global_edit.c:877 app/global_edit.c:910
+#: app/global_edit.c:879 app/global_edit.c:912
 msgid "Enter a name for this buffer"
 msgstr "Введ╕ть назву цього буферу"
 
-#: app/global_edit.c:907
+#: app/global_edit.c:909
 msgid "Copy Named"
 msgstr "Скоп╕ювати з названого буферу"
 
@@ -1877,11 +1890,11 @@ msgid "Gradient Editor"
 msgstr "Редактор град╕╓нт╕в"
 
 #: app/gradient.c:941 app/gradient_select.c:217 app/paintbrush.c:283
-#: app/palette.c:3171
+#: app/palette.c:3182
 msgid "Gradient"
 msgstr "Град╕╓нт"
 
-#: app/gradient.c:942 app/gradient_select.c:218 app/palette.c:2208
+#: app/gradient.c:942 app/gradient_select.c:218 app/palette.c:2219
 #: app/palette_select.c:95
 msgid "Name"
 msgstr "Назва"
@@ -1953,7 +1966,7 @@ msgstr "Перейменування град╕╓нту"
 msgid "Enter a new name for the gradient"
 msgstr "Введ╕ть нову назву град╕╓нту"
 
-#: app/gradient.c:1874 app/palette.c:1823
+#: app/gradient.c:1874 app/palette.c:1836
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -2190,7 +2203,7 @@ msgid "Gradient Selection"
 msgstr "Виб╕р град╕╓нту"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:189 app/histogram_tool.c:293 app/tools.c:1225
+#: app/histogram_tool.c:189 app/histogram_tool.c:294 app/tools.c:1225
 msgid "Histogram"
 msgstr "Г╕стограма"
 
@@ -2198,31 +2211,31 @@ msgstr "Г╕стограма"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Г╕стограма не д╕╓ на ╕ндексованих зображеннях."
 
-#: app/histogram_tool.c:279
+#: app/histogram_tool.c:280
 msgid "Mean:"
 msgstr "Середн╓:"
 
-#: app/histogram_tool.c:280
+#: app/histogram_tool.c:281
 msgid "Std Dev:"
 msgstr "Станд. в╕дхилення:"
 
-#: app/histogram_tool.c:281
+#: app/histogram_tool.c:282
 msgid "Median:"
 msgstr "Мед╕ана:"
 
-#: app/histogram_tool.c:282
+#: app/histogram_tool.c:283
 msgid "Pixels:"
 msgstr "П╕ксел╕в:"
 
-#: app/histogram_tool.c:284
+#: app/histogram_tool.c:285
 msgid "Count:"
 msgstr "К╕льк╕сть:"
 
-#: app/histogram_tool.c:285
+#: app/histogram_tool.c:286
 msgid "Percentile:"
 msgstr "В╕дсоток:"
 
-#: app/histogram_tool.c:318
+#: app/histogram_tool.c:319
 msgid "Information on Channel:"
 msgstr "╤нформац╕я про канал:"
 
@@ -2541,7 +2554,7 @@ msgstr "Процедури напрямних"
 msgid "Help procedures"
 msgstr "Дов╕дков╕ процедури"
 
-#: app/internal_procs.c:116 app/palette.c:3179
+#: app/internal_procs.c:116 app/palette.c:3190
 msgid "Image"
 msgstr "Зображення"
 
@@ -2559,7 +2572,7 @@ msgstr "╤нтерфейс"
 msgid "Miscellaneous"
 msgstr "Р╕зне"
 
-#: app/internal_procs.c:128 app/palette.c:2194 app/palette.c:2206
+#: app/internal_procs.c:128 app/palette.c:2205 app/palette.c:2217
 #: app/palette_select.c:93
 msgid "Palette"
 msgstr "Пал╕тра"
@@ -2608,15 +2621,15 @@ msgstr "Одиниц╕"
 msgid "Invert does not operate on indexed drawables."
 msgstr "╤нвертування не д╕╓ на ╕ндексованих зображеннях."
 
-#: app/invert.c:59
+#: app/invert.c:60
 msgid "Invert operation failed."
 msgstr "Операц╕я ╕нвертування не вдалась."
 
-#: app/layer.c:283
+#: app/layer.c:257
 msgid "Zero width or height layers not allowed."
 msgstr "Нульова ширина чи висота шару не допустима."
 
-#: app/layer.c:533
+#: app/layer.c:507
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
@@ -2764,7 +2777,7 @@ msgstr "Чорний (Повна прозор╕сть)"
 msgid "Layer's Alpha Channel"
 msgstr "Альфа-канал шару"
 
-#: app/layers_dialog.c:3917 app/layers_dialog.c:4003
+#: app/layers_dialog.c:3917 app/layers_dialog.c:4004
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2772,27 +2785,27 @@ msgstr ""
 "Нев╕рн╕ ширина чи висота.\n"
 "╤хн╕ значення мусять бути позитивними."
 
-#: app/layers_dialog.c:4089
+#: app/layers_dialog.c:4091
 msgid "Layer Merge Options"
 msgstr "Параметри об'╓днання шар╕в"
 
-#: app/layers_dialog.c:4114
+#: app/layers_dialog.c:4116
 msgid "Final, Merged Layer should be:"
 msgstr "В результат╕, об'╓днаний шар ма╓ бути:"
 
-#: app/layers_dialog.c:4115
+#: app/layers_dialog.c:4117
 msgid "Final, Anchored Layer should be:"
 msgstr "В результат╕, причеплений шар ма╓ бути:"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4122
 msgid "Expanded as necessary"
 msgstr "Розширювати при необх╕дност╕"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4124
 msgid "Clipped to image"
 msgstr "В╕дс╕кати по зображенню"
 
-#: app/layers_dialog.c:4124
+#: app/layers_dialog.c:4126
 msgid "Clipped to bottom layer"
 msgstr "В╕дсикати по нижньому шару"
 
@@ -3748,7 +3761,7 @@ msgstr "/Експортувати контур..."
 msgid "/Edit Path Attributes..."
 msgstr "/Зм╕на атрибут╕в контуру..."
 
-#: app/menus.c:1305
+#: app/menus.c:1317
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Помилка в╕дкриття файлу: %s\n"
@@ -3773,74 +3786,74 @@ msgstr "Запит на вивантаження"
 msgid "Unloaded OK"
 msgstr "Вивантажено"
 
-#: app/module_db.c:308
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "База даних модул╕в"
 
-#: app/module_db.c:608
+#: app/module_db.c:619
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "завантаження модуля \"%s\"\n"
 
-#: app/module_db.c:615
+#: app/module_db.c:626
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "пропускання модуля: \"%s\"\n"
 
-#: app/module_db.c:641
+#: app/module_db.c:652
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "помилка завантаження модуля: %s: %s"
 
-#: app/module_db.c:828
+#: app/module_db.c:839
 msgid "<No modules>"
 msgstr "<Нема╓ модул╕в>"
 
-#: app/module_db.c:841 app/module_db.c:850
+#: app/module_db.c:852 app/module_db.c:861
 msgid "on disk"
 msgstr "на диску"
 
-#: app/module_db.c:841
+#: app/module_db.c:852
 msgid "only in memory"
 msgstr "лише в пам'ят╕"
 
-#: app/module_db.c:850
+#: app/module_db.c:861
 msgid "nowhere (click 'refresh')"
 msgstr "н╕де (клацн╕ть \"поновити\")"
 
-#: app/module_db.c:889
+#: app/module_db.c:900
 msgid "Unload"
 msgstr "Вивантажити"
 
-#: app/module_db.c:905
+#: app/module_db.c:916
 msgid "Purpose:"
 msgstr "Призначення:"
 
-#: app/module_db.c:906
+#: app/module_db.c:917
 msgid "Author:"
 msgstr "Автор:"
 
-#: app/module_db.c:907
+#: app/module_db.c:918
 msgid "Version:"
 msgstr "Верс╕я:"
 
-#: app/module_db.c:908
+#: app/module_db.c:919
 msgid "Copyright:"
 msgstr "Авторськ╕ права:"
 
-#: app/module_db.c:909
+#: app/module_db.c:920
 msgid "Date:"
 msgstr "Дата:"
 
-#: app/module_db.c:910
+#: app/module_db.c:921
 msgid "Location:"
 msgstr "Розташування:"
 
-#: app/module_db.c:911
+#: app/module_db.c:922
 msgid "State:"
 msgstr "Стан:"
 
-#: app/module_db.c:930
+#: app/module_db.c:941
 msgid "Autoload during startup"
 msgstr "Автозавантаження на старт╕"
 
@@ -3858,7 +3871,7 @@ msgstr "Нав╕гац╕я: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Нав╕гац╕я: Нема╓ зображення"
 
-#: app/paint_core.c:802
+#: app/paint_core.c:803
 msgid "No brushes available for use with this tool."
 msgstr "Нема╓ пензл╕в доступних для використання з цим ╕нструментом."
 
@@ -3907,7 +3920,7 @@ msgstr "Пилопод╕бний цикл"
 msgid "Loop Triangle"
 msgstr "Трикутний цикл"
 
-#: app/palette.c:414
+#: app/palette.c:415
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3920,7 +3933,7 @@ msgstr ""
 "в╕дсутн╕й маг╕чний заголовок\n"
 "Цей файл необх╕дно перетворити з DOS?"
 
-#: app/palette.c:419
+#: app/palette.c:420
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3929,7 +3942,7 @@ msgstr ""
 "Завантаження пал╕три %s:\n"
 "З╕псована пал╕тра: в╕дсутн╕й маг╕чний заголовок"
 
-#: app/palette.c:432
+#: app/palette.c:433
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3939,7 +3952,7 @@ msgstr ""
 "Помилка зчитування"
 
 #. maybe we should just abort?
-#: app/palette.c:448
+#: app/palette.c:449
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3948,7 +3961,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня ЧЕРВОНА складова"
 
-#: app/palette.c:455
+#: app/palette.c:456
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3957,7 +3970,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня ЗЕЛЕНА складова"
 
-#: app/palette.c:462
+#: app/palette.c:463
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3966,7 +3979,7 @@ msgstr ""
 "Зчитування пал╕три %s (рядок %d):\n"
 "В╕дсутня СИНЯ складова"
 
-#: app/palette.c:471
+#: app/palette.c:472
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3975,97 +3988,97 @@ msgstr ""
 "Завантаження пал╕три %s (рядок %d):\n"
 "RGB-значення поза д╕апазоном"
 
-#: app/palette.c:520
+#: app/palette.c:521
 #, c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "Неможливо зберегти пал╕тру \"%s\"\n"
 
-#: app/palette.c:1164
+#: app/palette.c:1174
 msgid "Black"
 msgstr "Чорний"
 
-#: app/palette.c:1684 app/palette.c:2163
+#: app/palette.c:1697 app/palette.c:2174
 msgid "Undefined"
 msgstr "Невизначено"
 
-#: app/palette.c:1770
+#: app/palette.c:1783
 msgid "New Palette"
 msgstr "Нова пал╕тра"
 
-#: app/palette.c:1773
+#: app/palette.c:1786
 msgid "Enter a name for new palette"
 msgstr "Введ╕ть назву ново╖ пал╕три"
 
-#: app/palette.c:1827
+#: app/palette.c:1840
 msgid "Delete Palette"
 msgstr "Видалити пал╕тру"
 
-#: app/palette.c:1906
+#: app/palette.c:1919
 msgid "Merge Palette"
 msgstr "Об'╓днання пал╕тр"
 
-#: app/palette.c:1909
+#: app/palette.c:1922
 msgid "Enter a name for merged palette"
 msgstr "Введ╕ть назву об'╓днано╖ пал╕три"
 
-#: app/palette.c:2058
+#: app/palette.c:2069
 msgid "Color Palette Edit"
 msgstr "Редагування пал╕три кольор╕в"
 
-#: app/palette.c:2076
+#: app/palette.c:2087
 msgid "Color Palette"
 msgstr "Кольорова пал╕тра"
 
-#: app/palette.c:2196 app/palette.c:3250
+#: app/palette.c:2207 app/palette.c:3261
 msgid "Select"
 msgstr "Вид╕лити"
 
-#: app/palette.c:2207 app/palette_select.c:94
+#: app/palette.c:2218 app/palette_select.c:94
 msgid "Ncols"
 msgstr "К╕льк╕сть кольор╕в"
 
-#: app/palette.c:2227
+#: app/palette.c:2238
 msgid "Palette Ops"
 msgstr "Параметри пал╕три"
 
 #. The "Import" frame
-#: app/palette.c:2258 app/palette.c:3113 app/palette.c:3127
+#: app/palette.c:2269 app/palette.c:3124 app/palette.c:3138
 msgid "Import"
 msgstr "╤мпорт"
 
-#: app/palette.c:2269
+#: app/palette.c:2280
 msgid "Merge"
 msgstr "Об'╓днати"
 
-#: app/palette.c:3107
+#: app/palette.c:3118
 msgid "Import Palette"
 msgstr "╤мпортувати пал╕тру"
 
 #. The source's name
-#: app/palette.c:3143
+#: app/palette.c:3154
 msgid "Name:"
 msgstr "Назва:"
 
-#: app/palette.c:3156
+#: app/palette.c:3167
 msgid "new_import"
 msgstr "╕мпорт_ново╖"
 
 #. The source type
-#: app/palette.c:3161
+#: app/palette.c:3172
 msgid "Source:"
 msgstr "Джерело:"
 
-#: app/palette.c:3189
+#: app/palette.c:3200
 msgid "Indexed Palette"
 msgstr "╤ндексована пал╕тра"
 
 #. The sample size
-#: app/palette.c:3202
+#: app/palette.c:3213
 msgid "Sample Size:"
 msgstr "Розм╕р зразка:"
 
 #. The interval
-#: app/palette.c:3215
+#: app/palette.c:3226
 msgid "Interval:"
 msgstr "╤нтервал:"
 
@@ -4226,12 +4239,12 @@ msgstr "Запуск розширень: "
 msgid "Extensions"
 msgstr "Розширення"
 
-#: app/plug_in.c:843
+#: app/plug_in.c:851
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Не вдалося знайти доповнення: \"%s\""
 
-#: app/plug_in.c:1470
+#: app/plug_in.c:1478
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4881,12 +4894,12 @@ msgstr "Розширення GIMP"
 msgid "Temporary Procedure"
 msgstr "Тимчасова процедура"
 
-#: app/qmask.c:275
+#: app/qmask.c:282
 msgid "Edit Qmask Attributes"
 msgstr "Редагування атрибут╕в швидко╖ маски"
 
 #. The opacity scale
-#: app/qmask.c:303
+#: app/qmask.c:310
 msgid "Mask Opacity:"
 msgstr "Непрозор╕сть маски:"
 
@@ -5180,11 +5193,11 @@ msgstr "Ол╕вець"
 msgid "Paintbrush"
 msgstr "Пензель"
 
-#: app/tool_options.c:508 app/tools.c:716
+#: app/tool_options.c:508 app/tools.c:800
 msgid "Eraser"
 msgstr "Гумка"
 
-#: app/tool_options.c:510 app/tools.c:744
+#: app/tool_options.c:510 app/tools.c:716
 msgid "Airbrush"
 msgstr "Аерограф"
 
@@ -5200,7 +5213,7 @@ msgstr "Розмивач"
 msgid "Ink Tool"
 msgstr "Чорнило"
 
-#: app/tool_options.c:518 app/tools.c:856 app/tools.c:862
+#: app/tool_options.c:518 app/tools.c:884 app/tools.c:890
 msgid "Dodge or Burn"
 msgstr "Осв╕тлення чи затемнення"
 
@@ -5411,20 +5424,24 @@ msgid "Paint fuzzy brush strokes"
 msgstr "Нанесення розмитих мазк╕в пензлем"
 
 #: app/tools.c:717
-msgid "/Tools/Paint Tools/Eraser"
-msgstr "/╤нструменти/Малювання/Гумка"
-
-#: app/tools.c:722
-msgid "Erase to background or transparency"
-msgstr "Витирання до тла чи прозорост╕"
-
-#: app/tools.c:745
 msgid "/Tools/Paint Tools/Airbrush"
 msgstr "/╤нструменти/Малювання/Аерограф"
 
-#: app/tools.c:750
+#: app/tools.c:722
 msgid "Airbrush with variable pressure"
 msgstr "Аерограф ╕з зм╕нним натиском"
+
+#: app/tools.c:744
+msgid "Ink"
+msgstr "Чорнило"
+
+#: app/tools.c:745
+msgid "/Tools/Paint Tools/Ink"
+msgstr "/╤нструменти/Малювання/Чорнило"
+
+#: app/tools.c:750
+msgid "Draw in ink"
+msgstr "Малювання чорнилом"
 
 #: app/tools.c:772
 msgid "Clone"
@@ -5438,41 +5455,37 @@ msgstr "/╤нструменти/Малювання/Клонування"
 msgid "Paint using patterns or image regions"
 msgstr "Малювання в╕зерунками чи д╕лянкою зображення"
 
-#: app/tools.c:800
-msgid "Convolve"
-msgstr "Розмивач"
-
 #: app/tools.c:801
-msgid "/Tools/Paint Tools/Convolve"
-msgstr "/╤нструменти/Малювання/Розмивач"
+msgid "/Tools/Paint Tools/Eraser"
+msgstr "/╤нструменти/Малювання/Гумка"
 
 #: app/tools.c:806
-msgid "Blur or sharpen"
-msgstr "Розмивання чи р╕зк╕сть"
+msgid "Erase to background or transparency"
+msgstr "Витирання до тла чи прозорост╕"
 
-#: app/tools.c:828
-msgid "Ink"
-msgstr "Чорнило"
-
-#: app/tools.c:829
-msgid "/Tools/Paint Tools/Ink"
-msgstr "/╤нструменти/Малювання/Чорнило"
-
-#: app/tools.c:834
-msgid "Draw in ink"
-msgstr "Малювання чорнилом"
-
-#: app/tools.c:857
-msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/╤нструменти/Малювання/Осв╕тлення-Затемнення"
-
-#: app/tools.c:884 app/tools.c:890
+#: app/tools.c:828 app/tools.c:834
 msgid "Smudge"
 msgstr "Палець"
 
-#: app/tools.c:885
+#: app/tools.c:829
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/╤нструменти/Малювання/Палець"
+
+#: app/tools.c:856
+msgid "Convolve"
+msgstr "Розмивач"
+
+#: app/tools.c:857
+msgid "/Tools/Paint Tools/Convolve"
+msgstr "/╤нструменти/Малювання/Розмивач"
+
+#: app/tools.c:862
+msgid "Blur or sharpen"
+msgstr "Розмивання чи р╕зк╕сть"
+
+#: app/tools.c:885
+msgid "/Tools/Paint Tools/DodgeBurn"
+msgstr "/╤нструменти/Малювання/Осв╕тлення-Затемнення"
 
 #: app/tools.c:942
 msgid "Measure"
@@ -5639,191 +5652,191 @@ msgstr "Показати контур"
 msgid "Clip Result"
 msgstr "Кадрувати результат"
 
-#: app/undo.c:2876
+#: app/undo.c:2877
 #, c-format
 msgid "Can't undo %s"
 msgstr "Неможливо в╕дм╕нити %s"
 
-#: app/undo.c:2907
+#: app/undo.c:2908
 msgid "<<invalid>>"
 msgstr "<<нед╕йсно>>"
 
-#: app/undo.c:2908
+#: app/undo.c:2909
 msgid "image"
 msgstr "зображення"
 
-#: app/undo.c:2909
+#: app/undo.c:2910
 msgid "image mod"
 msgstr "редагування зображення"
 
-#: app/undo.c:2910
+#: app/undo.c:2911
 msgid "mask"
 msgstr "маска"
 
-#: app/undo.c:2911
+#: app/undo.c:2912
 msgid "layer move"
 msgstr "перем╕щення шару"
 
 #. ok
-#: app/undo.c:2912
+#: app/undo.c:2913
 msgid "transform"
 msgstr "перетворення"
 
-#: app/undo.c:2913
+#: app/undo.c:2914
 msgid "paint"
 msgstr "малювання"
 
-#: app/undo.c:2914
+#: app/undo.c:2915
 msgid "new layer"
 msgstr "новий шар"
 
-#: app/undo.c:2915
+#: app/undo.c:2916
 msgid "delete layer"
 msgstr "видалення шару"
 
-#: app/undo.c:2916
+#: app/undo.c:2917
 msgid "layer mod"
 msgstr "модиф╕кац╕я шару"
 
-#: app/undo.c:2917
+#: app/undo.c:2918
 msgid "add layer mask"
 msgstr "додавання маски до шару"
 
 #. ok
-#: app/undo.c:2918
+#: app/undo.c:2919
 msgid "delete layer mask"
 msgstr "видалення маски шару"
 
 #. ok
-#: app/undo.c:2919
+#: app/undo.c:2920
 msgid "rename layer"
 msgstr "перейменування шару"
 
-#: app/undo.c:2920
+#: app/undo.c:2921
 msgid "layer reposition"
 msgstr "зм╕на позиц╕╖ шару"
 
 #. ok
-#: app/undo.c:2921
+#: app/undo.c:2922
 msgid "new channel"
 msgstr "новий канал"
 
-#: app/undo.c:2922
+#: app/undo.c:2923
 msgid "delete channel"
 msgstr "видалення каналу"
 
-#: app/undo.c:2923
+#: app/undo.c:2924
 msgid "channel mod"
 msgstr "модиф╕кац╕я каналу"
 
-#: app/undo.c:2924
+#: app/undo.c:2925
 msgid "FS to layer"
 msgstr "плаваюче вид╕лення у шар"
 
 #. ok
-#: app/undo.c:2925
+#: app/undo.c:2926
 msgid "gimage"
 msgstr "g-зобаження"
 
-#: app/undo.c:2926
+#: app/undo.c:2927
 msgid "FS rigor"
 msgstr "точне плаваюче вид╕лення"
 
-#: app/undo.c:2927
+#: app/undo.c:2928
 msgid "FS relax"
 msgstr "м'яке плаваюче вид╕лення"
 
-#: app/undo.c:2928
+#: app/undo.c:2929
 msgid "guide"
 msgstr "напрямна"
 
-#: app/undo.c:2929
+#: app/undo.c:2930
 msgid "text"
 msgstr "текст"
 
-#: app/undo.c:2930
+#: app/undo.c:2931
 msgid "float selection"
 msgstr "плаваюче вид╕лення"
 
-#: app/undo.c:2931
+#: app/undo.c:2932
 msgid "paste"
 msgstr "вставляння"
 
-#: app/undo.c:2932
+#: app/undo.c:2933
 msgid "cut"
 msgstr "вир╕зання"
 
-#: app/undo.c:2933
+#: app/undo.c:2934
 msgid "transform core"
 msgstr "перетворення ядра"
 
-#: app/undo.c:2934
+#: app/undo.c:2935
 msgid "paint core"
 msgstr "малювання ядра"
 
-#: app/undo.c:2935
+#: app/undo.c:2936
 msgid "floating layer"
 msgstr "плаваючий шар"
 
 #. unused!
-#: app/undo.c:2936
+#: app/undo.c:2937
 msgid "linked layer"
 msgstr "прич╕плений шар"
 
-#: app/undo.c:2937
+#: app/undo.c:2938
 msgid "apply layer mask"
 msgstr "застосування маски шару"
 
 #. ok
-#: app/undo.c:2938
+#: app/undo.c:2939
 msgid "layer merge"
 msgstr "об'╓днання шар╕в"
 
-#: app/undo.c:2939
+#: app/undo.c:2940
 msgid "FS anchor"
 msgstr "причепити плаваюче вид╕лення"
 
-#: app/undo.c:2940
+#: app/undo.c:2941
 msgid "gimage mod"
 msgstr "зм╕на g-зображення"
 
-#: app/undo.c:2941
+#: app/undo.c:2942
 msgid "crop"
 msgstr "кадрування"
 
-#: app/undo.c:2942
+#: app/undo.c:2943
 msgid "layer scale"
 msgstr "масштабування шару"
 
-#: app/undo.c:2943
+#: app/undo.c:2944
 msgid "layer resize"
 msgstr "зм╕на розм╕ру шару"
 
-#: app/undo.c:2944
+#: app/undo.c:2945
 msgid "quickmask"
 msgstr "швидка маска"
 
-#: app/undo.c:2945
+#: app/undo.c:2946
 msgid "attach parasite"
 msgstr "долучення паразиту"
 
-#: app/undo.c:2946
+#: app/undo.c:2947
 msgid "remove parasite"
 msgstr "видалення паразиту"
 
-#: app/undo.c:2947
+#: app/undo.c:2948
 msgid "resolution change"
 msgstr "зм╕на розд╕льност╕"
 
-#: app/undo.c:2948
+#: app/undo.c:2949
 msgid "image scale"
 msgstr "масштабування зображення"
 
-#: app/undo.c:2949
+#: app/undo.c:2950
 msgid "image resize"
 msgstr "зм╕на розм╕ру зображення"
 
-#: app/undo.c:2950
+#: app/undo.c:2951
 msgid "misc"
 msgstr "╕нше"
 
@@ -6376,7 +6389,7 @@ msgstr ""
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: верс╕я %d XCF-файлу, що не п╕дтриму╓ться"
 
-#: app/xcf.c:1814
+#: app/xcf.c:1825
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6386,27 +6399,27 @@ msgstr ""
 "нев╕рно збер╕га╓ ╕ндексован╕ мапи кольор╕в.\n"
 "Зам╕щення на мапу градац╕й с╕рого."
 
-#: modules/colorsel_gtk.c:81
+#: modules/colorsel_gtk.c:71
 msgid "GTK color selector as a pluggable color selector"
 msgstr "Перемикач кольору GTK як зовн╕шн╕й перемикач кольор╕в."
 
-#: modules/colorsel_triangle.c:79
+#: modules/colorsel_triangle.c:69
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Перемикач кольору у художньому стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
-#: modules/colorsel_triangle.c:149 modules/colorsel_triangle.c:151
+#: modules/colorsel_triangle.c:137 modules/colorsel_triangle.c:139
 msgid "Triangle"
 msgstr "Трикутник"
 
-#: modules/colorsel_water.c:96
+#: modules/colorsel_water.c:90
 msgid "Watercolor style color selector as a pluggable module"
 msgstr ""
 "Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
-#: modules/colorsel_water.c:118 modules/colorsel_water.c:121
+#: modules/colorsel_water.c:112 modules/colorsel_water.c:115
 msgid "Watercolor"
 msgstr "Акварель"
 
-#: modules/colorsel_water.c:703
-msgid "Color History"
-msgstr "╤стор╕я кольор╕в"
+#: modules/colorsel_water.c:481
+msgid "Pressure"
+msgstr "Натиск"
