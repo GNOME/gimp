@@ -583,16 +583,17 @@ marshall_proc_db_call (LISP a)
 	    success = FALSE;
 	  if (success)
 	    {
-	      guchar color[3];
+	      guchar r, g, b;
 
 	      args[i].type = GIMP_PDB_COLOR;
 	      color_list = car (a);
-	      color[0] = get_c_long (car (color_list));
-	      color[1] = get_c_long (car (color_list));
-	      color[2] = get_c_long (car (color_list));
+              r = CLAMP (get_c_long (car (color_list)), 0, 255);
+              color_list = cdr (color_list);
+              g = CLAMP (get_c_long (car (color_list)), 0, 255);
+              color_list = cdr (color_list);
+              b = CLAMP (get_c_long (car (color_list)), 0, 255);
 
-	      gimp_rgb_set_uchar (&args[i].data.d_color, 
-				  color[0], color[1], color[2]);
+	      gimp_rgb_set_uchar (&args[i].data.d_color, r, g, b);
 	    }
 	  break;
 

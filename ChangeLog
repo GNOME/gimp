@@ -1,3 +1,8 @@
+2002-12-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call): fixed
+	color_list iteration for GIMP_PDB_COLOR args. Closes bug #100696.
+
 2002-12-06  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/winclipboard.c : need to adjust the data 
