@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2000-12-15 15:06+01:00\n"
+"POT-Creation-Date: 2001-01-02 12:34+0100\n"
+"PO-Revision-Date: 2001-01-02 12:48+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Om"
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
-#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
@@ -158,7 +158,7 @@ msgstr "OK"
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
-#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
 #: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
@@ -2749,7 +2749,7 @@ msgstr "Utvid"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
-#: plug-ins/common/warp.c:512
+#: plug-ins/common/warp.c:501
 msgid "Wrap"
 msgstr "Bryt"
 
@@ -3297,19 +3297,19 @@ msgstr "Y-forskyvning:"
 
 #. =======================================================================
 #. Displacement Type
-#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:502
+#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:491
 msgid "On Edges:"
 msgstr "På kanter:"
 
 #: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
-#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:523
+#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:512
 #: plug-ins/common/waves.c:378
 msgid "Smear"
 msgstr "Smør"
 
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
-#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
+#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:523
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3320
 msgid "Black"
@@ -3585,7 +3585,7 @@ msgstr "Fraktalspor"
 msgid "Outside Type"
 msgstr "Utenfor-type"
 
-#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
+#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:421
 msgid "Warp"
 msgstr "Warp"
 
@@ -3661,13 +3661,12 @@ msgstr ""
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Kanal uten navn"
+msgstr "Uten navn"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "GIMP pensler er enten GRÅTONE eller RGBA\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3689,13 +3688,12 @@ msgid "Description:"
 msgstr "Beskrivelse:"
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Filtre/Støy/Slur..."
+msgstr "<Image>/Filtre/Leketøy/Gee-slime"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "GEE-SLIME"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
@@ -3709,9 +3707,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Filtre/Farger/Het..."
+msgstr "<Image>/Filtre/Leketøy/Gee-zoom"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -3828,20 +3825,19 @@ msgstr "Lag %s har ikke en alpha-kanal, hoppet over"
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Feil i penselrørfil."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Penselrørfilen ser ut til å ha blitt korrupt."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Kunne ikke lese en av penslene i røret, gir opp."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Lagre som børste"
+msgstr "Lagre som børsterør"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -4667,7 +4663,7 @@ msgstr "Blur parametere"
 
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
-#: plug-ins/common/warp.c:687 plug-ins/gimpressionist/orientmap.c:551
+#: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
 msgstr "Vinkel:"
@@ -6588,73 +6584,73 @@ msgstr "Viderefører verdikanal"
 msgid "<Image>/Filters/Map/Warp..."
 msgstr "<Image>/Filtre/Kart/Forvreng.."
 
-#: plug-ins/common/warp.c:455
+#: plug-ins/common/warp.c:444
 msgid "Main Options"
 msgstr "Hovedalternativer"
 
-#: plug-ins/common/warp.c:470
+#: plug-ins/common/warp.c:459
 msgid "Step Size:"
 msgstr "Størrelse på steg:"
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1283
+#: plug-ins/common/warp.c:468 plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
 msgstr "Iterasjoner:"
 
 #. Displacement map menu
-#: plug-ins/common/warp.c:486
+#: plug-ins/common/warp.c:475
 msgid "Displacement Map:"
 msgstr ""
 
-#: plug-ins/common/warp.c:545
+#: plug-ins/common/warp.c:534
 msgid "FG Color"
 msgstr "FG farge"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: plug-ins/common/warp.c:564
+#: plug-ins/common/warp.c:553
 msgid "Secondary Options"
 msgstr "Sekundære alternativer"
 
-#: plug-ins/common/warp.c:577
+#: plug-ins/common/warp.c:566
 msgid "Dither Size:"
 msgstr "Dither-størrelse:"
 
-#: plug-ins/common/warp.c:586
+#: plug-ins/common/warp.c:575
 msgid "Rotation Angle:"
 msgstr "Rotasjonsvinkel:"
 
-#: plug-ins/common/warp.c:595
+#: plug-ins/common/warp.c:584
 msgid "Substeps:"
 msgstr "Understeg:"
 
 #. Magnitude map menu
-#: plug-ins/common/warp.c:602
+#: plug-ins/common/warp.c:591
 msgid "Magnitude Map:"
 msgstr "Størrelseskart:"
 
-#: plug-ins/common/warp.c:621
+#: plug-ins/common/warp.c:610
 msgid "Use Mag Map"
 msgstr "Bruk størrelseskart"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: plug-ins/common/warp.c:637
+#: plug-ins/common/warp.c:626
 msgid "Other Options"
 msgstr "Andre alternativer"
 
-#: plug-ins/common/warp.c:651
+#: plug-ins/common/warp.c:640
 msgid "Gradient Scale:"
 msgstr "Gradientskale:"
 
-#: plug-ins/common/warp.c:666
+#: plug-ins/common/warp.c:655
 msgid "Gradient map selection menu"
 msgstr ""
 
-#: plug-ins/common/warp.c:676
+#: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
 msgstr ""
 
-#: plug-ins/common/warp.c:702
+#: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
 msgstr ""
 
@@ -6664,20 +6660,20 @@ msgstr ""
 #. }
 #.
 #. make sure layer is visible
-#: plug-ins/common/warp.c:1163
+#: plug-ins/common/warp.c:1152
 msgid "Smoothing X gradient..."
 msgstr "Jevner ut X-gradient..."
 
-#: plug-ins/common/warp.c:1165
+#: plug-ins/common/warp.c:1154
 msgid "Smoothing Y gradient..."
 msgstr "Jevner ut Y-gradient"
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1220
+#: plug-ins/common/warp.c:1209
 msgid "Finding XY gradient..."
 msgstr "Finner XY gradient..."
 
-#: plug-ins/common/warp.c:1244
+#: plug-ins/common/warp.c:1233
 #, c-format
 msgid "Flow Step %d..."
 msgstr "Flyt steg %d..."
@@ -8835,14 +8831,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:455
-#, fuzzy
 msgid "Copying Layers into Frames..."
-msgstr "Heltall"
+msgstr "Kopierer lag inn i rammer..."
 
 #: plug-ins/gap/gap_mov_exec.c:459
-#, fuzzy
 msgid "Generating Animated Preview..."
-msgstr "Forhåndsvisning i sanntid"
+msgstr "Genererer animert forhåndsvisning..."
 
 #: plug-ins/gap/gap_mov_exec.c:1376
 #, c-format
@@ -8962,9 +8956,8 @@ msgid "GenParams"
 msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:244
-#, fuzzy
 msgid "Gen + Encode"
-msgstr "Uuencode"
+msgstr "Generér og kode inn"
 
 #: plug-ins/gap/gap_mpege.c:266
 msgid "To   Frame:"
@@ -8972,15 +8965,15 @@ msgstr "Til ramme:"
 
 #: plug-ins/gap/gap_mpege.c:273
 msgid "Framerate :"
-msgstr ""
+msgstr "Rammerate:"
 
 #: plug-ins/gap/gap_mpege.c:274
 msgid "framerate in frames/second"
-msgstr ""
+msgstr "rammerate i rammer/sekund"
 
 #: plug-ins/gap/gap_mpege.c:281
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitrate:"
 
 #: plug-ins/gap/gap_mpege.c:282
 msgid ""
@@ -9355,18 +9348,16 @@ msgid "Dither Options"
 msgstr "Alternativer for lagring"
 
 #: plug-ins/gap/gap_range_ops.c:361
-#, fuzzy
 msgid "Enable transparency"
-msgstr "Gjennomsiktig bakgrunn"
+msgstr "Bruk gjennomsiktighet"
 
 #: plug-ins/gap/gap_range_ops.c:362
 msgid "Enable dithering of transparency"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:365
-#, fuzzy
 msgid "Convert Frames to Indexed"
-msgstr "Fra bilde"
+msgstr "Konvertér rammer til indeksert type"
 
 #: plug-ins/gap/gap_range_ops.c:366
 #, fuzzy
@@ -9528,11 +9519,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:636
 msgid "Layer Mergemode:"
-msgstr ""
+msgstr "Flettemodus for lag:"
 
 #: plug-ins/gap/gap_range_ops.c:643
 msgid "Exclude BG-Layer"
-msgstr ""
+msgstr "Ekskludér BG-lag"
 
 #: plug-ins/gap/gap_range_ops.c:644
 msgid ""
@@ -9543,30 +9534,27 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:674
 msgid "Use all unselected Layers"
-msgstr ""
+msgstr "Bruk alle ikke-valgte lag"
 
 #: plug-ins/gap/gap_range_ops.c:748
 msgid "Creating Layer-Animated Image..."
-msgstr ""
+msgstr "Oppretter lag-animert bilde..."
 
 #: plug-ins/gap/gap_range_ops.c:970
-#, fuzzy
 msgid "Frames to Image"
-msgstr "Fra bilde"
+msgstr "Rammer til bilde"
 
 #: plug-ins/gap/gap_range_ops.c:971
 msgid "Create Multilayer-Image from Frames"
-msgstr ""
+msgstr "Lag flerlagsbilde fra enkeltbilder"
 
 #: plug-ins/gap/gap_range_ops.c:1112
-#, fuzzy
 msgid "Flattening Frames..."
-msgstr "Filnavn:"
+msgstr "Flater ut bilder..."
 
 #: plug-ins/gap/gap_range_ops.c:1113
-#, fuzzy
 msgid "Converting Frames..."
-msgstr "Heltall"
+msgstr "Konverterer bilder..."
 
 #: plug-ins/gap/gap_range_ops.c:1261
 msgid ""
@@ -9576,41 +9564,37 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1369
-#, fuzzy
 msgid "Cropping all Animation Frames..."
-msgstr "Skriv ut"
+msgstr "Beskjærer alle enkeltbildene i animasjonen..."
 
 #: plug-ins/gap/gap_range_ops.c:1372
-#, fuzzy
 msgid "Resizing all Animation Frames..."
-msgstr "Skriv ut"
+msgstr "Endrer størrelse på alle enkeltbildene i animasjonen..."
 
 #: plug-ins/gap/gap_range_ops.c:1375
 msgid "Scaling all Animation Frames..."
-msgstr ""
+msgstr "Skalerer alle enkeltbildene i animasjonen..."
 
 #: plug-ins/gap/gap_range_ops.c:1461
-#, fuzzy
 msgid "Flatten Frames"
-msgstr "Filnavn:"
+msgstr "Flate ut enkeltbilder"
 
 #: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr ""
+msgstr "Fjerner lag (pos:%ld) fra enkeltbilder..."
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
-msgstr ""
+msgstr "Slett lag i enkeltbilder"
 
-#: plug-ins/gap/gap_range_ops.c:1642
+#: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
-msgstr ""
+msgstr "Velg enkeltbildets område og posisjon"
 
 #: plug-ins/gap/gap_split.c:101
-#, fuzzy
 msgid "Splitting into Frames..."
-msgstr "Skriv ut"
+msgstr "Splitter til enkeltbilder..."
 
 #: plug-ins/gap/gap_split.c:176
 msgid ""
@@ -9640,13 +9624,12 @@ msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:241
-#, fuzzy
 msgid "Inverse Order:"
-msgstr "Heltall"
+msgstr "Motsatt rekkefølge:"
 
 #: plug-ins/gap/gap_split.c:242
 msgid "Start frame 0001 at Top Layer"
-msgstr ""
+msgstr "Start bilde 0001 i topplag"
 
 #: plug-ins/gap/gap_split.c:247
 msgid ""
@@ -9656,12 +9639,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
-msgstr ""
+msgstr "Splitt bilde til enkeltbilder"
 
 #: plug-ins/gap/gap_split.c:251
-#, fuzzy
 msgid "Split Settings"
-msgstr "Lyssetting"
+msgstr "Innstillinger for splitting"
 
 #: plug-ins/gap/gap_split.c:298
 msgid ""
@@ -9671,53 +9653,46 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/resize.c:107
-#, fuzzy
 msgid "Scale"
-msgstr "Lagre"
+msgstr "Skalér"
 
 #: plug-ins/gap/resize.c:111
 msgid "Resize"
-msgstr ""
+msgstr "Endre størrelse"
 
 #: plug-ins/gap/resize.c:127
-#, fuzzy
 msgid "New width:"
-msgstr "Bredde:"
+msgstr "Ny bredde:"
 
 #: plug-ins/gap/resize.c:144
-#, fuzzy
 msgid "New height:"
-msgstr "Høyde:"
+msgstr "Ny høyde:"
 
 #: plug-ins/gap/resize.c:161
-#, fuzzy
 msgid "X ratio:"
-msgstr "Metning:"
+msgstr "X-rate:"
 
 #: plug-ins/gap/resize.c:178
-#, fuzzy
 msgid "Y ratio:"
-msgstr "Metning:"
+msgstr "Y-rate:"
 
 #. the constrain toggle button
 #: plug-ins/gap/resize.c:231
 msgid "Constrain Ratio"
-msgstr ""
+msgstr "Begrensningsrate"
 
 #: plug-ins/gdyntext/charmap.c:121
 #, c-format
 msgid "Char: %c, %d, 0x%02x"
-msgstr ""
+msgstr "Char: %c, %d, 0x%02x"
 
 #: plug-ins/gdyntext/charmap_window.c:119
-#, fuzzy
 msgid "Selected char:"
-msgstr "Retningsvektor"
+msgstr "Valgt tegn:"
 
 #: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
-#, fuzzy
 msgid "Insert"
-msgstr "Heltall"
+msgstr "Sett inn"
 
 #: plug-ins/gdyntext/charmap_window.c:136
 msgid "Insert the selected char at the cursor position"
@@ -9750,117 +9725,104 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:443
-#, fuzzy
 msgid "GDynText Layer"
-msgstr "Velg fil"
+msgstr "GDynText lag"
 
 #: plug-ins/gdyntext/gdyntext.c:352
 msgid "GIMP Dynamic Text"
-msgstr ""
+msgstr "GIMP dynamisk tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:126
 msgid "GDynText: Messages Window"
-msgstr ""
+msgstr "GDynText: Meldingsvindu"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:157
 msgid "GDynText: About ..."
-msgstr ""
+msgstr "GDynText: Om ..."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4737
 msgid "none"
 msgstr "ingen"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:251
-#, fuzzy
 msgid "bottom-left"
-msgstr "Ingen lys"
+msgstr "nede-venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:252
 msgid "bottom-center"
-msgstr ""
+msgstr "nede-senter"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:253
-#, fuzzy
 msgid "bottom-right"
-msgstr "Ingen lys"
+msgstr "nede-høyre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:254
 msgid "middle-left"
-msgstr ""
+msgstr "midt-venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:255
-#, fuzzy
 msgid "center"
-msgstr "Senter"
+msgstr "senter"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:256
 msgid "middle-right"
-msgstr ""
+msgstr "midt-høyre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:257
 msgid "top-left"
-msgstr ""
+msgstr "topp-venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:258
-#, fuzzy
 msgid "top-center"
-msgstr "Senter"
+msgstr "topp-senter"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:259
-#, fuzzy
 msgid "top-right"
-msgstr "Ingen lys"
+msgstr "topp-høyre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:268
-#, fuzzy
 msgid "GDynText"
-msgstr "Velg fil"
+msgstr "GDynText"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:304
 msgid "Toggle creation of a new layer"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:317
-#, fuzzy
 msgid "Load text from file"
-msgstr "Last parametere fra"
+msgstr "Last tekst fra fil"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:328
-#, fuzzy
 msgid "GDynText: Select Color"
-msgstr "Seed"
+msgstr "GDynText: Velg farge"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:334
-#, fuzzy
 msgid "Text color"
-msgstr "farge"
+msgstr "Tekstfarge"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:344
 msgid "Toggle anti-aliased text"
-msgstr ""
+msgstr "Slå av/på anti-aliased tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:357
-#, fuzzy
 msgid "Left aligned text"
-msgstr "Venstre kant"
+msgstr "Venstrejustert tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:369
-#, fuzzy
 msgid "Centered text"
-msgstr "Heltall"
+msgstr "Sentrert tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:381
-#, fuzzy
 msgid "Right aligned text"
-msgstr "Høyre kant"
+msgstr "Høyrejustert tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:393
 msgid "Toggle text font preview"
-msgstr ""
+msgstr "Slå av/på forhåndsvisning av skrifttype for tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:405
 msgid "Toggle CharMap window"
-msgstr ""
+msgstr "Slå av/på tegnkartvindu"
 
 #. Layer Alignment
 #: plug-ins/gdyntext/gdyntext_ui.c:419
@@ -9870,16 +9832,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:427
-#, fuzzy
 msgid "Set layer alignment"
-msgstr "Sett lag til lenket"
+msgstr "Sett lagjustering"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:457
-#, fuzzy
 msgid ""
 "Line\n"
 "Spacing"
-msgstr "Skalering"
+msgstr ""
+"Linje\n"
+"Mellomrom"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:479
 msgid "Set text rotation (degrees)"
@@ -9890,9 +9852,8 @@ msgid "Editable text sample"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:524
-#, fuzzy
 msgid "Clear preview"
-msgstr "Forhåndsvisning av bilde"
+msgstr "Nullstill forhåndsvisning"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:531
 msgid "Preview default text sample"

@@ -1,12 +1,12 @@
 # Norwegian translation of the GIMP (bokmål dialect).
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999,2000.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
-"PO-Revision-Date: 2000-12-05 13:21+01:00\n"
+"Project-Id-Version: gimp 1.2.1\n"
+"POT-Creation-Date: 2001-01-02 11:55+0100\n"
+"PO-Revision-Date: 2001-01-02 11:57+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 #: app/about_dialog.c:209
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "Versjon %s brakt til deg av"
+msgstr "Versjon %s leveres til deg av"
 
 #: app/about_dialog.c:259
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -118,15 +118,14 @@ msgstr "Avslutt"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
+#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
+#: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1824
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -279,13 +278,11 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
+#: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "OK"
 
@@ -447,7 +444,6 @@ msgid "Replace"
 msgstr "Erstatt"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Legg til"
 
@@ -480,12 +476,12 @@ msgid "copy"
 msgstr "kopier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1807
 #, c-format
 msgid "%s copy"
 msgstr "%s kopier"
 
-#: app/channel.c:632
+#: app/channel.c:637
 msgid "Selection Mask"
 msgstr "Utvalgsmaske"
 
@@ -510,11 +506,11 @@ msgid "Wrap Around"
 msgstr "Bryt rundt"
 
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
-#: app/layers_dialog.c:3657
+#: app/layers_dialog.c:3663
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3659
+#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3665
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -974,7 +970,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3597 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Høyde:"
@@ -1471,34 +1467,6 @@ msgstr "indeksert-tom"
 msgid "indexed"
 msgstr "indeksert"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Fjern"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Opp"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Ned"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Konfigurér"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Filtre for fargevisning"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Tilgjengelige filtre"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Aktive filtre"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1545,28 +1513,28 @@ msgid "No selection to stroke!"
 msgstr "Ingen utvalg til stykning!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
+msgstr "Ukjent penselformat versjon #%d i \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Feil i GIMP mønsterfil \"%s\""
+msgstr "Feil i GIMP penselfil \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Uten navn"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "GIMP penselfil ser ut til å være avkuttet."
+msgstr "GIMP penselfil ser ut til å være avkuttet: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "GIMP penselfil ser ut til å være avkuttet."
+msgstr "GIMP penselfil ser ut til å være korrupt: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1578,27 +1546,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Advarsel: Klarte ikke å lese børste\n"
+"Advarsel: Klarte ikke å lese penselrør\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Rør av pensler må ha minst en pensel."
+msgstr ""
+"Rør av pensler må ha minst en pensel:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Klarte ikke å laste en av penselene i penselrøret."
+msgstr ""
+"Klarte ikke å lese en av penselene i penselrøret\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -2301,11 +2273,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: app/image_new.c:75 app/layers_dialog.c:3656
+#: app/image_new.c:75 app/layers_dialog.c:3662
 msgid "Foreground"
 msgstr "Forgrunn"
 
-#: app/image_new.c:85 app/layers_dialog.c:3658
+#: app/image_new.c:85 app/layers_dialog.c:3664
 msgid "White"
 msgstr "Hvit"
 
@@ -2642,7 +2614,7 @@ msgstr "%s maske"
 msgid "Layer Select"
 msgstr "Velg lag"
 
-#: app/layers_dialog.c:270 app/layers_dialog.c:3587
+#: app/layers_dialog.c:270 app/layers_dialog.c:3593
 msgid "New Layer"
 msgstr "Nytt lag"
 
@@ -2722,62 +2694,62 @@ msgstr "Behold trans."
 msgid "Keep Transparency"
 msgstr "Behold gjennomsiktighet"
 
-#: app/layers_dialog.c:1949
+#: app/layers_dialog.c:1955
 msgid "Empty Layer Copy"
 msgstr "Kopiering av lag uten innhold"
 
-#: app/layers_dialog.c:2213 app/layers_dialog.c:3396 app/layers_dialog.c:3766
+#: app/layers_dialog.c:2219 app/layers_dialog.c:3402 app/layers_dialog.c:3772
 msgid "Floating Selection"
 msgstr "Flytende utvalg"
 
-#: app/layers_dialog.c:3547
+#: app/layers_dialog.c:3553
 msgid "New Layer Options"
 msgstr "Alternativer for nytt lag"
 
 #. The name label and entry
-#: app/layers_dialog.c:3576
+#: app/layers_dialog.c:3582
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3597
 msgid "Layer Width:"
 msgstr "Bredde på lag:"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3658
 msgid "Layer Fill Type"
 msgstr "Fylltype for lag"
 
-#: app/layers_dialog.c:3731
+#: app/layers_dialog.c:3737
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagets attributter"
 
-#: app/layers_dialog.c:3758
+#: app/layers_dialog.c:3764
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/layers_dialog.c:3826
+#: app/layers_dialog.c:3832
 msgid "Add Mask Options"
 msgstr "Legg til alternativer for maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3844
+#: app/layers_dialog.c:3850
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser lagets maske til:"
 
-#: app/layers_dialog.c:3849
+#: app/layers_dialog.c:3855
 msgid "White (Full Opacity)"
 msgstr "Hvitt (Helt ugjennomsiktig)"
 
-#: app/layers_dialog.c:3851
+#: app/layers_dialog.c:3857
 msgid "Black (Full Transparency)"
 msgstr "Sort (Helt gjennomsiktig)"
 
-#: app/layers_dialog.c:3853
+#: app/layers_dialog.c:3859
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/layers_dialog.c:3915 app/layers_dialog.c:4001
+#: app/layers_dialog.c:3921 app/layers_dialog.c:4007
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2785,27 +2757,27 @@ msgstr ""
 "Ugyldig bredde eller høyde.\n"
 "Begge må være positive."
 
-#: app/layers_dialog.c:4087
+#: app/layers_dialog.c:4093
 msgid "Layer Merge Options"
 msgstr "Alternativer for fletting av lag"
 
-#: app/layers_dialog.c:4112
+#: app/layers_dialog.c:4118
 msgid "Final, Merged Layer should be:"
 msgstr "Endelig, flettet lag skal være:"
 
-#: app/layers_dialog.c:4113
+#: app/layers_dialog.c:4119
 msgid "Final, Anchored Layer should be:"
 msgstr "Endelig, forankret lag skal være:"
 
-#: app/layers_dialog.c:4118
+#: app/layers_dialog.c:4124
 msgid "Expanded as necessary"
 msgstr "Utvides etter behov"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4126
 msgid "Clipped to image"
 msgstr "Klippes til bildet"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4128
 msgid "Clipped to bottom layer"
 msgstr "Klippes til bunnlag"
 
@@ -3128,9 +3100,8 @@ msgid "/File/Save As..."
 msgstr "/Fil/Lagre som..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Fil/Forkast"
+msgstr "/Fil/Forkast..."
 
 #: app/menus.c:224
 msgid "/File/Close"
@@ -3573,9 +3544,8 @@ msgid "/Filters/Combine"
 msgstr "/Filtre/Kombinér"
 
 #: app/menus.c:576
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/Filtre/Støy"
+msgstr "/Filtre/Leketøy"
 
 #: app/menus.c:587
 msgid "/Automatic"
@@ -4172,19 +4142,19 @@ msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
+msgstr "Ukjent versjon av mønsterformat #%d i \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Feil i GIMP mønsterfil \"%s\""
+msgstr "Feil i GIMP mønsterfil \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "GIMP mønsterfil \"%s\" ser ut til å være avkuttet."
+msgstr "GIMP mønsterfil ser ut til å være avkuttet: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -6366,30 +6336,6 @@ msgstr ""
 "lagret ikke indekserte fargekart riktig.\n"
 "Erstatter gråtonekart."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Gamma fargevisningsfilter"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gamma"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:96
-msgid "High Contrast color display filter"
-msgstr "Høykontrast fargevisningsfilter"
-
-#: modules/cdisplay_highcontrast.c:318
-msgid "High Contrast"
-msgstr "Høy kontrast"
-
-#: modules/cdisplay_highcontrast.c:337
-msgid "Contrast Cycles:"
-msgstr "Kontrastomganger:"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK fargevelger som en innsettbar fargevelger"
@@ -6413,29 +6359,3 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
-
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Feil i GIMP penselfil...avbryter."
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Advarsel: Klarte ikke å lese bildebørste\n"
-#~ "\"%s\""
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Advarsel: Klarte ikke å lese bilderør\n"
-#~ "\"%s\""
-
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Klarte ikke å lese bildebørste."
-
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Ukjent GIMP mønster versjon #%d i \"%s\"\n"
-
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Feil under lesing av mønster \"%s\""

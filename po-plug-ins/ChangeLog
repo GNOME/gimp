@@ -1,3 +1,7 @@
+2001-01-02  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* no.po: Updated Norwegian translation.
+	
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* hu.po: Fixed an <Image> entry which was translated. Closes #36455.
