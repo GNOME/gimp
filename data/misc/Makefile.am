@@ -26,17 +26,17 @@ gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
 
 install-data-local:
 if GNOME_DESKTOP_PATH
-	if test -d @GNOME_DESKTOP_PATH@; then \
-		cd @GNOME_DESKTOP_PATH@ \
+	if test -d $(DESTDIR)@GNOME_DESKTOP_PATH@; then \
+		cd $(DESTDIR)@GNOME_DESKTOP_PATH@ \
 		&& rm -f gimp-1.3.desktop \
-		&& $(LN_S) $(DESTDIR)$(miscdatadir)/gimp.desktop gimp-1.3.desktop \
+		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-1.3.desktop \
 	; fi
 endif
 
 uninstall-local:
 if GNOME_DESKTOP_PATH
-	if test -d @GNOME_DESKTOP_PATH@; then \
-		cd @GNOME_DESKTOP_PATH@ \
+	if test -d $(DESTDIR)@GNOME_DESKTOP_PATH@; then \
+		cd $(DESTDIR)@GNOME_DESKTOP_PATH@ \
 		&& rm -f gimp-1.3.desktop \
 	; fi
 endif

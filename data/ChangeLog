@@ -1,3 +1,7 @@
+2002-07-16  Christophe Merlet  <christophe@merlet.net>
+
+        * misc/Makefile.am: added $(DESTDIR) variable.
+
 2001-04-06  Simon Budig  <simon@gimp.org>
 
         * brushes/Makefile.am: added feltpen.gih
