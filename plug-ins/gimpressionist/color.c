@@ -15,23 +15,20 @@
 
 #define NUMCOLORRADIO 2
 
-GtkWidget *colorradio[NUMCOLORRADIO];
+static GtkWidget *colorradio[NUMCOLORRADIO];
 GtkObject *colornoiseadjust = NULL;
 
 
-void colorchange(GtkWidget *wg, void *d, int num)
+void colorchange(int num)
 {
-  if (wg) {
-    pcvals.colortype = (int) d;
-  } else {
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(colorradio[num]), TRUE);
-  }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(colorradio[num]), TRUE);
 }
 
 void create_colorpage(GtkNotebook *notebook)
 {
-  GtkWidget *box0, *box1, *box2, *thispage;
-  GtkWidget *label, *tmpw, *table;
+  GtkWidget *vbox, *hbox, *thispage;
+  GtkWidget *label, *table;
+  GtkWidget *frame;
 
   label = gtk_label_new_with_mnemonic (_("Co_lor"));
 
@@ -39,47 +36,44 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
-  box0 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(thispage), box0,FALSE,FALSE,0);
-  gtk_widget_show (box0);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(thispage), vbox,FALSE,FALSE,0);
+  gtk_widget_show (vbox);
 
-  box1 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box0), box1,FALSE,FALSE,0);
-  gtk_widget_show (box1);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  tmpw = gtk_label_new( _("Color:"));
-  gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  frame = gimp_radio_group_new2 (TRUE, _("Color"),
+				 G_CALLBACK (gimp_radio_button_update),
+				 &pcvals.colortype, (gpointer) 0,
 
-  box2 = gtk_vbox_new(FALSE,0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE, 10);
-  gtk_widget_show(box2);
+				 _("A_verage under brush"), 0, &colorradio[0],
+				 _("C_enter of brush"), 1, &colorradio[1],
+				 NULL);
 
-  colorradio[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Average under brush"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
-		   G_CALLBACK(colorchange), (gpointer) 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Color is computed from the average of all pixels under the brush"), NULL);
-
-  colorradio[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("Center of brush"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
-  g_signal_connect(G_OBJECT(tmpw), "clicked",
-		   G_CALLBACK(colorchange), (gpointer) 1);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Samples the color from the pixel in the center of the brush"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), colorradio[0], 
+		       _("Color is computed from the average of all pixels under the brush"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), colorradio[1], 
+		       _("Samples the color from the pixel in the center of the brush"), NULL);
+  gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show(frame);
 
   gtk_toggle_button_set_active 
     (GTK_TOGGLE_BUTTON (colorradio[pcvals.colortype]), TRUE);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(box0), table, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   colornoiseadjust = 
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
-			  _("Color noise:"),
+			  _("Color _noise:"),
 			  100, -1, pcvals.colornoise, 
 			  0.0, 100.0, 1.0, 5.0, 0, 
 			  TRUE, 0, 0,

@@ -1,3 +1,12 @@
+2002-12-12  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gimpressionist/color.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/presets.c: last bunch of changes to solve
+	#81963.
+
 2002-12-12  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c (prefs_color_button_add): create the

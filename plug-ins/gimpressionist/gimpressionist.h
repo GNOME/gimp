@@ -177,8 +177,8 @@ void reselect(GtkWidget *list, char *fname);
 void readdirintolist(char *subdir, GtkWidget *list, char *selected);
 void orientchange(GtkWidget *wg, void *d, int num);
 void sizechange(GtkWidget *wg, void *d, int num);
-void placechange(GtkWidget *wg, void *d, int num);
-void colorchange(GtkWidget *wg, void *d, int num);
+void placechange(int num);
+void colorchange(int num);
 void generalbgchange(GtkWidget *wg, void *d, int num);
 
 void reloadbrush(char *fn, struct ppm *p);

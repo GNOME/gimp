@@ -149,7 +149,7 @@ void restorevals(void)
   gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.sizelast);
   sizechange(NULL, NULL, pcvals.sizetype);
 
-  placechange(NULL, NULL, pcvals.placetype);
+  placechange(pcvals.placetype);
   generalbgchange(NULL, NULL, pcvals.generalbgtype);
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), pcvals.brushgamma);
@@ -177,7 +177,7 @@ void restorevals(void)
 			       &pcvals.color);
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
-  colorchange(NULL, NULL, pcvals.colortype);
+  colorchange(pcvals.colortype);
 
   update_orientmap_dialog();
 }

@@ -21,10 +21,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* FIXME: remove usage of the 'broken' GtkText */
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 GtkWidget *presetnameentry = NULL;
 GtkWidget *presetsavebutton = NULL;
 GtkWidget *presetlist = NULL;
@@ -145,17 +141,9 @@ static void setsizevector(char *str)
 
 static void parsedesc(char *str, char *d)
 {
-  while(*str) {
-    if(*str == '\\') {
-      *d = (str[1] - '0') * 100;
-      *d += (str[2] - '0') * 10;
-      *d += (str[3] - '0');
-      str += 3;
-    } else *d = *str;
-    str++;
-    d++;
-  }
-  *d = '\0';
+  gchar *dest = g_strcompress (str);
+  strcpy (d, dest);
+  g_free (dest);
 }
 
 static void setval(char *key, char *val)
@@ -335,35 +323,33 @@ static void deletepreset(void)
   presetsrefresh();
 }
 
-static void savepreset(GtkWidget *wg, GtkWidget *p);
+static void savepreset(void);
 
-static void presetdesccallback(GtkWidget *widget, gpointer data)
+static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
 {
-  guchar *s;
-  char *d, *str;
-  str = gtk_editable_get_chars(GTK_EDITABLE (widget),0,-1);
-  s = str;
-  d = presetdesc;
-  while(*s) {
-    if((*s < ' ') || (*s == '\\')) { sprintf(d, "\\%03d", *s); d += 4; }
-    else { *d = *s; d++; }
-    s++;
-  }
-  *d = '\0';
-  g_free(str);
+  char *dest, *str;
+  GtkTextIter start, end;
+
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+  str = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
+  dest = g_strescape (str, NULL);
+  strcpy (presetdesc, dest);
+  g_free (dest);
+  g_free (str);
 }
 
 static void oksavepreset(GtkWidget *wg, GtkWidget *p)
 {
   gtk_widget_destroy(wg);
-  savepreset(NULL,NULL);
+  savepreset();
 }
 
 static void create_savepreset(void)
 {
   static GtkWidget *window = NULL;
   GtkWidget *box, *label;
-  GtkWidget *text;
+  GtkWidget *swin, *text;
+  GtkTextBuffer *buffer;
 
   window = 
     gimp_dialog_new (_("Save Current"), "gimpressionist",
@@ -389,29 +375,29 @@ static void create_savepreset(void)
   gtk_widget_show (box);
 
   label = gtk_label_new( _("Description:"));
-  gtk_box_pack_start(GTK_BOX(box),label,FALSE,FALSE,0);
+  gtk_box_pack_start(GTK_BOX(box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  presetdesctext = text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_box_pack_start(GTK_BOX(box),text,FALSE,FALSE,0);
+  swin = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER(box), swin);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(swin),
+				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_widget_show (swin);
+
+  buffer = gtk_text_buffer_new (NULL);
+  g_signal_connect (G_OBJECT (buffer), "changed",
+		    G_CALLBACK (presetdesccallback), NULL);
+  gtk_text_buffer_set_text (buffer, presetdesc, -1);
+  
+  text = gtk_text_view_new_with_buffer (buffer);
+  gtk_widget_set_size_request (text, -1, 192);
+  gtk_container_add (GTK_CONTAINER(swin), text);
   gtk_widget_show (text);
 
-  gtk_text_set_word_wrap(GTK_TEXT(text), 0);
-  gtk_text_set_line_wrap(GTK_TEXT(text), 0);
-
-  gtk_text_insert (GTK_TEXT (text), NULL, NULL,
-		   NULL, presetdesc, strlen(presetdesc));
-
-  gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      (GtkSignalFunc) presetdesccallback,
-		      NULL);
-    
   gtk_widget_show (window);
-
 }
 
-void savepreset(GtkWidget *wg, GtkWidget *p)
+static void savepreset(void)
 {
   const gchar *l;
   static char fname[200];
@@ -536,7 +522,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   reselect(presetlist, fname);
 }
 
-void readdesc(char *fn)
+static void readdesc(char *fn)
 {
   char *tmp, fname[200];
   FILE *f;
@@ -569,7 +555,7 @@ void readdesc(char *fn)
   return; 
 }
 
-void selectpreset(GtkWidget *wg, GtkWidget *p)
+static void selectpreset(GtkWidget *wg, GtkWidget *p)
 {
   GList *h = GTK_LIST(p)->selection;
   GtkWidget *tmpw;
@@ -588,7 +574,7 @@ void selectpreset(GtkWidget *wg, GtkWidget *p)
 
 void create_presetpage(GtkNotebook *notebook)
 {
-  GtkWidget *box1, *thispage, *box2;
+  GtkWidget *box1, *box2, *hbox, *vbox, *thispage;
   GtkWidget *scrolled_win, *list;
   GtkWidget *tmpw;
   GtkWidget *label;
@@ -629,7 +615,7 @@ void create_presetpage(GtkNotebook *notebook)
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
   gtk_widget_show (scrolled_win);
-  gtk_widget_set_size_request(scrolled_win, 150,-1);
+  gtk_widget_set_size_request(scrolled_win, 150, -1);
 
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
 
@@ -638,8 +624,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (list);
 
   gtk_signal_connect (GTK_OBJECT(list), "selection_changed",
-                      GTK_SIGNAL_FUNC(selectpreset),
-                      list);
+                      GTK_SIGNAL_FUNC(selectpreset), list);
 
   tmpw = gtk_list_item_new_with_label(factory_defaults);
   gtk_container_add(GTK_CONTAINER(list), tmpw);
@@ -647,8 +632,16 @@ void create_presetpage(GtkNotebook *notebook)
 
   readdirintolist("Presets", list, NULL);
 
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(box1), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE,0);
+  gtk_widget_show (hbox);
+
   box2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,5);
+  gtk_box_pack_start(GTK_BOX(hbox), box2, FALSE, FALSE, 5);
   gtk_widget_show (box2);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
@@ -673,8 +666,13 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
 		       _("Reread the folder of Presets"), NULL);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE,0);
+  gtk_widget_show (hbox);
+
   presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
+  /* gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0); */
+  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
 
   tmpw = gtk_label_new( _("\nIf you come up with some nice Presets,\n\
