@@ -40,8 +40,6 @@ static void gdisplay_close_warning_callback  (GtkWidget *widget,
 static void gdisplay_close_warning_dialog    (gchar     *image_name,
 					      GDisplay  *gdisp);
 
-static GtkWidget *warning_dialog = NULL;
-
 /*
  *  This file is for operations on the gdisplay object
  */
@@ -279,7 +277,7 @@ gdisplay_close_warning_callback (GtkWidget *widget,
 
   gdisp = (GDisplay *) data;
 
-  menus_set_sensitive ("<Image>/File/Close", TRUE);
+  gdisp->warning_dialog = NULL;
 
   if (close)
     gtk_widget_destroy (gdisp->shell);
@@ -292,22 +290,16 @@ gdisplay_close_warning_dialog (gchar    *image_name,
   GtkWidget *mbox;
   gchar     *warning_buf;
 
-  /* FIXUP this will raise any prexsisting close dialogs, which can be a
-     a bit confusing if you tried to close a new window because you had
-     forgotten the old dialog was still around */
-  /* If a warning dialog already exists raise the window and get out */
-  if (warning_dialog != NULL)
+  if (gdisp->warning_dialog != NULL)
     {
-      gdk_window_raise (warning_dialog->window);
+      gdk_window_raise (gdisp->warning_dialog->window);
       return;
     }
-
-  menus_set_sensitive ("<Image>/File/Close", FALSE);
 
   warning_buf =
     g_strdup_printf (_("Changes were made to %s.\nClose anyway?"), image_name);
 
-  warning_dialog = mbox =
+  gdisp->warning_dialog = mbox =
     gimp_query_boolean_box (image_name,
 			    gimp_standard_help_func,
 			    "dialogs/really_close.html",
@@ -319,10 +311,6 @@ gdisplay_close_warning_dialog (gchar    *image_name,
 			    gdisp);
 
   g_free (warning_buf);
-
-  gtk_signal_connect (GTK_OBJECT (mbox), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &warning_dialog);
 
   gtk_widget_show (mbox);
 }

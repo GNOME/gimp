@@ -158,6 +158,8 @@ struct _GDisplay
   
   GList *cd_list;                 /* color display conversion stuff           */
   GtkWidget *cd_ui;		  /* color display filter dialog              */
+
+  GtkWidget *warning_dialog;      /* "Changes were made to %s. Close anyway?" */
 };
 
 

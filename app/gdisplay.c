@@ -132,6 +132,8 @@ gdisplay_new (GimpImage *gimage,
   gdisp->cd_list = NULL;
   gdisp->cd_ui   = NULL;
 
+  gdisp->warning_dialog = NULL;
+
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
 

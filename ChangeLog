@@ -1,3 +1,11 @@
+2000-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.[ch]
+	* app/gdisplay_ops.c: made the warning_dialog a per-display
+	variable. The old behaviour of having only one global variable
+	can easily result in loss of work and should IMHO be considered
+	a bug.
+
 Wed Apr 26 22:35:36 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	On request of Martin Weber <martweb@gmx.net>:
