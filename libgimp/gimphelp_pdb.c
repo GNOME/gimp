@@ -27,14 +27,14 @@ void
 gimp_help (gchar *prog_name,
 	   gchar *help_page)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_help",
 				    &nreturn_vals,
-				    PARAM_STRING, prog_name,
-				    PARAM_STRING, help_page,
-				    PARAM_END);
+				    GIMP_PDB_STRING, prog_name,
+				    GIMP_PDB_STRING, help_page,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

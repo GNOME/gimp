@@ -26,16 +26,16 @@
 gchar *
 gimp_gimprc_query (gchar *token)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *value = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
 				    &nreturn_vals,
-				    PARAM_STRING, token,
-				    PARAM_END);
+				    GIMP_PDB_STRING, token,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     value = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -47,14 +47,14 @@ void
 gimp_gimprc_set (gchar *token,
 		 gchar *value)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gimprc_set",
 				    &nreturn_vals,
-				    PARAM_STRING, token,
-				    PARAM_STRING, value,
-				    PARAM_END);
+				    GIMP_PDB_STRING, token,
+				    GIMP_PDB_STRING, value,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -63,17 +63,17 @@ void
 gimp_get_monitor_resolution (gdouble *xres,
 			     gdouble *yres)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_get_monitor_resolution",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   *xres = 0.0;
   *yres = 0.0;
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *xres = return_vals[1].data.d_float;
       *yres = return_vals[2].data.d_float;

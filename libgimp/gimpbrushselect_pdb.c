@@ -31,18 +31,18 @@ gimp_brushes_popup (gchar                *brush_callback,
 		    gint                  spacing,
 		    GimpLayerModeEffects  paint_mode)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, brush_callback,
-				    PARAM_STRING, popup_title,
-				    PARAM_STRING, initial_brush,
-				    PARAM_FLOAT, opacity,
-				    PARAM_INT32, spacing,
-				    PARAM_INT32, paint_mode,
-				    PARAM_END);
+				    GIMP_PDB_STRING, brush_callback,
+				    GIMP_PDB_STRING, popup_title,
+				    GIMP_PDB_STRING, initial_brush,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_INT32, spacing,
+				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -50,13 +50,13 @@ gimp_brushes_popup (gchar                *brush_callback,
 void
 gimp_brushes_close_popup (gchar *brush_callback)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_close_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, brush_callback,
-				    PARAM_END);
+				    GIMP_PDB_STRING, brush_callback,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -68,17 +68,17 @@ gimp_brushes_set_popup (gchar                *brush_callback,
 			gint                  spacing,
 			GimpLayerModeEffects  paint_mode)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_set_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, brush_callback,
-				    PARAM_STRING, brush_name,
-				    PARAM_FLOAT, opacity,
-				    PARAM_INT32, spacing,
-				    PARAM_INT32, paint_mode,
-				    PARAM_END);
+				    GIMP_PDB_STRING, brush_callback,
+				    GIMP_PDB_STRING, brush_name,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_INT32, spacing,
+				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -28,14 +28,14 @@ gimp_palette_get_foreground (guchar *red,
 			     guchar *green,
 			     guchar *blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -50,14 +50,14 @@ gimp_palette_get_background (guchar *red,
 			     guchar *green,
 			     guchar *blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_palette_get_background",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -72,7 +72,7 @@ gimp_palette_set_foreground (guchar red,
 			     guchar green,
 			     guchar blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   guchar foreground[3];
 
@@ -82,8 +82,8 @@ gimp_palette_set_foreground (guchar red,
 
   return_vals = gimp_run_procedure ("gimp_palette_set_foreground",
 				    &nreturn_vals,
-				    PARAM_COLOR, foreground,
-				    PARAM_END);
+				    GIMP_PDB_COLOR, foreground,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -93,7 +93,7 @@ gimp_palette_set_background (guchar red,
 			     guchar green,
 			     guchar blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   guchar background[3];
 
@@ -103,8 +103,8 @@ gimp_palette_set_background (guchar red,
 
   return_vals = gimp_run_procedure ("gimp_palette_set_background",
 				    &nreturn_vals,
-				    PARAM_COLOR, background,
-				    PARAM_END);
+				    GIMP_PDB_COLOR, background,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -112,12 +112,12 @@ gimp_palette_set_background (guchar red,
 void
 gimp_palette_set_default_colors (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_palette_set_default_colors",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -125,12 +125,12 @@ gimp_palette_set_default_colors (void)
 void
 gimp_palette_swap_colors (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_palette_swap_colors",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -138,12 +138,12 @@ gimp_palette_swap_colors (void)
 void
 gimp_palette_refresh (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_palette_refresh",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -26,13 +26,13 @@
 void
 gimp_message (gchar *message)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_message",
 				    &nreturn_vals,
-				    PARAM_STRING, message,
-				    PARAM_END);
+				    GIMP_PDB_STRING, message,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -40,15 +40,15 @@ gimp_message (gchar *message)
 GimpMessageHandlerType
 gimp_message_get_handler (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   GimpMessageHandlerType handler = 0;
 
   return_vals = gimp_run_procedure ("gimp_message_get_handler",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     handler = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -59,13 +59,13 @@ gimp_message_get_handler (void)
 void
 gimp_message_set_handler (GimpMessageHandlerType handler)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_message_set_handler",
 				    &nreturn_vals,
-				    PARAM_INT32, handler,
-				    PARAM_END);
+				    GIMP_PDB_INT32, handler,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -30,17 +30,17 @@ gimp_channel_ops_offset (gint32                drawable_ID,
 			 gint                  offset_x,
 			 gint                  offset_y)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_ops_offset",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, wrap_around,
-				    PARAM_INT32, fill_type,
-				    PARAM_INT32, offset_x,
-				    PARAM_INT32, offset_y,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, wrap_around,
+				    GIMP_PDB_INT32, fill_type,
+				    GIMP_PDB_INT32, offset_x,
+				    GIMP_PDB_INT32, offset_y,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -48,16 +48,16 @@ gimp_channel_ops_offset (gint32                drawable_ID,
 gint32
 gimp_channel_ops_duplicate (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 new_image_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_channel_ops_duplicate",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     new_image_ID = return_vals[1].data.d_image;
 
   gimp_destroy_params (return_vals, nreturn_vals);

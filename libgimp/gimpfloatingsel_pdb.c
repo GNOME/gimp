@@ -26,13 +26,13 @@
 void
 gimp_floating_sel_remove (gint32 floating_sel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_remove",
 				    &nreturn_vals,
-				    PARAM_LAYER, floating_sel_ID,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, floating_sel_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -40,13 +40,13 @@ gimp_floating_sel_remove (gint32 floating_sel_ID)
 void
 gimp_floating_sel_anchor (gint32 floating_sel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_anchor",
 				    &nreturn_vals,
-				    PARAM_LAYER, floating_sel_ID,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, floating_sel_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -54,13 +54,13 @@ gimp_floating_sel_anchor (gint32 floating_sel_ID)
 void
 gimp_floating_sel_to_layer (gint32 floating_sel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_to_layer",
 				    &nreturn_vals,
-				    PARAM_LAYER, floating_sel_ID,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, floating_sel_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -69,14 +69,14 @@ void
 gimp_floating_sel_attach (gint32 layer_ID,
 			  gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_attach",
 				    &nreturn_vals,
-				    PARAM_LAYER, layer_ID,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -85,14 +85,14 @@ void
 gimp_floating_sel_rigor (gint32   floating_sel_ID,
 			 gboolean undo)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_rigor",
 				    &nreturn_vals,
-				    PARAM_LAYER, floating_sel_ID,
-				    PARAM_INT32, undo,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, floating_sel_ID,
+				    GIMP_PDB_INT32, undo,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -101,14 +101,14 @@ void
 gimp_floating_sel_relax (gint32   floating_sel_ID,
 			 gboolean undo)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_floating_sel_relax",
 				    &nreturn_vals,
-				    PARAM_LAYER, floating_sel_ID,
-				    PARAM_INT32, undo,
-				    PARAM_END);
+				    GIMP_PDB_LAYER, floating_sel_ID,
+				    GIMP_PDB_INT32, undo,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -33,7 +33,7 @@ _gimp_channel_new (gint32   image_ID,
 		   guchar   green,
 		   guchar   blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 channel_ID = -1;
   guchar color[3];
@@ -44,15 +44,15 @@ _gimp_channel_new (gint32   image_ID,
 
   return_vals = gimp_run_procedure ("gimp_channel_new",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, width,
-				    PARAM_INT32, height,
-				    PARAM_STRING, name,
-				    PARAM_FLOAT, opacity,
-				    PARAM_COLOR, color,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, width,
+				    GIMP_PDB_INT32, height,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_COLOR, color,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     channel_ID = return_vals[1].data.d_channel;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -63,16 +63,16 @@ _gimp_channel_new (gint32   image_ID,
 gint32
 gimp_channel_copy (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 channel_copy_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_channel_copy",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     channel_copy_ID = return_vals[1].data.d_channel;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -83,13 +83,13 @@ gimp_channel_copy (gint32 channel_ID)
 void
 gimp_channel_delete (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_delete",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -97,16 +97,16 @@ gimp_channel_delete (gint32 channel_ID)
 gchar *
 gimp_channel_get_name (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_name",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -118,14 +118,14 @@ void
 gimp_channel_set_name (gint32  channel_ID,
 		       gchar  *name)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_name",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_STRING, name,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -133,16 +133,16 @@ gimp_channel_set_name (gint32  channel_ID,
 gboolean
 gimp_channel_get_visible (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gboolean visible = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_visible",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     visible = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -154,14 +154,14 @@ void
 gimp_channel_set_visible (gint32   channel_ID,
 			  gboolean visible)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_visible",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_INT32, visible,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, visible,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -169,16 +169,16 @@ gimp_channel_set_visible (gint32   channel_ID,
 gboolean
 gimp_channel_get_show_masked (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gboolean show_masked = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_show_masked",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     show_masked = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -190,14 +190,14 @@ void
 gimp_channel_set_show_masked (gint32   channel_ID,
 			      gboolean show_masked)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_show_masked",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_INT32, show_masked,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, show_masked,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -205,16 +205,16 @@ gimp_channel_set_show_masked (gint32   channel_ID,
 gdouble
 gimp_channel_get_opacity (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gdouble opacity = 0;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_opacity",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     opacity = return_vals[1].data.d_float;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -226,14 +226,14 @@ void
 gimp_channel_set_opacity (gint32  channel_ID,
 			  gdouble opacity)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_opacity",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_FLOAT, opacity,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -244,15 +244,15 @@ gimp_channel_get_color (gint32  channel_ID,
 			guchar *green,
 			guchar *blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_color",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -268,7 +268,7 @@ gimp_channel_set_color (gint32 channel_ID,
 			guchar green,
 			guchar blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   guchar color[3];
 
@@ -278,9 +278,9 @@ gimp_channel_set_color (gint32 channel_ID,
 
   return_vals = gimp_run_procedure ("gimp_channel_set_color",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_COLOR, color,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_COLOR, color,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -288,16 +288,16 @@ gimp_channel_set_color (gint32 channel_ID,
 gint
 gimp_channel_get_tattoo (gint32 channel_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint tattoo = 0;
 
   return_vals = gimp_run_procedure ("gimp_channel_get_tattoo",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     tattoo = return_vals[1].data.d_tattoo;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -309,14 +309,14 @@ void
 gimp_channel_set_tattoo (gint32 channel_ID,
 			 gint   tattoo)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_channel_set_tattoo",
 				    &nreturn_vals,
-				    PARAM_CHANNEL, channel_ID,
-				    PARAM_INT32, tattoo,
-				    PARAM_END);
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, tattoo,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

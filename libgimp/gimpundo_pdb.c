@@ -26,13 +26,13 @@
 void
 gimp_undo_push_group_start (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_undo_push_group_start",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -40,13 +40,13 @@ gimp_undo_push_group_start (gint32 image_ID)
 void
 gimp_undo_push_group_end (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_undo_push_group_end",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

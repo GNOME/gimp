@@ -124,7 +124,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   gtk_object_set_user_data (GTK_OBJECT (menu), (gpointer) callback);
   gtk_object_set_data (GTK_OBJECT (menu), "gimp_callback_data", data);
 
-  images = gimp_query_images (&nimages);
+  images = gimp_image_list (&nimages);
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
@@ -190,7 +190,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 
   layer = -1;
 
-  images = gimp_query_images (&nimages);
+  images = gimp_image_list (&nimages);
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
@@ -302,7 +302,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 
   channel = -1;
 
-  images = gimp_query_images (&nimages);
+  images = gimp_image_list (&nimages);
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
       {
@@ -417,7 +417,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 
   drawable = -1;
 
-  images = gimp_query_images (&nimages);
+  images = gimp_image_list (&nimages);
 
   for (i = 0, k = 0; i < nimages; i++)
     if (!constraint || (* constraint) (images[i], -1, data))
@@ -796,7 +796,7 @@ temp_brush_invoker (gchar      *name,
 		    GimpParam **return_vals)
 {
   static GimpParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpBrushData *bdata;
 
   bdata = (GimpBrushData *) g_hash_table_lookup (gbrush_ht, name);
@@ -825,7 +825,7 @@ temp_brush_invoker (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -837,7 +837,7 @@ temp_pattern_invoker (gchar      *name,
 		      GimpParam **return_vals)
 {
   static GimpParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpPatternData *pdata;
 
   pdata = (GimpPatternData *)g_hash_table_lookup (gpattern_ht, name);
@@ -864,7 +864,7 @@ temp_pattern_invoker (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -876,7 +876,7 @@ temp_gradient_invoker (gchar      *name,
 		       GimpParam **return_vals)
 {
   static GimpParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpGradientData *gdata;
 
   gdata = (GimpGradientData *) g_hash_table_lookup (ggradient_ht, name);
@@ -911,7 +911,7 @@ temp_gradient_invoker (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -950,10 +950,10 @@ gen_temp_plugin_name (void)
 
   return_vals = gimp_run_procedure ("gimp_temp_PDB_name",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   result = "temp_name_gen_failed";
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     result = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -975,15 +975,15 @@ gimp_interactive_selection_brush (gchar             *dialogname,
 {
   static GimpParamDef args[] =
   {
-    { PARAM_STRING,    "str",           "String" },
-    { PARAM_FLOAT,     "opacity",       "Opacity" },
-    { PARAM_INT32,     "spacing",       "Spacing" },
-    { PARAM_INT32,     "paint mode",    "Paint mode" },
-    { PARAM_INT32,     "mask width",    "Brush width" },
-    { PARAM_INT32,     "mask height"    "Brush heigth" },
-    { PARAM_INT32,     "mask len",      "Length of brush mask data" },
-    { PARAM_INT8ARRAY, "mask data",     "The brush mask data" },
-    { PARAM_INT32,     "dialog status", "Registers if the dialog was closing "
+    { GIMP_PDB_STRING,    "str",           "String" },
+    { GIMP_PDB_FLOAT,     "opacity",       "Opacity" },
+    { GIMP_PDB_INT32,     "spacing",       "Spacing" },
+    { GIMP_PDB_INT32,     "paint mode",    "Paint mode" },
+    { GIMP_PDB_INT32,     "mask width",    "Brush width" },
+    { GIMP_PDB_INT32,     "mask height"    "Brush heigth" },
+    { GIMP_PDB_INT32,     "mask len",      "Length of brush mask data" },
+    { GIMP_PDB_INT8ARRAY, "mask data",     "The brush mask data" },
+    { GIMP_PDB_INT32,     "dialog status", "Registers if the dialog was closing "
                                         "[0 = No, 1 = Yes]" },
   };
   static GimpParamDef *return_vals = NULL;
@@ -1004,7 +1004,7 @@ gimp_interactive_selection_brush (gchar             *dialogname,
 			  "1997",
 			  NULL,
 			  "RGB*, GRAY*",
-			  PROC_TEMPORARY,
+			  GIMP_TEMPORARY,
 			  nargs, nreturn_vals,
 			  args, return_vals,
 			  temp_brush_invoker);
@@ -1012,15 +1012,15 @@ gimp_interactive_selection_brush (gchar             *dialogname,
   pdbreturn_vals =
     gimp_run_procedure ("gimp_brushes_popup",
 			&bnreturn_vals,
-			PARAM_STRING, pdbname,
-			PARAM_STRING, dialogname,
-			PARAM_STRING, brush_name,
-			PARAM_FLOAT,  opacity,
-			PARAM_INT32,  spacing,
-			PARAM_INT32,  paint_mode,
-			PARAM_END);
+			GIMP_PDB_STRING, pdbname,
+			GIMP_PDB_STRING, dialogname,
+			GIMP_PDB_STRING, brush_name,
+			GIMP_PDB_FLOAT,  opacity,
+			GIMP_PDB_INT32,  spacing,
+			GIMP_PDB_INT32,  paint_mode,
+			GIMP_PDB_END);
 
-/*   if (pdbreturn_vals[0].data.d_status != STATUS_SUCCESS) */
+/*   if (pdbreturn_vals[0].data.d_status != GIMP_PDB_SUCCESS) */
 /*     { */
 /*       printf("ret failed = 0x%x\n",bnreturn_vals); */
 /*     } */
@@ -1053,13 +1053,13 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
 {
   static GimpParamDef args[] =
   {
-    { PARAM_STRING,   "str",           "String" },
-    { PARAM_INT32,    "mask width",    "Pattern width" },
-    { PARAM_INT32,    "mask height",   "Pattern heigth" },
-    { PARAM_INT32,    "mask bpp",      "Pattern bytes per pixel" },
-    { PARAM_INT32,    "mask len",      "Length of pattern mask data" },
-    { PARAM_INT8ARRAY,"mask data",     "The pattern mask data" },
-    { PARAM_INT32,    "dialog status", "Registers if the dialog was closing "
+    { GIMP_PDB_STRING,   "str",           "String" },
+    { GIMP_PDB_INT32,    "mask width",    "Pattern width" },
+    { GIMP_PDB_INT32,    "mask height",   "Pattern heigth" },
+    { GIMP_PDB_INT32,    "mask bpp",      "Pattern bytes per pixel" },
+    { GIMP_PDB_INT32,    "mask len",      "Length of pattern mask data" },
+    { GIMP_PDB_INT8ARRAY,"mask data",     "The pattern mask data" },
+    { GIMP_PDB_INT32,    "dialog status", "Registers if the dialog was closing "
                                        "[0 = No, 1 = Yes]" },
   };
   static GimpParamDef *return_vals = NULL;
@@ -1080,7 +1080,7 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
 			  "1997",
 			  NULL,
 			  "RGB*, GRAY*",
-			  PROC_TEMPORARY,
+			  GIMP_TEMPORARY,
 			  nargs, nreturn_vals,
 			  args, return_vals,
 			  temp_pattern_invoker);
@@ -1088,10 +1088,10 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
   pdbreturn_vals =
     gimp_run_procedure("gimp_patterns_popup",
 		       &bnreturn_vals,
-		       PARAM_STRING,pdbname,
-		       PARAM_STRING,dialogname,
-		       PARAM_STRING,pattern_name,/*name*/
-		       PARAM_END);
+		       GIMP_PDB_STRING,pdbname,
+		       GIMP_PDB_STRING,dialogname,
+		       GIMP_PDB_STRING,pattern_name,/*name*/
+		       GIMP_PDB_END);
 
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
 
@@ -1118,10 +1118,10 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
 {
   static GimpParamDef args[] =
   {
-    { PARAM_STRING,    "str",           "String" },
-    { PARAM_INT32,     "grad width",    "Gradient width" },
-    { PARAM_FLOATARRAY,"grad data",     "The gradient mask data" },
-    { PARAM_INT32,     "dialog status", "Registers if the dialog was closing "
+    { GIMP_PDB_STRING,    "str",           "String" },
+    { GIMP_PDB_INT32,     "grad width",    "Gradient width" },
+    { GIMP_PDB_FLOATARRAY,"grad data",     "The gradient mask data" },
+    { GIMP_PDB_INT32,     "dialog status", "Registers if the dialog was closing "
                                         "[0 = No, 1 = Yes]" },
   };
   static GimpParamDef *return_vals = NULL;
@@ -1142,7 +1142,7 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
 			  "1997",
 			  NULL,
 			  "RGB*, GRAY*",
-			  PROC_TEMPORARY,
+			  GIMP_TEMPORARY,
 			  nargs, nreturn_vals,
 			  args, return_vals,
 			  temp_gradient_invoker);
@@ -1150,11 +1150,11 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
   pdbreturn_vals =
     gimp_run_procedure ("gimp_gradients_popup",
 			&bnreturn_vals,
-			PARAM_STRING, pdbname,
-			PARAM_STRING, dialogname,
-			PARAM_STRING, gradient_name, /*name*/
-			PARAM_INT32,  sample_sz,     /* size of sample to be returned */ 
-			PARAM_END);
+			GIMP_PDB_STRING, pdbname,
+			GIMP_PDB_STRING, dialogname,
+			GIMP_PDB_STRING, gradient_name, /*name*/
+			GIMP_PDB_INT32,  sample_sz,     /* size of sample to be returned */ 
+			GIMP_PDB_END);
 
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
 

@@ -26,18 +26,18 @@
 gchar **
 gimp_gradients_get_list (gint *num_gradients)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar **gradient_names = NULL;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_list",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   *num_gradients = 0;
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_gradients = return_vals[1].data.d_int32;
       gradient_names = g_new (gchar *, *num_gradients);
@@ -53,15 +53,15 @@ gimp_gradients_get_list (gint *num_gradients)
 gchar *
 gimp_gradients_get_active (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_active",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -72,13 +72,13 @@ gimp_gradients_get_active (void)
 void
 gimp_gradients_set_active (gchar *name)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gradients_set_active",
 				    &nreturn_vals,
-				    PARAM_STRING, name,
-				    PARAM_END);
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -86,17 +86,17 @@ gimp_gradients_set_active (gchar *name)
 gdouble *
 gimp_gradients_sample_uniform (gint num_samples)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gdouble *color_samples = NULL;
   gint num_color_samples;
 
   return_vals = gimp_run_procedure ("gimp_gradients_sample_uniform",
 				    &nreturn_vals,
-				    PARAM_INT32, num_samples,
-				    PARAM_END);
+				    GIMP_PDB_INT32, num_samples,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       num_color_samples = return_vals[1].data.d_int32;
       color_samples = g_new (gdouble, num_color_samples);
@@ -113,18 +113,18 @@ gdouble *
 gimp_gradients_sample_custom (gint     num_samples,
 			      gdouble *positions)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gdouble *color_samples = NULL;
   gint num_color_samples;
 
   return_vals = gimp_run_procedure ("gimp_gradients_sample_custom",
 				    &nreturn_vals,
-				    PARAM_INT32, num_samples,
-				    PARAM_FLOATARRAY, positions,
-				    PARAM_END);
+				    GIMP_PDB_INT32, num_samples,
+				    GIMP_PDB_FLOATARRAY, positions,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       num_color_samples = return_vals[1].data.d_int32;
       color_samples = g_new (gdouble, num_color_samples);

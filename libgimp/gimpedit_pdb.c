@@ -26,13 +26,13 @@
 void
 gimp_edit_cut (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_edit_cut",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -40,13 +40,13 @@ gimp_edit_cut (gint32 drawable_ID)
 void
 gimp_edit_copy (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_edit_copy",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -55,17 +55,17 @@ gint32
 gimp_edit_paste (gint32   drawable_ID,
 		 gboolean paste_into)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 floating_sel_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_edit_paste",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, paste_into,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, paste_into,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     floating_sel_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -76,13 +76,13 @@ gimp_edit_paste (gint32   drawable_ID,
 void
 gimp_edit_clear (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_edit_clear",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -91,14 +91,14 @@ void
 gimp_edit_fill (gint32       drawable_ID,
 		GimpFillType fill_type)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_edit_fill",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, fill_type,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, fill_type,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -106,13 +106,13 @@ gimp_edit_fill (gint32       drawable_ID,
 void
 gimp_edit_stroke (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_edit_stroke",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

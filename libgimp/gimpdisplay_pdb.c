@@ -26,16 +26,16 @@
 gint32
 gimp_display_new (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 display_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_display_new",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     display_ID = return_vals[1].data.d_display;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -46,13 +46,13 @@ gimp_display_new (gint32 image_ID)
 void
 gimp_display_delete (gint32 display_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_display_delete",
 				    &nreturn_vals,
-				    PARAM_DISPLAY, display_ID,
-				    PARAM_END);
+				    GIMP_PDB_DISPLAY, display_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -60,12 +60,12 @@ gimp_display_delete (gint32 display_ID)
 void
 gimp_displays_flush (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_displays_flush",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

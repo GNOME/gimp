@@ -29,16 +29,16 @@ gimp_airbrush (gint32   drawable_ID,
 	       gint     num_strokes,
 	       gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_airbrush",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, pressure,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, pressure,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -48,15 +48,15 @@ gimp_airbrush_default (gint32   drawable_ID,
 		       gint     num_strokes,
 		       gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_airbrush_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -77,26 +77,26 @@ gimp_blend (gint32               drawable_ID,
 	    gdouble              x2,
 	    gdouble              y2)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_blend",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, blend_mode,
-				    PARAM_INT32, paint_mode,
-				    PARAM_INT32, gradient_type,
-				    PARAM_FLOAT, opacity,
-				    PARAM_FLOAT, offset,
-				    PARAM_INT32, repeat,
-				    PARAM_INT32, supersample,
-				    PARAM_INT32, max_depth,
-				    PARAM_FLOAT, threshold,
-				    PARAM_FLOAT, x1,
-				    PARAM_FLOAT, y1,
-				    PARAM_FLOAT, x2,
-				    PARAM_FLOAT, y2,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, blend_mode,
+				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_INT32, gradient_type,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_FLOAT, offset,
+				    GIMP_PDB_INT32, repeat,
+				    GIMP_PDB_INT32, supersample,
+				    GIMP_PDB_INT32, max_depth,
+				    GIMP_PDB_FLOAT, threshold,
+				    GIMP_PDB_FLOAT, x1,
+				    GIMP_PDB_FLOAT, y1,
+				    GIMP_PDB_FLOAT, x2,
+				    GIMP_PDB_FLOAT, y2,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -111,20 +111,20 @@ gimp_bucket_fill (gint32               drawable_ID,
 		  gdouble              x,
 		  gdouble              y)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_bucket_fill",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, fill_mode,
-				    PARAM_INT32, paint_mode,
-				    PARAM_FLOAT, opacity,
-				    PARAM_FLOAT, threshold,
-				    PARAM_INT32, sample_merged,
-				    PARAM_FLOAT, x,
-				    PARAM_FLOAT, y,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, fill_mode,
+				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_FLOAT, threshold,
+				    GIMP_PDB_INT32, sample_merged,
+				    GIMP_PDB_FLOAT, x,
+				    GIMP_PDB_FLOAT, y,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -141,7 +141,7 @@ gimp_by_color_select (gint32         drawable_ID,
 		      gdouble        feather_radius,
 		      gboolean       sample_merged)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   guchar color[3];
 
@@ -151,15 +151,15 @@ gimp_by_color_select (gint32         drawable_ID,
 
   return_vals = gimp_run_procedure ("gimp_by_color_select",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_COLOR, color,
-				    PARAM_INT32, threshold,
-				    PARAM_INT32, operation,
-				    PARAM_INT32, antialias,
-				    PARAM_INT32, feather,
-				    PARAM_FLOAT, feather_radius,
-				    PARAM_INT32, sample_merged,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_COLOR, color,
+				    GIMP_PDB_INT32, threshold,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, antialias,
+				    GIMP_PDB_INT32, feather,
+				    GIMP_PDB_FLOAT, feather_radius,
+				    GIMP_PDB_INT32, sample_merged,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -173,19 +173,19 @@ gimp_clone (gint32         drawable_ID,
 	    gint           num_strokes,
 	    gdouble       *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_clone",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_DRAWABLE, src_drawable_ID,
-				    PARAM_INT32, clone_type,
-				    PARAM_FLOAT, src_x,
-				    PARAM_FLOAT, src_y,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_DRAWABLE, src_drawable_ID,
+				    GIMP_PDB_INT32, clone_type,
+				    GIMP_PDB_FLOAT, src_x,
+				    GIMP_PDB_FLOAT, src_y,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -195,15 +195,15 @@ gimp_clone_default (gint32   drawable_ID,
 		    gint     num_strokes,
 		    gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_clone_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -221,22 +221,22 @@ gimp_color_picker (gint32    image_ID,
 		   guchar   *green,
 		   guchar   *blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_color_picker",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, x,
-				    PARAM_FLOAT, y,
-				    PARAM_INT32, sample_merged,
-				    PARAM_INT32, sample_average,
-				    PARAM_FLOAT, average_radius,
-				    PARAM_INT32, save_color,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, x,
+				    GIMP_PDB_FLOAT, y,
+				    GIMP_PDB_INT32, sample_merged,
+				    GIMP_PDB_INT32, sample_average,
+				    GIMP_PDB_FLOAT, average_radius,
+				    GIMP_PDB_INT32, save_color,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *red = return_vals[1].data.d_color.red;
       *green = return_vals[1].data.d_color.green;
@@ -253,17 +253,17 @@ gimp_convolve (gint32            drawable_ID,
 	       gint              num_strokes,
 	       gdouble          *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convolve",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, pressure,
-				    PARAM_INT32, convolve_type,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, pressure,
+				    GIMP_PDB_INT32, convolve_type,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -273,15 +273,15 @@ gimp_convolve_default (gint32   drawable_ID,
 		       gint     num_strokes,
 		       gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convolve_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -293,17 +293,17 @@ gimp_crop (gint32 image_ID,
 	   gint   offx,
 	   gint   offy)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_crop",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, new_width,
-				    PARAM_INT32, new_height,
-				    PARAM_INT32, offx,
-				    PARAM_INT32, offy,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, new_width,
+				    GIMP_PDB_INT32, new_height,
+				    GIMP_PDB_INT32, offx,
+				    GIMP_PDB_INT32, offy,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -316,18 +316,18 @@ gimp_dodgeburn (gint32             drawable_ID,
 		gint               num_strokes,
 		gdouble           *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_dodgeburn",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, exposure,
-				    PARAM_INT32, dodgeburn_type,
-				    PARAM_INT32, dodgeburn_mode,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, exposure,
+				    GIMP_PDB_INT32, dodgeburn_type,
+				    GIMP_PDB_INT32, dodgeburn_mode,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -337,15 +337,15 @@ gimp_dodgeburn_default (gint32   drawable_ID,
 			gint     num_strokes,
 			gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_dodgeburn_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -361,21 +361,21 @@ gimp_ellipse_select (gint32         image_ID,
 		     gboolean       feather,
 		     gdouble        feather_radius)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_ellipse_select",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_FLOAT, x,
-				    PARAM_FLOAT, y,
-				    PARAM_FLOAT, width,
-				    PARAM_FLOAT, height,
-				    PARAM_INT32, operation,
-				    PARAM_INT32, antialias,
-				    PARAM_INT32, feather,
-				    PARAM_FLOAT, feather_radius,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_FLOAT, x,
+				    GIMP_PDB_FLOAT, y,
+				    GIMP_PDB_FLOAT, width,
+				    GIMP_PDB_FLOAT, height,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, antialias,
+				    GIMP_PDB_INT32, feather,
+				    GIMP_PDB_FLOAT, feather_radius,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -387,17 +387,17 @@ gimp_eraser (gint32                    drawable_ID,
 	     GimpBrushApplicationMode  hardness,
 	     GimpPaintApplicationMode  method)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_eraser",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_INT32, hardness,
-				    PARAM_INT32, method,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_INT32, hardness,
+				    GIMP_PDB_INT32, method,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -407,15 +407,15 @@ gimp_eraser_default (gint32   drawable_ID,
 		     gint     num_strokes,
 		     gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_eraser_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -424,17 +424,17 @@ gint32
 gimp_flip (gint32              drawable_ID,
 	   GimpOrientationType flip_type)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_flip",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, flip_type,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, flip_type,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -451,19 +451,19 @@ gimp_free_select (gint32          image_ID,
 		  gboolean        feather,
 		  gdouble         feather_radius)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_free_select",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, num_segs,
-				    PARAM_FLOATARRAY, segs,
-				    PARAM_INT32, operation,
-				    PARAM_INT32, antialias,
-				    PARAM_INT32, feather,
-				    PARAM_FLOAT, feather_radius,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, num_segs,
+				    GIMP_PDB_FLOATARRAY, segs,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, antialias,
+				    GIMP_PDB_INT32, feather,
+				    GIMP_PDB_FLOAT, feather_radius,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -479,21 +479,21 @@ gimp_fuzzy_select (gint32         drawable_ID,
 		   gdouble        feather_radius,
 		   gboolean       sample_merged)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_fuzzy_select",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, x,
-				    PARAM_FLOAT, y,
-				    PARAM_INT32, threshold,
-				    PARAM_INT32, operation,
-				    PARAM_INT32, antialias,
-				    PARAM_INT32, feather,
-				    PARAM_FLOAT, feather_radius,
-				    PARAM_INT32, sample_merged,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, x,
+				    GIMP_PDB_FLOAT, y,
+				    GIMP_PDB_INT32, threshold,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, antialias,
+				    GIMP_PDB_INT32, feather,
+				    GIMP_PDB_FLOAT, feather_radius,
+				    GIMP_PDB_INT32, sample_merged,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -506,18 +506,18 @@ gimp_paintbrush (gint32                    drawable_ID,
 		 GimpPaintApplicationMode  method,
 		 gdouble                   gradient_length)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_paintbrush",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, fade_out,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_INT32, method,
-				    PARAM_FLOAT, gradient_length,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, fade_out,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_INT32, method,
+				    GIMP_PDB_FLOAT, gradient_length,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -527,15 +527,15 @@ gimp_paintbrush_default (gint32   drawable_ID,
 			 gint     num_strokes,
 			 gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_paintbrush_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -545,15 +545,15 @@ gimp_pencil (gint32   drawable_ID,
 	     gint     num_strokes,
 	     gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_pencil",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -570,25 +570,25 @@ gimp_perspective (gint32   drawable_ID,
 		  gdouble  x3,
 		  gdouble  y3)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_perspective",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, interpolation,
-				    PARAM_FLOAT, x0,
-				    PARAM_FLOAT, y0,
-				    PARAM_FLOAT, x1,
-				    PARAM_FLOAT, y1,
-				    PARAM_FLOAT, x2,
-				    PARAM_FLOAT, y2,
-				    PARAM_FLOAT, x3,
-				    PARAM_FLOAT, y3,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_FLOAT, x1,
+				    GIMP_PDB_FLOAT, y1,
+				    GIMP_PDB_FLOAT, x2,
+				    GIMP_PDB_FLOAT, y2,
+				    GIMP_PDB_FLOAT, x3,
+				    GIMP_PDB_FLOAT, y3,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -606,20 +606,20 @@ gimp_rect_select (gint32         image_ID,
 		  gboolean       feather,
 		  gdouble        feather_radius)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_rect_select",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_FLOAT, x,
-				    PARAM_FLOAT, y,
-				    PARAM_FLOAT, width,
-				    PARAM_FLOAT, height,
-				    PARAM_INT32, operation,
-				    PARAM_INT32, feather,
-				    PARAM_FLOAT, feather_radius,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_FLOAT, x,
+				    GIMP_PDB_FLOAT, y,
+				    GIMP_PDB_FLOAT, width,
+				    GIMP_PDB_FLOAT, height,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, feather,
+				    GIMP_PDB_FLOAT, feather_radius,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -629,18 +629,18 @@ gimp_rotate (gint32   drawable_ID,
 	     gboolean interpolation,
 	     gdouble  angle)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_rotate",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, interpolation,
-				    PARAM_FLOAT, angle,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_FLOAT, angle,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -656,21 +656,21 @@ gimp_scale (gint32   drawable_ID,
 	    gdouble  x1,
 	    gdouble  y1)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_scale",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, interpolation,
-				    PARAM_FLOAT, x0,
-				    PARAM_FLOAT, y0,
-				    PARAM_FLOAT, x1,
-				    PARAM_FLOAT, y1,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_FLOAT, x0,
+				    GIMP_PDB_FLOAT, y0,
+				    GIMP_PDB_FLOAT, x1,
+				    GIMP_PDB_FLOAT, y1,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -684,19 +684,19 @@ gimp_shear (gint32              drawable_ID,
 	    GimpOrientationType shear_type,
 	    gdouble             magnitude)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_shear",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, interpolation,
-				    PARAM_INT32, shear_type,
-				    PARAM_FLOAT, magnitude,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_INT32, shear_type,
+				    GIMP_PDB_FLOAT, magnitude,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -710,16 +710,16 @@ gimp_smudge (gint32   drawable_ID,
 	     gint     num_strokes,
 	     gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_smudge",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_FLOAT, pressure,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, pressure,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -729,15 +729,15 @@ gimp_smudge_default (gint32   drawable_ID,
 		     gint     num_strokes,
 		     gdouble *strokes)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_smudge_default",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, num_strokes,
-				    PARAM_FLOATARRAY, strokes,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, num_strokes,
+				    GIMP_PDB_FLOATARRAY, strokes,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -753,24 +753,24 @@ gimp_transform_2d (gint32   drawable_ID,
 		   gdouble  dest_x,
 		   gdouble  dest_y)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_transform_2d",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, interpolation,
-				    PARAM_FLOAT, source_x,
-				    PARAM_FLOAT, source_y,
-				    PARAM_FLOAT, scale_x,
-				    PARAM_FLOAT, scale_y,
-				    PARAM_FLOAT, angle,
-				    PARAM_FLOAT, dest_x,
-				    PARAM_FLOAT, dest_y,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, interpolation,
+				    GIMP_PDB_FLOAT, source_x,
+				    GIMP_PDB_FLOAT, source_y,
+				    GIMP_PDB_FLOAT, scale_x,
+				    GIMP_PDB_FLOAT, scale_y,
+				    GIMP_PDB_FLOAT, angle,
+				    GIMP_PDB_FLOAT, dest_x,
+				    GIMP_PDB_FLOAT, dest_y,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     ret_drawable_ID = return_vals[1].data.d_drawable;
 
   gimp_destroy_params (return_vals, nreturn_vals);

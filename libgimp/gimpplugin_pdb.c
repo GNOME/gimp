@@ -26,14 +26,14 @@
 void
 gimp_progress_init (gchar *message)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_progress_init",
 				    &nreturn_vals,
-				    PARAM_STRING, message,
-				    PARAM_INT32, gimp_default_display (),
-				    PARAM_END);
+				    GIMP_PDB_STRING, message,
+				    GIMP_PDB_INT32, gimp_default_display (),
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -41,13 +41,13 @@ gimp_progress_init (gchar *message)
 void
 gimp_progress_update (gdouble percentage)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_progress_update",
 				    &nreturn_vals,
-				    PARAM_FLOAT, percentage,
-				    PARAM_END);
+				    GIMP_PDB_FLOAT, percentage,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -55,15 +55,15 @@ gimp_progress_update (gdouble percentage)
 gchar *
 gimp_temp_PDB_name (void)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *temp_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_temp_PDB_name",
 				    &nreturn_vals,
-				    PARAM_END);
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     temp_name = g_strdup (return_vals[1].data.d_string);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -75,14 +75,14 @@ void
 gimp_plugin_domain_register (gchar *domain_name,
 			     gchar *domain_path)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_plugin_domain_register",
 				    &nreturn_vals,
-				    PARAM_STRING, domain_name,
-				    PARAM_STRING, domain_path,
-				    PARAM_END);
+				    GIMP_PDB_STRING, domain_name,
+				    GIMP_PDB_STRING, domain_path,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -90,13 +90,13 @@ gimp_plugin_domain_register (gchar *domain_name,
 void
 gimp_plugin_help_register (gchar *help_path)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_plugin_help_register",
 				    &nreturn_vals,
-				    PARAM_STRING, help_path,
-				    PARAM_END);
+				    GIMP_PDB_STRING, help_path,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

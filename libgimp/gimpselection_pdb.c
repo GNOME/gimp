@@ -31,13 +31,13 @@ gimp_selection_bounds (gint32    image_ID,
 		       gint     *x2,
 		       gint     *y2)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_selection_bounds",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   *non_empty = FALSE;
   *x1 = 0;
@@ -45,7 +45,7 @@ gimp_selection_bounds (gint32    image_ID,
   *x2 = 0;
   *y2 = 0;
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *non_empty = return_vals[1].data.d_int32;
       *x1 = return_vals[2].data.d_int32;
@@ -60,16 +60,16 @@ gimp_selection_bounds (gint32    image_ID,
 gboolean
 gimp_selection_is_empty (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gboolean is_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_selection_is_empty",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     is_empty = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -82,18 +82,18 @@ _gimp_selection_float (gint32 drawable_ID,
 		       gint   offx,
 		       gint   offy)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 layer_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_selection_float",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, offx,
-				    PARAM_INT32, offy,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, offx,
+				    GIMP_PDB_INT32, offy,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     layer_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -104,13 +104,13 @@ _gimp_selection_float (gint32 drawable_ID,
 void
 gimp_selection_none (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_selection_none",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

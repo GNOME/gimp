@@ -1,6 +1,12 @@
 2000-08-03  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 	
+	* libgimp/*_pdb.c
+	* libgimp/gimpmenu.c: removed COMPAT_CRUFT
+
+2000-08-03  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+	
 	* libgimp/gimp.c
 	* libgimp/gimpbrushmenu.c
 	* libgimp/gimpprotocol.c: removed COMPAT_CRUFT

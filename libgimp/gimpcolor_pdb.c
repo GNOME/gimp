@@ -28,15 +28,15 @@ gimp_brightness_contrast (gint32 drawable_ID,
 			  gint   brightness,
 			  gint   contrast)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brightness_contrast",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, brightness,
-				    PARAM_INT32, contrast,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, brightness,
+				    GIMP_PDB_INT32, contrast,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -50,19 +50,19 @@ gimp_levels (gint32             drawable_ID,
 	     gint               low_output,
 	     gint               high_output)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_levels",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, channel,
-				    PARAM_INT32, low_input,
-				    PARAM_INT32, high_input,
-				    PARAM_FLOAT, gamma,
-				    PARAM_INT32, low_output,
-				    PARAM_INT32, high_output,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, channel,
+				    GIMP_PDB_INT32, low_input,
+				    GIMP_PDB_INT32, high_input,
+				    GIMP_PDB_FLOAT, gamma,
+				    GIMP_PDB_INT32, low_output,
+				    GIMP_PDB_INT32, high_output,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -71,14 +71,14 @@ void
 gimp_posterize (gint32 drawable_ID,
 		gint   levels)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_posterize",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, levels,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, levels,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -86,13 +86,13 @@ gimp_posterize (gint32 drawable_ID,
 void
 gimp_desaturate (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_desaturate",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -101,14 +101,14 @@ void
 gimp_equalize (gint32   drawable_ID,
 	       gboolean mask_only)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_equalize",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, mask_only,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, mask_only,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -116,13 +116,13 @@ gimp_equalize (gint32   drawable_ID,
 void
 gimp_invert (gint32 drawable_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_invert",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -133,16 +133,16 @@ gimp_curves_spline (gint32              drawable_ID,
 		    gint                num_points,
 		    guint8             *control_pts)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_curves_spline",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, channel,
-				    PARAM_INT32, num_points,
-				    PARAM_INT8ARRAY, control_pts,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, channel,
+				    GIMP_PDB_INT32, num_points,
+				    GIMP_PDB_INT8ARRAY, control_pts,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -153,16 +153,16 @@ gimp_curves_explicit (gint32              drawable_ID,
 		      gint                num_bytes,
 		      guint8             *curve)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_curves_explicit",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, channel,
-				    PARAM_INT32, num_bytes,
-				    PARAM_INT8ARRAY, curve,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, channel,
+				    GIMP_PDB_INT32, num_bytes,
+				    GIMP_PDB_INT8ARRAY, curve,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -175,18 +175,18 @@ gimp_color_balance (gint32           drawable_ID,
 		    gdouble          magenta_green,
 		    gdouble          yellow_blue)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_color_balance",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, transfer_mode,
-				    PARAM_INT32, preserve_lum,
-				    PARAM_FLOAT, cyan_red,
-				    PARAM_FLOAT, magenta_green,
-				    PARAM_FLOAT, yellow_blue,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, transfer_mode,
+				    GIMP_PDB_INT32, preserve_lum,
+				    GIMP_PDB_FLOAT, cyan_red,
+				    GIMP_PDB_FLOAT, magenta_green,
+				    GIMP_PDB_FLOAT, yellow_blue,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -203,16 +203,16 @@ gimp_histogram (gint32              drawable_ID,
 		gdouble            *count,
 		gdouble            *percentile)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_histogram",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, channel,
-				    PARAM_INT32, start_range,
-				    PARAM_INT32, end_range,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, channel,
+				    GIMP_PDB_INT32, start_range,
+				    GIMP_PDB_INT32, end_range,
+				    GIMP_PDB_END);
 
   *mean = 0.0;
   *std_dev = 0.0;
@@ -221,7 +221,7 @@ gimp_histogram (gint32              drawable_ID,
   *count = 0.0;
   *percentile = 0.0;
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *mean = return_vals[1].data.d_float;
       *std_dev = return_vals[2].data.d_float;
@@ -241,17 +241,17 @@ gimp_hue_saturation (gint32       drawable_ID,
 		     gdouble      lightness,
 		     gdouble      saturation)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_hue_saturation",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, hue_range,
-				    PARAM_FLOAT, hue_offset,
-				    PARAM_FLOAT, lightness,
-				    PARAM_FLOAT, saturation,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, hue_range,
+				    GIMP_PDB_FLOAT, hue_offset,
+				    GIMP_PDB_FLOAT, lightness,
+				    GIMP_PDB_FLOAT, saturation,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -261,15 +261,15 @@ gimp_threshold (gint32 drawable_ID,
 		gint   low_threshold,
 		gint   high_threshold)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_threshold",
 				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_INT32, low_threshold,
-				    PARAM_INT32, high_threshold,
-				    PARAM_END);
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, low_threshold,
+				    GIMP_PDB_INT32, high_threshold,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

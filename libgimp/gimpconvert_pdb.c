@@ -26,13 +26,13 @@
 void
 gimp_convert_rgb (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_rgb",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -40,13 +40,13 @@ gimp_convert_rgb (gint32 image_ID)
 void
 gimp_convert_grayscale (gint32 image_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_grayscale",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -60,19 +60,19 @@ gimp_convert_indexed (gint32                  image_ID,
 		      gboolean                remove_unused,
 		      gchar                  *palette)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_convert_indexed",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, dither_type,
-				    PARAM_INT32, palette_type,
-				    PARAM_INT32, num_cols,
-				    PARAM_INT32, alpha_dither,
-				    PARAM_INT32, remove_unused,
-				    PARAM_STRING, palette,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, dither_type,
+				    GIMP_PDB_INT32, palette_type,
+				    GIMP_PDB_INT32, num_cols,
+				    GIMP_PDB_INT32, alpha_dither,
+				    GIMP_PDB_INT32, remove_unused,
+				    GIMP_PDB_STRING, palette,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

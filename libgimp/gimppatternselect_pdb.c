@@ -28,15 +28,15 @@ gimp_patterns_popup (gchar *pattern_callback,
 		     gchar *popup_title,
 		     gchar *initial_pattern)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_patterns_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, pattern_callback,
-				    PARAM_STRING, popup_title,
-				    PARAM_STRING, initial_pattern,
-				    PARAM_END);
+				    GIMP_PDB_STRING, pattern_callback,
+				    GIMP_PDB_STRING, popup_title,
+				    GIMP_PDB_STRING, initial_pattern,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -44,13 +44,13 @@ gimp_patterns_popup (gchar *pattern_callback,
 void
 gimp_patterns_close_popup (gchar *pattern_callback)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_patterns_close_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, pattern_callback,
-				    PARAM_END);
+				    GIMP_PDB_STRING, pattern_callback,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -59,14 +59,14 @@ void
 gimp_patterns_set_popup (gchar *pattern_callback,
 			 gchar *pattern_name)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_patterns_set_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, pattern_callback,
-				    PARAM_STRING, pattern_name,
-				    PARAM_END);
+				    GIMP_PDB_STRING, pattern_callback,
+				    GIMP_PDB_STRING, pattern_name,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

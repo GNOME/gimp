@@ -31,20 +31,20 @@ gimp_brushes_get_brush_data (gchar                 *brush_name,
 			     gint                  *mask_data_size,
 			     guint8               **mask_data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush_data",
 				    &nreturn_vals,
-				    PARAM_STRING, brush_name,
-				    PARAM_END);
+				    GIMP_PDB_STRING, brush_name,
+				    GIMP_PDB_END);
 
    brush_name = NULL;
    *width = 0;
    *height = 0;
    *mask_data_size = 0;
    *mask_data = NULL;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       brush_name = g_strdup (return_vals[1].data.d_string);
       *opacity = return_vals[2].data.d_float;

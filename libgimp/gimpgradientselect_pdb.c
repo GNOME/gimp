@@ -29,16 +29,16 @@ gimp_gradients_popup (gchar *gradients_callback,
 		      gchar *initial_gradient,
 		      gint   sample_size)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gradients_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, gradients_callback,
-				    PARAM_STRING, popup_title,
-				    PARAM_STRING, initial_gradient,
-				    PARAM_INT32, sample_size,
-				    PARAM_END);
+				    GIMP_PDB_STRING, gradients_callback,
+				    GIMP_PDB_STRING, popup_title,
+				    GIMP_PDB_STRING, initial_gradient,
+				    GIMP_PDB_INT32, sample_size,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -46,13 +46,13 @@ gimp_gradients_popup (gchar *gradients_callback,
 void
 gimp_gradients_close_popup (gchar *gradients_callback)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gradients_close_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, gradients_callback,
-				    PARAM_END);
+				    GIMP_PDB_STRING, gradients_callback,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -61,14 +61,14 @@ void
 gimp_gradients_set_popup (gchar *gradients_callback,
 			  gchar *gradient_name)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gradients_set_popup",
 				    &nreturn_vals,
-				    PARAM_STRING, gradients_callback,
-				    PARAM_STRING, gradient_name,
-				    PARAM_END);
+				    GIMP_PDB_STRING, gradients_callback,
+				    GIMP_PDB_STRING, gradient_name,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -79,19 +79,19 @@ _gimp_gradients_get_gradient_data (gchar    *name,
 				   gint     *width,
 				   gdouble **grad_data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gchar *ret_name = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
 				    &nreturn_vals,
-				    PARAM_STRING, name,
-				    PARAM_INT32, sample_size,
-				    PARAM_END);
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, sample_size,
+				    GIMP_PDB_END);
 
   *width = 0;
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       ret_name = g_strdup (return_vals[1].data.d_string);
       *width = return_vals[2].data.d_int32;

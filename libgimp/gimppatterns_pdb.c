@@ -31,13 +31,13 @@ gimp_patterns_get_pattern_data (gchar   *name,
 				gint    *mask_data_size,
 				guint8 **mask_data)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
  
   return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
 				    &nreturn_vals,
-				    PARAM_STRING, name,
-				    PARAM_END);
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
 
   name = NULL;
   *width = 0;
@@ -45,7 +45,7 @@ gimp_patterns_get_pattern_data (gchar   *name,
   *mask_bpp = 0;
   *mask_data_size = 0;
   *mask_data = NULL;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       name = g_strdup (return_vals[1].data.d_string);
       *width = return_vals[2].data.d_int32;

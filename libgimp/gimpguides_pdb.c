@@ -27,17 +27,17 @@ gint32
 gimp_image_add_hguide (gint32 image_ID,
 		       gint   yposition)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 guide_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_image_add_hguide",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, yposition,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, yposition,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     guide_ID = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -49,17 +49,17 @@ gint32
 gimp_image_add_vguide (gint32 image_ID,
 		       gint   xposition)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 guide_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_image_add_vguide",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, xposition,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, xposition,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     guide_ID = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -71,14 +71,14 @@ void
 gimp_image_delete_guide (gint32 image_ID,
 			 gint32 guide_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_delete_guide",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, guide_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, guide_ID,
+				    GIMP_PDB_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
@@ -87,17 +87,17 @@ gint32
 gimp_image_find_next_guide (gint32 image_ID,
 			    gint32 guide_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint32 next_guide_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_image_find_next_guide",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, guide_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, guide_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     next_guide_ID = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -109,17 +109,17 @@ GimpOrientationType
 gimp_image_get_guide_orientation (gint32 image_ID,
 				  gint32 guide_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   GimpOrientationType orientation = GIMP_UNKNOWN;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_orientation",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, guide_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, guide_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     orientation = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -131,17 +131,17 @@ gint
 gimp_image_get_guide_position (gint32 image_ID,
 			       gint32 guide_ID)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint position = -1;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_position",
 				    &nreturn_vals,
-				    PARAM_IMAGE, image_ID,
-				    PARAM_INT32, guide_ID,
-				    PARAM_END);
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, guide_ID,
+				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     position = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
