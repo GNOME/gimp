@@ -183,7 +183,7 @@ gimp_color_bar_expose (GtkWidget      *widget,
           b[2] = src[2];
         }
 
-      for (i = 0; i < height; i++)
+      for (i = 1; i < height; i++)
         memcpy (buf + i * width * 3, buf, width * 3);
 
       break;

@@ -1,3 +1,8 @@
+2004-06-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorbar.c (gimp_color_bar_expose): don't copy
+	the first row onto itself.
+
 2004-06-12  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimptransformtool.c: Make Enter/Return apply the
