@@ -13,7 +13,7 @@ INCLUDES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
-##	libgimpbrushselecttool.la \
+	libgimpbrushselecttool.la \
 @STRIP_END@
 
 EXTRA_LTLIBRARIES =
