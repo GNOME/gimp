@@ -15,27 +15,27 @@ libexec_PROGRAMS = gfig
 gfig_SOURCES = \
 	gfig.c		\
 	gfig.h		\
-	gfig_arc.c	\
-	gfig_arc.h	\
-	gfig_bezier.c	\
-	gfig_bezier.h	\
-	gfig_circle.c	\
-	gfig_circle.h	\
-	gfig_dobject.c	\
-	gfig_dobject.h	\
-	gfig_ellipse.c	\
-	gfig_ellipse.h	\
-	gfig_line.c	\
-	gfig_line.h	\
-	gfig_poly.c	\
-	gfig_poly.h	\
-	gfig_spiral.c	\
-	gfig_spiral.h	\
-	gfig_star.c	\
-	gfig_star.h	\
+	gfig-arc.c	\
+	gfig-arc.h	\
+	gfig-bezier.c	\
+	gfig-bezier.h	\
+	gfig-circle.c	\
+	gfig-circle.h	\
+	gfig-dobject.c	\
+	gfig-dobject.h	\
+	gfig-ellipse.c	\
+	gfig-ellipse.h	\
+	gfig-line.c	\
+	gfig-line.h	\
+	gfig-poly.c	\
+	gfig-poly.h	\
+	gfig-spiral.c	\
+	gfig-spiral.h	\
+	gfig-star.c	\
+	gfig-star.h	\
 	gfig-stock.c	\
 	gfig-stock.h	\
-	pix_data.h
+	pix-data.h
 
 EXTRA_DIST = README
 

@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,14 +34,13 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 #include "gfig.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static gint bezier_closed     = 0; /* Closed curve 0 = false 1 = true */
 static gint bezier_line_frame = 0; /* Show frame = false 1 = true */
-Dobject *tmp_bezier;   /* Neeed when drawing bezier curves */
+Dobject *tmp_bezier;   		   /* Needed when drawing bezier curves */
 
 static void       d_paint_bezier          (Dobject *obj);
 static Dobject  * d_copy_bezier           (Dobject * obj);
@@ -177,24 +178,7 @@ d_bz_line (void)
       x1 = fp_pnt_pnts[i + 2];
       y1 = fp_pnt_pnts[i + 3];
 
-      if (drawing_pic)
-	{
-	  gdk_draw_line (pic_preview->window,
-			 pic_preview->style->black_gc,
-			 adjust_pic_coords (x0, preview_width),
-			 adjust_pic_coords (y0, preview_height),
-			 adjust_pic_coords (x1, preview_width),
-			 adjust_pic_coords (y1, preview_height));
-	}
-      else
-	{
-	  gdk_draw_line (gfig_preview->window,
-			 gfig_gc,
-			 gfig_scale_x (x0),
-			 gfig_scale_y (y0),
-			 gfig_scale_x (x1),
-			 gfig_scale_y (y1));
-	}
+      gfig_draw_line (x0, y0, x1, y1);
     }
 }
 
@@ -364,19 +348,14 @@ d_paint_bezier (Dobject *obj)
 }
 
 static Dobject *
-d_copy_bezier (Dobject * obj)
+d_copy_bezier (Dobject *obj)
 {
   Dobject *np;
-
-  if (!obj)
-    return (NULL);
 
   g_assert (obj->type == BEZIER);
 
   np = d_new_bezier (obj->points->pnt.x, obj->points->pnt.y);
-
   np->points->next = d_copy_dobjpoints (obj->points->next);
-
   np->type_data = obj->type_data;
 
   return np;
@@ -429,8 +408,7 @@ d_update_bezier (GdkPoint *pnt)
       draw_circle (&l_pnt->pnt);
       selvals.opts.showcontrol = 0;
       d_draw_bezier (tmp_bezier);
-      l_pnt->pnt.x = pnt->x;
-      l_pnt->pnt.y = pnt->y;
+      l_pnt->pnt = *pnt;
     }
   else
     {
@@ -452,12 +430,10 @@ d_update_bezier (GdkPoint *pnt)
 void
 d_bezier_start (GdkPoint *pnt, gint shift_down)
 {
-  gint16 x, y;
-  /* First is center point */
   if (!tmp_bezier)
     {
       /* New curve */
-      tmp_bezier = obj_creating = d_new_bezier (x = pnt->x, y = pnt->y);
+      tmp_bezier = obj_creating = d_new_bezier (pnt->x, pnt->y);
     }
 }
 

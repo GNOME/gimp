@@ -22,31 +22,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 #include "gfig.h"
-#include "gfig_arc.h"
-#include "gfig_bezier.h"
-#include "gfig_circle.h"
-#include "gfig_dobject.h"
-#include "gfig_ellipse.h"
-#include "gfig_line.h"
-#include "gfig_poly.h"
-#include "gfig_spiral.h"
-#include "gfig_star.h"
+#include "gfig-arc.h"
+#include "gfig-bezier.h"
+#include "gfig-circle.h"
+#include "gfig-dobject.h"
+#include "gfig-ellipse.h"
+#include "gfig-line.h"
+#include "gfig-poly.h"
+#include "gfig-spiral.h"
+#include "gfig-star.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static Dobject  *operation_obj;
 static GdkPoint *move_all_pnt; /* Point moving all from */
 
-static void     draw_one_obj    (Dobject * obj);
-static void	do_move_obj (Dobject  *obj,
-			     GdkPoint *to_pnt);
+static void     draw_one_obj	(Dobject *obj);
+static void	do_move_obj	(Dobject  *obj,
+				 GdkPoint *to_pnt);
 static void	do_move_all_obj (GdkPoint *to_pnt);
 static void	do_move_obj_pnt (Dobject  *obj,
 				 GdkPoint *to_pnt);
@@ -82,27 +83,26 @@ new_dobjpoint (gint x, gint y)
 }
 
 DobjPoints *
-d_copy_dobjpoints (DobjPoints * pnts)
+d_copy_dobjpoints (DobjPoints *pnts)
 {
   DobjPoints *ret = NULL;
   DobjPoints *head = NULL;
   DobjPoints *newpnt;
-  DobjPoints *pnt2copy = pnts;
+  DobjPoints *pnt2copy;
 
-  while (pnt2copy)
+  for (pnt2copy = pnts; pnt2copy; pnt2copy = pnt2copy->next)
     {
-      newpnt = g_new0 (DobjPoints, 1);
-      newpnt->pnt.x = pnt2copy->pnt.x;
-      newpnt->pnt.y = pnt2copy->pnt.y;
+      newpnt = new_dobjpoint (pnt2copy->pnt.x, pnt2copy->pnt.y);
 
       if (!ret)
-	head = ret = newpnt;
+	{
+	  head = ret = newpnt;
+	}
       else
 	{
 	  head->next = newpnt;
 	  head = newpnt;
 	}
-      pnt2copy = pnt2copy->next;
     }
 
   return ret;
@@ -110,8 +110,8 @@ d_copy_dobjpoints (DobjPoints * pnts)
 
 static DobjPoints *
 get_diffs (Dobject  *obj,
-	   gint16   *xdiff,
-	   gint16   *ydiff,
+	   gint     *xdiff,
+	   gint     *ydiff,
 	   GdkPoint *to_pnt)
 {
   DobjPoints *spnt;
@@ -135,15 +135,15 @@ inside_sqr (GdkPoint *cpnt,
 	    GdkPoint *testpnt)
 {
   /* Return TRUE if testpnt is near cpnt */
-  gint16 x = cpnt->x;
-  gint16 y = cpnt->y;
-  gint16 tx = testpnt->x;
-  gint16 ty = testpnt->y;
+  gint x = cpnt->x;
+  gint y = cpnt->y;
+  gint tx = testpnt->x;
+  gint ty = testpnt->y;
 
   return (abs (x - tx) <= SQ_SIZE && abs (y - ty) < SQ_SIZE);
 }
 
-static gint
+static gboolean
 scan_obj_points (DobjPoints *opnt,
 		 GdkPoint   *pnt)
 {
@@ -172,9 +172,7 @@ get_nearest_objs (GFigObj  *obj,
   if (!obj)
     return NULL;
 
-  all = obj->obj_list;
-
-  while (all)
+  for (all = obj->obj_list; all; all = all->next)
     {
       test_obj = all->obj;
 
@@ -183,7 +181,6 @@ get_nearest_objs (GFigObj  *obj,
 	  {
 	    return test_obj;
 	  }
-      all = all->next;
       count++;
     }
   return NULL;
@@ -254,7 +251,7 @@ object_operation_start (GdkPoint *pnt,
       /* Copy the "operation object" */
       /* Then bung us into "copy/move" mode */
 
-      new_obj = (Dobject *) operation_obj->copyfunc (operation_obj);
+      new_obj = (Dobject*) operation_obj->copyfunc (operation_obj);
       if (new_obj)
 	{
 	  scan_obj_points (new_obj->points, pnt);
@@ -369,8 +366,8 @@ object_operation (GdkPoint *to_pnt,
 
 static void
 update_pnts (Dobject *obj,
-	     gint16   xdiff,
-	     gint16   ydiff)
+	     gint     xdiff,
+	     gint     ydiff)
 {
   DobjPoints *spnt;
 
@@ -401,10 +398,6 @@ remove_obj_from_list (GFigObj *obj,
       if (all->obj == del_obj)
 	{
 	  /* Found the one to delete */
-#ifdef DEBUG
-	  printf ("Found the one to delete\n");
-#endif /* DEBUG */
-
 	  if (prev_all)
 	    prev_all->next = all->next;
 	  else
@@ -435,8 +428,8 @@ do_move_all_obj (GdkPoint *to_pnt)
 {
   /* Move all objects in one go */
   /* Undraw/then draw in new pos */
-  gint16 xdiff = move_all_pnt->x - to_pnt->x;
-  gint16 ydiff = move_all_pnt->y - to_pnt->y;
+  gint xdiff = move_all_pnt->x - to_pnt->x;
+  gint ydiff = move_all_pnt->y - to_pnt->y;
   
   if (xdiff || ydiff)
     {
@@ -476,8 +469,8 @@ do_move_obj (Dobject  *obj,
 {
   /* Move the whole line - undraw the line to start with */
   /* Then draw in new pos */
-  gint16 xdiff = 0;
-  gint16 ydiff = 0;
+  gint xdiff = 0;
+  gint ydiff = 0;
   
   get_diffs (obj, &xdiff, &ydiff, to_pnt);
   
@@ -500,8 +493,8 @@ do_move_obj_pnt (Dobject  *obj,
   /* Move the whole line - undraw the line to start with */
   /* Then draw in new pos */
   DobjPoints *spnt;
-  gint16 xdiff = 0;
-  gint16 ydiff = 0;
+  gint xdiff = 0;
+  gint ydiff = 0;
   
   spnt = get_diffs (obj, &xdiff, &ydiff, to_pnt);
   

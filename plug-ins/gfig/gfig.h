@@ -26,14 +26,14 @@
 #ifndef __GFIG_H__
 #define __GFIG_H__
 
-#include "gfig_dobject.h"
+#include "gfig-dobject.h"
 
 #define MAX_LOAD_LINE    256
 #define SQ_SIZE 8
 
 extern gint line_no;
 extern gint preview_width, preview_height;
-extern gint drawing_pic;
+extern gboolean drawing_pic;
 extern gint need_to_scale;
 extern gint32        gfig_image;
 extern gint32        gfig_drawable;
@@ -180,14 +180,10 @@ gchar *get_line (gchar *buf,
 		 FILE  *from,
 		 gint   init);
 
-gint      	gfig_scale_x    (gint       x);
-gint      	gfig_scale_y    (gint       y);
 void		scale_to_xy	(gdouble *list,
 				 gint     size);
 void		scale_to_original_xy (gdouble *list,
 				      gint     size);
-gint		adjust_pic_coords (gint coord,
-				   gint ratio);
 
 void reverse_pairs_list (gdouble *list,
 			 gint     size);
@@ -205,8 +201,21 @@ void num_sides_dialog (gchar *d_title,
 		       gint  *which_way,
 		       gint   adj_min,
 		       gint   adj_max);
-void       setup_undo              (void);
-void      draw_grid_clear           (void);
-void       	prepend_to_all_obj      (GFigObj *fobj, DAllObjs *nobj);
+void	setup_undo              (void);
+void	draw_grid_clear		(void);
+void	prepend_to_all_obj      (GFigObj *fobj, 
+				 DAllObjs *nobj);
+
+void	gfig_draw_arc		(gint x, 
+				 gint y, 
+				 gint width, 
+				 gint height, 
+				 gint angle1, 
+				 gint angle2);
+
+void	gfig_draw_line		(gint x0, 
+				 gint y0, 
+				 gint x1, 
+				 gint y1);
 
 #endif /* __GFIG_H__ */

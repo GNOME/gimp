@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,13 +34,12 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
+#include "gfig.h"
+#include "gfig-poly.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-#include "gfig.h"
-#include "gfig_poly.h"
-
-static Dobject  * d_new_circle            (gint x, gint y);
+static Dobject *d_new_circle (gint x, gint y);
 
 static void
 d_save_circle (Dobject *obj,
@@ -83,12 +84,20 @@ d_load_circle (FILE *from)
   return NULL;
 }
 
+static gint
+calc_radius (GdkPoint *center, GdkPoint *edge)
+{
+  gint dx = center->x - edge->x;
+  gint dy = center->y - edge->y;
+  return (gint) sqrt (dx * dx + dy * dy);
+}
+
 static void
-d_draw_circle (Dobject * obj)
+d_draw_circle (Dobject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
-  gdouble     radius;
+  gint radius;
 
   center_pnt = obj->points;
 
@@ -102,42 +111,11 @@ d_draw_circle (Dobject * obj)
       g_warning ("Internal error - circle no edge pnt");
     }
 
-  radius = sqrt (((center_pnt->pnt.x - edge_pnt->pnt.x) *
-		  (center_pnt->pnt.x - edge_pnt->pnt.x)) +
-		 ((center_pnt->pnt.y - edge_pnt->pnt.y) *
-		  (center_pnt->pnt.y - edge_pnt->pnt.y)));
-
+  radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
   draw_sqr (&center_pnt->pnt);
   draw_sqr (&edge_pnt->pnt);
 
-  if (drawing_pic)
-    {
-      gdk_draw_arc (pic_preview->window,
-		    pic_preview->style->black_gc,
-		    0,
-		    adjust_pic_coords (center_pnt->pnt.x - radius,
-				       preview_width),
-		    adjust_pic_coords (center_pnt->pnt.y - radius,
-				       preview_height),
-		    adjust_pic_coords (radius * 2,
-				       preview_width),
-		    adjust_pic_coords (radius * 2,
-				       preview_height),
-		    0,
-		    360 * 64);
-    }
-  else
-    {
-      gdk_draw_arc (gfig_preview->window,
-		    gfig_gc,
-		    0,
-		    gfig_scale_x (center_pnt->pnt.x - (gint) RINT (radius)),
-		    gfig_scale_y (center_pnt->pnt.y - (gint) RINT (radius)),
-		    gfig_scale_x ((gint) RINT (radius) * 2),
-		    gfig_scale_y ((gint) RINT (radius) * 2),
-		    0,
-		    360 * 64);
-    }
+  gfig_draw_arc (center_pnt->pnt.x, center_pnt->pnt.y, radius, radius, 0, 360);
 }
 
 static void
@@ -174,10 +152,7 @@ d_paint_circle (Dobject *obj)
       g_error ("Internal error - circle no edge pnt");
     }
 
-  radius = (gint) sqrt (((center_pnt->pnt.x - edge_pnt->pnt.x) *
-			 (center_pnt->pnt.x - edge_pnt->pnt.x)) +
-			((center_pnt->pnt.y - edge_pnt->pnt.y) *
-			 (center_pnt->pnt.y - edge_pnt->pnt.y)));
+  radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
   dpnts[0] = (gdouble) center_pnt->pnt.x - radius;
   dpnts[1] = (gdouble) center_pnt->pnt.y - radius;
@@ -206,18 +181,14 @@ d_paint_circle (Dobject *obj)
   gimp_selection_clear (gfig_image);
 }
 
-static Dobject *
+static Dobject*
 d_copy_circle (Dobject * obj)
 {
   Dobject *nc;
 
-  if (!obj)
-    return NULL;
-
   g_assert (obj->type == CIRCLE);
 
   nc = d_new_circle (obj->points->pnt.x, obj->points->pnt.y);
-
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nc;
@@ -246,7 +217,7 @@ void
 d_update_circle (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *edge_pnt;
-  gdouble radius;
+  gint radius;
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
@@ -258,10 +229,7 @@ d_update_circle (GdkPoint *pnt)
     {
       /* Undraw current */
       draw_circle (&edge_pnt->pnt);
-      radius = sqrt (((center_pnt->pnt.x - edge_pnt->pnt.x) *
-		      (center_pnt->pnt.x - edge_pnt->pnt.x)) +
-		     ((center_pnt->pnt.y - edge_pnt->pnt.y) *
-		      (center_pnt->pnt.y - edge_pnt->pnt.y)));
+      radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
       
       gdk_draw_arc (gfig_preview->window,
 		    gfig_gc,
@@ -277,11 +245,7 @@ d_update_circle (GdkPoint *pnt)
   draw_circle (pnt);
 
   edge_pnt = new_dobjpoint (pnt->x, pnt->y);
-
-  radius = sqrt (((center_pnt->pnt.x - edge_pnt->pnt.x) *
-		  (center_pnt->pnt.x - edge_pnt->pnt.x)) +
-		 ((center_pnt->pnt.y - edge_pnt->pnt.y) *
-		  (center_pnt->pnt.y - edge_pnt->pnt.y)));
+  radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
   gdk_draw_arc (gfig_preview->window,
 		gfig_gc,

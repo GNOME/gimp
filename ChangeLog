@@ -1,3 +1,10 @@
+2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gfig/gfig_*.[ch]: removed
+	* plug-ins/gfig/gfig-*.[ch]: added. Changed all underscores in 
+	filenames to hyphens. More code-cleanup.
+	* plug-ins/gfig/Makefile.am: updated accordingly
+
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
 	* app/errors.c (gimp_errors_init): fixed spelling of The GIMP.

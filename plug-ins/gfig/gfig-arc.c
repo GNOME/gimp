@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,11 +34,10 @@
 
 #include <libgimp/gimp.h>
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 #include "gfig.h"
-#include "gfig_line.h"
+#include "gfig-line.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static Dobject  *d_new_arc               (gint x, gint y);
 
@@ -288,8 +289,8 @@ arc_details (GdkPoint *vert_a,
   if (!got_y)
     inter_y = /*rint*/((line1_grad * inter_x + line1_const));
 
-  center_pnt->x = (gint16)inter_x;
-  center_pnt->y = (gint16)inter_y;
+  center_pnt->x = (gint) inter_x;
+  center_pnt->y = (gint) inter_y;
 }
 
 static gdouble
@@ -458,36 +459,9 @@ d_draw_arc (Dobject * obj)
   if (!obj)
     return;
 
-  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE, FALSE);
-
-  if (drawing_pic)
-    {
-      gdk_draw_arc (pic_preview->window,
-		    pic_preview->style->black_gc,
-		    0,
-		    adjust_pic_coords (center_pnt.x - (gint)radius,
-				      preview_width),
-		    adjust_pic_coords (center_pnt.y - (gint)radius,
-				      preview_height),
-		    adjust_pic_coords ((gint) (radius * 2),
-				      preview_width),
-		    adjust_pic_coords ((gint) (radius * 2),
-				      preview_height),
-		    (gint) (minang*64),
-		    (gint) (arcang*64));
-    }
-  else
-    {
-      gdk_draw_arc (gfig_preview->window,
-		    gfig_gc,
-		    0,
-		    gfig_scale_x (center_pnt.x - (gint)radius),
-		    gfig_scale_y (center_pnt.y - (gint)radius),
-		    gfig_scale_x ((gint) (radius * 2)),
-		    gfig_scale_y ((gint) (radius * 2)),
-		    (gint) (minang*64),
-		    (gint) (arcang*64));
-    }
+  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE, 
+		       FALSE);
+  gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, minang, arcang);
 }
 
 static void
@@ -503,7 +477,7 @@ d_paint_arc (Dobject *obj)
   gdouble radius;
   gint loop;
   GdkPoint first_pnt, last_pnt;
-  gint first = 1;
+  gboolean first = TRUE;
   GdkPoint center_pnt;
   gdouble minang, arcang;
 
@@ -554,13 +528,14 @@ d_paint_arc (Dobject *obj)
 	    }
 	}
 
-      last_pnt.x = line_pnts[i++] = calc_pnt.x;
-      last_pnt.y = line_pnts[i++] = calc_pnt.y;
+      line_pnts[i++] = calc_pnt.x;
+      line_pnts[i++] = calc_pnt.y;
+      last_pnt = calc_pnt;
 
       if (first)
 	{
 	  first_pnt = calc_pnt;
-	  first = 0;
+	  first = FALSE;
 	}
     }
 
@@ -600,13 +575,9 @@ d_copy_arc (Dobject * obj)
 {
   Dobject *nc;
 
-  if (!obj)
-    return NULL;
-
   g_assert (obj->type == ARC);
 
   nc = d_new_arc (obj->points->pnt.x, obj->points->pnt.y);
-
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nc;

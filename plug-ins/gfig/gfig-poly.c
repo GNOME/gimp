@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,13 +34,12 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
+#include "gfig.h"
+#include "gfig-line.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-#include "gfig.h"
-#include "gfig_line.h"
-
-static gint poly_num_sides    = 3; /* Default to three sided object */
+static gint poly_num_sides = 3; /* Default to three sided object */
 
 static void       d_save_poly             (Dobject * obj, FILE *to);
 static void       d_draw_poly             (Dobject *obj);
@@ -196,28 +197,7 @@ d_draw_poly (Dobject *obj)
 	  if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
 	    continue;
 
-	  if (drawing_pic)
-	    {
-	      gdk_draw_line (pic_preview->window,
-			     pic_preview->style->black_gc,			    
-			     adjust_pic_coords (calc_pnt.x,
-						preview_width),
-			     adjust_pic_coords (calc_pnt.y,
-						preview_height),
-			     adjust_pic_coords (start_pnt.x,
-						preview_width),
-			     adjust_pic_coords (start_pnt.y,
-						preview_height));
-	    }
-	  else
-	    {
-	      gdk_draw_line (gfig_preview->window,
-			     gfig_gc,
-			     gfig_scale_x (calc_pnt.x),
-			     gfig_scale_y (calc_pnt.y),
-			     gfig_scale_x (start_pnt.x),
-			     gfig_scale_y (start_pnt.y));
-	    }
+	  gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
 	}
       else
 	{
@@ -227,25 +207,7 @@ d_draw_poly (Dobject *obj)
       start_pnt = calc_pnt;
     }
 
-  /* Join up */
-  if (drawing_pic)
-    {
-      gdk_draw_line (pic_preview->window,
-		     pic_preview->style->black_gc,
-		     adjust_pic_coords (first_pnt.x, preview_width),
-		     adjust_pic_coords (first_pnt.y, preview_width),
-		     adjust_pic_coords (start_pnt.x, preview_width),
-		     adjust_pic_coords (start_pnt.y, preview_width));
-    }
-  else
-    {
-      gdk_draw_line (gfig_preview->window,
-		     gfig_gc,
-		     gfig_scale_x (first_pnt.x),
-		     gfig_scale_y (first_pnt.y),
-		     gfig_scale_x (start_pnt.x),
-		     gfig_scale_y (start_pnt.y));
-    }
+  gfig_draw_line (first_pnt.x, first_pnt.y, start_pnt.x, start_pnt.y);
 }
 
 void
@@ -585,19 +547,14 @@ d_star2lines (Dobject *obj)
 }
 
 static Dobject *
-d_copy_poly (Dobject * obj)
+d_copy_poly (Dobject *obj)
 {
   Dobject *np;
-
-  if (!obj)
-    return (NULL);
 
   g_assert (obj->type == POLY);
 
   np = d_new_poly (obj->points->pnt.x, obj->points->pnt.y);
-
   np->points->next = d_copy_dobjpoints (obj->points->next);
-
   np->type_data = obj->type_data;
 
   return np;
@@ -652,8 +609,7 @@ d_update_poly (GdkPoint *pnt)
       selvals.opts.showcontrol = 0;
       d_draw_poly (obj_creating);
 
-      edge_pnt->pnt.x = pnt->x;
-      edge_pnt->pnt.y = pnt->y;
+      edge_pnt->pnt = *pnt;
     }
   else
     {
@@ -676,7 +632,7 @@ void
 d_poly_start (GdkPoint *pnt,
 	      gint      shift_down)
 {
-  obj_creating = d_new_poly ((gint16) pnt->x, (gint16) pnt->y);
+  obj_creating = d_new_poly (pnt->x, pnt->y);
   obj_creating->type_data = poly_num_sides;
 }
 

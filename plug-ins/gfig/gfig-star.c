@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,20 +34,19 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 #include "gfig.h"
 
-static gint star_num_sides    = 3; /* Default to three sided object */
+#include "libgimp/stdplugins-intl.h"
 
-static void       d_save_star             (Dobject * obj, FILE *to);
-static void       d_draw_star             (Dobject *obj);
-static void       d_paint_star            (Dobject *obj);
-static Dobject  * d_copy_star             (Dobject * obj);
-static Dobject  * d_new_star              (gint x, gint y);
+static gint star_num_sides = 3; /* Default to three sided object */
 
-gint
+static void      d_save_star             (Dobject * obj, FILE *to);
+static void      d_draw_star             (Dobject *obj);
+static void      d_paint_star            (Dobject *obj);
+static Dobject  *d_copy_star             (Dobject * obj);
+static Dobject  *d_new_star              (gint x, gint y);
+
+gboolean
 star_button_press (GtkWidget      *widget,
 		   GdkEventButton *event,
 		   gpointer        data)
@@ -142,7 +143,7 @@ d_draw_star (Dobject *obj)
   gint loop;
   GdkPoint start_pnt;
   GdkPoint first_pnt;
-  gint do_line = 0;
+  gboolean do_line = FALSE;
 
   center_pnt = obj->points;
 
@@ -155,7 +156,7 @@ d_draw_star (Dobject *obj)
   draw_sqr (&center_pnt->pnt);
 
   /* Next point defines the radius */
-  outer_radius_pnt = center_pnt->next; /* this defines the vetices */
+  outer_radius_pnt = center_pnt->next; /* this defines the vertices */
 
   if (!outer_radius_pnt)
     {
@@ -165,7 +166,7 @@ d_draw_star (Dobject *obj)
       return;
     }
 
-  inner_radius_pnt = outer_radius_pnt->next; /* this defines the vetices */
+  inner_radius_pnt = outer_radius_pnt->next; /* this defines the vertices */
 
   if (!inner_radius_pnt)
     {
@@ -202,7 +203,7 @@ d_draw_star (Dobject *obj)
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
 	
-      if (loop%2)
+      if (loop % 2)
 	{
 	  lx = inner_radius * cos (ang_loop);
 	  ly = inner_radius * sin (ang_loop);
@@ -223,58 +224,17 @@ d_draw_star (Dobject *obj)
 	  if (calc_pnt.x == start_pnt.x && calc_pnt.y == start_pnt.y)
 	    continue;
 
-	  if (drawing_pic)
-	    {
-	      gdk_draw_line (pic_preview->window,
-			     pic_preview->style->black_gc,			    
-			     adjust_pic_coords (calc_pnt.x,
-						preview_width),
-			     adjust_pic_coords (calc_pnt.y,
-						preview_height),
-			     adjust_pic_coords (start_pnt.x,
-						preview_width),
-			     adjust_pic_coords (start_pnt.y,
-						preview_height));
-	    }
-	  else
-	    {
-	      gdk_draw_line (gfig_preview->window,
-			     gfig_gc,
-			     gfig_scale_x (calc_pnt.x),
-			     gfig_scale_y (calc_pnt.y),
-			     gfig_scale_x (start_pnt.x),
-			     gfig_scale_y (start_pnt.y));
-	    }
+	  gfig_draw_line (calc_pnt.x, calc_pnt.y, start_pnt.x, start_pnt.y);
 	}
       else
 	{
-	  do_line = 1;
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
+	  do_line = TRUE;
+	  first_pnt = calc_pnt;
 	}
-      start_pnt.x = calc_pnt.x;
-      start_pnt.y = calc_pnt.y;
+      start_pnt = calc_pnt;
     }
 
-  /* Join up */
-  if (drawing_pic)
-    {
-      gdk_draw_line (pic_preview->window,
-		     pic_preview->style->black_gc,
-		     adjust_pic_coords (first_pnt.x, preview_width),
-		     adjust_pic_coords (first_pnt.y, preview_width),
-		     adjust_pic_coords (start_pnt.x, preview_width),
-		     adjust_pic_coords (start_pnt.y, preview_width));
-    }
-  else
-    {
-      gdk_draw_line (gfig_preview->window,
-		     gfig_gc,
-		     gfig_scale_x (first_pnt.x),
-		     gfig_scale_y (first_pnt.y),
-		     gfig_scale_x (start_pnt.x),
-		     gfig_scale_y (start_pnt.y));
-    }
+  gfig_draw_line (first_pnt.x, first_pnt.y, start_pnt.x, start_pnt.y);
 }
 
 static void
@@ -294,11 +254,10 @@ d_paint_star (Dobject *obj)
   gdouble ang_loop;
   gdouble outer_radius;
   gdouble inner_radius;
-
   gdouble offset_angle;
   gint loop;
   GdkPoint first_pnt, last_pnt;
-  gint first = 1;
+  gboolean first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -355,7 +314,7 @@ d_paint_star (Dobject *obj)
       
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
 	
-      if (loop%2)
+      if (loop % 2)
 	{
 	  lx = inner_radius * cos (ang_loop);
 	  ly = inner_radius * sin (ang_loop);
@@ -385,7 +344,7 @@ d_paint_star (Dobject *obj)
       if (first)
 	{
 	  first_pnt = calc_pnt;
-	  first = 0;
+	  first = FALSE;
 	}
     }
 
@@ -423,19 +382,14 @@ d_paint_star (Dobject *obj)
 }
 
 static Dobject *
-d_copy_star (Dobject * obj)
+d_copy_star (Dobject *obj)
 {
   Dobject *np;
-
-  if (!obj)
-    return (NULL);
 
   g_assert (obj->type == STAR);
 
   np = d_new_star (obj->points->pnt.x, obj->points->pnt.y);
-
   np->points->next = d_copy_dobjpoints (obj->points->next);
-
   np->type_data = obj->type_data;
 
   return np;
@@ -492,8 +446,7 @@ d_update_star (GdkPoint *pnt)
       draw_circle (&outer_pnt->pnt);
       selvals.opts.showcontrol = 0;
       d_draw_star (obj_creating);
-      outer_pnt->pnt.x = pnt->x;
-      outer_pnt->pnt.y = pnt->y;
+      outer_pnt->pnt = *pnt;
       inner_pnt->pnt.x = pnt->x + (2*(center_pnt->pnt.x - pnt->x))/3;
       inner_pnt->pnt.y = pnt->y + (2*(center_pnt->pnt.y - pnt->y))/3;
     }
@@ -525,7 +478,7 @@ void
 d_star_start (GdkPoint *pnt,
 	      gint      shift_down)
 {
-  obj_creating = d_new_star ((gint) pnt->x, (gint) pnt->y);
+  obj_creating = d_new_star (pnt->x, pnt->y);
   obj_creating->type_data = star_num_sides;
 }
 

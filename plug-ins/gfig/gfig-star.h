@@ -26,9 +26,9 @@
 #ifndef __GFIG_STAR_H__
 #define __GFIG_STAR_H__
 
-gint	star_button_press (GtkWidget      *widget,
-			   GdkEventButton *event,
-			   gpointer        data);
+gboolean   star_button_press 	   (GtkWidget      *widget,
+				    GdkEventButton *event,
+				    gpointer        data);
 
 void       d_update_star           (GdkPoint *pnt);
 void       d_star_start            (GdkPoint *pnt, gint shift_down);

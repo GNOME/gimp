@@ -23,6 +23,8 @@
  * 
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -32,10 +34,9 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 #include "gfig.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static Dobject  * d_new_line              (gint x, gint y);
 
@@ -84,13 +85,9 @@ d_copy_line (Dobject *obj)
 {
   Dobject *nl;
 
-  if (!obj)
-    return NULL;
-
   g_assert (obj->type == LINE);
 
-  nl = d_new_line (obj->points->pnt.x, obj->points->pnt.y);
-  
+  nl = d_new_line (obj->points->pnt.x, obj->points->pnt.y);  
   nl->points->next = d_copy_dobjpoints (obj->points->next);
 
   return nl;
@@ -113,24 +110,7 @@ d_draw_line (Dobject *obj)
     {
       draw_sqr (&spnt->pnt);
       /* Go around all the points drawing a line from one to the next */
-      if (drawing_pic)
-	{
-	  gdk_draw_line (pic_preview->window,
-			 pic_preview->style->black_gc,
-			 adjust_pic_coords (spnt->pnt.x, preview_width),
-			 adjust_pic_coords (spnt->pnt.y, preview_height),
-			 adjust_pic_coords (epnt->pnt.x, preview_width),
-			 adjust_pic_coords (epnt->pnt.y, preview_height));
-	}
-      else
-	{
-	  gdk_draw_line (gfig_preview->window,
-			 gfig_gc,
-			 gfig_scale_x (spnt->pnt.x),
-			 gfig_scale_y (spnt->pnt.y),
-			 gfig_scale_x (epnt->pnt.x),
-			 gfig_scale_y (epnt->pnt.y));
-	}
+      gfig_draw_line (spnt->pnt.x, spnt->pnt.y, epnt->pnt.x, epnt->pnt.y);
       spnt = epnt;
       epnt = epnt->next;
     }
