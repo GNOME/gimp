@@ -92,15 +92,12 @@ struct _CdisplayColorblind
 
   ColorblindDeficiency  deficiency;
 
-  gfloat                rgb2lms[9];
-  gfloat                lms2rgb[9];
-  gfloat                gammaRGB[3];
-
   gfloat                a1, b1, c1;
   gfloat                a2, b2, c2;
   gfloat                inflection;
 
   guint32               cache[2 * COLOR_CACHE_SIZE];
+  gfloat                gamma_lut[256][3];
 };
 
 struct _CdisplayColorblindClass
@@ -140,6 +137,62 @@ static void        cdisplay_colorblind_changed        (GimpColorDisplay     *dis
 
 static void        cdisplay_colorblind_set_deficiency (CdisplayColorblind   *colorblind,
                                                        ColorblindDeficiency  value);
+
+
+  /* The RGB<->LMS transforms above are computed from the human cone
+   * photo-pigment absorption spectra and the monitor phosphor
+   * emission spectra. These parameters are fairly constant for most
+   * humans and most montiors (at least for modern CRTs). However,
+   * gamma will vary quite a bit, as it is a property of the monitor
+   * (eg. amplifier gain), the video card, and even the
+   * software. Further, users can adjust their gammas (either via
+   * adjusting the monitor amp gains or in software). That said, the
+   * following are the gamma estimates that we have used in the
+   * Vischeck code. Many colorblind users have viewed our simulations
+   * and told us that they "work" (simulated and original images are
+   * indistinguishabled).
+   */
+
+static const gfloat gammaRGB[3] = { 2.1, 2.0, 2.1 };
+
+
+  /* For most modern Cathode-Ray Tube monitors (CRTs), the following
+   * are good estimates of the RGB->LMS and LMS->RGB transform
+   * matrices.  They are based on spectra measured on a typical CRT
+   * with a PhotoResearch PR650 spectral photometer and the Stockman
+   * human cone fundamentals. NOTE: these estimates will NOT work well
+   * for LCDs!
+   */
+static const gfloat rgb2lms[9] =
+{
+  0.05059983,
+  0.08585369,
+  0.00952420,
+
+  0.01893033,
+  0.08925308,
+  0.01370054,
+
+  0.00292202,
+  0.00975732,
+  0.07145979
+};
+
+static const gfloat lms2rgb[9] =
+{
+   30.830854,
+  -29.832659,
+    1.610474,
+
+   -6.481468,
+   17.715578,
+   -2.532642,
+
+   -0.375690,
+   -1.199062,
+   14.273846
+};
+
 
 static const GimpModuleInfo cdisplay_colorblind_info =
 {
@@ -244,53 +297,14 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 static void
 cdisplay_colorblind_init (CdisplayColorblind *colorblind)
 {
-  /* For most modern Cathode-Ray Tube monitors (CRTs), the following
-   * are good estimates of the RGB->LMS and LMS->RGB transform
-   * matrices.  They are based on spectra measured on a typical CRT
-   * with a PhotoResearch PR650 spectral photometer and the Stockman
-   * human cone fundamentals. NOTE: these estimates will NOT work well
-   * for LCDs!
-   */
-  colorblind->rgb2lms[0] = 0.05059983;
-  colorblind->rgb2lms[1] = 0.08585369;
-  colorblind->rgb2lms[2] = 0.00952420;
+  gint i;
 
-  colorblind->rgb2lms[3] = 0.01893033;
-  colorblind->rgb2lms[4] = 0.08925308;
-  colorblind->rgb2lms[5] = 0.01370054;
-
-  colorblind->rgb2lms[6] = 0.00292202;
-  colorblind->rgb2lms[7] = 0.00975732;
-  colorblind->rgb2lms[8] = 0.07145979;
-
-  colorblind->lms2rgb[0] =  30.830854;
-  colorblind->lms2rgb[1] = -29.832659;
-  colorblind->lms2rgb[2] =   1.610474;
-
-  colorblind->lms2rgb[3] =  -6.481468;
-  colorblind->lms2rgb[4] =  17.715578;
-  colorblind->lms2rgb[5] =  -2.532642;
-
-  colorblind->lms2rgb[6] =  -0.375690;
-  colorblind->lms2rgb[7] =  -1.199062;
-  colorblind->lms2rgb[8] =  14.273846;
-
-  /* The RGB<->LMS transforms above are computed from the human cone
-   * photo-pigment absorption spectra and the monitor phosphor
-   * emission spectra. These parameters are fairly constant for most
-   * humans and most montiors (at least for modern CRTs). However,
-   * gamma will vary quite a bit, as it is a property of the monitor
-   * (eg. amplifier gain), the video card, and even the
-   * software. Further, users can adjust their gammas (either via
-   * adjusting the monitor amp gains or in software). That said, the
-   * following are the gamma estimates that we have used in the
-   * Vischeck code. Many colorblind users have viewed our simulations
-   * and told us that they "work" (simulated and original images are
-   * indistinguishabled).
-   */
-  colorblind->gammaRGB[0] = 2.1;
-  colorblind->gammaRGB[1] = 2.0;
-  colorblind->gammaRGB[2] = 2.1;
+  for (i = 0; i < 256; i++)
+    {
+      colorblind->gamma_lut[i][0] = pow (i, 1.0 / gammaRGB[0]);
+      colorblind->gamma_lut[i][1] = pow (i, 1.0 / gammaRGB[1]);
+      colorblind->gamma_lut[i][2] = pow (i, 1.0 / gammaRGB[2]);
+    }
 }
 
 static void
@@ -342,7 +356,6 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
   guchar             *b;
-  gfloat              rgb2lms[9],lms2rgb[9];
   gfloat              a1, b1, c1, a2, b2, c2;
   gfloat              tmp;
   gfloat              red, green, blue, redOld, greenOld;
@@ -352,9 +365,6 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
   if (bpp != 3)
     return;
 
-  /* to improve readability, copy the parameters into local variables */
-  memcpy (rgb2lms, colorblind->rgb2lms, sizeof (rgb2lms));
-  memcpy (lms2rgb, colorblind->lms2rgb, sizeof (lms2rgb));
   a1 = colorblind->a1; b1 = colorblind->b1; c1 = colorblind->c1;
   a2 = colorblind->a2; b2 = colorblind->b2; c2 = colorblind->c2;
 
@@ -379,14 +389,10 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
             continue;
           }
 
-        red   = b[0];
-        green = b[1];
-        blue  = b[2];
-
         /* Remove gamma to linearize RGB intensities */
-        red   = pow (red,   1.0 / colorblind->gammaRGB[0]);
-        green = pow (green, 1.0 / colorblind->gammaRGB[1]);
-        blue  = pow (blue,  1.0 / colorblind->gammaRGB[2]);
+        red   = colorblind->gamma_lut[b[0]][0];
+        green = colorblind->gamma_lut[b[1]][1];
+        blue  = colorblind->gamma_lut[b[2]][2];
 
         /* Convert to LMS (dot product with transform matrix) */
         redOld   = red;
@@ -438,20 +444,15 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
         blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
 
         /* Apply gamma to go back to non-linear intensities */
-        red   = pow (red,   colorblind->gammaRGB[0]);
-        green = pow (green, colorblind->gammaRGB[1]);
-        blue  = pow (blue,  colorblind->gammaRGB[2]);
+        red   = pow (red,   gammaRGB[0]);
+        green = pow (green, gammaRGB[1]);
+        blue  = pow (blue,  gammaRGB[2]);
 
         /* Ensure that we stay within the RGB gamut */
-        /* *** FIX THIS: it would be better to desaturate than blindly clip. */
-        red   = CLAMP (red,   0, 255);
-        green = CLAMP (green, 0, 255);
-        blue  = CLAMP (blue,  0, 255);
-
-        /* Stuff result back into buffer */
-        b[0] = (guchar) red;
-        b[1] = (guchar) green;
-        b[2] = (guchar) blue;
+        /* *** FIXME: it would be better to desaturate than blindly clip. */
+        b[0] = (guchar) CLAMP (red,   0, 255);
+        b[1] = (guchar) CLAMP (green, 0, 255);
+        b[2] = (guchar) CLAMP (blue,  0, 255);
 
         /* Put the result into our cache */
         colorblind->cache[2 * index]     = pixel;
@@ -512,12 +513,9 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
    * our anchors) (we can just peel this out of the rgb2lms transform
    * matrix)
    */
-  anchor_e[0] =
-    colorblind->rgb2lms[0] + colorblind->rgb2lms[1] + colorblind->rgb2lms[2];
-  anchor_e[1] =
-    colorblind->rgb2lms[3] + colorblind->rgb2lms[4] + colorblind->rgb2lms[5];
-  anchor_e[2] =
-    colorblind->rgb2lms[6] + colorblind->rgb2lms[7] + colorblind->rgb2lms[8];
+  anchor_e[0] = rgb2lms[0] + rgb2lms[1] + rgb2lms[2];
+  anchor_e[1] = rgb2lms[3] + rgb2lms[4] + rgb2lms[5];
+  anchor_e[2] = rgb2lms[6] + rgb2lms[7] + rgb2lms[8];
 
   switch (colorblind->deficiency)
     {
