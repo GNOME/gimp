@@ -181,6 +181,27 @@ gimp_image_new (guint      width,
   return image_ID;
 }
 
+gint32
+gimp_image_duplicate (gint32 image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint32 new_image_ID;
+
+  return_vals = gimp_run_procedure ("gimp_channel_ops_duplicate",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  new_image_ID = -1;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    new_image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return (new_image_ID);
+}     
+
 void
 gimp_image_delete (gint32 image_ID)
 {
@@ -955,7 +976,8 @@ gimp_image_set_filename (gint32  image_ID,
 }
 
 Parasite *
-gimp_image_find_parasite (gint32 image_ID, const char *name)
+gimp_image_find_parasite (gint32      image_ID, 
+			  const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -979,7 +1001,8 @@ gimp_image_find_parasite (gint32 image_ID, const char *name)
 }
 
 void
-gimp_image_attach_parasite (gint32 image_ID, const Parasite *p)
+gimp_image_attach_parasite (gint32          image_ID, 
+			    const Parasite *p)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -994,8 +1017,11 @@ gimp_image_attach_parasite (gint32 image_ID, const Parasite *p)
 }
 
 void
-gimp_image_attach_new_parasite (gint32 image_ID, const char *name, int flags,
-				int size, const void *data)
+gimp_image_attach_new_parasite (gint32      image_ID, 
+				const char *name, 
+				int         flags,
+				int         size, 
+				const void *data)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1012,7 +1038,8 @@ gimp_image_attach_new_parasite (gint32 image_ID, const char *name, int flags,
 }
 
 void
-gimp_image_detach_parasite (gint32 image_ID, const char *name)
+gimp_image_detach_parasite (gint32      image_ID, 
+			    const char *name)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1060,9 +1087,9 @@ gimp_image_get_resolution (gint32  image_ID,
 }
 
 void
-gimp_image_set_resolution (gint32  image_ID,
-			   double  xresolution,
-			   double  yresolution)
+gimp_image_set_resolution (gint32 image_ID,
+			   double xresolution,
+			   double yresolution)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1078,7 +1105,7 @@ gimp_image_set_resolution (gint32  image_ID,
 }
 
 GUnit
-gimp_image_get_unit (gint32  image_ID)
+gimp_image_get_unit (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1101,8 +1128,8 @@ gimp_image_get_unit (gint32  image_ID)
 }
 
 void
-gimp_image_set_unit (gint32  image_ID,
-		     GUnit   unit)
+gimp_image_set_unit (gint32 image_ID,
+		     GUnit  unit)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1117,7 +1144,8 @@ gimp_image_set_unit (gint32  image_ID,
 }
 
 gint32
-gimp_image_get_layer_by_tattoo (gint32  image_ID, gint32 tattoo)
+gimp_image_get_layer_by_tattoo (gint32 image_ID, 
+				gint32 tattoo)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1139,7 +1167,8 @@ gimp_image_get_layer_by_tattoo (gint32  image_ID, gint32 tattoo)
 }
 
 gint32
-gimp_image_get_channel_by_tattoo (gint32  image_ID, gint32 tattoo)
+gimp_image_get_channel_by_tattoo (gint32 image_ID, 
+				  gint32 tattoo)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -1161,10 +1190,10 @@ gimp_image_get_channel_by_tattoo (gint32  image_ID, gint32 tattoo)
 }
 
 guchar *
-gimp_image_get_thumbnail_data (gint32 image_ID,
-			       gint  *width,
-			       gint  *height,
-			       gint  *bytes)
+gimp_image_get_thumbnail_data (gint32  image_ID,
+			       gint   *width,
+			       gint   *height,
+			       gint   *bytes)
 {
   GParam *return_vals;
   int     nreturn_vals;
@@ -1189,6 +1218,59 @@ gimp_image_get_thumbnail_data (gint32 image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return image_data;
-
 }
+
+void
+gimp_image_convert_rgb (gint32 image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_convert_rgb",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}     
+
+void
+gimp_image_convert_grayscale (gint32 image_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_convert_grayscale",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}     
+
+void
+gimp_image_convert_indexed (gint32  image_ID, 
+			    gint    dither_type,
+			    gint    palette_type,
+			    gint    num_colors,
+			    gint    alpha_dither,
+			    gint    remove_unused,
+			    gchar  *palette)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_convert_indexed",
+				    &nreturn_vals,
+				    PARAM_IMAGE,  image_ID,
+				    PARAM_INT32,  dither_type,
+				    PARAM_INT32,  palette_type,
+				    PARAM_INT32,  num_colors,
+				    PARAM_INT32,  alpha_dither,
+				    PARAM_INT32,  remove_unused,
+				    PARAM_STRING, palette,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}     
 

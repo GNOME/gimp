@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bmp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -63,6 +64,7 @@ static void   run        (char    *name,
                           GParam  *param,
                           int     *nreturn_vals,
                           GParam **return_vals);
+static void   init_gtk   (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -120,7 +122,7 @@ query ()
                           "Alexander Schulz",
                           "1997",
                           "<Save>/BMP",
-                          "INDEXED*, GRAY*, RGB*",
+                          "INDEXED, GRAY, RGB",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -140,6 +142,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   gint32 image_ID;
+  gint32 drawable_ID;
+  gboolean export = FALSE;
   
   run_mode = param[0].data.d_int32;
 
@@ -187,6 +191,22 @@ run (char    *name,
     {
       INIT_I18N();
 
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
         {
         case RUN_INTERACTIVE:
@@ -209,12 +229,15 @@ run (char    *name,
         }
 
       *nreturn_vals = 1;
-      if (WriteBMP(param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (WriteBMP (param[3].data.d_string, image_ID, drawable_ID))
         {
 	  values[0].data.d_status = STATUS_SUCCESS;
         }
       else
         values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -241,3 +264,19 @@ void  FromS(gint16 wert, guchar *bopuffer)
   bopuffer[0]=(wert & 0x00ff)>>0x00;
   bopuffer[1]=(wert & 0xff00)>>0x08;
 }
+
+static void
+init_gtk (void)
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("bmp");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
+

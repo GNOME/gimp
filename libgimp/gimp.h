@@ -423,6 +423,7 @@ void     gimp_request_wakeups (void);
 gint32     gimp_image_new                   (guint      width,
 					     guint      height,
 					     GImageType type);
+gint32     gimp_image_duplicate             (gint32     image_ID);
 void       gimp_image_delete                (gint32     image_ID);
 guint      gimp_image_width                 (gint32     image_ID);
 guint      gimp_image_height                (gint32     image_ID);
@@ -505,8 +506,10 @@ Parasite  *gimp_image_find_parasite         (gint32     image_ID,
 void       gimp_image_attach_parasite       (gint32      image_ID,
 					     const Parasite *p);
 void       gimp_image_attach_new_parasite   (gint32      image_ID,
-					     const char *name, int flags,
-					     int size, const void *data);
+					     const char *name, 
+					     int         flags,
+					     int         size, 
+					     const void *data);
 void       gimp_image_detach_parasite       (gint32      image_ID,
 					     const char *name);
 void       gimp_image_set_resolution        (gint32     image_ID,
@@ -518,15 +521,24 @@ void       gimp_image_get_resolution        (gint32     image_ID,
 void       gimp_image_set_unit              (gint32     image_ID,
 					     GUnit      unit);
 GUnit      gimp_image_get_unit              (gint32     image_ID);
-gint32     gimp_image_get_layer_by_tattoo   (gint32  image_ID,
-					     gint32 tattoo);
-gint32     gimp_image_get_channel_by_tattoo (gint32  image_ID,
-					     gint32 tattoo);
+gint32     gimp_image_get_layer_by_tattoo   (gint32     image_ID,
+					     gint32     tattoo);
+gint32     gimp_image_get_channel_by_tattoo (gint32     image_ID,
+					     gint32     tattoo);
 
-guchar *   gimp_image_get_thumbnail_data    (gint32 image_ID,
-					     gint  *width,
-					     gint  *height,
-					     gint  *bytes);
+guchar *   gimp_image_get_thumbnail_data    (gint32     image_ID,
+					     gint      *width,
+					     gint      *height,
+					     gint      *bytes);
+void       gimp_image_convert_rgb           (gint32     image_ID);
+void       gimp_image_convert_grayscale     (gint32     image_ID);
+void       gimp_image_convert_indexed       (gint32     image_ID, 
+					     gint       dither_type,
+					     gint       palette_type,
+					     gint       num_colors,
+					     gint       alpha_dither,
+					     gint       remove_unused,
+					     gchar     *palette);
 
 /****************************************
  *              Guides                  *

@@ -54,6 +54,7 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 #include <time.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef NATIVE_WIN32
@@ -162,50 +163,53 @@ static gint save_rgb   (FILE *ofp,
                         gint32 drawable_ID);
 
 static gint32 create_new_image (char *filename, guint pagenum,
-                guint width, guint height,
-                GImageType type, gint32 *layer_ID, GDrawable **drawable,
-                GPixelRgn *pixel_rgn);
+				guint width, guint height,
+				GImageType type, gint32 *layer_ID, GDrawable **drawable,
+				GPixelRgn *pixel_rgn);
 
-static void   check_load_vals (void);
-static void   check_save_vals (void);
+static void   check_load_vals  (void);
+static void   check_save_vals  (void);
 
-static char  *ftoa (char *format, double r);
+static char  *ftoa         (char *format, double r);
 
 static gint   page_in_list (char *list, guint pagenum);
 
-static gint   get_bbox (char *filename,
-                        int *x0, int *y0, int *x1, int *y1);
+static gint   get_bbox     (char *filename,
+			    int *x0, int *y0, int *x1, int *y1);
 
-static FILE  *ps_open (char *filename,
-                       const PSLoadVals *loadopt,
-                       int *llx, int* lly, int* urx, int* ury);
+static FILE  *ps_open      (char *filename,
+			    const PSLoadVals *loadopt,
+			    int *llx, int* lly, int* urx, int* ury);
 
-static void   ps_close (FILE *ifp);
+static void   ps_close      (FILE *ifp);
 
-static gint32 skip_ps (FILE *ifp);
+static gint32 skip_ps       (FILE *ifp);
 
-static gint32 load_ps (char *filename,
-                       guint pagenum,
-                       FILE *ifp,
-                       int llx, int lly, int urx, int ury);
+static gint32 load_ps       (char *filename,
+			     guint pagenum,
+			     FILE *ifp,
+			     int llx, int lly, int urx, int ury);
 
-static void save_ps_header (FILE *ofp,
-                            char *filename);
-static void save_ps_setup (FILE *ofp,
-                           gint32 drawable_ID,
-                           int width,
-                           int height,
-                           int bpp);
+static void save_ps_header  (FILE *ofp,
+			     char *filename);
+static void save_ps_setup   (FILE *ofp,
+			     gint32 drawable_ID,
+			     int width,
+			     int height,
+			     int bpp);
 static void save_ps_trailer (FILE *ofp);
 static void save_ps_preview (FILE *ofp,
                              gint32 drawable_ID);
-static void dither_grey (unsigned char *grey,
-                         unsigned char *bw,
-                         int npix,
-                         int linecount);
+static void dither_grey     (unsigned char *grey,
+			     unsigned char *bw,
+			     int npix,
+			     int linecount);
 
 
 /* Dialog-handling */
+
+static void init_gtk        (void);
+
 typedef struct
 {
   GtkWidget *dialog;
@@ -349,7 +353,7 @@ those with alpha channels."),
                           "Peter Kirchgessner",
                           dversio,
                           "<Save>/PostScript",
-                          "RGB*, GRAY*, INDEXED*",
+                          "RGB, GRAY, INDEXED",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -403,6 +407,9 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID = -1;
+  gint32 drawable_ID = -1;
+  gint32 orig_image_ID = -1;
+  gboolean export = FALSE;
   int k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
@@ -463,6 +470,22 @@ run (char    *name,
     {
       INIT_I18N_UI();
 
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+       /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PS", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
         {
         case RUN_INTERACTIVE:
@@ -475,7 +498,7 @@ run (char    *name,
             psvals.eps = 1;
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-          ps_set_save_size (&psvals, param[1].data.d_int32);
+          ps_set_save_size (&psvals, orig_image_ID);
 #endif
           /*  First acquire information with a dialog  */
           if (! save_dialog ())
@@ -516,11 +539,10 @@ run (char    *name,
       {
 #ifdef GIMP_HAVE_RESOLUTION_INFO
         if ((psvals.width == 0.0) || (psvals.height == 0.0))
-          ps_set_save_size (&psvals, param[1].data.d_int32);
+          ps_set_save_size (&psvals, orig_image_ID);
 #endif
         check_save_vals ();
-        if (save_image (param[3].data.d_string, param[1].data.d_int32,
-                        param[2].data.d_int32))
+        if (save_image (param[3].data.d_string, image_ID, drawable_ID))
         {
           /*  Store psvals data  */
           gimp_set_data ("file_ps_save", &psvals, sizeof (PSSaveVals));
@@ -530,6 +552,10 @@ run (char    *name,
           status = STATUS_EXECUTION_ERROR;
         }
       }
+
+      if (export)
+	gimp_image_delete (image_ID);
+      
       values[0].data.d_status = status;
     }
   else if (strcmp (name, "file_ps_load_setargs") == 0)
@@ -721,11 +747,11 @@ save_image (char *filename,
   save_ps_header (ofp, filename);
 
   if (drawable_type == GRAY_IMAGE)
-    retval = save_gray (ofp,image_ID, drawable_ID);
+    retval = save_gray (ofp, image_ID, drawable_ID);
   else if (drawable_type == INDEXED_IMAGE)
-    retval = save_index (ofp,image_ID, drawable_ID);
+    retval = save_index (ofp, image_ID, drawable_ID);
   else if (drawable_type == RGB_IMAGE)
-    retval = save_rgb (ofp,image_ID, drawable_ID);
+    retval = save_rgb (ofp, image_ID, drawable_ID);
 
   save_ps_trailer (ofp);
 
@@ -2031,6 +2057,19 @@ save_rgb (FILE *ofp,
 #undef GET_RGB_TILE
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("ps");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 /*  Load interface functions  */
 
@@ -2047,8 +2086,6 @@ load_dialog (void)
   GtkWidget *label;
   GtkWidget *table;
   GSList *group;
-  gchar **argv;
-  gint argc;
   char buffer[STR_LENGTH];
   static char *label_text[] =
     { N_("Resolution:"), N_("Width:"), N_("Height:"), N_("Pages:") };
@@ -2058,13 +2095,7 @@ load_dialog (void)
     { N_("none"), N_("weak"), N_("strong") };
   int j, n_prop, alias, *alpha_bits;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("load");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
+  init_gtk ();
   vals = g_malloc (sizeof (*vals));
 
   vals->dialog = gtk_dialog_new ();
@@ -2313,8 +2344,6 @@ save_dialog (void)
   GtkWidget *label;
   GtkWidget *table;
   GSList *group;
-  gchar **argv;
-  gint argc;
   static char *label_text[] =
     { N_("Width:"), N_("Height:"), N_("X-offset:"), N_("Y-offset:") };
   static char *radio_text[] =
@@ -2324,13 +2353,6 @@ save_dialog (void)
   char tmp[80];
   int j, idata;
   double rdata;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   vals = g_malloc (sizeof (*vals));
 

@@ -125,4 +125,5 @@ libgimp/gimpunit.c
 libgimp/gimpfileselection.c
 libgimp/gimpenv.c
 libgimp/gimpunitmenu.c
+libgimp/gimpexport.c
 

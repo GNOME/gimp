@@ -269,8 +269,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /* uncomment the line below for a little debugging info */
@@ -302,47 +302,35 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint   save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static void   query                    (void);
+static void   run                      (char    *name,
+					int      nparams,
+					GParam  *param,
+					int     *nreturn_vals,
+					GParam **return_vals);
+static gint   save_image               (char    *filename,
+					gint32   image_ID,
+					gint32   drawable_ID,
+					gint32   orig_image_ID);
+static void   init_gtk                 (void);
 
-static gboolean boundscheck (gint32 image_ID);
-static gboolean badbounds_dialog ( void );
+static gboolean boundscheck            (gint32 image_ID);
+static gboolean badbounds_dialog       (void);
 
-static void
-cropok_callback (GtkWidget *widget,
-		 gpointer   data);
-static void
-cropclose_callback (GtkWidget *widget,
-		    gpointer   data);
-static void
-cropcancel_callback (GtkWidget *widget,
-		     gpointer   data);
+static void   cropok_callback          (GtkWidget *widget, gpointer   data);
+static void   cropclose_callback       (GtkWidget *widget, gpointer   data);
+static void   cropcancel_callback      (GtkWidget *widget, gpointer   data);
 
-static gint   save_dialog ( gint32 image_ID );
+static gint   save_dialog              (gint32 image_ID);
 
-static void   save_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
-static void   save_cancel_callback     (GtkWidget *widget,
-					gpointer   data);
-static void   save_windelete_callback     (GtkWidget *widget,
-					   gpointer   data);
-static void   disposal_select_callback (GtkWidget *widget,
-					gpointer   data);
-static void   save_toggle_update   (GtkWidget *widget,
-				    gpointer   data);
-static void   save_entry_callback  (GtkWidget *widget,
-                                    gpointer   data);
-static void   comment_entry_callback  (GtkWidget *widget,
-				       gpointer   data);
+static void   save_close_callback      (GtkWidget *widget, gpointer   data);
+static void   save_ok_callback         (GtkWidget *widget, gpointer   data);
+static void   save_cancel_callback     (GtkWidget *widget, gpointer   data);
+static void   save_windelete_callback  (GtkWidget *widget, gpointer   data);
+static void   disposal_select_callback (GtkWidget *widget, gpointer   data);
+static void   save_toggle_update       (GtkWidget *widget, gpointer   data);
+static void   save_entry_callback      (GtkWidget *widget, gpointer   data);
+static void   comment_entry_callback   (GtkWidget *widget, gpointer   data);
 
 
 
@@ -391,15 +379,15 @@ query ()
 {
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Image to save" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_INT32, "interlace", "Try to save as interlaced" },
-    { PARAM_INT32, "loop", "(animated gif) loop infinitely" },
-    { PARAM_INT32, "default_delay", "(animated gif) Default delay between framese in milliseconds" },
-    { PARAM_INT32, "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
+    { PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",           "Image to save" },
+    { PARAM_DRAWABLE, "drawable",        "Drawable to save" },
+    { PARAM_STRING,   "filename",        "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename",    "The name entered" },
+    { PARAM_INT32,    "interlace",       "Try to save as interlaced" },
+    { PARAM_INT32,    "loop",            "(animated gif) loop infinitely" },
+    { PARAM_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
+    { PARAM_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -411,7 +399,7 @@ query ()
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "1995-1997",
                           "<Save>/GIF",
-			  "INDEXED*",
+			  "INDEXED*, GRAY*",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -429,8 +417,10 @@ run (char    *name,
 {
   static GParam values[2];
   GStatusType status = STATUS_SUCCESS;
-  gchar **argv;
-  gint argc;
+  gint32 image_ID;
+  gint32 drawable_ID;
+  gint32 orig_image_ID;
+  gboolean export = FALSE;
 
   run_mode = param[0].data.d_int32;
 
@@ -441,17 +431,26 @@ run (char    *name,
 
   if (strcmp (name, "file_gif_save") == 0)
     {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup ("gif");
-     
       INIT_I18N_UI();
- 
-      gtk_init (&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
- 
+      init_gtk ();
 
-      if (boundscheck(param[1].data.d_int32))
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID  = param[1].data.d_int32;
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF", 
+				      (CAN_HANDLE_INDEXED | CAN_HANDLE_GRAY | 
+				       CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS_AS_ANIMATION));
+	  break;
+	default:
+	  break;
+	}
+
+      if (boundscheck (image_ID))
 	/* The image may or may not have had layers out of
 	   bounds, but the user didn't mind cropping it down. */
 	{
@@ -469,7 +468,7 @@ run (char    *name,
 		
 		radio_pressed[gsvals.default_dispose] = TRUE;
 		
-		if (! save_dialog (param[1].data.d_int32))
+		if (! save_dialog (image_ID))
 		  {
 		    *nreturn_vals = 1;
 		    values[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -509,8 +508,9 @@ run (char    *name,
 
 	  *nreturn_vals = 1;
 	  if (save_image (param[3].data.d_string,
-			  param[1].data.d_int32,
-			  param[2].data.d_int32))
+			  image_ID,
+			  drawable_ID,
+			  orig_image_ID))
 	    {
 	      /*  Store psvals data  */
 	      gimp_set_data ("file_gif_save", &gsvals, sizeof (GIFSaveVals));
@@ -526,6 +526,9 @@ run (char    *name,
 	  *nreturn_vals = 1;
 	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
+
+      if (export)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -842,7 +845,8 @@ boundscheck (gint32 image_ID)
 static gint
 save_image (char   *filename,
 	    gint32  image_ID,
-	    gint32  drawable_ID)
+	    gint32  drawable_ID,
+	    gint32  orig_image_ID)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -874,13 +878,12 @@ save_image (char   *filename,
 
 #ifdef FACEHUGGERS
   /* Save the comment back to the ImageID, if appropriate */
-  if (globalcomment != NULL &&
-      comment_was_edited)
+  if (globalcomment != NULL && comment_was_edited)
     {
       comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-				       strlen(globalcomment)+1,
-				       (void*)globalcomment);
-      gimp_image_attach_parasite (image_ID, comment_parasite);
+				       strlen (globalcomment)+1,
+				       (void*) globalcomment);
+      gimp_image_attach_parasite (orig_image_ID, comment_parasite);
       parasite_free (comment_parasite);
       comment_parasite = NULL;
     }
@@ -897,7 +900,7 @@ save_image (char   *filename,
   /* If the image has multiple layers (i.e. will be animated), a comment,
      or transparency, then it must be encoded as a GIF89a file, not a vanilla
      GIF87a. */
-  if (nlayers>1)
+  if (nlayers > 1)
     is_gif89 = TRUE;
   if (globalusecomment)
     is_gif89 = TRUE;
@@ -980,8 +983,8 @@ save_image (char   *filename,
 	}
     }
 
-  cols = gimp_image_width(image_ID);
-  rows = gimp_image_height(image_ID);
+  cols = gimp_image_width (image_ID);
+  rows = gimp_image_height (image_ID);
   Interlace = gsvals.interlace;
   GIFEncodeHeader (outfile, is_gif89, cols, rows, 0,
 		   BitsPerPixel, Red, Green, Blue, GetPixel);
@@ -1135,6 +1138,19 @@ save_image (char   *filename,
   return TRUE;
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gif");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 static gboolean
 badbounds_dialog ( void )

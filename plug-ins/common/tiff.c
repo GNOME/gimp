@@ -34,8 +34,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <tiffio.h>
-#include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #ifdef GIMP_HAVE_RESOLUTION_INFO
 #include "libgimp/gimpunit.h"
 #endif
@@ -96,8 +96,10 @@ static void   read_default (guchar *source, channel_data *channel,
 
 static gint   save_image (char   *filename,
 			  gint32  image,
-			  gint32  drawable);
+			  gint32  drawable,
+			  gint32  orig_image);
 
+static void   init_gtk ();
 static gint   save_dialog ();
 
 static void   save_close_callback  (GtkWidget *widget,
@@ -206,6 +208,9 @@ run (char    *name,
   Parasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   gint32 image;
+  gint32 drawable;
+  gint32 orig_image;
+  gboolean export = FALSE;
 
   run_mode = param[0].data.d_int32;
 
@@ -232,20 +237,34 @@ run (char    *name,
     }
   else if (strcmp (name, "file_tiff_save") == 0)
     {
+      image = orig_image = param[1].data.d_int32;
+      drawable = param[1].data.d_int32;
 
 /* Do this right this time, if POSSIBLE query for parasites, otherwise
    or if there isn't one, choose the DEFAULT_COMMENT */
 
-#ifdef GIMP_HAVE_PARASITES
-      int image = param[1].data.d_int32;
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image, &drawable, "TIFF", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA));
+	  break;
+	default:
+	  break;
+	}
 
-      parasite = gimp_image_find_parasite(image, "gimp-comment");
+#ifdef GIMP_HAVE_PARASITES
+
+      parasite = gimp_image_find_parasite (orig_image, "gimp-comment");
       if (parasite)
-        image_comment = g_strdup(parasite->data);
+        image_comment = g_strdup (parasite->data);
       parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
-      if (!image_comment) image_comment = g_strdup(DEFAULT_COMMENT);	  
+      if (!image_comment) image_comment = g_strdup (DEFAULT_COMMENT);	  
 
       switch (run_mode)
 	{
@@ -254,18 +273,19 @@ run (char    *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
+	  parasite = gimp_image_find_parasite (orig_image, "tiff-save-options");
 	  if (parasite)
-	  {
-	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
-	  }
+	    {
+	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	    }
 	  parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
 	    return;
-	} break;
+	} 
+	break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
@@ -287,12 +307,12 @@ run (char    *name,
 	{
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
+	  parasite = gimp_image_find_parasite (orig_image, "tiff-save-options");
 	  if (parasite)
-	  {
-	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
-	  }
-	  parasite_free(parasite);
+	    {
+	      tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	    }
+	  parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 	}
 	  break;
@@ -302,7 +322,7 @@ run (char    *name,
 	}
 
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image, drawable, orig_image))
 	{
 	  /*  Store mvals data  */
 	  gimp_set_data ("file_tiff_save", &tsvals, sizeof (TiffSaveVals));
@@ -311,10 +331,15 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export)
+	gimp_image_delete (image);
     }
 }
 
-static gint32 load_image (char *filename) {
+static gint32 
+load_image (char *filename) 
+{
   TIFF *tif;
   unsigned short bps, spp, photomet;
   int cols, rows, alpha;
@@ -337,7 +362,7 @@ static gint32 load_image (char *filename) {
   guint16 tmp;
   tif = TIFFOpen (filename, "r");
   if (!tif) {
-    g_message("TIFF Can't open %s\n", filename);
+    g_message ("TIFF Can't open %s\n", filename);
     gimp_quit ();
   }
 
@@ -358,12 +383,12 @@ static gint32 load_image (char *filename) {
     extra = 0;
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols)) {
-    g_message("TIFF Can't get image width\n");
+    g_message ("TIFF Can't get image width\n");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows)) {
-    g_message("TIFF Can't get image length\n");
+    g_message ("TIFF Can't get image length\n");
     gimp_quit ();
   }
 
@@ -452,10 +477,10 @@ static gint32 load_image (char *filename) {
       len = MIN(len, 241);
       img_desc[len-1] = '\000';
 
-      parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
-			      len, img_desc);
-      gimp_image_attach_parasite(image, parasite);
-      parasite_free(parasite);
+      parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
+			       len, img_desc);
+      gimp_image_attach_parasite (image, parasite);
+      parasite_free (parasite);
     }
   }
 #endif /* GIMP_HAVE_PARASITES */
@@ -470,41 +495,48 @@ static gint32 load_image (char *filename) {
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
       if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
 
-	if (TIFFGetFieldDefaulted (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit)) {
-	  switch(read_unit) {
-	  case RESUNIT_NONE:
-	    /* ImageMagick writes files with this silly resunit */
-	    g_message("TIFF warning: resolution units meaningless, "
-		      "forcing 72 dpi\n");
-	    break;
-
-	  case RESUNIT_INCH:
-	    unit = UNIT_INCH;
-	    break;
-
-	  case RESUNIT_CENTIMETER:
-	    xres *= 2.54;
-	    yres *= 2.54;
-	    unit = UNIT_MM; /* as this is our default metric unit */
-	    break;
-
-	  default:
-	    g_message("TIFF file error: unknown resolution unit type %d, "
-		      "assuming dpi\n", read_unit);
+	if (TIFFGetFieldDefaulted (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit)) 
+	  {
+	    switch (read_unit) 
+	      {
+	      case RESUNIT_NONE:
+		/* ImageMagick writes files with this silly resunit */
+		g_message ("TIFF warning: resolution units meaningless, "
+			   "forcing 72 dpi\n");
+		break;
+		
+	      case RESUNIT_INCH:
+		unit = UNIT_INCH;
+		break;
+		
+	      case RESUNIT_CENTIMETER:
+		xres *= 2.54;
+		yres *= 2.54;
+		unit = UNIT_MM; /* as this is our default metric unit */
+		break;
+		
+	      default:
+		g_message ("TIFF file error: unknown resolution unit type %d, "
+			   "assuming dpi\n", read_unit);
+	      }
+	  } 
+	else 
+	  { /* no res unit tag */
+	    /* old AppleScan software produces these */
+	    g_message ("TIFF warning: resolution specified without\n"
+		       "any units tag, assuming dpi\n");
 	  }
-	} else { /* no res unit tag */
-	  /* old AppleScan software produces these */
-	  g_message("TIFF warning: resolution specified without\n"
-		    "any units tag, assuming dpi\n");
+      } 
+      else 
+	{ /* xres but no yres */
+	  g_message("TIFF warning: no y resolution info, assuming same as x\n");
+	  yres = xres;
 	}
-      } else { /* xres but no yres */
-	g_message("TIFF warning: no y resolution info, assuming same as x\n");
-	yres = xres;
-      }
 
       /* sanity check, since division by zero later could be embarrassing */
-      if (xres < 1e-5 || yres < 1e-5) {
-	g_message("TIFF: image resolution is zero: forcing 72 dpi\n");
+      if (xres < 1e-5 || yres < 1e-5) 
+	{
+	g_message ("TIFF: image resolution is zero: forcing 72 dpi\n");
 	xres = 72.0;
 	yres = 72.0;
       }
@@ -528,19 +560,22 @@ static gint32 load_image (char *filename) {
 
 
   /* Install colormap for INDEXED images only */
-  if (image_type == INDEXED) {
-    if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) {
-      g_message("TIFF Can't get colormaps\n");
-      gimp_quit ();
-    }
+  if (image_type == INDEXED) 
+    {
+      if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) 
+	{
+	  g_message ("TIFF Can't get colormaps\n");
+	  gimp_quit ();
+	}
 
-    for (i = 0, j = 0; i < (1 << bps); i++) {
-      cmap[j++] = redmap[i] >> 8;
-      cmap[j++] = greenmap[i] >> 8;
-      cmap[j++] = bluemap[i] >> 8;
+      for (i = 0, j = 0; i < (1 << bps); i++) 
+	{
+	  cmap[j++] = redmap[i] >> 8;
+	  cmap[j++] = greenmap[i] >> 8;
+	  cmap[j++] = bluemap[i] >> 8;
+	}
+      gimp_image_set_cmap (image, cmap, (1 << bps));
     }
-    gimp_image_set_cmap (image, cmap, (1 << bps));
-  }
 
   /* Allocate channel_data for all channels, even the background layer */
   channel = g_new (channel_data, extra + 1);
@@ -652,8 +687,8 @@ load_tiles (TIFF *tif, channel_data *channel,
 
 static void
 load_lines (TIFF *tif, channel_data *channel,
-	   unsigned short bps, unsigned short photomet,
-	   int alpha, int extra)
+	    unsigned short bps, unsigned short photomet,
+	    int alpha, int extra)
 {
   uint16 planar= PLANARCONFIG_CONTIG;
   uint32 imageLength, lineSize, cols, rows;
@@ -707,9 +742,9 @@ load_lines (TIFF *tif, channel_data *channel,
 }
 
 static void
-read_16bit(guchar *source, channel_data *channel, unsigned short photomet,
-             int startrow, int startcol, int rows, int cols,
-             int alpha, int extra)
+read_16bit (guchar *source, channel_data *channel, unsigned short photomet,
+	    int startrow, int startcol, int rows, int cols,
+	    int alpha, int extra)
 {
   guchar *dest;
   int gray_val, red_val, green_val, blue_val, alpha_val;
@@ -801,9 +836,9 @@ read_16bit(guchar *source, channel_data *channel, unsigned short photomet,
 }
 
 static void
-read_8bit(guchar *source, channel_data *channel, unsigned short photomet,
-             int startrow, int startcol, int rows, int cols,
-             int alpha, int extra)
+read_8bit (guchar *source, channel_data *channel, unsigned short photomet,
+	   int startrow, int startcol, int rows, int cols,
+	   int alpha, int extra)
 {
   guchar *dest;
   int gray_val, red_val, green_val, blue_val, alpha_val;
@@ -908,10 +943,10 @@ read_8bit(guchar *source, channel_data *channel, unsigned short photomet,
   }
 
 static void
-read_default(guchar *source, channel_data *channel,
-             unsigned short bps, unsigned short photomet,
-             int startrow, int startcol, int rows, int cols,
-             int alpha, int extra)
+read_default (guchar *source, channel_data *channel,
+	      unsigned short bps, unsigned short photomet,
+	      int startrow, int startcol, int rows, int cols,
+	      int alpha, int extra)
 {
   guchar *dest;
   int gray_val, red_val, green_val, blue_val, alpha_val;
@@ -1072,7 +1107,11 @@ read_separate (guchar *source, channel_data *channel,
 ** other special, indirect and consequential damages.
 */
 
-static gint save_image (char *filename, gint32 image, gint32 layer) {
+static gint save_image (char   *filename, 
+			gint32  image, 
+			gint32  layer,
+			gint32  orig_image)  /* the export function might have created a duplicate */  
+{
   TIFF *tif;
   unsigned short red[256];
   unsigned short grn[256];
@@ -1106,10 +1145,11 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   rowsperstrip = 0;
 
   tif = TIFFOpen (filename, "w");
-  if (!tif) {
-    g_print ("Can't write image to\n%s", filename);
-    return 0;
-  }
+  if (!tif) 
+    {
+      g_print ("Can't write image to\n%s", filename);
+      return 0;
+    }
 
   name = malloc (strlen (filename) + 11);
   sprintf (name, "Saving %s:", filename);
@@ -1211,8 +1251,8 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
     GUnit unit;
     float factor;
 
-    gimp_image_get_resolution (image, &xresolution, &yresolution);
-    unit = gimp_image_get_unit (image);
+    gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
+    unit = gimp_image_get_unit (orig_image);
     factor = gimp_unit_get_factor (unit);
 
     /*  if we have a metric unit, save the resolution as centimeters
@@ -1241,15 +1281,15 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
    * detaches a previous incarnation of the parasite. */
 #ifdef GIMP_HAVE_PARASITES
   if (image_comment && *image_comment != '\000')
-  {
-    Parasite *parasite;
-
-    TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
-    parasite = parasite_new ("gimp-comment", 1,
-			      strlen(image_comment)+1, image_comment);
-    gimp_image_attach_parasite (image, parasite);
-    parasite_free (parasite);
-  }
+    {
+      Parasite *parasite;
+      
+      TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
+      parasite = parasite_new ("gimp-comment", 1,
+			       strlen (image_comment) + 1, image_comment);
+      gimp_image_attach_parasite (orig_image, parasite);
+      parasite_free (parasite);
+    }
 #endif /* GIMP_HAVE_PARASITES */
 
   if (drawable_type == INDEXED_IMAGE)
@@ -1326,6 +1366,20 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   return 1;
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("tiff");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 static gint
 save_dialog ()
 {
@@ -1338,18 +1392,9 @@ save_dialog ()
   GtkWidget *label;
   GtkWidget *entry;
   GSList *group;
-  gchar **argv;
-  gint argc;
   gint use_none = (tsvals.compression == COMPRESSION_NONE);
   gint use_lzw = (tsvals.compression == COMPRESSION_LZW);
   gint use_packbits = (tsvals.compression == COMPRESSION_PACKBITS);
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as Tiff");
@@ -1509,8 +1554,8 @@ comment_entry_callback (GtkWidget *widget,
       return;
     }
 
-  g_free(image_comment);
-  image_comment = g_strdup(text);
+  g_free (image_comment);
+  image_comment = g_strdup (text);
 
   /* g_print ("COMMENT: %s\n", image_comment); */
 }

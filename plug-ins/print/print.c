@@ -50,6 +50,7 @@
 #include <os2.h>
 #endif
 
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -91,6 +92,7 @@ static void	get_printers(void);
 
 static void	query(void);
 static void	run(char *, int, GParam *, int *, GParam **);
+static void     init_gtk (void);
 static int	do_print_dialog(void);
 static void	brightness_update(GtkAdjustment *);
 static void	brightness_callback(GtkWidget *);
@@ -390,6 +392,9 @@ run(char   *name,		/* I - Name of print program. */
 #ifdef __EMX__
   char		*tmpfile;	/* temp filename */
 #endif
+  gint32         image_ID;      /* image ID */
+  gint32         drawable_ID;   /* drawable ID */
+  gboolean       export;        /* have we exported the image ? */
 
   INIT_I18N_UI();
 
@@ -407,11 +412,29 @@ run(char   *name,		/* I - Name of print program. */
   *nreturn_vals = 1;
   *return_vals  = values;
 
+  image_ID = param[1].data.d_int32;
+  drawable_ID = param[2].data.d_int32;
+
+  /*  eventually export the image */ 
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+    case RUN_WITH_LAST_VALS:
+      init_gtk ();
+      export = gimp_export_image (&image_ID, &drawable_ID, "Print", 
+				  (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED |
+				   CAN_HANDLE_ALPHA));
+      break;
+    default:
+      break;
+    }
+
+
  /*
   * Get drawable...
   */
 
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (drawable_ID);
 
   image_width  = drawable->width;
   image_height = drawable->height;
@@ -567,8 +590,8 @@ run(char   *name,		/* I - Name of print program. */
       * Is the image an Indexed type?  If so we need the colormap...
       */
 
-      if (gimp_image_base_type(param[1].data.d_image) == INDEXED)
-        cmap = gimp_image_get_cmap(param[1].data.d_image, &ncolors);
+      if (gimp_image_base_type (image_ID) == INDEXED)
+        cmap = gimp_image_get_cmap (image_ID, &ncolors);
       else
       {
         cmap    = NULL;
@@ -619,8 +642,24 @@ run(char   *name,		/* I - Name of print program. */
   */
 
   gimp_drawable_detach(drawable);
+
+  if (export)
+    gimp_image_delete (image_ID);
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("print");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 /*
  * 'do_print_dialog()' - Pop up the print dialog...
@@ -657,14 +696,8 @@ do_print_dialog(void)
  /*
   * Initialize the program's display...
   */
-
-  argc    = 1;
-  argv    = g_new(gchar *, 1);
-  argv[0] = g_strdup("print");
-
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-  gdk_set_use_xshm(gimp_use_xshm());
+  init_gtk ();
+  gdk_set_use_xshm (gimp_use_xshm());
 
 #ifdef SIGBUS
   signal(SIGBUS, SIG_DFL);

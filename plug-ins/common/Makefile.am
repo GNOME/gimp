@@ -498,6 +498,7 @@ gif_SOURCES = \
 
 gif_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -627,6 +628,7 @@ jpeg_SOURCES = \
 	jpeg.c
 
 jpeg_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBJPEG)				\
 	$(GTK_LIBS)				\
@@ -800,6 +802,7 @@ png_SOURCES = \
 
 png_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(LIBPNG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -825,6 +828,7 @@ ps_SOURCES = \
 
 ps_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -1011,6 +1015,7 @@ tiff_SOURCES = \
 	tiff.c
 
 tiff_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBTIFF)				\
 	$(GTK_LIBS)				\

@@ -565,6 +565,11 @@ duplicate (GimpImage *gimage)
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
   gimage_disable_undo (new_gimage);
 
+  /*  Copy resolution and unit information  */
+  new_gimage->xresolution = gimage->xresolution;
+  new_gimage->yresolution = gimage->yresolution;
+  new_gimage->unit = gimage->unit;
+
   /*  Copy-on-write the projection tilemanager so we don't have
    *  to reproject the new gimage - since if we do the duplicate
    *  operation correctly, the projection for the new gimage is

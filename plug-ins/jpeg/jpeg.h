@@ -119,32 +119,32 @@
 #endif
 #include <jpeglib.h>
 #include <jerror.h>
-#include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SCALE_WIDTH 125
+#define SCALE_WIDTH         125
 
 /* if you are not compiling this from inside the gimp tree, you have to  */
 /* take care yourself if your JPEG library supports progressive mode     */
 /* #undef HAVE_PROGRESSIVE_JPEG   if your library doesn't support it     */
 /* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
 
-#define DEFAULT_QUALITY 0.75
-#define DEFAULT_SMOOTHING 0.0
-#define DEFAULT_OPTIMIZE 1
+#define DEFAULT_QUALITY     0.75
+#define DEFAULT_SMOOTHING   0.0
+#define DEFAULT_OPTIMIZE    1
 #define DEFAULT_PROGRESSIVE 0
-#define DEFAULT_BASELINE 1
-#define DEFAULT_SUBSMP 0
-#define DEFAULT_RESTART 0
-#define DEFAULT_DCT 0
-#define DEFAULT_PREVIEW 1
+#define DEFAULT_BASELINE    1
+#define DEFAULT_SUBSMP      0
+#define DEFAULT_RESTART     0
+#define DEFAULT_DCT         0
+#define DEFAULT_PREVIEW     1
 
-#define DEFAULT_COMMENT "Created with The GIMP"
+#define DEFAULT_COMMENT     "Created with The GIMP"
 
 /* sg - these should not be global... */
-gint32 volatile image_ID_global = -1, drawable_ID_global = -1, layer_ID_global = -1;
+gint32 volatile image_ID_global = -1, orig_image_ID_global, drawable_ID_global = -1, layer_ID_global = -1;
 GtkWidget *preview_size = NULL;
 GDrawable *drawable_global = NULL;
 
@@ -182,6 +182,7 @@ typedef struct
 
   gint abort_me;
 } preview_persistent;
+
 gint *abort_me = NULL;
 
 typedef void (*MenuItemCallback) (GtkWidget *widget,
@@ -189,50 +190,56 @@ typedef void (*MenuItemCallback) (GtkWidget *widget,
 
 /* Declare local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-			  int      nparams,
-			  GParam  *param,
-			  int     *nreturn_vals,
-			  GParam **return_vals);
-static gint32 load_image (char   *filename, GRunModeType runmode, int preview);
-static gint   save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID,
-			  int     preview);
+static void   query                     (void);
+static void   run                       (char    *name,
+					 int      nparams,
+					 GParam  *param,
+					 int     *nreturn_vals,
+					 GParam **return_vals);
+static gint32 load_image                (char   *filename, 
+					 GRunModeType runmode, 
+					 int preview);
+static gint   save_image                (char   *filename,
+					 gint32  image_ID,
+					 gint32  drawable_ID,
+					 gint32  orig_image_ID,
+					 int     preview);
 
-static void   add_menu_item (GtkWidget *menu,
-			     char *label,
-			     guint op_no,
-			     MenuItemCallback callback);
+static void   add_menu_item             (GtkWidget *menu,
+					 char *label,
+					 guint op_no,
+					 MenuItemCallback callback);
 
-static gint   save_dialog ();
+static void   init_gtk                   (void);
+static gint   save_dialog                (void);
 
-static void   save_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
-static void   save_scale_update    (GtkAdjustment *adjustment,
-				    double        *scale_val);
+static void   save_close_callback        (GtkWidget *widget,
+					  gpointer   data);
+static void   save_ok_callback           (GtkWidget *widget,
+					  gpointer   data);
+static void   save_scale_update          (GtkAdjustment *adjustment,
+					  double        *scale_val);
 static void   save_restart_toggle_update (GtkWidget     *toggle,
 					  GtkAdjustment *adjustment);
-static void   save_restart_update  (GtkAdjustment *adjustment,
-                     		    GtkWidget     *toggle);
-static void   save_optimize_update (GtkWidget *widget,
-				    gpointer   data);
-static void   save_progressive_toggle (GtkWidget *widget,
-				       gpointer   data);
-static void   save_baseline_toggle (GtkWidget *widget,
-                                    gpointer   data);
-static void   save_preview_toggle (GtkWidget *widget,
-				   gpointer  data);
+static void   save_restart_update        (GtkAdjustment *adjustment,
+					  GtkWidget     *toggle);
+static void   save_optimize_update       (GtkWidget *widget,
+					  gpointer   data);
+static void   save_progressive_toggle    (GtkWidget *widget,
+					  gpointer   data);
+static void   save_baseline_toggle       (GtkWidget *widget,
+					  gpointer   data);
+static void   save_preview_toggle        (GtkWidget *widget,
+					  gpointer  data);
 
 
-static void   make_preview ();
-static void   destroy_preview ();
+static void   make_preview               (void);
+static void   destroy_preview            (void);
 
-static void   subsmp_callback (GtkWidget *widget, gpointer data);
-static void   dct_callback (GtkWidget *widget, gpointer data);
+static void   subsmp_callback            (GtkWidget *widget, 
+					  gpointer data);
+static void   dct_callback               (GtkWidget *widget, 
+					  gpointer data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -272,33 +279,33 @@ query ()
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,   "filename",     "The name of the file to load" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to load" },
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,   "image",         "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static int nload_args        = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
-    { PARAM_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters (0/1)" },
-    { PARAM_INT32, "progressive", "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
-    { PARAM_STRING, "comment", "Image comment" },
-    { PARAM_INT32, "subsmp", "The subsampling option number" },
-    { PARAM_INT32, "baseline", "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
-    { PARAM_INT32, "restart", "Frequency of restart markers (in rows, 0 = no restart markers)" },
-    { PARAM_INT32, "dct", "DCT algorithm to use (speed/quality tradeoff)" }
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { PARAM_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
+    { PARAM_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
+    { PARAM_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
+    { PARAM_INT32,    "progressive",  "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
+    { PARAM_STRING,   "comment",      "Image comment" },
+    { PARAM_INT32,    "subsmp",       "The subsampling option number" },
+    { PARAM_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
+    { PARAM_INT32,    "restart",      "Frequency of restart markers (in rows, 0 = no restart markers)" },
+    { PARAM_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -329,7 +336,7 @@ query ()
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_jpeg_load", "jpg,jpeg", "", "6,string,JFIF");
-  gimp_register_save_handler ("file_jpeg_save", "jpg,jpeg", "");
+  gimp_register_save_handler       ("file_jpeg_save", "jpg,jpeg", "");
 }
 
 static void
@@ -343,10 +350,14 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+  gint32 drawable_ID;
+  gint32 orig_image_ID;
+  gint32 display_ID = -1;
 #ifdef GIMP_HAVE_PARASITES
   Parasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   int err;
+  gboolean export = FALSE;
 
   run_mode = param[0].data.d_int32;
 
@@ -377,19 +388,43 @@ run (char    *name,
     {
       INIT_I18N_UI();
 
-      image_ID = param[1].data.d_int32;
-      if(image_comment) {
-	g_free(image_comment);
-	image_comment=NULL;
-      }
+      image_ID = orig_image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+       /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
+	  if (export) 
+	    {
+	      display_ID = gimp_display_new (image_ID);
+	      gimp_displays_flush ();
+	    }
+	  break;
+	default:
+	  break;
+	}
+      
+      if (image_comment) 
+	{
+	  g_free (image_comment);
+	  image_comment = NULL;
+	}
 #ifdef GIMP_HAVE_PARASITES
-      parasite = gimp_image_find_parasite(image_ID, "gimp-comment");
-      if (parasite) {
-        image_comment = g_strdup(parasite->data);
-	parasite_free(parasite);
-      }
+      parasite = gimp_image_find_parasite (orig_image_ID, "gimp-comment");
+      if (parasite) 
+	{
+	  image_comment = g_strdup (parasite->data);
+	  parasite_free (parasite);
+	}
 #endif /* GIMP_HAVE_PARASITES */
-      if (!image_comment) image_comment = g_strdup(DEFAULT_COMMENT);
+      if (!image_comment) 
+	image_comment = g_strdup (DEFAULT_COMMENT);
+
       jsvals.quality = DEFAULT_QUALITY;
       jsvals.smoothing = DEFAULT_SMOOTHING;
       jsvals.optimize = DEFAULT_OPTIMIZE;
@@ -408,38 +443,44 @@ run (char    *name,
 
 #ifdef GIMP_HAVE_PARASITES
 	  /* load up the previously used values */
-	  parasite = gimp_image_find_parasite(image_ID, "jpeg-save-options");
+	  parasite = gimp_image_find_parasite (orig_image_ID, "jpeg-save-options");
 	  if (parasite)
-	  {
-	    jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
-	    jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
-	    jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
-	    jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
-	    jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
-	    jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
-	    jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
-	    jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
-	    jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
-	    parasite_free(parasite);
-	  }
+	    {
+	      jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
+	      jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
+	      jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
+	      jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
+	      jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
+	      jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
+	      jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
+	      jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
+	      jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
+	      parasite_free(parasite);
+	    }
 #endif /* GIMP_HAVE_PARASITES */
 	  
-	  /* we start an undo_group and immediately freeze undo saving
-	     so that we can avoid sucking up tile cache with our unneeded
-	     preview steps. */
-	  gimp_undo_push_group_start (image_ID);
-	  gimp_image_freeze_undo(image_ID);
-
+	  if (!export)
+	    {
+	      /* we start an undo_group and immediately freeze undo saving
+		 so that we can avoid sucking up tile cache with our unneeded
+		 preview steps. */
+	      gimp_undo_push_group_start (image_ID);
+	      gimp_image_freeze_undo (image_ID);
+	    }
 	  /* prepare for the preview */
 	  image_ID_global = image_ID;
-	  drawable_ID_global = param[2].data.d_int32;
+	  orig_image_ID_global = orig_image_ID;
+	  drawable_ID_global = drawable_ID;
  
 	  /*  First acquire information with a dialog  */
 	  err = save_dialog ();
-
-	  /* thaw undo saving and end the undo_group. */
-	  gimp_image_thaw_undo(image_ID);
-	  gimp_undo_push_group_end (image_ID);
+ 
+	  if (!export)
+	    {
+	      /* thaw undo saving and end the undo_group. */
+	      gimp_image_thaw_undo (image_ID);
+	      gimp_undo_push_group_end (image_ID); 
+	    }
 
           if (!err)
 	    return;
@@ -449,25 +490,26 @@ run (char    *name,
 	  /*  Make sure all the arguments are there!  */
 	  /*  pw - added two more progressive and comment */
 	  /*  sg - added subsampling, preview, baseline, restarts and DCT */
-	  if (nparams != 10)
+	  if (nparams != 14)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
-	      jsvals.quality = param[5].data.d_float;
-	      jsvals.smoothing = param[6].data.d_float;
-	      jsvals.optimize = param[7].data.d_int32;
+	      jsvals.quality     = param[5].data.d_float;
+	      jsvals.smoothing   = param[6].data.d_float;
+	      jsvals.optimize    = param[7].data.d_int32;
 #ifdef HAVE_PROGRESSIVE_JPEG
 	      jsvals.progressive = param[8].data.d_int32;
 #endif /* HAVE_PROGRESSIVE_JPEG */
-	      jsvals.baseline = param[11].data.d_int32;
-	      jsvals.subsmp = param[10].data.d_int32;
-	      jsvals.restart = param[12].data.d_int32;
-	      jsvals.dct = param[13].data.d_int32;
-	      jsvals.preview = FALSE;
+	      jsvals.baseline    = param[11].data.d_int32;
+	      jsvals.subsmp      = param[10].data.d_int32;
+	      jsvals.restart     = param[12].data.d_int32;
+	      jsvals.dct         = param[13].data.d_int32;
+	      jsvals.preview     = FALSE;
 
 	      /* free up the default -- wasted some effort earlier */
-	      if(image_comment) g_free(image_comment);
-	      image_comment=g_strdup(param[9].data.d_string);
+	      if (image_comment) 
+		g_free (image_comment);
+	      image_comment = g_strdup (param[9].data.d_string);
 	    }
 	  if (status == STATUS_SUCCESS &&
 	      (jsvals.quality < 0.0 || jsvals.quality > 1.0))
@@ -487,20 +529,20 @@ run (char    *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 #ifdef GIMP_HAVE_PARASITES
-	  parasite = gimp_image_find_parasite(image_ID, "jpeg-save-options");
+	  parasite = gimp_image_find_parasite (orig_image_ID, "jpeg-save-options");
 	  if (parasite)
-	  {
-	    jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
-	    jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
-	    jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
-	    jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
-	    jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
-	    jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
-	    jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
-	    jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
-	    jsvals.preview     = FALSE;
-	    parasite_free(parasite);
-	  }
+	    {
+	      jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
+	      jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
+	      jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
+	      jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
+	      jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
+	      jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
+	      jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
+	      jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
+	      jsvals.preview     = FALSE;
+	      parasite_free(parasite);
+	    }
 #endif /* GIMP_HAVE_PARASITES */
 	  break;
 
@@ -510,8 +552,9 @@ run (char    *name,
 
       *nreturn_vals = 1;
       if (save_image (param[3].data.d_string,
-		      param[1].data.d_int32,
-		      param[2].data.d_int32,
+		      image_ID,
+		      drawable_ID,
+		      orig_image_ID,
 		      FALSE))
 	{
 	  /*  Store mvals data  */
@@ -522,35 +565,42 @@ run (char    *name,
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
+      if (export)
+	{
+	  /* if the image was exported, delete the new display */
+	  /* according to the documentation, this should also delete the image */
+	  
+	  if (display_ID > -1)
+	    gimp_display_delete (display_ID);
+	  else
+	    gimp_image_delete (image_ID);
+	}
+
 #ifdef GIMP_HAVE_PARASITES
 
       /* pw - now we need to change the defaults to be whatever
        * was used to save this image.  Dump the old parasites
        * and add new ones. */
       
-      gimp_image_detach_parasite(image_ID,"gimp-comment");
-      if(strlen(image_comment)) {
-	parasite=parasite_new("gimp-comment",
-			      PARASITE_PERSISTENT,
-			      strlen(image_comment)+1,
-			      image_comment);
-	gimp_image_attach_parasite(image_ID,parasite);
-	parasite_free(parasite);
+      gimp_image_detach_parasite (orig_image_ID, "gimp-comment");
+      if (strlen (image_comment)) 
+	{
+	  parasite = parasite_new ("gimp-comment",
+				   PARASITE_PERSISTENT,
+				   strlen (image_comment) + 1,
+				   image_comment);
+	  gimp_image_attach_parasite (orig_image_ID, parasite);
+	  parasite_free (parasite);
       }
-      gimp_image_detach_parasite(image_ID, "jpeg-save-options");
+      gimp_image_detach_parasite (orig_image_ID, "jpeg-save-options");
       
-      parasite=parasite_new("jpeg-save-options",0,sizeof(jsvals),&jsvals);
-      gimp_image_attach_parasite(image_ID,parasite);
-      parasite_free(parasite);
-    
-#endif /* Have Parasites */  
-      
+      parasite = parasite_new ("jpeg-save-options", 0, sizeof (jsvals), &jsvals);
+      gimp_image_attach_parasite (orig_image_ID, parasite);
+      parasite_free (parasite);
 
-      
+#endif /* Have Parasites */  
     }
 }
-
-
 
 
 /* Read next byte */
@@ -559,10 +609,11 @@ jpeg_getc (j_decompress_ptr cinfo)
 {
   struct jpeg_source_mgr * datasrc = cinfo->src;
 
-  if (datasrc->bytes_in_buffer == 0) {
-    if (! (*datasrc->fill_input_buffer) (cinfo))
-      ERREXIT(cinfo, JERR_CANT_SUSPEND);
-  }
+  if (datasrc->bytes_in_buffer == 0) 
+    {
+      if (! (*datasrc->fill_input_buffer) (cinfo))
+	ERREXIT (cinfo, JERR_CANT_SUSPEND);
+    }
   datasrc->bytes_in_buffer--;
   return *datasrc->next_input_byte++;
 }
@@ -576,7 +627,7 @@ jpeg_getc (j_decompress_ptr cinfo)
  * This replaces the library's built-in processor, which just skips the marker.
  * Note this code relies on a non-suspending data source.
  */
-static GString *local_image_comments=NULL;
+static GString *local_image_comments = NULL;
 
 static boolean
 COM_handler (j_decompress_ptr cinfo)
@@ -596,10 +647,10 @@ COM_handler (j_decompress_ptr cinfo)
     g_string_append_c (local_image_comments, '\n');
 
   while (length-- > 0)
-  {
-    ch = jpeg_getc (cinfo);
-    g_string_append_c (local_image_comments, ch);
-  }
+    {
+      ch = jpeg_getc (cinfo);
+      g_string_append_c (local_image_comments, ch);
+    }
 
   return TRUE;
 }
@@ -629,7 +680,9 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (char *filename, GRunModeType runmode, int preview)
+load_image (char         *filename, 
+	    GRunModeType  runmode, 
+	    int           preview)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -712,37 +765,40 @@ load_image (char *filename, GRunModeType runmode, int preview)
 #ifdef GIMP_HAVE_PARASITES
   if (!preview) {
     /* if we had any comments then make a parasite for them */
-    if(local_image_comments) {
-      char *string=local_image_comments->str;
-      g_string_free(local_image_comments,FALSE);
-      comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
-				      strlen(string)+1,string);
-    } else {
-      comment_parasite=NULL;
-    }
+    if (local_image_comments) 
+      {
+	char *string = local_image_comments->str;
+	g_string_free (local_image_comments,FALSE);
+	comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
+					 strlen (string) + 1, string);
+      } 
+    else 
+      {
+	comment_parasite = NULL;
+      }
   
     /* pw - figuring out what the saved values were is non-trivial.
      * They don't seem to be in the cinfo structure. For now, I will
      * just use the defaults, but if someone figures out how to derive
      * them this is the place to store them. */
 
-    local_save_vals.quality=DEFAULT_QUALITY;
-    local_save_vals.smoothing=DEFAULT_SMOOTHING;
-    local_save_vals.optimize=DEFAULT_OPTIMIZE;
+    local_save_vals.quality     = DEFAULT_QUALITY;
+    local_save_vals.smoothing   = DEFAULT_SMOOTHING;
+    local_save_vals.optimize    = DEFAULT_OPTIMIZE;
   
 #ifdef HAVE_PROGRESSIVE_JPEG 
-    local_save_vals.progressive=cinfo.progressive_mode;
+    local_save_vals.progressive = cinfo.progressive_mode;
 #else
-    local_save_vals.progressive=0;
+    local_save_vals.progressive = 0;
 #endif /* HAVE_PROGRESSIVE_JPEG */
-    local_save_vals.baseline = DEFAULT_BASELINE;
-    local_save_vals.subsmp = DEFAULT_SUBSMP;   /* sg - this _is_ there, but I'm too lazy */ 
-    local_save_vals.restart = DEFAULT_RESTART;
-    local_save_vals.dct = DEFAULT_DCT;
-    local_save_vals.preview = DEFAULT_PREVIEW;
+    local_save_vals.baseline    = DEFAULT_BASELINE;
+    local_save_vals.subsmp      = DEFAULT_SUBSMP;   /* sg - this _is_ there, but I'm too lazy */ 
+    local_save_vals.restart     = DEFAULT_RESTART;
+    local_save_vals.dct         = DEFAULT_DCT;
+    local_save_vals.preview     = DEFAULT_PREVIEW;
   
-    vals_parasite = parasite_new("jpeg-save-options", 0,
-			         sizeof(local_save_vals), &local_save_vals);
+    vals_parasite = parasite_new ("jpeg-save-options", 0,
+				  sizeof (local_save_vals), &local_save_vals);
   } 
 #endif /* GIMP_HAVE_PARASITES */
   
@@ -797,24 +853,30 @@ load_image (char *filename, GRunModeType runmode, int preview)
       gimp_quit ();
     }
 
-  if (preview) {
-    image_ID = image_ID_global;
-  } else {
-    image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height, image_type);
-    gimp_image_set_filename (image_ID, filename);
-  }
+  if (preview) 
+    {
+      image_ID = image_ID_global;
+    } 
+  else 
+    {
+      image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height, image_type);
+      gimp_image_set_filename (image_ID, filename);
+    }
 
-  if (preview) {
-    layer_ID_global = layer_ID = gimp_layer_new (image_ID, _("JPEG preview"),
-                               cinfo.output_width,
-                               cinfo.output_height,
-                               layer_type, 100, NORMAL_MODE);
-  } else {
-    layer_ID = gimp_layer_new (image_ID, _("Background"),
-			       cinfo.output_width,
-			       cinfo.output_height,
-			       layer_type, 100, NORMAL_MODE);
-  }
+  if (preview) 
+    {
+      layer_ID_global = layer_ID = gimp_layer_new (image_ID, _("JPEG preview"),
+						   cinfo.output_width,
+						   cinfo.output_height,
+						   layer_type, 100, NORMAL_MODE);
+    } 
+  else 
+    {
+      layer_ID = gimp_layer_new (image_ID, _("Background"),
+				 cinfo.output_width,
+				 cinfo.output_height,
+				 layer_type, 100, NORMAL_MODE);
+    }
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -835,24 +897,24 @@ load_image (char *filename, GRunModeType runmode, int preview)
 
     switch (cinfo.density_unit) {
     case 0: /* unknown */
-	asymmetry = xresolution / yresolution;
-	xresolution = 72 * asymmetry;
-	yresolution = 72;
-	break;
-
+      asymmetry = xresolution / yresolution;
+      xresolution = 72 * asymmetry;
+      yresolution = 72;
+      break;
+      
     case 1: /* dots per inch */
-	break;
+      break;
 
     case 2: /* dots per cm */
-	xresolution *= 2.54;
-	yresolution *= 2.54;
-	break;
-
+      xresolution *= 2.54;
+      yresolution *= 2.54;
+      break;
+      
     default:
-	g_message (_("unknown density unit %d\nassuming dots per inch"),
-		   cinfo.density_unit);
-	break;
-      }
+      g_message (_("unknown density unit %d\nassuming dots per inch"),
+		 cinfo.density_unit);
+      break;
+    }
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
@@ -955,16 +1017,19 @@ load_image (char *filename, GRunModeType runmode, int preview)
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
      there was no image. */
   
-  if (!preview) {
-    if(comment_parasite){
-      gimp_image_attach_parasite(image_ID, comment_parasite);
-      parasite_free(comment_parasite);
+  if (!preview) 
+    {
+      if (comment_parasite)
+	{
+	  gimp_image_attach_parasite (image_ID, comment_parasite);
+	  parasite_free (comment_parasite);
+	}
+      if (vals_parasite)
+	{
+	  gimp_image_attach_parasite (image_ID, vals_parasite);
+	  parasite_free (vals_parasite);
+	}   
     }
-    if(vals_parasite){
-      gimp_image_attach_parasite(image_ID, vals_parasite);
-      parasite_free(vals_parasite);
-    }   
-  }
 
   return image_ID;
 }
@@ -1010,15 +1075,16 @@ background_jpeg_save (gpointer *ptr)
     if (pp->drawable) gimp_drawable_detach (pp->drawable);
 
     /* display the preview stuff */
-    if (!pp->abort_me) {
-      stat(pp->file_name, &buf);
-      sprintf(temp, _("Size: %lu bytes (%02.01f kB)"), buf.st_size,
-       (float)(buf.st_size) / 1024.0f);
-      gtk_label_set_text (GTK_LABEL (preview_size), temp);
-
-      /* and load the preview */
-      load_image (pp->file_name, RUN_NONINTERACTIVE, TRUE);
-    }
+    if (!pp->abort_me) 
+      {
+	stat (pp->file_name, &buf);
+	sprintf (temp, _("Size: %lu bytes (%02.01f kB)"), buf.st_size,
+		 (float)(buf.st_size) / 1024.0f);
+	gtk_label_set_text (GTK_LABEL (preview_size), temp);
+	
+	/* and load the preview */
+	load_image (pp->file_name, RUN_NONINTERACTIVE, TRUE);
+      }
 
     /* we cleanup here (load_image doesn't run in the background) */
     unlink (pp->file_name);
@@ -1037,7 +1103,8 @@ background_jpeg_save (gpointer *ptr)
       {
         yend = pp->cinfo.next_scanline + pp->tile_height;
         yend = MIN (yend, pp->cinfo.image_height);
-        gimp_pixel_rgn_get_rect (&pp->pixel_rgn, pp->data, 0, pp->cinfo.next_scanline, pp->cinfo.image_width,
+        gimp_pixel_rgn_get_rect (&pp->pixel_rgn, pp->data, 0, 
+				 pp->cinfo.next_scanline, pp->cinfo.image_width,
                                  (yend - pp->cinfo.next_scanline));
         pp->src = pp->data;
       }
@@ -1065,6 +1132,7 @@ static gint
 save_image (char   *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
+	    gint32  orig_image_ID,
 	    int     preview)
 {
   GPixelRgn pixel_rgn;
@@ -1085,13 +1153,14 @@ save_image (char   *filename,
   drawable_type = gimp_drawable_type (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  if (!preview) {
-    name = malloc (strlen (filename) + 11);
-
-    sprintf (name, _("Saving %s:"), filename);
-    gimp_progress_init (name);
-    free (name);
-  }
+  if (!preview) 
+    {
+      name = malloc (strlen (filename) + 11);
+      
+      sprintf (name, _("Saving %s:"), filename);
+      gimp_progress_init (name);
+      free (name);
+    }
 
   /* Step 1: allocate and initialize JPEG compression object */
 
@@ -1187,68 +1256,71 @@ save_image (char   *filename,
   cinfo.optimize_coding = jsvals.optimize;
 
 #ifdef HAVE_PROGRESSIVE_JPEG
-  if(jsvals.progressive) {
-    jpeg_simple_progression(&cinfo);
-  }
+  if (jsvals.progressive) 
+    {
+      jpeg_simple_progression (&cinfo);
+    }
 #endif /* HAVE_PROGRESSIVE_JPEG */
 
-  switch (jsvals.subsmp) {
-  case 0:
-  default:
-    cinfo.comp_info[0].h_samp_factor = 2;
-    cinfo.comp_info[0].v_samp_factor = 2;
-    cinfo.comp_info[1].h_samp_factor = 1;
-    cinfo.comp_info[1].v_samp_factor = 1;
-    cinfo.comp_info[2].h_samp_factor = 1;
-    cinfo.comp_info[2].v_samp_factor = 1;
-    break;
-  case 1:
-    cinfo.comp_info[0].h_samp_factor = 2;
-    cinfo.comp_info[0].v_samp_factor = 1;
-    cinfo.comp_info[1].h_samp_factor = 1;
-    cinfo.comp_info[1].v_samp_factor = 1;
-    cinfo.comp_info[2].h_samp_factor = 1;
-    cinfo.comp_info[2].v_samp_factor = 1;
-    break;
-  case 2:
-    cinfo.comp_info[0].h_samp_factor = 1;
-    cinfo.comp_info[0].v_samp_factor = 1;
-    cinfo.comp_info[1].h_samp_factor = 1;
-    cinfo.comp_info[1].v_samp_factor = 1;
-    cinfo.comp_info[2].h_samp_factor = 1;
-    cinfo.comp_info[2].v_samp_factor = 1;
-    break;
-  }
-
+  switch (jsvals.subsmp) 
+    {
+    case 0:
+    default:
+      cinfo.comp_info[0].h_samp_factor = 2;
+      cinfo.comp_info[0].v_samp_factor = 2;
+      cinfo.comp_info[1].h_samp_factor = 1;
+      cinfo.comp_info[1].v_samp_factor = 1;
+      cinfo.comp_info[2].h_samp_factor = 1;
+      cinfo.comp_info[2].v_samp_factor = 1;
+      break;
+    case 1:
+      cinfo.comp_info[0].h_samp_factor = 2;
+      cinfo.comp_info[0].v_samp_factor = 1;
+      cinfo.comp_info[1].h_samp_factor = 1;
+      cinfo.comp_info[1].v_samp_factor = 1;
+      cinfo.comp_info[2].h_samp_factor = 1;
+      cinfo.comp_info[2].v_samp_factor = 1;
+      break;
+    case 2:
+      cinfo.comp_info[0].h_samp_factor = 1;
+      cinfo.comp_info[0].v_samp_factor = 1;
+      cinfo.comp_info[1].h_samp_factor = 1;
+      cinfo.comp_info[1].v_samp_factor = 1;
+      cinfo.comp_info[2].h_samp_factor = 1;
+      cinfo.comp_info[2].v_samp_factor = 1;
+      break;
+    }
+  
   cinfo.restart_interval = 0;
   cinfo.restart_in_rows = jsvals.restart;
 
-  switch (jsvals.dct) {
-  case 0:
-  default:
-    cinfo.dct_method = JDCT_ISLOW;
-    break;
-  case 1:
-    cinfo.dct_method = JDCT_IFAST;
-    break;
-  case 2:
-    cinfo.dct_method = JDCT_FLOAT;
-    break;
-  }
+  switch (jsvals.dct) 
+    {
+    case 0:
+    default:
+      cinfo.dct_method = JDCT_ISLOW;
+      break;
+    case 1:
+      cinfo.dct_method = JDCT_IFAST;
+      break;
+    case 2:
+      cinfo.dct_method = JDCT_FLOAT;
+      break;
+    }
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     double xresolution;
     double yresolution;
 
-    gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+    gimp_image_get_resolution (orig_image_ID, &xresolution, &yresolution);
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
-    {
-      cinfo.density_unit = 1;  /* dots per inch */
-      cinfo.X_density = xresolution;
-      cinfo.Y_density = yresolution;
-    }
+      {
+	cinfo.density_unit = 1;  /* dots per inch */
+	cinfo.X_density = xresolution;
+	cinfo.Y_density = yresolution;
+      }
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
   
@@ -1260,12 +1332,13 @@ save_image (char   *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
   /* Step 4.1: Write the comment out - pw */
-  if(image_comment) {
-    jpeg_write_marker(&cinfo,
-		      JPEG_COM,
-		      image_comment,
-		      strlen(image_comment));
-  }
+  if(image_comment) 
+    {
+      jpeg_write_marker (&cinfo,
+			 JPEG_COM,
+			 image_comment,
+			 strlen (image_comment));
+    }
     
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
@@ -1289,34 +1362,35 @@ save_image (char   *filename,
    * not duplicate code in the future; for now, it's OK
    */
 
-  if (preview) {
-    preview_persistent *pp = malloc (sizeof (preview_persistent));
-    if (pp == NULL) return FALSE;
-
-    /* pass all the information we need */
-    pp->cinfo = cinfo;
-    pp->tile_height = gimp_tile_height();
-    pp->data = data;
-    pp->outfile = outfile;
-    pp->has_alpha = has_alpha;
-    pp->rowstride = rowstride;
-    pp->temp = temp;
-    pp->data = data;
-    pp->drawable = drawable;
-    pp->pixel_rgn = pixel_rgn;
-    pp->src = NULL;
-    pp->file_name = filename;
-
-    pp->abort_me = 0;
-    abort_me = &(pp->abort_me);
-
-    jerr.pub.error_exit = background_error_exit;
+  if (preview) 
+    {
+      preview_persistent *pp = malloc (sizeof (preview_persistent));
+      if (pp == NULL) return FALSE;
+      
+      /* pass all the information we need */
+      pp->cinfo = cinfo;
+      pp->tile_height = gimp_tile_height();
+      pp->data = data;
+      pp->outfile = outfile;
+      pp->has_alpha = has_alpha;
+      pp->rowstride = rowstride;
+      pp->temp = temp;
+      pp->data = data;
+      pp->drawable = drawable;
+      pp->pixel_rgn = pixel_rgn;
+      pp->src = NULL;
+      pp->file_name = filename;
+      
+      pp->abort_me = 0;
+      abort_me = &(pp->abort_me);
+      
+      jerr.pub.error_exit = background_error_exit;
  
-    gtk_idle_add ((GtkFunction) background_jpeg_save, (gpointer *)pp);
-
-    /* background_jpeg_save() will cleanup as needed */
-    return TRUE;
-  } 
+      gtk_idle_add ((GtkFunction) background_jpeg_save, (gpointer *)pp);
+      
+      /* background_jpeg_save() will cleanup as needed */
+      return TRUE;
+    } 
 
   while (cinfo.next_scanline < cinfo.image_height)
     {
@@ -1376,44 +1450,67 @@ make_preview ()
 
   destroy_preview ();
 
-  if (jsvals.preview) {
-    tn = tempnam(NULL, "gimp");	/* user temp dir? */
-    save_image(tn, image_ID_global, drawable_ID_global, TRUE);
-  } else {
-    gtk_label_set_text (GTK_LABEL (preview_size), _("Size: unknown"));
-    gtk_widget_draw (preview_size, NULL);
-
-    gimp_displays_flush ();
-    gdk_flush();
-  }
+  if (jsvals.preview) 
+    {
+      tn = tempnam(NULL, "gimp");	/* user temp dir? */
+      save_image (tn, image_ID_global, drawable_ID_global, orig_image_ID_global, TRUE);
+    } 
+  else 
+    {
+      gtk_label_set_text (GTK_LABEL (preview_size), _("Size: unknown"));
+      gtk_widget_draw (preview_size, NULL);
+      
+      gimp_displays_flush ();
+      gdk_flush();
+    }
 }
 
 static void
 destroy_preview ()
 {
-  if (abort_me) {
-    *abort_me = 1;   /* signal the background save to stop */
-  }
-  if (drawable_global) {
-    gimp_drawable_detach (drawable_global);
-    drawable_global = NULL;
-  }
-  if (layer_ID_global != -1 && image_ID_global != -1) {
-    gimp_image_remove_layer (image_ID_global, layer_ID_global);
-
-    /* gimp_layer_delete(layer_ID_global); */
-    layer_ID_global = -1;
-  }
+  if (abort_me) 
+    {
+      *abort_me = 1;   /* signal the background save to stop */
+    }
+  if (drawable_global) 
+    {
+      gimp_drawable_detach (drawable_global);
+      drawable_global = NULL;
+    }
+  if (layer_ID_global != -1 && image_ID_global != -1) 
+    {
+      gimp_image_remove_layer (image_ID_global, layer_ID_global);
+      
+      /* gimp_layer_delete(layer_ID_global); */
+      layer_ID_global = -1;
+    }
 }
 
 static void
-add_menu_item (GtkWidget *menu, char *label, guint op_no, MenuItemCallback callback)
+add_menu_item (GtkWidget        *menu, 
+	       char             *label, 
+	       guint             op_no, 
+	       MenuItemCallback  callback)
 {
   GtkWidget *menu_item = gtk_menu_item_new_with_label (label);
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-                            (GtkSignalFunc) callback, &op_no);
+		      (GtkSignalFunc) callback, &op_no);
   gtk_widget_show (menu_item);
+}
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("jpeg");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint
@@ -1447,16 +1544,6 @@ save_dialog ()
   GtkWidget *prv_frame;
   GtkWidget *prv_table;
   GDrawableType dtype;
-
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Save as Jpeg"));
@@ -1554,11 +1641,11 @@ save_dialog ()
   scale_data = gtk_adjustment_new ((jsvals.restart == 0) ? 1 : jsvals.restart, 1, 64, 1, 1, 0.0);
   restart_markers_scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 
-  restart = gtk_check_button_new_with_label(_("Restart markers"));
-  gtk_table_attach(GTK_TABLE(table), restart, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(restart), "toggled",
-                     (GtkSignalFunc) save_restart_toggle_update, scale_data);
-  gtk_widget_show(restart);
+  restart = gtk_check_button_new_with_label (_("Restart markers"));
+  gtk_table_attach (GTK_TABLE (table), restart, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (restart), "toggled",
+		      (GtkSignalFunc) save_restart_toggle_update, scale_data);
+  gtk_widget_show (restart);
 
   restart_markers_label = gtk_label_new (_("Restart frequency (rows)"));
   gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 0.0, 0.5);
@@ -1574,40 +1661,39 @@ save_dialog ()
                       (GtkSignalFunc) save_restart_update,
                       restart);
 
-  gtk_widget_set_sensitive(restart_markers_label, (jsvals.restart ? TRUE : FALSE));
-  gtk_widget_set_sensitive(restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_label, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
   
   gtk_widget_show (restart_markers_label);
   gtk_widget_show (restart_markers_scale);
 
-  toggle = gtk_check_button_new_with_label(_("Optimize"));
-  gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 4, 5, GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-                     (GtkSignalFunc)save_optimize_update, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
+  toggle = gtk_check_button_new_with_label (_("Optimize"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5, GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      (GtkSignalFunc)save_optimize_update, NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
   gtk_widget_show(toggle);
 
-
-  progressive = gtk_check_button_new_with_label(_("Progressive"));
-  gtk_table_attach(GTK_TABLE(table), progressive, 0, 2, 5, 6,
-		   GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(progressive), "toggled",
-                     (GtkSignalFunc)save_progressive_toggle, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(progressive),
-			       jsvals.progressive);
-  gtk_widget_show(progressive);
+  progressive = gtk_check_button_new_with_label (_("Progressive"));
+  gtk_table_attach (GTK_TABLE (table), progressive, 0, 2, 5, 6,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
+		      (GtkSignalFunc)save_progressive_toggle, NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (progressive),
+				jsvals.progressive);
+  gtk_widget_show (progressive);
 
 #ifndef HAVE_PROGRESSIVE_JPEG
-  gtk_widget_set_sensitive(progressive,FALSE);
+  gtk_widget_set_sensitive (progressive,FALSE);
 #endif
   
-  baseline = gtk_check_button_new_with_label(_("Force baseline JPEG (readable by all decoders)"));
-  gtk_table_attach(GTK_TABLE(table), baseline, 0, 2, 6, 7,
-                   GTK_FILL, 0, 0, 0);
-  gtk_signal_connect(GTK_OBJECT(baseline), "toggled",
-                     (GtkSignalFunc)save_baseline_toggle, NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(baseline),
-                               jsvals.baseline);
+  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (readable by all decoders)"));
+  gtk_table_attach (GTK_TABLE (table), baseline, 0, 2, 6, 7,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
+		      (GtkSignalFunc)save_baseline_toggle, NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(baseline),
+				jsvals.baseline);
   gtk_widget_show(baseline);
 
   /* build option menu (code taken from app/buildmenu.c) */
@@ -1645,15 +1731,15 @@ save_dialog ()
   gtk_option_menu_set_menu (GTK_OPTION_MENU (dct_menu), menu);
 
   dtype = gimp_drawable_type (drawable_ID_global);
-  if (dtype != RGB_IMAGE && dtype != RGBA_IMAGE) {
-    gtk_widget_set_sensitive (subsmp_menu, FALSE);
-  }
+  if (dtype != RGB_IMAGE && dtype != RGBA_IMAGE) 
+    {
+      gtk_widget_set_sensitive (subsmp_menu, FALSE);
+    }
 
   com_frame = gtk_frame_new (_("Image Comments"));
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (com_frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), com_frame, TRUE, TRUE, 0
-);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), com_frame, TRUE, TRUE, 0);
   com_table = gtk_table_new (1, 1, FALSE);
   gtk_container_border_width (GTK_CONTAINER (com_table), 10);
   gtk_container_add (GTK_CONTAINER (com_frame), com_table);
@@ -1662,13 +1748,13 @@ save_dialog ()
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
   gtk_widget_set_usize(text,-1,3); /* //HB: restrict to 3 line height 
                                     * to allow 800x600 mode */
-  if(image_comment) 
+  if (image_comment) 
     gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,image_comment,-1);
   gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-
-    /* Add a vertical scrollbar to the GtkText widget */
+  
+  /* Add a vertical scrollbar to the GtkText widget */
   vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
   gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -1681,7 +1767,7 @@ save_dialog ()
    * the comment text area to the comment string.  See the
    * save-ok-callback for more details.  */
   
-  gtk_object_set_data((GtkObject *)dlg,"text",text); 
+  gtk_object_set_data (GTK_OBJECT (dlg), "text", text); 
   
   gtk_widget_show (text);
   gtk_widget_show (com_frame);
@@ -1717,16 +1803,17 @@ save_ok_callback (GtkWidget *widget,
   jsint.run = TRUE;
 
   /* pw - get the comment text object and grab it's data */
-  text=gtk_object_get_data(GTK_OBJECT(data),"text");
-  if(image_comment!=NULL) {
-    g_free(image_comment);
-    image_comment=NULL;
-  }
+  text = gtk_object_get_data (GTK_OBJECT (data), "text");
+  if (image_comment != NULL) 
+    {
+      g_free (image_comment);
+      image_comment = NULL;
+    }
   
   /* pw - gtk_editable_get_chars allocates a copy of the string, so
    * don't worry about the gtk_widget_destroy killing it.  */
 
-  image_comment=gtk_editable_get_chars(GTK_EDITABLE (text),0,-1);
+  image_comment = gtk_editable_get_chars (GTK_EDITABLE (text), 0, -1);
   
   gtk_widget_destroy (GTK_WIDGET (data));
 }
@@ -1736,7 +1823,7 @@ save_scale_update (GtkAdjustment *adjustment,
 		   double        *scale_val)
 {
   *scale_val = adjustment->value;
-  make_preview();
+  make_preview ();
 }
 
 static void
@@ -1752,42 +1839,42 @@ save_restart_update (GtkAdjustment *adjustment,
 {
   jsvals.restart = GTK_TOGGLE_BUTTON (toggle)->active ? adjustment->value : 0;
 
-  gtk_widget_set_sensitive(restart_markers_label, (jsvals.restart ? TRUE : FALSE));
-  gtk_widget_set_sensitive(restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_label, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
           
-  make_preview();
+  make_preview ();
 }
 
 static void
 save_optimize_update(GtkWidget *widget,
 		     gpointer  data)
 {
-  jsvals.optimize = GTK_TOGGLE_BUTTON(widget)->active;
-  make_preview();
+  jsvals.optimize = GTK_TOGGLE_BUTTON (widget)->active;
+  make_preview ();
 }
 
 static void
 save_progressive_toggle(GtkWidget *widget,
 			gpointer  data)
 {
-  jsvals.progressive = GTK_TOGGLE_BUTTON(widget)->active;
-  make_preview();
+  jsvals.progressive = GTK_TOGGLE_BUTTON (widget)->active;
+  make_preview ();
 }
 
 static void
 save_baseline_toggle(GtkWidget *widget,
 		     gpointer  data)
 {
-  jsvals.baseline = GTK_TOGGLE_BUTTON(widget)->active;
-  make_preview();
+  jsvals.baseline = GTK_TOGGLE_BUTTON (widget)->active;
+  make_preview ();
 }
 
 static void
 save_preview_toggle(GtkWidget *widget,
                     gpointer  data)
 {
-  jsvals.preview = GTK_TOGGLE_BUTTON(widget)->active;
-  make_preview();
+  jsvals.preview = GTK_TOGGLE_BUTTON (widget)->active;
+  make_preview ();
 }
 
 static void
@@ -1795,7 +1882,7 @@ subsmp_callback (GtkWidget *widget,
 		 gpointer  data)
 {
   jsvals.subsmp = *((guchar *)data);
-  make_preview();
+  make_preview ();
 }
 
 static void
@@ -1803,6 +1890,6 @@ dct_callback (GtkWidget *widget,
 	      gpointer  data)
 {
   jsvals.dct = *((guchar *)data);
-  make_preview();
+  make_preview ();
 }
 

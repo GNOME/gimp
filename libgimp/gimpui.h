@@ -21,7 +21,8 @@
 
 
 #include <gtk/gtk.h>
-#include <libgimp/gimpmenu.h>
+#include "libgimp/gimpmenu.h"
+#include "libgimp/gimpexport.h"
 
 
 #endif /* __GIMP_UI_H__ */

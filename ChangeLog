@@ -1,3 +1,34 @@
+1999-10-03  Sven Neumann <sven@gimp.org>
+
+	* app/channel_ops.c: copy resolution and unit information when duplicating
+	an image
+
+	* libgimp/gimpimage.c
+    * libgimp/gimp.h: some wrappers for PDB functions
+
+    * libgimp/gimpexport.[ch]: new files
+	This fixes a longstanding bug and the MostFAQ: When saving a file, the
+	file-save plug-ins can use gimp_export_image() to get the file converted
+	to a format they can handle. The conversion is performed on a duplicate
+	of the image; the original image stays as is.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* po/POTFILES.in: integrate the new files
+
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/bmp/bmp.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/gif.c
+    * plug-ins/common/jpeg.c
+    * plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/tiff.c
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print.c: Use the new export functionality. The other save
+	plug-ins will follow...
+
 1999-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/fileops.c

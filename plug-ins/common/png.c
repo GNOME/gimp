@@ -46,6 +46,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
@@ -74,15 +75,16 @@ typedef struct
  * Local functions...
  */
 
-static void	query(void);
-static void	run(char *, int, GParam *, int *, GParam **);
-static gint32	load_image(char *);
-static gint	save_image (char *, gint32, gint32);
-static gint	save_dialog(void);
-static void	save_close_callback(GtkWidget *, gpointer);
-static void	save_ok_callback(GtkWidget *, gpointer);
-static void	save_compression_update(GtkAdjustment *, gpointer);
-static void	save_interlace_update(GtkWidget *, gpointer);
+static void	query                     (void);
+static void	run                       (char *, int, GParam *, int *, GParam **);
+static gint32	load_image                (char *);
+static gint	save_image                (char *, gint32, gint32, gint32);
+static void     init_gtk                  (void);
+static gint	save_dialog               (void);
+static void	save_close_callback       (GtkWidget *, gpointer);
+static void	save_ok_callback          (GtkWidget *, gpointer);
+static void	save_compression_update   (GtkAdjustment *, gpointer);
+static void	save_interlace_update     (GtkWidget *, gpointer);
 
 
 /*
@@ -117,17 +119,17 @@ MAIN()
  */
 
 static void
-query(void)
+query (void)
 {
   static GParamDef	load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_INT32,      "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,     "filename",     "The name of the file to load" },
+    { PARAM_STRING,     "raw_filename", "The name of the file to load" },
   };
   static GParamDef	load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,      "image",        "Output image" },
   };
   static int		nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int		nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
@@ -143,9 +145,9 @@ query(void)
   };
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-  INIT_I18N();
+  INIT_I18N ();
 
-  gimp_install_procedure("file_png_load",
+  gimp_install_procedure ("file_png_load",
       _("Loads files in PNG file format"),
       _("This plug-in loads Portable Network Graphics (PNG) files."),
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
@@ -154,7 +156,7 @@ query(void)
       "<Load>/PNG", NULL, PROC_PLUG_IN, nload_args, nload_return_vals,
       load_args, load_return_vals);
 
-  gimp_install_procedure("file_png_save",
+  gimp_install_procedure ("file_png_save",
       "Saves files in PNG file format",
       "This plug-in saves Portable Network Graphics (PNG) files.",
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
@@ -162,8 +164,8 @@ query(void)
       PLUG_IN_VERSION,
       "<Save>/PNG", "RGB*,GRAY*,INDEXED", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
-  gimp_register_magic_load_handler("file_png_load", "png", "", "0,string,\211PNG\r\n\032\n");
-  gimp_register_save_handler("file_png_save", "png", "");
+  gimp_register_magic_load_handler ("file_png_load", "png", "", "0,string,\211PNG\r\n\032\n");
+  gimp_register_save_handler       ("file_png_save", "png", "");
 }
 
 
@@ -172,21 +174,25 @@ query(void)
  */
 
 static void
-run(char   *name,		/* I - Name of filter program. */
-    int    nparams,		/* I - Number of parameters passed in */
-    GParam *param,		/* I - Parameter values */
-    int    *nreturn_vals,	/* O - Number of return values */
-    GParam **return_vals)	/* O - Return values */
+run (char    *name,		/* I - Name of filter program. */
+     int      nparams,		/* I - Number of parameters passed in */
+     GParam  *param,		/* I - Parameter values */
+     int     *nreturn_vals,	/* O - Number of return values */
+     GParam **return_vals)	/* O - Return values */
 {
-  gint32	image_ID;	/* ID of loaded image */
+  gint32	 image_ID;
+  gint32         drawable_ID;
+  gint32         orig_image_ID;
+  GRunModeType   run_mode;
   GParam	*values;	/* Return values */
-
+  gboolean       export = FALSE;
+  
 
  /*
   * Initialize parameter data...
   */
 
-  values = g_new(GParam, 2);
+  values = g_new (GParam, 2);
 
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_SUCCESS;
@@ -197,13 +203,13 @@ run(char   *name,		/* I - Name of filter program. */
   * Load or save an image...
   */
 
-  if (strcmp(name, "file_png_load") == 0)
+  if (strcmp (name, "file_png_load") == 0)
   {
-    INIT_I18N();
+    INIT_I18N ();
 
     *nreturn_vals = 2;
 
-    image_ID = load_image(param[1].data.d_string);
+    image_ID = load_image (param[1].data.d_string);
 
     if (image_ID != -1)
     {
@@ -217,16 +223,32 @@ run(char   *name,		/* I - Name of filter program. */
   {
     INIT_I18N_UI();
 
+    run_mode = param[0].data.d_int32;
+    image_ID = orig_image_ID = param[1].data.d_int32;
+    drawable_ID = param[2].data.d_int32;
     *nreturn_vals = 1;
+    
+    /*  eventually export the image */ 
+    switch (run_mode)
+      {
+      case RUN_INTERACTIVE:
+      case RUN_WITH_LAST_VALS:
+	init_gtk ();
+	export = gimp_export_image (&image_ID, &drawable_ID, "PNG", 
+				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA));
+	break;
+      default:
+	break;
+      }
 
-    switch (param[0].data.d_int32)
+    switch (run_mode)
     {
       case RUN_INTERACTIVE :
          /*
           * Possibly retrieve data...
           */
 
-          gimp_get_data("file_png_save", &pngvals);
+          gimp_get_data ("file_png_save", &pngvals);
 
          /*
           * Then acquire information with a dialog...
@@ -258,8 +280,7 @@ run(char   *name,		/* I - Name of filter program. */
          /*
           * Possibly retrieve data...
           */
-
-          gimp_get_data("file_png_save", &pngvals);
+          gimp_get_data ("file_png_save", &pngvals);
           break;
 
       default :
@@ -267,16 +288,18 @@ run(char   *name,		/* I - Name of filter program. */
     };
 
     if (values[0].data.d_status == STATUS_SUCCESS)
-    {
-      if (save_image(param[3].data.d_string, param[1].data.d_int32,
-                     param[2].data.d_int32))
-        gimp_set_data("file_png_save", &pngvals, sizeof(pngvals));
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-    };
+      {
+	if (save_image (param[3].data.d_string, image_ID, drawable_ID, orig_image_ID))
+	  gimp_set_data ("file_png_save", &pngvals, sizeof (pngvals));
+	else
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      };
   }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+  if (export)
+    gimp_image_delete (image_ID);
 }
 
 
@@ -285,7 +308,7 @@ run(char   *name,		/* I - Name of filter program. */
  */
 
 static gint32
-load_image(char *filename)	/* I - File to load */
+load_image (char *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
                 trns = 0,       /* Transparency present */
@@ -333,9 +356,9 @@ load_image(char *filename)	/* I - File to load */
   info = (png_infop)calloc(sizeof(png_info), 1);
 #endif /* PNG_LIBPNG_VER > 88 */
 
-  if (setjmp(pp->jmpbuf))
+  if (setjmp (pp->jmpbuf))
   {
-    g_message("%s\nPNG error. File corrupted?", filename);
+    g_message ("%s\nPNG error. File corrupted?", filename);
     return image;
   }
 
@@ -345,17 +368,18 @@ load_image(char *filename)	/* I - File to load */
 
   fp = fopen(filename, "rb");
 
-  if (fp == NULL) {
-    g_message("%s\nis not present or is unreadable", filename);
-    gimp_quit();
+  if (fp == NULL) 
+    {
+      g_message ("%s\nis not present or is unreadable", filename);
+      gimp_quit ();
   }
 
   png_init_io(pp, fp);
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, _("Loading %s:"), strrchr(filename, '/') + 1);
+    sprintf (progress, _("Loading %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, _("Loading %s:"), filename);
+    sprintf (progress, _("Loading %s:"), filename);
 
   gimp_progress_init(progress);
 
@@ -591,13 +615,14 @@ load_image(char *filename)	/* I - File to load */
 
 
 /*
- * 'save_image()' - Save the specified image to a PNG file.
+ * 'save_image ()' - Save the specified image to a PNG file.
  */
 
 static gint
-save_image(char   *filename,	/* I - File to save to */
-	   gint32 image_ID,	/* I - Image to save */
-	   gint32 drawable_ID)	/* I - Current drawable */
+save_image (char   *filename,	        /* I - File to save to */
+	    gint32  image_ID,	        /* I - Image to save */
+	    gint32  drawable_ID,	/* I - Current drawable */
+	    gint32  orig_image_ID)      /* I - Original image before export */
 {
   int		i,		/* Looping var */
 		bpp = 0,	/* Bytes per pixel */
@@ -629,8 +654,8 @@ save_image(char   *filename,	/* I - File to save to */
   * Use the "new" calling convention...
   */
 
-  pp   = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  info = png_create_info_struct(pp);
+  pp   = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  info = png_create_info_struct (pp);
 #else
  /*
   * SGI (and others) supply libpng-88 and not -89c...
@@ -664,8 +689,8 @@ save_image(char   *filename,	/* I - File to save to */
   * Get the drawable for the current image...
   */
 
-  drawable = gimp_drawable_get(drawable_ID);
-  type     = gimp_drawable_type(drawable_ID);
+  drawable = gimp_drawable_get (drawable_ID);
+  type     = gimp_drawable_type (drawable_ID);
 
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
                       drawable->height, FALSE, FALSE);
@@ -674,7 +699,7 @@ save_image(char   *filename,	/* I - File to save to */
   * Set the image dimensions and save the image...
   */
 
-  png_set_compression_level(pp, pngvals.compression_level);
+  png_set_compression_level (pp, pngvals.compression_level);
 
   gamma = gimp_gamma();
 
@@ -692,7 +717,7 @@ save_image(char   *filename,	/* I - File to save to */
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   info->valid |= PNG_INFO_pHYs;
-  gimp_image_get_resolution(image_ID, &xres, &yres);
+  gimp_image_get_resolution (orig_image_ID, &xres, &yres);
   info->phys_unit_type = PNG_RESOLUTION_METER;
   info->x_pixels_per_unit = (int) (xres * 39.37);
   info->y_pixels_per_unit = (int) (yres * 39.37);
@@ -720,7 +745,7 @@ save_image(char   *filename,	/* I - File to save to */
 	bpp		 = 1;
 	info->valid      |= PNG_INFO_PLTE;
         info->color_type = PNG_COLOR_TYPE_PALETTE;
-        info->palette    = (png_colorp)gimp_image_get_cmap(image_ID, &num_colors);
+        info->palette    = (png_colorp)gimp_image_get_cmap (image_ID, &num_colors);
         info->num_palette= num_colors;
         break;
     case INDEXEDA_IMAGE :
@@ -732,7 +757,7 @@ save_image(char   *filename,	/* I - File to save to */
         abort ();
   };
 
-  png_write_info(pp, info);
+  png_write_info (pp, info);
 
  /*
   * Turn on interlace handling...
@@ -763,35 +788,35 @@ save_image(char   *filename,	/* I - File to save to */
     for (begin = 0, end = tile_height;
          begin < drawable->height;
          begin += tile_height, end += tile_height)
-    {
-      if (end > drawable->height)
-        end = drawable->height;
+      {
+	if (end > drawable->height)
+	  end = drawable->height;
 
-      num = end - begin;
-
-      gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, begin, drawable->width, num);
-
-      png_write_rows(pp, pixels, num);
-
-      gimp_progress_update(((double)pass + (double)end / (double)info->height) /
-                           (double)num_passes);
-    };
+	num = end - begin;
+	
+	gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin, drawable->width, num);
+	
+	png_write_rows (pp, pixels, num);
+	
+	gimp_progress_update (((double)pass + (double)end / (double)info->height) /
+			      (double)num_passes);
+      };
   };
 
-  png_write_end(pp, info);
-  png_write_destroy(pp);
+  png_write_end (pp, info);
+  png_write_destroy (pp);
 
-  g_free(pixel);
-  g_free(pixels);
+  g_free (pixel);
+  g_free (pixels);
 
  /*
   * Done with the file...
   */
 
-  free(pp);
-  free(info);
+  free (pp);
+  free (info);
 
-  fclose(fp);
+  fclose (fp);
 
   return (1);
 }
@@ -814,8 +839,8 @@ save_close_callback(GtkWidget *widget,	/* I - Close button */
  */
 
 static void
-save_ok_callback(GtkWidget *widget,	/* I - OK button */
-                 gpointer  data)	/* I - Callback data */
+save_ok_callback (GtkWidget *widget,	/* I - OK button */
+		  gpointer  data)	/* I - Callback data */
 {
   runme = TRUE;
 
@@ -828,8 +853,8 @@ save_ok_callback(GtkWidget *widget,	/* I - OK button */
  */
 
 static void
-save_compression_update(GtkAdjustment *adjustment,	/* I - Scale adjustment */
-                        gpointer      data)		/* I - Callback data */
+save_compression_update (GtkAdjustment *adjustment,	/* I - Scale adjustment */
+                         gpointer      data)		/* I - Callback data */
 {
   pngvals.compression_level = (gint32)adjustment->value;
 }
@@ -840,10 +865,24 @@ save_compression_update(GtkAdjustment *adjustment,	/* I - Scale adjustment */
  */
 
 static void
-save_interlace_update(GtkWidget *widget,	/* I - Interlace toggle button */
-                      gpointer  data)		/* I - Callback data  */
+save_interlace_update (GtkWidget *widget,	/* I - Interlace toggle button */
+		       gpointer  data)		/* I - Callback data  */
 {
-  pngvals.interlaced = GTK_TOGGLE_BUTTON(widget)->active;
+  pngvals.interlaced = GTK_TOGGLE_BUTTON (widget)->active;
+}
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("png");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 }
 
 
@@ -852,7 +891,7 @@ save_interlace_update(GtkWidget *widget,	/* I - Interlace toggle button */
  */
 
 static gint
-save_dialog(void)
+save_dialog (void)
 {
   GtkWidget	*dlg,		/* Dialog window */
 		*button,	/* OK/cancel buttons */
@@ -862,20 +901,6 @@ save_dialog(void)
 		*label,		/* Label for controls */
 		*scale;		/* Compression level scale */
   GtkObject	*scale_data;	/* Scale data */
-  gchar		**argv;		/* Fake command-line args */
-  gint		argc;		/* Number of fake command-line args */
-
-
- /*
-  * Fake the command-line args and open a window...
-  */
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup("png");
-
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
 
  /*
   * Open a dialog window...

@@ -98,6 +98,7 @@ libgimpui_la_SOURCES = \
 	gimpbrushmenu.c		\
 	gimpgradientmenu.c 	\
 	gimppatternmenu.c	\
+	gimpexport.c		\
 	gimpchainbutton.c	\
 	gimpfileselection.c	\
 	gimppatheditor.c	\
@@ -111,6 +112,7 @@ gimpinclude_HEADERS = \
 	gimpchainbutton.h	\
 	gimpenums.h		\
 	gimpenv.h		\
+	gimpexport.h		\
 	gimpfeatures.h		\
 	gimpfileselection.h	\
 	gimplimits.h		\
