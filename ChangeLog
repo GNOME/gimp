@@ -1,3 +1,11 @@
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_table_attach_stock):
+	added a colspan parameter and fixed packing of the stock icon.
+
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptextoptions.c: improved dialog layout.
+
 2003-02-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c

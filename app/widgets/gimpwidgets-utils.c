@@ -246,6 +246,7 @@ gimp_table_attach_stock (GtkTable    *table,
 			 const gchar *label_text,
 			 gdouble      yalign,
                          GtkWidget   *widget,
+			 gint         colspan,
                          const gchar *stock_id)
 {
   GtkWidget *image;
@@ -266,7 +267,7 @@ gimp_table_attach_stock (GtkTable    *table,
     {
       g_return_if_fail (GTK_IS_WIDGET (widget));
 
-      gtk_table_attach (table, widget, 1, 3, row, row + 1,
+      gtk_table_attach (table, widget, 1, 1 + colspan, row, row + 1,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (widget);
 
@@ -278,8 +279,8 @@ gimp_table_attach_stock (GtkTable    *table,
   if (image)
     {
       gtk_misc_set_alignment (GTK_MISC (image), 0.0, 0.5);
-      gtk_table_attach (table, image, 3, 4, row, row + 1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_table_attach (table, image, 1 + colspan, 2 + colspan, row, row + 1,
+			GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (image);
     }
 }

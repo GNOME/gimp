@@ -42,10 +42,10 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_text_options_init       (GimpTextOptions      *options);
-static void   gimp_text_options_class_init (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_init       (GimpTextOptions      *options);
+static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
 
-static void   gimp_text_options_reset      (GimpToolOptions      *tool_options);
+static void  gimp_text_options_reset      (GimpToolOptions      *tool_options);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -119,71 +119,70 @@ GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
   GimpTextOptions *options;
+  GObject         *config;
   GtkWidget       *vbox;
   GtkWidget       *table;
   GtkWidget       *button;
-  GtkWidget       *unit_menu;
+  GtkWidget       *menu;
   GtkWidget       *font_selection;
   GtkWidget       *box;
   GtkWidget       *spinbutton;
   gint             digits;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
+  config = G_OBJECT (options->text);
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  table = gtk_table_new (4, 6, FALSE);
+  table = gtk_table_new (6, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  font_selection = gimp_prop_font_selection_new (G_OBJECT (options->text),
-                                                 "font");
+  font_selection = gimp_prop_font_selection_new (config, "font");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Font:"), 1.0, 0.5,
-                             font_selection, 3, FALSE);
+                             font_selection, 2, FALSE);
 
   digits = gimp_unit_get_digits (options->text->font_size_unit);
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
-                                          "font-size",
+  spinbutton = gimp_prop_spin_button_new (config, "font-size",
 					  1.0, 10.0, digits); 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Size:"), 1.0, 0.5,
-                             spinbutton, 2, FALSE);
+                             spinbutton, 1, FALSE);
 
-  unit_menu = gimp_prop_unit_menu_new (G_OBJECT (options->text),
-                                       "font-size-unit", "%a");
-  g_object_set_data (G_OBJECT (unit_menu), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), unit_menu, 3, 4, 1, 2,
+  menu = gimp_prop_unit_menu_new (config, "font-size-unit", "%a");
+  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (unit_menu);
+  gtk_widget_show (menu);
 
-  button = gimp_prop_color_button_new (G_OBJECT (options->text),
-                                       "color", _("Text Color"),
+  button = gimp_prop_color_button_new (config, "color",
+				       _("Text Color"),
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Color:"), 1.0, 0.5, button, 1, FALSE);
+                             _("Color:"), 1.0, 0.5,
+			     button, 1, FALSE);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (options->text),
-                                      "justify", "gtk-justify", 0, 0);
+  box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Justify:"), 1.0, 0.5, box, 3, TRUE);
+                             _("Justify:"), 1.0, 0.5,
+			     box, 2, TRUE);
 
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
-                                          "indent", 1.0, 10.0, 1);
+  spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 4,
-			   _("Indent:"), 0.5, spinbutton, NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                             _("Indent:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
 
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
-                                          "line-spacing", 1.0, 10.0, 1);
+  spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), 5,
-                           _("Line\nSpacing:"), 0.0, spinbutton,
-			   GIMP_STOCK_LINE_SPACING);
+                           _("Line\nSpacing:"), 0.0,
+			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
   return vbox;
 }
