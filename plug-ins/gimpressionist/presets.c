@@ -15,8 +15,9 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimp.h>
+
 #include "gimpressionist.h"
-#include "ppmtool.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -67,13 +68,13 @@ int loadoldpreset(char *fname)
   return 0;
 }
 
-void chop(char *buffer)
+static void chop(char *buffer)
 {
   while(strlen(buffer) && buffer[strlen(buffer)-1] <= ' ')
     buffer[strlen(buffer)-1] = '\0';
 }
 
-unsigned int hexval(char c)
+static unsigned int hexval(char c)
 {
   c = tolower(c);
   if((c >= 'a') && (c <= 'f')) return c - 'a' + 10;
@@ -81,7 +82,7 @@ unsigned int hexval(char c)
   return 0;
 }
 
-char *parsergbstring(char *s)
+static char *parsergbstring(char *s)
 {
   static char col[3];
   col[0] = (hexval(s[0]) << 4) | hexval(s[1]);
@@ -90,9 +91,8 @@ char *parsergbstring(char *s)
   return col;
 }
 
-void setorientvector(char *str)
+static void setorientvector(char *str)
 {
-  /* num,x,y,dir,dx,dy,str,type */
   char *tmps = str;
   int n;
 
@@ -121,7 +121,7 @@ void setorientvector(char *str)
   
 }
 
-void setsizevector(char *str)
+static void setsizevector(char *str)
 {
   /* num,x,y,siz,str,type */
   char *tmps = str;
@@ -143,7 +143,7 @@ void setsizevector(char *str)
   
 }
 
-void parsedesc(char *str, char *d)
+static void parsedesc(char *str, char *d)
 {
   while(*str) {
     if(*str == '\\') {
@@ -232,8 +232,10 @@ void setval(char *key, char *val)
   else if(!strcmp(key, "selectedpaper"))
     strncpy(pcvals.selectedpaper, val, 99);
 
-  else if(!strcmp(key, "color"))
-    memcpy(pcvals.color, parsergbstring(val), 3);
+  else if(!strcmp(key, "color")){
+    char *c = parsergbstring(val);
+    gimp_rgba_set_uchar(&pcvals.color, c[0], c[1], c[2], 255);
+  }
   
   else if(!strcmp(key, "numorientvector"))
     pcvals.numorientvector = atoi(val);
@@ -301,7 +303,7 @@ void applypreset(void)
   gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
 
   /* Restore defaults, in case of old/short Preset file */
-  memcpy(&pcvals, &defaultpcvals, sizeof(pcvals));
+  pcvals = defaultpcvals;
   presetdesc[0] = '\0';
 
   if(!strcmp(l, factory_defaults)) {
@@ -428,6 +430,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   GList *thispath;
   gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  vbuf[6][G_ASCII_DTOSTR_BUF_SIZE];
+  guchar color[3];
   int i;
 
   l = gtk_entry_get_text(GTK_ENTRY(presetnameentry));
@@ -494,8 +497,8 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   fprintf(f, "selectedbrush=%s\n", pcvals.selectedbrush);
   fprintf(f, "selectedpaper=%s\n", pcvals.selectedpaper);
 
-  fprintf(f, "color=%02x%02x%02x\n", pcvals.color[0],
-	  pcvals.color[1], pcvals.color[2]);
+  gimp_rgb_get_uchar(&pcvals.color, &color[0], &color[1], &color[2]);
+  fprintf(f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
   
   fprintf(f, "placetype=%d\n", pcvals.placetype);
   fprintf(f, "placecenter=%d\n", pcvals.placecenter);
@@ -597,19 +600,11 @@ void selectpreset(GtkWidget *wg, GtkWidget *p)
 void create_presetpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *thispage, *box2;
-  GtkWidget *labelbox, *menubox;
   GtkWidget *scrolled_win, *list;
   GtkWidget *tmpw;
+  GtkWidget *label;
 
-  labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new (_("Presets"));
-  gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(labelbox);
-
-  menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new ( _("Presets"));
-  gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(menubox);
+  label = gtk_label_new_with_mnemonic (_("_Presets"));
 
   presetlist = list = gtk_list_new ();
 
@@ -623,7 +618,7 @@ void create_presetpage(GtkNotebook *notebook)
 
   presetnameentry = tmpw = gtk_entry_new();
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
-  gtk_widget_set_usize(tmpw, 150, -1);
+  gtk_widget_set_size_request(tmpw, 150, -1);
   gtk_widget_show(tmpw);
 
   presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current"));
@@ -644,9 +639,8 @@ void create_presetpage(GtkNotebook *notebook)
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
   gtk_widget_show (scrolled_win);
-  gtk_widget_set_usize(scrolled_win, 150,-1);
+  gtk_widget_set_size_request(scrolled_win, 150,-1);
 
-  /* list = gtk_list_new (); */ /* Moved up */
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
 
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -696,7 +690,6 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show(tmpw);
 
-
   tmpw = gtk_label_new( _("\nIf you come up with some nice Presets,\n\
 (or Brushes and Papers for that matter)\n\
 feel free to send them to me <vidar@prosalg.no>\n\
@@ -704,5 +697,5 @@ for inclusion into the next release!\n"));
   gtk_box_pack_start(GTK_BOX(thispage), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
 
-  gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);
+  gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

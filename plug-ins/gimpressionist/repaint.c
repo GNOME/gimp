@@ -22,21 +22,21 @@
 
 #include <libgimp/stdplugins-intl.h>
 
-gimpressionist_vals_t runningvals;
+static gimpressionist_vals_t runningvals;
 
-void prepbrush(struct ppm *p)
+static void prepbrush(ppm_t *p)
 {
   int x, y;
   int rowstride = p->width * 3;
 
-  for(y = 0; y< p->height; y++) {
-    for(x = 0; x < p->width; x++) {
+  for (y = 0; y< p->height; y++) {
+    for (x = 0; x < p->width; x++) {
       p->col[y*rowstride+x*3+1] = 0;
     }
   }
 
-  for(y = 1; y< p->height; y++) {
-    for(x = 1; x < p->width; x++) {
+  for (y = 1; y< p->height; y++) {
+    for (x = 1; x < p->width; x++) {
       int v = p->col[y*rowstride+x*3] - p->col[(y-1)*rowstride+(x-1)*3];
       if(v < 0) v = 0;
       p->col[y*rowstride+x*3+1] = v;
@@ -44,7 +44,7 @@ void prepbrush(struct ppm *p)
   }
 }
 
-double sumbrush(struct ppm *p)
+static double sumbrush(ppm_t *p)
 {
   double sum = 0;
   int i;
@@ -54,7 +54,7 @@ double sumbrush(struct ppm *p)
   return sum;
 }
 
-int gethue(guchar *rgb)
+static int gethue(guchar *rgb)
 {
   double h, v, temp, diff;
   if((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])) /* Gray */
@@ -75,9 +75,9 @@ int gethue(guchar *rgb)
   return h * 255.0 / 6.0;
 }
 
-int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
-	      struct ppm *brushes, int numbrush, double *brushsum,
-	      int start, int step)
+static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
+		     ppm_t *brushes, int numbrush, double *brushsum,
+		     int start, int step)
 {
   double dev, thissum;
   double bestdev = 0.0;
@@ -88,7 +88,7 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
   GList *brlist = NULL;
 
   for(i = start; i < numbrush; i += step) {
-    struct ppm *brush = &brushes[i];
+    ppm_t *brush = &brushes[i];
     /* thissum = 0.0; */
     thissum = brushsum[i];
 
@@ -155,13 +155,13 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
   return best;
 }
 
-void applybrush(struct ppm *brush,
-		struct ppm *shadow,
-		struct ppm *p, struct ppm *a,
-		int tx, int ty, int r, int g, int b)
+static void applybrush(ppm_t *brush,
+		       ppm_t *shadow,
+		       ppm_t *p, ppm_t *a,
+		       int tx, int ty, int r, int g, int b)
 {
-  struct ppm tmp;
-  struct ppm atmp;
+  ppm_t tmp;
+  ppm_t atmp;
   double v, h;
   int x, y;
   double edgedarken = 1.0 - runningvals.generaldarkedge;
@@ -169,17 +169,11 @@ void applybrush(struct ppm *brush,
   int shadowdepth = pcvals.generalshadowdepth;
   int shadowblur = pcvals.generalshadowblur;
 
-  /*
-  if((tx < 0) || (ty < 0)) {
-    fprintf(stderr, "applybrush: Huh!? tx=%d ty=%d\n",tx,ty);
-    return;
-  }
-  */
+  tmp = *p;
+  if(img_has_alpha)
+    atmp = *a;
 
-  memcpy(&tmp, p, sizeof(struct ppm));
-  if(img_has_alpha) memcpy(&atmp, a, sizeof(struct ppm));
-
-  if(shadow) {
+  if (shadow) {
     int sx = tx + shadowdepth - shadowblur*2;
     int sy = ty + shadowdepth - shadowblur*2;
     for(y = 0; y < shadow->height; y++) {
@@ -248,25 +242,25 @@ void applybrush(struct ppm *brush,
   }
 }
 
-void repaint(struct ppm *p, struct ppm *a)
+void repaint(ppm_t *p, ppm_t *a)
 {
   int x, y;
   int tx = 0, ty = 0;
-  struct ppm tmp = {0,0,NULL};
-  struct ppm atmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
+  ppm_t atmp = {0,0,NULL};
   int r, g, b, n, h, i, j, on, sn;
   int numbrush, maxbrushwidth, maxbrushheight;
   guchar back[3] = {0,0,0};
-  struct ppm *brushes, *shadows;
-  struct ppm *brush, *shadow = NULL;
+  ppm_t *brushes, *shadows;
+  ppm_t *brush, *shadow = NULL;
   double *brushsum;
   int cx, cy, maxdist;
   double scale, relief, startangle, anglespan, density, bgamma;
   double thissum;
   int max_progress;
-  struct ppm paperppm = {0,0,NULL};
-  struct ppm dirmap = {0,0,NULL};
-  struct ppm sizmap = {0,0,NULL};
+  ppm_t paperppm = {0,0,NULL};
+  ppm_t dirmap = {0,0,NULL};
+  ppm_t sizmap = {0,0,NULL};
   int *xpos = NULL, *ypos = NULL;
   int step = 1;
   int progstep;
@@ -275,11 +269,11 @@ void repaint(struct ppm *p, struct ppm *a)
   int dropshadow = pcvals.generaldropshadow;
   int shadowblur = pcvals.generalshadowblur;
 
-  if(running)
+  if (running)
     return;
   running++;
 
-  memcpy(&runningvals, &pcvals, sizeof(pcvals));
+  runningvals = pcvals;
 
   /* Shouldn't be necessary, but... */
   if(img_has_alpha)
@@ -300,11 +294,11 @@ void repaint(struct ppm *p, struct ppm *a)
 
   bgamma = runningvals.brushgamma;
 
-  brushes = g_malloc (numbrush * sizeof(struct ppm));
+  brushes = g_malloc (numbrush * sizeof(ppm_t));
   brushsum = g_malloc (numbrush * sizeof(double));
 
   if(dropshadow)
-    shadows = g_malloc (numbrush * sizeof(struct ppm));
+    shadows = g_malloc (numbrush * sizeof(ppm_t));
   else
     shadows = NULL;
 
@@ -423,7 +417,7 @@ void repaint(struct ppm *p, struct ppm *a)
   if(runningvals.generalbgtype == 0) {
     guchar tmpcol[3];
     newppm(&tmp, p->width, p->height);
-    memcpy(&tmpcol, runningvals.color, 3);
+    gimp_rgb_get_uchar(&runningvals.color, &tmpcol[0], &tmpcol[1], &tmpcol[2]);
     fill(&tmp, tmpcol);
   } else if(runningvals.generalbgtype == 1) {
     copyppm(p, &tmp);
@@ -789,15 +783,11 @@ void repaint(struct ppm *p, struct ppm *a)
     killppm(&brushes[i]);
   }
   g_free(brushes);
-  if(shadows)
-    g_free(shadows);
+  g_free(shadows);
   g_free(brushsum);
 
-  if (xpos)
-    g_free (xpos);
-  if (ypos)
-    g_free (ypos);
-  
+  g_free (xpos);
+  g_free (ypos);
 
   if(runningvals.generalpaintedges) {
     crop(&tmp, maxbrushwidth, maxbrushheight, tmp.width - maxbrushwidth, tmp.height - maxbrushheight);
@@ -822,7 +812,7 @@ void repaint(struct ppm *p, struct ppm *a)
     scale = runningvals.paperscale / 100.0;
 
     if(paperppm.col) {
-      memcpy(&tmp, &paperppm, sizeof(struct ppm));
+      tmp = paperppm;
       paperppm.col = NULL;
     } else {
       tmp.col = NULL;

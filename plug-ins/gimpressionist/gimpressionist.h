@@ -11,6 +11,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimpui.h>
+
 #define PLUG_IN_NAME "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v0.99.6, August 1999"
 
@@ -32,19 +34,19 @@
 
 /* Type declaration and definitions */
 
-struct vector_t {
+typedef struct vector {
   double x, y;
   double dir;
   double dx, dy;
   double str;
   int type;
-};
+} vector_t;
 
-struct smvector_t {
+typedef struct smvector {
   double x, y;
   double siz;
   double str;
-};
+} smvector_t;
 
 typedef struct {
   int orientnum;
@@ -63,10 +65,10 @@ typedef struct {
   int run;
   char selectedbrush[100];
   char selectedpaper[100];
-  guchar color[3];
+  GimpRGB color;
   int generalpaintedges;
   int placetype;
-  struct vector_t orientvector[MAXORIENTVECT];
+  vector_t orientvector[MAXORIENTVECT];
   int numorientvector;
   int placecenter;
   double brushaspect;
@@ -84,7 +86,7 @@ typedef struct {
   int sizetype;
   double devthresh;
 
-  struct smvector_t sizevector[MAXSIZEVECT];
+  smvector_t sizevector[MAXSIZEVECT];
   int numsizevector;
   double sizestrexp;
   int sizevoronoi;
@@ -145,6 +147,7 @@ extern int generalbgtype;
 extern GtkWidget *generalpaintedges;
 extern GtkWidget *generaltileable;
 extern GtkWidget *generaldropshadow;
+extern GtkWidget *generalcolbutton;
 extern GtkObject *generalshadowadjust;
 extern GtkObject *generalshadowdepth;
 extern GtkObject *generalshadowblur;
@@ -159,13 +162,11 @@ extern GtkWidget *previewbutton;
 
 extern GtkWidget *presetsavebutton;
 
-extern gint img_has_alpha;
+extern gboolean img_has_alpha;
 
 /* Prototypes */
 
 GList *parsepath(void);
-
-int create_dialog(void);
 
 void create_paperpage(GtkNotebook *);
 void create_brushpage(GtkNotebook *);
@@ -177,7 +178,7 @@ void create_placementpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
 
 GtkWidget* create_preview();
-void updatepreviewprev(GtkWidget *wg, void *d);
+void updatepreviewprev(GtkWidget *wg, gpointer d);
 
 void grabarea(void);
 void storevals(void);
@@ -187,7 +188,6 @@ gchar *findfile(const gchar *);
 void unselectall(GtkWidget *list);
 void reselect(GtkWidget *list, char *fname);
 void readdirintolist(char *subdir, GtkWidget *list, char *selected);
-void drawcolor(GtkWidget *w);
 void orientchange(GtkWidget *wg, void *d, int num);
 void sizechange(GtkWidget *wg, void *d, int num);
 void placechange(GtkWidget *wg, void *d, int num);

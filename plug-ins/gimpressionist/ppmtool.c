@@ -35,15 +35,14 @@ void fatal(char *s)
   exit(1);
 }
 
-void killppm(struct ppm *p)
+void killppm(ppm_t *p)
 {
-  free(p->col);
+  g_free(p->col);
   p->col = NULL;
   p->height = p->width = 0;
 }
 
-
-void newppm(struct ppm *p, int xs, int ys)
+void newppm(ppm_t *p, int xs, int ys)
 {
   int x;
   guchar bgcol[3] = {0,0,0};
@@ -63,7 +62,7 @@ void newppm(struct ppm *p, int xs, int ys)
   }
 }
 
-void getrgb(struct ppm *s, float xo, float yo, guchar *d)
+void getrgb(ppm_t *s, float xo, float yo, guchar *d)
 {
   float ix, iy;
   int x1, x2, y1, y2;
@@ -123,12 +122,12 @@ void getrgb(struct ppm *s, float xo, float yo, guchar *d)
 }
 
 
-void resize(struct ppm *p, int nx, int ny)
+void resize(ppm_t *p, int nx, int ny)
 {
   int x, y;
   float xs = p->width/(float)nx;
   float ys = p->height/(float)ny;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
 
   newppm(&tmp, nx, ny);
   for(y = 0; y < ny; y++) {
@@ -143,17 +142,17 @@ void resize(struct ppm *p, int nx, int ny)
   p->col = tmp.col;
 }
 
-void rescale(struct ppm *p, double sc)
+void rescale(ppm_t *p, double sc)
 {
   resize(p, p->width * sc, p->height * sc);
 }
 
-void resize_fast(struct ppm *p, int nx, int ny)
+void resize_fast(ppm_t *p, int nx, int ny)
 {
   int x, y;
   float xs = p->width/(float)nx;
   float ys = p->height/(float)ny;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
 
   newppm(&tmp, nx, ny);
   for(y = 0; y < ny; y++) {
@@ -187,7 +186,7 @@ void msb2lsb(unsigned int *i)
   c = p[0]; p[0] = p[3]; p[3] = c;
 }
 
-void loadgbr(char *fn, struct ppm *p)
+void loadgbr(char *fn, ppm_t *p)
 {
   FILE *f;
   struct _BrushHeader hdr;
@@ -228,7 +227,7 @@ void loadgbr(char *fn, struct ppm *p)
   free(ptr);
 }
 
-void loadppm(char *fn, struct ppm *p)
+void loadppm(char *fn, ppm_t *p)
 {
   char line[200];
   int y, pgm = 0;
@@ -286,7 +285,7 @@ void loadppm(char *fn, struct ppm *p)
   fclose(f);
 }
 
-void fill(struct ppm *p, guchar *c)
+void fill(ppm_t *p, guchar *c)
 {
   int x, y;
  
@@ -308,7 +307,7 @@ void fill(struct ppm *p, guchar *c)
   }
 }
 
-void copyppm(struct ppm *s, struct ppm *p)
+void copyppm(ppm_t *s, ppm_t *p)
 {
   if(p->col)
     killppm(p);
@@ -318,12 +317,12 @@ void copyppm(struct ppm *s, struct ppm *p)
   memcpy(p->col, s->col, p->width * 3 * p->height);
 }
 
-void freerotate(struct ppm *p, double amount)
+void freerotate(ppm_t *p, double amount)
 {
   int x, y;
   double nx, ny;
   double R, a;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
   double f = amount*G_PI*2/360.0;
   int rowstride = p->width * 3;
 
@@ -351,9 +350,9 @@ void freerotate(struct ppm *p, double amount)
   p->col = tmp.col;
 }
 
-void crop(struct ppm *p, int lx, int ly, int hx, int hy)
+void crop(ppm_t *p, int lx, int ly, int hx, int hy)
 {
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
   int x, y;
   int srowstride = p->width * 3;
   int drowstride;
@@ -370,12 +369,12 @@ void crop(struct ppm *p, int lx, int ly, int hx, int hy)
   p->height = tmp.height;
 }
 
-void autocrop(struct ppm *p, int room)
+void autocrop(ppm_t *p, int room)
 {
   int lx = 0, hx = p->width, ly = 0, hy = p->height;
   int x, y, n = 0;
   guchar tc[3];
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
   int rowstride = p->width * 3;
   int drowstride;
 
@@ -445,10 +444,10 @@ void autocrop(struct ppm *p, int room)
   p->height = tmp.height;
 }
 
-void pad(struct ppm *p, int left,int right, int top, int bottom, guchar *bg)
+void pad(ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
 {
   int x, y;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
 
   newppm(&tmp, p->width+left+right, p->height+top+bottom);
   for(y = 0; y < tmp.height; y++) {
@@ -489,7 +488,7 @@ void pad(struct ppm *p, int left,int right, int top, int bottom, guchar *bg)
   p->col = tmp.col;
 }
 
-void saveppm(struct ppm *p, const char *fn)
+void saveppm(ppm_t *p, const char *fn)
 {
   FILE *f = fopen (fn, "wb");
 
@@ -505,10 +504,10 @@ void saveppm(struct ppm *p, const char *fn)
   fclose (f);
 }
 
-void edgepad(struct ppm *p, int left,int right, int top, int bottom)
+void edgepad(ppm_t *p, int left,int right, int top, int bottom)
 {
   int x,y;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
   guchar testcol[3] = {0,255,0};
   int srowstride, drowstride;
 
@@ -547,7 +546,7 @@ void edgepad(struct ppm *p, int left,int right, int top, int bottom)
   p->col = tmp.col;
 }
 
-void ppmgamma(struct ppm *p, float e, int r, int g, int b)
+void ppmgamma(ppm_t *p, float e, int r, int g, int b)
 {
   int x, l = p->width * 3 * p->height;
   guchar xlat[256], *pix;
@@ -563,7 +562,7 @@ void ppmgamma(struct ppm *p, float e, int r, int g, int b)
   if(b) for(x = 2; x < l; x += 3) pix[x] = xlat[pix[x]];
 }
 
-void ppmbrightness(struct ppm *p, float e, int r, int g, int b)
+void ppmbrightness(ppm_t *p, float e, int r, int g, int b)
 {
   int x, l = p->width * 3 * p->height;
   guchar xlat[256], *pix;
@@ -578,11 +577,11 @@ void ppmbrightness(struct ppm *p, float e, int r, int g, int b)
 }
 
 
-void blur(struct ppm *p, int xrad, int yrad)
+void blur(ppm_t *p, int xrad, int yrad)
 {
   int x, y, k;
   int tx, ty;
-  struct ppm tmp = {0,0,NULL};
+  ppm_t tmp = {0,0,NULL};
   int r, g, b, n;
   int rowstride = p->width * 3;
 
@@ -615,7 +614,7 @@ void blur(struct ppm *p, int xrad, int yrad)
   p->col = tmp.col;
 }
 
-void putrgb_fast(struct ppm *s, float xo, float yo, guchar *d)
+void putrgb_fast(ppm_t *s, float xo, float yo, guchar *d)
 {
   guchar *tp;
   tp = s->col + s->width * 3 * (int)(yo+0.5) + 3 * (int)(xo+0.5);
@@ -624,7 +623,7 @@ void putrgb_fast(struct ppm *s, float xo, float yo, guchar *d)
   tp[2] = d[2];
 }
 
-void putrgb(struct ppm *s, float xo, float yo, guchar *d)
+void putrgb(ppm_t *s, float xo, float yo, guchar *d)
 {
   int x, y;
   float aa, ab, ba, bb;
@@ -675,7 +674,7 @@ void putrgb(struct ppm *s, float xo, float yo, guchar *d)
   s->col[k+rowstride+5] += bb * d[2];
 }
 
-void drawline(struct ppm *p, float fx, float fy, float tx, float ty, guchar *col)
+void drawline(ppm_t *p, float fx, float fy, float tx, float ty, guchar *col)
 {
   float i;
   float d, x, y;

@@ -13,13 +13,11 @@
 static void query(void);
 static void gimpressionist_main(void);
 static void run(char *, int, GimpParam *, int *, GimpParam **);
-void repaint(struct ppm *p, struct ppm *a);
+void repaint(ppm_t *p, ppm_t *a);
 
 int create_gimpressionist(void);
 
-static gint img_width, img_height, img_bpp;
-gint img_has_alpha = 0;
-static gint sel_x1, sel_y1, sel_x2, sel_y2;
+gboolean img_has_alpha = FALSE;
 
 GimpPlugInInfo PLUG_IN_INFO = {
         NULL,   /* init_proc */
@@ -47,7 +45,7 @@ gimpressionist_vals_t defaultpcvals = {
   0,
   "defaultbrush.pgm",
   "defaultpaper.pgm",
-  {0,0,0},
+  {0,0,0,1.0},
   1,
   0,
   { { 0.5, 0.5, 0.0, 0.0, 1.0, 1.0, 0 } },
@@ -113,10 +111,9 @@ query(void)
 static void
 gimpressionist_get_data(char *name, void *ptr)
 {
-  memcpy(&pcvals, &defaultpcvals, sizeof(pcvals));
+  pcvals = defaultpcvals;
   gimp_get_data(name, ptr);
 }
-
 
 static void
 run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **return_vals)
@@ -138,14 +135,7 @@ run(char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **re
   /* Get the active drawable info */
 
   drawable = gimp_drawable_get(param[2].data.d_drawable);
-  
-  img_width     = gimp_drawable_width(drawable->drawable_id);
-  img_height    = gimp_drawable_height(drawable->drawable_id);
-  img_bpp       = gimp_drawable_bpp(drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
-
-  gimp_drawable_mask_bounds(drawable->drawable_id,
-			    &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   switch (run_mode) {
   case GIMP_RUN_INTERACTIVE:
@@ -190,7 +180,7 @@ void grabarea(void)
   guchar *src;
   gint alpha, has_alpha, bpp;
   gint x, y;
-  struct ppm *p;
+  ppm_t *p;
   gint x1, y1, x2, y2;
   gint row, col;
   int rowstride;
@@ -271,14 +261,14 @@ void grabarea(void)
   g_free (src_row);
 }
 
-void gimpressionist_main(void)
+static void gimpressionist_main(void)
 {
   GimpPixelRgn dest_rgn;
   guchar *dest_row;
   guchar *dest;
   gint alpha, has_alpha, bpp;
   gint x, y;
-  struct ppm *p;
+  ppm_t *p;
   gint x1, y1, x2, y2;
   gint row, col;
   int rowstride;
@@ -297,10 +287,7 @@ void gimpressionist_main(void)
     grabarea();
   }
 
-  if(img_has_alpha)
-    repaint(&infile, &inalpha);
-  else
-    repaint(&infile, NULL);
+  repaint(&infile, (img_has_alpha) ? &inalpha : NULL);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0, x2-x1, y2-y1, TRUE, TRUE);
 
@@ -354,7 +341,6 @@ void gimpressionist_main(void)
     }
 
   } else {
-
 
     for(row = 0, y = y1; y < y2; row++, y++) {
       guchar *tmprow = p->col + row * rowstride;

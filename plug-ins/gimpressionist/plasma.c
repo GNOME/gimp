@@ -4,16 +4,16 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
-int pfix(int n)
+static int pfix(int n)
 {
-  if(n<1) return 1;
-  if(n>255) return 255;
+  if (n < 1) return 1;
+  if (n > 255) return 255;
   return n;
 }
 
 #define PIXEL(y,x,z) p->col[(y)*rowstride+(x)*3+z]
 
-void mkplasma_sub(struct ppm *p, int x1, int x2, int y1, int y2, float turb)
+static void mkplasma_sub(ppm_t *p, int x1, int x2, int y1, int y2, float turb)
 {
   int rowstride = p->width * 3;
   int r=0;
@@ -52,7 +52,7 @@ void mkplasma_sub(struct ppm *p, int x1, int x2, int y1, int y2, float turb)
   }
 }
 
-void mkplasma_red(struct ppm *p, float turb)
+static void mkplasma_red(ppm_t *p, float turb)
 {
   int x=0, y=0;
   int rowstride = p->width * 3;
@@ -68,12 +68,12 @@ void mkplasma_red(struct ppm *p, float turb)
   mkplasma_sub(p, 0, x, 0, y, turb);
 }
 
-void mkgrayplasma(struct ppm *p, float turb)
+void mkgrayplasma(ppm_t *p, float turb)
 {
   int y,l;
 
   mkplasma_red(p, turb);
   l = p->width * 3 * p->height;
-  for(y = 0; y < l; y += 3)
+  for (y = 0; y < l; y += 3)
     p->col[y+1] = p->col[y+2] = p->col[y];
 }

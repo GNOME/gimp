@@ -14,6 +14,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimpui.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
@@ -40,7 +42,7 @@ void updatepaperprev(char *fn)
 
   } else {
     double sc;
-    struct ppm p = {0,0,NULL};
+    ppm_t p = {0,0,NULL};
     loadppm(fn, &p);
     sc = p.width > p.height ? p.width : p.height;
     sc = 100.0 / sc;
@@ -62,7 +64,7 @@ void updatepaperprev(char *fn)
   gtk_widget_draw (paperprev, NULL);
 }
 
-void selectpaper(GtkWidget *wg, GtkWidget *p)
+static void selectpaper(GtkWidget *wg, GtkWidget *p)
 {
   GList *h = GTK_LIST(p)->selection;
   GtkWidget *tmpw;
@@ -80,24 +82,13 @@ void selectpaper(GtkWidget *wg, GtkWidget *p)
   updatepaperprev(fname);
 }
 
-
-
 void create_paperpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *thispage, *box2;
-  GtkWidget *labelbox, *menubox;
+  GtkWidget *label, *tmpw, *table;
   GtkWidget *scrolled_win, *list;
-  GtkWidget *tmpw;
 
-  labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new (_("Paper"));
-  gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(labelbox);
-
-  menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new (_("Paper"));
-  gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(menubox);
+  label = gtk_label_new_with_mnemonic (_("P_aper"));
 
   thispage = gtk_vbox_new(FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
@@ -113,7 +104,7 @@ void create_paperpage(GtkNotebook *notebook)
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (box1), scrolled_win, FALSE, FALSE, 0);
   gtk_widget_show (scrolled_win);
-  gtk_widget_set_usize(scrolled_win, 150,-1);
+  gtk_widget_set_size_request(scrolled_win, 150,-1);
 
   paperlist = list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
@@ -126,7 +117,7 @@ void create_paperpage(GtkNotebook *notebook)
   readdirintolist("Paper", list, pcvals.selectedpaper);
 
   box2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
+  gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
   gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 
@@ -145,68 +136,55 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-                      GTK_SIGNAL_FUNC(selectpaper),
-                      list);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(selectpaper), list);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Inverts the Papers texture"), NULL);
-  if(pcvals.paperinvert)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperinvert);
 
   paperoverlay = tmpw = gtk_check_button_new_with_label( _("Overlay"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
-  if(pcvals.paperoverlay)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
-
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperoverlay);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);
   gtk_widget_show (box1);
 
-  box2 = gtk_vbox_new (TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
-  gtk_widget_show (box2);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
+  gtk_box_pack_start(GTK_BOX(box1), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  tmpw = gtk_label_new( _("Scale:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  paperscaleadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+			  _("Scale:"),
+			  150, -1, pcvals.paperscale, 
+			  3.0, 150.0, 1.0, 10.0, 1, 
+			  TRUE, 0, 0,
+			  _("Specifies the scale of the texture (in percent of original file)"),
+			  NULL);
+  g_signal_connect (paperscaleadjust, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pcvals.paperscale);
 
-  tmpw = gtk_label_new( _("Relief:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
+  paperreliefadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 1, 
+			  _("Relief:"),
+			  150, -1, pcvals.paperrelief, 
+			  0.0, 100.0, 1.0, 10.0, 1, 
+			  TRUE, 0, 0,
+			  _("Specifies the amount of embossing to apply to the image (in percent)"),
+			  NULL);
+  g_signal_connect (paperreliefadjust, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pcvals.paperrelief);
 
-  box2 = gtk_vbox_new (TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,10);
-  gtk_widget_show (box2);
-
-  paperscaleadjust = gtk_adjustment_new(pcvals.paperscale, 3.0, 151.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(paperscaleadjust));
-  gtk_widget_set_usize (GTK_WIDGET(tmpw), 150, 30);
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the scale of the texture (in percent of original file)"), NULL);
-
-  paperreliefadjust = gtk_adjustment_new(pcvals.paperrelief, 0.0, 101.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(paperreliefadjust));
-  gtk_widget_set_usize (GTK_WIDGET(tmpw), 150, 30);
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the amount of embossing to apply to the image (in percent)"), NULL);
-
-
-  gtk_signal_connect (GTK_OBJECT(list), "selection_changed",
-		      GTK_SIGNAL_FUNC(selectpaper),
-		      list);
-  if(!GTK_LIST(list)->selection)
+  g_signal_connect (G_OBJECT(list), "selection_changed", 
+		    G_CALLBACK(selectpaper), list);
+  if (!GTK_LIST(list)->selection)
     gtk_list_select_item(GTK_LIST(list), 0);
   selectpaper(NULL,list);
 
-  gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);
-
+  gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

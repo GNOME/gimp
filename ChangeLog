@@ -1,3 +1,26 @@
+2002-11-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/color.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gimpressionist/gimpressionist.[ch]
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/plasma.c
+	* plug-ins/gimpressionist/ppmtool.[ch]
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/preview.c
+	* plug-ins/gimpressionist/repaint.c
+	* plug-ins/gimpressionist/size.c
+	* plug-ins/gimpressionist/sizemap.c: lots and lots of changes. 
+	gimpressionist now looks more or less like other plug-ins, using
+	gimp_scale widgets for data entry, the gimp_color_button for color
+	selection, the OK and Cancel button at the bottom, etc. There are still
+	a few things left to do, mostly more code clean-up.
+
 2002-11-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppatheditor.[ch]: added new function

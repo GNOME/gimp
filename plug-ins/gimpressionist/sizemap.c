@@ -37,7 +37,7 @@ GtkWidget *sizevoronoi = NULL;
 
 char sbuffer[OMWIDTH*OMHEIGHT];
 
-struct smvector_t smvector[MAXSIZEVECT];
+smvector_t smvector[MAXSIZEVECT];
 int numsmvect = 0;
 
 double dist(double x, double y, double dx, double dy);
@@ -49,7 +49,7 @@ double getsiz(double x, double y, int from)
   int n;
   int voronoi;
   double sum, ssum, dst;
-  struct smvector_t *vec;
+  smvector_t *vec;
   double smstrexp;
   int first = 0, last;
 
@@ -103,7 +103,7 @@ double getsiz(double x, double y, int from)
 void updatesmpreviewprev(void)
 {
   int x, y;
-  static struct ppm nsbuffer = {0,0,NULL};
+  static ppm_t nsbuffer = {0,0,NULL};
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
 
@@ -130,8 +130,8 @@ int selectedsmvector = 0;
 
 void updatesmvectorprev(void)
 {
-  static struct ppm backup = {0,0,NULL};
-  static struct ppm sbuffer = {0,0,NULL};
+  static ppm_t backup = {0,0,NULL};
+  static ppm_t sbuffer = {0,0,NULL};
   static int ok = 0;
   int i, x, y;
   double val;
@@ -173,17 +173,16 @@ void updatesmvectorprev(void)
 
 }
 
-
-int smadjignore = 0;
+static gboolean smadjignore = FALSE;
 
 void updatesmsliders(void)
 {
-  smadjignore = 1;
+  smadjignore = TRUE;
   gtk_adjustment_set_value(GTK_ADJUSTMENT(sizadjust),
 			   smvector[selectedsmvector].siz);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(smstradjust),
 			   smvector[selectedsmvector].str);
-  smadjignore = 0;
+  smadjignore = FALSE;
 }
 
 void smprevclick(GtkWidget *w, gpointer data)
@@ -202,9 +201,9 @@ void smnextclick(GtkWidget *w, gpointer data)
   updatesmvectorprev();
 }
 
-void smaddclick(GtkWidget *w, gpointer data)
+static void smaddclick(GtkWidget *w, gpointer data)
 {
-  if(numsmvect + 1 == MAXSIZEVECT) return;
+  if (numsmvect + 1 == MAXSIZEVECT) return;
   smvector[numsmvect].x = 0.5;
   smvector[numsmvect].y = 0.5;
   smvector[numsmvect].siz = 50.0;
@@ -216,15 +215,16 @@ void smaddclick(GtkWidget *w, gpointer data)
   updatesmpreviewprev();
 }
 
-void smdeleteclick(GtkWidget *w, gpointer data)
+static void smdeleteclick(GtkWidget *w, gpointer data)
 {
   int i;
 
-  if(numsmvect == 1) return;
+  if (numsmvect == 1) return;
 
-  for(i = selectedsmvector; i < numsmvect-1; i++) {
-    memcpy(&smvector[i], &smvector[i+1], sizeof(struct smvector_t));
-  }
+  for (i = selectedsmvector; i < numsmvect-1; i++) 
+    {
+      smvector[i] = smvector[i+1];
+    }
   numsmvect--;
   if(selectedsmvector >= numsmvect) selectedsmvector = 0;
   updatesmsliders();
@@ -232,8 +232,7 @@ void smdeleteclick(GtkWidget *w, gpointer data)
   updatesmpreviewprev();
 }
 
-
-void smmapclick(GtkWidget *w, GdkEventButton *event)
+static void smmapclick(GtkWidget *w, GdkEventButton *event)
 {
   if(event->button == 1) {
     smvector[selectedsmvector].x = event->x / (double)OMWIDTH;
@@ -262,44 +261,48 @@ void smmapclick(GtkWidget *w, GdkEventButton *event)
   updatesmpreviewprev();
 }
 
-void angsmadjmove(GtkWidget *w, gpointer data)
+static void angsmadjmove(GtkWidget *w, gpointer data)
 {
-  if(smadjignore) return;
-  smvector[selectedsmvector].siz = GTK_ADJUSTMENT(sizadjust)->value;
-  updatesmvectorprev();
-  updatesmpreviewprev();
+  if (!smadjignore)
+    {
+      smvector[selectedsmvector].siz = GTK_ADJUSTMENT(sizadjust)->value;
+      updatesmvectorprev();
+      updatesmpreviewprev();
+    }
 }
 
-void strsmadjmove(GtkWidget *w, gpointer data)
+static void strsmadjmove(GtkWidget *w, gpointer data)
 {
-  if(smadjignore) return;
-  smvector[selectedsmvector].str = GTK_ADJUSTMENT(smstradjust)->value;
-  updatesmvectorprev();
-  updatesmpreviewprev();
+  if (!smadjignore)
+    {
+      smvector[selectedsmvector].str = GTK_ADJUSTMENT(smstradjust)->value;
+      updatesmvectorprev();
+      updatesmpreviewprev();
+    }
 }
 
-void smstrexpsmadjmove(GtkWidget *w, gpointer data)
+static void smstrexpsmadjmove(GtkWidget *w, gpointer data)
 {
-  if(smadjignore) return;
-  updatesmvectorprev();
-  updatesmpreviewprev();
+  if (!smadjignore)
+    {
+      updatesmvectorprev();
+      updatesmpreviewprev();
+    }
 }
 
-
-void hidewin(GtkWidget *w, GtkWidget **win);
-
-void smcancelclick(GtkWidget *w, GtkWidget *win)
+static void smcancelclick(GtkWidget *w, GtkWidget *win)
 {
-  if(win)
+  if (win)
     gtk_widget_hide(win);
 }
 
-void smokclick(GtkWidget *w, GtkWidget *win)
+static void smokclick(GtkWidget *w, GtkWidget *win)
 {
   int i;
-  for(i = 0; i < numsmvect; i++) {
-    memcpy(&pcvals.sizevector[i], &smvector[i], sizeof(struct smvector_t));
-  }
+  for (i = 0; i < numsmvect; i++) 
+    {
+      pcvals.sizevector[i] = smvector[i];
+    }
   pcvals.numsizevector = numsmvect;
   pcvals.sizestrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
   pcvals.sizevoronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
@@ -309,36 +312,43 @@ void smokclick(GtkWidget *w, GtkWidget *win)
 
 void initsmvectors(void)
 {
-  int i;
+  if (pcvals.numsizevector) 
+    {
+      int i;
 
-  if(pcvals.numsizevector) {
-    numsmvect = pcvals.numsizevector;
-    for(i = 0; i < numsmvect; i++) {
-      memcpy(&smvector[i], &pcvals.sizevector[i], sizeof(struct smvector_t));
+      numsmvect = pcvals.numsizevector;
+      for(i = 0; i < numsmvect; i++) 
+	{
+	  smvector[i] = pcvals.sizevector[i];
+	}
+    } 
+  else 
+    {
+      /* Shouldn't happen */
+      numsmvect = 1;
+      smvector[0].x = 0.5;
+      smvector[0].y = 0.5;
+      smvector[0].siz = 0.0;
+      smvector[0].str = 1.0;
     }
-  } else {
-    /* Shouldn't happen */
-    numsmvect = 1;
-    smvector[0].x = 0.5;
-    smvector[0].y = 0.5;
-    smvector[0].siz = 0.0;
-    smvector[0].str = 1.0;
-  }
   if(selectedsmvector >= numsmvect)
     selectedsmvector = numsmvect-1;
 }
 
-void update_sizemap_dialog(void)
+static void update_sizemap_dialog(void)
 {
-  if(!smwindow) return;
+  if (smwindow)
+    {
+      initsmvectors();
 
-  initsmvectors();
+      gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust), 
+			       pcvals.sizestrexp);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi), 
+				   pcvals.sizevoronoi);
 
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust), pcvals.sizestrexp);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi), pcvals.sizevoronoi);
-
-  updatesmvectorprev();
-  updatesmpreviewprev();
+      updatesmvectorprev();
+      updatesmpreviewprev();
+    }
 }
 
 void create_sizemap_dialog(void)

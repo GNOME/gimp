@@ -33,11 +33,11 @@
 # endif
 #endif
 
-GtkWidget *window = NULL;
+static GtkWidget *dlg = NULL;
 GtkTooltips *tooltips = NULL;
 
-struct ppm infile = {0,0,NULL};
-struct ppm inalpha = {0,0,NULL};
+ppm_t infile = {0,0,NULL};
+ppm_t inalpha = {0,0,NULL};
 
 GList * parsepath (void)
 {
@@ -118,19 +118,8 @@ findfile (const gchar *fn)
 
 void storevals(void)
 {
-  pcvals.orientnum = GTK_ADJUSTMENT(orientnumadjust)->value;
-  pcvals.orientfirst = GTK_ADJUSTMENT(orientfirstadjust)->value;
-  pcvals.orientlast = GTK_ADJUSTMENT(orientlastadjust)->value;
-  pcvals.sizenum = GTK_ADJUSTMENT(sizenumadjust)->value;
-  pcvals.sizefirst = GTK_ADJUSTMENT(sizefirstadjust)->value;
-  pcvals.sizelast = GTK_ADJUSTMENT(sizelastadjust)->value;
-  pcvals.brushrelief = GTK_ADJUSTMENT(brushreliefadjust)->value;
-  pcvals.brushaspect = GTK_ADJUSTMENT(brushaspectadjust)->value;
-  pcvals.brushdensity = GTK_ADJUSTMENT(brushdensityadjust)->value;
   pcvals.brushgamma = GTK_ADJUSTMENT(brushgammaadjust)->value;
   pcvals.generaldarkedge = GTK_ADJUSTMENT(generaldarkedgeadjust)->value;
-  pcvals.paperrelief = GTK_ADJUSTMENT(paperreliefadjust)->value;
-  pcvals.paperscale = GTK_ADJUSTMENT(paperscaleadjust)->value;
   pcvals.paperinvert = GTK_TOGGLE_BUTTON(paperinvert)->active;
   pcvals.generalpaintedges = GTK_TOGGLE_BUTTON(generalpaintedges)->active;
   pcvals.generaltileable = GTK_TOGGLE_BUTTON(generaltileable)->active;
@@ -141,7 +130,6 @@ void storevals(void)
   pcvals.devthresh = GTK_ADJUSTMENT(devthreshadjust)->value;
   pcvals.placecenter = GTK_TOGGLE_BUTTON(placecenter)->active;
   pcvals.paperoverlay = GTK_TOGGLE_BUTTON(paperoverlay)->active;
-  pcvals.colornoise = GTK_ADJUSTMENT(colornoiseadjust)->value;
 }
 
 void restorevals(void)
@@ -183,7 +171,8 @@ void restorevals(void)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(placecenter), pcvals.placecenter);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
 
-  drawcolor(NULL);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON(generalcolbutton), 
+			       &pcvals.color);
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
   colorchange(NULL, NULL, pcvals.colortype);
@@ -201,15 +190,15 @@ static void dialog_ok_callback(GtkWidget *widget, gpointer data)
 {
   storevals();
   pcvals.run = 1;
-  gtk_widget_destroy(GTK_WIDGET(data));
-  if(omwindow)
+  gtk_widget_destroy(dlg);
+  if (omwindow)
     gtk_widget_destroy(GTK_WIDGET(omwindow));
 }
 
 static void dialog_cancel_callback(GtkWidget *widget, gpointer data)
 {
   pcvals.run = 0;
-  gtk_widget_destroy(GTK_WIDGET(data));
+  gtk_widget_destroy(dlg);
 }
 
 void unselectall(GtkWidget *list)
@@ -236,15 +225,7 @@ void reselect(GtkWidget *list, char *fname)
     fname = ++tmpfile;  
 
   unselectall(list);
-  /*
-  for(;;) {
-    h = GTK_LIST(list)->selection;
-    if(!h) break;
-    tmpw = h->data;
-    if(!tmpw) break;
-    gtk_list_unselect_child(GTK_LIST(list), tmpw);
-  }
-  */  
+
   h = GTK_LIST(list)->children;
   while(h) {
     tmpw = h->data;
@@ -329,8 +310,7 @@ void readdirintolist(char *subdir, GtkWidget *list, char *selected)
     }
 }
 
-
-void showabout(void)
+static void showabout(void)
 {
   static GtkWidget *window = NULL;
   GtkWidget *tmpw, *tmpvbox, *tmphbox;
@@ -407,10 +387,10 @@ void showabout(void)
   gtk_widget_show(window);
 }
 
-int create_dialog(void)
+static int create_dialog(void)
 {
   GtkWidget *notebook;
-  GtkWidget *tmpw, *box1, *box2, *box3, *preview_box;
+  GtkWidget *box1, *box2, *preview_box;
   gint        argc;
   gchar     **argv;
 
@@ -433,17 +413,30 @@ int create_dialog(void)
   tooltips = gtk_tooltips_new ();
   gtk_tooltips_enable (tooltips);
 
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
+			 gimp_standard_help_func, 
+			 "filters/gimpressionist.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  g_signal_connect (G_OBJECT (window), "destroy",
-                    G_CALLBACK (dialog_close_callback),
-                    NULL);
+			 _("_About..."), showabout,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			    
+			 GTK_STOCK_CANCEL, dialog_cancel_callback,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
-  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
+			 GTK_STOCK_OK, dialog_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			    
+			 NULL);
+
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (dialog_close_callback), NULL);
+
+  gimp_help_init ();
 
   box1 = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (window), box1);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), box1);
   gtk_widget_show (box1);
 
   box2 = gtk_vbox_new (FALSE, 0);
@@ -451,10 +444,8 @@ int create_dialog(void)
   gtk_widget_show (box2);
 
   notebook = gtk_notebook_new ();
-  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (box1), notebook, TRUE, TRUE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (notebook), 0);
-  gtk_widget_realize (notebook);
+  /*  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook)); */
   gtk_widget_show(notebook);
 
   create_presetpage(GTK_NOTEBOOK (notebook));
@@ -470,34 +461,7 @@ int create_dialog(void)
   gtk_box_pack_start (GTK_BOX (box2), preview_box, FALSE, FALSE, 0);
   gtk_widget_show (preview_box);
 
-  box3 = gtk_hbox_new (TRUE, 0);
-  gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE, 0);
-  gtk_widget_show (box3);
-  
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  g_signal_connect (G_OBJECT(tmpw), "clicked",
-		    G_CALLBACK (dialog_cancel_callback), window);
-  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Quit the program"), NULL);
-
-  tmpw = gtk_button_new_with_label (_("About..."));
-  g_signal_connect (G_OBJECT(tmpw), "clicked",
-                    G_CALLBACK (showabout), window);
-  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Show some information about program"), NULL);
-
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_OK);
-  g_signal_connect (G_OBJECT(tmpw), "clicked",
-                    G_CALLBACK (dialog_ok_callback), window);
-  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
-  GTK_WIDGET_SET_FLAGS (tmpw, GTK_CAN_DEFAULT);
-  gtk_widget_grab_default (tmpw);
-  gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Run with the selected settings"), NULL);
-
-  gtk_widget_show(window);
+  gtk_widget_show(dlg);
 
   return 1;
 }
@@ -507,15 +471,16 @@ int create_gimpressionist(void)
   pcvals.run = 0;
 
   if(standalone) {
-    memcpy(&pcvals, &defaultpcvals, sizeof(pcvals));
+    pcvals = defaultpcvals;
     create_dialog();
     restorevals();
   } else {
     create_dialog();
   }
 
-  gtk_main();
-  gdk_flush();
+  gtk_main ();
+  gimp_help_free ();
+  gdk_flush ();
 
   return pcvals.run;
 }

@@ -12,7 +12,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpui.h"
+#include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
@@ -22,42 +22,39 @@
 
 GtkWidget *previewprev = NULL;
 GtkWidget *previewbutton = NULL;
-GtkWidget *resetpreviewbutton = NULL;
 
-void drawalpha(struct ppm *p, struct ppm *a)
+static void drawalpha(ppm_t *p, ppm_t *a)
 {
   int x, y, g;
   double v;
   int gridsize = 16;
   int rowstride = p->width * 3;
 
-  for(y = 0; y < p->height; y++) {
-    for(x = 0; x < p->width; x++) {
+  for (y = 0; y < p->height; y++) {
+    for (x = 0; x < p->width; x++) {
       int k = y*rowstride + x*3;
-      if(!a->col[k]) continue;
+      if (!a->col[k]) continue;
       v = 1.0 - a->col[k] / 255.0;
       g = ((x/gridsize+y/gridsize)%2)*60+100;
       p->col[k+0] *= v;
       p->col[k+1] *= v;
       p->col[k+2] *= v;
-      v = 1.0-v;
+      v = 1.0 - v;
       p->col[k+0] += g*v;
       p->col[k+1] += g*v;
       p->col[k+2] += g*v;
     }
   }
-  
-  return;
 }
 
-void updatepreviewprev(GtkWidget *wg, void *d)
+void updatepreviewprev(GtkWidget *wg, gpointer d)
 {
   int i;
   char buf[PREVIEWSIZE*3];
-  static struct ppm p = {0,0,NULL};
-  static struct ppm a = {0,0,NULL};
-  static struct ppm backup = {0,0,NULL};
-  static struct ppm abackup = {0,0,NULL};
+  static ppm_t p = {0,0,NULL};
+  static ppm_t a = {0,0,NULL};
+  static ppm_t backup = {0,0,NULL};
+  static ppm_t abackup = {0,0,NULL};
 
   if(!infile.col && d) grabarea();
 
@@ -85,16 +82,16 @@ void updatepreviewprev(GtkWidget *wg, void *d)
     if(d) {
       storevals();
 
-      if(d != (void *)2)
+      if((gint) d != 2)
 	repaint(&p, &a);
     }
     if(img_has_alpha)
       drawalpha(&p, &a);
 
     for(i = 0; i < PREVIEWSIZE; i++) {
-      memset(buf,0,PREVIEWSIZE*3);
-      /*for(j = 0; j < p.width; j++)*/
-      gtk_preview_draw_row(GTK_PREVIEW(previewprev), (guchar *)&p.col[i*PREVIEWSIZE*3], 0, i, PREVIEWSIZE);
+      gtk_preview_draw_row(GTK_PREVIEW(previewprev), 
+			   (guchar*) &p.col[i * PREVIEWSIZE * 3], 0, i, 
+			   PREVIEWSIZE);
     }
     killppm(&p);
     if(img_has_alpha)
@@ -121,19 +118,21 @@ GtkWidget* create_preview()
 
   box2 = gtk_hbox_new(TRUE, 0);
 
-  previewbutton = tmpw = gtk_button_new_with_label( _("Update"));
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-                     (GtkSignalFunc)updatepreviewprev, (void *)1);
+  previewbutton = tmpw = gtk_button_new_with_mnemonic( _("_Update"));
+  g_signal_connect (G_OBJECT (tmpw), "clicked",
+		    G_CALLBACK (updatepreviewprev), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Refresh the Preview window"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Refresh the Preview window"), NULL);
 
-  resetpreviewbutton = tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-                     (GtkSignalFunc)updatepreviewprev, (void *)2);
+  tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  g_signal_connect(G_OBJECT(tmpw), "clicked",
+		   G_CALLBACK (updatepreviewprev), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Revert to the original image"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Revert to the original image"), NULL);
 
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
   gtk_widget_show(box2);

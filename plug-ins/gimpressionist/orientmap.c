@@ -24,8 +24,8 @@
 
 GtkWidget *omwindow = NULL;
 
-GtkWidget *vectorprev = NULL;
-GtkWidget *ompreviewprev = NULL;
+static GtkWidget *vectorprev = NULL;
+static GtkWidget *ompreviewprev = NULL;
 
 GtkObject *vectprevbrightadjust = NULL;
 
@@ -39,12 +39,10 @@ GtkWidget *orientvoronoi = NULL;
 #define OMWIDTH 150
 #define OMHEIGHT 150
 
-char buffer[OMWIDTH*OMHEIGHT];
+static vector_t vector[MAXORIENTVECT];
+static int numvect = 0;
 
-struct vector_t vector[MAXORIENTVECT];
-int numvect = 0;
-
-double degtorad(double d)
+static double degtorad(double d)
 {
   return d/180.0*G_PI;
 }
@@ -56,19 +54,11 @@ double radtodeg(double d)
   return v;
 }
 
-char *skipnum(char *s)
-{
-  while((*s == ' ') || (*s == '\t')) s++;
-  while(((*s >= '0') && (*s <= '9')) || (*s == '.')) s++;
-  while((*s == ' ') || (*s == '\t')) s++;
-  return s;
-}
-
 double dist(double x, double y, double dx, double dy)
 {
-  double ax = fabs(dx-x);
-  double ay = fabs(dy-y);
-  return sqrt((ax*ax)+(ay*ay));
+  double ax = dx - x;
+  double ay = dy - y;
+  return sqrt(ax * ax + ay * ay);
 }
 
 int pixval(double dir)
@@ -84,7 +74,7 @@ double getdir(double x, double y, int from)
   int n;
   int voronoi;
   double sum, dx, dy, dst;
-  struct vector_t *vec;
+  vector_t *vec;
   double angoff, strexp;
   int first = 0, last;
 
@@ -157,10 +147,10 @@ double getdir(double x, double y, int from)
   return 90-(radtodeg(atan2(dy,dx))+angoff);
 }
 
-void updateompreviewprev(void)
+static void updateompreviewprev(void)
 {
   int x, y;
-  static struct ppm nbuffer = {0,0,NULL};
+  static ppm_t nbuffer = {0,0,NULL};
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
   guchar white[3] = {255,255,255};
@@ -184,12 +174,12 @@ void updateompreviewprev(void)
   gtk_widget_draw(ompreviewprev,NULL);
 }
 
-int selectedvector = 0;
+static int selectedvector = 0;
 
-void updatevectorprev(void)
+static void updatevectorprev(void)
 {
-  static struct ppm backup = {0,0,NULL};
-  static struct ppm buffer = {0,0,NULL};
+  static ppm_t backup = {0,0,NULL};
+  static ppm_t buffer = {0,0,NULL};
   static int ok = 0;
   int i, x, y;
   double dir, xo, yo;
@@ -234,13 +224,12 @@ void updatevectorprev(void)
 
 }
 
+static gboolean adjignore = FALSE;
 
-int adjignore = 0;
-
-void updatesliders(void)
+static void updatesliders(void)
 {
   int i;
-  adjignore = 1;
+  adjignore = TRUE;
   gtk_adjustment_set_value(GTK_ADJUSTMENT(angadjust),
 			   vector[selectedvector].dir);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(stradjust),
@@ -251,10 +240,10 @@ void updatesliders(void)
     else
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[i]), FALSE);
   }
-  adjignore = 0;
+  adjignore = FALSE;
 }
 
-void prevclick(GtkWidget *w, gpointer data)
+static void prevclick(GtkWidget *w, gpointer data)
 {
   selectedvector--;
   if(selectedvector < 0) selectedvector = numvect-1;
@@ -262,7 +251,7 @@ void prevclick(GtkWidget *w, gpointer data)
   updatevectorprev();
 }
 
-void nextclick(GtkWidget *w, gpointer data)
+static void nextclick(GtkWidget *w, gpointer data)
 {
   selectedvector++;
   if(selectedvector == numvect) selectedvector = 0;
@@ -270,7 +259,7 @@ void nextclick(GtkWidget *w, gpointer data)
   updatevectorprev();
 }
 
-void addclick(GtkWidget *w, gpointer data)
+static void addclick(GtkWidget *w, gpointer data)
 {
   if(numvect + 1 == MAXORIENTVECT) return;
   vector[numvect].x = 0.5;
@@ -287,14 +276,14 @@ void addclick(GtkWidget *w, gpointer data)
   updateompreviewprev();
 }
 
-void deleteclick(GtkWidget *w, gpointer data)
+static void deleteclick(GtkWidget *w, gpointer data)
 {
   int i;
 
   if(numvect == 1) return;
 
   for(i = selectedvector; i < numvect-1; i++) {
-    memcpy(&vector[i], &vector[i+1], sizeof(struct vector_t));
+    memcpy(&vector[i], &vector[i+1], sizeof(vector_t));
   }
   numvect--;
   if(selectedvector >= numvect) selectedvector = 0;
@@ -302,7 +291,6 @@ void deleteclick(GtkWidget *w, gpointer data)
   updatevectorprev();
   updateompreviewprev();
 }
-
 
 void mapclick(GtkWidget *w, GdkEventButton *event)
 {
@@ -335,9 +323,9 @@ void mapclick(GtkWidget *w, GdkEventButton *event)
   updateompreviewprev();
 }
 
-void angadjmove(GtkWidget *w, gpointer data)
+static void angadjmove(GtkWidget *w, gpointer data)
 {
-  if(adjignore) return;
+  if (adjignore) return;
   vector[selectedvector].dir = GTK_ADJUSTMENT(angadjust)->value;
   vector[selectedvector].dx = sin(degtorad(vector[selectedvector].dir));
   vector[selectedvector].dy = cos(degtorad(vector[selectedvector].dir));
@@ -345,32 +333,32 @@ void angadjmove(GtkWidget *w, gpointer data)
   updateompreviewprev();
 }
 
-void stradjmove(GtkWidget *w, gpointer data)
+static void stradjmove(GtkWidget *w, gpointer data)
 {
-  if(adjignore) return;
+  if (adjignore) return;
   vector[selectedvector].str = GTK_ADJUSTMENT(stradjust)->value;
   updatevectorprev();
   updateompreviewprev();
 }
 
-void strexpadjmove(GtkWidget *w, gpointer data)
+static void strexpadjmove(GtkWidget *w, gpointer data)
 {
-  if(adjignore) return;
+  if (adjignore) return;
   updatevectorprev();
   updateompreviewprev();
 }
 
-void angoffadjmove(GtkWidget *w, gpointer data)
+static void angoffadjmove(GtkWidget *w, gpointer data)
 {
-  if(adjignore) return;
+  if (adjignore) return;
   updatevectorprev();
   updateompreviewprev();
 }
 
-void vectypeclick(GtkWidget *w, gpointer data)
+static void vectypeclick(GtkWidget *w, gpointer data)
 {
   int i;
-  if(adjignore) return;
+  if (adjignore) return;
   for(i = 0; i < NUMVECTYPES; i++) {
     if(GTK_TOGGLE_BUTTON(vectypes[i])->active)
       vector[selectedvector].type = i;
@@ -379,22 +367,17 @@ void vectypeclick(GtkWidget *w, gpointer data)
   updateompreviewprev();
 }
 
-void hidewin(GtkWidget *w, GtkWidget **win)
+static void omcancelclick(GtkWidget *w, GtkWidget *win)
 {
-  gtk_widget_hide(*win);
-}
-
-void omcancelclick(GtkWidget *w, GtkWidget *win)
-{
-  if(win)
+  if (win)
     gtk_widget_hide(win);
 }
 
-void omokclick(GtkWidget *w, GtkWidget *win)
+static void omokclick(GtkWidget *w, GtkWidget *win)
 {
   int i;
   for(i = 0; i < numvect; i++) {
-    memcpy(&pcvals.orientvector[i], &vector[i], sizeof(struct vector_t));
+    pcvals.orientvector[i] = vector[i];
   }
   pcvals.numorientvector = numvect;
   pcvals.orientstrexp = GTK_ADJUSTMENT(strexpadjust)->value;
@@ -408,10 +391,10 @@ void initvectors(void)
 {
   int i;
 
-  if(pcvals.numorientvector) {
+  if (pcvals.numorientvector) {
     numvect = pcvals.numorientvector;
     for(i = 0; i < numvect; i++) {
-      memcpy(&vector[i], &pcvals.orientvector[i], sizeof(struct vector_t));
+      vector[i] = pcvals.orientvector[i];
     }
   } else {
     /* Shouldn't happen */
@@ -550,7 +533,6 @@ void create_orientmap_dialog(void)
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(deleteclick), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Delete selected vector"), NULL);
-
 
   tmpw = table2 = gtk_table_new(2,2,FALSE);
   gtk_widget_show(tmpw);

@@ -29,27 +29,25 @@
 
 
 GtkWidget *brushlist = NULL;
-GtkWidget *brushprev = NULL;
+static GtkWidget *brushprev = NULL;
 GtkObject *brushreliefadjust = NULL;
 GtkObject *brushaspectadjust = NULL;
 GtkObject *brushgammaadjust = NULL;
 
 GtkWidget *brushdrawablemenu = NULL;
-GtkWidget *brushemptyitem;
+static GtkWidget *brushemptyitem;
 
 gint32 brushdrawableid;
 
 int brushfile = 2;
 
-struct ppm brushppm = {0,0,NULL};
+ppm_t brushppm = {0,0,NULL};
 
-void updatebrushprev(char *fn);
+static void updatebrushprev(char *fn);
 
-int colorfile(char *fn)
+static gboolean colorfile(char *fn)
 {
-  if(!fn) return 0;
-  if(strstr(fn, ".ppm")) return 1;
-  return 0;
+  return fn && strstr(fn, ".ppm");
 }
 
 void brushdmenuselect(gint32 id, gpointer data)
@@ -59,7 +57,7 @@ void brushdmenuselect(gint32 id, gpointer data)
   guchar *src;
   gint alpha, has_alpha, bpp;
   gint x, y;
-  struct ppm *p;
+  ppm_t *p;
   gint x1, y1, x2, y2;
   gint row, col;
   GimpDrawable *drawable;
@@ -225,10 +223,10 @@ gint validdrawable(gint32 imageid, gint32 drawableid, gpointer data)
   return (gimp_drawable_is_rgb(drawableid) || gimp_drawable_is_gray(drawableid));
 }
 
-void reloadbrush(char *fn, struct ppm *p)
+void reloadbrush(char *fn, ppm_t *p)
 {
   static char lastfn[200] = "";
-  static struct ppm cache = {0,0,NULL};
+  static ppm_t cache = {0,0,NULL};
 
   if(strcmp(fn, lastfn)) {
     strncpy(lastfn, fn, 199);
@@ -238,7 +236,7 @@ void reloadbrush(char *fn, struct ppm *p)
   pcvals.colorbrushes = colorfile(fn);
 }
 
-void padbrush(struct ppm *p, int width, int height)
+static void padbrush(ppm_t *p, int width, int height)
 {
   guchar black[3] = {0,0,0};
   int left = (width - p->width) / 2;
@@ -256,14 +254,14 @@ void updatebrushprev(char *fn)
   if(fn)
     brushfile = 1;
 
-  if(!fn && brushfile) {
+  if (!fn && brushfile) {
     memset(buf, 0, 100);
     for(i = 0; i < 100; i++) {
       gtk_preview_draw_row (GTK_PREVIEW (brushprev), buf, 0, i, 100);
     }
   } else {
     double sc;
-    struct ppm p = {0,0,NULL};
+    ppm_t p = {0,0,NULL};
     guchar gammatable[256];
     int newheight;
 
@@ -286,7 +284,7 @@ void updatebrushprev(char *fn)
     sc = p.width > newheight ? p.width : newheight;
     sc = 100.0 / sc;
     resize_fast(&p, p.width*sc,newheight*sc);
-    padbrush(&p,100,100);
+    padbrush(&p, 100, 100);
     for(i = 0; i < 100; i++) {
       int k = i * p.width * 3;
       memset(buf,0,100);
@@ -300,7 +298,7 @@ void updatebrushprev(char *fn)
   gtk_widget_queue_draw (brushprev);
 }
 
-int brushdontupdate = 0;
+static gboolean brushdontupdate = FALSE;
 
 void selectbrush(GtkWidget *wg, GtkWidget *p)
 {
@@ -310,9 +308,9 @@ void selectbrush(GtkWidget *wg, GtkWidget *p)
   static char *oldl = NULL;
   static char fname[200];
 
-  if(brushdontupdate) return;
+  if (brushdontupdate) return;
 
-  if(brushfile == 0) {
+  if (brushfile == 0) {
     updatebrushprev(NULL);
     return;
   }
@@ -332,11 +330,11 @@ void selectbrush(GtkWidget *wg, GtkWidget *p)
   if(!tmpw) return;
   l = (gchar *) gtk_label_get_text(GTK_LABEL(GTK_BIN(tmpw)->child));
 
-  if(oldl) if(strcmp(oldl, l)) {
-    brushdontupdate = 1;
+  if (oldl && strcmp(oldl, l)) {
+    brushdontupdate = TRUE;
     gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), 1.0);
     gtk_adjustment_set_value(GTK_ADJUSTMENT(brushaspectadjust), 0.0);
-    brushdontupdate = 0;
+    brushdontupdate = FALSE;
   }
   oldl = l;
 
@@ -346,7 +344,7 @@ void selectbrush(GtkWidget *wg, GtkWidget *p)
   updatebrushprev(fname);
 }
 
-void selectbrushfile(GtkWidget *wg, GtkWidget *p)
+static void selectbrushfile(GtkWidget *wg, GtkWidget *p)
 {
   brushfile = 1;
   if(GTK_IS_WIDGET(presetsavebutton))
@@ -357,20 +355,12 @@ void selectbrushfile(GtkWidget *wg, GtkWidget *p)
 void create_brushpage(GtkNotebook *notebook)
 {
   GtkWidget *box1, *box2, *box3, *thispage;
-  GtkWidget *labelbox, *menubox;
   GtkWidget *scrolled_win, *list;
-  GtkWidget *tmpw;
+  GtkWidget *tmpw, *table;
   GtkWidget *dmenu;
+  GtkWidget *label;
 
-  labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new (_("Brush"));
-  gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(labelbox);
-
-  menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new (_("Brush"));
-  gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show_all(menubox);
+  label = gtk_label_new_with_mnemonic (_("_Brush"));
 
   thispage = gtk_vbox_new(FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
@@ -431,31 +421,16 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);
   gtk_widget_show (box1);
 
-
   box2 = gtk_vbox_new (TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  if(!standalone) {
+  if (!standalone) {
+    GtkWidget *emptyitem;
+
     tmpw = gtk_label_new( _("Select:"));
     gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
     gtk_widget_show (tmpw);
-  }
-
-  tmpw = gtk_label_new( _("Aspect ratio:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
-
-  tmpw = gtk_label_new( _("Relief:"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-  gtk_widget_show (tmpw);
-
-  box2 = gtk_vbox_new (TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,10);
-  gtk_widget_show (box2);
-
-  if(!standalone) {
-    GtkWidget *emptyitem;
 
     box3 = gtk_hbox_new(FALSE,0);
     gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
@@ -474,35 +449,40 @@ void create_brushpage(GtkNotebook *notebook)
     brushdrawablemenu = dmenu = gimp_drawable_menu_new(validdrawable, brushdmenuselect, NULL, -1);
     gtk_menu_shell_prepend (GTK_MENU_SHELL (dmenu), emptyitem);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
-
-    tmpw = gtk_button_new_with_label( _("Save..."));
+    tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
     gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-    g_signal_connect (G_OBJECT(tmpw), "clicked",
-                      G_CALLBACK(savebrush),
-                      NULL);
+    g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(savebrush), NULL);
     gtk_widget_show(tmpw);
   }
 
-  brushaspectadjust = gtk_adjustment_new(pcvals.brushaspect, -1.0, 2.0, 0.1, 0.1, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushaspectadjust));
-  gtk_widget_set_size_request (GTK_WIDGET(tmpw), 150, 30);
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the aspect ratio of the brush"), NULL);
-  g_signal_connect(G_OBJECT(brushaspectadjust), "value_changed",
-                   G_CALLBACK (selectbrush),
-                   list);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE(table), 4);
+  gtk_box_pack_start(GTK_BOX(box2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  brushreliefadjust = gtk_adjustment_new(pcvals.brushrelief, 0.0, 101.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushreliefadjust));
-  gtk_widget_set_size_request (GTK_WIDGET(tmpw), 150, 30);
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
-  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
-  gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Specifies the amount of embossing to apply to each brush stroke"), NULL);
+  brushaspectadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+			  _("Aspect ratio:"),
+			  150, -1, pcvals.brushaspect, 
+			  -1.0, 1.0, 0.1, 0.1, 2, 
+			  TRUE, 0, 0,
+			  _("Specifies the aspect ratio of the brush"),
+			  NULL);
+  g_signal_connect (brushaspectadjust, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pcvals.brushaspect);
+
+  brushreliefadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 1, 
+			  _("Relief:"),
+			  150, -1, pcvals.brushrelief, 
+			  0.0, 100.0, 1.0, 10.0, 1, 
+			  TRUE, 0, 0,
+			  _("Specifies the amount of embossing to apply to the image (in percent)"),
+			  NULL);
+  g_signal_connect (brushreliefadjust, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &pcvals.brushrelief);
 
   g_signal_connect (G_OBJECT(list), "selection_changed",
                     G_CALLBACK(selectbrushfile),
@@ -511,5 +491,5 @@ void create_brushpage(GtkNotebook *notebook)
     gtk_list_select_item(GTK_LIST(list), 0);
   selectbrush(NULL, list);
 
-  gtk_notebook_append_page_menu (notebook, thispage, labelbox, menubox);
+  gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }
