@@ -1,5 +1,10 @@
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpviewable.c: made stock_id a property of the
+	GimpViewable object.
+
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
 	* etc/Makefile.am
 	* etc/templaterc: added a short templaterc.
 
