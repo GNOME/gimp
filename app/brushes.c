@@ -59,7 +59,8 @@ static void         create_default_brush   (void);
 static void         load_brush             (char *filename);
 static void         free_brush             (GBrushP);
 static void         brushes_free_one       (gpointer, gpointer);
-static gint         brush_compare_func     (gpointer, gpointer);
+static gint         brush_compare_func     (gconstpointer, 
+					    gconstpointer);
 
 /*  function declarations  */
 void
@@ -130,9 +131,10 @@ brushes_free_one (gpointer data, gpointer dummy)
 
 
 static gint
-brush_compare_func (gpointer first, gpointer second)
+brush_compare_func (gconstpointer first, gconstpointer second)
 {
-  return strcmp (((GBrushP)first)->name, ((GBrushP)second)->name);
+  return strcmp (((const GBrushP)first)->name, 
+		 ((const GBrushP)second)->name);
 }
 
 

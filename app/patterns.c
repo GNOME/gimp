@@ -53,7 +53,8 @@ static GSList *     insert_pattern_in_list   (GSList *, GPatternP);
 static void         load_pattern             (char *filename);
 static void         free_pattern             (GPatternP);
 static void         pattern_free_one         (gpointer, gpointer);
-static gint         pattern_compare_func     (gpointer, gpointer);
+static gint         pattern_compare_func     (gconstpointer, 
+					      gconstpointer);
 
 
 /*  function declarations  */
@@ -92,9 +93,10 @@ pattern_free_one (gpointer data, gpointer dummy)
 }
 
 static gint
-pattern_compare_func(gpointer first, gpointer second)
+pattern_compare_func(gconstpointer first, gconstpointer second)
 {
-  return strcmp (((GPatternP)first)->name, ((GPatternP)second)->name);
+  return strcmp (((const GPatternP)first)->name, 
+		 ((const GPatternP)second)->name);
 }
 
 void

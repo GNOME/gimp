@@ -296,7 +296,7 @@ server_start (gint   port,
   SFCommand *cmd;
 
   /*  Set up the clientname hash table  */
-  clientname_ht = g_hash_table_new (clientname_hash, NULL);
+  clientname_ht = g_hash_table_new (g_direct_hash, NULL);
 
   /*  Setup up the server log file  */
   if (logfile)
@@ -500,12 +500,6 @@ make_socket (guint port)
     }
 
   return sock;
-}
-
-static guint
-clientname_hash (gpointer key)
-{
-  return (int) key;
 }
 
 static void

@@ -66,8 +66,7 @@ static Argument * procedural_db_set_data (Argument *);
 static Argument * procedural_db_query (Argument *);
 static void       procedural_db_query_entry (gpointer, gpointer, gpointer);
 static int        match_strings (regex_t *, char *);
-static guint      procedural_db_hash_func (gpointer key);
-static gint       procedural_db_compare_func (gpointer a, gpointer b);
+static guint      procedural_db_hash_func (gconstpointer key);
 
 
 /*  Local data  */
@@ -485,7 +484,7 @@ procedural_db_init ()
   app_init_update_status("Procedural Database", NULL, -1);
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func,
-				      procedural_db_compare_func);
+				      g_str_equal);
 }
 
 void
@@ -1127,10 +1126,14 @@ match_strings (regex_t * preg,
   return regexec (preg, a, 0, NULL, 0);
 }
 
+/* We could just use g_str_hash() here ... that uses a different
+ * hash function, though
+ */
+
 static guint
-procedural_db_hash_func (gpointer key)
+procedural_db_hash_func (gconstpointer key)
 {
-  gchar *string;
+  const gchar *string;
   guint result;
   int c;
 
@@ -1158,7 +1161,7 @@ procedural_db_hash_func (gpointer key)
    * Copyright (c) 1994 Sun Microsystems, Inc.
    */
 
-  string = (gchar *) key;
+  string = (const gchar *) key;
   result = 0;
   while (1)
     {
@@ -1170,11 +1173,4 @@ procedural_db_hash_func (gpointer key)
     }
 
   return result;
-}
-
-static gint
-procedural_db_compare_func (gpointer a,
-			    gpointer b)
-{
-  return (strcmp ((char *) a, (char *) b) == 0);
 }

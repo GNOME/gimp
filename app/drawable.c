@@ -103,18 +103,6 @@ static GHashTable *drawable_table = NULL;
 /**************************/
 /*  Function definitions  */
 
-static guint
-drawable_hash (gpointer v)
-{
-  return (guint) v;
-}
-
-static gint
-drawable_hash_compare (gpointer v1, gpointer v2)
-{
-  return ((guint) v1) == ((guint) v2);
-}
-
 GimpDrawable*
 drawable_get_ID (int drawable_id)
 {
@@ -575,8 +563,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 
   drawable->ID = global_drawable_ID++;
   if (drawable_table == NULL)
-    drawable_table = g_hash_table_new (drawable_hash,
-				       drawable_hash_compare);
+    drawable_table = g_hash_table_new (g_direct_hash, NULL);
   g_hash_table_insert (drawable_table, (gpointer) drawable->ID,
 		       (gpointer) drawable);
 }
