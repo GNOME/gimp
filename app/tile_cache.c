@@ -243,7 +243,7 @@ tile_cache_zorch_next ()
   TILE_MUTEX_LOCK (tile);
   CACHE_LOCK;
   tile_cache_flush_internal (tile);
-  if (tile->dirty)
+  if (tile->dirty || tile->swap_offset == -1)
     {
       tile_swap_out (tile);
     }
