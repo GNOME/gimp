@@ -156,6 +156,27 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_ALPHA_ADD }
 };
 
+static GimpToggleActionEntry layers_mask_toggle_actions[] =
+{
+  { "layers-mask-edit", NULL,
+    N_("Edit Layer Mask"), NULL, NULL,
+    G_CALLBACK (layers_mask_edit_cmd_callback),
+    FALSE,
+    NULL },
+
+  { "layers-mask-show", NULL,
+    N_("Show Layer Mask"), NULL, NULL,
+    G_CALLBACK (layers_mask_show_cmd_callback),
+    FALSE,
+    NULL },
+
+  { "layers-mask-disable", NULL,
+    N_("Disable Layer Mask"), NULL, NULL,
+    G_CALLBACK (layers_mask_disable_cmd_callback),
+    FALSE,
+    NULL }
+};
+
 static GimpEnumActionEntry layers_mask_apply_actions[] =
 {
   { "layers-mask-apply", NULL,
@@ -283,6 +304,10 @@ layers_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (layers_mask_apply_actions),
                                       G_CALLBACK (layers_mask_apply_cmd_callback));
 
+  gimp_action_group_add_toggle_actions (group,
+                                        layers_mask_toggle_actions,
+                                        G_N_ELEMENTS (layers_mask_toggle_actions));
+
   gimp_action_group_add_enum_actions (group,
                                       layers_mask_to_selection_actions,
                                       G_N_ELEMENTS (layers_mask_to_selection_actions),
@@ -390,10 +415,13 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
   SET_SENSITIVE ("layers-scale",           layer && !ac);
 
-  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !lm && alpha);
-  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  lm);
-  SET_SENSITIVE ("layers-alpha-add",   layer && !fs && !alpha);
+  SET_SENSITIVE ("layers-mask-add",      layer && !fs && !ac && !lm && alpha);
+  SET_SENSITIVE ("layers-mask-edit",     layer && !fs && !ac &&  lm);
+  SET_SENSITIVE ("layers-mask-show",     layer && !fs && !ac &&  lm);
+  SET_SENSITIVE ("layers-mask-disable",  layer && !fs && !ac &&  lm);
+  SET_SENSITIVE ("layers-mask-apply",    layer && !fs && !ac &&  lm);
+  SET_SENSITIVE ("layers-mask-delete",   layer && !fs && !ac &&  lm);
+  SET_SENSITIVE ("layers-alpha-add",     layer && !fs && !alpha);
 
   SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && lm);
   SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && lm);

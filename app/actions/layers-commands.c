@@ -377,6 +377,73 @@ layers_mask_apply_cmd_callback (GtkAction *action,
 }
 
 void
+layers_mask_edit_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage         *gimage;
+  GimpLayer         *layer;
+  GimpLayerMask     *mask;
+  return_if_no_layer (gimage, layer, data);
+
+  mask = gimp_layer_get_mask (layer);
+  if (mask)
+    {
+      gboolean active;
+
+      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_layer_mask_set_edit (mask, active);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+layers_mask_show_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage         *gimage;
+  GimpLayer         *layer;
+  GimpLayerMask     *mask;
+
+  return_if_no_layer (gimage, layer, data);
+
+  mask = gimp_layer_get_mask (layer);
+
+  if (mask)
+    {
+      gboolean active;
+
+      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_layer_mask_set_show (mask, active);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+layers_mask_disable_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpImage         *gimage;
+  GimpLayer         *layer;
+  GimpLayerMask     *mask;
+
+  return_if_no_layer (gimage, layer, data);
+
+  mask = gimp_layer_get_mask (layer);
+
+  if (mask)
+    {
+      gboolean active;
+
+      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_layer_mask_set_apply (mask, ! active);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
 layers_mask_to_selection_cmd_callback (GtkAction *action,
                                        gint       value,
                                        gpointer   data)

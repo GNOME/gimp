@@ -7,10 +7,12 @@
     <menuitem action="layers-edit-attributes" />
     <separator />
     <menuitem action="layers-new" />
+<!--
     <menuitem action="layers-raise" />
     <menuitem action="layers-raise-to-top" />
     <menuitem action="layers-lower" />
     <menuitem action="layers-lower-to-bottom" />
+ -->
     <menuitem action="layers-duplicate" />
     <menuitem action="layers-anchor" />
     <menuitem action="layers-merge-down" />
@@ -22,6 +24,9 @@
     <menuitem action="layers-scale" />
     <separator />
     <menuitem action="layers-mask-add" />
+    <menuitem action="layers-mask-show" />
+    <menuitem action="layers-mask-edit" />
+    <menuitem action="layers-mask-disable" />
     <menuitem action="layers-mask-apply" />
     <menuitem action="layers-mask-delete" />
     <menuitem action="layers-mask-selection-replace" />

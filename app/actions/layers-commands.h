@@ -65,6 +65,12 @@ void   layers_mask_add_cmd_callback           (GtkAction   *action,
 void   layers_mask_apply_cmd_callback         (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
+void   layers_mask_edit_cmd_callback          (GtkAction   *action,
+                                               gpointer     data);
+void   layers_mask_show_cmd_callback          (GtkAction   *action,
+                                               gpointer     data);
+void   layers_mask_disable_cmd_callback       (GtkAction   *action,
+                                               gpointer     data);
 void   layers_mask_to_selection_cmd_callback  (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
