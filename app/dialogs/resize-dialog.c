@@ -346,9 +346,15 @@ resize_dialog_reset (ResizeDialog *private)
 {
   g_object_set (private->box,
                 "keep-aspect", FALSE,
+                NULL);
+
+  g_object_set (private->box,
                 "width",       private->old_width,
                 "height",      private->old_height,
                 "unit",        private->old_unit,
+                NULL);
+
+  g_object_set (private->box,
                 "keep-aspect", TRUE,
                 NULL);
 }

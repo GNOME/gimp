@@ -29,6 +29,13 @@
 
 2005-03-02  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/resize-dialog.c (resize_dialog_reset)
+	* app/dialogs/scale-dialog.c (scale_dialog_reset): don't rely on
+	GObject internals about the order in which properties are being
+	set. Fixes one aspect of bug #169011.
+
+2005-03-02  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout.c
 	* app/tools/gimptextoptions.[ch]: allow to adjust letter-spacing.
 
