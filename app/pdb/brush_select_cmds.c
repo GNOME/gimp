@@ -76,7 +76,7 @@ brushes_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   spacing = args[4].value.pdb_int;
-  if (spacing < 0 || spacing > 1000)
+  if (spacing > 1000)
     success = FALSE;
 
   paint_mode = args[5].value.pdb_int;
@@ -91,7 +91,7 @@ brushes_popup_invoker (Gimp     *gimp,
 	  brush_select_new (gimp, popup_title,
 			    initial_brush,
 			    opacity / 100.0,
-			     paint_mode,
+			    paint_mode,
 			    spacing,
 			    brush_callback);
 	}
@@ -161,7 +161,7 @@ brushes_close_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *brush_callback;
   ProcRecord *proc;
-  BrushSelect *bsp;
+  BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL)
@@ -171,9 +171,9 @@ brushes_close_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, brush_callback)) &&
-	  (bsp = brush_select_get_by_callback (brush_callback)))
+	  (brush_select = brush_select_get_by_callback (brush_callback)))
 	{
-	  brush_select_free (bsp);
+	  brush_select_free (brush_select);
 	}
       else
 	{
@@ -220,7 +220,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
   gint32 spacing;
   gint32 paint_mode;
   ProcRecord *proc;
-  BrushSelect *bsp;
+  BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL)
@@ -235,7 +235,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
     success = FALSE;
 
   spacing = args[3].value.pdb_int;
-  if (spacing < 0 || spacing > 1000)
+  if (spacing > 1000)
     success = FALSE;
 
   paint_mode = args[4].value.pdb_int;
@@ -246,26 +246,29 @@ brushes_set_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, brush_callback)) &&
-	  (bsp = brush_select_get_by_callback (brush_callback)))
+	  (brush_select = brush_select_get_by_callback (brush_callback)))
 	{
 	  GimpBrush *active = (GimpBrush *)
 	    gimp_container_get_child_by_name (gimp->brush_factory->container,
 					      brush_name);
     
-	  success = (active != NULL);
-    
-	  if (success)
+	  if (active)
 	    {
 	      GtkAdjustment *spacing_adj;
     
-	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
+	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (brush_select->view)->spacing_adjustment;
     
-	      gimp_context_set_brush (bsp->context, active);
-	      gimp_context_set_opacity (bsp->context, opacity / 100.0);
-	      gimp_context_set_paint_mode (bsp->context, paint_mode);
+	      gimp_context_set_brush (brush_select->context, active);
+	      gimp_context_set_opacity (brush_select->context, opacity / 100.0);
+	      gimp_context_set_paint_mode (brush_select->context, paint_mode);
     
-	      gtk_adjustment_set_value (spacing_adj, spacing);
+	      if (spacing >= 0)
+		gtk_adjustment_set_value (spacing_adj, spacing);
+    
+	      gtk_window_present (GTK_WINDOW (brush_select->shell));
 	    }
+	  else
+	    success = FALSE;
 	}
       else
 	success = FALSE;

@@ -1,3 +1,23 @@
+2003-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush_select.pdb (brush_args): don't fail on
+	brush_spacing values < 0, but behave as documented (use the
+	brush's own spacing).
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+
+	* tools/pdbgen/pdb/pattern_select.pdb: gtk_window_present() the
+	dialog on each set_popup(). This way the dialogs can be risen via
+	the PDB by setting the already selected object. Replaced
+	unreadable variable names by verbose ones.
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/font_select_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/pattern_select_cmds.c: regenerated.
+
 2003-06-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c: minor GUI cleanups.

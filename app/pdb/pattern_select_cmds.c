@@ -127,7 +127,7 @@ patterns_close_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *pattern_callback;
   ProcRecord *proc;
-  PatternSelect *psp;
+  PatternSelect *pattern_select;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
   if (pattern_callback == NULL)
@@ -137,9 +137,9 @@ patterns_close_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, pattern_callback)) &&
-	  (psp = pattern_select_get_by_callback (pattern_callback)))
+	  (pattern_select = pattern_select_get_by_callback (pattern_callback)))
 	{
-	  pattern_select_free (psp);
+	  pattern_select_free (pattern_select);
 	}
       else
 	{
@@ -183,7 +183,7 @@ patterns_set_popup_invoker (Gimp     *gimp,
   gchar *pattern_callback;
   gchar *pattern_name;
   ProcRecord *proc;
-  PatternSelect *psp;
+  PatternSelect *pattern_select;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
   if (pattern_callback == NULL)
@@ -197,16 +197,20 @@ patterns_set_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, pattern_callback)) &&
-	  (psp = pattern_select_get_by_callback (pattern_callback)))
+	  (pattern_select = pattern_select_get_by_callback (pattern_callback)))
 	{
 	  GimpPattern *active = (GimpPattern *)
 	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					      pattern_name);
     
-	  success = (active != NULL);
+	  if (active)
+	    {
+	      gimp_context_set_pattern (pattern_select->context, active);
     
-	  if (success)
-	    gimp_context_set_pattern (psp->context, active);
+	      gtk_window_present (GTK_WINDOW (pattern_select->shell));
+	    }
+	  else
+	    success = FALSE;
 	}
       else
 	success = FALSE;

@@ -139,7 +139,7 @@ gradients_close_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *gradient_callback;
   ProcRecord *prec;
-  GradientSelect *gsp;
+  GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL)
@@ -149,9 +149,9 @@ gradients_close_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-	  (gsp = gradient_select_get_by_callback (gradient_callback)))
+	  (gradient_select = gradient_select_get_by_callback (gradient_callback)))
 	{
-	  gradient_select_free (gsp);
+	  gradient_select_free (gradient_select);
 	}
       else
 	{
@@ -195,7 +195,7 @@ gradients_set_popup_invoker (Gimp     *gimp,
   gchar *gradient_callback;
   gchar *gradient_name;
   ProcRecord *prec;
-  GradientSelect *gsp;
+  GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL)
@@ -209,16 +209,20 @@ gradients_set_popup_invoker (Gimp     *gimp,
     {
       if (! gimp->no_interface &&
 	  (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-	  (gsp = gradient_select_get_by_callback (gradient_callback)))
+	  (gradient_select = gradient_select_get_by_callback (gradient_callback)))
 	{
 	  GimpGradient *active = (GimpGradient *)
 	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      gradient_name);
     
-	  success = (active != NULL);
+	  if (active)
+	    {
+	      gimp_context_set_gradient (gradient_select->context, active);
     
-	  if (success)
-	    gimp_context_set_gradient (gsp->context, active);
+	      gtk_window_present (GTK_WINDOW (gradient_select->shell));
+	    }
+	  else
+	    success = FALSE;
 	}
       else
 	success = FALSE;
