@@ -127,6 +127,16 @@ GimpPreviewArea
 @num_colors: 
 
 
+<!-- ##### FUNCTION gimp_preview_area_set_max_size ##### -->
+<para>
+
+</para>
+
+@area: 
+@width: 
+@height: 
+
+
 <!-- ##### FUNCTION gimp_preview_area_menu_popup ##### -->
 <para>
 

@@ -915,6 +915,10 @@ gimp_preview_get_update (GimpPreview *preview)
  * @xmax:
  * @ymax:
  *
+ * Sets the lower and upper limits for the previewed area. The
+ * difference between the upper and lower value is used to set the
+ * maximum size of the #GimpPreviewArea used in the @preview.
+ *
  * Since: GIMP 2.2
  **/
 void
@@ -961,7 +965,7 @@ gimp_preview_get_size (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_posistion:
+ * gimp_preview_get_position:
  * @preview: a #GimpPreview widget
  * @x:       return location for the horizontal offset
  * @y:       return location for the vertical offset

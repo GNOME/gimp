@@ -55,6 +55,18 @@ GimpPreview
 @update: 
 
 
+<!-- ##### FUNCTION gimp_preview_set_bounds ##### -->
+<para>
+
+</para>
+
+@preview: 
+@xmin: 
+@ymin: 
+@xmax: 
+@ymax: 
+
+
 <!-- ##### FUNCTION gimp_preview_get_size ##### -->
 <para>
 

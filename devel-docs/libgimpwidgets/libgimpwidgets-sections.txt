@@ -785,6 +785,7 @@ gimp_preview_area_blend
 gimp_preview_area_mask
 gimp_preview_area_set_offsets
 gimp_preview_area_set_cmap
+gimp_preview_area_set_max_size
 gimp_preview_area_menu_popup
 <SUBSECTION Standard>
 GimpPreviewAreaClass
@@ -803,6 +804,7 @@ GIMP_PREVIEW_AREA_GET_CLASS
 GimpPreview
 gimp_preview_get_update
 gimp_preview_set_update
+gimp_preview_set_bounds
 gimp_preview_get_size
 gimp_preview_get_position
 gimp_preview_draw

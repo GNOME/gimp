@@ -1,3 +1,10 @@
+2004-09-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppreview.sgml	
+	* libgimpwidgets/tmpl/gimppreviewarea.sgml: updated for new
+	preview APIs.
+
 2004-09-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

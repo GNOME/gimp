@@ -1666,9 +1666,14 @@ gimp_preview_area_set_cmap (GimpPreviewArea *area,
 
 /**
  * gimp_preview_area_set_max_size:
- * @area: a #GimpPreviewArea widget
- * @width:
- * @height:
+ * @area:   a #GimpPreviewArea widget
+ * @width:  the maximum width in pixels or -1 to unset the limit
+ * @height: the maximum height in pixels or -1 to unset the limit
+ *
+ * Usually a #GimpPreviewArea fills the size that it is
+ * allocated. This funtion allows you to limit the preview area to a
+ * maximum size. If a larger size is allocated for the widget, the
+ * preview will draw itself centered into the allocated area.
  *
  * Since: GIMP 2.2
  **/
