@@ -1,5 +1,10 @@
 2003-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmodules.c (gimp_modules_load): silently ignore a
+	non-existing modulerc.
+
+2003-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpcoreconfig.[ch]
 	* app/config/gimprc-blurbs.h: removed "module-load-inhibit"
 	property since the GimpModuleDB stores this value.

@@ -71,75 +71,79 @@ gimp_modules_exit (Gimp *gimp)
 void
 gimp_modules_load (Gimp *gimp)
 {
-  gchar      *filename;
-  gchar      *path;
-  GScanner   *scanner;
-  GTokenType  token;
-  gchar      *module_load_inhibit = NULL;
-  GError     *error               = NULL;
+  gchar    *filename;
+  gchar    *path;
+  GScanner *scanner;
+  gchar    *module_load_inhibit = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("modulerc");
-  scanner = gimp_scanner_new_file (filename, &error);
+  scanner = gimp_scanner_new_file (filename, NULL);
   g_free (filename);
+
+  if (scanner)
+    {
+      GTokenType  token;
+      GError     *error = NULL;
 
 #define MODULE_LOAD_INHIBIT 1
 
-  g_scanner_scope_add_symbol (scanner, 0, "module-load-inhibit",
-                              GINT_TO_POINTER (MODULE_LOAD_INHIBIT));
+      g_scanner_scope_add_symbol (scanner, 0, "module-load-inhibit",
+                                  GINT_TO_POINTER (MODULE_LOAD_INHIBIT));
 
-  token = G_TOKEN_LEFT_PAREN;
+      token = G_TOKEN_LEFT_PAREN;
 
-  while (g_scanner_peek_next_token (scanner) == token)
-    {
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
+      while (g_scanner_peek_next_token (scanner) == token)
         {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_SYMBOL;
-          break;
+          token = g_scanner_get_next_token (scanner);
 
-        case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == GINT_TO_POINTER (MODULE_LOAD_INHIBIT))
+          switch (token)
             {
-              token = G_TOKEN_STRING;
+            case G_TOKEN_LEFT_PAREN:
+              token = G_TOKEN_SYMBOL;
+              break;
 
-              if (! gimp_scanner_parse_string_no_validate (scanner,
-                                                           &module_load_inhibit))
-                goto error;
+            case G_TOKEN_SYMBOL:
+              if (scanner->value.v_symbol == GINT_TO_POINTER (MODULE_LOAD_INHIBIT))
+                {
+                  token = G_TOKEN_STRING;
+
+                  if (! gimp_scanner_parse_string_no_validate (scanner,
+                                                               &module_load_inhibit))
+                    goto error;
+                }
+              token = G_TOKEN_RIGHT_PAREN;
+              break;
+
+            case G_TOKEN_RIGHT_PAREN:
+              token = G_TOKEN_LEFT_PAREN;
+              break;
+
+            default: /* do nothing */
+              break;
             }
-          token = G_TOKEN_RIGHT_PAREN;
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_LEFT_PAREN;
-          break;
-
-        default: /* do nothing */
-          break;
         }
-    }
 
 #undef MODULE_LOAD_INHIBIT
 
-  if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
+      if (token != G_TOKEN_LEFT_PAREN)
+        {
+          g_scanner_get_next_token (scanner);
+          g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                                 _("fatal parse error"), TRUE);
+        }
+
+    error:
+
+      if (error)
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
+
+      gimp_scanner_destroy (scanner);
     }
-
- error:
-
-  if (error)
-    {
-      g_message (error->message);
-      g_clear_error (&error);
-    }
-
-  gimp_scanner_destroy (scanner);
 
   if (module_load_inhibit)
     {
