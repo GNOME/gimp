@@ -241,6 +241,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
    *         (SHFT) -> multiple selection
    *         (CTRL) -> Drag out control point
    *         (CTRL+SHFT) -> Convert to corner
+   *         (ALT)  -> close this stroke  (really should be able to connect
+   *                                       two strokes)
    *         
    * Handle: (NONE) -> Regular Movement
    *         (SHFT) -> (Handle) Move opposite handle symmetrically
@@ -357,6 +359,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           if (state & GDK_CONTROL_MASK)
             gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_CONTROL,
                                         gdisp, &anchor, &stroke);
+
+          if (state & GDK_MOD1_MASK)
+            gimp_stroke_close (stroke);
         }
       else
         {

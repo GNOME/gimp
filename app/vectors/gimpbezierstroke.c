@@ -220,6 +220,8 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
 
   stroke = GIMP_STROKE (bezier_stroke);
 
+  g_return_val_if_fail (!stroke->closed, NULL);
+
   if (stroke->anchors == NULL)
     {
       /* assure that there is no neighbor specified */

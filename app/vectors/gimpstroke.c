@@ -366,6 +366,12 @@ gimp_stroke_real_anchor_move_absolute (GimpStroke            *stroke,
   anchor->position.y = coord->y;
 }
 
+void
+gimp_stroke_close (GimpStroke *stroke)
+{
+  stroke->closed = TRUE;
+}
+
 
 void
 gimp_stroke_anchor_convert (GimpStroke            *stroke,

@@ -124,6 +124,8 @@ void         gimp_stroke_anchor_move_absolute (GimpStroke            *stroke,
                                                const GimpCoords      *coord,
                                                GimpAnchorFeatureType  feature);
 
+void         gimp_stroke_close                (GimpStroke            *stroke);
+
 void         gimp_stroke_anchor_convert       (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
                                                GimpAnchorFeatureType  feature);
@@ -138,7 +140,7 @@ gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke);
 gdouble      gimp_stroke_get_distance         (const GimpStroke      *stroke,
                                                const GimpCoords      *coord);
 
-/* returns the number of valid coordinates */                       
+/* returns an array of valid coordinates */                       
 GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
                                                gdouble                precision,
                                                gboolean              *closed);
