@@ -2,13 +2,13 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * 
  * gimp-remote.c
- * Copyright (C) 2000 Sven Neumann <sven@gimp.org>
- *                and Simon Budig <simon@gimp.org>
- * 
+ * Copyright (C) 2000-2003  Sven Neumann <sven@gimp.org>
+ *                          Simon Budig <simon@gimp.org>
+ *
  * Tells a running gimp to open files by creating a synthetic drop-event.
  *
  * compile with
- *  gcc -o gimp-remote `gtk-config --cflags --libs` -lXmu -Wall gimp-remote.c
+ *  gcc -o gimp-remote `pkg-config --cflags --libs gtk+-2.0` -lXmu gimp-remote.c
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,23 +23,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
-/* This file contains code derived from:
- * 
- * remote.c --- remote control of Netscape Navigator for Unix.
- * version 1.1.3, for Netscape Navigator 1.1 and newer.
- *
- * Copyright © 1996 Netscape Communications Corporation, all rights reserved.
- * Created: Jamie Zawinski <jwz@netscape.com>, 24-Dec-94.
- *
- * Permission to use, copy, modify, distribute, and sell this software and its
- * documentation for any purpose is hereby granted without fee, provided that
- * the above copyright notice appear in all copies and that both that
- * copyright notice and this permission notice appear in supporting
- * documentation.  No representations are made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or 
- * implied warranty.
  */
 
 /* Disclaimer:
@@ -57,8 +40,8 @@
 
 /* TODO:
  *
- * Should try to execv the gimp in the same path as the gimp-remote executable,
- * then fall back to execvp ("gimp", argv).
+ * Should try to execv the gimp in the same path as the gimp-remote
+ * executable, then fall back to execvp ("gimp", argv).
  */
 
 #include "config.h"
@@ -68,10 +51,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <X11/Xmu/WinUtil.h>
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-
-#include <X11/Xmu/WinUtil.h>       /*  for XmuClientWindow ()  */
 
 #include "libgimpbase/gimpversion.h"
 
@@ -79,66 +62,76 @@
 static gboolean  start_new = FALSE;
 
 
-static Window
-gimp_remote_find_window (Display *display)
+static GdkWindow *
+gimp_remote_find_window (void)
 {
-    Window root_window;
-    Window root, parent, *children;
-    Window result = None;
-    Atom WM_CLASS;
-    Atom WM_STRING;
-    guint nchildren;
-    gint i;
+  GdkWindow *result = NULL;
+  Window     root, parent;
+  Window    *children;
+  Atom       class_atom;
+  Atom       string_atom;
+  guint      nchildren;
+  gint       i;
+
+  if (XQueryTree (gdk_display,
+                  gdk_x11_get_default_root_xwindow (), 
+                  &root, &parent, &children, &nchildren) == 0)
+    return NULL;
   
-    g_return_val_if_fail (display != NULL, 0);
-
-    root_window = RootWindowOfScreen (DefaultScreenOfDisplay (display));
-
-    if (XQueryTree (display, root_window, 
-                    &root, &parent, &children, &nchildren) == 0)
-        return None;
+  if (! (children && nchildren))
+    return NULL;
   
-    if (! (children && nchildren))
-        return None;
+  class_atom  = XInternAtom (gdk_display, "WM_CLASS", TRUE);
+  string_atom = XInternAtom (gdk_display, "STRING",   TRUE);
 
-    WM_CLASS  = XInternAtom (display, "WM_CLASS", False);
-    WM_STRING = XInternAtom (display, "STRING", False);
+  for (i = nchildren - 1; i >= 0; i--)
+    {
+      Window  window;
+      Atom    ret_type;
+      gint    ret_format;
+      gulong  bytes_after;
+      gulong  nitems;
+      guchar *data;
 
-    for (i = nchildren - 1; i >= 0; i--)
-      {
-        Atom type;
-        gint format;
-        gulong nitems, bytesafter;
-        guchar *version = 0;
-        Window window = XmuClientWindow (display, children[i]);
-        gint status = 0;
+      /*  The XmuClientWindow() function finds a window at or below the
+       *  specified window, that has a WM_STATE property. If such a
+       *  window is found, it is returned; otherwise the argument window
+       *  is returned.
+       */
 
-        /*  We are searching the Gimp toolbox: Its WM_CLASS Property
-         *  has the values "toolbox\0Gimp\0". This is pretty relieable,
-         *  it is more reliable when we ask a special property, explicitely
-         *  set from the gimp. See below... :-)
-         */
+      window = XmuClientWindow (gdk_display, children[i]);
 
-        status = XGetWindowProperty (display, window, WM_CLASS,
-                                     0, (128 / sizeof (long)),
-                                     False, WM_STRING,
-                                     &type, &format, &nitems, &bytesafter,
-                                     &version);
+      /*  We are searching the Gimp toolbox: Its WM_CLASS Property
+       *  has the values "toolbox\0Gimp\0". This is pretty relieable,
+       *  it is more reliable when we ask a special property, explicitely
+       *  set from the gimp. See below... :-)
+       */
 
-        if (status == Success && type != None && nitems > 0) 
-	  {
-            if (!strcmp (version, "toolbox") && !strcmp (version+8, "Gimp")) 
-	      {
-		result = window;
-		break;
-	      }
-            XFree (version);
-	  }
-      }
+      if (XGetWindowProperty (gdk_display, window,
+                              class_atom,
+                              0, 32,
+                              FALSE,
+                              string_atom,
+                              &ret_type, &ret_format, &nitems, &bytes_after,
+                              &data) == Success &&
+          ret_type)
+        {
+          if (nitems > 12                        &&
+              strcmp (data,     "toolbox") == 0  &&
+              strcmp (data + 8, "Gimp")    == 0) 
+            {
+              XFree (data);
+              result = gdk_window_foreign_new (window);
+              break;
+            }
+
+          XFree (data);
+        }
+    }
   
-    XFree (children);
-  
-    return result;
+  XFree (children);
+
+  return result;
 }
 
 static void  
@@ -148,21 +141,22 @@ source_selection_get (GtkWidget          *widget,
 		      guint               time,
 		      gpointer            data)
 {
-    gchar *uri = (gchar *) data;
+  gchar *uri = (gchar *) data;
 
-    gtk_selection_data_set (selection_data,
-			    selection_data->target,
-			    8, uri, strlen (uri));
-    gtk_main_quit ();
+  gtk_selection_data_set (selection_data,
+                          selection_data->target,
+                          8, uri, strlen (uri));
+  gtk_main_quit ();
 }
 
-static int
+static gboolean
 toolbox_hidden (gpointer data)
 {
-    g_printerr ("Could not connect to the Gimp.\n"
-                "Make sure that the Toolbox is visible!\n");
-    gtk_main_quit ();
-    return 0;
+  g_printerr ("Could not connect to the Gimp.\n"
+              "Make sure that the Toolbox is visible!\n");
+  gtk_main_quit ();
+
+  return FALSE;
 }
   
 static void
@@ -197,7 +191,8 @@ start_new_gimp (GString *file_list)
   execvp ("gimp-1.3", argv);
 	  
   /*  if execvp returns, there was an arror  */
-  g_printerr ("Couldn't start gimp for the following reason: %s\n", g_strerror (errno));
+  g_printerr ("Couldn't start gimp-1.3 for the following reason: %s\n",
+              g_strerror (errno));
   exit (-1);
 }
 
@@ -236,140 +231,130 @@ gint
 main (gint    argc, 
       gchar **argv)
 {
-    GtkWidget *source;
-    GdkWindow *gimp_window;
-    Window     gimp_x_window;
-
-    GdkDragContext  *context;
-    GdkDragProtocol  protocol;
-
-    GdkAtom   sel_type;
-    GdkAtom   sel_id;
-    GList    *targetlist;
-    guint     timeout;
-    gboolean  options = TRUE;
-
-    GString  *file_list = g_string_new ("");
-    gchar    *cwd       = g_get_current_dir();
-    gchar    *file_uri  = "";
-    guint    i;
-
-    for (i = 1; i < argc; i++)
-      {
-	if (strlen (argv[i]) == 0)
-	  continue;
-
-	if (options && *argv[i] == '-')
-	  {
-	    if (strcmp (argv[i], "--"))
-	      {
-		parse_option (argv[0], argv[i]);
-		continue;
-	      }
-	    else
-	      {
-		/*  everything following a -- is interpreted as arguments  */
-		options = FALSE;
-		continue;
-	      }
-	  }
-
-	/* If not already a valid URI */
-        if (g_ascii_strncasecmp ("file:", argv[i], 5) &&
-            g_ascii_strncasecmp ("ftp:",  argv[i], 4) &&
-            g_ascii_strncasecmp ("http:", argv[i], 5))
-	  {
-	    if (g_path_is_absolute (argv[i]))
-		file_uri = g_strconcat ("file:", argv[i], NULL);
-	    else
-		file_uri = g_strconcat ("file:", cwd, "/", argv[i], NULL);
-	  }
-	else
-	  file_uri = g_strdup (argv[i]);
-
-	if (file_list->len > 0)
-	  file_list = g_string_append_c (file_list, '\n');
-
-	file_list = g_string_append (file_list, file_uri);
-	g_free (file_uri);
-      }
-
-    if (file_list->len == 0) 
-      {
-	usage (argv[0]);
-        exit (0);
-      }
-
-    gtk_init (&argc, &argv); 
-
-    /*  locate Gimp window and make it comfortable for us */
-    gimp_x_window = gimp_remote_find_window (gdk_display);
-    if (gimp_x_window == None)
-      {
-	if (start_new)
-	  start_new_gimp (file_list);
-
-	g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
-	exit (-1);
-      }
-
-    gdk_drag_get_protocol (gimp_x_window, &protocol);
-    if (protocol != GDK_DRAG_PROTO_XDND)
-      {
-       g_printerr ("Gimp-Window doesnt use Xdnd-Protocol - huh?\n");
-	exit (-1);
-      }	
-
-    gimp_window = gdk_window_foreign_new ((GdkNativeWindow) gimp_x_window);
-    if (!gimp_window)
-      {
-	g_printerr ("Couldn't create gdk_window for gimp_x_window\n");
-	exit (-1);
-      }
-
-    /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
-     *  it does not accept DnD-Operations and gtk_main() will not be
-     *  terminated. If the Toolbox is simply unmapped (by the Windowmanager)
-     *  DnD works. But in both cases gdk_window_is_visible () == 0.... :-( 
-     *  To work around this add a timeout and abort after 1.5 seconds.
-     */
- 
-    timeout = gtk_timeout_add (1500, toolbox_hidden, NULL);
-
-
-    /*  set up an DND-source  */
-    source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    g_signal_connect (G_OBJECT (source), "selection_get",
-                      G_CALLBACK (source_selection_get), file_list->str);
-    gtk_widget_realize (source);
-
-
-    /*  specify the id and the content-type of the selection used to
-     *  pass the URIs to Gimp.
-     */
-    sel_id = gdk_atom_intern ("XdndSelection", FALSE);
-    sel_type = gdk_atom_intern ("text/uri-list", FALSE);
-    targetlist = g_list_prepend (NULL, GUINT_TO_POINTER (sel_type));
-
-
-    /*  assign the selection to our DnD-source  */
-    gtk_selection_owner_set (source, sel_id, GDK_CURRENT_TIME);
-    gtk_selection_add_target (source, sel_id, sel_type, 0);
-
-
-    /*  drag_begin/motion/drop  */
-    context = gdk_drag_begin (source->window, targetlist);
+  GtkWidget *source;
+  GdkWindow *gimp_window;
+    
+  GdkDragContext  *context;
+  GdkDragProtocol  protocol;
   
-    gdk_drag_motion (context, gimp_window, protocol, 0, 0,
-                     GDK_ACTION_COPY, GDK_ACTION_COPY, GDK_CURRENT_TIME);
+  GdkAtom   sel_type;
+  GdkAtom   sel_id;
+  GList    *targetlist;
+  guint     timeout;
+  gboolean  options = TRUE;
+  
+  GString  *file_list = g_string_new (NULL);
+  gchar    *cwd       = g_get_current_dir ();
+  gchar    *file_uri  = "";
+  guint    i;
+  
+  for (i = 1; i < argc; i++)
+    {
+      if (strlen (argv[i]) == 0)
+        continue;
+      
+      if (options && *argv[i] == '-')
+        {
+          if (strcmp (argv[i], "--"))
+            {
+              parse_option (argv[0], argv[i]);
+              continue;
+            }
+          else
+            {
+              /*  everything following a -- is interpreted as arguments  */
+              options = FALSE;
+              continue;
+            }
+        }
+      
+      /* If not already a valid URI */
+      if (g_ascii_strncasecmp ("file:", argv[i], 5) &&
+          g_ascii_strncasecmp ("ftp:",  argv[i], 4) &&
+          g_ascii_strncasecmp ("http:", argv[i], 5))
+        {
+          if (g_path_is_absolute (argv[i]))
+            file_uri = g_strconcat ("file:", argv[i], NULL);
+          else
+            file_uri = g_strconcat ("file:", cwd, "/", argv[i], NULL);
+        }
+      else
+        file_uri = g_strdup (argv[i]);
+      
+      if (file_list->len > 0)
+        file_list = g_string_append_c (file_list, '\n');
+      
+      file_list = g_string_append (file_list, file_uri);
+      g_free (file_uri);
+    }
 
-    gdk_drag_drop (context, GDK_CURRENT_TIME);
+  if (file_list->len == 0) 
+    {
+      usage (argv[0]);
+      return EXIT_SUCCESS;
+    }
 
-    /*  finally enter the mainloop to handle the events  */
-    gtk_main ();
+  gtk_init (&argc, &argv); 
+  
+  /*  locate Gimp window */
+  gimp_window = gimp_remote_find_window ();
 
-    gtk_timeout_remove (timeout);
-    g_string_free (file_list, TRUE);
+  if (!gimp_window)
+    {
+      if (start_new)
+        start_new_gimp (file_list);
+      
+      g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
+      return EXIT_FAILURE;
+    }
 
-    exit (0);
+  gdk_drag_get_protocol (GDK_WINDOW_XID (gimp_window), &protocol);
+  if (protocol != GDK_DRAG_PROTO_XDND)
+    {
+      g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");
+      return EXIT_FAILURE;
+    }	
+
+  /*  Problem: If the Toolbox is hidden via Tab (gtk_widget_hide)
+   *  it does not accept DnD-Operations and gtk_main() will not be
+   *  terminated. If the Toolbox is simply unmapped (by the Windowmanager)
+   *  DnD works. But in both cases gdk_window_is_visible () == 0.... :-( 
+   *  To work around this add a timeout and abort after 1.5 seconds.
+   */
+ 
+  timeout = g_timeout_add (1500, toolbox_hidden, NULL);
+
+  /*  set up an DND-source  */
+  source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  g_signal_connect (source, "selection_get",
+                    G_CALLBACK (source_selection_get), file_list->str);
+  gtk_widget_realize (source);
+
+
+  /*  specify the id and the content-type of the selection used to
+   *  pass the URIs to Gimp.
+   */
+  sel_id   = gdk_atom_intern ("XdndSelection", FALSE);
+  sel_type = gdk_atom_intern ("text/uri-list", FALSE);
+  targetlist = g_list_prepend (NULL, GUINT_TO_POINTER (sel_type));
+
+  /*  assign the selection to our DnD-source  */
+  gtk_selection_owner_set (source, sel_id, GDK_CURRENT_TIME);
+  gtk_selection_add_target (source, sel_id, sel_type, 0);
+
+  /*  drag_begin/motion/drop  */
+  context = gdk_drag_begin (source->window, targetlist);
+
+  gdk_drag_motion (context, gimp_window, protocol, 0, 0,
+                   GDK_ACTION_COPY, GDK_ACTION_COPY, GDK_CURRENT_TIME);
+
+  gdk_drag_drop (context, GDK_CURRENT_TIME);
+
+  /*  finally enter the mainloop to handle the events  */
+  gtk_main ();
+
+  g_source_remove (timeout);
+  g_string_free (file_list, TRUE);
+  
+  return EXIT_SUCCESS;
 }
