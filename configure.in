@@ -68,10 +68,10 @@ AC_DEFUN(AC_GIMP_CHECK,
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
 
 	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for glib and gtk >= 0.99.1])
-        AC_TRY_LINK(
+	AC_MSG_CHECKING([for glib and gtk >= 0.99.3])
+        AC_TRY_COMPILE(
 [#include <gtk/gtk.h>],
-[GtkPixmap *pixmap; gdk_pixmap_unref (pixmap); gtk_button_new();],
+[GtkArgSetFunc arg_set_func;],
 gtk_found=yes,
 gtk_found=no)
 	AC_MSG_RESULT($gtk_found)
