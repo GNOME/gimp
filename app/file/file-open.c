@@ -42,6 +42,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimpdocumentlist.h"
 
@@ -203,8 +204,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
-      /* enable & clear all undo steps */
-      gimp_image_undo_enable (gimage);
+      /* clear all undo steps */
+      gimp_image_undo_free (gimage);
 
       /* set the image to clean  */
       gimp_image_clean_all (gimage);

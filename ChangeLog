@@ -1,3 +1,20 @@
+2004-03-14  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage.[ch]
+	* app/core/gimpimage-undo.c: introduced a freeze counter, so
+	that undo_freeze(); undo_freeze(); undo_thaw(); no longer
+	results in an thawed undo stack.
+
+	Fixes Bug #124176.
+
+	This might reveal other places in the code where
+	gimp_image_undo_freeze/thaw or gimp_image_undo_disable/enable
+	were used in an inconsistent (not-paired) manner.
+
+	* app/file/file-open.c: e.g. here, where _enable was called on
+	the new image. The intention was to free a potential undo stack,
+	so now call gimp_image_undo_free() instead.
+
 2004-03-14  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayer.[ch]: removed all idle handling here.

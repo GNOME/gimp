@@ -114,7 +114,7 @@ struct _GimpImage
   gint               num_cols;              /*  number of cols--for indexed  */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
-  gboolean           undo_on;               /*  Is undo enabled?             */
+  gint               freeze_count;          /*  counts the _freeze's         */
 
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */

@@ -121,7 +121,7 @@ gimp_image_undo_group_start (GimpImage    *gimage,
   /* Notify listeners that the image will be modified */
   gimp_image_undo_start (gimage);
 
-  if (! gimage->undo_on)
+  if (gimage->freeze_count > 0)
     return FALSE;
 
   gimage->group_count++;
@@ -160,7 +160,7 @@ gimp_image_undo_group_end (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  if (! gimage->undo_on)
+  if (gimage->freeze_count > 0)
     return FALSE;
 
   g_return_val_if_fail (gimage->group_count > 0, FALSE);
@@ -226,7 +226,7 @@ gimp_image_undo_push_item (GimpImage        *gimage,
   if (dirties_image)
     gimp_image_dirty (gimage);
 
-  if (! gimage->undo_on)
+  if (gimage->freeze_count > 0)
     return NULL;
 
   /*  nuke the redo stack  */
