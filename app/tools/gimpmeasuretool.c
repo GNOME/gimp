@@ -827,13 +827,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
 static GtkWidget *
 gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
 {
+  GimpTool  *tool = GIMP_TOOL (mtool);
   GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *label;
 
-  dialog = gimp_tool_dialog_new (GIMP_TOOL (mtool)->tool_info,
-                                 GIMP_TOOL (mtool)->gdisp->shell,
+  dialog = gimp_tool_dialog_new (tool->tool_info,
+                                 NULL /* tool->gdisp->shell */,
                                  _("Measure Distances and Angles"),
 
                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,

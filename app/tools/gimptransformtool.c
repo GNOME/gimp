@@ -1251,6 +1251,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
+  GimpTool     *tool = GIMP_TOOL (tr_tool);
   GimpToolInfo *tool_info;
   const gchar  *stock_id;
   gchar        *identifier;
@@ -1258,7 +1259,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
 
-  tool_info = GIMP_TOOL (tr_tool)->tool_info;
+  tool_info = tool->tool_info;
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
@@ -1267,7 +1268,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                           GIMP_OBJECT (tool_info)->name,
                                           stock_id,
                                           tr_tool->shell_desc,
-                                          GIMP_TOOL (tr_tool)->gdisp->shell,
+                                          NULL /* tool->gdisp->shell */,
                                           gimp_standard_help_func,
                                           tool_info->help_id);
 

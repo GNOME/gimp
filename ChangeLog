@@ -1,5 +1,14 @@
 2004-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c: don't set tool dialogs transient
+	to the image window. Fixes bug #128833.
+
+2004-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/about-dialog.c: don't abuse the SPLASHSCREEN window type
 	hint, instead make the about dialog a popup window and center it
 	explicitely.
