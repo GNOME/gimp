@@ -1,3 +1,8 @@
+Sun Jun 14 00:50:25 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gif/gif.c: don't pop up dialog for informational
+	"Too many colors?" message
+
 Sat Jun 13 21:11:17 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: install gimp.m4 too

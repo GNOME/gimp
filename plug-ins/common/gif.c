@@ -1720,7 +1720,7 @@ save_image (char   *filename,
   else
     {
       BitsPerPixel = colorstobpp (256);
-      g_message ("GIF: Too many colours?\n");
+      g_print ("GIF: Too many colours?\n");
     }
 
   cols = gimp_image_width(image_ID);
