@@ -3,10 +3,10 @@
 # Sung-Hyun Nam <namsh@kldp.org>, 1999
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 13:55-0700\n"
-"PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
-"Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
+"Project-Id-Version: gimp-plug-ins 1.1.10\n"
+"POT-Creation-Date: 1999-10-04 09:28-0700\n"
+"PO-Revision-Date: 1999-10-23 12:51:05+0900\n"
+"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-kr\n"
@@ -64,7 +64,7 @@ msgstr "sin^p-based 함수"
 msgid "sin^p, stepped"
 msgstr "sin^p, 진행됨"
 
-#: plug-ins/common/CML_explorer.c:253
+#: plug-ins/common/CML_explorer.c:253 plug-ins/gap/gap_mov_dialog.c:280
 msgid "None"
 msgstr "없음"
 
@@ -101,8 +101,8 @@ msgid "Max (x+d, -), (0.5 < x)"
 msgstr "최대 (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:271
-msgid "MAX (x-d, -), (x < 0.5)"
-msgstr "최대 (x-d, -), (x < 0.5)"
+msgid "Max (x-d, -), (x < 0.5)"
+msgstr "최대 (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:273
 msgid "Max (x-d, -), (0.5 < x)"
@@ -211,19 +211,24 @@ msgstr "씨앗(seed)에서 랜덤 (공유됨)"
 
 #: plug-ins/common/CML_explorer.c:377 plug-ins/common/CML_explorer.c:385
 #: plug-ins/common/CML_explorer.c:1429 plug-ins/common/CML_explorer.c:1753
-#: plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:135 plug-ins/common/lic.c:1024
+#: plug-ins/gap/gap_mov_dialog.c:253 plug-ins/gimpressionist/orientation.c:191
+#: plug-ins/gimpressionist/size.c:189
 msgid "Hue"
 msgstr "색도"
 
 #: plug-ins/common/CML_explorer.c:378 plug-ins/common/CML_explorer.c:386
 #: plug-ins/common/CML_explorer.c:1433 plug-ins/common/CML_explorer.c:1753
-#: plug-ins/common/decompose.c:136
+#: plug-ins/common/decompose.c:136 plug-ins/common/lic.c:1036
+#: plug-ins/gap/gap_mov_dialog.c:254
 msgid "Saturation"
 msgstr "채도"
 
 #: plug-ins/common/CML_explorer.c:379 plug-ins/common/CML_explorer.c:387
 #: plug-ins/common/CML_explorer.c:1437 plug-ins/common/CML_explorer.c:1753
-#: plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:137 plug-ins/gap/gap_mov_dialog.c:256
+#: plug-ins/gimpressionist/orientation.c:134
+#: plug-ins/gimpressionist/size.c:133
 msgid "Value"
 msgstr "값"
 
@@ -251,7 +256,9 @@ msgstr ""
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "연결된-맵 격자무늬(Coupled-Map Lattice) 탐색"
 
-#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2448
+#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2531
+#: plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 msgid "Preview"
 msgstr "미리보기"
 
@@ -335,9 +342,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"씨앗(seed) 고정\" 버튼은 나의 별명이다.\n"
-"같은 씨앗(seed)이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 "
-"한다(이 이유는 그리기에서의 이미지는 미리보기에서 다르기 때문), 그리고 "
-"(2) 모든 변화율은 0과 같아야 합니다." 
+"같은 씨앗(seed)이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 "
+"이유는 그리기에서의 이미지는 미리보기에서 다르기 때문), 그리고 (2) 모든 "
+"변화율은 0과 같아야 합니다."
 
 #: plug-ins/common/CML_explorer.c:1530
 msgid "Others"
@@ -444,22 +451,32 @@ msgid "Graph of the current settings"
 msgstr "현재 설정 환경 그래프"
 
 #. Action Area
-#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1818
+#: plug-ins/bmp/bmpwrite.c:420 plug-ins/common/CML_explorer.c:1818
 #: plug-ins/common/CML_explorer.c:2679 plug-ins/common/CML_explorer.c:2775
 #: plug-ins/common/apply_lens.c:416 plug-ins/common/blur.c:619
 #: plug-ins/common/bumpmap.c:965 plug-ins/common/checkerboard.c:381
 #: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
 #: plug-ins/common/cubism.c:329 plug-ins/common/decompose.c:914
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
-#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
-#: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
-#: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
-#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
-#: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
+#: plug-ins/common/gif.c:1285 plug-ins/common/jpeg.c:1565
+#: plug-ins/common/lic.c:1246 plug-ins/common/mail.c:485
+#: plug-ins/common/oilify.c:460 plug-ins/common/png.c:924
+#: plug-ins/common/ps.c:2115 plug-ins/common/ps.c:2373
+#: plug-ins/common/rotate.c:605 plug-ins/common/threshold_alpha.c:467
+#: plug-ins/common/threshold_alpha.c:500 plug-ins/common/warp.c:508
+#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:790
+#: plug-ins/gap/gap_arr_dialog.c:947 plug-ins/gap/gap_arr_dialog.c:1171
+#: plug-ins/gap/gap_mod_layer.c:149 plug-ins/gap/gap_mov_dialog.c:461
+#: plug-ins/gap/gap_mpege.c:190 plug-ins/gap/gap_resi_dialog.c:136
+#: plug-ins/gimpressionist/gimpressionist.c:361
+#: plug-ins/gimpressionist/orientmap.c:626
+#: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
+#: plug-ins/mosaic/mosaic.c:564 plug-ins/print/print.c:1143
+#: plug-ins/script-fu/script-fu-scripts.c:1383
+#: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
+#: plug-ins/struc/struc.c:239
 msgid "OK"
-msgstr "예"
+msgstr "확인"
 
 #: plug-ins/common/CML_explorer.c:1828
 msgid "The Graph"
@@ -518,24 +535,34 @@ msgstr "경고: 오래된 포멧 파일입니다."
 
 #: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr "경고: 흠, 현제 것보다 새로워진 CML_explorer를 위한 패러미터 파일입니다."
+msgstr ""
+"경고: 흠, 현제 것보다 새로워진 CML_explorer를 위한 패러미터 파일입니다."
 
-#. cancel button
-#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
+#. the 3 Action Buttons
+#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:429
 #: plug-ins/common/CML_explorer.c:2688 plug-ins/common/apply_lens.c:426
 #: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:974
 #: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
 #: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
 #: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:924
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
-#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
-#: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
-#: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
-#: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
-#: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
-#: plug-ins/sel2path/sel2path.c:359
+#: plug-ins/common/gif.c:1194 plug-ins/common/jpeg.c:1574
+#: plug-ins/common/lic.c:1255 plug-ins/common/mail.c:496
+#: plug-ins/common/oilify.c:469 plug-ins/common/png.c:933
+#: plug-ins/common/ps.c:2125 plug-ins/common/ps.c:2383
+#: plug-ins/common/rotate.c:615 plug-ins/common/threshold_alpha.c:476
+#: plug-ins/common/warp.c:517 plug-ins/common/xbm.c:707
+#: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:799
+#: plug-ins/gap/gap_arr_dialog.c:1173 plug-ins/gap/gap_dbbrowser_utils.c:211
+#: plug-ins/gap/gap_filter_foreach.c:127 plug-ins/gap/gap_mod_layer.c:151
+#: plug-ins/gap/gap_mod_layer.c:265 plug-ins/gap/gap_mov_dialog.c:470
+#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_resi_dialog.c:145
+#: plug-ins/gimpressionist/orientmap.c:640
+#: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/mosaic/mosaic.c:573 plug-ins/print/print.c:1030
+#: plug-ins/print/print.c:1136 plug-ins/script-fu/script-fu-scripts.c:1392
+#: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
+#: plug-ins/struc/struc.c:248
 msgid "Cancel"
 msgstr "취소"
 
@@ -609,7 +636,7 @@ msgstr "환경 매핑(environment mapping) 사용"
 msgid "Transparent background"
 msgstr "투명한 배경"
 
-#: plug-ins/Lighting/lighting_ui.c:580
+#: plug-ins/Lighting/lighting_ui.c:580 plug-ins/common/lic.c:1008
 msgid "Create new image"
 msgstr "새로운 이미지 생성"
 
@@ -810,7 +837,7 @@ msgstr "환경 설정"
 msgid "Environment image:"
 msgstr "이미지 환경:"
 
-#: plug-ins/Lighting/lighting_ui.c:987
+#: plug-ins/Lighting/lighting_ui.c:987 plug-ins/common/lic.c:1001
 msgid "Options"
 msgstr "옵션"
 
@@ -837,6 +864,8 @@ msgstr "조명 효과"
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
 #: plug-ins/Lighting/lighting_ui.c:1061
+#: plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "Apply"
 msgstr "적용"
 
@@ -868,13 +897,96 @@ msgstr "확대(더 큰 이미지로)"
 msgid "Zoom out (make image smaller)"
 msgstr "축소(더 작은 이미지로)"
 
+#: plug-ins/common/animationplay.c:247
+msgid "This plugin allows you to preview a GIMP layer-based animation."
+msgstr "이 플러그인은 GIMP 계층-기본적 에니메이션- 미리보기를 허용합니다."
+
+#: plug-ins/common/animationplay.c:252
+msgid "<Image>/Filters/Animation/Animation Playback"
+msgstr "<Image>/필터/에니메이션/에니메이션 되돌리기"
+
+#: plug-ins/common/animationplay.c:663 plug-ins/common/animationplay.c:664
+msgid "Animation Playback: "
+msgstr "에니메이션 되돌리기: "
+
+#. Action area - 'close' button only.
+#: plug-ins/common/animationplay.c:676
+#: plug-ins/script-fu/script-fu-console.c:205
+#: plug-ins/script-fu/script-fu-scripts.c:1903
+msgid "Close"
+msgstr "닫기"
+
+#. The 'playback' half of the dialog
+#: plug-ins/common/animationplay.c:690 plug-ins/common/animationplay.c:693
+msgid "Playback: "
+msgstr "되돌리기: "
+
+#: plug-ins/common/animationplay.c:723
+msgid "Play/Stop"
+msgstr "재생/정지"
+
+#: plug-ins/common/animationplay.c:729
+msgid "Rewind"
+msgstr "되감기"
+
+#: plug-ins/common/animationplay.c:735
+msgid "Step"
+msgstr "진행"
+
+#: plug-ins/common/animationplay.c:793
+msgid "Frame %v of %u"
+msgstr "프레임 %v of %u"
+
+#: plug-ins/common/animationplay.c:971
+#, c-format
+msgid "playback: Asked for frame number %d in a %d-frame animation!\n"
+msgstr "되돌리기: %d-프레임 에니메이션 에서 프레임 번호 %d를 물었다!\n"
+
+#: plug-ins/common/animoptimize.c:130
+msgid ""
+"This plugin applies various optimizations to a GIMP layer-based animation."
+msgstr ""
+"이 플러그인은 GIMP 계층-기본적 에니메이션-에 여러가지 최적화를 적용합니다."
+
+#: plug-ins/common/animoptimize.c:136
+msgid "<Image>/Filters/Animation/Animation Optimize"
+msgstr "<Image>/필터/에니메이션/에니메이션 최적화"
+
+#: plug-ins/common/animoptimize.c:143
+msgid ""
+"This plugin 'simplifies' a GIMP layer-based animation that has been "
+"AnimationOptimized.  This makes the animation much easier to work with if, "
+"for example, the optimized version is all you have."
+msgstr ""
+"이 플러그인 'simplifies' 한 GIMP 계층-에니메이션최적화된 기본적은 에니메이션."
+"이것은 만약 예를들어 최적화된 버젼은 모두 당신이 가진것을 가지고 아주 쉽게 "
+"동작하여 에니메이션을 만듭니다."
+
+#: plug-ins/common/animoptimize.c:152
+msgid "<Image>/Filters/Animation/Animation UnOptimize"
+msgstr "<Image>/필터/에니메이션/에니메이션 역 최적화"
+
+#: plug-ins/common/animoptimize.c:296
+msgid "Optimizing Animation..."
+msgstr "에니메이션 최적화..."
+
+#: plug-ins/common/animoptimize.c:298
+msgid "UnOptimizing Animation..."
+msgstr "에니메이션 역 최적화..."
+
+#: plug-ins/common/animoptimize.c:327
+msgid "Not enough memory to allocate buffers for optimization.\n"
+msgstr "최적화를 위한 버퍼 할당을 위한 메모리가 부족합니다.\n"
+
 #: plug-ins/common/apply_lens.c:132
 msgid "Apply a lens effect"
 msgstr "렌즈 효과 적용"
 
 #: plug-ins/common/apply_lens.c:133
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
-msgstr "이 플러그인은 이미지위에 타원을 그리기위해 스넬의 법칙(Snell's law)을 사용합니다."
+msgstr ""
+"이 플러그인은 이미지위에 타원을 그리기위해 스넬의 법칙(Snell's law)을 "
+"사용합니다."
 
 #: plug-ins/common/apply_lens.c:137
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
@@ -895,9 +1007,9 @@ msgstr "렌즈 효과"
 #.
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
-#: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
-#: plug-ins/common/xpm.c:781
+#: plug-ins/common/jpeg.c:1609 plug-ins/common/oilify.c:478
+#: plug-ins/common/png.c:944 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/xpm.c:808 plug-ins/mosaic/mosaic.c:698
 msgid "Parameter Settings"
 msgstr "파라미터 설정"
 
@@ -953,8 +1065,8 @@ msgstr ""
 "그것은 최소 최대 값들을 찾습니다... 그것은 전체 대비 범위위한 개인 "
 "히스토그램을 늘이기 위한 저 값들을 사용합니다. 몇몇 이미지를 위해 단지 "
 "당신이 원하는것을 해줄것입니다.; 다른 이미지들을 위해서는 전체 포기해야 "
-"할것이다 :)."
-"이 버젼은 HSV 공간과 보호하는 색조에서 대비 자동늘이기 와는 다릅니다."
+"할것이다 :).이 버젼은 HSV 공간과 보호하는 색조에서 대비 자동늘이기 와는 "
+"다릅니다."
 
 #: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto-Stretch HSV"
@@ -974,9 +1086,9 @@ msgid ""
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
-"3x3 흐릿하게 할때, 이 플러그인은 임의대로 지정된 그리기에서 흐리기를 "
-"합니다. 당신은 흐리기가 되어진 픽셀들의 퍼센티지를 조정하고 여러번 "
-"흐릿하게 적용되어 집니다. 인덱스된 이미지들은 지원되지 않습니다." 
+"3x3 흐릿하게 할때, 이 플러그인은 임의대로 지정된 그리기에서 흐리기를 합니다. "
+"당신은 흐리기가 되어진 픽셀들의 퍼센티지를 조정하고 여러번 흐릿하게 적용되어 "
+"집니다. 인덱스된 이미지들은 지원되지 않습니다."
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur"
@@ -1052,18 +1164,18 @@ msgstr "반복:"
 msgid "Number of times to apply filter"
 msgstr "적용된 필터의 횟수"
 
-#: plug-ins/bmp/bmp.c:105 plug-ins/bmp/bmp.c:106
+#: plug-ins/bmp/bmp.c:107 plug-ins/bmp/bmp.c:108
 msgid "Loads files of Windows BMP file format"
 msgstr "윈도우 BMP 파일 형식의 파일 읽기"
 
-#: plug-ins/bmp/bmp.c:117 plug-ins/bmp/bmp.c:118
+#: plug-ins/bmp/bmp.c:119 plug-ins/bmp/bmp.c:120
 msgid "Saves files in Windows BMP file format"
 msgstr "윈도우 BMP 파일 형식의 파일 저장"
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:345
-#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
-#: plug-ins/common/xpm.c:300
+#: plug-ins/common/jpeg.c:733 plug-ins/common/png.c:385
+#: plug-ins/common/png.c:387 plug-ins/common/xbm.c:523
+#: plug-ins/common/xpm.c:315
 #, c-format
 msgid "Loading %s:"
 msgstr "읽기 %s:"
@@ -1098,14 +1210,13 @@ msgstr "%s: 너무 많은 색상: %u\n"
 msgid "%s: bad colormap\n"
 msgstr "%s: 잘못된 컬러맵\n"
 
-#.
-#. * Create the "background" layer to hold the image...
-#.
+#. Create a "normal" layer
+#. =======================
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:455
-#: plug-ins/common/xbm.c:612
+#: plug-ins/common/jpeg.c:884 plug-ins/common/lic.c:848
+#: plug-ins/common/png.c:515 plug-ins/common/xbm.c:612
 msgid "Background"
 msgstr "배경"
 
@@ -1118,24 +1229,24 @@ msgstr "bmp: 알수 없는 이미지 유형 혹은 알파 아미지를 작동하지 않습니다."
 msgid "can't open %s\n"
 msgstr "%s를 열수 없습니다.\n"
 
-#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1090
-#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
-#: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
-#: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1169
+#: plug-ins/common/png.c:687 plug-ins/common/png.c:689
+#: plug-ins/common/ps.c:748 plug-ins/common/xbm.c:777
+#: plug-ins/common/xpm.c:636 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
 msgstr "%s 저장중:"
 
-#: plug-ins/bmp/bmpwrite.c:421
+#: plug-ins/bmp/bmpwrite.c:413
 msgid "Save as BMP"
 msgstr "BMP로 저장"
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:446
+#: plug-ins/bmp/bmpwrite.c:438
 msgid "Save Options"
 msgstr "저장 옵션"
 
-#: plug-ins/bmp/bmpwrite.c:454
+#: plug-ins/bmp/bmpwrite.c:446
 msgid "RLE encoded"
 msgstr "RLE로 인코드"
 
@@ -1207,7 +1318,8 @@ msgstr "방위"
 msgid "Elevation"
 msgstr "앙각"
 
-#: plug-ins/common/bumpmap.c:955
+#. Horizontal scale
+#: plug-ins/common/bumpmap.c:955 plug-ins/struc/struc.c:307
 msgid "Depth"
 msgstr "짙은정도(depth)"
 
@@ -1331,10 +1443,11 @@ msgstr "색상화"
 
 #: plug-ins/common/colorify.c:314
 msgid "Ok"
-msgstr "예"
+msgstr "확인"
 
-#: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
-#: plug-ins/print/print.c:848
+#: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:424
+#: plug-ins/gap/gap_mov_dialog.c:255 plug-ins/gimpressionist/color.c:51
+#: plug-ins/print/print.c:887
 msgid "Color"
 msgstr "색상"
 
@@ -1350,8 +1463,7 @@ msgstr "색상화 보통 색상"
 msgid ""
 "Automatically stretch the saturation of the specified drawable to cover all "
 "possible ranges."
-msgstr ""
-"자동으로 모든 가능한 범위를 맞추기 위해 지정된 그리기의 채도 늘리기"
+msgstr "자동으로 모든 가능한 범위를 맞추기 위해 지정된 그리기의 채도 늘리기"
 
 #: plug-ins/common/color_enhance.c:85
 msgid ""
@@ -1365,9 +1477,8 @@ msgstr ""
 "이 간단한 플러그인은 자동 채도 늘이기를 합니다. 이미지안에 각각의 채널들을 "
 "위해 최소 최대 값들을 찾습니다... 전체 범위로 개인 히스토그램들을 늘리기 "
 "위해 이 값들을 사용합니다. 몇몇 그림해서는 당신이 원하면 가능할 것입니다; "
-"다른 이미지들은 전체를 포기해야 할것입니다 :).    "
-"이 버젼은 HSV공간에서 수행할수 있는 것이 대비 자동-늘이기와는 다릅니다. "
-"그리고 색초를 보호합니다."
+"다른 이미지들은 전체를 포기해야 할것입니다 :).    이 버젼은 HSV공간에서 "
+"수행할수 있는 것이 대비 자동-늘이기와는 다릅니다. 그리고 색초를 보호합니다."
 
 #: plug-ins/common/color_enhance.c:89
 msgid "<Image>/Image/Colors/Color Enhance"
@@ -1451,7 +1562,7 @@ msgstr "황색:"
 
 #: plug-ins/common/compose.c:132
 msgid "cmy-compose"
-msgstr ""
+msgstr "cmy-작성"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:143
 msgid "CMYK"
@@ -1463,7 +1574,7 @@ msgstr "검은색:"
 
 #: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
-msgstr ""
+msgstr "cmyk-작성"
 
 #: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
@@ -1474,8 +1585,8 @@ msgid "This function creates a new image from multiple gray images"
 msgstr "이 함수는 여러개의 이미지에서 새로운 이미지를 생성합니다."
 
 #: plug-ins/common/compose.c:234
-msgid "<Image>/Image/Channel Ops/Compose"
-msgstr "<Image>/이미지/채널 동작/작성"
+msgid "<Image>/Image/Channels/Compose"
+msgstr "<Image>/이미지/채널/작성"
 
 #: plug-ins/common/compose.c:241
 msgid "Compose an image from multiple drawables of gray images"
@@ -1558,12 +1669,12 @@ msgstr "알파"
 msgid "Extend"
 msgstr "확장"
 
-#: plug-ins/common/convmatrix.c:80
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/warp.c:596
 msgid "Wrap"
 msgstr "싸기"
 
 #. Action area
-#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1163
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1185
 msgid "Crop"
 msgstr "잘라내기"
 
@@ -1642,7 +1753,7 @@ msgstr "입체파"
 msgid "Use Background Color"
 msgstr "배경 색상 사용"
 
-#: plug-ins/common/cubism.c:363
+#: plug-ins/common/cubism.c:363 plug-ins/mosaic/mosaic.c:705
 msgid "Tile Size"
 msgstr "타일 크기"
 
@@ -1743,8 +1854,8 @@ msgstr ""
 "생성합니다."
 
 #: plug-ins/common/decompose.c:222
-msgid "<Image>/Image/Channel Ops/Decompose"
-msgstr "<Image>/이미지/채널 동작/분해"
+msgid "<Image>/Image/Channels/Decompose"
+msgstr "<Image>/이미지/채널/분해"
 
 #: plug-ins/common/decompose.c:303
 msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
@@ -1786,8 +1897,8 @@ msgid ""
 "closer (has a lower depth map value) at each point."
 msgstr ""
 "두가지 전체 색생이 입력된 것, 전체-알파 이미지들과 두가지 일치하는 "
-"그레이스케일 깊이 맵들을 다루려면, 이 플러그인은 각 포인트에 가까운 것 "
-"(낮은 깊이 맵 값을 가진) 에 기초한 이미지들을 결합합니다."
+"그레이스케일 깊이 맵들을 다루려면, 이 플러그인은 각 포인트에 가까운 것 (낮은 "
+"깊이 맵 값을 가진) 에 기초한 이미지들을 결합합니다."
 
 #: plug-ins/common/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge"
@@ -1874,15 +1985,1909 @@ msgstr "히스토그램"
 msgid "Width"
 msgstr "넓이"
 
-#: plug-ins/common/gif.c:408
+#. Button  to invoke filebrowser
+#: plug-ins/gap/gap_arr_dialog.c:278
+msgid "File-Browser"
+msgstr "파일찾아보기"
+
+#: plug-ins/gap/gap_arr_dialog.c:666
+#, c-format
+msgid "pair_flt_create_value: Bad FloatFormat ignored %s\n"
+msgstr "pair_flt_create_value: 잘못된 FloatFormat 무시 %s\n"
+
+#: plug-ins/gap/gap_arr_dialog.c:810
+#, c-format
+msgid "pair_int_create_value: Bad IntFormat ignored %s\n"
+msgstr "pair_int_create_value: 잘못된 IntFormat 무시 %s\n"
+
+#. if no buttons are specified use one CLOSE button per default
+#: plug-ins/gap/gap_arr_dialog.c:962
+msgid "CLOSE"
+msgstr "닫기"
+
+#. parameter settings
+#: plug-ins/gap/gap_arr_dialog.c:973
+msgid "Enter Values"
+msgstr "값 넣기"
+
+#: plug-ins/gap/gap_arr_dialog.c:990 plug-ins/gap/gap_arr_dialog.c:1050
+msgid "Value: "
+msgstr "값: "
+
+#: plug-ins/gap/gap_arr_dialog.c:1026
+msgid "WGT_ACT_BUTTON not implemented yet, widget type ignored\n"
+msgstr "WGT_ACT_BUTTON이 아직 실시 되지 않아서, 위젯 형식을 무시\n"
+
+#. undefined widget type
+#: plug-ins/gap/gap_arr_dialog.c:1029
+#, c-format
+msgid "Unknown widget type %d ignored\n"
+msgstr "알수 없는 위젯 형식 %d 무시\n"
+
+#: plug-ins/gap/gap_arr_dialog.c:1202
+msgid "Press Button"
+msgstr "버튼 누름"
+
+#: plug-ins/gap/gap_arr_dialog.c:1203
+msgid "Select"
+msgstr "선택"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:65
+msgid "GAP Animated Filter apply"
+msgstr "GAP 움직이는(Animate) 필터 적용"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:86
+msgid "Animated Filter apply (init)"
+msgstr "움직이는(Animate) 필터 적용 (초기화)"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:137
+msgid "Search :"
+msgstr "찾기 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:166
+msgid "Gen Code by name"
+msgstr "이름에 의한 젠 코드(Gen Code)"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:175
+msgid "Search by name"
+msgstr "이름으로 찾기"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:183
+msgid "Search by blurb"
+msgstr "커버설명으로 찾기"
+
+#. show the name
+#: plug-ins/gap/gap_dbbrowser_utils.c:325
+msgid "Name :"
+msgstr "이름 :"
+
+#. show the description
+#: plug-ins/gap/gap_dbbrowser_utils.c:342
+msgid "Blurb :"
+msgstr "커버설명 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:364
+msgid "In :"
+msgstr "안 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:410
+msgid "Out :"
+msgstr "바깥 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:459
+msgid "Help :"
+msgstr "도움말 :"
+
+#. show the author & the copyright
+#: plug-ins/gap/gap_dbbrowser_utils.c:497
+msgid "Author :"
+msgstr "저자 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:512
+msgid "Date :"
+msgstr "날짜 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:527
+msgid "Copyright :"
+msgstr "저작권 :"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:666
+msgid "Animated Filter apply (by name - please wait)"
+msgstr "움직이는(Animate) 필터 적용 (이름으로 - 기다리세요)"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:690
+msgid "Animated Filter apply (by blurb - please wait)"
+msgstr "움직이는(Animate) 필터 적용 (커버설명으로 - 기다리세요)"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:698
+msgid "Animated Filter apply (please wait)"
+msgstr "움직이는(Animate) 필터 적용 (기다리세요)"
+
+#: plug-ins/gap/gap_dbbrowser_utils.c:745
+#: plug-ins/gap/gap_filter_foreach.c:156 plug-ins/gap/gap_mod_layer.c:288
+msgid "Animated Filter apply"
+msgstr "움직이는(Animate) 필터 적용"
+
+#: plug-ins/gap/gap_filter_foreach.c:119
+msgid "backup to file"
+msgstr "파일로 백업"
+
+#. pixel
+#: plug-ins/gap/gap_filter_foreach.c:121
+msgid "Make backup of the image after each step"
+msgstr "각 단계후에 이미지 백업 만들기"
+
+#: plug-ins/gap/gap_filter_foreach.c:125 plug-ins/gap/gap_mod_layer.c:263
+msgid "Continue"
+msgstr "계속"
+
+#: plug-ins/gap/gap_filter_foreach.c:148 plug-ins/gap/gap_mod_layer.c:282
+#, c-format
+msgid ""
+"2.nd call of %s\n"
+"(define end-settings)"
+msgstr ""
+"%s의 두번째 호출\n"
+"(마지막-새팅 정의)"
+
+#: plug-ins/gap/gap_filter_foreach.c:152
+#, c-format
+msgid ""
+"Non-Interactive call of %s\n"
+"(for all layers inbetween)"
+msgstr ""
+"넌-인터랙티브 %s의 호출\n"
+"(모든 계층 중계자를 위해)"
+
+#: plug-ins/gap/gap_filter_foreach.c:186
+#, c-format
+msgid ""
+"Error: Plugin %s has changed Nr. of layers from %d to %d\n"
+"could not restore Layer visibilty.\n"
+msgstr ""
+"애러: 플러그인 %s는 %d에서 %d로 계층의 Nr.로 바뀌었다.\n"
+"보이게 계층을 복구 할수 없습니다.\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:202
+msgid "Warning: cant get layers (maybe the image was closed)\n"
+msgstr "경고: 계층을 가져올수 없습니다 (아마 이미지가 닫혀있을 겁니다)\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:207
+#, c-format
+msgid ""
+"Error: Plugin %s has changed Nr. of layers from %d to %d\n"
+"Anim Filter apply stopped.\n"
+msgstr ""
+"애러: 플러그인 %s는 %d에서 %d로 계층의 Nr.로 바뀌었다.\n"
+"Anim 필터 적용 중단.\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:258
+#, c-format
+msgid "ERROR: Plugin not available or wrong type %s\n"
+msgstr "애러: 플러그인을 사용가능하지 않거나 잘못된 형식 %s 입니다.\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:269
+msgid "Applying Filter to all Layers .."
+msgstr "모든 계층에 필터 적용중 .."
+
+#: plug-ins/gap/gap_filter_foreach.c:277
+msgid "ERROR: need at 1 Layers to apply plugin !\n"
+msgstr "애러: 플러그인을 적용하기 위해 한개의 계층에서 해야 합니다 !\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:307
+msgid "ERROR: fork failed !\n"
+msgstr "애러: fork 실패 !\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:495
+#, c-format
+msgid "Saving image to backupfile:%s step = %d\n"
+msgstr "백업파일로 이미지 저장:%s 단계 = %d\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:543
+msgid "Select Filter for Animated apply"
+msgstr "움직임(animated) 적용을 위한 필터 선택"
+
+#: plug-ins/gap/gap_filter_foreach.c:544 plug-ins/gap/gap_mod_layer.c:664
+msgid "Apply Constant"
+msgstr "상수 적용"
+
+#: plug-ins/gap/gap_filter_foreach.c:545 plug-ins/gap/gap_mod_layer.c:665
+msgid "Apply Varying"
+msgstr "수정된것 적용"
+
+#: plug-ins/gap/gap_filter_main.c:100
+msgid ""
+"This plugin calls another plugin for each layer of an image, varying its "
+"settings (to produce animated effects). The called plugin must work on a "
+"single drawable and must be able to RUN_WITH_LAST_VALS"
+msgstr ""
+"이 플러그인은 한 이미지의 각 계층들을 위한 다른 플러그인을 호출여서, 그것의 "
+"새팅 을 수정합니다. (움직임(animate) 효과 계획을 위해). 호출된 플러그인은 "
+"단 한개의 그리기에서 동작하고, RUN_WITH_LAST_VALS을 해야만 합니다"
+
+#: plug-ins/gap/gap_filter_main.c:105
+msgid "<Image>/Filters/Animation/Filter all Layers"
+msgstr "<Image>/필터/에니메이션/모든 계층 필터링"
+
+#: plug-ins/gap/gap_lib.c:852
+msgid ""
+"You are using a fileformat != xcf\n"
+"Save Operations may result\n"
+"in loss of layerinformation"
+msgstr ""
+"당신은 xcf가 아닌 파일형식을 사용하고 있습니다\n"
+"동작 저장은 계층정보의 손실로 나올것입니다." 
+
+#. no defined value found (this is the 1.st call for this image_id)
+#. * ask what to do with a 3 Button dialog
+#.
+#: plug-ins/gap/gap_lib.c:864 plug-ins/gap/gap_mpege.c:188
+#: plug-ins/gap/gap_range_ops.c:1029
+msgid "CANCEL"
+msgstr "취소"
+
+#: plug-ins/gap/gap_lib.c:866
+msgid "SAVE Flattened"
+msgstr "플래튼 저장"
+
+#: plug-ins/gap/gap_lib.c:868
+msgid "SAVE As Is"
+msgstr "Is로 저장"
+
+#: plug-ins/gap/gap_lib.c:872 plug-ins/gap/gap_range_ops.c:1032
+msgid "GAP Question"
+msgstr "GAP 질의"
+
+#: plug-ins/gap/gap_lib.c:1439
+msgid "Duplicating frames .."
+msgstr "프레임 복사중 .."
+
+#: plug-ins/gap/gap_lib.c:1607
+msgid "Renumber Framesequence .."
+msgstr "프레임차례 번호를 다시 메기는 중 .."
+
+#: plug-ins/gap/gap_lib.c:1791
+msgid "Goto Frame (%ld/%ld)"
+msgstr "프레임으로 가기 (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1794
+#, c-format
+msgid "Destination Frame Number (%ld  - %ld)"
+msgstr "대상 프레임 번호 (%ld  - %ld)"
+
+#: plug-ins/gap/gap_lib.c:1798 plug-ins/gap/gap_lib.c:1872
+#: plug-ins/gap/gap_lib.c:2052
+msgid "Number :"
+msgstr "번호 :"
+
+#: plug-ins/gap/gap_lib.c:1856
+#, c-format
+msgid "Delete Frames (%ld/%ld)"
+msgstr "프레임 지우기 (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1859
+#, c-format
+msgid "Delete Frames from %ld to (Number)"
+msgstr "%ld를 (번호)로 프레임 지우기"
+
+#: plug-ins/gap/gap_lib.c:1919
+#, c-format
+msgid "Duplicate Frames (%ld/%ld)"
+msgstr "프레임 복사 (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1924 plug-ins/gap/gap_lib.c:2097
+#: plug-ins/gap/gap_range_ops.c:232 plug-ins/gap/gap_range_ops.c:445
+msgid "From :"
+msgstr "어디에서 :"
+
+#: plug-ins/gap/gap_lib.c:1929
+msgid "Source Range starts at this framenumber"
+msgstr "소스 범위가 이 프레임번호에서 시작한다"
+
+#: plug-ins/gap/gap_lib.c:1932 plug-ins/gap/gap_lib.c:2105
+#: plug-ins/gap/gap_range_ops.c:239 plug-ins/gap/gap_range_ops.c:453
+msgid "To :"
+msgstr "어디로 :"
+
+#: plug-ins/gap/gap_lib.c:1937
+msgid "Source Range ends at this framenumber"
+msgstr "소스 범위가 이 프레임번호로 끝난다."
+
+#: plug-ins/gap/gap_lib.c:1940
+msgid "N-Times :"
+msgstr "N-번 :"
+
+#: plug-ins/gap/gap_lib.c:1945
+msgid ""
+"Copy selected Range n-times  \n"
+"(you may type in Values > 99)"
+msgstr ""
+"선택된 범위 n-번 복사  \n"
+"(당신은 99보다 크게 넣어야할 것입니다)"
+
+#: plug-ins/gap/gap_lib.c:1947
+msgid "Duplicate Framerange"
+msgstr "프레임범위 복사"
+
+#: plug-ins/gap/gap_lib.c:2048
+#, c-format
+msgid "Exchange current Frame (%ld)"
+msgstr "현재 프레임 (%ld) 교환"
+
+#: plug-ins/gap/gap_lib.c:2050
+msgid "With Frame (Number)"
+msgstr "프레임을 가지고 (번호)"
+
+#: plug-ins/gap/gap_lib.c:2092
+#, c-format
+msgid "Framesequence Shift (%ld/%ld)"
+msgstr "프레임차레 이동 (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:2102
+msgid "Affected Range starts at this framenumber"
+msgstr "영향을 미친 범위는 이 프레임번호에서 시작됩니다"
+
+#: plug-ins/gap/gap_lib.c:2110
+msgid "Affected Range ends at this framenumber"
+msgstr "영향을 미친 범위는 이 프레임번호에서 끝납니다."
+
+#: plug-ins/gap/gap_lib.c:2113
+msgid "N-Shift :"
+msgstr "N-번 이동 :"
+
+#: plug-ins/gap/gap_lib.c:2118
+msgid ""
+"Renumber the affected framesequence     \n"
+"(numbers are shifted in circle by N)"
+msgstr ""
+"영향을 미친 프레임차레 번호를 다시 메김    \n"
+"(번호는 N에 의해 원에서 이동된다.)"
+
+#: plug-ins/gap/gap_lib.c:2120
+msgid "Framesequence shift"
+msgstr "프레임차례 이동"
+
+#: plug-ins/gap/gap_main.c:323
+msgid ""
+"This plugin exchanges current image with (next nubered) image from disk."
+msgstr ""
+"이 플러그인은 디스크에서 이미지를 가지고 (다음 nubered) 현재 이미지를 교환합니다."
+
+#: plug-ins/gap/gap_main.c:328
+msgid "<Image>/AnimFrames/Goto Next"
+msgstr "<Image>/음직이는 프레임/다음으로"
+
+#: plug-ins/gap/gap_main.c:335
+msgid ""
+"This plugin exchanges current image with (previous nubered) image from disk."
+msgstr ""
+"이 플러그인은 디스크에서 이미지를 가지고 (전에 nubered) 현재 이미지를 교환합니다."
+
+#: plug-ins/gap/gap_main.c:340
+msgid "<Image>/AnimFrames/Goto Prev"
+msgstr "<Image>/음직이는 프레임/앞으로"
+
+#: plug-ins/gap/gap_main.c:347
+msgid ""
+"This plugin exchanges current image with (lowest nubered) image from disk."
+msgstr ""
+"이 플러그인은 디스크에서 이미지를 가지고 (가장낮은 nubered) 현재 이미지를 교환합니다."
+
+#: plug-ins/gap/gap_main.c:352
+msgid "<Image>/AnimFrames/Goto First"
+msgstr "<Image>/움직이는 프레임/처음으로"
+
+#: plug-ins/gap/gap_main.c:359
+msgid ""
+"This plugin exchanges current image with (highest nubered) image from disk."
+msgstr ""
+"이 플러그인은 디스크에서 이미지를 가지고 (가장높은 nubered) 현재 이미지를 교환합니다."
+
+#: plug-ins/gap/gap_main.c:364
+msgid "<Image>/AnimFrames/Goto Last"
+msgstr "<Image>/움직이는 프레임/마지막으로"
+
+#: plug-ins/gap/gap_main.c:371
+msgid ""
+"This plugin exchanges current image with requested image (nr) from disk."
+msgstr ""
+"이 플러그인은 디스크에서 요청된 이미지 (nr) 을 가지고 현재 이미지와 교환 합니다."
+
+#: plug-ins/gap/gap_main.c:376
+msgid "<Image>/AnimFrames/Goto Any"
+msgstr "<Image>/움직이는 프레임/아무데나"
+
+#: plug-ins/gap/gap_main.c:383
+msgid ""
+"This plugin deletes the given number of frames from disk including the "
+"current frame."
+msgstr ""
+"이 플러그인은 현재 프레임이 포함된 디스크에서 주어진 다수의 프레임을 "
+"지웁니다."
+
+#: plug-ins/gap/gap_main.c:388
+msgid "<Image>/AnimFrames/Delete Frames"
+msgstr "<Image>/움직이는 프레임/프레임 지우기"
+
+#: plug-ins/gap/gap_main.c:395
+msgid "This plugin duplicates the current frames on disk n-times."
+msgstr "이 플러그인은 n-번을 디스크에서 현재 프레임을 복사합니다."
+
+#: plug-ins/gap/gap_main.c:400
+msgid "<Image>/AnimFrames/Duplicate Frames"
+msgstr "<Image>/움직이는 프레임/프레임 복사"
+
+#: plug-ins/gap/gap_main.c:407
+msgid "This plugin exchanges content of the current with destination frame."
+msgstr "이 플러그인은 대상 프레임을 가지고 현재의 차례를 교환합니다."
+
+#: plug-ins/gap/gap_main.c:412
+msgid "<Image>/AnimFrames/Exchange Frame"
+msgstr "<Image>/움직이는 프레임/프레임 교환"
+
+#: plug-ins/gap/gap_main.c:419
+msgid ""
+"This plugin copies layer(s) from one sourceimage to multiple frames on disk, "
+"varying position, size and opacity."
+msgstr ""
+"이 플러그인은 디스크에 하나의 원 이미지에서 여러개의 프레임으로 계층들이 "
+"복사되어서, 위치, 크기, 불투명도가 수정됩니다."
+
+#: plug-ins/gap/gap_main.c:424
+msgid "<Image>/AnimFrames/Move Path"
+msgstr "<Image>/움직이는 프레임/경로 이동"
+
+#: plug-ins/gap/gap_main.c:431
+msgid ""
+"This plugin creates a new image from the given range of frame-images. Each "
+"frame is converted to one layer in the new image, according to flatten_mode. "
+"(the frames on disk are not changed)."
+msgstr ""
+"이 플러그인은 주어진 프레임-이미지의 범위에서 새로운 이미지를 생성합니다. "
+"각각의 프레임은 세로운 이미지에서 하나의 계층으로 바뀌어 지어서, "
+"플래튼_모드로 일치된다."
+"(디스크의 프레임은 변화되지 않습니다)."
+
+#: plug-ins/gap/gap_main.c:436
+msgid "<Image>/AnimFrames/Frames to Image"
+msgstr "<Image>/움직이는 프레임/이미지로 프레임"
+
+#: plug-ins/gap/gap_main.c:443
+msgid "This plugin flattens the given range of frame-images (on disk)"
+msgstr "이 플러그인 주어진 프레임-이미지의 범위를 플래튼합니다 (디스크에서)"
+
+#: plug-ins/gap/gap_main.c:448
+msgid "<Image>/AnimFrames/Frames Flatten"
+msgstr "<Image>/움직이는 프레임/프레임 플래튼"
+
+#: plug-ins/gap/gap_main.c:455
+msgid ""
+"This plugin deletes one layer in the given range of frame-images (on disk). "
+"exception: the last remaining layer of a frame is not deleted"
+msgstr ""
+"이 플러그인은 주어진 프레임-이미지의 범위에서 하나의 계층을 지웁니다 (디스크에서)."
+"예외: 마지막 남은 프레임 계층은 지워지지 않습니다."
+
+#: plug-ins/gap/gap_main.c:460
+msgid "<Image>/AnimFrames/Frames LayerDel"
+msgstr "<Image>/움직이는 프레임/프레임 계층 지우기"
+
+#: plug-ins/gap/gap_main.c:467
+msgid ""
+"This plugin converts the given range of frame-images to other fileformats "
+"(on disk) depending on extension"
+msgstr ""
+"이 플러그인은 주어진 프레임-이미지의 범위를 확장자에 따라 (디스크에서) "
+"다른 파일 형식들로 바꿉니다."
+
+#: plug-ins/gap/gap_main.c:472
+msgid "<Image>/AnimFrames/Frames Convert"
+msgstr "<Image>/움직이는 프레임/프레임 바꾸기"
+
+#: plug-ins/gap/gap_main.c:479
+msgid ""
+"This plugin resizes all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+"이 플러그인은 모든 anim_프레임 (디스크의 이미지)을 주어진 "
+"새로운_넓이/새로운높이로 크기 조정을 합니다."
+
+#: plug-ins/gap/gap_main.c:484
+msgid "<Image>/AnimFrames/Frames Resize"
+msgstr "<Image>/움직이는 프레임/프레임 크기조정"
+
+#: plug-ins/gap/gap_main.c:491
+msgid ""
+"This plugin crops all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+"이 플러그인은 주어진 새로운_폭/새로운_높이로 모든 anim_프레임 "
+"(디스크의 이미지)을 잘라냅니다."
+
+#: plug-ins/gap/gap_main.c:496
+msgid "<Image>/AnimFrames/Frames Crop"
+msgstr "<Image>/움직이는 프레임/프레임 잘라내기"
+
+#: plug-ins/gap/gap_main.c:503
+msgid ""
+"This plugin scales all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+"이 플러그인은 주어진 새로운_폭/새로운_높이로 모든 anim_프레임 "
+"(디스크의 이미지)을 스케일 합니다."
+
+#: plug-ins/gap/gap_main.c:508
+msgid "<Image>/AnimFrames/Frames Scale"
+msgstr "<Image>/움직이는 프레임/프레임 스케일"
+
+#: plug-ins/gap/gap_main.c:515
+msgid ""
+"This plugin splits the current image to anim frames (images on disk). Each "
+"layer is saved as one frame"
+msgstr ""
+"이 플러그인은 현재 이미지를 움직이는 프레임으로 분할(디스크의 이미지). 각 "
+"계층들은 하나의 프레임으로 저장되어집니다."
+
+#: plug-ins/gap/gap_main.c:520
+msgid "<Image>/AnimFrames/Split Img to Frames"
+msgstr "<Image>/움직이는 프레임/이미지를 프레임으로 분할"
+
+#: plug-ins/gap/gap_main.c:527
+msgid ""
+"This plugin calls mpeg_encode to convert anim frames to MPEG1, or just "
+"generates a param file for mpeg_encode. (mpeg_encode must be installed on "
+"your system)"
+msgstr ""
+"이 플러그인은 움직이는 프레임을 MPEG1으로 바꾸거나 단지 mpeg_encode를 위한 "
+"param 파일을 생성할때 mpeg_encode를 호출합니다. (mpeg_encode는 단지 당신의 "
+"시스템에 설치되어야만 합니다)"
+
+#: plug-ins/gap/gap_main.c:532
+msgid "<Image>/AnimFrames/Frames MPEG1 encode"
+msgstr "<Image>/움직이는 프레임/프레임 MPEG1 인코드"
+
+#: plug-ins/gap/gap_main.c:540
+msgid ""
+"This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or "
+"just generates a param file for mpeg2encode. (mpeg2encode must be installed "
+"on your system)"
+msgstr ""
+"이 플러그인은 움직이는 프레임을 MPEG1 또는 MPEG2바꾸거나 단지 mpeg2encode를 "
+"위한 param 파일을 생성할때 mpeg2encode를 호출합니다. (mpeg2encode 는 당신의 "
+"시스템에 설치되어져야만 합니다)"
+
+#: plug-ins/gap/gap_main.c:545
+msgid "<Image>/AnimFrames/Frames MPEG2 encode"
+msgstr "<Image>/움직이는 프레임/프레임 MPEG2 인코드"
+
+#: plug-ins/gap/gap_main.c:553
+msgid ""
+"This plugin exchanges frame numbers in the given range. (discfile "
+"frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)"
+msgstr ""
+"이 플러그인은 주어진 범위에서 프레임 번호로 교환합니다. (디스크파일 "
+"frame_0001.xcf는 frame_0002.xcf, 2->3, 3->4 ... n->1로 바뀌어집니다)"
+
+#: plug-ins/gap/gap_main.c:558
+msgid "<Image>/AnimFrames/Framesequence Shift"
+msgstr "<Image>/움직이는 프레임/프레임차례 이동"
+
+#: plug-ins/gap/gap_main.c:565
+msgid ""
+"This plugin performs a modifying action on each selected layer in each "
+"selected framerange"
+msgstr ""
+"이 플러그인은 각 선택된 프레임범위에서 선택된 계층에 수정된 것을 "
+"동작합니다."
+
+#: plug-ins/gap/gap_main.c:570
+msgid "<Image>/AnimFrames/Frames Modify"
+msgstr "<Image>/움직이는 프레임/프레임 수정"
+
+#. Layer select modes
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:417
+msgid "Pattern is equal to LayerName"
+msgstr "패턴은 계층이름과 같다"
+
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:418
+msgid "Pattern is Start of LayerName"
+msgstr "패턴은 계층이름의 시작이다"
+
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:419
+msgid "Pattern is End of Layername"
+msgstr "패턴은 계층이름의 끝이다"
+
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:420
+msgid "Pattern is a Part of LayerName"
+msgstr "패턴은 계층이름의 부분이다"
+
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:421
+msgid "Pattern is LayerstackNumber List"
+msgstr "패턴은 계층스택번호 목록입니다"
+
+#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:422
+msgid "Pattern is REVERSE-stack List"
+msgstr "패턴은 반대-스택 목록 입니다"
+
+#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:423
+msgid "All Visible (ignore Pattern)"
+msgstr "모든 보이는 것 (패턴 무시)"
+
+#: plug-ins/gap/gap_mod_layer.c:92 plug-ins/gap/gap_range_ops.c:425
+msgid "select all Layers where Layername is equal to Pattern"
+msgstr "계층이름과 같은 패턴이 있는 곳에 모든 계층을 선택합니다"
+
+#: plug-ins/gap/gap_mod_layer.c:93 plug-ins/gap/gap_range_ops.c:426
+msgid "select all Layers where Layername starts with Pattern"
+msgstr "걔층이름과 패턴이 시작되는 곳에 모든 계층을 선택합니다."
+
+#: plug-ins/gap/gap_mod_layer.c:94 plug-ins/gap/gap_range_ops.c:427
+msgid "select all Layers where Layername ends up with Pattern"
+msgstr "걔층이름과 패턴이 끝나는 곳에 모든 계층을 선택합니다."
+
+#: plug-ins/gap/gap_mod_layer.c:95 plug-ins/gap/gap_range_ops.c:428
+msgid "select all Layers where Layername contains Pattern"
+msgstr "계층이름이 패턴을 포함하는 곳에 모든 계층을 선택합니다."
+
+#: plug-ins/gap/gap_mod_layer.c:96 plug-ins/gap/gap_range_ops.c:429
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == Top-layer"
+msgstr ""
+"계층스택 위치 선택.\n"
+"0, 4-5, 8\n"
+"0 == 상위-계층"
+
+#: plug-ins/gap/gap_mod_layer.c:97 plug-ins/gap/gap_range_ops.c:430
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == BG-layer"
+msgstr ""
+"계층스택 위치 선택.\n"
+"0, 4-5, 8\n"
+"0 == 배경-계층"
+
+#: plug-ins/gap/gap_mod_layer.c:98 plug-ins/gap/gap_range_ops.c:431
+msgid "select all visible Layers"
+msgstr "모든 나타난 계층 선택"
+
+#. action items what to do with the selected layer(s)
+#: plug-ins/gap/gap_mod_layer.c:102
+msgid "set Layer(s) visible"
+msgstr "계층을 보이게 설정"
+
+#: plug-ins/gap/gap_mod_layer.c:103
+msgid "set Layer(s) invisible"
+msgstr "계층을 보이지 않게 설정"
+
+#: plug-ins/gap/gap_mod_layer.c:104
+msgid "set Layer(s) linked"
+msgstr "계층을 연결되게 설정"
+
+#: plug-ins/gap/gap_mod_layer.c:105
+msgid "set Layer(s) unlinked"
+msgstr "계층을 단결되게 설정"
+
+#: plug-ins/gap/gap_mod_layer.c:106
+msgid "raise Layer(s)"
+msgstr "계층 올리기"
+
+#: plug-ins/gap/gap_mod_layer.c:107
+msgid "lower Layer(s)"
+msgstr "계층 내리기"
+
+#: plug-ins/gap/gap_mod_layer.c:108
+msgid "merge Layer(s) expand as necessary"
+msgstr "필요에 따라 머지 계층 확장"
+
+#: plug-ins/gap/gap_mod_layer.c:109
+msgid "merge Layer(s) clipped to image"
+msgstr "이미지에서 머지 계층 잘라내기"
+
+#: plug-ins/gap/gap_mod_layer.c:110
+msgid "merge Layer(s) clipped to bg-layer"
+msgstr "배경-계층으로 머지 계층 잘라내기"
+
+#: plug-ins/gap/gap_mod_layer.c:111
+msgid "apply filter on Layer(s)"
+msgstr "계층에서 필터 적용"
+
+#: plug-ins/gap/gap_mod_layer.c:112
+msgid "duplicate Layer(s)"
+msgstr "계층 복사"
+
+#: plug-ins/gap/gap_mod_layer.c:113
+msgid "delete Layer(s)"
+msgstr "계층 삭제"
+
+#: plug-ins/gap/gap_mod_layer.c:114
+msgid "rename Layer(s)"
+msgstr "계층 이름바꾸기"
+
+#: plug-ins/gap/gap_mod_layer.c:146
+msgid ""
+"Perform function on one or more Layer(s)\n"
+"in all frames of the selected framerange\n"
+msgstr ""
+"선택된 프레임범위의 모든 프레임 안에서 하나 혹은\n"
+"여러개의 계층위에서 함수 수행하기\n"
+
+#: plug-ins/gap/gap_mod_layer.c:159 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_range_ops.c:293
+msgid "From Frame:"
+msgstr "프레임에서:"
+
+#: plug-ins/gap/gap_mod_layer.c:160 plug-ins/gap/gap_mov_dialog.c:594
+#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:294
+#: plug-ins/gap/gap_range_ops.c:446
+msgid "first handled frame"
+msgstr "첫번째 조절된 프레임"
+
+#: plug-ins/gap/gap_mod_layer.c:167 plug-ins/gap/gap_mpege.c:266
+#: plug-ins/gap/gap_range_ops.c:301
+msgid "To   Frame:"
+msgstr "프레임으로:"
+
+#: plug-ins/gap/gap_mod_layer.c:168 plug-ins/gap/gap_mov_dialog.c:598
+#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:302
+#: plug-ins/gap/gap_range_ops.c:454
+msgid "last handled frame"
+msgstr "마지막 조절된 프레임"
+
+#: plug-ins/gap/gap_mod_layer.c:176 plug-ins/gap/gap_range_ops.c:493
+msgid "Select Layer(s):"
+msgstr "계층 선택:"
+
+#: plug-ins/gap/gap_mod_layer.c:185 plug-ins/gap/gap_range_ops.c:502
+msgid "Select Pattern:"
+msgstr "패턴 선택:"
+
+#. pixel
+#: plug-ins/gap/gap_mod_layer.c:187 plug-ins/gap/gap_range_ops.c:504
+msgid ""
+"String to identify layer names    \n"
+"or layerstack position numbers\n"
+"0,3-5"
+msgstr ""
+"계층이름 혹은 계층스택 위치 번호   \n"
+"0,3-5를 확인하는\n"
+"스트링."
+
+#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:510
+msgid "Case sensitive"
+msgstr "사건 민감도"
+
+#: plug-ins/gap/gap_mod_layer.c:194 plug-ins/gap/gap_range_ops.c:511
+msgid "Lowercase and UPPERCASE letters are considered as different"
+msgstr "대문자와 소문자는 다른것으로 취급합니다."
+
+#: plug-ins/gap/gap_mod_layer.c:199 plug-ins/gap/gap_range_ops.c:516
+msgid "Invert Selection"
+msgstr "셀렉션을 반대로(Invert)"
+
+#: plug-ins/gap/gap_mod_layer.c:200
+msgid "Perform actions on all unselected Layers"
+msgstr "모든 선택되지 않은 계층에 작용을 수행"
+
+#: plug-ins/gap/gap_mod_layer.c:205
+msgid "Function :"
+msgstr "함수 :"
+
+#. argv[7].radio_help_argv = action_help
+#: plug-ins/gap/gap_mod_layer.c:209
+msgid "Function to be performed on all selected layers"
+msgstr "모든 선택된 계층에 수행되어진 함수"
+
+#: plug-ins/gap/gap_mod_layer.c:215
+msgid "New Layername:"
+msgstr "새로운 계층이름:"
+
+#. pixel
+#: plug-ins/gap/gap_mod_layer.c:217
+msgid ""
+"New Layername for all handled layers \n"
+"[####] is replaced by frame number\n"
+"(is used on function rename only)"
+msgstr ""
+"모든 조절된 계층 [####]을 위한 새로운 \n"
+"계층이름은 프레임 범호에 의해 변경되어집니다.\n"
+"(오직 함수 이름 바꾸기에서 사용됩니다.)"
+
+#: plug-ins/gap/gap_mod_layer.c:222
+msgid "Frames Modify"
+msgstr "프레임 변경"
+
+#: plug-ins/gap/gap_mod_layer.c:223
+msgid "Settings"
+msgstr "설정"
+
+#: plug-ins/gap/gap_mod_layer.c:286
+#, c-format
+msgid ""
+"Non-Interactive call of %s\n"
+"(for all selected layers)"
+msgstr ""
+"%s의 호출은 상호 작용을 하지 않습니다.\n"
+"(모든 선택된 계층에서)"
+
+#. GAP-PDB-Browser Dialog
+#. ----------------------
+#: plug-ins/gap/gap_mod_layer.c:663
+msgid "Select Filter for Animated frames-apply"
+msgstr "움직이는(animate) 프레임-적용을 위한 필터 선택"
+
+#: plug-ins/gap/gap_mod_layer.c:805
+msgid "GAP Modify: No layer selected in last handled frame\n"
+msgstr "GAP 변경: 마지막 조절된 프레인에 선택된 계층이 없음\n"
+
+#: plug-ins/gap/gap_mod_layer.c:891
+msgid "Modifying Frames/Layer(s) .."
+msgstr "프레임/계층 변경중 .."
+
+#: plug-ins/gap/gap_mod_layer.c:972
+msgid "No selected Layer in start frame\n"
+msgstr "시작 프레임에서 선택된 계층이 없습니다.\n"
+
+#: plug-ins/gap/gap_mov_dialog.c:243 plug-ins/gimpressionist/orientmap.c:590
+msgid "Normal"
+msgstr "보통"
+
+#: plug-ins/gap/gap_mov_dialog.c:244
+msgid "Dissolve"
+msgstr "분해"
+
+#: plug-ins/gap/gap_mov_dialog.c:245
+msgid "Multiply"
+msgstr "배로 증가"
+
+#: plug-ins/gap/gap_mov_dialog.c:246
+msgid "Screen"
+msgstr "스크린"
+
+#: plug-ins/gap/gap_mov_dialog.c:247 plug-ins/gimpressionist/paper.c:155
+msgid "Overlay"
+msgstr "겹치기"
+
+#: plug-ins/gap/gap_mov_dialog.c:248
+msgid "Difference"
+msgstr "차이점"
+
+#: plug-ins/gap/gap_mov_dialog.c:249
+msgid "Addition"
+msgstr "추가"
+
+#: plug-ins/gap/gap_mov_dialog.c:250
+msgid "Subtract"
+msgstr "빼기"
+
+#: plug-ins/gap/gap_mov_dialog.c:251
+msgid "Darken Only"
+msgstr "오직 어둡게"
+
+#: plug-ins/gap/gap_mov_dialog.c:252
+msgid "Lighten Only"
+msgstr "오직 라이트만"
+
+#: plug-ins/gap/gap_mov_dialog.c:263
+msgid "Left  Top"
+msgstr "왼쪽  위"
+
+#: plug-ins/gap/gap_mov_dialog.c:264
+msgid "Left  Bottom"
+msgstr "왼쪽  아래"
+
+#: plug-ins/gap/gap_mov_dialog.c:265
+msgid "Right Top"
+msgstr "오른쪽 위"
+
+#: plug-ins/gap/gap_mov_dialog.c:266
+msgid "Right Bottom"
+msgstr "오른쪽 아래"
+
+#: plug-ins/gap/gap_mov_dialog.c:267
+msgid "Center"
+msgstr "중간"
+
+#: plug-ins/gap/gap_mov_dialog.c:275
+msgid "Loop"
+msgstr "루프"
+
+#: plug-ins/gap/gap_mov_dialog.c:276
+msgid "Loop Reverse"
+msgstr "역 루프"
+
+#: plug-ins/gap/gap_mov_dialog.c:277
+msgid "Once"
+msgstr "한 번"
+
+#: plug-ins/gap/gap_mov_dialog.c:278
+msgid "OnceReverse"
+msgstr "거꾸로 한번"
+
+#: plug-ins/gap/gap_mov_dialog.c:279
+msgid "PingPong"
+msgstr "핑퐁"
+
+#: plug-ins/gap/gap_mov_dialog.c:440
+msgid "Move Path"
+msgstr "경로 이동"
+
+#: plug-ins/gap/gap_mov_dialog.c:478
+msgid "UpdPreview"
+msgstr "Upd미리보기"
+
+#: plug-ins/gap/gap_mov_dialog.c:485
+msgid ""
+"Show PreviewFame with Selected       \n"
+"SrcLayer at current Controlpoint"
+msgstr ""
+"현재 컨트롤 포인트에서 선택된       \n"
+"원래 계층을 가지고 미리보기 보여주기"
+
+#. parameter settings
+#: plug-ins/gap/gap_mov_dialog.c:491
+msgid "Copy moving source-layer(s) into frames"
+msgstr "프레임에서 이동중인 원래 계층 복사"
+
+#. Point Buttons
+#: plug-ins/gap/gap_mov_dialog.c:514
+msgid "Load Points"
+msgstr "포인트 읽기"
+
+#: plug-ins/gap/gap_mov_dialog.c:522
+msgid "Load Controlpoints from file"
+msgstr "파일에서 컨트롤 포인트 읽기"
+
+#: plug-ins/gap/gap_mov_dialog.c:526
+msgid "Save Points"
+msgstr "포인트 저장"
+
+#: plug-ins/gap/gap_mov_dialog.c:534
+msgid "Save Controlpoints to file"
+msgstr "파일에 컨트롤포인트 저장"
+
+#: plug-ins/gap/gap_mov_dialog.c:538
+msgid "Reset Points"
+msgstr "포인트 재설정"
+
+#: plug-ins/gap/gap_mov_dialog.c:546
+msgid ""
+"Reset Controlpoints  \n"
+"to one Defaultpoint"
+msgstr ""
+"하나의 초기포인트에  \n"
+"컨트롤포인트 재설정"
+
+#: plug-ins/gap/gap_mov_dialog.c:550
+msgid "Add Point"
+msgstr "포인트 추가"
+
+#: plug-ins/gap/gap_mov_dialog.c:558
+msgid ""
+"Add Controlpoint at end        \n"
+"(the last Point is duplicated)"
+msgstr ""
+"끝에 컨트롤포인트 추가        \n"
+"(마지막 포인트가 복사되어짐)"
+
+#: plug-ins/gap/gap_mov_dialog.c:562
+msgid "Prev Point"
+msgstr "앞 포인트"
+
+#: plug-ins/gap/gap_mov_dialog.c:570
+msgid "Show Previous Controlpoint"
+msgstr "앞 컨트롤포인트 보여주기"
+
+#: plug-ins/gap/gap_mov_dialog.c:574
+msgid "Next Point"
+msgstr "다음 포인트"
+
+#: plug-ins/gap/gap_mov_dialog.c:582
+msgid "Show Next Controlpoint"
+msgstr "다음 컨트롤포인트 보여주기"
+
+#: plug-ins/gap/gap_mov_dialog.c:592
+msgid "Start Frame:"
+msgstr "시작 프레임:"
+
+#: plug-ins/gap/gap_mov_dialog.c:596
+msgid "End Frame:"
+msgstr "마지막 프레임:"
+
+#: plug-ins/gap/gap_mov_dialog.c:600
+msgid "Preview Frame:"
+msgstr "프레임 미리보기:"
+
+#: plug-ins/gap/gap_mov_dialog.c:602
+msgid ""
+"frame to show when UpdPreview\n"
+"button is pressed"
+msgstr ""
+"Upd미리보기 버튼을 누르면 프레임을\n"
+"보여줍니다."
+
+#: plug-ins/gap/gap_mov_dialog.c:604
+msgid "Layerstack:"
+msgstr "계층스택:"
+
+#: plug-ins/gap/gap_mov_dialog.c:606
+msgid ""
+"How to insert SrcLayer into the\n"
+"Dst.Frame's Layerstack\n"
+"0 means on top i.e in front"
+msgstr ""
+"대상 프레임의 계층스택 0을 의미하는\n"
+"탑에 원래 계층을 삽입하는\n"
+"방법"
+
+#. toggle clip_to_image
+#: plug-ins/gap/gap_mov_dialog.c:609
+msgid "Clip To Frame"
+msgstr "프레임 잘라내기"
+
+#: plug-ins/gap/gap_mov_dialog.c:616
+msgid ""
+"Clip all copied Src-Layers\n"
+"at Frame Boundaries"
+msgstr ""
+"프레임 경계선에 모든 복사된\n"
+"원래계층을 잘라내기"
+
+#: plug-ins/gap/gap_mov_dialog.c:660
+msgid ""
+"No Source Image was selected\n"
+"(Please open a 2nd Image of the same type before opening Move Path)\n"
+msgstr ""
+"선택되어진 원본 이미지 없음\n"
+"(경로 이동을 하기 전에 같은 유형의 두번째 이미지를 열어주세요)\n"
+
+#. filesel is already open
+#: plug-ins/gap/gap_mov_dialog.c:824
+msgid "Load Path Points from file"
+msgstr "파일에서 포인트 경로 읽기"
+
+#. filesel is already open
+#: plug-ins/gap/gap_mov_dialog.c:860
+msgid "Save Path Points to file"
+msgstr "파일에서 포인트 경로 저장"
+
+#: plug-ins/gap/gap_mov_dialog.c:1071
+#, c-format
+msgid "X [%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1072
+#, c-format
+msgid "Y [%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1073
+#, c-format
+msgid "Opacity [%d]: "
+msgstr "불투명도 [%d]: "
+
+#: plug-ins/gap/gap_mov_dialog.c:1074
+#, c-format
+msgid "Width [%d]: "
+msgstr "넓이 [%d]:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1075
+#, c-format
+msgid "Height [%d]: "
+msgstr "높이 [%d]:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1076
+#, c-format
+msgid "Rotate deg[%d]: "
+msgstr "[%d]도 회전: "
+
+#: plug-ins/gap/gap_mov_dialog.c:1255
+msgid "Source Select"
+msgstr "소스 선택"
+
+#. Source Layer menu
+#: plug-ins/gap/gap_mov_dialog.c:1272
+msgid "SourceImage/Layer:"
+msgstr "소스이미지/계층:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1282
+msgid "Source Object to insert into Framerange"
+msgstr "프레임범위안에 삽입하기 위한 원본 개체"
+
+#. Paintmode menu
+#: plug-ins/gap/gap_mov_dialog.c:1297
+msgid "Mode:"
+msgstr "모드:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1306
+msgid "Paintmode"
+msgstr "페인트모드"
+
+#. Loop Stepmode menu
+#: plug-ins/gap/gap_mov_dialog.c:1321
+msgid "Stepmode:"
+msgstr "단계모드:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1339
+msgid ""
+"How to fetch te next SrcLayer   \n"
+"at the next handled frame"
+msgstr ""
+"다음 조절된 프레임에서 다음    \n"
+"원본 계층을 부르는 방법"
+
+#. Source Image Handle menu
+#: plug-ins/gap/gap_mov_dialog.c:1345
+msgid "Handle:"
+msgstr "조절:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1363
+msgid ""
+"How to place the SrcLayer at   \n"
+"Controlpoint Koordinates"
+msgstr ""
+"대등한 컨트롤포인트에서 원본   \n"
+"계층을 위치하는 방법"
+
+#. to avoid side effects while initialization
+#: plug-ins/gap/gap_mov_dialog.c:1409
+msgid "Move Path Preview"
+msgstr "경로 이동 미리보기"
+
+#: plug-ins/gap/gap_mov_dialog.c:1459
+msgid ""
+"Scale SrcLayer's Width\n"
+"in percent"
+msgstr ""
+"퍼센트로 원본 계층의\n"
+"넓이 스케일"
+
+#: plug-ins/gap/gap_mov_dialog.c:1465
+msgid ""
+"Scale SrcLayer's Height\n"
+"in percent"
+msgstr ""
+"퍼센트로 원본 계층의\n"
+"높이 스케일"
+
+#: plug-ins/gap/gap_mov_dialog.c:1471
+msgid ""
+"SrcLayer's Opacity\n"
+"in percent"
+msgstr ""
+"퍼센트 원본계층의 \n"
+"불투명도"
+
+#: plug-ins/gap/gap_mov_dialog.c:1480
+msgid "Rotate SrcLayer (in degree)"
+msgstr "원본계층 회전 (각도로)"
+
+#: plug-ins/gap/gap_mov_exec.c:217
+msgid ""
+"No Source Image was selected\n"
+"(Please open a 2nd Image of the same type before opening Move Path)"
+msgstr ""
+"선택되어진 원본 이미지 없음\n"
+"(경로 이동을 하기 전에 같은 유형의 두번째 이미지를 열어주세요)"
+
+#: plug-ins/gap/gap_mov_exec.c:225
+msgid "Copying Layers into Frames .."
+msgstr "프레임안에서 계층 복사중 .."
+
+#: plug-ins/gap/gap_mpege.c:110
+msgid "Conditions to run mpeg_encode 1.5:"
+msgstr "mpeg_encode 1.5 작동 상태:"
+
+#: plug-ins/gap/gap_mpege.c:113
+msgid "Conditions to run mpeg2encode 1.2:"
+msgstr "mpeg2encode 1.2 작동 상태:"
+
+#: plug-ins/gap/gap_mpege.c:123
+msgid "1.) mpeg_encode 1.5 must be installed"
+msgstr "1.) mpeg_encode 1.5 가 설치되어져야만 합니다."
+
+#: plug-ins/gap/gap_mpege.c:126
+msgid "1.) mpeg2encode 1.2 must be installed"
+msgstr "1.) mpeg2encode 1.2 가 설치되어져야만 합니다."
+
+#: plug-ins/gap/gap_mpege.c:131
+msgid "    you can get mpeg_encode at"
+msgstr "    당신은 다음에서 mpeg_encode를 얻을수 있습니다."
+
+#: plug-ins/gap/gap_mpege.c:134
+msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
+msgstr "    당신은 http://www.mpeg.org/MSSG에서 mpeg2encode를 얻을수 있습니다."
+
+#: plug-ins/gap/gap_mpege.c:139
+msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+
+#: plug-ins/gap/gap_mpege.c:142
+msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
+msgstr "   또는 ftp://ftp.mpeg.org/pub/mpeg/mssg 에서 얻으실수 있습니다."
+
+#: plug-ins/gap/gap_mpege.c:147
+msgid "2.) You need a series of single Images on disk (AnimFrames)"
+msgstr "2.) 당신은 디스크에서 (움직이는 프레임) 싱글 이미지의 시리즈가 필요합니다."
+
+#: plug-ins/gap/gap_mpege.c:151
+msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
+msgstr "     모두 JPEG (혹은 YUV 혹은 PNM 혹은 PPM) 파일형식을 다룸"
+
+#: plug-ins/gap/gap_mpege.c:154
+msgid "   all with fileformat PPM (or YUV)"
+msgstr "     모두 PPM(혹은 YUV) 파일형식을 다룸"
+
+#: plug-ins/gap/gap_mpege.c:159
+msgid "    (use 'Frames Convert' from the AnimFrames Menu"
+msgstr "    (움직이는 프레임 메뉴에서 '프레임 바꾸기' 사용"
+
+#: plug-ins/gap/gap_mpege.c:163
+msgid "    or 'Split Img to Frames' from the AnimFrames Menu)"
+msgstr "    혹은 움직이는 프레임 메뉴에서 '이미지를 프레임으로 분할'"
+
+#: plug-ins/gap/gap_mpege.c:167
+msgid "3.) All Images must have the same size,"
+msgstr "4.) 모든 이미지들은 같은 크기를 사용하여야만 합니다."
+
+#: plug-ins/gap/gap_mpege.c:174
+msgid "    width and height must be a multiple of 16"
+msgstr "    넓이와 높이는 16의 배우이어야만 합니다."
+
+#: plug-ins/gap/gap_mpege.c:178
+msgid "    (use Scale or Crop from the AnimFrames Menu)"
+msgstr "    (움직이는 프레임 메뉴에서 스케일 혹은 잘라내기 사용)"
+
+#: plug-ins/gap/gap_mpege.c:193
+msgid "MPEG_ENCODE Information"
+msgstr "MPEG_ENCODE 정보"
+
+#: plug-ins/gap/gap_mpege.c:231
+msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
+msgstr "MPEG (ISO/IEC 11172-2) 스트림 생성"
+
+#: plug-ins/gap/gap_mpege.c:232
+msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
+msgstr "MPEG2 (ISO/IEC DIS 13818-2) 스트림 생성"
+
+#: plug-ins/gap/gap_mpege.c:242
+msgid "GenParams"
+msgstr "젠(gen)파라미터"
+
+#: plug-ins/gap/gap_mpege.c:273
+msgid "Framerate :"
+msgstr "프레임 율 :"
+
+#: plug-ins/gap/gap_mpege.c:274
+msgid "framerate in frames/second"
+msgstr "frames/second로 프레임 율을 나타냄"
+
+#: plug-ins/gap/gap_mpege.c:281
+msgid "Bitrate:"
+msgstr "비트 율:"
+
+#: plug-ins/gap/gap_mpege.c:282
+msgid ""
+"used for constant bitrates (bit/sec)                  \n"
+"(low rate gives good compression + bad quality)"
+msgstr ""
+"상수 비트율 (bit/sec)을 사용                    \n"
+"(낮을 비율은 좋은 압축과 나쁜 품질을 가짐)"
+
+#: plug-ins/gap/gap_mpege.c:293
+msgid "Outputfile:"
+msgstr "출력파일:"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:295
+msgid "Name of the resulting MPEG outputfile"
+msgstr "MPEG 출력파일 결과의 이름"
+
+#: plug-ins/gap/gap_mpege.c:301
+msgid "Paramfile:"
+msgstr "파라미터파일:"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:303
+msgid ""
+"Name of the Encoder-Parameterfile\n"
+"(is generated)"
+msgstr ""
+"인코더-파라미터파일의 이름\n"
+"(생성되어짐)"
+
+#: plug-ins/gap/gap_mpege.c:309
+msgid "Startscript:"
+msgstr "시작 스크립트:"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:311
+msgid ""
+"Name of the Startscript           \n"
+"(is generated/executed)"
+msgstr ""
+"시작 스크립트의 이름            \n"
+"(생성/실행되어짐)"
+
+#: plug-ins/gap/gap_mpege.c:318
+msgid ""
+"Generate parameterfile for mpeg_encode 1.5\n"
+"(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
+msgstr ""
+"mpeg_encode 1.5를 위한 파라미터파일 생성\n"
+"(공짜로 배포되는 버클리 MPEG-1 비디오 인코더)\n"
+
+#: plug-ins/gap/gap_mpege.c:322
+msgid "Constant Bitrate :"
+msgstr "상수 비트 율 :"
+
+#: plug-ins/gap/gap_mpege.c:323
+msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
+msgstr "I/P/QSCALE 값을 무시하고 상수 비트율 사용)"
+
+#: plug-ins/gap/gap_mpege.c:328
+msgid "Pattern:"
+msgstr "패턴:"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:330
+msgid "How to encode MPEG framesequence (I/P/B frames)"
+msgstr "MPEG 프레임시퀸스 (I/P/B 프레임) 인코드 방법"
+
+#: plug-ins/gap/gap_mpege.c:336
+msgid "IQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:337
+msgid ""
+"Quality scale for I-Frames                       \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+"I-프레임을 위한 스케일의 질                        \n"
+"(1 = 최상의 질, 31 = 최상의 압축)"
+
+#: plug-ins/gap/gap_mpege.c:344
+msgid "PQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:345
+msgid ""
+"Quality scale for P-Frames                  \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+"P-프레임을 위한 스케일의 질                        \n"
+"(1 = 최상의 질, 31 = 최상의 압축)"
+
+#: plug-ins/gap/gap_mpege.c:352
+msgid "BQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:353
+msgid ""
+"Quality scale for B-Frames                  \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+"B-프레임을 위한 스케일의 질                        \n"
+"(1 = 최상의 질, 31 = 최상의 압축)"
+
+#: plug-ins/gap/gap_mpege.c:360
+msgid "P-Search :"
+msgstr "P-탐색 :"
+
+#: plug-ins/gap/gap_mpege.c:361
+msgid "Search Algorithmus used for P-frames"
+msgstr "P-프레임에서 사용하는 알고리즘 탐색"
+
+#: plug-ins/gap/gap_mpege.c:367
+msgid "B-Search :"
+msgstr "B-탐색 :"
+
+#: plug-ins/gap/gap_mpege.c:368
+msgid "Search Algorithmus used for B-frames"
+msgstr "B-프레임에서 사용하는 알고리즘 탐색"
+
+#: plug-ins/gap/gap_mpege.c:373
+msgid "Gen MPEG_ENCODE Parameters"
+msgstr "젠(gen) MPEG_ENCODE 파라미터"
+
+#: plug-ins/gap/gap_mpege.c:374 plug-ins/gap/gap_mpege.c:413
+msgid "Encode Values"
+msgstr "인코드 값"
+
+#: plug-ins/gap/gap_mpege.c:391
+msgid ""
+"Generate parameterfile for mpeg2encode 1.2\n"
+"(MPEG-2 Video  Encoder.)\n"
+msgstr ""
+"mpeg2encode 1.2를 위한 파라미터파일 생성\n"
+"(MPEG-2 비디오 인코더.)\n"
+
+#: plug-ins/gap/gap_mpege.c:394
+msgid "MPEG-type :"
+msgstr "MPEG-유형 :"
+
+#: plug-ins/gap/gap_mpege.c:403
+msgid "Videoformat :"
+msgstr "비디오형식 :"
+
+#: plug-ins/gap/gap_mpege.c:404
+msgid "Videoformat"
+msgstr "비디오형식"
+
+#. framerates above 30 ar not allowed in mpeg2encode
+#: plug-ins/gap/gap_mpege.c:412
+msgid "Gen MPEG2ENCODE Parameters"
+msgstr "젠(gen) MPEG2ENCODE 파라미터"
+
+#: plug-ins/gap/gap_mpege.c:517
+#, c-format
+msgid "cant open MPEG Paramfile %s for write\n"
+msgstr "쓰기위한 MPEG 파라미터파일 %s를 열수 없습니다.\n"
+
+#: plug-ins/gap/gap_mpege.c:976
+msgid ""
+"\n"
+"WARNING: mpeg_encode does not support Fileformat "
+msgstr ""
+"\n"
+"경고: mpeg_encode는 파일형식이 지원되지 않습니다. "
+
+#: plug-ins/gap/gap_mpege.c:979
+msgid ""
+"\n"
+"ERROR: width not a multiple of 16"
+msgstr ""
+"\n"
+"애러: 넓이가 16의 배수가 아닙니다."
+
+#: plug-ins/gap/gap_mpege.c:980
+msgid ""
+"\n"
+"ERROR: height not a multiple of 16"
+msgstr ""
+"\n"
+"애러: 높이가 16의 배수가 아닙니다."
+
+#: plug-ins/gap/gap_mpege.c:986
+msgid ""
+"\n"
+"WARNING: mpeg2encode does not support Fileformat "
+msgstr ""
+"\n"
+"경고: mpeg2encode는 파일형식이 지원되지 않습니다. "
+
+#: plug-ins/gap/gap_mpege.c:991
+msgid ""
+"\n"
+"ERROR: invoked from a single image, animframe required"
+msgstr ""
+"\n"
+"애러: 싱글 이미지에서 발생되어서, 움직이는 프레임이 요구했습니다."
+
+#: plug-ins/gap/gap_mpege.c:1009
+msgid "sorry folks, NON_INTERACTIVE call .. not implemented yet\n"
+msgstr "죄송합니다 folks, NON_INTERACTIVE 호출 .. 은 아직 작동되지않습니다.\n"
+
+#: plug-ins/gap/gap_range_ops.c:108
+msgid "New Width :"
+msgstr "새로운 넓이 :"
+
+#: plug-ins/gap/gap_range_ops.c:115
+msgid "New Height :"
+msgstr "새로운 높이 :"
+
+#: plug-ins/gap/gap_range_ops.c:122
+msgid "Offest X :"
+msgstr "옵셋 X :"
+
+#: plug-ins/gap/gap_range_ops.c:129
+msgid "Offest Y :"
+msgstr "옵셋 Y :"
+
+#: plug-ins/gap/gap_range_ops.c:138
+msgid "Crop AnimFrames (all)"
+msgstr "움직이는 프레임 잘라내기 (모두)"
+
+#: plug-ins/gap/gap_range_ops.c:139
+#, c-format
+msgid "Crop (original %dx%d)"
+msgstr "잘라내기 (원래 %dx%d)"
+
+#: plug-ins/gap/gap_range_ops.c:149
+msgid "Resize AnimFrames (all)"
+msgstr "움직이는 프레임 크기조절 (모두)"
+
+#: plug-ins/gap/gap_range_ops.c:150
+#, c-format
+msgid "Resize (original %dx%d)"
+msgstr "크기조절 (원래 %dx%d)"
+
+#: plug-ins/gap/gap_range_ops.c:156
+msgid "Scale AnimFrames (all)"
+msgstr "움직이는 프레임 스케일 (모두)"
+
+#: plug-ins/gap/gap_range_ops.c:157
+#, c-format
+msgid "Scale (original %dx%d)"
+msgstr "스케일 (원래 %dx%d)"
+
+#: plug-ins/gap/gap_range_ops.c:246
+msgid "Layerstack :"
+msgstr "계층스택 :"
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "KEEP_TYPE"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to RGB"
+msgstr "RGB로 바꿈"
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to GRAY"
+msgstr "그레이스케일로 바꿈"
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to INDEXED"
+msgstr "인덱스로 바꿈"
+
+#: plug-ins/gap/gap_range_ops.c:308
+msgid ""
+"\n"
+"Select destination fileformat by extension\n"
+"optionally convert imagetype\n"
+msgstr ""
+"\n"
+"확장자에 의해 대상 파일형식을 선택은 마음대로\n"
+"이미지유형을 바꿉니다.\n"
+
+#: plug-ins/gap/gap_range_ops.c:311
+msgid "Basename:"
+msgstr "기본이름:"
+
+#: plug-ins/gap/gap_range_ops.c:312
+msgid ""
+"basename of the resulting frames       \n"
+"(0001.ext is added)"
+msgstr ""
+"결과 프레임의 기본이름          \n"
+"(0001.ext가 추가되어집니다)"
+
+#: plug-ins/gap/gap_range_ops.c:317 plug-ins/gap/gap_split.c:229
+msgid "Extension:"
+msgstr "확장:"
+
+#: plug-ins/gap/gap_range_ops.c:318 plug-ins/gap/gap_split.c:230
+msgid ""
+"extension of resulting frames       \n"
+"(is also used to define Fileformat)"
+msgstr ""
+"결과 프레임의 확장       \n"
+"(은 또한 파일형식을 정의 한다)"
+
+#: plug-ins/gap/gap_range_ops.c:324
+msgid "Imagetype :"
+msgstr "이미지유형 :"
+
+#: plug-ins/gap/gap_range_ops.c:325
+msgid ""
+"Convert to, or keep imagetype           \n"
+"(most fileformats cant handle all types)"
+msgstr ""
+"바꾸거나, 이미지유형 유지           \n"
+"(대부분의 파일형식은 모든 유형을 조절하지 못합니다)"
+
+#: plug-ins/gap/gap_range_ops.c:331
+msgid "Flatten  :"
+msgstr "플래튼 :"
+
+#: plug-ins/gap/gap_range_ops.c:332
+msgid ""
+"Flatten all resulting frames               \n"
+"(most fileformats need flattened frames)"
+msgstr ""
+"모든 결과 프레임 플래튼              \n"
+"(대부분의 파일형식은 플래튼된 프레임이 필요합니다)"
+
+#: plug-ins/gap/gap_range_ops.c:337
+msgid "Colors  :"
+msgstr "색상  :"
+
+#: plug-ins/gap/gap_range_ops.c:338
+msgid ""
+"Number of resulting Colors               \n"
+"(ignored if not converted to indexed)"
+msgstr ""
+"다수의 결과 색상               \n"
+"(만약 인덱스됨(indexed)으로 변환되지 않으면 무시된다.)"
+
+#: plug-ins/gap/gap_range_ops.c:344
+msgid "Dither  :"
+msgstr "떨림  :"
+
+#: plug-ins/gap/gap_range_ops.c:345
+msgid ""
+"Enable Floyd-Steinberg dithering      \n"
+"(ignored if not converted to indexed)"
+msgstr ""
+"Floyd-Steinberg 떨림 가능     \n"
+"(만약 인덱스됨(indexed)으로 변환되지 않으면 무시된다.)"
+
+#: plug-ins/gap/gap_range_ops.c:350
+msgid "Convert Frames to other Formats"
+msgstr "프레임을 다름 형식으로 바꾸기"
+
+#: plug-ins/gap/gap_range_ops.c:351
+msgid "Convert Settings :"
+msgstr "바꾸기 설정 :"
+
+#: plug-ins/gap/gap_range_ops.c:408
+msgid "Expand as necessary"
+msgstr "필요할때 확장"
+
+#: plug-ins/gap/gap_range_ops.c:409
+msgid "Clipped to image"
+msgstr "이미지 자르기"
+
+#: plug-ins/gap/gap_range_ops.c:410
+msgid "Clipped to bottom layer"
+msgstr "하위 계층 자르기"
+
+#: plug-ins/gap/gap_range_ops.c:411
+msgid "Flattened image"
+msgstr "플래튼된 이미지"
+
+#: plug-ins/gap/gap_range_ops.c:412
+msgid ""
+"Resulting Layer Size is made of the outline-rectangle \n"
+"of all visible layers (may differ from frame to frame)"
+msgstr ""
+"결과 계층 크기는 모든 보이는 계층의 아웃라인-직사각형으로\n"
+"만들어집니다 (프레임에서 프레임으로 다를 것입니다)"
+
+#: plug-ins/gap/gap_range_ops.c:413
+msgid "Resulting Layer Size is the frame size"
+msgstr "결과 계층 크기는 프레임 크기입니다"
+
+#: plug-ins/gap/gap_range_ops.c:414
+msgid ""
+"Resulting Layer Size is the size of the bottom layer\n"
+"(may differ from frame to frame)"
+msgstr ""
+"결과 계층 크기는 하위 계층의 크기입니다.\n"
+"(프레임에서 프레임으로 다를 것입니다.)"
+
+#: plug-ins/gap/gap_range_ops.c:415
+msgid ""
+"Resulting Layer Size is the frame size     \n"
+"transparent parts are filled with BG color"
+msgstr ""
+"결과 계층 크기는 프레임 크기입니다     \n"
+"투명한 부분들은 배경 색상으로 채워집니다."
+
+#: plug-ins/gap/gap_range_ops.c:460
+msgid "Layer Basename:"
+msgstr "계층 기본이름:"
+
+#: plug-ins/gap/gap_range_ops.c:461
+msgid ""
+"Basename for all Layers    \n"
+"[####] is replaced by frame number"
+msgstr ""
+"모든 계층들을 위한 기본이름   \n"
+"[####]은 프레임 번호에 의해 바뀌어집니다"
+
+#: plug-ins/gap/gap_range_ops.c:479
+msgid "Layer Mergemode :"
+msgstr "계층 머지모드 :"
+
+#: plug-ins/gap/gap_range_ops.c:486
+msgid "Exclude BG-Layer"
+msgstr "배경-계층 제�"
+
+#: plug-ins/gap/gap_range_ops.c:487
+msgid ""
+"Exclude the BG-Layers    \n"
+"in all handled frames\n"
+"regardless to selection"
+msgstr ""
+"모든 대충 조절된 프레임은    \n"
+"셀렉션에서\n"
+" 제외됩니다."
+
+#: plug-ins/gap/gap_range_ops.c:517
+msgid "Use all unselected Layers"
+msgstr "모든 선택되지 않은 계층 사용"
+
+#: plug-ins/gap/gap_range_ops.c:591
+msgid "Creating Layer-Animated Image .."
+msgstr "계층-움직임(animate) 이미지 생성 중 .."
+
+#: plug-ins/gap/gap_range_ops.c:805
+msgid "Frames to Image"
+msgstr "이미지에 프레임"
+
+#: plug-ins/gap/gap_range_ops.c:806
+msgid "Create Multilayer-Image from Frames"
+msgstr "프레임에서 다중 계층-이미지 생성"
+
+#: plug-ins/gap/gap_range_ops.c:935
+msgid "Flattening Frames .."
+msgstr "프레임 플래튼 중 .."
+
+#: plug-ins/gap/gap_range_ops.c:936
+msgid "Converting Frames .."
+msgstr "프레임을 바꾸는 중 .."
+
+#: plug-ins/gap/gap_range_ops.c:1025
+msgid "OVERWRITE frame"
+msgstr "프레임 덮어씌우기"
+
+#: plug-ins/gap/gap_range_ops.c:1027
+msgid "OVERWRITE all"
+msgstr "모두 덮어씌우기"
+
+#: plug-ins/gap/gap_range_ops.c:1046
+msgid ""
+"Convert Frames: SAVE operation FAILED\n"
+"- desired save plugin cant handle type\n"
+"- or desired save plugin not available\n"
+msgstr ""
+"프레임 바꾸기: 저장 동작 실패\n"
+"- 옳은 저장 플러그인은 유형을 조절할 수 없거나\n"
+"- 혹은 옳은 저장 플러그인이 가능하지 않을 것입니다\n"
+
+#: plug-ins/gap/gap_range_ops.c:1152
+msgid "Cropping all Animation Frames .."
+msgstr "모든 움직이는(animate) 프레임 잘라내기 .."
+
+#: plug-ins/gap/gap_range_ops.c:1155
+msgid "Resizing all Animation Frames .."
+msgstr "모든 움직이는(animate) 프레임 크기조정 .."
+
+#: plug-ins/gap/gap_range_ops.c:1158
+msgid "Scaling all Animation Frames .."
+msgstr "모든 움직이는(animate) 프레임 스케일링 .."
+
+#: plug-ins/gap/gap_range_ops.c:1244
+msgid "Flatten Frames"
+msgstr "플래튼 프레임"
+
+#: plug-ins/gap/gap_range_ops.c:1245
+msgid "Select Frame Range"
+msgstr "프레임 범위 선택"
+
+#: plug-ins/gap/gap_range_ops.c:1300
+#, c-format
+msgid "Removing Layer (pos:%ld) from Frames .."
+msgstr "프레임에서 계층 (pos:%ld) 제거 중 .."
+
+#: plug-ins/gap/gap_range_ops.c:1423
+msgid "Delete Layers in Frames"
+msgstr "프레임에서 계층 삭제"
+
+#: plug-ins/gap/gap_range_ops.c:1424
+msgid "Select Frame Range & Position"
+msgstr "프레임 범위와 위치 선택"
+
+#: plug-ins/gap/gap_split.c:97
+msgid "Splitting into Frames .."
+msgstr "프레임에서 분할 중 .."
+
+#: plug-ins/gap/gap_split.c:172
+msgid ""
+"Split Frames: SAVE operation FAILED\n"
+"- desired save plugin cant handle type\n"
+"- or desired save plugin not available\n"
+msgstr ""
+"프레임 분할: 저장 동작 실패\n"
+"- 옳은 저장 플러그인은 유형을 조절할 수 없거나\n"
+"- 혹은 옳은 저장 플러그인이 가능하지 않을 것입니다\n"
+
+#: plug-ins/gap/gap_split.c:220
+#, c-format
+msgid ""
+"%s\n"
+"%s\n"
+"(%s_0001.%s)\n"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:221
+msgid "Make a frame (diskfile) from each Layer"
+msgstr "각 계층에서 프레임 (디스크파일) 만들기"
+
+#: plug-ins/gap/gap_split.c:222
+msgid "frames are named: base_nr.extension"
+msgstr "프레임은 명명되어졌다: base_nr.extension"
+
+#: plug-ins/gap/gap_split.c:235
+msgid "Inverse Order :"
+msgstr "역 순서 :"
+
+#: plug-ins/gap/gap_split.c:236
+msgid "Start frame 0001 at Top Layer"
+msgstr "상위 계층에 프레임 0001로 시작"
+
+#: plug-ins/gap/gap_split.c:240
+msgid "Flatten :"
+msgstr "플래튼 :"
+
+#: plug-ins/gap/gap_split.c:241
+msgid ""
+"Remove Alpha Channel in resulting Frames,    \n"
+"transparent parts are filled with BG color"
+msgstr ""
+"결과 프레임안에 알파 채널 제거 되어서,   \n"
+"투명한 부분은 배경 색상으로 채워집니다."
+
+#: plug-ins/gap/gap_split.c:244
+msgid "Split Image into Frames"
+msgstr "프레임안에서 이미지 분할"
+
+#: plug-ins/gap/gap_split.c:245
+msgid "Split Settings :"
+msgstr "분할하기 설정 :"
+
+#: plug-ins/gap/gap_split.c:290
+msgid ""
+"OPERATION CANCELLED\n"
+"This image is already an AnimFrame\n"
+"Try again on a Duplicate\n"
+"(image/channel ops/duplicate)"
+msgstr ""
+"동작 취소됨\n"
+"이 이미지는 벌써 움직이는 프레임입니다\n"
+"복사해서 다시 시도해 주세요\n"
+"(이미지/채널 동작/복사)"
+
+#: plug-ins/gap/resize.c:107
+msgid "Scale"
+msgstr "스케일"
+
+#: plug-ins/gap/resize.c:111
+msgid "Resize"
+msgstr "크기조정"
+
+#: plug-ins/gap/resize.c:127
+msgid "New width:"
+msgstr "새로운 넓이:"
+
+#: plug-ins/gap/resize.c:144
+msgid "New height:"
+msgstr "새로운 높이:"
+
+#: plug-ins/gap/resize.c:161
+msgid "X ratio:"
+msgstr "X 비율:"
+
+#: plug-ins/gap/resize.c:178
+msgid "Y ratio:"
+msgstr "Y 비율:"
+
+#: plug-ins/gap/resize.c:197
+msgid "X Offset:"
+msgstr "X 옵셋:"
+
+#: plug-ins/gap/resize.c:214
+msgid "Y Offset:"
+msgstr "Y 옵셋:"
+
+#. the constrain toggle button
+#: plug-ins/gap/resize.c:231
+msgid "Constrain Ratio"
+msgstr "억제 비율"
+
+#: plug-ins/common/gif.c:396
 msgid "saves files in Compuserve GIF file format"
 msgstr "컴퓨서브 GIF 파일 형식으로 저장"
 
-#: plug-ins/common/gif.c:682
+#: plug-ins/common/gif.c:691
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
 msgstr "GIF: 색상 그 이상을 간단히 줄일수 없습니다. 불투명하게 저장.\n"
 
-#: plug-ins/common/gif.c:938
+#: plug-ins/common/gif.c:947
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -1890,19 +3895,18 @@ msgstr ""
 "GIF: 죄송합니다, RGB 이미지들은 GIF로 저장할 수 없습니다. - 엔덱스된\n"
 "이미지나 그레이 이미지로 먼저 바꾸세요.\n"
 
-#: plug-ins/common/gif.c:957
+#: plug-ins/common/gif.c:966
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: %s를 열수 없습니다.\n"
 
-#: plug-ins/common/gif.c:1064
+#: plug-ins/common/gif.c:1073
 msgid ""
 "Transparent colour *might* be incorrect on viewers which don't support "
 "transparency."
-msgstr ""
-"투명한 색상은 투명한 것이 지원되지 않는 뷰어에서는 잘못될 것입니다."
+msgstr "투명한 색상은 투명한 것이 지원되지 않는 뷰어에서는 잘못될 것입니다."
 
-#: plug-ins/common/gif.c:1196
+#: plug-ins/common/gif.c:1218
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -1919,62 +3923,62 @@ msgstr ""
 "당신은 아마 이미지 테두리에 모든 계층들을 잘라내든지\n"
 "저장을 취소 하던지 해야 합니다."
 
-#: plug-ins/common/gif.c:1252
+#: plug-ins/common/gif.c:1274
 msgid "Save as GIF"
 msgstr "GIF 로 저장"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1286
+#: plug-ins/common/gif.c:1308
 msgid "GIF Options"
 msgstr "GIF 옵션"
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
+#: plug-ins/common/gif.c:1316 plug-ins/common/png.c:953
 msgid "Interlace"
 msgstr "인터레이스"
 
-#: plug-ins/common/gif.c:1306
+#: plug-ins/common/gif.c:1328
 msgid "GIF Comment: "
 msgstr "GIF 설명: "
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1367
+#: plug-ins/common/gif.c:1389
 msgid "Animated GIF Options"
 msgstr "움직이는 GIF 옵션"
 
-#: plug-ins/common/gif.c:1375
+#: plug-ins/common/gif.c:1397
 msgid "Loop forever"
 msgstr "무한 루프"
 
-#: plug-ins/common/gif.c:1388
+#: plug-ins/common/gif.c:1410
 msgid "Delay between frames where unspecified: "
-msgstr "지정되지 않은 프래임들 사이 지연: "
+msgstr "지정되지 않은 프레임들 사이 지연: "
 
-#: plug-ins/common/gif.c:1402
+#: plug-ins/common/gif.c:1424
 msgid " milliseconds"
 msgstr " 밀리세컨드"
 
-#: plug-ins/common/gif.c:1413
+#: plug-ins/common/gif.c:1435
 msgid "Frame disposal where unspecified: "
-msgstr "지정되지 않은 프래임 배치: "
+msgstr "지정되지 않은 프레임 배치: "
 
-#: plug-ins/common/gif.c:1423
+#: plug-ins/common/gif.c:1445
 msgid "I don't care"
 msgstr "보호하지 않습니다."
 
-#: plug-ins/common/gif.c:1429
+#: plug-ins/common/gif.c:1451
 msgid "Cumulative layers (combine)"
 msgstr "누적 계층 (결합)"
 
-#: plug-ins/common/gif.c:1435
+#: plug-ins/common/gif.c:1457
 msgid "One frame per layer (replace)"
-msgstr "계층 당 하나의 프래임 (고치기)"
+msgstr "계층 당 하나의 프레임 (고치기)"
 
-#: plug-ins/common/gif.c:1493
+#: plug-ins/common/gif.c:1515
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
 msgstr "GIF: 색상을 bpp로 - 앱! 너무 많은 색상: %d\n"
 
-#: plug-ins/common/gif.c:1509
+#: plug-ins/common/gif.c:1531
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
 msgstr "GIF: bpp를 색상으로 - 앱! bpp=%d !\n"
@@ -2070,12 +4074,12 @@ msgstr "배경 (%dms)"
 #: plug-ins/common/gifload.c:877
 #, c-format
 msgid "Frame %d"
-msgstr "프래임 %d"
+msgstr "프레임 %d"
 
 #: plug-ins/common/gifload.c:879
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr "프래임 %d (%dms)"
+msgstr "프레임 %d (%dms)"
 
 #. 'don't care'
 #: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
@@ -2105,7 +4109,7 @@ msgstr "GIF: 무엇인가가 변질되었다.\n"
 #: plug-ins/common/gifload.c:925
 #, c-format
 msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
-msgstr "GIF: %d%s GIF 이미지로 %d 읽는중, 칸=%d\n"
+msgstr "GIF: %2$d%3$s GIF 이미지로 %1$d 읽는중, 칸=%d\n"
 
 #: plug-ins/common/gifload.c:926
 msgid " interlaced"
@@ -2123,12 +4127,820 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr "GIF: 너무 많은 입력 데이터, 초과된 것은 무시하는 중...\n"
 
+#: plug-ins/gimpressionist/brush.c:183
+msgid "GIMPressionist: Can only save drawables!\n"
+msgstr "GIMPressionist: 오직 그리기만 저장할수 있습니다!\n"
+
+#: plug-ins/gimpressionist/brush.c:189
+msgid "Save brush"
+msgstr "브러쉬 저장"
+
+#: plug-ins/gimpressionist/brush.c:395
+msgid "Brush Preview:"
+msgstr "브러쉬 미리보기"
+
+#: plug-ins/gimpressionist/brush.c:404
+msgid "Gamma:"
+msgstr "감마:"
+
+#: plug-ins/gimpressionist/brush.c:417
+msgid "Changes the gamma (brightness) of the selected brush"
+msgstr "선택된 브러쉬의 감마 (밝기) 변경"
+
+#: plug-ins/gimpressionist/brush.c:429
+msgid "Select:"
+msgstr "선택:"
+
+#: plug-ins/gimpressionist/brush.c:434
+msgid "Aspect ratio:"
+msgstr "영상비:"
+
+#: plug-ins/gimpressionist/brush.c:438 plug-ins/gimpressionist/paper.c:176
+msgid "Relief:"
+msgstr "교체:"
+
+#: plug-ins/gimpressionist/brush.c:453
+msgid "(None)"
+msgstr "(없음)"
+
+#: plug-ins/gimpressionist/brush.c:466
+msgid "Save..."
+msgstr "저장..."
+
+#: plug-ins/gimpressionist/brush.c:480
+msgid "Specifies the aspect ratio of the brush"
+msgstr "브러쉬의 영상비 지정하기"
+
+#: plug-ins/gimpressionist/brush.c:491
+msgid "Specifies the amount of embossing to apply to each brush stroke"
+msgstr "각 브러쉬 한번 긋기에 적용하기 위해 전체 양각으로 지정"
+
+#: plug-ins/gimpressionist/color.c:79
+msgid "Color:"
+msgstr "색상:"
+
+#: plug-ins/gimpressionist/color.c:89
+msgid "Average under brush"
+msgstr "브러쉬에 평균"
+
+#: plug-ins/gimpressionist/color.c:95
+msgid "Color is computed from the average of all pixels under the brush"
+msgstr "색상은 브러쉬 이하에 모든 픽셀의 평균치로 계산된다."
+
+#: plug-ins/gimpressionist/color.c:99
+msgid "Center of brush"
+msgstr "브러쉬의 중앙"
+
+#: plug-ins/gimpressionist/color.c:105
+msgid "Samples the color from the pixel in the center of the brush"
+msgstr "브러쉬의 중앙에 픽셀에서의 색상 샘플"
+
+#: plug-ins/gimpressionist/color.c:114
+msgid "Color noise:"
+msgstr "색상 노이즈"
+
+#: plug-ins/gimpressionist/color.c:125
+msgid "Adds random noise to the color"
+msgstr "색상에 랜덤 노이즈 추가"
+
+#: plug-ins/gimpressionist/general.c:99
+msgid "Color Selection Dialog"
+msgstr "색상 셀렉션 대화상자"
+
+#: plug-ins/gimpressionist/general.c:134
+msgid "General"
+msgstr "일반적"
+
+#: plug-ins/gimpressionist/general.c:159
+msgid "Edge darken:"
+msgstr "어두운 가장자리:"
+
+#: plug-ins/gimpressionist/general.c:176
+msgid "How much to \"darken\" the edges of each brush stroke"
+msgstr "각 브러쉬 한번긋기의 가장자리는 얼마나 \"어두운\"가"
+
+#: plug-ins/gimpressionist/general.c:183
+msgid "Background:"
+msgstr "배경:"
+
+#: plug-ins/gimpressionist/general.c:191
+msgid "Keep original"
+msgstr "원래 환경 유지"
+
+#: plug-ins/gimpressionist/general.c:197
+msgid "Preserve the original image as a background"
+msgstr "배경으로써 원래 이미지 보호"
+
+#: plug-ins/gimpressionist/general.c:201
+msgid "From paper"
+msgstr "페이퍼에서"
+
+#: plug-ins/gimpressionist/general.c:207
+msgid "Copy the texture of the selected paper as a background"
+msgstr "배경으로써 선택된 페이퍼의 텍스쳐 복사"
+
+#: plug-ins/gimpressionist/general.c:220
+msgid "Solid"
+msgstr "입체"
+
+#: plug-ins/gimpressionist/general.c:226
+msgid "Solid colored background"
+msgstr "채색된 배경 입체"
+
+#: plug-ins/gimpressionist/general.c:243
+msgid "Transparent"
+msgstr "투명함"
+
+#: plug-ins/gimpressionist/general.c:249
+msgid "Use a transparent background; Only the strokes painted will be visible"
+msgstr "투명한 배경 사용; 오직 한번긋기 페인트만이 보이게 될것이다."
+
+#: plug-ins/gimpressionist/general.c:264
+msgid "Paint edges"
+msgstr "가장자리 페인트"
+
+#: plug-ins/gimpressionist/general.c:272
+msgid "Tileable"
+msgstr "타일덮기가능"
+
+#: plug-ins/gimpressionist/general.c:276
+msgid "Selects if the resulting image should be seamlessly tileable"
+msgstr "만약 결과 이미지가 이어진곳없는 타일덮기를 한다면 선택하세요"
+
+#: plug-ins/gimpressionist/general.c:284
+msgid "Drop Shadow"
+msgstr "그림자 넣기"
+
+#: plug-ins/gimpressionist/general.c:288
+msgid "Adds a shadow effect to each brush stroke"
+msgstr "각 브러쉬 한번긋기에 그림자 효과 추가"
+
+#: plug-ins/gimpressionist/general.c:299
+msgid "How much to \"darken\" the drop shadow"
+msgstr "그림자넣기에 얼마나 \"어두운\"가"
+
+#: plug-ins/gimpressionist/general.c:305
+msgid "Shadow depth:"
+msgstr "그림자 깊이:"
+
+#: plug-ins/gimpressionist/general.c:316
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr ""
+"그림자넣기의 깊이, 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는가"
+
+#: plug-ins/gimpressionist/general.c:322
+msgid "Shadow blur:"
+msgstr "그림자 흐림:"
+
+#: plug-ins/gimpressionist/general.c:333
+msgid "How much to blur the drop shadow"
+msgstr "그림자넣기는 얼마나 흐린가"
+
+#: plug-ins/gimpressionist/general.c:339
+msgid "Deviation threshold:"
+msgstr "이탈 발단규모(threshold):"
+
+#: plug-ins/gimpressionist/general.c:350
+msgid "A bailout-value for adaptive selections"
+msgstr "적응성있는 셀렉션을 위한 탈출-값"
+
+#: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
+msgid "Performs various artistic operations on an image"
+msgstr "이미지에 여러가지 미술적 동작을 수행"
+
+#: plug-ins/gimpressionist/gimp.c:105
+msgid "<Image>/Filters/Artistic/GIMPressionist"
+msgstr "<Image>/필터/미술적/GIMPressionist"
+
+#: plug-ins/gimpressionist/gimp.c:294
+msgid "Painting..."
+msgstr "프린팅..."
+
+#: plug-ins/gimpressionist/gimpressionist.c:83
+#, c-format
+msgid ""
+"*** Warning ***\n"
+"It is highly recommended to add\n"
+"  (gimpressionist-path \"%s\")\n"
+"(or similar) to your gimprc file.\n"
+msgstr ""
+"*** 경고 ***\n"
+"당신의 gimprc 파일에\n"
+"(gimpressionist-path \"%s\")\n"
+"(or similar) 추가가 너무 높게 추천되었다.\n"
+
+#: plug-ins/gimpressionist/gimpressionist.c:100
+msgid ""
+"*** Warning ***\n"
+"No home directory!\n"
+msgstr ""
+"*** 경고 ***\n"
+"홈 디랙토리가 아닙니다!\n"
+
+#: plug-ins/gimpressionist/gimpressionist.c:351
+#: plug-ins/gimpressionist/gimpressionist.c:448
+msgid "The GIMPressionist!"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:483
+msgid " OK "
+msgstr " 확인 "
+
+#: plug-ins/gimpressionist/gimpressionist.c:490
+msgid "Run with the selected settings"
+msgstr "선택적 설정 동작"
+
+#: plug-ins/gimpressionist/gimpressionist.c:492
+msgid " Cancel "
+msgstr " 취소 "
+
+#: plug-ins/gimpressionist/gimpressionist.c:497
+msgid "Quit the program"
+msgstr "프로그램 종료"
+
+#: plug-ins/gimpressionist/gimpressionist.c:499
+msgid " About... "
+msgstr " 대하여... "
+
+#: plug-ins/gimpressionist/gimpressionist.c:504
+msgid "Show some information about program"
+msgstr "프로그램에 대한 정보 보여주기"
+
+#: plug-ins/gimpressionist/orientation.c:52
+msgid "Orientation"
+msgstr "적응"
+
+#: plug-ins/gimpressionist/orientation.c:76
+msgid "Directions:"
+msgstr "방향:"
+
+#: plug-ins/gimpressionist/orientation.c:80
+msgid "Start angle:"
+msgstr "시작 각도:"
+
+#: plug-ins/gimpressionist/orientation.c:84
+msgid "Angle span:"
+msgstr "각도 폭:"
+
+#: plug-ins/gimpressionist/orientation.c:99 plug-ins/gimpressionist/size.c:98
+msgid "The number of directions (i.e. brushes) to use"
+msgstr "사용하기위한 다수의 방향 (즉, 브러쉬)"
+
+#: plug-ins/gimpressionist/orientation.c:108
+msgid "The angle of the first brush to create"
+msgstr "생성하기위한 첫번째 브러쉬의 각도"
+
+#: plug-ins/gimpressionist/orientation.c:117
+msgid "How large an angle-span to use (360 = full circle)"
+msgstr "얼마나 사용하기위한 (360 = 원의 각도) 각도-폭이 넓은가 "
+
+#.
+#. * Orientation option menu...
+#.
+#: plug-ins/gimpressionist/orientation.c:124 plug-ins/print/print.c:822
+msgid "Orientation:"
+msgstr "적응:"
+
+#: plug-ins/gimpressionist/orientation.c:140
+msgid ""
+"Let the value (brightness) of the region determine the direction of the "
+"stroke"
+msgstr ""
+"지역의 값 (밝기)은 한번긋기의 방향을 결정한다."
+
+#: plug-ins/gimpressionist/orientation.c:144
+#: plug-ins/gimpressionist/size.c:143
+msgid "Radius"
+msgstr "반경"
+
+#: plug-ins/gimpressionist/orientation.c:150
+msgid ""
+"The distance from the center of the image determines the direction of the "
+"stroke"
+msgstr ""
+"이미지 중앙으로부터의 거리는 한번긋기의 방향을 결정한다."
+
+#: plug-ins/gimpressionist/orientation.c:154
+#: plug-ins/gimpressionist/size.c:153
+msgid "Random"
+msgstr "랜덤"
+
+#: plug-ins/gimpressionist/orientation.c:160
+msgid "Selects a random direction of each stroke"
+msgstr "각 한번긋기의 랜덤 방향 선택"
+
+#: plug-ins/gimpressionist/orientation.c:164
+#: plug-ins/gimpressionist/size.c:163
+msgid "Radial"
+msgstr "원주"
+
+#: plug-ins/gimpressionist/orientation.c:170
+msgid "Let the direction from the center determine the direction of the stroke"
+msgstr "이미지 중앙으로부터의 거리는 한번긋기의 방향으로 결정하기"
+
+#: plug-ins/gimpressionist/orientation.c:179
+#: plug-ins/gimpressionist/size.c:178
+msgid "Flowing"
+msgstr "흘러내림"
+
+#: plug-ins/gimpressionist/orientation.c:185
+#: plug-ins/gimpressionist/size.c:184
+msgid "The strokes follow a \"flowing\" pattern"
+msgstr "한번긋기는 \"흘러내림\" 패텀을 따라간다."
+
+#: plug-ins/gimpressionist/orientation.c:197
+msgid "The hue of the region determines the direction of the stroke"
+msgstr "지역 색상은 한번긋기 방향을 결정한다."
+
+#: plug-ins/gimpressionist/orientation.c:201
+#: plug-ins/gimpressionist/size.c:199
+msgid "Adaptive"
+msgstr "적응성있는"
+
+#: plug-ins/gimpressionist/orientation.c:207
+msgid "The direction that matches the original image the closest is selected"
+msgstr "원래 이미지와 일치하는 방향에서 가장가까운 것이 선택되어 집니다."
+
+#: plug-ins/gimpressionist/orientation.c:216
+#: plug-ins/gimpressionist/size.c:213 plug-ins/print/print-pcl.c:248
+msgid "Manual"
+msgstr "매뉴얼"
+
+#: plug-ins/gimpressionist/orientation.c:222
+msgid "Manually specify the stroke orientation"
+msgstr "직접 한번긋기 적응 지정"
+
+#: plug-ins/gimpressionist/orientation.c:226
+#: plug-ins/gimpressionist/size.c:223
+msgid "Edit..."
+msgstr "편집..."
+
+#: plug-ins/gimpressionist/orientation.c:231
+msgid "Opens up the Orientation Map Editor"
+msgstr "적응 맵 편집기 열어놓기"
+
+#: plug-ins/gimpressionist/orientmap.c:461
+msgid "Orientation Map Editor"
+msgstr "적응 맵 편집기"
+
+#: plug-ins/gimpressionist/orientmap.c:469
+msgid "Vectors"
+msgstr "백터"
+
+#: plug-ins/gimpressionist/orientmap.c:479
+msgid ""
+"The vector-field. Left-click to move selected vector, Right-click to point "
+"it towards mouse, Middle-click to add a new vector."
+msgstr ""
+"백터-필드. 선택된 백터 이동은 왼쪽마우스 클릭, 그것을 마우스에 "
+"대기위해 오른쪽마우스 클릭, 새로운 백터 추가는 중간마우스클릭"
+
+#: plug-ins/gimpressionist/orientmap.c:500
+#: plug-ins/gimpressionist/sizemap.c:400
+msgid "Adjust the preview's brightness"
+msgstr "미리보기 밝기 조절"
+
+#: plug-ins/gimpressionist/orientmap.c:522
+msgid "Select previous vector"
+msgstr "앞의 백터 선택"
+
+#: plug-ins/gimpressionist/orientmap.c:529
+msgid "Select next vector"
+msgstr "다음 백터 선택"
+
+#: plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/sizemap.c:431
+msgid "Add"
+msgstr "추가"
+
+#: plug-ins/gimpressionist/orientmap.c:536
+msgid "Add new vector"
+msgstr "새로운 백터 추가"
+
+#: plug-ins/gimpressionist/orientmap.c:538
+#: plug-ins/gimpressionist/sizemap.c:438
+msgid "Kill"
+msgstr "죽이기"
+
+#: plug-ins/gimpressionist/orientmap.c:543
+msgid "Delete selected vector"
+msgstr "선택된 백터 삭제"
+
+#: plug-ins/gimpressionist/orientmap.c:551
+msgid "Angle:"
+msgstr "각도:"
+
+#: plug-ins/gimpressionist/orientmap.c:563
+msgid "Change the angle of the selected vector"
+msgstr "선택된 백터 각도 변경"
+
+#: plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/gimpressionist/sizemap.c:465
+msgid "Strength:"
+msgstr "능력:"
+
+#: plug-ins/gimpressionist/orientmap.c:577
+msgid "Change the strength of the selected vector"
+msgstr "선택된 백터의 능력을 변경"
+
+#: plug-ins/gimpressionist/orientmap.c:580
+msgid "Type:"
+msgstr "유형:"
+
+#: plug-ins/gimpressionist/orientmap.c:596
+msgid "Vortex"
+msgstr "버택스"
+
+#: plug-ins/gimpressionist/orientmap.c:608
+msgid "Vortex2"
+msgstr "버택스2"
+
+#: plug-ins/gimpressionist/orientmap.c:614
+msgid "Vortex3"
+msgstr "버택스3"
+
+#: plug-ins/gimpressionist/orientmap.c:631
+#: plug-ins/gimpressionist/sizemap.c:490
+msgid "Apply and exit the editor"
+msgstr "적용하고 편집기 닫기"
+
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/gimpressionist/sizemap.c:497
+msgid "Apply, but stay inside the editor"
+msgstr "적용 하지만 편집기에 머무르기"
+
+#: plug-ins/gimpressionist/orientmap.c:645
+#: plug-ins/gimpressionist/sizemap.c:504
+msgid "Cancel all changes and exit"
+msgstr "모든 변환된것을 취소하고 닫기"
+
+#: plug-ins/gimpressionist/orientmap.c:653
+#: plug-ins/gimpressionist/sizemap.c:512
+msgid "Strength exp.:"
+msgstr "능력 설명자:"
+
+#: plug-ins/gimpressionist/orientmap.c:665
+#: plug-ins/gimpressionist/sizemap.c:524
+msgid "Change the exponent of the strength"
+msgstr "능력 설명자 변경"
+
+#: plug-ins/gimpressionist/orientmap.c:667
+msgid "Angle offset:"
+msgstr "각도 옵셋:"
+
+#: plug-ins/gimpressionist/orientmap.c:679
+msgid "Offset all vectors with a given angle"
+msgstr "주어진 각도를 가지고 모든 백터 벌충"
+
+#: plug-ins/gimpressionist/orientmap.c:681
+#: plug-ins/gimpressionist/sizemap.c:527
+msgid "Voronoi"
+msgstr "보르노이"
+
+#: plug-ins/gimpressionist/orientmap.c:689
+msgid ""
+"Voronoi-mode makes only the vector closest to the given point have any "
+"influence"
+msgstr "보르노이-모드는 오직 SM백터가 영향을 가진 주어진 포인트를 조밀하게 한다."
+
+#: plug-ins/gimpressionist/paper.c:74
+#, c-format
+msgid "Paper/%s"
+msgstr "페이퍼/%s"
+
+#: plug-ins/gimpressionist/paper.c:89
+msgid "Paper"
+msgstr "페이퍼"
+
+#: plug-ins/gimpressionist/paper.c:133
+msgid "Paper Preview:"
+msgstr "페이퍼 미리보기"
+
+#. updatepaperprev(NULL);
+#: plug-ins/gimpressionist/paper.c:144
+msgid "Invert"
+msgstr "반대로(invert)"
+
+#: plug-ins/gimpressionist/paper.c:151
+msgid "Inverts the Papers texture"
+msgstr "페이퍼 텍스쳐 반대로(invert)"
+
+#: plug-ins/gimpressionist/paper.c:159
+msgid "Applies the paper as it is (without embossing it)"
+msgstr "양각된것 없는 그것처럼 페이퍼에 적용하기"
+
+#: plug-ins/gimpressionist/paper.c:172
+msgid "Scale:"
+msgstr "스케일:"
+
+#: plug-ins/gimpressionist/paper.c:191
+msgid "Specifies the scale of the texture (in percent of original file)"
+msgstr "텍스쳐의 스케일 지정 (원래 파일의 퍼센트로)"
+
+#: plug-ins/gimpressionist/paper.c:200
+msgid "Specifies the amount of embossing to apply to the image (in percent)"
+msgstr "이미지를 적용시키기 위해 모든 양각 효과를 적용 (퍼센트로)"
+
+#: plug-ins/gimpressionist/placement.c:52
+msgid "Placement"
+msgstr "배치"
+
+#: plug-ins/gimpressionist/placement.c:80
+msgid "Placement:"
+msgstr "배치:"
+
+#: plug-ins/gimpressionist/placement.c:90
+msgid "Randomly"
+msgstr "임의로"
+
+#: plug-ins/gimpressionist/placement.c:96
+msgid "Place strokes randomly around the image"
+msgstr "이미지둘래를 임의로 한번긋기 하기"
+
+#: plug-ins/gimpressionist/placement.c:100
+msgid "Evenly distributed"
+msgstr "고르게 분배"
+
+#: plug-ins/gimpressionist/placement.c:106
+msgid "The strokes are evenly distributed across the image"
+msgstr "한번긋기는 이미지를 가로질러 고르게 분배 되어집니다."
+
+#: plug-ins/gimpressionist/placement.c:115
+msgid "Stroke density:"
+msgstr "한번긋기 농도:"
+
+#: plug-ins/gimpressionist/placement.c:126
+msgid "The relative density of the brush strokes"
+msgstr "브러쉬 한번긋기의 상대적 농도"
+
+#: plug-ins/gimpressionist/placement.c:128
+msgid "Centerize"
+msgstr "중앙으로"
+
+#: plug-ins/gimpressionist/placement.c:132
+msgid "Focus the brush strokes around the center of the image"
+msgstr "이미지의 중앙 둘레에 브러쉬 한번긋기 집중하기"
+
+#: plug-ins/gimpressionist/ppmtool.c:41
+#, c-format
+msgid "(When allocating %u bytes.)\n"
+msgstr "(%u 바이트 할당 할때)\n"
+
+#: plug-ins/gimpressionist/ppmtool.c:42
+msgid "Out of memory!\n"
+msgstr "메모리 초과!\n"
+
+#: plug-ins/gimpressionist/ppmtool.c:215
+#, c-format
+msgid "loadgbr: Unable to open file \"%s\"!\n"
+msgstr "loadgdr: \"%s\"파일을 열수 없습니다!\n"
+
+#: plug-ins/gimpressionist/ppmtool.c:257
+#, c-format
+msgid "loadppm: Unable to open file \"%s\"!\n"
+msgstr "loadppm: \"%s\"파일을 열수 없습니다!\n"
+
+#: plug-ins/gimpressionist/ppmtool.c:267
+#, c-format
+msgid "loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n"
+msgstr "loadppm: \"%s\" 파일 PPM/PGM 아닌가요? (줄=\"%s\")%c\n"
+
+#: plug-ins/gimpressionist/ppmtool.c:279
+#, c-format
+msgid "loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n"
+msgstr "loadppm: \"%s\" 파일 정확한 PPM/PGM 아닌가요? (줄=\"%s\")%c\n"
+
+#: plug-ins/gimpressionist/presets.c:53
+#, c-format
+msgid "Error opening file \"%s\" for reading!%c\n"
+msgstr "읽기위해 \"%s\" 파일을 열수 없습니다!%c\n"
+
+#: plug-ins/gimpressionist/presets.c:263
+#, c-format
+msgid "Error opening file \"%s\" for reading!\n"
+msgstr "읽기위해 \"%s\" 파일을 열수 없습니다!\n"
+
+#: plug-ins/gimpressionist/presets.c:373
+msgid "Description:"
+msgstr "설명: "
+
+#: plug-ins/gimpressionist/presets.c:428
+msgid "Internal error: (savepreset) thispath == NULL"
+msgstr "내부 애러: (미리저장) 이 경로는 NULL이다"
+
+#: plug-ins/gimpressionist/presets.c:436
+#, c-format
+msgid "Error opening file \"%s\" for writing!%c\n"
+msgstr "쓰기위한 \"%s\" 파일을 열수 없습니다!%c\n"
+
+#: plug-ins/gimpressionist/presets.c:572
+msgid "Presets"
+msgstr "미리조절"
+
+#: plug-ins/gimpressionist/presets.c:600
+msgid " Save current "
+msgstr " 현재 저장 "
+
+#: plug-ins/gimpressionist/presets.c:606
+msgid "Save the current settings to the specified file"
+msgstr "지정된 파일에 현재 설정 저장"
+
+#. gtk_container_border_width (GTK_CONTAINER (box2), 5);
+#: plug-ins/gimpressionist/presets.c:644
+msgid " Apply "
+msgstr " 적용 "
+
+#: plug-ins/gimpressionist/presets.c:650
+msgid "Reads the selected Preset into memory"
+msgstr "메모리에 선택된 미리조절 읽기"
+
+#: plug-ins/gimpressionist/presets.c:652
+msgid " Delete "
+msgstr " 삭제 "
+
+#: plug-ins/gimpressionist/presets.c:658
+msgid "Deletes the selected Preset"
+msgstr "선택된 미리조절 삭제"
+
+#: plug-ins/gimpressionist/presets.c:660
+msgid " Refresh "
+msgstr " 새로고침 "
+
+#: plug-ins/gimpressionist/presets.c:666
+msgid "Reread the directory of Presets"
+msgstr "미리조절 디랙토리 다시 읽기"
+
+#: plug-ins/gimpressionist/presets.c:668
+msgid "(Desc)"
+msgstr "(설명)"
+
+#: plug-ins/gimpressionist/presets.c:673
+msgid ""
+"\n"
+"If you come up with some nice Presets,\n"
+"(or Brushes and Papers for that matter)\n"
+"feel free to send them to me <vidar@prosalg.no>\n"
+"for inclusion into the next release!\n"
+msgstr ""
+"\n"
+"만약 몇몇 좋은 미리조절가지고 생기면,\n"
+"(또는 그 문제에 맞는 브러쉬와 페이퍼)\n"
+"마음대로 다음 릴리즈에 포함하기 위해\n"
+"저 <vidar@prosalg.no> 에게 보내주세요!\n"
+
+#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:863
+#: plug-ins/gimpressionist/repaint.c:865
+msgid " Update "
+msgstr " 갱신 "
+
+#: plug-ins/gimpressionist/preview.c:122
+msgid "Refresh the Preview window"
+msgstr "미리보기 창 새로고침"
+
+#: plug-ins/gimpressionist/preview.c:124
+msgid " Reset "
+msgstr " 재설정 "
+
+#: plug-ins/gimpressionist/preview.c:129
+msgid "Revert to the original image"
+msgstr "원래 이미지로 복귀"
+
+#: plug-ins/gimpressionist/repaint.c:142
+msgid "What!? No brushes?!\n"
+msgstr "무었이라!? 브러쉬가 없다고?!\n"
+
+#: plug-ins/gimpressionist/repaint.c:282
+msgid "Huh? Image size != alpha size?\n"
+msgstr "어? 이미지 크기와 알파 크기가 다르네?\n"
+
+#: plug-ins/gimpressionist/repaint.c:667
+msgid "Internal error; Unknown orientationtype\n"
+msgstr "내부 애러; 알수없는 적응유형\n"
+
+#: plug-ins/gimpressionist/repaint.c:687
+msgid "Internal error; Unknown sizetype\n"
+msgstr "내부 애러; 알수없는 크기유형\n"
+
+#: plug-ins/gimpressionist/size.c:51
+msgid "Size"
+msgstr "크기"
+
+#: plug-ins/gimpressionist/size.c:75
+msgid "Sizes:"
+msgstr "크기:"
+
+#: plug-ins/gimpressionist/size.c:79
+msgid "Min size:"
+msgstr "최소 크기:"
+
+#: plug-ins/gimpressionist/size.c:83
+msgid "Max size:"
+msgstr "최대 크기:"
+
+#: plug-ins/gimpressionist/size.c:107
+msgid "The smallest brush to create"
+msgstr "가장작은 브러쉬 생성"
+
+#: plug-ins/gimpressionist/size.c:116
+msgid "The largest brush to create"
+msgstr "가장큰 브러쉬 생성"
+
+#: plug-ins/gimpressionist/size.c:123 plug-ins/gimpressionist/sizemap.c:451
+msgid "Size:"
+msgstr "크기:"
+
+#: plug-ins/gimpressionist/size.c:139
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
+msgstr ""
+"지역의 값 (밝기)은 한번긋기의 크기를 결정한다."
+
+#: plug-ins/gimpressionist/size.c:149
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
+msgstr ""
+"이미지 중앙으로부터의 거리는 한번긋기의 크기를 결정한다."
+
+
+#: plug-ins/gimpressionist/size.c:159
+msgid "Selects a random size for each stroke"
+msgstr "각 한번긋기를 위한 랜덤 크기 선택"
+
+#: plug-ins/gimpressionist/size.c:169
+msgid "Let the direction from the center determine the size of the stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/size.c:195
+msgid "The hue of the region determines the size of the stroke"
+msgstr "지역의 색상은 한번긋기의 크기로 결정됩니다"
+
+#: plug-ins/gimpressionist/size.c:205
+msgid "The brush-size that matches the original image the closest is selected"
+msgstr "조밀하게 원래 이미지와 일치되는 브러쉬-크기는 선택되어야합니다."
+
+#: plug-ins/gimpressionist/size.c:219
+msgid "Manually specify the stroke size"
+msgstr "직접 한번긋기 크기 지정"
+
+#: plug-ins/gimpressionist/size.c:228
+msgid "Opens up the Size Map Editor"
+msgstr "크기 맵 편집기 열어놓기"
+
+#: plug-ins/gimpressionist/sizemap.c:361
+msgid "Size Map Editor"
+msgstr "크기 맵 편집기"
+
+#: plug-ins/gimpressionist/sizemap.c:369
+msgid "Smvectors"
+msgstr "SM백터"
+
+#: plug-ins/gimpressionist/sizemap.c:379
+msgid ""
+"The smvector-field. Left-click to move selected smvector, Right-click to "
+"point it towards mouse, Middle-click to add a new smvector."
+msgstr ""
+"SM백터-필드. 선택된 SM백터 이동은 왼쪽마우스 클릭, 그것을 마우스에 "
+"대기위해 오른쪽마우스 클릭, 새로운 SM백터 추가는 중간마우스클릭"
+
+#: plug-ins/gimpressionist/sizemap.c:422
+msgid "Select previous smvector"
+msgstr "앞의 SM백터 선택"
+
+#: plug-ins/gimpressionist/sizemap.c:429
+msgid "Select next smvector"
+msgstr "다음 SM백터 선택"
+
+#: plug-ins/gimpressionist/sizemap.c:436
+msgid "Add new smvector"
+msgstr "새로운 SM백터 추가"
+
+#: plug-ins/gimpressionist/sizemap.c:443
+msgid "Delete selected smvector"
+msgstr "선택된 SM백터 삭제"
+
+#: plug-ins/gimpressionist/sizemap.c:463
+msgid "Change the angle of the selected smvector"
+msgstr "선택된 SM백터의 각도 변환"
+
+#: plug-ins/gimpressionist/sizemap.c:477
+msgid "Change the strength of the selected smvector"
+msgstr "'선택된 SM백터의 능력을 변환"
+
+#: plug-ins/gimpressionist/sizemap.c:535
+msgid ""
+"Voronoi-mode makes only the smvector closest to the given point have any "
+"influence"
+msgstr ""
+"보르노이-모드는 오직 SM백터가 영향을 가진 주어진 포인트를 조밀하게 한다."
+
 #: plug-ins/common/guillotine.c:76
 msgid ""
 "Slice up the image into subimages, cutting along the image's Guides.  Fooey "
 "to you and your broccoli, Pokey."
 msgstr ""
-"부 이미지 안에서 이미지를 분할 하려면 이미지의 가이드를 따라 자르세요. ^뭐지?^"
+"부 이미지 안에서 이미지를 분할 하려면 이미지의 가이드를 따라 자르세요. "
+"Fooey to you and your broccoli, Pokey."
 
 #: plug-ins/common/guillotine.c:77
 msgid "This function takes an image and blah blah.  Hooray!"
@@ -2155,24 +4967,24 @@ msgstr "예이... %d 수평 가이드들과 %d 수직 가이드들을 찾았습니다.\n"
 msgid "Poopy, no guides.\n"
 msgstr "^뭐지?^, 가이드들이 없습니다.\n"
 
-#: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
+#: plug-ins/common/jpeg.c:315 plug-ins/common/jpeg.c:316
 msgid "loads files in the JPEG file format"
 msgstr "xpm 형식의 파일 읽기"
 
-#: plug-ins/common/jpeg.c:319
+#: plug-ins/common/jpeg.c:327
 msgid "saves files in the JPEG file format"
 msgstr "파일을 XWD 형식으로 저장"
 
-#: plug-ins/common/jpeg.c:320
+#: plug-ins/common/jpeg.c:328
 msgid "saves files in the lossy, widely supported JPEG format"
 msgstr "파일을 XWD 형식으로 저장"
 
-#: plug-ins/common/jpeg.c:663
+#: plug-ins/common/jpeg.c:726
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "\"%s\"를 열수 없습니다.\n"
 
-#: plug-ins/common/jpeg.c:794
+#: plug-ins/common/jpeg.c:860
 #, c-format
 msgid ""
 "don't know how to load JPEGs\n"
@@ -2181,11 +4993,11 @@ msgstr ""
 "%d 색상 채널을 가지고 JPEG들을\n"
 "어떻게 읽는지 알 수 없다."
 
-#: plug-ins/common/jpeg.c:807
+#: plug-ins/common/jpeg.c:877
 msgid "JPEG preview"
 msgstr "JPEG 미리보기"
 
-#: plug-ins/common/jpeg.c:851
+#: plug-ins/common/jpeg.c:923
 #, c-format
 msgid ""
 "unknown density unit %d\n"
@@ -2194,91 +5006,171 @@ msgstr ""
 "알수없는 밀도 단위 %d는\n"
 "인치 당 도트 수로 가정하다."
 
-#: plug-ins/common/jpeg.c:1014
+#: plug-ins/common/jpeg.c:1090
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr "크기: %lu 바이트 (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1382 plug-ins/common/jpeg.c:1501
+#: plug-ins/common/jpeg.c:1469 plug-ins/common/jpeg.c:1598
 msgid "Size: unknown"
 msgstr "크기: 알수없음"
 
-#: plug-ins/common/jpeg.c:1461
+#: plug-ins/common/jpeg.c:1558
 msgid "Save as Jpeg"
 msgstr "Jpeg 으로 저장"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1486
+#: plug-ins/common/jpeg.c:1583
 msgid "Image Preview"
 msgstr "이미지 미리보기"
 
-#: plug-ins/common/jpeg.c:1494
+#: plug-ins/common/jpeg.c:1591
 msgid "Preview (in image window)"
 msgstr "미리보기 (이미지 창에서)"
 
-#: plug-ins/common/jpeg.c:1520
+#: plug-ins/common/jpeg.c:1617
 msgid "Quality"
 msgstr "특성"
 
-#: plug-ins/common/jpeg.c:1536
+#: plug-ins/common/jpeg.c:1633
 msgid "Smoothing"
 msgstr "부드럽게"
 
-#: plug-ins/common/jpeg.c:1556
+#: plug-ins/common/jpeg.c:1653
 msgid "Restart markers"
 msgstr "메이커 재시작"
 
-#: plug-ins/common/jpeg.c:1562
+#: plug-ins/common/jpeg.c:1659
 msgid "Restart frequency (rows)"
 msgstr "빈도 재시작 (열)"
 
-#: plug-ins/common/jpeg.c:1582
+#: plug-ins/common/jpeg.c:1679
 msgid "Optimize"
 msgstr "최적화"
 
-#: plug-ins/common/jpeg.c:1590
+#: plug-ins/common/jpeg.c:1686
 msgid "Progressive"
 msgstr "진보적"
 
-#: plug-ins/common/jpeg.c:1603
+#: plug-ins/common/jpeg.c:1699
 msgid "Force baseline JPEG (readable by all decoders)"
 msgstr "강제 베이스라인 JPEG (모든 디코더들에서 읽혀지도록)"
 
-#: plug-ins/common/jpeg.c:1615
+#: plug-ins/common/jpeg.c:1711
 msgid "2x2,1x1,1x1"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1616
+#: plug-ins/common/jpeg.c:1712
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1617
+#: plug-ins/common/jpeg.c:1713
 msgid "1x1,1x1,1x1"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1621
+#: plug-ins/common/jpeg.c:1717
 msgid "Subsampling"
 msgstr "슈퍼샘플링"
 
-#: plug-ins/common/jpeg.c:1632
+#: plug-ins/common/jpeg.c:1728
 msgid "Integer"
 msgstr "정수"
 
-#: plug-ins/common/jpeg.c:1633
+#: plug-ins/common/jpeg.c:1729
 msgid "Fast integer"
 msgstr "빠른 정수"
 
-#: plug-ins/common/jpeg.c:1634
+#: plug-ins/common/jpeg.c:1730
 msgid "Floating-point"
 msgstr "유동적-포인트"
 
-#: plug-ins/common/jpeg.c:1638
+#: plug-ins/common/jpeg.c:1734
 msgid "DCT method (speed/quality tradeoff)"
 msgstr "DCT 방법 (속도/특성 평균)"
 
-#: plug-ins/common/jpeg.c:1651
+#: plug-ins/common/jpeg.c:1748
 msgid "Image Comments"
 msgstr "이미지 설명"
+
+#: plug-ins/common/lic.c:857 plug-ins/common/lic.c:988
+msgid "Van Gogh (LIC)"
+msgstr "반 고흐 (LIC)"
+
+#: plug-ins/common/lic.c:885
+msgid "LIC: Couldn't allocate temporary buffer - out of memory!\n"
+msgstr "LIC: 임비 버퍼를 할당 할수 없습니다 - 매모리 부족!\n"
+
+#: plug-ins/common/lic.c:1017
+msgid "Effect channel"
+msgstr "채널 효과"
+
+#: plug-ins/common/lic.c:1047
+msgid "Brightness"
+msgstr "밝기"
+
+#: plug-ins/common/lic.c:1061
+msgid "Effect operator"
+msgstr "효과 동작"
+
+#: plug-ins/common/lic.c:1068
+msgid "Derivative"
+msgstr "유도적"
+
+#: plug-ins/common/lic.c:1080
+msgid "Gradient"
+msgstr "색감변화도"
+
+#: plug-ins/common/lic.c:1094
+msgid "Convolve"
+msgstr "얽기"
+
+#: plug-ins/common/lic.c:1101
+msgid "With white noise"
+msgstr "하얀 잡음을 가지고 "
+
+#: plug-ins/common/lic.c:1113
+msgid "With source image"
+msgstr "원본 이미지를 가지고"
+
+#: plug-ins/common/lic.c:1132
+msgid "Parameters"
+msgstr "파라미터"
+
+#: plug-ins/common/lic.c:1144
+msgid "Effect image:"
+msgstr "이미지 환경:"
+
+#: plug-ins/common/lic.c:1162
+msgid "Filter length:"
+msgstr "필터 길이:"
+
+#: plug-ins/common/lic.c:1176
+msgid "Noise magnitude:"
+msgstr "매그니튜드 잡음:"
+
+#: plug-ins/common/lic.c:1191
+msgid "Integration steps:"
+msgstr "사용작용 단계:"
+
+#: plug-ins/common/lic.c:1206
+msgid "Minimum value:"
+msgstr "최소 값:"
+
+#: plug-ins/common/lic.c:1221
+msgid "Maximum value:"
+msgstr "최대 값:"
+
+#: plug-ins/common/lic.c:1309
+msgid "Creates a Van Gogh effect (Line Integral Convolution)"
+msgstr "반 고흐 효과 생성 (완전한 얽인 라인)"
+
+#: plug-ins/common/lic.c:1314
+msgid "<Image>/Filters/Artistic/Van Gogh (LIC)"
+msgstr "<Image>/필터/미술적/반 고흐 (LIC)"
+
+#: plug-ins/common/lic.c:1436
+msgid "Noninteractive not yet implemented! Sorry.\n"
+msgstr "사용작용않기는 아직 작동되지 않습니다! 죄송합니다.\n"
 
 #: plug-ins/common/mail.c:212
 msgid "pipe files to uuencode then mail them"
@@ -2319,12 +5211,94 @@ msgstr ""
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "mail: 몇몇 파일 확장자 혹은 부족한 것을 가진 정렬 \n"
 
+#: plug-ins/mosaic/mosaic.c:326
+msgid "Convert the input drawable into a collection of tiles"
+msgstr "타일의 집합안에서 입력 그리기로 바꾸기"
+
+#: plug-ins/mosaic/mosaic.c:327
+msgid "Help not yet written for this plug-in"
+msgstr "이 플러그인을 위한 도움말이 아직 씌여지지 않았습니다."
+
+#: plug-ins/mosaic/mosaic.c:331
+msgid "<Image>/Filters/Artistic/Mosaic"
+msgstr "<Image>/필터/미술적/모자이크"
+
+#. progress bar for gradient finding
+#: plug-ins/mosaic/mosaic.c:452
+msgid "Finding Edges..."
+msgstr "가장자리 찾는 중..."
+
+#. Progress bar for rendering tiles
+#: plug-ins/mosaic/mosaic.c:502
+msgid "Rendering Tiles..."
+msgstr "타일 랜더링..."
+
+#: plug-ins/mosaic/mosaic.c:557
+msgid "Mosaic"
+msgstr "모자이크"
+
+#: plug-ins/mosaic/mosaic.c:622
+msgid "Antialiasing"
+msgstr "앤티앨리어싱"
+
+#: plug-ins/mosaic/mosaic.c:630
+msgid "Color Averaging"
+msgstr "색상 평균내기"
+
+#: plug-ins/mosaic/mosaic.c:638
+msgid "Pitted Surfaces"
+msgstr "흠단 외관"
+
+#: plug-ins/mosaic/mosaic.c:646
+msgid "FG/BG Lighting"
+msgstr "전경/배경 라이팅"
+
+#. tiling primitive
+#: plug-ins/mosaic/mosaic.c:659
+msgid "Tiling Primitives"
+msgstr "원시적인 타일링"
+
+#: plug-ins/mosaic/mosaic.c:666
+msgid "Squares"
+msgstr "정사각형"
+
+#: plug-ins/mosaic/mosaic.c:675
+msgid "Hexagons"
+msgstr "6각형"
+
+#: plug-ins/mosaic/mosaic.c:684
+msgid "Octagons & Squares"
+msgstr "팔각형과 정사각형"
+
+#: plug-ins/mosaic/mosaic.c:720
+msgid "Tile Height"
+msgstr "타일 높이:"
+
+#: plug-ins/mosaic/mosaic.c:735
+msgid "Tile Spacing"
+msgstr "타일 간격띄움"
+
+#: plug-ins/mosaic/mosaic.c:750
+msgid "Tile Neatness"
+msgstr "타일 깔끔하게"
+
+#: plug-ins/mosaic/mosaic.c:766
+msgid "Light Direction"
+msgstr "라이트 방향"
+
+#: plug-ins/mosaic/mosaic.c:781
+msgid "Color Variation"
+msgstr "색상 변화"
+
+#: plug-ins/mosaic/mosaic.c:2557
+msgid "Unable to add additional point.\n"
+msgstr "추가 포인트 추가 불가능\n"
+
 #: plug-ins/common/normalize.c:78
 msgid ""
 "Normalize the contrast of the specified drawable to cover all possible "
 "ranges."
-msgstr ""
-"모든 가능한 범위에 미치기위한 지정된 그리기의 명암 대비 표준화하기."
+msgstr "모든 가능한 범위에 미치기위한 지정된 그리기의 명암 대비 표준화하기."
 
 #: plug-ins/common/normalize.c:79
 msgid ""
@@ -2337,9 +5311,9 @@ msgid ""
 msgstr ""
 "이 플러그인은 '자동늘이기 대비' 플러그인 같은 거의 모든 같은 동작을 수행하기 "
 "위해, 컬러 채널을 독립적 표준화로 허가 하지 않는 것이 제외된다. 이것은 아마 "
-"모든 대비-자동늘이기 대신에 실지로 원하는 것일 것입니다.; 만약 당신이 퓨어-화이트와 "
-"퓨어-블렉을 포함을 지원하는 원본 이미지로부터 바람직하지 못한 색상-음영을 "
-"제거하기 원한다면 c-a만 사용하세요."
+"모든 대비-자동늘이기 대신에 실지로 원하는 것일 것입니다.; 만약 당신이 "
+"퓨어-화이트와 퓨어-블렉을 포함을 지원하는 원본 이미지로부터 바람직하지 못한 "
+"색상-음영을 제거하기 원한다면 c-a만 사용하세요."
 
 #: plug-ins/common/normalize.c:83
 msgid "<Image>/Image/Colors/Normalize"
@@ -2362,8 +5336,8 @@ msgid ""
 "This function performs the well-known oil-paint effect on the specified "
 "drawable.  The size of the input mask is specified by 'mask_size'."
 msgstr ""
-"이 함수는 지정된 그리기에서 잘 알고 있는 오일-페인팅 효과를 수행합니다. "
-"입력 마스크의 크기는 'mask_size'에 의해 지정됩니다."
+"이 함수는 지정된 그리기에서 잘 알고 있는 오일-페인팅 효과를 수행합니다. 입력 "
+"마스크의 크기는 'mask_size'에 의해 지정됩니다."
 
 #: plug-ins/common/oilify.c:127
 msgid "<Image>/Filters/Artistic/Oilify"
@@ -2385,19 +5359,23 @@ msgstr "강도 알고리즘 사용"
 msgid "Mask Size"
 msgstr "마스크 크기"
 
-#: plug-ins/common/png.c:149
+#: plug-ins/common/png.c:151
 msgid "Loads files in PNG file format"
 msgstr "PNG 파일 유형 읽기"
 
-#: plug-ins/common/png.c:150
+#: plug-ins/common/png.c:152
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr "이 플러그인은 Portable Network Graphics (PNG)파일들을 읽습니다."
 
-#: plug-ins/common/png.c:818
+#: plug-ins/common/png.c:757
+msgid "Can't save image with alpha\n"
+msgstr "이미지를 알파로 저장할 수 없습니다.\n"
+
+#: plug-ins/common/png.c:915
 msgid "PNG Options"
 msgstr "PNG 옵션"
 
-#: plug-ins/common/png.c:863
+#: plug-ins/common/png.c:960
 msgid "Compression level"
 msgstr "압축 레벨"
 
@@ -2463,10 +5441,6 @@ msgstr "광택이 남"
 msgid "Transparency"
 msgstr "투명함"
 
-#: plug-ins/print/print-pcl.c:248
-msgid "Manual"
-msgstr "매뉴얼"
-
 #: plug-ins/print/print-pcl.c:249
 msgid "Tray 1"
 msgstr "트레이 1"
@@ -2495,440 +5469,434 @@ msgstr ""
 msgid "600 DPI"
 msgstr ""
 
-#: plug-ins/print/print.c:229
+#: plug-ins/print/print.c:231
 msgid "PostScript Level 1"
 msgstr "포스트스크립트 레벨 1"
 
-#: plug-ins/print/print.c:231
+#: plug-ins/print/print.c:233
 msgid "PostScript Level 2"
 msgstr "포스트스크립트 레벨 2"
 
-#: plug-ins/print/print.c:233
+#: plug-ins/print/print.c:235
 msgid "HP DeskJet 500, 520"
 msgstr "HP 데스크젯 500, 520"
 
-#: plug-ins/print/print.c:235
+#: plug-ins/print/print.c:237
 msgid "HP DeskJet 500C, 540C"
 msgstr "HP 데스크젯 500C, 540C"
 
-#: plug-ins/print/print.c:237
+#: plug-ins/print/print.c:239
 msgid "HP DeskJet 550C, 560C"
 msgstr "HP 데스크젯 550C, 560C"
 
-#: plug-ins/print/print.c:239
+#: plug-ins/print/print.c:241
 msgid "HP DeskJet 600 series"
 msgstr "HP 데스크젯 600 시리즈"
 
-#: plug-ins/print/print.c:241
+#: plug-ins/print/print.c:243
 msgid "HP DeskJet 800 series"
 msgstr "HP 데스크젯 800 시리즈"
 
-#: plug-ins/print/print.c:243
+#: plug-ins/print/print.c:245
 msgid "HP DeskJet 1100C, 1120C"
 msgstr "HP 데스크젯 1100C, 1120C"
 
-#: plug-ins/print/print.c:245
+#: plug-ins/print/print.c:247
 msgid "HP DeskJet 1200C, 1600C"
 msgstr "HP 데스크젯 1200C, 1600C"
 
-#: plug-ins/print/print.c:247
+#: plug-ins/print/print.c:249
 msgid "HP LaserJet II series"
 msgstr "HP 레이저젯 II 시리즈"
 
-#: plug-ins/print/print.c:249
+#: plug-ins/print/print.c:251
 msgid "HP LaserJet III series"
 msgstr "HP 레이저젯 III 시리즈"
 
-#: plug-ins/print/print.c:251
+#: plug-ins/print/print.c:253
 msgid "HP LaserJet 4 series"
 msgstr "HP 레이저젯 4 시리즈"
 
-#: plug-ins/print/print.c:253
+#: plug-ins/print/print.c:255
 msgid "HP LaserJet 4V, 4Si"
 msgstr "HP 레이저젯 4V, 4Si"
 
-#: plug-ins/print/print.c:255
+#: plug-ins/print/print.c:257
 msgid "HP LaserJet 5 series"
 msgstr "HP 레이저젯 5 시리즈"
 
-#: plug-ins/print/print.c:257
+#: plug-ins/print/print.c:259
 msgid "HP LaserJet 5Si"
 msgstr "HP 레이저젯 5Si"
 
-#: plug-ins/print/print.c:259
+#: plug-ins/print/print.c:261
 msgid "HP LaserJet 6 series"
 msgstr "HP 레이저젯 6 시리즈"
 
-#: plug-ins/print/print.c:261
+#: plug-ins/print/print.c:263
 msgid "EPSON Stylus Color"
 msgstr "엡슨 스타일러스 컬러"
 
-#: plug-ins/print/print.c:263
+#: plug-ins/print/print.c:265
 msgid "EPSON Stylus Color Pro"
 msgstr "엡슨 스타일러스 컬러 프로"
 
-#: plug-ins/print/print.c:265
+#: plug-ins/print/print.c:267
 msgid "EPSON Stylus Color Pro XL"
 msgstr "엡슨 스타일러스 컬러 프로 XL"
 
-#: plug-ins/print/print.c:267
+#: plug-ins/print/print.c:269
 msgid "EPSON Stylus Color 1500"
 msgstr "엡슨 스타일러스 컬러 1500"
 
-#: plug-ins/print/print.c:269
+#: plug-ins/print/print.c:271
 msgid "EPSON Stylus Color 400"
 msgstr "엡슨 스타일러스 컬러 400"
 
-#: plug-ins/print/print.c:271
+#: plug-ins/print/print.c:273
 msgid "EPSON Stylus Color 500"
 msgstr "엡슨 스타일러스 컬러 500"
 
-#: plug-ins/print/print.c:273
+#: plug-ins/print/print.c:275
 msgid "EPSON Stylus Color 600"
 msgstr "엡슨 스타일러스 컬러 600"
 
-#: plug-ins/print/print.c:275
+#: plug-ins/print/print.c:277
 msgid "EPSON Stylus Color 800"
 msgstr "엡슨 스타일러스 컬러 800"
 
-#: plug-ins/print/print.c:277
+#: plug-ins/print/print.c:279
 msgid "EPSON Stylus Color 1520"
 msgstr "엡슨 스타일러스 컬러 1520"
 
-#: plug-ins/print/print.c:279
+#: plug-ins/print/print.c:281
 msgid "EPSON Stylus Color 3000"
 msgstr "엡슨 스타일러스 컬러 3000"
 
-#: plug-ins/print/print.c:332
+#: plug-ins/print/print.c:334
 msgid "This plug-in prints images from The GIMP."
 msgstr "이 플러그인은 GIMP에서 이미지를 프린트 합니다."
 
-#: plug-ins/print/print.c:333
+#: plug-ins/print/print.c:335
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
 msgstr "PostScript, PCL, ESC/P2 프린터들로 이미지를 프린트"
 
-#: plug-ins/print/print.c:337
+#: plug-ins/print/print.c:339
 msgid "<Image>/File/Print"
 msgstr "<Image>/파일/프린트"
 
-#: plug-ins/print/print.c:650
+#: plug-ins/print/print.c:695
 msgid "Auto"
 msgstr "자동"
 
-#: plug-ins/print/print.c:651
+#: plug-ins/print/print.c:696
 msgid "Portrait"
 msgstr "묘사"
 
-#: plug-ins/print/print.c:652
+#: plug-ins/print/print.c:697
 msgid "Landscape"
 msgstr "풍경"
 
-#: plug-ins/print/print.c:685
+#: plug-ins/print/print.c:724
 #, c-format
 msgid "Print v%s"
-msgstr "프린트 v&s"
+msgstr "프린트 v%s"
 
 #.
 #. * Media size option menu...
 #.
-#: plug-ins/print/print.c:735
+#: plug-ins/print/print.c:774
 msgid "Media Size:"
 msgstr "미디어 크기:"
 
 #.
 #. * Media type option menu...
 #.
-#: plug-ins/print/print.c:751
+#: plug-ins/print/print.c:790
 msgid "Media Type:"
 msgstr "미디어 유형:"
 
 #.
 #. * Media source option menu...
 #.
-#: plug-ins/print/print.c:767
+#: plug-ins/print/print.c:806
 msgid "Media Source:"
 msgstr "원본 미디어:"
 
 #.
-#. * Orientation option menu...
-#.
-#: plug-ins/print/print.c:783
-msgid "Orientation:"
-msgstr "방향:"
-
-#.
 #. * Resolution option menu...
 #.
-#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
+#: plug-ins/common/ps.c:2097 plug-ins/print/print.c:852
 msgid "Resolution:"
 msgstr "해상도:"
 
 #.
 #. * Output type toggles...
 #.
-#: plug-ins/print/print.c:829
+#: plug-ins/print/print.c:868
 msgid "Output Type:"
 msgstr "출력 유형:"
 
-#: plug-ins/print/print.c:838
+#: plug-ins/print/print.c:877
 msgid "B&W"
 msgstr "B&W"
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/print.c:861
+#: plug-ins/print/print.c:900
 msgid "Scaling:"
 msgstr "스케일링"
 
-#: plug-ins/print/print.c:896
+#: plug-ins/print/print.c:935
 msgid "Percent"
 msgstr "퍼센트"
 
-#: plug-ins/print/print.c:905
+#: plug-ins/print/print.c:944
 msgid "PPI"
 msgstr "PPI"
 
 #.
 #. * Brightness slider...
 #.
-#: plug-ins/print/print.c:917
+#: plug-ins/print/print.c:956
 msgid "Brightness:"
 msgstr "밝기:"
 
 #.
 #. * Printer option menu...
 #.
-#: plug-ins/print/print.c:952
+#: plug-ins/print/print.c:991
 msgid "Printer:"
 msgstr "프린터:"
 
-#: plug-ins/print/print.c:978 plug-ins/print/print.c:1011
+#: plug-ins/print/print.c:1017 plug-ins/print/print.c:1050
 msgid "Setup"
 msgstr "셋업"
 
-#: plug-ins/print/print.c:998
+#: plug-ins/print/print.c:1037
 msgid "Print"
 msgstr "프린트"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/print.c:1033
+#: plug-ins/print/print.c:1072
 msgid "Driver:"
 msgstr "드라이버:"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/print.c:1058
+#: plug-ins/print/print.c:1097
 msgid "PPD File:"
 msgstr "PPD 파일:"
 
-#: plug-ins/print/print.c:1071
+#: plug-ins/print/print.c:1110
 msgid "Browse"
 msgstr "찾아보기"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/print.c:1081
+#: plug-ins/print/print.c:1120
 msgid "Command:"
 msgstr "명령:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/print.c:1116
+#: plug-ins/print/print.c:1155
 msgid "Print To File?"
 msgstr "파일로 프린트 할까요?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/print.c:1126
+#: plug-ins/print/print.c:1165
 msgid "PPD File?"
 msgstr "PPD 파일로?"
 
-#: plug-ins/print/print.c:2111
+#: plug-ins/print/print.c:2150
 msgid "File"
 msgstr "파일"
 
-#: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
+#: plug-ins/common/ps.c:325 plug-ins/common/ps.c:326
 msgid "load file of PostScript/PDF file format"
 msgstr "PostScript/PDF 형식의 파일을 읽기"
 
-#: plug-ins/common/ps.c:344
+#: plug-ins/common/ps.c:349
 msgid "save file in PostScript file format"
 msgstr "PostScaipt 형식의 파일로 저장"
 
-#: plug-ins/common/ps.c:345
+#: plug-ins/common/ps.c:350
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
 msgstr ""
-"모든 이미지 유형들을 핸들에 저장한 PostScript는 알파 채널을을 가지고 저것들을 제외 합니다."
+"모든 이미지 유형들을 핸들에 저장한 PostScript는 알파 채널을을 가지고 "
+"저것들을 제외 합니다."
 
-#: plug-ins/common/ps.c:550
+#: plug-ins/common/ps.c:620
 msgid "PS: can't open file for reading"
 msgstr "PS: 파일을 읽기 위해 열수 없습니다."
 
-#: plug-ins/common/ps.c:557
+#: plug-ins/common/ps.c:627
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "%s 인터프리팅과 읽기는 중:"
 
-#: plug-ins/common/ps.c:565
+#: plug-ins/common/ps.c:635
 msgid "PS: can't interprete file"
 msgstr "PS: 파일을 인터프리트 할 수 없습니다."
 
-#: plug-ins/common/ps.c:647
+#: plug-ins/common/ps.c:722
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript 저장은 알파 채널들을 가지고 이미지를 조정할 수 없습니다."
 
-#: plug-ins/common/ps.c:658
+#: plug-ins/common/ps.c:733
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: 알수 없는 이미지 유형은 작동되지 않습니다."
 
-#: plug-ins/common/ps.c:667
+#: plug-ins/common/ps.c:742
 msgid "PS: can't open file for writing"
 msgstr "PS: 파일을 쓰기위해 열수 없습니다."
 
-#: plug-ins/common/ps.c:1713 plug-ins/common/ps.c:1810
-#: plug-ins/common/ps.c:1903 plug-ins/common/ps.c:1972
+#: plug-ins/common/ps.c:1800 plug-ins/common/ps.c:1897
+#: plug-ins/common/ps.c:1990 plug-ins/common/ps.c:2059
 msgid "write error occured"
 msgstr "쓰기 애러 발생"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2097 plug-ins/common/ps.c:2354
 msgid "Width:"
 msgstr "넓이:"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2097 plug-ins/common/ps.c:2354
 msgid "Height:"
 msgstr "높이:"
 
-#: plug-ins/common/ps.c:1999
+#: plug-ins/common/ps.c:2097
 msgid "Pages:"
 msgstr "페이지:"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2099
 msgid "b/w"
 msgstr "b/w"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2099
 msgid "gray"
 msgstr "그레이"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2099
 msgid "colour"
 msgstr "색상"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2099
 msgid "automatic"
 msgstr "자동"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2101
 msgid "none"
 msgstr "없음"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2101
 msgid "weak"
 msgstr "약하게"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2101
 msgid "strong"
 msgstr "힘있게"
 
-#: plug-ins/common/ps.c:2016
+#: plug-ins/common/ps.c:2108
 msgid "Load PostScript"
 msgstr "PostScript 읽기"
 
 #. Rendering
-#: plug-ins/common/ps.c:2049
+#: plug-ins/common/ps.c:2141
 msgid "Rendering"
 msgstr "랜더링"
 
-#: plug-ins/common/ps.c:2089
+#: plug-ins/common/ps.c:2181
 msgid "try BoundingBox"
 msgstr "바운딩박스 시도"
 
 #. Colouring
-#: plug-ins/common/ps.c:2102
+#: plug-ins/common/ps.c:2194
 msgid "Colouring"
 msgstr "컬러링"
 
-#: plug-ins/common/ps.c:2138
+#: plug-ins/common/ps.c:2230
 msgid "Graphic antialiasing"
 msgstr "그래픽 안티엘리어싱"
 
-#: plug-ins/common/ps.c:2139
+#: plug-ins/common/ps.c:2231
 msgid "Text antialiasing"
 msgstr "텍스트 안티엘리어싱"
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2354
 msgid "X-offset:"
 msgstr "X-옵셋:"
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2354
 msgid "Y-offset:"
 msgstr "Y-옵셋:"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2356
 msgid "0"
 msgstr "0"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2356
 msgid "90"
 msgstr "90"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2356
 msgid "180"
 msgstr "180"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2356
 msgid "270"
 msgstr "270"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2358
 msgid "Inch"
 msgstr "인치"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2358
 msgid "Millimeter"
 msgstr "밀리미터"
 
-#: plug-ins/common/ps.c:2283
+#: plug-ins/common/ps.c:2366
 msgid "Save PostScript"
 msgstr "포스트스크립트 저장"
 
 #. Image Size
-#: plug-ins/common/ps.c:2324
+#: plug-ins/common/ps.c:2407
 msgid "Image Size"
 msgstr "이미지 크기"
 
-#: plug-ins/common/ps.c:2363
+#: plug-ins/common/ps.c:2446
 msgid "keep aspect ratio"
 msgstr "영상비 유지"
 
 #. Unit
-#: plug-ins/common/ps.c:2373
+#: plug-ins/common/ps.c:2456
 msgid "Unit"
 msgstr "단위"
 
 #. Rotation
-#: plug-ins/common/ps.c:2404
+#: plug-ins/common/ps.c:2487
 msgid "Rotation"
 msgstr "회전하기"
 
 #. Format
-#: plug-ins/common/ps.c:2431
+#: plug-ins/common/ps.c:2514
 msgid "Output"
 msgstr "출력"
 
-#: plug-ins/common/ps.c:2439
+#: plug-ins/common/ps.c:2522
 msgid "Encapsulated PostScript"
 msgstr "싸여진 포스트스크립트"
 
-#: plug-ins/common/ps.c:2465
+#: plug-ins/common/ps.c:2548
 msgid "Preview size"
 msgstr "미리보기 크기"
 
@@ -2943,8 +5911,8 @@ msgid ""
 "resized if necessary."
 msgstr ""
 "이 플러그인은 활성 계층 혹은 전체 이미지를 90도의 배수로 시계방향으로 "
-"회전시킵니다. 전체 이미지를 선택되어 질때, 필요하다면 이미지 크기를"
-"조정합니다."
+"회전시킵니다. 전체 이미지를 선택되어 질때, 필요하다면 이미지 "
+"크기를조정합니다."
 
 #: plug-ins/common/rotate.c:157
 msgid "<Image>/Image/Transforms/Rotate"
@@ -3058,6 +6026,47 @@ msgstr "gimp_image_get_selection 실패"
 msgid "Internal error. Selection bpp > 1"
 msgstr "내부 애러. 셀렉션 bpp > 1"
 
+#: plug-ins/struc/struc.c:107
+msgid "Adds a canvas texture map to the picture"
+msgstr "그림에 캔서브 텍스쳐 맵 추가"
+
+#: plug-ins/struc/struc.c:108
+msgid "This function applies a canvas texture map to the drawable."
+msgstr "이 함수는 그리기에 캔버스 텍스쳐 맵을 적용"
+
+#: plug-ins/struc/struc.c:112
+msgid "<Image>/Filters/Artistic/Apply Canvas"
+msgstr "<Image>/필터/미술적/캔버스 적용"
+
+#: plug-ins/struc/struc.c:232
+msgid "Struc"
+msgstr ""
+
+#: plug-ins/struc/struc.c:262
+msgid "Filter options"
+msgstr "필터 옵션"
+
+#. Radio buttons
+#: plug-ins/struc/struc.c:272
+msgid "Direction"
+msgstr "방향"
+
+#: plug-ins/struc/struc.c:283
+msgid "Top-right"
+msgstr "위-오른쪽"
+
+#: plug-ins/struc/struc.c:283
+msgid "Top-left"
+msgstr "위-왼쪽"
+
+#: plug-ins/struc/struc.c:283
+msgid "Bottom-left"
+msgstr "아래-왼쪽"
+
+#: plug-ins/struc/struc.c:283
+msgid "Bottom-right"
+msgstr "아래-오른쪽"
+
 #: plug-ins/common/threshold_alpha.c:196
 msgid "<Image>/Image/Alpha/Threshold Alpha"
 msgstr "<Image>/이미지/알파/발단규모(Threshold) 알파"
@@ -3070,6 +6079,155 @@ msgstr "발단규모(Threshold)_알파 (0.13): 투명하게 컬러링..."
 msgid "Threshold"
 msgstr "발단규모(Threshold)"
 
+#: plug-ins/common/warp.c:301
+msgid "Twist or smear an image. (only first six arguments are required)"
+msgstr "이미지를 꼬거나 번지게 하기. (오직 첫번째 6개 인수가 필요하다)"
+
+#: plug-ins/common/warp.c:302
+msgid ""
+"Smears an image along vector paths calculated as the gradient of a separate "
+"control matrix. The effect can look like brushstrokes of acrylic or "
+"watercolor paint, in some cases."
+msgstr ""
+"개별적인 컨트롤 매트릭스의 색감변화도 처럼 계산된 백터 경로에 따라 이미지 "
+"번지기. 이 효과는 그림물감의 브러쉬한번긋기 혹은 물색상 페인트나 몇몇 경우 "
+"처럼 보이게 합니다."
+
+#: plug-ins/common/warp.c:306
+msgid "<Image>/Filters/Artistic/Warp"
+msgstr "<Image>/필터/미술적/휘어지게"
+
+#: plug-ins/common/warp.c:476
+msgid "Warp"
+msgstr "휘어지게"
+
+#. The main table
+#: plug-ins/common/warp.c:526
+msgid "Main Options"
+msgstr "주 옵션"
+
+#. on_x, on_y
+#: plug-ins/common/warp.c:540
+msgid "Step Size"
+msgstr "단계 크기"
+
+#: plug-ins/common/warp.c:544
+msgid "Iterations"
+msgstr "반복"
+
+#. Displacement map menu
+#: plug-ins/common/warp.c:572
+msgid "Displacement Map:"
+msgstr "치환 맵:"
+
+#: plug-ins/common/warp.c:592
+msgid "On Edges: "
+msgstr "가장자리: "
+
+#: plug-ins/common/warp.c:605
+msgid "Smear"
+msgstr "번지기(Smear)"
+
+#: plug-ins/common/warp.c:614
+msgid "Black"
+msgstr "검은색"
+
+#: plug-ins/common/warp.c:623
+msgid "FG Color"
+msgstr "전경 색상"
+
+#. --------------------------------------------------------------------
+#. ---------    The secondary table         --------------------------
+#: plug-ins/common/warp.c:640
+msgid "Secondary Options"
+msgstr "두번째 옵션"
+
+#: plug-ins/common/warp.c:653
+msgid "Dither Size"
+msgstr "떨림 크기"
+
+#: plug-ins/common/warp.c:667
+msgid "Substeps"
+msgstr "부 단계"
+
+#. --------------------------------------------------------
+#: plug-ins/common/warp.c:682
+msgid "Rotation Angle"
+msgstr "각도 회전"
+
+#. Magnitude map menu
+#: plug-ins/common/warp.c:699
+msgid "Magnitude Map:"
+msgstr "매그니튜드 맵:"
+
+#: plug-ins/common/warp.c:718
+msgid "Use Mag Map: "
+msgstr "매그니튜드 맵 사용"
+
+#: plug-ins/common/warp.c:722
+msgid "Yes"
+msgstr "예"
+
+#: plug-ins/common/warp.c:731
+msgid "No"
+msgstr "아니오"
+
+#. --------------------------------------------------------------------
+#. ---------    The "other" table         --------------------------
+#: plug-ins/common/warp.c:748
+msgid "Other Options"
+msgstr "다른 옵션"
+
+#: plug-ins/common/warp.c:761
+msgid "Gradient Scale"
+msgstr "색감변화도 스케일"
+
+#: plug-ins/common/warp.c:783
+msgid "Gradient map selection menu"
+msgstr "색감변화도 맵 셀렉션 메뉴"
+
+#. ----------------------------------------------
+#: plug-ins/common/warp.c:792
+msgid "Vector Mag"
+msgstr "백터 매그니튜드"
+
+#. --------------------------------------------------------
+#: plug-ins/common/warp.c:807
+msgid "Angle"
+msgstr "각도"
+
+#: plug-ins/common/warp.c:828
+msgid "Fixed-direction-vector map selection menu"
+msgstr "고정-방향-백터 맵 셀렉션 메뉴"
+
+#: plug-ins/common/warp.c:1118
+msgid "Warp diff: error allocating memory.\n"
+msgstr "Warp diff: 메모리 할당 애러\n"
+
+#.
+#. if (display_diff_map) {
+#. gimp_display_new(new_image_id);
+#. }
+#.
+#. make sure layer is visible
+#: plug-ins/common/warp.c:1305
+msgid "Smoothing X gradient..."
+msgstr "X 색감변화도 부드럽게..."
+
+#: plug-ins/common/warp.c:1307
+msgid "Smoothing Y gradient..."
+msgstr "Y 색감변화도 부드럽게..."
+
+#. calculate new X,Y Displacement image maps
+#: plug-ins/common/warp.c:1362
+msgid "Finding XY gradient..."
+msgstr "XY 색감변화도 찾는 중..."
+
+#: plug-ins/common/warp.c:1386
+#, c-format
+msgid "Flow Step %d..."
+msgstr "순차적 단계 %d..."
+
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
 msgstr "X10 혹은 X11 비트맵(XBM) 파일 형식 읽기"
@@ -3079,8 +6237,8 @@ msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
 "format for flat black-and-white (two color indexed) images."
 msgstr ""
-"X10 혹은 X11 비트맵 (XBM) 파일 형식 읽기. XBM은 블랙-엔-화이트 "
-"(두 컬러 인덱스됨) 이미지 플렛을 위한 손실없는 형식이다."
+"X10 혹은 X11 비트맵 (XBM) 파일 형식 읽기. XBM은 블랙-엔-화이트 (두 컬러 "
+"인덱스됨) 이미지 플렛을 위한 손실없는 형식이다."
 
 #: plug-ins/common/xbm.c:230
 msgid "Made with Gimp"
@@ -3157,19 +6315,19 @@ msgstr "X10 형식 비트맵"
 msgid "Identifier prefix: "
 msgstr "식별 접두사: "
 
-#: plug-ins/common/xpm.c:170
+#: plug-ins/common/xpm.c:156
 msgid "loads files of the xpm file format"
 msgstr "xpm 형식의 파일 읽기"
 
-#: plug-ins/common/xpm.c:182
+#: plug-ins/common/xpm.c:168
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
 msgstr "xpm 형식으로 파일 저장 (만일 16비트 디스플레이를 사용할 경우...)"
 
-#: plug-ins/common/xpm.c:756
+#: plug-ins/common/xpm.c:783
 msgid "Save as Xpm"
 msgstr "Xpm으로 저장"
 
-#: plug-ins/common/xpm.c:790
+#: plug-ins/common/xpm.c:817
 msgid "Alpha Threshold"
 msgstr "알파 발단규모(Threshold)"
 
@@ -3183,7 +6341,8 @@ msgstr "파일을 XWD 형식으로 저장"
 
 #: plug-ins/common/xwd.c:239
 msgid "XWD saving handles all image types except those with alpha channels."
-msgstr "모든 이미지 형식을 조작하는 XWD는 알파 채널을 가지고 저것들을 제외 시킵니다."
+msgstr ""
+"모든 이미지 형식을 조작하는 XWD는 알파 채널을 가지고 저것들을 제외 시킵니다."
 
 #: plug-ins/common/xwd.c:335
 msgid "can't open file for reading"
@@ -3252,17 +6411,136 @@ msgstr "rgb 이미지 쓰기동작시 에러"
 #: plug-ins/common/zealouscrop.c:64
 msgid ""
 "Automagically crops unused space from the edges and middle of a picture."
-msgstr ""
-"마술적으로 그림의 가장자리와 중간에서 사용하지 않은 공간을 잘라냅니다."
+msgstr "마술적으로 그림의 가장자리와 중간에서 사용하지 않은 공간을 잘라냅니다."
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr "<Image>/이미지/변환/집중자르기"
+msgstr "<Image>/이미지/변환/집중잘라내기"
 
 #: plug-ins/common/zealouscrop.c:105
 msgid "ZealousCropping(tm)..."
-msgstr "집중자르기(tm)..."
+msgstr "집중잘라내기(tm)..."
 
 #: plug-ins/common/zealouscrop.c:209
 msgid "ZealousCrop(tm): Nothing to be done.\n"
-msgstr "집중자르기(tm): 더 이상 할것이 없습니다.\n"
+msgstr "집중잘라내기(tm): 더 이상 할것이 없습니다.\n"
+
+#: plug-ins/script-fu/script-fu-console.c:157
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "Script-Fu 콘솔 모드는 오직 상호작용적 작용에서만 허용됩니다."
+
+#: plug-ins/script-fu/script-fu-console.c:193
+msgid "Script-Fu Console"
+msgstr "Script-Fu 콘솔"
+
+#. The info vbox
+#: plug-ins/script-fu/script-fu-console.c:213
+msgid "SIOD Output"
+msgstr "SIOD 출력"
+
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:290
+msgid "Current Command"
+msgstr "현재 명령"
+
+#: plug-ins/script-fu/script-fu-console.c:311
+msgid "Browse..."
+msgstr "찾아보기..."
+
+#: plug-ins/script-fu/script-fu-console.c:569
+msgid "Unable to open SIOD output pipe"
+msgstr "SIOD 출력 파이프를 열수 없습니다."
+
+#: plug-ins/script-fu/script-fu-console.c:573
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr "SIOD 출력 파이프에서 스트림을 열수 없습니다."
+
+#: plug-ins/script-fu/script-fu-console.c:620
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1156
+msgid "Script Arguments"
+msgstr "스크립트 인수"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1237
+msgid "Script Toggle"
+msgstr "스크립트 토글"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1290
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu 파일 셀렉션"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1318
+msgid "Script-fu Pattern Selection"
+msgstr "Script-Fu 패턴 셀렉션"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1324
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu 색감변화도 셀렉션"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1332
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu 브러쉬 셀렉션"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1366
+msgid " Reset to Defaults "
+msgstr " 초기값으로 재설정"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1400
+msgid "About"
+msgstr "대하여"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1524
+msgid "NOT SET"
+msgstr "결정않됨"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1598
+msgid ""
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
+msgstr ""
+"적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
+"설정을 검사해보세요\n"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1856
+msgid "Author: "
+msgstr "저자: "
+
+#: plug-ins/script-fu/script-fu-scripts.c:1866
+msgid "Copyright: "
+msgstr "저작권: "
+
+#: plug-ins/script-fu/script-fu-scripts.c:1876
+msgid "Date: "
+msgstr "날짜: "
+
+#: plug-ins/script-fu/script-fu-scripts.c:1888
+msgid "Image types: "
+msgstr "이미지 유형: "
+
+#: plug-ins/script-fu/script-fu-scripts.c:2032
+msgid "Script-Fu Color Picker"
+msgstr "Script-Fu 색상 채취"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2127
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu 폰트 셀렉션"
+
+#: plug-ins/script-fu/script-fu-server.c:551
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu 서버 옵션"
+
+#. The server port
+#: plug-ins/script-fu/script-fu-server.c:582
+msgid "Server Port: "
+msgstr "서버 포트:"
+
+#. The server logfile
+#: plug-ins/script-fu/script-fu-server.c:595
+msgid "Server Logfile: "
+msgstr "서버 로그파일:"
+
+#~ msgid "MAX (x-d, -), (x < 0.5)"
+#~ msgstr "최대 (x-d, -), (x < 0.5)"
