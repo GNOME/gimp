@@ -36,6 +36,22 @@ the search path, the "path_changed" signal will be emitted.
 </para>
 
 
+<!-- ##### SIGNAL GimpPathEditor::path-changed ##### -->
+<para>
+
+</para>
+
+@gimppatheditor: the object which received the signal.
+
+<!-- ##### SIGNAL GimpPathEditor::writable-changed ##### -->
+<para>
+
+</para>
+
+@gimppatheditor: the object which received the signal.
+<!-- # Unused Parameters # -->
+@arg1: 
+
 <!-- ##### FUNCTION gimp_path_editor_new ##### -->
 <para>
 
@@ -105,20 +121,4 @@ the search path, the "path_changed" signal will be emitted.
 @directory: 
 @writable: 
 
-
-<!-- ##### SIGNAL GimpPathEditor::path-changed ##### -->
-<para>
-
-</para>
-
-@gimppatheditor: the object which received the signal.
-
-<!-- ##### SIGNAL GimpPathEditor::writable-changed ##### -->
-<para>
-
-</para>
-
-@gimppatheditor: the object which received the signal.
-<!-- # Unused Parameters # -->
-@arg1: 
 

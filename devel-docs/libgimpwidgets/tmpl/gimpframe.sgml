@@ -1,0 +1,36 @@
+<!-- ##### SECTION Title ##### -->
+GimpFrame
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpFrame ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG GimpFrame:label-spacing ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_frame_new ##### -->
+<para>
+
+</para>
+
+@label: 
+@Returns: 
+
+

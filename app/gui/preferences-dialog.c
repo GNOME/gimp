@@ -258,9 +258,6 @@ prefs_response (GtkWidget *widget,
 
       gimp_rc_save (GIMP_RC (gimp->edit_config));
 
-      /*  enable autosaving again  */
-      gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
-
       /*  spit out a solely informational warning about changed values
        *  which need restart
        */
@@ -330,10 +327,10 @@ prefs_response (GtkWidget *widget,
       g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
       g_list_free (diff);
-
-      /*  enable autosaving again  */
-      gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
     }
+
+  /*  enable autosaving again  */
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
   gtk_widget_destroy (dialog);
 }
@@ -407,9 +404,9 @@ static void
 prefs_input_devices_dialog (GtkWidget *widget,
                             gpointer   user_data)
 {
-  Gimp *gimp = GIMP (user_data);
-
   static GtkWidget *input_dialog = NULL;
+
+  Gimp *gimp = GIMP (user_data);
 
   if (input_dialog)
     {
@@ -477,7 +474,7 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_id);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
@@ -604,51 +601,16 @@ prefs_frame_new (const gchar  *label,
 		 GtkContainer *parent,
                  gboolean      expand)
 {
-  GtkWidget *frame;
-  GtkWidget *vbox;
-
-  gboolean   hig_compliant = FALSE;
+  const gboolean   hig_compliant = TRUE;
+  GtkWidget       *frame;
+  GtkWidget       *vbox;
 
   if (hig_compliant)
     {
-      GtkWidget      *hbox;
-      GtkWidget      *title;
-      GtkWidget      *space;
-      PangoAttrList  *attrs;
-      PangoAttribute *attr;
+      frame = gimp_frame_new (label);
 
-      frame = gtk_vbox_new (FALSE, 4);
-
-      attrs = pango_attr_list_new ();
-
-      attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-      attr->start_index = 0;
-      attr->end_index   = -1;
-      pango_attr_list_insert (attrs, attr);
-
-      attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-      attr->start_index = 0;
-      attr->end_index   = -1;
-      pango_attr_list_insert (attrs, attr);
-
-      title = gtk_label_new (label);
-      gtk_misc_set_alignment (GTK_MISC (title), 0.0, 0.5);
-      gtk_label_set_attributes (GTK_LABEL (title), attrs);
-      gtk_box_pack_start (GTK_BOX (frame), title, FALSE, FALSE, 0);
-      gtk_widget_show (title);
-
-      pango_attr_list_unref (attrs);
-
-      hbox = gtk_hbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_widget_show (hbox);
-
-      space = gtk_label_new ("   ");
-      gtk_box_pack_start (GTK_BOX (hbox), space, FALSE, FALSE, 0);
-      gtk_widget_show (space);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (hbox), vbox);
+      vbox = gtk_vbox_new (FALSE, 6);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
     }
   else
@@ -836,7 +798,7 @@ prefs_spin_button_add (GObject     *config,
                        GtkTable    *table,
                        gint         table_row)
 {
-  GtkWidget  *spinbutton;
+  GtkWidget *spinbutton;
 
   spinbutton = gimp_prop_spin_button_new (config, property_name,
                                           step_increment, page_increment,
@@ -1239,7 +1201,8 @@ prefs_dialog_new (Gimp       *gimp,
                          GTK_TABLE (table), 3);
 
   /* Keyboard Shortcuts */
-  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "can-change-accels",
                           _("Use Dynamic _Keyboard Shortcuts"),

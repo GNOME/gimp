@@ -20,6 +20,13 @@ GimpColorSelection
 </para>
 
 
+<!-- ##### SIGNAL GimpColorSelection::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorselection: the object which received the signal.
+
 <!-- ##### FUNCTION gimp_color_selection_new ##### -->
 <para>
 
@@ -97,11 +104,4 @@ GimpColorSelection
 
 @selection: 
 
-
-<!-- ##### SIGNAL GimpColorSelection::color-changed ##### -->
-<para>
-
-</para>
-
-@gimpcolorselection: the object which received the signal.
 

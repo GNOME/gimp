@@ -27,6 +27,18 @@ display color correction modules.
 </para>
 
 
+<!-- ##### SIGNAL GimpColorDisplay::changed ##### -->
+<para>
+
+</para>
+
+@gimpcolordisplay: the object which received the signal.
+
+<!-- ##### ARG GimpColorDisplay:enabled ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_color_display_new ##### -->
 <para>
 
@@ -118,16 +130,4 @@ display color correction modules.
 
 @display: 
 
-
-<!-- ##### SIGNAL GimpColorDisplay::changed ##### -->
-<para>
-
-</para>
-
-@gimpcolordisplay: the object which received the signal.
-
-<!-- ##### ARG GimpColorDisplay:enabled ##### -->
-<para>
-
-</para>
 

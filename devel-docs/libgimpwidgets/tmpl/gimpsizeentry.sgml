@@ -48,6 +48,27 @@ gimp_coordinates_new()
 </para>
 
 
+<!-- ##### SIGNAL GimpSizeEntry::refval-changed ##### -->
+<para>
+
+</para>
+
+@gimpsizeentry: the object which received the signal.
+
+<!-- ##### SIGNAL GimpSizeEntry::unit-changed ##### -->
+<para>
+
+</para>
+
+@gimpsizeentry: the object which received the signal.
+
+<!-- ##### SIGNAL GimpSizeEntry::value-changed ##### -->
+<para>
+
+</para>
+
+@gimpsizeentry: the object which received the signal.
+
 <!-- ##### STRUCT GimpSizeEntryField ##### -->
 <para>
 
@@ -239,25 +260,4 @@ gimp_coordinates_new()
 @field: 
 @Returns: 
 
-
-<!-- ##### SIGNAL GimpSizeEntry::refval-changed ##### -->
-<para>
-
-</para>
-
-@gimpsizeentry: the object which received the signal.
-
-<!-- ##### SIGNAL GimpSizeEntry::unit-changed ##### -->
-<para>
-
-</para>
-
-@gimpsizeentry: the object which received the signal.
-
-<!-- ##### SIGNAL GimpSizeEntry::value-changed ##### -->
-<para>
-
-</para>
-
-@gimpsizeentry: the object which received the signal.
 

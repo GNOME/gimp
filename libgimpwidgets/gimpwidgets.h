@@ -40,6 +40,7 @@
 #include <libgimpwidgets/gimpcolorselection.h>
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpfileentry.h>
+#include <libgimpwidgets/gimpframe.h>
 #include <libgimpwidgets/gimphelpui.h>
 #include <libgimpwidgets/gimpintcombobox.h>
 #include <libgimpwidgets/gimpintstore.h>

@@ -90,6 +90,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpdialog.h		\
 	gimpfileentry.c		\
 	gimpfileentry.h		\
+	gimpframe.c		\
+	gimpframe.h		\
 	gimphelpui.c		\
 	gimphelpui.h		\
 	gimpintcombobox.c	\
@@ -151,6 +153,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorselection.h	\
 	gimpdialog.h		\
 	gimpfileentry.h		\
+	gimpframe.h		\
 	gimphelpui.h		\
 	gimpintcombobox.h	\
 	gimpintstore.h		\

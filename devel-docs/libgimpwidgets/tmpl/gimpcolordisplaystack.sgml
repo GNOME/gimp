@@ -20,6 +20,39 @@ GimpColorDisplayStack
 </para>
 
 
+<!-- ##### SIGNAL GimpColorDisplayStack::added ##### -->
+<para>
+
+</para>
+
+@gimpcolordisplaystack: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL GimpColorDisplayStack::changed ##### -->
+<para>
+
+</para>
+
+@gimpcolordisplaystack: the object which received the signal.
+
+<!-- ##### SIGNAL GimpColorDisplayStack::removed ##### -->
+<para>
+
+</para>
+
+@gimpcolordisplaystack: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL GimpColorDisplayStack::reordered ##### -->
+<para>
+
+</para>
+
+@gimpcolordisplaystack: the object which received the signal.
+@arg1: 
+@arg2: 
+
 <!-- ##### FUNCTION gimp_color_display_stack_new ##### -->
 <para>
 
@@ -93,37 +126,4 @@ GimpColorDisplayStack
 @bpp: 
 @bpl: 
 
-
-<!-- ##### SIGNAL GimpColorDisplayStack::added ##### -->
-<para>
-
-</para>
-
-@gimpcolordisplaystack: the object which received the signal.
-@arg1: 
-@arg2: 
-
-<!-- ##### SIGNAL GimpColorDisplayStack::changed ##### -->
-<para>
-
-</para>
-
-@gimpcolordisplaystack: the object which received the signal.
-
-<!-- ##### SIGNAL GimpColorDisplayStack::removed ##### -->
-<para>
-
-</para>
-
-@gimpcolordisplaystack: the object which received the signal.
-@arg1: 
-
-<!-- ##### SIGNAL GimpColorDisplayStack::reordered ##### -->
-<para>
-
-</para>
-
-@gimpcolordisplaystack: the object which received the signal.
-@arg1: 
-@arg2: 
 

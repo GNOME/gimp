@@ -20,6 +20,15 @@ Widget to control image offsets.
 </para>
 
 
+<!-- ##### SIGNAL GimpOffsetArea::offsets-changed ##### -->
+<para>
+
+</para>
+
+@gimpoffsetarea: the object which received the signal.
+@arg1: 
+@arg2: 
+
 <!-- ##### FUNCTION gimp_offset_area_new ##### -->
 <para>
 
@@ -49,13 +58,4 @@ Widget to control image offsets.
 @offset_x: 
 @offset_y: 
 
-
-<!-- ##### SIGNAL GimpOffsetArea::offsets-changed ##### -->
-<para>
-
-</para>
-
-@gimpoffsetarea: the object which received the signal.
-@arg1: 
-@arg2: 
 

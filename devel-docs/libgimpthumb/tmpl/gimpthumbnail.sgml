@@ -21,6 +21,51 @@ using object properties.
 </para>
 
 
+<!-- ##### ARG GimpThumbnail:image-filesize ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-height ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-mtime ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-num-layers ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-state ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-type ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-uri ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:image-width ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpThumbnail:thumb-state ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_thumbnail_new ##### -->
 <para>
 
@@ -112,49 +157,4 @@ using object properties.
 @error: 
 @Returns: 
 
-
-<!-- ##### ARG GimpThumbnail:image-filesize ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-height ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-mtime ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-num-layers ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-state ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-type ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-uri ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:image-width ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpThumbnail:thumb-state ##### -->
-<para>
-
-</para>
 

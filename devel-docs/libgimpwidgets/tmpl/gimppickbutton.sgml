@@ -22,14 +22,6 @@ from any point on the screen.
 </para>
 
 
-<!-- ##### FUNCTION gimp_pick_button_new ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### SIGNAL GimpPickButton::color-picked ##### -->
 <para>
 
@@ -37,4 +29,12 @@ from any point on the screen.
 
 @gimppickbutton: the object which received the signal.
 @arg1: pointer to a #GimpRGB structure that holds the picked color
+
+<!-- ##### FUNCTION gimp_pick_button_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
 

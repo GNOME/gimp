@@ -27,6 +27,23 @@ selector modules.
 </para>
 
 
+<!-- ##### SIGNAL GimpColorSelector::channel-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorselector: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL GimpColorSelector::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorselector: the object which received the signal.
+@arg1: 
+@arg2: 
+
 <!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
 <para>
 The suggested size for a color area in a #GimpColorSelector implementation.
@@ -127,21 +144,4 @@ The suggested width for a color bar in a #GimpColorSelector implementation.
 
 @selector: 
 
-
-<!-- ##### SIGNAL GimpColorSelector::channel-changed ##### -->
-<para>
-
-</para>
-
-@gimpcolorselector: the object which received the signal.
-@arg1: 
-
-<!-- ##### SIGNAL GimpColorSelector::color-changed ##### -->
-<para>
-
-</para>
-
-@gimpcolorselector: the object which received the signal.
-@arg1: 
-@arg2: 
 

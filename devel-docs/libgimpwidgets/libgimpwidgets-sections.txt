@@ -122,6 +122,22 @@ GIMP_FILE_ENTRY_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpframe</FILE>
+<TITLE>GimpFrame</TITLE>
+GimpFrame
+gimp_frame_new
+<SUBSECTION Standard>
+GimpFrameClass
+GIMP_FRAME
+GIMP_IS_FRAME
+GIMP_TYPE_FRAME
+gimp_frame_get_type
+GIMP_FRAME_CLASS
+GIMP_IS_FRAME_CLASS
+GIMP_FRAME_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimppatheditor</FILE>
 <TITLE>GimpPathEditor</TITLE>
 GimpPathEditor

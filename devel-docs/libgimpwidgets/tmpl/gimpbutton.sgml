@@ -22,6 +22,14 @@ modifier keys pressed.
 </para>
 
 
+<!-- ##### SIGNAL GimpButton::extended-clicked ##### -->
+<para>
+
+</para>
+
+@gimpbutton: the object which received the signal.
+@arg1: the state of modifier keys when the button was clicked
+
 <!-- ##### FUNCTION gimp_button_new ##### -->
 <para>
 
@@ -38,12 +46,4 @@ modifier keys pressed.
 @button: 
 @state: 
 
-
-<!-- ##### SIGNAL GimpButton::extended-clicked ##### -->
-<para>
-
-</para>
-
-@gimpbutton: the object which received the signal.
-@arg1: the state of modifier keys when the button was clicked
 
