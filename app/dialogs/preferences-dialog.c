@@ -1126,7 +1126,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
   prefs_memsize_entry_add (object, "max-new-image-size",
-                           _("Maximum Image Size:"),
+                           _("Maximum New Image Size:"),
                            GTK_TABLE (table), 1);
 
 

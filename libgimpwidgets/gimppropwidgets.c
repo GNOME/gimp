@@ -836,19 +836,39 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
-      g_object_set (config, param_spec->name, (gint) adjustment->value, NULL);
+      g_object_set (config,
+                    param_spec->name, (gint) adjustment->value,
+                    NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT (param_spec))
     {
-      g_object_set (config, param_spec->name, (guint) adjustment->value, NULL);
+      g_object_set (config,
+                    param_spec->name, (guint) adjustment->value,
+                    NULL);
     }
   else if (G_IS_PARAM_SPEC_LONG (param_spec))
     {
-      g_object_set (config, param_spec->name, (glong) adjustment->value, NULL);
+      g_object_set (config,
+                    param_spec->name, (glong) adjustment->value,
+                    NULL);
     }
   else if (G_IS_PARAM_SPEC_ULONG (param_spec))
     {
-      g_object_set (config, param_spec->name, adjustment->value, NULL);
+      g_object_set (config,
+                    param_spec->name, (gulong) adjustment->value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_INT64 (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (gint64) adjustment->value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (guint64) adjustment->value,
+                    NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
@@ -903,6 +923,22 @@ gimp_prop_adjustment_notify (GObject       *config,
 
       value = ulong_value;
     }
+  else if (G_IS_PARAM_SPEC_INT64 (param_spec))
+    {
+      gint64 int64_value;
+
+      g_object_get (config, param_spec->name, &int64_value, NULL);
+
+      value = int64_value;
+    }
+  else if (G_IS_PARAM_SPEC_ULONG (param_spec))
+    {
+      guint64 uint64_value;
+
+      g_object_get (config, param_spec->name, &uint64_value, NULL);
+
+      value = uint64_value;
+    }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
       g_object_get (config, param_spec->name, &value, NULL);
@@ -945,10 +981,10 @@ GtkWidget *
 gimp_prop_memsize_entry_new (GObject     *config,
                              const gchar *property_name)
 {
-  GParamSpec      *param_spec;
-  GParamSpecULong *ulong_spec;
-  GtkWidget       *entry;
-  gulong           value;
+  GParamSpec       *param_spec;
+  GParamSpecUInt64 *uint64_spec;
+  GtkWidget        *entry;
+  guint64           value;
 
   param_spec = check_param_spec (config, property_name,
                                  GIMP_TYPE_PARAM_MEMSIZE, G_STRLOC);
@@ -959,11 +995,14 @@ gimp_prop_memsize_entry_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  ulong_spec = G_PARAM_SPEC_ULONG (param_spec);
+  uint64_spec = G_PARAM_SPEC_UINT64 (param_spec);
+
+  g_return_val_if_fail (uint64_spec->minimum <= (guint64) G_MAXDOUBLE, NULL);
+  g_return_val_if_fail (uint64_spec->maximum <= (guint64) G_MAXDOUBLE, NULL);
 
   entry = gimp_memsize_entry_new (value,
-				  ulong_spec->minimum,
-				  ulong_spec->maximum);
+				  uint64_spec->minimum,
+				  uint64_spec->maximum);
 
   set_param_spec (G_OBJECT (entry),
                   GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
@@ -991,7 +1030,7 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
   if (! param_spec)
     return;
 
-  g_return_if_fail (G_IS_PARAM_SPEC_ULONG (param_spec));
+  g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
   g_object_set (config,
 		param_spec->name, gimp_memsize_entry_get_value (entry),
@@ -1003,9 +1042,9 @@ gimp_prop_memsize_notify (GObject          *config,
 			  GParamSpec       *param_spec,
 			  GimpMemsizeEntry *entry)
 {
-  gulong value;
+  guint64  value;
 
-  g_return_if_fail (G_IS_PARAM_SPEC_ULONG (param_spec));
+  g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
   g_object_get (config,
 		param_spec->name, &value,

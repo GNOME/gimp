@@ -88,7 +88,7 @@ gimp_memsize_get_type (void)
     {
       static const GTypeInfo type_info = { 0, };
 
-      memsize_type = g_type_register_static (G_TYPE_ULONG, "GimpMemsize",
+      memsize_type = g_type_register_static (G_TYPE_UINT64, "GimpMemsize",
                                              &type_info, 0);
 
       g_value_register_transform_func (memsize_type, G_TYPE_STRING,
@@ -104,15 +104,15 @@ gboolean
 gimp_memsize_set_from_string (GValue      *value,
                               const gchar *string)
 {
-  gchar  *end;
-  gulong  size;
+  gchar   *end;
+  guint64  size;
 
   g_return_val_if_fail (GIMP_VALUE_HOLDS_MEMSIZE (value), FALSE);
   g_return_val_if_fail (string != NULL, FALSE);
 
-  size = strtoul (string, &end, 0);
+  size = g_ascii_strtoull (string, &end, 0);
 
-  if (size == ULONG_MAX && errno == ERANGE)
+  if (size == G_MAXUINT64 && errno == ERANGE)
     return FALSE;
 
   if (end && *end)
@@ -140,7 +140,7 @@ gimp_memsize_set_from_string (GValue      *value,
       /* protect against overflow */
       if (shift)
         {
-          gulong limit = G_MAXULONG >> (shift);
+          guint64  limit = G_MAXUINT64 >> shift;
 
           if (size != (size & limit))
             return FALSE;
@@ -149,7 +149,7 @@ gimp_memsize_set_from_string (GValue      *value,
         }
     }
 
-  g_value_set_ulong (value, size);
+  g_value_set_uint64 (value, size);
 
   return TRUE;
 }
@@ -209,19 +209,19 @@ static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)
 {
-  gulong  size;
-  gchar  *str;
+  guint64  size;
+  gchar   *str;
 
-  size = g_value_get_ulong (src_value);
+  size = g_value_get_uint64 (src_value);
 
   if (size > (1 << 30) && size % (1 << 30) == 0)
-    str = g_strdup_printf ("%luG", size >> 30);
+    str = g_strdup_printf ("%" G_GUINT64_FORMAT "G", size >> 30);
   else if (size > (1 << 20) && size % (1 << 20) == 0)
-    str = g_strdup_printf ("%luM", size >> 20);
+    str = g_strdup_printf ("%" G_GUINT64_FORMAT "M", size >> 20);
   else if (size > (1 << 10) && size % (1 << 10) == 0)
-    str = g_strdup_printf ("%luk", size >> 10);
+    str = g_strdup_printf ("%" G_GUINT64_FORMAT "k", size >> 10);
   else
-    str = g_strdup_printf ("%lu", size);
+    str = g_strdup_printf ("%" G_GUINT64_FORMAT, size);
 
   g_value_set_string_take_ownership (dest_value, str);
 }

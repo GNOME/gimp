@@ -387,7 +387,7 @@ gimp_core_config_set_property (GObject      *object,
       core_config->levels_of_undo = g_value_get_int (value);
       break;
     case PROP_UNDO_SIZE:
-      core_config->undo_size = g_value_get_ulong (value);
+      core_config->undo_size = g_value_get_uint64 (value);
       break;
     case PROP_PLUGINRC_PATH:
       g_free (core_config->plug_in_rc_path);
@@ -482,7 +482,7 @@ gimp_core_config_get_property (GObject    *object,
       g_value_set_int (value, core_config->levels_of_undo);
       break;
     case PROP_UNDO_SIZE:
-      g_value_set_ulong (value, core_config->undo_size);
+      g_value_set_uint64 (value, core_config->undo_size);
       break;
     case PROP_PLUGINRC_PATH:
       g_value_set_string (value, core_config->plug_in_rc_path);

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * ParamSpecs for config objects
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -331,11 +331,11 @@ gimp_param_memsize_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_memsize_class_init,
         NULL, NULL,
-        sizeof (GParamSpecULong),
+        sizeof (GParamSpecUInt64),
         0, NULL, NULL
       };
 
-      spec_type = g_type_register_static (G_TYPE_PARAM_ULONG,
+      spec_type = g_type_register_static (G_TYPE_PARAM_UINT64,
                                           "GimpParamMemsize",
                                           &type_info, 0);
     }
@@ -353,12 +353,12 @@ GParamSpec *
 gimp_param_spec_memsize (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
-                         gulong       minimum,
-                         gulong       maximum,
-                         gulong       default_value,
+                         guint64      minimum,
+                         guint64      maximum,
+                         guint64      default_value,
                          GParamFlags  flags)
 {
-  GParamSpecULong *pspec;
+  GParamSpecUInt64 *pspec;
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
                                  name, nick, blurb, flags);

@@ -401,6 +401,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_INT:
     case G_TYPE_LONG:
+    case G_TYPE_INT64:
       if (g_scanner_peek_next_token (scanner) == '-')
         {
           negate = TRUE;
@@ -409,6 +410,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
       /*  fallthrough  */
     case G_TYPE_UINT:
     case G_TYPE_ULONG:
+    case G_TYPE_UINT64:
       token = G_TOKEN_INT;
       break;
 
@@ -464,18 +466,31 @@ gimp_config_deserialize_fundamental (GValue     *value,
 
     case G_TYPE_INT:
       g_value_set_int (value, (negate ?
-                               - scanner->value.v_int : scanner->value.v_int));
+                               - scanner->value.v_int64 :
+                               scanner->value.v_int64));
       break;
     case G_TYPE_UINT:
-      g_value_set_uint (value, scanner->value.v_int);
+      g_value_set_uint (value, scanner->value.v_int64);
       break;
+
     case G_TYPE_LONG:
       g_value_set_long (value, (negate ?
-                                - scanner->value.v_int : scanner->value.v_int));
+                                - scanner->value.v_int64 :
+                                scanner->value.v_int64));
       break;
     case G_TYPE_ULONG:
-      g_value_set_ulong (value, scanner->value.v_int);
+      g_value_set_ulong (value, scanner->value.v_int64);
       break;
+
+    case G_TYPE_INT64:
+      g_value_set_int64 (value, (negate ?
+                                 - scanner->value.v_int64 :
+                                 scanner->value.v_int64));
+      break;
+    case G_TYPE_UINT64:
+      g_value_set_uint64 (value, scanner->value.v_int64);
+      break;
+
     case G_TYPE_FLOAT:
       g_value_set_float (value, negate ?
                          - scanner->value.v_float : scanner->value.v_float);
@@ -526,13 +541,14 @@ gimp_config_deserialize_enum (GValue     *value,
     case G_TOKEN_INT:
       g_scanner_get_next_token (scanner);
 
-      enum_value = g_enum_get_value (enum_class, scanner->value.v_int);
+      enum_value = g_enum_get_value (enum_class,
+                                     (gint) scanner->value.v_int64);
 
       if (!enum_value)
 	{
 	  g_scanner_error (scanner,
 			   _("invalid value '%ld' for token %s"),
-			   scanner->value.v_int, prop_spec->name);
+			   (glong) scanner->value.v_int64, prop_spec->name);
 	  return G_TOKEN_NONE;
 	}
       break;

@@ -196,7 +196,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                     "max-new-image-size",
                                     MAX_NEW_IMAGE_SIZE_BLURB,
-                                    0, G_MAXULONG, 1 << 26,
+                                    0, (guint64) 1 << 40, 1 << 26,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
@@ -295,7 +295,7 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->last_opened_size = g_value_get_int (value);
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
-      gui_config->max_new_image_size = g_value_get_ulong (value);
+      gui_config->max_new_image_size = g_value_get_uint64 (value);
       break;
     case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
@@ -380,7 +380,7 @@ gimp_gui_config_get_property (GObject    *object,
       g_value_set_int (value, gui_config->last_opened_size);
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
-      g_value_set_ulong (value, gui_config->max_new_image_size);
+      g_value_set_uint64 (value, gui_config->max_new_image_size);
       break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);

@@ -147,6 +147,8 @@ gimp_scanner_new (const gchar  *name,
                                              G_CSET_DIGITS "-_" );
   scanner->config->scan_identifier_1char = TRUE;
 
+  scanner->config->store_int64           = TRUE;
+
   return scanner;
 }
 
@@ -216,7 +218,7 @@ gimp_scanner_parse_string (GScanner  *scanner,
           g_scanner_warn (scanner, _("invalid UTF-8 string"));
           return FALSE;
         }
-      
+
       *dest = g_strdup (scanner->value.v_string);
     }
   else
@@ -262,9 +264,9 @@ gimp_scanner_parse_int (GScanner *scanner,
   g_scanner_get_next_token (scanner);
 
   if (negate)
-    *dest = -scanner->value.v_int;
+    *dest = -scanner->value.v_int64;
   else
-    *dest = scanner->value.v_int;
+    *dest = scanner->value.v_int64;
 
   return TRUE;
 }

@@ -55,7 +55,7 @@ struct _GimpGuiConfig
   gboolean             save_accels;
   gboolean             restore_accels;
   gint                 last_opened_size;
-  gulong               max_new_image_size;
+  guint64              max_new_image_size;
   gchar               *theme_path;
   gchar               *theme;
   gboolean             use_help;

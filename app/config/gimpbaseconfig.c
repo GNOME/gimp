@@ -61,7 +61,7 @@ enum
 static GObjectClass *parent_class = NULL;
 
 
-GType 
+GType
 gimp_base_config_get_type (void)
 {
   static GType config_type = 0;
@@ -81,8 +81,8 @@ gimp_base_config_get_type (void)
 	NULL            /* instance_init  */
       };
 
-      config_type = g_type_register_static (G_TYPE_OBJECT, 
-                                            "GimpBaseConfig", 
+      config_type = g_type_register_static (G_TYPE_OBJECT,
+                                            "GimpBaseConfig",
                                             &config_info, 0);
     }
 
@@ -132,7 +132,7 @@ gimp_base_config_finalize (GObject *object)
   GimpBaseConfig *base_config;
 
   base_config = GIMP_BASE_CONFIG (object);
-  
+
   g_free (base_config->temp_path);
   g_free (base_config->swap_path);
 
@@ -166,7 +166,7 @@ gimp_base_config_set_property (GObject      *object,
       base_config->num_processors = g_value_get_uint (value);
       break;
     case PROP_TILE_CACHE_SIZE:
-      base_config->tile_cache_size = g_value_get_ulong (value);
+      base_config->tile_cache_size = g_value_get_uint64 (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -199,7 +199,7 @@ gimp_base_config_get_property (GObject    *object,
       g_value_set_uint (value, base_config->num_processors);
       break;
     case PROP_TILE_CACHE_SIZE:
-      g_value_set_ulong (value, base_config->tile_cache_size);
+      g_value_set_uint64 (value, base_config->tile_cache_size);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

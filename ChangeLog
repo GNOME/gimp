@@ -1,3 +1,22 @@
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpscanner.c	
+	* app/config/gimpconfig-deserialize.c: configured the scanner to
+	use 64bit integers. This means you must now access value.v_int64
+	instead of value.v_int. Fortunately gimp_scanner_parse_int() hides
+	this ugly detail from you.
+
+	* app/config/gimpconfig-params.[ch]
+	* app/config/gimpconfig-types.c: derive GimpMemsize from guint64
+	now that support for 64bit integers is guaranteed by glib.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.[ch]
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: changed a label.
+
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdevices.c: code review & cleanup.
