@@ -180,6 +180,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_LIST ##### -->
+<para>
+<inlinegraphic fileref="stock-list-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRID ##### -->
+<para>
+<inlinegraphic fileref="stock-grid-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ALL ##### -->
 <para>
 <inlinegraphic fileref="stock-selection-all-16.png" format="png"></inlinegraphic>
@@ -350,6 +364,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_IMAGE ##### -->
 <para>
+<inlinegraphic fileref="stock-image-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-image-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-image-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-image-16.png" format="png"></inlinegraphic>
 </para>
@@ -358,6 +374,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_LAYER ##### -->
 <para>
+<inlinegraphic fileref="stock-layer-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-layer-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-layer-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-layer-16.png" format="png"></inlinegraphic>
 </para>
@@ -366,6 +384,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-16.png" format="png"></inlinegraphic>
 </para>
@@ -374,6 +394,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_RED ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-red-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-red-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-red-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-red-16.png" format="png"></inlinegraphic>
 </para>
@@ -382,6 +404,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_GREEN ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-green-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-green-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-green-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-green-16.png" format="png"></inlinegraphic>
 </para>
@@ -390,6 +414,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_BLUE ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-blue-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-blue-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-blue-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-blue-16.png" format="png"></inlinegraphic>
 </para>
@@ -398,6 +424,8 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_GRAY ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-gray-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-gray-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-gray-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-gray-16.png" format="png"></inlinegraphic>
 </para>
@@ -406,8 +434,20 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_ALPHA ##### -->
 <para>
+<inlinegraphic fileref="stock-channel-alpha-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-alpha-32.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-alpha-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-alpha-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TEXT_LAYER ##### -->
+<para>
+<inlinegraphic fileref="stock-text-layer-48.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-text-layer-32.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-text-layer-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-text-layer-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -524,6 +564,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_AIRBRUSH ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-airbrush-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-airbrush-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -531,6 +572,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BEZIER_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-bezier-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-bezier-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -538,6 +580,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BLEND ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-blend-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-blend-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -545,6 +588,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BLUR ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-blur-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-blur-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -552,6 +596,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-brightness-contrast-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-brightness-contrast-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -559,6 +604,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BUCKET_FILL ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-bucket-fill-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-bucket-fill-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -566,6 +612,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_BY_COLOR_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-by-color-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-by-color-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -573,6 +620,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_CLONE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-clone-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-clone-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -580,6 +628,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_BALANCE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-color-balance-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-color-balance-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -587,6 +636,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_PICKER ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-color-picker-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-color-picker-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -594,6 +644,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_CROP ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-crop-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-crop-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -601,6 +652,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_CURVES ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-curves-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-curves-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -608,6 +660,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_DODGE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-dodge-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-dodge-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -615,6 +668,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_ELLIPSE_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-ellipse-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-ellipse-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -622,6 +676,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_ERASER ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-eraser-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-eraser-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -636,6 +691,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_FREE_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-free-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-free-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -643,6 +699,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_FUZZY_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-fuzzy-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-fuzzy-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -650,6 +707,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_HISTOGRAM ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-histogram-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-histogram-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -657,6 +715,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_HUE_SATURATION ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-hue-saturation-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-hue-saturation-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -664,6 +723,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_INK ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-ink-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-ink-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -671,6 +731,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_ISCISSORS ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-iscissors-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-iscissors-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -678,6 +739,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_LEVELS ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-levels-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-levels-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -685,6 +747,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_MEASURE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-measure-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-measure-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -692,6 +755,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_MOVE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-move-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-move-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -699,6 +763,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_PAINTBRUSH ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-paintbrush-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-paintbrush-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -713,6 +778,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_PENCIL ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-pencil-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-pencil-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -720,6 +786,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-perspective-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-perspective-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -727,6 +794,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_POSTERIZE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-posterize-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-posterize-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -734,6 +802,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_RECT_SELECT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-rect-select-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-rect-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -741,6 +810,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_ROTATE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-rotate-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-rotate-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -748,6 +818,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_SCALE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-scale-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-scale-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -755,6 +826,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_SHEAR ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-shear-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-shear-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -762,6 +834,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_SMUDGE ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-smudge-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-smudge-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -769,6 +842,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_TEXT ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-text-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-text-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -776,6 +850,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_THRESHOLD ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-threshold-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-threshold-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -783,6 +858,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_ZOOM ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-zoom-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-zoom-16.png" format="png"></inlinegraphic>
 </para>
 
 

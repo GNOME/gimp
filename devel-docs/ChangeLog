@@ -1,3 +1,9 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: new icons and lots of new
+	sizes for existing icons.
+
 2003-03-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
