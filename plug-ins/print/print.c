@@ -59,7 +59,7 @@
 #include <libgimp/gimpui.h>
 #include <libgimp/stdplugins-intl.h>
 
-#define PLUG_IN_VERSION		"3.0.5 - 13 Jan 2000"
+#define PLUG_IN_VERSION         "3.0.6 - 11 Feb 2000"
 #define PLUG_IN_NAME		"Print"
 
 
@@ -562,7 +562,7 @@ run(char   *name,		/* I - Name of print program. */
           if (nparams > 16)
             vars.gamma = param[16].data.d_float;
           else
-            vars.gamma = 0.0;
+            vars.gamma = 1.0;
 
           if (nparams > 17)
 	    vars.contrast = param[17].data.d_int32;
@@ -3120,11 +3120,11 @@ get_printers(void)
   defname[0] = '\0';
 
   memset(plist, 0, sizeof(plist));
-  plist_count = 1;
   strcpy(plist[0].name, _("File"));
   plist[0].v.output_to[0] = '\0';
   strcpy(plist[0].v.driver, "ps2");
-  plist[0].v.output_type = OUTPUT_COLOR;
+  initialize_printer(&plist[0]);
+  plist_count = 1;
 
 #ifdef LPC_COMMAND
   if ((pfile = popen(LPC_COMMAND " status", "r")) != NULL)

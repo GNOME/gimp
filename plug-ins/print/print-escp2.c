@@ -26,288 +26,12 @@
  *                            parameter.
  *   escp2_imageable_area() - Return the imageable area of the page.
  *   escp2_print()          - Print an image to an EPSON printer.
- *   escp2_write()          - Send 6-color ESC/P2 graphics using TIFF packbits compression.
+ *   escp2_write()          - Send 6-color ESC/P2 graphics using TIFF packbits
+ *                            compression.
  *
  * Revision History:
  *
- *   $Log$
- *   Revision 1.13  2000/01/26 16:00:47  neo
- *   updated print plug-in
- *
- *
- *   --Sven
- *
- *   Revision 1.39.2.1  2000/01/13 03:32:34  rlk
- *   silliness
- *
- *   Revision 1.39  2000/01/13 03:25:31  rlk
- *   bug fix from mainline
- *
- *   Revision 1.38  2000/01/08 23:27:54  rlk
- *   Rearrange setup code; more printers to support softweave
- *
- *   Revision 1.37  1999/12/19 14:36:18  rlk
- *   Make 'em big enough
- *
- *   Revision 1.36  1999/12/18 23:08:28  rlk
- *   comments, mostly
- *
- *   Revision 1.35  1999/12/11 15:26:27  rlk
- *   hopefully get borders right
- *
- *   Revision 1.34  1999/12/11 04:52:35  rlk
- *   bug fixes
- *
- *   Revision 1.33  1999/12/11 04:25:23  rlk
- *   various other print modes
- *
- *   Revision 1.32  1999/12/11 01:46:13  rlk
- *   Better weaving code -- not absolutely complete yet
- *
- *   Revision 1.31  1999/12/05 22:10:53  rlk
- *   minor, prep for release
- *
- *   Revision 1.30  1999/12/05 04:33:43  rlk
- *   fencepost
- *
- *   Revision 1.29  1999/11/23 02:11:37  rlk
- *   Rationalize variables, pass 3
- *
- *   Revision 1.28  1999/11/23 01:45:00  rlk
- *   Rationalize variables -- pass 2
- *
- *   Revision 1.27  1999/11/16 01:04:06  rlk
- *   Documentation
- *
- *   Revision 1.26  1999/11/14 18:59:22  rlk
- *   Final preparations for release to Olof
- *
- *   Revision 1.25  1999/11/14 03:13:36  rlk
- *   Pseudo-hi-res microweave options
- *
- *   Revision 1.24  1999/11/13 02:32:58  rlk
- *   Comments on some good settings!
- *
- *   Revision 1.23  1999/11/10 01:13:27  rlk
- *   1440x720 two-pass
- *
- *   Revision 1.22  1999/11/08 13:10:21  rlk
- *   Bug fix
- *
- *   Revision 1.21  1999/11/07 22:18:51  rlk
- *   Support Stylus Photo
- *
- *   Attempt at 1440 dpi
- *
- *   Revision 1.20  1999/11/04 03:08:52  rlk
- *   Comments!  Comments!  Comments!
- *
- *   Revision 1.19  1999/11/02 23:11:16  rlk
- *   Good weave code
- *
- *   Revision 1.18  1999/11/02 03:11:17  rlk
- *   Remove dead code
- *
- *   Revision 1.17  1999/11/02 03:01:29  rlk
- *   Support both softweave and microweave
- *
- *   Revision 1.16  1999/11/02 02:04:18  rlk
- *   Much better weaving code!
- *
- *   Revision 1.15  1999/11/01 03:38:53  rlk
- *   First cut at weaving
- *
- *   Revision 1.14  1999/10/26 23:58:31  rlk
- *   indentation
- *
- *   Revision 1.13  1999/10/26 23:36:51  rlk
- *   Comment out all remaining 16-bit code, and rename 16-bit functions to "standard" names
- *
- *   Revision 1.12  1999/10/26 02:10:30  rlk
- *   Mostly fix save/load
- *
- *   Move all gimp, glib, gtk stuff into print.c (take it out of everything else).
- *   This should help port it to more general purposes later.
- *
- *   Revision 1.11  1999/10/25 23:31:59  rlk
- *   16-bit clean
- *
- *   Revision 1.10  1999/10/25 00:16:12  rlk
- *   Comment
- *
- *   Revision 1.9  1999/10/21 01:27:37  rlk
- *   More progress toward full 16-bit rendering
- *
- *   Revision 1.8  1999/10/19 02:04:59  rlk
- *   Merge all of the single-level print_cmyk functions
- *
- *   Revision 1.7  1999/10/18 01:37:19  rlk
- *   Add Stylus Photo 700 and switch to printer capabilities
- *
- *   Revision 1.6  1999/10/17 23:44:07  rlk
- *   16-bit everything (untested)
- *
- *   Revision 1.5  1999/10/14 01:59:59  rlk
- *   Saturation
- *
- *   Revision 1.4  1999/10/03 23:57:20  rlk
- *   Various improvements
- *
- *   Revision 1.3  1999/09/15 02:53:58  rlk
- *   Remove some stuff that seems to have no effect
- *
- *   Revision 1.2  1999/09/12 00:12:24  rlk
- *   Current best stuff
- *
- *   Revision 1.11  1999/05/29 16:35:26  yosh
- *   * configure.in
- *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
- *   GIMP_MODULES so you can easily skip those parts of the build
- *
- *   * acinclude.m4
- *   * config.sub
- *   * config.guess
- *   * ltconfig
- *   * ltmain.sh: libtool 1.3.2
- *
- *   * app/fileops.c: shuffle #includes to avoid warning about MIN and
- *   MAX
- *
- *   [ The following is a big i18n patch from David Monniaux
- *     <david.monniaux@ens.fr> ]
- *
- *   * tips/gimp_conseils.fr.txt
- *   * tips/gimp_tips.txt
- *   * tips/Makefile.am
- *   * configure.in: moved tips to separate dir
- *
- *   * po-plugins: new dir for plug-in translation files
- *
- *   * configure.in: add po-plugins dir and POTFILES processing
- *
- *   * app/boundary.c
- *   * app/brightness_contrast.c
- *   * app/by_color_select.c
- *   * app/color_balance.c
- *   * app/convert.c
- *   * app/curves.c
- *   * app/free_select.c
- *   * app/gdisplay.c
- *   * app/gimpimage.c
- *   * app/gimpunit.c
- *   * app/gradient.c
- *   * app/gradient_select.c
- *   * app/install.c
- *   * app/session.c: various i18n tweaks
- *
- *   * app/tips_dialog.c: localize tips filename
- *
- *   * libgimp/gimpunit.c
- *   * libgimp/gimpunitmenu.c: #include "config.h"
- *
- *   * plug-ins/CEL
- *   * plug-ins/CML_explorer
- *   * plug-ins/Lighting
- *   * plug-ins/apply_lens
- *   * plug-ins/autostretch_hsv
- *   * plug-ins/blur
- *   * plug-ins/bmp
- *   * plug-ins/borderaverage
- *   * plug-ins/bumpmap
- *   * plug-ins/bz2
- *   * plug-ins/checkerboard
- *   * plug-ins/colorify
- *   * plug-ins/compose
- *   * plug-ins/convmatrix
- *   * plug-ins/cubism
- *   * plug-ins/depthmerge
- *   * plug-ins/destripe
- *   * plug-ins/gif
- *   * plug-ins/gifload
- *   * plug-ins/jpeg
- *   * plug-ins/mail
- *   * plug-ins/oilify
- *   * plug-ins/png
- *   * plug-ins/print
- *   * plug-ins/ps
- *   * plug-ins/xbm
- *   * plug-ins/xpm
- *   * plug-ins/xwd: plug-in i18n stuff
- *
- *   -Yosh
- *
- *   Revision 1.10  1998/08/28 23:01:44  yosh
- *   * acconfig.h
- *   * configure.in
- *   * app/main.c: added check for putenv and #ifdefed it's usage since NeXTStep is
- *   lame
- *
- *   * libgimp/gimp.c
- *   * app/main.c
- *   * app/plug_in.c: conditionally compile shared mem stuff so platforms without
- *   it can still work
- *
- *   * plug-ins/CEL/CEL.c
- *   * plug-ins/palette/palette.c
- *   * plug-ins/print/print-escp2.c
- *   * plug-ins/print/print-pcl.c
- *   * plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
- *
- *   -Yosh
- *
- *   Revision 1.9  1998/05/17 07:16:45  yosh
- *   0.99.31 fun
- *
- *   updated print plugin
- *
- *   -Yosh
- *
- *   Revision 1.11  1998/05/15  21:01:51  mike
- *   Updated image positioning code (invert top and center left/top independently)
- *
- *   Revision 1.10  1998/05/08  21:18:34  mike
- *   Now enable microweaving in 720 DPI mode.
- *
- *   Revision 1.9  1998/05/08  20:49:43  mike
- *   Updated to support media size, imageable area, and parameter functions.
- *   Added support for scaling modes - scale by percent or scale by PPI.
- *
- *   Revision 1.8  1998/01/21  21:33:47  mike
- *   Updated copyright.
- *
- *   Revision 1.7  1997/11/12  15:57:48  mike
- *   Minor changes for clean compiles under Digital UNIX.
- *
- *   Revision 1.7  1997/11/12  15:57:48  mike
- *   Minor changes for clean compiles under Digital UNIX.
- *
- *   Revision 1.6  1997/07/30  20:33:05  mike
- *   Final changes for 1.1 release.
- *
- *   Revision 1.6  1997/07/30  20:33:05  mike
- *   Final changes for 1.1 release.
- *
- *   Revision 1.5  1997/07/30  18:47:39  mike
- *   Added scaling, orientation, and offset options.
- *
- *   Revision 1.4  1997/07/15  20:57:11  mike
- *   Updated ESC 800/1520/3000 output code to use vertical spacing of 5 instead of 40.
- *
- *   Revision 1.3  1997/07/03  13:21:15  mike
- *   Updated documentation for 1.0 release.
- *
- *   Revision 1.2  1997/07/03  13:03:57  mike
- *   Added horizontal offset to try to center image.
- *   Got rid of initial vertical positioning since the top margin is
- *   now set properly.
- *
- *   Revision 1.2  1997/07/03  13:03:57  mike
- *   Added horizontal offset to try to center image.
- *   Got rid of initial vertical positioning since the top margin is
- *   now set properly.
- *
- *   Revision 1.1  1997/07/02  13:51:53  mike
- *   Initial revision
+ *   See ChangeLog
  */
 
 /*
@@ -1046,7 +770,11 @@ escp2_print(int       model,		/* I - Model */
       if (output_type == OUTPUT_GRAY)
       {
         dither_black(out, x, image_height, out_width, black);
-        escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+       if (use_softweave)
+         escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+                           cyan, magenta, yellow, black, lcyan, lmagenta);
+       else
+         escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
       }
       else if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
       {
@@ -1134,7 +862,11 @@ escp2_print(int       model,		/* I - Model */
       if (output_type == OUTPUT_GRAY)
       {
         dither_black(out, y, image_width, out_width, black);
-        escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+       if (use_softweave)
+         escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+                           cyan, magenta, yellow, black, lcyan, lmagenta);
+       else
+         escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
       }
       else if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
       {
@@ -1570,6 +1302,7 @@ static int vertical_subpasses;	/* Number of passes per line (for better */
 				/* quality) */
 static int vmod;		/* Number of banks of passes */
 static int oversample;		/* Excess precision per row */
+static int is_monochrome = 0;
 
 /*
  * Mapping between color and linear index.  The colors are
@@ -1873,7 +1606,7 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
     {
       for (j = 0; j < 6; j++)
 	{
-	  if (lineoffs[k].v[j] == 0)
+	  if (lineoffs[k].v[j] == 0 || (j > 0 && is_monochrome))
 	    continue;
 	  if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
 	    fprintf(prn, "\033(r\002%c%c%c", 0, densities[j], colors[j]);
@@ -2151,6 +1884,10 @@ escp2_write_weave(FILE          *prn,	/* I - Print file or command */
   cols[3] = y;
   cols[4] = M;
   cols[5] = C;
+  if (!c)
+    is_monochrome = 1;
+  else
+    is_monochrome = 0;
 
   initialize_row(lineno, width);
   

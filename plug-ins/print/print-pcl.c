@@ -31,205 +31,7 @@
  *
  * Revision History:
  *
- *   $Log$
- *   Revision 1.13  2000/01/26 16:00:48  neo
- *   updated print plug-in
- *
- *
- *   --Sven
- *
- *   Revision 1.14  2000/01/08 23:30:56  rlk
- *   Y2K copyright
- *
- *   Revision 1.13  1999/11/23 02:11:37  rlk
- *   Rationalize variables, pass 3
- *
- *   Revision 1.12  1999/11/23 01:45:00  rlk
- *   Rationalize variables -- pass 2
- *
- *   Revision 1.11  1999/11/10 01:13:44  rlk
- *   multi-pass
- *
- *   Revision 1.10  1999/10/26 23:36:51  rlk
- *   Comment out all remaining 16-bit code, and rename 16-bit functions to "standard" names
- *
- *   Revision 1.9  1999/10/26 02:10:30  rlk
- *   Mostly fix save/load
- *
- *   Move all gimp, glib, gtk stuff into print.c (take it out of everything else).
- *   This should help port it to more general purposes later.
- *
- *   Revision 1.8  1999/10/25 23:31:59  rlk
- *   16-bit clean
- *
- *   Revision 1.7  1999/10/21 01:27:37  rlk
- *   More progress toward full 16-bit rendering
- *
- *   Revision 1.6  1999/10/19 02:04:59  rlk
- *   Merge all of the single-level print_cmyk functions
- *
- *   Revision 1.5  1999/10/17 23:44:07  rlk
- *   16-bit everything (untested)
- *
- *   Revision 1.4  1999/10/17 23:01:01  rlk
- *   Move various dither functions into print-utils.c
- *
- *   Revision 1.3  1999/10/14 01:59:59  rlk
- *   Saturation
- *
- *   Revision 1.2  1999/09/12 00:12:24  rlk
- *   Current best stuff
- *
- *   Revision 1.11  1999/05/29 16:35:27  yosh
- *   * configure.in
- *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
- *   GIMP_MODULES so you can easily skip those parts of the build
- *
- *   * acinclude.m4
- *   * config.sub
- *   * config.guess
- *   * ltconfig
- *   * ltmain.sh: libtool 1.3.2
- *
- *   * app/fileops.c: shuffle #includes to avoid warning about MIN and
- *   MAX
- *
- *   [ The following is a big i18n patch from David Monniaux
- *     <david.monniaux@ens.fr> ]
- *
- *   * tips/gimp_conseils.fr.txt
- *   * tips/gimp_tips.txt
- *   * tips/Makefile.am
- *   * configure.in: moved tips to separate dir
- *
- *   * po-plugins: new dir for plug-in translation files
- *
- *   * configure.in: add po-plugins dir and POTFILES processing
- *
- *   * app/boundary.c
- *   * app/brightness_contrast.c
- *   * app/by_color_select.c
- *   * app/color_balance.c
- *   * app/convert.c
- *   * app/curves.c
- *   * app/free_select.c
- *   * app/gdisplay.c
- *   * app/gimpimage.c
- *   * app/gimpunit.c
- *   * app/gradient.c
- *   * app/gradient_select.c
- *   * app/install.c
- *   * app/session.c: various i18n tweaks
- *
- *   * app/tips_dialog.c: localize tips filename
- *
- *   * libgimp/gimpunit.c
- *   * libgimp/gimpunitmenu.c: #include "config.h"
- *
- *   * plug-ins/CEL
- *   * plug-ins/CML_explorer
- *   * plug-ins/Lighting
- *   * plug-ins/apply_lens
- *   * plug-ins/autostretch_hsv
- *   * plug-ins/blur
- *   * plug-ins/bmp
- *   * plug-ins/borderaverage
- *   * plug-ins/bumpmap
- *   * plug-ins/bz2
- *   * plug-ins/checkerboard
- *   * plug-ins/colorify
- *   * plug-ins/compose
- *   * plug-ins/convmatrix
- *   * plug-ins/cubism
- *   * plug-ins/depthmerge
- *   * plug-ins/destripe
- *   * plug-ins/gif
- *   * plug-ins/gifload
- *   * plug-ins/jpeg
- *   * plug-ins/mail
- *   * plug-ins/oilify
- *   * plug-ins/png
- *   * plug-ins/print
- *   * plug-ins/ps
- *   * plug-ins/xbm
- *   * plug-ins/xpm
- *   * plug-ins/xwd: plug-in i18n stuff
- *
- *   -Yosh
- *
- *   Revision 1.10  1998/08/28 23:01:45  yosh
- *   * acconfig.h
- *   * configure.in
- *   * app/main.c: added check for putenv and #ifdefed it's usage since NeXTStep is
- *   lame
- *
- *   * libgimp/gimp.c
- *   * app/main.c
- *   * app/plug_in.c: conditionally compile shared mem stuff so platforms without
- *   it can still work
- *
- *   * plug-ins/CEL/CEL.c
- *   * plug-ins/palette/palette.c
- *   * plug-ins/print/print-escp2.c
- *   * plug-ins/print/print-pcl.c
- *   * plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
- *
- *   -Yosh
- *
- *   Revision 1.9  1998/05/17 07:16:46  yosh
- *   0.99.31 fun
- *
- *   updated print plugin
- *
- *   -Yosh
- *
- *   Revision 1.12  1998/05/16  18:27:59  mike
- *   Added support for 4-level "CRet" mode of 800/1100 series printers.
- *
- *   Revision 1.11  1998/05/15  21:01:51  mike
- *   Updated image positioning code (invert top and center left/top independently)
- *
- *   Revision 1.10  1998/05/08  21:22:00  mike
- *   Added quality mode command for DeskJet printers (high quality for 300
- *   DPI or higher).
- *
- *   Revision 1.9  1998/05/08  19:20:50  mike
- *   Updated to support media size, imageable area, and parameter functions.
- *   Added support for scaling modes - scale by percent or scale by PPI.
- *
- *   Revision 1.8  1998/01/21  21:33:47  mike
- *   Updated copyright.
- *
- *   Revision 1.7  1997/11/12  15:57:48  mike
- *   Minor changes for clean compiles under Digital UNIX.
- *
- *   Revision 1.7  1997/11/12  15:57:48  mike
- *   Minor changes for clean compiles under Digital UNIX.
- *
- *   Revision 1.6  1997/10/02  17:57:26  mike
- *   Updated positioning code to use "decipoint" commands.
- *
- *   Revision 1.5  1997/07/30  20:33:05  mike
- *   Final changes for 1.1 release.
- *
- *   Revision 1.4  1997/07/30  18:47:39  mike
- *   Added scaling, orientation, and offset options.
- *
- *   Revision 1.3  1997/07/03  13:24:12  mike
- *   Updated documentation for 1.0 release.
- *
- *   Revision 1.2  1997/07/02  18:48:14  mike
- *   Added mode 2 compression code.
- *   Fixed bug in pcl_mode0 and pcl_mode2 - wasn't sending 'V' or 'W' at
- *   the right times.
- *
- *   Revision 1.2  1997/07/02  18:48:14  mike
- *   Added mode 2 compression code.
- *   Fixed bug in pcl_mode0 and pcl_mode2 - wasn't sending 'V' or 'W' at
- *   the right times.
- *
- *   Revision 1.1  1997/07/02  13:51:53  mike
- *   Initial revision
+ *   See ChangeLog
  */
 
 #include "print.h"
@@ -432,6 +234,7 @@ pcl_print(int       model,		/* I - Model */
   char 		*resolution = v->resolution;
   char 		*media_size = v->media_size;
   char 		*media_type = v->media_type;
+  char          *media_source = v->media_source;
   int 		output_type = v->output_type;
   int		orientation = v->orientation;
   float 	scaling = v->scaling;
@@ -693,15 +496,15 @@ pcl_print(int       model,		/* I - Model */
   else if (strcmp(media_type, "Transparency") == 0)
     fputs("\033&l4M", prn);
 
-  if (strcmp(media_type, "Manual") == 0)	/* Set media source */
+  if (strcmp(media_source, "Manual") == 0)	/* Set media source */
     fputs("\033&l2H", prn);
-  else if (strcmp(media_type, "Tray 1") == 0)
+  else if (strcmp(media_source, "Tray 1") == 0)
     fputs("\033&l8H", prn);
-  else if (strcmp(media_type, "Tray 2") == 0)
+  else if (strcmp(media_source, "Tray 2") == 0)
     fputs("\033&l1H", prn);
-  else if (strcmp(media_type, "Tray 3") == 0)
+  else if (strcmp(media_source, "Tray 3") == 0)
     fputs("\033&l4H", prn);
-  else if (strcmp(media_type, "Tray 4") == 0)
+  else if (strcmp(media_source, "Tray 4") == 0)
     fputs("\033&l5H", prn);
 
   if (model >= 500 && model < 1200 && xdpi >= 300)
