@@ -1,3 +1,13 @@
+2002-10-09  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-char-picker-22.png
+	* themes/Default/images/stock-letter-spacing-22.png
+	* themes/Default/images/stock-line-spacing-22.png: new icons taken
+	from #84151.
+
+	* libgimpwidgets/gimpstock.[ch]: added the new icons.
+
 2002-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainermenu.c

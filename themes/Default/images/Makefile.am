@@ -41,10 +41,13 @@ WILBER_VARIABLES = \
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
+	stock-char-picker-22.png		\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\
+	stock-line-spacing-22.png		\
 	stock-linked-20.png			\
+	stock-letter-spacing-22.png		\
 	stock-paste-as-new-16.png		\
 	stock-paste-into-16.png			\
 	stock-reset-16.png			\

@@ -35,6 +35,13 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
 <para>
 
@@ -113,6 +120,20 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 
 <!-- ##### MACRO GIMP_STOCK_LAYER_TO_IMAGESIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LETTER_SPACING ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LINE_SPACING ##### -->
 <para>
 
 </para>
