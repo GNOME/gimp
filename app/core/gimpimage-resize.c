@@ -98,6 +98,7 @@ enum {
   RESIZE,
   RESTRUCTURE,
   COLORMAP_CHANGED,
+  UNDO_EVENT,
   LAST_SIGNAL
 };
 
@@ -139,6 +140,9 @@ gimp_image_class_init (GimpImageClass *klass)
 			   gimp_sigtype_void);
   gimp_image_signals[COLORMAP_CHANGED] =
 	  gimp_signal_new ("colormap_changed", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_int);
+  gimp_image_signals[UNDO_EVENT] = 
+	  gimp_signal_new ("undo_event", GTK_RUN_FIRST, type, 0,
 			   gimp_sigtype_int);
   
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
@@ -3357,6 +3361,12 @@ gimp_image_enable_undo (GimpImage *gimage)
   undo_free (gimage);
 
   return gimp_image_thaw_undo (gimage);
+}
+
+void
+gimp_image_undo_event (GimpImage *gimage, int event)
+{
+    gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[UNDO_EVENT], event);
 }
 
 

@@ -167,18 +167,20 @@ nav_window_disp_area(NavWinData *iwd,GDisplay *gdisp)
   GimpImage *gimage;
   gint       newwidth;
   gint       newheight;
-  gdouble    ratio; /* Screen res ratio */
+  gdouble    xratio;
+  gdouble    yratio;     /* Screen res ratio */
   gboolean   need_update = FALSE;
 
   /* Calculate preview size */
   gimage = gdisp->gimage;
 
-  ratio = ((gdouble)SCALEDEST(gdisp))/((gdouble)SCALESRC(gdisp));
+  xratio = SCALEFACTOR_X(gdisp);
+  yratio = SCALEFACTOR_Y(gdisp);
 
-  iwd->dispx = gdisp->offset_x*iwd->ratio/ratio;
-  iwd->dispy = gdisp->offset_y*iwd->ratio/ratio;
-  iwd->dispwidth = (gdisp->disp_width*iwd->ratio)/ratio;
-  iwd->dispheight = (gdisp->disp_height*iwd->ratio)/ratio;
+  iwd->dispx = gdisp->offset_x*iwd->ratio/xratio;
+  iwd->dispy = gdisp->offset_y*iwd->ratio/yratio;
+  iwd->dispwidth = (gdisp->disp_width*iwd->ratio)/xratio;
+  iwd->dispheight = (gdisp->disp_height*iwd->ratio)/yratio;
 
   newwidth = gimage->width;
   newheight = gimage->height;
@@ -315,12 +317,9 @@ create_preview_widget(NavWinData *iwd)
   GtkWidget *hbox;  
   GtkWidget *image;
   GtkWidget *frame;
-  gdouble ratio;
   GDisplay *gdisp;
 
   gdisp = (GDisplay *)(iwd->gdisp_ptr);
-
-  ratio = ((gdouble)SCALEDEST(gdisp))/((gdouble)SCALESRC(gdisp));
 
   hbox = gtk_hbox_new(FALSE,0);
   iwd->previewBox = hbox;
@@ -369,14 +368,17 @@ static void
 update_real_view(NavWinData *iwd,gint tx,gint ty)
 {
   GDisplay *gdisp;
-  gdouble ratio;
+  gdouble xratio;
+  gdouble yratio;
   gint xoffset;
   gint yoffset;
   gint xpnt;
   gint ypnt;
 
   gdisp = (GDisplay *) iwd->gdisp_ptr;
-  ratio = ((gdouble)SCALEDEST(gdisp))/((gdouble)SCALESRC(gdisp));
+
+  xratio = SCALEFACTOR_X(gdisp);
+  yratio = SCALEFACTOR_Y(gdisp);
 
   if((tx + iwd->dispwidth) >= iwd->pwidth)
     {
@@ -385,12 +387,12 @@ update_real_view(NavWinData *iwd,gint tx,gint ty)
 			 */
     }
 
-  xpnt = (gint)(((gdouble)(tx)*ratio)/iwd->ratio);
+  xpnt = (gint)(((gdouble)(tx)*xratio)/iwd->ratio);
 
   if((ty + iwd->dispheight) >= iwd->pheight)
     ty = iwd->pheight; /* Same comment as for xpnt above. */
 
-  ypnt = (gint)(((gdouble)(ty)*ratio)/iwd->ratio);
+  ypnt = (gint)(((gdouble)(ty)*yratio)/iwd->ratio);
 
   xoffset = xpnt - gdisp->offset_x;
   yoffset = ypnt - gdisp->offset_y;

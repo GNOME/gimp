@@ -2015,7 +2015,7 @@ paths_first_button_press(BezierSelect *bezier_sel,GDisplay * gdisp)
   plp = (PATHIMAGELISTP)gimp_image_get_paths(gdisp->gimage);      
 
   /* Since beziers are part of the save format.. make the image dirty */
-/*   gimp_image_dirty(gdisp->gimage); */
+/*   undo_push_cantundo(gdisp->gimage, _("path modification")); */
   
   if(!paths_replaced_current(plp,bezier_sel))
     {

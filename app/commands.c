@@ -237,6 +237,25 @@ edit_redo_cmd_callback (GtkWidget *widget,
 }
 
 void
+edit_show_undo_history_cmd_callback (GtkWidget *widget,
+				     gpointer   client_data)
+{
+  GDisplay * gdisp;
+  GImage   * gimage;
+  return_if_no_display (gdisp);
+
+  gimage = gdisp->gimage;
+
+  if (!gimage->undo_history)
+      gimage->undo_history = undo_history_new (gimage);
+
+  if (!GTK_WIDGET_VISIBLE (gimage->undo_history))
+      gtk_widget_show (gimage->undo_history);
+  else
+      gdk_window_raise (gimage->undo_history->window);
+}
+
+void
 edit_named_cut_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {

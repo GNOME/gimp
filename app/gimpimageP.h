@@ -27,6 +27,7 @@
 #include "layer.h"
 #include "parasitelistF.h"
 #include "pathsP.h"
+#include "undo_types.h"
 
 
 #define MAX_CHANNELS     4
@@ -98,7 +99,8 @@ struct _GimpImage
   gint    undo_bytes;                 /*  bytes in undo stack          */
   gint    undo_levels;                /*  levels in undo stack         */
   gint    group_count;		      /*  nested undo groups           */
-  gint    pushing_undo_group;         /*  undo group status flag       */
+  undo_type pushing_undo_group;       /*  undo group status flag       */
+  GtkWidget *undo_history;	      /*  history viewer, or NULL      */
 
                                       /*  Composite preview  */
   TempBuf *comp_preview;              /*  the composite preview        */

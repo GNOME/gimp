@@ -1,3 +1,60 @@
+Mon Sep 20 12:51:30 EDT 1999  Austin Donnelly  <austin@gimp.org>
+
+	Honest, guv, it's not a feature - it's a tightly integrated
+	package of undo system cleanups and fixes.
+
+	NEW FILES:
+	* app/undo_history.c: window showing recent undo (and redo) steps
+	    available.
+	* app/undo_types.h: broken out of undo.h to fix circular includes.
+
+	MODIFIED FILES:
+	* app/Makefile.am: compile undo_history.c
+	* app/channel.h: use enum for channel undo type, not just magic
+	    numbers.
+	* app/layer.h: same for layer undos.
+	* app/commands.c: edit_show_undo_history_cmd_callback() function to
+	    pull up undo history window.
+	* app/commands.h: prototype for above.
+	* app/gdisplay.c: make undo / redo menu items sensitive according
+	    to whether they would do anything.  Would be easy to change
+	    the text to say what would be undone/redone, but I don't know
+	    the GTK.
+	* app/gimpimage.c: new signal emitted by gimage:
+	    UNDO_EVENT. gimp_image_undo_event() function to emit it.
+	* app/gimpimage.h: prototype for above.
+	* app/gimpimageP.h: pushing_undo_group member is now an undo_type,
+	    not an int.  Keep undo history widget here too (if created).
+	* app/menus.c: add "Edit/Undo history..." to image menu.
+	* app/undo.c: new types: enums undo_type and undo_state rather than
+	    ints and magic numbers.  All undo_pop_* and undo_free_*
+	    functions made static.  New static function
+	    undo_type_to_name().  Issue undo event signals on various
+	    important events (eg undo pushed, undo popped etc).
+	    undo_push() now takes a "dirties_image" arg to say whether
+	    image should be dirtied.  Layer moves now dirty the image.  A
+	    couple of g_return_if_fails () on undo_pop and undo_redo to
+	    assert we're not in the middle of an undo group.
+	    undo_get_{undo,redo}_name() to peek at names of top items on
+	    undo and redo stacks resp.   undo_map_over_{undo,redo}_stack()
+	    to run a function for each item or group on stack.  Layer and
+	    channel undos use symbolic names rather than 0 or 1.  Array
+	    mapping undo types to names.
+	* app/undo.h: split out undo types to undo_types.h.  Prototypes
+	    for functions described above.  undo_event_t enum.
+	    undo_history_new() prototype lives here too.
+
+	Random other fixes:
+	* app/gimpdrawable.c
+	* app/image_render.c: default labels in switches to keep egcs happy.
+
+	* app/nav_window.c: some fixes to (sort of) cope with image res !=
+	    screen res.  Still needs work to handle non-square pixels
+	    properly.
+
+	* app/paths_dialog.c: bad idea to call gimp_image_dirty()
+	    directly.  Even though it's currently commented out.
+
 Mon Sep 20 18:23:18 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* configure.in: Add app/unittest/Makefile

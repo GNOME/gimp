@@ -18,49 +18,15 @@
 #ifndef __UNDO_H__
 #define __UNDO_H__
 
+
+#include "undo_types.h"
+
 #include "gimage.h"
 
-/*  Undo types  */
-#define      IMAGE_UNDO              1
-#define      IMAGE_MOD_UNDO          2
-#define      MASK_UNDO               3
-#define      LAYER_DISPLACE_UNDO     4
-#define      TRANSFORM_UNDO          5
-#define      PAINT_UNDO              6
-#define      LAYER_UNDO              7
-#define      LAYER_MOD               8
-#define      LAYER_MASK_UNDO         9
-#define      LAYER_CHANGE            10
-#define      LAYER_POSITION          11
-#define      CHANNEL_UNDO            12
-#define      CHANNEL_MOD             13
-#define      FS_TO_LAYER_UNDO        14
-#define      GIMAGE_MOD              15
-#define      FS_RIGOR                16
-#define      FS_RELAX                17
-#define      GUIDE_UNDO              18
-
-/*  Aggregate undo types  */
-#define      FLOAT_MASK_UNDO         20
-#define      EDIT_PASTE_UNDO         21
-#define      EDIT_CUT_UNDO           22
-#define      TRANSFORM_CORE_UNDO     23
-#define      PAINT_CORE_UNDO         24
-#define      FLOATING_LAYER_UNDO     25
-#define      LINKED_LAYER_UNDO       26
-#define      LAYER_APPLY_MASK_UNDO   27
-#define      LAYER_MERGE_UNDO        28
-#define      FS_ANCHOR_UNDO          29
-#define      GIMAGE_MOD_UNDO         30
-#define      CROP_UNDO               31
-#define      LAYER_SCALE_UNDO        32
-#define      LAYER_RESIZE_UNDO       33
-#define      QMASK_UNDO		     34
-#define      MISC_UNDO               100
 
 /*  Undo interface functions  */
 
-int      undo_push_group_start       (GImage *, int);
+int      undo_push_group_start       (GImage *, undo_type);
 int      undo_push_group_end         (GImage *);
 int      undo_push_image             (GImage *, GimpDrawable *, int, int, int, int);
 int      undo_push_image_mod         (GImage *, GimpDrawable *, int, int, int, int, void *, int);
@@ -93,5 +59,28 @@ int      undo_pop                    (GImage *);
 int      undo_redo                   (GImage *);
 void     undo_free                   (GImage *);
 
+const char *undo_get_undo_name (GImage *);
+const char *undo_get_redo_name (GImage *);
+
+/* Stack peeking functions */
+typedef int (*undo_map_fn) (const char *undoitemname, void *data);
+void undo_map_over_undo_stack (GImage *, undo_map_fn, void *data);
+void undo_map_over_redo_stack (GImage *, undo_map_fn, void *data);
+
+
+/* Not really appropriate here, since undo_history_new is not defined
+ * in undo.c, but it saves on having a full header file for just one
+ * function prototype. */
+GtkWidget *undo_history_new (GImage *gimage);
+
+
+/* Argument to undo_event signal emitted by gimages: */
+typedef enum {
+    UNDO_PUSHED,	/* a new undo has been added to the undo stack */
+    UNDO_EXPIRED,	/* an undo has been freed from the undo stack */
+    UNDO_POPPED,	/* an undo has been executed and moved to redo stack */
+    UNDO_REDO,		/* a redo has been executed and moved to undo stack */
+    UNDO_FREE		/* all undo and redo info has been cleared */
+} undo_event_t;
 
 #endif  /* __UNDO_H__ */

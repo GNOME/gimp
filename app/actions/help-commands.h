@@ -22,6 +22,7 @@ void edit_fill_cmd_callback         (GtkWidget *, gpointer);
 void edit_stroke_cmd_callback       (GtkWidget *, gpointer);
 void edit_undo_cmd_callback         (GtkWidget *, gpointer);
 void edit_redo_cmd_callback         (GtkWidget *, gpointer);
+void edit_show_undo_history_cmd_callback (GtkWidget *, gpointer);
 void edit_named_cut_cmd_callback    (GtkWidget *, gpointer);
 void edit_named_copy_cmd_callback   (GtkWidget *, gpointer);
 void edit_named_paste_cmd_callback  (GtkWidget *, gpointer);

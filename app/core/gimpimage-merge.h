@@ -249,6 +249,7 @@ gboolean           gimp_image_enable_undo          (GimpImage *);
 gboolean           gimp_image_disable_undo         (GimpImage *);
 gboolean           gimp_image_freeze_undo          (GimpImage *);
 gboolean           gimp_image_thaw_undo            (GimpImage *);
+void		   gimp_image_undo_event	   (GimpImage *, int);
 gint               gimp_image_dirty                (GimpImage *);
 gint               gimp_image_clean                (GimpImage *);
 void               gimp_image_clean_all            (GimpImage *);

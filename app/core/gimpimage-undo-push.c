@@ -48,77 +48,82 @@
 #include "libgimp/gimpintl.h"
 #include "gimpparasite.h"
 
+typedef enum {
+    UNDO = 0,
+    REDO = 1
+} undo_state;
 
 
-typedef int   (* UndoPopFunc)  (GImage *, int, int, void *);
-typedef void  (* UndoFreeFunc) (int, void *);
+typedef int   (* UndoPopFunc)  (GImage *, undo_state, undo_type, void *);
+typedef void  (* UndoFreeFunc) (undo_state, void *);
 
 typedef struct _undo Undo;
 
 struct _undo
 {
-  int           type;           /*  undo type                           */
-  void *        data;           /*  data to implement the undo          */
-  long          bytes;          /*  size of undo item                   */
+  undo_type     type;          /* undo type                           */
+  void *        data;          /* data to implement the undo, NULL for group */
+  long          bytes;         /* size of undo item                   */
+  gboolean      dirties_image; /* TRUE if undo mutates image */
 
-  UndoPopFunc   pop_func;       /*  function pointer to undo pop proc   */
-  UndoFreeFunc  free_func;      /*  function with specifics for freeing */
+  UndoPopFunc   pop_func;      /* function pointer to undo pop proc   */
+  UndoFreeFunc  free_func;     /* function with specifics for freeing */
 };
 
 /*  Pop functions  */
 
-int      undo_pop_image            (GImage *, int, int, void *);
-int      undo_pop_mask             (GImage *, int, int, void *);
-int      undo_pop_layer_displace   (GImage *, int, int, void *);
-int      undo_pop_transform        (GImage *, int, int, void *);
-int      undo_pop_paint            (GImage *, int, int, void *);
-int      undo_pop_layer            (GImage *, int, int, void *);
-int      undo_pop_layer_mod        (GImage *, int, int, void *);
-int      undo_pop_layer_mask       (GImage *, int, int, void *);
-int      undo_pop_channel          (GImage *, int, int, void *);
-int      undo_pop_channel_mod      (GImage *, int, int, void *);
-int      undo_pop_fs_to_layer      (GImage *, int, int, void *);
-int      undo_pop_fs_rigor         (GImage *, int, int, void *);
-int      undo_pop_fs_relax         (GImage *, int, int, void *);
-int      undo_pop_gimage_mod       (GImage *, int, int, void *);
-int      undo_pop_guide            (GImage *, int, int, void *);
-int      undo_pop_parasite         (GImage *, int, int, void *);
-int      undo_pop_qmask		   (GImage *, int, int, void *);
-static int undo_pop_layer_rename   (GImage *, int, int, void *);
-static int undo_pop_cantundo       (GImage *, int, int, void *);
+static int undo_pop_image            (GImage *, undo_state, undo_type, void *);
+static int undo_pop_mask             (GImage *, undo_state, undo_type, void *);
+static int undo_pop_layer_displace   (GImage *, undo_state, undo_type, void *);
+static int undo_pop_transform        (GImage *, undo_state, undo_type, void *);
+static int undo_pop_paint            (GImage *, undo_state, undo_type, void *);
+static int undo_pop_layer            (GImage *, undo_state, undo_type, void *);
+static int undo_pop_layer_mod        (GImage *, undo_state, undo_type, void *);
+static int undo_pop_layer_mask       (GImage *, undo_state, undo_type, void *);
+static int undo_pop_channel          (GImage *, undo_state, undo_type, void *);
+static int undo_pop_channel_mod      (GImage *, undo_state, undo_type, void *);
+static int undo_pop_fs_to_layer      (GImage *, undo_state, undo_type, void *);
+static int undo_pop_fs_rigor         (GImage *, undo_state, undo_type, void *);
+static int undo_pop_fs_relax         (GImage *, undo_state, undo_type, void *);
+static int undo_pop_gimage_mod       (GImage *, undo_state, undo_type, void *);
+static int undo_pop_guide            (GImage *, undo_state, undo_type, void *);
+static int undo_pop_parasite         (GImage *, undo_state, undo_type, void *);
+static int undo_pop_qmask            (GImage *, undo_state, undo_type, void *);
+static int undo_pop_layer_rename     (GImage *, undo_state, undo_type, void *);
+static int undo_pop_cantundo         (GImage *, undo_state, undo_type, void *);
 
 
 /*  Free functions  */
 
-void     undo_free_image           (int, void *);
-void     undo_free_mask            (int, void *);
-void     undo_free_layer_displace  (int, void *);
-void     undo_free_transform       (int, void *);
-void     undo_free_paint           (int, void *);
-void     undo_free_layer           (int, void *);
-void     undo_free_layer_mod       (int, void *);
-void     undo_free_layer_mask      (int, void *);
-void     undo_free_channel         (int, void *);
-void     undo_free_channel_mod     (int, void *);
-void     undo_free_fs_to_layer     (int, void *);
-void     undo_free_fs_rigor        (int, void *);
-void     undo_free_fs_relax        (int, void *);
-void     undo_free_gimage_mod      (int, void *);
-void     undo_free_guide           (int, void *);
-void     undo_free_parasite        (int, void *);
-void     undo_free_qmask           (int, void *);
-static void undo_free_layer_rename (int, void *);
-static void undo_free_cantundo     (int, void *);
+static void     undo_free_image           (undo_state, void *);
+static void     undo_free_mask            (undo_state, void *);
+static void     undo_free_layer_displace  (undo_state, void *);
+static void     undo_free_transform       (undo_state, void *);
+static void     undo_free_paint           (undo_state, void *);
+static void     undo_free_layer           (undo_state, void *);
+static void     undo_free_layer_mod       (undo_state, void *);
+static void     undo_free_layer_mask      (undo_state, void *);
+static void     undo_free_channel         (undo_state, void *);
+static void     undo_free_channel_mod     (undo_state, void *);
+static void     undo_free_fs_to_layer     (undo_state, void *);
+static void     undo_free_fs_rigor        (undo_state, void *);
+static void     undo_free_fs_relax        (undo_state, void *);
+static void     undo_free_gimage_mod      (undo_state, void *);
+static void     undo_free_guide           (undo_state, void *);
+static void     undo_free_parasite        (undo_state, void *);
+static void     undo_free_qmask           (undo_state, void *);
+static void     undo_free_layer_rename    (undo_state, void *);
+static void     undo_free_cantundo        (undo_state, void *);
 
 
 /*  Sizing functions  */
 static int   layer_size            (Layer *);
 static int   channel_size          (Channel *);
 
+static const char *undo_type_to_name (undo_type);
+
 static int   shrink_wrap = FALSE;
 
-#define UNDO          0
-#define REDO          1
 
 static int
 layer_size (Layer *layer)
@@ -149,9 +154,9 @@ channel_size (Channel *channel)
 
 
 static void
-undo_free_list (GImage   *gimage,
-		int       state,
-		GSList   *list)
+undo_free_list (GImage     *gimage,
+		undo_state  state,
+		GSList     *list)
 {
   GSList * orig;
   Undo * undo;
@@ -197,6 +202,8 @@ remove_stack_bottom (GImage *gimage)
 	  if (last)
 	    last->next = NULL;
 	  list = NULL;
+
+	  gimp_image_undo_event (gimage, UNDO_EXPIRED);
 	}
       else
 	{
@@ -208,7 +215,7 @@ remove_stack_bottom (GImage *gimage)
 	   */
 	  if ((list->data && !in_group) ||
 	      (!list->data && !in_group))
-	  last = list;
+	      last = list;
 
 	  list = g_slist_next (list);
 	}
@@ -242,11 +249,17 @@ undo_free_up_space (GImage *gimage)
 
 
 static Undo *
-undo_push (GImage *gimage,
-	   long    size,
-	   int     type)
+undo_push (GImage   *gimage,
+	   long      size,
+	   undo_type type,
+	   gboolean  dirties_image)
 {
   Undo * new;
+
+  /* Does this undo dirty the image?  If so, we always want to mark
+   * image dirty, even if we can't actually push the undo. */
+  if (dirties_image)
+      gimp_image_dirty (gimage);
 
   if (! gimage->undo_on)
     return NULL;
@@ -275,6 +288,7 @@ undo_push (GImage *gimage,
 
   new->bytes = size;
   gimage->undo_bytes += size;
+  new->dirties_image = dirties_image;
   if (!gimage->pushing_undo_group)  /*  only increment levels if not in a group  */
     {
       new->type = type;
@@ -285,15 +299,20 @@ undo_push (GImage *gimage,
 
   gimage->undo_stack = g_slist_prepend (gimage->undo_stack, (void *) new);
 
+  /* lastly, tell people about the newly pushed undo (must come after
+   * modification of undo_stack).  */
+  if (!gimage->pushing_undo_group)
+      gimp_image_undo_event (gimage, UNDO_PUSHED);
+
   return new;
 }
 
 
 static int
-pop_stack (GImage  *gimage,
-	   GSList **stack_ptr,
-	   GSList **unstack_ptr,
-	   int      state)
+pop_stack (GImage      *gimage,
+	   GSList     **stack_ptr,
+	   GSList     **unstack_ptr,
+	   undo_state   state)
 {
   Undo * object;
   GSList *stack;
@@ -324,7 +343,21 @@ pop_stack (GImage  *gimage,
 	}
       else
 	{
-	  status = (* object->pop_func) (gimage, state, object->type, object->data);
+	  status = (* object->pop_func) (gimage, state, object->type,
+					 object->data);
+
+	  if (object->dirties_image)
+	  {
+	      switch (state) {
+	      case UNDO:
+		  gimp_image_clean (gimage);
+		  break;
+	      case REDO:
+		  gimp_image_dirty (gimage);
+		  break;
+	      }
+	  }
+
 	  if (!in_group)
 	    gimage->undo_levels += (state == UNDO) ? -1 : 1;
 	}
@@ -369,6 +402,10 @@ pop_stack (GImage  *gimage,
 	      shrink_wrap = FALSE;
 	    }
 
+	  /* let others know that we just popped an action */
+	  gimp_image_undo_event (gimage,
+				 (state == UNDO)? UNDO_POPPED : UNDO_REDO);
+
 	  return TRUE;
 	}
     }
@@ -377,9 +414,17 @@ pop_stack (GImage  *gimage,
 }
 
 
+
 int
 undo_pop (GImage *gimage)
 {
+  /* Very bad idea to pop an action off the undo stack if we're in the
+   * middle of a group, since the whole group won't be popped.  Might
+   * leave unbalanced group start marker earlier in the stack too,
+   * causing much confusion when it's later reached and
+   * mis-interpreted as a group start.  */
+  g_return_val_if_fail (gimage->pushing_undo_group == 0, FALSE);
+
   return pop_stack (gimage, &gimage->undo_stack, &gimage->redo_stack, UNDO);
 }
 
@@ -387,8 +432,114 @@ undo_pop (GImage *gimage)
 int
 undo_redo (GImage *gimage)
 {
+  /* ditto for redo stack */
+  g_return_val_if_fail (gimage->pushing_undo_group == 0, FALSE);
+
   return pop_stack (gimage, &gimage->redo_stack, &gimage->undo_stack, REDO);
 }
+
+
+
+/* Return the name of the action that would be used if undo_pop or
+ * undo_redo is called, or NULL if there are no actions pushed on the
+ * stack.  */
+static const char *
+undo_get_topitem_name (GSList *stack)
+{
+    Undo *undo;
+
+    if (!stack)
+	return NULL;
+
+    undo = stack->data;
+
+    /* is this the start of an undo group? */
+    if (!undo)
+    {
+	/* Peek at the next action's type. All actions in an undo
+	 * group have the same type, that of the group. */
+	stack = g_slist_next (stack);
+	g_return_val_if_fail (stack != NULL, NULL);
+
+	undo = stack->data;
+	g_return_val_if_fail (undo != NULL, NULL); /* empty group? */
+    }
+    
+    return undo_type_to_name (undo->type);
+}
+
+const char *
+undo_get_undo_name (GImage *gimage)
+{
+    g_return_val_if_fail (gimage != NULL, NULL);
+
+    /* don't want to encourage undo while a group is open */
+    if (gimage->pushing_undo_group != 0)
+	return NULL;
+
+    return undo_get_topitem_name (gimage->undo_stack);
+}
+
+
+const char *
+undo_get_redo_name (GImage *gimage)
+{
+    g_return_val_if_fail (gimage != NULL, NULL);
+
+    /* don't want to encourage redo while a group is open */
+    if (gimage->pushing_undo_group != 0)
+	return NULL;
+
+    return undo_get_topitem_name (gimage->redo_stack);
+}
+
+
+
+
+static void
+undo_map_over_stack (GSList *stack, undo_map_fn fn, void *data)
+{
+    int in_group = 0;
+    int count = 0;
+    Undo *undo;
+
+    while (stack)
+    {
+	if (stack->data == NULL)
+	    in_group = !in_group;
+
+	/* keep track of group length.  0 means not in group, 1 is
+         * group start, >= 2 are group members */
+	if (in_group)
+	    count++;
+	else
+	    count = 0;
+
+	/* non-groups + initial group member */
+	if (stack->data && (count <= 2))
+	{
+	    undo = stack->data;
+	    if (fn (undo_type_to_name (undo->type), data))
+		return; /* early termination option exercised */
+	}
+
+	stack = g_slist_next (stack);
+    }
+}
+
+void
+undo_map_over_undo_stack (GImage *gimage, undo_map_fn fn, void *data)
+{
+    undo_map_over_stack (gimage->undo_stack, fn, data);
+}
+
+void
+undo_map_over_redo_stack (GImage *gimage, undo_map_fn fn, void *data)
+{
+    undo_map_over_stack (gimage->redo_stack, fn, data);
+}
+
+
 
 
 void
@@ -412,6 +563,8 @@ undo_free (GImage *gimage)
   /* The same applies to the case where the image would become clean
    * due to undo actions, but since user can't undo without an undo
    * stack, that's not so much a problem. */
+
+  gimp_image_undo_event (gimage, UNDO_FREE);
 }
 
 
@@ -419,11 +572,15 @@ undo_free (GImage *gimage)
 /*  group Undo funcs  */
 
 int
-undo_push_group_start (GImage *gimage,
-		       int     type)
+undo_push_group_start (GImage    *gimage,
+		       undo_type  type)
 {
   if (! gimage->undo_on)
     return FALSE;
+
+  /* Bad idea to push 0 as the group type, since that won't
+   * be recognized as the start of the group later. */
+  g_return_val_if_fail (type != 0, FALSE);
 
   gimage->group_count ++;
 
@@ -467,6 +624,10 @@ undo_push_group_end (GImage *gimage)
     {
       gimage->pushing_undo_group = 0;
       gimage->undo_stack = g_slist_prepend (gimage->undo_stack, NULL);
+
+      /* Do it here, since undo_push doesn't emit this event while in the
+       * middle of a group */
+      gimp_image_undo_event (gimage, UNDO_PUSHED);
     }
 
   return TRUE;
@@ -501,8 +662,7 @@ undo_push_image (GImage       *gimage,
   TileManager *tiles;
   PixelRegion srcPR, destPR;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (drawable);
 
   x1 = BOUNDS (x1, 0, drawable_width (drawable));
@@ -512,7 +672,7 @@ undo_push_image (GImage       *gimage,
 
   size = (x2 - x1) * (y2 - y1) * drawable_bytes (drawable) + sizeof (void *) * 2;
 
-  if ((new = undo_push (gimage, size, IMAGE_UNDO)))
+  if ((new = undo_push (gimage, size, IMAGE_UNDO, TRUE)))
     {
       image_undo = (ImageUndo *) g_malloc (sizeof (ImageUndo));
 
@@ -560,8 +720,7 @@ undo_push_image_mod (GImage       *gimage,
   ImageUndo *image_undo;
   TileManager *tiles;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (drawable);
 
   if (! tiles_ptr)
@@ -579,7 +738,7 @@ undo_push_image_mod (GImage       *gimage,
   size = tiles->width * tiles->height *
     tiles->bpp + sizeof (void *) * 2;
 
-  if ((new = undo_push (gimage, size, IMAGE_MOD_UNDO)))
+  if ((new = undo_push (gimage, size, IMAGE_MOD_UNDO, TRUE)))
     {
       image_undo = (ImageUndo *) g_malloc (sizeof (ImageUndo));
       image_undo->tiles = tiles;
@@ -604,11 +763,11 @@ undo_push_image_mod (GImage       *gimage,
 }
 
 
-int
-undo_pop_image (GImage *gimage,
-		int     state,
-		int     type,
-		void   *image_undo_ptr)
+static int
+undo_pop_image (GImage    *gimage,
+		undo_state state,
+		undo_type  type,
+		void      *image_undo_ptr)
 {
   ImageUndo *image_undo;
   TileManager *tiles;
@@ -622,11 +781,9 @@ undo_pop_image (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (image_undo->drawable);
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (image_undo->drawable);
       break;
     }
@@ -688,9 +845,9 @@ undo_pop_image (GImage *gimage,
 }
 
 
-void
-undo_free_image (int   state,
-		 void *image_undo_ptr)
+static void
+undo_free_image (undo_state  state,
+		 void       *image_undo_ptr)
 {
   ImageUndo *image_undo;
 
@@ -718,7 +875,7 @@ undo_push_mask (GImage *gimage,
   else
     size = 0;
 
-  if ((new = undo_push (gimage, size, MASK_UNDO)))
+  if ((new = undo_push (gimage, size, MASK_UNDO, FALSE)))
     {
       new->data          = mask_undo;
       new->pop_func      = undo_pop_mask;
@@ -736,11 +893,11 @@ undo_push_mask (GImage *gimage,
 }
 
 
-int
-undo_pop_mask (GImage *gimage,
-	       int     state,
-	       int     type,
-	       void   *mask_ptr)
+static int
+undo_pop_mask (GImage     *gimage,
+	       undo_state  state,
+	       undo_type   type,
+	       void       *mask_ptr)
 {
   MaskUndo *mask_undo;
   TileManager *new_tiles;
@@ -822,9 +979,9 @@ undo_pop_mask (GImage *gimage,
 }
 
 
-void
-undo_free_mask (int   state,
-		void *mask_ptr)
+static void
+undo_free_mask (undo_state state,
+		void      *mask_ptr)
 {
   MaskUndo *mask_undo;
 
@@ -845,7 +1002,7 @@ undo_push_layer_displace (GImage    *gimage,
   Undo * new;
   int * info;
 
-  if ((new = undo_push (gimage, 12, LAYER_DISPLACE_UNDO)))
+  if ((new = undo_push (gimage, 12, LAYER_DISPLACE_UNDO, TRUE)))
     {
       new->data          = (void *) g_malloc (sizeof (int) * 3);
       new->pop_func      = undo_pop_layer_displace;
@@ -863,11 +1020,11 @@ undo_push_layer_displace (GImage    *gimage,
 }
 
 
-int
-undo_pop_layer_displace (GImage *gimage,
-			 int     state,
-			 int     type,
-			 void   *info_ptr)
+static int
+undo_pop_layer_displace (GImage     *gimage,
+			 undo_state  state,
+			 undo_type   type,
+			 void       *info_ptr)
 {
   Layer * layer;
   int old_offsets[2];
@@ -912,9 +1069,9 @@ undo_pop_layer_displace (GImage *gimage,
 }
 
 
-void
-undo_free_layer_displace (int   state,
-			  void *info_ptr)
+static void
+undo_free_layer_displace (undo_state state,
+			  void      *info_ptr)
 {
   g_free (info_ptr);
 }
@@ -932,7 +1089,7 @@ undo_push_transform (GImage *gimage,
 
   size = sizeof (TransformUndo);
 
-  if ((new = undo_push (gimage, size, TRANSFORM_UNDO)))
+  if ((new = undo_push (gimage, size, TRANSFORM_UNDO, FALSE)))
     {
       new->data          = tu_ptr;
       new->pop_func      = undo_pop_transform;
@@ -948,11 +1105,11 @@ undo_push_transform (GImage *gimage,
 }
 
 
-int
-undo_pop_transform (GImage *gimage,
-		    int     state,
-		    int     type,
-		    void   *tu_ptr)
+static int
+undo_pop_transform (GImage    *gimage,
+		    undo_state state,
+		    undo_type  type,
+		    void      *tu_ptr)
 {
   TransformCore * tc;
   TransformUndo * tu;
@@ -998,9 +1155,9 @@ undo_pop_transform (GImage *gimage,
 }
 
 
-void
-undo_free_transform (int   state,
-		     void *tu_ptr)
+static void
+undo_free_transform (undo_state  state,
+		     void       *tu_ptr)
 {
   TransformUndo * tu;
 
@@ -1024,7 +1181,7 @@ undo_push_paint (GImage *gimage,
 
   size = sizeof (PaintUndo);
 
-  if ((new = undo_push (gimage, size, PAINT_UNDO)))
+  if ((new = undo_push (gimage, size, PAINT_UNDO, FALSE)))
     {
       new->data          = pu_ptr;
       new->pop_func      = undo_pop_paint;
@@ -1040,11 +1197,11 @@ undo_push_paint (GImage *gimage,
 }
 
 
-int
-undo_pop_paint (GImage *gimage,
-		int     state,
-		int     type,
-		void   *pu_ptr)
+static int
+undo_pop_paint (GImage    *gimage,
+		undo_state state,
+		undo_type  type,
+		void      *pu_ptr)
 {
   PaintCore * pc;
   PaintUndo * pu;
@@ -1086,9 +1243,9 @@ undo_pop_paint (GImage *gimage,
 }
 
 
-void
-undo_free_paint (int   state,
-		 void *pu_ptr)
+static void
+undo_free_paint (undo_state state,
+		 void      *pu_ptr)
 {
   PaintUndo * pu;
 
@@ -1110,13 +1267,12 @@ undo_push_layer (GImage *gimage,
 
   lu = (LayerUndo *) lu_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(lu->layer));
 
   size = layer_size (lu->layer) + sizeof (LayerUndo);
 
-  if ((new = undo_push (gimage, size, LAYER_UNDO)))
+  if ((new = undo_push (gimage, size, LAYER_UNDO, TRUE)))
     {
       new->data          = lu_ptr;
       new->pop_func      = undo_pop_layer;
@@ -1127,7 +1283,7 @@ undo_push_layer (GImage *gimage,
   else
     {
       /*  if this is a remove layer, delete the layer  */
-      if (lu->undo_type == 1)
+      if (lu->undo_type == LAYER_REMOVE_UNDO)
 	layer_unref (lu->layer);
       g_free (lu);
       return FALSE;
@@ -1135,11 +1291,11 @@ undo_push_layer (GImage *gimage,
 }
 
 
-int
-undo_pop_layer (GImage *gimage,
-		int     state,
-		int     type,
-		void   *lu_ptr)
+static int
+undo_pop_layer (GImage    *gimage,
+		undo_state state,
+		undo_type  type,
+		void      *lu_ptr)
 {
   LayerUndo *lu;
 
@@ -1148,18 +1304,16 @@ undo_pop_layer (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(lu->layer));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(lu->layer));
       break;
     }
 
   /*  remove layer  */
-  if ((state == UNDO && lu->undo_type == 0) ||
-      (state == REDO && lu->undo_type == 1))
+  if ((state == UNDO && lu->undo_type == LAYER_ADD_UNDO) ||
+      (state == REDO && lu->undo_type == LAYER_REMOVE_UNDO))
     {
       /*  record the current position  */
       lu->prev_position = gimage_get_layer_index (gimage, lu->layer);
@@ -1211,9 +1365,9 @@ undo_pop_layer (GImage *gimage,
 }
 
 
-void
-undo_free_layer (int   state,
-		 void *lu_ptr)
+static void
+undo_free_layer (undo_state state,
+		 void      *lu_ptr)
 {
   LayerUndo *lu;
 
@@ -1223,8 +1377,8 @@ undo_free_layer (int   state,
    *  stack and it's a layer add, or if we're freeing from
    *  the undo stack and it's a layer remove
    */
-  if ((state == REDO && lu->undo_type == 0) ||
-      (state == UNDO && lu->undo_type == 1))
+  if ((state == REDO && lu->undo_type == LAYER_ADD_UNDO) ||
+      (state == UNDO && lu->undo_type == LAYER_REMOVE_UNDO))
     layer_unref (lu->layer);
 
   g_free (lu);
@@ -1247,8 +1401,7 @@ undo_push_layer_mod (GImage *gimage,
 
   layer = (Layer *) layer_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(layer));
 
   tiles = GIMP_DRAWABLE(layer)->tiles;
@@ -1257,7 +1410,7 @@ undo_push_layer_mod (GImage *gimage,
   size = GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * 
     GIMP_DRAWABLE(layer)->bytes + sizeof (void *) * 3;
 
-  if ((new = undo_push (gimage, size, LAYER_MOD)))
+  if ((new = undo_push (gimage, size, LAYER_MOD, TRUE)))
     {
       data               = (void **) g_malloc (sizeof (void *) * 3);
       new->data          = data;
@@ -1278,11 +1431,11 @@ undo_push_layer_mod (GImage *gimage,
 }
 
 
-int
-undo_pop_layer_mod (GImage *gimage,
-		    int     state,
-		    int     type,
-		    void   *data_ptr)
+static int
+undo_pop_layer_mod (GImage    *gimage,
+		    undo_state state,
+		    undo_type  type,
+		    void      *data_ptr)
 {
   void **data;
   int layer_type;
@@ -1296,11 +1449,9 @@ undo_pop_layer_mod (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(layer));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(layer));
       break;
     }
@@ -1350,9 +1501,9 @@ undo_pop_layer_mod (GImage *gimage,
 }
 
 
-void
-undo_free_layer_mod (int   state,
-		     void *data_ptr)
+static void
+undo_free_layer_mod (undo_state state,
+		     void      *data_ptr)
 {
   void ** data;
 
@@ -1375,13 +1526,12 @@ undo_push_layer_mask (GImage *gimage,
 
   lmu = (LayerMaskUndo *) lmu_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(lmu->layer));
 
   size = channel_size (GIMP_CHANNEL (lmu->mask)) + sizeof (LayerMaskUndo);
 
-  if ((new = undo_push (gimage, size, LAYER_MASK_UNDO)))
+  if ((new = undo_push (gimage, size, LAYER_MASK_UNDO, TRUE)))
     {
       new->data          = lmu_ptr;
       new->pop_func      = undo_pop_layer_mask;
@@ -1391,7 +1541,7 @@ undo_push_layer_mask (GImage *gimage,
     }
   else
     {
-      if (lmu->undo_type == 1)
+      if (lmu->undo_type == LAYER_REMOVE_UNDO)
 	layer_mask_delete (lmu->mask);
       g_free (lmu);
       return FALSE;
@@ -1399,11 +1549,11 @@ undo_push_layer_mask (GImage *gimage,
 }
 
 
-int
-undo_pop_layer_mask (GImage *gimage,
-		     int     state,
-		     int     type,
-		     void   *lmu_ptr)
+static int
+undo_pop_layer_mask (GImage    *gimage,
+		     undo_state state,
+		     undo_type  type,
+		     void      *lmu_ptr)
 {
   LayerMaskUndo *lmu;
 
@@ -1412,18 +1562,16 @@ undo_pop_layer_mask (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(lmu->layer));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(lmu->layer));
       break;
     }
 
   /*  remove layer mask  */
-  if ((state == UNDO && lmu->undo_type == 0) ||
-      (state == REDO && lmu->undo_type == 1))
+  if ((state == UNDO && lmu->undo_type == LAYER_ADD_UNDO) ||
+      (state == REDO && lmu->undo_type == LAYER_REMOVE_UNDO))
     {
       /*  remove the layer mask  */
       lmu->layer->mask       = NULL;
@@ -1462,9 +1610,9 @@ undo_pop_layer_mask (GImage *gimage,
 }
 
 
-void
-undo_free_layer_mask (int   state,
-		      void *lmu_ptr)
+static void
+undo_free_layer_mask (undo_state state,
+		      void      *lmu_ptr)
 {
   LayerMaskUndo *lmu;
 
@@ -1474,8 +1622,8 @@ undo_free_layer_mask (int   state,
    *  stack and it's a layer add, or if we're freeing from
    *  the undo stack and it's a layer remove
    */
-  if ((state == REDO && lmu->undo_type == 0) ||
-      (state == UNDO && lmu->undo_type == 1))
+  if ((state == REDO && lmu->undo_type == LAYER_ADD_UNDO) ||
+      (state == UNDO && lmu->undo_type == LAYER_REMOVE_UNDO))
     layer_mask_delete (lmu->mask);
 
   g_free (lmu);
@@ -1495,13 +1643,12 @@ undo_push_channel (GImage *gimage,
 
   cu = (ChannelUndo *) cu_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(cu->channel));
 
   size = channel_size (cu->channel) + sizeof (ChannelUndo);
 
-  if ((new = undo_push (gimage, size, CHANNEL_UNDO)))
+  if ((new = undo_push (gimage, size, CHANNEL_UNDO, TRUE)))
     {
       new->data          = cu_ptr;
       new->pop_func      = undo_pop_channel;
@@ -1511,7 +1658,7 @@ undo_push_channel (GImage *gimage,
     }
   else
     {
-      if (cu->undo_type == 1)
+      if (cu->undo_type == CHANNEL_REMOVE_UNDO)
 	channel_delete (cu->channel);
       g_free (cu);
       return FALSE;
@@ -1519,11 +1666,11 @@ undo_push_channel (GImage *gimage,
 }
 
 
-int
-undo_pop_channel (GImage *gimage,
-		  int     state,
-		  int     type,
-		  void   *cu_ptr)
+static int
+undo_pop_channel (GImage    *gimage,
+		  undo_state state,
+		  undo_type  type,
+		  void      *cu_ptr)
 {
   ChannelUndo *cu;
 
@@ -1532,18 +1679,16 @@ undo_pop_channel (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(cu->channel));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(cu->channel));
       break;
     }
 
   /*  remove channel  */
-  if ((state == UNDO && cu->undo_type == 0) ||
-      (state == REDO && cu->undo_type == 1))
+  if ((state == UNDO && cu->undo_type == CHANNEL_ADD_UNDO) ||
+      (state == REDO && cu->undo_type == CHANNEL_REMOVE_UNDO))
     {
       /*  record the current position  */
       cu->prev_position = gimage_get_channel_index (gimage, cu->channel);
@@ -1579,9 +1724,9 @@ undo_pop_channel (GImage *gimage,
 }
 
 
-void
-undo_free_channel (int   state,
-		   void *cu_ptr)
+static void
+undo_free_channel (undo_state state,
+		   void      *cu_ptr)
 {
   ChannelUndo *cu;
 
@@ -1591,8 +1736,8 @@ undo_free_channel (int   state,
    *  stack and it's a channel add, or if we're freeing from
    *  the undo stack and it's a channel remove
    */
-  if ((state == REDO && cu->undo_type == 0) ||
-      (state == UNDO && cu->undo_type == 1))
+  if ((state == REDO && cu->undo_type == CHANNEL_ADD_UNDO) ||
+      (state == UNDO && cu->undo_type == CHANNEL_REMOVE_UNDO))
     channel_delete (cu->channel);
 
   g_free (cu);
@@ -1615,14 +1760,13 @@ undo_push_channel_mod (GImage *gimage,
 
   channel = (Channel *) channel_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(channel));
 
   tiles = GIMP_DRAWABLE(channel)->tiles;
   size = GIMP_DRAWABLE(channel)->width * GIMP_DRAWABLE(channel)->height + sizeof (void *) * 2;
 
-  if ((new = undo_push (gimage, size, CHANNEL_MOD)))
+  if ((new = undo_push (gimage, size, CHANNEL_MOD, TRUE)))
     {
       data               = (void **) g_malloc (sizeof (void *) * 2);
       new->data          = data;
@@ -1642,11 +1786,11 @@ undo_push_channel_mod (GImage *gimage,
 }
 
 
-int
-undo_pop_channel_mod (GImage *gimage,
-		      int     state,
-		      int     type,
-		      void   *data_ptr)
+static int
+undo_pop_channel_mod (GImage    *gimage,
+		      undo_state state,
+		      undo_type  type,
+		      void      *data_ptr)
 {
   void **data;
   TileManager *tiles;
@@ -1659,11 +1803,9 @@ undo_pop_channel_mod (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(channel));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(channel));
       break;
     }
@@ -1690,9 +1832,9 @@ undo_pop_channel_mod (GImage *gimage,
 }
 
 
-void
-undo_free_channel_mod (int   state,
-		       void *data_ptr)
+static void
+undo_free_channel_mod (undo_state state,
+		       void      *data_ptr)
 {
   void ** data;
 
@@ -1715,13 +1857,12 @@ undo_push_fs_to_layer (GImage *gimage,
 
   fsu = (FStoLayerUndo *) fsu_ptr;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
+  /*  increment the dirty flag for this drawable  */
   drawable_dirty (GIMP_DRAWABLE(fsu->layer));
 
   size = sizeof (FStoLayerUndo);
 
-  if ((new = undo_push (gimage, size, CHANNEL_MOD)))
+  if ((new = undo_push (gimage, size, CHANNEL_MOD, TRUE)))
     {
       new->data          = fsu_ptr;
       new->pop_func      = undo_pop_fs_to_layer;
@@ -1738,11 +1879,11 @@ undo_push_fs_to_layer (GImage *gimage,
 }
 
 
-int
-undo_pop_fs_to_layer (GImage *gimage,
-		      int     state,
-		      int     type,
-		      void   *fsu_ptr)
+static int
+undo_pop_fs_to_layer (GImage    *gimage,
+		      undo_state state,
+		      undo_type  type,
+		      void      *fsu_ptr)
 {
   FStoLayerUndo *fsu;
 
@@ -1751,11 +1892,9 @@ undo_pop_fs_to_layer (GImage *gimage,
   switch (state)
     {
     case UNDO:
-      gimage_clean (gimage);
       drawable_clean (GIMP_DRAWABLE(fsu->layer));
       break;
     case REDO:
-      gimage_dirty (gimage);
       drawable_dirty (GIMP_DRAWABLE(fsu->layer));
       break;
     }
@@ -1812,9 +1951,9 @@ undo_pop_fs_to_layer (GImage *gimage,
 }
 
 
-void
-undo_free_fs_to_layer (int   state,
-		       void *fsu_ptr)
+static void
+undo_free_fs_to_layer (undo_state state,
+		       void      *fsu_ptr)
 {
   FStoLayerUndo *fsu;
 
@@ -1838,7 +1977,7 @@ undo_push_fs_rigor (GImage *gimage,
 
   size = sizeof (int);
 
-  if ((new = undo_push (gimage, size, FS_RIGOR)))
+  if ((new = undo_push (gimage, size, FS_RIGOR, FALSE)))
     {
       new->data          = g_new (int, 1);
       new->pop_func      = undo_pop_fs_rigor;
@@ -1853,11 +1992,11 @@ undo_push_fs_rigor (GImage *gimage,
 }
 
 
-int
-undo_pop_fs_rigor (GImage *gimage,
-		   int     state,
-		   int     type,
-		   void   *layer_ptr)
+static int
+undo_pop_fs_rigor (GImage    *gimage,
+		   undo_state state,
+		   undo_type  type,
+		   void      *layer_ptr)
 {
   int layer_id;
   Layer *floating_layer;
@@ -1896,9 +2035,9 @@ undo_pop_fs_rigor (GImage *gimage,
 }
 
 
-void
-undo_free_fs_rigor (int   state,
-		    void *layer_ptr)
+static void
+undo_free_fs_rigor (undo_state state,
+		    void      *layer_ptr)
 {
   g_free (layer_ptr);
 }
@@ -1916,7 +2055,7 @@ undo_push_fs_relax (GImage *gimage,
 
   size = sizeof (int);
 
-  if ((new = undo_push (gimage, size, FS_RELAX)))
+  if ((new = undo_push (gimage, size, FS_RELAX, FALSE)))
     {
       new->data          = g_new (int, 1);
       new->pop_func      = undo_pop_fs_relax;
@@ -1931,11 +2070,11 @@ undo_push_fs_relax (GImage *gimage,
 }
 
 
-int
-undo_pop_fs_relax (GImage *gimage,
-		   int     state,
-		   int     type,
-		   void   *layer_ptr)
+static int
+undo_pop_fs_relax (GImage    *gimage,
+		   undo_state state,
+		   undo_type  type,
+		   void      *layer_ptr)
 {
   int layer_id;
   Layer *floating_layer;
@@ -1974,9 +2113,9 @@ undo_pop_fs_relax (GImage *gimage,
 }
 
 
-void
-undo_free_fs_relax (int   state,
-		    void *layer_ptr)
+static void
+undo_free_fs_relax (undo_state state,
+		    void       *layer_ptr)
 {
   g_free (layer_ptr);
 }
@@ -1992,12 +2131,9 @@ undo_push_gimage_mod (GImage *gimage)
   int *data;
   int size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (int) * 3;
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = (int *) g_malloc (sizeof (int) * 3);
       new->data          = data;
@@ -2015,24 +2151,14 @@ undo_push_gimage_mod (GImage *gimage)
 }
 
 
-int
-undo_pop_gimage_mod (GImage *gimage,
-		     int     state,
-		     int     type,
-		     void   *data_ptr)
+static int
+undo_pop_gimage_mod (GImage    *gimage,
+		     undo_state state,
+		     undo_type  type,
+		     void       *data_ptr)
 {
   int *data;
   int tmp;
-
-  switch (state)
-    {
-    case UNDO:
-      gimage_clean (gimage);
-      break;
-    case REDO:
-      gimage_dirty (gimage);
-      break;
-    }
 
   data = (int *) data_ptr;
   tmp = data[0];
@@ -2063,9 +2189,9 @@ undo_pop_gimage_mod (GImage *gimage,
 }
 
 
-void
-undo_free_gimage_mod (int   state,
-		      void *data_ptr)
+static void
+undo_free_gimage_mod (undo_state state,
+		      void       *data_ptr)
 {
   g_free (data_ptr);
 }
@@ -2091,12 +2217,9 @@ undo_push_qmask (GImage *gimage,
   QmaskUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (QmaskUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = g_new (QmaskUndo, 1);
       new->data          = data;
@@ -2113,11 +2236,11 @@ undo_push_qmask (GImage *gimage,
   return FALSE;
 }
 
-int
-undo_pop_qmask (GImage *gimage,
-		int     state,
-		int     type,
-		void   *data_ptr)
+static int
+undo_pop_qmask (GImage    *gimage,
+		undo_state state,
+		undo_type  type,
+		void      *data_ptr)
 {
   QmaskUndo *data;
   int tmp;
@@ -2130,23 +2253,13 @@ undo_pop_qmask (GImage *gimage,
 
   gimage->qmask_state = data->qmask;
 
-  switch (state)
-    {
-    case UNDO:
-      gimage_clean (gimage);
-      break;
-    case REDO:
-      gimage_dirty (gimage);
-      break;
-    }
-
   return TRUE;
 }
 
 
-void
-undo_free_qmask (int   state,
-		 void *data_ptr)
+static void
+undo_free_qmask (undo_state state,
+		 void       *data_ptr)
 {
   g_free (data_ptr);
 }
@@ -2162,6 +2275,7 @@ struct _GuideUndo
   Guide *guide;
   Guide orig;
 };
+
 int
 undo_push_guide (GImage *gimage,
 		 void   *guide)
@@ -2170,12 +2284,9 @@ undo_push_guide (GImage *gimage,
   GuideUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (GuideUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       ((Guide *)(guide))->ref_count++;
       data               = g_new (GuideUndo, 1);
@@ -2194,11 +2305,11 @@ undo_push_guide (GImage *gimage,
 }
 
 
-int
-undo_pop_guide (GImage *gimage,
-		int     state,
-		int     type,
-		void   *data_ptr)
+static int
+undo_pop_guide (GImage    *gimage,
+		undo_state state,
+		undo_type  type,
+		void      *data_ptr)
 {
   GuideUndo *data;
   Guide tmp;
@@ -2215,23 +2326,13 @@ undo_pop_guide (GImage *gimage,
   data->guide->ref_count = tmp_ref;
   data->orig = tmp;
 
-  switch (state)
-    {
-    case UNDO:
-      gimage_clean (gimage);
-      break;
-    case REDO:
-      gimage_dirty (gimage);
-      break;
-    }
-
   return TRUE;
 }
 
 
-void
-undo_free_guide (int   state,
-		 void *data_ptr)
+static void
+undo_free_guide (undo_state state,
+		 void      *data_ptr)
 {
   GuideUndo *data;
 
@@ -2266,12 +2367,9 @@ undo_push_image_parasite (GImage   *gimage,
   ParasiteUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (ParasiteUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = g_new (ParasiteUndo, 1);
       new->data          = data;
@@ -2297,12 +2395,9 @@ undo_push_image_parasite_remove (GImage      *gimage,
   ParasiteUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (ParasiteUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = g_new (ParasiteUndo, 1);
       new->data          = data;
@@ -2329,12 +2424,9 @@ undo_push_drawable_parasite (GImage       *gimage,
   ParasiteUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (ParasiteUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = g_new (ParasiteUndo, 1);
       new->data          = data;
@@ -2360,12 +2452,9 @@ undo_push_drawable_parasite_remove (GImage       *gimage,
   ParasiteUndo *data;
   long size;
 
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
-
   size = sizeof (ParasiteUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD)))
+  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
     {
       data               = g_new (ParasiteUndo, 1);
       new->data          = data;
@@ -2383,11 +2472,11 @@ undo_push_drawable_parasite_remove (GImage       *gimage,
 }
 
 
-int
-undo_pop_parasite (GImage *gimage,
-		   int     state,
-		   int     type,
-		   void   *data_ptr)
+static int
+undo_pop_parasite (GImage    *gimage,
+		   undo_state state,
+		   undo_type  type,
+		   void      *data_ptr)
 {
   ParasiteUndo *data;
   Parasite *tmp;
@@ -2426,25 +2515,13 @@ undo_pop_parasite (GImage *gimage,
   if (tmp)
     parasite_free (tmp);
 
-/*   if ((tmp            && parasite_is_persistant(tmp)) || */
-/*       (data->parasite && parasite_is_persistant(data->parasite))) */
-      switch (state)
-      {
-       case UNDO:
-	 gimage_clean (gimage);
-	 break;
-       case REDO:
-	 gimage_dirty (gimage);
-	 break;
-      }
-
   return TRUE;
 }
 
 
-void
-undo_free_parasite (int   state,
-		    void *data_ptr)
+static void
+undo_free_parasite (undo_state state,
+		    void      *data_ptr)
 {
   ParasiteUndo *data;
 
@@ -2481,7 +2558,7 @@ undo_push_layer_rename (GImage *gimage, Layer *layer)
 
   size = sizeof (LayerRenameUndo);
 
-  if ((new = undo_push (gimage, size, LAYER_CHANGE)))
+  if ((new = undo_push (gimage, size, LAYER_CHANGE, TRUE)))
   {
       data               = g_new (LayerRenameUndo, 1);
       new->data          = data;
@@ -2498,10 +2575,10 @@ undo_push_layer_rename (GImage *gimage, Layer *layer)
 }
 
 static int
-undo_pop_layer_rename (GImage *gimage,
-		       int     state,
-		       int     type,
-		       void   *data_ptr)
+undo_pop_layer_rename (GImage    *gimage,
+		       undo_state state,
+		       undo_type  type,
+		       void      *data_ptr)
 {
     LayerRenameUndo *data = data_ptr;
     gchar *tmp;
@@ -2525,8 +2602,8 @@ undo_pop_layer_rename (GImage *gimage,
 }
 
 static void
-undo_free_layer_rename (int   state,
-			void *data_ptr)
+undo_free_layer_rename (undo_state state,
+			void      *data_ptr)
 {
     LayerRenameUndo *data = data_ptr;
 
@@ -2552,7 +2629,7 @@ undo_push_cantundo (GImage     *gimage,
      * any adequate undo facility. */
     gimp_image_dirty (gimage);
 
-    new = undo_push (gimage, 0, GIMAGE_MOD);
+    new = undo_push (gimage, 0, GIMAGE_MOD, TRUE);
     if (!new)
 	return FALSE;
 
@@ -2564,10 +2641,10 @@ undo_push_cantundo (GImage     *gimage,
 }
 
 static int
-undo_pop_cantundo (GImage *gimage,
-		   int     state,
-		   int     type,
-		   void   *data_ptr)
+undo_pop_cantundo (GImage    *gimage,
+		   undo_state state,
+		   undo_type  type,
+		   void      *data_ptr)
 {
     char *action = data_ptr;
 
@@ -2586,6 +2663,63 @@ undo_pop_cantundo (GImage *gimage,
 }
 
 static void
-undo_free_cantundo (int state, void *data_ptr)
+undo_free_cantundo (undo_state state, void *data_ptr)
 {
+}
+
+
+static struct undo_name_t {
+    undo_type type;
+    const char *name;
+} undo_name[] = {
+    {0,			N_("<<invalid>>")},
+    {IMAGE_UNDO,	N_("image")},
+    {IMAGE_MOD_UNDO,	N_("image mod")},
+    {MASK_UNDO,		N_("mask")},
+    {LAYER_DISPLACE_UNDO, N_("layer move")},
+    {TRANSFORM_UNDO,	N_("transform")},
+    {PAINT_UNDO,	N_("paint")},
+    {LAYER_UNDO,	N_("layer")},
+    {LAYER_MOD,		N_("layer mod")},
+    {LAYER_MASK_UNDO,	N_("layer mask")},
+    {LAYER_CHANGE,	N_("layer change")},
+    {LAYER_POSITION,	N_("layer position")},
+    {CHANNEL_UNDO,	N_("channel")},
+    {CHANNEL_MOD,	N_("channel mod")},
+    {FS_TO_LAYER_UNDO,	N_("FS to layer")},
+    {GIMAGE_MOD,	N_("gimage")},
+    {FS_RIGOR,		N_("FS rigor")},
+    {FS_RELAX,		N_("FS relax")},
+    {GUIDE_UNDO,	N_("guide")},
+    {FLOAT_MASK_UNDO,	N_("float selection")},
+    {EDIT_PASTE_UNDO,	N_("paste")},
+    {EDIT_CUT_UNDO,	N_("cut")},
+    {TRANSFORM_CORE_UNDO, N_("transform core")},
+    {PAINT_CORE_UNDO,	N_("paint core")},
+    {FLOATING_LAYER_UNDO, N_("floating layer")}, /* unused! */
+    {LINKED_LAYER_UNDO,	N_("linked layer")},
+    {LAYER_APPLY_MASK_UNDO, N_("apply layer mask")},
+    {LAYER_MERGE_UNDO,	N_("layer merge")},
+    {FS_ANCHOR_UNDO,	N_("FS anchor")},
+    {GIMAGE_MOD_UNDO,	N_("gimage mod")},
+    {CROP_UNDO,		N_("crop")},
+    {LAYER_SCALE_UNDO,	N_("layer scale")},
+    {LAYER_RESIZE_UNDO,	N_("layer resize")},
+    {QMASK_UNDO,	N_("quickmask")},
+    {MISC_UNDO,		N_("misc")}
+};
+#define NUM_NAMES (sizeof (undo_name) / sizeof (struct undo_name_t))
+
+
+static const char *
+undo_type_to_name (undo_type type)
+{
+    int i;
+
+    for (i=0; i < NUM_NAMES; i++)
+	if (undo_name[i].type == type)
+	    return gettext (undo_name[i].name);
+
+    /* no name found */
+    return "";
 }

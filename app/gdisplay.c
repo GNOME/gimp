@@ -1645,6 +1645,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE (N_("/Edit/Clear"), lp);
       SET_SENSITIVE (N_("/Edit/Fill"), lp);
       SET_SENSITIVE (N_("/Edit/Stroke"), lp);
+      SET_SENSITIVE (N_("/Edit/Undo"), undo_get_undo_name (gdisp->gimage));
+      SET_SENSITIVE (N_("/Edit/Redo"), undo_get_redo_name (gdisp->gimage));
       SET_SENSITIVE (N_("/Edit/Cut Named"), lp);
       SET_SENSITIVE (N_("/Edit/Copy Named"), lp);
       SET_SENSITIVE (N_("/Edit/Paste Named"), lp);

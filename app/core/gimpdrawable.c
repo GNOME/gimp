@@ -309,6 +309,9 @@ gimp_drawable_type_with_alpha (GimpDrawable *drawable)
 	return GRAYA_GIMAGE; break;
       case INDEXED_GIMAGE:
 	return INDEXEDA_GIMAGE; break;
+      default:
+	  g_assert_not_reached ();
+	  break;
       }
   return 0;
 }

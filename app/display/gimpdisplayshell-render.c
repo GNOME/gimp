@@ -744,6 +744,9 @@ render_image_init_info (RenderInfo *info,
     case INDEXEDA_GIMAGE:
       info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
       break;
+    default:
+      /* nothing special needs doing */
+      break;
     }
 }
 

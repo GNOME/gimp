@@ -123,6 +123,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Edit/Stroke"), NULL, edit_stroke_cmd_callback, 0 },
   { N_("/Edit/Undo"), "<control>Z", edit_undo_cmd_callback, 0 },
   { N_("/Edit/Redo"), "<control>R", edit_redo_cmd_callback, 0 },
+  { N_("/Edit/Undo history..."), NULL, edit_show_undo_history_cmd_callback, 0},
   { N_("/Edit/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Edit/Cut Named"), "<control><shift>X", edit_named_cut_cmd_callback, 0 },
   { N_("/Edit/Copy Named"), "<control><shift>C", edit_named_copy_cmd_callback, 0 },
