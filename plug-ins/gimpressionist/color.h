@@ -7,8 +7,8 @@ enum COLOR_TYPE_ENUM
     COLOR_TYPE_CENTER = 1,
 };
 
+void create_colorpage(GtkNotebook *);
 void color_restore(void);
-
 
 #endif /* #ifndef __COLOR_H */
 

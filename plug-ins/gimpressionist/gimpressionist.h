@@ -120,7 +120,7 @@ enum PRESETS_LIST_COLUMN_ENUM
 /* Globals */
 
 extern gimpressionist_vals_t pcvals;
-extern gboolean img_has_alpha;
+
 
 /* Prototypes */
 
@@ -128,7 +128,6 @@ GList *parsepath(void);
 void free_parsepath_cache(void);
 
 void create_orientationpage(GtkNotebook *);
-void create_colorpage(GtkNotebook *);
 
 void grabarea(void);
 void storevals(void);

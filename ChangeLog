@@ -1,5 +1,10 @@
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
+	* plug-ins/gimpressionist/: Moved the global declarations of 
+	img_has_alpha and create_colorpage to more specialized headers.
+
+2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
+
 	* plug-ins/gimpressionist/: Added the paper.h header for the functions 
 	defined in the paper.c module. (thus removing more declarations
 	from gimpressionist.h)

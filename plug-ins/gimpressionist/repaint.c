@@ -14,6 +14,7 @@
 #include "preview.h"
 #include "random.h"
 #include "size.h"
+#include "infile.h"
 
 #include <libgimp/stdplugins-intl.h>
 
