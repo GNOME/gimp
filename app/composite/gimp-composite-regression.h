@@ -1,3 +1,5 @@
+#ifndef gimp_composite_regression_h
+#define gimp_composite_regression_h
 /*
  * The following typedefs are temporary and only used in regression testing.
 	*/
@@ -83,14 +85,15 @@ typedef struct
 } gimp_rgba32_t;
 #endif
 
-extern double gimp_composite_regression_time_function(int, void (*)(), GimpCompositeContext *);
-extern int gimp_composite_regression_comp_rgba8(char *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, u_long);
-extern int gimp_composite_regression_comp_va8(char *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, u_long);
-extern int gimp_composite_regression_compare_contexts(char *, GimpCompositeContext *, GimpCompositeContext *);
-extern void gimp_composite_regression_dump_rgba8(char *, gimp_rgba8_t *, u_long);
-extern void gimp_composite_regression_print_rgba8(gimp_rgba8_t *);
-extern void gimp_composite_regression_print_va8(gimp_va8_t *);
-extern void gimp_composite_regression_timer_report(char *, double, double);
+extern double gimp_composite_regression_time_function (int, void (*)(), GimpCompositeContext *);
+extern int gimp_composite_regression_comp_rgba8 (char *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, u_long);
+extern int gimp_composite_regression_comp_va8 (char *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, u_long);
+extern int gimp_composite_regression_compare_contexts (char *, GimpCompositeContext *, GimpCompositeContext *);
+extern void gimp_composite_regression_dump_rgba8 (char *, gimp_rgba8_t *, u_long);
+extern void gimp_composite_regression_print_rgba8 (gimp_rgba8_t *);
+extern void gimp_composite_regression_print_va8 (gimp_va8_t *);
+extern void gimp_composite_regression_timer_report (char *, double, double);
 
-extern gimp_rgba8_t *gimp_composite_regression_random_rgba8(unsigned long);
-extern gimp_rgba8_t *gimp_composite_regression_fixed_rgba8(unsigned long);
+extern gimp_rgba8_t *gimp_composite_regression_random_rgba8 (unsigned long);
+extern gimp_rgba8_t *gimp_composite_regression_fixed_rgba8 (unsigned long);
+#endif

@@ -15,5 +15,5 @@ gimp_composite_vis_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_vis_init();
+  gimp_composite_vis_init ();
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- mode: python py-indent-offset: 2; -*-
+# -*- mode: python py-indent-offset: 2; indent-tabs-mode: nil -*-
 #
 # Gimp image compositing
 # Copyright (C) 2003  Helvetix Victorinox, <helvetix@gimp.org>
@@ -270,7 +270,7 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '#include "%s.h"' % (filenameify(options.file))
   print >>fpout, ''
   print >>fpout, 'int'
-  print >>fpout, '%s_test(int iterations, int n_pixels)' % (functionnameify(options.file))
+  print >>fpout, '%s_test (int iterations, int n_pixels)' % (functionnameify(options.file))
   print >>fpout, '{'
 
   for r in options.requires:
@@ -327,7 +327,7 @@ def gimp_composite_regression(fpout, function_tables, options):
             #print key
             print >>fpout, ''
             print >>fpout, '  /* %s */' % (key)
-            print >>fpout, '  memset((void *) &special_ctx, 0, sizeof(special_ctx));'
+            print >>fpout, '  memset ((void *) &special_ctx, 0, sizeof(special_ctx));'
             print >>fpout, '  special_ctx.op = %s;' % (mode)
             print >>fpout, '  special_ctx.n_pixels = n_pixels;'
             print >>fpout, '  special_ctx.scale.scale = 2;'
@@ -339,9 +339,9 @@ def gimp_composite_regression(fpout, function_tables, options):
             print >>fpout, '  special_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
             print >>fpout, '  special_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
             print >>fpout, '  special_ctx.D = (unsigned char *) %sD1;' % (pixel_depth_name(D))
-            print >>fpout, '  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);'
+            print >>fpout, '  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);'
             
-            print >>fpout, '  memset((void *) &generic_ctx, 0, sizeof(special_ctx));'
+            print >>fpout, '  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));'
             print >>fpout, '  generic_ctx.op = %s;' % (mode)
             print >>fpout, '  generic_ctx.n_pixels = n_pixels;'
             print >>fpout, '  generic_ctx.scale.scale = 2;'
@@ -353,17 +353,17 @@ def gimp_composite_regression(fpout, function_tables, options):
             print >>fpout, '  generic_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
             print >>fpout, '  generic_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
             print >>fpout, '  generic_ctx.D = (unsigned char *) %sD2;' % (pixel_depth_name(D))
-            print >>fpout, '  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);'
+            print >>fpout, '  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);'
 
             #print >>fpout, '  gimp_composite_context_print(&special_ctx);'
             #print >>fpout, '  gimp_composite_context_print(&generic_ctx);'
             
-            print >>fpout, '  ft0 = gimp_composite_regression_time_function(iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
-            print >>fpout, '  ft1 = gimp_composite_regression_time_function(iterations, %s, &special_ctx);' % (generic_table[key][0])
-            print >>fpout, '  if (gimp_composite_regression_compare_contexts("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
+            print >>fpout, '  ft0 = gimp_composite_regression_time_function (iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
+            print >>fpout, '  ft1 = gimp_composite_regression_time_function (iterations, %s, &special_ctx);' % (generic_table[key][0])
+            print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
             print >>fpout, '    return (1);'
             print >>fpout, '  }'
-            print >>fpout, '  gimp_composite_regression_timer_report("%s", ft0, ft1);' % (mode_name(mode))
+            print >>fpout, '  gimp_composite_regression_timer_report ("%s", ft0, ft1);' % (mode_name(mode))
             pass
           pass
         pass
@@ -379,7 +379,7 @@ def gimp_composite_regression(fpout, function_tables, options):
 
   print >>fpout, ''
   print >>fpout, 'int'
-  print >>fpout, 'main(int argc, char *argv[])'
+  print >>fpout, 'main (int argc, char *argv[])'
   print >>fpout, '{'
   print >>fpout, '  int iterations;'
   print >>fpout, '  int n_pixels;'
@@ -393,18 +393,18 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, ''
   print >>fpout, '  argv++, argc--;'
   print >>fpout, '  while (argc >= 2) {'
-  print >>fpout, '    if ((strcmp(argv[0], "--iterations") == 0 || strcmp(argv[0], "-i") == 0) && argc > 1) {'
+  print >>fpout, '    if ((strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0) && argc > 1) {'
   print >>fpout, '      iterations = atoi(argv[1]);'
   print >>fpout, '      argc -= 2, argv++; argv++;'
-  print >>fpout, '    } else if ((strcmp(argv[0], "--n-pixels") == 0 || strcmp(argv[0], "-n") == 0) && argc > 1) {'
-  print >>fpout, '      n_pixels = atoi(argv[1]);'
+  print >>fpout, '    } else if ((strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0) && argc > 1) {'
+  print >>fpout, '      n_pixels = atoi (argv[1]);'
   print >>fpout, '      argc -= 2, argv++; argv++;'
   print >>fpout, '    } else {'
   print >>fpout, '      argc--, argv++;'
   print >>fpout, '    }'
   print >>fpout, '  }'
   print >>fpout, ''
-  print >>fpout, '  gimp_composite_generic_install();'
+  print >>fpout, '  gimp_composite_generic_install ();'
   print >>fpout, ''
   print >>fpout, '  return (%s_test(iterations, n_pixels));' % (functionnameify(options.file))
   print >>fpout, '}'
@@ -432,7 +432,7 @@ def gimp_composite_installer_install(fpout, name, function_table, requirements=[
     print >>fpout, '          if (%s[mode][a][b][d]) {' % (functionnameify(name))
     print >>fpout, '            gimp_composite_function[mode][a][b][d] = %s[mode][a][b][d];' % (functionnameify(name))
     print >>fpout, '            if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) {'
-    print >>fpout, '              printf("gimp_composite_install: %s %s %s %s: %p\\n", gimp_composite_mode_astext(mode), gimp_composite_pixelformat_astext(a),  gimp_composite_pixelformat_astext(b), gimp_composite_pixelformat_astext(d), gimp_composite_function[mode][a][b][d]);'
+    print >>fpout, '              printf ("gimp_composite_install: %s %s %s %s: %p\\n", gimp_composite_mode_astext(mode), gimp_composite_pixelformat_astext(a),  gimp_composite_pixelformat_astext(b), gimp_composite_pixelformat_astext(d), gimp_composite_function[mode][a][b][d]);'
     print >>fpout, '            }'
     print >>fpout, '          }'
     print >>fpout, '        }'
@@ -468,7 +468,7 @@ def gimp_composite_installer_install2(fpout, name, function_table, requirements=
     pass
   
   print >>fpout, ''
-  print >>fpout, '  %s_init();' % functionnameify(name)
+  print >>fpout, '  %s_init ();' % functionnameify(name)
   print >>fpout, '}'
   pass
 

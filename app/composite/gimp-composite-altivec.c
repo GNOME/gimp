@@ -36,7 +36,7 @@
 #endif  /* ARCH_PPC */
 
 void
-gimp_composite_altivec_init(void)
+gimp_composite_altivec_init (void)
 {
 
 }

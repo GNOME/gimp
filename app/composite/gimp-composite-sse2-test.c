@@ -17,7 +17,7 @@
 #include "gimp-composite-sse2.h"
 
 int
-gimp_composite_sse2_test(int iterations, int n_pixels)
+gimp_composite_sse2_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_SSE)     && defined(ARCH_X86)
   GimpCompositeContext generic_ctx;
@@ -61,7 +61,7 @@ gimp_composite_sse2_test(int iterations, int n_pixels)
 }
 
 int
-main(int argc, char *argv[])
+main (int argc, char *argv[])
 {
   int iterations;
   int n_pixels;
@@ -75,18 +75,18 @@ main(int argc, char *argv[])
 
   argv++, argc--;
   while (argc >= 2) {
-    if ((strcmp(argv[0], "--iterations") == 0 || strcmp(argv[0], "-i") == 0) && argc > 1) {
+    if ((strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0) && argc > 1) {
       iterations = atoi(argv[1]);
       argc -= 2, argv++; argv++;
-    } else if ((strcmp(argv[0], "--n-pixels") == 0 || strcmp(argv[0], "-n") == 0) && argc > 1) {
-      n_pixels = atoi(argv[1]);
+    } else if ((strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0) && argc > 1) {
+      n_pixels = atoi (argv[1]);
       argc -= 2, argv++; argv++;
     } else {
       argc--, argv++;
     }
   }
 
-  gimp_composite_generic_install();
+  gimp_composite_generic_install ();
 
   return (gimp_composite_sse2_test(iterations, n_pixels));
 }

@@ -15,5 +15,5 @@ gimp_composite_sse2_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_sse2_init();
+  gimp_composite_sse2_init ();
 }

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * -*- mode: c tab-width: 2; -*-
+ * -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
-#include "gimp-composite-vis.h"
+#include "gimp-composite-sse2.h"
 
 #if __GNUC__ >= 3
 
@@ -42,7 +42,7 @@
 #endif /* defined(USE_SSE) */
 
 void
-gimp_composite_sse2_init(void)
+gimp_composite_sse2_init (void)
 {
 
 }

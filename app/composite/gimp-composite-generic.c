@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * -*- mode: c tab-width: 2; -*-
+ * -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdio.h>
 
 #include <glib-object.h>
 
@@ -77,7 +78,7 @@ static gint32 random_table[RANDOM_TABLE_SIZE];
  * XXX This implementation is totally wrong.
  */
 void
-gimp_composite_convert_any_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_convert_any_any_any_generic (GimpCompositeContext *ctx)
 {
   int i;
   int j;
@@ -97,7 +98,7 @@ gimp_composite_convert_any_any_any_generic(GimpCompositeContext *ctx)
 }
 
 void
-gimp_composite_color_any_any_any_generic(guchar * dest, const guchar * color, guint w, guint bytes)
+gimp_composite_color_any_any_any_generic (guchar * dest, const guchar * color, guint w, guint bytes)
 {
   /* dest % bytes and color % bytes must be 0 or we will crash 
      when bytes = 2 or 4.
@@ -188,7 +189,7 @@ gimp_composite_color_any_any_any_generic(guchar * dest, const guchar * color, gu
 }
 
 void
-gimp_composite_blend_any_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_blend_any_any_any_generic (GimpCompositeContext *ctx)
 {
   guchar *src1 = ctx->A;
   guchar *src2 = ctx->B;
@@ -213,7 +214,7 @@ gimp_composite_blend_any_any_any_generic(GimpCompositeContext *ctx)
 
 #if 0
 void
-gimp_composite_shade_generic(const guchar *src, guchar *dest, const guchar *col, guchar blend, guint w, guint bytes, guint has_alpha)
+gimp_composite_shade_generic (const guchar *src, guchar *dest, const guchar *col, guchar blend, guint w, guint bytes, guint has_alpha)
 {
   const guchar blend2 = (255 - blend);
   const guint alpha = (has_alpha) ? bytes - 1 : bytes;
@@ -234,7 +235,7 @@ gimp_composite_shade_generic(const guchar *src, guchar *dest, const guchar *col,
 #endif
 
 void
-gimp_composite_darken_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_darken_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -269,7 +270,7 @@ gimp_composite_darken_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_lighten_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_lighten_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -305,7 +306,7 @@ gimp_composite_lighten_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_hue_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_hue_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -352,7 +353,7 @@ gimp_composite_hue_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_saturation_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_saturation_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -399,7 +400,7 @@ gimp_composite_saturation_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_value_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_value_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -446,7 +447,7 @@ gimp_composite_value_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_color_only_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -494,7 +495,7 @@ gimp_composite_color_only_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_multiply_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -546,7 +547,7 @@ gimp_composite_multiply_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_divide_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_divide_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -580,7 +581,7 @@ gimp_composite_divide_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_screen_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_screen_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -611,7 +612,7 @@ gimp_composite_screen_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_overlay_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_overlay_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -644,7 +645,7 @@ gimp_composite_overlay_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_dodge_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_dodge_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -679,7 +680,7 @@ gimp_composite_dodge_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_burn_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_burn_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -717,7 +718,7 @@ gimp_composite_burn_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_hardlight_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_hardlight_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -737,6 +738,8 @@ gimp_composite_hardlight_any_any_any_generic(GimpCompositeContext * ctx)
           if (src2[b] > 128)
             {
               tmp = ((gint) 255 - src1[b]) * ((gint) 255 - ((src2[b] - 128) << 1));
+														printf("tmp %04x\n", tmp);
+              printf("%d\n", ((gint) 255 - ((src2[b] - 128) << 1)));
               dest[b] = (guchar) CLAMP(255 - (tmp >> 8), 0, 255);
             }
           else
@@ -759,7 +762,7 @@ gimp_composite_hardlight_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_softlight_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_softlight_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -795,7 +798,7 @@ gimp_composite_softlight_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_grain_extract_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_grain_extract_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -830,7 +833,7 @@ gimp_composite_grain_extract_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_grain_merge_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_grain_merge_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -865,7 +868,7 @@ gimp_composite_grain_merge_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_addition_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_addition_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *A = ctx->A;
   const guchar *B = ctx->B;
@@ -912,7 +915,7 @@ gimp_composite_addition_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_subtract_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_subtract_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -947,7 +950,7 @@ gimp_composite_subtract_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_difference_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_difference_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   const guchar *src2 = ctx->B;
@@ -982,7 +985,7 @@ gimp_composite_difference_any_any_any_generic(GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_dissolve_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
 {
   GRand *gr;
   gint alpha;
@@ -1005,7 +1008,7 @@ gimp_composite_dissolve_any_any_any_generic(GimpCompositeContext * ctx)
    */
   if (!gimp_composite_pixel_alphap[ctx->pixelformat_D]) {
     ctx->pixelformat_D = gimp_composite_pixel_alpha[ctx->pixelformat_D];
-    /*gimp_composite_convert_any_any_any_generic(ctx);*/
+    /*gimp_composite_convert_any_any_any_generic (ctx);*/
   }
 
   gr = g_rand_new_with_seed(random_table[y % RANDOM_TABLE_SIZE]);
@@ -1054,7 +1057,7 @@ gimp_composite_dissolve_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_replace_any_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_replace_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = REPLACE_INTEN;
@@ -1062,7 +1065,7 @@ gimp_composite_replace_any_any_any_generic(GimpCompositeContext *ctx)
 
 
 void
-gimp_composite_swap_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_swap_any_any_any_generic (GimpCompositeContext * ctx)
 {
   guint length;
   guchar *src = ctx->A;
@@ -1081,35 +1084,35 @@ gimp_composite_swap_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_normal_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_normal_any_any_any_generic (GimpCompositeContext * ctx)
 {
   ctx->D = ctx->B;
 }
 
 
 void
-gimp_composite_normal_rgba8_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_normal_rgba8_any_any_generic (GimpCompositeContext * ctx)
 {
   ctx->D = ctx->B;
 }
 
 
 void
-gimp_composite_erase_rgba8_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_erase_rgba8_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B]) ? ERASE_INTEN : 0;
 }
 
 void
-gimp_composite_anti_erase_any_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_anti_erase_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B]) ? ANTI_ERASE_INTEN : 0;
 }
 
 void
-gimp_composite_color_erase_any_any_any_generic(GimpCompositeContext *ctx)
+gimp_composite_color_erase_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B]) ? COLOR_ERASE_INTEN : 0;
@@ -1117,7 +1120,7 @@ gimp_composite_color_erase_any_any_any_generic(GimpCompositeContext *ctx)
 
 
 void
-gimp_composite_scale_any_any_any_generic(GimpCompositeContext * ctx)
+gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   guchar *dest = ctx->D;
@@ -1137,7 +1140,7 @@ gimp_composite_scale_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_generic_init(void)
+gimp_composite_generic_init (void)
 {
   guint i;
   GRand *gr;

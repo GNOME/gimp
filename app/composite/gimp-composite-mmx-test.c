@@ -17,7 +17,7 @@
 #include "gimp-composite-mmx.h"
 
 int
-gimp_composite_mmx_test(int iterations, int n_pixels)
+gimp_composite_mmx_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_MMX)     && defined(ARCH_X86)
   GimpCompositeContext generic_ctx;
@@ -58,7 +58,7 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
 
 
   /* gimp_composite_multiply_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_MULTIPLY;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -70,8 +70,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_MULTIPLY;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -83,16 +83,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_multiply_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("multiply", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_multiply_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("multiply", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("multiply", ft0, ft1);
+  gimp_composite_regression_timer_report ("multiply", ft0, ft1);
 
   /* gimp_composite_screen_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_SCREEN;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -104,8 +104,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_SCREEN;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -117,16 +117,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_screen_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("screen", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_screen_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("screen", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("screen", ft0, ft1);
+  gimp_composite_regression_timer_report ("screen", ft0, ft1);
 
   /* gimp_composite_overlay_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_OVERLAY;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -138,8 +138,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_OVERLAY;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -151,16 +151,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_overlay_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("overlay", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_overlay_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("overlay", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("overlay", ft0, ft1);
+  gimp_composite_regression_timer_report ("overlay", ft0, ft1);
 
   /* gimp_composite_difference_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_DIFFERENCE;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -172,8 +172,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_DIFFERENCE;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -185,16 +185,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_difference_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("difference", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_difference_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("difference", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("difference", ft0, ft1);
+  gimp_composite_regression_timer_report ("difference", ft0, ft1);
 
   /* gimp_composite_addition_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_ADDITION;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -206,8 +206,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_ADDITION;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -219,16 +219,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_addition_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("addition", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_addition_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("addition", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("addition", ft0, ft1);
+  gimp_composite_regression_timer_report ("addition", ft0, ft1);
 
   /* gimp_composite_subtract_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_SUBTRACT;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -240,8 +240,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_SUBTRACT;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -253,16 +253,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_subtract_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("subtract", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_subtract_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("subtract", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("subtract", ft0, ft1);
+  gimp_composite_regression_timer_report ("subtract", ft0, ft1);
 
   /* gimp_composite_darken_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_DARKEN;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -274,8 +274,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_DARKEN;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -287,16 +287,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_darken_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("darken", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_darken_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("darken", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("darken", ft0, ft1);
+  gimp_composite_regression_timer_report ("darken", ft0, ft1);
 
   /* gimp_composite_lighten_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_LIGHTEN;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -308,8 +308,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_LIGHTEN;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -321,16 +321,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_lighten_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("lighten", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_lighten_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("lighten", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("lighten", ft0, ft1);
+  gimp_composite_regression_timer_report ("lighten", ft0, ft1);
 
   /* gimp_composite_divide_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_DIVIDE;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -342,8 +342,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_DIVIDE;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -355,16 +355,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_divide_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("divide", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_divide_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("divide", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("divide", ft0, ft1);
+  gimp_composite_regression_timer_report ("divide", ft0, ft1);
 
   /* gimp_composite_dodge_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_DODGE;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -376,8 +376,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_DODGE;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -389,16 +389,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_dodge_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("dodge", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_dodge_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("dodge", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("dodge", ft0, ft1);
+  gimp_composite_regression_timer_report ("dodge", ft0, ft1);
 
   /* gimp_composite_burn_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_BURN;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -410,8 +410,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_BURN;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -423,16 +423,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_burn_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("burn", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_burn_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("burn", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("burn", ft0, ft1);
+  gimp_composite_regression_timer_report ("burn", ft0, ft1);
 
   /* gimp_composite_grain_extract_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_GRAIN_EXTRACT;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -444,8 +444,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_GRAIN_EXTRACT;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -457,16 +457,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_grain_extract_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("grain_extract", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_grain_extract_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("grain_extract", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("grain_extract", ft0, ft1);
+  gimp_composite_regression_timer_report ("grain_extract", ft0, ft1);
 
   /* gimp_composite_grain_merge_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_GRAIN_MERGE;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -478,8 +478,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_GRAIN_MERGE;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -491,16 +491,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("grain_merge", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("grain_merge", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("grain_merge", ft0, ft1);
+  gimp_composite_regression_timer_report ("grain_merge", ft0, ft1);
 
   /* gimp_composite_swap_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_SWAP;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -512,8 +512,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_SWAP;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -525,16 +525,16 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_swap_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("swap", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_swap_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("swap", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("swap", ft0, ft1);
+  gimp_composite_regression_timer_report ("swap", ft0, ft1);
 
   /* gimp_composite_scale_rgba8_rgba8_rgba8 */
-  memset((void *) &special_ctx, 0, sizeof(special_ctx));
+  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_SCALE;
   special_ctx.n_pixels = n_pixels;
   special_ctx.scale.scale = 2;
@@ -546,8 +546,8 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   special_ctx.B = (unsigned char *) rgba8B;
   special_ctx.M = (unsigned char *) rgba8B;
   special_ctx.D = (unsigned char *) rgba8D1;
-  memset(special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset((void *) &generic_ctx, 0, sizeof(special_ctx));
+  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
+  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
   generic_ctx.op = GIMP_COMPOSITE_SCALE;
   generic_ctx.n_pixels = n_pixels;
   generic_ctx.scale.scale = 2;
@@ -559,19 +559,19 @@ gimp_composite_mmx_test(int iterations, int n_pixels)
   generic_ctx.B = (unsigned char *) rgba8B;
   generic_ctx.M = (unsigned char *) rgba8B;
   generic_ctx.D = (unsigned char *) rgba8D2;
-  memset(generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function(iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function(iterations, gimp_composite_scale_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts("scale", &generic_ctx, &special_ctx)) {
+  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
+  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
+  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_scale_rgba8_rgba8_rgba8_mmx, &special_ctx);
+  if (gimp_composite_regression_compare_contexts ("scale", &generic_ctx, &special_ctx)) {
     return (1);
   }
-  gimp_composite_regression_timer_report("scale", ft0, ft1);
+  gimp_composite_regression_timer_report ("scale", ft0, ft1);
 #endif
   return (0);
 }
 
 int
-main(int argc, char *argv[])
+main (int argc, char *argv[])
 {
   int iterations;
   int n_pixels;
@@ -585,18 +585,18 @@ main(int argc, char *argv[])
 
   argv++, argc--;
   while (argc >= 2) {
-    if ((strcmp(argv[0], "--iterations") == 0 || strcmp(argv[0], "-i") == 0) && argc > 1) {
+    if ((strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0) && argc > 1) {
       iterations = atoi(argv[1]);
       argc -= 2, argv++; argv++;
-    } else if ((strcmp(argv[0], "--n-pixels") == 0 || strcmp(argv[0], "-n") == 0) && argc > 1) {
-      n_pixels = atoi(argv[1]);
+    } else if ((strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0) && argc > 1) {
+      n_pixels = atoi (argv[1]);
       argc -= 2, argv++; argv++;
     } else {
       argc--, argv++;
     }
   }
 
-  gimp_composite_generic_install();
+  gimp_composite_generic_install ();
 
   return (gimp_composite_mmx_test(iterations, n_pixels));
 }

@@ -1836,5 +1836,5 @@ gimp_composite_generic_install (void)
     gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;
   }
 
-  gimp_composite_generic_init();
+  gimp_composite_generic_init ();
 }

@@ -15,5 +15,5 @@ gimp_composite_3dnow_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_3dnow_init();
+  gimp_composite_3dnow_init ();
 }

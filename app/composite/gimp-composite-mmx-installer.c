@@ -45,5 +45,5 @@ gimp_composite_mmx_install (void)
     gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;
   }
 
-  gimp_composite_mmx_init();
+  gimp_composite_mmx_init ();
 }

@@ -15,5 +15,5 @@ gimp_composite_altivec_install (void)
 {
   /* nothing to do */
 
-  gimp_composite_altivec_init();
+  gimp_composite_altivec_init ();
 }

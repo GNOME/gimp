@@ -16,124 +16,124 @@
 #include "gimp-composite-generic.h"
 
 void
-gimp_composite_regression_print_rgba8(gimp_rgba8_t *p)
+gimp_composite_regression_print_rgba8 (gimp_rgba8_t *p)
 {
-  printf("#%02x%02x%02x,%02X", p->r, p->g, p->b, p->a);
-  fflush(stdout);
+  printf ("#%02x%02x%02x,%02X", p->r, p->g, p->b, p->a);
+  fflush (stdout);
 }
 
 void
-gimp_composite_regression_print_va8(gimp_va8_t *va8)
+gimp_composite_regression_print_va8 (gimp_va8_t *va8)
 {
-  printf("#%02x,%02X", va8->v, va8->a);
-  fflush(stdout);
+  printf ("#%02x,%02X", va8->v, va8->a);
+  fflush (stdout);
 }
 
 int
-gimp_composite_regression_compare_contexts(char *operation, GimpCompositeContext *ctx1, GimpCompositeContext *ctx2)
+gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContext *ctx1, GimpCompositeContext *ctx2)
 {
-		switch (ctx1->pixelformat_D) {
-		case GIMP_PIXELFORMAT_ANY:
-		case GIMP_PIXELFORMAT_N:
-		default:
-				printf("Bad pixelformat! %d\n", ctx1->pixelformat_A);
-				exit(1);
-				break;
+  switch (ctx1->pixelformat_D) {
+  case GIMP_PIXELFORMAT_ANY:
+  case GIMP_PIXELFORMAT_N:
+  default:
+    printf("Bad pixelformat! %d\n", ctx1->pixelformat_A);
+    exit(1);
+    break;
 
-		case GIMP_PIXELFORMAT_V8:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_V8:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_VA8:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_VA8:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGB8:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_RGB8:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGBA8:
-				gimp_composite_regression_comp_rgba8(operation, (gimp_rgba8_t *) ctx1->A, (gimp_rgba8_t *) ctx1->B, (gimp_rgba8_t *) ctx1->D, (gimp_rgba8_t *) ctx2->D, ctx1->n_pixels);
-				break;
+  case GIMP_PIXELFORMAT_RGBA8:
+    gimp_composite_regression_comp_rgba8(operation, (gimp_rgba8_t *) ctx1->A, (gimp_rgba8_t *) ctx1->B, (gimp_rgba8_t *) ctx1->D, (gimp_rgba8_t *) ctx2->D, ctx1->n_pixels);
+    break;
 
 #if GIMP_COMPOSITE_16BIT
-		case GIMP_PIXELFORMAT_V16:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_V16:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_VA16:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_VA16:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGB16:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_RGB16:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGBA16:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_RGBA16:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
 #endif
 #if GIMP_COMPOSITE_32BIT
-		case GIMP_PIXELFORMAT_V32:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_V32:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_VA32:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_VA32:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGB32:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_RGB32:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
-		case GIMP_PIXELFORMAT_RGBA32:
-				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-						printf("%s: failed to agree\n", operation);
-						return (1);
-				}
-				break;
+  case GIMP_PIXELFORMAT_RGBA32:
+    if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+      printf("%s: failed to agree\n", operation);
+      return (1);
+    }
+    break;
 
 #endif
-		}
+  }
 
 
-		return (0);
+  return (0);
 }
 
 
 int
-gimp_composite_regression_comp_rgba8(char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *got, u_long length)
+gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *got, u_long length)
 {
   int i;
   int failed;
@@ -168,7 +168,7 @@ gimp_composite_regression_comp_rgba8(char *str, gimp_rgba8_t *rgba8A, gimp_rgba8
 }
 
 int
-gimp_composite_regression_comp_va8(char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *got, u_long length)
+gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *got, u_long length)
 {
   int i;
   int failed;
@@ -200,7 +200,7 @@ gimp_composite_regression_comp_va8(char *str, gimp_va8_t *va8A, gimp_va8_t *va8B
 }
 
 void
-gimp_composite_regression_dump_rgba8(char *str, gimp_rgba8_t *rgba, u_long n_pixels)
+gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pixels)
 {
   int i;
 
@@ -218,61 +218,61 @@ gimp_composite_regression_dump_rgba8(char *str, gimp_rgba8_t *rgba, u_long n_pix
 #define timer_report(name,t1,t2) printf("%-17s %17.7f %17.7f %17.7f%c\n", name, tv_to_secs(t1), tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2) > 1.0 ? ' ' : '*');
 
 void
-gimp_composite_regression_timer_report(char *name, double t1, double t2)
+gimp_composite_regression_timer_report (char *name, double t1, double t2)
 {
-		printf("%-17s %17.7f %17.7f %17.7f%c\n", name, t1, t2, t1/t2, t1/t2 > 1.0 ? ' ' : '*');
+  printf ("%-17s %17.7f %17.7f %17.7f%c\n", name, t1, t2, t1/t2, t1/t2 > 1.0 ? ' ' : '*');
 }
 
 double
-gimp_composite_regression_time_function(int iterations, void (*func)(), GimpCompositeContext *ctx)
+gimp_composite_regression_time_function (int iterations, void (*func)(), GimpCompositeContext *ctx)
 {
-		struct timeval t0;
-		struct timeval t1;
-		struct timeval tv_elapsed;
-		int i;
+  struct timeval t0;
+  struct timeval t1;
+  struct timeval tv_elapsed;
+  int i;
 
   gettimeofday(&t0, NULL);
   for (i = 0; i < iterations; i++) { (*func)(ctx); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &tv_elapsed);
 
-		return (tv_to_secs(tv_elapsed));
+  return (tv_to_secs(tv_elapsed));
 }
 
 gimp_rgba8_t *
-gimp_composite_regression_random_rgba8(unsigned long n_pixels)
+gimp_composite_regression_random_rgba8 (unsigned long n_pixels)
 {
-		gimp_rgba8_t *rgba8;
-		int i;
+  gimp_rgba8_t *rgba8;
+  int i;
 
-		if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
-				for (i = 0; i < n_pixels; i++) {
-						rgba8[i].r = rand() % 256;
-						rgba8[i].g = rand() % 256;
-						rgba8[i].b = rand() % 256;
-						rgba8[i].a = rand() % 256;
-				}
-		}
+  if ((rgba8 = (gimp_rgba8_t *) calloc (sizeof(gimp_rgba8_t), n_pixels))) {
+    for (i = 0; i < n_pixels; i++) {
+      rgba8[i].r = rand() % 256;
+      rgba8[i].g = rand() % 256;
+      rgba8[i].b = rand() % 256;
+      rgba8[i].a = rand() % 256;
+    }
+  }
 
-		return (rgba8);
+  return (rgba8);
 }
 
 gimp_rgba8_t *
-gimp_composite_regression_fixed_rgba8(unsigned long n_pixels)
+gimp_composite_regression_fixed_rgba8 (unsigned long n_pixels)
 {
-		gimp_rgba8_t *rgba8;
-		int i;
-		int v;
+  gimp_rgba8_t *rgba8;
+  int i;
+  int v;
 
-		if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
-				for (i = 0; i < n_pixels; i++) {
-						v = i % 256;
-						rgba8[i].r = v+8;
-						rgba8[i].g = v+8;
-						rgba8[i].b = v+8;
-						rgba8[i].a = v+8;
-				}
-		}
+  if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
+    for (i = 0; i < n_pixels; i++) {
+      v = i % 256;
+      rgba8[i].r = v+8;
+      rgba8[i].g = v+8;
+      rgba8[i].b = v+8;
+      rgba8[i].a = v+8;
+    }
+  }
 
-		return (rgba8);
+  return (rgba8);
 }
