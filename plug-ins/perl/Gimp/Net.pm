@@ -127,11 +127,13 @@ sub unlock {
 
 sub set_trace {
    my($trace)=@_;
+   my $old_level = $trace_level;
    if(ref $trace) {
       $trace_res=$trace;
-   } else {
+   } elsif (defined $trace) {
       $trace_level=$trace;
    }
+   $old_level;
 }
 
 sub start_server {

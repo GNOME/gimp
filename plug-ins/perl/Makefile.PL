@@ -46,6 +46,44 @@ Do you want me to make these tests [y]? ";
    do './config.pl';
 }
 
+eval { require Gimp };
+unless($@) {
+   $old_prefix = eval { Gimp::_gimp_prefix() };
+   if ($@) {
+      print <<EOF;
+
+WARNING: I've detected an old version of Gimp-Perl installed
+         already. Since I cannot detect the prefix used to install
+         it I will just overwrite it.  If you happen to use two
+         different and incompatible versions of the Gimp with differing
+         prefixes you should call configure with the --disable-perl
+         switch to disable the perl extension, or consider installing
+         the perl module elsewhere, using the environment variables
+         PERL5LIB=/my/module/dir and PERL_MM_OPTS="PREFIX=\$PERL5LIB" to
+         overwrite the installation directory (PERL_MM_OPTS) and run the
+         Gimp (PERL5LIB). See "perldoc ExtUtils::MakeMaker" for a full
+         discussion of your options.
+
+EOF
+   } else {
+      if ($GIMP_PREFIX ne $old_prefix) {
+         print <<EOF;
+
+WARNING: I've detected another installaion of the Gimp-Perl extension.
+            
+         This version uses the prefix '$GIMP_PREFIX'.
+         The already installed version uses the prefix '$old_prefix'.
+
+         They don't match, which indicates that installing Gimp-Perl might
+         overwrite an old but still used installation. Gimp-Perl will
+         therefore be disabled, and not be installed.
+
+EOF
+         not_halt("prefix mismatch");
+      }
+   }
+}
+
 eval "use Gtk;"; $GTK = $@ eq "";
 eval "use PDL;"; $PDL = $@ eq "";
 eval "use Parse::RecDescent;"; $PRD = $@ eq "";
@@ -125,8 +163,35 @@ EOF
       examples/example-fu.pl examples/example-oo.pl));
 
 for(@shebang) {
-   print "updating bangpath in $_\n";
    system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
+}
+
+sub MY::install {
+   package MY;
+   my $install = shift->SUPER::install(@_);
+   ($install =~ s/^install\b/really-install/m) or return $install;
+   '
+install ::
+	@for dir in \
+	   $(INSTALLPRIVLIB) \
+	   $(INSTALLARCHLIB) \
+	   $(INSTALLBIN) \
+	   $(INSTALLSCRIPT) \
+	   $(INSTALLMAN1DIR) \
+	   $(INSTALLMAN3DIR) ; \
+	do \
+	   $(MKPATH) "$$dir"; \
+	   if test -d "$$dir" && test -w "$$dir" ; then : ; else \
+	      echo ; \
+	      echo "ERROR: installation directory \"$$dir\"" ; \
+	      echo "       is not writable, not installing gimp-perl" ; \
+	      echo ; \
+	      exit ; \
+	   fi \
+	done ; \
+        $(MAKE) really-install
+
+'.$install;
 }
 
 sub MY::postamble {
@@ -141,7 +206,7 @@ check :: test
 clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 
-install :: install-plugins
+really-install :: install-plugins
 	$GIMPTOOL --install-admin-bin Perl-Server
 
 install-plugins:
@@ -176,7 +241,7 @@ WriteMakefile(
     		   },
     'LIBS'	=> [''],
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",
-    'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP" : ""),
+    'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP " : ""),
     'EXE_FILES'	=> ['scm2perl','scm2scm'],
     'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
@@ -189,6 +254,23 @@ Hopefully, Gimp is now correctly configured. you can now enter "make",
 "make test" and "make install".
 
 EOF
+
+# write an empty makefile (the last chance to stop)
+# and warn the user.
+sub not_halt {
+   print STDERR "WARNING: *** perl extension will not be built ($_[0]) ***\n\n";
+   open MAKEFILE,">Makefile" or die "unable to create Makefile: $!";
+   print MAKEFILE <<EOF;
+all install check:
+
+clean mostlyclean objclean:
+
+distclean maintainer-clean: clean
+	rm -f Makefile config.cache config.pl config.log config.h config.status stamp-h Makefile.old
+EOF
+   close MAKEFILE;
+   exit;
+}
 
 
 

@@ -89,6 +89,14 @@ _exit()
 #endif
         abort();
 
+# this one is for prefix mismatch check.
+char *
+_gimp_prefix()
+	CODE:
+        RETVAL = GIMP_PREFIX;
+	OUTPUT:
+        RETVAL
+
 BOOT:
 {
    HV *stash = gv_stashpvn("Gimp", 4, TRUE);

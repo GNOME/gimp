@@ -26,3 +26,12 @@ if (defined $topdir) {
    $GIMP_LIBS		=~ s/\$topdir/$topdir/g;
    $GIMP_LIBS_NOUI	=~ s/\$topdir/$topdir/g;
 }
+
+if ($IN_GIMP) {
+   $GIMP_PREFIX=$prefix;
+} else {
+   $GIMP_PREFIX = `$GIMPTOOL --prefix`;
+   chomp $GIMP_PREFIX;
+}
+
+$DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\"';

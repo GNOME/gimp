@@ -1,5 +1,10 @@
 Revision history for Gimp-Perl extension.
 
+	- fixed Gimp::Util::gimp_image_layertype.
+	- make install checks for install directory writability
+          and refuses to install if it isn't.
+        - fixed a longstanding bug that caused (some) set_trace calls
+          to be ignored with Gimp::Net.
 	- added new convinience functions to Gimp::Util.
         - Gimp::Fu checks for the presence of Gtk and dies
           if it can't be found.
