@@ -1,5 +1,11 @@
 2000-04-12  Sven Neumann  <sven@gimp.org>
 	
+        * docs/keybindings.txt: applied gimp-cornwell-000412-0, a 
+	patch from  Piers Cornwell <piers.cornwell@usa.net>, that 
+	brings the keybindings uptodate.
+	
+2000-04-12  Sven Neumann  <sven@gimp.org>
+
         * plug-ins/gfig/gfig.c
 	* plug-ins/pagecurl/pagecurl.c: saner message strings
 	

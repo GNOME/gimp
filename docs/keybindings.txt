@@ -1,176 +1,212 @@
-This is the set of default hotkeys for GIMP. Note: Gimp allows 
-menu keybindings to be dynamically re-assigned. So if you dont
-like these, they are easy enough to change. GIMP also comes with
-a menurc that will implement PS style keybindings, if you are used
-to PS, this may prove helpful.
+The Gimp: Keybindings
+=====================
 
-version 1.0 Nov 7 Adrian Likins <adrian@gimp.org>
-===========================================
+This is the set of default hotkeys (keyboard shortcuts) for The 
+GIMP. For more information on what the commands do, use the 
+help system (press F1) or the GUM (GIMP Users Manual) which is
+available at http://manual.gimp.org/.
 
+The GIMP allows menu keybindings to be dynamically re-assigned. 
+So if you don't like these, they are easy enough to change. To
+do this, just highlight the menu item of your choice, and press
+the desired new key combination. If that combination is already
+assigned, the old command will lose it's binding.
 
-ToolBox
+The GIMP also comes with a menurc that will implement Adobe 
+Photoshop style keybindings, if you are used to Photoshop, this 
+may prove helpful. To use it, rename ps-menurc to menurc and
+put it in ~/gimp-1.1, overwriting the one that is already there
+(you may want to make a backup first).
 
-File  
-
-	New		Ctrl+N
-	Open		Ctrl+O
-	Quit		Ctrl+Q
-
-	Dialogs
-		Brushes		Shift+Ctrl+B
-		Patterns	Shift+Ctrl+P
-		Palette		Ctrl+P
-		Gradient Editor Ctrl+G
-		Tool Options	Shift+Ctrl+T	
-
-
-
-Image
+1. ToolBox
+==========
 
 File
+    New.................................Ctrl+N
+    Open................................Ctrl+O
+    Dialogs >
+	Layers, Channels & Paths........Ctrl+L
+	Tool Options....................Shift+Ctrl+T
+	Brushes.........................Shift+Ctrl+B
+	Patterns........................Shift+Ctrl+P
+	Gradients.......................Ctrl+G
+	Palette.........................Ctrl+P
+    Quit................................Ctrl+Q
 
-	New		Ctrl+N
-	Open		Ctrl+O
-	Save		Ctrl+S
-	Close		Ctrl+W
-	Quit		Ctrl+Q	
+Help
+    Help................................F1
+    Context Help........................Shift+F1
+
+
+2. Image
+========
+
+File
+    New.................................Ctrl+N
+    Open................................Ctrl+O
+    Save................................Ctrl+S
+    Close...............................Ctrl+W
+    Quit................................Ctrl+Q	
 	
-
 Edit
-
-	Cut		Ctrl+X
-	Copy		Ctrl+C
-	Paste		Ctrl+V
-	Clear		Ctrl+K
-	Fill		Ctrl+.
-	Undo		Ctrl+Z
-	Redo		Ctrl+R
-	Cut Named	Shift+Ctrl+X
-	Copy Named	Shift+Ctrl+C
-	Paste Named	Shift+Ctrl+V
+    Undo................................Ctrl+Z
+    Redo................................Ctrl+R
+    Cut.................................Ctrl+X
+    Copy................................Ctrl+C
+    Paste...............................Ctrl+V
+    Buffer >
+        Cut Named.......................Shift+Ctrl+X
+        Copy Named......................Shift+Ctrl+C
+        Paste Named.....................Shift+Ctrl+V
+    Clear...............................Ctrl+K
+    Fill with FG Color..................Ctrl+,
+    Fill with BG Color..................Ctrl+.
 
 Select
-	
-	Toggle		Ctrl+T
-	Invert		Ctrl+I
-	All		Ctrl+A
-	None		Shift+Ctrl+A
-	Float		Shift+Ctrl+L
-	Sharpen		Shift+Ctrl+H
-	Feather		Shift+Ctrl+F
+    Invert..............................Ctrl+I
+    All.................................Ctrl+A
+    None................................Shift+Ctrl+A
+    Float...............................Shift+Ctrl+L
+    Feather.............................Shift+Ctrl+F
+    Sharpen.............................Shift+Ctrl+H
 
 View
-	Zoom in		=
-	Zoom out	-
-	Zoom (1:1)	1
-	Window Info	Shift+Ctrl+l
-	Toggle Rulers	Shift+Ctrl+R
-	Toggle Guides	Shift+Ctrl+T
-	Shrink Wrap	Ctrl+E
+    Zoom in.............................=
+    Zoom out............................-
+    Zoom >	
+	1:1.............................1
+    Info Window.........................Shift+Ctrl+I
+    Nav Window..........................Shift+Ctrl+N
+    Toggle Selection....................Ctrl+T
+    Toggle Rulers.......................Shift+Ctrl+R
+    Toggle Statusbar....................Shift+Ctrl+S
+    Toggle Guides.......................Shift+Ctrl+T	
+    Shrink Wrap.........................Ctrl+E
 
 Image
-
-	Channel Ops
-		Duplicate		Ctrl+D
-		Offset			Shift+Ctrl+O
+    Mode >
+	RGB.............................Alt+R
+	Grayscale.......................Alt+G
+	Indexed.........................Alt+I
+    Transforms >
+	Offset..........................Shift+Ctrl+O
+    Duplicate...........................Ctrl+D
 
 Layers
+    Stack >
+	Previous Layer..................Pg Dn
+	Next Layer......................Pg Up		
+	Raise Layer.....................Shift+Pg Dn
+	Lower Layer.....................Shift+Pg Up
+	Layer to Top....................Ctrl+Pg Dn
+	Layer to Bottom.................Ctrl+Pg Up
+    Anchor Layer........................Ctrl+H
+    Merge Visible Layers................Ctrl+M
 
-	Layers		
-	& Channels..	Ctrl+L
-	Raise Layer	Ctrl+F
-	Lower Layer	Ctrl+B
-	Merge		
-	Visible Layers	Ctrl+M
-	
 Tools
+    Default Colors......................D
+    Swap Colors.........................X
+    Select Tools >
+	Rect Select.....................R
+	Ellipse Select..................E
+	Free Select.....................F
+	Fuzzy Select....................Z
+	Bezier Select...................B
+	Intelligent Scissors............I
+    Transform Tools >
+	Move............................M
+	Crop & Resize...................Shift+C
+	Transform.......................Shift+T
+	Flip............................Shift+F
+    Magnify.............................Shift+M
+    Text................................T
+    Color Picker........................O
+    Paint Tools >
+	Bucket Fill.....................Shift+B
+	Blend...........................L
+	Pencil..........................Shift+P
+	Paintbrush......................P
+	Eraser..........................Shift+E
+	Airbrush........................A
+	Clone...........................C
+	Convolve........................V
+	Ink.............................K
+	DodgeBurn.......................Shift+D
+	Smudge..........................Shift+S
 
-	Rect Select		R
-	Ellipse Select		E
-	Fuzzy Select		Z
-	Bezier Select		B
-	Intelligent Scissors	I
-	Move			M
-	Magnify			Shift+M
-	Crop			Shift+C
-	Transform		Shift+T
-	Flip			Shift+F
-	Text			T
-	Color Picker		O
-	Bucket Fill		Shift+B
-	Blend			L
-	Paintbrush		P
-	Pencil			Shift+P
-	Eraser			Shift+E
-	Airbrush		A
-	Clone			C
-	Convolve		V
+Dialogs
+    Layers, Channels & Paths............Ctrl+L
+    Brushes.............................Shift+Ctrl+B
+    Patterns............................Shift+Ctrl+P
+    Gradients...........................Ctrl+G
+    Palette.............................Ctrl+P
 
 Filters
+    Repeat Last.........................Alt+F
+    Re-Show Last........................Shift+Alt+F
 
-	Repeat Last		Alt+F
-	Re-show Last		Shift+Alt+F
-				
-Dialogs
-	Brushes			Shift+Ctrl+B
-	Patterns		Shift+Ctrl+P
-	Palette			Ctrl+P
-	Gradient Editor		Ctrl+G
-	Layers&Channels		Ctrl+L
-	Tool Options		Shift+Ctrl+T	
-	
-
-Gradient Editor
+3. Gradient Editor
+==================
 
 Gradient Ops Menu
+    Left Endpoint Color.................L
+    Load From >
+	Left neighbors right endpoint...Ctrl+L
+	Right endpoint..................Alt+L
+    Right Endpoint Color................R
+    Load From >
+	Right neighbours right endpoint.Ctrl+R
+	Left Endpoint...................Alt+R
+    Split segment at midpoint...........S
+    Split segment uniformly.............U
+    Delete segment......................D
+    Re-center segments midpoint.........C
+    Re-distribute handles in segment....Ctrl+C
+    Selection Operands >
+	Flip segment....................F
+	Replicate segment...............M
+	Blend endpoints colors..........B
+	Blend endpoints opacity.........Ctrl+B    
 
-	Left Endpoint Color	L
-	Load From
-		Left neighbors right endpoint	Ctrl+L
-		Right endpoint			Alt+L
-	Righ Endpoint Color	R
-	Load From
-		Right neighbors right endpoint	Ctrl+R
-		Left endpoint			Alt+R
-	
-	Split Segment		S
-	 at midpoint
-	Split Segment		U
-	 uniformly				
-	Delete Segment		D
-	Re-center		C
-	  segments midpoint
-	Re-Distribute		Ctrl+C
-	  handles in segment
-
-	Selection Operands
-		Flip Segment		F
-		Replicate Segment	M
-		Blend Endpoints		B
-		  Colors	
-		Blend endpoints		Ctrl+B
-		  opacity
-
-
-Layers & Channels
+4. Layers & Channels
+====================
 
 Layers Ops menu
-
-	New Layer		Ctrl+N
-	Raise Layer		Ctrl+F
-	Lower Layer		Ctrl+B
-	Duplicate Layer		Ctrl+C
-	Delete	Layer		Ctrl+X
-	Scale Layer		Ctrl+S
-	Resize Layer		Ctrl+R
-	Merge Visible Layers	Ctrl+M
+    New Layer...........................Ctrl+N
+    Stack >
+	Raise Layer.....................Ctrl+F
+	Lower Layer.....................Ctrl+B
+	Layer to Top....................Shift+Ctrl+F
+	Layer to Bottom.................Shift+Ctrl+B
+    Duplicate Layer.....................Ctrl+C
+    Anchor Layer........................Ctrl+H
+    Delete Layer........................Ctrl+X
+    Layer Boundary Size.................Ctrl+R
+    Scale Layer.........................Ctrl+S
+    Merge Visible Layers................Ctrl+M
+    Merge Down..........................Shift+Ctrl+M
 
 Channel Ops Menu
+    New Channel.........................Ctrl+N
+    Raise Channel.......................Ctrl+F
+    Lower Channel.......................Ctrl+B
+    Duplicate Channel...................Ctrl+C
+    Channel to Selection................Ctrl+S
+    Delete Channel......................Ctrl+X 
+    
+Paths Ops Menu
+    New Path............................Ctrl+N
+    Duplicate Path......................Ctrl+U
+    Path to Selection...................Ctrl+S
+    Selection to Path...................Ctrl+P
+    Stroke Path.........................Ctrl+T
+    Delete Path.........................Ctrl+X 
+    Copy Path...........................Ctrl+C
+    Paste Path..........................Ctrl+V
+    Import Path.........................Ctrl+I
+    Export Path.........................Ctrl+E
 
-	New Channel		Ctrl+N
-	Raise Channel		Ctrl+F
-	Lower Channel		Ctrl+B
-	Duplicate Channel	Ctrl+C
-	Delete Channel		Ctrl+X
-	Channel to selection	Ctrl+S
-	
+
+Version 1.1.0:
+    Adrian Likins <adrian@gimp.org>
+    Piers Cornwell <piers.cornwell@usa.net>
