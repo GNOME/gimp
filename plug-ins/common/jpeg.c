@@ -153,7 +153,7 @@
  *
  * When writing thumbnails with high quality settings, EXIF marker length could
  * get more than 65533 (sanity checking in libjpeg). Gradually decrease
- * thumbnail quality (in 5% steps) until it fits.
+ * thumbnail quality (in steps of 5) until it fits.
  */
 
 #include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
@@ -177,6 +177,8 @@
 
 #ifdef HAVE_EXIF
 #include <libexif/exif-data.h>
+
+#define MARKER_CODE_EXIF 0xE1
 #endif /* HAVE_EXIF */
 
 #include <libgimp/gimp.h>
@@ -1658,7 +1660,7 @@ save_image (const gchar *filename,
         exif_data = exif_data_new ();
 
       /* avoid to save markers longer than 65533, gradually decrease
-       * quality in 5% steps until exif_buf_len is lower than that.
+       * quality in steps of 5 until exif_buf_len is lower than that.
        */
       for (exif_buf_len = 65535;
            exif_buf_len > 65533 && quality > 0.0;
@@ -1706,7 +1708,8 @@ save_image (const gchar *filename,
           exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
       }
 
-      jpeg_write_marker (&cinfo, 0xe1, exif_buf, exif_buf_len);
+      jpeg_write_marker (&cinfo, MARKER_CODE_EXIF, exif_buf, exif_buf_len);
+
       if (exif_buf)
         free (exif_buf);
     }
