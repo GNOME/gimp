@@ -276,7 +276,7 @@ def _interact(func_name):
 	def get_value(self):
 	    return self.get_active()
     class RadioEntry(gtk.Frame):
-        def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
+        def __init__(self, default=0, items=[("Yes", 1), ("No", 0)]):
             import gtk
             gtk.Frame.__init__(self)
             box = gtk.HBox(gtk.FALSE, 5)
@@ -292,7 +292,7 @@ def _interact(func_name):
                     button.set_active(gtk.TRUE)
                     self.active_value = value
         def changed(self, radio, value):
-            if radio.active:
+            if radio.get_active():
                 self.active_value = value
         def get_value(self):
             return self.active_value 
