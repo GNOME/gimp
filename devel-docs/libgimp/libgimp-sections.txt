@@ -131,7 +131,6 @@ gimp_channel_get_opacity
 gimp_channel_set_opacity
 gimp_channel_get_color
 gimp_channel_set_color
-gimp_channel_get_image_id
 gimp_channel_combine_masks
 </SECTION>
 
@@ -184,7 +183,6 @@ gimp_drawable_get_tattoo
 gimp_drawable_set_tattoo
 gimp_drawable_get_pixel
 gimp_drawable_set_pixel
-gimp_drawable_set_image
 gimp_drawable_get_tile
 gimp_drawable_get_tile2
 gimp_drawable_get_thumbnail_data
@@ -192,10 +190,11 @@ gimp_drawable_merge_shadow
 gimp_drawable_fill
 gimp_drawable_update
 gimp_drawable_mask_bounds
-gimp_drawable_image
-gimp_drawable_type
+gimp_drawable_get_image
+gimp_drawable_set_image
 gimp_drawable_has_alpha
 gimp_drawable_type_with_alpha
+gimp_drawable_type
 gimp_drawable_is_rgb
 gimp_drawable_is_gray
 gimp_drawable_is_indexed
@@ -207,7 +206,6 @@ gimp_drawable_is_layer
 gimp_drawable_is_layer_mask
 gimp_drawable_is_channel
 gimp_drawable_offset
-gimp_drawable_image_id
 gimp_drawable_bpp
 gimp_drawable_parasite_find
 gimp_drawable_parasite_list
@@ -410,7 +408,6 @@ gimp_layer_set_opacity
 gimp_layer_get_mode
 gimp_layer_set_mode
 gimp_layer_get_mask_id
-gimp_layer_get_image_id
 gimp_layer_is_floating_sel
 gimp_layer_is_floating_selection
 gimp_layer_get_preserve_transparency

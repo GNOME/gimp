@@ -166,16 +166,6 @@ Functions to manipulate drawables.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_set_image ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@image_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_drawable_get_tile ##### -->
 <para>
 
@@ -258,7 +248,7 @@ Functions to manipulate drawables.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_image ##### -->
+<!-- ##### FUNCTION gimp_drawable_get_image ##### -->
 <para>
 
 </para>
@@ -267,12 +257,13 @@ Functions to manipulate drawables.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_type ##### -->
+<!-- ##### FUNCTION gimp_drawable_set_image ##### -->
 <para>
 
 </para>
 
 @drawable_ID: 
+@image_ID: 
 @Returns: 
 
 
@@ -286,6 +277,15 @@ Functions to manipulate drawables.
 
 
 <!-- ##### FUNCTION gimp_drawable_type_with_alpha ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_type ##### -->
 <para>
 
 </para>
@@ -396,14 +396,6 @@ Functions to manipulate drawables.
 @fill_type: 
 @offset_x: 
 @offset_y: 
-@Returns: 
-
-
-<!-- ##### MACRO gimp_drawable_image_id ##### -->
-<para>
-
-</para>
-
 @Returns: 
 
 

@@ -45,10 +45,11 @@ static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;
 static ProcRecord drawable_update_proc;
 static ProcRecord drawable_mask_bounds_proc;
-static ProcRecord drawable_image_proc;
-static ProcRecord drawable_type_proc;
+static ProcRecord drawable_get_image_proc;
+static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_has_alpha_proc;
 static ProcRecord drawable_type_with_alpha_proc;
+static ProcRecord drawable_type_proc;
 static ProcRecord drawable_is_rgb_proc;
 static ProcRecord drawable_is_gray_proc;
 static ProcRecord drawable_is_indexed_proc;
@@ -69,7 +70,6 @@ static ProcRecord drawable_get_tattoo_proc;
 static ProcRecord drawable_set_tattoo_proc;
 static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
-static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_thumbnail_proc;
 static ProcRecord drawable_offset_proc;
 static ProcRecord drawable_delete_proc;
@@ -81,10 +81,11 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_fill_proc);
   procedural_db_register (gimp, &drawable_update_proc);
   procedural_db_register (gimp, &drawable_mask_bounds_proc);
-  procedural_db_register (gimp, &drawable_image_proc);
-  procedural_db_register (gimp, &drawable_type_proc);
+  procedural_db_register (gimp, &drawable_get_image_proc);
+  procedural_db_register (gimp, &drawable_set_image_proc);
   procedural_db_register (gimp, &drawable_has_alpha_proc);
   procedural_db_register (gimp, &drawable_type_with_alpha_proc);
+  procedural_db_register (gimp, &drawable_type_proc);
   procedural_db_register (gimp, &drawable_is_rgb_proc);
   procedural_db_register (gimp, &drawable_is_gray_proc);
   procedural_db_register (gimp, &drawable_is_indexed_proc);
@@ -105,7 +106,6 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_set_tattoo_proc);
   procedural_db_register (gimp, &drawable_get_pixel_proc);
   procedural_db_register (gimp, &drawable_set_pixel_proc);
-  procedural_db_register (gimp, &drawable_set_image_proc);
   procedural_db_register (gimp, &drawable_thumbnail_proc);
   procedural_db_register (gimp, &drawable_offset_proc);
   procedural_db_register (gimp, &drawable_delete_proc);
@@ -387,8 +387,8 @@ static ProcRecord drawable_mask_bounds_proc =
 };
 
 static Argument *
-drawable_image_invoker (Gimp     *gimp,
-                        Argument *args)
+drawable_get_image_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -402,7 +402,7 @@ drawable_image_invoker (Gimp     *gimp,
   if (success)
     success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;
 
-  return_args = procedural_db_return_args (&drawable_image_proc, success);
+  return_args = procedural_db_return_args (&drawable_get_image_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
@@ -410,7 +410,7 @@ drawable_image_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg drawable_image_inargs[] =
+static ProcArg drawable_get_image_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -419,7 +419,7 @@ static ProcArg drawable_image_inargs[] =
   }
 };
 
-static ProcArg drawable_image_outargs[] =
+static ProcArg drawable_get_image_outargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -428,9 +428,9 @@ static ProcArg drawable_image_outargs[] =
   }
 };
 
-static ProcRecord drawable_image_proc =
+static ProcRecord drawable_get_image_proc =
 {
-  "gimp_drawable_image",
+  "gimp_drawable_get_image",
   "Returns the drawable's image.",
   "This procedure returns the drawable's image.",
   "Spencer Kimball & Peter Mattis",
@@ -438,64 +438,62 @@ static ProcRecord drawable_image_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  drawable_image_inargs,
+  drawable_get_image_inargs,
   1,
-  drawable_image_outargs,
-  { { drawable_image_invoker } }
+  drawable_get_image_outargs,
+  { { drawable_get_image_invoker } }
 };
 
 static Argument *
-drawable_type_invoker (Gimp     *gimp,
-                       Argument *args)
+drawable_set_image_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
   GimpDrawable *drawable;
+  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_type_proc, success);
+  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_type (drawable);
+    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
 
-  return return_args;
+  return procedural_db_return_args (&drawable_set_image_proc, success);
 }
 
-static ProcArg drawable_type_inargs[] =
+static ProcArg drawable_set_image_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
-  }
-};
-
-static ProcArg drawable_type_outargs[] =
-{
+  },
   {
-    GIMP_PDB_INT32,
-    "type",
-    "The drawable's type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
   }
 };
 
-static ProcRecord drawable_type_proc =
+static ProcRecord drawable_set_image_proc =
 {
-  "gimp_drawable_type",
-  "Returns the drawable's type.",
-  "This procedure returns the drawable's type.",
+  "gimp_drawable_set_image",
+  "Set image where drawable belongs to.",
+  "Set the image the drawable should be a part of (Use this before adding a drawable to another image).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  1,
-  drawable_type_inargs,
-  1,
-  drawable_type_outargs,
-  { { drawable_type_invoker } }
+  2,
+  drawable_set_image_inargs,
+  0,
+  NULL,
+  { { drawable_set_image_invoker } }
 };
 
 static Argument *
@@ -604,6 +602,60 @@ static ProcRecord drawable_type_with_alpha_proc =
   1,
   drawable_type_with_alpha_outargs,
   { { drawable_type_with_alpha_invoker } }
+};
+
+static Argument *
+drawable_type_invoker (Gimp     *gimp,
+                       Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_type_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_drawable_type (drawable);
+
+  return return_args;
+}
+
+static ProcArg drawable_type_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_type_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "type",
+    "The drawable's type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
+  }
+};
+
+static ProcRecord drawable_type_proc =
+{
+  "gimp_drawable_type",
+  "Returns the drawable's type.",
+  "This procedure returns the drawable's type.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_type_inargs,
+  1,
+  drawable_type_outargs,
+  { { drawable_type_invoker } }
 };
 
 static Argument *
@@ -1788,58 +1840,6 @@ static ProcRecord drawable_set_pixel_proc =
   0,
   NULL,
   { { drawable_set_pixel_invoker } }
-};
-
-static Argument *
-drawable_set_image_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpImage *gimage;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
-
-  return procedural_db_return_args (&drawable_set_image_proc, success);
-}
-
-static ProcArg drawable_set_image_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  },
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcRecord drawable_set_image_proc =
-{
-  "gimp_drawable_set_image",
-  "Set image where drawable belongs to.",
-  "Set the image the drawable should be a part of (Use this before adding a drawable to another image).",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  drawable_set_image_inargs,
-  0,
-  NULL,
-  { { drawable_set_image_invoker } }
 };
 
 static Argument *

@@ -23,8 +23,7 @@
  */
 
 /*
- * version 0.52
- * This version requires gtk-1.0.4 or above.
+ * version 0.60
  *
  * This plug-in puts an image through a screen at a particular angle
  * and lines per inch, to arrive at a newspaper-style effect.
@@ -1031,7 +1030,7 @@ new_channel (const chan_tmpl *ct)
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
   gtk_widget_show (hbox2);
 
-  label = gtk_label_new_with_mnemonic( _("_Spot Function:"));
+  label = gtk_label_new_with_mnemonic (_("_Spot Function:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1046,7 +1045,7 @@ new_channel (const chan_tmpl *ct)
   i = 0;
   while (sf->name)
     {
-      chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
+      chst->menuitem[i] = gtk_menu_item_new_with_label (gettext (sf->name));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                              GTK_WIDGET (chst->menuitem[i]));
       gtk_widget_show (chst->menuitem[i]);
@@ -1217,7 +1216,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gimp_image_get_resolution (gimp_drawable_image_id( drawable->drawable_id),
+  gimp_image_get_resolution (gimp_drawable_get_image (drawable->drawable_id),
 			     &xres, &yres);
   /* XXX hack: should really note both resolutions, and use
    * rectangular cells, not square cells.  But I'm being lazy,
@@ -1306,7 +1305,7 @@ newsprint_dialog (GimpDrawable *drawable)
       /*  pack the scaleentry table  */
       gtk_box_pack_start (GTK_BOX (st.vbox), st.pull_table, FALSE, FALSE, 0);
 
-      label = gtk_label_new( _("Separate to:"));
+      label = gtk_label_new (_("Separate to:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show(label);
 

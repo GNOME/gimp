@@ -199,7 +199,7 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
 }
 
 /**
- * gimp_drawable_image:
+ * gimp_drawable_get_image:
  * @drawable_ID: The drawable.
  *
  * Returns the drawable's image.
@@ -209,13 +209,13 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
  * Returns: The drawable's image.
  */
 gint32
-gimp_drawable_image (gint32 drawable_ID)
+gimp_drawable_get_image (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 image_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_image",
+  return_vals = gimp_run_procedure ("gimp_drawable_get_image",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
@@ -229,33 +229,36 @@ gimp_drawable_image (gint32 drawable_ID)
 }
 
 /**
- * gimp_drawable_type:
+ * gimp_drawable_set_image:
  * @drawable_ID: The drawable.
+ * @image_ID: The image.
  *
- * Returns the drawable's type.
+ * Set image where drawable belongs to.
  *
- * This procedure returns the drawable's type.
+ * Set the image the drawable should be a part of (Use this before
+ * adding a drawable to another image).
  *
- * Returns: The drawable's type.
+ * Returns: TRUE on success.
  */
-GimpImageType
-gimp_drawable_type (gint32 drawable_ID)
+gboolean
+gimp_drawable_set_image (gint32 drawable_ID,
+			 gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  GimpImageType type = 0;
+  gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_type",
+  return_vals = gimp_run_procedure ("gimp_drawable_set_image",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    type = return_vals[1].data.d_int32;
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return type;
+  return success;
 }
 
 /**
@@ -321,6 +324,36 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return type_with_alpha;
+}
+
+/**
+ * gimp_drawable_type:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's type.
+ *
+ * This procedure returns the drawable's type.
+ *
+ * Returns: The drawable's type.
+ */
+GimpImageType
+gimp_drawable_type (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpImageType type = 0;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_type",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    type = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return type;
 }
 
 /**
@@ -981,39 +1014,6 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
 				    GIMP_PDB_INT32, y_coord,
 				    GIMP_PDB_INT32, num_channels,
 				    GIMP_PDB_INT8ARRAY, pixel,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_set_image:
- * @drawable_ID: The drawable.
- * @image_ID: The image.
- *
- * Set image where drawable belongs to.
- *
- * Set the image the drawable should be a part of (Use this before
- * adding a drawable to another image).
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_set_image (gint32 drawable_ID,
-			 gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_drawable_set_image",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

@@ -423,7 +423,7 @@ fuzzy_select_on_button_press (GtkWidget      *widget,
    if (event->button == 1) {
       gdouble rx = get_real_coord((gint) event->x);
       gdouble ry = get_real_coord((gint) event->y);
-      gint32 image_ID = gimp_drawable_image (_drawable->drawable_id);
+      gint32 image_ID = gimp_drawable_get_image (_drawable->drawable_id);
       gint32 channel_ID;
 
       /* Save the old selection first */

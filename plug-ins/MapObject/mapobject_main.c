@@ -95,7 +95,7 @@ set_default_settings (void)
   mapvals.material.diffuse_ref  = 0.5;
   mapvals.material.specular_ref = 0.5;
   mapvals.material.highlight    = 27.0;
-  
+
   for (i = 0; i < 6; i++)
     mapvals.boxmap_id[i] = -1;
 
@@ -116,7 +116,7 @@ check_drawables (GimpDrawable *drawable)
       if (mapvals.boxmap_id[i] == -1)
         mapvals.boxmap_id[i] = drawable->drawable_id;
       else if (mapvals.boxmap_id[i] != -1 &&
-	       gimp_drawable_image_id (mapvals.boxmap_id[i]) == -1)
+	       gimp_drawable_get_image (mapvals.boxmap_id[i]) == -1)
         mapvals.boxmap_id[i] = drawable->drawable_id;
       else if (gimp_drawable_is_gray (mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->drawable_id;
@@ -129,8 +129,8 @@ check_drawables (GimpDrawable *drawable)
     {
       if (mapvals.cylindermap_id[i] == -1)
         mapvals.cylindermap_id[i] = drawable->drawable_id;
-      else if (mapvals.cylindermap_id[i]!=-1 && 
-               gimp_drawable_image_id (mapvals.cylindermap_id[i]) == -1)
+      else if (mapvals.cylindermap_id[i]!=-1 &&
+               gimp_drawable_get_image (mapvals.cylindermap_id[i]) == -1)
         mapvals.cylindermap_id[i] = drawable->drawable_id;
       else if (gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
         mapvals.cylindermap_id[i] = drawable->drawable_id;
@@ -190,7 +190,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "box_left_drawable",     "Box left face" },
     { GIMP_PDB_DRAWABLE, "box_right_drawable",    "Box right face" },
     { GIMP_PDB_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
-    { GIMP_PDB_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }      
+    { GIMP_PDB_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }
   };
 
   gimp_install_procedure ("plug_in_map_object",
@@ -242,10 +242,10 @@ run (const gchar      *name,
   switch (run_mode)
     {
       case GIMP_RUN_INTERACTIVE:
-        
+
         /* Possibly retrieve data */
         /* ====================== */
-    
+
         gimp_get_data ("plug_in_map_object", &mapvals);
         check_drawables (drawable);
         if (main_dialog (drawable))
@@ -327,7 +327,7 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-  
+
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 

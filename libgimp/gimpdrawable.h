@@ -26,8 +26,7 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#define gimp_drawable_image_id  gimp_drawable_image
-#define gimp_drawable_bpp       gimp_drawable_bytes
+#define gimp_drawable_bpp gimp_drawable_bytes
 
 
 struct _GimpDrawable

@@ -255,14 +255,6 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### MACRO gimp_layer_get_image_id ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_layer_is_floating_sel ##### -->
 <para>
 

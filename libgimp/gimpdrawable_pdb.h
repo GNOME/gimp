@@ -43,10 +43,12 @@ gboolean      gimp_drawable_mask_bounds     (gint32           drawable_ID,
 					     gint            *y1,
 					     gint            *x2,
 					     gint            *y2);
-gint32        gimp_drawable_image           (gint32           drawable_ID);
-GimpImageType gimp_drawable_type            (gint32           drawable_ID);
+gint32        gimp_drawable_get_image       (gint32           drawable_ID);
+gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
+					     gint32           image_ID);
 gboolean      gimp_drawable_has_alpha       (gint32           drawable_ID);
 GimpImageType gimp_drawable_type_with_alpha (gint32           drawable_ID);
+GimpImageType gimp_drawable_type            (gint32           drawable_ID);
 gboolean      gimp_drawable_is_rgb          (gint32           drawable_ID);
 gboolean      gimp_drawable_is_gray         (gint32           drawable_ID);
 gboolean      gimp_drawable_is_indexed      (gint32           drawable_ID);
@@ -80,8 +82,6 @@ gboolean      gimp_drawable_set_pixel       (gint32           drawable_ID,
 					     gint             y_coord,
 					     gint             num_channels,
 					     const guint8    *pixel);
-gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
-					     gint32           image_ID);
 gboolean      _gimp_drawable_thumbnail      (gint32           drawable_ID,
 					     gint             width,
 					     gint             height,

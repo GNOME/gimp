@@ -292,7 +292,7 @@ CODE
     );
 }
 
-sub drawable_image {
+sub drawable_get_image {
     $blurb = "Returns the drawable's image.";
 
     $help = "This procedure returns the drawable's image.";
@@ -698,16 +698,17 @@ CODE
               "base/temp-buf.h" "gimp-intl.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
-	    drawable_mask_bounds drawable_image drawable_type
-	    drawable_has_alpha drawable_type_with_alpha drawable_is_rgb
-	    drawable_is_gray drawable_is_indexed drawable_bytes drawable_width
-	    drawable_height drawable_offsets
+	    drawable_mask_bounds
+            drawable_get_image drawable_set_image
+	    drawable_has_alpha drawable_type_with_alpha
+            drawable_type drawable_is_rgb drawable_is_gray drawable_is_indexed
+            drawable_bytes drawable_width drawable_height drawable_offsets
             drawable_is_layer drawable_is_layer_mask drawable_is_channel
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible
             drawable_get_linked drawable_set_linked
             drawable_get_tattoo drawable_set_tattoo
-            drawable_get_pixel drawable_set_pixel drawable_set_image
+            drawable_get_pixel drawable_set_pixel
             drawable_thumbnail drawable_offset drawable_delete);
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -19,7 +19,7 @@
 #include "siod.h"
 #include "siodp.h"
 
-static void 
+static void
 init_trace_version (void)
 {
   setvar (cintern ("*trace-version*"),
@@ -44,7 +44,7 @@ static LISP ct_gc_mark (LISP ptr);
 void ct_prin1 (LISP ptr, struct gen_printio *f);
 LISP ct_eval (LISP ct, LISP * px, LISP * penv);
 
-LISP 
+LISP
 ltrace_fcn_name (LISP body)
 {
   LISP tmp;
@@ -66,7 +66,7 @@ ltrace_fcn_name (LISP body)
   return (CAR (tmp));
 }
 
-LISP 
+LISP
 ltrace_1 (LISP fcn_name, LISP env)
 {
   LISP fcn, code;
@@ -88,7 +88,7 @@ ltrace_1 (LISP fcn_name, LISP env)
   return (NIL);
 }
 
-LISP 
+LISP
 ltrace (LISP fcn_names, LISP env)
 {
   LISP l;
@@ -97,7 +97,7 @@ ltrace (LISP fcn_names, LISP env)
   return (NIL);
 }
 
-LISP 
+LISP
 luntrace_1 (LISP fcn)
 {
   if (TYPE (fcn) == tc_closure)
@@ -109,7 +109,7 @@ luntrace_1 (LISP fcn)
   return (NIL);
 }
 
-LISP 
+LISP
 luntrace (LISP fcns)
 {
   LISP l;
@@ -118,21 +118,21 @@ luntrace (LISP fcns)
   return (NIL);
 }
 
-static void 
+static void
 ct_gc_scan (LISP ptr)
 {
   CAR (ptr) = gc_relocate (CAR (ptr));
   CDR (ptr) = gc_relocate (CDR (ptr));
 }
 
-static LISP 
+static LISP
 ct_gc_mark (LISP ptr)
 {
   gc_mark (ptr->storage_as.closure.code);
   return (ptr->storage_as.closure.env);
 }
 
-void 
+void
 ct_prin1 (LISP ptr, struct gen_printio *f)
 {
   gput_st (f, "#<CLOSURE(TRACED) ");
@@ -142,7 +142,7 @@ ct_prin1 (LISP ptr, struct gen_printio *f)
   gput_st (f, ">");
 }
 
-LISP 
+LISP
 ct_eval (LISP ct, LISP * px, LISP * penv)
 {
   LISP fcn_name, args, env, result, l;
@@ -169,7 +169,7 @@ ct_eval (LISP ct, LISP * px, LISP * penv)
   return (NIL);
 }
 
-void 
+void
 init_trace (void)
 {
   long j;

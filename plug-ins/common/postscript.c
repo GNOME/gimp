@@ -2026,7 +2026,7 @@ save_ps_preview (FILE   *ofp,
   cmap = NULL;     /* Check if we need a colour table */
   if (gimp_drawable_type (drawable_ID) == GIMP_INDEXED_IMAGE)
     cmap = (guchar *)
-      gimp_image_get_cmap (gimp_drawable_image_id (drawable_ID), &ncols);
+      gimp_image_get_cmap (gimp_drawable_get_image (drawable_ID), &ncols);
 
   for (y = 0; y < height; y++)
     {

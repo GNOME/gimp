@@ -354,7 +354,7 @@
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
 
-	 (d-img (car (gimp-drawable-image drawable)))
+	 (d-img (car (gimp-drawable-get-image drawable)))
 	 (d-width (car (gimp-drawable-width drawable)))
 	 (d-height (car (gimp-drawable-height drawable)))
 	 (d-offsets (gimp-drawable-offsets drawable))

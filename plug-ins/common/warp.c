@@ -362,7 +362,7 @@ run (const gchar      *name,
 
   values[0].data.d_status = status;
 
-  image_ID = gimp_layer_get_image_id (map_x->drawable_id);
+  image_ID = gimp_drawable_get_image (map_x->drawable_id);
 
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);
@@ -896,42 +896,41 @@ diff (GimpDrawable *drawable,
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width = drawable->width;
-  height = drawable->height;
-  src_bytes = drawable->bpp;                /* bytes per pixel in SOURCE drawable */
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  width     = drawable->width;
+  height    = drawable->height;
+  src_bytes = drawable->bpp;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /* -- Add two layers: X and Y Displacement vectors -- */
   /* -- I'm using a RGB  drawable and using the first two bytes for a
         16-bit pixel value. This is either clever, or a kluge,
         depending on your point of view.  */
 
-  image_id = gimp_layer_get_image_id(drawable->drawable_id);
-  layer_active = gimp_image_get_active_layer(image_id);
+  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  layer_active = gimp_image_get_active_layer (image_id);
 
-  new_image_id = gimp_image_new(width, height, GIMP_RGB); /* create new image for X,Y diff */
+  new_image_id = gimp_image_new (width, height, GIMP_RGB); /* create new image for X,Y diff */
 
-  xlayer_id = gimp_layer_new(new_image_id, "Warp_X_Vectors",
-			     width, height,
-			     GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
+  xlayer_id = gimp_layer_new (new_image_id, "Warp_X_Vectors",
+                              width, height,
+                              GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
 
-  ylayer_id = gimp_layer_new(new_image_id, "Warp_Y_Vectors",
-			     width, height,
-			     GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
+  ylayer_id = gimp_layer_new (new_image_id, "Warp_Y_Vectors",
+                              width, height,
+                              GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
 
   draw_yd = gimp_drawable_get (ylayer_id);
   draw_xd = gimp_drawable_get (xlayer_id);
 
-    gimp_image_add_layer (new_image_id, xlayer_id, 1);
-    gimp_image_add_layer (new_image_id, ylayer_id, 1);
-    gimp_drawable_fill(xlayer_id, GIMP_BACKGROUND_FILL);
-    gimp_drawable_fill(ylayer_id, GIMP_BACKGROUND_FILL);
-    gimp_image_set_active_layer(image_id, layer_active);
+  gimp_image_add_layer (new_image_id, xlayer_id, 1);
+  gimp_image_add_layer (new_image_id, ylayer_id, 1);
+  gimp_drawable_fill (xlayer_id, GIMP_BACKGROUND_FILL);
+  gimp_drawable_fill (ylayer_id, GIMP_BACKGROUND_FILL);
+  gimp_image_set_active_layer (image_id, layer_active);
 
-  dest_bytes = draw_xd->bpp;                /* bytes per pixel in destination drawable(s) */
+  dest_bytes = draw_xd->bpp;
   /* for a GRAYA drawable, I would expect this to be two bytes; any more would be excess */
   dest_bytes_inc = dest_bytes - 2;
-
 
   /*  allocate row buffers for source & dest. data  */
 
@@ -950,11 +949,12 @@ diff (GimpDrawable *drawable,
   desty = g_new (guchar, (x2 - x1) * dest_bytes);
 
   if ((desty==NULL) || (destx==NULL) || (cur_row_m==NULL) || (cur_row_v==NULL)
-    || (next_row_g==NULL) || (cur_row_g==NULL) || (prev_row_g==NULL)
-    || (next_row==NULL) || (cur_row==NULL) || (prev_row==NULL)) {
-   fprintf(stderr, "Warp diff: error allocating memory.\n");
-   exit(1);
-  }
+      || (next_row_g==NULL) || (cur_row_g==NULL) || (prev_row_g==NULL)
+      || (next_row==NULL) || (cur_row==NULL) || (prev_row==NULL))
+    {
+      g_printerr ("Warp diff: error allocating memory.\n");
+      exit (EXIT_FAILURE);
+    }
 
   /*  initialize the source and destination pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);  /* 'curl' vector-rotation input */
@@ -1198,44 +1198,44 @@ warp (GimpDrawable  *orig_draw,
 
   gimp_progress_init (_("Finding XY gradient..."));
 
-  diff(disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
+  diff (disp_map, &xdlayer, &ydlayer);    /* generate x,y differential images (arrays) */
 
   /* Get selection area */
-   gimp_drawable_mask_bounds (orig_draw->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (orig_draw->drawable_id, &x1, &y1, &x2, &y2);
 
-   width  = orig_draw->width;
-   height = orig_draw->height;
-   bytes  = orig_draw->bpp;
-   image_type = gimp_drawable_type(orig_draw->drawable_id);
+  width  = orig_draw->width;
+  height = orig_draw->height;
+  bytes  = orig_draw->bpp;
+  image_type = gimp_drawable_type (orig_draw->drawable_id);
 
-   *map_x = gimp_drawable_get(xdlayer);
-   *map_y = gimp_drawable_get(ydlayer);
+  *map_x = gimp_drawable_get (xdlayer);
+  *map_y = gimp_drawable_get (ydlayer);
 
-   orig_image_id = gimp_layer_get_image_id(orig_draw->drawable_id);
+  orig_image_id = gimp_drawable_get_image (orig_draw->drawable_id);
 
-   /*   gimp_image_lower_layer(orig_image_id, new_layer_id); */ /* hide it! */
+  /*   gimp_image_lower_layer(orig_image_id, new_layer_id); */ /* hide it! */
 
-   /*   gimp_layer_set_opacity(new_layer_id, 0.0); */
+  /*   gimp_layer_set_opacity(new_layer_id, 0.0); */
 
-   for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
-   {
-     string = g_strdup_printf (_("Flow Step %d..."), warp_iter+1);
-     gimp_progress_init (string);
-     g_free (string);
-     progress = 0;
-     gimp_progress_update (0);
+  for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
+    {
+      string = g_strdup_printf (_("Flow Step %d..."), warp_iter+1);
+      gimp_progress_init (string);
+      g_free (string);
+      progress = 0;
+      gimp_progress_update (0);
 
-     warp_one(orig_draw, orig_draw, *map_x, *map_y, mag_draw, first_time, warp_iter);
+      warp_one (orig_draw, orig_draw,
+                *map_x, *map_y, mag_draw, first_time, warp_iter);
 
-     gimp_drawable_update (orig_draw->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_update (orig_draw->drawable_id,
+                            x1, y1, (x2 - x1), (y2 - y1));
 
-     if (run_mode != GIMP_RUN_NONINTERACTIVE)
-       gimp_displays_flush();
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
 
-
-     first_time = FALSE;
-
-   } /*  end for (warp_iter) */
+      first_time = FALSE;
+    }
 
    /* gimp_image_add_layer (orig_image_id, new_layer_id, 1); */  /* make layer visible in 'layers' dialog */
 

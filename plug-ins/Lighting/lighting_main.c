@@ -50,7 +50,7 @@ set_default_settings (void)
 {
   gimp_vector3_set (&mapvals.viewpoint,   0.5, 0.5, 0.25);
   gimp_vector3_set (&mapvals.planenormal, 0.0, 0.0, 1.0);
-  
+
   gimp_vector3_set (&mapvals.lightsource.position,   1.0,  0.0, 1.0);
   gimp_vector3_set (&mapvals.lightsource.direction, -1.0, -1.0, 1.0);
 
@@ -89,14 +89,14 @@ static void
 check_drawables (void)
 {
   if (mapvals.bumpmap_id != -1 &&
-      gimp_drawable_image_id (mapvals.bumpmap_id) == -1)
+      gimp_drawable_get_image (mapvals.bumpmap_id) == -1)
     {
       mapvals.bump_mapped = FALSE;
       mapvals.bumpmap_id  = -1;
     }
 
   if (mapvals.envmap_id != -1 &&
-      gimp_drawable_image_id (mapvals.envmap_id) == -1)
+      gimp_drawable_get_image (mapvals.envmap_id) == -1)
     {
       mapvals.env_mapped = FALSE;
       mapvals.envmap_id  = -1;
@@ -104,7 +104,7 @@ check_drawables (void)
 
   if (mapvals.bump_mapped)
     {
-      if (!gimp_drawable_is_gray (mapvals.bumpmap_id) || 
+      if (!gimp_drawable_is_gray (mapvals.bumpmap_id) ||
 	  (gimp_drawable_width (mapvals.drawable_id) !=
 	   gimp_drawable_width (mapvals.bumpmap_id)) ||
 	  (gimp_drawable_height (mapvals.drawable_id) !=
@@ -117,7 +117,7 @@ check_drawables (void)
 
   if (mapvals.env_mapped)
     {
-      if (gimp_drawable_is_gray (mapvals.envmap_id) || 
+      if (gimp_drawable_is_gray (mapvals.envmap_id) ||
           gimp_drawable_has_alpha (mapvals.envmap_id))
         {
           mapvals.bump_mapped = FALSE;
@@ -222,7 +222,7 @@ run (const gchar      *name,
           /* ======================= */
 
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
-          
+
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:

@@ -317,7 +317,7 @@ pixelize_dialog (GimpDrawable *drawable)
   /*  parameter settings  */
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
-  image_id = gimp_drawable_image (drawable->drawable_id);
+  image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);
 

@@ -636,7 +636,7 @@ convert_to_rgb (GimpDrawable *srcdrawable,
 
    case GIMP_INDEXED_IMAGE:
    case GIMP_INDEXEDA_IMAGE:
-     cmap = gimp_image_get_cmap (gimp_drawable_image_id (srcdrawable->drawable_id),
+     cmap = gimp_image_get_cmap (gimp_drawable_get_image (srcdrawable->drawable_id),
                                  &ncols);
      if (cmap)
        {
@@ -889,7 +889,7 @@ draw_number (gint32 layer_ID,
   g_snprintf (buf, sizeof (buf), "%d", num);
 
   drw = gimp_drawable_get (layer_ID);
-  image_ID = gimp_drawable_image_id (layer_ID);
+  image_ID = gimp_drawable_get_image (layer_ID);
 
   max_delta = height / 10;
   if (max_delta < 1)

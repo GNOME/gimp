@@ -96,7 +96,7 @@
 )
 
 (define (script-fu-addborder aimg adraw xsize ysize colour dvalue)
-  (let* ((img (car (gimp-drawable-image adraw)))
+  (let* ((img (car (gimp-drawable-get-image adraw)))
 	 (owidth (car (gimp-image-width img)))
 	 (oheight (car (gimp-image-height img)))
 	 (old-fg (car (gimp-palette-get-foreground)))

@@ -333,7 +333,7 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 
   if (gimp_drawable_is_indexed (drawable_ID))
     {
-      gint32 image_ID = gimp_drawable_image (drawable_ID);
+      gint32 image_ID = gimp_drawable_get_image (drawable_ID);
       preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
     }
   else
@@ -389,7 +389,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
 
   if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
-      gint32 image_ID = gimp_drawable_image (drawable->drawable_id);
+      gint32 image_ID = gimp_drawable_get_image (drawable->drawable_id);
       preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
     }
   else
@@ -465,7 +465,7 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
 
   if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
-      gint32 image_ID = gimp_drawable_image (drawable->drawable_id);
+      gint32 image_ID = gimp_drawable_get_image (drawable->drawable_id);
       preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
     }
   else

@@ -2524,7 +2524,7 @@ p_is_layer_alive(gint32 drawable_id)
       return -1;
     }
 
-  if (gimp_layer_get_image_id (drawable_id) < 0)
+  if (gimp_drawable_get_image (drawable_id) < 0)
     {
       printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
               (int)drawable_id);
@@ -2558,15 +2558,18 @@ p_end_gdrw(t_GDRW *gdrw)
 }
 
 static void
-p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
+p_init_gdrw (t_GDRW       *gdrw,
+             GimpDrawable *drawable,
+             gint          dirty,
+             gint          shadow)
 {
-  gint32 l_image_id;
-  gint32 l_sel_channel_id;
+  gint32  l_image_id;
+  gint32  l_sel_channel_id;
   gint32  l_x1, l_x2, l_y1, l_y2;
   gint    l_offsetx, l_offsety;
   gint    l_sel_offsetx, l_sel_offsety;
-  t_GDRW  *l_sel_gdrw;
-  gint32   non_empty;
+  t_GDRW *l_sel_gdrw;
+  gint32  non_empty;
 
   if(g_Sdebug)  printf("\np_init_gdrw: drawable %p  ID: %d\n", drawable, (int)drawable->drawable_id);
 
@@ -2581,35 +2584,37 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
   gdrw->seldeltay = 0;
   gimp_drawable_offsets (drawable->drawable_id, &l_offsetx, &l_offsety);  /* get offsets within the image */
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
 
   gdrw->bpp = drawable->bpp;
   if (gimp_drawable_has_alpha(drawable->drawable_id))
-  {
-     /* index of the alpha channelbyte {1|3} */
-     gdrw->index_alpha = gdrw->bpp -1;
-  }
+    {
+      /* index of the alpha channelbyte {1|3} */
+      gdrw->index_alpha = gdrw->bpp -1;
+    }
   else
-  {
-     gdrw->index_alpha = 0;      /* there is no alpha channel */
-  }
+    {
+      gdrw->index_alpha = 0;      /* there is no alpha channel */
+    }
 
-  l_image_id = gimp_layer_get_image_id(drawable->drawable_id);
+  l_image_id = gimp_drawable_get_image (drawable->drawable_id);
 
   /* check and see if we have a selection mask */
-  l_sel_channel_id  = gimp_image_get_selection(l_image_id);
+  l_sel_channel_id  = gimp_image_get_selection (l_image_id);
 
   if(g_Sdebug)
-  {
-     printf("p_init_gdrw: image_id %d sel_channel_id: %d\n", (int)l_image_id, (int)l_sel_channel_id);
-     printf("p_init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
-        (int)gdrw->x1,  (int)gdrw->y1, (int)gdrw->x2,(int)gdrw->y2);
-     printf("p_init_gdrw: OFFS       x: %d y: %d\n", (int)l_offsetx, (int)l_offsety );
-  }
+    {
+      printf("p_init_gdrw: image_id %d sel_channel_id: %d\n", (int)l_image_id, (int)l_sel_channel_id);
+      printf("p_init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
+             (int)gdrw->x1,  (int)gdrw->y1, (int)gdrw->x2,(int)gdrw->y2);
+      printf("p_init_gdrw: OFFS       x: %d y: %d\n", (int)l_offsetx, (int)l_offsety );
+    }
 
   gimp_selection_bounds (l_image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2);
+
   if (non_empty && (l_sel_channel_id >= 0))
-  {
+    {
       /* selection is TRUE */
       l_sel_gdrw = (t_GDRW *) calloc(1, sizeof(t_GDRW));
       l_sel_gdrw->drawable = gimp_drawable_get (l_sel_channel_id);
@@ -2639,20 +2644,20 @@ p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
 
       gdrw->sel_gdrw = (t_GDRW *) l_sel_gdrw;
 
-      if(g_Sdebug)
-      {
-	 printf("p_init_gdrw: SEL_BOUNDS x1: %d y1: %d x2:%d y2: %d\n",
+      if (g_Sdebug)
+        {
+          printf("p_init_gdrw: SEL_BOUNDS x1: %d y1: %d x2:%d y2: %d\n",
         	 (int)l_sel_gdrw->x1,  (int)l_sel_gdrw->y1, (int)l_sel_gdrw->x2,(int)l_sel_gdrw->y2);
-	 printf("p_init_gdrw: SEL_OFFS   x: %d y: %d\n", (int)l_sel_offsetx, (int)l_sel_offsety );
+          printf("p_init_gdrw: SEL_OFFS   x: %d y: %d\n", (int)l_sel_offsetx, (int)l_sel_offsety );
 
-	 printf("p_init_gdrw: SEL_DELTA  x: %d y: %d\n", (int)gdrw->seldeltax, (int)gdrw->seldeltay );
-      }
-  }
+          printf("p_init_gdrw: SEL_DELTA  x: %d y: %d\n", (int)gdrw->seldeltax, (int)gdrw->seldeltay );
+        }
+    }
   else
-  {
-     gdrw->sel_gdrw = NULL;     /* selection is FALSE */
-  }
-}	/* end p_init_gdrw */
+    {
+      gdrw->sel_gdrw = NULL;     /* selection is FALSE */
+    }
+}
 
 /* analyze the colors in the sample_drawable */
 static int
@@ -2783,230 +2788,236 @@ p_rnd_remap(gint32 lum, guchar *mapped_color)
   gint               l_idx;
 
   if (g_lum_tab[lum].all_samples > 1)
-  {
-    l_rnd = g_random_int_range (0, g_lum_tab[lum].all_samples);
-    l_ct  = 0;
-    l_idx = 0;
-
-    for(l_col_ptr = g_lum_tab[lum].col_ptr;
-        l_col_ptr != NULL;
-        l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
     {
-       l_ct += l_col_ptr->sum_color;
-       if(l_rnd < l_ct)
-       {
-         /* printf("RND_remap: rnd: %d all:%d  ct:%d idx:%d\n",
-          * l_rnd, (int)g_lum_tab[lum].all_samples, l_ct, l_idx);
-          */
-          memcpy(mapped_color, &l_col_ptr->color[0], 3);
-          return;
-       }
-       l_idx++;
-    }
-  }
+      l_rnd = g_random_int_range (0, g_lum_tab[lum].all_samples);
+      l_ct  = 0;
+      l_idx = 0;
 
-  memcpy(mapped_color, &g_sample_color_tab[lum + lum + lum], 3);
-}	/* end p_rnd_remap */
+      for (l_col_ptr = g_lum_tab[lum].col_ptr;
+           l_col_ptr != NULL;
+           l_col_ptr = (t_samp_color_elem *)l_col_ptr->next)
+        {
+          l_ct += l_col_ptr->sum_color;
+
+          if (l_rnd < l_ct)
+            {
+              /* printf("RND_remap: rnd: %d all:%d  ct:%d idx:%d\n",
+               * l_rnd, (int)g_lum_tab[lum].all_samples, l_ct, l_idx);
+               */
+              memcpy (mapped_color, &l_col_ptr->color[0], 3);
+              return;
+            }
+          l_idx++;
+        }
+    }
+
+  memcpy (mapped_color, &g_sample_color_tab[lum + lum + lum], 3);
+}
 
 static void
 p_remap_pixel (guchar       *pixel,
 	       const guchar *original,
 	       gint          bpp2)
 {
-  guchar      mapped_color[4];
-  gint        l_lum;
-  double      l_orig_lum, l_mapped_lum;
-  double      l_grn, l_red, l_blu;
-  double      l_mg,  l_mr,  l_mb;
-  double      l_dg,  l_dr,  l_db;
-  double      l_dlum;
+  guchar mapped_color[4];
+  gint   l_lum;
+  double l_orig_lum, l_mapped_lum;
+  double l_grn, l_red, l_blu;
+  double l_mg,  l_mr,  l_mb;
+  double l_dg,  l_dr,  l_db;
+  double l_dlum;
 
   /* get brightness from (uncolorized) original */
   l_lum = g_out_trans_tab[g_lvl_trans_tab[LUMINOSITY_1(original)]];
   if (g_values.rnd_subcolors)
-  {
-    p_rnd_remap (l_lum, mapped_color);
-  }
+    {
+      p_rnd_remap (l_lum, mapped_color);
+    }
   else
-  {
-    memcpy (mapped_color, &g_sample_color_tab[l_lum + l_lum + l_lum], 3);
-  }
+    {
+      memcpy (mapped_color, &g_sample_color_tab[l_lum + l_lum + l_lum], 3);
+    }
 
   if (g_values.hold_inten)
-  {
-     if (g_values.orig_inten)
-       {
-	 l_orig_lum = LUMINOSITY_0(original);
-       }
-     else
-       {
-	 l_orig_lum = 100.0 * g_lvl_trans_tab[LUMINOSITY_1(original)];
-       }
-     l_mapped_lum = LUMINOSITY_0(mapped_color);
+    {
+      if (g_values.orig_inten)
+        {
+          l_orig_lum = LUMINOSITY_0(original);
+        }
+      else
+        {
+          l_orig_lum = 100.0 * g_lvl_trans_tab[LUMINOSITY_1(original)];
+        }
 
-     if (l_mapped_lum == 0)
-     {
-        /* convert black to greylevel with desired brightness value */
-        mapped_color[0] = l_orig_lum / 100.0;
-        mapped_color[1] = mapped_color[0];
-        mapped_color[2] = mapped_color[0];
-     }
-     else
-     {
-        /* Calculate therotecal RGB to reach given intensity LUM value (l_orig_lum) */
-	l_mr = mapped_color[0];
-	l_mg = mapped_color[1];
-	l_mb = mapped_color[2];
+      l_mapped_lum = LUMINOSITY_0 (mapped_color);
 
-	if(l_mr > 0.0)
-	{
-	  l_red = l_orig_lum / (30 + (59 * l_mg / l_mr) + (11 * l_mb / l_mr));
-	  l_grn = l_mg * l_red / l_mr;
-	  l_blu = l_mb * l_red / l_mr;
-	}
-	else if (l_mg > 0.0)
-	{
-	  l_grn = l_orig_lum / ((30 * l_mr / l_mg) + 59 + (11 * l_mb / l_mg));
-	  l_red = l_mr * l_grn / l_mg;
-	  l_blu = l_mb * l_grn / l_mg;
-	}
-	else
-	{
-	  l_blu = l_orig_lum / ((30 * l_mr / l_mb) + (59 * l_mg / l_mb) + 11);
-	  l_grn = l_mg * l_blu / l_mb;
-	  l_red = l_mr * l_blu / l_mb;
-	}
+      if (l_mapped_lum == 0)
+        {
+          /* convert black to greylevel with desired brightness value */
+          mapped_color[0] = l_orig_lum / 100.0;
+          mapped_color[1] = mapped_color[0];
+          mapped_color[2] = mapped_color[0];
+        }
+      else
+        {
+          /* Calculate therotecal RGB to reach given intensity LUM value (l_orig_lum) */
+          l_mr = mapped_color[0];
+          l_mg = mapped_color[1];
+          l_mb = mapped_color[2];
 
-        /* on overflow: Calculate real RGB values
-	 * (this may change the hue and saturation,
-	 * more and more into white)
-	 */
+          if(l_mr > 0.0)
+            {
+              l_red = l_orig_lum / (30 + (59 * l_mg / l_mr) + (11 * l_mb / l_mr));
+              l_grn = l_mg * l_red / l_mr;
+              l_blu = l_mb * l_red / l_mr;
+            }
+          else if (l_mg > 0.0)
+            {
+              l_grn = l_orig_lum / ((30 * l_mr / l_mg) + 59 + (11 * l_mb / l_mg));
+              l_red = l_mr * l_grn / l_mg;
+              l_blu = l_mb * l_grn / l_mg;
+            }
+          else
+            {
+              l_blu = l_orig_lum / ((30 * l_mr / l_mb) + (59 * l_mg / l_mb) + 11);
+              l_grn = l_mg * l_blu / l_mb;
+              l_red = l_mr * l_blu / l_mb;
+            }
 
-        if(l_red > 255)
-	{
-	   if((l_blu < 255) && (l_grn < 255))
-	   {
-	     /* overflow in the red channel (compensate with green and blu)  */
-             l_dlum = (l_red - 255.0) * 30.0;
-	     if(l_mg > 0)
-	     {
-	        l_dg = l_dlum / (59.0 + (11.0 * l_mb / l_mg));
-		l_db = l_dg * l_mb / l_mg;
-	     }
-	     else if(l_mb > 0)
-	     {
-	        l_db = l_dlum / (11.0 + (59.0 * l_mg / l_mb));
-		l_dg = l_db * l_mg / l_mb;
-	     }
-	     else
-	     {
-	        l_db = l_dlum / (11.0 + 59.0);
-		l_dg = l_dlum / (59.0 + 11.0);
-	     }
-	     l_grn += l_dg;
-	     l_blu += l_db;
-	   }
+          /* on overflow: Calculate real RGB values
+           * (this may change the hue and saturation,
+           * more and more into white)
+           */
 
-           l_red = 255.0;
+          if (l_red > 255)
+            {
+              if ((l_blu < 255) && (l_grn < 255))
+                {
+                  /* overflow in the red channel (compensate with green and blu)  */
+                  l_dlum = (l_red - 255.0) * 30.0;
+                  if (l_mg > 0)
+                    {
+                      l_dg = l_dlum / (59.0 + (11.0 * l_mb / l_mg));
+                      l_db = l_dg * l_mb / l_mg;
+                    }
+                  else if (l_mb > 0)
+                    {
+                      l_db = l_dlum / (11.0 + (59.0 * l_mg / l_mb));
+                      l_dg = l_db * l_mg / l_mb;
+                    }
+                  else
+                    {
+                      l_db = l_dlum / (11.0 + 59.0);
+                      l_dg = l_dlum / (59.0 + 11.0);
+                    }
 
-	   if(l_grn > 255)
-	   {
-             l_grn = 255.0;
-	     l_blu = (l_orig_lum - 22695) / 11;  /* 22695 =  (255*30) + (255*59)  */
-	   }
-	   if(l_blu > 255)
-	   {
-             l_blu = 255.0;
-	     l_grn = (l_orig_lum - 10455) / 59;  /* 10455 =  (255*30) + (255*11)  */
-	   }
-	}
-	else if(l_grn > 255)
-	{
-	   if((l_blu < 255) && (l_red < 255))
-	   {
-	     /* overflow in the green channel (compensate with red and blu)  */
-             l_dlum = (l_grn - 255.0) * 59.0;
-	     if(l_mr > 0)
-	     {
-	        l_dr = l_dlum / (30.0 + (11.0 * l_mb / l_mr));
-		l_db = l_dr * l_mb / l_mr;
-	     }
-	     else if(l_mb > 0)
-	     {
-	        l_db = l_dlum / (11.0 + (30.0 * l_mr / l_mb));
-		l_dr = l_db * l_mr / l_mb;
-	     }
-	     else
-	     {
-	        l_db = l_dlum / (11.0 + 30.0);
-		l_dr = l_dlum / (30.0 + 11.0);
-	     }
-	     l_red += l_dr;
-	     l_blu += l_db;
-	   }
+                  l_grn += l_dg;
+                  l_blu += l_db;
+                }
 
-           l_grn = 255.0;
+              l_red = 255.0;
 
-	   if(l_red > 255)
-	   {
-             l_red = 255.0;
-	     l_blu = (l_orig_lum - 22695) / 11;  /* 22695 =  (255*59) + (255*30)  */
-	   }
-	   if(l_blu > 255)
-	   {
-             l_blu = 255.0;
-	     l_red = (l_orig_lum - 17850) / 30;  /* 17850 =  (255*59) + (255*11)  */
-	   }
-	}
-	else if(l_blu > 255)
-	{
-	   if((l_red < 255) && (l_grn < 255))
-	   {
-	     /* overflow in the blue channel (compensate with green and red)  */
-             l_dlum = (l_blu - 255.0) * 11.0;
-	     if (l_mg > 0)
-	     {
-	        l_dg = l_dlum / (59.0 + (30.0 * l_mr / l_mg));
-		l_dr = l_dg * l_mr / l_mg;
-	     }
-	     else if (l_mr > 0)
-	     {
-	        l_dr = l_dlum / (30.0 + (59.0 * l_mg / l_mr));
-		l_dg = l_dr * l_mg / l_mr;
-	     }
-	     else
-	     {
-	        l_dr = l_dlum / (30.0 + 59.0);
-		l_dg = l_dlum / (59.0 + 30.0);
-	     }
-	     l_grn += l_dg;
-	     l_red += l_dr;
-	   }
+              if (l_grn > 255)
+                {
+                  l_grn = 255.0;
+                  l_blu = (l_orig_lum - 22695) / 11;  /* 22695 =  (255*30) + (255*59)  */
+                }
+              if (l_blu > 255)
+                {
+                  l_blu = 255.0;
+                  l_grn = (l_orig_lum - 10455) / 59;  /* 10455 =  (255*30) + (255*11)  */
+                }
+            }
+          else if (l_grn > 255)
+            {
+              if ((l_blu < 255) && (l_red < 255))
+                {
+                  /* overflow in the green channel (compensate with red and blu)  */
+                  l_dlum = (l_grn - 255.0) * 59.0;
 
-           l_blu = 255.0;
+                  if (l_mr > 0)
+                    {
+                      l_dr = l_dlum / (30.0 + (11.0 * l_mb / l_mr));
+                      l_db = l_dr * l_mb / l_mr;
+                    }
+                  else if (l_mb > 0)
+                    {
+                      l_db = l_dlum / (11.0 + (30.0 * l_mr / l_mb));
+                      l_dr = l_db * l_mr / l_mb;
+                    }
+                  else
+                    {
+                      l_db = l_dlum / (11.0 + 30.0);
+                      l_dr = l_dlum / (30.0 + 11.0);
+                    }
 
-	   if(l_grn > 255)
-	   {
-             l_grn = 255.0;
-	     l_red = (l_orig_lum - 17850) / 30;  /* 17850 =  (255*11) + (255*59)  */
-	   }
-	   if(l_red > 255)
-	   {
-             l_red = 255.0;
-	     l_grn = (l_orig_lum - 10455) / 59;  /* 10455 =  (255*11) + (255*30)  */
-	   }
-	}
+                  l_red += l_dr;
+                  l_blu += l_db;
+                }
 
-        mapped_color[0] = CLAMP0255(l_red + 0.5);
-        mapped_color[1] = CLAMP0255(l_grn + 0.5);
-        mapped_color[2] = CLAMP0255(l_blu + 0.5);
+              l_grn = 255.0;
 
-     }
-  }
+              if (l_red > 255)
+                {
+                  l_red = 255.0;
+                  l_blu = (l_orig_lum - 22695) / 11;  /* 22695 =  (255*59) + (255*30)  */
+                }
+              if (l_blu > 255)
+                {
+                  l_blu = 255.0;
+                  l_red = (l_orig_lum - 17850) / 30;  /* 17850 =  (255*59) + (255*11)  */
+                }
+            }
+          else if (l_blu > 255)
+            {
+              if ((l_red < 255) && (l_grn < 255))
+                {
+                  /* overflow in the blue channel (compensate with green and red)  */
+                  l_dlum = (l_blu - 255.0) * 11.0;
+
+                  if (l_mg > 0)
+                    {
+                      l_dg = l_dlum / (59.0 + (30.0 * l_mr / l_mg));
+                      l_dr = l_dg * l_mr / l_mg;
+                    }
+                  else if (l_mr > 0)
+                    {
+                      l_dr = l_dlum / (30.0 + (59.0 * l_mg / l_mr));
+                      l_dg = l_dr * l_mg / l_mr;
+                    }
+                  else
+                    {
+                      l_dr = l_dlum / (30.0 + 59.0);
+                      l_dg = l_dlum / (59.0 + 30.0);
+                    }
+
+                  l_grn += l_dg;
+                  l_red += l_dr;
+                }
+
+              l_blu = 255.0;
+
+              if (l_grn > 255)
+                {
+                  l_grn = 255.0;
+                  l_red = (l_orig_lum - 17850) / 30;  /* 17850 =  (255*11) + (255*59)  */
+                }
+              if (l_red > 255)
+                {
+                  l_red = 255.0;
+                  l_grn = (l_orig_lum - 10455) / 59;  /* 10455 =  (255*11) + (255*30)  */
+                }
+            }
+
+          mapped_color[0] = CLAMP0255 (l_red + 0.5);
+          mapped_color[1] = CLAMP0255 (l_grn + 0.5);
+          mapped_color[2] = CLAMP0255 (l_blu + 0.5);
+        }
+    }
 
   /* set colorized pixel in shadow pr */
-  memcpy(pixel, &mapped_color[0], bpp2);
-}	/* end p_remap_pixel */
+  memcpy (pixel, &mapped_color[0], bpp2);
+}
 
 static void
 colorize_func (const guchar *src,
@@ -3021,26 +3032,27 @@ colorize_func (const guchar *src,
       bpp--;
       dest[bpp] = src[bpp];
     }
+
   p_remap_pixel (dest, src, bpp);
 }
 
 static void
 p_colorize_drawable (gint32 drawable_id)
 {
-   GimpDrawable *drawable;
-   gboolean has_alpha;
+  GimpDrawable *drawable;
+  gboolean      has_alpha;
 
-   drawable = gimp_drawable_get (drawable_id);
-   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  drawable = gimp_drawable_get (drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-   if (g_show_progress)
-     gimp_progress_init (_("Remap Colorized..."));
+  if (g_show_progress)
+    gimp_progress_init (_("Remap Colorized..."));
 
-   gimp_rgn_iterate2 (drawable, run_mode, colorize_func,
-		      GINT_TO_POINTER (has_alpha));
+  gimp_rgn_iterate2 (drawable, run_mode, colorize_func,
+                     GINT_TO_POINTER (has_alpha));
 
-   if (g_show_progress)
-     gimp_progress_update (0.0);
+  if (g_show_progress)
+    gimp_progress_update (0.0);
 }
 
 /* colorize dst_drawable like sample_drawable */
@@ -3049,63 +3061,65 @@ p_main_colorize (gint mc_flags)
 {
    GimpDrawable *dst_drawable;
    GimpDrawable *sample_drawable;
-   t_GDRW  l_sample_gdrw;
-   gint32  l_max;
-   gint32  l_id;
-   gint    l_rc;
+   t_GDRW        l_sample_gdrw;
+   gint32        l_max;
+   gint32        l_id;
+   gint          l_rc;
 
-   if(g_Sdebug)  p_get_filevalues();  /* for debugging: read values from file */
+   if(g_Sdebug)  p_get_filevalues ();  /* for debugging: read values from file */
    sample_drawable = NULL;
    dst_drawable = NULL;
 
    /* calculate value of tolerable color error */
-   l_max = p_color_error(0,0,0,255,255,255); /* 260100 */
+   l_max = p_color_error (0,0, 0, 255, 255, 255); /* 260100 */
    g_tol_col_err = (((float)l_max  * (g_values.tol_col_err * g_values.tol_col_err)) / (100.0 *100.0));
    g_max_col_err = l_max;
 
    l_rc = 0;
 
    if (mc_flags & MC_GET_SAMPLE_COLORS)
-   {
-     l_id = g_values.sample_id;
-     if ((l_id == SMP_GRADIENT) || (l_id == SMP_INV_GRADIENT))
      {
-         p_get_gradient(l_id);
+       l_id = g_values.sample_id;
+       if ((l_id == SMP_GRADIENT) || (l_id == SMP_INV_GRADIENT))
+         {
+           p_get_gradient (l_id);
+         }
+       else
+         {
+           if (p_is_layer_alive (l_id) < 0)
+             {
+               return -1;
+             }
+
+           sample_drawable = gimp_drawable_get (l_id);
+           p_init_gdrw (&l_sample_gdrw, sample_drawable, FALSE, FALSE);
+           p_free_colors ();
+           l_rc = p_sample_analyze (&l_sample_gdrw);
+         }
      }
-     else
-     {
-         if (p_is_layer_alive(l_id) < 0)
-	   {
-	     return -1;
-	   }
-         sample_drawable = gimp_drawable_get (l_id);
-         p_init_gdrw (&l_sample_gdrw, sample_drawable, FALSE, FALSE);
-         p_free_colors ();
-         l_rc = p_sample_analyze (&l_sample_gdrw);
-     }
-   }
 
    if ((mc_flags & MC_DST_REMAP) && (l_rc == 0))
-   {
-      if (p_is_layer_alive(g_values.dst_id) < 0)
-	{
-	  return -1;
-	}
-      dst_drawable = gimp_drawable_get (g_values.dst_id);
-      if (gimp_drawable_is_gray (g_values.dst_id))
-      {
-         if (mc_flags & MC_DST_REMAP)
+     {
+       if (p_is_layer_alive (g_values.dst_id) < 0)
          {
-           gimp_convert_rgb (gimp_layer_get_image_id (g_values.dst_id));
+           return -1;
          }
-      }
-      p_colorize_drawable (dst_drawable->drawable_id);
-   }
+       dst_drawable = gimp_drawable_get (g_values.dst_id);
+       if (gimp_drawable_is_gray (g_values.dst_id))
+         {
+           if (mc_flags & MC_DST_REMAP)
+             {
+               gimp_convert_rgb (gimp_drawable_get_image (g_values.dst_id));
+             }
+         }
+
+       p_colorize_drawable (dst_drawable->drawable_id);
+     }
 
    if (sample_drawable)
-   {
-     p_end_gdrw (&l_sample_gdrw);
-   }
+     {
+       p_end_gdrw (&l_sample_gdrw);
+     }
 
    return l_rc;
-}	/* end p_main_colorize */
+}

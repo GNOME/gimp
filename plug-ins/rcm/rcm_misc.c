@@ -26,7 +26,7 @@
 
 /*-----------------------------------------------------------------------------------
  * Change log:
- * 
+ *
  * Version 2.0, 04 April 1999.
  *  Nearly complete rewrite, made plug-in stable.
  *  (Works with GIMP 1.1 and GTK+ 1.2)
@@ -55,17 +55,17 @@
 #include "rcm_misc.h"
 #include "rcm_gdk.h"
 
-float 
-arctg (float y, 
+float
+arctg (float y,
        float x)
 {
   float temp = atan2(y,x);
   return (temp<0) ? (temp+TP) : temp;
 }
 
-float 
-min_prox (float alpha, 
-	  float beta, 
+float
+min_prox (float alpha,
+	  float beta,
 	  float angle)
 {
   gfloat temp1 = MIN(angle_mod_2PI(alpha - angle),
@@ -77,8 +77,8 @@ min_prox (float alpha,
 }
 
 float*
-closest (float *alpha, 
-	 float *beta, 
+closest (float *alpha,
+	 float *beta,
 	 float  angle)
 {
   float temp_alpha = MIN(angle_mod_2PI(*alpha-angle),
@@ -87,16 +87,16 @@ closest (float *alpha,
   float temp_beta  = MIN(angle_mod_2PI(*beta -angle),
 			 TP-angle_mod_2PI(*beta -angle));
 
-  if (temp_alpha-temp_beta<0) 
+  if (temp_alpha-temp_beta<0)
     return alpha;
-  else 
+  else
     return beta;
 }
 
-float 
+float
 angle_mod_2PI (float angle)
 {
-  if (angle < 0) 
+  if (angle < 0)
     return angle + TP;
   else if (angle > TP)
     return angle - TP;
@@ -108,36 +108,36 @@ angle_mod_2PI (float angle)
 /* supporting routines  */
 /*-----------------------------------------------------------------------------------*/
 
-float 
-rcm_linear (float A, 
-	    float B, 
-	    float C, 
-	    float D, 
+float
+rcm_linear (float A,
+	    float B,
+	    float C,
+	    float D,
 	    float x)
 {
   if (B > A)
     if (A<=x && x<=B)
       return C+(D-C)/(B-A)*(x-A);
     else if (A<=x+TP && x+TP<=B)
-      return C+(D-C)/(B-A)*(x+TP-A);    
+      return C+(D-C)/(B-A)*(x+TP-A);
     else
       return x;
-  else 
+  else
     if (B<=x && x<=A)
       return C+(D-C)/(B-A)*(x-A);
     else if (B<=x+TP && x+TP<=A)
-      return C+(D-C)/(B-A)*(x+TP-A);    
+      return C+(D-C)/(B-A)*(x+TP-A);
     else
       return x;
 }
 
-float 
+float
 rcm_left_end (RcmAngle *angle)
 {
   gfloat alpha  = angle->alpha;
   gfloat beta   = angle->beta;
   gint   cw_ccw = angle->cw_ccw;
-  
+
   switch (cw_ccw)
   {
     case (-1): if (alpha < beta) return alpha + TP;
@@ -145,13 +145,13 @@ rcm_left_end (RcmAngle *angle)
   }
 }
 
-float 
+float
 rcm_right_end (RcmAngle *angle)
 {
   gfloat alpha  = angle->alpha;
   gfloat beta   = angle->beta;
   gint   cw_ccw = angle->cw_ccw;
-  
+
   switch (cw_ccw)
   {
     case 1: if (beta < alpha) return beta + TP;
@@ -159,8 +159,8 @@ rcm_right_end (RcmAngle *angle)
   }
 }
 
-float 
-rcm_angle_inside_slice (float     angle, 
+float
+rcm_angle_inside_slice (float     angle,
 			RcmAngle *slice)
 {
   return angle_mod_2PI(slice->cw_ccw * (slice->beta-angle)) /
@@ -178,9 +178,9 @@ rcm_is_gray (float s)
 /*-----------------------------------------------------------------------------------*/
 
 ReducedImage*
-rcm_reduce_image (GimpDrawable *drawable, 
-		  GimpDrawable *mask, 
-		  gint          LongerSize, 
+rcm_reduce_image (GimpDrawable *drawable,
+		  GimpDrawable *mask,
+		  gint          LongerSize,
 		  gint          Slctn)
 {
   guint32 gimage;
@@ -193,14 +193,14 @@ rcm_reduce_image (GimpDrawable *drawable,
   gint offx, offy;
   gdouble *tempHSV, H, S, V;
 
-  bytes = drawable->bpp;  
+  bytes = drawable->bpp;
   temp = g_new0 (ReducedImage, 1);
 
   /* get bounds of image or selection */
 
   gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  if (((x2-x1) != drawable->width) || ((y2-y1) != drawable->height)) 
+  if (((x2-x1) != drawable->width) || ((y2-y1) != drawable->height))
     NoSelectionMade = FALSE;
   else
     NoSelectionMade = TRUE;
@@ -212,14 +212,14 @@ rcm_reduce_image (GimpDrawable *drawable,
       x2 = drawable->width;
       y1 = 0;
       y2 = drawable->height;
-      break;  
+      break;
 
     case SELECTION_IN_CONTEXT:
       x1 = MAX (0, x1 - (x2-x1) / 2.0);
       x2 = MIN (drawable->width, x2 + (x2-x1) / 2.0);
       y1 = MAX (0, y1 - (y2-y1) / 2.0);
       y2 = MIN (drawable->height, y2 + (y2-y1) / 2.0);
-      break;  
+      break;
 
     default:
       break; /* take selection dimensions */
@@ -228,7 +228,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   /* clamp to image size since this is the size of the mask */
 
   gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
-  gimage = gimp_drawable_image (drawable->drawable_id);
+  gimage = gimp_drawable_get_image (drawable->drawable_id);
 
   x1 = CLAMP (x1, - offx, gimp_image_width (gimage) - offx);
   x2 = CLAMP (x2, - offx, gimp_image_width (gimage) - offx);
@@ -236,7 +236,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   y2 = CLAMP (y2, - offy, gimp_image_height (gimage) - offy);
 
   /* calculate size of preview */
-  
+
   width  = x2 - x1;
   height = y2 - y1;
 
@@ -255,13 +255,13 @@ rcm_reduce_image (GimpDrawable *drawable,
   }
 
   /* allocate memory */
-  
+
   tempRGB  = g_new (guchar, RW * RH * bytes);
   tempHSV  = g_new (gdouble, RW * RH * bytes);
   tempmask = g_new (guchar, RW * RH);
 
   gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&srcMask, mask, 
+  gimp_pixel_rgn_init (&srcMask, mask,
                        x1 + offx, y1 + offy, width, height, FALSE, FALSE);
 
   src_row = g_new (guchar, width * bytes);
@@ -272,10 +272,10 @@ rcm_reduce_image (GimpDrawable *drawable,
   for (i=0; i<RH; i++)
   {
     whichrow = (float)i * (float)height / (float)RH;
-    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);   
-    gimp_pixel_rgn_get_row (&srcMask, src_mask_row, 
+    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
+    gimp_pixel_rgn_get_row (&srcMask, src_mask_row,
                             x1 + offx, y1 + offy + whichrow, width);
-   
+
     for (j=0; j<RW; j++)
     {
       whichcol = (float)j * (float)width / (float)RW;
@@ -284,7 +284,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 	tempmask[i*RW+j] = 255;
       else
 	tempmask[i*RW+j] = src_mask_row[whichcol];
-      
+
       gimp_rgb_to_hsv4 (&src_row[whichcol*bytes], &H, &S, &V);
 
       tempRGB[i*RW*bytes+j*bytes+0] = src_row[whichcol*bytes+0];
@@ -307,7 +307,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   temp->height = RH;
   temp->rgb = tempRGB;
   temp->hsv = tempHSV;
-  temp->mask = tempmask;  
+  temp->mask = tempmask;
 
   return temp;
 }
@@ -316,20 +316,20 @@ rcm_reduce_image (GimpDrawable *drawable,
 /* render before/after preview */
 /*-----------------------------------------------------------------------------------*/
 
-static gint 
-rcm_fake_transparency (gint i, 
+static gint
+rcm_fake_transparency (gint i,
 		       gint j)
 {
-  if ( ((i%20)-10)*((j%20)-10) > 0 ) 
+  if ( ((i%20)-10)*((j%20)-10) > 0 )
     return 102;
 
   return 153;
 }
 
-void 
-rcm_render_preview (GtkWidget *preview, 
+void
+rcm_render_preview (GtkWidget *preview,
 		    gint       version)
-{ 
+{
   ReducedImage *reduced;
   gint RW, RH, bytes, i, j, k, unchanged, skip;
   guchar *rgb_array, *a;
@@ -350,8 +350,8 @@ rcm_render_preview (GtkWidget *preview,
   rgb_array = reduced->rgb;
 
   a = g_new (guchar, bytes * RW);
-  
-  if (version == CURRENT) 
+
+  if (version == CURRENT)
   {
     for (i=0; i<RH; i++)
     {
@@ -359,31 +359,31 @@ rcm_render_preview (GtkWidget *preview,
       {
 	unchanged = 1; /* TRUE */
 	skip = 0; /* FALSE */
-	
+
 	H = hsv_array[i*RW*bytes + j*bytes + 0];
 	S = hsv_array[i*RW*bytes + j*bytes + 1];
 	V = hsv_array[i*RW*bytes + j*bytes + 2];
-	
+
 	if (rcm_is_gray(S) && (reduced->mask[i*RW+j] != 0))
 	{
 	  switch (Current.Gray_to_from)
 	  {
 	    case GRAY_FROM:
-	      if (rcm_angle_inside_slice(Current.Gray->hue, Current.From->angle) <= 1) 
+	      if (rcm_angle_inside_slice(Current.Gray->hue, Current.From->angle) <= 1)
 	      {
 		H = Current.Gray->hue/TP;
 		S = Current.Gray->satur;
 	      }
-	      else 
+	      else
 		skip = 1;
 	      break;
-	    
-	    case GRAY_TO:  
-	      unchanged = 0; 
+
+	    case GRAY_TO:
+	      unchanged = 0;
 	      skip = 1;
 	      gimp_hsv_to_rgb4 (rgb, Current.Gray->hue/TP, Current.Gray->satur, V);
 	    break;
-	    
+
 	    default: break;
 	  } /* switch */
 	} /* if */
@@ -395,22 +395,22 @@ rcm_render_preview (GtkWidget *preview,
 			 rcm_right_end(Current.From->angle),
 			 rcm_left_end(Current.To->angle),
 			 rcm_right_end(Current.To->angle),
-			 H*TP);    
+			 H*TP);
 
 	  H = angle_mod_2PI(H) / TP;
 	  gimp_hsv_to_rgb4 (rgb, H,S,V);
 	} /* if (!skip) */
-	
+
 	if (unchanged)degree = 0;
 	else
 	  degree = reduced->mask[i*RW+j] / 255.0;
-	
+
 	a[j*3+0] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 0] + degree * rgb[0];
 	a[j*3+1] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 1] + degree * rgb[1];
 	a[j*3+2] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 2] + degree * rgb[2];
-	
+
 	/* apply transparency */
-	if (bytes == 4) 
+	if (bytes == 4)
 	{
 	  for (k=0; k<3; k++)
 	  {
@@ -436,8 +436,8 @@ rcm_render_preview (GtkWidget *preview,
 	a[j*3+0] = rgb_array[i*RW*bytes + j*bytes + 0];
 	a[j*3+1] = rgb_array[i*RW*bytes + j*bytes + 1];
 	a[j*3+2] = rgb_array[i*RW*bytes + j*bytes + 2];
-      
-	if (bytes == 4) 
+
+	if (bytes == 4)
 	{
 	  for (k=0; k<3; k++)
 	  {
@@ -453,7 +453,7 @@ rcm_render_preview (GtkWidget *preview,
     } /* for i */
   }
 
-  g_free (a); 
+  g_free (a);
   gtk_widget_queue_draw (preview);
 }
 
@@ -461,11 +461,11 @@ rcm_render_preview (GtkWidget *preview,
 /* render circle */
 /*-----------------------------------------------------------------------------------*/
 
-void 
-rcm_render_circle (GtkWidget *preview, 
-		   int        sum, 
+void
+rcm_render_circle (GtkWidget *preview,
+		   int        sum,
 		   int        margin)
-{ 
+{
   gint i, j;
   gdouble h, s, v;
   guchar *a;
@@ -473,7 +473,7 @@ rcm_render_circle (GtkWidget *preview,
   if (preview == NULL) return;
 
   a = g_new (guchar, 3*sum);
-  
+
   for (j = 0; j < sum; j++)
   {
     for (i = 0; i < sum; i++)
@@ -490,11 +490,11 @@ rcm_render_circle (GtkWidget *preview,
 	h = arctg (sum / 2.0 - j, i - sum / 2.0) / (2 * G_PI);
 	v = 1 - sqrt (s) / 4;
 	gimp_hsv_to_rgb4 (&a[i*3], h, s, v);
-      }	
-    }   
+      }
+    }
     gtk_preview_draw_row(GTK_PREVIEW(preview), a, 0, j, sum);
   }
-  
-  g_free (a); 
+
+  g_free (a);
   gtk_widget_queue_draw (preview);
 }

@@ -1,6 +1,14 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpchannel.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimplayer.sgml: updated after
+	gimp_drawable_get_image() cleanup.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpdrawable.sgml
 	* libgimp/tmpl/gimplayer.sgml: "linked" moved from layer to drawable.
 

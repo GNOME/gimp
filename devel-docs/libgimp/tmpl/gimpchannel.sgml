@@ -95,13 +95,6 @@ Functions for manipulating channels.
 @Returns: 
 
 
-<!-- ##### MACRO gimp_channel_get_image_id ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### FUNCTION gimp_channel_combine_masks ##### -->
 <para>
 

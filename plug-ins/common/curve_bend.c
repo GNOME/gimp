@@ -2659,8 +2659,8 @@ p_create_pv_image (GimpDrawable *src_drawable,
   t_GDRW  l_src_gdrw;
   t_GDRW  l_dst_gdrw;
 
-  l_new_image_id = gimp_image_new(PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
-                   gimp_image_base_type(gimp_layer_get_image_id(src_drawable->drawable_id)));
+  l_new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                   gimp_image_base_type (gimp_drawable_get_image (src_drawable->drawable_id)));
   gimp_image_undo_disable (l_new_image_id);
 
   l_type = gimp_drawable_type(src_drawable->drawable_id);
@@ -2730,7 +2730,7 @@ p_add_layer (gint       width,
   gint32     image_id;
   gint       stack_position;
 
-  image_id = gimp_layer_get_image_id(src_drawable->drawable_id);
+  image_id = gimp_drawable_get_image (src_drawable->drawable_id);
   stack_position = 0;                                  /* TODO:  should be same as src_layer */
 
   /* copy type, name, opacity and mode from src_drawable */
@@ -3189,7 +3189,7 @@ p_main_bend (BenderDialog *cd,
    gint32    xmax, ymax;
 
    l_interpolation = cd->smoothing;
-   l_image_id = gimp_layer_get_image_id(original_drawable->drawable_id);
+   l_image_id = gimp_drawable_get_image (original_drawable->drawable_id);
    gimp_drawable_offsets(original_drawable->drawable_id, &l_offset_x, &l_offset_y);
 
    l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable->drawable_id) / 2 );

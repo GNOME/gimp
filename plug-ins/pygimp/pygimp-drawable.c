@@ -258,7 +258,7 @@ drw_get_height(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_image(PyGimpDrawable *self, void *closure)
 {
-    return pygimp_image_new(gimp_drawable_image(self->ID));
+    return pygimp_image_new(gimp_drawable_get_image(self->ID));
 }
 
 static PyObject *

@@ -153,8 +153,8 @@ render_indexed_image(GtkWidget *preview, GimpPixelRgn *srcrgn)
    if (has_alpha)
       alpha--;
 
-   cmap = gimp_image_get_cmap(gimp_drawable_image_id(srcrgn->drawable->drawable_id),
-			      &ncols);
+   cmap = gimp_image_get_cmap (gimp_drawable_get_image (srcrgn->drawable->drawable_id),
+                               &ncols);
 
    src_row = g_new(guchar, dwidth * bpp);
    dest_row = g_new(guchar, pwidth * 3);
