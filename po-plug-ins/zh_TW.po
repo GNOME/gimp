@@ -1,15 +1,15 @@
 # traditional Chinese translation for gimp-std-plugins.
-# Copyright (C) 2001, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001, 2003.
+# Abel Cheung <maddog@linux.org.hk>, 2001, 2003-04.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp14-std-plug-ins 1.3.22\n"
+"Project-Id-Version: gimp20-std-plug-ins 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2003-11-05 13:31+0800\n"
+"POT-Creation-Date: 2004-03-23 21:55+0800\n"
+"PO-Revision-Date: 2004-03-24 01:26+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "即時預覽"
 
 #: plug-ins/FractalExplorer/Dialogs.c:630
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr "如果您選用本選項，預覽圖像將會自動更新"
+msgstr "如果您選用本選項，預覽影像將會自動更新"
 
 #: plug-ins/FractalExplorer/Dialogs.c:633
 msgid "Redraw"
@@ -359,7 +359,7 @@ msgstr "補色"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "如選用本選項，整幅圖像的顏色會更改為與原來圖像互補的顏色"
+msgstr "如選用本選項，整幅影像的顏色會更改為與原來影像互補的顏色"
 
 #. Greenmode radio frame
 #. Greenmode toggle box
@@ -392,7 +392,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
-msgstr "將使用中的漸層套用在最終的圖像之上"
+msgstr "將使用中的漸層套用在最終的影像之上"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
@@ -425,18 +425,14 @@ msgstr "碎形(_F)"
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
-"無法開啟‘%s’來寫入資料：\n"
-"%s"
+msgstr "無法開啟‘%s’來寫入資料：%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
-#, fuzzy, c-format
+#, c-format
 msgid "Could not write '%s': %s"
-msgstr ""
-"無法寫入‘%s’\n"
-"%s"
+msgstr "無法寫入‘%s’：%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1861
 msgid "Save: No filename given"
@@ -444,9 +440,8 @@ msgstr "儲存：沒有指定檔案名稱"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1868 plug-ins/gfig/gfig.c:1095
-#, fuzzy
 msgid "Cannot save to a folder."
-msgstr "儲存：不能儲存成為資料夾。"
+msgstr "不可以儲存成為資料夾。"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1910
 msgid "Load Fractal Parameters"
@@ -476,25 +471,19 @@ msgstr "儲存碎形參數"
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
 #: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr ""
-"無法開啟‘%s’來寫入資料：\n"
-"%s"
+msgstr "無法開啟‘%s’來讀取資料：%s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr ""
-"‘%s’\n"
-"不是 FractalExplorer 格式檔案"
+msgstr "‘%s’不是 FractalExplorer 格式檔案"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2142
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr ""
-"檔案‘%s’已損毀。\n"
-"第 %d 行的「選項」部份不正確"
+msgstr "檔案‘%s’內容受損。第 %d 行的 Option 部份不正確"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
@@ -506,9 +495,9 @@ msgstr "正在描繪碎形..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3109
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "是否確定從清單及磁碟中刪除“%s”？"
+msgstr "您是否確定同時從清單及磁碟中刪除“%s”？"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:767
 msgid "Delete Fractal"
@@ -615,11 +604,11 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:381
 msgid "Cre_ate New Image"
-msgstr "產生新的圖像(_A)"
+msgstr "產生新的影像(_A)"
 
 #: plug-ins/Lighting/lighting_ui.c:391 plug-ins/MapObject/mapobject_ui.c:603
 msgid "Create a new image when applying filter"
-msgstr "套用濾鏡時會產生新的圖像"
+msgstr "套用濾鏡時會產生新的影像"
 
 #: plug-ins/Lighting/lighting_ui.c:393
 msgid "High _Quality Preview"
@@ -910,7 +899,7 @@ msgstr "更新(_U)"
 
 #: plug-ins/Lighting/lighting_ui.c:1169 plug-ins/MapObject/mapobject_ui.c:1438
 msgid "Recompute preview image"
-msgstr "重新計算預覽圖像"
+msgstr "重新計算預覽影像"
 
 #: plug-ins/Lighting/lighting_ui.c:1171
 msgid "I_nteractive"
@@ -972,15 +961,15 @@ msgstr "物體外的部份是透明的"
 
 #: plug-ins/MapObject/mapobject_ui.c:578
 msgid "Tile Source Image"
-msgstr "鋪排來源圖像"
+msgstr "鋪排來源影像"
 
 #: plug-ins/MapObject/mapobject_ui.c:589
 msgid "Tile source image: useful for infinite planes"
-msgstr "鋪排來源圖像：對於無限大的平面比較有用"
+msgstr "鋪排來源影像：對於無限大的平面比較有用"
 
 #: plug-ins/MapObject/mapobject_ui.c:592
 msgid "Create New Image"
-msgstr "產生新的圖像"
+msgstr "產生新的影像"
 
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable _Antialiasing"
@@ -1090,7 +1079,7 @@ msgstr "右："
 
 #: plug-ins/MapObject/mapobject_ui.c:1148
 msgid "Map Images to Box Faces"
-msgstr "將圖像投影至方盒表面"
+msgstr "將影像投影至方盒表面"
 
 #: plug-ins/MapObject/mapobject_ui.c:1189
 #: plug-ins/common/spheredesigner.c:2697
@@ -1119,7 +1108,7 @@ msgstr "底部(_B)："
 
 #: plug-ins/MapObject/mapobject_ui.c:1245
 msgid "Images for the Cap Faces"
-msgstr "柱體蓋面的圖像"
+msgstr "柱體蓋面的影像"
 
 #: plug-ins/MapObject/mapobject_ui.c:1274
 #: plug-ins/print/gimp_main_window.c:1119
@@ -1160,11 +1149,11 @@ msgstr "預覽！(_P)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1452
 msgid "Zoom out (make image smaller)"
-msgstr "縮小(令圖像變小)"
+msgstr "縮小(令影像變小)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1466
 msgid "Zoom in (make image bigger)"
-msgstr "放大(令圖像變大)"
+msgstr "放大(令影像變大)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1468
 msgid "Show Preview _Wireframe"
@@ -1212,7 +1201,7 @@ msgstr "‘%s’不是有效的 BMP 點陣圖"
 #: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
 #: plug-ins/bmp/bmpread.c:263 plug-ins/bmp/bmpread.c:269
 #: plug-ins/bmp/bmpread.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "讀取 BMP 點陣圖‘%s’的檔頭時發生錯誤"
 
@@ -1240,16 +1229,14 @@ msgstr "背景"
 
 #: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:616
 #: plug-ins/common/hrz.c:445 plug-ins/common/pcx.c:578
-#, fuzzy
 msgid "Cannot save images with alpha channel."
-msgstr "PNM 儲存程序無法處理有透明色版的圖像。"
+msgstr "無法儲存有透明色版的影像。"
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
 #: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
 #: plug-ins/fits/fits.c:441 plug-ins/xjt/xjt.c:1686
-#, fuzzy
 msgid "Cannot operate on unknown image types."
-msgstr "不適用於不明的圖像類型"
+msgstr "無法處理不明的影像。"
 
 #. And let's begin the progress
 #. init the progress meter
@@ -1494,12 +1481,12 @@ msgstr "載入 KISS 調色盤"
 
 #: plug-ins/common/CEL.c:349
 msgid "Can't create a new image"
-msgstr "無法產生新的圖像"
+msgstr "無法產生新的影像"
 
 #: plug-ins/common/CEL.c:438
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "不支援的顏色數目(%d)"
+msgstr "不支援的顏色位元數(%d)！"
 
 #: plug-ins/common/CML_explorer.c:133
 msgid "Keep image's values"
@@ -1664,7 +1651,7 @@ msgstr "全白"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "The first row of the image"
-msgstr "圖像的第一行"
+msgstr "影像的第一行"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Continuous gradient"
@@ -1901,24 +1888,22 @@ msgid "Save Parameters to"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were Saved to '%s'"
-msgstr ""
-"參數已儲存至\n"
-"‘%s’"
+msgstr "參數已儲存至‘%s’"
 
 #: plug-ins/common/CML_explorer.c:2210
 msgid "CML File Operation Warning"
 msgstr "CML 檔案操作程序警告"
 
 #: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
-"%s\n"
-"已存在，是否覆寫？"
+"檔案‘%s’已存在。\n"
+"是否覆寫？"
 
 #: plug-ins/common/CML_explorer.c:2267
 msgid "Load Parameters from"
@@ -1933,16 +1918,14 @@ msgid "Error: it's not CML parameter file."
 msgstr "錯誤：它不是 CML 參數檔。"
 
 #: plug-ins/common/CML_explorer.c:2370
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr ""
-"警告：‘%s’\n"
-"是舊格式的檔案。"
+msgstr "警告：‘%s’是舊格式的檔案。"
 
 #: plug-ins/common/CML_explorer.c:2373
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "警告：‘%s’這個參數檔的版本比本程式能夠辨認的還要新。"
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
@@ -2039,11 +2022,11 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:428
 msgid "Fill (left to right)"
-msgstr ""
+msgstr "填滿 (由左至右)"
 
 #: plug-ins/common/align_layers.c:429
 msgid "Fill (right to left)"
-msgstr ""
+msgstr "填滿 (由右至左)"
 
 #: plug-ins/common/align_layers.c:430 plug-ins/common/align_layers.c:458
 #: plug-ins/gfig/gfig.c:2660
@@ -2073,11 +2056,11 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:456
 msgid "Fill (top to bottom)"
-msgstr ""
+msgstr "填滿 (由上至下)"
 
 #: plug-ins/common/align_layers.c:457
 msgid "Fill (bottom to top)"
-msgstr ""
+msgstr "填滿 (由下至上)"
 
 #: plug-ins/common/align_layers.c:462
 msgid "_Vertical Style:"
@@ -2137,14 +2120,12 @@ msgid "Frame %d of %d"
 msgstr "畫格 %2$d 之 %1$d"
 
 #: plug-ins/common/animoptimize.c:196
-#, fuzzy
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Image>/濾鏡/動畫/動畫優化(_O)"
+msgstr "<Image>/濾鏡/動畫/動畫優化 [專為 _GIF 而設]"
 
 #: plug-ins/common/animoptimize.c:214
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize (Difference)"
-msgstr "<Image>/濾鏡/動畫/動畫優化(_O)"
+msgstr "<Image>/濾鏡/動畫/動畫優化 [取畫面差異] (_O)"
 
 #: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"
@@ -2188,19 +2169,19 @@ msgstr "透鏡效果"
 
 #: plug-ins/common/apply_lens.c:389
 msgid "_Keep Original Surroundings"
-msgstr "保留原有圖像四周(_K)"
+msgstr "保留原有影像四周(_K)"
 
 #: plug-ins/common/apply_lens.c:401
 msgid "_Set Surroundings to Index 0"
-msgstr "指定圖像周圍使用索引色編號 0 (_S)"
+msgstr "指定影像周圍使用索引色編號 0 (_S)"
 
 #: plug-ins/common/apply_lens.c:402
 msgid "_Set Surroundings to Background Color"
-msgstr "指定圖像周圍使用背景顏色(_S)"
+msgstr "指定影像周圍使用背景顏色(_S)"
 
 #: plug-ins/common/apply_lens.c:414
 msgid "_Make Surroundings Transparent"
-msgstr "令圖像周圍變成透明(_M)"
+msgstr "令影像周圍變成透明(_M)"
 
 #: plug-ins/common/apply_lens.c:432
 msgid "_Lens Refraction Index:"
@@ -2208,7 +2189,7 @@ msgstr "透鏡折射率(_L)："
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Image>/圖像/變換/自動裁剪(_A)"
+msgstr "<Image>/影像/變換/自動裁剪(_A)"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
@@ -2228,7 +2209,7 @@ msgstr "<Image>/濾鏡/扭曲/百葉窗(_B)..."
 
 #: plug-ins/common/blinds.c:233
 msgid "Adding Blinds..."
-msgstr "加上百葉窗..."
+msgstr "加上百葉窗效果..."
 
 #. Get the preview image and store it also set has_alpha
 #: plug-ins/common/blinds.c:273
@@ -2440,12 +2421,11 @@ msgstr "結果"
 #: plug-ins/common/ccanalyze.c:592 plug-ins/imagemap/imap_cmd_guides.c:228
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr "圖像尺寸：%d×%d"
+msgstr "影像尺寸：%d×%d"
 
 #: plug-ins/common/ccanalyze.c:595
-#, fuzzy
 msgid "No colors"
-msgstr "沒有任何顏色 (?)"
+msgstr "沒有任何顏色"
 
 #: plug-ins/common/ccanalyze.c:597
 msgid "Only one unique color"
@@ -2457,9 +2437,9 @@ msgid "Number of unique colors: %d"
 msgstr "顏色數目：%d"
 
 #: plug-ins/common/ccanalyze.c:602
-#, fuzzy, c-format
+#, c-format
 msgid "Uncompressed size: %s"
-msgstr "解壓後的大小：%d 位元組"
+msgstr "解壓後的大小：%s"
 
 #: plug-ins/common/ccanalyze.c:609
 #, c-format
@@ -2467,9 +2447,9 @@ msgid "Filename: %s"
 msgstr "檔案名稱：%s"
 
 #: plug-ins/common/ccanalyze.c:610
-#, fuzzy, c-format
+#, c-format
 msgid "Compressed size: %s"
-msgstr "壓縮後的大小：%u 位元組"
+msgstr "壓縮後的大小：%s"
 
 #: plug-ins/common/ccanalyze.c:611
 #, c-format
@@ -2482,9 +2462,8 @@ msgid "<Image>/Filters/Colors/Channel Mi_xer.."
 msgstr "<Image>/濾鏡/色彩/組合(_O)..."
 
 #: plug-ins/common/channel_mixer.c:530
-#, fuzzy
 msgid "Channel Mixer"
-msgstr "色版"
+msgstr ""
 
 #. The preview toggle
 #: plug-ins/common/channel_mixer.c:566 plug-ins/imagemap/imap_grid.c:295
@@ -2492,35 +2471,29 @@ msgid "_Preview"
 msgstr "預覽(_P)"
 
 #: plug-ins/common/channel_mixer.c:591
-#, fuzzy
 msgid "O_utput Channel:"
-msgstr "輸出類型："
+msgstr ""
 
 #. The monochrome toggle
 #: plug-ins/common/channel_mixer.c:660
-#, fuzzy
 msgid "_Monochrome"
-msgstr "單色"
+msgstr "單色(_M)"
 
 #: plug-ins/common/channel_mixer.c:672
-#, fuzzy
 msgid "Preserve _Luminosity"
-msgstr "保留亮度(_P)"
+msgstr "保留亮度(_L)"
 
 #: plug-ins/common/channel_mixer.c:1035
-#, fuzzy
 msgid "Load Channel Mixer Settings"
-msgstr "參數設定"
+msgstr ""
 
 #: plug-ins/common/channel_mixer.c:1171
-#, fuzzy
 msgid "Save Channel Mixer Settings"
-msgstr "參數設定"
+msgstr ""
 
 #: plug-ins/common/channel_mixer.c:1264
-#, fuzzy
 msgid "Channel Mixer File Operation Warning"
-msgstr "CML 檔案操作程序警告"
+msgstr ""
 
 #: plug-ins/common/checkerboard.c:94
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
@@ -2528,7 +2501,7 @@ msgstr "<Image>/濾鏡/描繪/圖樣/棋盤(_C)..."
 
 #: plug-ins/common/checkerboard.c:158
 msgid "Adding Checkerboard..."
-msgstr "加上棋盤..."
+msgstr "加上棋盤效果..."
 
 #: plug-ins/common/checkerboard.c:308
 msgid "Checkerboard"
@@ -2667,51 +2640,51 @@ msgstr ""
 
 #: plug-ins/common/compose.c:179
 msgid "Luma_y470:"
-msgstr ""
+msgstr "Luma_y470:"
 
 #: plug-ins/common/compose.c:180
 msgid "Blueness_cb470:"
-msgstr ""
+msgstr "Blueness_cb470:"
 
 #: plug-ins/common/compose.c:181
 msgid "Redness_cr470:"
-msgstr ""
+msgstr "Redness_cr470:"
 
 #: plug-ins/common/compose.c:186
 msgid "Luma_y709:"
-msgstr ""
+msgstr "Luma_y709:"
 
 #: plug-ins/common/compose.c:187
 msgid "Blueness_cb709:"
-msgstr ""
+msgstr "Blueness_cb709:"
 
 #: plug-ins/common/compose.c:188
 msgid "Redness_cr709:"
-msgstr ""
+msgstr "Redness_cr709:"
 
 #: plug-ins/common/compose.c:193
 msgid "Luma_y470f:"
-msgstr ""
+msgstr "Luma_y470f:"
 
 #: plug-ins/common/compose.c:194
 msgid "Blueness_cb470f:"
-msgstr ""
+msgstr "Blueness_cb470f:"
 
 #: plug-ins/common/compose.c:195
 msgid "Redness_cr470f:"
-msgstr ""
+msgstr "Redness_cr470f:"
 
 #: plug-ins/common/compose.c:200
 msgid "Luma_y709f:"
-msgstr ""
+msgstr "Luma_y709f:"
 
 #: plug-ins/common/compose.c:201
 msgid "Blueness_cb709f:"
-msgstr ""
+msgstr "Blueness_cb709f:"
 
 #: plug-ins/common/compose.c:202
 msgid "Redness_cr709f:"
-msgstr ""
+msgstr "Redness_cr709f:"
 
 #: plug-ins/common/compose.c:297
 msgid "<Image>/Filters/Colors/C_ompose..."
@@ -2720,7 +2693,7 @@ msgstr "<Image>/濾鏡/色彩/組合(_O)..."
 #: plug-ins/common/compose.c:360
 #, c-format
 msgid "Could not get layers for image %d"
-msgstr "無法從第 %d 幅圖像擷取圖層"
+msgstr "無法從第 %d 幅影像擷取圖層"
 
 #: plug-ins/common/compose.c:412
 msgid "Composing..."
@@ -2732,7 +2705,7 @@ msgstr "可繪物件之間的大小不同"
 
 #: plug-ins/common/compose.c:498
 msgid "Images have different size"
-msgstr "圖像之間的大小不同"
+msgstr "影像之間的大小不同"
 
 #: plug-ins/common/compose.c:512
 msgid "Error in getting layer IDs"
@@ -2741,7 +2714,7 @@ msgstr "擷取圖層識別碼時發生錯誤"
 #: plug-ins/common/compose.c:529
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr "圖像不是灰階圖像 (bpp=%d)"
+msgstr "影像不是灰階影像 (bpp=%d)"
 
 #: plug-ins/common/compose.c:1090
 msgid "Compose"
@@ -2798,7 +2771,6 @@ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
 msgstr "<Image>/濾鏡/通用/矩陣運算(_C)..."
 
 #: plug-ins/common/convmatrix.c:226
-#, fuzzy
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
 msgstr "矩陣運算不適用於小於 3 個像素的圖層。"
 
@@ -2913,14 +2885,12 @@ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/濾鏡/扭曲/依曲線扭曲(_C)..."
 
 #: plug-ins/common/curve_bend.c:709
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "「依曲線扭曲」只適用於圖層上 (但企圖使用於色版或圖曾遮罩)"
+msgstr "只適用於圖層上 (但企圖使用於色版或圖層遮罩)"
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "不適用於不明的圖像類型"
+msgstr "不適用於沒有選擇區域的情況之下。"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3136,51 +3106,51 @@ msgstr "透明"
 
 #: plug-ins/common/decompose.c:163
 msgid "luma_y470"
-msgstr ""
+msgstr "luma_y470"
 
 #: plug-ins/common/decompose.c:164
 msgid "blueness_cb470"
-msgstr ""
+msgstr "blueness_cb470"
 
 #: plug-ins/common/decompose.c:165
 msgid "redness_cr470"
-msgstr ""
+msgstr "redness_cr470"
 
 #: plug-ins/common/decompose.c:167
 msgid "luma_y709"
-msgstr ""
+msgstr "luma_y709"
 
 #: plug-ins/common/decompose.c:168
 msgid "blueness_cb709"
-msgstr ""
+msgstr "blueness_cb709"
 
 #: plug-ins/common/decompose.c:169
 msgid "redness_cr709"
-msgstr ""
+msgstr "redness_cr709"
 
 #: plug-ins/common/decompose.c:171
 msgid "luma_y470f"
-msgstr ""
+msgstr "luma_y470f"
 
 #: plug-ins/common/decompose.c:172
 msgid "blueness_cb470f"
-msgstr ""
+msgstr "blueness_cb470f"
 
 #: plug-ins/common/decompose.c:173
 msgid "redness_cr470f"
-msgstr ""
+msgstr "redness_cr470f"
 
 #: plug-ins/common/decompose.c:175
 msgid "luma_y709f"
-msgstr ""
+msgstr "luma_y709f"
 
 #: plug-ins/common/decompose.c:176
 msgid "blueness_cb709f"
-msgstr ""
+msgstr "blueness_cb709f"
 
 #: plug-ins/common/decompose.c:177
 msgid "redness_cr709f"
-msgstr ""
+msgstr "redness_cr709f"
 
 #: plug-ins/common/decompose.c:242
 msgid "<Image>/Filters/Colors/_Decompose..."
@@ -3188,7 +3158,7 @@ msgstr "<Image>/濾鏡/色彩/分解(_D)..."
 
 #: plug-ins/common/decompose.c:325
 msgid "Decomposing..."
-msgstr "正在分解圖像..."
+msgstr "正在分解影像..."
 
 #: plug-ins/common/decompose.c:1183
 msgid "Decompose"
@@ -3358,11 +3328,9 @@ msgid "_Width:"
 msgstr "寬度(_W)："
 
 #: plug-ins/common/dicom.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a DICOM file."
-msgstr ""
-"‘%s’\n"
-"不是 PCX 格式檔案"
+msgstr "‘%s’不是 DICOM 格式檔案。"
 
 #: plug-ins/common/diffraction.c:184
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
@@ -3394,11 +3362,11 @@ msgstr "亮度(_B)："
 
 #: plug-ins/common/diffraction.c:628
 msgid "Sc_attering:"
-msgstr ""
+msgstr "散射(_A)："
 
 #: plug-ins/common/diffraction.c:637
 msgid "Po_latization:"
-msgstr ""
+msgstr "極化(_L)："
 
 #: plug-ins/common/diffraction.c:645
 msgid "O_ther options"
@@ -3600,7 +3568,7 @@ msgstr "<Image>/濾鏡/合併/電影膠片(_F)..."
 
 #: plug-ins/common/film.c:333
 msgid "Composing Images..."
-msgstr "正在合成圖像..."
+msgstr "正在合成影像..."
 
 #: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:176
 msgid "Untitled"
@@ -3609,11 +3577,11 @@ msgstr "無標題"
 #. ** Get a RGB copy of the source region **
 #: plug-ins/common/film.c:712
 msgid "Temporary"
-msgstr "暫時性圖像"
+msgstr "暫時性影像"
 
 #: plug-ins/common/film.c:1108
 msgid "Available Images:"
-msgstr "可用的圖像："
+msgstr "可用的影像："
 
 #: plug-ins/common/film.c:1109
 msgid "On Film:"
@@ -3631,7 +3599,7 @@ msgstr "電影膠片"
 #. Keep maximum image height
 #: plug-ins/common/film.c:1211
 msgid "_Fit Height to Images"
-msgstr "令新圖像的高度符合原來圖像的高度(_F)"
+msgstr "令新影像的高度符合原來影像的高度(_F)"
 
 #. Film color
 #: plug-ins/common/film.c:1245
@@ -3672,7 +3640,7 @@ msgstr "在頂部(_T)"
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1322
 msgid "Image Selection"
-msgstr "選取圖像"
+msgstr "選取影像"
 
 #: plug-ins/common/film.c:1352
 msgid "All Values are Fractions of the Film Heigh"
@@ -3684,11 +3652,11 @@ msgstr "進階(_V)"
 
 #: plug-ins/common/film.c:1373
 msgid "Image _Height:"
-msgstr "圖像高度(_H)："
+msgstr "影像高度(_H)："
 
 #: plug-ins/common/film.c:1384
 msgid "Image Spac_ing:"
-msgstr "圖像間隔(_I)："
+msgstr "影像間隔(_I)："
 
 #: plug-ins/common/film.c:1402
 msgid "_Hole Offset:"
@@ -3791,9 +3759,8 @@ msgstr "IIR 高斯模糊"
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
 #: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
-#, fuzzy
 msgid "Cannot operate on indexed color images."
-msgstr "xjt：不適用於索引色圖像"
+msgstr "不適用於索引色影像。"
 
 #: plug-ins/common/gauss_iir.c:363 plug-ins/common/gauss_rle.c:357
 msgid "Blur Horizontally"
@@ -3832,21 +3799,18 @@ msgid "RLE Gaussian Blur"
 msgstr "RLE 高斯模糊"
 
 #: plug-ins/common/gbr.c:364 plug-ins/common/gbr.c:376
-#, fuzzy
 msgid "Unsupported brush format"
-msgstr "不支援的顏色數目(%d)"
+msgstr "不支援的筆刷格式"
 
 #: plug-ins/common/gbr.c:387
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr ""
-"GIMP 筆刷檔案發生錯誤\n"
-"‘%s’"
+msgstr "GIMP 筆刷檔案‘%s’中含有錯誤"
 
 #: plug-ins/common/gbr.c:395
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr ""
+msgstr "筆刷檔案‘%s’中含有無效的 UTF-8 文字。"
 
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
 #: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2985
@@ -3854,9 +3818,8 @@ msgid "Unnamed"
 msgstr "未命名"
 
 #: plug-ins/common/gbr.c:573
-#, fuzzy
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP 筆刷檔必須為灰階或 RGBA 圖像\n"
+msgstr "GIMP 筆刷檔必須為灰階或 RGBA 影像"
 
 #: plug-ins/common/gbr.c:658
 msgid "Save as Brush"
@@ -3916,26 +3879,20 @@ msgid "Icon Name:"
 msgstr "圖示名稱："
 
 #: plug-ins/common/gif.c:688
-#, fuzzy
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr ""
-"無法再刪減顏色數目。\n"
-"會儲存為不透明的圖像。"
+msgstr "無法再刪減顏色數目。現在會儲存為不透明的影像。"
 
 #: plug-ins/common/gif.c:910
-#, fuzzy
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"GIF 圖像格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+"GIF 影像格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: plug-ins/common/gif.c:971
-#, fuzzy
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr ""
-"抱歉，不可能將 RGB 圖像以 GIF 格式儲存 ─ 請先將圖像轉換為索引色或灰階色系。"
+msgstr "不可能儲存 RGB 色系的影像。請先將影像轉換為索引色或灰階色系。"
 
 #: plug-ins/common/gif.c:1114
 msgid ""
@@ -3944,11 +3901,11 @@ msgid ""
 "support transparency."
 msgstr ""
 "警告：\n"
-"如果圖像有透明度，在不支援這種圖像的顯示程式中可能無法正確顯示。"
+"如果影像有透明度，在不支援這種影像的顯示程式中可能無法正確顯示。"
 
 #: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr ""
+msgstr "加入延遲時間，避免動畫過度消耗 CPU 資源。"
 
 #: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
@@ -3964,10 +3921,10 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
-"在準備儲存成為 GIF 的圖像中，有一些圖層的位置超出圖像範圍之外。GIF 應該不允許"
+"在準備儲存成為 GIF 的影像中，有一些圖層的位置超出影像範圍之外。GIF 應該不允許"
 "這種情況發生。\n"
 "\n"
-"您可以選擇裁剪所有圖層，令它們限制在圖像之內，或者不儲存圖像。"
+"您可以選擇裁剪所有圖層，令它們限制在影像之內，或者不儲存影像。"
 
 #: plug-ins/common/gif.c:1261
 msgid "Save as GIF"
@@ -4029,18 +3986,17 @@ msgid "The default comment is limited to %d characters."
 msgstr "預設的備註文字長度上限為 %d 字符。"
 
 #: plug-ins/common/gifload.c:313
-#, fuzzy
 msgid "This is not a GIF file"
-msgstr "‘%s’不是 HRZ 格式檔案"
+msgstr "這個不是 GIF 檔"
 
 #: plug-ins/common/gifload.c:351
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
 #: plug-ins/common/gifload.c:859
-#, fuzzy, c-format
+#, c-format
 msgid "Background (%d%s)"
-msgstr "背景 (%dms)"
+msgstr "背景 (%d%s)"
 
 #: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:783
 #: plug-ins/common/iwarp.c:815
@@ -4049,9 +4005,9 @@ msgid "Frame %d"
 msgstr "第 %d 畫格"
 
 #: plug-ins/common/gifload.c:909
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d (%d%s)"
-msgstr "第 %d 畫格 (%dms)"
+msgstr "第 %d 畫格 (%d%s)"
 
 #: plug-ins/common/gifload.c:939
 #, c-format
@@ -4232,14 +4188,11 @@ msgid "Warning"
 msgstr "警告"
 
 #: plug-ins/common/gtm.c:432
-#, fuzzy
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"您瘋了嗎？\n"
-"\n"
 "您正要建立一個很可能會讓\n"
 "瀏覽器掛掉的巨大 HTML 檔。"
 
@@ -4349,7 +4302,7 @@ msgstr "格子間隔的距離。"
 
 #: plug-ins/common/guillotine.c:79
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Image>/圖像/變換/切紙機(_G)"
+msgstr "<Image>/影像/變換/切紙機(_G)"
 
 #: plug-ins/common/guillotine.c:110
 msgid "Guillotine..."
@@ -4394,11 +4347,11 @@ msgstr "‘%s’不是 HRZ 格式檔案"
 
 #: plug-ins/common/hrz.c:454
 msgid "Image must be 256x240"
-msgstr "圖像尺寸必須為 256×240"
+msgstr "影像尺寸必須為 256×240"
 
 #: plug-ins/common/hrz.c:460
 msgid "Image must be RGB or GRAY"
-msgstr "圖像必須使用 RGB 或灰階色系"
+msgstr "影像必須使用 RGB 或灰階色系"
 
 #: plug-ins/common/illusion.c:105
 msgid "<Image>/Filters/Map/_Illusion..."
@@ -4612,7 +4565,7 @@ msgstr "儲存為 JPEG"
 #. sg - preview
 #: plug-ins/common/jpeg.c:1686 plug-ins/print/gimp_color_window.c:253
 msgid "Image Preview"
-msgstr "圖像預覽"
+msgstr "影像預覽"
 
 #: plug-ins/common/jpeg.c:1694
 msgid "Preview (in image window, will modify image's undo history!)"
@@ -4672,7 +4625,7 @@ msgstr "DCT 壓縮方法(速度與品質之間的平衡)："
 
 #: plug-ins/common/jpeg.c:1916
 msgid "Image comments"
-msgstr "圖像備註"
+msgstr "影像備註"
 
 #: plug-ins/common/laplace.c:95
 msgid "<Image>/Filters/Edge-Detect/_Laplace"
@@ -4700,7 +4653,7 @@ msgstr ""
 
 #: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 msgid "_Saturation"
-msgstr "彩度(_S)："
+msgstr "彩度(_S)"
 
 #: plug-ins/common/lic.c:656
 msgid "_Brightness"
@@ -4756,36 +4709,31 @@ msgstr "<Image>/濾鏡/映射/梵谷(LI_C)..."
 
 #: plug-ins/common/mail.c:214
 msgid "<Image>/File/_Mail Image..."
-msgstr "<Image>/檔案/郵寄圖像(_M)..."
+msgstr "<Image>/檔案/郵寄影像(_M)..."
 
 #: plug-ins/common/mail.c:431
 msgid "Send to Mail"
 msgstr "送出郵件"
 
 #: plug-ins/common/mail.c:455
-#, fuzzy
 msgid "_Recipient:"
-msgstr "收信者："
+msgstr "收信者(_R)："
 
 #: plug-ins/common/mail.c:467
-#, fuzzy
 msgid "_Sender:"
-msgstr "寄信者："
+msgstr "寄信者(_S)："
 
 #: plug-ins/common/mail.c:479
-#, fuzzy
 msgid "S_ubject:"
-msgstr "標題："
+msgstr "標題(_U)："
 
 #: plug-ins/common/mail.c:491
-#, fuzzy
 msgid "Comm_ent:"
-msgstr "備註："
+msgstr "備註(_E)："
 
 #: plug-ins/common/mail.c:503
-#, fuzzy
 msgid "_Filename:"
-msgstr "檔案名稱："
+msgstr "檔案名稱(_F)："
 
 #. Encapsulation label
 #: plug-ins/common/mail.c:537
@@ -4793,14 +4741,12 @@ msgid "Encapsulation:"
 msgstr "編碼方式："
 
 #: plug-ins/common/mail.c:549
-#, fuzzy
 msgid "_Uuencode"
-msgstr "Uuencode"
+msgstr "_Uuencode"
 
 #: plug-ins/common/mail.c:550
-#, fuzzy
 msgid "_MIME"
-msgstr "MIME"
+msgstr "_MIME"
 
 #: plug-ins/common/mail.c:650
 msgid "some sort of error with the file extension or lack thereof"
@@ -4831,9 +4777,8 @@ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
 msgstr "<Image>/濾鏡/色彩/映射/映射色彩範圍(_M)..."
 
 #: plug-ins/common/mapcolor.c:397 plug-ins/common/mapcolor.c:712
-#, fuzzy
 msgid "Cannot operate on gray or indexed color images."
-msgstr "xjt：不適用於索引色圖像"
+msgstr "不適用於灰階或者索引色系影像。"
 
 #: plug-ins/common/mapcolor.c:418
 msgid "Adjusting Foreground/Background..."
@@ -4946,11 +4891,11 @@ msgstr "儲存檔案製作時間"
 
 #: plug-ins/common/mng.c:1276
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: plug-ins/common/mng.c:1277
 msgid "JNG"
-msgstr ""
+msgstr "JNG"
 
 #: plug-ins/common/mng.c:1286
 msgid "PNG + Delta PNG"
@@ -4961,14 +4906,12 @@ msgid "JNG + Delta PNG"
 msgstr ""
 
 #: plug-ins/common/mng.c:1288
-#, fuzzy
 msgid "All PNG"
-msgstr "全部"
+msgstr "全部 PNG"
 
 #: plug-ins/common/mng.c:1289
-#, fuzzy
 msgid "All JNG"
-msgstr "全部"
+msgstr "全部 JNG"
 
 #: plug-ins/common/mng.c:1295
 msgid "Default Chunks Type:"
@@ -4976,7 +4919,7 @@ msgstr ""
 
 #: plug-ins/common/mng.c:1303
 msgid "Combine"
-msgstr ""
+msgstr "結合"
 
 #: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
@@ -5378,7 +5321,7 @@ msgstr "上限[%](_M)："
 
 #: plug-ins/common/papertile.c:353
 msgid "_Wrap Around"
-msgstr "繞到圖像另一端(_W)"
+msgstr "繞到影像另一端(_W)"
 
 #: plug-ins/common/papertile.c:363
 msgid "Background Type"
@@ -5386,11 +5329,11 @@ msgstr "背景類型"
 
 #: plug-ins/common/papertile.c:370
 msgid "I_nverted Image"
-msgstr "反相圖像(_N)"
+msgstr "反相影像(_N)"
 
 #: plug-ins/common/papertile.c:372
 msgid "Im_age"
-msgstr "圖像(_A)"
+msgstr "影像(_A)"
 
 #: plug-ins/common/papertile.c:374
 msgid "Fo_reground Color"
@@ -5423,23 +5366,21 @@ msgstr "<Image>/濾鏡/映射/紙塊(_P)..."
 #: plug-ins/common/pat.c:338
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "圖樣檔案‘%s’中含有無效的 UTF-8 文字。"
 
 #: plug-ins/common/pat.c:496
 msgid "Save as Pattern"
 msgstr "儲存為圖樣"
 
 #: plug-ins/common/pcx.c:313
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from '%s'"
 msgstr "無法從‘%s’讀取標頭資料"
 
 #: plug-ins/common/pcx.c:320
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a PCX file"
-msgstr ""
-"‘%s’\n"
-"不是 PCX 格式檔案"
+msgstr "‘%s’不是 PCX 檔。"
 
 #: plug-ins/common/pcx.c:374
 msgid "Unusual PCX flavour, giving up"
@@ -5564,7 +5505,7 @@ msgstr "選單路徑"
 
 #: plug-ins/common/plugindetails.c:1044 plug-ins/common/plugindetails.c:1103
 msgid "Image Types"
-msgstr "圖像類型"
+msgstr "影像類型"
 
 #: plug-ins/common/plugindetails.c:1067
 msgid "List View"
@@ -5604,10 +5545,7 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
-#, fuzzy
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "儲存時無法不損失任何透明度資訊，因此改用不透明的方式儲存。"
 
@@ -5616,14 +5554,12 @@ msgid "Save as PNG"
 msgstr "儲存為 PNG"
 
 #: plug-ins/common/png.c:1557
-#, fuzzy
 msgid "_Load Defaults"
-msgstr "使用預設值(_F)"
+msgstr "載入預設值(_L)"
 
 #: plug-ins/common/png.c:1558
-#, fuzzy
 msgid "_Save Defaults"
-msgstr "使用預設值(_F)"
+msgstr "儲存預設值(_S)"
 
 #. parameter settings
 #: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
@@ -5643,9 +5579,8 @@ msgid "Save _Gamma"
 msgstr "儲存 _Gamma 值"
 
 #: plug-ins/common/png.c:1612
-#, fuzzy
 msgid "Save Layer O_ffset"
-msgstr "儲存圖層偏移位置(_L)"
+msgstr "儲存圖層偏移位置(_F)"
 
 #: plug-ins/common/png.c:1621
 msgid "Save _Resolution"
@@ -5668,9 +5603,8 @@ msgid "Co_mpression Level:"
 msgstr "壓縮程度(_M)："
 
 #: plug-ins/common/png.c:1786
-#, fuzzy
 msgid "Could not load PNG defaults"
-msgstr "找不到說明文件"
+msgstr "無法載入 PNG 預設組態"
 
 #: plug-ins/common/pnm.c:427 plug-ins/common/pnm.c:448
 #: plug-ins/common/pnm.c:455 plug-ins/common/pnm.c:464
@@ -5704,7 +5638,7 @@ msgstr "PNM：讀取檔案時發生錯誤。"
 
 #: plug-ins/common/pnm.c:762
 msgid "PNM save cannot handle images with alpha channels."
-msgstr "PNM 儲存程序無法處理有透明色版的圖像。"
+msgstr "PNM 儲存程序無法處理有透明色版的影像。"
 
 #: plug-ins/common/pnm.c:911
 msgid "Save as PNM"
@@ -5757,7 +5691,7 @@ msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
-"如果不選用本選項，映射後的圖像底部表示原來圖像的中心點，而頂端表示原來圖像的"
+"如果不選用本選項，映射後的影像底部表示原來影像的中心點，而頂端表示原來影像的"
 "四周。如果選用則會以相反方向映射。"
 
 #: plug-ins/common/polar.c:689
@@ -5769,22 +5703,22 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"如果不選用本選項，圖像會以旋轉方式映射至另一個長方形。如果選上則會映射至圓"
+"如果不選用本選項，影像會以旋轉方式映射至另一個長方形。如果選上則會映射至圓"
 "形。"
 
 #: plug-ins/common/postscript.c:887
-#, fuzzy, c-format
+#, c-format
 msgid "Could not interpret '%s'"
-msgstr "無法解譯檔案"
+msgstr "無法解譯‘%s’"
 
 #: plug-ins/common/postscript.c:975
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr "PostScript 儲存程序無法處理有透明色版的圖像"
+msgstr "PostScript 儲存程序無法處理有透明色版的影像"
 
 #: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
 #, c-format
 msgid "Error starting ghostscript (%s)"
-msgstr ""
+msgstr "執行 ghostscript 時發生錯誤 (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
@@ -5855,7 +5789,7 @@ msgstr "儲存為 PostScript"
 #. Image Size
 #: plug-ins/common/postscript.c:2921
 msgid "Image Size"
-msgstr "圖像尺寸"
+msgstr "影像尺寸"
 
 #: plug-ins/common/postscript.c:2956
 msgid "_X-Offset:"
@@ -5873,7 +5807,7 @@ msgstr "保持長寬比(_K)"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr "如果不選用本選項，最終的圖像會完全縮放至指定的尺寸，不理會長寬比例。"
+msgstr "如果不選用本選項，最終的影像會完全縮放至指定的尺寸，不理會長寬比例。"
 
 #. Unit
 #: plug-ins/common/postscript.c:2986
@@ -5911,7 +5845,7 @@ msgstr "預覽圖尺寸(_S)："
 
 #: plug-ins/common/psd.c:488
 msgid "Invalid UTF-8 string in PSD file"
-msgstr ""
+msgstr "PSD 檔案中含有無效的 UTF-8 字串"
 
 #: plug-ins/common/psp.c:404
 msgid "Save as PSP"
@@ -6002,11 +5936,11 @@ msgstr "波幅(_M)："
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "如果有選擇區域存在，就不可以旋轉整個圖像。"
+msgstr "如果有選擇區域存在，就不可以旋轉整個影像。"
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "如果有浮動選擇區域存在，就不可以旋轉整個圖像。"
+msgstr "如果有浮動選擇區域存在，就不可以旋轉整個影像。"
 
 #: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
@@ -6044,15 +5978,13 @@ msgstr ""
 
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1434
-#, fuzzy
 msgid "From Gradient"
-msgstr "漸層"
+msgstr ""
 
 #. Add extra menu items for Inverted Gradient
 #: plug-ins/common/sample_colorize.c:1443
-#, fuzzy
 msgid "From Reverse Gradient"
-msgstr "重新掃瞄漸層"
+msgstr ""
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1459
@@ -6182,9 +6114,8 @@ msgid "the _Whole Screen"
 msgstr "整個畫面(_W)"
 
 #: plug-ins/common/screenshot.c:589
-#, fuzzy
 msgid "Grab _After"
-msgstr "延遲"
+msgstr ""
 
 #: plug-ins/common/sel_gauss.c:114
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
@@ -6569,7 +6500,7 @@ msgstr "背景顏色(_B)"
 
 #: plug-ins/common/sparkle.c:527
 msgid "Use the Color of the Image"
-msgstr "使用圖像的色彩"
+msgstr "使用影像的色彩"
 
 #: plug-ins/common/sparkle.c:528
 msgid "Use the Foreground Color"
@@ -6778,18 +6709,18 @@ msgid "Bottom-_Right"
 msgstr "右下(_R)"
 
 #: plug-ins/common/sunras.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "無法以 SUN raster 檔案方式讀取檔案"
+msgstr "無法以 SUN raster 檔案方式開啟‘%s’"
 
 #: plug-ins/common/sunras.c:399
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "不支援此類型的 SUN raster 檔案"
 
 #: plug-ins/common/sunras.c:422
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "無法讀取色彩項目"
+msgstr "無法從‘%s’讀取色彩項目"
 
 #: plug-ins/common/sunras.c:430
 msgid "Type of colormap not supported"
@@ -6801,11 +6732,11 @@ msgstr ""
 
 #: plug-ins/common/sunras.c:492
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr "SUNRAS 儲存程序無法處理有透明色版的圖像"
+msgstr "SUNRAS 儲存程序無法處理有透明色版的影像"
 
 #: plug-ins/common/sunras.c:503
 msgid "Can't operate on unknown image types"
-msgstr "不適用於不明的圖像類型"
+msgstr "不適用於不明的影像類型"
 
 #: plug-ins/common/sunras.c:1031 plug-ins/common/sunras.c:1122
 #: plug-ins/common/sunras.c:1203 plug-ins/common/sunras.c:1298
@@ -6844,7 +6775,7 @@ msgstr ""
 msgid ""
 "SVG file does not\n"
 "specify a size!"
-msgstr "SVG 檔案沒有指定任何圖像尺寸！"
+msgstr "SVG 檔案沒有指定任何影像尺寸！"
 
 #: plug-ins/common/svg.c:430
 #, c-format
@@ -6893,18 +6824,14 @@ msgid "Merge Imported Paths"
 msgstr ""
 
 #: plug-ins/common/tga.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read footer from '%s'"
-msgstr ""
-"無法從‘%s’\n"
-"讀取檔尾資料"
+msgstr "無法從‘%s’讀取檔尾資料"
 
 #: plug-ins/common/tga.c:442
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read extension from '%s'"
-msgstr ""
-"無法從‘%s’\n"
-"讀取延伸部份"
+msgstr "無法從‘%s’讀取延伸部份"
 
 #: plug-ins/common/tga.c:1193
 msgid "Save as TGA"
@@ -6950,9 +6877,9 @@ msgid "Threshold:"
 msgstr "界限值："
 
 #: plug-ins/common/tiff.c:831
-#, fuzzy, c-format
+#, c-format
 msgid "Page %d"
-msgstr "第 %d 畫格"
+msgstr "第 %d 頁"
 
 #: plug-ins/common/tiff.c:846
 msgid "TIFF Channel"
@@ -6966,7 +6893,7 @@ msgid ""
 "this conversion."
 msgstr ""
 "警告：\n"
-"準備載入的圖像的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行"
+"準備載入的影像的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行"
 "轉換，而在這個過程中將會失去一部份資訊。"
 
 #: plug-ins/common/tiff.c:1930
@@ -6974,7 +6901,7 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"TIFF 圖像格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+"TIFF 影像格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: plug-ins/common/tiff.c:2079
 msgid "Save as TIFF"
@@ -7028,7 +6955,7 @@ msgstr "鋪排成新的尺寸"
 
 #: plug-ins/common/tile.c:423
 msgid "C_reate New Image"
-msgstr "製作新的圖像(_R)"
+msgstr "製作新的影像(_R)"
 
 #: plug-ins/common/tileit.c:228
 msgid "<Image>/Filters/Map/_Small Tiles..."
@@ -7163,7 +7090,7 @@ msgstr "本單位的複數形式。"
 
 #: plug-ins/common/uniteditor.c:117
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Toolbox>/擴展/單位編輯器(_U)..."
+msgstr "<Toolbox>/擴展/長度單位編輯器(_U)..."
 
 #: plug-ins/common/uniteditor.c:171
 msgid "New Unit"
@@ -7207,11 +7134,11 @@ msgstr "必須填上所有文字欄位"
 
 #: plug-ins/common/uniteditor.c:533
 msgid "Unit Editor"
-msgstr "單位編輯器"
+msgstr "長度單位編輯器"
 
 #: plug-ins/common/uniteditor.c:559
 msgid "Create a new unit from scratch."
-msgstr "建立新的單位"
+msgstr "定義新的長度單位"
 
 #: plug-ins/common/uniteditor.c:563
 msgid "Create a new unit with the currently seleted unit as template."
@@ -7336,7 +7263,7 @@ msgstr ""
 
 #: plug-ins/common/vpropagate.c:255
 msgid "<Image>/Filters/Generic/E_rode"
-msgstr ""
+msgstr "<Image>/濾鏡/一般性/侵蝕(_R)"
 
 #: plug-ins/common/vpropagate.c:267
 msgid "<Image>/Filters/Generic/_Dilate"
@@ -7544,6 +7471,8 @@ msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
+"未指定網頁瀏覽器。\n"
+"請在「偏好設定」對話方塊中指定網頁瀏覽器。"
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7551,6 +7480,8 @@ msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
 msgstr ""
+"無法解析用來執行網頁瀏覽器的指令：\n"
+"%s"
 
 #: plug-ins/common/webbrowser.c:174
 #, c-format
@@ -7558,6 +7489,8 @@ msgid ""
 "Could not execute specified web browser:\n"
 "%s"
 msgstr ""
+"無法執行指定的網頁瀏覽器：\n"
+"%s"
 
 #: plug-ins/common/whirlpinch.c:185
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
@@ -7748,21 +7681,21 @@ msgid "Scale (log 2):"
 msgstr "比例 (log 2)："
 
 #: plug-ins/common/wmf.c:396 plug-ins/sgi/sgi.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading."
-msgstr "無法開啟‘%s’來寫入資料"
+msgstr "無法開啟‘%s’來讀取資料。"
 
 #: plug-ins/common/wmf.c:418
 msgid "Rendered WMF"
 msgstr ""
 
-# image comment, better use english here -- Abel
+# the effect of using non-english in image comment is unknown -- Abel
 #: plug-ins/common/xbm.c:240
 msgid "Created with The GIMP"
 msgstr "Created with The GIMP"
 
 #: plug-ins/common/xbm.c:803
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
@@ -7777,7 +7710,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 "‘%s’：\n"
-"未指定圖像寬度"
+"未指定影像寬度"
 
 #: plug-ins/common/xbm.c:817
 #, c-format
@@ -7786,7 +7719,7 @@ msgid ""
 "No image height specified"
 msgstr ""
 "‘%s’：\n"
-"未指定圖像高度"
+"未指定影像高度"
 
 #: plug-ins/common/xbm.c:824
 #, c-format
@@ -7795,9 +7728,8 @@ msgid ""
 "No image data type specified"
 msgstr ""
 "‘%s’：\n"
-"未指定圖像資料類型"
+"未指定影像資料類型"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -7870,9 +7802,9 @@ msgid "_Alpha Threshold:"
 msgstr "透明度臨界值(_A)："
 
 #: plug-ins/common/xwd.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr "無法從‘%s’讀取標頭資料"
+msgstr "無法從‘%s’讀取 XWD 檔頭資料"
 
 #: plug-ins/common/xwd.c:427
 msgid "can't read color entries"
@@ -7890,9 +7822,8 @@ msgstr ""
 "目前未有支援這種格式。\n"
 
 #: plug-ins/common/xwd.c:513
-#, fuzzy
 msgid "Cannot save images with alpha channels."
-msgstr "PNM 儲存程序無法處理有透明色版的圖像。"
+msgstr "無法儲存有透明色版的影像。"
 
 #: plug-ins/common/xwd.c:1237
 msgid "EOF encountered on "
@@ -7904,11 +7835,11 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:2068
 msgid "Error during writing indexed/grey image"
-msgstr "寫入索引色或灰階圖像時發生錯誤"
+msgstr "寫入索引色或灰階影像時發生錯誤"
 
 #: plug-ins/common/xwd.c:2157
 msgid "Error during writing rgb image"
-msgstr "寫入 rgb 圖像時發生錯誤"
+msgstr "寫入 rgb 影像時發生錯誤"
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Layer/Transform/_Zealous Crop"
@@ -7987,11 +7918,11 @@ msgstr "開啟 FITS 檔案時發生錯誤"
 
 #: plug-ins/fits/fits.c:351
 msgid "FITS file keeps no displayable images"
-msgstr "FITS 檔內沒有可以顯示的圖像"
+msgstr "FITS 檔內沒有可以顯示的影像"
 
 #: plug-ins/fits/fits.c:430
 msgid "FITS save cannot handle images with alpha channels"
-msgstr "FITS 儲存程序無法處理有透明色版的圖像"
+msgstr "FITS 儲存程序無法處理有透明色版的影像"
 
 #: plug-ins/fits/fits.c:970
 msgid "Load FITS File"
@@ -8142,7 +8073,7 @@ msgstr ""
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
-msgstr "請先將圖像轉換成 RGB 色系！"
+msgstr "請先將影像轉換成 RGB 色系！"
 
 #: plug-ins/fp/fp.c:132
 msgid "Applying the Filter Pack..."
@@ -8150,19 +8081,19 @@ msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:35
 msgid "Darker:"
-msgstr ""
+msgstr "較暗："
 
 #: plug-ins/fp/fp_gtk.c:36
 msgid "Lighter:"
-msgstr ""
+msgstr "較光亮："
 
 #: plug-ins/fp/fp_gtk.c:38
 msgid "More Sat:"
-msgstr ""
+msgstr "較高彩度："
 
 #: plug-ins/fp/fp_gtk.c:39
 msgid "Less Sat:"
-msgstr ""
+msgstr "較低彩度："
 
 #. All the previews
 #: plug-ins/fp/fp_gtk.c:41 plug-ins/fp/fp_gtk.c:98
@@ -8171,7 +8102,7 @@ msgstr "目前："
 
 #: plug-ins/fp/fp_gtk.c:95
 msgid "Before and After"
-msgstr ""
+msgstr "影像對照"
 
 #: plug-ins/fp/fp_gtk.c:102
 msgid "Original:"
@@ -8179,7 +8110,7 @@ msgstr "原來："
 
 #: plug-ins/fp/fp_gtk.c:205
 msgid "Hue Variations"
-msgstr ""
+msgstr "色相變化"
 
 #: plug-ins/fp/fp_gtk.c:221
 msgid "Roughness"
@@ -8239,11 +8170,11 @@ msgstr "顯示"
 
 #: plug-ins/fp/fp_gtk.c:450
 msgid "_Entire Image"
-msgstr "整幅圖像(_E)"
+msgstr "整幅影像(_E)"
 
 #: plug-ins/fp/fp_gtk.c:455
 msgid "Se_lection Only"
-msgstr ""
+msgstr "只限選擇區域(_L)"
 
 #: plug-ins/fp/fp_gtk.c:460
 msgid "Selec_tion In Context"
@@ -8493,11 +8424,11 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2105
 msgid "Scale to Image"
-msgstr "縮放至圖像"
+msgstr "縮放至影像"
 
 #: plug-ins/gfig/gfig.c:2113
 msgid "Scale drawings to images size"
-msgstr "將繪圖縮放至圖像尺寸"
+msgstr "將繪圖縮放至影像尺寸"
 
 #: plug-ins/gfig/gfig.c:2135
 msgid "Approx. Circles/Ellipses"
@@ -8594,11 +8525,11 @@ msgstr ""
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:2533
 msgid "Show Image"
-msgstr "顯示圖像"
+msgstr "顯示影像"
 
 #: plug-ins/gfig/gfig.c:2544
 msgid "Reload Image"
-msgstr "重新載入圖像"
+msgstr "重新載入影像"
 
 #: plug-ins/gfig/gfig.c:2556 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
@@ -8715,11 +8646,9 @@ msgid "Select"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:3096
-#, fuzzy, c-format
+#, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
-msgstr ""
-"有 %d 個未儲存的 Gfig 物件。\n"
-"確定要離開？"
+msgstr "有 %d 個未儲存的 Gfig 物件。確定要離開？"
 
 #: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
@@ -8908,9 +8837,8 @@ msgid "A_uto Update Preview"
 msgstr "自動更新預覽圖(_U)"
 
 #: plug-ins/gflare/gflare.c:2404
-#, fuzzy
 msgid "`Default' is created."
-msgstr "已建立「預設」。"
+msgstr ""
 
 #: plug-ins/gflare/gflare.c:2405
 msgid "Default"
@@ -8965,28 +8893,26 @@ msgid "New GFlare"
 msgstr "新增 GFlare"
 
 #: plug-ins/gflare/gflare.c:2984
-#, fuzzy
 msgid "Enter a name for the new GFlare"
-msgstr "為新的 GFlare 命名："
+msgstr "為新的 GFlare 命名"
 
 #: plug-ins/gflare/gflare.c:3003
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "名稱「%s」已經使用了！"
+msgstr "名稱「%s」已經被使用了！"
 
 #: plug-ins/gflare/gflare.c:3053
 msgid "Copy GFlare"
 msgstr "複製 GFlare"
 
 #: plug-ins/gflare/gflare.c:3056
-#, fuzzy
 msgid "Enter a name for the copied GFlare"
-msgstr "為 GFlare 複製本命名："
+msgstr "為 GFlare 複製本命名"
 
 #: plug-ins/gflare/gflare.c:3077
 #, c-format
 msgid "The name `%s' is used already!"
-msgstr "名稱「%s」已經使用了！"
+msgstr "名稱「%s」已經被使用了！"
 
 #: plug-ins/gflare/gflare.c:3103
 msgid "Cannot delete!! There must be at least one GFlare."
@@ -9140,7 +9066,7 @@ msgstr "畫格 (%i)"
 
 #: plug-ins/gfli/gfli.c:679
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "抱歉，只可以儲存索引色或灰階圖像。"
+msgstr "抱歉，只可以儲存索引色或灰階影像。"
 
 #: plug-ins/gfli/gfli.c:812
 msgid "GFLI 1.3 - Load framestack"
@@ -9155,7 +9081,6 @@ msgid "Can only save drawables!"
 msgstr "只可以儲存可繪物件！"
 
 #: plug-ins/gimpressionist/brush.c:199
-#, fuzzy
 msgid "Save Brush"
 msgstr "儲存筆刷"
 
@@ -9237,7 +9162,7 @@ msgstr "保留"
 
 #: plug-ins/gimpressionist/general.c:81
 msgid "Preserve the original image as a background"
-msgstr "保留原來的圖像作為背景"
+msgstr "保留原來的影像作為背景"
 
 #: plug-ins/gimpressionist/general.c:83
 msgid "From paper"
@@ -9270,7 +9195,7 @@ msgstr "可鋪排"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "決定最終的圖像可否重複鋪排"
+msgstr "決定最終的影像可否重複鋪排"
 
 #: plug-ins/gimpressionist/general.c:158
 msgid "Drop Shadow"
@@ -9330,7 +9255,6 @@ msgstr "<Image>/濾鏡/藝術效果/_GIMPressionist..."
 msgid "Painting..."
 msgstr "繪畫中..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -9394,7 +9318,7 @@ msgstr "半徑"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "以該點和圖像中心點之間的距離來決定筆劃的方向"
+msgstr "以該點和影像中心點之間的距離來決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:134
 msgid "Selects a random direction of each stroke"
@@ -9407,7 +9331,7 @@ msgstr "旋轉"
 
 #: plug-ins/gimpressionist/orientation.c:144
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "依從圖像中心點出發至該點的方向來決定筆劃的方向"
+msgstr "依從影像中心點出發至該點的方向來決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:152
 #: plug-ins/gimpressionist/size.c:138
@@ -9592,11 +9516,11 @@ msgstr "平均分佈"
 
 #: plug-ins/gimpressionist/placement.c:60
 msgid "Place strokes randomly around the image"
-msgstr "隨機地在圖像中繪出筆劃"
+msgstr "隨機地在影像中繪出筆劃"
 
 #: plug-ins/gimpressionist/placement.c:62
 msgid "The strokes are evenly distributed across the image"
-msgstr "筆劃均勻地在圖像中分佈"
+msgstr "筆劃均勻地在影像中分佈"
 
 #: plug-ins/gimpressionist/placement.c:81
 msgid "Stroke _density:"
@@ -9612,14 +9536,12 @@ msgstr "集中"
 
 #: plug-ins/gimpressionist/placement.c:95
 msgid "Focus the brush strokes around the center of the image"
-msgstr "將筆劃盡量集中在圖像中心點附近"
+msgstr "將筆劃盡量集中在影像中心點附近"
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr ""
-"無法儲存 PPM 檔‘%s’：\n"
-"%s"
+msgstr "無法儲存 PPM 檔‘%s’：%s"
 
 #: plug-ins/gimpressionist/presets.c:384
 msgid "Save Current"
@@ -9668,7 +9590,7 @@ msgstr "更新預覽視窗"
 
 #: plug-ins/gimpressionist/preview.c:136
 msgid "Revert to the original image"
-msgstr "還原至本來的圖像"
+msgstr "還原至本來的影像"
 
 #: plug-ins/gimpressionist/size.c:43
 msgid "_Size"
@@ -9706,7 +9628,7 @@ msgstr "依該區域的亮度來決定筆劃的大小"
 #: plug-ins/gimpressionist/size.c:118
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr "以該點和圖像中心點之間的距離來決定筆劃的大小"
+msgstr "以該點和影像中心點之間的距離來決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9714,7 +9636,7 @@ msgstr "每一筆的大小都是隨機決定的"
 
 #: plug-ins/gimpressionist/size.c:132
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "依從圖像中心點出發至該點的方向來決定筆劃的大小"
+msgstr "依從影像中心點出發至該點的方向來決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:152
 msgid "The hue of the region determines the size of the stroke"
@@ -9802,32 +9724,32 @@ msgid "Help ID '%s' unknown"
 msgstr ""
 
 #: plug-ins/help/domain.c:414
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"開啟檔案‘%s’發生錯誤：\n"
+"分析‘%s’檔案內容時發生錯誤：\n"
 "%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "GIMP 說明瀏覽器"
 
-#: plug-ins/helpbrowser/dialog.c:463 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<無標題>"
 
-#: plug-ins/helpbrowser/dialog.c:531
+#: plug-ins/helpbrowser/dialog.c:533
 msgid "Document Not Found"
 msgstr "找不到文件"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Could not locate help document"
 msgstr "找不到說明文件"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9940,49 +9862,40 @@ msgid "Relative Probability:"
 msgstr "相對機率："
 
 #: plug-ins/ifscompose/ifscompose.c:1191
-#, fuzzy
 msgid "/Move"
-msgstr "移動"
+msgstr "/移動"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "旋轉/縮放"
+msgstr "/旋轉\\/縮放"
 
 #: plug-ins/ifscompose/ifscompose.c:1195
-#, fuzzy
 msgid "/Stretch"
-msgstr "伸展"
+msgstr "/伸展"
 
 #: plug-ins/ifscompose/ifscompose.c:1198
-#, fuzzy
 msgid "/New"
-msgstr "新增"
+msgstr "/新增"
 
 #: plug-ins/ifscompose/ifscompose.c:1200
-#, fuzzy
 msgid "/Delete"
-msgstr "刪除"
+msgstr "/刪除"
 
 #: plug-ins/ifscompose/ifscompose.c:1202
-#, fuzzy
 msgid "/Undo"
-msgstr "復原"
+msgstr "/復原"
 
 #: plug-ins/ifscompose/ifscompose.c:1204
-#, fuzzy
 msgid "/Redo"
-msgstr "取消復原"
+msgstr "/取消復原"
 
 #: plug-ins/ifscompose/ifscompose.c:1206
-#, fuzzy
 msgid "/Select All"
-msgstr "選擇全部"
+msgstr "/選擇全部"
 
 #: plug-ins/ifscompose/ifscompose.c:1208
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "重新計算中心點(_C)"
+msgstr "/重新計算中心點"
 
 #: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
@@ -10009,7 +9922,7 @@ msgstr "正在描繪 IFS (%d/%d)..."
 #: plug-ins/ifscompose/ifscompose.c:1412
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr "將 IFS 複製至圖像 (%d/%d)..."
+msgstr "將 IFS 複製至影像 (%d/%d)..."
 
 #: plug-ins/ifscompose/ifscompose.c:1551
 #, c-format
@@ -10017,9 +9930,8 @@ msgid "Transformation %s"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
-#, fuzzy
 msgid "Open failed"
-msgstr "開啟檔案"
+msgstr "開啟檔案失敗"
 
 #: plug-ins/ifscompose/ifscompose.c:2685
 #, c-format
@@ -10031,9 +9943,8 @@ msgid "Save as IFS file"
 msgstr "儲存為 IFS 檔案"
 
 #: plug-ins/ifscompose/ifscompose.c:2746
-#, fuzzy
 msgid "Open IFS file"
-msgstr "開啟檔案"
+msgstr "開啟 IFS 檔案"
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
@@ -10437,7 +10348,7 @@ msgstr "無法儲存檔案："
 
 #: plug-ins/imagemap/imap_main.c:977
 msgid "Image size has changed."
-msgstr "圖像尺寸已被更改。"
+msgstr "影像尺寸已被更改。"
 
 #: plug-ins/imagemap/imap_main.c:978
 msgid "Resize area's?"
@@ -10539,9 +10450,8 @@ msgid "About ImageMap..."
 msgstr "關於 ImageMap..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "刪除 GFlare"
+msgstr ""
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -10681,11 +10591,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:95
 msgid "Image name:"
-msgstr "圖像名稱："
+msgstr "影像名稱："
 
 #: plug-ins/imagemap/imap_settings.c:96
 msgid "Select Image File"
-msgstr "選擇圖像檔"
+msgstr "選擇影像檔"
 
 #: plug-ins/imagemap/imap_settings.c:100
 msgid "_Title:"
@@ -10957,7 +10867,7 @@ msgid ""
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
 "調整列印時的彩度 (色彩平衡)\n"
-"將彩度設定為 0，表示使用顏色墨水及黑色墨水產生灰階圖像"
+"將彩度設定為 0，表示使用顏色墨水及黑色墨水產生灰階影像"
 
 #: plug-ins/print/gimp_color_window.c:380
 msgid "Density:"
@@ -10978,8 +10888,8 @@ msgid ""
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
-"調整列印時的 gamma 值。數值較大時，一般會令列印出來的圖像較光亮；相反地，數值"
-"較小時，列印出來的圖像則較暗。和亮度調整不一樣，本設定不會更改黑色和白色這兩"
+"調整列印時的 gamma 值。數值較大時，一般會令列印出來的影像較光亮；相反地，數值"
+"較小時，列印出來的影像則較暗。和亮度調整不一樣，本設定不會更改黑色和白色這兩"
 "種顏色。"
 
 #: plug-ins/print/gimp_color_window.c:426
@@ -11038,14 +10948,14 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
-"請在頁面中指定圖像位置。\n"
-"點選圖像後，按定滑鼠第一個按鈕來拖曳圖像可以更改圖像位置。\n"
-"點選圖像後，按定滑鼠第二個按鈕來拖曳圖像可以精確地更改圖像位置；每次移動的單"
+"請在頁面中指定影像位置。\n"
+"點選影像後，按定滑鼠第一個按鈕來拖曳影像可以更改影像位置。\n"
+"點選影像後，按定滑鼠第二個按鈕來拖曳影像可以精確地更改影像位置；每次移動的單"
 "位為一點 (1/72 英吋)。\n"
-"點選圖像後，按定滑鼠第三個(中央)按鈕來拖曳圖像，每次移動的單位則是圖像尺寸本"
+"點選影像後，按定滑鼠第三個(中央)按鈕來拖曳影像，每次移動的單位則是影像尺寸本"
 "身。\n"
-"拖曳圖像時按下 shift 鍵，會限制圖像只向水平或垂直方向移動。\n"
-"如果拖曳的時候再按多一個滑鼠按鈕，圖像會還原至原來位置。"
+"拖曳影像時按下 shift 鍵，會限制影像只向水平或垂直方向移動。\n"
+"如果拖曳的時候再按多一個滑鼠按鈕，影像會還原至原來位置。"
 
 #: plug-ins/print/gimp_main_window.c:484
 msgid "Portrait"
@@ -11071,15 +10981,15 @@ msgstr "指定列印時的方向：直向、橫向、直向倒置、橫向倒置
 
 #: plug-ins/print/gimp_main_window.c:517
 msgid "Distance from the left of the paper to the image"
-msgstr "從紙張左邊邊緣至圖像之間的距離"
+msgstr "從紙張左邊邊緣至影像之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:530
 msgid "Distance from the top of the paper to the image"
-msgstr "從紙張頂部邊緣至圖像之間的距離"
+msgstr "從紙張頂部邊緣至影像之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:543
 msgid "Distance from the left of the paper to the right of the image"
-msgstr "從紙張左邊邊緣至圖像右邊邊緣之間的距離"
+msgstr "從紙張左邊邊緣至影像右邊邊緣之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:553
 msgid "Right Border:"
@@ -11087,11 +10997,11 @@ msgstr "右邊邊界："
 
 #: plug-ins/print/gimp_main_window.c:557
 msgid "Distance from the right of the paper to the image"
-msgstr "從紙張右邊邊緣至圖像之間的距離"
+msgstr "從紙張右邊邊緣至影像之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:571
 msgid "Distance from the top of the paper to the bottom of the image"
-msgstr "從紙張頂部邊緣至圖像底部邊緣之間的距離"
+msgstr "從紙張頂部邊緣至影像底部邊緣之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:581
 msgid "Bottom Border:"
@@ -11099,7 +11009,7 @@ msgstr "底部邊界："
 
 #: plug-ins/print/gimp_main_window.c:585
 msgid "Distance from the bottom of the paper to the image"
-msgstr "從紙張底部邊緣至圖像之間的距離"
+msgstr "從紙張底部邊緣至影像之間的距離"
 
 #: plug-ins/print/gimp_main_window.c:602
 msgid "Center:"
@@ -11111,7 +11021,7 @@ msgstr "垂直方向"
 
 #: plug-ins/print/gimp_main_window.c:611
 msgid "Center the image vertically on the paper"
-msgstr "將圖像的垂直位置調整至紙張中間"
+msgstr "將影像的垂直位置調整至紙張中間"
 
 #: plug-ins/print/gimp_main_window.c:617
 msgid "Both"
@@ -11119,7 +11029,7 @@ msgstr "兩者"
 
 #: plug-ins/print/gimp_main_window.c:622
 msgid "Center the image on the paper"
-msgstr "將圖像放置在紙張中間"
+msgstr "將影像放置在紙張中間"
 
 #: plug-ins/print/gimp_main_window.c:629
 msgid "Horizontally"
@@ -11127,7 +11037,7 @@ msgstr "水平方向"
 
 #: plug-ins/print/gimp_main_window.c:634
 msgid "Center the image horizontally on the paper"
-msgstr "將圖像的水平位置調整至紙張中間"
+msgstr "將影像的水平位置調整至紙張中間"
 
 #: plug-ins/print/gimp_main_window.c:650
 msgid "Setup Printer"
@@ -11341,13 +11251,13 @@ msgstr "縮放："
 
 #: plug-ins/print/gimp_main_window.c:1145
 msgid "Set the scale (size) of the image"
-msgstr "指定圖像的縮放比例 (尺寸)"
+msgstr "指定影像的縮放比例 (尺寸)"
 
 #: plug-ins/print/gimp_main_window.c:1178
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr "指定放大縮小圖像時的單位，是頁面尺寸的百分比，還是每英吋有多少點"
+msgstr "指定放大縮小影像時的單位，是頁面尺寸的百分比，還是每英吋有多少點"
 
 #: plug-ins/print/gimp_main_window.c:1183
 msgid "Percent"
@@ -11355,7 +11265,7 @@ msgstr "百分比"
 
 #: plug-ins/print/gimp_main_window.c:1190
 msgid "Scale the print to the size of the page"
-msgstr "指定列印時的圖像尺寸為頁面尺寸的某個百分比"
+msgstr "指定列印時的影像尺寸為頁面尺寸的某個百分比"
 
 #: plug-ins/print/gimp_main_window.c:1196
 msgid "PPI"
@@ -11363,15 +11273,15 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1202
 msgid "Scale the print to the number of dots per inch"
-msgstr "列印時，透過指定每英吋有多少點來放大縮小圖像"
+msgstr "列印時，透過指定每英吋有多少點來放大縮小影像"
 
 #: plug-ins/print/gimp_main_window.c:1228
 msgid "Set the width of the print"
-msgstr "指定列印時的圖像寬度"
+msgstr "指定列印時的影像寬度"
 
 #: plug-ins/print/gimp_main_window.c:1241
 msgid "Set the height of the print"
-msgstr "指定列印時的圖像高度"
+msgstr "指定列印時的影像高度"
 
 #: plug-ins/print/gimp_main_window.c:1261
 msgid "Units:"
@@ -11405,20 +11315,20 @@ msgid ""
 "Use Original\n"
 "Image Size"
 msgstr ""
-"使用圖像\n"
+"使用影像\n"
 "原來的尺寸"
 
 #: plug-ins/print/gimp_main_window.c:1304
 msgid "Set the print size to the size of the image"
-msgstr "將列印時的圖像尺寸設定為圖像原來的尺寸"
+msgstr "將列印時的影像尺寸設定為影像原來的尺寸"
 
 #: plug-ins/print/gimp_main_window.c:1327
 msgid "Image / Output Settings"
-msgstr "圖像 / 輸出選項"
+msgstr "影像 / 輸出選項"
 
 #: plug-ins/print/gimp_main_window.c:1340
 msgid "Image Type:"
-msgstr "圖像類型："
+msgstr "影像類型："
 
 #: plug-ins/print/gimp_main_window.c:1345
 msgid "Optimize the output for the type of image being printed"
@@ -11448,7 +11358,7 @@ msgstr "相片"
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
-msgstr "最慢，但在連續色彩的圖像及相片中，效果最準確，色彩也會較平滑"
+msgstr "最慢，但在連續色彩的影像及相片中，效果最準確，色彩也會較平滑"
 
 #: plug-ins/print/gimp_main_window.c:1412
 msgid "Output Type:"
@@ -11608,9 +11518,9 @@ msgid "Selection To Path Advanced Settings"
 msgstr "「選擇區域轉為路徑」進階設定"
 
 #: plug-ins/sgi/sgi.c:532
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing."
-msgstr "無法開啟‘%s’來寫入資料"
+msgstr "無法開啟‘%s’來寫入資料。"
 
 #: plug-ins/sgi/sgi.c:614
 msgid "Save as SGI"
@@ -11635,15 +11545,13 @@ msgid ""
 msgstr ""
 
 #: plug-ins/twain/twain.c:532
-#, fuzzy
 msgid "<Toolbox>/File/Acquire/_TWAIN..."
-msgstr "<Toolbox>/檔案/擷取/TWAIN..."
+msgstr "<Toolbox>/檔案/擷取/_TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:666
-#, fuzzy
 msgid "Transferring TWAIN data..."
-msgstr "正在傳送 TWAIN 資料"
+msgstr "正在傳送 TWAIN 資料..."
 
 #: plug-ins/winsnap/winsnap.c:947
 msgid "Grab a single window"
@@ -11704,36 +11612,22 @@ msgid "Clear Transparent"
 msgstr "當像素完全透明時清除該像素的資料"
 
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create working folder '%s': %s"
-msgstr "無法建立工作目錄：%s"
+msgstr "無法建立工作目錄‘%s’：%s"
 
 #: plug-ins/xjt/xjt.c:3198
-#, fuzzy, c-format
+#, c-format
 msgid "Error: Could not read XJT property file '%s'."
-msgstr "錯誤：無法讀取 XJT 屬性檔 %s"
+msgstr "錯誤：無法讀取 XJT 屬性檔 %s。"
 
 #: plug-ins/xjt/xjt.c:3204
-#, fuzzy, c-format
+#, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr "錯誤：XJT 屬性檔 %s 是空的"
-
-#, fuzzy
-#~ msgid ""
-#~ "Failed to open help files:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "無法開啟檔案‘%s’：\n"
-#~ "%s"
-
-#~ msgid "About..."
-#~ msgstr "關於..."
+msgstr "錯誤：XJT 屬性檔‘%s’是空的。"
 
 #~ msgid "Only an indexed-alpha image can be saved in CEL format"
-#~ msgstr "只有索引化並帶透明的圖像才可以以 CEL 格式儲存"
-
-#~ msgid "Image dimensions: %dx%d"
-#~ msgstr "圖像尺寸：%d×%d"
+#~ msgstr "只有索引化並帶透明的影像才可以以 CEL 格式儲存"
 
 #~ msgid ""
 #~ "Can't open '%s':\n"
@@ -11743,16 +11637,29 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ "%s"
 
 #~ msgid "Cannot operate on unknown image types or alpha images"
-#~ msgstr "無法處理不明的圖像類型或透明圖像"
+#~ msgstr "無法處理不明的影像類型或透明影像"
+
+#~ msgid "About..."
+#~ msgstr "關於..."
 
 #~ msgid "Not enough memory to allocate buffers for optimization.\n"
 #~ msgstr "無法分配足夠記憶體來進行優化程序。\n"
+
+#~ msgid "Image dimensions: %dx%d"
+#~ msgstr "影像尺寸：%d×%d"
 
 #~ msgid ""
 #~ "Failed to write file '%s':\n"
 #~ "%s"
 #~ msgstr ""
 #~ "無法寫入‘%s’：\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Failed to open file '%s':\n"
+#~ "%s"
+#~ msgstr ""
+#~ "無法開啟檔案‘%s’：\n"
 #~ "%s"
 
 #~ msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -11775,14 +11682,14 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ "Cannot operate on gray/indexed images"
 #~ msgstr ""
 #~ "色彩映射 / 調整前景背景：\n"
-#~ "不適用於灰階或索引色圖像"
+#~ "不適用於灰階或索引色影像"
 
 #~ msgid ""
 #~ "Can't save layers with alpha.\n"
 #~ "Flatten your image"
 #~ msgstr ""
 #~ "不可以儲存有透明度的圖層。\n"
-#~ "請先將圖像平面化。"
+#~ "請先將影像平面化。"
 
 #~ msgid ""
 #~ "'%s':\n"
@@ -11803,13 +11710,13 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ "PNG error. Couldn't save image"
 #~ msgstr ""
 #~ "‘%s’：\n"
-#~ "PNG 錯誤。無法儲存圖像"
+#~ "PNG 錯誤。無法儲存影像"
 
 #~ msgid "_after"
 #~ msgstr "延遲(_A)"
 
 #~ msgid "sel_gauss: Cannot operate on indexed color images"
-#~ msgstr "選擇性高斯模糊：不適用於索引色系圖像"
+#~ msgstr "sel_gauss：不適用於索引色系影像"
 
 #~ msgid "Interpreting %s:"
 #~ msgstr "正在解譯 %s："
@@ -11818,10 +11725,10 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "無法以 XWD 格式開啟檔案"
 
 #~ msgid "XWD save cannot handle images with alpha channels"
-#~ msgstr "XWD 儲存程序無法處理有透明色版的圖像"
+#~ msgstr "XWD 儲存程序無法處理有透明色版的影像"
 
 #~ msgid "cannot operate on unknown image types"
-#~ msgstr "不適用於不明的圖像類型"
+#~ msgstr "不適用於不明的影像類型"
 
 #~ msgid "Saving '%s':"
 #~ msgstr "正在儲存‘%s’："
@@ -11855,7 +11762,7 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "無法開啟(寫入)：%s"
 
 #~ msgid "xjt: cannot operate on unknown image types"
-#~ msgstr "xjt：不適用於不明的圖像類型"
+#~ msgstr "xjt：不適用於不明的影像類型"
 
 #~ msgid "Can't open: %s"
 #~ msgstr "無法開啟：%s"
@@ -11979,7 +11886,7 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ "無法建立檔案"
 
 #~ msgid "PS: cannot operate on unknown image types"
-#~ msgstr "PS：無法處理不明的圖像類型"
+#~ msgstr "PS：無法處理不明的影像類型"
 
 #~ msgid "Can't open file for reading"
 #~ msgstr "無法讀取檔案"
@@ -12015,19 +11922,19 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "<Image>/圖層/變換/旋轉 270 度"
 
 #~ msgid "<Image>/Image/Transform/Rotate 90 degrees"
-#~ msgstr "<Image>/圖像/變換/旋轉 90 度"
+#~ msgstr "<Image>/影像/變換/旋轉 90 度"
 
 #~ msgid "<Image>/Image/Transform/Rotate 180 degrees"
-#~ msgstr "<Image>/圖像/變換/旋轉 180 度"
+#~ msgstr "<Image>/影像/變換/旋轉 180 度"
 
 #~ msgid "<Image>/Image/Transform/Rotate 270 degrees"
-#~ msgstr "<Image>/圖像/變換/旋轉 270 度"
+#~ msgstr "<Image>/影像/變換/旋轉 270 度"
 
 #~ msgid "<Image>/Image/Mode/Compose..."
-#~ msgstr "<Image>/圖像/模式/組合..."
+#~ msgstr "<Image>/影像/模式/組合..."
 
 #~ msgid "<Image>/Image/Mode/Decompose..."
-#~ msgstr "<Image>/圖像/模式/分解..."
+#~ msgstr "<Image>/影像/模式/分解..."
 
 #~ msgid "Load"
 #~ msgstr "載入"
@@ -12176,7 +12083,7 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "列印"
 
 #~ msgid "Center Image"
-#~ msgstr "圖像置中"
+#~ msgstr "影像置中"
 
 #~ msgid "Adjust Color"
 #~ msgstr "調整色彩"
@@ -12216,7 +12123,7 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "備份至檔案"
 
 #~ msgid "Make backup of the image after each step"
-#~ msgstr "每一步後都製作圖像的備份檔"
+#~ msgstr "每一步後都製作影像的備份檔"
 
 #~ msgid "Continue"
 #~ msgstr "繼續"
@@ -12360,13 +12267,13 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "轉換設定"
 
 #~ msgid "Clipped to image"
-#~ msgstr "裁剪成圖像尺寸"
+#~ msgstr "裁剪成影像尺寸"
 
 #~ msgid "Clipped to bottom layer"
 #~ msgstr "裁剪成最底圖層的尺寸"
 
 #~ msgid "Flattened image"
-#~ msgstr "平面化圖像"
+#~ msgstr "平面化影像"
 
 #~ msgid "select all visible Layers"
 #~ msgstr "選擇所有可見圖層"
@@ -12384,10 +12291,10 @@ msgstr "錯誤：XJT 屬性檔 %s 是空的"
 #~ msgstr "使用所有未選取的圖層"
 
 #~ msgid "Frames to Image"
-#~ msgstr "畫格轉為圖像"
+#~ msgstr "畫格轉為影像"
 
 #~ msgid "Create Multilayer-Image from Frames"
-#~ msgstr "由畫格建立多圖層的圖像"
+#~ msgstr "由畫格建立多圖層的影像"
 
 #~ msgid "Converting Frames..."
 #~ msgstr "正在轉換畫格..."
