@@ -281,26 +281,35 @@ edit_paste (GImage       *gimage,
 	    TileManager  *paste,
 	    int           paste_into)
 {
-  Layer * float_layer;
+  Layer * layer;
   int x1, y1, x2, y2;
   int cx, cy;
 
-  /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  /*  Make a new layer  */
+  layer = layer_new_from_tiles (gimage, paste, 
+				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
-  if (float_layer)
+  if (layer)
     {
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
       /*  Set the offsets to the center of the image  */
-      drawable_offsets ( (drawable), &cx, &cy);
-      drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
-      cx += (x1 + x2) >> 1;
-      cy += (y1 + y2) >> 1;
+      if (drawable != NULL)
+	{
+	  drawable_offsets (drawable, &cx, &cy);
+	  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+	  cx += (x1 + x2) >> 1;
+	  cy += (y1 + y2) >> 1;
+	}
+      else
+	{
+	  cx = gimage->width >> 1;
+	  cy = gimage->height >> 1;
+	}
 
-      GIMP_DRAWABLE(float_layer)->offset_x = cx - (GIMP_DRAWABLE(float_layer)->width >> 1);
-      GIMP_DRAWABLE(float_layer)->offset_y = cy - (GIMP_DRAWABLE(float_layer)->height >> 1);
+      GIMP_DRAWABLE(layer)->offset_x = cx - (GIMP_DRAWABLE(layer)->width >> 1);
+      GIMP_DRAWABLE(layer)->offset_y = cy - (GIMP_DRAWABLE(layer)->height >> 1);
 
       /*  If there is a selection mask clear it--
        *  this might not always be desired, but in general,
@@ -309,13 +318,21 @@ edit_paste (GImage       *gimage,
       if (! gimage_mask_is_empty (gimage) && !paste_into)
 	channel_clear (gimage_get_mask (gimage));
 
-      /*  add a new floating selection  */
-      floating_sel_attach (float_layer, drawable);
-
-      /*  end the group undo  */
+      /*  if there's a drawable, add a new floating selection  */
+      if (drawable != NULL)
+	{
+	  floating_sel_attach (layer, drawable);
+	}
+      else
+	{
+	  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
+	  gimage_add_layer (gimage, layer, 0);
+	}
+      
+     /*  end the group undo  */
       undo_push_group_end (gimage);
 
-      return float_layer;
+      return layer;
     }
   else
     return NULL;
@@ -326,9 +343,7 @@ edit_paste_as_new (GImage       *invoke,
 		   TileManager  *paste)
 {
   GImage       *gimage;
-  GimpDrawable *drawable;
   Layer        *layer;
-  Layer        *float_layer;
   GDisplay     *gdisp;
 
   if (!global_buf)
@@ -336,26 +351,19 @@ edit_paste_as_new (GImage       *invoke,
 
   /*  create a new image  (always of type RGB)  */
   gimage = gimage_new (paste->width, paste->height, RGB);
+  gimage_disable_undo (gimage);
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
   
-  layer = layer_new (gimage, gimage->width, gimage->height, RGBA_GIMAGE, 
-		     _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  layer = layer_new_from_tiles (gimage, paste, 
+				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  add the new layer to the image  */
-  gimage_disable_undo (gimage);
+  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
   gimage_add_layer (gimage, layer, 0);
-  drawable = gimage_active_drawable (gimage);
-  drawable_fill (GIMP_DRAWABLE (drawable), TRANSPARENT_FILL);
-            
-  /*  make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, 
-				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
-  /*  add the new floating selection  */
-  floating_sel_attach (float_layer, drawable);
-  floating_sel_anchor (float_layer);
   gimage_enable_undo (gimage);
+
   gdisp = gdisplay_new (gimage, 0x0101);
   gimp_context_set_display (gimp_context_get_user (), gdisp);
 
@@ -486,6 +494,7 @@ global_edit_paste (void *gdisp_ptr,
   else
     {
       /*  flush the display  */
+      gdisplays_update_title (gdisp->gimage);
       gdisplays_flush ();
       return TRUE;
     }

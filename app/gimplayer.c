@@ -393,14 +393,12 @@ layer_copy (Layer    *layer,
 }
 
 Layer *
-layer_from_tiles (void             *gimage_ptr,
-		  GimpDrawable     *drawable,
-		  TileManager      *tiles,
-		  gchar            *name,
-		  gint              opacity,
-		  LayerModeEffects  mode)
+layer_new_from_tiles (GimpImage        *gimage,
+		      TileManager      *tiles,
+		      gchar            *name,
+		      gint              opacity,
+		      LayerModeEffects  mode)
 {
-  GImage * gimage;
   Layer * new_layer;
   GimpImageType layer_type;
   PixelRegion layerPR, bufPR;
@@ -410,13 +408,11 @@ layer_from_tiles (void             *gimage_ptr,
    *  the contents to meet the requirements of the target image type
    */
 
-  /*  If no tile manager, return NULL  */
-  if (!tiles)
+  /*  If no image or no tile manager, return NULL  */
+  if (!gimage || !tiles )
     return NULL;
 
-  gimage = (GImage *) gimage_ptr;
-
-  layer_type = drawable_type_with_alpha (drawable);
+  layer_type = gimp_image_base_type_with_alpha (gimage);
 
   /*  Create the new layer  */
   new_layer = layer_new (0, tiles->width, tiles->height,
@@ -424,7 +420,7 @@ layer_from_tiles (void             *gimage_ptr,
 
   if (!new_layer)
     {
-      g_message ("layer_from_tiles: could not allocate new layer");
+      g_message ("layer_new_from_tiles: could not allocate new layer");
       return NULL;
     }
 

@@ -729,10 +729,8 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	  dest_height = dest_gimage->height;
 
 	  new_layer =
-	    layer_from_tiles (dest_gimage,
-			      GIMP_DRAWABLE (gimage_get_active_layer (dest_gimage)),
-			      tiles, _("Pasted Layer"),
-			      OPAQUE_OPACITY, NORMAL_MODE);
+	    layer_new_from_tiles (dest_gimage, tiles, 
+				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
 	  tile_manager_destroy (tiles);
 

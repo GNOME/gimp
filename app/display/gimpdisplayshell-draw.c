@@ -1164,8 +1164,8 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	      add_alpha_region (&srcPR, &destPR);
 
-	      new_layer = layer_from_tiles (new_gimage, drawable, tiles,
-					    "", OPAQUE_OPACITY, NORMAL_MODE);
+	      new_layer = layer_new_from_tiles (new_gimage, tiles,
+						"", OPAQUE_OPACITY, NORMAL_MODE);
 
 	      tile_manager_destroy (tiles);
 	    }

@@ -633,7 +633,8 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
 
 
 static void
-gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
+gdisplay_flush_whenever (GDisplay *gdisp, 
+			 gboolean  now)
 {
   GSList *list;
   GArea  *ga;
@@ -699,7 +700,8 @@ gdisplay_flush_now (GDisplay *gdisp)
 }
 
 /* Force all gdisplays to finish their idlerender projection */
-void gdisplays_finish_draw (void)
+void 
+gdisplays_finish_draw (void)
 {
   GSList *list = display_list;
   GDisplay* gdisp;
@@ -1018,7 +1020,9 @@ gdisplay_draw_cursor (GDisplay *gdisp)
 }
 
 void
-gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
+gdisplay_update_cursor (GDisplay *gdisp, 
+			int       x, 
+			int       y)
 {
   int new_cursor;
   char buffer[CURSOR_STR_LENGTH];
@@ -1090,7 +1094,8 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 
 
 void
-gdisplay_set_dot_for_dot (GDisplay *gdisp, int value)
+gdisplay_set_dot_for_dot (GDisplay *gdisp, 
+			  int       value)
 {
   if (value != gdisp->dot_for_dot)
     {
@@ -1575,7 +1580,7 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
 
 /*  remove an override-cursor from gdisplay...  */
 void
-gdisplay_remove_override_cursor (GDisplay      *gdisp)
+gdisplay_remove_override_cursor (GDisplay *gdisp)
 {
   if (gdisp->using_override_cursor)
     {
@@ -1649,12 +1654,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Edit/Redo", undo_get_redo_name (gdisp->gimage));
       SET_SENSITIVE ("Edit/Cut", lp);
       SET_SENSITIVE ("Edit/Copy", lp);
-      SET_SENSITIVE ("Edit/Paste", lp);
-      SET_SENSITIVE ("Edit/Paste Into", lp);
-      SET_SENSITIVE ("Edit/Paste as New", lp);
       SET_SENSITIVE ("Edit/Buffer/Cut Named...", lp);
       SET_SENSITIVE ("Edit/Buffer/Copy Named...", lp);
-      SET_SENSITIVE ("Edit/Buffer/Paste Named...", lp);
       SET_SENSITIVE ("Edit/Clear", lp);
       SET_SENSITIVE ("Edit/Fill", lp);
       SET_SENSITIVE ("Edit/Stroke", lp);
@@ -2063,8 +2064,8 @@ gdisplays_nav_preview_resized (void)
 }
 
 void
-gdisplays_selection_visibility (GimpImage* gimage,
-				SelectionControl function)
+gdisplays_selection_visibility (GimpImage        *gimage,
+				SelectionControl  function)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -2140,7 +2141,8 @@ gdisplays_delete (void)
 
 
 GDisplay *
-gdisplays_check_valid (GDisplay *gtest, GimpImage *gimage)
+gdisplays_check_valid (GDisplay  *gtest, 
+		       GimpImage *gimage)
 {
   /* Give a gdisp check that it is still valid and points to the require
    * GimpImage. If not return the first gDisplay that does point to the 
@@ -2217,7 +2219,8 @@ gdisplay_hash (GDisplay *display)
 }
 
 void
-gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
+gdisplay_reconnect (GDisplay  *gdisp, 
+		    GimpImage *gimage)
 {
   int instance;
 
@@ -2252,7 +2255,8 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
 
 /* Called whenever the underlying gimage is dirtied or cleaned */
 static void
-gdisplay_cleandirty_handler (GimpImage *gimage, void *data)
+gdisplay_cleandirty_handler (GimpImage *gimage, 
+			     void      *data)
 {
     GDisplay *gdisp = data;
 

@@ -154,7 +154,7 @@ gdisplay_color_attach (GDisplay   *gdisp,
   ColorDisplayInfo *info;
   ColorDisplayNode *node;
 
-  g_return_if_fail (gdisp != NULL);
+  g_return_val_if_fail (gdisp != NULL, NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {

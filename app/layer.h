@@ -79,10 +79,8 @@ Layer *         layer_copy  (Layer *, gboolean);
 Layer *		layer_ref   (Layer *);
 void   		layer_unref (Layer *);
 
-Layer *         layer_from_tiles            (void *, GimpDrawable *,
-					     TileManager *,
-					     gchar *, gint,
-					     LayerModeEffects);
+Layer *         layer_new_from_tiles        (GimpImage *, TileManager *,
+					     gchar *, gint, LayerModeEffects);
 LayerMask *     layer_add_mask              (Layer *, LayerMask *);
 LayerMask *     layer_create_mask           (Layer *, AddMaskType);
 Layer *         layer_get_ID                (gint);
