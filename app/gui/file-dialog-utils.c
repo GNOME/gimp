@@ -119,7 +119,7 @@ file_dialog_show (GtkWidget *filesel)
   gimp_item_factory_set_sensitive (item_factory, "/File/Open...", FALSE);
   gimp_item_factory_set_sensitive (item_factory, "/File/Save", FALSE);
   gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", FALSE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy as...", FALSE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy...", FALSE);
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
   gtk_widget_show (filesel);
@@ -139,7 +139,7 @@ file_dialog_hide (GtkWidget *filesel)
   gimp_item_factory_set_sensitive (item_factory, "/File/Open...", TRUE);
   gimp_item_factory_set_sensitive (item_factory, "/File/Save", TRUE);
   gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", TRUE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy as...", TRUE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy...", TRUE);
 
   /*  return TRUE because we are used as "delete_event" handler  */
   return TRUE;

@@ -1,5 +1,13 @@
 2002-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c: HIG compliance: changed "Save a Copy as..."
+	to "Save a Copy...".
+
+	* app/gui/file-dialog-utils.c
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
+2002-09-01  Michael Natterer  <mitch@gimp.org>
+
 	Refcount layer masks correctly. Fixes layer mask undo.
 
 	* app/core/gimplayer.c (gimp_layer_add_mask): ref the mask.

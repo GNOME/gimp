@@ -1094,11 +1094,11 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 
   /*  File  */
 
-  SET_SENSITIVE ("/File/Save",              gdisp && drawable);
-  SET_SENSITIVE ("/File/Save as...",        gdisp && drawable);
-  SET_SENSITIVE ("/File/Save a Copy as...", gdisp && drawable);
-  SET_SENSITIVE ("/File/Revert...",         gdisp && GIMP_OBJECT (gimage)->name);
-  SET_SENSITIVE ("/File/Close",             gdisp);
+  SET_SENSITIVE ("/File/Save",           gdisp && drawable);
+  SET_SENSITIVE ("/File/Save as...",     gdisp && drawable);
+  SET_SENSITIVE ("/File/Save a Copy...", gdisp && drawable);
+  SET_SENSITIVE ("/File/Revert...",      gdisp && GIMP_OBJECT (gimage)->name);
+  SET_SENSITIVE ("/File/Close",          gdisp);
 
   /*  Edit  */
 
