@@ -37,18 +37,35 @@ static void need_pdl (void)
 
 #endif
 
-#define is_dynamic(sv)					\
-	(sv_derived_from (sv, "Gimp::Tile")		\
-         || sv_derived_from (sv, "Gimp::PixelRgn")	\
-         || sv_derived_from (sv, "Gimp::GDrawable"))
+#define is_dynamic(sv)				\
+	(strEQ ((sv), "Gimp::Tile")		\
+         || strEQ ((sv), "Gimp::PixelRgn")	\
+         || strEQ ((sv), "Gimp::GDrawable"))
 
 static GHashTable *object_cache;
+static gint object_id = 1000;
 
 #define init_object_cache	if (!object_cache) object_cache = g_hash_table_new (g_int_hash, g_int_equal)
 
-static void destroy (gint id)
+static void destroy_object (SV *sv)
 {
-  init_object_cache;
+  if (object_cache && sv_isobject (sv))
+    {
+      if (is_dynamic (HvNAME(SvSTASH(SvRV(sv)))))
+        {
+          gint id = SvIV(SvRV(sv));
+          SV *cv = (SV*)g_hash_table_lookup (object_cache, &id);
+          if (cv)
+            {
+              SvREFCNT_dec (cv);
+              g_hash_table_remove (object_cache, &id);
+            }
+        }
+      else
+        croak ("Internal error: Gimp::Net #101, please report!");
+    }
+  else
+    croak ("Internal error: Gimp::Net #100, please report!");
 }
 
 /* allocate this much as initial length */
@@ -83,9 +100,15 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
 
           sv_catpvf (s, "b%x:%s", strlen (name), name);
 
-          if (is_dynamic (sv))
+          if (deobjectify && is_dynamic (name))
             {
-              //return;
+              object_id++;
+
+              SvREFCNT_inc(sv);
+              g_hash_table_insert (object_cache, &object_id, (gpointer)sv);
+              
+              sv_catpvf (s, "i%d:", object_id);
+              return; /* well... */
             }
         } 
       else
@@ -96,7 +119,7 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
           AV *av = (AV*)rv;
           int i;
 
-          sv_catpvf (s, "a%x:", (int)av_len(av));
+          sv_catpvf (s, "a%x:", (I32)av_len(av));
           for (i = 0; i <= av_len(av); i++)
             sv2net (deobjectify, s, *av_fetch(av,i,0));
         }
@@ -130,6 +153,7 @@ static SV *net2sv (int objectify, char **_s)
   SV *sv;
   AV *av;
   unsigned int ui, n;
+  I32 i32,i33;
   long l;
   char str[64];
 
@@ -161,15 +185,30 @@ static SV *net2sv (int objectify, char **_s)
 
         memcpy (str, s, ui); s += ui;
         str[ui] = 0;
-        sv = sv_bless (newRV_noinc (net2sv (objectify, &s)), gv_stashpv (str, 1));
+
+        if (objectify && is_dynamic (str))
+          {
+            gint id;
+
+            sscanf (s, "i%ld:%n", &l, &n); s += n;
+
+            sv = (SV*)g_hash_table_lookup (object_cache, (id=l,&id));
+            if (!sv)
+              croak ("Internal error: asked to deobjectify an object not in the cache, please report!");
+          }
+        else
+          sv = net2sv (objectify, &s);
+
+        sv = sv_bless (newRV_noinc (sv), gv_stashpv (str, 1));
+
         break;
 
       case 'a':
-        sscanf (s, "%x:%n", &ui, &n); s += n;
+        sscanf (s, "%x:%n", &i32, &n); s += n;
         av = newAV ();
-        av_extend (av, ui);
-        for (n = 0; n <= ui; n++)
-          av_store (av, n, net2sv (objectify, &s));
+        av_extend (av, i32);
+        for (i33 = 0; i33 <= i32; i33++)
+          av_store (av, i33, net2sv (objectify, &s));
 
         sv = (SV*)av;
         break;
@@ -201,7 +240,7 @@ args2net(deobjectify,...)
 	for (index = 1; index < items; index++)
           sv2net (deobjectify, RETVAL, ST(index));
 
-        /*printf (">>>>%s\n",SvPV_nolen(RETVAL));*/
+        /*printf (">>>>%s\n",SvPV_nolen(RETVAL));*//*D*/
         OUTPUT:
         RETVAL
 
@@ -211,10 +250,18 @@ net2args(objectify,s)
 	char *	s
         PPCODE:
 
-        /*printf ("<<<<%s\n",s);*/
+        /*printf ("<<<<%s\n",s);*//*D*/
         if (objectify) init_object_cache;
 
         /* this depends on a trailing zero! */
         while (*s)
 	  XPUSHs (sv_2mortal (net2sv (objectify, &s)));
+
+void
+destroy_objects(...)
+	CODE:
+        int index;
+
+        for (index = 0; index < items; index++)
+          destroy_object (ST(index));
 

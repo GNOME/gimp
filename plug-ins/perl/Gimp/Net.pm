@@ -135,7 +135,9 @@ sub set_trace {
 }
 
 sub start_server {
-   print "trying to start gimp\n" if $Gimp::verbose;
+   my $opt = shift;
+   $opt = $Gimp::spawn_opts unless $opt;
+   print "trying to start gimp with options \"$opt\"\n" if $Gimp::verbose;
    $server_fh=local *FH;
    my $gimp_fh=local *FH;
    socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,AF_UNIX
@@ -159,8 +161,15 @@ sub start_server {
                  fileno($gimp_fh);
       { # block to suppress warning with broken perls (e.g. 5.004)
          require Gimp::Config;
+         my @args;
+         push(@args,"--no-data") if $opt=~s/(^|:)no-?data//;
+         push(@args,"-n") unless $opt=~s/(^|:)gui//;
+         push(@args,"--verbose") if $Gimp::verbose;
          exec $Gimp::Config{GIMP_PATH},
-              "-n","-b","(extension-perl-server $args)",
+              "--no-splash",
+              @args,
+              "-b",
+              "(extension-perl-server $args)",
               "(extension_perl_server $args)",
               "(gimp_quit 0)",
               "(gimp-quit 0)";
@@ -177,7 +186,7 @@ sub try_connect {
    $auth = s/^(.*)\@// ? $1 : "";	# get authorization
    if ($_ ne "") {
       if (s{^spawn/}{}) {
-         return start_server;
+         return start_server($_);
       } elsif (s{^unix/}{/}) {
          my $server_fh=local *FH;
          return socket($server_fh,PF_UNIX,SOCK_STREAM,AF_UNIX)
@@ -295,13 +304,15 @@ then it is probably installed.
 The Perl-Server can either be started from the C<<Xtns>> menu in Gimp, or automatically
 when a perl script can't find a running Perl-Server.
 
-When started from within The Gimp, the Perl-Server will create a unix domain
-socket to which local clients can connect. If an authorization password is
-given to the Perl-Server (by defining the environment variable C<GIMP_HOST>
-before starting The Gimp), it will also listen on a tcp port (default
-10009). Since the password is transmitted in cleartext, using the Perl-Server
-over tcp effectively B<lowers the security of your network to the level of
-telnet>.
+When started from within The Gimp, the Perl-Server will create a unix
+domain socket to which local clients can connect. If an authorization
+password is given to the Perl-Server (by defining the environment variable
+C<GIMP_HOST> before starting The Gimp), it will also listen on a tcp port
+(default 10009). Since the password is transmitted in cleartext, using the
+Perl-Server over tcp effectively B<lowers the security of your network to
+the level of telnet>. Even worse: the current Gimp::Net-protocol can be
+used for denial of service attacks, i.e. crashing the Perl-Server. There
+also *might* be buffer-overflows (although I do care a lot for these).
 
 =head1 ENVIRONMENT
 
@@ -321,6 +332,8 @@ and spawn/ for a private gimp instance. Examples are:
  authorize@                  # specify authorization only
  
  spawn/                      # use a private gimp instance
+ spawn/nodata                # pass --no-data switch
+ spawn/gui                   # don't pass -n switch
 
 =head1 CALLBACKS
 

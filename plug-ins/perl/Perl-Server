@@ -13,8 +13,7 @@ use Socket;
 
 use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
-            %object_dynamic $object_uid %objects $auth @authorized $exclusive
-            $rm $saved_rm);
+            $auth @authorized $exclusive $rm $saved_rm %stats);
 # the '' might be required (i.e. no ()). why??
 use Gimp ();
 use Gimp::Net ();
@@ -56,47 +55,15 @@ sub slog {
   print time(),": ",@_,"\n";
 }
 
-# which objects are dynamic and mustn't be destroyed at will
-%object_dynamic = (
-	'Gimp::Tile'		=>	1,
-	'Gimp::PixelRgn'	=>	1,
-	'Gimp::GDrawable'	=>	1,
-);
-
-$object_uid=0;
-
-# convert objects to, well... networkable objects
-sub deobjectify {
-   my(@args)=@_;
-   for(@args) {
-      if($object_dynamic{ref $_}) {
-         $objects{++$object_uid}=$_;
-         $_=bless \(my $x=$object_uid),ref $_;
-      }
-   }
-   @args;
-}
-
-# make real objects again
-sub objectify {
-   my(@args)=@_;
-   for(@args) {
-      if($object_dynamic{ref $_}) {
-         $_=$objects{$$_};
-      }
-   }
-   @args;
-}
-
 sub destroy_objects {
-   delete @objects{map $$_,@_};
+   Gimp::Net::destroy_objects(@_);
 }
 
 # this is hardcoded into handle_request!
 sub reply {
-  my $fh=shift;
-  my $data=Gimp::Net::args2net(0,@_);
-  print $fh pack("N",length($data)).$data;
+   my $fh=shift;
+   my $data=Gimp::Net::args2net(0,@_);
+   print $fh pack("N",length($data)).$data;
 }
 
 sub handle_request($) {
@@ -121,20 +88,20 @@ sub handle_request($) {
       if($req eq "EXEC") {
          no strict 'refs';
          ($req,@args)=Gimp::Net::net2args(1,$data);
-         @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
+         @args=eval { Gimp->$req(@args) };
          $data=Gimp::Net::args2net(1,$@,@args);
          print $fh pack("N",length($data)).$data;
       } elsif ($req eq "TEST") {
          no strict 'refs';
          print $fh (defined(*{"Gimp::Lib::$data"}{CODE}) || Gimp::_gimp_procedure_available($data)) ? "1" : "0";
       } elsif ($req eq "DTRY") {
-         destroy_objects Gimp::Net::net2args(0,$data);
+         Gimp::Net::destroy_objects Gimp::Net::net2args 0,$data;
       } elsif($req eq "TRCE") {
          no strict 'refs';
-         ($trace_level,$req,@args)=Gimp::Net::net2args(1,$data);
+         ($trace_level,$req,@args)=Gimp::Net::net2args 1,$data;
          Gimp::set_trace($trace_level);
          $trace_res="";
-         @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
+         @args=eval { Gimp->$req(@args) };
          $data=Gimp::Net::args2net(1,$trace_res,$@,@args);
          print $fh pack("N",length($data)).$data;
          Gimp::set_trace(0);
@@ -283,6 +250,7 @@ sub extension_perl_server {
      push(@r,"AUTH") if $auth;
      reply $fh,@r;
      vec($rm,fileno($fh),1)=1;
+     $stats{fileno($fh)}=[0,time];
   }
 
   while(!$server_quit) {
@@ -302,8 +270,10 @@ sub extension_perl_server {
       for $f (keys(%handles)) {
         if(vec($r,$f,1)) {
           $fh=$handles{$f};
-          unless(handle_request($fh)) {
-            slog "closing connection ",$f;
+          if(handle_request($fh)) {
+            $stats{$f}[0]++;
+          } else {
+             slog "closing connection ",$f," ($stats{$f}[0] requests in ",time-$stats{$f}[1]," seconds)";
             if ($exclusive) {
                $rm = $saved_rm;
                $exclusive = 0;

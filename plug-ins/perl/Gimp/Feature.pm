@@ -85,6 +85,7 @@ sub present {
          MacOS		=> 1,
          MSWin32	=> 1,
          os2		=> 1,
+         dos		=> 1,
          VMS		=> 1,
        }->{$^O};
    } elsif ($_ eq "never") {

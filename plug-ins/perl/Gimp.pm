@@ -5,7 +5,7 @@ use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
-            @gimp_gui_functions $function $basename
+            @gimp_gui_functions $function $basename $spawn_opts
             $in_quit $in_run $in_net $in_init $in_query $no_SIG
             $help $verbose $host);
 use subs qw(init end lock unlock canonicalize_color);
@@ -120,6 +120,8 @@ sub import($;@) {
          push(@export,@_param);
       } elsif (/^interface=(\S+)$/) {
          croak "interface=... tag is no longer supported\n";
+      } elsif ($_=~/spawn_options=(\S+)/) {
+         $spawn_opts = $1;
       } elsif ($_ ne "") {
          push(@export,$_);
       } elsif ($_ eq "") {
@@ -201,6 +203,8 @@ sub canonicalize_colour {
 *canonicalize_color = \&canonicalize_colour;
 
 ($basename = $0) =~ s/^.*[\\\/]//;
+
+$spawn_opts = "";
 
 # extra check for Gimp::Feature::import
 $in_query=0 unless defined $in_query;	# perl -w is SOOO braindamaged
@@ -574,6 +578,10 @@ Import PARAM_* constants (PARAM_INT32, PARAM_STRING etc.) only.
 =item :consts
 
 All constants from gimpenums.h (BG_IMAGE_FILL, RUN_NONINTERACTIVE, NORMAL_MODE, PARAM_INT32 etc.).
+
+=item spawn_options=I<options>
+
+Set default spawn options to I<options>, see L<Gimp::Net>.
 
 =back
 

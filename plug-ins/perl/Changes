@@ -1,13 +1,18 @@
 Revision history for Gimp-Perl extension.
 
-1.09
+1.09 Fri May 21 14:12:02 CEST 1999
+        - added gimpdoc, a simple man-like help viewer.
 	- corrected PDL version check to work with version 2.001.
-        - new file Net.xs, containing protocol serializer
+        - new file Net.xs, containing protocol serializer.
         - new, faster and leaner protocol (bumped protocol version number).
         - added SvPV_nolen to ppport.h and made use of it everywhere.
         - renamed nolib => Module.
         - streamlined warning messages as not to scare the people away.
         - fixed a bug in check_for_typoe (correct TRUE and FALSE).
+        - zero-copy piddle support should generally work now. Tile
+          functions and network support is still missing, but...
+        - experimental enhancements to the spawn/ hosttype.
+        - Gimp::Feature no longer counts dos as unix-like.
 
 1.089 Tue May 18 19:55:25 CEST 1999
 	- added colourtoalpha.
@@ -21,7 +26,7 @@ Revision history for Gimp-Perl extension.
         - re-added PARASITE_*-constants (including UNDOABLE variants).
         - temporarily disabled the module for political reasons.
         - made my first attempt at implementing XS-PDL support.
-        - transform obnjects ids of -1 into undef and vice versa.
+        - transform objects ids of -1 into undef and vice versa.
         - Gimp::Fu did not properly supply a default value for PF_COLOUR.
 
 1.083 Wed May 12 03:36:10 CEST 1999

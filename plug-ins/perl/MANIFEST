@@ -13,6 +13,7 @@ Gimp.pm
 Gimp.xs
 scm2perl
 scm2scm
+gimpdoc
 t/load.t
 t/loadlib.t
 t/run.t
