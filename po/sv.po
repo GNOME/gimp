@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2004-01-16 10:55+0900\n"
+"POT-Creation-Date: 2004-01-24 21:07+0900\n"
+"PO-Revision-Date: 2004-01-24 21:00+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr ""
 "användes.\n"
 "Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
-#: app/app_procs.c:269
+#: app/app_procs.c:267
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Öppnande av \"%s\" misslyckades: %s"
@@ -73,34 +73,34 @@ msgstr ""
 "Användning: %s [flagga ...] [fil ...]\n"
 "\n"
 
-#: app/main.c:507
+#: app/main.c:508
 msgid "Options:\n"
 msgstr "Alternativ:\n"
 
-#: app/main.c:508
+#: app/main.c:509
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Skriv ut denna hjälptext.\n"
 
-#: app/main.c:509
+#: app/main.c:510
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Skriv ut versionsinformation.\n"
 
-#: app/main.c:510
+#: app/main.c:511
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:511
+#: app/main.c:512
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Använd inte delat minne mellan GIMP och tillägg.\n"
 
-#: app/main.c:512
+#: app/main.c:513
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
 msgstr "  --no-cpu-accel           Använd inte särskilda CPU-fartökningar.\n"
 
-#: app/main.c:513
+#: app/main.c:514
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -108,45 +108,45 @@ msgstr ""
 "  -d, --no-data            Läs in inte in penslar, färgskalor, färgpaletter, "
 "mönster.\n"
 
-#: app/main.c:514
+#: app/main.c:515
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
 msgstr "  -s, --no-fonts           Läs inte in några typsnitt.\n"
 
-#: app/main.c:515
+#: app/main.c:516
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Kör utan användargränssnitt.\n"
 
-#: app/main.c:516
+#: app/main.c:517
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Använd en speciell X-display.\n"
 
-#: app/main.c:517
+#: app/main.c:518
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Visa inte startfönstret.\n"
 
-#: app/main.c:518
+#: app/main.c:519
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Visa ingen bild i startfönstret.\n"
 
-#: app/main.c:519
+#: app/main.c:520
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
 msgstr "  --session <namn>         Använd en alternativ sessionrc-fil.\n"
 
-#: app/main.c:520
+#: app/main.c:521
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Använd en alternativ gimprc-fil.\n"
 
-#: app/main.c:521
+#: app/main.c:522
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Använd en alternativ system-gimprc-fil.\n"
 
-#: app/main.c:522
+#: app/main.c:523
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Skriv ut en gimprs med standardinställningar.\n"
 
-#: app/main.c:523
+#: app/main.c:524
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -154,14 +154,14 @@ msgstr ""
 "  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte ett "
 "separat dialogfönster.\n"
 
-#: app/main.c:524
+#: app/main.c:525
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Aktivera icke ödesdiger signalhanterare för\n"
 "                           felsökning.\n"
 
-#: app/main.c:525
+#: app/main.c:526
 msgid ""
 "  --stack-trace-mode <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -170,7 +170,7 @@ msgstr ""
 "                           Felsökningsläge för ödesdigra signaler.\n"
 "\n"
 
-#: app/main.c:527
+#: app/main.c:528
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
@@ -178,11 +178,11 @@ msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Anpassat läge för proceduraldatabas.\n"
 
-#: app/main.c:529
+#: app/main.c:530
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <kommandon>  Kör kommandon i flerjobbsläge.\n"
 
-#: app/main.c:549
+#: app/main.c:550
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
@@ -236,17 +236,17 @@ msgid "Value"
 msgstr "Värde"
 
 #: app/base/base-enums.c:76 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:302
+#: app/tools/gimpcolorbalancetool.c:304
 msgid "Red"
 msgstr "Röd"
 
 #: app/base/base-enums.c:77 app/core/core-enums.c:99
-#: app/tools/gimpcolorbalancetool.c:309
+#: app/tools/gimpcolorbalancetool.c:311
 msgid "Green"
 msgstr "Grön"
 
 #: app/base/base-enums.c:78 app/core/core-enums.c:100
-#: app/tools/gimpcolorbalancetool.c:316
+#: app/tools/gimpcolorbalancetool.c:318
 msgid "Blue"
 msgstr "Blå"
 
@@ -322,16 +322,16 @@ msgstr "Kan inte expandera ${%s}"
 #: app/core/gimpbrush.c:414 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:353 app/core/gimpgradient.c:356
 #: app/core/gimppalette.c:379 app/core/gimppattern.c:344
-#: app/tools/gimpcurvestool.c:1319 app/tools/gimplevelstool.c:1494
+#: app/tools/gimpcurvestool.c:1321 app/tools/gimplevelstool.c:1497
 #: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunde inte öppna \"%s\" för läsning: %s"
 
-#: app/config/gimpconfig-utils.c:481 app/config/gimpconfigwriter.c:118
+#: app/config/gimpconfig-utils.c:481 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:509
 #: app/core/gimpgradient.c:595 app/core/gimppalette.c:590 app/gui/themes.c:238
-#: app/tools/gimpcurvestool.c:1318 app/tools/gimplevelstool.c:1493
+#: app/tools/gimpcurvestool.c:1320 app/tools/gimplevelstool.c:1496
 #: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -357,12 +357,12 @@ msgstr ""
 "Ett fel uppstod vid tolkningen av din fil \"%s\". Standardvärden kommer att "
 "användas. En säkerhetskopia av din konfiguration har skapats vid \"%s\"."
 
-#: app/config/gimpconfigwriter.c:105
+#: app/config/gimpconfigwriter.c:107
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Misslyckades med att skapa temporär fil för \"%s\": %s"
 
-#: app/config/gimpconfigwriter.c:566
+#: app/config/gimpconfigwriter.c:568
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -371,7 +371,7 @@ msgstr ""
 "Fel vid skrivande till temporär fil för \"%s\": %s\n"
 "Originalfilen har inte rörts."
 
-#: app/config/gimpconfigwriter.c:573
+#: app/config/gimpconfigwriter.c:576
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -380,12 +380,12 @@ msgstr ""
 "Fel vid skrivning till temporär fil för \"%s\": %s\n"
 "Ingen fil har skapats."
 
-#: app/config/gimpconfigwriter.c:583
+#: app/config/gimpconfigwriter.c:587
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fel vid skrivande till \"%s\": %s"
 
-#: app/config/gimpconfigwriter.c:600
+#: app/config/gimpconfigwriter.c:605
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Kunde inte skapa \"%s\": %s"
@@ -1210,7 +1210,7 @@ msgid "Guide"
 msgstr "Hjälplinje"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#: app/core/gimpchannel.c:1597 app/core/gimpselection.c:565
+#: app/core/gimpchannel.c:1618 app/core/gimpselection.c:566
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
@@ -1252,15 +1252,15 @@ msgstr "Lägg till lagermask"
 msgid "Apply Layer Mask"
 msgstr "Applicera lagermask"
 
-#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:212
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:231
 msgid "Floating Selection to Layer"
 msgstr "Flytande markering till lager"
 
-#: app/core/core-enums.c:604 app/core/gimpselection.c:821
+#: app/core/core-enums.c:604 app/core/gimpselection.c:822
 msgid "Float Selection"
 msgstr "Flytande markering"
 
-#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:122
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:123
 msgid "Anchor Floating Selection"
 msgstr "Ankra flytande markering"
 
@@ -1274,7 +1274,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:638
-#: app/tools/gimptexttool.c:112 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:113 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1288,7 +1288,7 @@ msgstr "Transformera"
 msgid "Paint"
 msgstr "Måla"
 
-#: app/core/core-enums.c:611 app/core/core-enums.c:653 app/core/gimpitem.c:897
+#: app/core/core-enums.c:611 app/core/core-enums.c:653 app/core/gimpitem.c:898
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
@@ -1591,80 +1591,80 @@ msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Okänd GIMP penselversion."
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Filen är trasig."
 
-#: app/core/gimpchannel.c:234 app/pdb/internal_procs.c:86
+#: app/core/gimpchannel.c:238 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Kanal"
 
-#: app/core/gimpchannel.c:235
+#: app/core/gimpchannel.c:239
 msgid "Rename Channel"
 msgstr "Byt namn på kanal"
 
-#: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:251
+#: app/core/gimpchannel.c:259 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1215
 msgid "Move Channel"
 msgstr "Flytta kanal"
 
-#: app/core/gimpchannel.c:256
+#: app/core/gimpchannel.c:260
 msgid "Feather Channel"
 msgstr "Fjädra kanal"
 
-#: app/core/gimpchannel.c:257
+#: app/core/gimpchannel.c:261
 msgid "Sharpen Channel"
 msgstr "Gör kanalen skarpare"
 
-#: app/core/gimpchannel.c:258
+#: app/core/gimpchannel.c:262
 msgid "Clear Channel"
 msgstr "Rensa kanal"
 
-#: app/core/gimpchannel.c:259
+#: app/core/gimpchannel.c:263
 msgid "Fill Channel"
 msgstr "Fyll kanal"
 
-#: app/core/gimpchannel.c:260
+#: app/core/gimpchannel.c:264
 msgid "Invert Channel"
 msgstr "Invertera kanal"
 
-#: app/core/gimpchannel.c:261
+#: app/core/gimpchannel.c:265
 msgid "Border Channel"
 msgstr "Kantmarkera kanal"
 
-#: app/core/gimpchannel.c:262
+#: app/core/gimpchannel.c:266
 msgid "Grow Channel"
 msgstr "Öka kanal"
 
-#: app/core/gimpchannel.c:263
+#: app/core/gimpchannel.c:267
 msgid "Shrink Channel"
 msgstr "Minska kanal"
 
-#: app/core/gimpchannel.c:465
+#: app/core/gimpchannel.c:469
 msgid "Scale Channel"
 msgstr "Skala kanal"
 
-#: app/core/gimpchannel.c:492
+#: app/core/gimpchannel.c:496
 msgid "Resize Channel"
 msgstr "Ändra storlek på kanal"
 
-#: app/core/gimpchannel.c:521
+#: app/core/gimpchannel.c:525
 msgid "Flip Channel"
 msgstr "Vänd kanal"
 
-#: app/core/gimpchannel.c:548
+#: app/core/gimpchannel.c:552
 msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
-#: app/core/gimpchannel.c:578 app/core/gimpdrawable-transform.c:1108
+#: app/core/gimpchannel.c:582 app/core/gimpdrawable-transform.c:1108
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
-#: app/core/gimpchannel.c:618
+#: app/core/gimpchannel.c:616
 msgid "Cannot stroke empty channel."
 msgstr "Kan inte stryka tom kanal."
 
-#: app/core/gimpchannel.c:1478
+#: app/core/gimpchannel.c:1499
 msgid "Set Channel Color"
 msgstr "Sätt kanalfärg"
 
-#: app/core/gimpchannel.c:1525
+#: app/core/gimpchannel.c:1546
 msgid "Set Channel Opacity"
 msgstr "Sätt kanalopacitet"
 
@@ -2097,19 +2097,19 @@ msgstr "%d lager"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kunde inte öppna miniatyrbild \"%s\": %s"
 
-#: app/core/gimpitem.c:907
+#: app/core/gimpitem.c:908
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: app/core/gimpitem.c:946 app/core/gimpitem.c:953
+#: app/core/gimpitem.c:947 app/core/gimpitem.c:954
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
-#: app/core/gimplayer-floating-sel.c:115
+#: app/core/gimplayer-floating-sel.c:116
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Kan inte ankra det här lagret, för det är inte en flytande markering."
 
-#: app/core/gimplayer-floating-sel.c:193
+#: app/core/gimplayer-floating-sel.c:212
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -2262,41 +2262,41 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ogiltig UTF_8-sträng i mönsterfilen \"%s\"."
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
+#: app/core/gimpselection.c:197 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1127 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Flytta markering"
 
-#: app/core/gimpselection.c:197 app/gui/select-commands.c:151
+#: app/core/gimpselection.c:198 app/gui/select-commands.c:151
 msgid "Feather Selection"
 msgstr "Fjädra markering"
 
-#: app/core/gimpselection.c:198
+#: app/core/gimpselection.c:199
 msgid "Sharpen Selection"
 msgstr "Gör markering skarpare"
 
-#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:176
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:176
 msgid "Select None"
 msgstr "Markera inget"
 
-#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:168
+#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:168
 msgid "Select All"
 msgstr "Markera allt"
 
-#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:184
+#: app/core/gimpselection.c:202 app/widgets/gimpselectioneditor.c:184
 msgid "Invert Selection"
 msgstr "Omvänd markering"
 
-#: app/core/gimpselection.c:202 app/gui/select-commands.c:244
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:244
 msgid "Border Selection"
 msgstr "Kantmarkering"
 
-#: app/core/gimpselection.c:203 app/gui/select-commands.c:221
+#: app/core/gimpselection.c:204 app/gui/select-commands.c:221
 msgid "Grow Selection"
 msgstr "Öka markering"
 
-#: app/core/gimpselection.c:204 app/gui/select-commands.c:187
+#: app/core/gimpselection.c:205 app/gui/select-commands.c:187
 msgid "Shrink Selection"
 msgstr "Krymp markering"
 
@@ -2308,23 +2308,23 @@ msgstr "Ingen markering att stryka."
 msgid "Stroke Selection"
 msgstr "Stryk markering"
 
-#: app/core/gimpselection.c:597 app/gui/channels-commands.c:206
+#: app/core/gimpselection.c:598 app/gui/channels-commands.c:206
 #: app/pdb/selection_cmds.c:917 app/pdb/selection_cmds.c:1035
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Kanal till markering"
 
-#: app/core/gimpselection.c:669
+#: app/core/gimpselection.c:670
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Kunde inte kopiera eller klippa ut eftersom den markerade regionen är tom."
 
-#: app/core/gimpselection.c:814
+#: app/core/gimpselection.c:815
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Kan inte göra markeringen flytande eftersom den markerade regionen är tom."
 
-#: app/core/gimpselection.c:837 app/gui/layers-commands.c:959
+#: app/core/gimpselection.c:838 app/gui/layers-commands.c:959
 msgid "Floating Selection"
 msgstr "Flytande markering"
 
@@ -3306,7 +3306,7 @@ msgstr ""
 "aktuell"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:254 app/tools/gimpimagemaptool.c:236
+#: app/gui/file-open-dialog.c:254 app/tools/gimpimagemaptool.c:234
 msgid "_Preview"
 msgstr "_Förhandsgranskning"
 
@@ -4671,7 +4671,7 @@ msgid "/_Delete Image"
 msgstr "/_Ta bort bild"
 
 #. General
-#: app/gui/info-dialog.c:355 app/gui/preferences-dialog.c:1307
+#: app/gui/info-dialog.c:366 app/gui/preferences-dialog.c:1307
 #: app/gui/preferences-dialog.c:1419
 msgid "General"
 msgstr "Generellt"
@@ -5020,7 +5020,6 @@ msgid "Documents Menu"
 msgstr "Dokumentmeny"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
 msgstr "Mallmeny"
 
@@ -5328,21 +5327,21 @@ msgstr "/_Ta bort mönster..."
 msgid "/_Refresh Patterns"
 msgstr "/_Uppdatera mönster"
 
-#: app/gui/plug-in-menus.c:343
+#: app/gui/plug-in-menus.c:342
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa \"%s\""
 
-#: app/gui/plug-in-menus.c:344
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Å_tervisa \"%s\""
 
-#: app/gui/plug-in-menus.c:370
+#: app/gui/plug-in-menus.c:369
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: app/gui/plug-in-menus.c:373
+#: app/gui/plug-in-menus.c:372
 msgid "Re-Show Last"
 msgstr "Återvisa senaste"
 
@@ -6081,6 +6080,8 @@ msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
+"Lager med indexerad färg skalas alltid utan interpolation. Den valda "
+"interpolationstypen kommer bara påverka skalning av kanaler och masker."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6759,15 +6760,10 @@ msgstr "Avbryter installation..."
 msgid "Creating folder '%s'..."
 msgstr "Skapar mappen \"%s\"..."
 
-#: app/gui/user-install-dialog.c:1070
+#: app/gui/user-install-dialog.c:1069 app/gui/user-install-dialog.c:1102
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan inte skapa mappen \"%s\": %s"
-
-#: app/gui/user-install-dialog.c:1103
-#, c-format
-msgid "Cannot create folder: %s"
-msgstr "Kan inte skapa mapp: %s"
 
 #: app/gui/user-install-dialog.c:1115
 #, c-format
@@ -6830,7 +6826,7 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibrera"
 
-#: app/gui/vectors-commands.c:178 app/pdb/paths_cmds.c:1134
+#: app/gui/vectors-commands.c:178 app/pdb/paths_cmds.c:1135
 #: app/tools/gimpvectortool.c:1815 app/widgets/gimpvectorstreeview.c:285
 msgid "Path to Selection"
 msgstr "Slinga till markering"
@@ -7016,7 +7012,7 @@ msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
 #: app/pdb/color_cmds.c:266 app/pdb/color_cmds.c:384
-#: app/tools/gimplevelstool.c:171
+#: app/tools/gimplevelstool.c:172
 msgid "Levels"
 msgstr "Nivåer"
 
@@ -7196,7 +7192,7 @@ msgstr "Temporär procedur"
 msgid "Free Select"
 msgstr "Fri markering"
 
-#: app/plug-in/plug-in.c:687
+#: app/plug-in/plug-in.c:688
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7233,20 +7229,20 @@ msgid "Querying plug-in: '%s'\n"
 msgstr "Undersöker insticksmodul: \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:292
+#: app/plug-in/plug-ins.c:293
 msgid "Initializing Plug-ins"
 msgstr "Initierar insticksmoduler"
 
-#: app/plug-in/plug-ins.c:308
+#: app/plug-in/plug-ins.c:309
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Initierar insticksmodul: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:337
+#: app/plug-in/plug-ins.c:339
 msgid "Starting Extensions"
 msgstr "Startar tillägg"
 
-#: app/plug-in/plug-ins.c:346
+#: app/plug-in/plug-ins.c:348
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Startar tillägg: \"%s\"\n"
@@ -7285,7 +7281,7 @@ msgstr ""
 "Flygande bäckasiner söka\n"
 "strax hwila på mjuka tuvor."
 
-#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:327
+#: app/text/gimptext-compat.c:104 app/tools/gimptexttool.c:335
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -7391,7 +7387,7 @@ msgstr "Fixt aspektförhållande"
 msgid "Transform Selection"
 msgstr "Transformera urval"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:524
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:515
 msgid "Transform Path"
 msgstr "Transformera slinga"
 
@@ -7506,11 +7502,11 @@ msgstr "Justera ljusstyrka och kontrast"
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade lager."
 
-#: app/tools/gimpbrightnesscontrasttool.c:235
+#: app/tools/gimpbrightnesscontrasttool.c:237
 msgid "_Brightness:"
 msgstr "_Ljusstyrka:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:250
+#: app/tools/gimpbrightnesscontrasttool.c:252
 msgid "Con_trast:"
 msgstr "Kon_trast:"
 
@@ -7598,31 +7594,31 @@ msgstr "Justera färgbalans"
 msgid "Color balance operates only on RGB color layers."
 msgstr "Färgbalans fungerar endast på RGB-lager."
 
-#: app/tools/gimpcolorbalancetool.c:275
+#: app/tools/gimpcolorbalancetool.c:277
 msgid "Select Range to Modify"
 msgstr "Välj intervall att modifiera"
 
-#: app/tools/gimpcolorbalancetool.c:284
+#: app/tools/gimpcolorbalancetool.c:286
 msgid "Modify Selected Range's Color Levels"
 msgstr "Modifiera markerade intervallets färgnivåer"
 
-#: app/tools/gimpcolorbalancetool.c:302
+#: app/tools/gimpcolorbalancetool.c:304
 msgid "Cyan"
 msgstr "Cyan"
 
-#: app/tools/gimpcolorbalancetool.c:309
+#: app/tools/gimpcolorbalancetool.c:311
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:316
+#: app/tools/gimpcolorbalancetool.c:318
 msgid "Yellow"
 msgstr "Gul"
 
-#: app/tools/gimpcolorbalancetool.c:326
+#: app/tools/gimpcolorbalancetool.c:328
 msgid "R_eset Range"
 msgstr "_Återställ intervall"
 
-#: app/tools/gimpcolorbalancetool.c:335
+#: app/tools/gimpcolorbalancetool.c:337
 msgid "Preserve _Luminosity"
 msgstr "Behåll _luminans"
 
@@ -7646,19 +7642,19 @@ msgstr "Färglägg bilden"
 msgid "Colorize operates only on RGB color layers."
 msgstr "Färgläggning fungerar endast på RGB-lager."
 
-#: app/tools/gimpcolorizetool.c:234
+#: app/tools/gimpcolorizetool.c:236
 msgid "Select Color"
 msgstr "Välj färg"
 
-#: app/tools/gimpcolorizetool.c:253 app/tools/gimphuesaturationtool.c:362
+#: app/tools/gimpcolorizetool.c:255 app/tools/gimphuesaturationtool.c:364
 msgid "_Hue:"
 msgstr "_Nyans:"
 
-#: app/tools/gimpcolorizetool.c:267 app/tools/gimphuesaturationtool.c:390
+#: app/tools/gimpcolorizetool.c:269 app/tools/gimphuesaturationtool.c:392
 msgid "_Saturation:"
 msgstr "_Mättnad:"
 
-#: app/tools/gimpcolorizetool.c:281 app/tools/gimphuesaturationtool.c:376
+#: app/tools/gimpcolorizetool.c:283 app/tools/gimphuesaturationtool.c:378
 msgid "_Lightness:"
 msgstr "_Ljusstyrka:"
 
@@ -7780,37 +7776,37 @@ msgstr "Justera färgkurvor"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kurvor för indexerade lager kan inte justeras."
 
-#: app/tools/gimpcurvestool.c:507 app/tools/gimplevelstool.c:436
+#: app/tools/gimpcurvestool.c:509 app/tools/gimplevelstool.c:439
 msgid "R_eset Channel"
 msgstr "_Återställ kanal"
 
-#: app/tools/gimpcurvestool.c:516
+#: app/tools/gimpcurvestool.c:518
 msgid "Modify Curves for Channel:"
 msgstr "Modifiera kurvor för kanal:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:665
+#: app/tools/gimpcurvestool.c:595 app/tools/gimplevelstool.c:668
 msgid "All Channels"
 msgstr "Alla kanaler"
 
-#: app/tools/gimpcurvestool.c:607
+#: app/tools/gimpcurvestool.c:609
 msgid "Read curves settings from file"
 msgstr "Läs kurvinställningar från fil"
 
-#: app/tools/gimpcurvestool.c:617
+#: app/tools/gimpcurvestool.c:619
 msgid "Save curves settings to file"
 msgstr "Spara kurvinställningar till fil"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:625
+#: app/tools/gimpcurvestool.c:627
 msgid "Curve Type"
 msgstr "Kurvtyp"
 
-#: app/tools/gimpcurvestool.c:1243
+#: app/tools/gimpcurvestool.c:1245
 msgid "Load Curves"
 msgstr "Läs in kurvor"
 
-#: app/tools/gimpcurvestool.c:1262
+#: app/tools/gimpcurvestool.c:1264
 msgid "Save Curves"
 msgstr "Spara kurvor"
 
@@ -7837,7 +7833,7 @@ msgid "Exposure:"
 msgstr "Exponering:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1167 app/vectors/gimpvectors.c:352
+#: app/tools/gimpeditselectiontool.c:1167 app/vectors/gimpvectors.c:353
 msgid "Move Path"
 msgstr "Flytta slinga"
 
@@ -7932,47 +7928,47 @@ msgstr "Justera nyans / ljusstyrka / mättnad"
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Nyans-Mättnad fungerar endast på RGB-lager."
 
-#: app/tools/gimphuesaturationtool.c:262
+#: app/tools/gimphuesaturationtool.c:264
 msgid "_Master"
 msgstr "_Huvud"
 
-#: app/tools/gimphuesaturationtool.c:263
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:264
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:265
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:266
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:270
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:273
 msgid "Select Primary Color to Modify"
 msgstr "Välj primär färg att modifiera"
 
-#: app/tools/gimphuesaturationtool.c:300
+#: app/tools/gimphuesaturationtool.c:302
 msgid "Modify all colors"
 msgstr "Modifiera alla färger"
 
-#: app/tools/gimphuesaturationtool.c:343
+#: app/tools/gimphuesaturationtool.c:345
 msgid "Modify Selected Color"
 msgstr "Modifiera markerad färg"
 
-#: app/tools/gimphuesaturationtool.c:406
+#: app/tools/gimphuesaturationtool.c:408
 msgid "R_eset Color"
 msgstr "_Återställ färg"
 
@@ -8036,73 +8032,73 @@ msgstr "Markera former i bilden"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Verktyg/Markeringsverktyg/_Intelligent sax"
 
-#: app/tools/gimplevelstool.c:172
+#: app/tools/gimplevelstool.c:173
 msgid "Adjust color levels"
 msgstr "Justera färgnivåer"
 
-#: app/tools/gimplevelstool.c:173
+#: app/tools/gimplevelstool.c:174
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Verktyg/Färgverktyg/_Nivåer..."
 
-#: app/tools/gimplevelstool.c:241
+#: app/tools/gimplevelstool.c:242
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
-#: app/tools/gimplevelstool.c:292
+#: app/tools/gimplevelstool.c:293
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Kan inte justera nivåer för indexerade lager."
 
-#: app/tools/gimplevelstool.c:358
+#: app/tools/gimplevelstool.c:361
 msgid "Pick Black Point"
 msgstr "Välj svart punkt"
 
-#: app/tools/gimplevelstool.c:362
+#: app/tools/gimplevelstool.c:365
 msgid "Pick Gray Point"
 msgstr "Välj grå punkt"
 
-#: app/tools/gimplevelstool.c:366
+#: app/tools/gimplevelstool.c:369
 msgid "Pick White Point"
 msgstr "Välj vit punkt"
 
-#: app/tools/gimplevelstool.c:422
+#: app/tools/gimplevelstool.c:425
 msgid "Modify Levels for Channel:"
 msgstr "Modifiera nivåer för kanal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:446
+#: app/tools/gimplevelstool.c:449
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:554
+#: app/tools/gimplevelstool.c:557
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:584
+#: app/tools/gimplevelstool.c:587
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:683
+#: app/tools/gimplevelstool.c:686
 msgid "Read levels settings from file"
 msgstr "Läs nivåinställningar från fil"
 
-#: app/tools/gimplevelstool.c:693
+#: app/tools/gimplevelstool.c:696
 msgid "Save levels settings to file"
 msgstr "Spara nivåinställningar till fil"
 
-#: app/tools/gimplevelstool.c:705
+#: app/tools/gimplevelstool.c:708
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:707
+#: app/tools/gimplevelstool.c:710
 msgid "Adjust levels automatically"
 msgstr "Justera nivåer automatiskt"
 
-#: app/tools/gimplevelstool.c:1418
+#: app/tools/gimplevelstool.c:1421
 msgid "Load Levels"
 msgstr "Läs in nivåer"
 
-#: app/tools/gimplevelstool.c:1437
+#: app/tools/gimplevelstool.c:1440
 msgid "Save Levels"
 msgstr "Spara nivåer"
 
@@ -8290,7 +8286,7 @@ msgstr "Posterisera (reducera antalet färger)"
 msgid "Posterize does not operate on indexed layers."
 msgstr "Kan inte använda posterisering på indexerade lager."
 
-#: app/tools/gimpposterizetool.c:222
+#: app/tools/gimpposterizetool.c:224
 msgid "Posterize _Levels:"
 msgstr "Posterisera _nivåer:"
 
@@ -8478,15 +8474,15 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Skapa väg från text"
 
-#: app/tools/gimptexttool.c:113
+#: app/tools/gimptexttool.c:114
 msgid "Add text to the image"
 msgstr "Skriv text i bilden"
 
-#: app/tools/gimptexttool.c:114
+#: app/tools/gimptexttool.c:115
 msgid "/Tools/Te_xt"
 msgstr "/Verktyg/Te_xt"
 
-#: app/tools/gimptexttool.c:415
+#: app/tools/gimptexttool.c:433
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
@@ -8506,7 +8502,7 @@ msgstr "Applicera tröskelvärde"
 msgid "Threshold does not operate on indexed layers."
 msgstr "Kan inte använda tröskelvärde på indexerade lager."
 
-#: app/tools/gimpthresholdtool.c:256
+#: app/tools/gimpthresholdtool.c:258
 msgid "Threshold Range:"
 msgstr "Tröskelvärdets område:"
 
@@ -8557,7 +8553,7 @@ msgstr "Behåll bredd %s"
 msgid "Transforming..."
 msgstr "Transformerar..."
 
-#: app/tools/gimptransformtool.c:338
+#: app/tools/gimptransformtool.c:336
 msgid "Transformations do not work on layers that contain layer masks."
 msgstr "Transformationer fungerar inte på lager som innehåller lagermasker."
 
@@ -8718,31 +8714,31 @@ msgstr "Klicka för att göra noden kantig."
 msgid "There is no active layer or channel to stroke to"
 msgstr "Det finns inget aktivt lager eller kanal att stryka till"
 
-#: app/vectors/gimpvectors.c:221
+#: app/vectors/gimpvectors.c:224
 msgid "Path"
 msgstr "Slinga"
 
-#: app/vectors/gimpvectors.c:222
+#: app/vectors/gimpvectors.c:225
 msgid "Rename Path"
 msgstr "Byt namn på slinga"
 
-#: app/vectors/gimpvectors.c:381
+#: app/vectors/gimpvectors.c:380
 msgid "Scale Path"
 msgstr "Skala slinga"
 
-#: app/vectors/gimpvectors.c:415
+#: app/vectors/gimpvectors.c:412
 msgid "Resize Path"
 msgstr "Ändra storlek på slinga"
 
-#: app/vectors/gimpvectors.c:448
+#: app/vectors/gimpvectors.c:443
 msgid "Flip Path"
 msgstr "Vänd sling"
 
-#: app/vectors/gimpvectors.c:493
+#: app/vectors/gimpvectors.c:486
 msgid "Rotate Path"
 msgstr "Rotera slinga"
 
-#: app/vectors/gimpvectors.c:557
+#: app/vectors/gimpvectors.c:544
 msgid "Cannot stroke empty path."
 msgstr "Kan inte stryka tom väg."
 
@@ -8755,7 +8751,7 @@ msgstr "Importerad slinga"
 msgid "No paths found in '%s'"
 msgstr "Inga slingor funna i \"%s\""
 
-#: app/vectors/gimpvectors-import.c:293
+#: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
 msgstr "Inga slingor funna i bufferten"
 
@@ -9783,14 +9779,12 @@ msgid "View as Grid"
 msgstr "Visa som rutnät"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "Bildfönster"
+msgstr "Normalt fönster"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
-msgstr "Nytta"
+msgstr "Verktygsfönster"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
@@ -9834,6 +9828,9 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#~ msgid "Cannot create folder: %s"
+#~ msgstr "Kan inte skapa mapp: %s"
 
 #~ msgid "<Translators: insert your names here, separated by newline>"
 #~ msgstr ""
