@@ -1,7 +1,12 @@
 Revision history for Gimp-Perl extension.
 
+1.094
+	- finally(?) fixed the runmode confusion by making these constants
+          magic. Also hopefully fixed the error message.
 	- enable embedded pod sections in standard register arguments.
         - improved scm2perl ever so slightly.
+        - fixed xpm off-by-one bug in embedxpm (and added embedxpm).
+        - fixed off-by-one error in Gimp::Fu and exmaples/PDB.
 
 1.093 Tue Jun 15 21:48:48 CEST 1999
 	- possible workaround for Gimp::Util::gimp_layer_get_position.

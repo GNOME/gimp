@@ -1496,9 +1496,9 @@ gimp_call_procedure (proc_name, ...)
 		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
 		    &params, &return_vals) == TRUE)
 		  {
-		    int no_runmode = !nparams
-		                     || params[0].type != PARAM_INT32
-		                     || strcmp (params[0].name, "run_mode");
+		    int runmode = nparams
+		                  && params[0].type == PARAM_INT32
+		                  && !strcmp (params[0].name, "run_mode");
 		    
 		    g_free (proc_blurb);
 		    g_free (proc_help);
@@ -1506,121 +1506,109 @@ gimp_call_procedure (proc_name, ...)
 		    g_free (proc_copyright);
 		    g_free (proc_date);
 		    
-		    if (nparams)
-		      args = (GParam *) g_new0 (GParam, nparams);
-		    
-		    for(;items;)
-		      {
-		        j = 0;
-		        
-		        if (no_runmode || !SvROK (ST(0)))
-    		          for (i = 0; i < nparams && j < items-1; i++)
-		            {
-		              args[i].type = params[i].type;
-		              if (i == 0 && no_runmode == 2)
-		                args->data.d_int32 = RUN_NONINTERACTIVE;
-		              else if ((!SvROK(ST(j+1)) || i >= nparams-1 || !is_array (params[i+1].type))
-		                       && convert_sv2gimp (croak_str, &args[i], ST(j+1)))
-		                j++;
-		          
-		              if (croak_str [0])
-		                {
-		                  if (!no_runmode)
-		                    {
-		                      croak_str [0] = 0;
-		                      break;
-		                    }
-		                  
-		                  if (trace & TRACE_CALL)
-		                    {
-		                      dump_params (i, args, params);
-		                      trace_printf (" = [argument error]\n");
-		                    }
-		              
-		                  goto error;
-		                }
-		            }
-		        
-		        if (no_runmode || i == nparams)
-		          break;
-		        
-		        /* very costly, do better! */
-		        no_runmode = 2;
-		        destroy_params (args, nparams);
-		        args = (GParam *) g_new0 (GParam, nparams);
-		      }
-		    
-		    if (trace & TRACE_CALL)
-		      {
-		        dump_params (i, args, params);
-		        trace_printf (" = ");
-		      }
-    		    
-		    if (j != items-1 || i < nparams)
-		      {
-		        if (trace & TRACE_CALL)
-		          trace_printf ("[unfinished]\n");
-		        
-		        sprintf (croak_str, "%s arguments (%d) for function '%s'",
-		                 (j == items || i < nparams) ? "not enough" : "too many", (int)items-1, proc_name);
-    		        
-    		        if (nparams)
-    		          destroy_params (args, nparams);
-		      }
-		    else
-		      {
-	                values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
-	                
-    		        if (nparams)
-    		          destroy_params (args, nparams);
-    		    
-			if (trace & TRACE_CALL)
-			  {
-			    dump_params (nvalues-1, values+1, return_vals);
-			    trace_printf ("\n");
-			  }
-			
-	                if (values && values[0].type == PARAM_STATUS)
-	                  {
-	                    if (values[0].data.d_status == STATUS_EXECUTION_ERROR)
-	                      sprintf (croak_str, "%s: procedural database execution failed", proc_name);
-	                    else if (values[0].data.d_status == STATUS_CALLING_ERROR)
-	                      sprintf (croak_str, "%s: procedural database execution failed on invalid input arguments", proc_name);
-	                    else if (values[0].data.d_status == STATUS_SUCCESS)
-	                      {
-	                        EXTEND(SP, perl_paramdef_count (return_vals, nvalues-1));
-	                        PUTBACK;
-	                        for (i = 0; i < nvalues-1; i++)
-	                          {
-	                            if (i < nvalues-2 && is_array (values[i+2].type))
-	                              i++;
-	                            
-	                            push_gimp_sv (values+i+1, nvalues > 2+1);
-	                          }
-	                        
-	                        SPAGAIN;
-	                      }
-	                    else
-	                      sprintf (croak_str, "unsupported status code: %d\n", values[0].data.d_status);
-	                  }
-	                else
-	                  sprintf (croak_str, "gimp returned, well.. dunno how to interpret that...");
-		        
-	              }
-		    
-		    error:
-		    
-		    if (values)
-		      gimp_destroy_params (values, nreturn_vals);
-		    
-		    destroy_paramdefs (params, nparams);
-		    destroy_paramdefs (return_vals, nreturn_vals);
-		    
-		    if (croak_str[0])
-		      croak (croak_str);
-		  }
-		else
-		  croak ("gimp procedure '%s' not found", proc_name);
+                    if (nparams)
+                      args = (GParam *) g_new0 (GParam, nparams);
+
+                    for (i = 0, j = 1; i < nparams && j < items; i++)
+                      {
+                        args[i].type = params[i].type;
+                        if (i == 0 && runmode)
+                           {
+                             if (sv_isa (ST(j), "Gimp::run_mode"))
+                               {
+                                 args->data.d_int32 = SvIV(SvRV(ST(j)));
+                                 j++;
+                               }
+                             else
+                               args->data.d_int32 = RUN_NONINTERACTIVE;
+                           }
+                        else if ((!SvROK(ST(j)) || i >= nparams-1 || !is_array (params[i+1].type))
+                                 && convert_sv2gimp (croak_str, &args[i], ST(j)))
+                          j++;
+                    
+                        if (croak_str [0])
+                          {
+                            if (trace & TRACE_CALL)
+                              {
+                                dump_params (i, args, params);
+                                trace_printf (" = [argument error]\n");
+                              }
+                        
+                            goto error;
+                          }
+                      }
+                  
+                    if (trace & TRACE_CALL)
+                      {
+                        dump_params (i, args, params);
+                        trace_printf (" = ");
+                      }
+                    
+                    if (i < nparams || j < items)
+                      {
+                        if (trace & TRACE_CALL)
+                          trace_printf ("[unfinished]\n");
+                        
+                        sprintf (croak_str, "%s arguments for function '%s'",
+                                 i < nparams ? "not enough" : "too many", proc_name);
+                        
+                        if (nparams)
+                          destroy_params (args, nparams);
+                      }
+                    else
+                      {
+                        values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
+                        
+                        if (nparams)
+                          destroy_params (args, nparams);
+                    
+                        if (trace & TRACE_CALL)
+                          {
+                            dump_params (nvalues-1, values+1, return_vals);
+                            trace_printf ("\n");
+                          }
+                        
+                        if (values && values[0].type == PARAM_STATUS)
+                          {
+                            if (values[0].data.d_status == STATUS_EXECUTION_ERROR)
+                              sprintf (croak_str, "%s: procedural database execution failed", proc_name);
+                            else if (values[0].data.d_status == STATUS_CALLING_ERROR)
+                              sprintf (croak_str, "%s: procedural database execution failed on invalid input arguments", proc_name);
+                            else if (values[0].data.d_status == STATUS_SUCCESS)
+                              {
+                                EXTEND(SP, perl_paramdef_count (return_vals, nvalues-1));
+                                PUTBACK;
+                                for (i = 0; i < nvalues-1; i++)
+                                  {
+                                    if (i < nvalues-2 && is_array (values[i+2].type))
+                                      i++;
+                                    
+                                    push_gimp_sv (values+i+1, nvalues > 2+1);
+                                  }
+                                
+                                SPAGAIN;
+                              }
+                            else
+                              sprintf (croak_str, "unsupported status code: %d, fatal error\n", values[0].data.d_status);
+                          }
+                        else
+                          sprintf (croak_str, "gimp didn't return an execution status, fatal error");
+                        
+                      }
+                    
+                    error:
+                    
+                    if (values)
+                      gimp_destroy_params (values, nreturn_vals);
+                    
+                    destroy_paramdefs (params, nparams);
+                    destroy_paramdefs (return_vals, nreturn_vals);
+                    
+                    if (croak_str[0])
+                      croak (croak_str);
+                  }
+                else
+                  croak ("gimp procedure '%s' not found", proc_name);
 	}
 
 void

@@ -170,7 +170,6 @@ sub start_server {
               "--no-splash",
               @args,
               "-b",
-              "(extension-perl-server $args)",
               "(extension_perl_server $args)",
               "(gimp_quit 0)",
               "(gimp-quit 0)";

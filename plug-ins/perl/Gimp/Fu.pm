@@ -1159,7 +1159,7 @@ sub print_switches {
 }
 
 sub main {
-   $old_trace = Gimp::set_trace (0);
+   $old_trace = Gimp::set_trace (0);#d#
    if ($Gimp::help) {
       my $this=this_script;
       print <<EOF;
@@ -1184,7 +1184,7 @@ sub logo {
 
 sub logo_xpm {
    my $window=shift;
-   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($window->window,$window->style->black,
+   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($window->window,undef,
       #%XPM:logo%
       '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',
       '# c #C3C3C4', '$ c #252524', '% c #A5A5A4', '& c #646464', '* c #E4E4E4',
@@ -1223,7 +1223,8 @@ sub logo_xpm {
       '           )      &&+      _       %$..\'     >=.]>>)&^ ^..;   #~.${            ',
       '          ;-     @;];]    &-       ($..\'      \'~.....+ ^..;   #~.$-            ',
       '          \')    ]_& @     __       %{))#       >_@,;\'  >)+(   #+){             ',
-      '         &%               @;                                                   '
+      '         &%               @;                                                   ',
+      '        ,{_                                                                    '
       #%XPM%
    ))
 }

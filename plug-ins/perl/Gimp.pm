@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.093;
+$VERSION = 1.094;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -81,7 +81,7 @@ sub RADIAL              (){ 2} sub CONICAL_SYMMETRIC   (){ 4} sub SHAPEBURST_DIM
 sub SPIRAL_ANTICLOCKWISE(){10} sub SHAPEBURST_ANGULAR  (){ 6} sub SHAPEBURST_SPHERICAL(){ 7} sub ALPHA_LUT           (){ 4} sub GREEN_LUT           (){ 2}
 sub BLUE_LUT            (){ 3} sub VALUE_LUT           (){ 0} sub RED_LUT             (){ 1} sub HORIZONTAL_GUIDE    (){ 1} sub VERTICAL_GUIDE      (){ 2}
 sub OFFSET_BACKGROUND   (){ 0} sub OFFSET_TRANSPARENT  (){ 1} sub MESSAGE_BOX         (){ 0} sub ERROR_CONSOLE       (){ 2} sub CONSOLE             (){ 1}
-sub RUN_INTERACTIVE     (){ 0} sub RUN_WITH_LAST_VALS  (){ 2} sub RUN_NONINTERACTIVE  (){ 1} sub EXPAND_AS_NECESSARY (){ 0} sub CLIP_TO_BOTTOM_LAYER(){ 2}
+sub RUN_INTERACTIVE     (){bless \(my $x=0),'Gimp::run_mode'} sub RUN_WITH_LAST_VALS  (){bless \(my $x=2),'Gimp::run_mode'} sub RUN_NONINTERACTIVE  (){bless \(my $x=1),'Gimp::run_mode'} sub EXPAND_AS_NECESSARY (){ 0} sub CLIP_TO_BOTTOM_LAYER(){ 2}
 sub CLIP_TO_IMAGE       (){ 1} sub FLATTEN_IMAGE       (){ 3} sub REPEAT_NONE         (){ 0} sub REPEAT_SAWTOOTH     (){ 1} sub REPEAT_TRIANGULAR   (){ 2}
 sub BG_BUCKET_FILL      (){ 1} sub FG_BUCKET_FILL      (){ 0} sub PATTERN_BUCKET_FILL (){ 2}
 #ENUM_DEFS#
@@ -533,6 +533,13 @@ sub data($)		{ $_[0]->[2] }
 sub compare($$)		{ $_[0]->[0] eq $_[1]->[0] and
 			  $_[0]->[1] eq $_[1]->[1] and 
 			  $_[0]->[2] eq $_[1]->[2] }
+
+package Gimp::run_mode;
+
+# I guess I now use almost every perl feature available ;)
+
+use overload fallback => 1,
+             '0+'     => sub { ${$_[0]} };
 
 package Gimp; # for __DATA__
 

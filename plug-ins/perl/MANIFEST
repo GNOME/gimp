@@ -100,4 +100,5 @@ examples/oneliners
 examples/randomart1
 examples/colourtoalpha
 examples/pixelmap
-
+embedxpm
+logo.xpm
