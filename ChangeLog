@@ -1,3 +1,26 @@
+2005-02-06  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/url.c: removed.
+
+	* plug-ins/common/plugin-defs.pl: changed accordingly.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* configure.in
+	* plug-ins/Makefile.am: added the "uri" subdir.
+
+	* plug-ins/uri/.cvsignore
+	* plug-ins/uri/Makefile.am
+	* plug-ins/uri/uri-backend-wget.c
+	* plug-ins/uri/uri-backend.h
+	* plug-ins/uri/uri.c: new files: split uri plug-in into common and
+	backend-specific code that will soon optionally use gnomre-vfs.
+
+	Also treat everything after the basename's first dot as extension,
+	not after the last dot, so opening "foo.ext.gz" doesn't trigger
+	warnings from the compressor plug-in.
+
 2005-02-06  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: moved call to sanity_check() after the

@@ -40,137 +40,32 @@
 #define TIMEOUT "300"
 #define BUFSIZE 1024
 
-static void    query (void);
-static void    run   (const gchar      *name,
-                      gint              nparams,
-                      const GimpParam  *param,
-                      gint             *nreturn_vals,
-                      GimpParam       **return_vals);
 
-static gint32  load_image (const gchar       *filename,
-                           GimpRunMode        run_mode,
-                           GimpPDBStatusType *status /* return value */);
-
-GimpPlugInInfo PLUG_IN_INFO =
+const gchar *
+uri_backend_get_load_protocols (void)
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-MAIN ()
-
-static void
-query (void)
-{
-  static GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
-  };
-
-  static GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
-
-  gimp_install_procedure ("file_url_load",
-                          "loads files given a URL",
-                          "You need to have GNU Wget installed.",
-                          "Spencer Kimball & Peter Mattis",
-                          "Spencer Kimball & Peter Mattis",
-                          "1995-1997",
-                          N_("URL"),
-			  NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_plugin_icon_register ("file_url_load",
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
-  gimp_register_load_handler ("file_url_load",
-			      "",
-			      "http:,https:,ftp:");
+  return "http:,https:,ftp:";
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+gboolean
+uri_backend_load_image (const gchar  *uri,
+                        const gchar  *tmpname,
+                        GimpRunMode   run_mode,
+                        GError      **error)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (strcmp (name, "file_url_load") == 0)
-    {
-      image_ID = load_image (param[2].data.d_string, run_mode, &status);
-
-      if (image_ID != -1 &&
-	  status == GIMP_PDB_SUCCESS)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  values[0].data.d_status = status;
-}
-
-static gint32
-load_image (const gchar       *filename,
-	    GimpRunMode        run_mode,
-	    GimpPDBStatusType *status)
-{
-  gint32    image_ID;
-  gchar    *ext = strrchr (filename, '.');
-  gchar    *tmpname;
-  gint      pid;
-  gint      p[2];
-  gboolean  name_image = FALSE;
-
-  if (!ext || ext[1] == 0 || strchr (ext, '/'))
-    {
-      tmpname = gimp_temp_name ("xxx");
-    }
-  else
-    {
-      tmpname = gimp_temp_name (ext + 1);
-      name_image = TRUE;
-    }
+  gint pid;
+  gint p[2];
 
   if (pipe (p) != 0)
     {
-      g_message ("pipe() failed: %s", g_strerror (errno));
-      g_free (tmpname);
-      *status = GIMP_PDB_EXECUTION_ERROR;
-      return -1;
+      g_set_error (error, 0, 0, "pipe() failed: %s", g_strerror (errno));
+      return FALSE;
     }
 
   if ((pid = fork()) < 0)
     {
-      g_message ("fork() failed: %s", g_strerror (errno));
-      g_free (tmpname);
-      *status = GIMP_PDB_EXECUTION_ERROR;
-      return -1;
+      g_set_error (error, 0, 0, "fork() failed: %s", g_strerror (errno));
+      return FALSE;
     }
   else if (pid == 0)
     {
@@ -186,9 +81,8 @@ load_image (const gchar       *filename,
       putenv ("LANG=C");
 #endif
 
-      execlp ("wget", "wget", "-T", TIMEOUT, filename, "-O", tmpname, NULL);
-      g_message ("exec() failed: wget: %s", g_strerror (errno));
-      g_free (tmpname);
+      execlp ("wget", "wget", "-T", TIMEOUT, uri, "-O", tmpname, NULL);
+      g_set_error (error, 0, 0, "exec() failed: wget: %s", g_strerror (errno));
       _exit (127);
     }
   else
@@ -196,17 +90,16 @@ load_image (const gchar       *filename,
       FILE     *input;
       gchar     buf[BUFSIZE];
       gboolean  seen_resolve = FALSE;
-      gboolean  connected = FALSE;
-      gboolean  file_found = FALSE;
+      gboolean  connected    = FALSE;
+      gboolean  file_found   = FALSE;
       gchar     sizestr[32];
-      gint      size = 0;
+      gint      size         = 0;
       gchar    *message;
       gint      i, j;
       gchar     dot;
-      gint      kilobytes = 0;
-      gboolean  finished = FALSE;
-
-      gboolean  debug = FALSE;
+      gint      kilobytes    = 0;
+      gboolean  finished     = FALSE;
+      gboolean  debug        = FALSE;
 
 #define DEBUG(x) if (debug) g_printerr (x)
 
@@ -221,9 +114,7 @@ load_image (const gchar       *filename,
           /*  no message here because failing on the first line means
            *  that wget was not found
            */
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          return FALSE;
         }
 
       DEBUG (buf);
@@ -231,10 +122,8 @@ load_image (const gchar       *filename,
       /*  The second line is the local copy of the file  */
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_message ("wget exited abnormally on URL '%s'", filename);
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          return FALSE;
         }
 
       DEBUG (buf);
@@ -246,10 +135,8 @@ load_image (const gchar       *filename,
     read_connect:
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_message ("wget exited abnormally on URL '%s'", filename);
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          return FALSE;
         }
       else if (strstr (buf, "connected"))
         {
@@ -265,25 +152,21 @@ load_image (const gchar       *filename,
       DEBUG (buf);
 
       /*  The fourth line is either the network request or an error  */
-      gimp_progress_init ("Opening URL... "
+      gimp_progress_init ("Opening URI... "
                           "(timeout is "TIMEOUT" seconds)");
 
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_message ("wget exited abnormally on URL '%s'", filename);
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          return FALSE;
         }
       else if (! connected)
         {
-          g_message ("A network error occured: %s", buf);
+          g_set_error (error, 0, 0, "A network error occured: %s", buf);
 
           DEBUG (buf);
 
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          return FALSE;
         }
 
       DEBUG (buf);
@@ -291,10 +174,8 @@ load_image (const gchar       *filename,
       /*  The fifth line is either the length of the file or an error  */
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_message ("wget exited abnormally on URL '%s'", filename);
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          return FALSE;
         }
       else if (strstr (buf, "Length"))
         {
@@ -302,23 +183,20 @@ load_image (const gchar       *filename,
         }
       else
         {
-          g_message ("A network error occured: %s", buf);
+          g_set_error (error, 0, 0, "A network error occured: %s", buf);
 
           DEBUG (buf);
 
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          return FALSE;
         }
 
       DEBUG (buf);
 
       if (sscanf (buf, "Length: %31s", sizestr) != 1)
         {
-          g_message ("Could not parse wget's file length message");
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0,
+                       "Could not parse wget's file length message");
+          return FALSE;
         }
 
       /*  strip away commas  */
@@ -380,30 +258,12 @@ load_image (const gchar       *filename,
 
       if (! finished)
         {
-          g_message ("wget exited before finishing downloading URL\n'%s'",
-                     filename);
-          unlink (tmpname);
-          g_free (tmpname);
-          *status = GIMP_PDB_EXECUTION_ERROR;
-          return -1;
+          g_set_error (error, 0, 0,
+                       "wget exited before finishing downloading URI\n'%s'",
+                       uri);
+          return FALSE;
         }
     }
 
-  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
-
-  unlink (tmpname);
-  g_free (tmpname);
-
-  if (image_ID != -1)
-    {
-      *status = GIMP_PDB_SUCCESS;
-      if (name_image)
-	gimp_image_set_filename (image_ID, filename);
-      else
-	gimp_image_set_filename (image_ID, "");
-    }
-  else
-    *status = GIMP_PDB_EXECUTION_ERROR;
-
-  return image_ID;
+  return TRUE;
 }

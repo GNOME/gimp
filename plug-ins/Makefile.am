@@ -57,6 +57,7 @@ SUBDIRS = \
 	sgi			\
 	sel2path		\
 	$(twain)		\
+	uri			\
 	winicon			\
 	$(winsnap)		\
 	$(xjt)			\

@@ -152,7 +152,6 @@ libexec_PROGRAMS = \
 	tiler \
 	uniteditor \
 	unsharp \
-	$(URL) \
 	video \
 	vinvert \
 	vpropagate \
@@ -178,7 +177,6 @@ EXTRA_PROGRAMS = \
 	screenshot \
 	svg \
 	tiff \
-	url \
 	winclipboard \
 	winprint \
 	wmf \
@@ -1895,18 +1893,6 @@ unsharp_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-url_SOURCES = \
-	url.c
-
-url_LDADD = \
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(LIBURL)		\
-	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

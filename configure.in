@@ -1628,6 +1628,7 @@ plug-ins/rcm/images/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/twain/Makefile
+plug-ins/uri/Makefile
 plug-ins/winicon/Makefile
 plug-ins/winsnap/Makefile
 modules/Makefile

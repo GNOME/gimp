@@ -123,7 +123,6 @@
     'tiler' => { libdep => 'glib' },
     'uniteditor' => { libdep => 'gtk', ui => 1 },
     'unsharp' => { libdep => 'gtk', ui => 1 },
-    'url' => { libdep => 'glib', optional => 1 },
     'video' => { libdep => 'gtk', ui => 1 },
     'vinvert' => { libdep => 'glib' },
     'vpropagate' => { libdep => 'gtk', ui => 1 },
