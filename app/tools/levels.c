@@ -1489,7 +1489,7 @@ static ActionAreaItem action_items[] =
 
 
 /*
- *  TBD - WRB -make work with 16 bit & float data
+ *  TBD - WRB -make work with float data
 */
 LevelsDialog *
 levels_new_dialog ( gint bins )
