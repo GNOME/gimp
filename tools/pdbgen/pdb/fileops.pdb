@@ -76,9 +76,10 @@ HELP
     $outargs[0]->{desc} = 'The output image';
 
     %invoke = (
-	proc => [ 'proc->name', 'args' ],
-	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc',
-                  'gchar *uri' ],
+	proc => [ 'proc->name', 'new_args' ],
+	args => [ 'new_args', 'return_vals' ],
+	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gchar *uri',
+                  'gint i' ],
 	code => <<'CODE'
 {
   uri = file_utils_filename_to_uri (gimp->load_procs, %%filename%%, NULL);
@@ -95,7 +96,20 @@ HELP
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  return %%exec%%;
+  new_args = g_new0 (%%argtype%%, proc->num_args);
+  memcpy (new_args, args, sizeof (%%argtype%%) * 3);
+
+  for (i = 3; i < proc->num_args; i++)
+    {
+      new_args[i].arg_type = proc->args[i].arg_type;
+      if (proc->args[i].arg_type == GIMP_PDB_STRING)
+        new_args[i].value.pdb_pointer = g_strdup ("");
+    }
+
+  return_vals = %%exec%%;
+  g_free (new_args);
+
+  return return_vals;
 }
 CODE
     );
@@ -152,8 +166,7 @@ HELP
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new (%%argtype%%, proc->num_args);
-  memset (new_args, 0, sizeof (%%argtype%%) * proc->num_args);
+  new_args = g_new0 (%%argtype%%, proc->num_args);
   memcpy (new_args, args, sizeof (%%argtype%%) * 5);
 
   for (i = 5; i < proc->num_args; i++)

@@ -78,9 +78,12 @@ static Argument *
 file_load_invoker (Gimp     *gimp,
                    Argument *args)
 {
+  Argument *new_args;
+  Argument *return_vals;
   PlugInProcDef *file_proc;
   ProcRecord *proc;
   gchar *uri;
+  gint i;
 
   uri = file_utils_filename_to_uri (gimp->load_procs, (gchar *) args[1].value.pdb_pointer, NULL);
 
@@ -96,7 +99,20 @@ file_load_invoker (Gimp     *gimp,
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  return procedural_db_execute (gimp, proc->name, args);
+  new_args = g_new0 (Argument, proc->num_args);
+  memcpy (new_args, args, sizeof (Argument) * 3);
+
+  for (i = 3; i < proc->num_args; i++)
+    {
+      new_args[i].arg_type = proc->args[i].arg_type;
+      if (proc->args[i].arg_type == GIMP_PDB_STRING)
+	new_args[i].value.pdb_pointer = g_strdup ("");
+    }
+
+  return_vals = procedural_db_execute (gimp, proc->name, new_args);
+  g_free (new_args);
+
+  return return_vals;
 }
 
 static ProcArg file_load_inargs[] =
@@ -168,8 +184,7 @@ file_save_invoker (Gimp     *gimp,
 
   proc = plug_in_proc_def_get_proc (file_proc);
 
-  new_args = g_new (Argument, proc->num_args);
-  memset (new_args, 0, sizeof (Argument) * proc->num_args);
+  new_args = g_new0 (Argument, proc->num_args);
   memcpy (new_args, args, sizeof (Argument) * 5);
 
   for (i = 5; i < proc->num_args; i++)

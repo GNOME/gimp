@@ -1,3 +1,13 @@
+2003-10-08  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb (file_load_invoker):
+	procedural_db_execute() *must* get the correct number of args, so
+	do like file_save_invoker and create a full Argument array with
+	the correct number of args and copy our own args into it before
+	calling the actual load procedure. Fixes bug #124059.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2003-10-08  Sven Neumann  <sven@gimp.org>
 
 	* data/images/gimp_splash.png: flatten the splash (bug #124062).
