@@ -52,6 +52,10 @@
 /* unscale values */
 #define  UNSCALEX(g,x)  ((int)(x / SCALEFACTOR_X(g)))
 #define  UNSCALEY(g,y)  ((int)(y / SCALEFACTOR_Y(g)))
+/* (and float-returning versions) */
+#define  FUNSCALEX(g,x)  ((x / SCALEFACTOR_X(g)))
+#define  FUNSCALEY(g,y)  ((y / SCALEFACTOR_Y(g)))
+
 
 
 

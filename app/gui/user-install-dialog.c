@@ -192,11 +192,11 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tPaths to search for brushes, palettes, gradients\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tpatterns, and plug-ins are also configured here.\n"), -1);
+		   _("\t\tpatterns, plug-ins and modules are also configured here.\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   _("pluginrc\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tPlug-ins and extensions are extern programs run by\n"), -1);
+		   _("\t\tPlug-ins and extensions are external programs run by\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tthe GIMP which provide additional functionality.\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
@@ -300,6 +300,18 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tplug-ins.\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   _("modules\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tThis subdirectory can be used to store user created,\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\ttemporary, or otherwise non-system-supported DLL modules.  \n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tThe default gimprc file checks this subdirectory\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\tin addition to the system-wide GIMP module directory\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   _("\t\twhen searching for modules to load when initialising.\n"), -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   _("scripts\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tThis subdirectory is used by the GIMP to store \n"), -1);
@@ -321,6 +333,9 @@ install_help (InstallCallback callback)
 		   _("\t\tof the form: gimp<#>.<#>.  These files are useless across\n"), -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   _("\t\tGIMP sessions and can be destroyed with impunity.\n"), -1);
+
+  /* scroll back to the top */
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (vadj), 0.0);
 
   gtk_widget_show (vsb);
   gtk_widget_show (text);
@@ -389,7 +404,7 @@ install_run (InstallCallback callback)
   vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
   vsb  = gtk_vscrollbar_new (vadj);
   text = gtk_text_new (NULL, vadj);
-  gtk_widget_set_usize (text, 384, 256);
+  gtk_widget_set_usize (text, 384, 356);
 
   table  = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
@@ -447,6 +462,8 @@ install_run (InstallCallback callback)
 	g_snprintf (buffer, sizeof(buffer), "%s/user_install %s %s",
 		    DATADIR, DATADIR, gimp_directory ());
 
+      /* urk - should really use something better than popen(), since
+       * we can't tell if the installation script failed --austin */
       if ((pfp = popen (buffer, "r")) != NULL)
 	{
 	  while (fgets (buffer, 2048, pfp))

@@ -158,6 +158,37 @@ change_scale (GDisplay *gdisp,
 }
 
 
+/* scale image coord to realworld units (cm, inches, pixels) */
+static gdouble
+img2real (GDisplay *g, gboolean xdir, gdouble a)
+{
+  float res;  
+
+  if (g->dot_for_dot)
+    return a;
+
+  if (xdir)
+    res = monitor_xres;
+  else
+    res = monitor_yres;
+
+  switch (ruler_units) {
+  case GTK_PIXELS:
+    return a;
+
+  case GTK_INCHES:
+    return a / res;
+
+  case GTK_CENTIMETERS:
+    return a * 2.54 / res;
+
+  default:
+    g_warning ("unknown ruler_units %d, can't happen", ruler_units);
+    return a;
+  }
+}
+
+
 void
 setup_scale (GDisplay *gdisp)
 {
@@ -168,8 +199,8 @@ setup_scale (GDisplay *gdisp)
 
   sx = SCALEX(gdisp, gdisp->gimage->width);
   sy = SCALEY(gdisp, gdisp->gimage->height);
-  stepx = SCALEX(gdisp, 1);
-  stepy = SCALEY(gdisp, 1);
+  stepx = SCALEFACTOR_X(gdisp);
+  stepy = SCALEFACTOR_Y(gdisp);
 
   gdisp->hsbdata->value = gdisp->offset_x;
   gdisp->hsbdata->upper = sx;
@@ -190,37 +221,47 @@ setup_scale (GDisplay *gdisp)
   vruler = GTK_RULER (gdisp->vrule);
 
   hruler->lower = 0;
-  hruler->upper = UNSCALEX (gdisp, gdisp->disp_width);
-  hruler->max_size = MAXIMUM (gdisp->gimage->width, gdisp->gimage->height);
+  hruler->upper = img2real (gdisp, TRUE, FUNSCALEX (gdisp, gdisp->disp_width));
+  hruler->max_size = img2real (gdisp, TRUE, MAXIMUM (gdisp->gimage->width,
+						     gdisp->gimage->height));
 
   vruler->lower = 0;
-  vruler->upper = UNSCALEY (gdisp, gdisp->disp_height);
-  vruler->max_size = MAXIMUM (gdisp->gimage->width, gdisp->gimage->height);
+  vruler->upper = img2real(gdisp, FALSE, FUNSCALEY(gdisp, gdisp->disp_height));
+  vruler->max_size = img2real (gdisp, FALSE, MAXIMUM (gdisp->gimage->width,
+						      gdisp->gimage->height));
 
   if (sx < gdisp->disp_width)
     {
       gdisp->disp_xoffset = (gdisp->disp_width - sx) / 2;
-      hruler->lower -= UNSCALEX (gdisp, (double) gdisp->disp_xoffset);
-      hruler->upper -= UNSCALEX (gdisp, (double) gdisp->disp_xoffset);
+      hruler->lower -= img2real(gdisp, TRUE,
+				FUNSCALEX(gdisp,(double) gdisp->disp_xoffset));
+      hruler->upper -= img2real(gdisp, TRUE,
+				FUNSCALEX(gdisp,(double) gdisp->disp_xoffset));
     }
   else
     {
       gdisp->disp_xoffset = 0;
-      hruler->lower += UNSCALEX (gdisp, (double) gdisp->offset_x);
-      hruler->upper += UNSCALEX (gdisp, (double) gdisp->offset_x);
+      hruler->lower += img2real (gdisp, TRUE,
+				 FUNSCALEX (gdisp, (double) gdisp->offset_x));
+      hruler->upper += img2real (gdisp, TRUE,
+				 FUNSCALEX (gdisp, (double) gdisp->offset_x));
     }
 
   if (sy < gdisp->disp_height)
     {
       gdisp->disp_yoffset = (gdisp->disp_height - sy) / 2;
-      vruler->lower -= UNSCALEY (gdisp, (double) gdisp->disp_yoffset);
-      vruler->upper -= UNSCALEY (gdisp, (double) gdisp->disp_yoffset);
+      vruler->lower -= img2real(gdisp, FALSE,
+				FUNSCALEY(gdisp,(double) gdisp->disp_yoffset));
+      vruler->upper -= img2real(gdisp, FALSE,
+				FUNSCALEY(gdisp,(double) gdisp->disp_yoffset));
     }
   else
     {
       gdisp->disp_yoffset = 0;
-      vruler->lower += UNSCALEY (gdisp, (double) gdisp->offset_y);
-      vruler->upper += UNSCALEY (gdisp, (double) gdisp->offset_y);
+      vruler->lower += img2real (gdisp, FALSE,
+				 FUNSCALEY (gdisp, (double) gdisp->offset_y));
+      vruler->upper += img2real (gdisp, FALSE,
+				 FUNSCALEY (gdisp, (double) gdisp->offset_y));
     }
 
   gtk_widget_draw (GTK_WIDGET (hruler), NULL);

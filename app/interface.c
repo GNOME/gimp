@@ -648,7 +648,10 @@ create_display_shell (GDisplay* gdisp,
   gdisp->hrule = gtk_hruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->hrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_ruler_set_metric (GTK_RULER (gdisp->hrule), ruler_units);
+  /* Still need to sort out the best way of using this metrics stuff.
+   * For the moment, we do everything in terms of pixels
+   *    -- austin 25/Jan/99 */
+  /*gtk_ruler_set_metric (GTK_RULER (gdisp->hrule), ruler_units);*/
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
 			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->hrule)->klass)->motion_notify_event,
 			     GTK_OBJECT (gdisp->hrule));
@@ -659,7 +662,7 @@ create_display_shell (GDisplay* gdisp,
   gdisp->vrule = gtk_vruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_ruler_set_metric (GTK_RULER (gdisp->vrule), ruler_units);
+  /*gtk_ruler_set_metric (GTK_RULER (gdisp->vrule), ruler_units);*/
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
 			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->vrule)->klass)->motion_notify_event,
 			     GTK_OBJECT (gdisp->vrule));

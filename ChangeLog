@@ -1,3 +1,23 @@
+Mon Jan 25 20:40:26 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* user_install: create modules/ directory in user's ~/.gimp-1.1 dir
+	* app/install.c: include description of ~/.gimp-1.1/modules, plus
+	    scroll info back to top when done inserting text since it
+	    looks nicer.  Also make window that holds result of running
+	    user_install a little larger so we see all messages at once.
+
+	* app/gdisplay.h: FUNSCALE_{X,Y} macros for floating point
+	    unscales.
+	* app/scale.c: show rulers in real-world units (inches/cm/pixels)
+	    if dot-for-dot is turned off, plus smoother ruler updates by
+	    using FUNSCALE so we don't jump in pixel steps at high
+	    magnification factors.
+	* app/interface.c: don't set the ruler metrics for now - it's
+ 	    easier to do the calculations in pixels.  Need to rethink this
+ 	    a little anyway.
+
+	* docs/parasites.txt: added jpeg parasite info.
+
 Sat Jan 23 20:36:06 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/color_select.c: don't try and gdk_window_get_size() when we

@@ -29,6 +29,8 @@ echo "mkdir $2/patterns"
 mkdir $2/patterns
 echo "mkdir $2/plug-ins"
 mkdir $2/plug-ins
+echo "mkdir $2/modules"
+mkdir $2/modules
 echo "mkdir $2/gfig"
 mkdir $2/gfig
 echo "mkdir $2/tmp"
