@@ -45,8 +45,6 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "tools/gimp-tools.h"
-
 #ifndef GIMP_CONSOLE_COMPILATION
 #include "gui/gui.h"
 #include "gui/user-install-dialog.h"
@@ -62,6 +60,7 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
+
 
 /*  local prototypes  */
 

@@ -110,12 +110,12 @@ main (int    argc,
   gboolean            use_cpu_accel           = TRUE;
   gboolean            console_messages        = FALSE;
   gboolean            use_debug_handler       = FALSE;
-#if ((GIMP_MINOR_VERSION % 2) == 0)
-  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
-  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_ON;
-#else
+#ifdef GIMP_UNSTABLE
   GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
   GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_WARN;
+#else
+  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
+  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_ON;
 #endif
   gint                i, j;
 
