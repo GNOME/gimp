@@ -181,7 +181,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                                     "show-menubar", SHOW_MENUBAR_BLURB,
-                                    FALSE,
+                                    TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
