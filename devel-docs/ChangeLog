@@ -1,3 +1,15 @@
+2003-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/tmpl/gimpcompat.sgml: removed.
+	* libgimp/Makefile.am: ignore gimpcompat.h
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimpbase/tmpl/gimpprotocol.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimphelpui.sgml: updated after the
+	gimp_help_*() changes.
+
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am

@@ -294,6 +294,14 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_show_tool_tips ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_progname ##### -->
 <para>
 

@@ -236,8 +236,6 @@ GIMP_DIALOG_GET_CLASS
 <FILE>gimphelpui</FILE>
 <TITLE>GimpHelpUI</TITLE>
 GimpHelpFunc
-gimp_help_init
-gimp_help_free
 gimp_help_enable_tooltips
 gimp_help_disable_tooltips
 gimp_standard_help_func

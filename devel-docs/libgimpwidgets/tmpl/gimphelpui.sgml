@@ -45,20 +45,6 @@ the help.
 @help_data: A string containing the path to a HTML page.
 
 
-<!-- ##### FUNCTION gimp_help_init ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### FUNCTION gimp_help_free ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### FUNCTION gimp_help_enable_tooltips ##### -->
 <para>
 

@@ -30,6 +30,7 @@ gimp_destroy_paramdefs
 gimp_gamma
 gimp_install_cmap
 gimp_min_colors
+gimp_show_tool_tips
 gimp_get_progname
 set_gimp_PLUG_IN_INFO_PTR
 gimp_parasite_find
@@ -70,16 +71,6 @@ GimpRepeatMode
 GimpRunMode
 GimpSizeType
 GimpTransferMode
-</SECTION>
-
-<SECTION>
-<FILE>gimpcompat</FILE>
-GimpRunModeType
-gimp_use_xshm
-gimp_color_cube
-gimp_crop
-gimp_gradients_get_active
-gimp_gradients_set_active
 </SECTION>
 
 <SECTION>

@@ -33,7 +33,7 @@ The communication protocol between GIMP and it's plug-ins.
 @shm_ID: 
 @gamma: 
 @install_cmap: 
-@unused: 
+@show_tool_tips: 
 @min_colors: 
 @gdisp_ID: 
 
