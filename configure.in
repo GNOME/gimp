@@ -336,6 +336,22 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
     AC_DEFINE(HAVE_RINT)])])
 
 
+######################################################
+# Check for extra libs needed for inet_ntoa and socket
+######################################################
+
+gimp_save_LIBS=$LIBS
+LIBS=""
+
+AC_CHECK_FUNCS(inet_ntoa, , AC_CHECK_LIB(nsl, inet_ntoa))
+AC_CHECK_LIB(socket, socket)
+
+SOCKET_LIBS="$LIBS"
+LIBS=$gimp_save_LIBS
+
+AC_SUBST(SOCKET_LIBS)
+
+
 ########################
 # Check for MMX assembly
 ########################

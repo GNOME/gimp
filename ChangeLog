@@ -1,5 +1,12 @@
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for extra libraries needed for inet_ntoa() and
+	socket() and define them as SOCKET_LIBS.
+
+	* plug-ins/script-fu/Makefile.am (LDADD): added SOCKET_LIBS.
+
+2002-05-30  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added -lX11 to LIBXMU since GTK_LIBS doesn't provide
 	it for us anymore (reported by Tomas Ogren).
 

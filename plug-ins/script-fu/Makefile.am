@@ -14,8 +14,8 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	script-fu.c		\
 	script-fu-console.c	\
 	script-fu-console.h	\
-	script-fu-text-console.h	\
-	script-fu-text-console.c	\
+	script-fu-text-console.h\
+	script-fu-text-console.c\
 	script-fu-constants.c	\
 	script-fu-constants.h	\
 	script-fu-intl.h	\
@@ -49,7 +49,8 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-	$(REGEXREPL)							\
+	$(GTK_LIBS)	\
+	$(SOCKET_LIBS)	\
+	$(INTLLIBS)	\
+	$(REGEXREPL)	\
 @STRIP_END@
