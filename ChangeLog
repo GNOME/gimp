@@ -1,3 +1,8 @@
+2000-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c (open_browser_dialog):
+	install gimp's colormap to avoid flickering on 8 bit displays.
+
 2000-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay_ops.c (gdisplay_shrink_wrap): block all canvas
