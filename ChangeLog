@@ -1,5 +1,13 @@
 2001-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimprc.c: register all parse functions in a hash table
+	instead of a static array. This way, with some additional ugly
+	hacking, we get the addresses of the variables in
+	base/base-config.c registered. The whole config stuff has to be
+	done properly at some point.
+
+2001-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: new directory app/base/
 
 	* app/Makefile.am

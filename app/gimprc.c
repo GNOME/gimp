@@ -39,6 +39,8 @@
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
+#include "base/base-config.c"
+
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
@@ -197,8 +199,6 @@ static gchar        * open_backup_file          (gchar        *filename,
 
 /*  global gimprc variables  */
 gchar             *plug_in_path              = NULL;
-gchar             *temp_path                 = NULL;
-gchar             *swap_path                 = NULL;
 gchar             *brush_path                = NULL;
 gchar             *default_brush             = NULL;
 gchar             *pattern_path              = NULL;
@@ -209,7 +209,6 @@ gchar             *gradient_path             = NULL;
 gchar             *default_gradient          = NULL;
 gchar             *pluginrc_path             = NULL;
 gchar             *module_path               = NULL;
-guint              tile_cache_size           = 33554432;  /* 32 MB */
 gint               marching_speed            = 300;       /* 300 ms */
 gdouble            gamma_val                 = 1.0;
 gint               transparency_type         = 1;     /* Mid-Tone Checks */
@@ -221,7 +220,6 @@ gint               min_colors                = 144;   /* 6*6*4 */
 gboolean           install_cmap              = FALSE;
 gint               cycled_marching_ants      = 0;
 gint               default_threshold         = 15;
-gboolean           stingy_memory_use         = FALSE;
 gboolean           allow_resize_windows      = FALSE;
 gboolean           no_cursor_updating        = FALSE;
 gint               preview_size              = 32;
@@ -230,7 +228,6 @@ gboolean           show_rulers               = TRUE;
 gboolean           show_statusbar            = TRUE;
 GimpUnit           default_units             = GIMP_UNIT_INCH;
 gboolean           auto_save                 = TRUE;
-InterpolationType  interpolation_type        = LINEAR_INTERPOLATION;
 gboolean           confirm_on_close          = TRUE;
 gboolean           save_session_info         = TRUE;
 gboolean           save_device_status        = FALSE;
@@ -265,10 +262,11 @@ gint               cursor_mode               = CURSOR_MODE_TOOL_ICON;
 gboolean           disable_tearoff_menus     = FALSE;
 
 
+static GHashTable *parse_func_hash = NULL;
+
+
 static ParseFunc funcs[] =
 {
-  { "temp-path",                 TT_PATH,          &temp_path, NULL },
-  { "swap-path",                 TT_PATH,          &swap_path, NULL },
   { "brush-path",                TT_PATH,          &brush_path, NULL },
   { "pattern-path",              TT_PATH,          &pattern_path, NULL },
   { "plug-in-path",              TT_PATH,          &plug_in_path, NULL },
@@ -281,7 +279,6 @@ static ParseFunc funcs[] =
   { "default-palette",           TT_STRING,        &default_palette, NULL },
   { "default-gradient",          TT_STRING,        &default_gradient, NULL },
   { "gamma-correction",          TT_DOUBLE,        &gamma_val, NULL },
-  { "tile-cache-size",           TT_MEMSIZE,       &tile_cache_size, NULL },
   { "marching-ants-speed",       TT_INT,           &marching_speed, NULL },
   { "last-opened-size",          TT_INT,           &last_opened_size, NULL },
   { "undo-levels",               TT_INT,           &levels_of_undo, NULL },
@@ -292,7 +289,6 @@ static ParseFunc funcs[] =
   { "install-colormap",          TT_BOOLEAN,       &install_cmap, NULL },
   { "colormap-cycling",          TT_BOOLEAN,       &cycled_marching_ants, NULL },
   { "default-threshold",         TT_INT,           &default_threshold, NULL },
-  { "stingy-memory-use",         TT_BOOLEAN,       &stingy_memory_use, NULL },
   { "allow-resize-windows",      TT_BOOLEAN,       &allow_resize_windows, NULL },
   { "dont-allow-resize-windows", TT_BOOLEAN,       NULL, &allow_resize_windows },
   { "cursor-updating",           TT_BOOLEAN,       NULL, &no_cursor_updating },
@@ -306,7 +302,6 @@ static ParseFunc funcs[] =
   { "default-units",             TT_XUNIT,         &default_units, NULL },
   { "auto-save",                 TT_BOOLEAN,       &auto_save, NULL },
   { "dont-auto-save",            TT_BOOLEAN,       NULL, &auto_save },
-  { "interpolation-type",        TT_INTERP,        &interpolation_type, NULL },
   { "confirm-on-close",          TT_BOOLEAN,       &confirm_on_close, NULL },
   { "dont-confirm-on-close",     TT_BOOLEAN,       NULL, &confirm_on_close },
   { "save-session-info",         TT_BOOLEAN,       &save_session_info, NULL },
@@ -391,8 +386,40 @@ gimp_system_rc_file (void)
 gboolean
 gimprc_init (void)
 {
-  if (!parse_info.buffer)
+  if (! parse_info.buffer)
     {
+      gint i;
+
+      static ParseFunc base_funcs[] =
+      {
+	{ "temp-path",          TT_PATH,    NULL, NULL },
+	{ "swap-path",          TT_PATH,    NULL, NULL },
+	{ "tile-cache-size",    TT_MEMSIZE, NULL, NULL },
+	{ "stingy-memory-use",  TT_BOOLEAN, NULL, NULL },
+	{ "interpolation-type", TT_INTERP,  NULL, NULL }
+      };
+      static gint n_base_funcs = (sizeof (base_funcs) /
+				  sizeof (base_funcs[0]));
+
+      /*  this hurts badly  */
+      base_funcs[0].val1p = &base_config->temp_path;
+      base_funcs[1].val1p = &base_config->swap_path;
+      base_funcs[2].val1p = &base_config->tile_cache_size;
+      base_funcs[3].val1p = &base_config->stingy_memory_use;
+      base_funcs[4].val1p = &base_config->interpolation_type;
+
+      parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
+
+      for (i = 0; i < n_base_funcs; i++)
+	g_hash_table_insert (parse_func_hash,
+			     base_funcs[i].name,
+			     &base_funcs[i]);
+
+      for (i = 0; i < n_funcs; i++)
+	g_hash_table_insert (parse_func_hash,
+			     funcs[i].name,
+			     &funcs[i]);
+
       parse_info.buffer        = g_new (gchar, 4096);
       parse_info.tokenbuf      = parse_info.buffer + 2048;
       parse_info.buffer_size   = 2048;
@@ -425,17 +452,17 @@ parse_gimprc (void)
 {
   gchar *libfilename;
   gchar *filename;
-  
+
   parse_add_directory_tokens ();
 
   if (alternate_system_gimprc != NULL) 
     libfilename = g_strdup (alternate_system_gimprc);
   else
     libfilename = g_strdup (gimp_system_rc_file ());
-    
+
   if (! parse_gimprc_file (libfilename))
     g_message ("Can't open '%s' for reading.", libfilename);
-  
+
   if (alternate_gimprc != NULL) 
     filename = g_strdup (alternate_gimprc);
   else 
@@ -838,8 +865,8 @@ peek_next_token (void)
 static gint
 parse_statement (void)
 {
-  gint token;
-  gint i;
+  ParseFunc *func;
+  gint       token;
 
   token = peek_next_token ();
   if (!token)
@@ -853,59 +880,62 @@ parse_statement (void)
     return ERROR;
   token = get_next_token ();
 
-  for (i = 0; i < n_funcs; i++)
-    if (strcmp (funcs[i].name, token_sym) == 0)
-      switch (funcs[i].type)
+  func = g_hash_table_lookup (parse_func_hash, token_sym);
+
+  if (func)
+    {
+      switch (func->type)
 	{
 	case TT_STRING:
-	  return parse_string (funcs[i].val1p, funcs[i].val2p);
+	  return parse_string (func->val1p, func->val2p);
 	case TT_PATH:
-	  return parse_path (funcs[i].val1p, funcs[i].val2p);
+	  return parse_path (func->val1p, func->val2p);
 	case TT_DOUBLE:
-	  return parse_double (funcs[i].val1p, funcs[i].val2p);
+	  return parse_double (func->val1p, func->val2p);
 	case TT_FLOAT:
-	  return parse_float (funcs[i].val1p, funcs[i].val2p);
+	  return parse_float (func->val1p, func->val2p);
 	case TT_INT:
-	  return parse_int (funcs[i].val1p, funcs[i].val2p);
+	  return parse_int (func->val1p, func->val2p);
 	case TT_BOOLEAN:
-	  return parse_boolean (funcs[i].val1p, funcs[i].val2p);
+	  return parse_boolean (func->val1p, func->val2p);
 	case TT_POSITION:
-	  return parse_position (funcs[i].val1p, funcs[i].val2p);
+	  return parse_position (func->val1p, func->val2p);
 	case TT_MEMSIZE:
-	  return parse_mem_size (funcs[i].val1p, funcs[i].val2p);
+	  return parse_mem_size (func->val1p, func->val2p);
 	case TT_IMAGETYPE:
-	  return parse_image_type (funcs[i].val1p, funcs[i].val2p);
+	  return parse_image_type (func->val1p, func->val2p);
 	case TT_INTERP:
-	  return parse_interpolation_type (funcs[i].val1p, funcs[i].val2p);
+	  return parse_interpolation_type (func->val1p, func->val2p);
 	case TT_XPREVSIZE:
-	  return parse_preview_size (funcs[i].val1p, funcs[i].val2p);
+	  return parse_preview_size (func->val1p, func->val2p);
 	case TT_XNAVPREVSIZE:
-	  return parse_nav_preview_size (funcs[i].val1p, funcs[i].val2p);
+	  return parse_nav_preview_size (func->val1p, func->val2p);
 	case TT_XUNIT:
-	  return parse_units (funcs[i].val1p, funcs[i].val2p);
+	  return parse_units (func->val1p, func->val2p);
 	case TT_XPLUGIN:
-	  return parse_plug_in (funcs[i].val1p, funcs[i].val2p);
+	  return parse_plug_in (func->val1p, func->val2p);
 	case TT_XPLUGINDEF:
-	  return parse_plug_in_def (funcs[i].val1p, funcs[i].val2p);
+	  return parse_plug_in_def (func->val1p, func->val2p);
 	case TT_XMENUPATH:
-	  return parse_menu_path (funcs[i].val1p, funcs[i].val2p);
+	  return parse_menu_path (func->val1p, func->val2p);
 	case TT_XDEVICE:
-	  return parse_device (funcs[i].val1p, funcs[i].val2p);
+	  return parse_device (func->val1p, func->val2p);
 	case TT_XSESSIONINFO:
-	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
+	  return parse_session_info (func->val1p, func->val2p);
 	case TT_XCOLORHISTORY:
-	  return parse_color_history (funcs[i].val1p, funcs[i].val2p);
+	  return parse_color_history (func->val1p, func->val2p);
 	case TT_XUNITINFO:
-	  return parse_unit_info (funcs[i].val1p, funcs[i].val2p);
+	  return parse_unit_info (func->val1p, func->val2p);
 	case TT_XPARASITE:
-	  return parse_parasite (funcs[i].val1p, funcs[i].val2p);
+	  return parse_parasite (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
-	  return parse_help_browser (funcs[i].val1p, funcs[i].val2p);
+	  return parse_help_browser (func->val1p, func->val2p);
 	case TT_XCURSORMODE:
-	  return parse_cursor_mode (funcs[i].val1p, funcs[i].val2p);
+	  return parse_cursor_mode (func->val1p, func->val2p);
 	case TT_XCOMMENT:
-	  return parse_string (funcs[i].val1p, funcs[i].val2p);
+	  return parse_string (func->val1p, func->val2p);
 	}
+    }
 
   return parse_unknown (token_sym);
 }
@@ -2759,44 +2789,46 @@ gimprc_value_to_str (gchar *name)
 static gchar *
 value_to_str (gchar *name)
 {
-  gint i;
+  ParseFunc *func;
 
-  for (i = 0; i < n_funcs; i++)
-    if (! strcmp (funcs[i].name, name))
-      switch (funcs[i].type)
+  func = g_hash_table_lookup (parse_func_hash, name);
+
+  if (func)
+    {
+      switch (func->type)
 	{
 	case TT_STRING:
-	  return string_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return string_to_str (func->val1p, func->val2p);
 	case TT_PATH:
-	  return path_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return path_to_str (func->val1p, func->val2p);
 	case TT_DOUBLE:
-	  return double_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return double_to_str (func->val1p, func->val2p);
 	case TT_FLOAT:
-	  return float_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return float_to_str (func->val1p, func->val2p);
 	case TT_INT:
-	  return int_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return int_to_str (func->val1p, func->val2p);
 	case TT_BOOLEAN:
-	  return boolean_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return boolean_to_str (func->val1p, func->val2p);
 	case TT_POSITION:
-	  return position_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return position_to_str (func->val1p, func->val2p);
 	case TT_MEMSIZE:
-	  return mem_size_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return mem_size_to_str (func->val1p, func->val2p);
 	case TT_IMAGETYPE:
-	  return image_type_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return image_type_to_str (func->val1p, func->val2p);
 	case TT_INTERP:
-	  return interpolation_type_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return interpolation_type_to_str (func->val1p, func->val2p);
 	case TT_XPREVSIZE:
-	  return preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return preview_size_to_str (func->val1p, func->val2p);
 	case TT_XNAVPREVSIZE:
-	  return nav_preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return nav_preview_size_to_str (func->val1p, func->val2p);
 	case TT_XUNIT:
-	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return units_to_str (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
-	  return help_browser_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return help_browser_to_str (func->val1p, func->val2p);
 	case TT_XCURSORMODE:
-	  return cursor_mode_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
-	  return comment_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return comment_to_str (func->val1p, func->val2p);
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
@@ -2807,6 +2839,8 @@ value_to_str (gchar *name)
 	case TT_XPARASITE:
 	  return NULL;
 	}
+    }
+
   return NULL;
 }
 
@@ -3007,11 +3041,10 @@ add_gimp_directory_token (const gchar *gimp_dir)
 {
   UnknownToken *ut;
 
-  /*
-    The token holds data from a static buffer which is initialized
-    once.  There should be no need to change an already-existing
-    value.
-  */
+  /* The token holds data from a static buffer which is initialized
+   * once.  There should be no need to change an already-existing
+   * value.
+   */
   if (NULL != gimprc_find_token ("gimp_dir"))
     return;
 
@@ -3125,13 +3158,14 @@ open_backup_file (gchar  *filename,
 
   if (oldfilename != NULL)
     g_free (oldfilename);
+
   return NULL;
 }
 
-gchar*
+gchar *
 gimprc_find_token (gchar *token)
 {
-  GList *list;
+  GList        *list;
   UnknownToken *ut;
 
   for (list = unknown_tokens; list; list = g_list_next (list))
@@ -3149,7 +3183,7 @@ static void
 gimprc_set_token (gchar *token,
 		  gchar *value)
 {
-  GList *list;
+  GList        *list;
   UnknownToken *ut;
 
   for (list = unknown_tokens; list; list = g_list_next (list))
