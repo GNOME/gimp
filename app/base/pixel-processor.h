@@ -25,7 +25,9 @@
 #define GIMP_MAX_NUM_THREADS  16
 
 
-typedef void (* PixelProcessorFunc) (void);
+typedef void (* PixelProcessorFunc)         (void);
+typedef void (* PixelProcessorProgressFunc) (gpointer  progress_data,
+                                             gdouble   fraction);
 
 
 void  pixel_processor_init            (gint num_threads);
@@ -35,6 +37,14 @@ void  pixel_processor_exit            (void);
 void  pixel_regions_process_parallel  (PixelProcessorFunc  func,
                                        gpointer            data,
                                        gint                num_regions,
+                                       ...);
+
+void  pixel_regions_process_parallel_progress
+                                      (PixelProcessorFunc          func,
+                                       gpointer                    data,
+                                       PixelProcessorProgressFunc  progress_func,
+                                       gpointer                    progress_data,
+                                       gint                        num_regions,
                                        ...);
 
 

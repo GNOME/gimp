@@ -1,5 +1,13 @@
 2005-02-16  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-processor.[ch]: added a variant of
+	pixel_regions_process_parallel() that takes a progress callback and
+	progress data. Does only work for the single-threaded case yet.
+
+	* app/core/gimpdrawable-blend.c (gradient_fill_region): parallelized.
+
+2005-02-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-contiguous-region.c
 	(gimp_image_contiguous_region_by_color): parallelized.
 
