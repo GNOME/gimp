@@ -1,4 +1,8 @@
-199-08-23  Kjartan Maraas  <kmaraas@online.no>
+Tue Aug 24 12:52:40 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* POTFILES.in: added measure.c
+
+1999-08-23  Kjartan Maraas  <kmaraas@online.no>
 
 	* no.po: Updated translation.
 	

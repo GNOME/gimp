@@ -73,6 +73,7 @@ app/lc_dialog.c
 app/levels.c
 app/magnify.c
 app/main.c
+app/measure.c
 app/menus.c
 app/module_db.c
 app/move.c
