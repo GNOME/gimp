@@ -28,25 +28,23 @@ typedef struct _PaletteSelect PaletteSelect;
 
 struct _PaletteSelect
 {
-  GtkWidget   *shell;
-  GtkWidget   *view;
-
+  GimpContext *context;
   gchar       *callback_name;
 
-  GimpContext *context;
+  GtkWidget   *shell;
+  GtkWidget   *view;
 };
 
 
-PaletteSelect * palette_select_new    (Gimp          *gimp,
-                                       const gchar   *title,
-				       const gchar   *initial_palette,
-                                       const gchar   *callback_name);
-void            palette_select_free   (PaletteSelect *palette_select);
+PaletteSelect * palette_select_new             (Gimp          *gimp,
+                                                GimpContext   *context,
+                                                const gchar   *title,
+                                                const gchar   *initial_palette,
+                                                const gchar   *callback_name);
+void            palette_select_free            (PaletteSelect *palette_select);
 
-
-/*  the main palette selection  */
-GtkWidget     * palette_dialog_create (Gimp          *gimp);
-void            palette_dialog_free   (void);
+PaletteSelect * palette_select_get_by_callback (const gchar   *callback_name);
+void            palette_select_dialogs_check   (void);
 
 
 #endif  /* __PALETTE_SELECT_H__ */

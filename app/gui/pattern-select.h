@@ -24,19 +24,16 @@ typedef struct _PatternSelect PatternSelect;
 
 struct _PatternSelect
 {
-  GtkWidget     *shell;
+  GimpContext *context;
+  gchar       *callback_name;
 
-  GtkWidget     *view;
-
-  /*  Callback function name  */
-  gchar         *callback_name;
-
-  /*  Context to store the current pattern  */
-  GimpContext   *context;
+  GtkWidget   *shell;
+  GtkWidget   *view;
 };
 
 
 PatternSelect * pattern_select_new             (Gimp          *gimp,
+                                                GimpContext   *context,
                                                 const gchar   *title,
                                                 const gchar   *initial_pattern,
                                                 const gchar   *callback_name);
@@ -44,11 +41,6 @@ void            pattern_select_free            (PatternSelect *psp);
 
 PatternSelect * pattern_select_get_by_callback (const gchar   *callback_name);
 void            pattern_select_dialogs_check   (void);
-
-
-/*  the main pattern selection  */
-GtkWidget     * pattern_dialog_create        (Gimp          *gimp);
-void            pattern_dialog_free          (void);
 
 
 #endif  /*  __PATTERN_SELECT_H__  */

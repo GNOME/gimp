@@ -44,18 +44,14 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "brush-select.h"
 #include "color-select.h"
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "error-console-dialog.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
-#include "gradient-select.h"
 #include "gui.h"
 #include "menus.h"
-#include "palette-select.h"
-#include "pattern-select.h"
 #include "session.h"
 
 #include "gimprc.h"
@@ -287,11 +283,6 @@ gui_shutdown (Gimp *gimp)
 
   if (gimprc.save_device_status)
     gimp_devices_save (gimp);
-
-  brush_dialog_free ();
-  pattern_dialog_free ();
-  palette_dialog_free ();
-  gradient_dialog_free ();
 
   gdisplays_delete ();
 }

@@ -24,17 +24,17 @@ typedef struct _GradientSelect GradientSelect;
 
 struct _GradientSelect
 {
-  GtkWidget    *shell;
+  GimpContext *context;
+  gchar       *callback_name;
+  gint         sample_size;
 
-  GtkWidget    *view;
-
-  GimpContext  *context;
-  gchar        *callback_name;
-  gint          sample_size;
+  GtkWidget   *shell;
+  GtkWidget   *view;
 };
 
 
 GradientSelect * gradient_select_new             (Gimp           *gimp,
+                                                  GimpContext    *context,
                                                   const gchar    *title,
                                                   const gchar    *initial_gradient,
                                                   const gchar    *callback_name,
@@ -44,10 +44,6 @@ void             gradient_select_free            (GradientSelect *gsp);
 
 GradientSelect * gradient_select_get_by_callback (const gchar    *callback_name);
 void             gradient_select_dialogs_check   (void);
-
-/*  the main gradient selection  */
-GtkWidget      * gradient_dialog_create          (Gimp           *gimp);
-void             gradient_dialog_free            (void);
 
 
 #endif  /*  __GRADIENT_SELECT_H__  */

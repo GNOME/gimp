@@ -39,10 +39,10 @@ sub gradients_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'gradients_callback', type => 'string', alias => 'name',
+	{ name => 'gradient_callback', type => 'string',
 	  desc => 'The callback PDB proc to call when gradient selection is
 		   made' },
-	{ name => 'popup_title', type => 'string', alias => 'title',
+	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the gradient popup window' },
 	{ name => 'initial_gradient', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
@@ -54,14 +54,18 @@ sub gradients_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)))
+  if ((prec = procedural_db_lookup (gimp, gradient_callback)))
     {
       if (initial_gradient && strlen (initial_gradient))
-	newdialog = gradient_select_new (gimp, title, initial_gradient,
-                                         name, sample_size);
+	newdialog = gradient_select_new (gimp, NULL, popup_title,
+                                         initial_gradient,
+                                         gradient_callback,
+                                         sample_size);
       else
-	newdialog = gradient_select_new (gimp, title, NULL,
-                                         name, sample_size);
+	newdialog = gradient_select_new (gimp, NULL, popup_title,
+                                         NULL,
+                                         gradient_callback,
+                                         sample_size);
     }
   else
     {
@@ -80,7 +84,7 @@ sub gradients_close_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'gradients_callback', type => 'string', alias => 'name',
+	{ name => 'gradient_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' }
     );
 
@@ -88,8 +92,8 @@ sub gradients_close_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)) &&
-      (gsp = gradient_select_get_by_callback (name)))
+  if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+      (gsp = gradient_select_get_by_callback (gradient_callback)))
     {
       gradient_select_free (gsp);
     }
@@ -110,7 +114,7 @@ sub gradients_set_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'gradients_callback', type => 'string', alias => 'pdbname',
+	{ name => 'gradient_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' },
 	{ name => 'gradient_name', type => 'string',
 	  desc => 'The name of the gradient to set as selected' }
@@ -120,8 +124,8 @@ sub gradients_set_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, pdbname)) &&
-      (gsp = gradient_select_get_by_callback (pdbname)))
+  if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+      (gsp = gradient_select_get_by_callback (gradient_callback)))
     {
       GimpGradient *active = NULL;
 

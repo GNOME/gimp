@@ -11,8 +11,8 @@
     fileops
     floating_sel
     gimprc
-    gradients
     gradient_select
+    gradients
     guides
     help
     image
@@ -22,6 +22,8 @@
     misc_tools
     paint_tools
     palette
+    palette_select
+    palettes
     parasite
     paths
     pattern_select

@@ -92,12 +92,6 @@ struct _GimpPaintOptions
 {
   GimpToolOptions  tool_options;
 
-  /*  vbox for the common paint options  */
-  GtkWidget   *paint_vbox;
-
-  /*  a widget to be shown if we are in global mode  */
-  GtkWidget   *global;
-
   /*  options used by all paint tools  */
   GtkObject   *opacity_w;
   GtkWidget   *paint_mode_w;

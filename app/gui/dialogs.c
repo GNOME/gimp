@@ -40,10 +40,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   { "gimp:toolbox",                dialogs_toolbox_get,         32, TRUE,  TRUE,  TRUE,  TRUE  },
   { "gimp:device-status-dialog",   dialogs_device_status_get,   32, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    32, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, 32, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:palette-select-dialog",  dialogs_palette_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     32, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:module-browser-dialog",  dialogs_module_browser_get,  32, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:undo-history-dialog",    dialogs_undo_history_get,    32, FALSE, FALSE, FALSE, TRUE  },

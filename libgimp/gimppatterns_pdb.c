@@ -27,7 +27,7 @@
 
 /**
  * gimp_patterns_get_pattern_data:
- * @name: the pattern name (\"\" means current active pattern).
+ * @name: the pattern name (\"\" means currently active pattern).
  * @width: The pattern width.
  * @height: The pattern height.
  * @mask_bpp: Pattern bytes per pixel.

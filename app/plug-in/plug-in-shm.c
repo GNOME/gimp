@@ -102,6 +102,7 @@
 
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
+#include "gui/palette-select.h"
 #include "gui/pattern-select.h"
 
 #include "plug-in.h"
@@ -112,7 +113,6 @@
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
-
 
 
 typedef struct _PlugInBlocked PlugInBlocked;
@@ -1232,8 +1232,9 @@ plug_in_close (PlugIn   *plug_in,
 
   /* Close any dialogs that this plugin might have opened */
   brush_select_dialogs_check ();
-  pattern_select_dialogs_check ();
   gradient_select_dialogs_check ();
+  palette_select_dialogs_check ();
+  pattern_select_dialogs_check ();
 
   open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
 }

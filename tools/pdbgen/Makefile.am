@@ -13,8 +13,8 @@ pdb_sources = \
 	pdb/fileops.pdb		\
 	pdb/floating_sel.pdb	\
 	pdb/gimprc.pdb		\
-	pdb/gradients.pdb	\
 	pdb/gradient_select.pdb	\
+	pdb/gradients.pdb	\
 	pdb/guides.pdb		\
 	pdb/help.pdb		\
 	pdb/image.pdb		\
@@ -24,6 +24,8 @@ pdb_sources = \
 	pdb/misc_tools.pdb	\
 	pdb/paint_tools.pdb	\
 	pdb/palette.pdb		\
+	pdb/palette_select.pdb	\
+	pdb/palettes.pdb	\
 	pdb/parasite.pdb	\
 	pdb/paths.pdb		\
 	pdb/pattern_select.pdb	\

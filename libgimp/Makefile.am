@@ -48,6 +48,8 @@ PDB_WRAPPERS_C = \
 	gimpmisctools_pdb.c		\
 	gimppainttools_pdb.c		\
 	gimppalette_pdb.c		\
+	gimppalettes_pdb.c		\
+	gimppaletteselect_pdb.c		\
 	gimpparasite_pdb.c		\
 	gimppaths_pdb.c			\
 	gimppatterns_pdb.c		\
@@ -85,6 +87,8 @@ PDB_WRAPPERS_H = \
 	gimpmisctools_pdb.h		\
 	gimppainttools_pdb.h		\
 	gimppalette_pdb.h		\
+	gimppalettes_pdb.h		\
+	gimppaletteselect_pdb.h		\
 	gimpparasite_pdb.h		\
 	gimppaths_pdb.h			\
 	gimppatterns_pdb.h		\

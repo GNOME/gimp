@@ -65,7 +65,6 @@ gimp_paint_options_init (GimpPaintOptions *options)
 {
   g_return_if_fail  (options != NULL);
 
-  options->global           = NULL;
   options->opacity_w        = NULL;
   options->paint_mode_w     = NULL;
   options->context          = NULL;

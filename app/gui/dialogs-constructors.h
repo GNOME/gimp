@@ -28,18 +28,6 @@ GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
 GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_brush_select_get       (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-GtkWidget * dialogs_pattern_select_get     (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-GtkWidget * dialogs_palette_select_get     (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

@@ -54,19 +54,19 @@ gradients_popup_invoker (Gimp     *gimp,
                          Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
-  gchar *title;
+  gchar *gradient_callback;
+  gchar *popup_title;
   gchar *initial_gradient;
   gint32 sample_size;
   ProcRecord *prec;
   GradientSelect *newdialog;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  gradient_callback = (gchar *) args[0].value.pdb_pointer;
+  if (gradient_callback == NULL)
     success = FALSE;
 
-  title = (gchar *) args[1].value.pdb_pointer;
-  if (title == NULL)
+  popup_title = (gchar *) args[1].value.pdb_pointer;
+  if (popup_title == NULL)
     success = FALSE;
 
   initial_gradient = (gchar *) args[2].value.pdb_pointer;
@@ -77,14 +77,18 @@ gradients_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)))
+      if ((prec = procedural_db_lookup (gimp, gradient_callback)))
 	{
 	  if (initial_gradient && strlen (initial_gradient))
-	    newdialog = gradient_select_new (gimp, title, initial_gradient,
-					     name, sample_size);
+	    newdialog = gradient_select_new (gimp, NULL, popup_title,
+					     initial_gradient,
+					     gradient_callback,
+					     sample_size);
 	  else
-	    newdialog = gradient_select_new (gimp, title, NULL,
-					     name, sample_size);
+	    newdialog = gradient_select_new (gimp, NULL, popup_title,
+					     NULL,
+					     gradient_callback,
+					     sample_size);
 	}
       else
 	{
@@ -99,7 +103,7 @@ static ProcArg gradients_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradients_callback",
+    "gradient_callback",
     "The callback PDB proc to call when gradient selection is made"
   },
   {
@@ -140,18 +144,18 @@ gradients_close_popup_invoker (Gimp     *gimp,
                                Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *gradient_callback;
   ProcRecord *prec;
   GradientSelect *gsp;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  gradient_callback = (gchar *) args[0].value.pdb_pointer;
+  if (gradient_callback == NULL)
     success = FALSE;
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (gsp = gradient_select_get_by_callback (name)))
+      if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+	  (gsp = gradient_select_get_by_callback (gradient_callback)))
 	{
 	  gradient_select_free (gsp);
 	}
@@ -168,7 +172,7 @@ static ProcArg gradients_close_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradients_callback",
+    "gradient_callback",
     "The name of the callback registered for this popup"
   }
 };
@@ -194,13 +198,13 @@ gradients_set_popup_invoker (Gimp     *gimp,
                              Argument *args)
 {
   gboolean success = TRUE;
-  gchar *pdbname;
+  gchar *gradient_callback;
   gchar *gradient_name;
   ProcRecord *prec;
   GradientSelect *gsp;
 
-  pdbname = (gchar *) args[0].value.pdb_pointer;
-  if (pdbname == NULL)
+  gradient_callback = (gchar *) args[0].value.pdb_pointer;
+  if (gradient_callback == NULL)
     success = FALSE;
 
   gradient_name = (gchar *) args[1].value.pdb_pointer;
@@ -209,8 +213,8 @@ gradients_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, pdbname)) &&
-	  (gsp = gradient_select_get_by_callback (pdbname)))
+      if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+	  (gsp = gradient_select_get_by_callback (gradient_callback)))
 	{
 	  GimpGradient *active = NULL;
     
@@ -237,7 +241,7 @@ static ProcArg gradients_set_popup_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "gradients_callback",
+    "gradient_callback",
     "The name of the callback registered for this popup"
   },
   {

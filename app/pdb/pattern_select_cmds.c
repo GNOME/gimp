@@ -53,30 +53,34 @@ patterns_popup_invoker (Gimp     *gimp,
                         Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
-  gchar *title;
-  gchar *pattern;
+  gchar *pattern_callback;
+  gchar *popup_title;
+  gchar *initial_pattern;
   ProcRecord *prec;
   PatternSelect *newdialog;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  pattern_callback = (gchar *) args[0].value.pdb_pointer;
+  if (pattern_callback == NULL)
     success = FALSE;
 
-  title = (gchar *) args[1].value.pdb_pointer;
-  if (title == NULL)
+  popup_title = (gchar *) args[1].value.pdb_pointer;
+  if (popup_title == NULL)
     success = FALSE;
 
-  pattern = (gchar *) args[2].value.pdb_pointer;
+  initial_pattern = (gchar *) args[2].value.pdb_pointer;
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)))
+      if ((prec = procedural_db_lookup (gimp, pattern_callback)))
 	{
-	  if (pattern && strlen (pattern))
-	    newdialog = pattern_select_new (gimp, title, pattern, name);
+	  if (initial_pattern && strlen (initial_pattern))
+	    newdialog = pattern_select_new (gimp, NULL, popup_title,
+					    initial_pattern,
+					    pattern_callback);
 	  else
-	    newdialog = pattern_select_new (gimp, title, NULL, name);
+	    newdialog = pattern_select_new (gimp, NULL, popup_title,
+					    NULL,
+					    pattern_callback);
 	}
       else
 	{
@@ -127,18 +131,18 @@ patterns_close_popup_invoker (Gimp     *gimp,
                               Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *pattern_callback;
   ProcRecord *prec;
   PatternSelect *psp;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  pattern_callback = (gchar *) args[0].value.pdb_pointer;
+  if (pattern_callback == NULL)
     success = FALSE;
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (psp = pattern_select_get_by_callback (name)))
+      if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+	  (psp = pattern_select_get_by_callback (pattern_callback)))
 	{
 	  pattern_select_free (psp);
 	}
@@ -181,13 +185,13 @@ patterns_set_popup_invoker (Gimp     *gimp,
                             Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *pattern_callback;
   gchar *pattern_name;
   ProcRecord *prec;
   PatternSelect *psp;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  pattern_callback = (gchar *) args[0].value.pdb_pointer;
+  if (pattern_callback == NULL)
     success = FALSE;
 
   pattern_name = (gchar *) args[1].value.pdb_pointer;
@@ -196,8 +200,8 @@ patterns_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (psp = pattern_select_get_by_callback (name)))
+      if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+	  (psp = pattern_select_get_by_callback (pattern_callback)))
 	{
 	  GimpPattern *active = (GimpPattern *)
 	    gimp_container_get_child_by_name (gimp->pattern_factory->container,

@@ -42,12 +42,12 @@ sub brushes_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', alias => 'name',
+	{ name => 'brush_callback', type => 'string',
 	  desc => 'The callback PDB proc to call when brush selection is
 		   made' },
-	{ name => 'popup_title', type => 'string', alias => 'title',
+	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the brush popup window' },
-	{ name => 'initial_brush', type => 'string', alias => 'brush',
+	{ name => 'initial_brush', type => 'string',
 	  desc => 'The name of the brush to set as the first selected',
 	  no_success => 1 },
 	&brush_args
@@ -57,15 +57,22 @@ sub brushes_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)))
+  if ((prec = procedural_db_lookup (gimp, brush_callback)))
     {
-      if (brush && strlen (brush))
-	newdialog = brush_select_new (gimp, title, brush,
+      if (initial_brush && strlen (initial_brush))
+	newdialog = brush_select_new (gimp, NULL, popup_title,
+                                      initial_brush,
                                       opacity / 100.0,
                                       spacing,
-				      paint_mode, name);
+				      paint_mode,
+                                      brush_callback);
       else
-	newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
+	newdialog = brush_select_new (gimp, NULL, popup_title,
+                                      NULL,
+                                      0.0,
+                                      0, 
+                                      0,
+                                      brush_callback);
     }
   else
     {
@@ -84,7 +91,7 @@ sub brushes_close_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', alias => 'name',
+	{ name => 'brush_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' }
     );
 
@@ -92,8 +99,8 @@ sub brushes_close_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)) &&
-      (bsp = brush_select_get_by_callback (name)))
+  if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+      (bsp = brush_select_get_by_callback (brush_callback)))
     {
       brush_select_free (bsp);
     }
@@ -114,7 +121,7 @@ sub brushes_set_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', alias => 'name',
+	{ name => 'brush_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' },
 	{ name => 'brush_name', type => 'string',
 	  desc => 'The name of the brush to set as selected' },
@@ -128,8 +135,8 @@ sub brushes_set_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)) &&
-      (bsp = brush_select_get_by_callback (name)))
+  if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+      (bsp = brush_select_get_by_callback (brush_callback)))
     {
       GimpObject *object =
         gimp_container_get_child_by_name (gimp->brush_factory->container,

@@ -23,9 +23,6 @@
 void           tool_manager_init                  (Gimp             *gimp);
 void           tool_manager_exit                  (Gimp             *gimp);
 
-void        tool_manager_set_global_paint_options (Gimp             *gimp,
-						   gboolean          global);
-
 GimpTool     * tool_manager_get_active            (Gimp             *gimp); 
 
 void           tool_manager_select_tool           (Gimp             *gimp,

@@ -56,24 +56,24 @@ brushes_popup_invoker (Gimp     *gimp,
                        Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
-  gchar *title;
-  gchar *brush;
+  gchar *brush_callback;
+  gchar *popup_title;
+  gchar *initial_brush;
   gdouble opacity;
   gint32 spacing;
   gint32 paint_mode;
   ProcRecord *prec;
   BrushSelect *newdialog;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  brush_callback = (gchar *) args[0].value.pdb_pointer;
+  if (brush_callback == NULL)
     success = FALSE;
 
-  title = (gchar *) args[1].value.pdb_pointer;
-  if (title == NULL)
+  popup_title = (gchar *) args[1].value.pdb_pointer;
+  if (popup_title == NULL)
     success = FALSE;
 
-  brush = (gchar *) args[2].value.pdb_pointer;
+  initial_brush = (gchar *) args[2].value.pdb_pointer;
 
   opacity = args[3].value.pdb_float;
   if (opacity < 0.0 || opacity > 100.0)
@@ -89,15 +89,22 @@ brushes_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)))
+      if ((prec = procedural_db_lookup (gimp, brush_callback)))
 	{
-	  if (brush && strlen (brush))
-	    newdialog = brush_select_new (gimp, title, brush,
+	  if (initial_brush && strlen (initial_brush))
+	    newdialog = brush_select_new (gimp, NULL, popup_title,
+					  initial_brush,
 					  opacity / 100.0,
 					  spacing,
-					  paint_mode, name);
+					  paint_mode,
+					  brush_callback);
 	  else
-	    newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
+	    newdialog = brush_select_new (gimp, NULL, popup_title,
+					  NULL,
+					  0.0,
+					  0, 
+					  0,
+					  brush_callback);
 	}
       else
 	{
@@ -163,18 +170,18 @@ brushes_close_popup_invoker (Gimp     *gimp,
                              Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *brush_callback;
   ProcRecord *prec;
   BrushSelect *bsp;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  brush_callback = (gchar *) args[0].value.pdb_pointer;
+  if (brush_callback == NULL)
     success = FALSE;
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (bsp = brush_select_get_by_callback (name)))
+      if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+	  (bsp = brush_select_get_by_callback (brush_callback)))
 	{
 	  brush_select_free (bsp);
 	}
@@ -217,7 +224,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
                            Argument *args)
 {
   gboolean success = TRUE;
-  gchar *name;
+  gchar *brush_callback;
   gchar *brush_name;
   gdouble opacity;
   gint32 spacing;
@@ -225,8 +232,8 @@ brushes_set_popup_invoker (Gimp     *gimp,
   ProcRecord *prec;
   BrushSelect *bsp;
 
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  brush_callback = (gchar *) args[0].value.pdb_pointer;
+  if (brush_callback == NULL)
     success = FALSE;
 
   brush_name = (gchar *) args[1].value.pdb_pointer;
@@ -247,8 +254,8 @@ brushes_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (bsp = brush_select_get_by_callback (name)))
+      if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+	  (bsp = brush_select_get_by_callback (brush_callback)))
 	{
 	  GimpObject *object =
 	    gimp_container_get_child_by_name (gimp->brush_factory->container,

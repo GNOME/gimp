@@ -85,38 +85,28 @@ static Argument *
 gradients_get_list_invoker (Gimp     *gimp,
                             Argument *args)
 {
-  gboolean success;
+  gboolean success = TRUE;
   Argument *return_args;
-  gint32 num_gradients;
   gchar **gradients;
-  GimpGradient *grad;
-  GList *list = NULL;
-  int i = 0;
+  GList *list;
+  gint i = 0;
 
-  num_gradients =
-    gimp_container_num_children (gimp->gradient_factory->container);
+  gradients = g_new (gchar *, gimp->gradient_factory->container->num_children);
 
-  gradients = g_new (gchar *, num_gradients);
-
-  if (num_gradients)
+  for (list = GIMP_LIST (gimp->gradient_factory->container)->list;
+       list;
+       list = g_list_next (list))
     {
-      list = GIMP_LIST (gimp->gradient_factory->container)->list;
+      gradients[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
     }
 
-  success = (list != NULL);
-
-  while (list)
-    {
-      grad           = list->data;
-      gradients[i++] = g_strdup (GIMP_OBJECT (grad)->name);
-      list           = list->next;
-    }
+  success = (i > 0);
 
   return_args = procedural_db_return_args (&gradients_get_list_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_gradients;
+      return_args[1].value.pdb_int = gimp->gradient_factory->container->num_children;
       return_args[2].value.pdb_pointer = gradients;
     }
 

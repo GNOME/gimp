@@ -30,12 +30,12 @@ sub patterns_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	{ name => 'pattern_callback', type => 'string',
 	  desc => 'The callback PDB proc to call when pattern selection is
 		   made' },
-	{ name => 'popup_title', type => 'string', alias => 'title',
+	{ name => 'popup_title', type => 'string',
 	  desc => 'Title to give the pattern popup window' },
-	{ name => 'initial_pattern', type => 'string', alias => 'pattern',
+	{ name => 'initial_pattern', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
 	  no_success => 1 },
     );
@@ -44,12 +44,16 @@ sub patterns_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)))
+  if ((prec = procedural_db_lookup (gimp, pattern_callback)))
     {
-      if (pattern && strlen (pattern))
-	newdialog = pattern_select_new (gimp, title, pattern, name);
+      if (initial_pattern && strlen (initial_pattern))
+	newdialog = pattern_select_new (gimp, NULL, popup_title,
+                                        initial_pattern,
+                                        pattern_callback);
       else
-	newdialog = pattern_select_new (gimp, title, NULL, name);
+	newdialog = pattern_select_new (gimp, NULL, popup_title,
+                                        NULL,
+                                        pattern_callback);
     }
   else
     {
@@ -68,7 +72,7 @@ sub patterns_close_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	{ name => 'pattern_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' }
     );
 
@@ -76,8 +80,8 @@ sub patterns_close_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)) &&
-      (psp = pattern_select_get_by_callback (name)))
+  if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+      (psp = pattern_select_get_by_callback (pattern_callback)))
     {
       pattern_select_free (psp);
     }
@@ -98,7 +102,7 @@ sub patterns_set_popup {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	{ name => 'pattern_callback', type => 'string',
 	  desc => 'The name of the callback registered for this popup' },
 	{ name => 'pattern_name', type => 'string',
 	  desc => 'The name of the pattern to set as selected' },
@@ -108,8 +112,8 @@ sub patterns_set_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, name)) &&
-      (psp = pattern_select_get_by_callback (name)))
+  if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+      (psp = pattern_select_get_by_callback (pattern_callback)))
     {
       GimpPattern *active = (GimpPattern *)
         gimp_container_get_child_by_name (gimp->pattern_factory->container,

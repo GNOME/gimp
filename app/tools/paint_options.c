@@ -51,8 +51,6 @@
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -78,10 +76,6 @@ static void   paint_options_paint_mode_changed        (GimpContext      *context
 						       gpointer          data);
 static void   paint_options_gradient_toggle_callback  (GtkWidget        *widget,
                                                        GimpPaintOptions *options);
-
-
-/*  a list of all PaintOptions  */
-static GSList *paint_options_list = NULL;
 
 
 GimpToolOptions *
@@ -112,10 +106,7 @@ paint_options_init (GimpPaintOptions *options,
   options->context = tool_info->context;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), vbox,
-		      FALSE, FALSE, 0);
-  options->paint_vbox = vbox;
+  vbox = options->tool_options.main_vbox;
 
   /*  the main table  */
   table = gtk_table_new (2, 3, FALSE);
@@ -164,7 +155,7 @@ paint_options_init (GimpPaintOptions *options,
       gtk_widget_set_sensitive (mode_label, FALSE);
     }
 
-  /*  a separator after the common paint options which can be global  */
+  /*  a separator after the common paint options  */
   if (tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       GtkWidget *separator;
@@ -173,9 +164,6 @@ paint_options_init (GimpPaintOptions *options,
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
     }
-
-  if (! gimprc.global_paint_options)
-    gtk_widget_show (vbox);
 
   /*  the "incremental" toggle  */
   if (tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
@@ -217,12 +205,6 @@ paint_options_init (GimpPaintOptions *options,
 			  options->gradient_options->frame, FALSE, FALSE, 0);
       gtk_widget_show (options->gradient_options->frame);
     }
-
-  /*  register this Paintoptions structure  */
-  paint_options_list = g_slist_prepend (paint_options_list, options);
-
-  if (gimprc.global_paint_options && options->global)
-    gtk_widget_show (options->global);
 }
 
 void
@@ -253,40 +235,6 @@ paint_options_reset (GimpToolOptions *tool_options)
 
   pressure_options_reset (options->pressure_options);
   gradient_options_reset (options->gradient_options);
-}
-
-void
-paint_options_set_global (gboolean global)
-{
-  GimpPaintOptions *options;
-  GSList           *list;
-
-  global = global ? TRUE : FALSE;
-
-  if (gimprc.global_paint_options == global)
-    return;
-
-  gimprc.global_paint_options = global;
-
-  for (list = paint_options_list; list; list = list->next)
-    {
-      options = (GimpPaintOptions *) list->data;
-
-      if (global)
-	{
-	  if (options->paint_vbox && GTK_WIDGET_VISIBLE (options->paint_vbox))
-	    gtk_widget_hide (options->paint_vbox);
-	  if (options->global && ! GTK_WIDGET_VISIBLE (options->global))
-	    gtk_widget_show (options->global);
-	}
-      else
-	{
-	  if (options->paint_vbox && ! GTK_WIDGET_VISIBLE (options->paint_vbox))
-	    gtk_widget_show (options->paint_vbox);
-	  if (options->global && GTK_WIDGET_VISIBLE (options->global))
-	    gtk_widget_hide (options->global);
-	}
-    }
 }
 
 

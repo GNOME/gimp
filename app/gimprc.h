@@ -56,7 +56,6 @@ struct _GimpRc
   gboolean           using_xserver_resolution;
   gchar             *image_title_format;
   gchar             *image_status_format;
-  gboolean           global_paint_options;
   guint              max_new_image_size;
   gboolean           trust_dirty_flag;
   gboolean           use_help;

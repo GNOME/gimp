@@ -168,7 +168,6 @@ static gboolean           old_using_xserver_resolution;
 static gint               old_num_processors;
 static gchar            * old_image_title_format;
 static gchar            * old_image_status_format;
-static gboolean           old_global_paint_options;
 static guint              old_max_new_image_size;
 static gboolean           old_write_thumbnails;
 static gboolean	          old_trust_dirty_flag;
@@ -719,11 +718,6 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "image-status-format");
     }
-  if (gimprc.global_paint_options != old_global_paint_options)
-    {
-      update = g_list_append (update, "global-paint-options");
-      remove = g_list_append (remove, "no-global-paint-options");
-    }
   if (gimprc.max_new_image_size != old_max_new_image_size)
     {
       update = g_list_append (update, "max-new-image-size");
@@ -979,8 +973,6 @@ prefs_cancel_callback (GtkWidget *widget,
   prefs_strset (&gimprc.image_status_format,    old_image_status_format);
   prefs_strset (&gimp->config->default_comment, old_default_comment);
 
-  tool_manager_set_global_paint_options (gimp, old_global_paint_options);
-
   /*  restore values which need a restart  */
   edit_stingy_memory_use         = old_stingy_memory_use;
   edit_min_colors                = old_min_colors;
@@ -1081,12 +1073,6 @@ prefs_toggle_callback (GtkWidget *widget,
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
-  else if (data == &gimprc.global_paint_options)
-    {
-      tool_manager_set_global_paint_options (gimp,
-					     GTK_TOGGLE_BUTTON (widget)->active);
-    }
-
   /*  no matching varible found  */
   else
     {
@@ -1712,7 +1698,6 @@ preferences_dialog_create (Gimp *gimp)
   old_monitor_xres             = gimprc.monitor_xres;
   old_monitor_yres             = gimprc.monitor_yres;
   old_using_xserver_resolution = gimprc.using_xserver_resolution;
-  old_global_paint_options     = gimprc.global_paint_options;
   old_max_new_image_size       = gimprc.max_new_image_size;
   old_trust_dirty_flag         = gimprc.trust_dirty_flag;
   old_use_help                 = gimprc.use_help;
@@ -2216,11 +2201,6 @@ preferences_dialog_create (Gimp *gimp)
 				     &top_iter,
 				     &child_iter,
 				     page_index++);
-
-  vbox2 = prefs_frame_new (_("Paint Options"), GTK_CONTAINER (vbox));
-
-  prefs_check_button_new (_("Use Global Paint Options"),
-                          &gimprc.global_paint_options, GTK_BOX (vbox2));
 
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_CONTAINER (vbox));
 

@@ -46,7 +46,7 @@ static ProcRecord brushes_get_spacing_proc;
 static ProcRecord brushes_set_spacing_proc;
 static ProcRecord brushes_get_paint_mode_proc;
 static ProcRecord brushes_set_paint_mode_proc;
-static ProcRecord brushes_list_proc;
+static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
@@ -61,7 +61,7 @@ register_brushes_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_set_spacing_proc);
   procedural_db_register (gimp, &brushes_get_paint_mode_proc);
   procedural_db_register (gimp, &brushes_set_paint_mode_proc);
-  procedural_db_register (gimp, &brushes_list_proc);
+  procedural_db_register (gimp, &brushes_get_list_proc);
   procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
@@ -168,7 +168,7 @@ brushes_set_brush_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpObject *object;
+  GimpBrush *brush;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -176,14 +176,13 @@ brushes_set_brush_invoker (Gimp     *gimp,
 
   if (success)
     {
-      object = gimp_container_get_child_by_name (gimp->brush_factory->container,
-						 name);
+      brush = (GimpBrush *)
+	gimp_container_get_child_by_name (gimp->brush_factory->container, name);
     
-      if (object)
-	gimp_context_set_brush (gimp_get_current_context (gimp),
-				GIMP_BRUSH (object));
-      else
-	success = FALSE;
+      success = (brush != NULL);
+    
+      if (brush)
+	gimp_context_set_brush (gimp_get_current_context (gimp), brush);
     }
 
   return procedural_db_return_args (&brushes_set_brush_proc, success);
@@ -452,26 +451,27 @@ static ProcRecord brushes_set_paint_mode_proc =
 };
 
 static Argument *
-brushes_list_invoker (Gimp     *gimp,
-                      Argument *args)
+brushes_get_list_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   gchar **brushes;
-  GList *list = NULL;
+  GList *list;
   int i = 0;
 
   brushes = g_new (char *, gimp->brush_factory->container->num_children);
 
-  success = (list = GIMP_LIST (gimp->brush_factory->container)->list) != NULL;
-
-  while (list)
+  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
+       list;
+       list = g_list_next (list))
     {
       brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-      list = list->next;
     }
 
-  return_args = procedural_db_return_args (&brushes_list_proc, success);
+  success = (i > 0);
+
+  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
 
   if (success)
     {
@@ -482,7 +482,7 @@ brushes_list_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg brushes_list_outargs[] =
+static ProcArg brushes_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
@@ -496,9 +496,9 @@ static ProcArg brushes_list_outargs[] =
   }
 };
 
-static ProcRecord brushes_list_proc =
+static ProcRecord brushes_get_list_proc =
 {
-  "gimp_brushes_list",
+  "gimp_brushes_get_list",
   "Retrieve a complete listing of the available brushes.",
   "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_brushes_set_brush'.",
   "Spencer Kimball & Peter Mattis",
@@ -508,8 +508,8 @@ static ProcRecord brushes_list_proc =
   0,
   NULL,
   2,
-  brushes_list_outargs,
-  { { brushes_list_invoker } }
+  brushes_get_list_outargs,
+  { { brushes_get_list_invoker } }
 };
 
 static Argument *
@@ -531,25 +531,15 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
     {
       if (strlen (name))
 	{
-	  GList *list;
-    
-	  success = FALSE;
-    
-	  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      brush = (GimpBrush *) list->data;
-    
-	      if (!strcmp (GIMP_OBJECT (brush)->name, name))
-		{
-		  success = TRUE;
-		  break;
-		}
-	    }
+	  brush = (GimpBrush *)
+	    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 	}
       else
-	success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;
+	{
+	  brush = gimp_context_get_brush (gimp_get_current_context (gimp));
+	}
+    
+      success = (brush != NULL);
     
       if (success)
 	{

@@ -59,7 +59,6 @@
 #include "widgets/gimpvectorslistview.h"
 
 #include "about-dialog.h"
-#include "brush-select.h"
 #include "brushes-commands.h"
 #include "buffers-commands.h"
 #include "channels-commands.h"
@@ -70,15 +69,12 @@
 #include "dialogs-constructors.h"
 #include "documents-commands.h"
 #include "error-console-dialog.h"
-#include "gradient-select.h"
 #include "gradients-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "module-browser.h"
-#include "palette-select.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"
-#include "pattern-select.h"
 #include "patterns-commands.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
@@ -166,38 +162,6 @@ dialogs_device_status_get (GimpDialogFactory *factory,
                            gint               preview_size)
 {
   return device_status_dialog_create (context->gimp);
-}
-
-GtkWidget *
-dialogs_brush_select_get (GimpDialogFactory *factory,
-			  GimpContext       *context,
-                          gint               preview_size)
-{
-  return brush_dialog_create (context->gimp);
-}
-
-GtkWidget *
-dialogs_pattern_select_get (GimpDialogFactory *factory,
-			    GimpContext       *context,
-                            gint               preview_size)
-{
-  return pattern_dialog_create (context->gimp);
-}
-
-GtkWidget *
-dialogs_gradient_select_get (GimpDialogFactory *factory,
-			     GimpContext       *context,
-                             gint               preview_size)
-{
-  return gradient_dialog_create (context->gimp);
-}
-
-GtkWidget *
-dialogs_palette_select_get (GimpDialogFactory *factory,
-			    GimpContext       *context,
-                            gint               preview_size)
-{
-  return palette_dialog_create (context->gimp);
 }
 
 GtkWidget *

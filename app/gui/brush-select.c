@@ -37,6 +37,7 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpbrushfactoryview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "brush-select.h"
@@ -53,6 +54,7 @@
 
 
 /*  local function prototypes  */
+
 static void     brush_select_change_callbacks   (BrushSelect          *bsp,
                                                  gboolean              closing);
 
@@ -67,84 +69,106 @@ static void     brush_select_paint_mode_changed (GimpContext          *context,
                                                  BrushSelect          *bsp);
 
 static void     opacity_scale_update            (GtkAdjustment        *adj,
-                                                 gpointer              data);
+                                                 BrushSelect          *bsp);
 static void     paint_mode_menu_callback        (GtkWidget            *widget,
-                                                 gpointer              data);
+                                                 BrushSelect          *bsp);
 static void     spacing_scale_update            (GtkAdjustment        *adj,
-                                                 gpointer              data);
+                                                 BrushSelect          *bsp);
 
 static void     brush_select_close_callback     (GtkWidget            *widget,
-                                                 gpointer              data);
+                                                 BrushSelect          *bsp);
 
 
 /*  list of active dialogs  */
 static GSList *brush_active_dialogs = NULL;
 
-/*  the main brush selection dialog  */
-static BrushSelect *brush_select_dialog = NULL;
-
 
 /*  public functions  */
 
-GtkWidget *
-brush_dialog_create (Gimp *gimp)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (! brush_select_dialog)
-    {
-      brush_select_dialog = brush_select_new (gimp, NULL, NULL, 0.0, 0, 0, NULL);
-    }
-
-  return brush_select_dialog->shell;
-}
-
-void
-brush_dialog_free (void)
-{
-  if (brush_select_dialog)
-    {
-      brush_select_free (brush_select_dialog);
-      brush_select_dialog = NULL;
-    }
-}
-
-
-/*  If title == NULL then it is the main brush dialog  */
 BrushSelect *
 brush_select_new (Gimp        *gimp,
+                  GimpContext *context,
                   const gchar *title,
-		  /*  These are the required initial vals
-		   *  If init_name == NULL then use current brush
-		   */
 		  const gchar *init_name,
 		  gdouble      init_opacity,
 		  gint         init_spacing,
 		  gint         init_mode,
                   const gchar *callback_name)
 {
-  BrushSelect *bsp;
-  GtkWidget   *main_vbox;
-  GtkWidget   *sep;
-  GtkWidget   *table;
-  GtkWidget   *slider;
-
-  GimpBrush *active = NULL;
+  BrushSelect   *bsp;
+  GtkWidget     *sep;
+  GtkWidget     *table;
+  GtkWidget     *slider;
+  GtkAdjustment *spacing_adj;
+  GimpBrush     *active = NULL;
 
   static gboolean first_call = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (title != NULL, NULL);
+
+  if (gimp->no_data && first_call)
+    gimp_data_factory_data_init (gimp->brush_factory, FALSE);
+
+  first_call = FALSE;
+
+  if (init_name && strlen (init_name))
+    {
+      active = (GimpBrush *)
+	gimp_container_get_child_by_name (gimp->brush_factory->container,
+					  init_name);
+    }
+
+  if (! active)
+    {
+      if (context)
+        active = gimp_context_get_brush (context);
+      else
+        active = gimp_context_get_brush (gimp_get_current_context (gimp));
+    }
+
+  if (! active)
+    return NULL;
 
   bsp = g_new0 (BrushSelect, 1);
 
+  /*  Add to active brush dialogs list  */
+  brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
+
+  bsp->context       = gimp_context_new (gimp, title, context);
   bsp->callback_name = g_strdup (callback_name);
 
+  if (context)
+    {
+      gimp_context_define_properties (bsp->context,
+                                      GIMP_CONTEXT_OPACITY_MASK    |
+                                      GIMP_CONTEXT_PAINT_MODE_MASK |
+                                      GIMP_CONTEXT_BRUSH_MASK,
+                                      FALSE);
+      gimp_context_set_parent (bsp->context, context);
+    }
+
+  gimp_context_set_brush (bsp->context, active);
+  gimp_context_set_paint_mode (bsp->context, init_mode);
+  gimp_context_set_opacity (bsp->context, init_opacity);
+  bsp->spacing_value = init_spacing;
+
+  g_signal_connect (G_OBJECT (bsp->context), "brush_changed",
+                    G_CALLBACK (brush_select_brush_changed),
+                    bsp);
+  g_signal_connect (G_OBJECT (bsp->context), "opacity_changed",
+                    G_CALLBACK (brush_select_opacity_changed),
+                    bsp);
+  g_signal_connect (G_OBJECT (bsp->context), "paint_mode_changed",
+                    G_CALLBACK (brush_select_paint_mode_changed),
+                    bsp);
+
   /*  The shell  */
-  bsp->shell = gimp_dialog_new (title ? title : _("Brush Selection"),
-				"brush_selection",
+  bsp->shell = gimp_dialog_new (title, "brush_selection",
 				gimp_standard_help_func,
 				"dialogs/brush_selection.html",
-				title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
+				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
 				"_delete_event_", brush_select_close_callback,
@@ -155,70 +179,28 @@ brush_select_new (Gimp        *gimp,
   gtk_dialog_set_has_separator (GTK_DIALOG (bsp->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (bsp->shell)->action_area);
 
-  if (title)
-    {
-      bsp->context = gimp_context_new (gimp, title, NULL);
-    }
-  else
-    {
-      bsp->context = gimp_get_user_context (gimp);
-    }
-
-  if (gimp->no_data && first_call)
-    gimp_data_factory_data_init (gimp->brush_factory, FALSE);
-
-  first_call = FALSE;
-
-  if (title && init_name && strlen (init_name))
-    {
-      active = (GimpBrush *)
-	gimp_container_get_child_by_name (gimp->brush_factory->container,
-					  init_name);
-    }
-  else
-    {
-      active = gimp_context_get_brush (gimp_get_user_context (gimp));
-    }
-
-  if (!active)
-    active = gimp_context_get_brush (gimp_get_standard_context (gimp));
-
-  if (title)
-    {
-      gimp_context_set_brush (bsp->context, active);
-      gimp_context_set_paint_mode (bsp->context, init_mode);
-      gimp_context_set_opacity (bsp->context, init_opacity);
-      bsp->spacing_value = init_spacing;
-    }
-
-  /*  The main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), main_vbox);
-
   /*  The Brush Grid  */
-  bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					   gimp->brush_factory,
-					   dialogs_edit_brush_func,
-					   bsp->context,
-					   title ? FALSE : TRUE,
-					   MIN_CELL_SIZE,
-					   STD_BRUSH_COLUMNS,
-					   STD_BRUSH_ROWS,
-					   NULL);
-  gtk_box_pack_start (GTK_BOX (main_vbox), bsp->view, TRUE, TRUE, 0);
-  gtk_widget_show (bsp->view);
+  bsp->view =
+    gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                 gimp->brush_factory,
+                                 dialogs_edit_brush_func,
+                                 bsp->context,
+                                 title ? FALSE : TRUE,
+                                 MIN_CELL_SIZE,
+                                 STD_BRUSH_COLUMNS,
+                                 STD_BRUSH_ROWS,
+                                 gimp_item_factory_from_path ("<Brushes>"));
 
-  /*  The vbox for the paint options  */
-  bsp->paint_options_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (bsp->view), bsp->paint_options_box,
-		      FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);
+  gtk_widget_show (bsp->view);
 
   /*  Create the frame and the table for the options  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), table, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (bsp->view), table, FALSE, FALSE, 2);
+  gtk_widget_show (table);
 
   /*  Create the opacity scale widget  */
   bsp->opacity_data = 
@@ -245,55 +227,26 @@ brush_select_new (Gimp        *gimp,
 			     _("Mode:"), 1.0, 0.5,
 			     bsp->option_menu, 1, TRUE);
 
-  gtk_widget_show (table);
-  gtk_widget_show (bsp->paint_options_box);
-
   /*  A separator after the paint options  */
   sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (bsp->view), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  if (title && init_spacing >= 0)
+  spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
+
+  if (init_spacing >= 0)
     {
-      GtkAdjustment *adj;
-
-      adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
-
       /*  Use passed spacing instead of brushes default  */
-      gtk_adjustment_set_value (adj, init_spacing);
+      gtk_adjustment_set_value (spacing_adj, init_spacing);
     }
 
-  g_signal_connect
-    (G_OBJECT (GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment),
-     "value_changed",
-     G_CALLBACK (spacing_scale_update),
-     bsp);
+  g_signal_connect (G_OBJECT (spacing_adj), "value_changed",
+                    G_CALLBACK (spacing_scale_update),
+                    bsp);
 
   gtk_widget_show (table);
 
-  gtk_widget_show (main_vbox);
-
-  /*  Only for main dialog  */
-  if (! title)
-    {
-      /*  if we are in per-tool paint options mode, hide the paint options  */
-      brush_select_show_paint_options (bsp, gimprc.global_paint_options);
-    }
-
   gtk_widget_show (bsp->shell);
-
-  g_signal_connect (G_OBJECT (bsp->context), "brush_changed",
-                    G_CALLBACK (brush_select_brush_changed),
-                    bsp);
-  g_signal_connect (G_OBJECT (bsp->context), "opacity_changed",
-                    G_CALLBACK (brush_select_opacity_changed),
-                    bsp);
-  g_signal_connect (G_OBJECT (bsp->context), "paint_mode_changed",
-                    G_CALLBACK (brush_select_paint_mode_changed),
-                    bsp);
-
-  /*  Add to active brush dialogs list  */
-  brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
 
   return bsp;
 }
@@ -308,76 +261,86 @@ brush_select_free (BrushSelect *bsp)
   /* remove from active list */
   brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
-                                        brush_select_brush_changed,
-                                        bsp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
-                                        brush_select_opacity_changed,
-                                        bsp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
-                                        brush_select_paint_mode_changed,
-                                        bsp);
-  
   if (bsp->callback_name)
-    {
-      g_free (bsp->callback_name);
-      g_object_unref (G_OBJECT (bsp->context));
-    }
+    g_free (bsp->callback_name);
+
+  if (bsp->context)
+    g_object_unref (G_OBJECT (bsp->context));
 
   g_free (bsp);
 }
 
-void
-brush_select_show_paint_options (BrushSelect *bsp,
-				 gboolean     show)
+BrushSelect *
+brush_select_get_by_callback (const gchar *callback_name)
 {
-  if ((bsp == NULL) && ((bsp = brush_select_dialog) == NULL))
-    return;
+  GSList      *list;
+  BrushSelect *bsp;
 
-  if (show)
+  for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
-      if (! GTK_WIDGET_VISIBLE (bsp->paint_options_box))
-	gtk_widget_show (bsp->paint_options_box);
+      bsp = (BrushSelect *) list->data;
+
+      if (bsp->callback_name && ! strcmp (callback_name, bsp->callback_name))
+	return bsp;
     }
-  else
+
+  return NULL;
+}
+
+void
+brush_select_dialogs_check (void)
+{
+  BrushSelect *bsp;
+  GSList      *list;
+  ProcRecord  *proc = NULL;
+
+  list = brush_active_dialogs;
+
+  while (list)
     {
-      if (GTK_WIDGET_VISIBLE (bsp->paint_options_box))
-	gtk_widget_hide (bsp->paint_options_box);
+      bsp = (BrushSelect *) list->data;
+
+      list = g_slist_next (list);
+
+      if (bsp->callback_name)
+        {
+          proc = procedural_db_lookup (bsp->context->gimp, bsp->callback_name);
+
+          if (! proc)
+            brush_select_close_callback (NULL, bsp);
+        }
     }
 }
 
-/*  call this dialog's PDB callback  */
+
+/*  private functions  */
 
 static void
 brush_select_change_callbacks (BrushSelect *bsp,
 			       gboolean     closing)
 {
-  gchar      *name;
-  ProcRecord *prec = NULL;
+  ProcRecord *proc = NULL;
   GimpBrush  *brush;
+  Argument   *return_vals; 
   gint        nreturn_vals;
 
   static gboolean busy = FALSE;
 
-  /* Any procs registered to callback? */
-  Argument *return_vals; 
-
-  if (!bsp || !bsp->callback_name || busy)
+  if (! (bsp && bsp->callback_name) || busy)
     return;
 
   busy  = TRUE;
 
-  name  = bsp->callback_name;
   brush = gimp_context_get_brush (bsp->context);
 
   /* If its still registered run it */
-  prec = procedural_db_lookup (bsp->context->gimp, name);
+  proc = procedural_db_lookup (bsp->context->gimp, bsp->callback_name);
 
-  if (prec && brush)
+  if (proc && brush)
     {
       return_vals =
 	procedural_db_run_proc (bsp->context->gimp,
-				name,
+				bsp->callback_name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (brush)->name,
 				GIMP_PDB_FLOAT,     gimp_context_get_opacity (bsp->context) * 100.0,
@@ -402,65 +365,12 @@ brush_select_change_callbacks (BrushSelect *bsp,
   busy = FALSE;
 }
 
-BrushSelect *
-brush_select_get_by_callback (const gchar *callback_name)
-{
-  GSList      *list;
-  BrushSelect *bsp;
-
-  for (list = brush_active_dialogs; list; list = g_slist_next (list))
-    {
-      bsp = (BrushSelect *) list->data;
-
-      if (bsp->callback_name && ! strcmp (callback_name, bsp->callback_name))
-	return bsp;
-    }
-
-  return NULL;
-}
-
-/* Close active dialogs that no longer have PDB registered for them */
-
-void
-brush_select_dialogs_check (void)
-{
-  BrushSelect *bsp;
-  GSList      *list;
-  gchar       *name;
-  ProcRecord  *prec = NULL;
-
-  list = brush_active_dialogs;
-
-  while (list)
-    {
-      bsp = (BrushSelect *) list->data;
-      list = g_slist_next (list);
-
-      name = bsp->callback_name;
-
-      if (name)
-	{
-	  prec = procedural_db_lookup (bsp->context->gimp, name);
-
-	  if (!prec)
-	    {
-	      /*  Can alter brush_active_dialogs list  */
-	      brush_select_close_callback (NULL, bsp);
-	    }
-	}
-    }
-}
-
-/*
- *  Local functions
- */
-
 static void
 brush_select_brush_changed (GimpContext *context,
 			    GimpBrush   *brush,
 			    BrushSelect *bsp)
 {
-  if (brush && bsp->callback_name)
+  if (brush)
     {
       brush_select_change_callbacks (bsp, FALSE);
     }
@@ -482,8 +392,7 @@ brush_select_opacity_changed (GimpContext *context,
 				     opacity_scale_update,
 				     bsp);
 
-  if (bsp->callback_name)
-    brush_select_change_callbacks (bsp, FALSE);
+  brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void
@@ -494,37 +403,29 @@ brush_select_paint_mode_changed (GimpContext          *context,
   gimp_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
 				GINT_TO_POINTER (paint_mode));
 
-  if (bsp->callback_name)
-    brush_select_change_callbacks (bsp, FALSE);
+  brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void
 opacity_scale_update (GtkAdjustment *adjustment,
-		      gpointer       data)
+		      BrushSelect   *bsp)
 {
-  BrushSelect *bsp;
-
-  bsp = (BrushSelect *) data;
-
   g_signal_handlers_block_by_func (G_OBJECT (bsp->context),
 				   brush_select_opacity_changed,
-				   data);
+				   bsp);
 
   gimp_context_set_opacity (bsp->context, adjustment->value / 100.0);
 
   g_signal_handlers_unblock_by_func (G_OBJECT (bsp->context),
 				     brush_select_opacity_changed,
-				     data);
+				     bsp);
 }
 
 static void
-paint_mode_menu_callback (GtkWidget *widget,
-			  gpointer   data)
+paint_mode_menu_callback (GtkWidget   *widget,
+			  BrushSelect *bsp)
 {
-  BrushSelect          *bsp;
   GimpLayerModeEffects  paint_mode;
-
-  bsp = (BrushSelect *) data;
 
   paint_mode = (GimpLayerModeEffects)
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
@@ -534,13 +435,9 @@ paint_mode_menu_callback (GtkWidget *widget,
 
 static void
 spacing_scale_update (GtkAdjustment *adjustment,
-		      gpointer       data)
+		      BrushSelect   *bsp)
 {
-  BrushSelect *bsp;
-
-  bsp = (BrushSelect *) data;
-
-  if (bsp->callback_name && bsp->spacing_value != adjustment->value)
+  if (bsp->spacing_value != adjustment->value)
     {
       bsp->spacing_value = adjustment->value;
       brush_select_change_callbacks (bsp, FALSE);
@@ -548,21 +445,9 @@ spacing_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-brush_select_close_callback (GtkWidget *widget,
-			     gpointer   data)
+brush_select_close_callback (GtkWidget   *widget,
+			     BrushSelect *bsp)
 {
-  BrushSelect *bsp;
-
-  bsp = (BrushSelect *) data;
-
-  if (GTK_WIDGET_VISIBLE (bsp->shell))
-    gtk_widget_hide (bsp->shell);
-
-  /* Free memory if poping down dialog which is not the main one */
-  if (bsp != brush_select_dialog)
-    {
-      /* Send data back */
-      brush_select_change_callbacks (bsp, TRUE);
-      brush_select_free (bsp); 
-    }
+  brush_select_change_callbacks (bsp, TRUE);
+  brush_select_free (bsp); 
 }

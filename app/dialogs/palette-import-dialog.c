@@ -57,24 +57,25 @@ typedef struct _ImportDialog ImportDialog;
 
 struct _ImportDialog
 {
-  GtkWidget     *dialog;
+  GtkWidget      *dialog;
 
-  GimpContext   *context;
-  ImportType     import_type;
+  GimpContext    *context;
+  GradientSelect *gradient_select;
+  ImportType      import_type;
 
-  GtkWidget     *select_area;
-  GtkWidget     *preview;
-  GtkWidget     *select_button;
-  GtkWidget     *image_menu;
+  GtkWidget      *select_area;
+  GtkWidget      *preview;
+  GtkWidget      *select_button;
+  GtkWidget      *image_menu;
 
-  GtkWidget     *entry;
-  GtkWidget     *image_menu_item_image;
-  GtkWidget     *image_menu_item_gradient;
-  GtkWidget     *type_option;
-  GtkWidget     *threshold_scale;
-  GtkWidget     *threshold_text;
-  GtkAdjustment *threshold;
-  GtkAdjustment *sample;
+  GtkWidget      *entry;
+  GtkWidget      *image_menu_item_image;
+  GtkWidget      *image_menu_item_gradient;
+  GtkWidget      *type_option;
+  GtkWidget      *threshold_scale;
+  GtkWidget      *threshold_text;
+  GtkAdjustment  *threshold;
+  GtkAdjustment  *sample;
 };
 
 
@@ -91,10 +92,22 @@ palette_import_select_grad_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   ImportDialog *import_dialog;
+  GimpGradient *gradient;
 
   import_dialog = (ImportDialog *) data;
 
-  gradient_dialog_create (import_dialog->context->gimp);
+  gradient = gimp_context_get_gradient (import_dialog->context);
+
+  import_dialog->gradient_select =
+    gradient_select_new (import_dialog->context->gimp,
+                         import_dialog->context,
+                         _("Select a Gradient to Create a Palette from"),
+                         GIMP_OBJECT (gradient)->name,
+                         NULL,
+                         0);
+
+  g_object_add_weak_pointer (G_OBJECT (import_dialog->gradient_select->shell),
+                             (gpointer *) &import_dialog->gradient_select);
 }
 
 static void
@@ -263,6 +276,9 @@ static void
 palette_import_close_callback (GtkWidget *widget,
 			       gpointer   data)
 {
+  if (import_dialog->gradient_select)
+    gradient_select_free (import_dialog->gradient_select);
+
   gtk_widget_destroy (import_dialog->dialog);
   g_free (import_dialog);
   import_dialog = NULL;
@@ -349,8 +365,8 @@ palette_import_dialog_new (Gimp *gimp)
 
   import_dialog = g_new0 (ImportDialog, 1);
 
-  import_dialog->context    = gimp_context_new (gimp, "Palette Import",
-                                                gimp_get_user_context (gimp));
+  import_dialog->context = gimp_context_new (gimp, "Palette Import",
+                                             gimp_get_user_context (gimp));
 
   import_dialog->dialog =
     gimp_dialog_new (_("Import Palette"), "import_palette",

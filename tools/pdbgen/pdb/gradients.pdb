@@ -60,32 +60,25 @@ HELP
 	{ name => 'gradient_names', type => 'stringarray',
 	  desc => 'The list of gradient names', alias => 'gradients',
 	  array => { name => 'num_gradients',
-		     desc => 'The number of loaded gradients' } }
+		     desc => 'The number of loaded gradients',
+		     alias => 'gimp->gradient_factory->container->num_children',
+                     no_declare => 1 } }
     );
 
     %invoke = (
-	vars => [ 'GimpGradient *grad', 'GList *list = NULL', 'int i = 0' ],
-	success => 'NONE',
+	vars => [ 'GList *list', 'gint i = 0' ],
 	code => <<'CODE'
 {
-  num_gradients =
-    gimp_container_num_children (gimp->gradient_factory->container);
+  gradients = g_new (gchar *, gimp->gradient_factory->container->num_children);
 
-  gradients = g_new (gchar *, num_gradients);
-
-  if (num_gradients)
+  for (list = GIMP_LIST (gimp->gradient_factory->container)->list;
+       list;
+       list = g_list_next (list))
     {
-      list = GIMP_LIST (gimp->gradient_factory->container)->list;
+      gradients[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
     }
 
-  success = (list != NULL);
-
-  while (list)
-    {
-      grad           = list->data;
-      gradients[i++] = g_strdup (GIMP_OBJECT (grad)->name);
-      list           = list->next;
-    }
+  success = (i > 0);
 }
 CODE
     );

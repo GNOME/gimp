@@ -25,20 +25,14 @@
 
 /*  paint tool options functions  */
 
-GimpToolOptions * paint_options_new        (GimpToolInfo     *tool_info);
+GimpToolOptions * paint_options_new   (GimpToolInfo     *tool_info);
 
-void              paint_options_reset      (GimpToolOptions  *tool_options);
+void              paint_options_reset (GimpToolOptions  *tool_options);
 
 
 /*  to be used by "derived" paint options only  */
-void              paint_options_init       (GimpPaintOptions *options,
-                                            GimpToolInfo     *tool_info);
-
-
-/*  functions for the global paint options  */
-
-/*  switch between global and per-tool paint options  */
-void              paint_options_set_global (gboolean          global);
+void              paint_options_init  (GimpPaintOptions *options,
+                                       GimpToolInfo     *tool_info);
 
 
 #endif  /*  __PAINT_OPTIONS_H__  */

@@ -133,7 +133,7 @@ tool_manager_init (Gimp *gimp)
 
   gimp_tool_info_set_standard (gimp, tool_manager_get_info_by_type (gimp, GIMP_TYPE_RECT_SELECT_TOOL));
 
-  if (! gimprc.global_paint_options && tool_manager->active_tool)
+  if (tool_manager->active_tool)
     {
       tool_context = tool_manager->active_tool->tool_info->context;
 
@@ -141,10 +141,6 @@ tool_manager_init (Gimp *gimp)
 	{
 	  gimp_context_set_parent (tool_context, user_context);
 	}
-    }
-  else if (gimprc.global_paint_options)
-    {
-      gimp_context_set_parent (tool_manager->global_tool_context, user_context);
     }
 
   gimp_container_thaw (gimp->tool_info_list);
@@ -167,55 +163,6 @@ tool_manager_exit (Gimp *gimp)
   g_free (tool_manager);
 
   tool_manager_set (gimp, NULL);
-}
-
-void
-tool_manager_set_global_paint_options (Gimp     *gimp,
-				       gboolean  global)
-{
-  GimpToolManager *tool_manager;
-  GimpToolInfo    *tool_info;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (global == gimprc.global_paint_options)
-    return;
-
-  tool_manager = tool_manager_get (gimp);
-
-  paint_options_set_global (global);
-
-  /*  NULL is the main brush selection  */
-  brush_select_show_paint_options (NULL, global);
-
-  tool_info = gimp_context_get_tool (gimp_get_user_context (gimp));
-
-  if (global)
-    {
-      if (tool_info && tool_info->context)
-	{
-	  gimp_context_unset_parent (tool_info->context);
-	}
-
-      gimp_context_copy_properties (tool_manager->global_tool_context,
-				    gimp_get_user_context (gimp),
-				    PAINT_OPTIONS_MASK);
-      gimp_context_set_parent (tool_manager->global_tool_context,
-			       gimp_get_user_context (gimp));
-    }
-  else
-    {
-      gimp_context_unset_parent (tool_manager->global_tool_context);
-
-      if (tool_info && tool_info->context)
-	{
-	  gimp_context_copy_properties (tool_info->context,
-					gimp_get_user_context (gimp),
-					GIMP_CONTEXT_PAINT_PROPS_MASK);
-	  gimp_context_set_parent (tool_info->context,
-				   gimp_get_user_context (gimp));
-	}
-    }
 }
 
 GimpTool *
@@ -720,20 +667,17 @@ tool_manager_tool_changed (GimpContext  *user_context,
       return;
     }
 
-  if (! gimprc.global_paint_options)
+  if (tool_manager->active_tool &&
+      (tool_context = tool_manager->active_tool->tool_info->context))
     {
-      if (tool_manager->active_tool &&
-	  (tool_context = tool_manager->active_tool->tool_info->context))
-	{
-	  gimp_context_unset_parent (tool_context);
-	}
+      gimp_context_unset_parent (tool_context);
+    }
 
-      if ((tool_context = tool_info->context))
-	{
-	  gimp_context_copy_properties (tool_context, user_context,
-					PAINT_OPTIONS_MASK);
-	  gimp_context_set_parent (tool_context, user_context);
-	}
+  if ((tool_context = tool_info->context))
+    {
+      gimp_context_copy_properties (tool_context, user_context,
+                                    PAINT_OPTIONS_MASK);
+      gimp_context_set_parent (tool_context, user_context);
     }
 
   tool_manager_select_tool (user_context->gimp, new_tool);

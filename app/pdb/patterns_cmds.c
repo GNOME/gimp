@@ -39,7 +39,7 @@
 static ProcRecord patterns_refresh_proc;
 static ProcRecord patterns_get_pattern_proc;
 static ProcRecord patterns_set_pattern_proc;
-static ProcRecord patterns_list_proc;
+static ProcRecord patterns_get_list_proc;
 static ProcRecord patterns_get_pattern_data_proc;
 
 void
@@ -48,7 +48,7 @@ register_patterns_procs (Gimp *gimp)
   procedural_db_register (gimp, &patterns_refresh_proc);
   procedural_db_register (gimp, &patterns_get_pattern_proc);
   procedural_db_register (gimp, &patterns_set_pattern_proc);
-  procedural_db_register (gimp, &patterns_list_proc);
+  procedural_db_register (gimp, &patterns_get_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
 
@@ -141,7 +141,6 @@ patterns_set_pattern_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *name;
   GimpPattern *pattern;
-  GList *list;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -149,21 +148,13 @@ patterns_set_pattern_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = FALSE;
+      pattern = (GimpPattern *)
+	gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
     
-      for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
-	   list;
-	   list = g_list_next (list))
-	{
-	  pattern = (GimpPattern *) list->data;
+      success = (pattern != NULL);
     
-	  if (! strcmp (GIMP_OBJECT (pattern)->name, name))
-	    {
-	      gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
-	      success = TRUE;
-	      break;
-	    }
-	}
+      if (success)
+	gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
     }
 
   return procedural_db_return_args (&patterns_set_pattern_proc, success);
@@ -195,26 +186,27 @@ static ProcRecord patterns_set_pattern_proc =
 };
 
 static Argument *
-patterns_list_invoker (Gimp     *gimp,
-                       Argument *args)
+patterns_get_list_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   gchar **patterns;
-  GList *list = NULL;
+  GList *list;
   gint i = 0;
 
   patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
 
-  success = ((list = GIMP_LIST (gimp->pattern_factory->container)->list) != NULL);
-
-  while (list)
+  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
+       list;
+       list = g_list_next (list))
     {
       patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-      list = list->next;
     }
 
-  return_args = procedural_db_return_args (&patterns_list_proc, success);
+  success = (i > 0);
+
+  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
 
   if (success)
     {
@@ -225,7 +217,7 @@ patterns_list_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg patterns_list_outargs[] =
+static ProcArg patterns_get_list_outargs[] =
 {
   {
     GIMP_PDB_INT32,
@@ -239,9 +231,9 @@ static ProcArg patterns_list_outargs[] =
   }
 };
 
-static ProcRecord patterns_list_proc =
+static ProcRecord patterns_get_list_proc =
 {
-  "gimp_patterns_list",
+  "gimp_patterns_get_list",
   "Retrieve a complete listing of the available patterns.",
   "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_patterns_set_pattern'.",
   "Spencer Kimball & Peter Mattis",
@@ -251,8 +243,8 @@ static ProcRecord patterns_list_proc =
   0,
   NULL,
   2,
-  patterns_list_outargs,
-  { { patterns_list_invoker } }
+  patterns_get_list_outargs,
+  { { patterns_get_list_invoker } }
 };
 
 static Argument *
@@ -274,25 +266,16 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
     {
       if (strlen (name))
 	{
-	  GList *list;
-    
-	  success = FALSE;
-    
-	  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      pattern = (GimpPattern *) list->data;
-    
-	      if (!strcmp (GIMP_OBJECT (pattern)->name, name))
-		{
-		  success = TRUE;
-		  break;
-		}
-	    }
+	  pattern = (GimpPattern *)
+	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
+					      name);
 	}
       else
-	success = (pattern = gimp_context_get_pattern (gimp_get_current_context (gimp))) != NULL;
+	{
+	  pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
+	}
+    
+      success = (pattern != NULL);
     
       if (success)
 	{
@@ -323,7 +306,7 @@ static ProcArg patterns_get_pattern_data_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "the pattern name (\"\" means current active pattern)"
+    "the pattern name (\"\" means currently active pattern)"
   }
 };
 

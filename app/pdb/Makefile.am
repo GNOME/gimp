@@ -29,6 +29,8 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	misc_tools_cmds.c	\
 	paint_tools_cmds.c	\
 	palette_cmds.c		\
+	palette_select_cmds.c	\
+	palettes_cmds.c		\
 	parasite_cmds.c		\
 	paths_cmds.c		\
 	pattern_select_cmds.c	\
@@ -44,6 +46,9 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	undo_cmds.c		\
 	unit_cmds.c		\
 @STRIP_END@
+
+## This is a truly ugly hack
+libapppdb_a_LIBADD = ../gui/pattern-select.o ../gui/brush-select.o
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
