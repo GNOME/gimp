@@ -3,7 +3,8 @@
 	* app/core/gimpbrush.c
 	* app/paint/gimppaintcore.c
 	* app/tools/gimpcurvestool.c
-	* app/tools/gimptool.c: removed trailing whitespace.
+	* app/tools/gimptool.c
+	* app/tools/tool_manager.c: removed trailing whitespace.
 
 2003-07-10  Michael Natterer  <mitch@gimp.org>
 
