@@ -29,6 +29,7 @@ plug-ins/common/borderaverage.c
 plug-ins/common/bumpmap.c
 plug-ins/common/bz2.c
 plug-ins/common/c_astretch.c
+plug-ins/common/cartoon.c
 plug-ins/common/ccanalyze.c
 plug-ins/common/channel_mixer.c
 plug-ins/common/checkerboard.c
@@ -85,6 +86,7 @@ plug-ins/common/max_rgb.c
 plug-ins/common/mblur.c
 plug-ins/common/mng.c
 plug-ins/common/mosaic.c
+plug-ins/common/neon.c
 plug-ins/common/newsprint.c
 plug-ins/common/nlfilt.c
 plug-ins/common/noisify.c
@@ -94,6 +96,7 @@ plug-ins/common/oilify.c
 plug-ins/common/papertile.c
 plug-ins/common/pat.c
 plug-ins/common/pcx.c
+plug-ins/common/photocopy.c
 plug-ins/common/pix.c
 plug-ins/common/pixelize.c
 plug-ins/common/plasma.c
@@ -119,6 +122,7 @@ plug-ins/common/sinus.c
 plug-ins/common/smooth_palette.c
 plug-ins/common/snoise.c
 plug-ins/common/sobel.c
+plug-ins/common/softglow.c
 plug-ins/common/sparkle.c
 plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
