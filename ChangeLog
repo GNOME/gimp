@@ -1,3 +1,10 @@
+2002-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/gimpmodule.c: on error, always close the module
+	using gimp_module_close(), not g_module_close() so all stuff gets
+	reset. Set module->state *after* calling gimp_module_close().
+	Added more error checking & messages.
+
 2002-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppickbutton.[ch]: new GtkButton subclass

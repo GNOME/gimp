@@ -162,7 +162,6 @@ gimp_module_load (GTypeModule *module)
 {
   GimpModule *gimp_module;
   gpointer    symbol;
-  gboolean    retval;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
@@ -183,29 +182,38 @@ gimp_module_load (GTypeModule *module)
   /* find the gimp_module_register symbol */
   if (! g_module_symbol (gimp_module->module, "gimp_module_register", &symbol))
     {
-      gimp_module->state = GIMP_MODULE_STATE_ERROR;
-
       gimp_module_set_last_error (gimp_module,
                                   "Missing gimp_module_register() symbol");
 
       if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
 		   gimp_module->filename, gimp_module->last_module_error);
-      g_module_close (gimp_module->module);
-      gimp_module->module = NULL;
+
+      gimp_module_close (gimp_module);
+
+      gimp_module->state = GIMP_MODULE_STATE_ERROR;
       return FALSE;
     }
 
   gimp_module->register_module = symbol;
 
-  retval = gimp_module->register_module (module);
+  if (! gimp_module->register_module (module))
+    {
+      gimp_module_set_last_error (gimp_module,
+                                  "gimp_module_register() returned FALSE");
 
-  if (retval)
-    gimp_module->state = GIMP_MODULE_STATE_LOADED_OK;
-  else
-    gimp_module->state = GIMP_MODULE_STATE_LOAD_FAILED;
+      if (gimp_module->verbose)
+	g_message (_("Module '%s' load error:\n%s"),
+		   gimp_module->filename, gimp_module->last_module_error);
 
-  return retval;
+      gimp_module_close (gimp_module);
+
+      gimp_module->state = GIMP_MODULE_STATE_LOAD_FAILED;
+      return FALSE;
+    }
+
+  gimp_module->state = GIMP_MODULE_STATE_LOADED_OK;
+  return TRUE;
 }
 
 static void
@@ -277,16 +285,15 @@ gimp_module_query_module (GimpModule *module)
   /* find the gimp_module_query symbol */
   if (! g_module_symbol (module->module, "gimp_module_query", &symbol))
     {
-      module->state = GIMP_MODULE_STATE_ERROR;
-
       gimp_module_set_last_error (module, "Missing gimp_module_query() symbol");
 
       if (module->verbose)
 	g_print (_("Module '%s' load error:\n%s"),
                  module->filename, module->last_module_error);
 
-
       gimp_module_close (module);
+
+      module->state = GIMP_MODULE_STATE_ERROR;
       return FALSE;
     }
 
@@ -302,8 +309,6 @@ gimp_module_query_module (GimpModule *module)
 
   if (! info)
     {
-      module->state = GIMP_MODULE_STATE_ERROR;
-
       gimp_module_set_last_error (module, "gimp_module_query() returned NULL");
 
       if (module->verbose)
@@ -311,6 +316,8 @@ gimp_module_query_module (GimpModule *module)
 		   module->filename, module->last_module_error);
 
       gimp_module_close (module);
+
+      module->state = GIMP_MODULE_STATE_ERROR;
       return FALSE;
     }
 
