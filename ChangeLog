@@ -1,3 +1,8 @@
+Sat Nov 28 03:36:54 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* /app/gimage_mask_cmds.c: fixed an obvious bug (thanks to 
+	Wolfgang Hofer <wolfgang.hofer@siemens.at> for reporting it)
+
 Fri Nov 27 17:34:57 1998  Owen Taylor  <otaylor@redhat.com>
 
 	* app/ink.c: Use MAX when combining multiple blobs,

@@ -1042,9 +1042,9 @@ gimage_mask_load_invoker (Argument *args)
 	}
       else
         {
+          gimage = drawable_gimage (GIMP_DRAWABLE(channel));
 	  success = (drawable_width (GIMP_DRAWABLE(channel)) == gimage->width && 
 		     drawable_height (GIMP_DRAWABLE(channel)) == gimage->height);
-          gimage = drawable_gimage (GIMP_DRAWABLE(channel));
 	}
     }
 
