@@ -22,7 +22,7 @@ datadir = $(prefix)/@DATADIRNAME@
 localedir = $(datadir)/locale
 gnulocaledir = $(prefix)/share/locale
 gettextsrcdir = $(prefix)/share/gettext/po
-subdir = po-plug-ins
+subdir = plug-ins/perl/po
 
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -73,7 +73,7 @@ INSTOBJEXT = @INSTOBJEXT@
 	  && rm -f $$file && $(GMSGFMT) -o $$file $<
 
 .po.cat:
-	sed -f ../intl/po2msg.sed < $< > $*.msg \
+	sed -f ../../../intl/po2msg.sed < $< > $*.msg \
 	  && rm -f $@ && $(GENCAT) $@ $*.msg
 
 
@@ -91,7 +91,7 @@ $(srcdir)/$(PACKAGE).pot: $(POTFILES)
 $(srcdir)/cat-id-tbl.c: stamp-cat-id; @:
 $(srcdir)/stamp-cat-id: $(PACKAGE).pot
 	rm -f cat-id-tbl.tmp
-	sed -f ../intl/po2tbl.sed $(srcdir)/$(PACKAGE).pot \
+	sed -f ../../../intl/po2tbl.sed $(srcdir)/$(PACKAGE).pot \
 		| sed -e "s/@PACKAGE NAME@/$(PACKAGE)/" > cat-id-tbl.tmp
 	if cmp -s cat-id-tbl.tmp $(srcdir)/cat-id-tbl.c; then \
 	  rm cat-id-tbl.tmp; \
@@ -178,7 +178,7 @@ uninstall:
 
 check: all
 
-cat-id-tbl.o: ../intl/libgettext.h
+cat-id-tbl.o: ../../../intl/libgettext.h
 
 dvi info tags TAGS ID:
 
@@ -236,8 +236,8 @@ POTFILES: POTFILES.in
 	    && chmod a-w $@-t \
 	    && mv $@-t $@ )
 
-Makefile: Makefile.in.in ../config.status POTFILES
-	cd .. \
+Makefile: Makefile.in.in ../../../config.status POTFILES
+	cd ../../.. \
 	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
 	       $(SHELL) ./config.status
 

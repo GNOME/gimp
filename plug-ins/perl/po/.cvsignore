@@ -1,9 +1,9 @@
-Makefile
-pm_to_blib
 *.gmo
 *.mo
-gimp-perl.pot
+Makefile
+Makefile.in
+POTFILES
+cat-id-tbl.c
+*.pot
+stamp-cat-id
 messages
-translation
-tables
-blib

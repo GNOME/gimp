@@ -631,7 +631,7 @@ if test "x$enable_perl" != xno; then
       $PERL Makefile.PL --writemakefile $perl_prefix
 EOF
       GIMP_PERL=perl
-      GIMP_PERL_PO=po-perl
+      GIMP_PERL_PO=plug-ins/perl/po
    else
       GIMP_PERL=
       GIMP_PERL_PO=
@@ -831,7 +831,7 @@ build/Makefile
 build/win32/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
-po-perl/Makefile.in
+plug-ins/perl/po/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 intl/Makefile
@@ -875,7 +875,7 @@ help/images/Makefile],
    chmod +x gimptool
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
-   sed -e "/POTFILES =/r po-perl/POTFILES" po-perl/Makefile.in > po-perl/Makefile
+   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
    case "$CONFIG_FILES" in
