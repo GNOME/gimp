@@ -65,6 +65,10 @@ Most file-formats can't handle layers and for that reason only
 the active layer is saved.  Use XCF, the GIMP's native file format 
 to keep layers, channels and guides when saving.
 
+Not all effects can be applied to all kinds of images.  This 
+is indicated by a grayed-out menu-entry.  You may need to 
+change the image to RGB, add an alpha-channel or flatten it.
+
 # Tips for intermediate users start here
 #
 
