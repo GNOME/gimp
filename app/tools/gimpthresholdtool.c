@@ -39,6 +39,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 
@@ -251,10 +252,27 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
   GimpToolOptions   *tool_options;
+  GtkWidget         *vbox;
+  GtkWidget         *hbox;
+  GtkWidget         *menu;
   GtkWidget         *box;
 
+  tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
+
+  vbox = image_map_tool->main_vbox;
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
+                                       "histogram-scale", "gimp-histogram",
+                                       0, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
+
   box = gimp_histogram_box_new (_("Threshold Range:"));
-  gtk_container_add (GTK_CONTAINER (image_map_tool->main_vbox), box);
+  gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
@@ -263,7 +281,6 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 
-  tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        t_tool->histogram_box->view);
 }

@@ -47,6 +47,7 @@
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 
@@ -398,6 +399,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkObject       *data;
   gint             border;
 
+  tool_options = GIMP_TOOL (tool)->tool_info->tool_options;
+
   vbox = image_map_tool->main_vbox;
 
   /*  The option menu for selecting channels  */
@@ -420,13 +423,18 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   tool->channel_menu = menu;
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (levels_channel_reset_callback),
                     tool);
 
+  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
+                                       "histogram-scale", "gimp-histogram",
+                                       0, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
 
   /*  Input levels frame  */
   frame = gtk_frame_new (_("Input Levels"));
@@ -447,7 +455,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), tool->hist_view);
   gtk_widget_show (GTK_WIDGET (tool->hist_view));
 
-  tool_options = GIMP_TOOL (tool)->tool_info->tool_options;
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        GIMP_HISTOGRAM_VIEW (tool->hist_view));
 

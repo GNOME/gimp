@@ -1,3 +1,10 @@
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c: added buttons to toggle the
+	histogram scale from the tool dialogs. Fixes bug #136227.
+
 2004-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): if we
