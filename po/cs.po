@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.11.
+# Czech translation of GIMP 1.1.13.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-11-25 12:08-0800\n"
-"PO-Revision-Date: 1999-11-19 11:30+01:00\n"
+"Project-Id-Version: GIMP 1.1.13\n"
+"POT-Creation-Date: 1999-11-26 11:05+0100\n"
+"PO-Revision-Date: 1999-11-26 11:23+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,9 +18,9 @@ msgid "About the GIMP"
 msgstr "O programu GIMP"
 
 #: app/about_dialog.c:234
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s brought to you by"
-msgstr " pro vás napsali"
+msgstr "Verzi %s pro vás napsali"
 
 #: app/about_dialog.c:274
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -293,7 +293,7 @@ msgstr "Editor ¹tìtcù"
 #: app/color_notebook.c:112 app/color_picker.c:297 app/colormap_dialog.i.c:147
 #: app/colormap_dialog.i.c:157 app/crop.c:1041 app/devices.c:755
 #: app/docindexif.c:104 app/errorconsole.c:277 app/gdisplay_ops.c:354
-#: app/gradient.c:890 app/gradient_select.c:150 app/histogram_tool.c:291
+#: app/gradient.c:890 app/gradient_select.c:150 app/histogram_tool.c:292
 #: app/info_window.c:300 app/lc_dialog.c:196 app/measure.c:270
 #: app/nav_window.c:1366 app/palette.c:2015 app/palette.c:2031
 #: app/palette.c:3066 app/palette_select.c:62 app/pattern_select.c:171
@@ -521,17 +521,17 @@ msgid "Empty Channel Copy"
 msgstr "Kopie prázdného kanálu"
 
 #: app/channels_dialog.c:1386 app/color_balance.c:341 app/curves.c:414
-#: app/histogram_tool.c:271 app/levels.c:243
+#: app/histogram_tool.c:272 app/levels.c:243
 msgid "Red"
 msgstr "Èervená"
 
 #: app/channels_dialog.c:1390 app/color_balance.c:366 app/curves.c:415
-#: app/histogram_tool.c:272 app/levels.c:244
+#: app/histogram_tool.c:273 app/levels.c:244
 msgid "Green"
 msgstr "Zelená"
 
 #: app/channels_dialog.c:1394 app/color_balance.c:391 app/curves.c:416
-#: app/histogram_tool.c:273 app/levels.c:245
+#: app/histogram_tool.c:274 app/levels.c:245
 msgid "Blue"
 msgstr "Modrá"
 
@@ -621,9 +621,8 @@ msgid "Color Balance"
 msgstr "Vyvá¾ení barev"
 
 #: app/color_balance.c:286
-#, fuzzy
 msgid "Color Levels:"
-msgstr "Úrovnì barev: "
+msgstr "Úrovnì barev:"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:326
@@ -698,7 +697,7 @@ msgstr "Index:"
 msgid "Hex Triplet"
 msgstr "Hex trojice"
 
-#: app/color_picker.c:272 app/histogram_tool.c:263
+#: app/color_picker.c:272 app/histogram_tool.c:264
 msgid "Intensity:"
 msgstr "Intenzita:"
 
@@ -927,7 +926,7 @@ msgstr "Automaticky zú¾it"
 msgid "Curves Options"
 msgstr "Volby køivek"
 
-#: app/curves.c:413 app/histogram_tool.c:270 app/layers_dialog.c:242
+#: app/curves.c:413 app/histogram_tool.c:271 app/layers_dialog.c:242
 #: app/levels.c:242 app/paint_funcs.c:96 app/tool_options.c:1003
 msgid "Value"
 msgstr "Jas"
@@ -954,15 +953,13 @@ msgid "Curves"
 msgstr "Køivky"
 
 #: app/curves.c:577
-#, fuzzy
 msgid "Modify Curves for Channel:"
-msgstr "Upravit køivky pro kanál: "
+msgstr "Upravit køivky pro kanál:"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:658
-#, fuzzy
 msgid "Curve Type:"
-msgstr "Typ køivky: "
+msgstr "Typ køivky:"
 
 #: app/desaturate.c:35
 msgid "Desaturate operates only on RGB color drawables."
@@ -1797,9 +1794,9 @@ msgstr ""
 "\"%s\" ze seznamu a z disku?"
 
 #: app/gradient.c:2008
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open \"%s\""
-msgstr "Nelze znovu otevøít %s\n"
+msgstr "Nelze otevøít \"%s\""
 
 #: app/gradient.c:2130
 #, c-format
@@ -2060,36 +2057,36 @@ msgstr "Volby histogramu"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogram nefunguje na indexovaných obrazovkách."
 
-#: app/histogram_tool.c:259
+#: app/histogram_tool.c:260
 msgid "Mean:"
 msgstr "Prùmìr:"
 
-#: app/histogram_tool.c:260
+#: app/histogram_tool.c:261
 msgid "Std Dev:"
 msgstr "Rozptyl:"
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:262
 msgid "Median:"
 msgstr "Medián:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:263
 msgid "Pixels:"
 msgstr "Pixelù:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:265
 msgid "Count:"
 msgstr "Poèet:"
 
-#: app/histogram_tool.c:265
+#: app/histogram_tool.c:266
 msgid "Percentile:"
 msgstr "Procento:"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:286 app/tools.c:733
+#: app/histogram_tool.c:287 app/tools.c:733
 msgid "Histogram"
 msgstr "Histogram"
 
-#: app/histogram_tool.c:310
+#: app/histogram_tool.c:311
 msgid "Information on Channel:"
 msgstr "Informace o kanálu:"
 
@@ -3165,19 +3162,16 @@ msgid "Levels"
 msgstr "Úrovnì"
 
 #: app/levels.c:388
-#, fuzzy
 msgid "Modify Levels for Channel:"
-msgstr "Úpravy úrovní pro kanál: "
+msgstr "Úpravy úrovní pro kanál:"
 
 #: app/levels.c:404
-#, fuzzy
 msgid "Input Levels:"
-msgstr "Vstupní úrovnì: "
+msgstr "Vstupní úrovnì:"
 
 #: app/levels.c:513
-#, fuzzy
 msgid "Output Levels:"
-msgstr "Výstupní úrovnì: "
+msgstr "Výstupní úrovnì:"
 
 #: app/levels.c:617 app/module_db.c:825
 msgid "Load"
@@ -3361,29 +3355,24 @@ msgid "degrees"
 msgstr "stupnì"
 
 #: app/menus.c:69
-#, fuzzy
 msgid "/Filters/Render/Clouds"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Výpoèty/Mraky"
 
 #: app/menus.c:70
-#, fuzzy
 msgid "/Filters/Render/Nature"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Výpoèty/Pøíroda"
 
 #: app/menus.c:71
-#, fuzzy
 msgid "/Filters/Render/Pattern"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Výpoèty/Vzorek"
 
 #: app/menus.c:72
-#, fuzzy
 msgid "/Filters/Colors/Map"
-msgstr "/Soubor/Zavøít"
+msgstr "/Filtry/Barvy/Mapování"
 
 #: app/menus.c:73
-#, fuzzy
 msgid "/Filters/Misc"
-msgstr "/Filtry"
+msgstr "/Filtry/Rùzné"
 
 #. <Toolbox>/File
 #: app/menus.c:84 app/menus.c:194
@@ -3391,14 +3380,12 @@ msgid "/File"
 msgstr "/Soubor"
 
 #: app/menus.c:86 app/menus.c:196
-#, fuzzy
 msgid "/File/New..."
-msgstr "/Soubor/Nový"
+msgstr "/Soubor/Nový..."
 
 #: app/menus.c:88 app/menus.c:198
-#, fuzzy
 msgid "/File/Open..."
-msgstr "/Soubor/Otevøít"
+msgstr "/Soubor/Otevøít..."
 
 #: app/menus.c:95
 msgid "/File/Acquire"
@@ -3462,42 +3449,37 @@ msgstr "/Soubor/Dialogy/Zobrazovací filtry..."
 
 #. <Toolbox>/Xtns
 #: app/menus.c:150
-#, fuzzy
 msgid "/Xtns"
-msgstr "/Úpravy/---"
+msgstr "/Roz¹."
 
 #: app/menus.c:152
-#, fuzzy
 msgid "/Xtns/Module Browser..."
-msgstr "/Doplòky/Dialogy/Prohlí¾eè modulù"
+msgstr "/Roz¹./Prohlí¾eè modulù..."
 
 #. <Toolbox>/Help
 #: app/menus.c:160
 msgid "/Help"
-msgstr ""
+msgstr "/Pomoc"
 
 #: app/menus.c:162
-#, fuzzy
 msgid "/Help/Help..."
-msgstr "/Soubor/Nápovìda..."
+msgstr "/Pomoc/Nápovìda..."
 
 #: app/menus.c:164
 msgid "/Help/Context Help..."
-msgstr ""
+msgstr "/Pomoc/Kontextová nápovìda..."
 
 #: app/menus.c:166
-#, fuzzy
 msgid "/Help/Tip of the day..."
-msgstr "/Soubor/Tip dne"
+msgstr "/Pomoc/Tip dne..."
 
 #: app/menus.c:168
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/Soubor/O programu..."
+msgstr "/Pomoc/O programu..."
 
 #: app/menus.c:170
 msgid "/Help/Dump Items (Debug)"
-msgstr ""
+msgstr "/Pomoc/Vypsat polo¾ky (ladìní)"
 
 #: app/menus.c:182 app/menus.c:211
 msgid "/File/Quit"
@@ -3508,9 +3490,8 @@ msgid "/File/Save"
 msgstr "/Soubor/Zapsat"
 
 #: app/menus.c:202
-#, fuzzy
 msgid "/File/Save as..."
-msgstr "/Soubor/Zapsat jako"
+msgstr "/Soubor/Zapsat jako..."
 
 #: app/menus.c:204
 msgid "/File/Revert"
@@ -3555,24 +3536,20 @@ msgstr "/Úpravy/Vlo¾it jako nové"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:241
-#, fuzzy
 msgid "/Edit/Buffer"
-msgstr "/Úpravy/tearoff1"
+msgstr "/Úpravy/Buffer"
 
 #: app/menus.c:243
-#, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
-msgstr "/Úpravy/Vyøíznout pojmenované"
+msgstr "/Úpravy/Buffer/Vyøíznout pojmenované..."
 
 #: app/menus.c:245
-#, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
-msgstr "/Úpravy/Kopírovat pojmenované"
+msgstr "/Úpravy/Buffer/Kopírovat pojmenované..."
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
-msgstr "/Úpravy/Vlo¾it pojmenované"
+msgstr "/Úpravy/Buffer/Vlo¾it pojmenované..."
 
 #: app/menus.c:252
 msgid "/Edit/Clear"
@@ -3608,28 +3585,24 @@ msgid "/Select/Float"
 msgstr "/Výbìr/Plovoucí"
 
 #: app/menus.c:277
-#, fuzzy
 msgid "/Select/Feather..."
-msgstr "/Výbìr/Zaoblení"
+msgstr "/Výbìr/Zaoblení..."
 
 #: app/menus.c:279
 msgid "/Select/Sharpen"
 msgstr "/Výbìr/Zaostøení"
 
 #: app/menus.c:281
-#, fuzzy
 msgid "/Select/Shrink..."
-msgstr "/Výbìr/Zmen¹it"
+msgstr "/Výbìr/Zmen¹it..."
 
 #: app/menus.c:283
-#, fuzzy
 msgid "/Select/Grow..."
-msgstr "/Výbìr/Zvìt¹it"
+msgstr "/Výbìr/Zvìt¹it..."
 
 #: app/menus.c:285
-#, fuzzy
 msgid "/Select/Border..."
-msgstr "/Výbìr/Obvod"
+msgstr "/Výbìr/Obvod..."
 
 #: app/menus.c:290
 msgid "/Select/Save To Channel"
@@ -3702,9 +3675,8 @@ msgid "/View/Nav. Window..."
 msgstr "/Zobrazení/Navigaèní okno..."
 
 #: app/menus.c:334
-#, fuzzy
 msgid "/View/Undo history..."
-msgstr "/Úpravy/Historie vracení..."
+msgstr "/Zobrazení/Historie vracení..."
 
 #: app/menus.c:339
 msgid "/View/Toggle Selection"
@@ -3741,24 +3713,20 @@ msgstr "/Obrázek"
 
 #. <Image>/Image/Mode
 #: app/menus.c:367
-#, fuzzy
 msgid "/Image/Mode"
-msgstr "/Obrázek/RGB barvy"
+msgstr "/Obrázek/Re¾im"
 
 #: app/menus.c:369
-#, fuzzy
 msgid "/Image/Mode/RGB"
-msgstr "/Obrázek/RGB barvy"
+msgstr "/Obrázek/Re¾im/RGB barvy"
 
 #: app/menus.c:371
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "/Obrázek/Odstíny ¹edi"
+msgstr "/Obrázek/Re¾im/Odstíny ¹edi"
 
 #: app/menus.c:373
-#, fuzzy
 msgid "/Image/Mode/Indexed..."
-msgstr "/Obrázek/Indexovaný"
+msgstr "/Obrázek/Re¾im/Indexovaný..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:381
@@ -3775,14 +3743,12 @@ msgstr "/Obrázek/Barvy/Invertovat"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:396
-#, fuzzy
 msgid "/Image/Colors/Auto"
-msgstr "/Obrázek/Barvy"
+msgstr "/Obrázek/Barvy/Auto"
 
 #: app/menus.c:398
-#, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Obrázek/Barvy/Ekvalizace"
+msgstr "/Obrázek/Barvy/Auto/Ekvalizace"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:406
@@ -3795,29 +3761,24 @@ msgstr "/Obrázek/Alfa/Pøidat alfa kanál"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:413
-#, fuzzy
 msgid "/Image/Transforms"
 msgstr "/Obrázek/Transformace"
 
 #: app/menus.c:415
-#, fuzzy
 msgid "/Image/Transforms/Offset..."
-msgstr "/Obrázek/Transformace/Posun"
+msgstr "/Obrázek/Transformace/Posun..."
 
 #: app/menus.c:417
-#, fuzzy
 msgid "/Image/Transforms/Rotate"
-msgstr "/Obrázek/Transformace/tearoff1"
+msgstr "/Obrázek/Transformace/Rotace"
 
 #: app/menus.c:424
-#, fuzzy
 msgid "/Image/Canvas Size..."
-msgstr "/Obrázek/Rozmìry plátna"
+msgstr "/Obrázek/Rozmìry plátna..."
 
 #: app/menus.c:426
-#, fuzzy
 msgid "/Image/Scale Image..."
-msgstr "/Obrázek/Velikost"
+msgstr "/Obrázek/Velikost obrázku..."
 
 #: app/menus.c:428
 msgid "/Image/Duplicate"
@@ -3834,7 +3795,6 @@ msgstr "/Vrstvy/Vrstvy a kanály..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:443
-#, fuzzy
 msgid "/Layers/Stack"
 msgstr "/Vrstvy/Zásobník"
 
@@ -3864,18 +3824,16 @@ msgstr "/Vrstvy/Zásobník/Vrstvu dospod"
 
 #. <Image>/Layers/Rotate
 #: app/menus.c:462
-#, fuzzy
 msgid "/Layers/Rotate"
-msgstr "/Vrstvy/Zásobník/tearoff1"
+msgstr "/Vrstvy/Rotace"
 
 #: app/menus.c:467
 msgid "/Layers/Anchor Layer"
 msgstr "/Vrstvy/Pohltit vrstvu"
 
 #: app/menus.c:469
-#, fuzzy
 msgid "/Layers/Merge Visible Layers..."
-msgstr "/Vrstvy/Slouèit viditelné vrstvy"
+msgstr "/Vrstvy/Slouèit viditelné vrstvy..."
 
 #: app/menus.c:471
 msgid "/Layers/Flatten Image"
@@ -3924,84 +3882,68 @@ msgid "/Filters/Re-show last"
 msgstr "/Filtry/Zobrazit minulý"
 
 #: app/menus.c:515
-#, fuzzy
 msgid "/Filters/Blur"
-msgstr "/Filtry"
+msgstr "/Filtry/Rozostøení"
 
 #: app/menus.c:518
-#, fuzzy
 msgid "/Filters/Colors"
-msgstr "/Soubor/Zavøít"
+msgstr "/Filtry/Barvy"
 
 #: app/menus.c:523
-#, fuzzy
 msgid "/Filters/Noise"
-msgstr "/Filtry"
+msgstr "/Filtry/©um"
 
 #: app/menus.c:525
-#, fuzzy
 msgid "/Filters/Edge-Detect"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Detekce hran"
 
 #: app/menus.c:527
-#, fuzzy
 msgid "/Filters/Enhance"
-msgstr "/Filtry"
+msgstr "/Filtry/Vylep¹ení"
 
 #: app/menus.c:529
-#, fuzzy
 msgid "/Filters/Generic"
-msgstr "/Filtry/tearoff1"
+msgstr "/Filtry/Obecné"
 
 #: app/menus.c:534
-#, fuzzy
 msgid "/Filters/Glass Effects"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Efekty se sklem"
 
 #: app/menus.c:536
-#, fuzzy
 msgid "/Filters/Light Effects"
-msgstr "/Filtry/tearoff1"
+msgstr "/Filtry/Efekty se svìtlem"
 
 #: app/menus.c:538
-#, fuzzy
 msgid "/Filters/Distorts"
-msgstr "/Soubor/Dialogy"
+msgstr "/Filtry/Zkreslení"
 
 #: app/menus.c:540
-#, fuzzy
 msgid "/Filters/Artistic"
-msgstr "/Filtry/Opakovat minulý"
+msgstr "/Filtry/Umìní"
 
 #: app/menus.c:542
-#, fuzzy
 msgid "/Filters/Map"
-msgstr "/Filtry"
+msgstr "/Filtry/Mapování"
 
 #: app/menus.c:544
-#, fuzzy
 msgid "/Filters/Render"
-msgstr "/Soubor/Navrátit"
+msgstr "/Filtry/Výpoèty"
 
 #: app/menus.c:546
-#, fuzzy
 msgid "/Filters/Web"
-msgstr "/Filtry"
+msgstr "/Filtry/Web"
 
 #: app/menus.c:551
-#, fuzzy
 msgid "/Filters/Animation"
-msgstr "/Filtry/tearoff1"
+msgstr "/Filtry/Animace"
 
 #: app/menus.c:553
-#, fuzzy
 msgid "/Filters/Combine"
-msgstr "/Soubor/Zavøít"
+msgstr "/Filtry/Kombinace"
 
 #: app/menus.c:558
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/Filtry"
+msgstr "/Filtry/Hraèky"
 
 #. <Image>/Script-Fu
 #: app/menus.c:563
@@ -4010,7 +3952,6 @@ msgstr "/Script-Fu"
 
 #. <Image>/Dialogs
 #: app/menus.c:568
-#, fuzzy
 msgid "/Dialogs"
 msgstr "/Dialogy"
 
@@ -4071,9 +4012,8 @@ msgid "/By extension"
 msgstr "/Podle pøípony"
 
 #: app/menus.c:640
-#, fuzzy
 msgid "/New Layer..."
-msgstr "/Nová vrstva"
+msgstr "/Nová vrstva..."
 
 #. <Layers>/Stack
 #: app/menus.c:645
@@ -4118,17 +4058,15 @@ msgstr "/Smazat vrstvu"
 
 #: app/menus.c:669
 msgid "/Layer Boundary Size..."
-msgstr ""
+msgstr "/Rozmìry hranic vrstvy..."
 
 #: app/menus.c:671
-#, fuzzy
 msgid "/Scale Layer..."
-msgstr "/Velikost vrstvy"
+msgstr "/Velikost vrstvy..."
 
 #: app/menus.c:676
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "/Slouèit viditelné vrstvy"
+msgstr "/Slouèit viditelné vrstvy..."
 
 #: app/menus.c:678
 msgid "/Merge Down"
@@ -4139,14 +4077,12 @@ msgid "/Flatten Image"
 msgstr "/Slouèit obraz"
 
 #: app/menus.c:685
-#, fuzzy
 msgid "/Add Layer Mask..."
-msgstr "/Pøidat masku vrstvy"
+msgstr "/Pøidat masku vrstvy..."
 
 #: app/menus.c:687
-#, fuzzy
 msgid "/Apply Layer Mask..."
-msgstr "/Pou¾ít masku vrstvy"
+msgstr "/Pou¾ít masku vrstvy..."
 
 #: app/menus.c:689
 msgid "/Mask to Selection"
@@ -4161,9 +4097,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alfa do výbìru"
 
 #: app/menus.c:707
-#, fuzzy
 msgid "/New Channel..."
-msgstr "/Nový kanál"
+msgstr "/Nový kanál..."
 
 #: app/menus.c:709
 msgid "/Raise Channel"
@@ -4230,14 +4165,12 @@ msgid "/Paste Path"
 msgstr "/Vlo¾it cestu"
 
 #: app/menus.c:759
-#, fuzzy
 msgid "/Import Path..."
-msgstr "/Import cesty"
+msgstr "/Import cesty..."
 
 #: app/menus.c:761
-#, fuzzy
 msgid "/Export Path..."
-msgstr "/Export cesty"
+msgstr "/Export cesty..."
 
 #: app/menus.c:1210
 #, c-format
@@ -4341,14 +4274,13 @@ msgstr "Volby pøesunu"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, fuzzy, c-format
+#, c-format
 msgid "Window Navigation:%s-%d.%d"
-msgstr "%s: Navigaèní okno"
+msgstr "Navigaèní okno: %s-%d.%d"
 
 #: app/nav_window.c:1552
-#, fuzzy
 msgid "No image: Window Navigation"
-msgstr "%s: Navigaèní okno"
+msgstr "Navigaèní okno: Není obrázek"
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4714,9 +4646,8 @@ msgid "Posterize"
 msgstr "Posterizace"
 
 #: app/posterize.c:213
-#, fuzzy
 msgid "Posterize Levels:"
-msgstr "Úrovnì posterizace: "
+msgstr "Úrovnì posterizace:"
 
 #: app/preferences_dialog.c:215
 msgid "Error: Levels of undo must be zero or greater."
@@ -4743,9 +4674,8 @@ msgid "Error: Default unit must be within unit range."
 msgstr "Chyba: Implicitní jednotky musejí být v rozsahu jednotek."
 
 #: app/preferences_dialog.c:253
-#, fuzzy
 msgid "Error: Default resolution must not be zero."
-msgstr "Chyba: implicitní rozli¹ení nesmí být nula."
+msgstr "Chyba: Implicitní rozli¹ení nesmí být nula."
 
 #: app/preferences_dialog.c:261
 msgid "Error: Default resolution unit must be within unit range."
@@ -4868,18 +4798,16 @@ msgid "Scaling"
 msgstr "Zmìna velikosti"
 
 #: app/preferences_dialog.c:1439
-#, fuzzy
 msgid "Nearest Neighbor (Fast)"
-msgstr "Nejbli¾¹í soused"
+msgstr "Nejbli¾¹í soused (rychlá)"
 
 #: app/preferences_dialog.c:1443
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "Kubická (pomalá)"
 
 #: app/preferences_dialog.c:1447
-#, fuzzy
 msgid "Interpolation Type:"
-msgstr "Kubická interpolace"
+msgstr "Typ interpolace:"
 
 #: app/preferences_dialog.c:1452
 msgid "Interface Settings"
@@ -4911,16 +4839,15 @@ msgstr "Délka seznamu pøede¹lých dokumentù:"
 
 #: app/preferences_dialog.c:1532
 msgid "Dialog Behaviour"
-msgstr ""
+msgstr "Chování dialogu"
 
 #: app/preferences_dialog.c:1541
 msgid "Navigation Window per Display"
-msgstr ""
+msgstr "Navigaèní okno na obrazovku"
 
 #: app/preferences_dialog.c:1552
-#, fuzzy
 msgid "Help System Settings"
-msgstr "Systém nápovìdy"
+msgstr "Nastavení systém nápovìdy"
 
 #: app/preferences_dialog.c:1554
 msgid "Help System"
@@ -5323,9 +5250,8 @@ msgid "Size"
 msgstr "Velikost"
 
 #: app/resize.c:160
-#, fuzzy
 msgid "Scale Image"
-msgstr "Zapsat obrázek"
+msgstr "Velikost obrázeku"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
@@ -5333,11 +5259,11 @@ msgstr "Velikosti pixelu"
 
 #: app/resize.c:172
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "Nastavení rozmìrù hranic vrstvy"
 
 #: app/resize.c:177
 msgid "Set Canvas Size"
-msgstr ""
+msgstr "Nastavení velikosti plátna"
 
 #. the original width & height labels
 #: app/resize.c:234 app/scale_tool.c:77
@@ -5502,9 +5428,8 @@ msgid "Threshold"
 msgstr "Práh"
 
 #: app/threshold.c:287
-#, fuzzy
 msgid "Threshold Range:"
-msgstr "Rozsah prahu: "
+msgstr "Rozsah prahu:"
 
 #: app/tile_cache.c:270
 msgid "starting tile preswapper\n"
@@ -5994,75 +5919,66 @@ msgid "Select regions by color"
 msgstr "Výbìr oblastí ohranièených barvou"
 
 #: app/tools.c:616
-#, fuzzy
 msgid "/Image/Colors/Color Balance..."
-msgstr "/Obrázek/Barvy/Vyvá¾ení barev"
+msgstr "/Obrázek/Barvy/Vyvá¾ení barev..."
 
 #: app/tools.c:619
 msgid "Adjust color balance"
 msgstr "Nastavení vyvá¾ení barev"
 
 #: app/tools.c:633
-#, fuzzy
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/Obrázek/Barvy/Jas-kontrast"
+msgstr "/Obrázek/Barvy/Jas-kontrast..."
 
 #: app/tools.c:636
 msgid "Adjust brightness and contrast"
 msgstr "Nastavení jasu a kontrastu"
 
 #: app/tools.c:650
-#, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Obrázek/Barvy/Odstín-sytost"
+msgstr "/Obrázek/Barvy/Odstín-sytost..."
 
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
 msgstr "Nastavení odstínu a sytosti"
 
 #: app/tools.c:667
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/Obrázek/Barvy/Posterizace"
+msgstr "/Obrázek/Barvy/Posterizace..."
 
 #: app/tools.c:670
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Redukuje obrázek do pevného poètu barev"
 
 #: app/tools.c:684
-#, fuzzy
 msgid "/Image/Colors/Threshold..."
-msgstr "/Obrázek/Barvy/Práh"
+msgstr "/Obrázek/Barvy/Práh..."
 
 #: app/tools.c:687
 msgid "Reduce image to two colors using a threshold"
 msgstr "Redukuje obrázek do dvou barev s pou¾itím prahu"
 
 #: app/tools.c:701
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/Obrázek/Barvy/Køivky"
+msgstr "/Obrázek/Barvy/Køivky..."
 
 #: app/tools.c:704
 msgid "Adjust color curves"
 msgstr "Nastavení barevných køivek"
 
 #: app/tools.c:718
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/Obrázek/Barvy/Úrovnì"
+msgstr "/Obrázek/Barvy/Úrovnì..."
 
 #: app/tools.c:721
 msgid "Adjust color levels"
 msgstr "Nastavení úrovní barev"
 
 #: app/tools.c:735
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/Obrázek/Histogram"
+msgstr "/Obrázek/Histogram..."
 
 #: app/tools.c:738
-#, fuzzy
 msgid "View image histogram"
 msgstr "Zobrazit histogram obrázku"
 
@@ -6483,16 +6399,14 @@ msgstr ""
 #~ msgid "/File/Dialogs/tearoff1"
 #~ msgstr "/Soubor/Dialogy/tearoff1"
 
-#, fuzzy
 #~ msgid "/File/Dialogs/---"
-#~ msgstr "/Soubor/Dialogy"
+#~ msgstr "/Soubor/Dialogy/---"
 
 #~ msgid "/Xtns/tearoff1"
-#~ msgstr "/Doplòky/tearoff1"
+#~ msgstr "/Roz¹./tearoff1"
 
-#, fuzzy
 #~ msgid "/Help/tearoff1"
-#~ msgstr "/Výbìr/tearoff1"
+#~ msgstr "/Pomoc/tearoff1"
 
 #~ msgid "/tearoff1"
 #~ msgstr "/tearoff1"
@@ -6506,6 +6420,9 @@ msgstr ""
 #~ msgid "/Edit/---"
 #~ msgstr "/Úpravy/---"
 
+#~ msgid "/Edit/Buffer/tearoff1"
+#~ msgstr "/Úpravy/Buffer/tearoff1"
+
 #~ msgid "/Select/tearoff1"
 #~ msgstr "/Výbìr/tearoff1"
 
@@ -6515,9 +6432,8 @@ msgstr ""
 #~ msgid "/View/tearoff1"
 #~ msgstr "/Zobrazení/tearoff1"
 
-#, fuzzy
 #~ msgid "/View/Zoom/tearoff1"
-#~ msgstr "/Zobrazení/tearoff1"
+#~ msgstr "/Zobrazení/Zvìt¹ení/tearoff1"
 
 #~ msgid "/View/---"
 #~ msgstr "/Zobrazení/---"
@@ -6525,13 +6441,11 @@ msgstr ""
 #~ msgid "/Image/tearoff1"
 #~ msgstr "/Obrázek/tearoff1"
 
-#, fuzzy
 #~ msgid "/Image/Mode/tearoff1"
-#~ msgstr "/Obrázek/tearoff1"
+#~ msgstr "/Obrázek/Re¾im/tearoff1"
 
-#, fuzzy
 #~ msgid "/Image/Mode/---"
-#~ msgstr "/Obrázek/---"
+#~ msgstr "/Obrázek/Re¾im/---"
 
 #~ msgid "/Image/Colors/tearoff1"
 #~ msgstr "/Obrázek/Barvy/tearoff1"
@@ -6539,15 +6453,20 @@ msgstr ""
 #~ msgid "/Image/Colors/---"
 #~ msgstr "/Obrázek/Barvy/---"
 
-#, fuzzy
 #~ msgid "/Image/Colors/Auto/tearoff1"
-#~ msgstr "/Obrázek/Barvy/tearoff1"
+#~ msgstr "/Obrázek/Barvy/Auto/tearoff1"
 
 #~ msgid "/Image/Alpha/tearoff1"
 #~ msgstr "/Obrázek/Alfa/tearoff1"
 
 #~ msgid "/Image/Transforms/tearoff1"
 #~ msgstr "/Obrázek/Transformace/tearoff1"
+
+#~ msgid "/Image/Transforms/Rotate/tearoff1"
+#~ msgstr "/Obrázek/Transformace/Rotace/tearoff1"
+
+#~ msgid "/Image/Transforms/---"
+#~ msgstr "/Obrázek/Transformace/---"
 
 #~ msgid "/Image/---"
 #~ msgstr "/Obrázek/---"
@@ -6557,6 +6476,12 @@ msgstr ""
 
 #~ msgid "/Layers/Stack/tearoff1"
 #~ msgstr "/Vrstvy/Zásobník/tearoff1"
+
+#~ msgid "/Layers/Stack/---"
+#~ msgstr "/Vrstvy/Zásobník/---"
+
+#~ msgid "/Layers/Rotate/tearoff1"
+#~ msgstr "/Vrstvy/Rotace/tearoff1"
 
 #~ msgid "/Layers/---"
 #~ msgstr "/Vrstvy/---"
@@ -6578,6 +6503,15 @@ msgstr ""
 
 #~ msgid "/File/MRU%02d"
 #~ msgstr "/Soubor/MRU%02d"
+
+#~ msgid "tearoff menu not in top level window"
+#~ msgstr "tearoff menu chybí u okna nejvy¹¹í úrovnì"
+
+#~ msgid "can't unregister tearoff menu top level window"
+#~ msgstr "nelze odregistrovat tearoff menu u okna nejvy¹¹í úrovnì"
+
+#~ msgid "Cubic"
+#~ msgstr "Kubická"
 
 #~ msgid "ERROR: Unknown Selection Type"
 #~ msgstr "CHYBA: Neznámý druh výbìru"
@@ -6603,12 +6537,6 @@ msgstr ""
 #~ msgid "/Image/Channels/tearoff1"
 #~ msgstr "/Obrázek/Kanály/tearoff1"
 
-#~ msgid "tearoff menu not in top level window"
-#~ msgstr "tearoff menu chybí u okna nejvy¹¹í úrovnì"
-
-#~ msgid "can't unregister tearoff menu top level window"
-#~ msgstr "nelze odregistrovat tearoff menu u okna nejvy¹¹í úrovnì"
-
 #~ msgid "missing module_init() symbol"
 #~ msgstr "chybí symbol module_init()"
 
@@ -6617,9 +6545,6 @@ msgstr ""
 
 #~ msgid "set_undo_tiles: undo_tiles is null"
 #~ msgstr "set_undo_tiles: undo_tiles je nula"
-
-#~ msgid "Cubic"
-#~ msgstr "Kubické"
 
 #~ msgid "Image Scale"
 #~ msgstr "Velikost obrázku"
