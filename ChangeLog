@@ -1,3 +1,8 @@
+Wed May  5 14:29:51 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/datafiles.c: Add <sys/types.h>.
+	* app/patterns.c: <sys/types.h> before <dirent.h>
+
 Wed May  5 12:40:54 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* Makefile.am
