@@ -1,3 +1,10 @@
+Thu May 14 18:10:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/app_procs.c: made the splash screen a GTK_WINDOW_POPUP,
+	changed the hackish gtk_main_iteration with a null idle
+	loop to a more stylish while (gtk_events_pending())
+	gtk_main_iteration();
+
 Wed May 13 23:58:20 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/fileops.c (file_overwrite_yes_callback): destroy the
