@@ -6,6 +6,10 @@
 
 	* libgimp/gimp.def: Add gimp_invert.
 
+Wed Dec 20 14:39:38 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.32 release (1.2final)
+
 2000-12-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphistogram.c: plonk, my "cleanup" yesterday
