@@ -1,5 +1,12 @@
 2000-12-28  Simon Budig  <simon@gimp.org>
 
+	* gimp_splash.ppm     A new splash...
+	* gimp1_2_splash.ppm  A new file for the old splash
+
+	* modules/colorsel_triangle.c   Fixed a warning.
+	
+2000-12-28  Simon Budig  <simon@gimp.org>
+
 	* modules/colorsel_triangle.c
 	Cleanup, indentation madness, first steps towards a one-click
 	color-selector.

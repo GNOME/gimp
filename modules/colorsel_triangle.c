@@ -532,7 +532,7 @@ update_previews (ColorSelect *coldata,
         k += 3;
       }
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf, COLORWHEELRADIUS - dx,
-			    COLORWHEELRADIUS - y - 1, 2*dx+1);
+			    COLORWHEELRADIUS - y - 1, 2 * dx + 1);
     }
   
     /* Marker im aeusseren Ring */
@@ -568,8 +568,8 @@ update_previews (ColorSelect *coldata,
   
     s = coldata->oldsat;
     v = coldata->oldval;
-    x0 = (gint) (sx + (vx - sx)*v + (hx - vx) * s * v);
-    y0 = (gint) (sy + (vy - sy)*v + (hy - vy) * s * v);
+    x0 = (gint) (sx + (vx - sx) * v + (hx - vx) * s * v);
+    y0 = (gint) (sy + (vy - sy) * v + (hy - vy) * s * v);
     for (y = y0 - 4 ; y <= y0 + 4 ; y++) {
       for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++) {
         buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
@@ -613,9 +613,9 @@ update_previews (ColorSelect *coldata,
     for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++) {
       buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
       r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
-      if (r2 <= 20 && r2 >= 6)
+      if (r2 <= 20 && r2 >= 6) {
         buf[k] = buf[k+1] = buf[k+2] = col;
-      else {
+      } else {
         if (x * x + y * y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
           color_hsv_to_rgb (atan2 (x, y) / G_PI * 180, 1, 1,
 			    &buf[k], &buf[k+1], &buf[k+2]);
@@ -690,6 +690,14 @@ color_selection_callback (GtkWidget *widget,
     case GDK_BUTTON_RELEASE:
       coldata->mode = 0;
       gtk_grab_remove (widget);
+
+      /* callback the user */
+      (*coldata->callback) (coldata->data,
+			    coldata->values[RED],
+			    coldata->values[GREEN],
+			    coldata->values[BLUE]);
+      
+      return FALSE;
       break;
 
     default:
@@ -783,7 +791,7 @@ static GtkWidget *
 create_preview (ColorSelect *coldata)
 {
   GtkWidget *preview;
-  guchar buf[3*PREVIEWSIZE];
+  guchar buf[3 * PREVIEWSIZE];
   gint i;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -870,7 +878,7 @@ colorsel_triangle_drag_begin (GtkWidget      *widget,
 
   bg.red = 0xff * coldata->values[RED];
   bg.green = 0xff * coldata->values[GREEN];
-  bg.blue = 0xff *coldata->values[BLUE];
+  bg.blue = 0xff * coldata->values[BLUE];
 
   gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
   gdk_window_set_background (window->window, &bg);
