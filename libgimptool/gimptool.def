@@ -1,4 +1,5 @@
 EXPORTS
+	gimp_crop_type_get_type
 	gimp_tool_arrow_key
 	gimp_tool_button_press
 	gimp_tool_button_release
