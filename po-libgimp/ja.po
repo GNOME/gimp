@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 2000-02-29 15:53+09:00\n"
+"POT-Creation-Date: 2000-03-16 05:44+0900\n"
+"PO-Revision-Date: 2000-03-16 16:24+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -219,3 +219,15 @@ msgid ""
 msgstr ""
 "現在時刻をもとにした乱数を生成します - "
 "十分な精度の乱数を得ることができるでしょう"
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr "Bytes"
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr "KiloBytes"
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr "MegaBytes"

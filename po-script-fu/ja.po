@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 2000-02-29 16:40+09:00\n"
+"POT-Creation-Date: 2000-03-16 05:44+0900\n"
+"PO-Revision-Date: 2000-03-17 04:45+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Script-Fu コンソール"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:206
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "閉じる"
 
@@ -54,70 +54,70 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1207
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1236
+#: plug-ins/script-fu/script-fu-scripts.c:1142
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1300
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1306
+#: plug-ins/script-fu/script-fu-scripts.c:1212
 msgid "Script Toggle"
-msgstr "スクリプト切替え"
+msgstr "スクリプトトグル"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1274
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1407
+#: plug-ins/script-fu/script-fu-scripts.c:1313
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1415
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1440
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Reset to Defaults"
 msgstr "初期値に戻す"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1466
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "About"
 msgstr "このプラグインについて"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1480
+#: plug-ins/script-fu/script-fu-scripts.c:1386
 #: plug-ins/script-fu/script-fu-server.c:559
 msgid "OK"
 msgstr "了解"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1489
+#: plug-ins/script-fu/script-fu-scripts.c:1395
 #: plug-ins/script-fu/script-fu-server.c:568
 msgid "Cancel"
 msgstr "取消"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1594
+#: plug-ins/script-fu/script-fu-scripts.c:1500
 msgid "NOT SET"
 msgstr "未指定"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1665
+#: plug-ins/script-fu/script-fu-scripts.c:1571
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -125,23 +125,23 @@ msgstr ""
 "少なくとも選択したフォント中に一つ以上\n"
 "不正なものがあります.設定を確認して下さい.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1932
+#: plug-ins/script-fu/script-fu-scripts.c:1838
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1938
+#: plug-ins/script-fu/script-fu-scripts.c:1844
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1944
+#: plug-ins/script-fu/script-fu-scripts.c:1850
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2101
+#: plug-ins/script-fu/script-fu-scripts.c:2007
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
 
@@ -174,3 +174,307 @@ msgstr "全てのスクリプトを再読み込み"
 #: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/立体縁取り..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/立体曲線タイル..."
+
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Script-Fu/装飾/ベベル追加..."
+
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Script-Fu/装飾/枠追加..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/矢印..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/水平線..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/小球..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/ボタン..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアン発光..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/ASCII を画像に..."
+
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Image>/Script-Fu/ユーティリティ/ASCII を画像レイヤーに..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 I..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 II..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/拡張/Script-Fu/ボタン/単純面取りボタン..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/矢印..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/小球..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/ボタン..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/見出し..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/水平線..."
+
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Script-Fu/動画/ブレンド..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ブレンド..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/牛模様..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/迷彩..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Image>/Script-Fu/ステンシル操作/彫刻化..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/彫刻..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/チョーク..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/かじり取り..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Script-Fu/ステンシル操作/クロームメタル化..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/クローム..."
+
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Script-Fu/下塗り/回路..."
+
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Script-Fu/魔術/覆布化..."
+
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Script-Fu/装飾/コーヒーの染み..."
+
+msgid "<Image>/Script-Fu/Animators/Color Cycling..."
+msgstr "<Image>/Script-Fu/動画/色の回転..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/コミック本..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/冷たい金属..."
+
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/編集/レイヤを 1 つにしてコピー"
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/水晶..."
+
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Script-Fu/選択/ふらふら選択..."
+
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Script-Fu/影/影付け..."
+
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Script-Fu/魔術/一行おきに消す..."
+
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Script-Fu/選択/フェード化..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/平野地形図..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/フォントマップ..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/霜..."
+
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Script-Fu/装飾/ファジー縁取り..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/大見出し..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/小見出し..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管ボタンラベル..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/汎用管ラベル..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/光沢..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/白熱の輝き..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/グラデーション面取り..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/カスタムグラデーション..."
+
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Script-Fu/下塗り/格子作成..."
+
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Script-Fu/ユーティリティ/HSV グラフ描画..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ぐにゃぐにゃ..."
+
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Script-Fu/ユーティリティ/画像構造表示..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/地形図..."
+
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Script-Fu/下塗り/溶岩..."
+
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Script-Fu/下塗り/集中線..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/矩形..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた矩形..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/楕円形..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた楕円形..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ネオン..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/新聞印刷..."
+
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Script-Fu/装飾/古い写真..."
+
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Script-Fu/影/遠近法..."
+
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Script/魔術/プレデター..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/拡張/Script-Fu/ボタン/丸ボタン..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/地図..."
+
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/動画/波紋..."
+
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Script-Fu/装飾/角丸め..."
+
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Script-Fu/選択/ブラシ化..."
+
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Script-Fu/選択/画像化"
+
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Script-Fu/選択/丸める..."
+
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Script-Fu/装飾/スライド化..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/SOTA クローム..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/スピード文字..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/拡張/Script-Fu/その他/球..."
+
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Script-Fu/動画/回転球..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/超新星爆発..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/星のきらめき..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻タイル..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻 (タイル化可能)..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/粒子の軌跡..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
+msgstr "<Toolbox>/拡張/Script-Fu/テスト/球..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/文字円..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/テクスチャ..."
+
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/フィルタ/ぼかし/タイル化可能ぼかし..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/Web タイトル見出し..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/トロコイド曲線..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/曲線タイル..."
+
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Script-Fu/魔術/非シャープ化マスク..."
+
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Script-Fu/動画/波..."
+
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Script-Fu/魔術/織物..."
+
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Script-Fu/影/Xach 効果..."
+
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/動画/選択領域を動画画像化..."
