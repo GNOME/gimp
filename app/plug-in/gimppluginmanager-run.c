@@ -777,6 +777,9 @@ plug_in_close (PlugIn   *plug_in,
       g_slist_foreach (plug_in->temp_proc_defs,
 		       (GFunc) plug_ins_proc_def_remove,
 		       plug_in->gimp);
+      g_slist_foreach (plug_in->temp_proc_defs,
+                       (GFunc) g_free,
+                       NULL);
       g_slist_free (plug_in->temp_proc_defs);
       plug_in->temp_proc_defs = NULL;
     }
@@ -1661,6 +1664,7 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
 	  plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
                                                     proc_def);
 	  plug_ins_proc_def_remove (proc_def, plug_in->gimp);
+          g_free (proc_def);
 	  break;
 	}
     }

@@ -1,5 +1,14 @@
 2002-08-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-ins/plug-in.c (plug_in_close,
+	plug_in_handle_proc_uninstall): don't forget to g_free() the
+	proc_def struct after removing a temporary procedure.
+
+	* app/plug-ins/plug-ins.c: iterate lists with for() loops,
+	cleanup.
+
+2002-08-27  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c: fixed wrong parameter name in
 	gtk-doc comment.
 

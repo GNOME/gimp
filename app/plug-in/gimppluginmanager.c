@@ -119,14 +119,12 @@ plug_ins_init (Gimp               *gimp,
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
-  tmp = plug_in_defs;
-  (* status_callback) (_("New Plug-ins"), "", 0);
-  nplugins = g_slist_length (tmp);
-  nth = 0;
-  while (tmp)
+  (* status_callback) (_("Querying new Plug-ins"), "", 0);
+  nplugins = g_slist_length (plug_in_defs);
+
+  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
       if (plug_in_def->query)
 	{
@@ -140,7 +138,6 @@ plug_ins_init (Gimp               *gimp,
 
       basename = g_path_get_basename (plug_in_def->prog);
       (* status_callback) (NULL, basename, nth / nplugins);
-      nth++;
       g_free (basename);
     }
 
@@ -152,17 +149,13 @@ plug_ins_init (Gimp               *gimp,
       plug_ins_proc_def_insert (proc_def, NULL);
     }
 
-  tmp = plug_in_defs;
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
-      tmp2 = plug_in_def->proc_defs;
-      while (tmp2)
+      for (tmp2 = plug_in_def->proc_defs; tmp2; tmp2 = g_slist_next (tmp2))
 	{
 	  proc_def = tmp2->data;
-	  tmp2 = tmp2->next;
 
  	  proc_def->mtime = plug_in_def->mtime; 
 	  plug_ins_proc_def_insert (proc_def, plug_ins_proc_def_dead);
@@ -190,15 +183,11 @@ plug_ins_init (Gimp               *gimp,
     }
 
   /* initial the plug-ins */
-  (* status_callback) (_("Plug-ins"), "", 0);
+  (* status_callback) (_("Initializing Plug-ins"), "", 0);
 
-  tmp = plug_in_defs;
-  nth=0;
-  
-  while (tmp)
+  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
       if (plug_in_def->has_init)
 	{
@@ -210,23 +199,19 @@ plug_ins_init (Gimp               *gimp,
 
       basename = g_path_get_basename (plug_in_def->prog);
       (* status_callback) (NULL, basename, nth / nplugins);
-      nth++;
       g_free (basename);
     }
-    
+
   /* run the available extensions */
   if (gimp->be_verbose)
     g_print (_("Starting extensions: "));
 
-  (* status_callback) (_("Extensions"), "", 0);
+  (* status_callback) (_("Starting Extensions"), "", 0);
+  nplugins = g_slist_length (proc_defs);
 
-  tmp = proc_defs;
-  nplugins = g_slist_length (tmp); nth = 0;
-
-  while (tmp)
+  for (tmp = proc_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
     {
       proc_def = tmp->data;
-      tmp = tmp->next;
 
       if (proc_def->prog &&
 	  (proc_def->db_info.num_args == 0) &&
@@ -533,20 +518,16 @@ static void
 plug_ins_init_file (const gchar *filename,
                     gpointer     loader_data)
 {
-  GSList      *tmp;
-  PlugInDef   *plug_in_def;
-  gchar       *plug_in_name;
-  gchar       *basename;
+  GSList    *tmp;
+  PlugInDef *plug_in_def;
+  gchar     *plug_in_name;
+  gchar     *basename;
 
   basename = g_path_get_basename (filename);
 
-  plug_in_def = NULL;
-  tmp = plug_in_defs;
-
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
       plug_in_name = g_path_get_basename (plug_in_def->prog);
 
@@ -557,8 +538,6 @@ plug_ins_init_file (const gchar *filename,
 	}
 
       g_free (plug_in_name);
-
-      plug_in_def = NULL;
     }
 
   g_free (basename);
@@ -578,12 +557,9 @@ plug_ins_add_to_db (Gimp *gimp)
   Argument      *return_vals;
   GSList        *tmp;
 
-  tmp = proc_defs;
-
-  while (tmp)
+  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
-      tmp = tmp->next;
 
       if (proc_def->prog && (proc_def->db_info.proc_type != GIMP_INTERNAL))
 	{
@@ -640,9 +616,8 @@ plug_ins_proc_def_insert (PlugInProcDef *proc_def,
   GSList *list;
 
   prev = NULL;
-  tmp  = proc_defs;
 
-  while (tmp)
+  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       tmp_proc_def = tmp->data;
 
@@ -683,7 +658,6 @@ plug_ins_proc_def_insert (PlugInProcDef *proc_def,
 	}
 
       prev = tmp;
-      tmp = tmp->next;
     }
 
   proc_defs = g_slist_append (proc_defs, proc_def);
