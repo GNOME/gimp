@@ -1,5 +1,17 @@
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.[ch]: added hinting and antialias properties.
+
+	* app/text/gimptextlayout.c: rewrote some parts using the
+	PangoFontMap API. Respect hinting and antialias properties.
+	(PangoFT2 does not allow to switch antialias off, so that has no
+	effect yet.)
+
+	* app/tools/gimptextoptions.c: added a check button that controls
+	hinting.
+
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: require PangoFT2 >= 1.2.0.
 
 	* app/text/gimpfontlist.c: use the PangoFontMap API to list

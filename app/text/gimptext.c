@@ -48,13 +48,15 @@ enum
   PROP_FONT,
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
+  PROP_HINTING,
+  PROP_ANTIALIAS,
   PROP_LANGUAGE,
   PROP_COLOR,
-  PROP_FIXED_WIDTH,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
   PROP_LETTER_SPACING,
+  PROP_BOX_WIDTH,
   PROP_BORDER
 };
 
@@ -147,6 +149,16 @@ gimp_text_class_init (GimpTextClass *klass)
 				 "font-size-unit", NULL,
 				 TRUE, GIMP_UNIT_PIXEL,
 				 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
+                                    "hinting",
+                                    N_("Hinting alters the font outline to"
+                                       "produce a crisp bitmap at small sizes"),
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                                    "antialias", NULL,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
 				   "language", NULL,
 				   language,
@@ -155,10 +167,6 @@ gimp_text_class_init (GimpTextClass *klass)
 				  "color", NULL,
 				  &black,
 				  0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
-                                "fixed-width", NULL,
-                                0, GIMP_MAX_IMAGE_SIZE, 0,
-                                0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify",
                                  NULL,
@@ -180,6 +188,10 @@ gimp_text_class_init (GimpTextClass *klass)
 				   "letter-spacing", NULL,
                                     -8192.0, 8192.0, 0.0,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BOX_WIDTH,
+                                "box-width", NULL,
+                                0, GIMP_MAX_IMAGE_SIZE, 0,
+                                0);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -236,14 +248,17 @@ gimp_text_get_property (GObject      *object,
     case PROP_FONT_SIZE_UNIT:
       g_value_set_int (value, text->font_size_unit);
       break;
+    case PROP_HINTING:
+      g_value_set_boolean (value, text->hinting);
+      break;
+    case PROP_ANTIALIAS:
+      g_value_set_boolean (value, text->antialias);
+      break;
     case PROP_LANGUAGE:
       g_value_set_string (value, text->language);
       break;
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
-      break;
-    case PROP_FIXED_WIDTH:
-      g_value_set_int (value, text->fixed_width);
       break;
     case PROP_JUSTIFICATION:
       g_value_set_enum (value, text->justify);
@@ -256,6 +271,9 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_LETTER_SPACING:
       g_value_set_double (value, text->letter_spacing);
+      break;
+    case PROP_BOX_WIDTH:
+      g_value_set_int (value, text->box_width);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -288,6 +306,12 @@ gimp_text_set_property (GObject      *object,
     case PROP_FONT_SIZE_UNIT:
       text->font_size_unit = g_value_get_int (value);
       break;
+    case PROP_HINTING:
+      text->hinting = g_value_get_boolean (value);
+      break;
+    case PROP_ANTIALIAS:
+      text->antialias = g_value_get_boolean (value);
+      break;
     case PROP_LANGUAGE:
       g_free (text->language);
       text->language = g_value_dup_string (value);
@@ -295,9 +319,6 @@ gimp_text_set_property (GObject      *object,
     case PROP_COLOR:
       color = g_value_get_boxed (value);
       text->color = *color;
-      break;
-    case PROP_FIXED_WIDTH:
-      text->fixed_width = g_value_get_int (value);
       break;
     case PROP_JUSTIFICATION:
       text->justify = g_value_get_enum (value);
@@ -310,6 +331,9 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_LETTER_SPACING:
       text->letter_spacing = g_value_get_double (value);
+      break;
+    case PROP_BOX_WIDTH:
+      text->box_width = g_value_get_int (value);
       break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);

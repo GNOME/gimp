@@ -40,13 +40,15 @@ struct _GimpText
   gchar                 *font;
   gdouble                font_size;
   GimpUnit               font_size_unit;
+  gboolean               hinting;
+  gboolean               antialias;
   gchar                 *language;
   GimpRGB                color;
   GimpTextJustification  justify;
   gdouble                indent;
   gdouble                line_spacing;
   gdouble                letter_spacing;
-  gint                   fixed_width;
+  gint                   box_width;
 
   /* for historical reasons, don't use */
   gint                   border;

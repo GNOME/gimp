@@ -52,17 +52,18 @@ struct _GimpTextLayoutClass
 };
 
 
-static void      gimp_text_layout_class_init  (GimpTextLayoutClass *klass);
-static void      gimp_text_layout_init        (GimpTextLayout      *layout);
-static void      gimp_text_layout_finalize    (GObject             *object);
+static void   gimp_text_layout_class_init  (GimpTextLayoutClass *klass);
+static void   gimp_text_layout_init        (GimpTextLayout      *layout);
+static void   gimp_text_layout_finalize    (GObject             *object);
 
-static void      gimp_text_layout_position    (GimpTextLayout      *layout);
+static void   gimp_text_layout_position    (GimpTextLayout      *layout);
 
-static PangoContext * gimp_image_get_pango_context (GimpImage      *image);
+static PangoContext * gimp_text_get_pango_context (GimpText     *text,
+                                                   gdouble       xres,
+                                                   gdouble       yres);
 
 
-static GQuark         gimp_text_context_quark = 0;
-static GObjectClass * parent_class            = NULL;
+static GObjectClass * parent_class = NULL;
 
 
 GType
@@ -142,6 +143,7 @@ gimp_text_layout_new (GimpText  *text,
   PangoContext         *context;
   PangoFontDescription *font_desc;
   PangoAlignment        alignment = PANGO_ALIGN_LEFT;
+  gdouble               xres, yres;
   gint                  size;
 
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -152,6 +154,8 @@ gimp_text_layout_new (GimpText  *text,
   if (!font_desc)
     return NULL;
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   switch (text->font_size_unit)
     {
     case GIMP_UNIT_PIXEL:
@@ -160,13 +164,10 @@ gimp_text_layout_new (GimpText  *text,
 
     default:
       {
-	gdouble xres, yres;
 	gdouble factor;
 
 	factor = gimp_unit_get_factor (text->font_size_unit);
 	g_return_val_if_fail (factor > 0.0, NULL);
-
-	gimp_image_get_resolution (image, &xres, &yres);
 
 	size = (gdouble) PANGO_SCALE * text->font_size * yres / factor;
       }
@@ -175,11 +176,7 @@ gimp_text_layout_new (GimpText  *text,
   
   pango_font_description_set_size (font_desc, MAX (1, size));
 
-  context = gimp_image_get_pango_context (image);
-
-  if (text->language)
-    pango_context_set_language (context,
-                                pango_language_from_string (text->language));
+  context = gimp_text_get_pango_context (text, xres, yres);
 
   layout = g_object_new (GIMP_TYPE_TEXT_LAYOUT, NULL);
   layout->text   = g_object_ref (text);
@@ -215,8 +212,8 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_alignment (layout->layout, alignment);
 
   pango_layout_set_width (layout->layout,
-			  text->fixed_width > 0 ? 
-			  text->fixed_width * PANGO_SCALE : -1);
+			  text->box_width > 0 ? 
+			  text->box_width * PANGO_SCALE : -1);
 
   pango_layout_set_indent (layout->layout, text->indent * PANGO_SCALE);
   pango_layout_set_spacing (layout->layout, text->line_spacing * PANGO_SCALE);
@@ -294,10 +291,10 @@ gimp_text_layout_render (GimpTextLayout *layout,
 static void
 gimp_text_layout_position (GimpTextLayout *layout)
 {
-  PangoRectangle   ink;
-  PangoRectangle   logical;
-  gint             x1, y1;
-  gint             x2, y2;
+  PangoRectangle  ink;
+  PangoRectangle  logical;
+  gint            x1, y1;
+  gint            x2, y2;
 
   layout->extents.x      = 0;
   layout->extents.x      = 0;
@@ -344,38 +341,44 @@ gimp_text_layout_position (GimpTextLayout *layout)
 
 
 static void
-detach_pango_context (GObject *image)
+gimp_text_ft2_subst_func (FcPattern *pattern,
+                          gpointer   data)
 {
-  g_object_set_qdata (image, gimp_text_context_quark, NULL);
+  gboolean  hinting;
+  gboolean  antialias;
+
+  g_object_get (data,
+                "hinting",   &hinting,
+                "antialias", &antialias,
+                NULL);
+  
+  FcPatternAddBool (pattern, FC_HINTING,   hinting);
+  FcPatternAddBool (pattern, FC_ANTIALIAS, antialias);
 }
 
 static PangoContext *
-gimp_image_get_pango_context (GimpImage *image)
+gimp_text_get_pango_context (GimpText *text,
+                             gdouble   xres,
+                             gdouble   yres)
 {
-  PangoContext *context;
+  PangoContext    *context;
+  PangoFT2FontMap *fontmap;
 
-  if (!gimp_text_context_quark)
-    gimp_text_context_quark = g_quark_from_static_string ("pango-context");
+  fontmap = PANGO_FT2_FONT_MAP (pango_ft2_font_map_new ());
+  
+  pango_ft2_font_map_set_resolution (fontmap, xres, yres);
 
-  context = (PangoContext *) g_object_get_qdata (G_OBJECT (image),
-                                                 gimp_text_context_quark);
+  pango_ft2_font_map_set_default_substitute (fontmap,
+                                             gimp_text_ft2_subst_func,
+                                             g_object_ref (text),
+                                             (GDestroyNotify) g_object_unref);
 
-  if (!context)
-    {
-      gdouble xres, yres;
-      
-      gimp_image_get_resolution (image, &xres, &yres);
+  context = pango_ft2_font_map_create_context (fontmap);
+  g_object_unref (fontmap);
 
-      context = pango_ft2_get_context (xres, yres);
+  if (text->language)
+    pango_context_set_language (context,
+                                pango_language_from_string (text->language));
 
-      g_signal_connect_object (image, "resolution_changed",
-                               G_CALLBACK (detach_pango_context),
-                               context, 0);
-
-      g_object_set_qdata_full (G_OBJECT (image),
-                               gimp_text_context_quark, context,
-                               (GDestroyNotify) g_object_unref);
-    }
-
-  return g_object_ref (context);
+  return context;
 }
