@@ -1,5 +1,9 @@
 2004-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* de.po: updated a bit after menu registration cleanup.
+
+2004-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: removed plug-ins/fp/fp_gtk.c
 
 2004-04-24  Christophe Merlet  <redfox@redfoxcenter.org>
