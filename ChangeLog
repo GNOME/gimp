@@ -1,5 +1,10 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* menus/toolbox-menu.xml.in: applied patch from Brion Vibber
+	which adds <Toolbox>/Acquire/Paste as new. Fixes bug #147358.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-modules.c: don't do anything if gimp->no_interface
 	is TRUE.
 

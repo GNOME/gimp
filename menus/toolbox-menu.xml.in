@@ -17,7 +17,9 @@
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu" name="Acquire" />
+      <menu action="file-acquire-menu" name="Acquire">
+        <menuitem action="edit-paste-as-new" />
+      </menu>
       <separator />
       <menuitem action="dialogs-preferences" />
       <menu action="dialogs-menu" name="Dialogs">
