@@ -16,15 +16,16 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; perspective-shadow.scm   version 1.02   12/13/97
+; perspective-shadow.scm   version 1.03   1999/12/21
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
 ; 1.02 - some code cleanup, no real changes
+; 1.03 - only call blur plugin when blut-radius >= 1.0
 ;
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
+; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ; 
 ;  
 ; Adds a perspective shadow of the current selection or alpha-channel 
@@ -145,7 +146,7 @@
 		      x2 y2
 		      x3 y3)
 
-    (if (> shadow-blur 0)
+    (if (>= shadow-blur 1.0)
 	(begin
 	  (gimp-layer-set-preserve-trans shadow-layer FALSE)
 	  (gimp-layer-resize shadow-layer
@@ -179,16 +180,16 @@
 (script-fu-register "script-fu-perspective-shadow"
 		    "<Image>/Script-Fu/Shadow/Perspective..."
 		    "Add a perspective shadow"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "1999/12/21"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Angle" '(45 0 180 1 10 1 0)
 		    SF-ADJUSTMENT "Relative horizon distance" '(5 0 24 .1 1 1 1)
 		    SF-ADJUSTMENT "Relative shadow length" '(1 0 24 .1 1 1 1)
-		    SF-ADJUSTMENT "Blur Radius" '(3 0 64 1 10 0 0)
+		    SF-ADJUSTMENT "Blur Radius" '(3 0 1024 1 10 0 0)
 		    SF-COLOR "Color" '(0 0 0)
 		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
 		    SF-TOGGLE "Interpolate?" TRUE

@@ -16,13 +16,13 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; waves-anim.scm   version 1.01   12/13/97
+; waves-anim.scm   version 1.01   1997/12/13
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
+; Copyright (C) 1997 Sven Neumann <sven@gimp.org>
 ; 
 ;  
 ; Makes a copy of your image and creates an animation of the active layer
@@ -87,9 +87,9 @@
 (script-fu-register "script-fu-waves-anim"
 		    "<Image>/Script-Fu/Animators/Waves..."
 		    "Animate an image like a stone's been thrown into it"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "1997/13/12"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

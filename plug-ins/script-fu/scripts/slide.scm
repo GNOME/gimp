@@ -16,7 +16,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; slide.scm   version 0.40   99/5/11
+; slide.scm   version 0.40   1999/5/11
 ;
 ; CHANGE-LOG:
 ; 0.20 - first public release
@@ -31,7 +31,7 @@
 ;       - make 'add background' an option
 ;       - ?
 ;
-; Copyright (C) 1997,1999 Sven Neumann (neumanns@uni-duesseldorf.de) 
+; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ;  
 ; makes your picture look like a slide
 ;
@@ -229,7 +229,7 @@
 		    "Gives the image the look of a slide"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "1999/5/11"
+		    "1999/05/11"
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

@@ -1,3 +1,18 @@
+Tue Dec 21 14:53:33 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/blend-anim.scm
+	* plug-ins/script-fu/scripts/copy-visible.scm
+	* plug-ins/script-fu/scripts/drop-shadow.scm
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/round-corners.scm
+	* plug-ins/script-fu/scripts/selection-round.scm
+	* plug-ins/script-fu/scripts/slide.scm
+	* plug-ins/script-fu/scripts/waves-anim.scm: avoid calling gauss_blur
+	with blur-radius < 1, minor UI tweaks and email address updates
+
+	* plug-ins/common/animationplay.c: try not to crash when the image
+	is deleted, while playing is active
+
 Tue Dec 21 00:07:03 EST 1999 Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: evil perl is dealt with now.

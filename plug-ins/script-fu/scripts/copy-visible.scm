@@ -73,7 +73,7 @@
 (script-fu-register "script-fu-copy-visible"
 		    "<Image>/Edit/Copy Visible"
 		    "Copy the visible selction"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de), Adrian Likins <adrian@gimp.org>"
+		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>"
 		    "Sven Neumann, Adrian Likins"
 		    "01/24/1998"
 		    "RGB* INDEXED* GRAY*"

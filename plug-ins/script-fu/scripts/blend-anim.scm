@@ -16,17 +16,18 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; blend-anim.scm   version 1.02   05/28/98
+; blend-anim.scm   version 1.03   1999/12/21
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ; 1.02 - use gimp-message to output an error message if called
 ;        with less than three layers
+; 1.03 - only call blur plugin when blut-radius >= 1.0
 ;
-; Copyright (C) 1997-98 Sven Neumann (neumanns@uni-duesseldorf.de)
-; 
+; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ;  
+;
 ; Blends two or more layers over a backgound, so that an animation can
 ; be saved. A minimum of three layers is required.
 
@@ -128,11 +129,12 @@
 					     (+ layer-height (* blur 2))
 					     blur
 					     blur)
-			  (plug-in-gauss-rle 1
-					     image
-					     upper-copy
-					     blur
-					     TRUE TRUE)
+			  (if (>= blur 1.0)
+			      (plug-in-gauss-rle 1
+						 image
+						 upper-copy
+						 blur
+						 TRUE TRUE))
 			  (set! blur (- max-blur blur))
 			  (gimp-layer-set-preserve-trans lower-copy FALSE)
 			  (set! layer-width (car (gimp-drawable-width
@@ -144,11 +146,12 @@
 					     (+ layer-height (* blur 2))
 					     blur
 					     blur)
-			  (plug-in-gauss-rle 1
-					     image
-					     lower-copy
-					     blur
-					     TRUE TRUE)))
+			  (if (>= blur 1.0)
+			      (plug-in-gauss-rle 1
+						 image
+						 lower-copy
+						 blur
+						 TRUE TRUE))))
 		    (gimp-layer-resize bg-copy
 				       max-width
 				       max-height
@@ -217,14 +220,14 @@
 		    "<Image>/Script-Fu/Animators/Blend..."
 		    "Blend two or more layers over a background, so that an 
                      animation can be saved"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "05/28/1998"
+		    "1999/12/21"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Intermediate Frames" "3"
-		    SF-VALUE "Max. Blur Radius" "0"
+		    SF-ADJUSTMENT "Intermediate Frames" '(3 1 1024 1 10 0 1)
+		    SF-ADJUSTMENT "Max. Blur Radius" '(0 0 1024 1 10 0 1)
 		    SF-TOGGLE "Looped" TRUE)
 
 

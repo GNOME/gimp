@@ -144,33 +144,33 @@ typedef enum
 
 
 /* Declare local functions. */
-static void query(void);
-static void run(char *name,
-		int nparams,
-		GParam * param,
-		int *nreturn_vals,
-		GParam ** return_vals);
+static void query (void);
+static void run   (char    *name,
+		   int      nparams,
+		   GParam  *param,
+		   int     *nreturn_vals,
+		   GParam **return_vals);
 
 static        void do_playback        (void);
 static         int parse_ms_tag       (char *str);
 static DisposeType parse_disposal_tag (char *str);
 
-static gint window_delete_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data);
-static void window_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-static void playstop_callback  (GtkWidget *widget,
-				gpointer   data);
-static void rewind_callback  (GtkWidget *widget,
-			      gpointer   data);
-static void step_callback  (GtkWidget *widget,
-			    gpointer   data);
+static gint window_delete_callback    (GtkWidget *widget,
+				       GdkEvent  *event,
+				       gpointer   data);
+static void window_close_callback     (GtkWidget *widget,
+				       gpointer   data);
+static void playstop_callback         (GtkWidget *widget,
+				       gpointer   data);
+static void rewind_callback           (GtkWidget *widget,
+				       gpointer   data);
+static void step_callback             (GtkWidget *widget,
+				       gpointer   data);
 #ifdef RAPH_IS_HOME
-static void repaint_sda (GtkWidget *darea,
-			 gpointer data);
-static void repaint_da (GtkWidget *darea,
-			gpointer data);
+static void repaint_sda               (GtkWidget *darea,
+				       gpointer data);
+static void repaint_da                (GtkWidget *darea,
+				       gpointer data);
 #endif
 
 static DisposeType  get_frame_disposal  (guint whichframe);
@@ -240,35 +240,40 @@ static GdkWindow *root_win = NULL;
 
 MAIN()
 
-static void query()
+static void 
+query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image"},
+    {PARAM_INT32,    "run_mode", "Interactive, non-interactive"},
+    {PARAM_IMAGE,    "image",    "Input image"},
     {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
-  INIT_I18N();
+  INIT_I18N ();
 
-  gimp_install_procedure("plug_in_animationplay",
-			 _("This plugin allows you to preview a GIMP layer-based animation."),
-			 "",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "1997, 1998...",
-			 N_("<Image>/Filters/Animation/Animation Playback..."),
-			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
+  gimp_install_procedure ("plug_in_animationplay",
+			  _("This plugin allows you to preview a GIMP layer-based animation."),
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "1997, 1998...",
+			  N_("<Image>/Filters/Animation/Animation Playback..."),
+			  "RGB*, INDEXED*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_vals,
+			  args, return_vals);
 }
 
-static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
-		GParam ** return_vals)
+static void 
+run (char    *name, 
+     int      n_params, 
+     GParam  *param, 
+     int     *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GRunModeType run_mode;
@@ -279,24 +284,28 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_NONINTERACTIVE) {
-    if (n_params != 3) {
-      status = STATUS_CALLING_ERROR;
+  if (run_mode == RUN_NONINTERACTIVE) 
+    {
+      if (n_params != 3) 
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      INIT_I18N();
+    } 
+  else 
+    {
+      INIT_I18N_UI();
     }
-    INIT_I18N();
-  } else {
-    INIT_I18N_UI();
-  }
 
-  if (status == STATUS_SUCCESS) {
-
-    image_id = param[1].data.d_image;
-
-    do_playback();
-    
-    if (run_mode != RUN_NONINTERACTIVE)
-      gimp_displays_flush();
-  }
+  if (status == STATUS_SUCCESS) 
+    {
+      image_id = param[1].data.d_image;
+      
+      do_playback();
+      
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush();
+    }
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
@@ -364,7 +373,7 @@ parse_disposal_tag (char *str)
 
 
 static void
-reshape_from_bitmap(gchar* bitmap)
+reshape_from_bitmap (gchar* bitmap)
 {
   GdkBitmap *shape_mask;
   static gchar *prev_bitmap = NULL;
@@ -388,7 +397,8 @@ reshape_from_bitmap(gchar* bitmap)
 
 
 static void
-shape_pressed (GtkWidget *widget, GdkEventButton *event)
+shape_pressed (GtkWidget      *widget, 
+	       GdkEventButton *event)
 {
   CursorOffset *p;
 
@@ -412,7 +422,8 @@ shape_pressed (GtkWidget *widget, GdkEventButton *event)
 
 #ifdef RAPH_IS_HOME
 static void
-maybeblocked_expose (GtkWidget *widget, GdkEventExpose *event)
+maybeblocked_expose (GtkWidget      *widget, 
+		     GdkEventExpose *event)
 {
   if (playing)
     gtk_signal_emit_stop_by_name (GTK_OBJECT(widget), "expose_event");
@@ -423,7 +434,8 @@ maybeblocked_expose (GtkWidget *widget, GdkEventExpose *event)
 
 
 static void
-blocked_expose (GtkWidget *widget, GdkEventExpose *event)
+blocked_expose (GtkWidget      *widget, 
+		GdkEventExpose *event)
 {
   gtk_signal_emit_stop_by_name (GTK_OBJECT(widget), "expose_event");
 }
@@ -432,14 +444,16 @@ blocked_expose (GtkWidget *widget, GdkEventExpose *event)
 
 #ifdef I_AM_STUPID
 static void
-xblocked_expose (GtkWidget *widget, GdkEventExpose *event)
+xblocked_expose (GtkWidget      *widget, 
+		 GdkEventExpose *event)
 {
   printf("eep!\n");fflush(stdout);
   abort();
 }
 
 static void
-unblocked_expose (GtkWidget *widget, GdkEventExpose *event)
+unblocked_expose (GtkWidget      *widget, 
+		  GdkEventExpose *event)
 {
   gboolean should_block;
   
@@ -527,7 +541,8 @@ shape_motion (GtkWidget      *widget,
 
 #ifdef RAPH_IS_HOME
 static void
-repaint_da (GtkWidget *darea, gpointer data)
+repaint_da (GtkWidget *darea, 
+	    gpointer   data)
 {
   /*  printf("Repaint!  Woohoo!\n");*/
   gdk_draw_rgb_image (drawing_area->window,
@@ -539,7 +554,8 @@ repaint_da (GtkWidget *darea, gpointer data)
 
 
 static void
-repaint_sda (GtkWidget *darea, gpointer data)
+repaint_sda (GtkWidget *darea, 
+	     gpointer   data)
 {
   /*printf("Repaint!  Woohoo!\n");*/
   gdk_draw_rgb_image (shape_drawing_area->window,
@@ -552,7 +568,8 @@ repaint_sda (GtkWidget *darea, gpointer data)
 
 
 static void
-preview_pressed (GtkWidget *widget, GdkEventButton *event)
+preview_pressed (GtkWidget      *widget, 
+		 GdkEventButton *event)
 {
 #ifdef RAPH_IS_HOME
 #else
@@ -620,8 +637,8 @@ preview_pressed (GtkWidget *widget, GdkEventButton *event)
 
 
 static void
-build_dialog(GImageType basetype,
-	     char*      imagename)
+build_dialog (GImageType  basetype,
+	      char       *imagename)
 {
   gchar** argv;
   gint argc;
@@ -905,7 +922,8 @@ build_dialog(GImageType basetype,
 
 
 
-static void do_playback(void)
+static void 
+do_playback (void)
 {
   int i;
 
@@ -969,7 +987,7 @@ static void do_playback(void)
 /* Rendering Functions */
 
 static void
-render_frame(gint32 whichframe)
+render_frame (gint32 whichframe)
 {
   GPixelRgn pixel_rgn;
   static guchar *rawframe = NULL;
@@ -995,9 +1013,7 @@ render_frame(gint32 whichframe)
   /* Image has been closed/etc since we got the layer list? */
   /* FIXME - How do we tell if a gimp_drawable_get() fails? */
   if (gimp_drawable_width(drawable->id)==0)
-    {
-      window_close_callback(NULL, NULL);
-    }
+    window_close_callback (NULL, NULL);
 
   if (((dispose==DISPOSE_REPLACE)||(whichframe==0)) &&
       gimp_drawable_has_alpha(drawable->id))
@@ -1616,7 +1632,7 @@ render_frame(gint32 whichframe)
    it's too late (GDKRGB is synchronous).  So this just updates the
    progress bar. */
 static void
-show_frame(void)
+show_frame (void)
 {
 #ifndef RAPH_IS_HOME
   GdkGC *gc;
@@ -1656,7 +1672,7 @@ show_frame(void)
 
 
 static void
-init_preview_misc(void)
+init_preview_misc (void)
 {
   int i;
 
@@ -1695,7 +1711,7 @@ init_preview_misc(void)
 
 
 static void
-total_alpha_preview(guchar* ptr)
+total_alpha_preview (guchar* ptr)
 {
   int i;
 
@@ -1720,7 +1736,7 @@ total_alpha_preview(guchar* ptr)
 /* Util. */
 
 static void
-remove_timer(void)
+remove_timer (void)
 {
   if (timer)
     {
@@ -1730,7 +1746,7 @@ remove_timer(void)
 }
 
 static void
-do_step(void)
+do_step (void)
 {
   frame_number = (frame_number+1)%total_frames;
   render_frame(frame_number);
@@ -1740,13 +1756,16 @@ static guint32
 get_frame_duration (guint whichframe)
 {
   gchar* layer_name;
-  gint   duration;
+  gint   duration = 0;
 
   layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
-  duration = parse_ms_tag(layer_name);
-  g_free(layer_name);
-
-  if (duration < 0) duration = 125; /* FIXME for default-if-not-said  */
+  if (layer_name != NULL)
+    {
+      duration = parse_ms_tag(layer_name);
+      g_free(layer_name);
+    }
+  
+  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
   if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
 
   return ((guint32) duration);
@@ -1756,15 +1775,17 @@ static DisposeType
 get_frame_disposal (guint whichframe)
 {
   gchar* layer_name;
-  DisposeType disposal;
+  DisposeType disposal = DISPOSE_UNDEFINED;
   
   layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
-  disposal = parse_disposal_tag(layer_name);
-  g_free(layer_name);
+  if (layer_name != NULL)
+    {
+      disposal = parse_disposal_tag (layer_name);
+      g_free (layer_name);
+    }
 
-  return(disposal);
+  return (disposal);
 }
-
 
 
 /*  Callbacks  */

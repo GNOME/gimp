@@ -16,7 +16,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; drop-shadow.scm   version 1.03   06/03/99 
+; drop-shadow.scm   version 1.04   1999/12/21 
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
@@ -25,7 +25,7 @@
 ; 1.03 - can't call gimp-edit-fill until layer is added to image!
 ;
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
+; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ; 
 ;  
 ; Adds a drop-shadow of the current selection or alpha-channel. 
@@ -131,12 +131,12 @@
   (gimp-edit-fill shadow-layer)
   (gimp-selection-none image)
   (gimp-layer-set-preserve-trans shadow-layer FALSE)
-  (if (> shadow-blur 0) (plug-in-gauss-rle 1
-					   image
-					   shadow-layer
-					   shadow-blur
-					   TRUE
-					   TRUE))
+  (if (>= shadow-blur 1.0) (plug-in-gauss-rle 1
+					      image
+					      shadow-layer
+					      shadow-blur
+					      TRUE
+					      TRUE))
   (gimp-layer-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)
@@ -159,17 +159,17 @@
 		    "<Image>/Script-Fu/Shadow/Drop-Shadow..."
 		    "Add a drop-shadow of the current selection or 
                      alpha-channel"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "1999/12/21"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "X offset" "8"
-		    SF-VALUE "Y offset" "8"
-		    SF-VALUE "Blur Radius" "15"
+		    SF-ADJUSTMENT "X Offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT "Y Offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT "Blur Radius" '(15 0 1024 1 10 0 1)
 		    SF-COLOR "Color" '(0 0 0)
-		    SF-VALUE "Opacity" "80"
+		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
 		    SF-TOGGLE "Allow Resizing" TRUE)
 
 

@@ -16,13 +16,13 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; round-corners.scm   version 1.01   12/13/97
+; round-corners.scm   version 1.02   1999/12/21
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de) 
+; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org> 
 ;  
 ;
 ; Rounds the corners of an image, optionally adding a drop-shadow and
@@ -117,19 +117,19 @@
 (script-fu-register "script-fu-round-corners"
 		    "<Image>/Script-Fu/Decor/Round Corners..."
 		    "Round the corners of an image and optionally adds a drop-shadow and a background"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "1999/12/21"
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Radius of Edges" "12"
-		    SF-TOGGLE "Add drop-shadow" TRUE
-		    SF-VALUE "Shadow x" "8"
-		    SF-VALUE "Shadow y" "8"
-		    SF-VALUE "Blur Radius" "15"
-		    SF-TOGGLE "Add background" TRUE
-		    SF-TOGGLE "Work on copy" TRUE)
+		    SF-ADJUSTMENT "Edge Radius" '(15 0 4096 1 10 0 1)
+		    SF-TOGGLE "Add Drop-Shadow" TRUE
+		    SF-ADJUSTMENT "Shadow X Offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT "Shadow Y Offset" '(8 -4096 4096 1 10 0 1)
+		    SF-ADJUSTMENT "Blur Radius" '(15 0 1024 1 10 0 1)
+		    SF-TOGGLE "Add Background" TRUE
+		    SF-TOGGLE "Work on Copy" TRUE)
 
 
 

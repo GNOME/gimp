@@ -16,14 +16,14 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; selection-round.scm   version 1.02   02/06/98
+; selection-round.scm   version 1.02   1998/02/06
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ; 1.02 - made script undoable
 ;
-; Copyright (C) 1997,1998 Sven Neumann (neumanns@uni-duesseldorf.de)
+; Copyright (C) 1997, 1998 Sven Neumann <sven@gimp.org>
 ; 
 ;  
 ; Rounds the current selection by cutting of rectangles from the edges and 
@@ -126,9 +126,9 @@
 		    "<Image>/Script-Fu/Selection/Round..."
 		    "Rounds the active selection. The selection should be 
                      rectangular."
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "02/06/98"
+		    "1998/02/06"
 		    "RGB RGBA GRAY GRAYA INDEXED INDEXEDA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
