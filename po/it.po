@@ -3362,7 +3362,7 @@ msgstr "/Immagine/Trasforma/Offset..."
 
 #: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
-msgstr "/Immagine/Trasformazioni/Colori/"
+msgstr "/Immagine/Trasformazioni/Ruota"
 
 #: app/menus.c:408
 msgid "/Image/Canvas Size..."

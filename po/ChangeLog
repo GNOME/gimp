@@ -1,3 +1,7 @@
+2001-02-08  Daniel Egger <egger@suse.de>
+
+	* it.po: Applied fix for #37716 from Domenico Rotiroti.
+
 2001-02-06  Valek Filippov  <frob@df.ru>
 
 	* ru.po: Updated russian translation.
