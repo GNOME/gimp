@@ -36,30 +36,26 @@
 
 #include "app/pattern_header.h"
 
-/* Declare local data types
- */
 
-gchar    description[256] = "GIMP Pattern";
-gboolean run_flag = FALSE;
+/*  local function prototypes  */
 
-/* Declare some local functions.
- */
-static void   query        (void);
-static void   run          (gchar     *name,
-                            gint       nparams,
-                            GimpParam    *param,
-                            gint      *nreturn_vals,
-                            GimpParam   **return_vals);
-static gint32 load_image   (gchar     *filename);
-static gint   save_image   (gchar     *filename,
-                            gint32     image_ID,
-                            gint32     drawable_ID);
+static void       query          (void);
+static void       run            (gchar        *name,
+				  gint          nparams,
+				  GimpParam    *param,
+				  gint         *nreturn_vals,
+				  GimpParam   **return_vals);
+static gint32     load_image     (gchar        *filename);
+static gboolean   save_image     (gchar        *filename,
+				  gint32        image_ID,
+				  gint32        drawable_ID);
 
-static gint save_dialog    (void);
-static void ok_callback    (GtkWidget *widget,
-			    gpointer   data);
-static void entry_callback (GtkWidget *widget,
-			    gpointer   data);
+static gboolean   save_dialog    (void);
+static void       ok_callback    (GtkWidget    *widget,
+				  gpointer      data);
+static void       entry_callback (GtkWidget    *widget,
+				  gpointer      data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -69,6 +65,12 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+/*  private variables  */
+
+static gchar    description[256] = "GIMP Pattern";
+static gboolean run_flag = FALSE;
+
+
 
 MAIN ()
 
@@ -77,7 +79,7 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_STRING, "filename", "The name of the file to load" },
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
@@ -91,18 +93,19 @@ query (void)
 
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "description", "Short description of the pattern" },
+    { GIMP_PDB_STRING,   "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "description", "Short description of the pattern" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_pat_load",
                           "Loads Gimp's .PAT pattern files",
-                          "The images in the pattern dialog can be loaded directly with this plug-in",
+                          "The images in the pattern dialog can be loaded "
+			  "directly with this plug-in",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -114,7 +117,8 @@ query (void)
 
   gimp_install_procedure ("file_pat_save",
                           "Saves Gimp pattern file (.PAT)",
-                          "New Gimp patterns can be created by saving them in the appropriate place with this plug-in.",
+                          "New Gimp patterns can be created by saving them "
+			  "in the appropriate place with this plug-in.",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -134,17 +138,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunModeType      run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -164,7 +168,7 @@ run (gchar   *name,
 	  *nreturn_vals = 2;
 	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
-	} 
+	}
       else
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;
@@ -247,32 +251,33 @@ run (gchar   *name,
 static gint32 
 load_image (gchar *filename) 
 {
-  char *temp;
-  int fd;
-  PatternHeader ph;
-  guchar *buffer;
-  gint32 image_ID, layer_ID;
-  GimpDrawable *drawable;
-  gint line;
-  GimpPixelRgn pixel_rgn;
+  gchar            *temp;
+  gint              fd;
+  PatternHeader     ph;
+  guchar           *buffer;
+  gint32            image_ID;
+  gint32            layer_ID;
+  GimpDrawable     *drawable;
+  gint              line;
+  GimpPixelRgn      pixel_rgn;
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
-  temp = g_strdup_printf( _("Loading %s:"), filename);
+  temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
-  
+
   fd = open (filename, O_RDONLY | _O_BINARY);
 
   if (fd == -1)
     return -1;
 
-  if (read(fd, &ph, sizeof(ph)) != sizeof(ph)) 
+  if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader)) 
     {
-      close(fd);
+      close (fd);
       return -1;
     }
-  
+
   /*  rearrange the bytes in each unsigned int  */
   ph.header_size  = g_ntohl (ph.header_size);
   ph.version      = g_ntohl (ph.version);
@@ -281,15 +286,17 @@ load_image (gchar *filename)
   ph.bytes        = g_ntohl (ph.bytes);
   ph.magic_number = g_ntohl (ph.magic_number);
 
-  if (ph.magic_number != GPATTERN_MAGIC || ph.version != 1 || ph.header_size <= sizeof(ph)) 
+  if (ph.magic_number != GPATTERN_MAGIC ||
+      ph.version      != 1 ||
+      ph.header_size  <= sizeof (PatternHeader)) 
     {
-      close(fd);
+      close (fd);
       return -1;
     }
-  
-  if (lseek(fd, ph.header_size - sizeof(ph), SEEK_CUR) != ph.header_size) 
+
+  if (lseek (fd, ph.header_size - sizeof (PatternHeader), SEEK_CUR) != ph.header_size) 
     {
-      close(fd);
+      close (fd);
       return -1;
     }
 
@@ -305,116 +312,135 @@ load_image (gchar *filename)
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
       break;
+    case 2:
+      base_type = GIMP_GRAY;
+      image_type = GIMP_GRAYA_IMAGE;
+      g_message ("Your pattern has an aplha channel,\n"
+		 "please flatten and save it again to fix this.\n"
+		 "Loading it anyway...");
+      break;
     case 3:
       base_type = GIMP_RGB;
       image_type = GIMP_RGB_IMAGE;
       break;
-   default:
+    case 4:
+      base_type = GIMP_RGB;
+      image_type = GIMP_RGBA_IMAGE;
+      g_message ("Your pattern has an aplha channel,\n"
+		 "please flatten and save it again to fix this.\n"
+		 "Loading it anyway...");
+      break;
+    default:
       g_message ("Unsupported pattern depth: %d\nGIMP Patterns must be GRAY or RGB\n", ph.bytes);
       return -1;
     }
 
   image_ID = gimp_image_new (ph.width, ph.height, base_type);
-  gimp_image_set_filename(image_ID, filename);
-  
+  gimp_image_set_filename (image_ID, filename);
+
   layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
 			    image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
-  
-  drawable = gimp_drawable_get(layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, 
+
+  drawable = gimp_drawable_get (layer_ID);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height, 
 		       TRUE, FALSE);
-  
+
   buffer = g_malloc (ph.width * ph.bytes);
-  
+
   for (line = 0; line < ph.height; line++) 
     {
-      if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) {
-	close(fd);
-	g_free(buffer);
-	return -1;
-      }
+      if (read (fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes)
+	{
+	  close (fd);
+	  g_free (buffer);
+	  return -1;
+	}
+
       gimp_pixel_rgn_set_row (&pixel_rgn, buffer, 0, line, ph.width);
-      gimp_progress_update ((double) line / (double) ph.height);
+
+      gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
-  
+
   gimp_drawable_flush (drawable);
-  
+
   return image_ID;
 }
 
-static gint 
+static gboolean
 save_image (gchar  *filename, 
 	    gint32  image_ID, 
 	    gint32  drawable_ID) 
 {
-  int fd;
+  gint          fd;
   PatternHeader ph;
-  unsigned char *buffer;
+  guchar       *buffer;
   GimpDrawable *drawable;
-  gint line;
-  GimpPixelRgn pixel_rgn;
-  char *temp;
-  
-  temp = g_strdup_printf( _("Saving %s:"), filename);
+  gint          line;
+  GimpPixelRgn  pixel_rgn;
+  gchar        *temp;
+
+  temp = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
-  
+
   drawable = gimp_drawable_get (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
 		       drawable->height, FALSE, FALSE);
-  
-  fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
-  
-  if (fd == -1)
-    return 0;
 
-  ph.header_size  = g_htonl (sizeof (ph) + strlen (description) + 1);
+  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+
+  if (fd == -1)
+    return FALSE;
+
+  ph.header_size  = g_htonl (sizeof (PatternHeader) + strlen (description) + 1);
   ph.version      = g_htonl (1);
   ph.width        = g_htonl (drawable->width);
   ph.height       = g_htonl (drawable->height);
   ph.bytes        = g_htonl (drawable->bpp);
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-  if (write(fd, &ph, sizeof (ph)) != sizeof(ph)) 
+  if (write (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader)) 
     {
-      close(fd);
-      return 0;
+      close (fd);
+      return FALSE;
     }
 
   if (write (fd, description, strlen (description) + 1) != strlen (description) + 1) 
     {
-      close(fd);
-      return 0;
+      close (fd);
+      return FALSE;
     }
 
   buffer = g_malloc (drawable->width * drawable->bpp);
   if (buffer == NULL) 
     {
-      close(fd);
-      return 0;
+      close (fd);
+      return FALSE;
     }
-  
+
   for (line = 0; line < drawable->height; line++) 
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
+
       if (write (fd, buffer, drawable->width * drawable->bpp) !=
 	  drawable->width * drawable->bpp) 
 	{
-	  close(fd);
-	  return 0;
+	  close (fd);
+	  return FALSE;
 	}
-      gimp_progress_update ((double) line / (double) drawable->height);
+
+      gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
     }
  
   g_free (buffer);
   close (fd);
-  
-  return 1;
+
+  return TRUE;
 }
 
-static gint 
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
@@ -444,7 +470,7 @@ save_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
-  
+
   entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, 200, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
