@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2000-04-01 19:01+0200\n"
-"PO-Revision-Date: 2000-04-21 19:01+0200\n"
+"POT-Creation-Date: 2000-04-04 18:59+0200\n"
+"PO-Revision-Date: 2000-04-04 18:59+0200\n"
 "Last-Translator: GNOME PL Team <gnomepl@pandora.info.bielsko.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1332,19 +1332,23 @@ msgstr "Oderwanie zaznaczenia: Brak zaznaczenia."
 
 #: app/gimage_mask.c:1
 msgid "Floated Layer"
-msgstr ""
+msgstr "Oderwana warstwa"
 
 #: app/gimage_mask.c:1
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
+"Aktywna warstwa nie ma kana³u alfa, który\n"
+"mo¿na przekszta³ciæ w zaznaczenie"
 
 #: app/gimage_mask.c:1
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
+"Aktywna warstwa nie ma maski, któr±\n"
+"mo¿na przekszta³ciæ w zaznaczenie"
 
 #: app/gimage_mask.c:1
 msgid "No selection to stroke!"
@@ -3973,32 +3977,32 @@ msgid "Unload"
 msgstr "Usuñ"
 
 #: app/module_db.c:1
-msgid "Purpose: "
-msgstr "Przeznaczenia: "
-
-#: app/module_db.c:1
-msgid "Author: "
-msgstr "Autor: "
-
-#: app/module_db.c:1
-msgid "Version: "
-msgstr "Wersja"
-
-#: app/module_db.c:1
-msgid "Copyright: "
+msgid "Purpose:"
 msgstr ""
 
 #: app/module_db.c:1
-msgid "Date: "
-msgstr "Data: "
+msgid "Author:"
+msgstr "Autor:"
 
 #: app/module_db.c:1
-msgid "Location: "
-msgstr "Po³o¿enie: "
+msgid "Version:"
+msgstr "Wersja:"
 
 #: app/module_db.c:1
-msgid "State: "
-msgstr "Stan: "
+msgid "Copyright:"
+msgstr "Prawo autorskie:"
+
+#: app/module_db.c:1
+msgid "Date:"
+msgstr "Data:"
+
+#: app/module_db.c:1
+msgid "Location:"
+msgstr "Po³o¿enie:"
+
+#: app/module_db.c:1
+msgid "State:"
+msgstr "Stan:"
 
 #: app/module_db.c:1
 msgid "Autoload during startup"
@@ -5634,15 +5638,15 @@ msgstr ""
 
 #: app/transform_tool.c:1
 msgid "Smoothing"
-msgstr ""
+msgstr "Wyg³adzanie"
 
 #: app/transform_tool.c:1
 msgid "Show Path"
-msgstr ""
+msgstr "Wy¶wietlanie ¶cie¿ki"
 
 #: app/transform_tool.c:1
 msgid "Clip Result"
-msgstr ""
+msgstr "Przyciêcie wyniku"
 
 #: app/undo.c:1
 #, c-format
@@ -5651,11 +5655,11 @@ msgstr "Nie mo¿na cofn±æ %s"
 
 #: app/undo.c:1
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<niepoprawne>>"
 
 #: app/undo.c:1
 msgid "image"
-msgstr "obraz"
+msgstr "Obraz"
 
 #: app/undo.c:1
 msgid "image mod"
@@ -5663,11 +5667,11 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "mask"
-msgstr "maska"
+msgstr "Maska"
 
 #: app/undo.c:1
 msgid "layer move"
-msgstr "przeniesienie warstwy"
+msgstr "Przeniesienie warstwy"
 
 #: app/undo.c:1
 msgid "transform"
@@ -5675,15 +5679,15 @@ msgstr "przekszta³cenie"
 
 #: app/undo.c:1
 msgid "paint"
-msgstr "rysowanie"
+msgstr "Rysowanie"
 
 #: app/undo.c:1
 msgid "new layer"
-msgstr "nowa warstwa"
+msgstr "Nowa warstwa"
 
 #: app/undo.c:1
 msgid "delete layer"
-msgstr "usuniêcie warstwy"
+msgstr "Usuniêcie warstwy"
 
 #: app/undo.c:1
 msgid "layer mod"
@@ -5691,15 +5695,15 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "add layer mask"
-msgstr "dodanie maski warstwy"
+msgstr "Dodanie maski warstwy"
 
 #: app/undo.c:1
 msgid "delete layer mask"
-msgstr "usuniêcie maski warstwy"
+msgstr "Usuniêcie maski warstwy"
 
 #: app/undo.c:1
 msgid "rename layer"
-msgstr "zmiana nazwy warstwy"
+msgstr "Zmiana nazwy warstwy"
 
 #: app/undo.c:1
 msgid "layer reposition"
@@ -5707,11 +5711,11 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "new channel"
-msgstr "nowy kana³"
+msgstr "Nowy kana³"
 
 #: app/undo.c:1
 msgid "delete channel"
-msgstr "usuniêcie kana³u"
+msgstr "Usuniêcie kana³u"
 
 #: app/undo.c:1
 msgid "channel mod"
@@ -5735,35 +5739,35 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "guide"
-msgstr ""
+msgstr "Prowadnica"
 
 #: app/undo.c:1
 msgid "text"
-msgstr "tekst"
+msgstr "Tekst"
 
 #: app/undo.c:1
 msgid "float selection"
-msgstr "oderwanie zaznaczenia"
+msgstr "Oderwanie zaznaczenia"
 
 #: app/undo.c:1
 msgid "paste"
-msgstr "wklejenie"
+msgstr "Wklejenie"
 
 #: app/undo.c:1
 msgid "cut"
-msgstr "wyciêcie"
+msgstr "Wyciêcie"
 
 #: app/undo.c:1
 msgid "transform core"
-msgstr ""
+msgstr "Przekszta³cenie"
 
 #: app/undo.c:1
 msgid "paint core"
-msgstr ""
+msgstr "Rysowanie"
 
 #: app/undo.c:1
 msgid "floating layer"
-msgstr ""
+msgstr "Oderwana warstwa"
 
 #: app/undo.c:1
 msgid "linked layer"
@@ -5771,11 +5775,11 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "apply layer mask"
-msgstr ""
+msgstr "Zastosowanie maski warstwy"
 
 #: app/undo.c:1
 msgid "layer merge"
-msgstr "po³±czenie warstw"
+msgstr "Po³±czenie warstw"
 
 #: app/undo.c:1
 msgid "FS anchor"
@@ -5787,15 +5791,15 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "crop"
-msgstr "kadrowanie"
+msgstr "Kadrowanie"
 
 #: app/undo.c:1
 msgid "layer scale"
-msgstr "skalowanie warstwy"
+msgstr "Skalowanie warstwy"
 
 #: app/undo.c:1
 msgid "layer resize"
-msgstr "zmiana rozmiaru warstwy"
+msgstr "Zmiana rozmiaru warstwy"
 
 #: app/undo.c:1
 msgid "quickmask"
@@ -5811,19 +5815,19 @@ msgstr ""
 
 #: app/undo.c:1
 msgid "resolution change"
-msgstr "zmiana rozdzielczo¶ci"
+msgstr "Zmiana rozdzielczo¶ci"
 
 #: app/undo.c:1
 msgid "image scale"
-msgstr "skalowanie obrazu"
+msgstr "Skalowanie obrazu"
 
 #: app/undo.c:1
 msgid "image resize"
-msgstr "zmiana rozmiaru obrazu"
+msgstr "Zmiana rozmiaru obrazu"
 
 #: app/undo.c:1
 msgid "misc"
-msgstr ""
+msgstr "Ró¿ne"
 
 #: app/undo_history.c:1 app/undo_history.c:1
 #, c-format
@@ -5841,7 +5845,7 @@ msgstr "Ponów"
 #: app/xcf.c:1
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
+msgstr "B³±d XCF: napotkano nieobs³ugiwan± wersjê pliku %d"
 
 #: app/xcf.c:1
 msgid ""
