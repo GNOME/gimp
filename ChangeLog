@@ -1,3 +1,12 @@
+2001-07-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/batch.[ch]: seems Mathieu messed up the last commit :) Added
+	these two files back from the Attic, removed the old STDIN code
+	and added a small hack which calls "extension-script-fu-text-console"
+
+	* app/main.c: reverted to the last version, so old and new batch
+	mode are both there now.
+
 2001-07-17  Mathieu Lacage  <mathieu@gnome.org>
 
 	* app/batch.c: new code to call the script_fuc_text_console pdb function.
