@@ -1,4 +1,8 @@
-2004-01-13  Simon Budig  <simon@gimp.org>
+2004-01-14  Simon Budig  <simon@gimp.org>
+
+	* app/gui/about-dialog.c: Fixed small refresh issue.
+
+2004-01-14  Simon Budig  <simon@gimp.org>
 
 	* data/images/gimp_logo.png: New image for the about dialog by
 	Jakub Steiner.

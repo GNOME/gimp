@@ -432,7 +432,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
                      event->area.x, event->area.y,
                      event->area.width, event->area.height);
 
-  if (pp &&
+  if (pp && about_info.state == 0 &&
       (about_info.index < about_info.pixmaparea.height / 12 ||
        about_info.index < g_random_int () %
                           (about_info.pixmaparea.height / 8 + 13)))
