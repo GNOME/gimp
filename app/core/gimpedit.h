@@ -19,12 +19,17 @@
 #define __GLOBAL_EDIT_H__
 
 #include "gimage.h"
+struct _Canvas;
 
 /*  The interface functions  */
 TileManager *  crop_buffer            (TileManager *, int);
 TileManager *  edit_cut               (GImage *, GimpDrawable *);
 TileManager *  edit_copy              (GImage *, GimpDrawable *);
 int            edit_paste             (GImage *, GimpDrawable *, TileManager *, int);
+struct _Canvas *  crop_buffer_16            (struct _Canvas *, int);
+struct _Canvas *  edit_cut_16               (GImage *, GimpDrawable *);
+struct _Canvas *  edit_copy_16              (GImage *, GimpDrawable *);
+int            edit_paste_16             (GImage *, GimpDrawable *, struct _Canvas *, int);
 int            edit_clear             (GImage *, GimpDrawable *);
 int            edit_fill              (GImage *, GimpDrawable *);
 
