@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "tag.h"
 
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
@@ -36,7 +37,9 @@
 
 static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);
+static RETSIGTYPE on_sig_refresh (int);
 static void       init (void);
+static void       init_shmem (void);
 
 /* GLOBAL data */
 int no_interface;
@@ -47,10 +50,21 @@ int be_verbose;
 int use_shm;
 char *prog_name;		/* The path name we are invoked with */
 char **batch_cmds;
+int parentPID = 0;		/* If invoked using share memory intf from another process.. who parent is */
+
 
 /* LOCAL data */
 static int gimp_argc;
 static char **gimp_argv;
+static int useSharedMem = FALSE;
+
+/* Shared Memory LOCAL Data */
+static int shmemImage_ID = -1;
+static key_t shmid = 0;
+static int	chans = 0;
+static long offset = 0;
+static int xSize = 0;
+static int ySize = 0;
 
 /*
  *  argv processing: 
@@ -156,6 +170,25 @@ main (int argc, char **argv)
 	{
 	  use_shm = FALSE;
 	}
+	  else if( strcmp( argv[i], "--sharedmem" ) == 0 )
+	{
+	  if( i+6 >= argc )
+		  show_help = TRUE;
+	  else
+	  {
+		  useSharedMem = TRUE;
+		  parentPID = atoi( argv[++i] );
+		  shmid = atoi( argv[++i] );
+		  offset = atoi( argv[++i] );
+		  chans = atoi( argv[++i] );
+		  xSize = atoi( argv[++i] );
+		  ySize = atoi( argv[++i] );
+		  /*
+		  printf( "Parent PID: %d, shmid: %d, off: %d, chans: %d, (%d,%d)\n", 
+				  parentPID, shmid, offset, chans, xSize, ySize );
+		  */
+	  }
+	}
 /*
  *    ANYTHING ELSE starting with a '-' is an error.
  */
@@ -207,12 +240,18 @@ main (int argc, char **argv)
   /* Handle child exits */
   signal (SIGCHLD, on_sig_child);
 
+  /* Handle shmem reload */
+  signal( SIGUSR2, on_sig_refresh);
+
   /* Keep the command line arguments--for use in gimp_init */
   gimp_argc = argc - 1;
   gimp_argv = argv + 1;
 
   /* Check the installation */
-  install_verify (init);
+  if( useSharedMem )
+	install_verify( init_shmem );
+  else
+  	install_verify (init);
 
   /* Main application loop */
   if (!app_exit_finish_done ())
@@ -231,12 +270,32 @@ main (int argc, char **argv)
   return 0;
 }
 
+static void 
+init_shmem()
+{
+	/*  Continue initializing  */
+	shmemImage_ID = gimp_shmem_init( PRECISION_CONFIG, shmid, chans, offset, 
+					xSize, ySize );
+}
+
+static RETSIGTYPE
+on_sig_refresh (int sig_num)
+{
+	if( shmemImage_ID != -1 )
+	{
+		/*printf( "gimp: Got refresh signal.\n" );*/
+		gdisplays_update_full( shmemImage_ID );
+		gdisplays_flush();
+	}
+}
+
 static void
 init ()
 {
-  /*  Continue initializing  */
-  gimp_init (gimp_argc, gimp_argv);
+	/*  Continue initializing  */
+	gimp_init (gimp_argc, gimp_argv);
 }
+
 
 static int caught_fatal_sig = 0;
 
