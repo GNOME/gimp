@@ -717,7 +717,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 			  &c[RED_PIX],
 			  &c[GREEN_PIX],
 			  &c[BLUE_PIX]);
-      gimp_image_transform_color (gimage, drawable, c, &i, GIMP_RGB);
+      gimp_image_transform_color (gimage, drawable, &i, GIMP_RGB, c);
       c[INDEXED_PIX] = i;
       if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE)
 	gimp_rgba_get_uchar (color,
@@ -1015,7 +1015,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
   gimp_image_get_color (gimp_item_get_image (GIMP_ITEM (drawable)),
-			gimp_drawable_type (drawable), dest, src);
+			gimp_drawable_type (drawable), src, dest);
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (drawable)))
     dest[3] = src[gimp_drawable_bytes (drawable) - 1];

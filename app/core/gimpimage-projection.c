@@ -193,7 +193,7 @@ gimp_image_projection_get_color_at (GimpImage *gimage,
   tile = tile_manager_get_tile (gimp_image_projection (gimage), x, y,
 				TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  gimp_image_get_color (gimage, gimp_image_projection_type (gimage), dest, src);
+  gimp_image_get_color (gimage, gimp_image_projection_type (gimage), src, dest);
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (gimage)))
     dest[3] = src[gimp_image_projection_bytes (gimage) - 1];

@@ -276,7 +276,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 	  for (j = 0; j < imagePR.w; j++)
 	    {
 	      /*  Get the rgb values for the color  */
-	      gimp_image_get_color (gimage, d_type, rgb, idata);
+	      gimp_image_get_color (gimage, d_type, idata, rgb);
 
 	      /*  Plug the alpha channel in there  */
 	      if (has_alpha)

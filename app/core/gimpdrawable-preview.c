@@ -38,6 +38,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-preview.h"
 #include "gimplayer.h"
@@ -202,32 +203,33 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 			       gint          width,
 			       gint          height)
 {
-  TempBuf           *preview_buf;
-  PixelRegion        srcPR;
-  PixelRegion        destPR;
-  GimpImageBaseType  type;
-  gint               bytes;
-  gint               subsample;
-  TempBuf           *ret_buf;
+  TempBuf *ret_buf;
 
-  type  = GIMP_RGB;
-  bytes = 0;
-
-  /*  The easy way  */
   if (drawable->preview_valid &&
       (ret_buf = gimp_preview_cache_get (&drawable->preview_cache, 
 					 width, height)))
     {
+      /*  The easy way  */
+
       return ret_buf;
     }
-  /*  The hard way  */
   else
     {
-      GimpItem *item = GIMP_ITEM (drawable);
+      /*  The hard way  */
 
-      type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+      GimpItem          *item;
+      TempBuf           *preview_buf;
+      PixelRegion        srcPR;
+      PixelRegion        destPR;
+      GimpImageBaseType  base_type;
+      gint               bytes;
+      gint               subsample;
 
-      switch (type)
+      item = GIMP_ITEM (drawable);
+
+      base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+      switch (base_type)
 	{
 	case GIMP_RGB:
 	case GIMP_GRAY:
@@ -235,7 +237,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 	  break;
 
 	case GIMP_INDEXED:
-	  bytes = (gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE) ? 3 : 4;
+	  bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
 	  break;
 	}
 
@@ -251,10 +253,10 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 	subsample += 1;
 
       pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 0, 0,
-			 gimp_item_width  (item),
-			 gimp_item_height (item),
-			 FALSE);
+                         0, 0,
+                         gimp_item_width  (item),
+                         gimp_item_height (item),
+                         FALSE);
 
       preview_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
@@ -268,11 +270,10 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 
       if (GIMP_IS_LAYER (drawable))
 	{
-	  GimpImage *gimage;
+	  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-	  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-	  gimp_drawable_preview_scale (type, gimage->cmap,
+	  gimp_drawable_preview_scale (base_type,
+                                       gimp_image_get_colormap (gimage),
 				       &srcPR, &destPR,
 				       subsample);
 	}
@@ -315,7 +316,6 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   gint     i, j;
   gint     frac;
   gboolean advance_dest;
-  guchar   rgb[MAX_CHANNELS];
 
   orig_width  = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;
@@ -405,11 +405,11 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	  /*  If indexed, transform the color to RGB  */
 	  if (type == GIMP_INDEXED)
 	    {
-	      map_to_color (2, cmap, s, rgb);
+              gint index = *s * 3;
 
-	      r[RED_PIX]   += rgb[RED_PIX] * tot_frac;
-	      r[GREEN_PIX] += rgb[GREEN_PIX] * tot_frac;
-	      r[BLUE_PIX]  += rgb[BLUE_PIX] * tot_frac;
+	      r[RED_PIX]   += cmap[index++] * tot_frac;
+	      r[GREEN_PIX] += cmap[index++] * tot_frac;
+	      r[BLUE_PIX]  += cmap[index++] * tot_frac;
 
 	      if (bytes == 4)
 		r[ALPHA_PIX] += s[ALPHA_I_PIX] * tot_frac;

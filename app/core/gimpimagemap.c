@@ -461,7 +461,7 @@ gimp_image_map_get_color_at (GimpImageMap *image_map,
 
       gimp_image_get_color (gimp_item_get_image  (GIMP_ITEM (image_map->drawable)),
 			    gimp_drawable_type (image_map->drawable),
-			    dest, src);
+			    src, dest);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (image_map->drawable)))
 	dest[3] = src[gimp_drawable_bytes (image_map->drawable) - 1];

@@ -267,16 +267,6 @@ void  extract_from_indexed_pixels         (guchar       *src,
 					   guint         has_alpha);
 
 
-/*  variable source to RGB color mapping
- *  src_type == 0  (RGB)
- *  src_type == 1  (GRAY)
- *  src_type == 2  (INDEXED)
- */
-void  map_to_color                        (guint         src_type,
-					   const guchar *cmap,
-					   const guchar *src,
-					   guchar       *rgb);
-
 /*  Region functions  */
 void  color_region                        (PixelRegion *dest, 
 					   const guchar *color);

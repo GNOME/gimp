@@ -1,3 +1,42 @@
+2003-09-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: removed function map_to_color()
+	since it does not belong here and the two places using it look much
+	cleaner when doing that stuff themselves.
+
+	* app/core/gimpdrawable-preview.c: cleanup.
+	(gimp_drawable_preview_scale): do the indexed palette lookup here
+	instead of calling map_to_color().
+
+	* app/core/gimpimage.c (gimp_image_get_color): transform the
+	colors here instead of calling map_to_color().
+
+	* app/core/gimpimage.[ch] (gimp_image_get_color): reordered
+	parameters src parameters are before dest parameters.
+	Made the src color const.
+
+	(gimp_image_transform_color): reordered so src parameters are
+	*after* dest parameters (since this function operates on the dest
+	image and it makes sense to have the dest parameters
+	together). Made the src color const here, too.
+
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimagemap.c
+	* app/core/gimplayer.c
+	* app/core/gimppalette-import.c
+	* app/paint/gimpclone.c
+	* app/paint/gimppaintcore.c: changed accordingly.
+
+	* app/core/gimpedit.c (gimp_edit_cut,copy): simplified by
+	moving the "cropped" variable to a local scope.
+
+	* app/core/gimpimage-mask.c: calling gimp_image_update() followed
+	by gimp_viewable_imvalidate_preview(drawable) is equal to calling
+	gimp_drawable_update() directly.
+
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppreviewcache.[ch]: code cleanup. Removed the

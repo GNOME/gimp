@@ -158,12 +158,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
 	  gimp_channel_clear (sel_mask, NULL, TRUE);
 
 	  /*  Update the region  */
-	  gimp_image_update (gimage, 
-			     x1 + off_x, y1 + off_y,
-			     (x2 - x1), (y2 - y1));
-
-	  /*  Invalidate the preview  */
-	  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
   else /*  Otherwise, get the entire active layer  */

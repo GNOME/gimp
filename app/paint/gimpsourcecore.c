@@ -478,8 +478,8 @@ gimp_clone_line_image (GimpImage    *dest,
 
   while (width--)
     {
-      gimp_image_get_color (src, gimp_drawable_type (s_drawable), rgb, s);
-      gimp_image_transform_color (dest, d_drawable, rgb, d, GIMP_RGB);
+      gimp_image_get_color (src, gimp_drawable_type (s_drawable), s, rgb);
+      gimp_image_transform_color (dest, d_drawable, d, GIMP_RGB, rgb);
 
       if (has_alpha)
 	d[dest_alpha] = s[src_alpha];
@@ -528,7 +528,7 @@ gimp_clone_line_pattern (GimpImage    *dest,
     {
       p = pat + ((i + x) % pattern->mask->width) * pat_bytes;
 
-      gimp_image_transform_color (dest, drawable, p, d, color_type);
+      gimp_image_transform_color (dest, drawable, d, color_type, p);
 
       if (pat_bytes == 2 || pat_bytes == 4)
         d[alpha] = p[pat_bytes - 1];

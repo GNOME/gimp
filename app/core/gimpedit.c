@@ -49,8 +49,7 @@ const GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
 	       GimpDrawable *drawable)
 {
-  TileManager *cut;
-  TileManager *cropped_cut;
+  TileManager *tiles;
   gboolean     empty;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -64,38 +63,36 @@ gimp_edit_cut (GimpImage    *gimage,
   empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
   /*  Next, cut the mask portion from the gimage  */
-  cut = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+  tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
-  if (cut)
+  if (tiles)
     gimage->gimp->have_current_cut_buffer = TRUE;
 
   /*  Only crop if the gimage mask wasn't empty  */
-  if (cut && ! empty)
+  if (tiles && ! empty)
     {
-      cropped_cut = tile_manager_crop (cut, 0);
+      TileManager *crop;
 
-      if (cropped_cut != cut)
+      crop = tile_manager_crop (tiles, 0);
+
+      if (crop != tiles)
 	{
-	  tile_manager_unref (cut);
-	  cut = NULL;
+	  tile_manager_unref (tiles);
+	  tiles = crop;
 	}
     }
-  else if (cut)
-    cropped_cut = cut;
-  else
-    cropped_cut = NULL;
 
   /*  end the group undo  */
   gimp_image_undo_group_end (gimage);
 
-  if (cropped_cut)
+  if (tiles)
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
 	g_object_unref (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = gimp_buffer_new (cropped_cut,
+      gimage->gimp->global_buffer = gimp_buffer_new (tiles,
                                                      "Global Buffer",
                                                      FALSE);
 
@@ -109,8 +106,7 @@ const GimpBuffer *
 gimp_edit_copy (GimpImage    *gimage,
 		GimpDrawable *drawable)
 {
-  TileManager *copy;
-  TileManager *cropped_copy;
+  TileManager *tiles;
   gboolean     empty;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -124,38 +120,36 @@ gimp_edit_copy (GimpImage    *gimage,
   empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
   /*  First, copy the masked portion of the gimage  */
-  copy = gimp_image_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
+  tiles = gimp_image_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
 
-  if (copy)
+  if (tiles)
     gimage->gimp->have_current_cut_buffer = TRUE;
 
   /*  Only crop if the gimage mask wasn't empty  */
-  if (copy && ! empty)
+  if (tiles && ! empty)
     {
-      cropped_copy = tile_manager_crop (copy, 0);
+      TileManager *crop;
 
-      if (cropped_copy != copy)
+      crop = tile_manager_crop (tiles, 0);
+
+      if (crop != tiles)
 	{
-	  tile_manager_unref (copy);
-	  copy = NULL;
+	  tile_manager_unref (tiles);
+	  tiles = crop;
 	}
     }
-  else if (copy)
-    cropped_copy = copy;
-  else
-    cropped_copy = NULL;
 
   /*  end the group undo  */
   gimp_image_undo_group_end (gimage);
 
-  if (cropped_copy)
+  if (tiles)
     {
       /*  Free the old global edit buffer  */
       if (gimage->gimp->global_buffer)
 	g_object_unref (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = gimp_buffer_new (cropped_copy,
+      gimage->gimp->global_buffer = gimp_buffer_new (tiles,
                                                      "Global Buffer",
                                                      FALSE);
 
@@ -253,8 +247,8 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   /*  create a new image  (always of type GIMP_RGB)  */
   gimage = gimp_create_image (gimp,
-			      gimp_buffer_get_width (paste), 
-                              gimp_buffer_get_height (paste), 
+			      gimp_buffer_get_width (paste),
+                              gimp_buffer_get_height (paste),
 			      GIMP_RGB,
 			      TRUE);
   gimp_image_undo_disable (gimage);
@@ -348,6 +342,8 @@ gimp_edit_fill (GimpImage    *gimage,
 
   if (gimp_drawable_has_alpha (drawable))
     col [gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+
+  g_print ("fill_type: %d\n", fill_type);
 
   switch (fill_type)
     {

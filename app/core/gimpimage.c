@@ -1501,7 +1501,7 @@ gimp_image_get_foreground (const GimpImage    *gimage,
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
-  gimp_image_transform_color (gimage, drawable, pfg, fg, GIMP_RGB);
+  gimp_image_transform_color (gimage, drawable, fg, GIMP_RGB, pfg);
 }
 
 void
@@ -1520,50 +1520,65 @@ gimp_image_get_background (const GimpImage    *gimage,
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
-  gimp_image_transform_color (gimage, drawable, pbg, bg, GIMP_RGB);
+  gimp_image_transform_color (gimage, drawable, bg, GIMP_RGB, pbg);
 }
 
 void
-gimp_image_get_color (const GimpImage *gimage,
-		      GimpImageType    d_type,
-		      guchar          *rgb,
-		      guchar          *src)
+gimp_image_get_color (const GimpImage *src_gimage,
+		      GimpImageType    src_type,
+		      const guchar    *src,
+		      guchar          *rgb)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (src_gimage));
 
-  switch (d_type)
+  switch (src_type)
     {
     case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
-      map_to_color (0, NULL, src, rgb);
+      /*  Straight copy  */
+      *rgb++ = *src++;
+      *rgb++ = *src++;
+      *rgb   = *src;
       break;
+
     case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-      map_to_color (1, NULL, src, rgb);
+      /*  Gray to RG&B */
+      *rgb++ = *src;
+      *rgb++ = *src;
+      *rgb   = *src;
       break;
+
     case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-      map_to_color (2, gimage->cmap, src, rgb);
+      /*  Indexed palette lookup  */
+      {
+	gint index = *src * 3;
+
+	*rgb++ = src_gimage->cmap[index++];
+	*rgb++ = src_gimage->cmap[index++];
+	*rgb   = src_gimage->cmap[index++];
+      }
       break;
     }
 }
 
 void
-gimp_image_transform_color (const GimpImage    *gimage,
-			    const GimpDrawable *drawable,
-			    guchar             *src,
+gimp_image_transform_color (const GimpImage    *dest_gimage,
+			    const GimpDrawable *dest_drawable,
 			    guchar             *dest,
-			    GimpImageBaseType   type)
+			    GimpImageBaseType   src_type,
+			    const guchar       *src)
 {
-  GimpImageType drawable_type;
+  GimpImageType dest_type;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (dest_gimage));
 
-  drawable_type = (drawable ?
-                   gimp_drawable_type (drawable) :
-                   gimp_image_base_type_with_alpha (gimage));
+  dest_type = (dest_drawable ?
+               gimp_drawable_type (dest_drawable) :
+               gimp_image_base_type_with_alpha (dest_gimage));
 
-  switch (type)
+  switch (src_type)
     {
     case GIMP_RGB:
-      switch (drawable_type)
+      switch (dest_type)
 	{
 	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Straight copy  */
@@ -1571,15 +1586,17 @@ gimp_image_transform_color (const GimpImage    *gimage,
 	  *dest++ = *src++;
 	  *dest++ = *src++;
 	  break;
+
 	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
 	  /*  NTSC conversion  */
 	  *dest = INTENSITY (src[RED_PIX],
 			     src[GREEN_PIX],
 			     src[BLUE_PIX]);
 	  break;
+
 	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
-	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
+	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
 							src[RED_PIX],
 							src[GREEN_PIX],
 							src[BLUE_PIX]);
@@ -1588,7 +1605,7 @@ gimp_image_transform_color (const GimpImage    *gimage,
       break;
 
     case GIMP_GRAY:
-      switch (drawable_type)
+      switch (dest_type)
 	{
 	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Gray to RG&B */
@@ -1596,13 +1613,15 @@ gimp_image_transform_color (const GimpImage    *gimage,
 	  *dest++ = *src;
 	  *dest++ = *src;
 	  break;
+
 	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
 	  /*  Straight copy  */
 	  *dest = *src;
 	  break;
+
 	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
-	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
+	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
 							src[GRAY_PIX],
 							src[GRAY_PIX],
 							src[GRAY_PIX]);

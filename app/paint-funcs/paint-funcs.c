@@ -1998,37 +1998,6 @@ extract_from_indexed_pixels (guchar       *src,
 }
 
 
-void
-map_to_color (guint         src_type,
-	      const guchar *cmap,
-	      const guchar *src,
-	      guchar       *rgb)
-{
-  switch (src_type)
-    {
-    case 0:  /*  RGB      */
-      /*  Straight copy  */
-      *rgb++ = *src++;
-      *rgb++ = *src++;
-      *rgb   = *src;
-      break;
-    case 1:  /*  GRAY     */
-      *rgb++ = *src;
-      *rgb++ = *src;
-      *rgb   = *src;
-      break;
-    case 2:  /*  INDEXED  */
-      {
-	gint index = *src * 3;
-	*rgb++ = cmap [index++];
-	*rgb++ = cmap [index++];
-	*rgb   = cmap [index++];
-      }
-      break;
-    }
-}
-
-
 /**************************************************/
 /*    REGION FUNCTIONS                            */
 /**************************************************/

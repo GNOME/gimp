@@ -303,7 +303,7 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 	  for (j = 0; j < imagePR.w; j++)
 	    {
 	      /*  Get the rgb values for the color  */
-	      gimp_image_get_color (gimage, d_type, rgb, idata);
+	      gimp_image_get_color (gimage, d_type, idata, rgb);
 	      memcpy (rgb_real, rgb, MAX_CHANNELS); /* Structure copy */
 
 	      rgb[0] = (rgb[0] / threshold) * threshold;

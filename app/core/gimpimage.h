@@ -317,15 +317,15 @@ void            gimp_image_get_foreground        (const GimpImage    *gimage,
 void            gimp_image_get_background        (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
                                                   guchar             *bg);
-void            gimp_image_get_color             (const GimpImage    *gimage,
-                                                  GimpImageType       d_type,
-                                                  guchar             *rgb,
-                                                  guchar             *src);
-void            gimp_image_transform_color       (const GimpImage    *gimage,
-                                                  const GimpDrawable *drawable,
-                                                  guchar             *src,
+void            gimp_image_get_color             (const GimpImage    *src_gimage,
+                                                  GimpImageType       src_type,
+                                                  const guchar       *src,
+                                                  guchar             *rgb);
+void            gimp_image_transform_color       (const GimpImage    *dest_gimage,
+                                                  const GimpDrawable *dest_drawable,
                                                   guchar             *dest,
-                                                  GimpImageBaseType   type);
+                                                  GimpImageBaseType   src_type,
+                                                  const guchar       *src);
 
 
 /*  shadow tiles  */
