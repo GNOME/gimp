@@ -608,6 +608,8 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
   gchar          *label;
 
   dialog->file_proc = gimp_file_proc_view_get_proc (view, &name);
+  if (! dialog->file_proc)
+    return;
 
   label = g_strdup_printf (_("Select File _Type (%s)"), name);
 
@@ -620,7 +622,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
     {
       PlugInProcDef *proc = dialog->file_proc;
 
-      if (proc && proc->extensions_list)
+      if (proc->extensions_list)
         {
           gchar *uri = gtk_file_chooser_get_uri (chooser);
 
