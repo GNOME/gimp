@@ -1,3 +1,7 @@
+1999-09-18  Zach Beane  <xach@mint.net>
+
+	* plug-ins/webbrowser/web-browser.scm: Corrected GIMP News URL.
+
 1999-09-18  Tomas Ogren  <stric@ing.umu.se>
 
 	* plug-ins/common/tiff.c: "u_long" isn't portable at all..
