@@ -1,3 +1,7 @@
+2003-06-23  Danilo Å egan  <dsegan@gmx.net>
+
+	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
+
 2003-06-23  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: simplified exif check by using PKG_CHECK_MODULES().
@@ -2279,7 +2283,7 @@
 
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
-	(Spotted by Ville Pätsi).
+	(Spotted by Ville PÃ¤tsi).
 
 2003-05-11  Sven Neumann  <sven@gimp.org>
 
@@ -3812,7 +3816,7 @@
 
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
-	Applied a patch from Øyvind Kolås that adds supersampling to the
+	Applied a patch from Ã˜yvind KolÃ¥s that adds supersampling to the
 	transform operations (bug #109817):
 
 	* app/base/tile-manager-private.h
@@ -4126,7 +4130,7 @@
 
 	* app/core/gimpdrawable-transform-utils.c
 	(gimp_drawable_transform_matrix_perspective): applied patch from
-	Øyvind Kolås that fixes bug #109570.
+	Ã˜yvind KolÃ¥s that fixes bug #109570.
 
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
@@ -20523,7 +20527,7 @@
 	* themes/Default/images/stock-button-selection-subtract.png: cropped.
 
 	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
-	a nicer one from Ville Pätsi.
+	a nicer one from Ville PÃ¤tsi.
 
 	* app/gui/menus.c
 	* app/widgets/gimpvectorslistview.c: use the new stock items.
@@ -23620,7 +23624,7 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
-	layers by Ville Pätsi (drc).
+	layers by Ville PÃ¤tsi (drc).
 
 2001-12-12  Sven Neumann  <sven@gimp.org>
 
