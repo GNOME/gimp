@@ -15,6 +15,13 @@
 
 	* gimp-zip.in: Also distribute .def files.
 
+	* app/Makefile.am: Fix rules for making the import library
+	libgimpapp for importing from the GIMP executable (needed by the
+	modules). Copy gimp-1.2 to gimp.exe on Win32. Don't distribute
+	libgimpapp.la.
+
+	* app/libgimpapp.la: Remove, unneeded.
+
 2002-02-08  Manish Singh  <yosh@gimp.org>
 
         * app/paint-funcs/paint-funcs.c: 64-bit cleaniless cleanups.

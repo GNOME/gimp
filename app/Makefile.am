@@ -14,13 +14,13 @@ mwindows = -mwindows
 
 gimp_win32_resource = gimp-win32res.o
 
-noinst_DATA = .libs/libgimpapp.a
+noinst_DATA = libgimpapp.a
 
-gimp.exe : gimp-1.2.exe
-	mv gimp-1.2.exe $@
+gimp.exe : gimp-1.2
+	mv gimp-1.2 $@
 
-.libs/libgimpapp.a: gimp.exe
-	cp libgimp.a $@
+libgimpapp.a: gimp.exe
+	dlltool --output-lib $@ --input-def gimp.def --dllname gimp.exe
 endif
 
 scriptdata =
@@ -447,8 +447,7 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimp.rc			\
 	gimp.sym		\
-	wilber.ico		\
-	libgimpapp.la
+	wilber.ico
 
 
 gimp_1_2_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
@@ -483,6 +482,8 @@ gimp-win32res.o : gimp.rc
 install-exec-hook:
 if DEFAULT_BINARY
 if OS_WIN32
+	cd $(DESTDIR)$(bindir) \
+	&& mv gimp-1.2 gimp.exe	
 else
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp \
