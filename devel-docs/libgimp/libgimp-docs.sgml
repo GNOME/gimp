@@ -28,9 +28,7 @@
 <!entity GimpTools SYSTEM "sgml/gimptools.sgml">
 <!entity GimpUndo SYSTEM "sgml/gimpundo.sgml">
 <!entity GimpEnums SYSTEM "sgml/gimpenums.sgml">
-<!entity GimpColorselector SYSTEM "sgml/gimpcolorselector.sgml">
 <!entity GimpModule SYSTEM "sgml/gimpmodule.sgml">
-<!entity GimpColordisplay SYSTEM "sgml/gimpcolordisplay.sgml">
 <!entity GimpExport SYSTEM "sgml/gimpexport.sgml">
 <!entity GimpMenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity GimpUI SYSTEM "sgml/gimpui.sgml">
@@ -87,7 +85,5 @@
   <chapter id="gimpmodule">
     <title>GIMP Module Header Files</title>
     &GimpModule;
-    &GimpColordisplay;
-    &GimpColorselector;
   </chapter>
 </book>

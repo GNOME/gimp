@@ -1,0 +1,102 @@
+<!-- ##### SECTION Title ##### -->
+GimpColorSelector
+
+<!-- ##### SECTION Short_Description ##### -->
+Functions and definitiions for creating a pluggable GIMP
+color selector module.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Functions and definitiions for creating a pluggable GIMP
+color selector module.
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GModule
+</para>
+<para>
+#GTypeModule
+</para>
+<para>
+#libgimp-gimpmodule
+</para>
+
+
+<!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_COLOR_SELECTOR_BAR_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM GimpColorSelectorChannel ##### -->
+<para>
+
+</para>
+
+@GIMP_COLOR_SELECTOR_HUE: 
+@GIMP_COLOR_SELECTOR_SATURATION: 
+@GIMP_COLOR_SELECTOR_VALUE: 
+@GIMP_COLOR_SELECTOR_RED: 
+@GIMP_COLOR_SELECTOR_GREEN: 
+@GIMP_COLOR_SELECTOR_BLUE: 
+@GIMP_COLOR_SELECTOR_ALPHA: 
+
+<!-- ##### FUNCTION gimp_color_selector_new ##### -->
+<para>
+
+</para>
+
+@selector_type: 
+@rgb: 
+@hsv: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_set_color ##### -->
+<para>
+
+</para>
+
+@selector: 
+@rgb: 
+@hsv: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_set_channel ##### -->
+<para>
+
+</para>
+
+@selector: 
+@channel: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_color_changed ##### -->
+<para>
+
+</para>
+
+@selector: 
+@rgb: 
+@hsv: 
+
+
+<!-- ##### SIGNAL GimpColorSelector::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorselector: the object which received the signal.
+@arg1: 
+@arg2: 
+

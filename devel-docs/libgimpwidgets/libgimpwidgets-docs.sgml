@@ -1,4 +1,5 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity GimpButton SYSTEM "sgml/gimpbutton.sgml">
 <!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
 <!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
 <!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
@@ -11,6 +12,9 @@
 <!entity GimpQueryBox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity GimpStock SYSTEM "sgml/gimpstock.sgml">
 <!entity GimpWidgets SYSTEM "sgml/gimpwidgets.sgml">
+<!entity GimpColorDisplay SYSTEM "sgml/gimpcolordisplay.sgml">
+<!entity GimpColorSelector SYSTEM "sgml/gimpcolorselector.sgml">
+<!entity GimpColorSelect SYSTEM "sgml/gimpcolorselect.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -19,6 +23,7 @@
 
   <chapter id="libgimpwidgets">
     <title>GIMP Widgets Library</title>
+    &GimpButton;
     &GimpChainButton;
     &GimpColorButton; 
     &GimpFileSelection;
@@ -31,5 +36,9 @@
     &GimpQueryBox;
     &GimpWidgets;
     &GimpStock;
+
+    &GimpColorDisplay;
+    &GimpColorSelector;
+    &GimpColorSelect;
   </chapter>
 </book>

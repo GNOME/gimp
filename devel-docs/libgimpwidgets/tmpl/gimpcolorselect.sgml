@@ -1,22 +1,24 @@
 <!-- ##### SECTION Title ##### -->
-gimpcolorselector
+gimpcolorselect
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions and definitiions for creating a pluggable GIMP
-color selector module.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions and definitiions for creating a pluggable GIMP
-color selector module.
 
 </para>
+
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-#GModule
+
 </para>
+
+
+<!-- ##### STRUCT GimpColorSelectClass ##### -->
 <para>
-#libgimp-gimpmodule
+
 </para>
+
 

@@ -26,3 +26,21 @@ Common definitions for creating a pluggable GIMP module.
 @copyright: 
 @date: 
 
+<!-- ##### USER_FUNCTION GimpModuleQueryFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpModuleRegisterFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+

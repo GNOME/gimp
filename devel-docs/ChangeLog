@@ -1,5 +1,18 @@
 2002-10-20  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/tmpl/gimpcolordisplay.sgml
+	* libgimp/tmpl/gimpcolorselector.sgml: removed
+
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: added
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpmodule.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types: updated.
 
 2002-10-13  Sven Neumann  <sven@gimp.org>
 
