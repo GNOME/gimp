@@ -76,48 +76,75 @@
 #define NGRADSAMPLES    256
 
 
+typedef enum
+{
+  CURL_COLORS_FG_BG,
+  CURL_COLORS_GRADIENT,
+  CURL_COLORS_GRADIENT_REVERSE,
+  CURL_COLORS_LAST = CURL_COLORS_GRADIENT_REVERSE
+} CurlColors;
+
+typedef enum
+{
+  CURL_ORIENTATION_VERTICAL,
+  CURL_ORIENTATION_HORIZONTAL,
+  CURL_ORIENTATION_LAST = CURL_ORIENTATION_HORIZONTAL
+} CurlOrientation;
+
+typedef enum
+{
+  CURL_EDGE_LOWER_RIGHT = 1,
+  CURL_EDGE_LOWER_LEFT  = 2,
+  CURL_EDGE_UPPER_LEFT  = 3,
+  CURL_EDGE_UPPER_RIGHT = 4,
+  CURL_EDGE_FIRST       = CURL_EDGE_LOWER_RIGHT,
+  CURL_EDGE_LAST        = CURL_EDGE_UPPER_RIGHT
+} CurlEdge;
+
+
+#define CURL_EDGE_LEFT(e)  ((e) == CURL_EDGE_LOWER_LEFT  || \
+                            (e) == CURL_EDGE_UPPER_LEFT)
+#define CURL_EDGE_RIGHT(e) ((e) == CURL_EDGE_LOWER_RIGHT || \
+                            (e) == CURL_EDGE_UPPER_RIGHT)
+#define CURL_EDGE_LOWER(e) ((e) == CURL_EDGE_LOWER_RIGHT || \
+                            (e) == CURL_EDGE_LOWER_LEFT)
+#define CURL_EDGE_UPPER(e) ((e) == CURL_EDGE_UPPER_LEFT || \
+                            (e) == CURL_EDGE_UPPER_RIGHT)
+
+
 /***** Types *****/
 
 typedef struct
 {
-  gint    do_curl_shade;
-  gint    do_curl_gradient;
-  gint    do_curl_warp;  /* Not yet supported... */
-
-  gdouble do_curl_opacity;
-  gint    do_shade_under;
-
-  gint    do_upper_left;
-  gint    do_upper_right;
-  gint    do_lower_left;
-  gint    do_lower_right;
-
-  gint    do_vertical;
-  gint    do_horizontal;
+  CurlColors       colors;
+  gdouble          opacity;
+  gboolean         shade;
+  CurlEdge         edge;
+  CurlOrientation  orientation;
 } CurlParams;
+
 
 /***** Prototypes *****/
 
-static void    query                (void);
-static void    run                  (const gchar      *name,
-                                     gint              nparams,
-                                     const GimpParam  *param,
-                                     gint             *nreturn_vals,
-                                     GimpParam       **return_vals);
-static void    set_default_params   (void);
+static void      query                 (void);
+static void      run                   (const gchar      *name,
+                                        gint              nparams,
+                                        const GimpParam  *param,
+                                        gint             *nreturn_vals,
+                                        GimpParam       **return_vals);
+static void       set_default_params   (void);
 
-static void    dialog_toggle_update (GtkWidget         *widget,
-                                     gint32             value);
-static void    dialog_scale_update  (GtkAdjustment     *adjustment,
-                                     gdouble           *value);
+static void       dialog_scale_update  (GtkAdjustment    *adjustment,
+                                        gdouble          *value);
 
-static gboolean dialog              (void);
+static gboolean   dialog               (void);
 
-static void     init_calculation    (gint32 drawable_id);
-static void     do_curl_effect      (gint32 drawable_id);
-static void     clear_curled_region (gint32 drawable_id);
-static void     page_curl           (gint32 drawable_id);
-static guchar * get_samples         (gint32 drawable_id);
+static void       init_calculation     (gint32            drawable_id);
+static void       do_curl_effect       (gint32            drawable_id);
+static void       clear_curled_region  (gint32            drawable_id);
+static void       page_curl            (gint32            drawable_id);
+static guchar   * get_gradient_samples (gint32            drawable_id,
+                                        gboolean          reverse);
 
 
 /***** Variables *****/
@@ -189,14 +216,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive (0), non-interactive (1)" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                          },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                       },
-    { GIMP_PDB_INT32,    "mode",
-        "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive (0), non-interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image"                          },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable"                       },
+    { GIMP_PDB_INT32,    "colors",      "FG- and BG-Color (0), Current gradient (1), Current gradient reversed (2)" },
     { GIMP_PDB_INT32,    "edge",
         "Edge to curl (1-4, clockwise, starting in the lower right edge)"   },
-    { GIMP_PDB_INT32,    "type",     "vertical (0), horizontal (1)"         },
+    { GIMP_PDB_INT32,    "orientation", "Vertical (0), Horizontal (1)"         },
     { GIMP_PDB_INT32,    "shade",
         "Shade the region under the curl (1) or not (0)"                    },
   };
@@ -272,42 +298,16 @@ run (const gchar      *name,
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 7)
 	    status = GIMP_PDB_CALLING_ERROR;
+
 	  if (status == GIMP_PDB_SUCCESS)
 	    {
-	      curl.do_curl_shade = (param[3].data.d_int32 == 0) ? 1 : 0;
-	      curl.do_curl_gradient = 1 - curl.do_curl_shade;
-	      switch (param[4].data.d_int32)
-		{
-		case 1:
-		  curl.do_upper_left  = 0;
-		  curl.do_upper_right = 0;
-		  curl.do_lower_left  = 0;
-		  curl.do_lower_right = 1;
-		  break;
-		case 2:
-		  curl.do_upper_left  = 0;
-		  curl.do_upper_right = 0;
-		  curl.do_lower_left  = 1;
-		  curl.do_lower_right = 0;
-		  break;
-		case 3:
-		  curl.do_upper_left  = 1;
-		  curl.do_upper_right = 0;
-		  curl.do_lower_left  = 0;
-		  curl.do_lower_right = 0;
-		  break;
-		case 4:
-		  curl.do_upper_left  = 0;
-		  curl.do_upper_right = 1;
-		  curl.do_lower_left  = 0;
-		  curl.do_lower_right = 0;
-		  break;
-		default:
-		  break;
-		}
-	      curl.do_vertical    = (param[5].data.d_int32) ? 0 : 1;
-	      curl.do_horizontal  = 1 - curl.do_vertical;
-	      curl.do_shade_under = (param[6].data.d_int32) ? 1 : 0;
+              curl.colors      = CLAMP (param[3].data.d_int32,
+                                        0, CURL_COLORS_LAST);
+              curl.edge        = CLAMP (param[4].data.d_int32,
+                                        CURL_EDGE_FIRST, CURL_EDGE_LAST);
+              curl.orientation = CLAMP (param[5].data.d_int32,
+                                        0, CURL_ORIENTATION_LAST);
+	      curl.shade       = param[6].data.d_int32 ? TRUE : FALSE;
 	    }
 	  break;
 
@@ -398,20 +398,11 @@ inside_circle (gdouble x,
 static void
 set_default_params (void)
 {
-  curl.do_curl_shade = 1;
-  curl.do_curl_gradient = 0;
-  curl.do_curl_warp = 0;  /* Not yet supported... */
-
-  curl.do_curl_opacity = 1.0;
-  curl.do_shade_under = 1;
-
-  curl.do_upper_left = 0;
-  curl.do_upper_right = 0;
-  curl.do_lower_left = 0;
-  curl.do_lower_right = 1;
-
-  curl.do_vertical = 1;
-  curl.do_horizontal = 0;
+  curl.colors      = CURL_COLORS_FG_BG;
+  curl.opacity     = 1.0;
+  curl.shade       = TRUE;
+  curl.edge        = CURL_EDGE_LOWER_RIGHT;
+  curl.orientation = CURL_ORIENTATION_VERTICAL;
 }
 
 /********************************************************************/
@@ -426,49 +417,23 @@ dialog_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-dialog_toggle_update (GtkWidget *widget,
-		      gint32     value)
+curl_pixmap_update (void)
 {
-  gint pixmapindex = 0;
+  gint index;
 
-  switch (value)
+  switch (curl.edge)
     {
-    case 0:
-      curl.do_upper_left = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 1:
-      curl.do_upper_right = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 2:
-      curl.do_lower_left = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 3:
-      curl.do_lower_right = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 5:
-      curl.do_horizontal = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 6:
-      curl.do_vertical = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      break;
-    case 8:
-      curl.do_shade_under = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      return;
-      break;
-    case 9:
-      curl.do_curl_gradient = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
-      curl.do_curl_shade = (GTK_TOGGLE_BUTTON (widget)->active) ? 0 : 1;
-      return;
-      break;
+    case CURL_EDGE_LOWER_RIGHT: index = 0; break;
+    case CURL_EDGE_LOWER_LEFT:  index = 1; break;
+    case CURL_EDGE_UPPER_RIGHT: index = 2; break;
+    case CURL_EDGE_UPPER_LEFT:  index = 3; break;
     default:
-      break;
+      return;
     }
 
-  pixmapindex = (curl.do_lower_left + curl.do_upper_right * 2 +
-		 curl.do_upper_left * 3 + curl.do_horizontal * 4);
+  index += curl.orientation * 4;
 
-  gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget),
-		   curl_pixmaps[pixmapindex]);
+  gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget), curl_pixmaps[index]);
 }
 
 static gboolean
@@ -482,12 +447,9 @@ dialog (void)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *shade_button;
-  GtkWidget *gradient_button;
   GtkWidget *button;
-  GtkWidget *scale;
+  GtkWidget *combo;
   GtkObject *adjustment;
-  gint       i;
   gboolean   run;
 
   gimp_ui_init ("pagecurl", FALSE);
@@ -515,49 +477,54 @@ dialog (void)
    gtk_table_set_row_spacings (GTK_TABLE (table), 6);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
-   i = (curl.do_lower_left + curl.do_upper_right * 2 +
-        curl.do_upper_left * 3 + curl.do_horizontal * 4);
-
-   if (i < 0 || i > 7)
-     i = 0;
-
-   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[i]);
+   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[0]);
 
    gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 1, 2, 1, 2,
 		     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (curl_pixmap_widget);
 
+   curl_pixmap_update ();
+
    {
-     gint i;
+     gint   i;
      gchar *name[] =
      {
-       N_("Upper left"),
-       N_("Upper right"),
+       N_("Lower right"),
        N_("Lower left"),
-       N_("Lower right")
+       N_("Upper left"),
+       N_("Upper right")
      };
 
      button = NULL;
-     for (i = 0; i < 4; i++)
+     for (i = CURL_EDGE_FIRST; i <= CURL_EDGE_LAST; i++)
        {
-	 button = gtk_radio_button_new_with_label
-	   ((button == NULL) ?
-	    NULL : gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-	    gettext(name[i]));
-	 gtk_toggle_button_set_active
-	   (GTK_TOGGLE_BUTTON (button),
-	    (i == 0 ? curl.do_upper_left : i == 1 ? curl.do_upper_right :
-	     i == 2 ? curl.do_lower_left : curl.do_lower_right));
+	 button =
+           gtk_radio_button_new_with_label (button == NULL ?
+                                            NULL :
+                                            gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
+                                            gettext (name[i-CURL_EDGE_FIRST]));
+
+	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                       curl.edge == i);
+
+         g_object_set_data (G_OBJECT (button),
+                            "gimp-item-data", GINT_TO_POINTER (i));
 
 	 gtk_table_attach (GTK_TABLE (table), button,
-			   (i % 2) ? 2 : 0, (i % 2) ? 3 : 1,
-			   (i < 2) ? 0 : 2, (i < 2) ? 1 : 3,
+			   CURL_EDGE_LEFT  (i) ? 0 : 2,
+                           CURL_EDGE_LEFT  (i) ? 1 : 3,
+                           CURL_EDGE_UPPER (i) ? 0 : 2,
+                           CURL_EDGE_UPPER (i) ? 1 : 3,
 			   GTK_SHRINK, GTK_SHRINK, 0, 0);
 	 gtk_widget_show (button);
 
 	 g_signal_connect (button, "toggled",
-                           G_CALLBACK (dialog_toggle_update),
-                           GINT_TO_POINTER (i));
+                           G_CALLBACK (gimp_radio_button_update),
+                           &curl.edge);
+
+	 g_signal_connect (button, "toggled",
+                           G_CALLBACK (curl_pixmap_update),
+                           NULL);
        }
    }
 
@@ -571,77 +538,81 @@ dialog (void)
    gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {
-     gint i;
+     gint   i;
      gchar *name[] =
      {
-       N_("Horizontal"),
-       N_("Vertical")
+       N_("Vertical"),
+       N_("Horizontal")
      };
 
      button = NULL;
-     for (i = 0; i < 2; i++)
+     for (i = 0; i <= CURL_ORIENTATION_LAST; i++)
        {
 	 button = gtk_radio_button_new_with_label
 	   ((button == NULL) ?
 	    NULL : gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-	    gettext(name[i]));
-	 gtk_toggle_button_set_active
-	   (GTK_TOGGLE_BUTTON (button),
-	    (i == 0 ? curl.do_horizontal : curl.do_vertical));
+	    gettext (name[i]));
+
+	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                       curl.orientation == i);
+
+         g_object_set_data (G_OBJECT (button),
+                            "gimp-item-data", GINT_TO_POINTER (i));
 
 	 gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 	 gtk_widget_show (button);
 
 	 g_signal_connect (button, "toggled",
-                           G_CALLBACK (dialog_toggle_update),
-                           GINT_TO_POINTER (i + 5));
+                           G_CALLBACK (gimp_radio_button_update),
+                           &curl.orientation);
+
+	 g_signal_connect (button, "toggled",
+                           G_CALLBACK (curl_pixmap_update),
+                           NULL);
        }
    }
 
    gtk_widget_show (hbox);
    gtk_widget_show (frame);
 
-   frame = gimp_frame_new (_("Curl Opacity"));
-   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-   gtk_widget_show (frame);
+   table = gtk_table_new (1, 3, FALSE);
+   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+   gtk_widget_show (table);
 
-   adjustment = gtk_adjustment_new (curl.do_curl_opacity * 100, 0.0, 100.0,
-				    1.0, 1.0, 0.0);
+   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                      _("_Opacity:"), 100, 0,
+                                      curl.opacity * 100.0, 0.0, 100.0,
+                                      1.0, 1.0, 0.0,
+                                      TRUE, 0, 0,
+                                      NULL, NULL);
    g_signal_connect (adjustment, "value_changed",
                      G_CALLBACK (dialog_scale_update),
-                     &(curl.do_curl_opacity));
+                     &curl.opacity);
 
-   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-   gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
-   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-   gtk_scale_set_digits (GTK_SCALE (scale), 0);
-   gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-   gtk_container_add (GTK_CONTAINER (frame), scale);
-   gtk_widget_show (scale);
+   button = gtk_check_button_new_with_mnemonic (_("_Shade under curl"));
+   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), curl.shade);
+   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+   gtk_widget_show (button);
 
-   shade_button = gtk_check_button_new_with_label (_("Shade under curl"));
-   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
-				 curl.do_shade_under ? TRUE : FALSE);
-   gtk_box_pack_start (GTK_BOX (vbox), shade_button, FALSE, FALSE, 0);
-   gtk_widget_show (shade_button);
+   g_signal_connect (button, "toggled",
+                     G_CALLBACK (gimp_toggle_button_update),
+                     &curl.shade);
 
-   g_signal_connect (shade_button, "toggled",
-                     G_CALLBACK (dialog_toggle_update),
-                     GINT_TO_POINTER (8));
+   combo = gimp_int_combo_box_new (_("Foreground / background colors"),
+                                   CURL_COLORS_FG_BG,
+                                   _("Current gradient"),
+                                   CURL_COLORS_GRADIENT,
+                                   _("Current gradient (reversed)"),
+                                   CURL_COLORS_GRADIENT_REVERSE,
+                                   NULL);
+   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+   gtk_widget_show (combo);
 
-   gradient_button =
-     gtk_check_button_new_with_label (_("Use current gradient\n"
-					"instead of FG/BG-color"));
-   gtk_label_set_justify (GTK_LABEL (GTK_BIN (gradient_button)->child),
-			  GTK_JUSTIFY_LEFT);
-   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),
-				 curl.do_curl_gradient ? TRUE : FALSE);
-   gtk_box_pack_start (GTK_BOX (vbox), gradient_button, FALSE, FALSE, 0);
-   gtk_widget_show (gradient_button);
-
-   g_signal_connect (gradient_button, "toggled",
-                     G_CALLBACK (dialog_toggle_update),
-                     GINT_TO_POINTER (9));
+   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                               curl.colors,
+                               G_CALLBACK (gimp_int_combo_box_get_active),
+                               &curl.colors);
 
    gtk_widget_show (dialog);
 
@@ -681,15 +652,18 @@ init_calculation (gint32 drawable_id)
 
   true_sel_width = sel_x2 - sel_x1;
   true_sel_height = sel_y2 - sel_y1;
-  if (curl.do_vertical)
+
+  switch (curl.orientation)
     {
-      sel_width = true_sel_width;
+    case CURL_ORIENTATION_VERTICAL:
+      sel_width  = true_sel_width;
       sel_height = true_sel_height;
-    }
-  else
-    {
-      sel_width = true_sel_height;
+      break;
+
+    case CURL_ORIENTATION_HORIZONTAL:
+      sel_width  = true_sel_height;
       sel_height = true_sel_width;
+      break;
     }
 
   /* Circle parameters */
@@ -710,7 +684,8 @@ init_calculation (gint32 drawable_id)
   gimp_vector2_sub (&v1, &left_tangent, &center);
   gimp_vector2_set (&v2, sel_width - center.x, sel_height - center.y);
   angle = -2.0 * acos (gimp_vector2_inner_product (&v1, &v2) /
-		       (gimp_vector2_length (&v1) * gimp_vector2_length (&v2)));
+		       (gimp_vector2_length (&v1) *
+                        gimp_vector2_length (&v2)));
   gimp_vector2_set (&right_tangent,
 		    v1.x * cos (angle) + v1.y * -sin (angle),
 		    v1.x * sin (angle) + v1.y * cos (angle));
@@ -720,7 +695,8 @@ init_calculation (gint32 drawable_id)
 
   diagl_slope = (double) sel_width / sel_height;
   diagr_slope = (sel_width - right_tangent.x) / (sel_height - right_tangent.y);
-  diagb_slope = (right_tangent.y - left_tangent.y) / (right_tangent.x - left_tangent.x);
+  diagb_slope = ((right_tangent.y - left_tangent.y) /
+                 (right_tangent.x - left_tangent.x));
   diagm_slope = (sel_width - center.x) / sel_height;
 
   /* Colors */
@@ -735,7 +711,9 @@ init_calculation (gint32 drawable_id)
 static void
 do_curl_effect (gint32 drawable_id)
 {
-  gint          x, y, color_image;
+  gint          x = 0;
+  gint          y = 0;
+  gboolean      color_image;
   gint          x1, y1, k;
   guint         alpha_pos, progress, max_progress;
   gdouble       intensity, alpha, beta;
@@ -753,7 +731,8 @@ do_curl_effect (gint32 drawable_id)
 				       _("Curl Layer"),
 				       true_sel_width,
 				       true_sel_height,
-				       color_image ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
+				       color_image ?
+                                       GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
 				       100, GIMP_NORMAL_MODE));
   gimp_image_add_layer (image_id, curl_layer->drawable_id, drawable_position);
   gimp_drawable_fill (curl_layer->drawable_id, GIMP_TRANSPARENT_FILL);
@@ -786,8 +765,17 @@ do_curl_effect (gint32 drawable_id)
                                      back_color[2]) + 0.5;
 
   /* Gradient Samples */
-  if (curl.do_curl_gradient)
-    grad_samples = get_samples (curl_layer->drawable_id);
+  switch (curl.colors)
+    {
+    case CURL_COLORS_FG_BG:
+      break;
+    case CURL_COLORS_GRADIENT:
+      grad_samples = get_gradient_samples (curl_layer->drawable_id, FALSE);
+      break;
+    case CURL_COLORS_GRADIENT_REVERSE:
+      grad_samples = get_gradient_samples (curl_layer->drawable_id, TRUE);
+      break;
+    }
 
   max_progress = 2 * sel_width * sel_height;
   progress = 0;
@@ -807,20 +795,19 @@ do_curl_effect (gint32 drawable_id)
 	  for (x1 = dest_rgn.x; x1 < dest_rgn.x + dest_rgn.w; x1++)
 	    {
 	      /* Map coordinates to get the curl correct... */
-	      if (curl.do_horizontal)
-		{
-		  x = ((curl.do_lower_right || curl.do_lower_left) ?
-                       y1 : sel_width - 1 - y1);
-		  y = ((curl.do_upper_left  || curl.do_lower_left) ?
-                       x1 : sel_height - 1 - x1);
+              switch (curl.orientation)
+                {
+                case CURL_ORIENTATION_VERTICAL:
+		  x = CURL_EDGE_RIGHT (curl.edge) ? x1 : sel_width  - 1 - x1;
+		  y = CURL_EDGE_UPPER (curl.edge) ? y1 : sel_height - 1 - y1;
+                  break;
+
+                case CURL_ORIENTATION_HORIZONTAL:
+                  x = CURL_EDGE_LOWER (curl.edge) ? y1 : sel_width  - 1 - y1;
+		  y = CURL_EDGE_LEFT  (curl.edge) ? x1 : sel_height - 1 - x1;
+                  break;
 		}
-	      else
-		{
-		  x = ((curl.do_upper_right || curl.do_lower_right) ?
-                       x1 : sel_width - 1 - x1);
-		  y = ((curl.do_upper_left  || curl.do_upper_right) ?
-                       y1 : sel_height - 1 - y1);
-		}
+
 	      if (left_of_diagl (x, y))
 		{ /* uncurled region */
 		  for (k = 0; k <= alpha_pos; k++)
@@ -848,22 +835,47 @@ do_curl_effect (gint32 drawable_id)
 		      factor = angle / alpha;
 		      for (k = 0; k < alpha_pos; k++)
 			pp[k] = 0;
-		      pp[alpha_pos] = (curl.do_shade_under ?
+		      pp[alpha_pos] = (curl.shade ?
                                        (guchar) ((float) 255 * (float) factor) :
                                        0);
 		    }
 		  else
 		    {
 		      /* On the curl */
-		      if (curl.do_curl_gradient)
-			{
+                      switch (curl.colors)
+                        {
+                        case CURL_COLORS_FG_BG:
+			  intensity = pow (sin (G_PI * angle / alpha), 1.5);
+			  if (color_image)
+			    {
+			      pp[0] = (intensity * back_color[0] +
+                                       (1.0 - intensity) * fore_color[0]);
+			      pp[1] = (intensity * back_color[1] +
+                                       (1.0 - intensity) * fore_color[1]);
+			      pp[2] = (intensity * back_color[2] +
+                                       (1.0 - intensity) * fore_color[2]);
+			    }
+			  else
+			    pp[0] = (intensity * back_grayval +
+                                     (1 - intensity) * fore_grayval);
+
+			  pp[alpha_pos] = (guchar) ((double) 255.99 *
+                                                    (1.0 - intensity *
+                                                     (1.0 - curl.opacity)));
+                          break;
+
+                        case CURL_COLORS_GRADIENT:
+                        case CURL_COLORS_GRADIENT_REVERSE:
 			  /* Calculate position in Gradient */
                           intensity =
                             (angle/alpha) + sin (G_PI*2 * angle/alpha) * 0.075;
+
 			  /* Check boundaries */
-			  intensity = (intensity < 0 ?
-                                       0 : (intensity > 1 ? 1 : intensity ));
-			  gradsamp = &grad_samples[((guint) (intensity * NGRADSAMPLES)) * dest_rgn.bpp];
+			  intensity = CLAMP (intensity, 0.0, 1.0);
+			  gradsamp  = (grad_samples +
+                                       ((guint) (intensity * NGRADSAMPLES)) *
+                                       dest_rgn.bpp);
+
 			  if (color_image)
 			    {
 			      pp[0] = gradsamp[0];
@@ -873,22 +885,11 @@ do_curl_effect (gint32 drawable_id)
 			  else
 			    pp[0] = gradsamp[0];
 
-			  pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1.0 - intensity * (1.0 - curl.do_curl_opacity)));
-			}
-		      else
-			{
-			  intensity = pow (sin (G_PI * angle / alpha), 1.5);
-			  if (color_image)
-			    {
-			      pp[0] = (intensity * back_color[0] + (1.0 - intensity) * fore_color[0]);
-			      pp[1] = (intensity * back_color[1] + (1.0 - intensity) * fore_color[1]);
-			      pp[2] = (intensity * back_color[2] + (1.0 - intensity) * fore_color[2]);
-			    }
-			  else
-			    pp[0] = (intensity * back_grayval + (1 - intensity) * fore_grayval);
-
-			  pp[alpha_pos] = (guchar) ((double) 255.99 * (1.0 - intensity * (1.0 - curl.do_curl_opacity)));
-			}
+			  pp[alpha_pos] =
+                            (guchar) ((double) gradsamp[alpha_pos] *
+                                      (1.0 - intensity * (1.0 - curl.opacity)));
+                          break;
+                        }
 		    }
 		}
 	      pp += dest_rgn.bpp;
@@ -915,7 +916,8 @@ clear_curled_region (gint32 drawable_id)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gpointer      pr;
-  gint          x, y;
+  gint          x = 0;
+  gint          y = 0;
   guint         x1, y1, i;
   guchar       *dest, *src, *pp, *sp;
   guint         alpha_pos, progress, max_progress;
@@ -941,27 +943,35 @@ clear_curled_region (gint32 drawable_id)
     {
       dest = dest_rgn.data;
       src = src_rgn.data;
+
       for (y1 = dest_rgn.y; y1 < dest_rgn.y + dest_rgn.h; y1++)
 	{
 	  sp = src;
 	  pp = dest;
+
 	  for (x1 = dest_rgn.x; x1 < dest_rgn.x + dest_rgn.w; x1++)
 	    {
 	      /* Map coordinates to get the curl correct... */
-	      if (curl.do_horizontal)
-		{
-		  x = (curl.do_lower_right || curl.do_lower_left) ? y1 - sel_y1 : sel_width - 1 - (y1 - sel_y1);
-		  y = (curl.do_upper_left || curl.do_lower_left) ? x1 - sel_x1 : sel_height - 1 - (x1 - sel_x1);
-		}
-	      else
-		{
-		  x = ((curl.do_upper_right || curl.do_lower_right) ?
-                       x1 - sel_x1 : sel_width - 1 - (x1 - sel_x1));
-		  y = ((curl.do_upper_left || curl.do_upper_right) ?
+              switch (curl.orientation)
+                {
+                case CURL_ORIENTATION_VERTICAL:
+		  x = (CURL_EDGE_RIGHT (curl.edge) ?
+                       x1 - sel_x1 : sel_width  - 1 - (x1 - sel_x1));
+		  y = (CURL_EDGE_UPPER (curl.edge) ?
                        y1 - sel_y1 : sel_height - 1 - (y1 - sel_y1));
-		}
+                  break;
+
+                case CURL_ORIENTATION_HORIZONTAL:
+		  x = (CURL_EDGE_LOWER (curl.edge) ?
+                       y1 - sel_y1 : sel_width - 1 - (y1 - sel_y1));
+                  y = (CURL_EDGE_LEFT (curl.edge)  ?
+                       x1 - sel_x1 : sel_height - 1 - (x1 - sel_x1));
+                  break;
+                }
+
 	      for (i = 0; i < alpha_pos; i++)
 		pp[i] = sp[i];
+
 	      if (right_of_diagr (x, y) ||
 		  (right_of_diagm (x, y) &&
 		   below_diagb (x, y) &&
@@ -974,12 +984,15 @@ clear_curled_region (gint32 drawable_id)
 		{
 		  pp[alpha_pos] = sp[alpha_pos];
 		}
+
 	      pp += dest_rgn.bpp;
 	      sp += src_rgn.bpp;
 	    }
+
 	  src += src_rgn.rowstride;
 	  dest += dest_rgn.rowstride;
 	}
+
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
@@ -1012,17 +1025,15 @@ page_curl (gint32 drawable_id)
   "ripped" from gradmap.c.
  */
 static guchar *
-get_samples (gint32 drawable_id)
+get_gradient_samples (gint32    drawable_id,
+                      gboolean  reverse)
  {
   gdouble       *f_samples, *f_samp;    /* float samples */
   guchar        *b_samples, *b_samp;    /* byte samples */
   gint          bpp, color, has_alpha, alpha;
   gint          i, j;
 
-#ifdef __GNUC__
-#warning FIXME: "reverse" hardcoded to FALSE.
-#endif
-  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES, FALSE);
+  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES, reverse);
 
   bpp       = gimp_drawable_bpp (drawable_id);
   color     = gimp_drawable_is_rgb (drawable_id);

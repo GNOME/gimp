@@ -1,3 +1,9 @@
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pagecurl/pagecurl.c: code cleanup. Use enums instead of
+	a plethora of booleans. Added some macros for readability. Allow
+	to use a reversed gradient for colorizing the curl.
+
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
