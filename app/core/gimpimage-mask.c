@@ -73,24 +73,6 @@ gimp_image_mask_bounds (GimpImage *gimage,
   return gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2);
 }
 
-gint
-gimp_image_mask_value (GimpImage *gimage,
-                       gint       x,
-                       gint       y)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
-
-  return gimp_channel_value (gimp_image_get_mask (gimage), x, y);
-}
-
-gboolean
-gimp_image_mask_is_empty (GimpImage *gimage)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  return gimp_channel_is_empty (gimp_image_get_mask (gimage));
-}
-
 void
 gimp_image_mask_push_undo (GimpImage   *gimage,
                            const gchar *undo_desc)

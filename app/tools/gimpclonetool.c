@@ -24,9 +24,8 @@
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpclone.h"
@@ -247,12 +246,14 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 
   if (gimp_display_coords_in_active_drawable (gdisp, coords))
     {
+      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?
        */
-      if (gimp_image_mask_is_empty (gdisp->gimage))
+      if (gimp_channel_is_empty (selection))
         ctype = GIMP_MOUSE_CURSOR;
-      else if (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+      else if (gimp_channel_value (selection, coords->x, coords->y))
         ctype = GIMP_MOUSE_CURSOR;
     }
 

@@ -28,10 +28,10 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage.h"
 
@@ -288,7 +288,9 @@ bucket_fill_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+    
+      if (! gimage)
 	{
 	  success = FALSE;
 	}
@@ -296,7 +298,7 @@ bucket_fill_invoker (Gimp     *gimp,
 	{
 	  gboolean do_seed_fill;
     
-	  do_seed_fill = gimp_image_mask_is_empty (gimp_item_get_image (GIMP_ITEM (drawable)));
+	  do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
     
 	  gimp_drawable_bucket_fill (drawable, fill_mode,
 				     paint_mode, opacity / 100.0,

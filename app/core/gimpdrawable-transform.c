@@ -1001,7 +1001,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /*  extract the selected mask if there is a selection  */
-  if (! gimp_image_mask_is_empty (gimage))
+  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
     {
       /* set the keep_indexed flag to FALSE here, since we use
        * gimp_layer_new_from_tiles() later which assumes that the tiles

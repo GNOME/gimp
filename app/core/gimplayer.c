@@ -964,7 +964,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
         gint         copy_width, copy_height;
 
         selection       = gimp_image_get_mask (gimage);
-        selection_empty = gimp_image_mask_is_empty (gimage);
+        selection_empty = gimp_channel_is_empty (selection);
 
         gimp_rectangle_intersect (0, 0, gimage->width, gimage->height,
                                   item->offset_x, item->offset_y,

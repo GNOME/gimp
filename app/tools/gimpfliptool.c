@@ -29,10 +29,9 @@
 
 #include "base/tile-manager.h"
 
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimptoolinfo.h"
 
@@ -206,9 +205,11 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   if (gimp_display_coords_in_active_drawable (gdisp, coords))
     {
+      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+
       /*  Is there a selected region? If so, is cursor inside? */
-      if (gimp_image_mask_is_empty (gdisp->gimage) ||
-          gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+      if (gimp_channel_is_empty (selection) ||
+          gimp_channel_value (selection, coords->x, coords->y))
         {
           bad_cursor = FALSE;
         }

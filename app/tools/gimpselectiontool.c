@@ -25,8 +25,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -177,6 +177,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 {
   GimpSelectionTool    *selection_tool;
   GimpSelectionOptions *options;
+  GimpChannel          *selection;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
   gboolean              move_layer        = FALSE;
@@ -185,7 +186,9 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   selection_tool = GIMP_SELECTION_TOOL (tool);
   options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
+  selection    = gimp_image_get_mask (gdisp->gimage);
+  layer        = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                                  coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);
 
   if (layer)
@@ -195,7 +198,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+      else if (gimp_channel_value (selection, coords->x, coords->y))
         {
           move_layer = TRUE;
         }
@@ -205,7 +208,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     {
       selection_tool->op = SELECTION_MOVE_COPY; /* move a copy of the selection */
     }
-  else if ((state & GDK_MOD1_MASK) && ! gimp_image_mask_is_empty (gdisp->gimage))
+  else if ((state & GDK_MOD1_MASK) && ! gimp_channel_is_empty (selection))
     {
       selection_tool->op = SELECTION_MOVE_MASK; /* move the selection mask */
     }

@@ -24,8 +24,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimplist.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -161,7 +161,7 @@ vectors_menu_update (GtkItemFactory *factory,
 
       vectors = gimp_image_get_active_vectors (gimage);
 
-      mask_empty = gimp_image_mask_is_empty (gimage);
+      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
       global_buf = FALSE;
 

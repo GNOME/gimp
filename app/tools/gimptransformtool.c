@@ -609,8 +609,9 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 
   if (tr_tool->use_grid)
     {
-      GdkCursorType      ctype     = GDK_TOP_LEFT_ARROW;
-      GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+      GimpChannel        *selection = gimp_image_get_mask (gdisp->gimage);
+      GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
+      GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
       switch (options->type)
         {
@@ -629,9 +630,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                   }
                 else if (gimp_display_coords_in_active_drawable (gdisp, coords))
                   {
-                    if (gimp_image_mask_is_empty (gdisp->gimage) ||
-                        gimp_image_mask_value (gdisp->gimage,
-                                               coords->x, coords->y))
+                    if (gimp_channel_is_empty (selection) ||
+                        gimp_channel_value (selection, coords->x, coords->y))
                       {
                         ctype = GIMP_MOUSE_CURSOR;
                       }
@@ -641,8 +641,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           break;
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
-          if (gimp_image_mask_is_empty (gdisp->gimage) ||
-              gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+          if (gimp_channel_is_empty (selection) ||
+              gimp_channel_value (selection, coords->x, coords->y))
             {
               ctype = GIMP_MOUSE_CURSOR;
             }

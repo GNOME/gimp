@@ -34,12 +34,11 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimpdrawable-blend.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 
 #include "gimp-intl.h"
 
@@ -621,8 +620,10 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
   tempR.tiles = tile_manager_new (PR->w, PR->h, 1);
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
 
+  mask = gimp_image_get_mask (gimage);
+
   /*  If the gimage mask is not empty, use it as the shape burst source  */
-  if (! gimp_image_mask_is_empty (gimage))
+  if (! gimp_channel_is_empty (mask))
     {
       PixelRegion maskR;
       gint        x1, y1, x2, y2;
@@ -631,8 +632,6 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
       gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
 
-      /*  the selection mask  */
-      mask = gimp_image_get_mask (gimage);
       pixel_region_init (&maskR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 

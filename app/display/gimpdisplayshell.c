@@ -38,7 +38,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-snap.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -1048,19 +1047,6 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
           snapped_coords->y = ty - snap_offset_y;
         }
     }
-}
-
-gint
-gimp_display_shell_mask_value (GimpDisplayShell *shell,
-                               gint              x,
-                               gint              y)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
-
-  /*  move the coordinates from screen space to image space  */
-  gimp_display_shell_untransform_xy (shell, x, y, &x, &y, FALSE, FALSE);
-
-  return gimp_image_mask_value (shell->gdisp->gimage, x, y);
 }
 
 gboolean

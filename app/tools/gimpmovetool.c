@@ -26,9 +26,9 @@
 
 #include "tools-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
@@ -240,7 +240,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->guide_disp   = NULL;
   move->moving_guide = FALSE;
 
-  if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
+  if (options->move_mask &&
+      ! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
     {
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
       gimp_tool_control_activate (tool->control);
@@ -515,7 +516,8 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
   move    = GIMP_MOVE_TOOL (tool);
   options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
-  if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
+  if (options->move_mask &&
+      ! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
     {
       gimp_tool_set_cursor (tool, gdisp,
                             GIMP_MOUSE_CURSOR,

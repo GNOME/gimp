@@ -1687,8 +1687,9 @@ gimp_image_apply_image (GimpImage	     *gimage,
   item = GIMP_ITEM (drawable);
 
   /*  get the selection mask if one exists  */
-  mask = (gimp_image_mask_is_empty (gimage) ?
-          NULL : gimp_image_get_mask (gimage));
+  mask = gimp_image_get_mask (gimage);
+  if (gimp_channel_is_empty (mask))
+    mask = NULL;
 
   /*  configure the active channel array  */
   gimp_image_get_active_components (gimage, drawable, active_components);
@@ -1810,7 +1811,9 @@ gimp_image_replace_image (GimpImage    *gimage,
   item = GIMP_ITEM (drawable);
 
   /*  get the selection mask if one exists  */
-  mask = (gimp_image_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
+  mask = gimp_image_get_mask (gimage);
+  if (gimp_channel_is_empty (mask))
+    mask = NULL;
 
   /*  configure the active channel array  */
   gimp_image_get_active_components (gimage, drawable, active_components);

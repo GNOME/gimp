@@ -205,9 +205,6 @@ void        gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
                                                       gint              snap_width,
                                                       gint              snap_height);
 
-gint        gimp_display_shell_mask_value            (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y);
 gboolean    gimp_display_shell_mask_bounds           (GimpDisplayShell *shell,
                                                       gint             *x1,
                                                       gint             *y1,

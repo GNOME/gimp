@@ -32,10 +32,6 @@ gboolean      gimp_image_mask_bounds      (GimpImage       *gimage,
                                            gint            *y1,
                                            gint            *x2,
                                            gint            *y2);
-gint          gimp_image_mask_value       (GimpImage       *gimage,
-                                           gint             x,
-                                           gint             y);
-gboolean      gimp_image_mask_is_empty    (GimpImage       *gimage);
 
 
 /*  pure wrappers around the resp. GimpSelection functions:  */

@@ -27,6 +27,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -1341,7 +1342,7 @@ image_menu_update (GtkItemFactory *item_factory,
       fs  = (gimp_image_floating_sel (gimage) != NULL);
       aux = (gimp_image_get_active_channel (gimage) != NULL);
       lp  = ! gimp_image_is_empty (gimage);
-      sel = ! gimp_image_mask_is_empty (gimage);
+      sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
       drawable = gimp_image_active_drawable (gimage);
       if (drawable)
