@@ -61,6 +61,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
 
@@ -192,7 +193,13 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Distort an image by whirling and pinching",
-			  "Distorts the image by whirling and pinching, which are two common center-based, circular distortions.  Whirling is like projecting the image onto the surface of water in a toilet and flushing.  Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface.",
+			  "Distorts the image by whirling and pinching, which "
+			  "are two common center-based, circular distortions.  "
+			  "Whirling is like projecting the image onto the "
+			  "surface of water in a toilet and flushing.  "
+			  "Pinching is similar to projecting the image onto "
+			  "an elastic surface and pressing or pulling on the "
+			  "center of the surface.",
 			  "Federico Mena Quintero and Scott Goehring",
 			  "Federico Mena Quintero and Scott Goehring",
 			  PLUG_IN_VERSION,
@@ -368,10 +375,6 @@ whirl_pinch (void)
   guchar           bg_color[4];
   pixel_fetcher_t *pft, *pfb;
 
-#if 0
-  g_printf ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
   /* Initialize rows */
   top_row = g_malloc (img_bpp * sel_width);
   bot_row = g_malloc (img_bpp * sel_width);
@@ -398,7 +401,7 @@ whirl_pinch (void)
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  gimp_progress_init ( _("Whirling and pinching..."));
+  gimp_progress_init (_("Whirling and pinching..."));
 
   whirl   = wpvals.whirl * G_PI / 180;
   radius2 = radius * radius * wpvals.radius;
@@ -523,19 +526,19 @@ whirl_pinch (void)
   gimp_drawable_update (drawable->id, sel_x1, sel_y1, sel_width, sel_height);
 }
 
-static int
-calc_undistorted_coords (double  wx,
-			 double  wy,
-			 double  whirl,
-			 double  pinch,
-			 double *x,
-			 double *y)
+static gint
+calc_undistorted_coords (gdouble  wx,
+			 gdouble  wy,
+			 gdouble  whirl,
+			 gdouble  pinch,
+			 gdouble *x,
+			 gdouble *y)
 {
-  double dx, dy;
-  double d, factor;
-  double dist;
-  double ang, sina, cosa;
-  int    inside;
+  gdouble dx, dy;
+  gdouble d, factor;
+  gdouble dist;
+  gdouble ang, sina, cosa;
+  gint    inside;
 
   /* Distances to center, scaled */
 
@@ -585,11 +588,11 @@ calc_undistorted_coords (double  wx,
 }
 
 static guchar
-bilinear (double  x,
-	  double  y,
-	  guchar *values)
+bilinear (gdouble  x,
+	  gdouble  y,
+	  guchar  *values)
 {
-  double m0, m1;
+  gdouble m0, m1;
 
   x = fmod (x, 1.0);
   y = fmod (y, 1.0);
@@ -649,14 +652,14 @@ pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
 
 static void
 pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
-			 int              x,
-			 int              y,
+			 gint             x,
+			 gint             y,
 			 guchar          *pixel)
 {
   gint    col, row;
   gint    coloff, rowoff;
   guchar *p;
-  int     i;
+  gint    i;
 
   if ((x < sel_x1) || (x >= sel_x2) ||
       (y < sel_y1) || (y >= sel_y2))
@@ -704,10 +707,10 @@ pixel_fetcher_destroy (pixel_fetcher_t *pf)
 static void
 build_preview_source_image (void)
 {
-  double           left, right, bottom, top;
-  double           px, py;
-  double           dx, dy;
-  int              x, y;
+  gdouble          left, right, bottom, top;
+  gdouble          px, py;
+  gdouble          dx, dy;
+  gint             x, y;
   guchar          *p;
   guchar           pixel[4];
   pixel_fetcher_t *pf;
@@ -792,32 +795,8 @@ whirl_pinch_dialog (void)
   GtkWidget *pframe;
   GtkWidget *table;
   GtkObject *adj;
-  gint        argc;
-  gchar     **argv;
-  guchar     *color_cube;
 
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("whirlpinch");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("whirlpinch", TRUE);
 
   build_preview_source_image ();
 
@@ -922,18 +901,18 @@ whirl_pinch_dialog (void)
 static void
 dialog_update_preview (void)
 {
-  double  left, right, bottom, top;
-  double  dx, dy;
-  double  px, py;
-  double  cx, cy;
-  int     ix, iy;
-  int     x, y;
-  double  whirl;
-  double  scale_x, scale_y;
-  guchar *p_ul, *p_lr, *i, *p;
-  guchar *check_ul, *check_lr;
-  int     check;
-  guchar  outside[4];
+  gdouble  left, right, bottom, top;
+  gdouble  dx, dy;
+  gdouble  px, py;
+  gdouble  cx, cy;
+  gint     ix, iy;
+  gint     x, y;
+  gdouble  whirl;
+  gdouble  scale_x, scale_y;
+  guchar  *p_ul, *p_lr, *i, *p;
+  guchar  *check_ul, *check_lr;
+  gint     check;
+  guchar   outside[4];
 
   gimp_palette_get_background(&outside[0], &outside[1], &outside[2]);
   outside[3] = (img_has_alpha ? 0 : 255);

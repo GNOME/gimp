@@ -35,6 +35,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_VERSION "0.10"
 
 #define SCALE_WIDTH  150
@@ -169,15 +170,15 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 	
-  INIT_I18N();
-
   /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
 			  "An unsharp mask filter",
-			  "The unsharp mask is a sharpening filter that \
-works by comparing using the difference of the image and a blurred version \
-of the image.  It is commonly used on photographic images, and is provides \
-a much more pleasing result than the standard sharpen filter.",
+			  "The unsharp mask is a sharpening filter that works "
+			  "by comparing using the difference of the image and "
+			  "a blurred version of the image.  It is commonly "
+			  "used on photographic images, and is provides a much "
+			  "more pleasing result than the standard sharpen "
+			  "filter.",
 			  "Winston Chang <wchang3@students.wisc.edu>",
 			  "Winston Chang",
 			  "1999",
@@ -276,12 +277,12 @@ run (gchar   *name,
 static void
 unsharp_mask (GDrawable *drawable,
 	      gint       radius,
-	      gdouble amount)
+	      gdouble    amount)
 {
   GPixelRgn srcPR, destPR;
   glong width, height;
   glong bytes;
-  gint x1, y1, x2, y2;
+  gint  x1, y1, x2, y2;
 
   /* Get the input */
   gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
@@ -320,15 +321,15 @@ unsharp_region (GPixelRgn srcPR,
 		gint      y1,
 		gint      y2)
 {
-  guchar* cur_col;
-  guchar* dest_col;
-  guchar* cur_row;
-  guchar* dest_row;
-  gint x;
-  gint y;
-  gdouble* cmatrix = NULL;
-  gint cmatrix_length;
-  gdouble* ctable;
+  guchar  *cur_col;
+  guchar  *dest_col;
+  guchar  *cur_row;
+  guchar  *dest_row;
+  gint     x;
+  gint     y;
+  gdouble *cmatrix = NULL;
+  gint     cmatrix_length;
+  gdouble *ctable;
 
   gint row, col;  /* these are counters for loops */
 
@@ -348,8 +349,8 @@ unsharp_region (GPixelRgn srcPR,
   ctable = gen_lookup_table(cmatrix, cmatrix_length);
 
   /*  allocate row buffers  */
-  cur_row = (guchar *) g_malloc (x * bytes);
-  dest_row = (guchar *) g_malloc (x * bytes);
+  cur_row  = g_new (guchar, x * bytes);
+  dest_row = g_new (guchar, x * bytes);
 
   /* find height and width of subregion to act on */
   x = x2-x1;
@@ -376,8 +377,8 @@ unsharp_region (GPixelRgn srcPR,
     }
 
   /* allocate column buffers */
-  cur_col = (guchar *) g_malloc (y * bytes);
-  dest_col = (guchar *) g_malloc (y * bytes);
+  cur_col  = g_new (guchar, y * bytes);
+  dest_col = g_new (guchar, y * bytes);
 
   /* blur the cols */
   for (col = 0; col < x; col++)
@@ -679,7 +680,7 @@ gen_convolve_matrix (gdouble   radius,
   matrix_length = 2 * ceil(radius-0.5) + 1;
   if (matrix_length <= 0) matrix_length = 1;
   matrix_midpoint = matrix_length/2 + 1;
-  *cmatrix_p = (gdouble*)(g_malloc(matrix_length * sizeof(gdouble)));
+  *cmatrix_p = g_new (gdouble, matrix_length);
   cmatrix = *cmatrix_p;
 
   /*  Now we fill the matrix by doing a numeric integration approximation
@@ -737,7 +738,7 @@ gen_lookup_table (gdouble *cmatrix,
 		  gint     cmatrix_length)
 {
   int i, j;
-  gdouble* lookup_table = g_malloc(cmatrix_length * 256 * sizeof(gdouble));
+  gdouble* lookup_table = g_new (gdouble, cmatrix_length * 256);
 
 #ifdef READABLE_CODE
   for (i=0; i<cmatrix_length; i++)
@@ -775,16 +776,7 @@ unsharp_mask_dialog (void)
   GtkWidget *table;
   GtkObject *adj;
 
-  gint    argc = 1;
-  gchar** argv = g_new (gchar*, 1);
-  argv[0]      = g_strdup ("unsharp");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  gimp_ui_init ("unsharp", TRUE);
 
   window = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
 			    gimp_plugin_help_func, "filters/unsharp.html",
@@ -866,10 +858,10 @@ preview_init (void)
 
   width = preview_width * img_bpp;
 
-  preview_src   = g_malloc(width * preview_height * sizeof(guchar));
-  preview_neg   = g_malloc(width * preview_height * sizeof(guchar));
-  preview_dst   = g_malloc(width * preview_height * sizeof(guchar));
-  preview_image = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  preview_src   = g_new (guchar, width * preview_height);
+  preview_neg   = g_new (guchar, width * preview_height);
+  preview_dst   = g_new (guchar, width * preview_height);
+  preview_image = g_new (guchar, preview_width * preview_height * 3);
 
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
@@ -884,12 +876,12 @@ preview_init (void)
 static void
 preview_scroll_callback (void)
 {
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT(hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT(vscroll_data)->value;
+  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
+  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
   preview_x2 = preview_x1 + MIN(preview_width, sel_width);
   preview_y2 = preview_y1 + MIN(preview_height, sel_height);
 
-  preview_update();
+  preview_update ();
 }
 
 /*

@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 #define SCALE_WIDTH 200
 #define TILE_CACHE_SIZE 16
@@ -117,23 +118,23 @@ query (void)
     { PARAM_FLOAT, "spread_amount_x", "Horizontal spread amount (0 <= spread_amount_x <= 200)" },
     { PARAM_FLOAT, "spread_amount_y", "Vertical spread amount (0 <= spread_amount_y <= 200)" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_spread",
 			  "Spread the contents of the specified drawable",
-			  "Spreads the pixels of the specified drawable.  Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts ",
-			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
+			  "Spreads the pixels of the specified drawable.  "
+			  "Pixels are randomly moved to another location whose "
+			  "distance varies from the original by the horizontal "
+			  "and vertical spread amounts ",
+			  "Spencer Kimball and Peter Mattis, ported by Brian "
+			  "Degenhardt and Federico Mena Quintero",
 			  "Federico Mena Quintero and Brian Degenhardt",
 			  "1997",
 			  N_("<Image>/Filters/Noise/Spread..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -177,12 +178,15 @@ run (gchar  *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  spvals.spread_amount_x= param[3].data.d_float;
           spvals.spread_amount_y = param[4].data.d_float;
         }
+
       if ((status == STATUS_SUCCESS) &&
 	  (spvals.spread_amount_x < 0 || spvals.spread_amount_x > 200) &&
           (spvals.spread_amount_y < 0 || spvals.spread_amount_y > 200))
@@ -202,7 +206,8 @@ run (gchar  *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init (_("Spreading..."));
 
@@ -324,11 +329,15 @@ spread (GDrawable *drawable)
 
               /* Only displace the pixel if it's within the bounds of the image. */
               if ((xi >= 0) && (xi < width) && (yi >= 0) && (yi < height))
-                  tile = spread_pixel (drawable, tile, x1, y1, x2, y2, xi, yi, &row, &col, pixel[0]);
+                  tile = spread_pixel (drawable, tile,
+				       x1, y1, x2, y2, xi, yi,
+				       &row, &col, pixel[0]);
 	      else
               {
               /* Else just copy it */
-                  tile = spread_pixel (drawable, tile, x1, y1, x2, y2, x, y, &row, &col, pixel[0]);
+                  tile = spread_pixel (drawable, tile,
+				       x1, y1, x2, y2, x, y,
+				       &row, &col, pixel[0]);
               }
 
               for (k = 0; k < bytes; k++)
@@ -362,15 +371,8 @@ spread_dialog (gint32     image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("spread");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("spread", FALSE);
 
   dlg = gimp_dialog_new (_("Spread"), "spread",
 			 gimp_plugin_help_func, "filters/spread.html",
@@ -443,21 +445,21 @@ spread_ok_callback (GtkWidget *widget,
 }
 
 static GTile *
-spread_pixel (GDrawable * drawable,
-	      GTile *     tile,
-	      gint        x1,
-	      gint        y1,
-	      gint        x2,
-	      gint        y2,
-	      gint        x,
-	      gint        y,
-	      gint *      row,
-	      gint *      col,
-	      guchar *    pixel)
+spread_pixel (GDrawable *drawable,
+	      GTile     *tile,
+	      gint       x1,
+	      gint       y1,
+	      gint       x2,
+	      gint       y2,
+	      gint       x,
+	      gint       y,
+	      gint      *row,
+	      gint      *col,
+	      guchar    *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
-  gint b;
+  gint    b;
 
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {

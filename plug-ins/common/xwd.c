@@ -65,9 +65,10 @@ static char ident[] = "@(#) GIMP XWD file-plugin v1.94  27-Feb-2000";
 
 #include "libgimp/stdplugins-intl.h"
 
-typedef unsigned long L_CARD32;
-typedef unsigned short L_CARD16;
-typedef unsigned char L_CARD8;
+
+typedef gulong  L_CARD32;
+typedef gushort L_CARD16;
+typedef guchar  L_CARD8;
 
 typedef struct
 {
@@ -142,12 +143,10 @@ static void   run                 (gchar   *name,
 				   gint    *nreturn_vals,
 				   GParam **return_vals);
 
-static void   init_gtk            (void);
-
-static gint32 load_image          (gchar *filename);
-static gint   save_image          (gchar *filename,
-				   gint32 image_ID,
-				   gint32 drawable_ID);
+static gint32 load_image          (gchar  *filename);
+static gint   save_image          (gchar  *filename,
+				   gint32  image_ID,
+				   gint32  drawable_ID);
 static gint32 create_new_image    (char *filename, guint width, guint height,
 				   GImageType type, gint32 *layer_ID, 
 				   GDrawable **drawable, GPixelRgn *pixel_rgn);
@@ -186,7 +185,6 @@ static gint save_index       (FILE *, gint32, gint32, int);
 static gint save_rgb         (FILE *, gint32, gint32);
 
 
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -211,13 +209,14 @@ query (void)
   {
     { PARAM_INT32,  "run_mode",     "Interactive, non-interactive" },
     { PARAM_STRING, "filename",     "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
-  };
-  static GParamDef load_return_vals[] =
-  {
-    { PARAM_IMAGE,  "image",        "Output image" },
+    { PARAM_STRING, "raw_filename", "The name of the file to load" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+
+  static GParamDef load_return_vals[] =
+  {
+    { PARAM_IMAGE,  "image",        "Output image" }
+  };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
@@ -230,8 +229,6 @@ query (void)
     { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_xwd_load",
                           "load file of the XWD file format",
@@ -262,9 +259,9 @@ those with alpha channels.",
 				    "xwd",
 				    "",
                                     "4,long,0x00000007");
-  gimp_register_save_handler       ("file_xwd_save",
-				    "xwd",
-				    "");
+  gimp_register_save_handler ("file_xwd_save",
+			      "xwd",
+			      "");
 }
 
 
@@ -274,7 +271,6 @@ run (gchar   *name,
      GParam  *param,
      gint    *nreturn_vals,
      GParam **return_vals)
-
 {
   static GParam values[2];
   GRunModeType  run_mode;
@@ -319,7 +315,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("xwd", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XWD", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -367,20 +363,6 @@ run (gchar   *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("xwd");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint32

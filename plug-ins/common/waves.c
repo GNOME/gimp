@@ -25,6 +25,7 @@
  *
  * $Id$
  */
+
 #include "config.h"
 
 #include <string.h>
@@ -36,6 +37,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 enum
 {
@@ -123,10 +125,10 @@ static guchar bilinear (gdouble x,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init  */
-  NULL,  /* quit  */
-  query, /* query */
-  run,   /* run   */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
@@ -143,11 +145,9 @@ query (void)
     { PARAM_FLOAT, "phase", "The Phase of the Waves" },
     { PARAM_FLOAT, "wavelength", "The Wavelength of the Waves" },
     { PARAM_INT32, "type", "Type of waves, black/smeared" },
-    { PARAM_INT32, "reflective", "Use Reflection" },
+    { PARAM_INT32, "reflective", "Use Reflection" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_waves",
 			  "Distort the image with waves",
@@ -338,15 +338,8 @@ pluginCoreIA (struct piArgs *argp,
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("waves");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("waves", TRUE);
 
   dlg = gimp_dialog_new ( _("Waves"), "waves",
 			 gimp_plugin_help_func, "filters/waves.html",
@@ -579,16 +572,6 @@ mw_preview_new (GtkWidget        *parent,
   GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
-  guchar *color_cube;
-   
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -620,8 +603,6 @@ mw_preview_new (GtkWidget        *parent,
 
   return preview;
 }
-
-
 
 
 static void

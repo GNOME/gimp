@@ -33,6 +33,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Declare local functions. */
 static void query  (void);
 static void run    (gchar   *name,
@@ -69,13 +70,9 @@ query (void)
     { PARAM_INT32, "width", "Width" },
     { PARAM_INT32, "height", "Height" },
     { PARAM_INT32, "ntries", "Search Time" },
-    { PARAM_INT32, "show_image","Show Image?" },
+    { PARAM_INT32, "show_image","Show Image?" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_smooth_palette",
 			  "derive smooth palette from image",
@@ -86,17 +83,19 @@ query (void)
 			  N_("<Image>/Filters/Colors/Smooth Palette..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
-static struct {
+static struct
+{
   gint width;
   gint height;
   gint ntries;
   gint try_size;
   gint show_image;
-} config = {
+} config =
+{
   256,
   64,
   50,
@@ -138,14 +137,17 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams != 7)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  config.width      = param[3].data.d_int32;
 	  config.height     = param[4].data.d_int32;
 	  config.ntries     = param[5].data.d_int32;
 	  config.show_image = param[6].data.d_int32 ? TRUE : FALSE;
 	}
+
       if (status == STATUS_SUCCESS && 
 	  ((config.width <= 0) || (config.height <= 0) || config.ntries <= 0))
 	status = STATUS_CALLING_ERROR;
@@ -168,7 +170,8 @@ run (gchar   *name,
       if (gimp_drawable_is_rgb (drawable->id))
 	{
 	  gimp_progress_init (_("Deriving smooth palette..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) / gimp_tile_width ());
+	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
+				  gimp_tile_width ());
 	  values[1].data.d_image = doit (drawable, &values[2].data.d_layer);
 	  if (run_mode == RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
@@ -224,12 +227,12 @@ static gint32
 doit (GDrawable *drawable,
       gint32    *layer_id)
 {
-  gint32 new_image_id;
+  gint32     new_image_id;
   GDrawable *new_layer;
-  int psize, i, j;
-  guchar *pal;
-  int bpp = drawable->bpp;
-  GPixelRgn pr;
+  gint       psize, i, j;
+  guchar    *pal;
+  gint       bpp = drawable->bpp;
+  GPixelRgn  pr;
 
   srand(time(0));
 
@@ -252,25 +255,27 @@ doit (GDrawable *drawable,
   /* get initial palette */
   for (i = 0; i < psize; i++)
     {
-      int x = R % drawable->width;
-      int y = R % drawable->height;
-      gimp_pixel_rgn_get_pixel(&pr, pal + bpp * i, x, y);
+      gint x = R % drawable->width;
+      gint y = R % drawable->height;
+
+      gimp_pixel_rgn_get_pixel (&pr, pal + bpp * i, x, y);
     }
 
   /* reorder */
   if (1)
     {
-      guchar *pal_best = g_malloc (psize * bpp);
-      guchar *original = g_malloc (psize * bpp);
-      double len_best = 0;
-      int try;
+      guchar  *pal_best = g_malloc (psize * bpp);
+      guchar  *original = g_malloc (psize * bpp);
+      gdouble  len_best = 0;
+      gint     try;
 
       memcpy (pal_best, pal, bpp * psize);
       memcpy (original, pal, bpp * psize);
 
       for (try = 0; try < config.ntries; try++)
 	{
-	  double len;
+	  gdouble len;
+
 	  if (!(try%5))
 	    gimp_progress_update (try / (double) config.ntries);
 	  memcpy (pal, original, bpp * psize);
@@ -287,8 +292,8 @@ doit (GDrawable *drawable,
 	  /* improve */
 	  for (i = 0; i < config.try_size; i++)
 	    {
-	      gint i0 = 1 + (R % (psize-2));
-	      gint i1 = 1 + (R % (psize-2));
+	      gint  i0 = 1 + (R % (psize-2));
+	      gint  i1 = 1 + (R % (psize-2));
 	      glong as_is, swapd;
 
 	      if (1 == (i0 - i1))
@@ -386,15 +391,8 @@ dialog (void)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("smooth_palette");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("smooth_palette", FALSE);
 
   dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
 			 gimp_plugin_help_func, "filters/smooth_palette.html",

@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define	PLUG_IN_NAME        "plug_in_threshold_alpha"
 #define SHORT_NAME          "threshold_alpha"
 #define PROGRESS_UPDATE_NUM 100
@@ -90,7 +91,7 @@ query (void)
     { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     { PARAM_IMAGE, "image", "Input image (not used)"},
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "threshold", "Threshold" },
+    { PARAM_INT32, "threshold", "Threshold" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -249,23 +250,16 @@ threshold_alpha (gint32 drawable_id)
 }
 
 /* dialog stuff */
-static int
+static gint
 threshold_alpha_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
-  gchar	**argv;
-  gint	  argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("threshold_alpha");
+  gimp_ui_init ("threshold_alpha", FALSE);
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  
   dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
 			 gimp_plugin_help_func, "filters/threshold_alpha.html",
 			 GTK_WIN_POS_MOUSE,

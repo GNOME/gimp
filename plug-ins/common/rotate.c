@@ -54,10 +54,14 @@
  *  - do something magical so that only one rotate can be occuring at a time!
  */  
 
-#include <stdlib.h>
 #include "config.h"
-#include "libgimp/gimp.h"
+
+#include <stdlib.h>
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Defines */
 #define PLUG_IN_VERSION     "v0.9 (1999/11/13)"
@@ -87,16 +91,16 @@ static RotateValues rotvals =
 
 
 static void  query   (void);
-static void  run     (gchar      *name,
-		      gint        nparams,	
-		      GParam     *param,	
-		      gint       *nreturn_vals,  
-		      GParam    **return_vals);
+static void  run     (gchar   *name,
+		      gint     nparams,	
+		      GParam  *param,	
+		      gint    *nreturn_vals,  
+		      GParam **return_vals);
  
 static void  rotate                 (void);
-static void  rotate_drawable        (GDrawable  *drawable);
-static void  rotate_compute_offsets (gint       *offsetx, 
-				     gint       *offsety, 
+static void  rotate_drawable        (GDrawable *drawable);
+static void  rotate_compute_offsets (gint      *offsetx, 
+				     gint      *offsety, 
 				     gint       image_width, 
 				     gint       image_height,
 				     gint       width, 
@@ -105,123 +109,123 @@ static void  rotate_compute_offsets (gint       *offsetx,
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc  */
-  NULL,	  /* quit_proc  */
-  query,  /* query_proc */
-  run     /* run_proc   */
+  NULL,  /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
 };
 
 /* the image and drawable that will be used later */
-GDrawable *active_drawable = NULL;
-gint32    image_ID = -1;
+static GDrawable *active_drawable = NULL;
+static gint32     image_ID = -1;
 
 /* Functions */
 
 MAIN ()
 
-static void query (void)
+static void
+query (void)
 {
-static GParamDef args[] = {
-  { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
-  { PARAM_IMAGE,    "image",      "Input image" },\
-  { PARAM_DRAWABLE, "drawable",   "Input drawable"},\
-  { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
-  { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }"} 
-};
-static gint nargs = sizeof (args) / sizeof (args[0]);
+  static GParamDef args[] =
+  {
+    { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},
+    { PARAM_IMAGE,    "image",      "Input image" },
+    { PARAM_DRAWABLE, "drawable",   "Input drawable" },
+    { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees" },
+    { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
+  };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
-static GParamDef menuargs[] = {
-  { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
-  { PARAM_IMAGE,    "image",      "Input image" },\
-  { PARAM_DRAWABLE, "drawable",   "Input drawable"},\
-};
-static gint nmenuargs = sizeof (menuargs) / sizeof (menuargs[0]);
+  static GParamDef menuargs[] =
+  {
+    { PARAM_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",      "Input image" },
+    { PARAM_DRAWABLE, "drawable",   "Input drawable"}
+  };
+  static gint nmenuargs = sizeof (menuargs) / sizeof (menuargs[0]);
 
-static GParamDef *return_vals = NULL;
-static gint nreturn_vals      = 0;
+  gimp_install_procedure ("plug_in_rotate",
+			  "Rotates a layer or the whole image by 90, 180 or 270 degrees",
+			  "This plug-in does rotate the active layer or the "
+			  "whole image clockwise by multiples of 90 degrees. "
+			  "When the whole image is choosen, the image is "
+			  "resized if necessary.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  NULL,
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,		
+			  nargs, 0,
+			  args, NULL);
 
-INIT_I18N(); 
+  gimp_install_procedure ("plug_in_layer_rot90",
+			  "Rotates the given layer 90 degrees clockwise.",
+			  "Rotates the given layer 90 degrees clockwise.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Layers/Rotate/90 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
+  gimp_install_procedure ("plug_in_layer_rot180",
+			  "Rotates the given layer 180 degrees.",
+			  "Rotates the given layer 180 degrees.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Layers/Rotate/180 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
+  gimp_install_procedure ("plug_in_layer_rot270",
+			  "Rotates the given layer 270 degrees clockwise.",
+			  "Rotates the given layer 270 degrees clockwise.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Layers/Rotate/270 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
 
-/*install the plugin */
-gimp_install_procedure ("plug_in_rotate",
-                        "Rotates a layer or the whole image by 90, 180 or 270 degrees",
-                        "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is choosen, the image is resized if necessary.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			NULL,
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,		
-			nargs, nreturn_vals,
-			args, return_vals);
-
-gimp_install_procedure ("plug_in_layer_rot90",
-			"Rotates the given layer 90 degrees clockwise.",
-			"Rotates the given layer 90 degrees clockwise.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Layers/Rotate/90 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
-gimp_install_procedure ("plug_in_layer_rot180",
-			"Rotates the given layer 180 degrees.",
-			"Rotates the given layer 180 degrees.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Layers/Rotate/180 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
-gimp_install_procedure ("plug_in_layer_rot270",
-			"Rotates the given layer 270 degrees clockwise.",
-			"Rotates the given layer 270 degrees clockwise.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Layers/Rotate/270 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
-
-gimp_install_procedure ("plug_in_image_rot90",
-			"Rotates the given image 90 degrees clockwise.",
-			"Rotates the given image 90 degrees clockwise.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Image/Transforms/Rotate/90 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
-gimp_install_procedure ("plug_in_image_rot180",
-			"Rotates the given image 180 degrees.",
-			"Rotates the given image 180 degrees.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Image/Transforms/Rotate/180 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
-gimp_install_procedure ("plug_in_image_rot270",
-			"Rotates the given image 270 degrees clockwise.",
-			"Rotates the given image 270 degrees clockwise.",
-			PLUG_IN_AUTHOR,
-			PLUG_IN_COPYRIGHT,
-			PLUG_IN_VERSION,
-			N_("<Image>/Image/Transforms/Rotate/270 degrees"),
-			PLUG_IN_IMAGE_TYPES,
-			PROC_PLUG_IN,
-			nmenuargs, nreturn_vals,
-			menuargs, return_vals);
+  gimp_install_procedure ("plug_in_image_rot90",
+			  "Rotates the given image 90 degrees clockwise.",
+			  "Rotates the given image 90 degrees clockwise.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Image/Transforms/Rotate/90 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
+  gimp_install_procedure ("plug_in_image_rot180",
+			  "Rotates the given image 180 degrees.",
+			  "Rotates the given image 180 degrees.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Image/Transforms/Rotate/180 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
+  gimp_install_procedure ("plug_in_image_rot270",
+			  "Rotates the given image 270 degrees clockwise.",
+			  "Rotates the given image 270 degrees clockwise.",
+			  PLUG_IN_AUTHOR,
+			  PLUG_IN_COPYRIGHT,
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Image/Transforms/Rotate/270 degrees"),
+			  PLUG_IN_IMAGE_TYPES,
+			  PROC_PLUG_IN,
+			  nmenuargs, 0,
+			  menuargs, NULL);
 }
 
 static void 
@@ -508,13 +512,13 @@ static void
 rotate (void)
 {
   GDrawable *drawable;
-  gint32 *layers;
-  gint i;
-  gint nlayers;
-  gint32 guide_ID;
+  gint32    *layers;
+  gint       i;
+  gint       nlayers;
+  gint32     guide_ID;
   GuideInfo *guide;
-  GList *guides = NULL;
-  GList *list;
+  GList     *guides = NULL;
+  GList     *list;
 
   if (rotvals.angle == 0) return;  
 
@@ -650,4 +654,3 @@ rotate (void)
 
   return;
 }
-

@@ -33,6 +33,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
 
@@ -133,8 +134,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Scattering pixel values in HSV space",
 			  "Scattering pixel values in HSV space",
@@ -363,26 +362,8 @@ scatter_hsv_dialog (void)
   GtkWidget *abox;
   GtkWidget *table;
   GtkObject *adj;
-  guchar  *color_cube;
-  gchar	 **argv;
-  gint	   argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (SHORT_NAME);
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
 			 gimp_plugin_help_func, "filters/scatter_hsv.html",

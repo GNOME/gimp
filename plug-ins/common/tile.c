@@ -32,6 +32,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gint new_width;
@@ -100,21 +101,25 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "new_width", "New (tiled) image width" },
     { PARAM_INT32, "new_height", "New (tiled) image height" },
-    { PARAM_INT32, "new_image", "Create a new image?" },
+    { PARAM_INT32, "new_image", "Create a new image?" }
   };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+
   static GParamDef return_vals[] =
   {
     { PARAM_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
-    { PARAM_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" },
+    { PARAM_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_tile",
 			  "Create a new image which is a tiled version of the input drawable",
-			  "This function creates a new image with a single layer sized to the specified 'new_width' and 'new_height' parameters.  The specified drawable is tiled into this layer.  The new layer will have the same type as the specified drawable and the new image will have a corresponding base type",
+			  "This function creates a new image with a single "
+			  "layer sized to the specified 'new_width' and "
+			  "'new_height' parameters.  The specified drawable "
+			  "is tiled into this layer.  The new layer will have "
+			  "the same type as the specified drawable and the new "
+			  "image will have a corresponding base type",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996-1997",
@@ -314,10 +319,13 @@ tile (gint32  image_id,
 	  if (width + j > tvals.new_width)
 	    width = tvals.new_width - j;
 
-	  gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
-	  gimp_pixel_rgn_init (&dest_rgn, new_layer, j, i, width, height, TRUE, FALSE);
+	  gimp_pixel_rgn_init (&src_rgn, drawable,
+			       0, 0, width, height, FALSE, FALSE);
+	  gimp_pixel_rgn_init (&dest_rgn, new_layer,
+			       j, i, width, height, TRUE, FALSE);
 
-	  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL;
+	  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+	       pr != NULL;
 	       pr = gimp_pixel_rgns_process (pr))
 	    {
 	      for (k = 0; k < src_rgn.h; k++)
@@ -334,7 +342,7 @@ tile (gint32  image_id,
   /*  copy the colormap, if necessary  */
   if (image_type == INDEXED && tvals.new_image)
     {
-      gint ncols;
+      gint    ncols;
       guchar *cmap;
 
       cmap = gimp_image_get_cmap (image_id, &ncols);
@@ -371,15 +379,8 @@ tile_dialog (gint32 image_ID,
   gdouble  xres;
   gdouble  yres;
   GimpUnit unit;
-  gchar  **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("tile");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("tile", FALSE);
 
   width  = gimp_drawable_width (drawable_ID);
   height = gimp_drawable_height (drawable_ID);

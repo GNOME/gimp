@@ -33,6 +33,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 #define SCALE_WIDTH     200
 #define TILE_CACHE_SIZE  16
@@ -72,7 +73,8 @@ static void    run    (gchar    *name,
 		       GParam   *param,
 		       gint     *nreturn_vals,
 		       GParam  **return_vals);
-static void    ripple  (GDrawable * drawable);
+
+static void    ripple             (GDrawable *drawable);
 
 static gint    ripple_dialog      (void);
 static void    ripple_ok_callback (GtkWidget *widget,
@@ -141,11 +143,9 @@ query (void)
     { PARAM_INT32, "edges", "edges; 0 = smear, 1 =  wrap, 2 = black" },
     { PARAM_INT32, "waveform", "0 = sawtooth, 1 = sine wave" },
     { PARAM_INT32, "antialias", "antialias; True or False" },
-    { PARAM_INT32, "tile", "tile; if this is true, the image will retain it's tilability" },
+    { PARAM_INT32, "tile", "tile; if this is true, the image will retain it's tilability" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_ripple",
 			  "Ripple the contents of the specified drawable",
@@ -230,7 +230,8 @@ run (gchar  *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ( _("Rippling..."));
 
@@ -568,25 +569,8 @@ ripple_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("ripple");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("ripple", TRUE);
 
   dlg = gimp_dialog_new (_("Ripple"), "ripple",
 			 gimp_plugin_help_func, "filters/ripple.html",
@@ -732,21 +716,22 @@ ripple_dialog (void)
 }
 
 static GTile *
-ripple_pixel (GDrawable * drawable,
-	     GTile *     tile,
-	     gint        x1,
-	     gint        y1,
-	     gint        x2,
-	     gint        y2,
-	     gint        x,
-	     gint        y,
-	     gint *      row,
-	     gint *      col,
-	     guchar *    pixel)
+ripple_pixel (GDrawable *drawable,
+	      GTile     *tile,
+	      gint       x1,
+	      gint       y1,
+	      gint       x2,
+	      gint       y2,
+	      gint       x,
+	      gint       y,
+	      gint      *row,
+	      gint      *col,
+	      guchar    *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
+
   guchar *data;
-  gint b;
+  gint    b;
 
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {

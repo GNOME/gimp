@@ -1,3 +1,8 @@
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/[r-z]*.c: use gimp_ui_init(). Minor cleanups like
+	below: includes, indentation, prototypes...
+
 Mon May  1 10:58:34 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* app/paint_core.c: applied gimp-quinet-000427-0, draw the straight

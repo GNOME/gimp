@@ -44,6 +44,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #ifndef SRAND_FUNC
 #define SRAND_FUNC srand
 #endif
@@ -64,18 +65,18 @@
 #define MAXCOLPERGRADIENT 5
 
 static void      query  (void);
-static void      run    (char      *name,
-                         int        nparams,
-                         GParam    *param,
-                         int       *nreturn_vals,
-                         GParam   **return_vals);
+static void      run    (gchar   *name,
+                         gint     nparams,
+                         GParam  *param,
+                         gint    *nreturn_vals,
+                         GParam **return_vals);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 enum {
@@ -2223,11 +2224,6 @@ GtkWidget* makewindow (void)
   GtkWidget *_expscale;
   GtkWidget *tmpw;
 
-  gdk_rgb_set_verbose(FALSE);
-  gdk_rgb_init ();
-  gtk_widget_set_default_colormap (gdk_rgb_get_cmap ());
-  gtk_widget_set_default_visual (gdk_rgb_get_visual ());
-
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
 			    gimp_plugin_help_func, "filters/spheredesigner.html",
 			    GTK_WIN_POS_MOUSE,
@@ -2821,17 +2817,17 @@ void realrender(GDrawable *drawable)
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static void query (void)
+static void
+query (void)
 {
-  static GParamDef args[] = {
+  static GParamDef args[] =
+  {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+
   gimp_install_procedure ("plug_in_spheredesigner",
                           "Renders textures spheres",
                           "This plugin can be used to create textured and/or bumpmapped spheres, and uses a small lightweight raytracer to perform the task with good quality",
@@ -2841,38 +2837,38 @@ static void query (void)
                           N_("<Image>/Filters/Render/Sphere Designer..."),
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-                          args, return_vals);
+			  nargs, 0,
+                          args, NULL);
 }
 
 
 int sphere_main(GDrawable *drawable)
 {
-  gchar **argv;
-  gint argc = 1;
-  initworld();
+  initworld ();
 
-  argc = 1;
-  argv = g_new(char *,1);
-  argv[0] = g_strdup("spheredesigner");
-  gtk_init(&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("spheredesigner", TRUE);
 
-  memset(img, 0, PREVIEWSIZE*PREVIEWSIZE*3);
-  makewindow();
+  memset (img, 0, PREVIEWSIZE*PREVIEWSIZE*3);
+  makewindow ();
 
-  if(!s.com.numtexture)
-    sphere_reset();
+  if (!s.com.numtexture)
+    sphere_reset ();
   else
-    rebuildlist();
+    rebuildlist ();
 
-  drawit(img);
-  gtk_main();
-  gdk_flush();
+  drawit (img);
+  gtk_main ();
+  gdk_flush ();
+
   return do_run;
 }
 
-static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, GParam  **return_vals)
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -2929,4 +2925,4 @@ static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, G
   gimp_drawable_detach (drawable);
 }
 
-MAIN()
+MAIN ()

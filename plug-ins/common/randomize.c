@@ -83,6 +83,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /*********************************
  *
  *  PLUGIN-SPECIFIC CONSTANTS
@@ -129,8 +130,8 @@ typedef struct
 {
   gdouble rndm_pct;     /* likelihood of randomization (as %age) */
   gdouble rndm_rcount;  /* repeat count */
-  gint seed_type;       /* seed init. type - current time or user value */
-  gint rndm_seed;       /* seed value for rand() function */
+  gint    seed_type;    /* seed init. type - current time or user value */
+  gint    rndm_seed;    /* seed value for rand() function */
 } RandomizeVals;
 
 static RandomizeVals pivals =
@@ -165,6 +166,20 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
+static void randomize                    (GDrawable *drawable);
+
+static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
+					  guchar    *data,
+					  gint       x,
+					  gint       y,
+					  gint       w);
+
+static gint randomize_dialog             (void);
+static void randomize_ok_callback        (GtkWidget *widget,
+					  gpointer   data);
+
+/************************************ Guts ***********************************/
+
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -172,20 +187,6 @@ GPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-static void randomize (GDrawable *drawable);
-
-static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
-					  guchar *data,
-					  int x,
-					  int y,
-					  int w);
-
-static gint randomize_dialog             (void);
-static void randomize_ok_callback        (GtkWidget     *widget,
-					  gpointer       data);
-
-/************************************ Guts ***********************************/
 
 MAIN ()
 
@@ -208,7 +209,7 @@ query (void)
     { PARAM_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
     { PARAM_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
     { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
-    { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" },
+    { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
   };
   static gint nargs = sizeof(args) / sizeof (args[0]);
 
@@ -229,8 +230,6 @@ query (void)
   const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
   const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
-
-  INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME[0],
 			  (gchar *) hurl_blurb,
@@ -692,15 +691,8 @@ randomize_dialog (void)
   GtkWidget *table;
   GtkWidget *seed_hbox;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("randomize");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("randomize", FALSE);
 
   dlg = gimp_dialog_new (gettext (RNDM_VERSION[rndm_type - 1]), "randomize",
 			 gimp_plugin_help_func, "filters/randomize.html",

@@ -20,16 +20,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #define MAX_PATTERNS 9
 
@@ -1823,11 +1825,7 @@ query (void)
     { PARAM_INT32, "additive", "Whether the function adds the result to the original image" },
     { PARAM_INT32, "rotated", "Whether to rotate the RGB pattern by ninety degrees" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_video",
 			  "Apply low-dotpitch RGB simulation to the specified drawable",
@@ -1838,8 +1836,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Video..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -2144,28 +2142,10 @@ video_dialog (void)
   GtkWidget *vbox;
   GtkWidget *box;
   GtkWidget *toggle;
-  GSList  *group = NULL;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
-  gint     y;
+  GSList *group = NULL;
+  gint    y;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("video");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("video", TRUE);
 
   dlg = gimp_dialog_new ( _("Video"), "video",
 			 gimp_plugin_help_func, "filters/video.html",

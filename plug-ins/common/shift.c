@@ -35,13 +35,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 
-#define SCALE_WIDTH 200
-#define TILE_CACHE_SIZE 16
-#define HORIZONTAL 0
-#define VERTICAL 1
-#define ENTRY_WIDTH 35
+#define SCALE_WIDTH     200
+#define TILE_CACHE_SIZE  16
+#define HORIZONTAL        0
+#define VERTICAL          1
+#define ENTRY_WIDTH      35
 
 typedef struct
 {
@@ -117,11 +118,9 @@ query (void)
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
-    { PARAM_INT32, "orientation", "vertical, horizontal orientation" },
+    { PARAM_INT32, "orientation", "vertical, horizontal orientation" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_shift",
 			  "Shift the contents of the specified drawable",
@@ -201,7 +200,8 @@ run (gchar  *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ( _("Shifting..."));
 
@@ -284,75 +284,76 @@ shift (GDrawable *drawable)
      the image to do a vertical shift.
   */
 
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-        if (shvals.orientation == VERTICAL)
+      if (shvals.orientation == VERTICAL)
         {
+	  destline = dest_rgn.data;
+	  srand(seed+dest_rgn.x);
 
-            destline = dest_rgn.data;
-            srand(seed+dest_rgn.x);
-
-            for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
             {
-                dest = destline;
-                ydist = (rand() % mod_value) - sub_value;
-                for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	      dest = destline;
+	      ydist = (rand() % mod_value) - sub_value;
+	      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
                 {
-                    otherdest = dest;
+		  otherdest = dest;
 
-                    yi = (y + ydist + height)%height; /*  add width before % because % isn't a true modulo */
+		  yi = (y + ydist + height)%height; /*  add width before % because % isn't a true modulo */
 
-                    tile = shift_pixel (drawable, tile, x1, y1, x2, y2, x, yi, &row, &col, pixel[0]);
+		  tile = shift_pixel (drawable, tile, x1, y1, x2, y2, x, yi, &row, &col, pixel[0]);
 
-                    for (k = 0; k < bytes; k++)
-                        *otherdest++ = pixel[0][k];
-                    dest += dest_rgn.rowstride;
-                } /* for */
+		  for (k = 0; k < bytes; k++)
+		    *otherdest++ = pixel[0][k];
+		  dest += dest_rgn.rowstride;
+                }
 
-                for (k = 0; k < bytes; k++)
-                    destline++;
-            } /* for */
+	      for (k = 0; k < bytes; k++)
+		destline++;
+            }
 
-            progress += dest_rgn.w * dest_rgn.h;
-            gimp_progress_update ((double) progress / (double) max_progress);
+	  progress += dest_rgn.w * dest_rgn.h;
+	  gimp_progress_update ((double) progress / (double) max_progress);
         }
-        else
+      else
         {
-            destline = dest_rgn.data;
-            srand(seed+dest_rgn.y);
+	  destline = dest_rgn.data;
+	  srand (seed+dest_rgn.y);
 
-            for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	  for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
             {
-                dest = destline;
-                xdist = (rand() % mod_value) - sub_value;
-                for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	      dest = destline;
+	      xdist = (rand() % mod_value) - sub_value;
+	      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
                 {
-                    xi = (x + xdist + width)%width; /*  add width before % because % isn't a true modulo */
+		  xi = (x + xdist + width)%width; /*  add width before % because % isn't a true modulo */
 
-                    tile = shift_pixel (drawable, tile, x1, y1, x2, y2, xi, y, &row, &col, pixel[0]);
+		  tile = shift_pixel (drawable, tile, x1, y1, x2, y2, xi, y, &row, &col, pixel[0]);
 
-                    for (k = 0; k < bytes; k++)
-                        *dest++ = pixel[0][k];
-                } /* for */
+		  for (k = 0; k < bytes; k++)
+		    *dest++ = pixel[0][k];
+                }
 
-                destline += dest_rgn.rowstride;
-            } /* for */
+	      destline += dest_rgn.rowstride;
+            }
 
-            progress += dest_rgn.w * dest_rgn.h;
-            gimp_progress_update ((double) progress / (double) max_progress);
+	  progress += dest_rgn.w * dest_rgn.h;
+	  gimp_progress_update ((double) progress / (double) max_progress);
         }
-
-    }  /* for  */
+    }
 
   if (tile)
-      gimp_tile_unref (tile, FALSE);
+    gimp_tile_unref (tile, FALSE);
 
-      /*  update the region  */
+  /*  update the region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-} /* shift */
+}
 
 
 static gint
@@ -364,15 +365,8 @@ shift_dialog (void)
   GtkWidget *sep;
   GtkWidget *table;
   GtkObject *amount_data;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("shift");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("shift", FALSE);
 
   dlg = gimp_dialog_new (_("Shift"), "shift",
 			 gimp_plugin_help_func, "filters/shift.html",
@@ -444,21 +438,21 @@ shift_ok_callback (GtkWidget *widget,
 }
 
 static GTile *
-shift_pixel (GDrawable * drawable,
-	     GTile *     tile,
-	     gint        x1,
-	     gint        y1,
-	     gint        x2,
-	     gint        y2,
-	     gint        x,
-	     gint        y,
-	     gint *      row,
-	     gint *      col,
-	     guchar *    pixel)
+shift_pixel (GDrawable *drawable,
+	     GTile     *tile,
+	     gint       x1,
+	     gint       y1,
+	     gint       x2,
+	     gint       y2,
+	     gint       x,
+	     gint       y,
+	     gint      *row,
+	     gint      *col,
+	     guchar    *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
-  gint b;
+  gint    b;
 
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {

@@ -10,55 +10,58 @@
  *  Progress bar doesn't do anything yet.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
 /* Declare local functions. */
-static void query(void);
-static void run(char *name,
-		int nparams,
-		GParam * param,
-		int *nreturn_vals,
-		GParam ** return_vals);
-static inline int colours_equal(guchar *col1, guchar *col2, int bytes);
+static void query (void);
+static void run   (gchar    *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
+static inline gint colours_equal (guchar *col1,
+				  guchar *col2,
+				  gint    bytes);
 
-static void do_zcrop(GDrawable *drawable, gint32);
+static void do_zcrop (GDrawable *drawable,
+		      gint32     image_id);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
-gint bytes;
-gint sx1, sy1, sx2, sy2;
-int run_flag = 0;
+static gint bytes;
 
-MAIN()
 
-static void query()
+MAIN ()
+
+static void
+query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable"},
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure("plug_in_zealouscrop",
 			 "Automagically crops unused space from the edges and middle of a picture.",
@@ -69,12 +72,16 @@ static void query()
 			 N_("<Image>/Image/Transforms/Zealous Crop"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
+			 nargs, 0,
+			 args, NULL);
 }
 
-static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
-		GParam ** return_vals)
+static void
+run (gchar   *name,
+     gint     n_params,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -89,55 +96,61 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_NONINTERACTIVE) {
-    if (n_params != 3) {
-      status = STATUS_CALLING_ERROR;
+  if (run_mode == RUN_NONINTERACTIVE)
+    {
+      if (n_params != 3)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
     }
-  }
 
-  if (status == STATUS_SUCCESS) {
-    /*  Get the specified drawable  */
-    drawable = gimp_drawable_get(param[2].data.d_drawable);
-    image_id = param[1].data.d_image;
+  if (status == STATUS_SUCCESS)
+    {
+      /*  Get the specified drawable  */
+      drawable = gimp_drawable_get(param[2].data.d_drawable);
+      image_id = param[1].data.d_image;
 
-    /*  Make sure that the drawable is gray or RGB or indexed  */
-    if (gimp_drawable_is_rgb(drawable->id) || gimp_drawable_is_gray(drawable->id) || gimp_drawable_is_indexed(drawable->id)) {
-      gimp_progress_init(_("ZealousCropping(tm)..."));
+      /*  Make sure that the drawable is gray or RGB or indexed  */
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id) ||
+	  gimp_drawable_is_indexed (drawable->id))
+	{
+	  gimp_progress_init (_("ZealousCropping(tm)..."));
 
-      gimp_tile_cache_ntiles(1 + 2*(
-				    drawable->width > drawable->height ?
-				    ( drawable->width / gimp_tile_width() ) :
-				    ( drawable->height / gimp_tile_height() )
-				    )
-			     );
+	  gimp_tile_cache_ntiles (1 +
+				  2 * (drawable->width > drawable->height ?
+				       (drawable->width / gimp_tile_width()) :
+				       (drawable->height / gimp_tile_height())));
 
-      do_zcrop(drawable, image_id);
+	  do_zcrop(drawable, image_id);
 
-      if (run_mode != RUN_NONINTERACTIVE)
-	gimp_displays_flush();
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_displays_flush();
 
-      gimp_drawable_detach(drawable);
-    } else {
-      status = STATUS_EXECUTION_ERROR;
+	  gimp_drawable_detach(drawable);
+	}
+      else
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
     }
-  }
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 }
 
-
-
-static void do_zcrop(GDrawable *drawable, gint32 image_id)
+static void
+do_zcrop (GDrawable *drawable,
+	  gint32     image_id)
 {
   GPixelRgn srcPR, destPR;
-  gint width, height, x, y;
+  gint    width, height, x, y;
   guchar *buffer;
-  int nreturn_vals;
-  gint8 *killrows;
-  gint8 *killcols;
-  gint32 livingrows, livingcols, destrow, destcol;
-  int total_area, area;
+  gint    nreturn_vals;
+  gint8  *killrows;
+  gint8  *killcols;
+  gint32  livingrows, livingcols, destrow, destcol;
+  gint    total_area, area;
 
   width = drawable->width;
   height = drawable->height;
@@ -149,24 +162,22 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   killrows = g_malloc (sizeof(gint8)*height);
   killcols = g_malloc (sizeof(gint8)*width);
 
-  buffer = g_malloc((width > height ? width : height) * bytes);
-
+  buffer = g_malloc ((width > height ? width : height) * bytes);
 
   /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   livingrows = 0;
   for (y=0; y<height; y++)
     {
-      gimp_pixel_rgn_get_row(&srcPR, buffer, 0, y, width);
+      gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
 
       killrows[y] = TRUE;
 
       for (x=0; x<width*bytes; x+=bytes)
 	{
-	  if (!colours_equal(buffer, &buffer[x], bytes))
+	  if (!colours_equal (buffer, &buffer[x], bytes))
 	    {
 	      livingrows++;
 	      killrows[y] = FALSE;
@@ -183,7 +194,7 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   livingcols = 0;
   for (x=0; x<width; x++)
     {
-      gimp_pixel_rgn_get_col(&srcPR, buffer, x, 0, height);
+      gimp_pixel_rgn_get_col (&srcPR, buffer, x, 0, height);
 
       killcols[x] = TRUE;
 

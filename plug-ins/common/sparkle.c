@@ -40,6 +40,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define SCALE_WIDTH  175
 #define MAX_CHANNELS   4
 #define PSV            2  /* point spread value */
@@ -60,10 +61,10 @@ typedef struct
   gdouble opacity;
   gdouble random_hue;
   gdouble random_saturation;
-  gint preserve_luminosity;
-  gint invers;
-  gint border;
-  gint colortype;
+  gint    preserve_luminosity;
+  gint    invers;
+  gint    border;
+  gint    colortype;
 } SparkleVals;
 
 typedef struct
@@ -85,15 +86,15 @@ static gint      sparkle_dialog        (void);
 static void      sparkle_ok_callback   (GtkWidget *widget,
 					gpointer   data);
 
-static gint      compute_luminosity    (guchar *   pixel,
+static gint      compute_luminosity    (guchar    *pixel,
 					gint       gray,
 					gint       has_alpha);
-static gint      compute_lum_threshold (GDrawable * drawable,
+static gint      compute_lum_threshold (GDrawable *drawable,
 					gdouble    percentile);
-static void      sparkle               (GDrawable * drawable,
+static void      sparkle               (GDrawable *drawable,
 					gint       threshold);
-static void      fspike                (GPixelRgn * src_rgn,
-					GPixelRgn * dest_rgn,
+static void      fspike                (GPixelRgn *src_rgn,
+					GPixelRgn *dest_rgn,
 					gint       gray,
 					gint       x1,
 					gint       y1,
@@ -106,8 +107,8 @@ static void      fspike                (GPixelRgn * src_rgn,
 					gdouble    inten,
 					gdouble    length,
 					gdouble    angle);
-static GTile*    rpnt                  (GDrawable * drawable,
-					GTile *    tile,
+static GTile*    rpnt                  (GDrawable *drawable,
+					GTile     *tile,
 					gint       x1,
 					gint       y1,
 					gint       x2,
@@ -116,11 +117,11 @@ static GTile*    rpnt                  (GDrawable * drawable,
 					gdouble    yr,
 					gint       tile_width,
 					gint       tile_height,
-					gint *     row,
-					gint *     col,
+					gint      *row,
+					gint      *col,
 					gint       bytes,
 					gdouble    inten,
-					guchar color[MAX_CHANNELS]);
+					guchar     color[MAX_CHANNELS]);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -180,8 +181,6 @@ query (void)
     { PARAM_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_sparkle",
 			  "Simulates pixel bloom and diffraction effects",
@@ -290,7 +289,8 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init (_("Sparkling..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -338,15 +338,8 @@ sparkle_dialog (void)
   GtkWidget *sep;
   GtkWidget *r1, *r2, *r3;
   GtkObject *scale_data;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("sparkle");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("sparkle", FALSE);
 
   dlg = gimp_dialog_new (_("Sparkle"), "sparkle",
 			 gimp_plugin_help_func, "filters/sparkle.html",
@@ -369,7 +362,7 @@ sparkle_dialog (void)
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -598,15 +591,15 @@ compute_lum_threshold (GDrawable *drawable,
 		       gdouble    percentile)
 {
   GPixelRgn src_rgn;
-  gpointer pr;
-  guchar *data;
-  gint values[256];
-  gint total, sum;
-  gint size;
-  gint gray;
-  gint has_alpha;
-  gint i;
-  gint x1, y1, x2, y2;
+  gpointer  pr;
+  guchar   *data;
+  gint      values[256];
+  gint      total, sum;
+  gint      size;
+  gint      gray;
+  gint      has_alpha;
+  gint      i;
+  gint      x1, y1, x2, y2;
 
   /*  zero out the luminosity values array  */
 
@@ -654,16 +647,16 @@ sparkle (GDrawable *drawable,
 	 gint       threshold)
 {
   GPixelRgn src_rgn, dest_rgn;
-  guchar *src, *dest;
-  gdouble nfrac, length, inten, spike_angle;
-  gint cur_progress, max_progress;
-  gint x1, y1, x2, y2;
-  gint size, lum, x, y, b;
-  gint gray;
-  gint has_alpha, alpha;
-  gpointer pr;
-  guchar *tmp1;
-  gint tile_width, tile_height;
+  guchar   *src, *dest;
+  gdouble   nfrac, length, inten, spike_angle;
+  gint      cur_progress, max_progress;
+  gint      x1, y1, x2, y2;
+  gint      size, lum, x, y, b;
+  gint      gray;
+  gint      has_alpha, alpha;
+  gpointer  pr;
+  guchar   *tmp1;
+  gint      tile_width, tile_height;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   gray = gimp_drawable_is_gray (drawable->id);
@@ -800,7 +793,7 @@ rpnt (GDrawable *drawable,
       gdouble    inten,
       guchar     color[MAX_CHANNELS])
 {
-  gint x, y, b;
+  gint    x, y, b;
   gdouble dx, dy, rs, val;
   guchar *pixel;
   gdouble new;
@@ -888,14 +881,14 @@ fspike (GPixelRgn *src_rgn,
   gdouble in;
   gdouble theta;
   gdouble sfac;
-  gint r, g, b;
-  GTile *tile = NULL;
-  gint row, col;
-  gint i;
-  gint bytes;
-  gint ok;
-  guchar pixel[MAX_CHANNELS];
-  guchar color[MAX_CHANNELS];
+  gint    r, g, b;
+  GTile  *tile = NULL;
+  gint    row, col;
+  gint    i;
+  gint    bytes;
+  gint    ok;
+  guchar  pixel[MAX_CHANNELS];
+  guchar  color[MAX_CHANNELS];
 
   theta = angle;
   bytes = dest_rgn->bpp;
@@ -926,9 +919,9 @@ fspike (GPixelRgn *src_rgn,
       
       if (svals.invers)
 	{
-	       color[0] = 255 - color[0];
-	       color[1] = 255 - color[1];
-	       color[2] = 255 - color[2];
+	  color[0] = 255 - color[0];
+	  color[1] = 255 - color[1];
+	  color[2] = 255 - color[2];
         }
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
@@ -961,8 +954,8 @@ fspike (GPixelRgn *src_rgn,
 	  sfac = inten * exp (-pow (rpos / length, efac));
 	  ok = FALSE;
 
-        in = 0.2 * sfac;
-        if (in > 0.01)
+	  in = 0.2 * sfac;
+	  if (in > 0.01)
             ok = TRUE;
 
 	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt, tile_width, tile_height, &row, &col, bytes, in, color);

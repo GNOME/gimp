@@ -35,6 +35,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef guchar  BYTE;
 typedef guint16 WORD;
 typedef guint32 DWORD;
@@ -918,15 +919,7 @@ load_dialog (gchar *file_name)
   GtkWidget *table;
   GtkWidget *slider;
 
-  gchar **argv;
-  gint argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("wmf");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("wmf", FALSE);
 
   vals = g_new (LoadDialogVals, 1);
 
@@ -1010,13 +1003,14 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-  };
-  static GParamDef load_return_vals[] =
-  {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+
+  static GParamDef load_return_vals[] =
+  {
+    { PARAM_IMAGE, "image", "Output image" }
+  };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
@@ -1026,8 +1020,6 @@ query (void)
   };
   static gint nload_setargs_args = (sizeof (load_setargs_args) /
 				    sizeof (load_setargs_args[0]));
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_wmf_load",
                           "loads files of the Windows(tm) metafile file format",

@@ -45,34 +45,29 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
-
-#define NUMBER_IN_ARGS 3
-#define IN_ARGS { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },\
-                { PARAM_INT32,    "root",      "Root window { TRUE, FALSE }" },\
-                { PARAM_STRING,   "window_id", "Window id" }
-
-#define NUMBER_OUT_ARGS 1 
-#define OUT_ARGS { PARAM_IMAGE,   "image",     "Output image" }
 
 #ifndef XWD
 #define XWD "xwd"
 #endif
 
-typedef struct {
-  gint root;
+typedef struct
+{
+  gint   root;
   gchar *window_id;
-  guint delay;
-  gint decor;
+  guint  delay;
+  gint   decor;
 } ScreenShotValues;
 
-typedef struct {
+typedef struct
+{
   GtkWidget *decor_button;
   GtkWidget *delay_spinner;
   GtkWidget *single_button;
   GtkWidget *root_button;
-  gint run;
+  gint       run;
 } ScreenShotInterface;
 
 static ScreenShotValues shootvals = 
@@ -90,11 +85,12 @@ static ScreenShotInterface shootint =
 
 
 static void  query (void);
-static void  run (gchar *name,
-		  gint nparams,	          /* number of parameters passed in */
-		  GParam * param,	  /* parameters passed in */
-		  gint *nreturn_vals,     /* number of parameters returned */
-		  GParam ** return_vals); /* parameters to be returned */
+static void  run   (gchar   *name,
+		    gint     nparams,      /* number of parameters passed in */
+		    GParam  *param,        /* parameters passed in */
+		    gint    *nreturn_vals, /* number of parameters returned */
+		    GParam **return_vals); /* parameters to be returned */
+
 static void  shoot                (void);
 static gint  shoot_dialog         (void);
 static void  shoot_ok_callback    (GtkWidget *widget,
@@ -108,10 +104,10 @@ static gint  shoot_delay_callback (gpointer   data);
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc  */
-  NULL,	  /* quit_proc  */
-  query,  /* query_proc */
-  run     /* run_proc   */
+  NULL,  /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
 };
 
 /* the image that will be returned */
@@ -121,64 +117,70 @@ gint32    image_ID = -1;
 
 MAIN ()
 
-static void query (void)
+static void
+query (void)
 {
-  static GParamDef args[] = { IN_ARGS };
-  static gint nargs = NUMBER_IN_ARGS;
-  static GParamDef return_vals[] = { OUT_ARGS };
-  static gint nreturn_vals = NUMBER_OUT_ARGS;
-  
-  INIT_I18N ();
+  static GParamDef args[] =
+  {
+    { PARAM_INT32,  "run_mode",  "Interactive, non-interactive" },
+    { PARAM_INT32,  "root",      "Root window { TRUE, FALSE }" },
+    { PARAM_STRING, "window_id", "Window id" }
+  };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  /* the actual installation of the plugin */
+  static GParamDef return_vals[] =
+  {
+    { PARAM_IMAGE, "image", "Output image" }
+  };
+  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Creates a screenshot of a single window or the whole screen",
-			  "This extension serves as a simple frontend to the X-window "
-			  "utility xwd and the xwd-file-plug-in. After specifying some " 
-			  "options, xwd is called, the user selects a window, and the "
-			  "resulting image is loaded into the gimp. Alternatively the "
-			  "whole screen can be grabbed. When called non-interactively "
-			  "it may grab the root window or use the window-id passed as "
-			  "a parameter.",
+			  "This extension serves as a simple frontend to the "
+			  "X-window utility xwd and the xwd-file-plug-in. "
+			  "After specifying some options, xwd is called, the "
+			  "user selects a window, and the resulting image is "
+			  "loaded into the gimp. Alternatively the whole "
+			  "screen can be grabbed. When called non-interactively "
+			  "it may grab the root window or use the window-id "
+			  "passed as a parameter.",
 			  "Sven Neumann <sven@gimp.org>",
 			  "1998, 1999",
 			  "v0.9.4 (99/12/28)",
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  PROC_EXTENSION,		
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, nreturn_vals,
+			  args, return_vals);
 }
 
 static void 
-run (gchar *name,		/* name of plugin           */
-     gint nparams,		/* number of in-paramters   */
-     GParam * param,		/* in-parameters            */
-     gint *nreturn_vals,	/* number of out-parameters */
-     GParam ** return_vals)	/* out-parameters           */
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
-
   /* Get the runmode from the in-parameters */
   GRunModeType run_mode = param[0].data.d_int32;	
-  
+
   /* status variable, use it to check for errors in invocation usualy only 
-     during non-interactive calling */	
+   * during non-interactive calling
+   */
   GStatusType status = STATUS_SUCCESS;	 
-  
-  /*always return at least the status to the caller. */
+
+  /* always return at least the status to the caller. */
   static GParam values[1];
-  
+
   /* initialize the return of the status */ 	
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
-  
-  /*how are we running today? */
+
+  /* how are we running today? */
   switch (run_mode)
-  {
+    {
     case RUN_INTERACTIVE:
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
@@ -192,7 +194,7 @@ run (gchar *name,		/* name of plugin           */
       break;
 
     case RUN_NONINTERACTIVE:
-      if (nparams == NUMBER_IN_ARGS) 
+      if (nparams == 3) 
 	{
 	  shootvals.root      = (gint) param[1].data.d_int32;
 	  shootvals.window_id = (gchar*) param[2].data.d_string;
@@ -202,40 +204,40 @@ run (gchar *name,		/* name of plugin           */
       else
 	status = STATUS_CALLING_ERROR;
       break;
-     
+
     case RUN_WITH_LAST_VALS:
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
       break;
-    
+
     default:
       break;
-  } /* switch */
+    }
 
   if (status == STATUS_SUCCESS)
-  {
-    if (shootvals.delay > 0)
-      shoot_delay (shootvals.delay);
-    /* Run the main function */
-    shoot ();
-  }
+    {
+      if (shootvals.delay > 0)
+	shoot_delay (shootvals.delay);
+      /* Run the main function */
+      shoot ();
+    }
 
   status = (image_ID != -1) ? STATUS_SUCCESS : STATUS_EXECUTION_ERROR;
 
   if (status == STATUS_SUCCESS)
-  {
-    if (run_mode == RUN_INTERACTIVE)
-      {
-	/* Store variable states for next run */
-	gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
-	/* display the image */
-	shoot_display_image (image_ID);
-      }
-    /* set return values */
-    *nreturn_vals = 2;
-    values[1].type = PARAM_IMAGE;
-    values[1].data.d_image = image_ID;
-  }
+    {
+      if (run_mode == RUN_INTERACTIVE)
+	{
+	  /* Store variable states for next run */
+	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
+	  /* display the image */
+	  shoot_display_image (image_ID);
+	}
+      /* set return values */
+      *nreturn_vals = 2;
+      values[1].type = PARAM_IMAGE;
+      values[1].data.d_image = image_ID;
+    }
   values[0].data.d_status = status; 
 }
 
@@ -244,14 +246,14 @@ run (gchar *name,		/* name of plugin           */
 static void 
 shoot (void)
 {
-  GParam *params;
-  gint retvals;
-  char *tmpname;
-  char *xwdargv[7]; /* only need a maximum of 7 arguments to xwd */
-  gdouble xres, yres;
-  gint pid;
-  gint status;
-  gint i = 0;
+  GParam  *params;
+  gint     retvals;
+  gchar   *tmpname;
+  gchar   *xwdargv[7]; /* only need a maximum of 7 arguments to xwd */
+  gdouble  xres, yres;
+  gint     pid;
+  gint     status;
+  gint     i = 0;
 
   /* get a temp name with the right extension and save into it. */
   params = gimp_run_procedure ("gimp_temp_name",
@@ -374,20 +376,13 @@ shoot_dialog (void)
   gint  decorations;
   guint delay;
 
-  gint    argc = 1;
-  gchar **argv = g_new (gchar *, 1);
-  argv[0]      = g_strdup ("ScreenShot");
-
   radio_pressed[0] = (shootvals.root == FALSE);
   radio_pressed[1] = (shootvals.root == TRUE);
   decorations = shootvals.decor;
   delay = shootvals.delay;
 
   /* Init GTK  */
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
+  gimp_ui_init ("screenshot", FALSE);
 
   /* Main Dialog */
   dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
@@ -576,8 +571,3 @@ shoot_display_image (gint32 image)
 			       PARAM_END);
   gimp_destroy_params (params, retvals);
 }
-
-
-
-
-

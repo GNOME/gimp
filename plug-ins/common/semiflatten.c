@@ -25,82 +25,80 @@
  *     Use tile iteration instead of dumb row-walking
  */
 
-
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
-			 GParam    *param,
-			 int       *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
-static void      semiflatten            (GDrawable  *drawable);
+static void      semiflatten            (GDrawable    *drawable);
 static void      semiflatten_render_row (const guchar *src_row,
-				     guchar *dest_row,
-				     gint row,
-				     gint row_width,
-				     gint bytes);
+					 guchar       *dest_row,
+					 gint          row,
+					 gint          row_width,
+					 gint          bytes);
 
+
+static guchar bgred, bggreen, bgblue;
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
-
 
 MAIN ()
 
-
-unsigned char bgred, bggreen, bgblue;
-
-
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_semiflatten",
-			  "Flatten pixels in an RGBA image that aren't completely transparent against the current GIMP background color",
-			  "This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background color",
+			  "Flatten pixels in an RGBA image that aren't "
+			  "completely transparent against the current GIMP "
+			  "background color",
+			  "This plugin flattens pixels in an RGBA image that "
+			  "aren't completely transparent against the current "
+			  "GIMP background color",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th January 1998",
 			  N_("<Image>/Filters/Colors/Semi-Flatten"),
 			  "RGBA",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 
-
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -145,10 +143,10 @@ run (char    *name,
 
 static void
 semiflatten_render_row (const guchar *src_row,
-		  guchar *dest_row,
-		  gint row,
-		  gint row_width,
-		  gint bytes)
+			guchar       *dest_row,
+			gint          row,
+			gint          row_width,
+			gint          bytes)
 {
   gint col;
 
@@ -175,16 +173,15 @@ static void
 semiflatten (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
+  gint    width, height;
+  gint    bytes;
   guchar *src_row;
   guchar *dest_row;
-  gint row;
-  gint x1, y1, x2, y2;
-
+  gint    row;
+  gint    x1, y1, x2, y2;
 
   /* Fetch the GIMP current background colour, to semi-flatten against */
-  gimp_palette_get_background(&bgred, &bggreen, &bgblue);
+  gimp_palette_get_background (&bgred, &bggreen, &bgblue);
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -202,25 +199,22 @@ semiflatten (GDrawable *drawable)
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
-
+  src_row  = g_new (guchar, (x2 - x1) * bytes);
+  dest_row = g_new (guchar, (x2 - x1) * bytes);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
 
   for (row = y1; row < y2; row++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
 
       semiflatten_render_row (src_row,
-			dest_row,
-			row,
-			(x2 - x1),
-			bytes
-			);
+			      dest_row,
+			      row,
+			      (x2 - x1),
+			      bytes);
 
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));

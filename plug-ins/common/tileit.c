@@ -50,6 +50,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /***** Magic numbers *****/
 
 #define PREVIEW_SIZE 128 
@@ -225,8 +226,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_small_tiles",
 			  "Tiles image into smaller versions of the orginal",
 			  "More here later",
@@ -373,26 +372,8 @@ tileit_dialog (void)
   GtkObject *op_data;
   GtkWidget *toggle;
   GSList  *orientation_group = NULL;
-  guchar  *color_cube;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("tileit");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  /* Get the stuff for the preview window...*/
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("tileit", TRUE);
 
   cache_preview (); /* Get the preview image and store it also set has_alpha */
 
@@ -1211,55 +1192,60 @@ do_tiles_preview(guchar *dest_row,
 }
 
 static void
-dialog_update_preview(void)
+dialog_update_preview (void)
 {
+  gint y;
+  gint check, check_0, check_1;  
 
-  int     y;
-  gint check,check_0,check_1;  
+  for (y = 0; y < preview_height; y++)
+    {
+      if ((y / GIMP_CHECK_SIZE) & 1)
+	{
+	  check_0 = GIMP_CHECK_DARK * 255;
+	  check_1 = GIMP_CHECK_LIGHT * 255;
+	}
+      else
+	{
+	  check_0 = GIMP_CHECK_LIGHT * 255;
+	  check_1 = GIMP_CHECK_DARK * 255;
+	}
 
-  for (y = 0; y < preview_height; y++) {
-    
-    if ((y / GIMP_CHECK_SIZE) & 1) {
-      check_0 = GIMP_CHECK_DARK * 255;
-      check_1 = GIMP_CHECK_LIGHT * 255;
-    } else {
-      check_0 = GIMP_CHECK_LIGHT * 255;
-      check_1 = GIMP_CHECK_DARK * 255;
+      do_tiles_preview (tint.preview_row,
+			tint.pv_cache,
+			preview_width,
+			y,
+			preview_height,
+			tint.img_bpp);
+
+      if (tint.img_bpp > 3)
+	{
+	  gint i, j;
+
+	  for (i = 0, j = 0 ; i < sizeof (tint.preview_row); i += 4, j += 3 )
+	    {
+	      gint alphaval;
+
+	      if (((i/4) / GIMP_CHECK_SIZE) & 1)
+		check = check_0;
+	      else
+		check = check_1;
+
+	      alphaval = tint.preview_row[i + 3];
+
+	      tint.preview_row[j] = 
+		check + (((tint.preview_row[i] - check)*alphaval)/255);
+	      tint.preview_row[j + 1] = 
+		check + (((tint.preview_row[i + 1] - check)*alphaval)/255);
+	      tint.preview_row[j + 2] = 
+		check + (((tint.preview_row[i + 2] - check)*alphaval)/255);
+	    }
+	}
+
+      gtk_preview_draw_row (GTK_PREVIEW (tint.preview),
+			    tint.preview_row, 0, y, preview_width);
     }
 
-    do_tiles_preview(tint.preview_row,
-		tint.pv_cache,
-		preview_width,
-		y,
-		preview_height,
-		tint.img_bpp);
-
-    if(tint.img_bpp > 3)
-      {
-	int i,j;
-	for (i = 0, j = 0 ; i < sizeof(tint.preview_row); i += 4, j += 3 )
-	  {
-	    gint alphaval;
-	    if (((i/4) / GIMP_CHECK_SIZE) & 1)
-	      check = check_0;
-	    else
-	      check = check_1;
-	    
-	    alphaval = tint.preview_row[i + 3];
-	    
-	    tint.preview_row[j] = 
-	      check + (((tint.preview_row[i] - check)*alphaval)/255);
-	    tint.preview_row[j + 1] = 
-	      check + (((tint.preview_row[i + 1] - check)*alphaval)/255);
-	    tint.preview_row[j + 2] = 
-	      check + (((tint.preview_row[i + 2] - check)*alphaval)/255);
-	  }
-      }
-    
-    gtk_preview_draw_row(GTK_PREVIEW(tint.preview), tint.preview_row, 0, y, preview_width);
-  }
-
-  draw_explict_sel();
-  gtk_widget_draw(tint.preview, NULL);
-  gdk_flush();
+  draw_explict_sel ();
+  gtk_widget_draw (tint.preview, NULL);
+  gdk_flush ();
 }

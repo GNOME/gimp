@@ -72,6 +72,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /*---- Defines ----*/
 
 #define TABLE_SIZE 64
@@ -99,11 +100,6 @@ typedef struct
 {
   gint run;
 } SolidNoiseInterface;
-
-typedef struct
-{
-  gdouble x, y;
-} Vector2d;
 
 
 /*---- Prototypes ----*/
@@ -154,16 +150,16 @@ static SolidNoiseInterface snint =
   FALSE /* run */
 };
 
-static gint     xclip, yclip;
-static gdouble  offset, factor;
-static gdouble  xsize, ysize;
-static gint     perm_tab[TABLE_SIZE];
-static Vector2d grad_tab[TABLE_SIZE];
+static gint        xclip, yclip;
+static gdouble     offset, factor;
+static gdouble     xsize, ysize;
+static gint        perm_tab[TABLE_SIZE];
+static GimpVector2 grad_tab[TABLE_SIZE];
 
 
 /*---- Functions ----*/
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -182,8 +178,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure ("plug_in_solid_noise",
 			  "Creates a grayscale noise texture",
 			  "Generates 2D textures using Perlin's classic solid noise function.",
@@ -300,13 +294,13 @@ static void
 solid_noise (GDrawable *drawable)
 {
   GPixelRgn dest_rgn;
-  gint chns, i, has_alpha, row, col;
-  gint sel_x1, sel_y1, sel_x2, sel_y2;
-  gint sel_width, sel_height;
-  gint progress, max_progress;
-  gpointer pr;
-  guchar *dest, *dest_row;
-  guchar val;
+  gint      chns, i, has_alpha, row, col;
+  gint      sel_x1, sel_y1, sel_x2, sel_y2;
+  gint      sel_width, sel_height;
+  gint      progress, max_progress;
+  gpointer  pr;
+  guchar   *dest, *dest_row;
+  guchar    val;
 
   /*  Get selection area  */
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
@@ -365,7 +359,7 @@ solid_noise (GDrawable *drawable)
 static void
 solid_noise_init (void)
 {
-  gint i, j, k, t;
+  gint    i, j, k, t;
   gdouble m;
 
   /*  Force sane parameters  */
@@ -444,9 +438,9 @@ plain_noise (gdouble x,
 	     gdouble y,
 	     guint   s)
 {
-  Vector2d v;
-  gint a, b, i, j, n;
-  gdouble sum;
+  GimpVector2 v;
+  gint        a, b, i, j, n;
+  gdouble     sum;
 
   sum = 0.0;
   x *= s;
@@ -506,16 +500,8 @@ solid_noise_dialog (void)
   GtkWidget *seed_hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  /*  Set args  */
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("snoise");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("snoise", FALSE);
 
   /*  Dialog initialization  */
   dlg = gimp_dialog_new (_("Solid Noise"), "snoise",

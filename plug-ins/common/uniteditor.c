@@ -34,6 +34,7 @@
 #include "pixmaps/yes.xpm"
 #include "pixmaps/no.xpm"
 
+
 static void   query              (void);
 static void   run                (gchar   *name,
 				  gint     nparams,
@@ -137,6 +138,7 @@ new_unit_ok_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   *((gboolean *) data) = TRUE;
+
   gtk_main_quit ();
 }
 
@@ -510,15 +512,7 @@ unit_editor_dialog (void)
   gchar  *titles[NUM_FIELDS];
   gint    i;
 
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("uniteditor");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("uniteditor", FALSE);
 
   main_dialog =
     gimp_dialog_new (_("Unit Editor"), "uniteditor",

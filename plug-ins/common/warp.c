@@ -78,6 +78,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 
 #define ENTRY_WIDTH     75
@@ -129,8 +130,8 @@ static void      run    (gchar    *name,
 static void      blur16           (GDrawable *drawable);
 
 static void      diff             (GDrawable *drawable, 
-				   gint32 *xl_id, 
-				   gint32 *yl_id);
+				   gint32    *xl_id, 
+				   gint32    *yl_id);
 
 static void      diff_prepare_row (GPixelRgn  *pixel_rgn,
 				   guchar     *data,
@@ -143,35 +144,35 @@ static void      warp_one         (GDrawable *draw,
 				   GDrawable *map_x, 
 				   GDrawable *map_y,
 				   GDrawable *mag_draw,
-				   gint first_time,
-				   gint step);
+				   gint       first_time,
+				   gint       step);
 
 static void      warp        (GDrawable  *drawable,
 			      GDrawable **map_x_p,
 			      GDrawable **map_y_p);
  
 static gint      warp_dialog (GDrawable *drawable);
-static GTile *   warp_pixel  (GDrawable * drawable,
-			      GTile *     tile,
-			      gint        width,
-			      gint        height,
-			      gint        x1,
-			      gint        y1,
-			      gint        x2,
-			      gint        y2,
-			      gint        x,
-			      gint        y,
-			      gint *      row,
-			      gint *      col,
-			      guchar *    pixel);
+static GTile *   warp_pixel  (GDrawable *drawable,
+			      GTile     *tile,
+			      gint       width,
+			      gint       height,
+			      gint       x1,
+			      gint       y1,
+			      gint       x2,
+			      gint       y2,
+			      gint       x,
+			      gint       y,
+			      gint      *row,
+			      gint      *col,
+			      guchar    *pixel);
 
-static guchar    bilinear        (gdouble    x,
-				  gdouble    y,
-				  guchar *   v);
+static guchar    bilinear        (gdouble  x,
+				  gdouble  y,
+				  guchar  *v);
 
-static gint      bilinear16      (gdouble    x,
-				  gdouble    y,
-				  gint *   v);
+static gint      bilinear16      (gdouble  x,
+				  gdouble  y,
+				  gint    *v);
 
 static gint      warp_map_constrain       (gint32     image_id,
 					   gint32     drawable_id,
@@ -234,7 +235,6 @@ static guint        tile_width, tile_height;   /* size of an image tile       */
 static GRunModeType run_mode;                  /* interactive, non-, etc.     */
 static guchar       color_pixel[4] = {0, 0, 0, 255};  /* current fg color     */
 
-
 /* -------------------------------------------------------------------------- */
 
 /***** Functions *****/
@@ -262,15 +262,16 @@ query (void)
     { PARAM_FLOAT, "grad_scale", "Scaling factor for gradient map (0=don't use)" },
     { PARAM_INT32, "vector_map", "Fixed vector control map" },
     { PARAM_FLOAT, "vector_scale", "Scaling factor for fixed vector map (0=don't use)" },
-    { PARAM_FLOAT, "vector_angle", "Angle for fixed vector map" },
+    { PARAM_FLOAT, "vector_angle", "Angle for fixed vector map" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_warp",
 			  "Twist or smear an image. (only first six arguments are required)",
-			  "Smears an image along vector paths calculated as the gradient of a separate control matrix. The effect can look like brushstrokes of acrylic or watercolor paint, in some cases.",
+			  "Smears an image along vector paths calculated as "
+			  "the gradient of a separate control matrix. The "
+			  "effect can look like brushstrokes of acrylic or "
+			  "watercolor paint, in some cases.",
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
@@ -425,15 +426,8 @@ warp_dialog (GDrawable *drawable)
   GtkWidget *vectormenu;
 
   GSList  *group = NULL;
-  gchar  **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Warp");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("warp", FALSE);
 
   dlg = gimp_dialog_new (_("Warp"), "warp",
 			 gimp_plugin_help_func, "filters/warp.html",
@@ -781,26 +775,26 @@ blur16 (GDrawable *drawable)
 
       d = dest;
       for (col = 0; col < (x2 - x1); col++) /* over columns of pixels */
-	  {
-	     offb = col*src_bytes;    /* base of byte pointer offset */
- 	     off1 = offb+1;                 /* offset into row arrays */
+	{
+	  offb = col*src_bytes;    /* base of byte pointer offset */
+	  off1 = offb+1;                 /* offset into row arrays */
 
-		  pval = (   256.0*pr[offb - src_bytes] + pr[off1 - src_bytes] +
-		             256.0*pr[offb] + pr[off1] +
-			     256.0*pr[offb + src_bytes] + pr[off1 + src_bytes] +
-			     256.0*cr[offb - src_bytes] + cr[off1 - src_bytes] +
-			     256.0*cr[offb]  + cr[off1] +
-			     256.0*cr[offb + src_bytes] + cr[off1 + src_bytes] +
-			     256.0*nr[offb - src_bytes] + nr[off1 - src_bytes] +
-			     256.0*nr[offb] + nr[off1] +
-			     256.0*nr[offb + src_bytes]) + nr[off1 + src_bytes];
+	  pval = (256.0*pr[offb - src_bytes] + pr[off1 - src_bytes] +
+		  256.0*pr[offb] + pr[off1] +
+		  256.0*pr[offb + src_bytes] + pr[off1 + src_bytes] +
+		  256.0*cr[offb - src_bytes] + cr[off1 - src_bytes] +
+		  256.0*cr[offb]  + cr[off1] +
+		  256.0*cr[offb + src_bytes] + cr[off1 + src_bytes] +
+		  256.0*nr[offb - src_bytes] + nr[off1 - src_bytes] +
+		  256.0*nr[offb] + nr[off1] +
+		  256.0*nr[offb + src_bytes]) + nr[off1 + src_bytes];
 
-	     pval /= 9.0;  /* take the average */
-	     *d++ = (guchar) (((gint)pval)>>8);   /* high-order byte */
-             *d++ = (guchar) (((gint)pval)%256);  /* low-order byte */
-	     d += dest_bytes_inc;       /* move data pointer on to next destination pixel */
+	  pval /= 9.0;  /* take the average */
+	  *d++ = (guchar) (((gint)pval)>>8);   /* high-order byte */
+	  *d++ = (guchar) (((gint)pval)%256);  /* low-order byte */
+	  d += dest_bytes_inc;       /* move data pointer on to next destination pixel */
 	     
-	  }
+	}
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 

@@ -186,24 +186,24 @@ typedef struct {
  * Some globals 
  */
 
-t_samp_interface  g_di;  /* global dialog interface varables */
-t_values          g_values = { -1, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
-t_samp_table_elem g_lum_tab[256];
-guchar            g_lvl_trans_tab[256];
-guchar            g_out_trans_tab[256];
-guchar            g_sample_color_tab[256 * 3];
-guchar            g_dst_preview_buffer[PREVIEW_SIZE_X * PREVIEW_SIZE_Y * 4 ];  /* color copy with mask of dst in previewsize */
+static t_samp_interface  g_di;  /* global dialog interface varables */
+static t_values          g_values = { -1, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
+static t_samp_table_elem g_lum_tab[256];
+static guchar            g_lvl_trans_tab[256];
+static guchar            g_out_trans_tab[256];
+static guchar            g_sample_color_tab[256 * 3];
+static guchar            g_dst_preview_buffer[PREVIEW_SIZE_X * PREVIEW_SIZE_Y * 4 ];  /* color copy with mask of dst in previewsize */
 
-gint32  g_tol_col_err;
-gint32  g_max_col_err;
-gint    g_Sdebug = FALSE;
-gint    g_show_progress = FALSE;
+static gint32  g_tol_col_err;
+static gint32  g_max_col_err;
+static gint    g_Sdebug = FALSE;
+static gint    g_show_progress = FALSE;
 
 /* Declare a local function.
  */
 static void	 query		(void);
 static void	 run		(gchar	 *name,
-				 gint	 nparams,
+				 gint	  nparams,
 				 GParam	 *param,
 				 gint	 *nreturn_vals,
 				 GParam	 **return_vals);
@@ -233,10 +233,10 @@ static void      p_clear_preview(GtkWidget *preview);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
-  query,   /* query_proc */
-  run,	   /* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run,	 /* run_proc   */
 };
 
 MAIN ()
@@ -245,26 +245,25 @@ static void
 query (void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "dst_drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
-      { PARAM_DRAWABLE, "sample_drawable", "Sample drawable (should be of Type RGB or RGBA)" },
-      { PARAM_INT32, "hold_inten", "hold brightness intensity levels (TRUE, FALSE)" },
-      { PARAM_INT32, "orig_inten", "TRUE: hold brightness of original intensity levels. FALSE: Hold Intensity of input levels" },
-      { PARAM_INT32, "rnd_subcolors", "TRUE: Use all subcolors of same intensity, FALSE: use only one color per intensity" },
-      { PARAM_INT32, "guess_missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
-      { PARAM_INT32, "in_low",   "intensity of lowest input (0 <= in_low <= 254)" },
-      { PARAM_INT32, "in_high",  "intensity of highest input (1 <= in_high <= 255)" },
-      { PARAM_FLOAT, "gamma",  "gamma correction factor (0.1 <= gamma <= 10) where 1.0 is linear" },
-      { PARAM_INT32, "out_low",   "lowest sample color intensity (0 <= out_low <= 254)" },
-      { PARAM_INT32, "out_high",  "highest sample color intensity (1 <= out_high <= 255)" },
-   };
-  static GParamDef *return_vals = NULL;
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "dst_drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
+    { PARAM_DRAWABLE, "sample_drawable", "Sample drawable (should be of Type RGB or RGBA)" },
+    { PARAM_INT32, "hold_inten", "hold brightness intensity levels (TRUE, FALSE)" },
+    { PARAM_INT32, "orig_inten", "TRUE: hold brightness of original intensity levels. FALSE: Hold Intensity of input levels" },
+    { PARAM_INT32, "rnd_subcolors", "TRUE: Use all subcolors of same intensity, FALSE: use only one color per intensity" },
+    { PARAM_INT32, "guess_missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
+    { PARAM_INT32, "in_low",   "intensity of lowest input (0 <= in_low <= 254)" },
+    { PARAM_INT32, "in_high",  "intensity of highest input (1 <= in_high <= 255)" },
+    { PARAM_FLOAT, "gamma",  "gamma correction factor (0.1 <= gamma <= 10) where 1.0 is linear" },
+    { PARAM_INT32, "out_low",   "lowest sample color intensity (0 <= out_low <= 254)" },
+    { PARAM_INT32, "out_high",  "highest sample color intensity (1 <= out_high <= 255)" }
+  };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-  gchar *help_string =
-    " This plug-in colorizes the contents of the specified (gray) layer"
+
+  static gchar *help_string =
+    "This plug-in colorizes the contents of the specified (gray) layer"
     " with the help of a  sample (color) layer."
     " It analyzes all colors in the sample layer."
     " The sample colors are sorted by brightness (== intentisty) and amount"
@@ -297,7 +296,6 @@ query (void)
     " (the image with the dst_drawable is converted to RGB if necessary)"
     " The sample_drawable should be of type RGB or RGBA";
 
-  INIT_I18N();
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Colorize the contents of the specified drawable similar to sample drawable",
 			  help_string,
@@ -307,8 +305,8 @@ query (void)
 			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -324,11 +322,11 @@ run (gchar   *name,
   GStatusType status = STATUS_SUCCESS;
   gchar       *l_env;
 
-  l_env = g_getenv("SAMPLE_COLORIZE_DEBUG");
-  if(l_env != NULL)
-  {
-    if((*l_env != 'n') && (*l_env != 'N')) g_Sdebug = TRUE;
-  }
+  l_env = g_getenv ("SAMPLE_COLORIZE_DEBUG");
+  if (l_env != NULL)
+    {
+      if((*l_env != 'n') && (*l_env != 'N')) g_Sdebug = TRUE;
+    }
 
   if(g_Sdebug) printf("sample colorize run\n");
   g_show_progress = FALSE;
@@ -360,7 +358,8 @@ run (gchar   *name,
   p_clear_tables();
   
   /*  Make sure that the dst_drawable is gray or RGB color	*/
-  if (gimp_drawable_is_rgb (dst_drawable->id) || gimp_drawable_is_gray (dst_drawable->id))
+  if (gimp_drawable_is_rgb (dst_drawable->id) ||
+      gimp_drawable_is_gray (dst_drawable->id))
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
       
@@ -1336,43 +1335,27 @@ p_smp_dialog (void)
   GtkWidget *table;
   GtkWidget *check_button;
   GtkWidget *label; 
-  GtkWidget  *option_menu;
-  GtkWidget  *menu;
-  GtkWidget  *menu_item;
+  GtkWidget *option_menu;
+  GtkWidget *menu;
+  GtkWidget *menu_item;
   GtkWidget *spinbutton;
   GtkWidget *sep;
   GtkObject *data;
-  guchar *color_cube;
-  gint    l_ty;
-
-  gint    argc = 1;
-  gchar **argv = g_new (gchar *, 1);
-  argv[0]      = g_strdup ("sample_colorize");
+  gint  l_ty;
 
   /* set flags for check buttons from mode value bits */
-  if (g_Sdebug)  g_print ("p_smp_dialog START\n");
+  if (g_Sdebug) g_print ("p_smp_dialog START\n");
  
   /* init some dialog variables */
   g_di.enable_preview_update = FALSE;
   g_di.sample_show_selection = TRUE;
-  g_di.dst_show_selection = TRUE;
-  g_di.dst_show_color = TRUE;
-  g_di.sample_show_color = TRUE;  
-  g_di.orig_inten_button = NULL;
+  g_di.dst_show_selection    = TRUE;
+  g_di.dst_show_color        = TRUE;
+  g_di.sample_show_color     = TRUE;  
+  g_di.orig_inten_button     = NULL;
 
   /* Init GTK  */
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("sample_colorize", TRUE);
 
   /* Main Dialog */
   g_di.dialog = dialog =

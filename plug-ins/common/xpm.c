@@ -50,6 +50,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include "libgimp/stdplugins-intl.h"
 
+
 static const gchar linenoise [] =
 " .+@#$%&*=-;>,')!~{]^/(_:<[}|1234567890abcdefghijklmnopqrstuvwxyz\
 ABCDEFGHIJKLMNOPQRSTUVWXYZ`";
@@ -103,7 +104,6 @@ static gboolean save_image          (gchar         *filename,
 				     gint32         image_ID,
 				     gint32         drawable_ID);
 
-static void     init_gtk            (void);
 static gint     save_dialog         (void);
 static void     save_ok_callback    (GtkWidget     *widget,
 				     gpointer       data);
@@ -137,13 +137,14 @@ query (void)
   {
     { PARAM_INT32,     "run_mode",     "Interactive, non-interactive" },
     { PARAM_STRING,    "filename",     "The name of the file to load" },
-    { PARAM_STRING,    "raw_filename", "The name entered" },
-  };
-  static GParamDef load_return_vals[] =
-  {
-    { PARAM_IMAGE,    "image",         "Output image" },
+    { PARAM_STRING,    "raw_filename", "The name entered" }
   };
   static gint nload_args        = sizeof (load_args) / sizeof (load_args[0]);
+
+  static GParamDef load_return_vals[] =
+  {
+    { PARAM_IMAGE,    "image",         "Output image" }
+  };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
@@ -157,8 +158,6 @@ query (void)
     { PARAM_INT32,    "threshold",     "Alpha threshold (0-255)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_xpm_load",
                           "loads files of the xpm file format",
@@ -188,9 +187,9 @@ query (void)
 				    "xpm",
 				    "<Load>/Xpm",
 				    "0, string,/*\\040XPM\\040*/");
-  gimp_register_save_handler       ("file_xpm_save",
-				    "xpm",
-				    "<Save>/Xpm");
+  gimp_register_save_handler ("file_xpm_save",
+			      "xpm",
+			      "<Save>/Xpm");
 }
 
 static void
@@ -235,7 +234,7 @@ run (gchar   *name,
     {
       INIT_I18N_UI();
 
-      init_gtk ();
+      gimp_ui_init ("xpm", FALSE);
 
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -783,20 +782,6 @@ save_image (gchar  *filename,
     g_hash_table_destroy (hash);
   
   return rc;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("xpm");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint

@@ -42,6 +42,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gint horizontal;
@@ -58,18 +59,16 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
-			 GParam    *param,
-			 int       *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
-static void      sobel        (GDrawable *drawable,
-			       gint       horizontal,
-			       gint       vertical,
-			       gint       keep_sign);
-
-
+static void      sobel  (GDrawable *drawable,
+			 gint       horizontal,
+			 gint       vertical,
+			 gint       keep_sign);
 
 /*
  * Sobel interface
@@ -81,30 +80,27 @@ static gint      sobel_dialog (void);
  */
 static void      sobel_ok_callback     (GtkWidget *widget,
 					gpointer   data);
-static void      sobel_toggle_update   (GtkWidget *widget,
-					gpointer   data);
-
 
 static void      sobel_prepare_row (GPixelRgn  *pixel_rgn,
-				   guchar     *data,
-				   int         x,
-				   int         y,
-				   int         w);
+				    guchar     *data,
+				    gint        x,
+				    gint        y,
+				    gint        w);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static SobelValues bvals =
 {
-  TRUE, /*  horizontal sobel  */
-  TRUE,  /*  vertical sobel  */
-  TRUE  /*  keep sign  */
+  TRUE,  /*  horizontal sobel  */
+  TRUE,  /*  vertical sobel    */
+  TRUE   /*  keep sign         */
 };
 
 static SobelInterface bint =
@@ -125,34 +121,37 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "horizontal", "Sobel in horizontal direction" },
     { PARAM_INT32, "vertical", "Sobel in vertical direction" },
-    { PARAM_INT32, "keep_sign", "Keep sign of result (one direction only)" },
+    { PARAM_INT32, "keep_sign", "Keep sign of result (one direction only)" }
   };
-
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_sobel",
 			  "Edge Detection with Sobel Operation",
-			  "This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolut value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.",
+			  "This plugin calculates the gradient with a sobel "
+			  "operator. The user can specify which direction to "
+			  "use. When both directions are used, the result is "
+			  "the RMS of the two gradients; if only one direction "
+			  "is used, the result either the absolut value of the "
+			  "gradient, or 127 + gradient (if the 'keep sign' "
+			  "switch is on). This way, information about the "
+			  "direction of the gradient is preserved. Resulting "
+			  "images are not autoscaled.",
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
 			  N_("<Image>/Filters/Edge-Detect/Sobel..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (gchar    *name,
-     gint      nparams,
-     GParam   *param,
-     gint     *nreturn_vals,
-     GParam  **return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -209,7 +208,8 @@ run (gchar    *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       sobel (drawable, bvals.horizontal, bvals.vertical, bvals.keep_sign);
@@ -224,16 +224,13 @@ run (gchar    *name,
     }
   else
     {
-      /* gimp_message ("sobel: cannot operate on indexed color images"); */
+      /* g_message ("sobel: cannot operate on indexed color images"); */
       status = STATUS_EXECUTION_ERROR;
     }
 
   gimp_drawable_detach (drawable);
 
-
   values[0].data.d_status = status;
-
-
 }
 
 static gint
@@ -244,15 +241,7 @@ sobel_dialog (void)
   GtkWidget *frame;
   GtkWidget *vbox;
 
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("sobel");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("sobel", FALSE);
 
   dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
 			 gimp_plugin_help_func, "filters/sobel.html",
@@ -277,13 +266,13 @@ sobel_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Sobel Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sobel_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &bvals.horizontal);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
@@ -291,7 +280,7 @@ sobel_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Sobel Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sobel_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &bvals.vertical);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
@@ -299,7 +288,7 @@ sobel_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Keep Sign of Result (one Direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) sobel_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &bvals.keep_sign);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
@@ -316,12 +305,12 @@ sobel_dialog (void)
 
 static void
 sobel_prepare_row (GPixelRgn *pixel_rgn,
-		  guchar    *data,
-		  int        x,
-		  int        y,
-		  int        w)
+		   guchar    *data,
+		   gint       x,
+		   gint       y,
+		   gint       w)
 {
-  int b;
+  gint b;
 
   if (y == 0)
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
@@ -348,18 +337,18 @@ sobel (GDrawable *drawable,
        gint       keep_sign)
 {
   GPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  gint gradient, hor_gradient, ver_gradient;
+  gint    width, height;
+  gint    bytes;
+  gint    gradient, hor_gradient, ver_gradient;
   guchar *dest, *d;
   guchar *prev_row, *pr;
   guchar *cur_row, *cr;
   guchar *next_row, *nr;
   guchar *tmp;
-  gint row, col;
-  gint x1, y1, x2, y2;
-  gint alpha;
-  gint counter;
+  gint    row, col;
+  gint    x1, y1, x2, y2;
+  gint    alpha;
+  gint    counter;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -369,28 +358,28 @@ sobel (GDrawable *drawable,
    */
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gimp_progress_init ( _("Sobel Edge Detecting..."));
+  gimp_progress_init (_("Sobel Edge Detecting..."));
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
-  alpha = gimp_drawable_has_alpha (drawable -> id);
+  bytes  = drawable->bpp;
+  alpha  = gimp_drawable_has_alpha (drawable -> id);
 
   /*  allocate row buffers  */
-  prev_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  cur_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  next_row = (guchar *) malloc ((x2 - x1 + 2) * bytes);
-  dest = (guchar *) malloc ((x2 - x1) * bytes);
+  prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  cur_row  = g_new (guchar, (x2 - x1 + 2) * bytes);
+  next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
+  dest     = g_new (guchar, (x2 - x1) * bytes);
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   pr = prev_row + bytes;
-  cr = cur_row + bytes;
+  cr = cur_row  + bytes;
   nr = next_row + bytes;
 
   sobel_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
@@ -447,10 +436,10 @@ sobel (GDrawable *drawable,
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (prev_row);
-  free (cur_row);
-  free (next_row);
-  free (dest);
+  g_free (prev_row);
+  g_free (cur_row);
+  g_free (next_row);
+  g_free (dest);
 }
 
 /*  Sobel interface functions  */
@@ -460,20 +449,6 @@ sobel_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   bint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-sobel_toggle_update (GtkWidget *widget,
-		     gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-
 }

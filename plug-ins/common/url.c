@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/param.h>
@@ -22,11 +25,15 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+
 #ifdef __EMX__
 #include <process.h>
 #endif
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
+#include "libgimp/stdplugins-intl.h"
+
 
 /* Author: Josh MacDonald. */
 
@@ -56,13 +63,14 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-  };
-  static GParamDef load_return_vals[] =
-  {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+
+  static GParamDef load_return_vals[] =
+  {
+    { PARAM_IMAGE, "image", "Output image" }
+  };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 

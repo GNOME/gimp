@@ -53,11 +53,12 @@ static char ident[] = "@(#) GIMP SunRaster file-plugin v1.96  21-Nov-99";
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);
 
-typedef unsigned long L_CARD32;
-typedef unsigned short L_CARD16;
-typedef unsigned char L_CARD8;
+typedef gulong  L_CARD32;
+typedef gushort L_CARD16;
+typedef guchar  L_CARD8;
 
 /* Fileheader of SunRaster files */
 typedef struct
@@ -80,8 +81,8 @@ typedef struct
 
 typedef struct
 {
- int val;   /* The value that is to be repeated */
- int n;     /* How many times it is repeated */
+  gint val;   /* The value that is to be repeated */
+  gint n;     /* How many times it is repeated */
 } RLEBUF;
 
 
@@ -140,7 +141,6 @@ static int read_msb_first = 1;
 static RLEBUF rlebuf;
 
 /* Dialog-handling */
-static void   init_gtk                 (void);
 static gint   save_dialog              (void);
 static void   save_ok_callback         (GtkWidget *widget,
                                         gpointer   data);
@@ -185,7 +185,6 @@ static GRunModeType l_run_mode;
 
 MAIN ()
 
-
 static void
 query (void)
 {
@@ -193,15 +192,16 @@ query (void)
   {
     { PARAM_INT32,  "run_mode",      "Interactive, non-interactive" },
     { PARAM_STRING, "filename",      "The name of the file to load" },
-    { PARAM_STRING, "raw_filename",  "The name of the file to load" },
+    { PARAM_STRING, "raw_filename",  "The name of the file to load" }
   };
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,  "image",         "Output image" },
+    { PARAM_IMAGE,  "image",         "Output image" }
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = (sizeof (load_return_vals) /
-				  sizeof (load_return_vals[0]));
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   static GParamDef save_args[] =
   {
@@ -212,9 +212,7 @@ query (void)
     { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
     { PARAM_INT32,    "rle",          "Specify non-zero for rle output, zero for standard output" }
   };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
+  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_sunras_load",
                           "load file of the SunRaster file format",
@@ -302,7 +300,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("sunras", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -1565,20 +1563,6 @@ save_rgb (FILE   *ofp,
 
 /*  Save interface functions  */
 
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("sunras");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-}
-
 static gint
 save_dialog (void)
 {
@@ -1637,5 +1621,5 @@ my_fwrite (void *ptr,
 	   int   nmemb, 
 	   FILE *stream)
 {
-  return fwrite(ptr, size, nmemb, stream);
+  return fwrite (ptr, size, nmemb, stream);
 }

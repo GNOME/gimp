@@ -72,8 +72,8 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
-static void dialog_box (void);
-static gint render_effect (GDrawable *drawable);
+static void dialog_box       (void);
+static gint render_effect    (GDrawable *drawable);
 static void render_wind      (GDrawable *drawable, gint threshold, gint strength,
 			      direction_t direction, edge_t edge);
 static void render_blast     (GDrawable *drawable, gint threshold, gint strength,
@@ -93,12 +93,13 @@ static gint threshold_exceeded (guchar *pixel_R1, guchar *pixel_R2,
 				edge_t edge, gint threshold);
 static void reverse_buffer     (guchar *buffer, gint length, gint bytes);
 
+
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	  /* init_proc */
-  NULL,	  /* quit_proc */
-  query,  /* query_proc */
-  run	  /* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run	 /* run_proc   */
 };
 
 
@@ -108,7 +109,7 @@ GPlugInInfo PLUG_IN_INFO =
 
 /* This is needed to communicate the result from the dialog
    box button's callback function*/
-gint dialog_result = -1;
+static gint dialog_result = -1;
 
 struct config_tag
 {
@@ -130,26 +131,23 @@ config_t config =
 };
 
 
-
-MAIN()
+MAIN ()
 
 static void
 query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (unused)"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable"},
-    {PARAM_INT32, "threshold", "Controls where blending will be done >= 0"},
-    {PARAM_INT32, "direction", "Left or Right: 0 or 1"},
-    {PARAM_INT32, "strength", "Controls the extent of the blending > 1"},
-    {PARAM_INT32, "alg", "WIND, BLAST"},
-    {PARAM_INT32, "edge", "LEADING, TRAILING, or BOTH"}
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_INT32, "threshold", "Controls where blending will be done >= 0" },
+    { PARAM_INT32, "direction", "Left or Right: 0 or 1" },
+    { PARAM_INT32, "strength", "Controls the extent of the blending > 1" },
+    { PARAM_INT32, "alg", "WIND, BLAST" },
+    { PARAM_INT32, "edge", "LEADING, TRAILING, or BOTH" }
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_wind",
 			  "Renders a wind effect.",
@@ -701,15 +699,8 @@ dialog_box (void)
   GtkObject *adj;
   GtkWidget *frame;
   GtkWidget *dlg;
-  gchar  **argv;
-  gint     argc;
- 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("wind", FALSE);
 
   dlg = gimp_dialog_new ( _("Wind"), "wind",
 			 gimp_plugin_help_func, "filters/wind.html",

@@ -24,12 +24,16 @@
  *
  * Any suggestions, bug-reports or patches are welcome.
  */
+
+#include "config.h"
+
 #include <windows.h>
 #include <stdlib.h>
 
-#include "config.h"
-#include "libgimp/gimp.h"
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* History:
  *  
@@ -58,10 +62,10 @@
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
 
 /* Plugin function prototypes
@@ -77,10 +81,10 @@ static int CB_PasteImage (gboolean   interactive,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -93,11 +97,9 @@ query ()
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
+    { PARAM_DRAWABLE, "drawable", "Drawable to save" }
   };
-  static int ncopy_args = sizeof (copy_args) / sizeof (copy_args[0]);
-
-  INIT_I18N();
+  static gint ncopy_args = sizeof (copy_args) / sizeof (copy_args[0]);
 
   gimp_install_procedure ("plug_in_clipboard_copy",
                           "copy image to clipboard",
@@ -138,10 +140,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[2];

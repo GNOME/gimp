@@ -46,6 +46,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gdouble radius;
@@ -105,25 +106,27 @@ query (void)
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-    { PARAM_INT32, "maxdelta", "Maximum delta" },
+    { PARAM_INT32, "maxdelta", "Maximum delta" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_sel_gauss",
 			  "Applies a selective gaussian blur to the specified drawable.",
-			  "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
+			  "This filter functions similar to the regular "
+			  "gaussian blur filter except that neighbouring "
+			  "pixels that differ more than the given maxdelta "
+			  "parameter will not be blended with. This way with "
+			  "the correct parameters, an image can be smoothed "
+			  "out without losing details. However, this filter "
+			  "can be rather slow.",
 			  "Thom van Os",
 			  "Thom van Os",
 			  "1999",
 			  N_("<Image>/Filters/Blur/Selective Gaussian Blur..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -228,15 +231,8 @@ sel_gauss_dialog (void)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("sel_gauss", FALSE);
 
   dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
 			 gimp_plugin_help_func, "filters/sel_gauss.html",
@@ -310,7 +306,7 @@ init_matrix (gdouble   radius,
 	     gdouble **mat,
 	     gint      num)
 {
-  int dx, dy;
+  gint    dx, dy;
   gdouble sd, c1, c2;
 
   /* This formula isn't really correct, but it'll do */
@@ -339,8 +335,8 @@ matrixmult (guchar   *src,
 	    gint      has_alpha,
 	    gint      maxdelta)
 {
-  gint i, j, b, nb, x, y;
-  gint six, dix, tmp;
+  gint    i, j, b, nb, x, y;
+  gint    six, dix, tmp;
   gdouble sum, fact, d, alpha=1.0;
 
   nb = bytes - (has_alpha?1:0);
@@ -401,15 +397,15 @@ sel_gauss (GDrawable *drawable,
 	   gint       maxdelta)
 {
   GPixelRgn src_rgn, dest_rgn;
-  gint width, height;
-  gint bytes;
-  gint has_alpha;
-  guchar *dest;
-  guchar *src;
-  gint x1, y1, x2, y2;
-  gint i;
+  gint      width, height;
+  gint      bytes;
+  gint      has_alpha;
+  guchar   *dest;
+  guchar   *src;
+  gint      x1, y1, x2, y2;
+  gint      i;
   gdouble **mat;
-  gint numrad;
+  gint      numrad;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
@@ -421,14 +417,14 @@ sel_gauss (GDrawable *drawable,
   if ((width < 1) || (height < 1) || (bytes < 1))
     return;
 
-  numrad = (gint)(radius + 1.0);
-  mat = (gdouble **) g_malloc (numrad * sizeof(gdouble *));
-  for (i=0; i<numrad; i++)
-    mat[i] = (gdouble *) g_malloc (numrad * sizeof(gdouble));
+  numrad = (gint) (radius + 1.0);
+  mat = g_new (gdouble *, numrad);
+  for (i = 0; i < numrad; i++)
+    mat[i] = g_new (gdouble, numrad);
   init_matrix(radius, mat, numrad);
 
-  src = (guchar *) g_malloc (width * height * bytes);
-  dest = (guchar *) g_malloc (width * height * bytes);
+  src  = g_new (guchar, width * height * bytes);
+  dest = g_new (guchar, width * height * bytes);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, drawable->width,
 		       drawable->height, FALSE, FALSE);
@@ -450,7 +446,7 @@ sel_gauss (GDrawable *drawable,
   /* free up buffers */
   g_free (src);
   g_free (dest);
-  for (i=0; i<numrad; i++)
+  for (i = 0; i < numrad; i++)
     g_free (mat[i]);
   g_free (mat);
 }

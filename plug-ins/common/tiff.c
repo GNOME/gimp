@@ -44,6 +44,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gint  compression;
@@ -135,7 +136,6 @@ static gint   save_image             (gchar     *filename,
 				      gint32     drawable,
 				      gint32     orig_image);
 
-static void   init_gtk               (void);
 static gint   save_dialog            (void);
 
 static void   save_ok_callback       (GtkWidget *widget,
@@ -174,11 +174,11 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_STRING, "raw_filename", "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -191,11 +191,9 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" },
+    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_tiff_load",
                           "loads files of the tiff file format",
@@ -285,7 +283,7 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
-	  init_gtk ();
+	  gimp_ui_init ("tiff", FALSE);
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -412,20 +410,20 @@ tiff_error(const char* module, const char* fmt, va_list ap)
 static gint32
 load_image (gchar *filename) 
 {
-  TIFF *tif;
-  unsigned short bps, spp, photomet;
-  int cols, rows, alpha;
-  int image, image_type = RGB;
-  int layer, layer_type = RGB_IMAGE;
-  unsigned short extra, *extra_types;
+  TIFF    *tif;
+  gushort  bps, spp, photomet;
+  gint     cols, rows, alpha;
+  gint     image, image_type = RGB;
+  gint     layer, layer_type = RGB_IMAGE;
+  gushort  extra, *extra_types;
   channel_data *channel= NULL;
 
-  unsigned short *redmap, *greenmap, *bluemap;
-  guchar colors[3]= {0, 0, 0};
-  guchar cmap[768];
+  gushort *redmap, *greenmap, *bluemap;
+  guchar   colors[3]= {0, 0, 0};
+  guchar   cmap[768];
 
-  int i, j, worst_case = 0;
-  char *name;
+  gint   i, j, worst_case = 0;
+  gchar *name;
 
   TiffSaveVals save_vals;
 #ifdef GIMP_HAVE_PARASITES
@@ -814,13 +812,19 @@ load_lines (TIFF *tif, channel_data *channel,
 }
 
 static void
-read_16bit (guchar *source, channel_data *channel, unsigned short photomet,
-	    int startrow, int startcol, int rows, int cols,
-	    int alpha, int extra)
+read_16bit (guchar       *source,
+	    channel_data *channel,
+	    gushort       photomet,
+	    gint          startrow,
+	    gint          startcol,
+	    gint          rows,
+	    gint          cols,
+	    gint          alpha,
+	    gint          extra)
 {
   guchar *dest;
-  int gray_val, red_val, green_val, blue_val, alpha_val;
-  int col, row, i;
+  gint    gray_val, red_val, green_val, blue_val, alpha_val;
+  gint    col, row, i;
 
   for (i= 0; i <= extra; ++i) {
     gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
@@ -908,13 +912,19 @@ read_16bit (guchar *source, channel_data *channel, unsigned short photomet,
 }
 
 static void
-read_8bit (guchar *source, channel_data *channel, unsigned short photomet,
-	   int startrow, int startcol, int rows, int cols,
-	   int alpha, int extra)
+read_8bit (guchar       *source,
+	   channel_data *channel,
+	   gushort       photomet,
+	   gint          startrow,
+	   gint          startcol,
+	   gint          rows,
+	   gint          cols,
+	   gint          alpha,
+	   gint          extra)
 {
   guchar *dest;
-  int gray_val, red_val, green_val, blue_val, alpha_val;
-  int col, row, i;
+  gint    gray_val, red_val, green_val, blue_val, alpha_val;
+  gint    col, row, i;
 
   for (i= 0; i <= extra; ++i) {
     gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
@@ -1015,15 +1025,21 @@ read_8bit (guchar *source, channel_data *channel, unsigned short photomet,
   }
 
 static void
-read_default (guchar *source, channel_data *channel,
-	      unsigned short bps, unsigned short photomet,
-	      int startrow, int startcol, int rows, int cols,
-	      int alpha, int extra)
+read_default (guchar       *source,
+	      channel_data *channel,
+	      gushort       bps,
+	      gushort       photomet,
+	      gint          startrow,
+	      gint          startcol,
+	      gint          rows,
+	      gint          cols,
+	      gint          alpha,
+	      gint          extra)
 {
   guchar *dest;
-  int gray_val, red_val, green_val, blue_val, alpha_val;
-  int col, row, i;
-  int bitsleft = 8, maxval = (1 << bps) - 1;
+  gint    gray_val, red_val, green_val, blue_val, alpha_val;
+  gint    col, row, i;
+  gint    bitsleft = 8, maxval = (1 << bps) - 1;
 
   for (i= 0; i <= extra; ++i) {
     gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
@@ -1115,14 +1131,21 @@ read_default (guchar *source, channel_data *channel,
 }
 
 static void
-read_separate (guchar *source, channel_data *channel,
-               unsigned short bps, unsigned short photomet,
-               int startrow, int startcol, int rows, int cols,
-               int alpha, int extra, int sample)
+read_separate (guchar       *source,
+	       channel_data *channel,
+               gushort       bps,
+	       gushort       photomet,
+               gint          startrow,
+	       gint          startcol,
+	       gint          rows,
+	       gint          cols,
+               gint          alpha,
+	       gint          extra,
+	       gint          sample)
 {
   guchar *dest;
-  int col, row, c;
-  int bitsleft = 8, maxval = (1 << bps) - 1;
+  gint    col, row, c;
+  gint    bitsleft = 8, maxval = (1 << bps) - 1;
 
   if (bps > 8) {
     g_message("TIFF Unsupported layout\n");
@@ -1179,35 +1202,36 @@ read_separate (guchar *source, channel_data *channel,
 ** other special, indirect and consequential damages.
 */
 
-static gint save_image (char   *filename, 
-			gint32  image, 
-			gint32  layer,
-			gint32  orig_image)  /* the export function might have created a duplicate */  
+static gint
+save_image (gchar   *filename, 
+	    gint32   image, 
+	    gint32   layer,
+	    gint32   orig_image)  /* the export function might have created a duplicate */  
 {
-  TIFF *tif;
-  unsigned short red[256];
-  unsigned short grn[256];
-  unsigned short blu[256];
-  int cols, col, rows, row, i;
-  long rowsperstrip;
-  unsigned short compression;
-  unsigned short extra_samples[1];
-  int alpha;
-  short predictor;
-  short photometric;
-  short samplesperpixel;
-  short bitspersample;
-  int bytesperrow;
-  guchar *t, *src, *data;
-  guchar *cmap;
-  int colors;
-  int success;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
-  GPixelRgn pixel_rgn;
-  int tile_height;
-  int y, yend;
-  char *name;
+  TIFF          *tif;
+  gushort        red[256];
+  gushort        grn[256];
+  gushort        blu[256];
+  gint           cols, col, rows, row, i;
+  glong          rowsperstrip;
+  gushort        compression;
+  gushort        extra_samples[1];
+  gint           alpha;
+  gshort         predictor;
+  gshort         photometric;
+  gshort         samplesperpixel;
+  gshort         bitspersample;
+  gint           bytesperrow;
+  guchar        *t, *src, *data;
+  guchar        *cmap;
+  gint           colors;
+  gint           success;
+  GDrawable     *drawable;
+  GDrawableType  drawable_type;
+  GPixelRgn      pixel_rgn;
+  gint           tile_height;
+  gint           y, yend;
+  gchar         *name;
 
   compression = tsvals.compression;
   if (TIFFFindCODEC((uint16) compression) == NULL)
@@ -1229,11 +1253,12 @@ static gint save_image (char   *filename,
 
   name = g_strdup_printf( _("Saving %s:"), filename);
   gimp_progress_init (name);
-  free (name);
+  g_free (name);
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   cols = drawable->width;
   rows = drawable->height;
@@ -1420,8 +1445,8 @@ static gint save_image (char   *filename,
 	    }
 
 	  if (!success) {
-	      g_message("TIFF Failed a scanline write on row %d", row);
-	      return 0;
+	    g_message ("TIFF Failed a scanline write on row %d", row);
+	    return 0;
 	  }
 	}
 
@@ -1435,20 +1460,6 @@ static gint save_image (char   *filename,
   g_free (data);
 
   return 1;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("tiff");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint

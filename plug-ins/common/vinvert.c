@@ -34,31 +34,32 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Declare local functions.
  */
 static void      query  (void);
-static void      indexed_vinvert (gint32 image_ID);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
-static void      vinvert            (GDrawable  *drawable);
+static void      vinvert            (GDrawable    *drawable);
+static void      indexed_vinvert    (gint32        image_ID);
 static void      vinvert_render_row (const guchar *src_row,
-				     guchar *dest_row,
-				     gint row_width,
-				     const gint bytes);
+				     guchar       *dest_row,
+				     gint          row_width,
+				     const gint    bytes);
 
 
 static GRunModeType run_mode;
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -71,25 +72,27 @@ query ()
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (used for indexed images)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_vinvert",
 			  "Invert the 'value' component of an indexed/RGB image in HSV colorspace",
-			  "This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the color and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Sometimes produces unpleasant color artifacts on images from lossy sources (ie. JPEG).",
+			  "This function takes an indexed/RGB image and "
+			  "inverts its 'value' in HSV space.  The upshot of "
+			  "this is that the color and saturation at any given "
+			  "point remains the same, but its brightness is "
+			  "effectively inverted.  Quite strange.  Sometimes "
+			  "produces unpleasant color artifacts on images from "
+			  "lossy sources (ie. JPEG).",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
 			  N_("<Image>/Filters/Colors/Value Invert"),
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -122,10 +125,11 @@ run (char    *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-      if (run_mode != RUN_NONINTERACTIVE) {
-        INIT_I18N();
-	    gimp_progress_init ("Value Invert...");
-      }
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    {
+	      INIT_I18N();
+	      gimp_progress_init ("Value Invert...");
+	    }
 
 	  vinvert (drawable);
           if (run_mode != RUN_NONINTERACTIVE)
@@ -151,48 +155,44 @@ run (char    *name,
 
 
 static void
-indexed_vinvert(gint32 image_ID)
+indexed_vinvert (gint32 image_ID)
 {
   guchar *cmap;
-  gint ncols;
+  gint    ncols;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
   if (cmap==NULL)
     {
-      printf("vinvert: cmap was NULL!  Quitting...\n");
-      gimp_quit();
+      g_print ("vinvert: cmap was NULL!  Quitting...\n");
+      gimp_quit ();
     }
 
-  vinvert_render_row(
-		     cmap,
-		     cmap,
-		     ncols,
-		     3
-		     );
+  vinvert_render_row (cmap,
+		      cmap,
+		      ncols,
+		      3);
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
-
-
 static void
 vinvert_render_row (const guchar *src_data,
-		    guchar *dest_data,
-		    gint col,               /* row width in pixels */
-		    const gint bytes)
+		    guchar       *dest_data,
+		    gint          col,       /* row width in pixels */
+		    const gint    bytes)
 {
   while (col--)
     {
-      int v1, v2, v3;
+      gint v1, v2, v3;
 
       v1 = src_data[col*bytes   ];
       v2 = src_data[col*bytes +1];
       v3 = src_data[col*bytes +2];
 
-      gimp_rgb_to_hsv(&v1, &v2, &v3);
+      gimp_rgb_to_hsv (&v1, &v2, &v3);
       v3 = 255-v3;
-      gimp_hsv_to_rgb(&v1, &v2, &v3);
+      gimp_hsv_to_rgb (&v1, &v2, &v3);
 
       dest_data[col*bytes   ] = v1;
       dest_data[col*bytes +1] = v2;
@@ -232,18 +232,14 @@ vinvert_render_region (const GPixelRgn srcPR,
     }
 }
 
-
-
-
-
 static void
 vinvert (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
-  gint x1, y1, x2, y2;
-  gpointer pr;
-  gint total_area, area_so_far;
-  gint progress_skip;
+  gint      x1, y1, x2, y2;
+  gpointer  pr;
+  gint      total_area, area_so_far;
+  gint      progress_skip;
 
 
   /* Get the input area. This is the bounding box of the selection in
@@ -278,14 +274,8 @@ vinvert (GDrawable *drawable)
 	}
     }
 
-
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
-
-
-
-
-

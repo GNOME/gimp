@@ -36,11 +36,14 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 #include <windows.h>
 
-#include "libgimp/gimp.h"
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 #define NAME_PRINT "file_print"
 #define NAME_PAGE_SETUP "file_page_setup"
@@ -166,49 +169,40 @@ query(void)
     { PARAM_INT32,	"left",		"Left offset (points, -1 = centered)" },
     { PARAM_INT32,	"top",		"Top offset (points, -1 = centered)" }
   };
-  static int		print_nargs =
-    sizeof(print_args) / sizeof(print_args[0]);
+  static gint print_nargs = sizeof (print_args) / sizeof (print_args[0]);
 
   static GParamDef	pagesetup_args[] =
   {
     { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
     { PARAM_IMAGE,	"image",	"Input image" },
-    { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
+    { PARAM_DRAWABLE,	"drawable",	"Input drawable" }
   };
-  static int		pagesetup_nargs =
-    sizeof(pagesetup_args) / sizeof(pagesetup_args[0]);
+  static gint pagesetup_nargs = (sizeof (pagesetup_args) /
+				 sizeof (pagesetup_args[0]));
 
-  INIT_I18N();
+  gimp_install_procedure (NAME_PRINT,
+			  "This plug-in prints images from the GIMP.",
+			  "Prints images to any printer recognized by Windows.",
+			  "Tor Lillqvist <tml@iki.fi>",
+			  "Copyright 1999 Tor Lillqvist",
+			  "$Id$",
+			  N_("<Image>/File/Print"),
+			  "RGB*,GRAY*,INDEXED*",
+			  PROC_PLUG_IN,
+			  print_nargs, 0,
+			  print_args, NULL);
 
-  gimp_install_procedure(
-      NAME_PRINT,
-      "This plug-in prints images from the GIMP.",
-      "Prints images to any printer recognized by Windows.",
-      "Tor Lillqvist <tml@iki.fi>",
-      "Copyright 1999 Tor Lillqvist",
-      "$Id$",
-      N_("<Image>/File/Print"),
-      "RGB*,GRAY*,INDEXED*",
-      PROC_PLUG_IN,
-      print_nargs,
-      0,
-      print_args,
-      NULL);
-
-  gimp_install_procedure(
-      NAME_PAGE_SETUP,
-      "This plug-in sets up the page for printing from the GIMP.",
-      "Sets up the page parameters for printing to any Windows printer.",
-      "Tor Lillqvist <tml@iki.fi>",
-      "Copyright 1999 Tor Lillqvist",
-      "$Id$",
-      N_("<Image>/File/Page Setup"),
-      "RGB*,GRAY*,INDEXED*",
-      PROC_PLUG_IN,
-      pagesetup_nargs,
-      0,
-      pagesetup_args,
-      NULL);
+  gimp_install_procedure (NAME_PAGE_SETUP,
+			  "This plug-in sets up the page for printing from the GIMP.",
+			  "Sets up the page parameters for printing to any Windows printer.",
+			  "Tor Lillqvist <tml@iki.fi>",
+			  "Copyright 1999 Tor Lillqvist",
+			  "$Id$",
+			  N_("<Image>/File/Page Setup"),
+			  "RGB*,GRAY*,INDEXED*",
+			  PROC_PLUG_IN,
+			  pagesetup_nargs, 0,
+			  pagesetup_args, NULL);
 }
 
 /*
@@ -216,10 +210,10 @@ query(void)
  */
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   GDrawable    *drawable;
@@ -686,10 +680,10 @@ run (char    *name,
 
 GPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
-MAIN()
+MAIN ()
