@@ -1,11 +1,11 @@
-Index: menus.c
+Index: app/gui/menus.c
 ===================================================================
 RCS file: /cvs/gnome/gimp/app/gui/menus.c,v
 retrieving revision 1.242
-diff -u -r1.242 menus.c
---- menus.c	2001/11/13 16:56:58	1.242
-+++ menus.c	2001/11/14 22:33:49
-@@ -1813,7 +1813,7 @@
+diff -u -p -r1.242 menus.c
+--- app/gui/menus.c	2001/11/13 16:56:58	1.242
++++ app/gui/menus.c	2001/11/15 10:26:45
+@@ -1813,7 +1813,7 @@ menus_init (Gimp *gimp)
    }
  
    filename = gimp_personal_rc_file ("menurc");
@@ -14,7 +14,7 @@ diff -u -r1.242 menus.c
    g_free (filename);
  
    g_signal_connect (G_OBJECT (gimp->documents), "add",
-@@ -1841,7 +1841,7 @@
+@@ -1841,7 +1841,7 @@ menus_exit (Gimp *gimp)
                                          gimp);
  
    filename = gimp_personal_rc_file ("menurc");

@@ -1,3 +1,8 @@
+2001-11-15  Sven Neumann  <sven@gimp.org>
+
+	* RELEASE-TO-CVS.patch: recreated from toplevel dir so it applies
+	as advertised in HACKING.
+
 2001-11-14  Manish Singh  <yosh@gimp.org>
 
 	* RELEASE-TO-CVS.patch: gtk_item_factory_parse_rc->gtk_accel_map_load,
