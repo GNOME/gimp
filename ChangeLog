@@ -1,5 +1,10 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/pygimp/pygimp-drawable.c (lay_set_linked): made it
+	compile again.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/layer.pdb: removed "linked" API...
 	* tools/pdbgen/pdb/drawable.pdb: ...and added it here.
 

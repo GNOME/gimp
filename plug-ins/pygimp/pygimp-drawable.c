@@ -658,7 +658,7 @@ lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
 static PyObject *
 lay_get_linked(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_linked(self->ID));
+    return PyInt_FromLong(gimp_drawable_get_linked(self->ID));
 }
 
 static int
@@ -672,7 +672,7 @@ lay_set_linked(PyGimpLayer *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
-    gimp_layer_set_linked(self->ID, PyInt_AsLong(value));
+    gimp_drawable_set_linked(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
