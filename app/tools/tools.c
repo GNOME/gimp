@@ -57,46 +57,44 @@
 void
 register_tools (void)
 {
+  /*  register tools in reverse order  */
+
+  /*  paint tools  */
+
+  /* gimp_smudge_tool_register (); */
+  /* gimp_dodgeburn_tool_register (); */
   gimp_ink_tool_register ();
+  /* gimp_convolve_tool_register (): */
+  /* gimp_clone_tool_register (); */
+  /* gimp_airbrush_tool_register (); */
+  /* gimp_eraser_tool_register (); */
+  /* gimp_pencil_tool_register (); */
   gimp_paintbrush_tool_register ();
+  gimp_blend_tool_register ();
   gimp_bucket_fill_tool_register ();
+  gimp_text_tool_register ();
+
+  /*  transform tools  */
+
+  /* gimp_flip_tool_registrer (); */
+  /* gimp_perspective_tool_register (); */
+  /* gimp_shear_tool_register (); */
+  /* gimp_scale_tool_register (); */
+  /* gimp_rotate_tool_register (); */
+  gimp_crop_tool_register ();
+  gimp_move_tool_register ();
+
+  /*  non-modifying tools  */
+
   gimp_measure_tool_register ();
   gimp_magnify_tool_register ();
-  gimp_crop_tool_register ();
   gimp_color_picker_tool_register ();
-  gimp_text_tool_register ();
-  gimp_move_tool_register ();
+
+  /*  selection tool */
+
+  /* gimp_iscissors_tool_register (); */
   gimp_fuzzy_select_tool_register ();
   gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();
   gimp_rect_select_tool_register ();
-
-/*
-  snatched from the pdb.  For inspiration only.  ;)
-
-  procedural_db_register (&airbrush_proc);
-  procedural_db_register (&airbrush_default_proc);
-  procedural_db_register (&blend_proc);
-  procedural_db_register (&bucket_fill_proc);
-  procedural_db_register (&by_color_select_proc);
-  procedural_db_register (&clone_proc);
-  procedural_db_register (&clone_default_proc);
-  procedural_db_register (&color_picker_proc);
-  procedural_db_register (&convolve_proc);
-  procedural_db_register (&convolve_default_proc);
-  procedural_db_register (&crop_proc);
-  procedural_db_register (&dodgeburn_proc);
-  procedural_db_register (&dodgeburn_default_proc);
-  procedural_db_register (&eraser_proc);
-  procedural_db_register (&eraser_default_proc);
-  procedural_db_register (&flip_proc);
-  procedural_db_register (&fuzzy_select_proc);
-  procedural_db_register (&pencil_proc);
-  procedural_db_register (&perspective_proc);
-  procedural_db_register (&rotate_proc);
-  procedural_db_register (&scale_proc);
-  procedural_db_register (&shear_proc);
-  procedural_db_register (&smudge_proc);
-  procedural_db_register (&smudge_default_proc);
-  procedural_db_register (&transform_2d_proc); */
 }

@@ -5,8 +5,8 @@ noinst_LTLIBRARIES = libapptools.la
 libapptools_la_SOURCES = \
 ##	gimpairbrushtool.c	\
 ##	gimpairbrushtool.h	\
-##	gimpblendtool.c		\
-##	gimpblendtool.h		\
+	gimpblendtool.c		\
+	gimpblendtool.h		\
 	gimpbucketfilltool.c	\
 	gimpbucketfilltool.h	\
 ##	gimpbycolorselecttool.c	\

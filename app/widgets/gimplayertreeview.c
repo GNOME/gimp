@@ -73,8 +73,9 @@ static void   gimp_layer_list_view_opacity_scale_changed
                                                   (GtkAdjustment     *adjustment,
 						   GimpLayerListView *view);
 
-static void  gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
-							GimpLayerListView *view);
+static void   gimp_layer_list_view_layer_signal_handler
+                                                  (GimpLayer         *layer,
+						   GimpLayerListView *view);
 static void   gimp_layer_list_view_update_options (GimpLayerListView *view,
 						   GimpLayer         *layer);
 
@@ -474,6 +475,15 @@ gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
     }
 }
 
+
+#define BLOCK(object,function) \
+        gtk_signal_handler_block_by_func (GTK_OBJECT (object), \
+	                                  (function), view)
+
+#define UNBLOCK(object,function) \
+        gtk_signal_handler_unblock_by_func (GTK_OBJECT (object), \
+	                                    (function), view)
+
 static void
 gimp_layer_list_view_update_options (GimpLayerListView *view,
 				     GimpLayer         *layer)
@@ -484,28 +494,27 @@ gimp_layer_list_view_update_options (GimpLayerListView *view,
   if (layer->preserve_trans !=
       GTK_TOGGLE_BUTTON (view->preserve_trans_toggle)->active)
     {
-      gtk_signal_handler_block_by_func (GTK_OBJECT (view->preserve_trans_toggle),
-					gimp_layer_list_view_preserve_button_toggled,
-					view);
+      BLOCK (view->preserve_trans_toggle,
+	     gimp_layer_list_view_preserve_button_toggled);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->preserve_trans_toggle),
 				    layer->preserve_trans);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->preserve_trans_toggle),
-					  gimp_layer_list_view_preserve_button_toggled,
-					  view);
+      UNBLOCK (view->preserve_trans_toggle,
+	       gimp_layer_list_view_preserve_button_toggled);
       }
 
   if ((gdouble) layer->opacity / 2.55 != view->opacity_adjustment->value)
     {
-      gtk_signal_handler_block_by_func (GTK_OBJECT (view->opacity_adjustment),
-					gimp_layer_list_view_opacity_scale_changed,
-					view);
+      BLOCK (view->opacity_adjustment,
+	     gimp_layer_list_view_opacity_scale_changed);
 
       gtk_adjustment_set_value (view->opacity_adjustment, layer->opacity / 2.55);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->opacity_adjustment),
-					  gimp_layer_list_view_opacity_scale_changed,
-					  view);
+      UNBLOCK (view->opacity_adjustment,
+	       gimp_layer_list_view_opacity_scale_changed);
     }
 }
+
+#undef BLOCK
+#undef UNBLOCK

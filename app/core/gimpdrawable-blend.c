@@ -30,12 +30,9 @@
 
 #include "appenv.h"
 #include "asupsample.h"
-#include "blend.h"
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "drawable.h"
 #include "errors.h"
-#include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
@@ -44,16 +41,21 @@
 #include "gimpgradient.h"
 #include "gimpprogress.h"
 #include "paint_funcs.h"
-#include "paint_options.h"
 #include "pixel_region.h"
 #include "selection.h"
-#include "tools.h"
 #include "undo.h"
 
 #include "tile.h"
 #include "tile_manager.h"
 
+#include "gimpblendtool.h"
+#include "gimptoolinfo.h"
+#include "paint_options.h"
+#include "tool_manager.h"
+
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 /*  target size  */
@@ -62,23 +64,8 @@
 
 #define  STATUSBAR_SIZE  128
 
-/*  the blend structures  */
 
 typedef gdouble (* RepeatFunc) (gdouble);
-
-typedef struct _BlendTool BlendTool;
-
-struct _BlendTool
-{
-  DrawCore *core;        /*  Core select object   */
-
-  gint      startx;      /*  starting x coord     */
-  gint      starty;      /*  starting y coord     */
-
-  gint      endx;        /*  ending x coord       */
-  gint      endy;        /*  ending y coord       */
-  guint     context_id;  /*  for the statusbar    */
-};
 
 typedef struct _BlendOptions BlendOptions;
 
@@ -136,56 +123,42 @@ typedef struct
 } PutPixelData;
 
 
-/*  the blend tool options  */
-static BlendOptions *blend_options = NULL;
-
-/*  variables for the shapeburst algs  */
-static PixelRegion distR =
-{
-  NULL,  /* data */
-  NULL,  /* tiles */
-  0,     /* rowstride */
-  0, 0,  /* w, h */
-  0, 0,  /* x, y */
-  4,     /* bytes */
-  0      /* process count */
-};
-
-/*  dnd stuff  */
-static GtkTargetEntry blend_target_table[] =
-{
-  GIMP_TARGET_GRADIENT,  
-  GIMP_TARGET_TOOL
-};
-static guint blend_n_targets = (sizeof (blend_target_table) /
-				sizeof (blend_target_table[0]));
-
 /*  local function prototypes  */
+
+static void    gimp_blend_tool_class_init        (GimpBlendToolClass *klass);
+static void    gimp_blend_tool_init              (GimpBlendTool      *blend_tool);
+
+static void    gimp_blend_tool_destroy           (GtkObject      *object);
 
 static void    gradient_type_callback            (GtkWidget      *widget,
 						  gpointer        data);
 
-static void    blend_button_press                (Tool           *tool,
+static void    gimp_blend_tool_button_press      (GimpTool       *tool,
 						  GdkEventButton *bevent,
 						  GDisplay       *gdisp);
-static void    blend_button_release              (Tool           *tool,
+static void    gimp_blend_tool_button_release    (GimpTool       *tool,
 						  GdkEventButton *bevent,
 						  GDisplay       *gdisp);
-static void    blend_motion                      (Tool           *tool,
+static void    gimp_blend_tool_motion            (GimpTool       *tool,
 						  GdkEventMotion *mevent,
 						  GDisplay       *gdisp);
-static void    blend_cursor_update               (Tool           *tool,
+static void    gimp_blend_tool_cursor_update     (GimpTool       *tool,
 						  GdkEventMotion *mevent,
-						  GDisplay       *gdisp);
-static void    blend_control                     (Tool           *tool,
-						  ToolAction      action,
 						  GDisplay       *gdisp);
 
+static void    gimp_blend_tool_draw              (GimpDrawTool   *draw_tool);
+
+static BlendOptions * blend_options_new          (void);
+
+static void    blend_options_reset               (void);
+
+static void    gradient_type_callback            (GtkWidget      *widget,
+                                                  gpointer        data);
 static void    blend_options_drop_gradient       (GtkWidget      *widget,
-						  GimpGradient   *gradient,
+						  GimpViewable   *viewable,
 						  gpointer        data);
 static void    blend_options_drop_tool           (GtkWidget      *widget,
-						  ToolType        gradient,
+						  GimpViewable   *viewable,
 						  gpointer        data);
 
 static gdouble gradient_calc_conical_sym_factor  (gdouble         dist,
@@ -234,7 +207,7 @@ static gdouble gradient_repeat_none              (gdouble       val);
 static gdouble gradient_repeat_sawtooth          (gdouble       val);
 static gdouble gradient_repeat_triangular        (gdouble       val);
 
-static void    gradient_precalc_shapeburst       (GImage       *gimage,
+static void    gradient_precalc_shapeburst       (GimpImage    *gimage,
 						  GimpDrawable *drawable, 
 						  PixelRegion  *PR,
 						  gdouble       dist);
@@ -248,7 +221,7 @@ static void    gradient_put_pixel                (gint          x,
 						  GimpRGB      *color,
 						  gpointer      put_pixel_data);
 
-static void    gradient_fill_region              (GImage       *gimage,
+static void    gradient_fill_region              (GimpImage    *gimage,
 						  GimpDrawable *drawable,
 						  PixelRegion  *PR,
 						  gint          width,
@@ -268,44 +241,402 @@ static void    gradient_fill_region              (GImage       *gimage,
 						  gpointer      progress_data);
 
 
-/*  functions  */
+static GimpDrawToolClass *parent_class = NULL;
 
-static void
-gradient_type_callback (GtkWidget *widget,
-			gpointer   data)
+static BlendOptions *blend_options = NULL;
+
+/*  variables for the shapeburst algs  */
+static PixelRegion distR =
 {
-  gimp_menu_item_update (widget, data);
+  NULL,  /* data */
+  NULL,  /* tiles */
+  0,     /* rowstride */
+  0, 0,  /* w, h */
+  0, 0,  /* x, y */
+  4,     /* bytes */
+  0      /* process count */
+};
 
-  gtk_widget_set_sensitive (blend_options->repeat_w, 
-			    (blend_options->gradient_type < 6));
+/*  dnd stuff  */
+static GtkTargetEntry blend_target_table[] =
+{
+  GIMP_TARGET_GRADIENT,  
+  GIMP_TARGET_TOOL
+};
+static guint blend_n_targets = (sizeof (blend_target_table) /
+				sizeof (blend_target_table[0]));
+
+
+void
+gimp_blend_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_BLEND_TOOL,
+                              TRUE,
+			      "gimp:blend_tool",
+			      _("Blend"),
+			      _("Fill with a color gradient"),
+			      N_("/Tools/Paint Tools/Blend"), "L",
+			      NULL, "tools/blend.html",
+			      (const gchar **) gradient_bits);
+}
+
+GtkType
+gimp_blend_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+	"GimpBlendTool",
+	sizeof (GimpBlendTool),
+	sizeof (GimpBlendToolClass),
+	(GtkClassInitFunc) gimp_blend_tool_class_init,
+	(GtkObjectInitFunc) gimp_blend_tool_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
+    }
+
+  return tool_type;
 }
 
 static void
-blend_options_reset (void)
+gimp_blend_tool_class_init (GimpBlendToolClass *klass)
 {
-  BlendOptions *options = blend_options;
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
 
-  paint_options_reset ((PaintOptions *) options);
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
 
-  options->blend_mode    = options->blend_mode_d;
-  options->gradient_type = options->gradient_type_d;
-  options->repeat        = options->repeat_d;
+  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w),
-			       blend_options->blend_mode_d);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-			       blend_options->gradient_type_d);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w),
-			       blend_options->repeat_d);
+  object_class->destroy      = gimp_blend_tool_destroy;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->offset_w),
-			    blend_options->offset_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (blend_options->supersample_w),
-				blend_options->supersample_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->max_depth_w),
-			    blend_options->max_depth_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->threshold_w),
-			    blend_options->threshold_d);
+  tool_class->button_press   = gimp_blend_tool_button_press;
+  tool_class->button_release = gimp_blend_tool_button_release;
+  tool_class->motion         = gimp_blend_tool_motion;
+  tool_class->cursor_update  = gimp_blend_tool_cursor_update;
+
+  draw_tool_class->draw      = gimp_blend_tool_draw;
+}
+
+static void
+gimp_blend_tool_init (GimpBlendTool *blend_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (blend_tool);
+ 
+  if (! blend_options)
+    {
+      blend_options = blend_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_BLEND_TOOL,
+					  (ToolOptions *) blend_options);
+    }
+
+  tool->tool_cursor = GIMP_BLEND_TOOL_CURSOR;
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+}
+
+static void
+gimp_blend_tool_destroy (GtkObject *object)
+{
+  /*  free the distance map data if it exists  */
+  if (distR.tiles)
+    tile_manager_destroy (distR.tiles);
+  distR.tiles = NULL;
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_blend_tool_button_press (GimpTool       *tool,
+                              GdkEventButton *bevent,
+                              GDisplay       *gdisp)
+{
+  GimpBlendTool *blend_tool;
+
+  blend_tool = GIMP_BLEND_TOOL (tool);
+
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+    {
+    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+      g_message (_("Blend: Invalid for indexed images."));
+      return;
+
+      break;
+    default:
+      break;
+    }
+
+  /*  Keep the coordinates of the target  */
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
+			       &blend_tool->startx, &blend_tool->starty,
+			       FALSE, TRUE);
+
+  blend_tool->endx = blend_tool->startx;
+  blend_tool->endy = blend_tool->starty;
+
+  /*  Make the tool active and set the gdisplay which owns it  */
+  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
+		    NULL, NULL, bevent->time);
+
+  tool->gdisp = gdisp;
+  tool->state = ACTIVE;
+
+  /* initialize the statusbar display */
+  blend_tool->context_id =
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+		      blend_tool->context_id, _("Blend: 0, 0"));
+
+  /*  Start drawing the blend tool  */
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        gdisp->canvas->window);
+}
+
+static void
+gimp_blend_tool_button_release (GimpTool       *tool,
+                                GdkEventButton *bevent,
+                                GDisplay       *gdisp)
+{
+  GimpImage     *gimage;
+  GimpBlendTool *blend_tool;
+#ifdef BLEND_UI_CALLS_VIA_PDB
+  Argument      *return_vals;
+  gint           nreturn_vals;
+#else
+  GimpProgress  *progress;
+#endif
+
+  blend_tool = GIMP_BLEND_TOOL (tool);
+
+  gimage = gdisp->gimage;
+
+  gdk_pointer_ungrab (bevent->time);
+  gdk_flush ();
+
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  tool->state = INACTIVE;
+
+  /*  if the 3rd button isn't pressed, fill the selected region  */
+  if (! (bevent->state & GDK_BUTTON3_MASK) &&
+      ((blend_tool->startx != blend_tool->endx) ||
+       (blend_tool->starty != blend_tool->endy)))
+    {
+      /* we can't do callbacks easily with the PDB, so this UI/backend
+       * separation (though good) is ignored for the moment */
+#ifdef BLEND_UI_CALLS_VIA_PDB
+      return_vals = 
+	procedural_db_run_proc ("gimp_blend",
+				&nreturn_vals,
+				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gimage)),
+				PDB_INT32, (gint32) blend_options->blend_mode,
+				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (blend_options),
+				PDB_INT32, (gint32) blend_options->gradient_type,
+				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (blend_options) * 100,
+				PDB_FLOAT, (gdouble) blend_options->offset,
+				PDB_INT32, (gint32) blend_options->repeat,
+				PDB_INT32, (gint32) blend_options->supersample,
+				PDB_INT32, (gint32) blend_options->max_depth,
+				PDB_FLOAT, (gdouble) blend_options->threshold,
+				PDB_FLOAT, (gdouble) blend_tool->startx,
+				PDB_FLOAT, (gdouble) blend_tool->starty,
+				PDB_FLOAT, (gdouble) blend_tool->endx,
+				PDB_FLOAT, (gdouble) blend_tool->endy,
+				PDB_END);
+
+      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
+	gdisplays_flush ();
+      else
+	g_message (_("Blend operation failed."));
+
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+
+#else /* ! BLEND_UI_CALLS_VIA_PDB */
+
+      progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
+
+      blend (gimage,
+	     gimp_image_active_drawable (gimage),
+	     blend_options->blend_mode,
+	     gimp_context_get_paint_mode (NULL),
+	     blend_options->gradient_type,
+	     gimp_context_get_opacity (NULL) * 100,
+	     blend_options->offset,
+	     blend_options->repeat,
+	     blend_options->supersample,
+	     blend_options->max_depth,
+	     blend_options->threshold,
+	     blend_tool->startx,
+	     blend_tool->starty,
+	     blend_tool->endx,
+	     blend_tool->endy,
+	     progress ? progress_update_and_flush : (GimpProgressFunc) NULL, 
+	     progress);
+
+      if (progress)
+	progress_end (progress);
+
+      gdisplays_flush ();
+#endif /* ! BLEND_UI_CALLS_VIA_PDB */
+    }
+}
+
+static void
+gimp_blend_tool_motion (GimpTool       *tool,
+                        GdkEventMotion *mevent,
+                        GDisplay       *gdisp)
+{
+  GimpBlendTool *blend_tool;
+  gchar          vector[STATUSBAR_SIZE];
+
+  blend_tool = GIMP_BLEND_TOOL (tool);
+
+  /*  undraw the current tool  */
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  /*  Get the current coordinates  */
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
+
+
+  /* Restrict to multiples of 15 degrees if ctrl is pressed */
+  if (mevent->state & GDK_CONTROL_MASK)
+    {
+      gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+      gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
+      gint dx, dy, i, radius, frac;
+
+      dx = blend_tool->endx - blend_tool->startx;
+      dy = blend_tool->endy - blend_tool->starty;
+
+      if (dy)
+	{
+	  radius = sqrt (SQR (dx) + SQR (dy));
+	  frac = abs ((dx << 8) / dy);
+	  for (i = 0; i < 6; i++)
+	    {
+	      if (frac < tangens2[i])
+		break;  
+	    }
+	  dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
+	  dy = dy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
+	}
+      blend_tool->endx = blend_tool->startx + dx;
+      blend_tool->endy = blend_tool->starty + dy;
+    }
+
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+
+  if (gdisp->dot_for_dot)
+    {
+      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
+		  _("Blend: "),
+		  blend_tool->endx - blend_tool->startx,
+		  ", ",
+		  blend_tool->endy - blend_tool->starty);
+    }
+  else /* show real world units */
+    {
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
+		  _("Blend: "),
+		  blend_tool->endx - blend_tool->startx * unit_factor /
+		  gdisp->gimage->xresolution,
+		  ", ",
+		  blend_tool->endy - blend_tool->starty * unit_factor /
+		  gdisp->gimage->yresolution);
+    }
+
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id,
+		      vector);
+
+  /*  redraw the current tool  */
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_blend_tool_cursor_update (GimpTool       *tool,
+                               GdkEventMotion *mevent,
+                               GDisplay       *gdisp)
+{
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+    {
+    case INDEXED_GIMAGE:
+    case INDEXEDA_GIMAGE:
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_BAD_CURSOR,
+				    GIMP_BLEND_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
+      break;
+    default:
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    GIMP_BLEND_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
+      break;
+    }
+}
+
+static void
+gimp_blend_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpTool      *tool;
+  GimpBlendTool *blend_tool;
+  gint           tx1, ty1, tx2, ty2;
+
+  tool       = GIMP_TOOL (draw_tool);
+  blend_tool = GIMP_BLEND_TOOL (draw_tool);
+
+  gdisplay_transform_coords (tool->gdisp,
+			     blend_tool->startx, blend_tool->starty,
+			     &tx1, &ty1, 1);
+  gdisplay_transform_coords (tool->gdisp,
+			     blend_tool->endx, blend_tool->endy,
+			     &tx2, &ty2, 1);
+
+  /*  Draw start target  */
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+		 tx1 - (TARGET_WIDTH >> 1), ty1,
+		 tx1 + (TARGET_WIDTH >> 1), ty1);
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+		 tx1, ty1 - (TARGET_HEIGHT >> 1),
+		 tx1, ty1 + (TARGET_HEIGHT >> 1));
+
+  /*  Draw end target  */
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+		 tx2 - (TARGET_WIDTH >> 1), ty2,
+		 tx2 + (TARGET_WIDTH >> 1), ty2);
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+		 tx2, ty2 - (TARGET_HEIGHT >> 1),
+		 tx2, ty2 + (TARGET_HEIGHT >> 1));
+
+  /*  Draw the line between the start and end coords  */
+  gdk_draw_line (draw_tool->win,
+                 draw_tool->gc,
+		 tx1, ty1, tx2, ty2);
 }
 
 static BlendOptions *
@@ -319,10 +650,12 @@ blend_options_new (void)
   GtkWidget *frame;
 
   /*  the new blend tool options structure  */
-  options = g_new (BlendOptions, 1);
+  options = g_new0 (BlendOptions, 1);
+
   paint_options_init ((PaintOptions *) options,
-		      BLEND,
+		      GIMP_TYPE_BLEND_TOOL,
 		      blend_options_reset);
+
   options->offset  	 = options->offset_d  	    = 0.0;
   options->blend_mode 	 = options->blend_mode_d    = FG_BG_RGB_MODE;
   options->gradient_type = options->gradient_type_d = LINEAR;
@@ -341,8 +674,12 @@ blend_options_new (void)
 		     GTK_DEST_DEFAULT_DROP,
 		     blend_target_table, blend_n_targets,
 		     GDK_ACTION_COPY); 
-  gimp_dnd_gradient_dest_set (vbox, blend_options_drop_gradient, NULL);
-  gimp_dnd_tool_dest_set (vbox, blend_options_drop_tool, NULL);
+  gimp_dnd_viewable_dest_set (vbox,
+                              GIMP_TYPE_GRADIENT,
+                              blend_options_drop_gradient, NULL);
+  gimp_dnd_viewable_dest_set (vbox,
+                              GIMP_TYPE_TOOL_INFO,
+                              blend_options_drop_tool, NULL);
 
   /*  the offset scale  */
   table = gtk_table_new (4, 2, FALSE);
@@ -483,328 +820,69 @@ blend_options_new (void)
   return options;
 }
 
-
 static void
-blend_button_press (Tool           *tool,
-		    GdkEventButton *bevent,
-		    GDisplay       *gdisp)
+blend_options_reset (void)
 {
-  BlendTool *blend_tool;
+  BlendOptions *options = blend_options;
 
-  blend_tool = (BlendTool *) tool->private;
+  paint_options_reset ((PaintOptions *) options);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
-    {
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      g_message (_("Blend: Invalid for indexed images."));
-      return;
+  options->blend_mode    = options->blend_mode_d;
+  options->gradient_type = options->gradient_type_d;
+  options->repeat        = options->repeat_d;
 
-      break;
-    default:
-      break;
-    }
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w),
+			       blend_options->blend_mode_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
+			       blend_options->gradient_type_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w),
+			       blend_options->repeat_d);
 
-  /*  Keep the coordinates of the target  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &blend_tool->startx, &blend_tool->starty,
-			       FALSE, TRUE);
-
-  blend_tool->endx = blend_tool->startx;
-  blend_tool->endy = blend_tool->starty;
-
-  /*  Make the tool active and set the gdisplay which owns it  */
-  gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
-
-  tool->gdisp = gdisp;
-  tool->state = ACTIVE;
-
-  /* initialize the statusbar display */
-  blend_tool->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
-		      blend_tool->context_id, _("Blend: 0, 0"));
-
-  /*  Start drawing the blend tool  */
-  draw_core_start (blend_tool->core, gdisp->canvas->window, tool);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->offset_w),
+			    blend_options->offset_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (blend_options->supersample_w),
+				blend_options->supersample_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->max_depth_w),
+			    blend_options->max_depth_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->threshold_w),
+			    blend_options->threshold_d);
 }
 
 static void
-blend_button_release (Tool           *tool,
-		      GdkEventButton *bevent,
-		      GDisplay       *gdisp)
+gradient_type_callback (GtkWidget *widget,
+			gpointer   data)
 {
-  GImage        *gimage;
-  BlendTool     *blend_tool;
-#ifdef BLEND_UI_CALLS_VIA_PDB
-  Argument      *return_vals;
-  gint           nreturn_vals;
-#else
-  GimpProgress  *progress;
-#endif
+  gimp_menu_item_update (widget, data);
 
-  gimage = gdisp->gimage;
-  blend_tool = (BlendTool *) tool->private;
-
-  gdk_pointer_ungrab (bevent->time);
-  gdk_flush ();
-
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
-
-  draw_core_stop (blend_tool->core, tool);
-  tool->state = INACTIVE;
-
-  /*  if the 3rd button isn't pressed, fill the selected region  */
-  if (! (bevent->state & GDK_BUTTON3_MASK) &&
-      ((blend_tool->startx != blend_tool->endx) ||
-       (blend_tool->starty != blend_tool->endy)))
-    {
-      /* we can't do callbacks easily with the PDB, so this UI/backend
-       * separation (though good) is ignored for the moment */
-#ifdef BLEND_UI_CALLS_VIA_PDB
-      return_vals = 
-	procedural_db_run_proc ("gimp_blend",
-				&nreturn_vals,
-				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gimage)),
-				PDB_INT32, (gint32) blend_options->blend_mode,
-				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (blend_options),
-				PDB_INT32, (gint32) blend_options->gradient_type,
-				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (blend_options) * 100,
-				PDB_FLOAT, (gdouble) blend_options->offset,
-				PDB_INT32, (gint32) blend_options->repeat,
-				PDB_INT32, (gint32) blend_options->supersample,
-				PDB_INT32, (gint32) blend_options->max_depth,
-				PDB_FLOAT, (gdouble) blend_options->threshold,
-				PDB_FLOAT, (gdouble) blend_tool->startx,
-				PDB_FLOAT, (gdouble) blend_tool->starty,
-				PDB_FLOAT, (gdouble) blend_tool->endx,
-				PDB_FLOAT, (gdouble) blend_tool->endy,
-				PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
-	gdisplays_flush ();
-      else
-	g_message (_("Blend operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-
-#else /* ! BLEND_UI_CALLS_VIA_PDB */
-
-      progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
-
-      blend (gimage,
-	     gimp_image_active_drawable (gimage),
-	     blend_options->blend_mode,
-	     gimp_context_get_paint_mode (NULL),
-	     blend_options->gradient_type,
-	     gimp_context_get_opacity (NULL) * 100,
-	     blend_options->offset,
-	     blend_options->repeat,
-	     blend_options->supersample,
-	     blend_options->max_depth,
-	     blend_options->threshold,
-	     blend_tool->startx,
-	     blend_tool->starty,
-	     blend_tool->endx,
-	     blend_tool->endy,
-	     progress ? progress_update_and_flush : (GimpProgressFunc) NULL, 
-	     progress);
-
-      if (progress)
-	progress_end (progress);
-
-      gdisplays_flush ();
-#endif /* ! BLEND_UI_CALLS_VIA_PDB */
-    }
+  gtk_widget_set_sensitive (blend_options->repeat_w, 
+			    (blend_options->gradient_type < 6));
 }
-
-static void
-blend_motion (Tool           *tool,
-	      GdkEventMotion *mevent,
-	      GDisplay       *gdisp)
-{
-  BlendTool *blend_tool;
-  gchar      vector[STATUSBAR_SIZE];
-
-  blend_tool = (BlendTool *) tool->private;
-
-  /*  undraw the current tool  */
-  draw_core_pause (blend_tool->core, tool);
-
-  /*  Get the current coordinates  */
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
-
-
-  /* Restrict to multiples of 15 degrees if ctrl is pressed */
-  if (mevent->state & GDK_CONTROL_MASK)
-    {
-      int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
-      int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
-      int dx, dy, i, radius, frac;
-
-      dx = blend_tool->endx - blend_tool->startx;
-      dy = blend_tool->endy - blend_tool->starty;
-
-      if (dy)
-	{
-	  radius = sqrt (SQR (dx) + SQR (dy));
-	  frac = abs ((dx << 8) / dy);
-	  for (i = 0; i < 6; i++)
-	    {
-	      if (frac < tangens2[i])
-		break;  
-	    }
-	  dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
-	  dy = dy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
-	}
-      blend_tool->endx = blend_tool->startx + dx;
-      blend_tool->endy = blend_tool->starty + dy;
-    }
-
-  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
-  if (gdisp->dot_for_dot)
-    {
-      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
-		  _("Blend: "),
-		  blend_tool->endx - blend_tool->startx,
-		  ", ",
-		  blend_tool->endy - blend_tool->starty);
-    }
-  else /* show real world units */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-
-      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
-		  _("Blend: "),
-		  blend_tool->endx - blend_tool->startx * unit_factor /
-		  gdisp->gimage->xresolution,
-		  ", ",
-		  blend_tool->endy - blend_tool->starty * unit_factor /
-		  gdisp->gimage->yresolution);
-    }
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id,
-		      vector);
-
-  /*  redraw the current tool  */
-  draw_core_resume (blend_tool->core, tool);
-}
-
-static void
-blend_cursor_update (Tool           *tool,
-		     GdkEventMotion *mevent,
-		     GDisplay       *gdisp)
-{
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
-    {
-    case INDEXED_GIMAGE:
-    case INDEXEDA_GIMAGE:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_BAD_CURSOR,
-				    GIMP_BLEND_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
-      break;
-    default:
-      gdisplay_install_tool_cursor (gdisp,
-				    GIMP_MOUSE_CURSOR,
-				    GIMP_BLEND_TOOL_CURSOR,
-				    GIMP_CURSOR_MODIFIER_NONE);
-      break;
-    }
-}
-
-static void
-blend_draw (Tool *tool)
-{
-  BlendTool *blend_tool;
-  gint       tx1, ty1, tx2, ty2;
-
-  blend_tool = (BlendTool *) tool->private;
-
-  gdisplay_transform_coords (tool->gdisp,
-			     blend_tool->startx, blend_tool->starty,
-			     &tx1, &ty1, 1);
-  gdisplay_transform_coords (tool->gdisp,
-			     blend_tool->endx, blend_tool->endy,
-			     &tx2, &ty2, 1);
-
-  /*  Draw start target  */
-  gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,
-		 tx1 - (TARGET_WIDTH >> 1), ty1,
-		 tx1 + (TARGET_WIDTH >> 1), ty1);
-  gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,
-		 tx1, ty1 - (TARGET_HEIGHT >> 1),
-		 tx1, ty1 + (TARGET_HEIGHT >> 1));
-
-  /*  Draw end target  */
-  gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,
-		 tx2 - (TARGET_WIDTH >> 1), ty2,
-		 tx2 + (TARGET_WIDTH >> 1), ty2);
-  gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,
-		 tx2, ty2 - (TARGET_HEIGHT >> 1),
-		 tx2, ty2 + (TARGET_HEIGHT >> 1));
-
-  /*  Draw the line between the start and end coords  */
-  gdk_draw_line (blend_tool->core->win, blend_tool->core->gc,
-		 tx1, ty1, tx2, ty2);
-}
-
-static void
-blend_control (Tool       *tool,
-	       ToolAction  action,
-	       GDisplay   *gdisp)
-{
-  BlendTool * blend_tool;
-
-  blend_tool = (BlendTool *) tool->private;
-
-  switch (action)
-    {
-    case PAUSE:
-      draw_core_pause (blend_tool->core, tool);
-      break;
-
-    case RESUME:
-      draw_core_resume (blend_tool->core, tool);
-      break;
-
-    case HALT:
-      draw_core_stop (blend_tool->core, tool);
-      break;
-
-    default:
-      break;
-    }
-}
-
 
 static void
 blend_options_drop_gradient (GtkWidget    *widget,
-			     GimpGradient *gradient,
+			     GimpViewable *viewable,
 			     gpointer      data)
 {
-  gimp_context_set_gradient (gimp_context_get_user (), gradient);
+  gimp_context_set_gradient (gimp_context_get_user (), GIMP_GRADIENT (viewable));
+
   gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 
 			       CUSTOM_MODE);
   blend_options->blend_mode = CUSTOM_MODE;
 }
 
 static void
-blend_options_drop_tool (GtkWidget *widget,
-			 ToolType   tool,
-			 gpointer   data)
+blend_options_drop_tool (GtkWidget    *widget,
+			 GimpViewable *viewable,
+			 gpointer      data)
 {
-  gimp_context_set_tool (gimp_context_get_user (), tool);
+  gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
 }
 
 
 /*  The actual blending procedure  */
 
 void
-blend (GImage           *gimage,
+blend (GimpImage        *gimage,
        GimpDrawable     *drawable,
        BlendMode         blend_mode,
        int               paint_mode,
@@ -1216,7 +1294,7 @@ gradient_repeat_triangular (gdouble val)
 
 /*****/
 static void
-gradient_precalc_shapeburst (GImage       *gimage,
+gradient_precalc_shapeburst (GimpImage    *gimage,
 			     GimpDrawable *drawable,
 			     PixelRegion  *PR,
 			     gdouble       dist)
@@ -1438,7 +1516,7 @@ gradient_put_pixel (int      x,
 }
 
 static void
-gradient_fill_region (GImage           *gimage,
+gradient_fill_region (GimpImage        *gimage,
 		      GimpDrawable     *drawable,
 		      PixelRegion      *PR,
 		      gint              width,
@@ -1638,59 +1716,4 @@ gradient_fill_region (GImage           *gimage,
 	    (* progress_callback) (0, max_progress, progress, progress_data);
 	}
     }
-}
-
-/****************************/
-/*  Global blend functions  */
-/****************************/
-
-Tool *
-tools_new_blend (void)
-{
-  Tool      *tool;
-  BlendTool *private;
-
-  /*  The tool options  */
-  if (! blend_options)
-    {
-      blend_options = blend_options_new ();
-      tools_register (BLEND, (ToolOptions *) blend_options);
-    }
-
-  tool = tools_new_tool (BLEND);
-  private = g_new0 (BlendTool, 1);
-
-  private->core = draw_core_new (blend_draw);
-
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
-
-  tool->private = (void *) private;
-
-  tool->button_press_func   = blend_button_press;
-  tool->button_release_func = blend_button_release;
-  tool->motion_func         = blend_motion;
-  tool->cursor_update_func  = blend_cursor_update;
-  tool->control_func        = blend_control;
-
-  return tool;
-}
-
-void
-tools_free_blend (Tool *tool)
-{
-  BlendTool *blend_tool;
-
-  blend_tool = (BlendTool *) tool->private;
-
-  if (tool->state == ACTIVE)
-    draw_core_stop (blend_tool->core, tool);
-
-  draw_core_free (blend_tool->core);
-
-  /*  free the distance map data if it exists  */
-  if (distR.tiles)
-    tile_manager_destroy (distR.tiles);
-  distR.tiles = NULL;
-
-  g_free (blend_tool);
 }

@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __BLEND_H__
-#define  __BLEND_H__
+#ifndef  __GIMP_BLEND_TOOL_H__
+#define  __GIMP_BLEND_TOOL_H__
+
+
+#include "gimpdrawtool.h"
 
 
 typedef enum
@@ -53,26 +56,56 @@ typedef enum
   REPEAT_LAST /*< skip >*/
 } RepeatMode;
 
-void   blend            (GimpImage        *gimage,
-			 GimpDrawable     *drawable,
-			 BlendMode         blend_mode,
-			 gint              paint_mode,
-			 GradientType      gradient_type,
-			 gdouble           opacity,
-			 gdouble           offset,
-			 RepeatMode        repeat,
-			 gint              supersample,
-			 gint              max_depth,
-			 gdouble           threshold,
-			 gdouble           startx,
-			 gdouble           starty,
-			 gdouble           endx,
-			 gdouble           endy,
-			 GimpProgressFunc  progress_callback,
-			 gpointer          progress_data);
 
-Tool * tools_new_blend  (void);
-void   tools_free_blend (Tool             *tool);
+#define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
+#define GIMP_BLEND_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
+#define GIMP_IS_BLEND_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BLEND_TOOL))
+#define GIMP_BLEND_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
+#define GIMP_IS_BLEND_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BLEND_TOOL))
 
 
-#endif  /*  __BLEND_H__  */
+typedef struct _GimpBlendTool      GimpBlendTool;
+typedef struct _GimpBlendToolClass GimpBlendToolClass;
+
+struct _GimpBlendTool
+{
+  GimpDrawTool  parent_instance;
+
+  gint          startx;      /*  starting x coord     */
+  gint          starty;      /*  starting y coord     */
+
+  gint          endx;        /*  ending x coord       */
+  gint          endy;        /*  ending y coord       */
+  guint         context_id;  /*  for the statusbar    */
+};
+
+struct _GimpBlendToolClass
+{
+  GimpDrawToolClass  parent_class;
+};
+
+
+GtkType   gimp_blend_tool_get_type (void);
+
+void      gimp_blend_tool_register (void);
+
+void      blend                    (GimpImage        *gimage,
+                                    GimpDrawable     *drawable,
+                                    BlendMode         blend_mode,
+                                    gint              paint_mode,
+                                    GradientType      gradient_type,
+                                    gdouble           opacity,
+                                    gdouble           offset,
+                                    RepeatMode        repeat,
+                                    gint              supersample,
+                                    gint              max_depth,
+                                    gdouble           threshold,
+                                    gdouble           startx,
+                                    gdouble           starty,
+                                    gdouble           endx,
+                                    gdouble           endy,
+                                    GimpProgressFunc  progress_callback,
+                                    gpointer          progress_data);
+
+
+#endif  /*  __GIMP_BLEND_TOOL_H__  */

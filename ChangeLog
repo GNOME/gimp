@@ -1,5 +1,16 @@
 2001-03-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimplayerlistview.c: minor cleanups.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpblendtool.[ch]: back again.
+
+	* app/tools/gimptool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/tools.c: changed accordingly.
+
+2001-03-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/apptypes.h
 	* app/gimplayerlistview.[ch]: new subclass of GimpDrawableListView
