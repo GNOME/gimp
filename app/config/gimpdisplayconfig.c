@@ -61,6 +61,7 @@ enum
   PROP_RESIZE_WINDOWS_ON_ZOOM,
   PROP_RESIZE_WINDOWS_ON_RESIZE,
   PROP_DEFAULT_DOT_FOR_DOT,
+  PROP_INITIAL_ZOOM_TO_FIT,
   PROP_PERFECT_MOUSE,
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
@@ -147,6 +148,11 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
                                     DEFAULT_DOT_FOR_DOT_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INITIAL_ZOOM_TO_FIT,
+                                    "initial_zoom_to_fit",
+                                    INITIAL_ZOOM_TO_FIT_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
@@ -262,6 +268,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_DEFAULT_DOT_FOR_DOT:
       display_config->default_dot_for_dot = g_value_get_boolean (value);
       break;
+    case PROP_INITIAL_ZOOM_TO_FIT:
+      display_config->initial_zoom_to_fit = g_value_get_boolean (value);
+      break;
     case PROP_PERFECT_MOUSE:
       display_config->perfect_mouse = g_value_get_boolean (value);
       break;
@@ -342,6 +351,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       g_value_set_boolean (value, display_config->default_dot_for_dot);
+      break;
+    case PROP_INITIAL_ZOOM_TO_FIT:
+      g_value_set_boolean (value, display_config->initial_zoom_to_fit);
       break;
     case PROP_PERFECT_MOUSE:
       g_value_set_boolean (value, display_config->perfect_mouse);

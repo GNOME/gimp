@@ -1,5 +1,15 @@
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/display/gimpdisplayshell.c
+	* app/gui/preferences-dialog.c: applied a modified version of a
+	patch from Toralf Lund <toralf@kscanners.no> that adds a new
+	preferences option to choose the inital zoom ratio. Fixes bug
+	#106730 and in my opinion also #103547.
+
+2003-02-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/spheredesigner.c: replaced the GtkList with a
 	GtkTreeView/Model, replaced all deprecated GTK+ calls.
 

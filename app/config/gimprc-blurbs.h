@@ -133,6 +133,10 @@ N_("Sets the text to appear in image window titles.")
 N_("When set to yes, the GIMP will use a different info window per image " \
    "view.")
 
+#define INITIAL_ZOOM_TO_FIT_BLURB \
+N_("When set to yes, this will ensure that the full image is visible after " \
+   "a file is opened, otherwise it will be displayed with a scale of 1:1.")
+
 #define INSTALL_COLORMAP_BLURB \
 N_("Install a private colormap; might be useful on pseudocolor visuals.")
 

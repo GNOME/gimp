@@ -1312,11 +1312,16 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Show S_tatusbar"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 
+  prefs_boolean_option_menu_add (config, "initial-zoom-to-fit",
+                                 _("Fit to Window"),
+                                 "1:1",
+                                 _("Inital Zoom Ratio:"),
+                                 GTK_TABLE (table), 0);
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 1);
 
   /*  Canvas Padding Color  */
   vbox2 = prefs_frame_new (_("Canvas Padding Color"),

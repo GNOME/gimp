@@ -432,25 +432,39 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   n_width  = SCALEX (shell, image_width);
   n_height = SCALEX (shell, image_height);
 
-  /*  Limit to the size of the screen...  */
-  while (n_width > s_width || n_height > s_height)
+  if (config->initial_zoom_to_fit) 
     {
-      if (scaledest > 1)
-	scaledest--;
-      else
-	if (scalesrc < 0xFF)
-	  scalesrc++;
+      /*  Limit to the size of the screen...  */
+      while (n_width > s_width || n_height > s_height)
+        {
+          if (scaledest > 1)
+            scaledest--;
+          else
+            if (scalesrc < 0xFF)
+              scalesrc++;
 
-      n_width  = (image_width * 
-                  (scaledest * SCREEN_XRES (shell)) /
-                  (scalesrc * gdisp->gimage->xresolution));
+          n_width  = (image_width * 
+                      (scaledest * SCREEN_XRES (shell)) /
+                      (scalesrc * gdisp->gimage->xresolution));
 
-      n_height = (image_height *
-                  (scaledest * SCREEN_XRES (shell)) /
-                  (scalesrc * gdisp->gimage->xresolution));
+          n_height = (image_height *
+                      (scaledest * SCREEN_XRES (shell)) /
+                      (scalesrc * gdisp->gimage->xresolution));
 
-      if (scaledest == 1 && scalesrc == 0xFF)
-        break;
+          if (scaledest == 1 && scalesrc == 0xFF)
+            break;
+        }
+    } 
+  else 
+    {
+      /* Set up size like above, but do not zoom to fit. 
+	 Useful when working on large images. */
+    
+      if (n_width > s_width)
+	n_width = s_width;
+
+      if (n_height > s_height)
+	n_height = s_height;
     }
 
   shell->scale = (scaledest << 8) + scalesrc;
