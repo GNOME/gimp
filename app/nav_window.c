@@ -1066,41 +1066,26 @@ zoom_adj_changed (GtkAdjustment *adj,
 static GtkWidget *
 nav_create_button_area (InfoDialog *info_win)
 {
-  GtkWidget *hbox1;  
-  GtkWidget *vbox1;
-  GtkWidget *button;
-  GtkWidget *hscale1;
-  GtkWidget *label1;
-  GtkObject *adjustment;
-  GdkPixmap *pixmap;
-  GtkWidget *pixmapwid;
-  GdkBitmap *mask;
-  GtkStyle  *style;
+  GtkWidget  *hbox1;  
+  GtkWidget  *vbox1;
+  GtkWidget  *button;
+  GtkWidget  *hscale1;
+  GtkWidget  *label1;
+  GtkObject  *adjustment;
   NavWinData *iwd;
-  gchar      scale_str[MAX_SCALE_BUF];
+  gchar       scale_str[MAX_SCALE_BUF];
 
-  iwd = (NavWinData *)info_win->user_data;
+  iwd = (NavWinData *) info_win->user_data;
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);
 
-  style = gtk_widget_get_style (info_win->shell);
-
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_out_xpm);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomout), (gpointer) info_win->user_data);
+		      GTK_SIGNAL_FUNC (navwindow_zoomout),
+		      (gpointer) info_win->user_data);
   gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (info_win->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_out_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
@@ -1130,21 +1115,12 @@ nav_create_button_area (InfoDialog *info_win)
   gtk_box_pack_start (GTK_BOX (vbox1), hscale1, TRUE, TRUE, 0);
   gtk_scale_set_draw_value (GTK_SCALE (hscale1), FALSE);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_in_xpm);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomin), (gpointer) info_win->user_data); 
+		      GTK_SIGNAL_FUNC (navwindow_zoomin),
+		      (gpointer) info_win->user_data); 
   gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (info_win->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_in_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-  
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
 
   return vbox1;

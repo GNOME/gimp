@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimppixmap.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -40,22 +42,18 @@ typedef struct _GimpFileSelectionClass  GimpFileSelectionClass;
 
 struct _GimpFileSelection
 {
-  GtkHBox    hbox;
+  GtkHBox     hbox;
 
-  GtkWidget *file_exists;
-  GtkWidget *entry;
-  GtkWidget *browse_button;
+  GtkWidget  *yes_pixmap;
+  GtkWidget  *no_pixmap;
+  GtkWidget  *entry;
+  GtkWidget  *browse_button;
 
-  GtkWidget *file_selection;
+  GtkWidget  *file_selection;
 
-  GdkPixmap *yes_pixmap;
-  GdkBitmap *yes_mask;
-  GdkPixmap *no_pixmap;
-  GdkBitmap *no_mask;
-
-  gchar     *title;
-  gboolean   dir_only;
-  gboolean   check_valid;
+  gchar      *title;
+  gboolean    dir_only;
+  gboolean    check_valid;
 };
 
 struct _GimpFileSelectionClass

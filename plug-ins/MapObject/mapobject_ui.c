@@ -2,13 +2,17 @@
 /* Dialog creation and updaters, callbacks and event-handlers */
 /**************************************************************/
 
+#include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <gck/gck.h>
 
 #include "arcball.h"
 #include "mapobject_ui.h"
 #include "mapobject_image.h"
 #include "mapobject_apply.h"
 #include "mapobject_preview.h"
+#include "mapobject_main.h"
 
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
@@ -59,11 +63,10 @@ static void update_light_pos_entries   (void);
 static void double_adjustment_update   (GtkAdjustment *adjustment,
 					gpointer       data);
 
+static void toggle_update              (GtkWidget     *widget,
+					gpointer       data);
+
 static void togglegrid_update          (GtkWidget     *widget,
-					gpointer       data);
-static void toggletrans_update         (GtkWidget     *widget,
-					gpointer       data);
-static void toggletile_update          (GtkWidget     *widget,
 					gpointer       data);
 static void toggletips_update          (GtkWidget     *widget,
 					gpointer       data);
@@ -135,6 +138,20 @@ update_light_pos_entries (void)
 				      &mapvals.lightsource.position.z);
 }
 
+/**********************/
+/* Std. toggle update */
+/**********************/
+
+static void
+toggle_update (GtkWidget *widget,
+	       gpointer   data)
+{
+  gimp_toggle_button_update (widget, data);
+
+  draw_preview_image (TRUE);
+  linetab[0].x1 = -1;
+}
+
 /***************************/
 /* Show grid toggle update */
 /***************************/
@@ -159,20 +176,6 @@ togglegrid_update (GtkWidget *widget,
     }
 }
 
-/****************************/
-/* Tile image toggle update */
-/****************************/
-
-static void
-toggletile_update (GtkWidget *widget,
-		   gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  draw_preview_image (TRUE);
-  linetab[0].x1 = -1;
-}
-
 /**************************/
 /* Tooltips toggle update */
 /**************************/
@@ -187,20 +190,6 @@ toggletips_update (GtkWidget *widget,
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();
-}
-
-/****************************************/
-/* Transparent background toggle update */
-/****************************************/
-
-static void
-toggletrans_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  draw_preview_image (TRUE);
-  linetab[0].x1 = -1;
 }
 
 /*****************************************/
@@ -578,7 +567,7 @@ create_options_page (void)
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (toggletrans_update),
+		      GTK_SIGNAL_FUNC (toggle_update),
 		      &mapvals.transparent_background);
   gtk_widget_show (toggle);
 
@@ -590,7 +579,7 @@ create_options_page (void)
 				mapvals.tiled);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (toggletile_update),
+		      GTK_SIGNAL_FUNC (toggle_update),
 		      &mapvals.tiled);
   gtk_widget_show (toggle);
 
@@ -858,10 +847,6 @@ create_material_page (void)
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-
-  GdkPixmap *image;
-  GdkPixmap *mask;
-  GtkStyle  *style;
   GtkWidget *pixmap;
 
   page = gtk_vbox_new (FALSE, 4);
@@ -881,17 +866,9 @@ create_material_page (void)
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  style = gtk_widget_get_style (table);
-
   /* Ambient intensity */
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					amb1_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (amb1_xpm);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Ambient:"), 1.0, 0.5,
 			     pixmap, 1, FALSE);
@@ -909,26 +886,14 @@ create_material_page (void)
 			   _("Amount of original color to show where no "
 			     "direct light falls"), NULL);
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					amb2_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (amb2_xpm);
   gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
 
   /* Diffuse intensity */
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					diffint1_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (diffint1_xpm);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Diffuse:"), 1.0, 0.5,
 			     pixmap, 1, FALSE);
@@ -946,13 +911,7 @@ create_material_page (void)
 			   _("Intensity of original color when lit by a light "
 			     "source"), NULL);
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					diffint2_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (diffint2_xpm);
   gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
@@ -971,17 +930,9 @@ create_material_page (void)
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  style = gtk_widget_get_style (table);
-
   /* Diffuse reflection */
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					diffref1_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (diffref1_xpm);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Diffuse:"), 1.0, 0.5,
 			     pixmap, 1, FALSE);
@@ -999,26 +950,14 @@ create_material_page (void)
 			   _("Higher values makes the object reflect more "
 			     "light (appear lighter)"), NULL);
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					diffref2_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (diffref2_xpm);
   gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
 
   /* Specular reflection */
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					specref1_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (specref1_xpm);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Specular:"), 1.0, 0.5,
 			     pixmap, 1, FALSE);
@@ -1036,26 +975,14 @@ create_material_page (void)
 			   _("Controls how intense the highlights will be"),
 			   NULL);
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					specref2_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (specref2_xpm);
   gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
 
   /* Highlight */
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					high1_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (high1_xpm);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Highlight:"), 1.0, 0.5,
 			     pixmap, 1, FALSE);
@@ -1073,13 +1000,7 @@ create_material_page (void)
 			   _("Higher values makes the highlights more focused"),
 			   NULL);
 
-  image = gdk_pixmap_create_from_xpm_d (appwin->window,
-					&mask,
-					&style->bg[GTK_STATE_NORMAL],
-					high2_xpm);
-  pixmap = gtk_pixmap_new (image, mask);
-  gdk_pixmap_unref (image);
-  gdk_bitmap_unref (mask);
+  pixmap = gimp_pixmap_new (high2_xpm);
   gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
@@ -1433,10 +1354,6 @@ main_dialog (GDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *toggle;
-  GdkPixmap *pixmap;
-  GdkPixmap *mask;
-  GtkStyle  *style;
-  GtkWidget *pixmap_widget;
   gchar **argv;
   gint    argc;
 
@@ -1523,43 +1440,21 @@ main_dialog (GDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_out_xpm);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (zoomout_callback),
 		      NULL);
   gtk_widget_show (button);
 
-  style = gtk_widget_get_style (button);
-  pixmap = gdk_pixmap_create_from_xpm_d (appwin->window,
-					 &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 zoom_out_xpm);
-  pixmap_widget = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-  gtk_container_add (GTK_CONTAINER (button), pixmap_widget);
-  gtk_widget_show (pixmap_widget);
-
   gimp_help_set_help_data (button, _("Zoom out (make image smaller)"), NULL);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_in_xpm);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (zoomin_callback),
 		      NULL);
   gtk_widget_show (button);
-
-  style = gtk_widget_get_style (button);
-  pixmap = gdk_pixmap_create_from_xpm_d (appwin->window,
-					 &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 zoom_in_xpm);
-  pixmap_widget = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-  gtk_container_add (GTK_CONTAINER (button), pixmap_widget);
-  gtk_widget_show (pixmap_widget);
 
   gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
 
@@ -1598,7 +1493,7 @@ main_dialog (GDrawable *drawable)
   gtk_main ();
 
   if (preview_rgb_data != NULL)
-    free (preview_rgb_data);
+    g_free (preview_rgb_data);
   
   if (image != NULL)
     gdk_image_destroy (image);

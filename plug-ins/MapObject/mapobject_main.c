@@ -1,28 +1,42 @@
-/*********************************************************************************/
-/* MapObject 1.2.0 -- image filter plug-in for The Gimp program                  */
-/* Copyright (C) 1996-98 Tom Bech                                                */
-/* Copyright (C) 1996-98 Federico Mena Quintero                                  */
-/*===============================================================================*/
-/* E-mail: tomb@gimp.org (Tom) or quartic@gimp.org (Federico)                    */
-/* You can contact the original The Gimp authors at gimp@xcf.berkeley.edu        */
-/*===============================================================================*/
-/* This program is free software; you can redistribute it and/or modify it under */
-/* the terms of the GNU General Public License as published by the Free Software */
-/* Foundation; either version 2 of the License, or (at your option) any later    */
-/* version.                                                                      */
-/*===============================================================================*/
-/* This program is distributed in the hope that it will be useful, but WITHOUT   */
-/* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS */
-/* FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.*/
-/*===============================================================================*/
-/* You should have received a copy of the GNU General Public License along with  */
-/* this program (read the "COPYING" file); if not, write to the Free Software    */
-/* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.    */
-/*===============================================================================*/
-/* In other words, you can't sue us for whatever happens while using this ;)     */
-/*********************************************************************************/
+/* MapObject 1.2.0 -- image filter plug-in for The Gimp program
+ *
+ * Copyright (C) 1996-98 Tom Bech
+ * Copyright (C) 1996-98 Federico Mena Quintero
+ *
+ * E-mail: tomb@gimp.org (Tom) or quartic@gimp.org (Federico)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
+#include <gtk/gtk.h>
+
+#include <gck/gck.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "arcball.h"
+#include "mapobject_ui.h"
+#include "mapobject_image.h"
+#include "mapobject_apply.h"
+#include "mapobject_preview.h"
 #include "mapobject_main.h"
+
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 
 /* Global variables */
 /* ================ */

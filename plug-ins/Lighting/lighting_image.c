@@ -2,6 +2,13 @@
 /* GIMP image manipulation routines. */
 /*************************************/
 
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
+#include "lighting_main.h"
 #include "lighting_image.h"
 #include "lighting_preview.h"
 #include "lighting_ui.h"
@@ -291,7 +298,7 @@ get_map_value (GPixelRgn *region,
   return gck_bilinear (u, v, p);
 }
 
-void
+static void
 compute_maps (void)
 {
   gint    x;

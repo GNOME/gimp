@@ -2056,10 +2056,6 @@ palette_dialog_new (gint vert)
   GtkWidget *alignment;
   GtkWidget *frame;
   GtkWidget *button;
-  GtkWidget *pixmapwid;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
   gchar     *titles[3];
 
   palette = g_new (PaletteDialog, 1);
@@ -2190,36 +2186,18 @@ palette_dialog_new (gint vert)
 			palette);
 
   /*  + and - buttons  */
-  if (! GTK_WIDGET_REALIZED (palette->shell))
-    gtk_widget_realize (palette->shell);
-  style = gtk_widget_get_style (palette->shell);
-
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_in_xpm);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  pixmap = gdk_pixmap_create_from_xpm_d (palette->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_in_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_dialog_zoomin_callback),
 		      (gpointer) palette);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_out_xpm);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
-  pixmap = gdk_pixmap_create_from_xpm_d (palette->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_out_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_dialog_zoomout_callback),
 		      (gpointer) palette);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
   
   /*  clist preview of palettes  */
@@ -2317,6 +2295,8 @@ palette_dialog_new (gint vert)
 			       "dialogs/palette_editor/merge_palette.html");
       gtk_widget_show (button);
     }
+
+  gtk_widget_realize (palette->shell);
 
   palette->gc = gdk_gc_new (palette->shell->window);
 

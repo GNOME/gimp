@@ -1,3 +1,42 @@
+2000-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimppixmap.[ch]: simple widget which creates a pixmap
+	from XPM data without the need to worry about it's parent's
+	"realized" state and other stuff.
+
+	* libgimp/gimpcolorbutton.c: removed a gtk-doc comment from an
+	internal function.
+
+	* libgimp/gimpwidgets.[ch]: new function gimp_pixmap_button_new().
+
+	* app/gimpui.h
+	* libgimp/gimpui.h: include gimppixmap.h.
+
+	* app/gradient.c
+	* app/nav_window.c
+	* app/palette.c
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimppatheditor.c
+	* libgimp/gimpquerybox.c
+	* plug-ins/FractalExplorer/FractalExplorer.c: use GimpPixmaps.
+
+	* plug-ins/Lighting/*
+	* plug-ins/MapObject/*: some more cleanups: reduced # of includes,
+	made private functions static, use GimpPixmaps.
+
+	* plug-ins/libgck/Makefile.am
+	* plug-ins/libgck/NEWS
+	* plug-ins/libgck/README
+	* plug-ins/libgck/TODO
+	* plug-ins/libgck/docs/html/gck.html
+	* plug-ins/libgck/docs/html/gck_application_window.html
+	* plug-ins/libgck/docs/html/gck_dialog_window.html
+	* plug-ins/libgck/docs/html/gckmath.html
+	* plug-ins/libgck/docs/html/gckui.html
+	* plug-ins/libgck/docs/html/gckvector.html: removed because they
+	documented files which don't exist any more.
+
 Fri Feb 18 10:43:30 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: 
@@ -7,7 +46,7 @@ Fri Feb 18 10:43:30 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpcolorbutton.[ch]: new function
 	gimp_color_button_double_new() which uses an array of gdouble
-	instead uf guchar to store the color.
+	instead of guchar to store the color.
 
 	* libgimp/gimpwidgets.h: added macros for easier access of the
 	scale_entries widgets.

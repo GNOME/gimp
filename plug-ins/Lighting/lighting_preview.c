@@ -2,21 +2,34 @@
 /* Compute a preview image and preview wireframe */
 /*************************************************/
 
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
+#include "lighting_main.h"
+#include "lighting_ui.h"
+#include "lighting_image.h"
+#include "lighting_apply.h"
+#include "lighting_shade.h"
+
 #include "lighting_preview.h"
 
-gint lightx,lighty;
-BackBuffer backbuf={0,0,0,0,NULL};
+gint       lightx, lighty;
+BackBuffer backbuf= { 0, 0, 0, 0, NULL };
 
 /* g_free()'ed on exit */ 
-gdouble *xpostab=NULL,*ypostab=NULL;
+gdouble *xpostab = NULL;
+gdouble *ypostab = NULL;
 
-gint xpostab_size = -1;   /* if preview size change, do realloc */
-gint ypostab_size = -1;
+static gint xpostab_size = -1;   /* if preview size change, do realloc */
+static gint ypostab_size = -1;
 
 /* Protos */
 /* ====== */
 
-void
+static void
 compute_preview (gint startx,
 		 gint starty,
 		 gint w,
@@ -162,9 +175,11 @@ compute_preview (gint startx,
   gck_rgb_to_gdkimage(visinfo, preview_rgb_data, image, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
 
-void
+/*
+static void
 blah (void)
 {
+*/
   /* First, compute the linear mapping (x,y,x+w,y+h) to (0,0,pw,ph) */
   /* ============================================================== */
 
@@ -250,8 +265,9 @@ blah (void)
   /* ====================== */
 
 /*  gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,pw,ph); */
-
+/*
 }
+*/
 
 /*************************************************/
 /* Check if the given position is within the     */
@@ -283,10 +299,12 @@ check_light_hit (gint xpos,
 /* Draw a marker to show light position */
 /****************************************/
 
-void
+/*
+static void
 draw_light_marker (gint xpos,
 		   gint ypos)
 {
+*/
 /*  gck_gc_set_foreground(visinfo,gc,0,50,255);
   gck_gc_set_background(visinfo,gc,0,0,0);
 
@@ -322,9 +340,9 @@ draw_light_marker (gint xpos,
       backbuf.image=gdk_image_get(previewarea->window,backbuf.x,backbuf.y,backbuf.w,backbuf.h);
       gdk_draw_arc(previewarea->window,gc,TRUE,lightx-7,lighty-7,14,14,0,360*64);
     } */
-}
+/*}*/
 
-void
+static void
 clear_light_marker (void)
 {
   /* Restore background if it has been saved */
@@ -343,10 +361,11 @@ clear_light_marker (void)
     } */
 }
 
-void
+/*
+static void
 draw_lights (void)
 {
-/*  gdouble dxpos,dypos;
+  gdouble dxpos,dypos;
   gint xpos,ypos;
 
   clear_light_marker();
@@ -358,8 +377,8 @@ draw_lights (void)
   ypos=(gint)(dypos+0.5);
 
   if (xpos>=0 && xpos<=PREVIEW_WIDTH && ypos>=0 && ypos<=PREVIEW_HEIGHT)
-    draw_light_marker(xpos,ypos); */
-}
+    draw_light_marker(xpos,ypos);
+}*/
 
 /*************************************************/
 /* Update light position given new screen coords */
@@ -382,7 +401,7 @@ update_light (gint xpos,
   draw_lights(startx,starty,pw,ph); */
 }
 
-void
+static void
 compute_preview_rectangle (gint *xp,
 			   gint *yp,
 			   gint *wid,
@@ -451,4 +470,3 @@ draw_preview_image (gint recompute)
   gdk_draw_image (previewarea->window, gc, image,
 		  0, 0, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
-

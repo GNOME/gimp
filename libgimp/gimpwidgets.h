@@ -171,6 +171,8 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gdouble             ysize_0,   /* % */
 				    gdouble             ysize_100  /* % */);
 
+GtkWidget * gimp_pixmap_button_new (gchar             **xpm_data);
+
 /*
  *  Standard Callbacks
  */

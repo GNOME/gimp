@@ -5,6 +5,14 @@
 /* mapobject_preview.c and mapobject_apply.c             */
 /*********************************************************/
 
+#include <gck/gck.h>
+
+#include <libgimp/gimp.h>
+
+#include "mapobject_main.h"
+#include "mapobject_preview.h"
+#include "mapobject_shade.h"
+#include "mapobject_ui.h"
 #include "mapobject_image.h"
 
 GDrawable *input_drawable,*output_drawable;
@@ -16,12 +24,12 @@ GPixelRgn box_regions[6];
 GDrawable *cylinder_drawables[2];
 GPixelRgn cylinder_regions[2];
 
-guchar *preview_rgb_data = NULL;
+guchar   *preview_rgb_data = NULL;
 GdkImage *image = NULL;
 
-glong maxcounter,old_depth,max_depth;
-gint imgtype,width,height,in_channels,out_channels;
-GckRGB background;
+glong   maxcounter,old_depth,max_depth;
+gint    imgtype,width,height,in_channels,out_channels;
+GckRGB  background;
 gdouble oldtreshold;
 
 gint border_x1,border_y1,border_x2,border_y2;
@@ -30,7 +38,9 @@ gint border_x1,border_y1,border_x2,border_y2;
 /* Implementation */
 /******************/
 
-GckRGB peek(gint x,gint y)
+GckRGB
+peek (gint x,
+      gint y)
 {
   static guchar data[4];
   GckRGB color;
@@ -54,7 +64,10 @@ GckRGB peek(gint x,gint y)
   return(color);
 }
 
-GckRGB peek_box_image(gint image, gint x,gint y)
+static GckRGB
+peek_box_image (gint image,
+		gint x,
+		gint y)
 {
   static guchar data[4];
   GckRGB color;
@@ -78,7 +91,10 @@ GckRGB peek_box_image(gint image, gint x,gint y)
   return(color);
 }
 
-GckRGB peek_cylinder_image(gint image, gint x,gint y)
+static GckRGB
+peek_cylinder_image (gint image,
+		     gint x,
+		     gint y)
 {
   static guchar data[4];
   GckRGB color;
@@ -102,7 +118,10 @@ GckRGB peek_cylinder_image(gint image, gint x,gint y)
   return(color);
 }
 
-void poke(gint x,gint y,GckRGB *color)
+void
+poke (gint    x,
+      gint    y,
+      GckRGB *color)
 {
   static guchar data[4];
   
@@ -114,7 +133,9 @@ void poke(gint x,gint y,GckRGB *color)
   gimp_pixel_rgn_set_pixel(&dest_region,data,x,y);
 }
 
-gint checkbounds(gint x,gint y)
+gint
+checkbounds (gint x,
+	     gint y)
 {
   if (x<border_x1 || y<border_y1 || x>=border_x2 || y>=border_y2)
     return(FALSE);
@@ -122,7 +143,10 @@ gint checkbounds(gint x,gint y)
     return(TRUE);
 }
 
-gint checkbounds_box_image(gint image, gint x,gint y)
+static gint
+checkbounds_box_image (gint image,
+		       gint x,
+		       gint y)
 {
   gint w,h;
 
@@ -135,7 +159,10 @@ gint checkbounds_box_image(gint image, gint x,gint y)
     return(TRUE);
 }
 
-gint checkbounds_cylinder_image(gint image, gint x,gint y)
+static gint
+checkbounds_cylinder_image (gint image,
+			    gint x,
+			    gint y)
 {
   gint w,h;
 
@@ -148,7 +175,9 @@ gint checkbounds_cylinder_image(gint image, gint x,gint y)
     return(TRUE);
 }
 
-GimpVector3 int_to_pos(gint x,gint y)
+GimpVector3
+int_to_pos (gint x,
+	    gint y)
 {
   GimpVector3 pos;
 
@@ -159,7 +188,11 @@ GimpVector3 int_to_pos(gint x,gint y)
   return(pos);
 }
 
-void pos_to_int(gdouble x,gdouble y,gint *scr_x,gint *scr_y)
+void
+pos_to_int (gdouble  x,
+	    gdouble  y,
+	    gint    *scr_x,
+	    gint    *scr_y)
 {
   *scr_x=(gint)((x*(gdouble)width));
   *scr_y=(gint)((y*(gdouble)height));
@@ -170,7 +203,10 @@ void pos_to_int(gdouble x,gdouble y,gint *scr_x,gint *scr_y)
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GckRGB get_image_color(gdouble u,gdouble v,gint *inside)
+GckRGB
+get_image_color (gdouble  u,
+		 gdouble  v,
+		 gint    *inside)
 {
   gint   x1, y1, x2, y2;
   GckRGB p[4];
@@ -219,7 +255,10 @@ GckRGB get_image_color(gdouble u,gdouble v,gint *inside)
   return(gck_bilinear_rgba(u * width, v * height, p));
 }
 
-GckRGB get_box_image_color(gint image,gdouble u,gdouble v)
+GckRGB
+get_box_image_color (gint    image,
+		     gdouble u,
+		     gdouble v)
 {
   gint   w,h, x1, y1, x2, y2;
   GckRGB p[4];
@@ -247,7 +286,10 @@ GckRGB get_box_image_color(gint image,gdouble u,gdouble v)
   return(gck_bilinear_rgba(u*w, v*h, p));
 }
 
-GckRGB get_cylinder_image_color(gint image,gdouble u,gdouble v)
+GckRGB
+get_cylinder_image_color (gint    image,
+			  gdouble u,
+			  gdouble v)
 {
   gint   w,h, x1, y1, x2, y2;
   GckRGB p[4];
@@ -279,15 +321,17 @@ GckRGB get_cylinder_image_color(gint image,gdouble u,gdouble v)
 /* Allocate memory for temporary images */
 /****************************************/
 
-gint image_setup(GDrawable *drawable,gint interactive)
+gint
+image_setup (GDrawable *drawable,
+	     gint       interactive)
 {
   glong numbytes;
 
   /* Set the tile cache size */
   /* ======================= */
 
-  gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) /
-   gimp_tile_width());
+  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
+			  gimp_tile_width());
  
   /* Get some useful info on the input drawable */
   /* ========================================== */
@@ -295,12 +339,14 @@ gint image_setup(GDrawable *drawable,gint interactive)
   input_drawable=drawable;
   output_drawable=drawable;
 
-  gimp_drawable_mask_bounds (drawable->id, &border_x1, &border_y1, &border_x2, &border_y2);
+  gimp_drawable_mask_bounds (drawable->id,
+			     &border_x1, &border_y1, &border_x2, &border_y2);
 
   width=input_drawable->width;
   height=input_drawable->height;
 
-  gimp_pixel_rgn_init (&source_region, input_drawable,  0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&source_region, input_drawable,
+		       0, 0, width, height, FALSE, FALSE);
 
   maxcounter=(glong)width*(glong)height;
 
@@ -318,11 +364,12 @@ gint image_setup(GDrawable *drawable,gint interactive)
     
       numbytes=PREVIEW_HEIGHT*PREVIEW_WIDTH*3;
     
-      image=gdk_image_new(GDK_IMAGE_FASTEST,visinfo->visual,PREVIEW_WIDTH,PREVIEW_HEIGHT);
+      image=gdk_image_new(GDK_IMAGE_FASTEST,visinfo->visual,
+			  PREVIEW_WIDTH,PREVIEW_HEIGHT);
       if (image==NULL)
         return(FALSE);
 
-      preview_rgb_data=(guchar *)malloc((size_t)numbytes);
+      preview_rgb_data=(guchar *)g_malloc((size_t)numbytes);
       if (preview_rgb_data==NULL)
         return(FALSE);
       memset(preview_rgb_data,0,numbytes);
@@ -330,9 +377,9 @@ gint image_setup(GDrawable *drawable,gint interactive)
       /* Convert from raw RGB to GdkImage */
       /* ================================ */
 
-      gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,PREVIEW_WIDTH,PREVIEW_HEIGHT);
+      gck_rgb_to_gdkimage(visinfo,preview_rgb_data,image,
+			  PREVIEW_WIDTH,PREVIEW_HEIGHT);
     }
 
   return(TRUE);
 }
-

@@ -26,6 +26,7 @@
 #include "gimphelp.h"
 
 #include "libgimp/gimpdialog.h"
+#include "libgimp/gimppixmap.h"
 #include "libgimp/gimpquerybox.h"
 #include "libgimp/gimpwidgets.h"
 

@@ -24,6 +24,7 @@
 
 #include "gimpchainbutton.h"
 #include "gimphelpui.h"
+#include "gimppixmap.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 #include "gimpmath.h"
@@ -799,6 +800,21 @@ gimp_coordinates_new (GimpUnit         unit,
                       gcd);
 
   return sizeentry;
+}
+
+GtkWidget *
+gimp_pixmap_button_new (gchar **xpm_data)
+{
+  GtkWidget *button;
+  GtkWidget *pixmap;
+
+  button = gtk_button_new ();
+
+  pixmap = gimp_pixmap_new (xpm_data);
+  gtk_container_add (GTK_CONTAINER (button), pixmap);
+  gtk_widget_show (pixmap);
+
+  return button;
 }
 
 /*

@@ -1,25 +1,6 @@
 #ifndef __MAPOBJECT_MAIN_H__
 #define __MAPOBJECT_MAIN_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <gtk/gtk.h>
-
-#include <gck/gck.h>
-
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
-#include "arcball.h"
-#include "mapobject_ui.h"
-#include "mapobject_image.h"
-#include "mapobject_apply.h"
-#include "mapobject_preview.h"
-
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
 /* Defines and stuff */
 /* ================= */
 

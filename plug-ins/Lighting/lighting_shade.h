@@ -1,23 +1,17 @@
-#ifndef LIGHTINGSHADEH
-#define LIGHTINGSHADEH
+#ifndef __LIGHTING_SHADE_H__
+#define __LIGHTING_SHADE_H__
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <gdk/gdk.h>
-#include <gck/gck.h>
+typedef GckRGB (* get_ray_func) (GimpVector3 *vector);
 
-#include "lighting_main.h"
-#include "lighting_image.h"
+GckRGB get_ray_color                 (GimpVector3 *position);
+GckRGB get_ray_color_no_bilinear     (GimpVector3 *position);
+GckRGB get_ray_color_ref             (GimpVector3 *position);
+GckRGB get_ray_color_no_bilinear_ref (GimpVector3 *position);
 
-typedef GckRGB (*get_ray_func) (GimpVector3 *);
+void   precompute_init               (gint         w,
+				      gint         h);
+void   precompute_normals            (gint         x1,
+				      gint         x2,
+				      gint         y);
 
-extern GckRGB get_ray_color                 (GimpVector3 *position);
-extern GckRGB get_ray_color_no_bilinear     (GimpVector3 *position);
-extern GckRGB get_ray_color_ref             (GimpVector3 *position);
-extern GckRGB get_ray_color_no_bilinear_ref (GimpVector3 *position);
-
-extern void precompute_init    (gint w,gint h);
-extern void precompute_normals (gint x1,gint x2,gint y);
-
-#endif
+#endif  /* __LIGHTING_SHADE_H__ */

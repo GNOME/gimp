@@ -2,31 +2,61 @@
 /* Compute a preview image and preview wireframe */
 /*************************************************/
 
+#include <gtk/gtk.h>
+
+#include <gck/gck.h>
+
+#include <libgimp/gimp.h>
+
+#include "arcball.h"
+#include "mapobject_main.h"
+#include "mapobject_ui.h"
+#include "mapobject_image.h"
+#include "mapobject_apply.h"
+#include "mapobject_shade.h"
 #include "mapobject_preview.h"
 
 line    linetab[WIRESIZE*2+8];
 gdouble mat[3][4];
 
-gint lightx,lighty;
+gint       lightx,lighty;
 BackBuffer backbuf={0,0,0,0,NULL};
 
 /* Protos */
 /* ====== */
 
-void update_light       (gint xpos,gint ypos);
-void draw_light_marker  (gint xpos,gint ypos);
-void clear_light_marker (void);
+static void draw_light_marker  (gint        xpos,
+				gint        ypos);
+static void clear_light_marker (void);
 
-gint draw_line (gint n, gint startx,gint starty,gint pw,gint ph,
-                gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
-                GimpVector3 a,GimpVector3 b);
+static gint draw_line          (gint        n,
+				gint        startx,
+				gint        starty,
+				gint        pw,
+				gint        ph,
+				gdouble     cx1,
+				gdouble     cy1,
+				gdouble     cx2,
+				gdouble     cy2,
+				GimpVector3 a,
+				GimpVector3 b);
 
-void draw_wireframe_plane    (gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_sphere   (gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_box      (gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_cylinder (gint startx,gint starty,gint pw,gint ph);
-
-void clear_wireframe (void);
+static void draw_wireframe_plane    (gint startx,
+				     gint starty,
+				     gint pw,
+				     gint ph);
+static void draw_wireframe_sphere   (gint startx,
+				     gint starty,
+				     gint pw,
+				     gint ph);
+static void draw_wireframe_box      (gint startx,
+				     gint starty,
+				     gint pw,
+				     gint ph);
+static void draw_wireframe_cylinder (gint startx,
+				     gint starty,
+				     gint pw,
+				     gint ph);
 
 /*************************************************/
 /* Quick and dirty (and slow) line clip routine. */
@@ -118,7 +148,13 @@ clip_line (gdouble *x1,
 /* dimensions (w,h), placing the result in preview_RGB_data.  */ 
 /**************************************************************/
 
-void compute_preview(gint x,gint y,gint w,gint h,gint pw,gint ph)
+void
+compute_preview (gint x,
+		 gint y,
+		 gint w,
+		 gint h,
+		 gint pw,
+		 gint ph)
 {
   gdouble xpostab[PREVIEW_WIDTH],ypostab[PREVIEW_HEIGHT],realw,realh;
   GimpVector3 p1,p2;
@@ -221,7 +257,9 @@ void compute_preview(gint x,gint y,gint w,gint h,gint pw,gint ph)
 /* light marker. Return TRUE if so, FALSE if not */
 /*************************************************/
 
-gint check_light_hit(gint xpos,gint ypos)
+gint
+check_light_hit (gint xpos,
+		 gint ypos)
 {
   gdouble dx,dy,r;
   
@@ -243,7 +281,9 @@ gint check_light_hit(gint xpos,gint ypos)
 /* Draw a marker to show light position */
 /****************************************/
 
-void draw_light_marker(gint xpos,gint ypos)
+static void
+draw_light_marker (gint xpos,
+		   gint ypos)
 {
   gck_gc_set_foreground(visinfo,gc,0,50,255);
   gck_gc_set_background(visinfo,gc,0,0,0);
@@ -281,7 +321,8 @@ void draw_light_marker(gint xpos,gint ypos)
     }
 }
 
-void clear_light_marker()
+static void
+clear_light_marker (void)
 {
   /* Restore background if it has been saved */
   /* ======================================= */
@@ -299,7 +340,11 @@ void clear_light_marker()
     }
 }
 
-void draw_lights(gint startx,gint starty,gint pw,gint ph)
+static void
+draw_lights (gint startx,
+	     gint starty,
+	     gint pw,
+	     gint ph)
 {
   gdouble dxpos,dypos;
   gint xpos,ypos;
@@ -319,7 +364,9 @@ void draw_lights(gint startx,gint starty,gint pw,gint ph)
 /* Update light position given new screen coords */
 /*************************************************/
 
-void update_light(gint xpos,gint ypos)
+void
+update_light (gint xpos,
+	      gint ypos)
 {
   gint startx,starty,pw,ph;
 
@@ -382,7 +429,8 @@ draw_preview_image (gint docompute)
 /* Draw preview wireframe */
 /**************************/
 
-void draw_preview_wireframe(void)
+void
+draw_preview_wireframe (void)
 {
   gint startx,starty,pw,ph;
 
@@ -404,26 +452,34 @@ void draw_preview_wireframe(void)
 /* Draw a wireframe preview */
 /****************************/
 
-void draw_wireframe(gint startx,gint starty,gint pw,gint ph)
+void
+draw_wireframe (gint startx,
+		gint starty,
+		gint pw,
+		gint ph)
 {
   switch (mapvals.maptype)
     {
-      case MAP_PLANE:
-        draw_wireframe_plane(startx,starty,pw,ph);
-        break;
-      case MAP_SPHERE:
-        draw_wireframe_sphere(startx,starty,pw,ph);
-        break;
-      case MAP_BOX:
-        draw_wireframe_box(startx,starty,pw,ph);
-        break;
-      case MAP_CYLINDER:
-        draw_wireframe_cylinder(startx,starty,pw,ph);
-        break;
+    case MAP_PLANE:
+      draw_wireframe_plane(startx,starty,pw,ph);
+      break;
+    case MAP_SPHERE:
+      draw_wireframe_sphere(startx,starty,pw,ph);
+      break;
+    case MAP_BOX:
+      draw_wireframe_box(startx,starty,pw,ph);
+      break;
+    case MAP_CYLINDER:
+      draw_wireframe_cylinder(startx,starty,pw,ph);
+      break;
     }
 }
 
-void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
+static void
+draw_wireframe_plane (gint startx,
+		      gint starty,
+		      gint pw,
+		      gint ph)
 {
   GimpVector3 v1,v2,a,b,c,d,dir1,dir2;
   gint cnt,n=0;
@@ -507,7 +563,11 @@ void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph)
   linetab[n].x1=-1;
 }
 
-void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
+static void
+draw_wireframe_sphere (gint startx,
+		       gint starty,
+		       gint pw,
+		       gint ph)
 {
   GimpVector3 p[2*(WIRESIZE+5)];
   gint cnt,cnt2,n=0;
@@ -630,9 +690,18 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
   linetab[n].x1=-1;
 }
 
-gint draw_line(gint n, gint startx,gint starty,gint pw,gint ph,
-               gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
-               GimpVector3 a,GimpVector3 b)
+static gint
+draw_line (gint        n,
+	   gint        startx,
+	   gint        starty,
+	   gint        pw,
+	   gint        ph,
+	   gdouble     cx1,
+	   gdouble     cy1,
+	   gdouble     cx2,
+	   gdouble     cy2,
+	   GimpVector3 a,
+	   GimpVector3 b)
 {
   gdouble x1,y1,x2,y2;
   gint i = n;
@@ -658,7 +727,11 @@ gint draw_line(gint n, gint startx,gint starty,gint pw,gint ph,
   return(i);
 }
 
-void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
+static void
+draw_wireframe_box (gint startx,
+		    gint starty,
+		    gint pw,
+		    gint ph)
 {
   GimpVector3 p[8], tmp, scale;
   gint n=0,i;
@@ -720,7 +793,11 @@ void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
   linetab[n].x1=-1;
 }
 
-void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
+static void
+draw_wireframe_cylinder (gint startx,
+			 gint starty,
+			 gint pw,
+			 gint ph)
 {
   GimpVector3 p[2*8], a, axis, scale;
   gint n=0,i;
@@ -789,7 +866,8 @@ void draw_wireframe_cylinder(gint startx,gint starty,gint pw,gint ph)
   linetab[n].x1=-1;
 }
 
-void clear_wireframe(void)
+void
+clear_wireframe (void)
 {
   gint n=0;
   

@@ -2,6 +2,14 @@
 /* Apply mapping and shading on the whole input image */
 /******************************************************/
 
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
+#include "mapobject_main.h"
+#include "mapobject_image.h"
 #include "mapobject_shade.h"
 
 /*************/
@@ -9,7 +17,7 @@
 /*************/
 
 gdouble imat[4][4];
-gfloat rotmat[16], a[16], b[16];
+gfloat  rotmat[16], a[16], b[16];
 
 void init_compute(void)
 {

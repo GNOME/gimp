@@ -221,22 +221,6 @@ gimp_color_button_get_type (void)
   return gcb_type;
 }
 
-/**
- * gimp_color_button_new:
- * @title: String that wil be used as title for the color_selector.
- * @width: Width of the colorpreview in pixels.
- * @height: Height of the colorpreview in pixels.
- * @color: An array of guchar holding the color (RGB or RGBA)
- * @bpp: May be 3 for RGB or 4 for RGBA.
- * 
- * Creates a new GimpColorbutton widget. This returns a button with 
- * a preview showing the color. When the button is clicked a 
- * GtkColorSelectionDialog is opened. If the user changes the color
- * the new color is written into the array that was used to pass
- * the initial color and the "color_changed" signal is emitted.
- * 
- * Returns: Pointer to the new GimpColorButton widget.
- */
 static GtkWidget *
 _gimp_color_button_new (gboolean  double_color,
 			gchar    *title,
@@ -511,7 +495,8 @@ gimp_color_button_paint (GimpColorButton *gcb)
 	    *p0++ = gcb->dcolor[i] * 255.999;
 	}
       for (y = 0; y < gcb->height; y++)
-	gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->even, 0, y, gcb->width);
+	gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->even,
+			      0, y, gcb->width);
     }
   else  /* gcb->bpp == 4 */
     {
@@ -536,9 +521,11 @@ gimp_color_button_paint (GimpColorButton *gcb)
       for (y = 0; y < gcb->height; y++)
 	{
 	  if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	    gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->odd, 0, y, gcb->width);
+	    gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->odd,
+				  0, y, gcb->width);
 	  else
-	    gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->even, 0, y, gcb->width);
+	    gtk_preview_draw_row (GTK_PREVIEW (gcb->preview), gcb->even,
+				  0, y, gcb->width);
 	} 
     }
 

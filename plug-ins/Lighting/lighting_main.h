@@ -1,11 +1,6 @@
 #ifndef __LIGHTING_MAIN_H__
 #define __LIGHTING_MAIN_H__
 
-#include <gtk/gtk.h>
-#include <gck/gck.h>
-
-#include <libgimp/gimp.h>
-
 /* Defines and stuff */
 /* ================= */
 
@@ -104,4 +99,4 @@ typedef struct
 extern LightingValues mapvals;
 extern GckRGB         background;
 
-#endif
+#endif  /* __LIGHTING_MAIN_H__ */

@@ -1,12 +1,6 @@
 #ifndef __MAPOBJECT_UI_H__
 #define __MAPOBJECT_UI_H__
 
-#include <gtk/gtk.h>
-
-#include <libgimp/gimp.h>
-
-#include <gck/gck.h>
-
 /* Externally visible variables */
 /* ============================ */
 

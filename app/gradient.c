@@ -759,21 +759,17 @@ gradient_get_color_at (gradient_t *gradient,
 void 
 gradient_editor_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *gvbox;
-  GtkWidget *button;
-  GtkWidget *frame;
-  GtkWidget *scrolled_win;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *gvbox;
+  GtkWidget   *button;
+  GtkWidget   *frame;
+  GtkWidget   *scrolled_win;
   GdkColormap *colormap;
-  GtkWidget *pixmapwid;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
-  gchar     *titles[2];
-  gint       column_width;
-  gint       select_pos;
-  gint       i;
+  gchar       *titles[2];
+  gint         column_width;
+  gint         select_pos;
+  gint         i;
 
   /* If the editor already exists, just show it */
   if (g_editor)
@@ -934,42 +930,21 @@ gradient_editor_create (void)
 
   /*  + and - buttons  */
   gtk_widget_realize (g_editor->shell);
-  style = gtk_widget_get_style (g_editor->shell);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_in_xpm);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
 		      (gpointer) g_editor);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (g_editor->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_in_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
 
-  button = gtk_button_new ();
+  button = gimp_pixmap_button_new (zoom_out_xpm);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),
 		      (gpointer) g_editor);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (g_editor->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL], 
-					 zoom_out_xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-
-  gtk_container_add (GTK_CONTAINER (button), pixmapwid);
-  gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
 
   /*  Scrollbar  */
@@ -1278,6 +1253,7 @@ ed_create_button (gchar         *label,
   GtkWidget *button;
 
   button = gtk_button_new_with_label (label);
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_widget_show (button); 
 
   if (signal_func != NULL)

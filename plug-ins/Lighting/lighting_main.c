@@ -20,6 +20,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
 #include "lighting_apply.h"
 #include "lighting_image.h"
 #include "lighting_main.h"

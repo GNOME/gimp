@@ -721,19 +721,18 @@ static gint
 delete_fractal_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *button;
-  char      *str;
-  GtkWidget *list = (GtkWidget *)data;
-  GList * sellist;
+  gchar     *str;
+  GtkWidget *list = (GtkWidget *) data;
+  GList     *sellist;
   fractalexplorerOBJ * sel_obj;
+
+  if (delete_dialog)
+    return FALSE;
 
   sellist = GTK_LIST(list)->selection; 
 
-  sel_obj = (fractalexplorerOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
-  if(delete_dialog)
-    return(FALSE);
+  sel_obj = (fractalexplorerOBJ *)
+    gtk_object_get_user_data (GTK_OBJECT ((GtkWidget *) (sellist->data)));
 
   str = g_strdup_printf (_("Are you sure you want to delete\n"
 			   "\"%s\" from the list and from disk?"), 
@@ -746,9 +745,9 @@ delete_fractal_callback (GtkWidget *widget,
 					  str, 
 					  _("Delete"), _("Cancel"),
 					  GTK_OBJECT (widget), "destroy",
-					  (GimpQueryBooleanCallback)delete_dialog_callback,
-					  data);				  
-  g_free(str);
+					  delete_dialog_callback,
+					  data);
+  g_free (str);
 
   gtk_widget_set_sensitive (GTK_WIDGET (delete_frame_to_freeze), FALSE);
   gtk_widget_show (delete_dialog);

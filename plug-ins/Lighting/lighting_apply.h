@@ -1,18 +1,7 @@
-#ifndef LIGHTINGAPPLYH
-#define LIGHTINGAPPLYH
+#ifndef __LIGHTING_APPLY_H__
+#define __LIGHTING_APPLY_H__
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
-#include <gck/gck.h>
+void init_compute  (void);
+void compute_image (void);
 
-#include "lighting_main.h"
-#include "lighting_image.h"
-
-extern void init_compute  (void);
-extern void compute_image (void);
-
-#endif
+#endif  /* __LIGHTING_APPLY_H__ */

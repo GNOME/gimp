@@ -2,6 +2,14 @@
 /* Apply mapping and shading on the whole input image */
 /******************************************************/
 
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
+#include "lighting_main.h"
+#include "lighting_image.h"
 #include "lighting_shade.h"
 
 /*************/
@@ -10,11 +18,16 @@
 
 get_ray_func ray_func;
 
-void init_compute(void)
+void
+init_compute (void)
 {
 }
 
-void render(gdouble x,gdouble y,GckRGB *col)
+/*
+static void
+render (gdouble  x,
+	gdouble  y,
+	GckRGB  *col)
 {
   GimpVector3 pos;
 
@@ -23,12 +36,17 @@ void render(gdouble x,gdouble y,GckRGB *col)
   *col=(*ray_func)(&pos);
 }
 
-void show_progress(gint min,gint max,gint curr)
+static void
+show_progress (gint min,
+	       gint max,
+	       gint curr)
 {
-  gimp_progress_update((gdouble)curr/(gdouble)max);
+  gimp_progress_update ((gdouble)curr / (gdouble)max);
 }
+*/
 
-void compute_image(void)
+void
+compute_image (void)
 {
   gint xcount,ycount;
   GckRGB color;
@@ -91,7 +109,7 @@ void compute_image(void)
   obpp=gimp_drawable_bpp(output_drawable->id);
   has_alpha=gimp_drawable_has_alpha(output_drawable->id);
 
-  row = (guchar *)malloc(sizeof(guchar)*(size_t)(obpp)*(size_t)(width));
+  row = (guchar *)g_malloc(sizeof(guchar)*(size_t)(obpp)*(size_t)(width));
 
   gimp_progress_init("Lighting Effects");
 
@@ -127,7 +145,7 @@ void compute_image(void)
       mapvals.pixel_treshold,render,poke,show_progress); */
 
   if (row!=NULL)
-    free(row);
+    g_free(row);
 
   /* Update image */
   /* ============ */
@@ -144,4 +162,3 @@ void compute_image(void)
     }
 
 }
-

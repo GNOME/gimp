@@ -2,25 +2,35 @@
 /* Shading stuff */
 /*****************/
 
+#include <libgimp/gimp.h>
+
+#include <gck/gck.h>
+
+#include "lighting_main.h"
+#include "lighting_image.h"
 #include "lighting_shade.h"
 
-GimpVector3 *triangle_normals[2] = { NULL, NULL };
-GimpVector3 *vertex_normals[3] = { NULL, NULL, NULL };
-gdouble *heights[3] = { NULL, NULL, NULL };
-gdouble xstep,ystep;
-guchar *bumprow=NULL;
+static GimpVector3 *triangle_normals[2] = { NULL, NULL };
+static GimpVector3 *vertex_normals[3]   = { NULL, NULL, NULL };
+static gdouble *heights[3] = { NULL, NULL, NULL };
+static gdouble  xstep, ystep;
+static guchar  *bumprow = NULL;
 
-gint pre_w=-1;
-gint pre_h=-1;
+static gint pre_w = -1;
+static gint pre_h = -1;
 
 /*****************/
 /* Phong shading */
 /*****************/
 
-GckRGB phong_shade(GimpVector3 *position,GimpVector3 *viewpoint,
-                   GimpVector3 *normal,GimpVector3 *lightposition,
-                   GckRGB *diff_col,GckRGB *spec_col,
-                   LightType light_type)
+static GckRGB
+phong_shade (GimpVector3 *position,
+	     GimpVector3 *viewpoint,
+	     GimpVector3 *normal,
+	     GimpVector3 *lightposition,
+	     GckRGB      *diff_col,
+	     GckRGB      *spec_col,
+	     LightType    light_type)
 {
   GckRGB ambient_color,diffuse_color,specular_color;
   gdouble nl,rv,dist;
@@ -83,7 +93,11 @@ GckRGB phong_shade(GimpVector3 *position,GimpVector3 *viewpoint,
   return(ambient_color);
 }
 
-void get_normal(gdouble xf,gdouble yf,GimpVector3 *normal)
+/*
+static void
+get_normal (gdouble      xf,
+	    gdouble      yf,
+	    GimpVector3 *normal)
 {
   GimpVector3 v1,v2,n;
   gint numvecs=0,x,y,f;
@@ -162,8 +176,11 @@ void get_normal(gdouble xf,gdouble yf,GimpVector3 *normal)
   gimp_vector3_mul(normal,1.0/(gdouble)numvecs);
   gimp_vector3_normalize(normal);
 }
+*/
 
-void precompute_init(gint w,gint h)
+void
+precompute_init (gint w,
+		 gint h)
 {
   gint n;
 
@@ -176,28 +193,28 @@ void precompute_init(gint w,gint h)
   for (n=0;n<3;n++)
     {
       if (vertex_normals[n]!=NULL)
-        free(vertex_normals[n]);
+        g_free(vertex_normals[n]);
       if (heights[n]!=NULL)
-        free(heights[n]);
+        g_free(heights[n]);
       
-      heights[n]=(gdouble *)malloc(sizeof(gdouble)*(size_t)w);
-      vertex_normals[n]=(GimpVector3 *)malloc(sizeof(GimpVector3)*(size_t)w);
+      heights[n]=(gdouble *)g_malloc(sizeof(gdouble)*(size_t)w);
+      vertex_normals[n]=(GimpVector3 *)g_malloc(sizeof(GimpVector3)*(size_t)w);
     }
 
   for (n=0;n<2;n++)
     if (triangle_normals[n]!=NULL)
-      free(triangle_normals[n]);
+      g_free(triangle_normals[n]);
 
   if (bumprow!=NULL)
     {
-      free(bumprow);
+      g_free(bumprow);
       bumprow=NULL;
     }
 
-  bumprow=(guchar *)malloc(sizeof(guchar)*(size_t)w);
+  bumprow=(guchar *)g_malloc(sizeof(guchar)*(size_t)w);
 
-  triangle_normals[0]=(GimpVector3 *)malloc(sizeof(GimpVector3)*(size_t)((w<<1)+2));
-  triangle_normals[1]=(GimpVector3 *)malloc(sizeof(GimpVector3)*(size_t)((w<<1)+2));
+  triangle_normals[0]=(GimpVector3 *)g_malloc(sizeof(GimpVector3)*(size_t)((w<<1)+2));
+  triangle_normals[1]=(GimpVector3 *)g_malloc(sizeof(GimpVector3)*(size_t)((w<<1)+2));
   
   for (n=0;n<(w<<1)+1;n++)
     {
@@ -220,7 +237,10 @@ void precompute_init(gint w,gint h)
 /* Compute triangle and then vertex normals */
 /********************************************/
 
-void precompute_normals(gint x1,gint x2,gint y)
+void
+precompute_normals (gint x1,
+		    gint x2,
+		    gint y)
 {
   GimpVector3 *tmpv,p1,p2,p3,normal;
   gdouble *tmpd;
@@ -345,7 +365,9 @@ void precompute_normals(gint x1,gint x2,gint y)
 /* Compute the reflected ray given the normalized normal and ins. vec. */
 /***********************************************************************/
 
-GimpVector3 compute_reflected_ray(GimpVector3 *normal,GimpVector3 *view)
+static GimpVector3
+compute_reflected_ray (GimpVector3 *normal,
+		       GimpVector3 *view)
 {
   GimpVector3 ref;
   gdouble nl;
@@ -365,7 +387,10 @@ GimpVector3 compute_reflected_ray(GimpVector3 *normal,GimpVector3 *view)
 /* the conversion from spherical coordinates to image space coordinates */
 /************************************************************************/
 
-void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
+static void
+sphere_to_image (GimpVector3 *normal,
+		 gdouble     *u,
+		 gdouble     *v)
 {
   static gdouble alpha,fac;
   static GimpVector3 cross_prod;
@@ -402,7 +427,8 @@ void sphere_to_image(GimpVector3 *normal,gdouble *u,gdouble *v)
 /* These routines computes the color of the surface at a given point */
 /*********************************************************************/
 
-GckRGB get_ray_color(GimpVector3 *position)
+GckRGB
+get_ray_color (GimpVector3 *position)
 {
   GckRGB color;
   gint x,f;
@@ -449,7 +475,8 @@ GckRGB get_ray_color(GimpVector3 *position)
   return(color);
 }
 
-GckRGB get_ray_color_ref(GimpVector3 *position)
+GckRGB
+get_ray_color_ref (GimpVector3 *position)
 {
   GckRGB color,env_color;
   gint x,f;
@@ -507,7 +534,8 @@ GckRGB get_ray_color_ref(GimpVector3 *position)
   return(color);
 }
 
-GckRGB get_ray_color_no_bilinear(GimpVector3 *position)
+GckRGB
+get_ray_color_no_bilinear (GimpVector3 *position)
 {
   GckRGB color;
   gint x;
@@ -554,7 +582,8 @@ GckRGB get_ray_color_no_bilinear(GimpVector3 *position)
   return(color);
 }
 
-GckRGB get_ray_color_no_bilinear_ref(GimpVector3 *position)
+GckRGB
+get_ray_color_no_bilinear_ref (GimpVector3 *position)
 {
   GckRGB color,env_color;
   gint x;
@@ -631,4 +660,3 @@ GckRGB get_ray_color_no_bilinear_ref(GimpVector3 *position)
 
   return(color);
 }
-

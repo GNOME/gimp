@@ -23,6 +23,7 @@
 #include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 
+#include "config.h"
 #include "libgimp-intl.h"
 
 #include "pixmaps/eek.xpm"
@@ -402,11 +403,8 @@ gimp_query_boolean_box (gchar                    *title,
 {
   QueryBox  *query_box;
   GtkWidget *hbox;
-  GtkWidget *pixmap_widget;
+  GtkWidget *pixmap;
   GtkWidget *label;
-
-  static GdkPixmap *eek_pixmap = NULL;
-  static GdkBitmap *eek_mask   = NULL;
 
   query_box = create_query_box (title, help_func, help_data,
 				boolean_query_box_true_callback,
@@ -424,22 +422,9 @@ gimp_query_boolean_box (gchar                    *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox), hbox);
   gtk_widget_show (hbox);
 
-  if (!eek_pixmap)
-    {
-      GtkStyle  *style;
-
-      gtk_widget_realize (query_box->qbox);
-      style = gtk_widget_get_style (query_box->qbox);
-
-      eek_pixmap = gdk_pixmap_create_from_xpm_d (query_box->qbox->window,
-						 &eek_mask,
-						 &style->bg[GTK_STATE_NORMAL],
-						 eek_xpm);
-    }
-
-  pixmap_widget = gtk_pixmap_new (eek_pixmap, eek_mask);
-  gtk_box_pack_start (GTK_BOX (hbox), pixmap_widget, FALSE, FALSE, 0);
-  gtk_widget_show (pixmap_widget);
+  pixmap = gimp_pixmap_new (eek_xpm);
+  gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 0);
+  gtk_widget_show (pixmap);
 
   label = gtk_label_new (message);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

@@ -1,19 +1,5 @@
-#ifndef LIGHTINGPREVIEWH
-#define LIGHTINGPREVIEWH
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
-#include <gck/gck.h>
-#include <libgimp/gimp.h>
-
-#include "lighting_main.h"
-#include "lighting_ui.h"
-#include "lighting_image.h"
-#include "lighting_apply.h"
-#include "lighting_shade.h"
+#ifndef __LIGHTING_PREVIEW_H__
+#define __LIGHTING_PREVIEW_H__
 
 #define PREVIEW_WIDTH 300
 #define PREVIEW_HEIGHT 300
@@ -34,8 +20,10 @@ extern gdouble    *xpostab,*ypostab;
 /* Externally visible functions */
 /* ============================ */
 
-extern void draw_preview_image (gint recompute);
-extern gint check_light_hit    (gint xpos,gint ypos);
-extern void update_light       (gint xpos,gint ypos);
+void draw_preview_image (gint recompute);
+gint check_light_hit    (gint xpos,
+			 gint ypos);
+void update_light       (gint xpos,
+			 gint ypos);
 
-#endif
+#endif  /* __LIGHTING_PREVIEW_H__ */
