@@ -103,6 +103,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkStatusbar  *gtk_statusbar;
   GtkBox        *box;
+  GtkWidget     *hbox;
   GimpUnitStore *store;
   GtkShadowType  shadow_type;
 
@@ -125,20 +126,23 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_box_reorder_child (box, statusbar->cursor_frame, 0);
   gtk_widget_show (statusbar->cursor_frame);
 
+  hbox = gtk_hbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame), hbox);
+  gtk_widget_show (hbox);
+
   statusbar->cursor_label = gtk_label_new ("0, 0");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
-  gtk_container_add (GTK_CONTAINER (statusbar->cursor_frame),
-                     statusbar->cursor_label);
+  gtk_container_add (GTK_CONTAINER (hbox), statusbar->cursor_label);
   gtk_widget_show (statusbar->cursor_label);
 
   store = gimp_unit_store_new (2);
-  statusbar->combo = gimp_unit_combo_box_new_with_model (store);
+  statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
-  gtk_box_pack_start (box, statusbar->combo, FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->combo);
+  gtk_container_add (GTK_CONTAINER (hbox), statusbar->unit_combo);
+  gtk_widget_show (statusbar->unit_combo);
 
-  g_signal_connect (statusbar->combo, "changed",
+  g_signal_connect (statusbar->unit_combo, "changed",
                     G_CALLBACK (gimp_statusbar_unit_changed),
                     statusbar);
 
@@ -305,14 +309,15 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
   shell  = statusbar->shell;
   gimage = shell->gdisp->gimage;
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->combo));
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
   gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
                                    gimage->xresolution, gimage->yresolution);
 
-  g_signal_handlers_block_by_func (statusbar->combo,
+  g_signal_handlers_block_by_func (statusbar->unit_combo,
                                    gimp_statusbar_unit_changed, statusbar);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (statusbar->combo), gimage->unit);
-  g_signal_handlers_unblock_by_func (statusbar->combo,
+  gtk_combo_box_set_active (GTK_COMBO_BOX (statusbar->unit_combo),
+                            gimage->unit);
+  g_signal_handlers_unblock_by_func (statusbar->unit_combo,
                                      gimp_statusbar_unit_changed, statusbar);
 
   if (gimage->unit == GIMP_UNIT_PIXEL)
@@ -368,7 +373,7 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
   GimpUnitStore *store;
   gchar          buffer[CURSOR_STR_LENGTH];
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->combo));
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
   store = GIMP_UNIT_STORE (model);
 
   gimp_unit_store_set_pixel_values (store, x, y);

@@ -1,5 +1,10 @@
 2004-05-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.[ch]: renamed struct member combo to
+	unit_combo. Place the combobox into the cursor frame.
+
+2004-05-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpunitcombobox.[ch]

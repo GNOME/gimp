@@ -47,7 +47,7 @@ struct _GimpStatusbar
   GtkWidget        *cursor_frame;
   GtkWidget        *cursor_label;
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
-  GtkWidget        *combo;
+  GtkWidget        *unit_combo;
 
   GtkWidget        *progressbar;
   guint             progressid;
