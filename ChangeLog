@@ -1,3 +1,15 @@
+2004-12-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/actions.c (action_data_get_*): get gimp, display or
+	image from a context only if it isn't NULL. Fixes warnings and
+	crashes when dragging around some dockables (the dockables'
+	context temporarily becomes NULL while dragging).
+
+	Reordered checks for the passed "data" to be consistent across the
+	various functions.
+
+	Removed assertions which said "#warning: remove me before 2.2"
+
 2004-12-16  Sven Neumann  <neumann@jpk.com>
 
 	* app/dialogs/preferences-dialog.c (prefs_keyboard_shortcuts_dialog):
