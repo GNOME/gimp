@@ -1,3 +1,6 @@
+Wed Feb 18 17:56:40 MET 1998 Sven Neumann <sven@gimp.org>
+	* app/app_procs.c: fixed refcounting for the splash-image
+
 Tue Feb 17 21:23:20 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/fileops.c: hide the help buttons since we have no 

@@ -211,7 +211,6 @@ splash_logo_load (GtkWidget *window)
 	  fclose (fp);
 	  return 0;
 	}
-
       gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
     }
 
@@ -221,7 +220,7 @@ splash_logo_load (GtkWidget *window)
 		   logo_pixmap, window->style->black_gc,
 		   0, 0, 0, 0, logo_width, logo_height);
 
-  gtk_widget_destroy (preview);
+  gtk_widget_unref (preview);
   g_free (pixelrow);
 
   fclose (fp);
@@ -254,12 +253,6 @@ splash_text_draw (GtkWidget *widget)
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
 		   (0.7 * logo_area_height),
 		   AUTHORS);
-
-  /*  gdk_draw_rectangle (widget->window,
-		      widget->style->black_gc,
-		      FALSE, 
-		      1, 1, (logo_area_width - 2), (logo_area_height - 2));
-  */
 }
 
 static void
@@ -325,7 +318,7 @@ make_initialization_status_window(void)
 
       if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus)) 
 	{
-	  show_logo = TRUE;
+	  show_logo = SHOW_LATER;
 	}
 
       vbox = gtk_vbox_new(FALSE, 4);
