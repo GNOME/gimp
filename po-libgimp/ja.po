@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2000-11-25 21:01+0900\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-11-25 22:01+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -112,7 +112,7 @@ msgstr "無視"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
-#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:501
+#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
 msgid "Cancel"
 msgstr "取消"
 
@@ -133,23 +133,23 @@ msgstr "ファイル選択"
 
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:499
+#: libgimp/gimpunitmenu.c:503
 msgid "OK"
 msgstr "了解"
 
-#: libgimp/gimpunitmenu.c:238
+#: libgimp/gimpunitmenu.c:241
 msgid "More..."
 msgstr "詳細設定..."
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:498
 msgid "Unit Selection"
 msgstr "単位選択"
 
-#: libgimp/gimpunitmenu.c:531
+#: libgimp/gimpunitmenu.c:535
 msgid "Unit"
 msgstr "単位"
 
-#: libgimp/gimpunitmenu.c:532
+#: libgimp/gimpunitmenu.c:536
 msgid "Factor"
 msgstr "倍率"
 
@@ -200,7 +200,7 @@ msgstr "パイカ"
 msgid "percent"
 msgstr "パーセント"
 
-#: libgimp/gimpwidgets.c:706
+#: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -208,11 +208,11 @@ msgstr ""
 "\"時間\" ボタンが押されていない場合には, この値を乱数の種として用います - "
 "そうすることで, 特定の \"乱数\" 操作を行うことができます"
 
-#: libgimp/gimpwidgets.c:711
+#: libgimp/gimpwidgets.c:720
 msgid "Time"
 msgstr "時間"
 
-#: libgimp/gimpwidgets.c:720
+#: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -220,14 +220,14 @@ msgstr ""
 "現在時刻をもとにした乱数を生成します - "
 "十分な精度の乱数を得ることができるでしょう"
 
-#: libgimp/gimpwidgets.c:1031
+#: libgimp/gimpwidgets.c:1041
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1042
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimp/gimpwidgets.c:1033
+#: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
 msgstr "MegaBytes"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2000-12-07 00:22+0900\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-12-07 00:41+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -55,7 +55,7 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
-#: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1021
+#: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:368
@@ -84,9 +84,9 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/xpm.c:800 plug-ins/fits/fits.c:987
 #: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
 #: plug-ins/fp/fp_gtk.c:904 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:177
-#: plug-ins/gap/gap_lib.c:222 plug-ins/gap/gap_mod_layer.c:146
-#: plug-ins/gap/gap_mov_dialog.c:487 plug-ins/gap/gap_mpege.c:191
+#: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:178
+#: plug-ins/gap/gap_lib.c:230 plug-ins/gap/gap_mod_layer.c:147
+#: plug-ins/gap/gap_mov_dialog.c:498 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
 #: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
 #: plug-ins/gfig/gfig.c:4425 plug-ins/gfig/gfig.c:4508
@@ -136,7 +136,7 @@ msgstr "Î»²ò"
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
-#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1580
+#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
@@ -166,11 +166,11 @@ msgstr "Î»²ò"
 #: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
 #: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:908
 #: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
-#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
-#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:133
-#: plug-ins/gap/gap_lib.c:1019 plug-ins/gap/gap_mod_layer.c:148
-#: plug-ins/gap/gap_mod_layer.c:262 plug-ins/gap/gap_mov_dialog.c:518
-#: plug-ins/gap/gap_mov_dialog.c:3023 plug-ins/gap/gap_mpege.c:189
+#: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
+#: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
+#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
+#: plug-ins/gap/gap_mod_layer.c:264 plug-ins/gap/gap_mov_dialog.c:529
+#: plug-ins/gap/gap_mov_dialog.c:2680 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3933
 #: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4427
@@ -526,7 +526,7 @@ msgstr "Cos"
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1607
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
+#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
 msgstr "¤Ê¤·"
 
@@ -907,7 +907,7 @@ msgstr "°ÌÃÖ"
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:786
 #: plug-ins/common/nova.c:610 plug-ins/common/papertile.c:285
 #: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
-#: plug-ins/gap/gap_mov_dialog.c:2103 plug-ins/gflare/gflare.c:2876
+#: plug-ins/gap/gap_mov_dialog.c:1837 plug-ins/gflare/gflare.c:2876
 #: plug-ins/ifscompose/ifscompose.c:535
 msgid "X:"
 msgstr "X:"
@@ -924,7 +924,7 @@ msgstr "XYZ ¶õ´ÖÃæ¤Î¸÷¸»¤Î X °ÌÃÖ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:2121
+#: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:1855
 #: plug-ins/gflare/gflare.c:2880 plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
 msgstr "Y:"
@@ -1092,7 +1092,7 @@ msgstr "»ÈÍÑ¤¹¤ë´Ä¶­²èÁü"
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:861 plug-ins/gfig/gfig.c:4010
+#: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4010
 msgid "Options"
 msgstr "¥ª¥×¥·¥ç¥ó"
 
@@ -1118,7 +1118,7 @@ msgid "Lighting Effects"
 msgstr "¥é¥¤¥È¸ú²Ì"
 
 #: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:709
-#: plug-ins/gap/gap_mov_dialog.c:496
+#: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Update Preview"
 msgstr "¥×¥ì¥Ó¥å¡¼¹¹¿·"
 
@@ -1391,7 +1391,7 @@ msgstr "%s: ÉÔÀµ¤Ê¥«¥é¡¼¥Þ¥Ã¥×¤Ç¤¹"
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:849
-#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:895
+#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:900
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
@@ -1421,7 +1421,7 @@ msgstr "%s ¤¬³«¤±¤Þ¤»¤ó"
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:943
 #: plug-ins/common/gpb.c:798 plug-ins/common/gpb.c:838
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
-#: plug-ins/common/jpeg.c:1191 plug-ins/common/pat.c:343
+#: plug-ins/common/jpeg.c:1197 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
@@ -1844,7 +1844,7 @@ msgstr "¶¦ÄÌ¼ï¤ò¸µ¤Ë¤·¤¿Íð¿ô"
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
-#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "¿§Áê"
@@ -1852,13 +1852,13 @@ msgstr "¿§Áê"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
-#: plug-ins/gap/gap_mov_dialog.c:275 plug-ins/rcm/rcm_dialog.c:513
+#: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:513
 msgid "Saturation"
 msgstr "ºÌÅÙ"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
-#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:277
+#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:275
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
@@ -2159,7 +2159,7 @@ msgstr "²Ä»ë¥ì¥¤¥ä¡¼¤ÎÀ°Îó"
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
-#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1626
+#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
@@ -2205,7 +2205,7 @@ msgid "Left Edge"
 msgstr "º¸Ã¼"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:288 plug-ins/gflare/gflare.c:2864
+#: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2864
 msgid "Center"
 msgstr "Ãæ±û"
 
@@ -2266,7 +2266,7 @@ msgstr "Æ°²èºÆÀ¸: "
 #: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
-#: plug-ins/gap/gap_navigator_dialog.c:3159
+#: plug-ins/gap/gap_navigator_dialog.c:3160
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:593
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:822
@@ -2579,7 +2579,7 @@ msgstr "Ã±¿§ÅÉ¤ê"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
 #: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
+#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
@@ -2602,8 +2602,8 @@ msgid "Color to Alpha"
 msgstr "¿§¤òÆ©ÌÀÅÙ¤Ë"
 
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:652
-#: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
-#: plug-ins/gap/gap_lib.c:2104 plug-ins/gap/gap_lib.c:2283
+#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
+#: plug-ins/gap/gap_lib.c:2112 plug-ins/gap/gap_lib.c:2291
 #: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
 msgid "From:"
@@ -2857,7 +2857,7 @@ msgstr "¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤âÊÝÂ¸¤¹¤ë (RGBA/RGB)"
 #. Opacity
 #. table col, row
 #: plug-ins/common/csource.c:757 plug-ins/common/sparkle.c:443
-#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:2173
+#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:1907
 #: plug-ins/gflare/gflare.c:3604 plug-ins/gflare/gflare.c:3634
 #: plug-ins/gflare/gflare.c:3664
 msgid "Opacity:"
@@ -2919,7 +2919,7 @@ msgid "Curve Bend"
 msgstr "¤Ò¤ó¶Ê¤²¤ë"
 
 #. menu_item copy
-#: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2921
+#: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5283
 #: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
@@ -3231,7 +3231,7 @@ msgstr "¥Ò¥¹¥È¥°¥é¥àºîÀ®"
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
-#: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
 msgstr "Éý:"
@@ -3384,7 +3384,7 @@ msgstr "ÀþÉý¤òÀ©¸Â¤¹¤ë"
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
 #: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
-#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:2156
+#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:1890
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
@@ -4226,7 +4226,7 @@ msgstr "ºÇÂç¿¼ÅÙ:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:220
+#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:222
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3041
 msgid "Settings"
 msgstr "ÀßÄê"
@@ -4312,81 +4312,81 @@ msgstr "¥¨¥¯¥¹¥Ý¡¼¥È¥×¥ì¥Ó¥å¡¼"
 msgid "can't open \"%s\"\n"
 msgstr "\"%s\" ¤¬³«¤±¤Ê¤¤\n"
 
-#: plug-ins/common/jpeg.c:888
+#: plug-ins/common/jpeg.c:893
 msgid "JPEG preview"
 msgstr "JPEG ¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/common/jpeg.c:1109
+#: plug-ins/common/jpeg.c:1115
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr "¥µ¥¤¥º: %lu bytes (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1616
+#: plug-ins/common/jpeg.c:1526 plug-ins/common/jpeg.c:1633
 msgid "Size: unknown"
 msgstr "¥µ¥¤¥º: ÉÔÌÀ"
 
-#: plug-ins/common/jpeg.c:1573
+#: plug-ins/common/jpeg.c:1590
 msgid "Save as JPEG"
 msgstr "JPEG ·Á¼°¤ÇÊÝÂ¸¤¹¤ë"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1596
+#: plug-ins/common/jpeg.c:1613
 msgid "Image Preview"
 msgstr "²èÁü¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/common/jpeg.c:1605
+#: plug-ins/common/jpeg.c:1622
 msgid "Preview (in image window)"
 msgstr "²èÁü¥¦¥¤¥ó¥É¥¦Ãæ¤Ç¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/common/jpeg.c:1636 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
 msgstr "ÉÊ¼Á:"
 
-#: plug-ins/common/jpeg.c:1658 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
 msgstr "¥¹¥à¡¼¥¸¥ó¥°:"
 
-#: plug-ins/common/jpeg.c:1685
+#: plug-ins/common/jpeg.c:1702
 msgid "Restart markers"
 msgstr "¥ê¥¹¥¿¡¼¥È¥Þ¡¼¥«¡¼"
 
-#: plug-ins/common/jpeg.c:1693
+#: plug-ins/common/jpeg.c:1710
 msgid "Restart frequency (rows):"
 msgstr "¥ê¥¹¥¿¡¼¥ÈÉÑÅÙ(Îó)"
 
-#: plug-ins/common/jpeg.c:1722 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr "ºÇÅ¬²½"
 
-#: plug-ins/common/jpeg.c:1734
+#: plug-ins/common/jpeg.c:1751
 msgid "Progressive"
 msgstr "¥×¥í¥°¥ì¥Ã¥·¥Ö"
 
-#: plug-ins/common/jpeg.c:1751
+#: plug-ins/common/jpeg.c:1768
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "¥Ù¡¼¥¹¥é¥¤¥ó JPEG ¤ò¶¯À© (Á´¤Æ¤Î¥×¥í¥°¥é¥à¤ÇÆÉ¤ß¹þ¤ß²ÄÇ½)"
 
-#: plug-ins/common/jpeg.c:1775
+#: plug-ins/common/jpeg.c:1792
 msgid "Subsampling:"
 msgstr "¥µ¥Ö¥µ¥ó¥×¥ê¥ó¥°:"
 
-#: plug-ins/common/jpeg.c:1784
+#: plug-ins/common/jpeg.c:1801
 msgid "Fast Integer"
 msgstr "¹âÂ®À°¿ô"
 
-#: plug-ins/common/jpeg.c:1785
+#: plug-ins/common/jpeg.c:1802
 msgid "Integer"
 msgstr "À°¿ô"
 
-#: plug-ins/common/jpeg.c:1786
+#: plug-ins/common/jpeg.c:1803
 msgid "Floating-Point"
 msgstr "ÉâÆ°¾®¿ô"
 
-#: plug-ins/common/jpeg.c:1790
+#: plug-ins/common/jpeg.c:1807
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT Ë¡ (¥¹¥Ô¡¼¥É¤ÈÉÊ¼Á¤Î¥È¥ì¡¼¥É¥ª¥Õ):"
 
-#: plug-ins/common/jpeg.c:1798
+#: plug-ins/common/jpeg.c:1815
 msgid "Image comments"
 msgstr "²èÁü¥³¥á¥ó¥È"
 
@@ -4566,9 +4566,9 @@ msgstr "¸µ¤Î¿§ÈÏ°Ï"
 msgid "Destination color range"
 msgstr "Å¬ÍÑ¸å¤Î¿§ÈÏ°Ï"
 
-#: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:662
-#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2112
-#: plug-ins/gap/gap_lib.c:2291 plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:663
+#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2120
+#: plug-ins/gap/gap_lib.c:2299 plug-ins/gap/gap_range_ops.c:260
 #: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
@@ -4692,7 +4692,7 @@ msgid "Output LPI:"
 msgstr "½ÐÎÏ LPI:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:267
+#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:265
 #: plug-ins/gflare/gflare.c:597
 msgid "Screen"
 msgstr "¥¹¥¯¥ê¡¼¥ó"
@@ -5322,7 +5322,10 @@ msgstr "¥¢¥¹¥Ú¥¯¥ÈÈæ¤òÊÝ¤Ä"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr "¥Á¥§¥Ã¥¯¤òÆþ¤ì¤ë¤È, ²èÁü¤Ï¥¢¥¹¥Ú¥¯¥È¥ëÈæ¤òÊÑ¹¹¤»¤º¤ËÍ¿¤¨¤é¤ì¤¿¥µ¥¤¥º¤Ë¹ç¤¦¤è¤¦¤ËÄ´À°¤µ¤ì¤Æ½ÐÎÏ¤µ¤ì¤Þ¤¹."
+msgstr ""
+"¥Á¥§¥Ã¥¯¤òÆþ¤ì¤ë¤È, "
+"²èÁü¤Ï¥¢¥¹¥Ú¥¯¥È¥ëÈæ¤òÊÑ¹¹¤»¤º¤ËÍ¿¤¨¤é¤ì¤¿¥µ¥¤¥º¤Ë¹ç¤¦¤è¤¦¤ËÄ´À°¤µ¤ì¤Æ½ÐÎÏ¤µ¤"
+"ì¤Þ¤¹."
 
 #. Unit
 #: plug-ins/common/ps.c:2885
@@ -6470,7 +6473,9 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr "¤³¤ÎÍó¤Ï¿ôÃÍÆþÎÏÍó¤Î¤¿¤á¤Î¥Ò¥ó¥È¤Ç¤¹. \"¥¤¥ó¥Á\" Ã±°Ì¤ÇÉ½¤µ¤ì¤ëÆþÎÏÍó¤¬ 2 ·å¤Î 10 ¿Ê¿ô¤Î¾ì¹ç¤Ë²¿·å¤Î¿ô¤¬Æ±¤¸ÄøÅÙ¤Î¤â¤Î¤òÉ½¤¹¤Î¤«¤ò»ØÄê¤·¤Þ¤¹."
+msgstr ""
+"¤³¤ÎÍó¤Ï¿ôÃÍÆþÎÏÍó¤Î¤¿¤á¤Î¥Ò¥ó¥È¤Ç¤¹. \"¥¤¥ó¥Á\" Ã±°Ì¤ÇÉ½¤µ¤ì¤ëÆþÎÏÍó¤¬ 2 "
+"·å¤Î 10 ¿Ê¿ô¤Î¾ì¹ç¤Ë²¿·å¤Î¿ô¤¬Æ±¤¸ÄøÅÙ¤Î¤â¤Î¤òÉ½¤¹¤Î¤«¤ò»ØÄê¤·¤Þ¤¹."
 
 #: plug-ins/common/uniteditor.c:548
 msgid ""
@@ -6608,7 +6613,7 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/ÏÄ¤ß/¥Ó¥Ç¥ª..."
 msgid "Video/RGB..."
 msgstr "¥Ó¥Ç¥ª/RGB..."
 
-#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:642
+#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
 msgid "Video"
 msgstr "¥Ó¥Ç¥ª"
 
@@ -7596,50 +7601,50 @@ msgid "Animated Filter apply (please wait)"
 msgstr "Æ°²è¥Õ¥£¥ë¥¿Å¬ÍÑ (¤ªÂÔ¤Á²¼¤µ¤¤)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
-#: plug-ins/gap/gap_filter_foreach.c:162 plug-ins/gap/gap_mod_layer.c:285
+#: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
 msgid "Animated Filter apply"
 msgstr "Æ°²è¥Õ¥£¥ë¥¿Å¬ÍÑ"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:101
+#: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:102
+#: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
 msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:178
+#: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:190
+#: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
+#: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
 msgstr "¥Õ¥ì¡¼¥à¤ò¾å½ñ¤­"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
+#: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
 #: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
 msgstr "Á´¤Æ¾å½ñ¤­"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
-#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_range_ops.c:1247
+#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
+#: plug-ins/gap/gap_lib.c:1035 plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
 msgstr "GAP ¼ÁÌä"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
+#: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
 msgid "File already exists"
 msgstr "¥Õ¥¡¥¤¥ë¤Ï´û¤ËÂ¸ºß¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:437
+#: plug-ins/gap/gap_decode_mpeg_main.c:438
 msgid "Decoding MPEG Movie..."
 msgstr "MPEG Æ°²è¤ò¥Ç¥³¡¼¥É¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:643
+#: plug-ins/gap/gap_decode_mpeg_main.c:644
 msgid ""
 "Name of the MPEG1 videofile to READ.\n"
 "Frames are extracted from the videofile\n"
@@ -7651,19 +7656,19 @@ msgstr ""
 "¸Ä¡¹¤Ë¥Ç¥£¥¹¥¯¾å¤Î¥Õ¥¡¥¤¥ë¤Ë½ñ¤­½Ð¤·¤Þ¤¹.\n"
 "Æ°²è¥Õ¥¡¥¤¥ëÃæ¤Î²»À¼¥È¥é¥Ã¥¯¤ÏÌµ»ë¤µ¤ì¤Þ¤¹."
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
+#: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
 msgid "Framenumber of 1st frame to extract"
 msgstr "ºÇ½é¤Ë¼è¤ê½Ð¤¹¥Õ¥ì¡¼¥àÈÖ¹æ"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:663 plug-ins/gap/gap_decode_xanim.c:234
+#: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
 msgid "Framenumber of last frame to extract"
 msgstr "ºÇ¸å¤Ë¼è¤ê½Ð¤¹¥Õ¥ì¡¼¥àÈÖ¹æ"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:243
+#: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
 msgid "Framenames:"
 msgstr "¥Õ¥ì¡¼¥àÌ¾:"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:673
+#: plug-ins/gap/gap_decode_mpeg_main.c:674
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and .xcf is added)"
@@ -7671,16 +7676,16 @@ msgstr ""
 "¥Ç¥£¥¹¥¯¤Ë½ñ¤¯Æ°²è¥Õ¥ì¡¼¥à¤Î Basename.\n"
 "(¥Õ¥ì¡¼¥àÈÖ¹æ¤È .xcf ¤¬ÉÕ¤±¤é¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:680 plug-ins/gap/gap_decode_xanim.c:282
+#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
 #: plug-ins/imagemap/imap_toolbar.c:110
 msgid "Open"
 msgstr "³«¤¯"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
+#: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
 msgid "Open the 1st one of the extracted frames"
 msgstr "¼è¤ê½Ð¤µ¤ì¤¿¥Õ¥ì¡¼¥à¤ÎºÇ½é¤Î¤â¤Î¤ò³«¤¯"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:685
+#: plug-ins/gap/gap_decode_mpeg_main.c:686
 msgid ""
 "\n"
 "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
@@ -7690,59 +7695,59 @@ msgstr ""
 "·Ù¹ð: MPEG1 Æ°²è°Ê³°¤Î¥Õ¥¡¥¤¥ë¤òÊ¬³ä¤·¤Ê¤¤¤Ç²¼¤µ¤¤.\n"
 "Â³¹Ô¤¹¤ëÁ°¤Ëºî¶ÈÃæ¤ÎÁ´¤Æ¤Î²èÁü¤òÊÝÂ¸¤·¤Æ²¼¤µ¤¤."
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:688
+#: plug-ins/gap/gap_decode_mpeg_main.c:689
 msgid "Split MPEG1 Video to Frames"
 msgstr "MPEG1 Æ°²è¤ò¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
+#: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
 #: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
 msgstr "¥Õ¥ì¡¼¥àÈÏ°ÏÁªÂò"
 
-#: plug-ins/gap/gap_decode_xanim.c:113
+#: plug-ins/gap/gap_decode_xanim.c:114
 msgid "Conditions to run the xanim based video split"
 msgstr "xanim ¤Ë¤è¤ë²èÁüÊ¬³ä¤ËÉ¬Í×¤ÊÀßÄê"
 
-#: plug-ins/gap/gap_decode_xanim.c:121
+#: plug-ins/gap/gap_decode_xanim.c:122
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
 msgstr "1.) xanim 2.80.0 ¹ñºÝÈÇ (loki ¥Ð¡¼¥¸¥ç¥ó)"
 
-#: plug-ins/gap/gap_decode_xanim.c:125
+#: plug-ins/gap/gap_decode_xanim.c:126
 msgid "    must be installed somewhere in your PATH"
 msgstr "    ¤¬ PATH ¤ÎÄÌ¤Ã¤¿¤È¤³¤í¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤ë¤³¤È"
 
-#: plug-ins/gap/gap_decode_xanim.c:129
+#: plug-ins/gap/gap_decode_xanim.c:130
 msgid "    you can get xanim exporting edition at"
 msgstr "    ¹ñºÝÈÇ¤Î xanim ¤Ï°Ê²¼¤Î¾ì½ê¤Ç¼ê¤ËÆþ¤ì¤é¤ì¤Þ¤¹"
 
-#: plug-ins/gap/gap_decode_xanim.c:145
+#: plug-ins/gap/gap_decode_xanim.c:146
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 "2.) xanim ¤¬¹ñºÝÈÇ¤Ç¤Ê¤«¤Ã¤¿¤ê PATH ¤¬ÄÌ¤Ã¤Æ¤Ê¤«¤Ã¤¿¤ê xanim "
 "¤È¤¤¤¦Ì¾Á°¤Ç¤Ï¤Ê¤¤¾ì¹ç"
 
-#: plug-ins/gap/gap_decode_xanim.c:149
+#: plug-ins/gap/gap_decode_xanim.c:150
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
 msgstr "    ´Ä¶­ÊÑ¿ô GAP_XANIM_PROG ¤¬¹ñºÝÈÇ xanim ¤ò»Ø¤¹¤è¤¦¤Ë¤·¤Æ"
 
-#: plug-ins/gap/gap_decode_xanim.c:153
+#: plug-ins/gap/gap_decode_xanim.c:154
 msgid "    to your xanim exporting program and restart gimp"
 msgstr "    gimp ¤òºÆµ¯Æ°¤·¤Æ²¼¤µ¤¤"
 
-#: plug-ins/gap/gap_decode_xanim.c:161
+#: plug-ins/gap/gap_decode_xanim.c:162
 msgid "An ERROR occured while trying to call xanim:"
 msgstr "xanim ¸Æ¤Ó½Ð¤·Ãæ¤Ë¥¨¥é¡¼È¯À¸"
 
-#: plug-ins/gap/gap_decode_xanim.c:180
+#: plug-ins/gap/gap_decode_xanim.c:181
 msgid "XANIM Information"
 msgstr "XANIM ¾ðÊó"
 
-#: plug-ins/gap/gap_decode_xanim.c:213
+#: plug-ins/gap/gap_decode_xanim.c:214
 msgid "Video:"
 msgstr "Æ°²è:"
 
-#: plug-ins/gap/gap_decode_xanim.c:214
+#: plug-ins/gap/gap_decode_xanim.c:215
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
@@ -7754,7 +7759,7 @@ msgstr ""
 "¤½¤ì¤¾¤ìÊÌ¤Î¥Õ¥¡¥¤¥ë¤Ë½ñ¤­½Ð¤·¤Þ¤¹.\n"
 "xanim ¤Ï¹ñºÝÈÇ¤Ç¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó."
 
-#: plug-ins/gap/gap_decode_xanim.c:244
+#: plug-ins/gap/gap_decode_xanim.c:245
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
@@ -7762,11 +7767,11 @@ msgstr ""
 "¥Ç¥£¥¹¥¯¤Ë½ñ¤­½Ð¤¹Æ°²è¥Õ¥ì¡¼¥à¤Î Basename ¤Ç¤¹.\n"
 "(¥Õ¥ì¡¼¥àÈÖ¹æ¤È³ÈÄ¥»Ò¤¬ÉÕ¤±²Ã¤¨¤é¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:251
+#: plug-ins/gap/gap_decode_xanim.c:252
 msgid "Format"
 msgstr "·Á¼°"
 
-#: plug-ins/gap/gap_decode_xanim.c:252
+#: plug-ins/gap/gap_decode_xanim.c:253
 msgid ""
 "Fileformat for the extracted AnimFrames\n"
 "(xcf is extracted as ppm and converted to xcf)"
@@ -7774,19 +7779,19 @@ msgstr ""
 "Ãê½Ð¤¹¤ëÆ°²è¤Î¥Õ¥¡¥¤¥ë·Á¼°¤Ç¤¹.\n"
 "(xcf ¤ò»ØÄê¤¹¤ë¤È ppm ¤ÇÃê½Ð¤·¤Æ xcf ¤ËÊÑ´¹¤·¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:259
+#: plug-ins/gap/gap_decode_xanim.c:260
 msgid "Extract Frames"
 msgstr "¥Õ¥ì¡¼¥àÃê½Ð"
 
-#: plug-ins/gap/gap_decode_xanim.c:260
+#: plug-ins/gap/gap_decode_xanim.c:261
 msgid "Enable extraction of Frames"
 msgstr "¥Õ¥ì¡¼¥à¼è¤ê½Ð¤·¤òÍ­¸ú¤Ë¤¹¤ë"
 
-#: plug-ins/gap/gap_decode_xanim.c:264
+#: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Extract Audio"
 msgstr "²»À¼Ãê½Ð"
 
-#: plug-ins/gap/gap_decode_xanim.c:265
+#: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
@@ -7794,11 +7799,11 @@ msgstr ""
 "²»À¼¤ò raw ²»À¼¥Õ¥¡¥¤¥ë¤Ë¼è¤ê½Ð¤·¤Þ¤¹\n"
 "(¥Õ¥ì¡¼¥àÈÏ°Ï»ØÄê¤ÏÌµ»ë¤µ¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:270
+#: plug-ins/gap/gap_decode_xanim.c:271
 msgid "Jpeg Quality:"
 msgstr "JPEG ÉÊ¼Á:"
 
-#: plug-ins/gap/gap_decode_xanim.c:271
+#: plug-ins/gap/gap_decode_xanim.c:272
 msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
@@ -7806,11 +7811,11 @@ msgstr ""
 "½ÐÎÏ JPEG ¥Õ¥ì¡¼¥à¤ÎÉÊ¼Á¤Ç¤¹\n"
 "(Â¾¤Î·Á¼°¤Î¾ì¹ç¤ÏÌµ»ë¤µ¤ì¤Þ¤¹)"
 
-#: plug-ins/gap/gap_decode_xanim.c:287
+#: plug-ins/gap/gap_decode_xanim.c:288
 msgid "Run asynchronously"
 msgstr "ÈóÆ±´ü¼Â¹Ô"
 
-#: plug-ins/gap/gap_decode_xanim.c:288
+#: plug-ins/gap/gap_decode_xanim.c:289
 msgid ""
 "Run xanim asynchronously and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
@@ -7818,7 +7823,7 @@ msgstr ""
 "xanim ¤òÈóÆ±´ü¼Â¹Ô¤· xanim ¤¬¼Â¹ÔÃæ¤Ç¤â»ØÄê¤·¤¿\n"
 "ÈÏ°Ï³°¤ÎÉÔÍ×¤Ê¥Õ¥ì¡¼¥à¤òºï½ü¤¹¤ë."
 
-#: plug-ins/gap/gap_decode_xanim.c:293
+#: plug-ins/gap/gap_decode_xanim.c:294
 msgid ""
 "\n"
 "Warning: xanim 2.80 has only limited MPEG support.\n"
@@ -7828,11 +7833,11 @@ msgstr ""
 "·Ù¹ð: xanim 2.80 ¤Ï¸ÂÄê¤µ¤ì¤¿ MPEG ¥µ¥Ý¡¼¥È¤·¤«¹Ô¤¤¤Þ¤»¤ó.\n"
 "P ¤ä B ¥¿¥¤¥×¤Î¥Õ¥ì¡¼¥à¤ÏÌµ»ë¤µ¤ì¤Þ¤¹."
 
-#: plug-ins/gap/gap_decode_xanim.c:296
+#: plug-ins/gap/gap_decode_xanim.c:297
 msgid "Split any Xanim readable Video to Frames"
 msgstr "Xanim ¤ÇÆÉ¤á¤ëÆ°²è¥Õ¥¡¥¤¥ë¤ò¥Õ¥ì¡¼¥à¤ËÊ¬³ä¤¹¤ë"
 
-#: plug-ins/gap/gap_decode_xanim.c:539
+#: plug-ins/gap/gap_decode_xanim.c:540
 #, c-format
 msgid ""
 "can't find any extracted frames,\n"
@@ -7843,32 +7848,32 @@ msgstr ""
 "¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó.\n"
 "xanim ¤¬Å¾¤ó¤À¤«¥­¥ã¥ó¥»¥ë¤µ¤ì¤¿²ÄÇ½À­¤¬¤¢¤ê¤Þ¤¹"
 
-#: plug-ins/gap/gap_decode_xanim.c:564
+#: plug-ins/gap/gap_decode_xanim.c:565
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
 msgstr "%s ¤Î¾å½ñ¤­¤¬¥­¥ã¥ó¥»¥ë¤µ¤ì¤¿¤¿¤á, ¥Õ¥ì¡¼¥à¤ÏÃê½Ð¤µ¤ì¤Þ¤»¤ó¤Ç¤·¤¿."
 
-#: plug-ins/gap/gap_decode_xanim.c:574
+#: plug-ins/gap/gap_decode_xanim.c:575
 #, c-format
 msgid "failed to overwrite %s (check permissions ?)"
 msgstr "%s ¤Î¾å½ñ¤­¼ºÇÔ (µö²Ä¤µ¤ì¤Æ¤¤¤Þ¤¹¤«?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:596
+#: plug-ins/gap/gap_decode_xanim.c:597
 #, c-format
 msgid "failed to write %s (check permissions ?)"
 msgstr "%s ¤Î½ñ¤­¹þ¤ß¼ºÇÔ (µö²Ä¤µ¤ì¤Æ¤¤¤Þ¤¹¤«?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:722
+#: plug-ins/gap/gap_decode_xanim.c:723
 #, c-format
 msgid "could not execute %s (check if xanim is installed)"
 msgstr "%s ¤ò¼Â¹Ô¤Ç¤­¤Þ¤»¤ó (xanim ¤ÏÆ³Æþ¤µ¤ì¤Æ¤¤¤Þ¤¹¤«?)"
 
-#: plug-ins/gap/gap_decode_xanim.c:730
+#: plug-ins/gap/gap_decode_xanim.c:731
 #, c-format
 msgid "%s does not look like xanim"
 msgstr "%s ¤Ï xanim ¤Ç¤Ï¤Ê¤¤¤è¤¦¤Ç¤¹"
 
-#: plug-ins/gap/gap_decode_xanim.c:754
+#: plug-ins/gap/gap_decode_xanim.c:755
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
@@ -7877,7 +7882,7 @@ msgstr ""
 "¤¢¤Ê¤¿¤Î¥·¥¹¥Æ¥à¤Î xanim ¤Ç¤¢¤ë \"%s\" ¤Ï\n"
 "¥¨¥¯¥¹¥Ý¡¼¥È¥ª¥×¥·¥ç¥ó Ea, Ee, Eq ¤¬»È¤¨¤Ê¤¤¤è¤¦¤Ç¤¹."
 
-#: plug-ins/gap/gap_decode_xanim.c:761
+#: plug-ins/gap/gap_decode_xanim.c:762
 #, c-format
 msgid ""
 "The xanim program on your system \"%s\"\n"
@@ -7886,12 +7891,12 @@ msgstr ""
 "¤¢¤Ê¤¿¤Î¥·¥¹¥Æ¥à¤Î xanim ¤Ç¤¢¤ë \"%s\" ¤Ï\n"
 "Ã±°ì¥Õ¥ì¡¼¥à¤Î¥¨¥¯¥¹¥Ý¡¼¥È¤¬¤Ç¤­¤Ê¤¤¤è¤¦¤Ç¤¹."
 
-#: plug-ins/gap/gap_decode_xanim.c:1024
+#: plug-ins/gap/gap_decode_xanim.c:1025
 #, c-format
 msgid "videofile %s not existent or empty\n"
 msgstr "Æ°²è¥Õ¥¡¥¤¥ë %s ¤ÏÂ¸ºß¤·¤Ê¤¤¤«¶õ¤Î¤è¤¦¤Ç¤¹\n"
 
-#: plug-ins/gap/gap_decode_xanim.c:1077
+#: plug-ins/gap/gap_decode_xanim.c:1078
 #, c-format
 msgid ""
 "could not create %s directory\n"
@@ -7900,11 +7905,11 @@ msgstr ""
 "xanim ¤Ë¤è¤ë¥Õ¥ì¡¼¥àÃê½Ð¤ËÉ¬Í×¤Ê\n"
 "%s ¥Ç¥£¥ì¥¯¥È¥ê¤¬ºî¤ì¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_decode_xanim.c:1088
+#: plug-ins/gap/gap_decode_xanim.c:1089
 msgid "extracting frames..."
 msgstr "¥Õ¥ì¡¼¥à¤òÃê½Ð¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_decode_xanim.c:1113
+#: plug-ins/gap/gap_decode_xanim.c:1114
 #, c-format
 msgid ""
 "could not start xanim process\n"
@@ -7913,7 +7918,7 @@ msgstr ""
 "xanim ¥×¥í¥»¥¹¤ò³«»Ï¤Ç¤­¤Þ¤»¤ó\n"
 "(¥×¥í¥°¥é¥à=%s) "
 
-#: plug-ins/gap/gap_decode_xanim.c:1134
+#: plug-ins/gap/gap_decode_xanim.c:1135
 msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
@@ -7921,28 +7926,28 @@ msgstr ""
 "Ãê½Ð¤·¤¿¥Õ¥ì¡¼¥à¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó,\n"
 "xanim ¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤¿¤«¥­¥ã¥ó¥»¥ë¤µ¤ì¤Þ¤·¤¿."
 
-#: plug-ins/gap/gap_decode_xanim.c:1153
+#: plug-ins/gap/gap_decode_xanim.c:1154
 msgid "renaming frames..."
 msgstr "¥Õ¥ì¡¼¥àÌ¾¤òÊÑ¹¹¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_decode_xanim.c:1158
+#: plug-ins/gap/gap_decode_xanim.c:1159
 msgid "converting frames..."
 msgstr "¥Õ¥ì¡¼¥à¤òÊÑ´¹¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_filter_foreach.c:125
+#: plug-ins/gap/gap_filter_foreach.c:126
 msgid "backup to file"
 msgstr "¥Õ¥¡¥¤¥ë¤Ë¥Ð¥Ã¥¯¥¢¥Ã¥×"
 
 #. pixel
-#: plug-ins/gap/gap_filter_foreach.c:127
+#: plug-ins/gap/gap_filter_foreach.c:128
 msgid "Make backup of the image after each step"
 msgstr "³Æ²áÄø¤ÎËè¤Ë¥Ð¥Ã¥¯¥¢¥Ã¥×²èÁü¤òºî¤ë"
 
-#: plug-ins/gap/gap_filter_foreach.c:131 plug-ins/gap/gap_mod_layer.c:260
+#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
 msgid "Continue"
 msgstr "Â³¤±¤ë"
 
-#: plug-ins/gap/gap_filter_foreach.c:154 plug-ins/gap/gap_mod_layer.c:279
+#: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
 #, c-format
 msgid ""
 "2nd call of %s\n"
@@ -7951,7 +7956,7 @@ msgstr ""
 "%s ¤Î2ÅÙÌÜ¤Î¸Æ¤Ó½Ð¤·\n"
 "(½ªÎ»ÀßÄê¤ÎÄêµÁ)"
 
-#: plug-ins/gap/gap_filter_foreach.c:158
+#: plug-ins/gap/gap_filter_foreach.c:159
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -7960,47 +7965,47 @@ msgstr ""
 "%s ¤ÎÈó¥¤¥ó¥¿¥é¥¯¥Æ¥£¥Ö¸Æ¤Ó½Ð¤·\n"
 "(Á´¤Æ¤ÎÃæ´Ö¥ì¥¤¥ä¡¼¤ËÂÐ¤·¤Æ)"
 
-#: plug-ins/gap/gap_filter_foreach.c:277
+#: plug-ins/gap/gap_filter_foreach.c:278
 msgid "Applying Filter to all Layers..."
 msgstr "Á´¤Æ¤Î¥ì¥¤¥ä¡¼¤Ë¥Õ¥£¥ë¥¿¤òÅ¬ÍÑ¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_filter_foreach.c:551
+#: plug-ins/gap/gap_filter_foreach.c:552
 msgid "Select Filter for Animated apply"
 msgstr "ÊÑ²½¤µ¤»¤Ä¤ÄÅ¬ÍÑ¤¹¤ë¥Õ¥£¥ë¥¿¤òÁªÂò"
 
-#: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
+#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
 msgid "Apply Constant"
 msgstr "°ìÍÍ¤ËÅ¬ÍÑ"
 
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:663
+#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
 msgid "Apply Varying"
 msgstr "ÊÑ²½¤µ¤»¤Ä¤ÄÅ¬ÍÑ"
 
-#: plug-ins/gap/gap_filter_main.c:105
+#: plug-ins/gap/gap_filter_main.c:106
 msgid "<Image>/Filters/Filter all Layers..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/Á´¥ì¥¤¥ä¡¼¤ËÅ¬ÍÑ..."
 
-#: plug-ins/gap/gap_frontends_main.c:127
+#: plug-ins/gap/gap_frontends_main.c:128
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/XANIM ¤ÇÆÉ¤ß¹þ¤á¤ë¤â¤ÎÁ´¤Æ..."
 
-#: plug-ins/gap/gap_frontends_main.c:139
+#: plug-ins/gap/gap_frontends_main.c:140
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
 msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/XANIM ¤ÇÆÉ¤ß¹þ¤á¤ë¤â¤ÎÁ´¤Æ..."
 
-#: plug-ins/gap/gap_frontends_main.c:151
+#: plug-ins/gap/gap_frontends_main.c:152
 msgid "<Image>/Video/Encode/MPEG1..."
 msgstr "<Image>/Æ°²è/¥¨¥ó¥³¡¼¥É/MPEG1..."
 
-#: plug-ins/gap/gap_frontends_main.c:164
+#: plug-ins/gap/gap_frontends_main.c:165
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Æ°²è/¥¨¥ó¥³¡¼¥É/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:233
+#: plug-ins/gap/gap_lib.c:241
 msgid "GAP Message"
 msgstr "GAP ¥á¥Ã¥»¡¼¥¸"
 
-#: plug-ins/gap/gap_lib.c:896
+#: plug-ins/gap/gap_lib.c:904
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -8008,7 +8013,7 @@ msgstr ""
 "Áàºî¤Ï¥­¥ã¥ó¥»¥ë¤µ¤ì¤Þ¤·¤¿.\n"
 "¥À¥¤¥¢¥í¥°¤¬³«¤«¤ì¤Æ¤¤¤ë´Ö¤Ë¸½ºß¤Î¥Õ¥ì¡¼¥à¤ËÊÑ¹¹¤¬²Ã¤¨¤é¤ì¤Þ¤·¤¿."
 
-#: plug-ins/gap/gap_lib.c:918
+#: plug-ins/gap/gap_lib.c:926
 msgid ""
 "OPERATION CANCELLED.\n"
 "GAP-plugins works only with filenames\n"
@@ -8020,7 +8025,7 @@ msgstr ""
 "¥Õ¥¡¥¤¥ëÌ¾¤ËÂÐ¤·¤Æ¤Î¤ßÆ°ºî¤·¤Þ¤¹.\n"
 "==> ¥Õ¥¡¥¤¥ëÌ¾¤òÊÑ¹¹¤·¤Æ¤«¤é¤ä¤êÄ¾¤·¤Æ²¼¤µ¤¤."
 
-#: plug-ins/gap/gap_lib.c:1005
+#: plug-ins/gap/gap_lib.c:1013
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -8030,73 +8035,73 @@ msgstr ""
 "ÊÝÂ¸¤·¤¿¾ì¹ç¤Ë¥ì¥¤¥ä¡¼¾ðÊó¤¬¼º¤ï¤ì¤ë\n"
 "²ÄÇ½À­¤¬¤¢¤ê¤Þ¤¹"
 
-#: plug-ins/gap/gap_lib.c:1021
+#: plug-ins/gap/gap_lib.c:1029
 msgid "Save Flattened"
 msgstr "Åý¹ç¤·¤ÆÊÝÂ¸"
 
-#: plug-ins/gap/gap_lib.c:1023
+#: plug-ins/gap/gap_lib.c:1031
 msgid "Save As Is"
 msgstr "¤½¤Î¤Þ¤ÞÊÝÂ¸"
 
-#: plug-ins/gap/gap_lib.c:1498 plug-ins/gap/gap_lib.c:1615
-#: plug-ins/gap/gap_lib.c:1694 plug-ins/gap/gap_lib.c:1701
-#: plug-ins/gap/gap_lib.c:1708 plug-ins/gap/gap_lib.c:1791
-#: plug-ins/gap/gap_lib.c:1813 plug-ins/gap/gap_lib.c:2702
+#: plug-ins/gap/gap_lib.c:1506 plug-ins/gap/gap_lib.c:1623
+#: plug-ins/gap/gap_lib.c:1702 plug-ins/gap/gap_lib.c:1709
+#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1799
+#: plug-ins/gap/gap_lib.c:1821 plug-ins/gap/gap_lib.c:2710
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "¥¨¥é¡¼: ¥Õ¥ì¡¼¥à %ld ¤«¤é %ld ¤òÌ¾¾ÎÊÑ¹¹¤Ç¤­¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_lib.c:1603
+#: plug-ins/gap/gap_lib.c:1611
 msgid "Duplicating frames..."
 msgstr "¥Õ¥ì¡¼¥à¤òÊ£À½¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_lib.c:1779
+#: plug-ins/gap/gap_lib.c:1787
 msgid "Renumber Framesequence..."
 msgstr "¥Õ¥ì¡¼¥à¤òÊÂ¤ÙÄ¾¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/gap/gap_lib.c:1965
+#: plug-ins/gap/gap_lib.c:1973
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "»ØÄê¥Õ¥ì¡¼¥à¤Ø°ÜÆ° (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1968
+#: plug-ins/gap/gap_lib.c:1976
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "°¸Àè¥Õ¥ì¡¼¥àÈÖ¹æ (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1972 plug-ins/gap/gap_lib.c:2049
-#: plug-ins/gap/gap_lib.c:2237
+#: plug-ins/gap/gap_lib.c:1980 plug-ins/gap/gap_lib.c:2057
+#: plug-ins/gap/gap_lib.c:2245
 msgid "Number:"
 msgstr "ÈÖ¹æ:"
 
-#: plug-ins/gap/gap_lib.c:2033
+#: plug-ins/gap/gap_lib.c:2041
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "¥Õ¥ì¡¼¥àºï½ü (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2036
+#: plug-ins/gap/gap_lib.c:2044
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "ºï½ü¤¹¤ë¥Õ¥ì¡¼¥à¤Ï %ld ¤«¤é"
 
-#: plug-ins/gap/gap_lib.c:2099
+#: plug-ins/gap/gap_lib.c:2107
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "¥Õ¥ì¡¼¥àÊ£À½ (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2109
+#: plug-ins/gap/gap_lib.c:2117
 msgid "Source Range starts at this framenumber"
 msgstr "¸µÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤«¤é³«»Ï"
 
-#: plug-ins/gap/gap_lib.c:2117
+#: plug-ins/gap/gap_lib.c:2125
 msgid "Source Range ends at this framenumber"
 msgstr "¸µÈÏ°Ï¤¬¤³¤Î¥Õ¥ì¡¼¥à¤Ç½ª¤ê"
 
-#: plug-ins/gap/gap_lib.c:2120
+#: plug-ins/gap/gap_lib.c:2128
 msgid "N times:"
 msgstr "²ó¿ô:"
 
-#: plug-ins/gap/gap_lib.c:2127
+#: plug-ins/gap/gap_lib.c:2135
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -8104,37 +8109,37 @@ msgstr ""
 "ÁªÂòÈÏ°Ï¤ò n ²ó¥³¥Ô¡¼  \n"
 "(99 ¤è¤êÂç¤­¤¤²ó¿ô)"
 
-#: plug-ins/gap/gap_lib.c:2129
+#: plug-ins/gap/gap_lib.c:2137
 msgid "Duplicate Frame Range"
 msgstr "Ê£À½¤¹¤ë¥Õ¥ì¡¼¥àÈÏ°Ï"
 
-#: plug-ins/gap/gap_lib.c:2232
+#: plug-ins/gap/gap_lib.c:2240
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "¸½ºß¤Î¥Õ¥ì¡¼¥à (%ld) ¤È¸ò´¹"
 
-#: plug-ins/gap/gap_lib.c:2236
+#: plug-ins/gap/gap_lib.c:2244
 msgid "With Frame (number)"
 msgstr "¤¹¤ë¥Õ¥ì¡¼¥àÈÖ¹æ¤Ï"
 
-#: plug-ins/gap/gap_lib.c:2278
+#: plug-ins/gap/gap_lib.c:2286
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤· (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2288
+#: plug-ins/gap/gap_lib.c:2296
 msgid "Affected Range starts at this framenumber"
 msgstr "Å¬ÍÑ¤¹¤ëÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤«¤é³«»Ï"
 
-#: plug-ins/gap/gap_lib.c:2296
+#: plug-ins/gap/gap_lib.c:2304
 msgid "Affected Range ends at this framenumber"
 msgstr "Å¬ÍÑ¤¹¤ëÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤Ç½ª¤ê"
 
-#: plug-ins/gap/gap_lib.c:2299
+#: plug-ins/gap/gap_lib.c:2307
 msgid "N-Shift:"
 msgstr "¤º¤é¤¹ÎÌ:"
 
-#: plug-ins/gap/gap_lib.c:2304
+#: plug-ins/gap/gap_lib.c:2312
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -8142,132 +8147,140 @@ msgstr ""
 "Å¬ÍÑÉôÊ¬¤Î¥Õ¥ì¡¼¥àÊÂ¤Ó¤òºÆ³ä¤êÉÕ¤±    \n"
 "(ÈÖ¹æ¤Ï¤º¤é¤·ÎÌÊ¬¤º¤ì¤ë)"
 
-#: plug-ins/gap/gap_lib.c:2306
+#: plug-ins/gap/gap_lib.c:2314
 msgid "Framesequence shift"
 msgstr "¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤·"
 
-#: plug-ins/gap/gap_main.c:374
+#: plug-ins/gap/gap_lib.c:2922
+#, c-format
+msgid ""
+"Cant execute more than 1 Video Function\n"
+"on the same AnimFrame Image at the same time\n"
+"LOCK ID:%s\n"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
 msgstr "<Image>/Æ°²è/°ÜÆ°/¼¡¤Î¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_main.c:386
+#: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Goto/Previous Frame"
 msgstr "<Image>/Æ°²è/°ÜÆ°/Á°¤Î¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_main.c:398
+#: plug-ins/gap/gap_main.c:506
 msgid "<Image>/Video/Goto/First Frame"
 msgstr "<Image>/Æ°²è/°ÜÆ°/ºÇ½é¤Î¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_main.c:410
+#: plug-ins/gap/gap_main.c:518
 msgid "<Image>/Video/Goto/Last Frame"
 msgstr "<Image>/Æ°²è/°ÜÆ°/ºÇ¸å¤Î¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_main.c:422
+#: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Goto/Any Frame..."
 msgstr "<Image>/Æ°²è/°ÜÆ°/»ØÄê¤·¤¿¥Õ¥ì¡¼¥à..."
 
-#: plug-ins/gap/gap_main.c:434
+#: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Delete Frames..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àºï½ü..."
 
-#: plug-ins/gap/gap_main.c:446
+#: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Duplicate Frames..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊ£À½..."
 
-#: plug-ins/gap/gap_main.c:458
+#: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Exchange Frame..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¸ò´¹..."
 
-#: plug-ins/gap/gap_main.c:470
+#: plug-ins/gap/gap_main.c:578
 msgid "<Image>/Video/Move Path..."
 msgstr "<Image>/Æ°²è/¥Ñ¥¹°ÜÆ°..."
 
-#: plug-ins/gap/gap_main.c:482
+#: plug-ins/gap/gap_main.c:649
 msgid "<Image>/Video/Frames to Image..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ò²èÁü¤Ë..."
 
-#: plug-ins/gap/gap_main.c:494
+#: plug-ins/gap/gap_main.c:661
 msgid "<Image>/Video/Frames Flatten..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÅý¹ç..."
 
-#: plug-ins/gap/gap_main.c:506
+#: plug-ins/gap/gap_main.c:673
 msgid "<Image>/Video/Frames LayerDel..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¥ì¥¤¥ä¡¼ºï½ü..."
 
-#: plug-ins/gap/gap_main.c:530
+#: plug-ins/gap/gap_main.c:697
 msgid "<Image>/Video/Frames Convert..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊÑ´¹..."
 
-#: plug-ins/gap/gap_main.c:542
+#: plug-ins/gap/gap_main.c:709
 msgid "<Image>/Video/Frames Resize..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¥µ¥¤¥ºÊÑ¹¹..."
 
-#: plug-ins/gap/gap_main.c:554
+#: plug-ins/gap/gap_main.c:721
 msgid "<Image>/Video/Frames Crop..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÀÚ¤êÈ´¤­..."
 
-#: plug-ins/gap/gap_main.c:566
+#: plug-ins/gap/gap_main.c:733
 msgid "<Image>/Video/Frames Scale..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à³ÈÂç½Ì¾®..."
 
-#: plug-ins/gap/gap_main.c:578
+#: plug-ins/gap/gap_main.c:745
 msgid "<Image>/Video/Split Image to Frames..."
 msgstr "<Image>/Æ°²è/²èÁü¤ò¥Õ¥ì¡¼¥à¤ËÊ¬³ä..."
 
-#: plug-ins/gap/gap_main.c:591
+#: plug-ins/gap/gap_main.c:758
 msgid "<Image>/Video/Framesequence Shift..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤·..."
 
-#: plug-ins/gap/gap_main.c:603
+#: plug-ins/gap/gap_main.c:770
 msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à½¤Àµ..."
 
 #. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is equal to LayerName"
 msgstr "¥Ñ¥¿¡¼¥ó¤Ï¥ì¥¤¥ä¡¼Ì¾¤ËÅù¤·¤¤"
 
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is Start of LayerName"
 msgstr "¥Ñ¥¿¡¼¥ó¤Ï¥ì¥¤¥ä¡¼Ì¾¤Ç»Ï¤Þ¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is End of Layername"
 msgstr "¥Ñ¥¿¡¼¥ó¤Ï¥ì¥¤¥ä¡¼Ì¾¤Ç½ª¤ï¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is a Part of LayerName"
 msgstr "¥Ñ¥¿¡¼¥ó¤Ï¥ì¥¤¥ä¡¼Ì¾¤Î°ìÉôÊ¬"
 
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is LayerstackNumber List"
 msgstr "¥Ñ¥¿¡¼¥ó¤Ï¥ì¥¤¥ä¡¼¥¹¥¿¥Ã¥¯ÈÖ¹æ¥ê¥¹¥È"
 
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
+#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
 msgid "Pattern is REVERSE-stack List"
 msgstr "¥Ñ¥¿¡¼¥ó¤ÏµÕÅ¾¥¹¥¿¥Ã¥¯¥ê¥¹¥È"
 
-#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:580
+#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
 msgid "All Visible (ignore Pattern)"
 msgstr "²Ä»ë¥ì¥¤¥ä¡¼Á´¤Æ (¥Ñ¥¿¡¼¥óÌµ»ë)"
 
-#: plug-ins/gap/gap_mod_layer.c:91
+#: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername is equal to Pattern"
 msgstr "¥ì¥¤¥ä¡¼Ì¾¤¬¥Ñ¥¿¡¼¥ó¤ÈÅù¤·¤¤Á´¤Æ¤Î¥ì¥¤¥ä¡¼¤òÁª¤Ö"
 
-#: plug-ins/gap/gap_mod_layer.c:92
+#: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername starts with Pattern"
 msgstr "¥ì¥¤¥ä¡¼Ì¾¤¬¥Ñ¥¿¡¼¥ó¤«¤é»Ï¤Þ¤ëÁ´¤Æ¤Î¥ì¥¤¥ä¡¼¤òÁª¤Ö"
 
-#: plug-ins/gap/gap_mod_layer.c:93
+#: plug-ins/gap/gap_mod_layer.c:94
 msgid "Select all Layers where Layername ends up with Pattern"
 msgstr "¥ì¥¤¥ä¡¼Ì¾¤¬¥Ñ¥¿¡¼¥ó¤Ç½ª¤ï¤ëÁ´¤Æ¤Î¥ì¥¤¥ä¡¼¤òÁª¤Ö"
 
-#: plug-ins/gap/gap_mod_layer.c:94
+#: plug-ins/gap/gap_mod_layer.c:95
 msgid "Select all Layers where Layername contains Pattern"
 msgstr "¥ì¥¤¥ä¡¼Ì¾¤¬¥Ñ¥¿¡¼¥ó¤ò´Þ¤àÁ´¤Æ¤Î¥ì¥¤¥ä¡¼¤òÁª¤Ö"
 
-#: plug-ins/gap/gap_mod_layer.c:95
+#: plug-ins/gap/gap_mod_layer.c:96
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8277,7 +8290,7 @@ msgstr ""
 "0, 4-5, 8\n"
 "0 == ºÇ¾åÁØ¥ì¥¤¥ä¡¼"
 
-#: plug-ins/gap/gap_mod_layer.c:96
+#: plug-ins/gap/gap_mod_layer.c:97
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8287,64 +8300,64 @@ msgstr ""
 "0, 4-5, 8\n"
 "0 == ÇØ·Ê¥ì¥¤¥ä¡¼"
 
-#: plug-ins/gap/gap_mod_layer.c:97
+#: plug-ins/gap/gap_mod_layer.c:98
 msgid "Select all visible Layers"
 msgstr "²Ä»ë¥ì¥¤¥ä¡¼¤òÁ´¤ÆÁª¤Ö"
 
 #. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:101
+#: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) visible"
 msgstr "¥ì¥¤¥ä¡¼¤ò²Ä»ë¾õÂÖ¤Ë"
 
-#: plug-ins/gap/gap_mod_layer.c:102
+#: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) invisible"
 msgstr "¥ì¥¤¥ä¡¼¤òÉÔ²Ä»ë¾õÂÖ¤Ë"
 
-#: plug-ins/gap/gap_mod_layer.c:103
+#: plug-ins/gap/gap_mod_layer.c:104
 msgid "Set Layer(s) linked"
 msgstr "¥ì¥¤¥ä¡¼¤ò¥ê¥ó¥¯¤¹¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:104
+#: plug-ins/gap/gap_mod_layer.c:105
 msgid "Set Layer(s) unlinked"
 msgstr "¥ì¥¤¥ä¤ò¥ê¥ó¥¯¤·¤Ê¤¤"
 
-#: plug-ins/gap/gap_mod_layer.c:105
+#: plug-ins/gap/gap_mod_layer.c:106
 msgid "Raise Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤ò¾å¤²¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:106
+#: plug-ins/gap/gap_mod_layer.c:107
 msgid "Lower Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤ò²¼¤²¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:107
+#: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) expand as necessary"
 msgstr "É¬Í×¤Ë±þ¤¸¤Æ³ÈÂç¤·¤¿¥ì¥¤¥ä¡¼¤ò·ë¹ç"
 
-#: plug-ins/gap/gap_mod_layer.c:108
+#: plug-ins/gap/gap_mod_layer.c:109
 msgid "Merge Layer(s) clipped to image"
 msgstr "²èÁü¤ËÀÚ¤ê¼è¤é¤ì¤¿¥ì¥¤¥ä¡¼¤ò·ë¹ç"
 
-#: plug-ins/gap/gap_mod_layer.c:109
+#: plug-ins/gap/gap_mod_layer.c:110
 msgid "Merge Layer(s) clipped to bg-layer"
 msgstr "ÇØ·Ê¤ËÀÚ¤ê¼è¤é¤ì¤¿¥ì¥¤¥ä¡¼¤ò·ë¹ç"
 
-#: plug-ins/gap/gap_mod_layer.c:110
+#: plug-ins/gap/gap_mod_layer.c:111
 msgid "Apply filter on Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤Ë¥Õ¥£¥ë¥¿¡¼¤òÅ¬ÍÑ"
 
-#: plug-ins/gap/gap_mod_layer.c:111
+#: plug-ins/gap/gap_mod_layer.c:112
 msgid "Duplicate Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤òÊ£À½¤¹¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:112
+#: plug-ins/gap/gap_mod_layer.c:113
 msgid "Delete Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤òºï½ü¤¹¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:113
+#: plug-ins/gap/gap_mod_layer.c:114
 msgid "Rename Layer(s)"
 msgstr "¥ì¥¤¥ä¡¼¤ÎÌ¾¾ÎÊÑ¹¹"
 
-#: plug-ins/gap/gap_mod_layer.c:152
+#: plug-ins/gap/gap_mod_layer.c:153
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
@@ -8352,35 +8365,35 @@ msgstr ""
 "ÁªÂò¤µ¤ì¤¿¥Õ¥ì¡¼¥àÈÏ°ÏÆâ¤ÎÁ´¤Æ¤Î¥Õ¥ì¡¼¥à¤Ç\n"
 "°ì¤Ä°Ê¾å¤Î¥ì¥¤¥ä¡¼¤ËÂÐ¤·¤Æµ¡Ç½¤ò¼Â¹Ô¤¹¤ë\n"
 
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
 #: plug-ins/gap/gap_range_ops.c:443
 msgid "From Frame:"
 msgstr "¸µ¥Õ¥ì¡¼¥à:"
 
-#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:259
+#: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
 msgstr "ºÇ½é¤Ë°·¤ï¤ì¤ë¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_range_ops.c:451
+#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
 msgstr "°¸¥Õ¥ì¡¼¥à:"
 
-#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_mpege.c:267
+#: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
 msgstr "ºÇ¸å¤Ë°·¤ï¤ì¤ë¥Õ¥ì¡¼¥à"
 
-#: plug-ins/gap/gap_mod_layer.c:173 plug-ins/gap/gap_range_ops.c:650
+#: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
 msgstr "¥ì¥¤¥ä¡¼ÁªÂò:"
 
-#: plug-ins/gap/gap_mod_layer.c:182 plug-ins/gap/gap_range_ops.c:659
+#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
 msgid "Select Pattern:"
 msgstr "¥Ñ¥¿¡¼¥óÁªÂò:"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:661
+#: plug-ins/gap/gap_mod_layer.c:186 plug-ins/gap/gap_range_ops.c:661
 msgid ""
 "String to identify layer names    \n"
 "or layerstack position numbers\n"
@@ -8390,37 +8403,37 @@ msgstr ""
 "¤Þ¤¿¤Ï¥ì¥¤¥ä¡¼¥¹¥¿¥Ã¥¯°ÌÃÖ¤ÎÈÖ¹æ\n"
 "0,3-5"
 
-#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:667
+#: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
 msgstr "ÂçÊ¸»ú¤È¾®Ê¸»ú¤ò¶èÊÌ¤¹¤ë"
 
-#: plug-ins/gap/gap_mod_layer.c:191 plug-ins/gap/gap_range_ops.c:668
+#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
 msgstr "¾®Ê¸»ú¤ÈÂçÊ¸»ú¤ÎÊ¸»ú¤Ï°Û¤Ê¤ëÊª¤À¤È¤ß¤Ê¤¹"
 
-#: plug-ins/gap/gap_mod_layer.c:196 plug-ins/gap/gap_range_ops.c:673
+#: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
 msgstr "ÁªÂòÎÎ°èÈ¿Å¾"
 
-#: plug-ins/gap/gap_mod_layer.c:197
+#: plug-ins/gap/gap_mod_layer.c:199
 msgid "Perform actions on all unselected Layers"
 msgstr "Á´¤Æ¤ÎÈóÁªÂò¥ì¥¤¥ä¡¼¤Ë¥¢¥¯¥·¥ç¥ó¤ò¹Ô¤¦"
 
-#: plug-ins/gap/gap_mod_layer.c:202
+#: plug-ins/gap/gap_mod_layer.c:204
 msgid "Function:"
 msgstr "µ¡Ç½:"
 
 #. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:206
+#: plug-ins/gap/gap_mod_layer.c:208
 msgid "Function to be performed on all selected layers"
 msgstr "Á´¤Æ¤ÎÁªÂò¤·¤¿¥ì¥¤¥ä¡¼¤Ë¼Â¹Ô¤µ¤ì¤ëµ¡Ç½"
 
-#: plug-ins/gap/gap_mod_layer.c:212
+#: plug-ins/gap/gap_mod_layer.c:214
 msgid "New Layername:"
 msgstr "¿·µ¬¥ì¥¤¥ä¡¼Ì¾"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:214
+#: plug-ins/gap/gap_mod_layer.c:216
 msgid ""
 "New Layername for all handled layers \n"
 "[####] is replaced by frame number\n"
@@ -8430,11 +8443,11 @@ msgstr ""
 "[####] ¤Ï¥Õ¥ì¡¼¥àÈÖ¹æ¤Ë¤è¤Ã¤ÆÃÖ¤­¤«¤¨¤é¤ì¤ë\n"
 "(Ì¾Á°ÊÑ¹¹¤À¤±¤Î¤¿¤á¤Îµ¡Ç½¤È¤·¤Æ»È¤ï¤ì¤ë)"
 
-#: plug-ins/gap/gap_mod_layer.c:219
+#: plug-ins/gap/gap_mod_layer.c:221
 msgid "Frames Modify"
 msgstr "¥Õ¥ì¡¼¥à½¤Àµ"
 
-#: plug-ins/gap/gap_mod_layer.c:283
+#: plug-ins/gap/gap_mod_layer.c:285
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -8445,120 +8458,150 @@ msgstr ""
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:661
+#: plug-ins/gap/gap_mod_layer.c:663
 msgid "Select Filter for Animated frames-apply"
 msgstr "Æ°²è¥Õ¥ì¡¼¥à¤ËÅ¬ÍÑ¤¹¤ë¥Õ¥£¥ë¥¿¤ÎÁªÂò"
 
-#: plug-ins/gap/gap_mod_layer.c:803
+#: plug-ins/gap/gap_mod_layer.c:805
 msgid "GAP Modify: No layer selected in last handled frame"
 msgstr "GAP ½¤Àµ: ÁªÂò¤·¤¿ºÇ¸å¤Ë°·¤¦¥Õ¥ì¡¼¥à¤Ë¤Ï¥ì¥¤¥ä¡¼¤¬¤¢¤ê¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_mod_layer.c:889
+#: plug-ins/gap/gap_mod_layer.c:891
 msgid "Modifying Frames/Layer(s)..."
 msgstr "¥Õ¥ì¡¼¥à/¥ì¥¤¥ä¡¼¤Î½¤ÀµÃæ..."
 
-#: plug-ins/gap/gap_mod_layer.c:970
+#: plug-ins/gap/gap_mod_layer.c:972
 msgid "No selected Layer in start frame"
 msgstr "³«»Ï¥Õ¥ì¡¼¥à¤Î¥ì¥¤¥ä¡¼¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3319
+#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "É¸½à"
 
-#: plug-ins/gap/gap_mov_dialog.c:265
+#: plug-ins/gap/gap_mov_dialog.c:263
 msgid "Dissolve"
 msgstr "¾Ã»»"
 
-#: plug-ins/gap/gap_mov_dialog.c:266
+#: plug-ins/gap/gap_mov_dialog.c:264
 msgid "Multiply"
 msgstr "¾è»»"
 
-#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:596
+#: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr "¥ª¡¼¥Ð¡¼¥ì¥¤"
 
-#: plug-ins/gap/gap_mov_dialog.c:269
+#: plug-ins/gap/gap_mov_dialog.c:267
 msgid "Difference"
 msgstr "º¹Ê¬"
 
-#: plug-ins/gap/gap_mov_dialog.c:270 plug-ins/gflare/gflare.c:595
+#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:595
 msgid "Addition"
 msgstr "²Ã»»"
 
-#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gfig/gfig.c:3138
+#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
 msgstr "¸º»»"
 
-#: plug-ins/gap/gap_mov_dialog.c:272
+#: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Darken Only"
 msgstr "Èæ³Ó(°Å)"
 
-#: plug-ins/gap/gap_mov_dialog.c:273
+#: plug-ins/gap/gap_mov_dialog.c:271
 msgid "Lighten Only"
 msgstr "Èæ³Ó(ÌÀ)"
 
-#: plug-ins/gap/gap_mov_dialog.c:284
+#: plug-ins/gap/gap_mov_dialog.c:282
 msgid "Left  Top"
 msgstr "º¸¾å"
 
-#: plug-ins/gap/gap_mov_dialog.c:285
+#: plug-ins/gap/gap_mov_dialog.c:283
 msgid "Left  Bottom"
 msgstr "º¸"
 
-#: plug-ins/gap/gap_mov_dialog.c:286
+#: plug-ins/gap/gap_mov_dialog.c:284
 msgid "Right Top"
 msgstr "º¸²¼"
 
-#: plug-ins/gap/gap_mov_dialog.c:287
+#: plug-ins/gap/gap_mov_dialog.c:285
 msgid "Right Bottom"
 msgstr "±¦"
 
-#: plug-ins/gap/gap_mov_dialog.c:296
+#: plug-ins/gap/gap_mov_dialog.c:294
 msgid "Loop"
 msgstr "¥ë¡¼¥×"
 
-#: plug-ins/gap/gap_mov_dialog.c:297
+#: plug-ins/gap/gap_mov_dialog.c:295
 msgid "Loop Reverse"
 msgstr "µÕ¥ë¡¼¥×"
 
-#: plug-ins/gap/gap_mov_dialog.c:298
+#: plug-ins/gap/gap_mov_dialog.c:296
 msgid "Once"
 msgstr "°ì²ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:299
+#: plug-ins/gap/gap_mov_dialog.c:297
 msgid "OnceReverse"
 msgstr "µÕ°ì²ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:300
+#: plug-ins/gap/gap_mov_dialog.c:298
 msgid "PingPong"
 msgstr "ÁÐÊý¸þ"
 
-#: plug-ins/gap/gap_mov_dialog.c:469
+#: plug-ins/gap/gap_mov_dialog.c:300
+#, fuzzy
+msgid "Frame Loop"
+msgstr "¥Õ¥ì¡¼¥à %d"
+
+#: plug-ins/gap/gap_mov_dialog.c:301
+#, fuzzy
+msgid "Frame Loop Reverse"
+msgstr "µÕ¥ë¡¼¥×"
+
+#: plug-ins/gap/gap_mov_dialog.c:302
+#, fuzzy
+msgid "Frame Once"
+msgstr "¥Õ¥ì¡¼¥à %d"
+
+#: plug-ins/gap/gap_mov_dialog.c:303
+#, fuzzy
+msgid "Frame OnceReverse"
+msgstr "µÕ°ì²ó"
+
+#: plug-ins/gap/gap_mov_dialog.c:304
+#, fuzzy
+msgid "Frame PingPong"
+msgstr "ÁÐÊý¸þ"
+
+#: plug-ins/gap/gap_mov_dialog.c:305
+#, fuzzy
+msgid "Frame None"
+msgstr "¥Õ¥ì¡¼¥à %d"
+
+#: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
 msgstr "¥Ñ¥¹°ÜÆ°"
 
-#: plug-ins/gap/gap_mov_dialog.c:503
+#: plug-ins/gap/gap_mov_dialog.c:514
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr "¸½ºß¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤¬¤¢¤ë¸µ¥ì¥¤¥ä¡¼¤Ç¥×¥ì¥Ó¥å¡¼¥Õ¥ì¡¼¥à¤òÉ½¼¨"
 
-#: plug-ins/gap/gap_mov_dialog.c:507
+#: plug-ins/gap/gap_mov_dialog.c:518
 msgid "Anim Preview"
 msgstr "Æ°²è¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/gap/gap_mov_dialog.c:514
+#: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Generate Animated Preview as multilayer image"
 msgstr "Ê£¿ôËç¥ì¥¤¥ä¡¼²èÁü¤È¤·¤ÆÆ°²è¥×¥ì¥Ó¥å¡¼¤òÀ¸À®¤¹¤ë"
 
 #. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:527
+#: plug-ins/gap/gap_mov_dialog.c:538
 msgid "Copy moving source-layer(s) into frames"
 msgstr "°ÜÆ°¤¹¤ë¥½¡¼¥¹¥ì¥¤¥ä¡¼¤ò¥Õ¥ì¡¼¥à¤Ë¥³¥Ô¡¼"
 
 #. the start frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:560
+#: plug-ins/gap/gap_mov_dialog.c:571
 msgid "Start Frame:"
 msgstr "³«»Ï¥Õ¥ì¡¼¥à"
 
@@ -8570,13 +8613,13 @@ msgstr "³«»Ï¥Õ¥ì¡¼¥à"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:568
+#: plug-ins/gap/gap_mov_dialog.c:579
 msgid "First handled frame"
 msgstr "ºÇ½é¤Ë°·¤¦¥Õ¥ì¡¼¥à"
 
 #. the end frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:575
+#: plug-ins/gap/gap_mov_dialog.c:586
 msgid "End Frame:"
 msgstr "½ªÎ»¥Õ¥ì¡¼¥à"
 
@@ -8588,13 +8631,13 @@ msgstr "½ªÎ»¥Õ¥ì¡¼¥à"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:583
+#: plug-ins/gap/gap_mov_dialog.c:594
 msgid "Last handled frame"
 msgstr "ºÇ¸å¤Ë°·¤¦¥Õ¥ì¡¼¥à"
 
 #. the Preview Frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:590
+#: plug-ins/gap/gap_mov_dialog.c:601
 msgid "Preview Frame:"
 msgstr "¥×¥ì¥Ó¥å¡¼¥Õ¥ì¡¼¥à:"
 
@@ -8606,13 +8649,13 @@ msgstr "¥×¥ì¥Ó¥å¡¼¥Õ¥ì¡¼¥à:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:598
+#: plug-ins/gap/gap_mov_dialog.c:609
 msgid "Frame to show when UpdPreview button is pressed"
 msgstr "¥×¥ì¥Ó¥å¡¼¹¹¿·¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿»þ¤ËÉ½¼¨¤¹¤ë¥Õ¥ì¡¼¥à"
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:267
+#: plug-ins/gap/gap_mov_dialog.c:617 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
 msgstr "¥ì¥¤¥ä¡¼¥¹¥¿¥Ã¥¯:"
 
@@ -8624,7 +8667,7 @@ msgstr "¥ì¥¤¥ä¡¼¥¹¥¿¥Ã¥¯:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:614
+#: plug-ins/gap/gap_mov_dialog.c:625
 msgid ""
 "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
@@ -8633,66 +8676,66 @@ msgstr ""
 "0 ¤È¤¤¤¦¤Î¤Ï°ìÈÖ¾å, ¤Ä¤Þ¤êºÇÁ°ÌÌ¤Ç¤¹"
 
 #. toggle force visibility
-#: plug-ins/gap/gap_mov_dialog.c:626
+#: plug-ins/gap/gap_mov_dialog.c:637
 msgid "Force visibility"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:633
+#: plug-ins/gap/gap_mov_dialog.c:644
 msgid "Force visibility for all copied Src-Layers"
 msgstr ""
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:639
+#: plug-ins/gap/gap_mov_dialog.c:650
 msgid "Clip To Frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:646
+#: plug-ins/gap/gap_mov_dialog.c:657
 msgid "Clip all copied Src-Layers at Frame Boundaries"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:694
+#: plug-ins/gap/gap_mov_dialog.c:705
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:790
+#: plug-ins/gap/gap_mov_dialog.c:801
 msgid "Object on empty frames"
 msgstr "¶õ¥Õ¥ì¡¼¥à¥ª¥Ö¥¸¥§¥¯¥È"
 
-#: plug-ins/gap/gap_mov_dialog.c:791
+#: plug-ins/gap/gap_mov_dialog.c:802
 msgid "Object on one frame"
 msgstr "°ì¤Ä¤Î¥Õ¥ì¡¼¥à¥ª¥Ö¥¸¥§¥¯¥È"
 
-#: plug-ins/gap/gap_mov_dialog.c:792
+#: plug-ins/gap/gap_mov_dialog.c:803
 msgid "Exact Object on frames"
 msgstr "¥Õ¥ì¡¼¥à¤ÏÀµ³Î¤Ê¥ª¥Ö¥¸¥§¥¯¥È"
 
-#: plug-ins/gap/gap_mov_dialog.c:822
+#: plug-ins/gap/gap_mov_dialog.c:833
 msgid "Anim Preview Mode"
 msgstr "Æ°²è¥×¥ì¥Ó¥å¡¼¥â¡¼¥É"
 
-#: plug-ins/gap/gap_mov_dialog.c:830
+#: plug-ins/gap/gap_mov_dialog.c:841
 msgid "Scale Preview"
 msgstr "½Ì¾®¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/gap/gap_mov_dialog.c:831
+#: plug-ins/gap/gap_mov_dialog.c:842
 msgid "Scale down size of the generated animated preview (in %)"
 msgstr "ºîÀ®¤¹¤ëÆ°²è¥×¥ì¥Ó¥å¡¼¤Î¥µ¥¤¥º¤ò½Ì¾®¤¹¤ë (% ¤Ç)"
 
-#: plug-ins/gap/gap_mov_dialog.c:839
+#: plug-ins/gap/gap_mov_dialog.c:850
 msgid "Framerate"
 msgstr "¥Õ¥ì¡¼¥à¥ì¡¼¥È"
 
-#: plug-ins/gap/gap_mov_dialog.c:840
+#: plug-ins/gap/gap_mov_dialog.c:851
 msgid "Framerate to use in the animated preview in frames/sec"
 msgstr "Æ°²è¥×¥ì¥Ó¥å¡¼¤Ç ¥Õ¥ì¡¼¥à/ÉÃ ¤È¤·¤Æ»È¤ï¤ì¤ë¥Õ¥ì¡¼¥à¥ì¡¼¥È"
 
-#: plug-ins/gap/gap_mov_dialog.c:854
+#: plug-ins/gap/gap_mov_dialog.c:865
 msgid "Copy to Video Buffer"
 msgstr "¥Ó¥Ç¥ª¥Ð¥Ã¥Õ¥¡¤Ë¥³¥Ô¡¼"
 
-#: plug-ins/gap/gap_mov_dialog.c:855
+#: plug-ins/gap/gap_mov_dialog.c:866
 msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
@@ -8700,82 +8743,82 @@ msgstr ""
 "Á´¤Æ¤ÎÆ°²è¥×¥ì¥Ó¥å¡¼¤Î¥Õ¥ì¡¼¥à¤½¤ì¤¾¤ì¤ò¥Ó¥Ç¥ª¥Ð¥Ã¥Õ¥¡¤ËÊÝÂ¸¤¹¤ë\n"
 "(video-paste-dir ¤È video-paste-basename ¤Ë¤è¤Ã¤Æ gimprc ¤ÇÀßÄê¤µ¤ì¤ë)"
 
-#: plug-ins/gap/gap_mov_dialog.c:860
+#: plug-ins/gap/gap_mov_dialog.c:871
 msgid "Move Path Animated Preview"
 msgstr "°ÜÆ°¥Ñ¥¹Æ°²è¥×¥ì¥Ó¥å¡¼"
 
-#: plug-ins/gap/gap_mov_dialog.c:906
+#: plug-ins/gap/gap_mov_dialog.c:917
 msgid "Generate Animated Preview failed\n"
 msgstr "ºÇÅ¬Æ°²è¥×¥ì¥Ó¥å¡¼À¸À®¼ºÇÔ\n"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1345
+#: plug-ins/gap/gap_mov_dialog.c:1202
 msgid "Load Path Points from file"
 msgstr "¥Õ¥¡¥¤¥ë¤«¤é¥Ñ¥¹Ã¼ÅÀ¤ÎÆÉ¤ß¹þ¤ß"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1381
+#: plug-ins/gap/gap_mov_dialog.c:1238
 msgid "Save Path Points to file"
 msgstr "¥Õ¥¡¥¤¥ë¤Ë¥Ñ¥¹Ã¼ÅÀ¤òÊÝÂ¸"
 
-#: plug-ins/gap/gap_mov_dialog.c:1727
+#: plug-ins/gap/gap_mov_dialog.c:1567
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
 msgstr "¸½ºß¤ÎÃ¼ÅÀ : [ %3d ] Ãæ [ %3d ]"
 
-#: plug-ins/gap/gap_mov_dialog.c:1919
+#: plug-ins/gap/gap_mov_dialog.c:1653
 msgid "Source Select"
 msgstr "¸µÁªÂò"
 
 #. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1935
+#: plug-ins/gap/gap_mov_dialog.c:1669
 msgid "Source Image/Layer:"
 msgstr "¸µ²èÁü/¥ì¥¤¥ä¡¼:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1945
+#: plug-ins/gap/gap_mov_dialog.c:1679
 msgid "Source Object to insert into Frame Range"
 msgstr "¥Õ¥ì¡¼¥à´Ö¤ËÁÞÆþ¤¹¤ë¸µ¥ª¥Ö¥¸¥§¥¯¥È"
 
 #. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1960
+#: plug-ins/gap/gap_mov_dialog.c:1694
 msgid "Mode:"
 msgstr "¥â¡¼¥É:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1969
+#: plug-ins/gap/gap_mov_dialog.c:1703
 msgid "Paintmode"
 msgstr "ÉÁ²è¥â¡¼¥É"
 
 #. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1984
+#: plug-ins/gap/gap_mov_dialog.c:1718
 msgid "Stepmode:"
 msgstr "¥¹¥Æ¥Ã¥×¥â¡¼¥É:"
 
-#: plug-ins/gap/gap_mov_dialog.c:2002
+#: plug-ins/gap/gap_mov_dialog.c:1736
 msgid "How to fetch the next SrcLayer at the next handled frame"
 msgstr "¼¡¤Ë°·¤¦¥Õ¥ì¡¼¥à¤¬¼¡¤Î¸µ¥ì¥¤¥ä¡¼¤ò¼è¤Ã¤Æ¤¯¤ëÊýË¡"
 
 #. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:2008
+#: plug-ins/gap/gap_mov_dialog.c:1742
 msgid "Handle:"
 msgstr "°·¤¤:"
 
-#: plug-ins/gap/gap_mov_dialog.c:2026
+#: plug-ins/gap/gap_mov_dialog.c:1760
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
 msgstr "¸µ¥ì¥¤¥ä¡¼¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥ÈºÂÉ¸¤ÎÇÛÃÖÊýË¡"
 
 #. to avoid side effects while initialization
 #. the frame
-#: plug-ins/gap/gap_mov_dialog.c:2080
+#: plug-ins/gap/gap_mov_dialog.c:1814
 msgid "Move Path Preview"
 msgstr "°ÜÆ°¥Ñ¥¹¥×¥ì¥Ó¥å¡¼"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2112
+#: plug-ins/gap/gap_mov_dialog.c:1846
 msgid "X Coordinate"
 msgstr "X ºÂÉ¸"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2130
+#: plug-ins/gap/gap_mov_dialog.c:1864
 msgid "Y Coordinate"
 msgstr "Y ºÂÉ¸"
 
@@ -8787,7 +8830,7 @@ msgstr "Y ºÂÉ¸"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2147
+#: plug-ins/gap/gap_mov_dialog.c:1881
 msgid "Scale Source Layer's Width in percent"
 msgstr "¸µ¥ì¥¤¥ä¡¼¤ÎÉý¤ò¡ó¤Ç³ÈÂç½Ì¾®"
 
@@ -8799,7 +8842,7 @@ msgstr "¸µ¥ì¥¤¥ä¡¼¤ÎÉý¤ò¡ó¤Ç³ÈÂç½Ì¾®"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2164
+#: plug-ins/gap/gap_mov_dialog.c:1898
 msgid "Scale SrcLayer's Height in percent"
 msgstr "¸µ¥ì¥¤¥ä¡¼¤Î¹â¤µ¤ò¡ó¤Ç³ÈÂç½Ì¾®"
 
@@ -8811,13 +8854,13 @@ msgstr "¸µ¥ì¥¤¥ä¡¼¤Î¹â¤µ¤ò¡ó¤Ç³ÈÂç½Ì¾®"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2181
+#: plug-ins/gap/gap_mov_dialog.c:1915
 msgid "SrcLayer's Opacity in percent"
 msgstr "¡ó¤Ç¸µ¥ì¥¤¥ä¡¼¤ÎÉÔÆ©ÌÀÅÙ"
 
 #. Rotation
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:2190
+#: plug-ins/gap/gap_mov_dialog.c:1924
 msgid "Rotate:"
 msgstr "²óÅ¾:"
 
@@ -8829,13 +8872,13 @@ msgstr "²óÅ¾:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2198
+#: plug-ins/gap/gap_mov_dialog.c:1932
 msgid "Rotate SrcLayer (in degree)"
 msgstr "¸µ¥ì¥¤¥ä¡¼¤Î²óÅ¾ (³ÑÅÙ)"
 
 #. Keyframe
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:2209
+#: plug-ins/gap/gap_mov_dialog.c:1942
 msgid "Keyframe:"
 msgstr "¥­¡¼¥Õ¥ì¡¼¥à:"
 
@@ -8847,7 +8890,7 @@ msgstr "¥­¡¼¥Õ¥ì¡¼¥à:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:2217
+#: plug-ins/gap/gap_mov_dialog.c:1950
 msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
@@ -8855,11 +8898,11 @@ msgstr ""
 "¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤ò¥­¡¼¥Õ¥ì¡¼¥àÈÖ¹æ¤Ç½¤Àµ\n"
 "(0 == ¥­¡¼¥Õ¥ì¡¼¥àÌµ¤·)"
 
-#: plug-ins/gap/gap_mov_dialog.c:2292
+#: plug-ins/gap/gap_mov_dialog.c:2025
 msgid "Add Point"
 msgstr "Ã¼ÅÀÄÉ²Ã"
 
-#: plug-ins/gap/gap_mov_dialog.c:2300
+#: plug-ins/gap/gap_mov_dialog.c:2033
 msgid ""
 "Add Controlpoint at end\n"
 "(the last Point is duplicated)"
@@ -8868,24 +8911,24 @@ msgstr ""
 "(ºÇ¸å¤ÎÃ¼ÅÀ¤¬Ê£À½¤µ¤ì¤ë)"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:2305
+#: plug-ins/gap/gap_mov_dialog.c:2038
 msgid "Show Path"
 msgstr "¥Ñ¥¹É½¼¨"
 
-#: plug-ins/gap/gap_mov_dialog.c:2312
+#: plug-ins/gap/gap_mov_dialog.c:2045
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
 msgstr ""
 "¥Ñ¥¹Àþ¤òÉ½¼¨¤·¤Æº¸¥Ü¥¿¥ó¤ÇÁªÂò/¥É¥é¥Ã¥°¤Þ¤¿¤Ï±¦¥Ü¥¿¥ó¤Ç°ÜÆ°¤Ç¤­¤ë¤è¤¦¤Ë¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2322
+#: plug-ins/gap/gap_mov_dialog.c:2055
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
 msgstr "Ã¼ÅÀÁÞÆþ"
 
-#: plug-ins/gap/gap_mov_dialog.c:2330
+#: plug-ins/gap/gap_mov_dialog.c:2063
 msgid ""
 "Insert Controlpoint\n"
 "(the current Point is duplicated)"
@@ -8893,61 +8936,61 @@ msgstr ""
 "¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÁÞÆþ¤·¤Þ¤¹\n"
 "(¸½ºß¤ÎÃ¼ÅÀ¤¬Ê£À½¤µ¤ì¤ë)"
 
-#: plug-ins/gap/gap_mov_dialog.c:2334
+#: plug-ins/gap/gap_mov_dialog.c:2067
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
 msgstr "Ã¼ÅÀºï½ü"
 
-#: plug-ins/gap/gap_mov_dialog.c:2342
+#: plug-ins/gap/gap_mov_dialog.c:2075
 msgid "Delete current Controlpoint"
 msgstr "¸½ºß¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òºï½ü¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2348
+#: plug-ins/gap/gap_mov_dialog.c:2081
 msgid "Prev Point"
 msgstr "Á°¤ÎÃ¼ÅÀ"
 
-#: plug-ins/gap/gap_mov_dialog.c:2356
+#: plug-ins/gap/gap_mov_dialog.c:2089
 msgid "Show Previous Controlpoint"
 msgstr "Á°¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ½¼¨¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2360
+#: plug-ins/gap/gap_mov_dialog.c:2093
 msgid "Next Point"
 msgstr "¼¡¤ÎÃ¼ÅÀ"
 
-#: plug-ins/gap/gap_mov_dialog.c:2368
+#: plug-ins/gap/gap_mov_dialog.c:2101
 msgid "Show Next Controlpoint"
 msgstr "¼¡¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ½¼¨¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2374
+#: plug-ins/gap/gap_mov_dialog.c:2107
 msgid "First Point"
 msgstr "ÀèÆ¬¤ÎÃ¼ÅÀ"
 
-#: plug-ins/gap/gap_mov_dialog.c:2382
+#: plug-ins/gap/gap_mov_dialog.c:2115
 msgid "Show First Controlpoint"
 msgstr "ºÇ½é¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ½¼¨¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2386
+#: plug-ins/gap/gap_mov_dialog.c:2119
 msgid "Last Point"
 msgstr "ºÇ¸å¤ÎÃ¼ÅÀ"
 
-#: plug-ins/gap/gap_mov_dialog.c:2394
+#: plug-ins/gap/gap_mov_dialog.c:2127
 msgid "Show Last Controlpoint"
 msgstr "ºÇ¸å¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ½¼¨¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2400
+#: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Clear Point"
 msgstr "Ã¼ÅÀ¥¯¥ê¥¢"
 
-#: plug-ins/gap/gap_mov_dialog.c:2408
+#: plug-ins/gap/gap_mov_dialog.c:2141
 msgid "Reset the current Controlpoint to default Values"
 msgstr "¸½ºß¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ¸½àÃÍ¤Ë¥ê¥»¥Ã¥È¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2412
+#: plug-ins/gap/gap_mov_dialog.c:2145
 msgid "Clear All Points"
 msgstr "Á´Ã¼ÅÀ¥¯¥ê¥¢"
 
-#: plug-ins/gap/gap_mov_dialog.c:2420
+#: plug-ins/gap/gap_mov_dialog.c:2153
 msgid ""
 "Reset all Controlpoints to default Values but dont change the path (X/Y "
 "Values)"
@@ -8955,41 +8998,77 @@ msgstr ""
 "Á´¤Æ¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òÉ¸½àÃÍ¤Ë¥ê¥»¥Ã¥È¤·¤Þ¤¹¤¬¥Ñ¥¹ (X/Y ÃÍ) "
 "¤ÏÊÑ¤¨¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:2427
+#: plug-ins/gap/gap_mov_dialog.c:2160
 msgid "Rotate Follow"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:2438
+#: plug-ins/gap/gap_mov_dialog.c:2171
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:2445
+#: plug-ins/gap/gap_mov_dialog.c:2178
 msgid "Delete All Points"
 msgstr "Á´Ã¼ÅÀ¤Îºï½ü"
 
-#: plug-ins/gap/gap_mov_dialog.c:2453
+#: plug-ins/gap/gap_mov_dialog.c:2186
 msgid "Delete all Controlpoints"
 msgstr "Á´¤Æ¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤òºï½ü¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2460
+#: plug-ins/gap/gap_mov_dialog.c:2193
 msgid "Load Points"
 msgstr "Ã¼ÅÀÆÉ¤ß¹þ¤ß"
 
-#: plug-ins/gap/gap_mov_dialog.c:2468
+#: plug-ins/gap/gap_mov_dialog.c:2201
 msgid "Load Controlpoints from file"
 msgstr "¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤ò¥Õ¥¡¥¤¥ë¤«¤éÆÉ¤ß¹þ¤ß¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2472
+#: plug-ins/gap/gap_mov_dialog.c:2205
 msgid "Save Points"
 msgstr "Ã¼ÅÀÊÝÂ¸"
 
-#: plug-ins/gap/gap_mov_dialog.c:2480
+#: plug-ins/gap/gap_mov_dialog.c:2213
 msgid "Save Controlpoints to file"
 msgstr "¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤ò¥Õ¥¡¥¤¥ë¤ËÊÝÂ¸¤·¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2951
+#: plug-ins/gap/gap_mov_dialog.c:2671
+msgid ""
+"Can't operate with current Controlpoint\n"
+"or Keyframe settings"
+msgstr ""
+"¸½ºß¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤«¥­¡¼¥Õ¥ì¡¼¥à¤ÎÀßÄê¤Ç¤Ï\n"
+"Áàºî¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤»¤ó"
+
+#: plug-ins/gap/gap_mov_dialog.c:2678
+msgid "Reset Keyframes"
+msgstr "¥­¡¼¥Õ¥ì¡¼¥à¥ê¥»¥Ã¥È"
+
+#: plug-ins/gap/gap_mov_dialog.c:2683
+msgid "Move Path Controlpointcheck"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:2684
+msgid "Errors:"
+msgstr "¥¨¥é¡¼:"
+
+#: plug-ins/gap/gap_mov_exec.c:444
+msgid ""
+"No Source Image was selected.\n"
+"Please open a 2nd Image of the same type before opening Move Path."
+msgstr ""
+"¸µ²èÁü¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Þ¤»¤ó.\n"
+"¥Ñ¥¹°ÜÆ°¤ò³«¤¯Á°¤ËÆ±¤¸·¿¤Î 2 ÈÖÌÜ¤Î²èÁü¤ò³«¤¤¤Æ²¼¤µ¤¤."
+
+#: plug-ins/gap/gap_mov_exec.c:455
+msgid "Copying Layers into Frames..."
+msgstr "¥ì¥¤¥ä¡¼¤ò¥Õ¥ì¡¼¥à¤Ë¥³¥Ô¡¼¤·¤Æ¤¤¤Þ¤¹..."
+
+#: plug-ins/gap/gap_mov_exec.c:459
+msgid "Generating Animated Preview..."
+msgstr "Æ°²è¥×¥ì¥Ó¥å¡¼¤òÀ¸À®¤·¤Æ¤¤¤Þ¤¹..."
+
+#: plug-ins/gap/gap_mov_exec.c:1376
 #, c-format
 msgid ""
 "\n"
@@ -8998,7 +9077,7 @@ msgstr ""
 "\n"
 "¥¨¥é¡¼: ¥­¡¼¥Õ¥ì¡¼¥à %d ¤ÎÃ¼ÅÀ [%d] ¤ÏºÇ½ª¥Õ¥ì¡¼¥à¤è¤ê¤â¹â²á¤®¤ë¤«Æ±Åù¤Ç¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:2959
+#: plug-ins/gap/gap_mov_exec.c:1384
 #, c-format
 msgid ""
 "\n"
@@ -9009,7 +9088,7 @@ msgstr ""
 "¥¨¥é¡¼: ¥­¡¼¥Õ¥ì¡¼¥à %d ¤ÎÃ¼ÅÀ [%d] ¤Ë¤ÏÁ°¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤Î¤¿¤á¤Î\n"
 "½½Ê¬¤Ê¶õ´Ö (¥Õ¥ì¡¼¥à) ¤¬¤¢¤ê¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:2969
+#: plug-ins/gap/gap_mov_exec.c:1394
 #, c-format
 msgid ""
 "\n"
@@ -9018,7 +9097,7 @@ msgstr ""
 "\n"
 "¥¨¥é¡¼: ¥­¡¼¥Õ¥ì¡¼¥à %d ¤ÏÏ¢Â³¤·¤¿Ã¼ÅÀ [%d] ¤Ç¤Ï¤¢¤ê¤Þ¤»¤ó"
 
-#: plug-ins/gap/gap_mov_dialog.c:2987
+#: plug-ins/gap/gap_mov_exec.c:1412
 #, c-format
 msgid ""
 "\n"
@@ -9027,7 +9106,7 @@ msgstr ""
 "\n"
 "¥¨¥é¡¼: ¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È [%d] ¥Õ¥ì¡¼¥àÈÏ°Ï¤Î°·¤¤¤òÄ¶¤¨¤Æ¤¤¤Þ¤¹"
 
-#: plug-ins/gap/gap_mov_dialog.c:3001
+#: plug-ins/gap/gap_mov_exec.c:1426
 #, c-format
 msgid ""
 "\n"
@@ -9037,42 +9116,6 @@ msgstr ""
 "\n"
 "¥¨¥é¡¼:  ¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È (%d) ¤¬°·¤¦¥Õ¥ì¡¼¥à (%d) ¤è¤ê¤âÂ¿¤¤¤Î¤Ç\n"
 "¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤ò¸º¤é¤¹¤«¤â¤Ã¤ÈÂ¿¤¯¤Î¥Õ¥ì¡¼¥à¤òÁª¤ó¤Ç²¼¤µ¤¤"
-
-#: plug-ins/gap/gap_mov_dialog.c:3014
-msgid ""
-"Can't operate with current Controlpoint\n"
-"or Keyframe settings"
-msgstr ""
-"¸½ºß¤Î¥³¥ó¥È¥í¡¼¥ë¥Ý¥¤¥ó¥È¤«¥­¡¼¥Õ¥ì¡¼¥à¤ÎÀßÄê¤Ç¤Ï\n"
-"Áàºî¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤»¤ó"
-
-#: plug-ins/gap/gap_mov_dialog.c:3021
-msgid "Reset Keyframes"
-msgstr "¥­¡¼¥Õ¥ì¡¼¥à¥ê¥»¥Ã¥È"
-
-#: plug-ins/gap/gap_mov_dialog.c:3026
-msgid "Move Path Controlpointcheck"
-msgstr ""
-
-#: plug-ins/gap/gap_mov_dialog.c:3027
-msgid "Errors:"
-msgstr "¥¨¥é¡¼:"
-
-#: plug-ins/gap/gap_mov_exec.c:339
-msgid ""
-"No Source Image was selected.\n"
-"Please open a 2nd Image of the same type before opening Move Path."
-msgstr ""
-"¸µ²èÁü¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Þ¤»¤ó.\n"
-"¥Ñ¥¹°ÜÆ°¤ò³«¤¯Á°¤ËÆ±¤¸·¿¤Î 2 ÈÖÌÜ¤Î²èÁü¤ò³«¤¤¤Æ²¼¤µ¤¤."
-
-#: plug-ins/gap/gap_mov_exec.c:350
-msgid "Copying Layers into Frames..."
-msgstr "¥ì¥¤¥ä¡¼¤ò¥Õ¥ì¡¼¥à¤Ë¥³¥Ô¡¼¤·¤Æ¤¤¤Þ¤¹..."
-
-#: plug-ins/gap/gap_mov_exec.c:354
-msgid "Generating Animated Preview..."
-msgstr "Æ°²è¥×¥ì¥Ó¥å¡¼¤òÀ¸À®¤·¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
@@ -9367,7 +9410,7 @@ msgstr ""
 "\n"
 "¥¨¥é¡¼: °ìËç¤Î²èÁü¤¬¸Æ¤Ó½Ð¤µ¤ì¤Þ¤·¤¿, Æ°²è¥Õ¥ì¡¼¥à¤¬É¬Í×¤Ç¤¹"
 
-#: plug-ins/gap/gap_navigator_dialog.c:367
+#: plug-ins/gap/gap_navigator_dialog.c:368
 msgid ""
 "Playback         \n"
 "<Shift> optimized"
@@ -9375,7 +9418,7 @@ msgstr ""
 "¥×¥ì¥¤¥Ð¥Ã¥¯     \n"
 "<Shift> ºÇÅ¬²½"
 
-#: plug-ins/gap/gap_navigator_dialog.c:372
+#: plug-ins/gap/gap_navigator_dialog.c:373
 msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
@@ -9383,44 +9426,44 @@ msgstr ""
 "¤¹¤°¤Ë .xvpics ¤ò¹¹¿·\n"
 "<Shift> ¤Ç¶¯À©¹¹¿·"
 
-#: plug-ins/gap/gap_navigator_dialog.c:377
+#: plug-ins/gap/gap_navigator_dialog.c:378
 msgid "Duplicate selected Frames"
 msgstr "ÁªÂò¤·¤¿¥Õ¥ì¡¼¥à¤òÊ£À½"
 
-#: plug-ins/gap/gap_navigator_dialog.c:381
+#: plug-ins/gap/gap_navigator_dialog.c:382
 msgid "Delete selected Frames"
 msgstr "ÁªÂò¤·¤¿¥Õ¥ì¡¼¥à¤òºï½ü"
 
-#: plug-ins/gap/gap_navigator_dialog.c:390
+#: plug-ins/gap/gap_navigator_dialog.c:391
 msgid "Goto 1st Frame"
 msgstr "ºÇ½é¤Î¥Õ¥ì¡¼¥à¤Ø"
 
-#: plug-ins/gap/gap_navigator_dialog.c:394
+#: plug-ins/gap/gap_navigator_dialog.c:395
 msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
 
-#: plug-ins/gap/gap_navigator_dialog.c:399
+#: plug-ins/gap/gap_navigator_dialog.c:400
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
 
-#: plug-ins/gap/gap_navigator_dialog.c:404
+#: plug-ins/gap/gap_navigator_dialog.c:405
 msgid "Goto last Frame"
 msgstr "ºÇ¸å¤Î¥Õ¥ì¡¼¥à¤Ø"
 
-#: plug-ins/gap/gap_navigator_dialog.c:462
+#: plug-ins/gap/gap_navigator_dialog.c:463
 msgid "<Image>/Video/VCR Navigator..."
 msgstr "<Image>/Æ°²è/VCR ¥Ê¥Ó¥²¡¼¥¿..."
 
-#: plug-ins/gap/gap_navigator_dialog.c:525
+#: plug-ins/gap/gap_navigator_dialog.c:526
 msgid "Cant open two or more Video Navigator Windows."
 msgstr "2 ¤Ä°Ê¾å¤Î¥Ó¥Ç¥ª¥Ê¥Ó¥²¡¼¥¿¥¦¥£¥ó¥É¥¦¤Ï³«¤±¤Þ¤»¤ó."
 
 #. menu_item cut
-#: plug-ins/gap/gap_navigator_dialog.c:2931
+#: plug-ins/gap/gap_navigator_dialog.c:2932
 #: plug-ins/imagemap/imap_cmd_cut.c:53
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
@@ -9428,39 +9471,39 @@ msgid "Cut"
 msgstr "¥«¥Ã¥È"
 
 #. menu_item paste before
-#: plug-ins/gap/gap_navigator_dialog.c:2941
+#: plug-ins/gap/gap_navigator_dialog.c:2942
 msgid "Paste before"
 msgstr "Á°¤Ë¥Ú¡¼¥¹¥È"
 
 #. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2951
+#: plug-ins/gap/gap_navigator_dialog.c:2952
 msgid "Paste after"
 msgstr "¸å¤í¤Ë¥Ú¡¼¥¹¥È"
 
 #. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2961
+#: plug-ins/gap/gap_navigator_dialog.c:2962
 msgid "Paste replace"
 msgstr "ÃÖ¤­´¹¤¨¤Æ¥Ú¡¼¥¹¥È"
 
 #. menu_item copy
-#: plug-ins/gap/gap_navigator_dialog.c:2971
+#: plug-ins/gap/gap_navigator_dialog.c:2972
 msgid "Clear Video Buffer"
 msgstr "¥Ó¥Ç¥ª¥Ð¥Ã¥Õ¥¡¤Î¥¯¥ê¥¢"
 
-#: plug-ins/gap/gap_navigator_dialog.c:2996
+#: plug-ins/gap/gap_navigator_dialog.c:2997
 msgid "Videoframes:"
 msgstr "¥Ó¥Ç¥ª¥Õ¥ì¡¼¥à:"
 
-#: plug-ins/gap/gap_navigator_dialog.c:3011
+#: plug-ins/gap/gap_navigator_dialog.c:3012
 msgid "Framerate:"
 msgstr "¥Õ¥ì¡¼¥à¥ì¡¼¥È:"
 
-#: plug-ins/gap/gap_navigator_dialog.c:3034
+#: plug-ins/gap/gap_navigator_dialog.c:3035
 msgid "Timezoom:"
 msgstr "»þ´Ö¥º¡¼¥à:"
 
 #. The main shell
-#: plug-ins/gap/gap_navigator_dialog.c:3128
+#: plug-ins/gap/gap_navigator_dialog.c:3129
 msgid "Video Navigator"
 msgstr "Æ°²è¥Ê¥Ó¥²¡¼¥¿"
 
@@ -10015,7 +10058,7 @@ msgstr "GDynText ¥á¥Ã¥»¡¼¥¸Áë"
 msgid "GDynText: About ..."
 msgstr "GDynText: GDynText ¤Ë¤Ä¤¤¤Æ..."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4736
+#: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4737
 msgid "none"
 msgstr "¤Ê¤·"
 
@@ -10983,12 +11026,12 @@ msgstr "¥Ý¥ê¥´¥ó"
 msgid "Second Flares"
 msgstr "Æó¼¡¥Õ¥ì¥¢"
 
-#: plug-ins/gflare/gflare.c:4749
+#: plug-ins/gflare/gflare.c:4750
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" ¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó: \"%s\" ¤ò»ÈÍÑ¤·¤Þ¤¹"
 
-#: plug-ins/gflare/gflare.c:4819
+#: plug-ins/gflare/gflare.c:4821
 msgid "More..."
 msgstr "¾ÜºÙÀßÄê..."
 
@@ -11647,7 +11690,13 @@ msgid ""
 "this topic has not been written yet or that something is wrong with your "
 "installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
-msgstr "<html><head><title>¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«ÉÕ¤«¤ê¤Þ¤»¤ó</title></head><body bgcolor=\"#ffffff\"><center><p>%s<h3>¥Ç¥£¥ì¥¯¥È¥ê</h3><tt>%s</tt><h3>¤ËÊÑ¤¨¤é¤ì¤Þ¤»¤ó.</h3><h3>¤³¤ì¤Ï¥Õ¥¡¥¤¥ë</h3><tt>%s</tt><h3>¤Ë¥¢¥¯¥»¥¹¤·¤è¤¦¤È¤·¤ÆÈ¯À¸¤·¤Þ¤·¤¿</h3></center><p><small>¤³¤ÎÏÃÂê¤Î¤¿¤á¤Î¥Ø¥ë¥×¤¬¤Þ¤À½ñ¤«¤ì¤Æ¤¤¤Ê¤¤¤«¤¢¤Ê¤¿¤Î¥¤¥ó¥¹¥È¡¼¥ë¤Î¤É¤³¤«¤¬´Ö°ã¤Ã¤Æ¤¤¤Þ¤¹. ¤¢¤Ê¤¿¤¬¤³¤ì¤ò¥Ð¥°¤È¤·¤ÆÊó¹ð¤¹¤ëÁ°¤Ë¿µ½Å¤ËÄ´¤Ù¤Æ²¼¤µ¤¤</small></body></html>"
+msgstr ""
+"<html><head><title>¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«ÉÕ¤«¤ê¤Þ¤»¤ó</title></head><body "
+"bgcolor=\"#ffffff\"><center><p>%s<h3>¥Ç¥£¥ì¥¯¥È¥ê</h3><tt>%s</tt><h3>¤ËÊÑ¤¨¤é"
+"¤ì¤Þ¤»¤ó.</h3><h3>¤³¤ì¤Ï¥Õ¥¡¥¤¥ë</h3><tt>%s</tt><h3>¤Ë¥¢¥¯¥»¥¹¤·¤è¤¦¤È¤·¤ÆÈ¯À"
+"¸¤·¤Þ¤·¤¿</h3></center><p><small>¤³¤ÎÏÃÂê¤Î¤¿¤á¤Î¥Ø¥ë¥×¤¬¤Þ¤À½ñ¤«¤ì¤Æ¤¤¤Ê¤¤¤«"
+"¤¢¤Ê¤¿¤Î¥¤¥ó¥¹¥È¡¼¥ë¤Î¤É¤³¤«¤¬´Ö°ã¤Ã¤Æ¤¤¤Þ¤¹. "
+"¤¢¤Ê¤¿¤¬¤³¤ì¤ò¥Ð¥°¤È¤·¤ÆÊó¹ð¤¹¤ëÁ°¤Ë¿µ½Å¤ËÄ´¤Ù¤Æ²¼¤µ¤¤</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"

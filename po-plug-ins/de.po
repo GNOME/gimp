@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-03 18:40+0100\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-12-03 18:44+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -10168,7 +10168,7 @@ msgstr "GDynText Nachrichtenfenster"
 msgid "GDynText: About ..."
 msgstr "Über GDynText ..."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4736
+#: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4737
 msgid "none"
 msgstr "Kein"
 
@@ -11162,12 +11162,12 @@ msgstr "Polygon"
 msgid "Second Flares"
 msgstr "Zweites Flare"
 
-#: plug-ins/gflare/gflare.c:4749
+#: plug-ins/gflare/gflare.c:4750
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" nicht gefunden; Benutze \"%s\"."
 
-#: plug-ins/gflare/gflare.c:4819
+#: plug-ins/gflare/gflare.c:4821
 msgid "More..."
 msgstr "Mehr..."
 

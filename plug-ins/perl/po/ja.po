@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Sun Dec  3 17:57:53 2000\n"
+"POT-Creation-Date: Sat Dec  9 11:20:27 2000\n"
 "PO-Revision-Date: 2000-12-03 22:52+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -602,13 +602,17 @@ msgstr "編集"
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
-msgstr "INT32 が期待されますが '%s' を受け取りました. もし本当に渡すつもりならば '*1' を文字列に追加してください"
+msgstr ""
+"INT32 が期待されますが '%s' を受け取りました. もし本当に渡すつもりならば "
+"'*1' を文字列に追加してください"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
-msgstr "INT32 が期待されますが '%s' を受け取りました. '%s' とするつもりだったか 'use strict' を忘れたのかもしれません"
+msgstr ""
+"INT32 が期待されますが '%s' を受け取りました. '%s' とするつもりだったか 'use "
+"strict' を忘れたのかもしれません"
 
 #: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
@@ -912,7 +916,8 @@ msgstr "$pf_type2string{$type} 型への変換はまだ実装されていません\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr "gimp サーバに接続できません (Perl-Server が動いている事を確認して下さい)"
+msgstr ""
+"gimp サーバに接続できません (Perl-Server が動いている事を確認して下さい)"
 
 #: Gimp/Lib.xs:0
 msgid ""
@@ -922,7 +927,8 @@ msgstr "次元が違っています, pdl は %d 次元ですが最低 %d 次元が必要です"
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr "次元が違っています, pdl は %d 次元ですが最大 %d 次元までしか取り扱えません"
+msgstr ""
+"次元が違っています, pdl は %d 次元ですが最大 %d 次元までしか取り扱えません"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
@@ -948,7 +954,9 @@ msgstr "エクスポート失敗"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "ファンクション '$exe' がこのスクリプト中に見付かりません (以下のいずれかでなければなりません "
+msgstr ""
+"ファンクション '$exe' がこのスクリプト中に見付かりません "
+"(以下のいずれかでなければなりません "
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
@@ -1031,12 +1039,16 @@ msgstr "gimp_pattern_select_widget の最後の引数は整数参照でなくてはいけません"
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
-msgstr "不適切なパラメータ定義です, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] または PARAM_TYPE が期待されます"
+msgstr ""
+"不適切なパラメータ定義です, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] または "
+"PARAM_TYPE が期待されます"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr "メニューパスは <Image>, <Toolbox>, <Load>, <Save> または <None> のいずれかで始まらなければなりません."
+msgstr ""
+"メニューパスは <Image>, <Toolbox>, <Load>, <Save> または <None> "
+"のいずれかで始まらなければなりません."
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
@@ -1060,7 +1072,8 @@ msgstr "パラメータ '$entry->[1]' はオプションではありません\n"
 
 #: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "パラメータと返り値は (たとえ空であっても) 配列参照でなければいけません!"
+msgstr ""
+"パラメータと返り値は (たとえ空であっても) 配列参照でなければいけません!"
 
 #: Gimp/Lib.xs:0
 msgid "pdl height != region height"
@@ -1073,7 +1086,9 @@ msgstr "perl-arrayref は gimp-array のために datatype として必要です"
 #: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr "ピクセルサイズが合いません, pdl は %d チャンネルのピクセルを持っていますが %d チャンネルが必要です"
+msgstr ""
+"ピクセルサイズが合いません, pdl は %d チャンネルのピクセルを持っていますが "
+"%d チャンネルが必要です"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
@@ -1101,7 +1116,9 @@ msgstr "必要なコールバック 'run' が見付かりません\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr "run_mode は INTERACTIVE, NONINTERACTIVE もしくは RUN_WITH_LAST_VALS のいずれかでなければなりません\n"
+msgstr ""
+"run_mode は INTERACTIVE, NONINTERACTIVE もしくは RUN_WITH_LAST_VALS "
+"のいずれかでなければなりません\n"
 
 #: Perl-Server:0
 msgid "server going down..."

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Sun Oct  1 20:10:59 2000\n"
+"POT-Creation-Date: Sat Dec  9 11:20:27 2000\n"
 "PO-Revision-Date: 2000-09-30 02:20+02:00\n"
 "Last-Translator: Oscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 "valores primero\n"
 "       los argumentos del guión son\n"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -65,7 +65,7 @@ msgstr ""
 "                                      (para más información, vea "
 "Gimp::Net(3))\n"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ no es una etiqueta de importación válida para el paquete $pkg"
 
@@ -81,13 +81,17 @@ msgstr "$_: opción desconocida/no válida de guardar fichero"
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
-msgstr "$function: el nombre del argumento '$p->[1]' contiene carácteres no válidos, sólo 0-9, a-z y _ están permitidos."
+msgstr ""
+"$function: el nombre del argumento '$p->[1]' contiene carácteres no válidos, "
+"sólo 0-9, a-z y _ están permitidos."
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function: argumento/valor de retorno '$p->[1]' tiene un tipo no válido '$p->[0]'"
+msgstr ""
+"$function: argumento/valor de retorno '$p->[1]' tiene un tipo no válido "
+"'$p->[0]'"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -97,7 +101,9 @@ msgstr ""
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr "$function: el nombre de la función tiene carácteres inusuales, hacerlo correctamente es usar sólo 0-9, a-z y _"
+msgstr ""
+"$function: el nombre de la función tiene carácteres inusuales, hacerlo "
+"correctamente es usar sólo 0-9, a-z y _"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
@@ -576,7 +582,7 @@ msgstr "Mapa de relieve"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "No puedo llamar '$AUTOLOAD' esta vez"
 
@@ -788,7 +794,7 @@ msgstr "Este módulo se creó sin soporte para PDL."
 msgid "Unable to convert a reference to type '%s'"
 msgstr "No puedo convertir una referencia a tipo '%s'"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
@@ -809,7 +815,7 @@ msgstr "Tipo de argumento no soportado: $type"
 msgid "Visual Scriptor"
 msgstr ""
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "WARNING"
 msgstr "AVISO"
 
@@ -983,7 +989,7 @@ msgstr "no se encontró la función '$exe' en este guión (debe ser una de"
 msgid "function name contains dashes instead of underscores"
 msgstr "el nombre de la función tiene guiones en vez de subrayados ( _ )"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "función/macro \"$name\" no encontrada en $class"
 
@@ -1039,12 +1045,12 @@ msgstr "especificación de parásito ilegal, se esperaba referencia"
 msgid "illegal type for colour specification"
 msgstr "tipo ilegal para especificación de color"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr "el interfaz '$interface_type' no está soportado."
 
 # //O No está soportada ni lo estará...
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr "La etiqueta 'interface=...' ya no está soportada\n"
 
@@ -1054,7 +1060,9 @@ msgstr "La etiqueta 'interface=...' ya no está soportada\n"
 #: Perl-Server:0
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr "GIMP_HOST inválido: 'spawn' no es un método de conexión válido para el servidor"
+msgstr ""
+"GIMP_HOST inválido: 'spawn' no es un método de conexión válido para el "
+"servidor"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
@@ -1126,15 +1134,15 @@ msgstr "petición QUIT recibida"
 msgid "register called with too many or wrong arguments\n"
 msgstr "registro llamado con demasiados o incorrectos argumentos\n"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr "retrollamada requerida 'net' no encontrada\n"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr "retrollamada requerida 'query' no encontrada\n"
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr "retrollamada requerida 'run' no encontrada\n"
 
@@ -1223,7 +1231,7 @@ msgstr "no puedo hacer fork: $!"
 msgid "unable to grok colour specification"
 msgstr ""
 
-#: Gimp.pm:0
+#: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "no puedo abrir $rgb_db_path"
 

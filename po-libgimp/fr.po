@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.1.29\n"
-"POT-Creation-Date: 2000-11-24 15:06+0100\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-11-24 15:46+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -117,7 +117,7 @@ msgstr "Ignorer"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
-#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:501
+#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -140,23 +140,23 @@ msgstr "Sélection du fichier"
 
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:499
+#: libgimp/gimpunitmenu.c:503
 msgid "OK"
 msgstr "Valider"
 
-#: libgimp/gimpunitmenu.c:238
+#: libgimp/gimpunitmenu.c:241
 msgid "More..."
 msgstr "Suite..."
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:498
 msgid "Unit Selection"
 msgstr "Sélection des unités"
 
-#: libgimp/gimpunitmenu.c:531
+#: libgimp/gimpunitmenu.c:535
 msgid "Unit"
 msgstr "Unité"
 
-#: libgimp/gimpunitmenu.c:532
+#: libgimp/gimpunitmenu.c:536
 msgid "Factor"
 msgstr "Facteur"
 
@@ -207,7 +207,7 @@ msgstr "picas"
 msgid "percent"
 msgstr "pourcent"
 
-#: libgimp/gimpwidgets.c:706
+#: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -216,11 +216,11 @@ msgstr ""
 "du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence "
 "aléatoire reproductible en fournissant la même graine."
 
-#: libgimp/gimpwidgets.c:711
+#: libgimp/gimpwidgets.c:720
 msgid "Time"
 msgstr "Heure"
 
-#: libgimp/gimpwidgets.c:720
+#: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -228,15 +228,15 @@ msgstr ""
 "Prend l'heure actuelle comme graine du générateur de nombres aléatoires. "
 "Cela garanti un aléa raisonnable."
 
-#: libgimp/gimpwidgets.c:1031
+#: libgimp/gimpwidgets.c:1041
 msgid "Bytes"
 msgstr "Octets"
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1042
 msgid "KiloBytes"
 msgstr "KiloOctets"
 
-#: libgimp/gimpwidgets.c:1033
+#: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
 msgstr "MégaOctets"
 

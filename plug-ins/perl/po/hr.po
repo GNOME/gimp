@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.29\n"
-"POT-Creation-Date: Mon Oct 16 11:48:38 2000\n"
+"POT-Creation-Date: Sat Dec  9 11:20:27 2000\n"
 "PO-Revision-Date: 2000-11-04 11:12 +100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -75,12 +75,13 @@ msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
 msgstr ""
-"$function: argument '$p->[1]' sadr¾i krive karaktere, samo 0-9, "
-"a-z su dozvoljeni"
+"$function: argument '$p->[1]' sadr¾i krive karaktere, samo 0-9, a-z su "
+"dozvoljeni"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function: argument/povrat. vrijednost '$p->[1]' je neispravan '$p->[0]'"
+msgstr ""
+"$function: argument/povrat. vrijednost '$p->[1]' je neispravan '$p->[0]'"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
@@ -814,7 +815,8 @@ msgid "[undefined]"
 msgstr "[undefined]"
 
 #: Gimp/Lib.xs:0
-msgid "[undefined]\n"
+#, fuzzy
+msgid "[unfinished]\n"
 msgstr "[undefined]\n"
 
 #: UI/UI.pm:0
@@ -903,19 +905,18 @@ msgstr "konverzija u tip $pf_type2string{$type} nije podr¾ana\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr "ne mogu se spojiti na gimp server (provjeri da li je Perl Server Aktivan)"
+msgstr ""
+"ne mogu se spojiti na gimp server (provjeri da li je Perl Server Aktivan)"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr "" 
-"pogre¹na dimnezija, pdl ima dimenziju %d ali potrebno je najmanje %d"
+msgstr "pogre¹na dimnezija, pdl ima dimenziju %d ali potrebno je najmanje %d"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr ""
-"pogre¹na dimenzija, pdl ima dimenziju %d ali dozvoljeno je najvi¹e %d"
+msgstr "pogre¹na dimenzija, pdl ima dimenziju %d ali dozvoljeno je najvi¹e %d"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
@@ -931,7 +932,8 @@ msgstr "oèekivao sam perl server na drugom kraju, imam @r\n"
 
 #: Net/Net.pm:0
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr "oèekivana verz. protokola $Gimp::_PROT_VERSION, ali server koristi $r[0]\n"
+msgstr ""
+"oèekivana verz. protokola $Gimp::_PROT_VERSION, ali server koristi $r[0]\n"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
@@ -1066,6 +1068,7 @@ msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
 msgstr "prikljuèak je vratio %d vi¹e vrijednosti od oèekivane"
@@ -1205,4 +1208,3 @@ msgstr "pogre¹na autorizacija, ru¹im vezu"
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: unmatched XLFD '$fontname'\n"
-

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2000-10-30 21:56-0800\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-06-28 21:04+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -12,59 +12,59 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: libgimp/gimpcolorbutton.c:118
+#: libgimp/gimpcolorbutton.c:121
 msgid "/Use Foreground Color"
 msgstr "/Использовать цвет переднего плана"
 
-#: libgimp/gimpcolorbutton.c:119
+#: libgimp/gimpcolorbutton.c:122
 msgid "/Use Background Color"
 msgstr "/Использовать цвет фона"
 
-#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
 msgid "can't handle layers"
 msgstr "невозможно обработать слои"
 
-#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
+#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
-#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
+#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
 msgstr "можно обработать слои только как анимированные кадры"
 
-#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
 msgid "Save as Animation"
 msgstr "Сохранить как анимацию"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
+#: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
 msgstr "Свести изображение"
 
-#: libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
 msgstr "невозможно обработать прозрачность"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:205
 msgid "can only handle RGB images"
 msgstr "можно обработать только RGB-изображения"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
+#: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Convert to RGB"
 msgstr "Преобразовать в RGB"
 
-#: libgimp/gimpexport.c:212
+#: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
 msgstr "можно обработать только изображения в оттенках серого"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
 msgstr "Преобразовать в оттенки серого"
 
-#: libgimp/gimpexport.c:221
+#: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
 msgstr "можно обработать только индексированные изображения"
 
-#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
+#: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -72,24 +72,24 @@ msgstr ""
 "Преобразовать в индексированное используя настройки по умолчанию\n"
 "(Результат можно подстроить вручную)"
 
-#: libgimp/gimpexport.c:231
+#: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
 msgstr "можно обработать только изображения в оттенках серого или RGB"
 
-#: libgimp/gimpexport.c:240
+#: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
 msgstr "можно обработать только RGB или индексированные изображения"
 
-#: libgimp/gimpexport.c:250
+#: libgimp/gimpexport.c:252
 msgid "can only handle grayscale or indexed images"
 msgstr ""
 "можно обработать только изображения в оттенках серого или индексированные"
 
-#: libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
 msgstr "требуется альфа канал"
 
-#: libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:264
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
@@ -98,25 +98,25 @@ msgstr "Добавить альфа-канал"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:331
+#: libgimp/gimpexport.c:333
 msgid "Export File"
 msgstr "Экспортировать файл"
 
-#: libgimp/gimpexport.c:336
+#: libgimp/gimpexport.c:338
 msgid "Export"
 msgstr "Экспорт"
 
-#: libgimp/gimpexport.c:338
+#: libgimp/gimpexport.c:340
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
-#: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
-#: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
+#: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
+#: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
+#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
 msgid "Cancel"
 msgstr "Отмена"
 
-#: libgimp/gimpexport.c:355
+#: libgimp/gimpexport.c:357
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -125,33 +125,33 @@ msgstr ""
 "сохранено по следующим причинам:"
 
 #. the footline
-#: libgimp/gimpexport.c:418
+#: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: libgimp/gimpfileselection.c:391
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Выбрать файл"
 
-#: libgimp/gimpquerybox.c:183 libgimp/gimpquerybox.c:237
-#: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
-#: libgimp/gimpunitmenu.c:499
+#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
+#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
+#: libgimp/gimpunitmenu.c:503
 msgid "OK"
 msgstr "OK"
 
-#: libgimp/gimpunitmenu.c:238
+#: libgimp/gimpunitmenu.c:241
 msgid "More..."
 msgstr "Дополнительно..."
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:498
 msgid "Unit Selection"
 msgstr "Выбор единиц"
 
-#: libgimp/gimpunitmenu.c:531
+#: libgimp/gimpunitmenu.c:535
 msgid "Unit"
 msgstr "Единица"
 
-#: libgimp/gimpunitmenu.c:532
+#: libgimp/gimpunitmenu.c:536
 msgid "Factor"
 msgstr "Множитель"
 
@@ -202,7 +202,7 @@ msgstr "пики"
 msgid "percent"
 msgstr "процент"
 
-#: libgimp/gimpwidgets.c:709
+#: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -211,11 +211,11 @@ msgstr ""
 "генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
 "действие "
 
-#: libgimp/gimpwidgets.c:714
+#: libgimp/gimpwidgets.c:720
 msgid "Time"
 msgstr "Время"
 
-#: libgimp/gimpwidgets.c:723
+#: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -223,14 +223,14 @@ msgstr ""
 "Инициализировать генератор случайных чисел текущим времене - это гарантирует "
 "надежную \"случайность\""
 
-#: libgimp/gimpwidgets.c:1035
+#: libgimp/gimpwidgets.c:1041
 msgid "Bytes"
 msgstr "Байты"
 
-#: libgimp/gimpwidgets.c:1036
+#: libgimp/gimpwidgets.c:1042
 msgid "KiloBytes"
 msgstr "Килобайты"
 
-#: libgimp/gimpwidgets.c:1037
+#: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
 msgstr "Мегабайты"

@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2000-11-24 15:06+0100\n"
+"POT-Creation-Date: 2000-12-09 11:19-0800\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -124,12 +124,12 @@ msgstr "Quitter"
 #: app/app_procs.c:765 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:280 app/color_notebook.c:127 app/convert.c:513
-#: app/curves.c:567 app/file_new_dialog.c:210 app/file_new_dialog.c:360
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/curves.c:561 app/file_new_dialog.c:210 app/file_new_dialog.c:360
+#: app/gdisplay_color_ui.c:159 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
 #: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:379
-#: app/interface.c:1041 app/layers_dialog.c:3487 app/layers_dialog.c:3669
-#: app/layers_dialog.c:3764 app/layers_dialog.c:4024 app/levels.c:346
+#: app/interface.c:1041 app/layers_dialog.c:3524 app/layers_dialog.c:3708
+#: app/layers_dialog.c:3803 app/layers_dialog.c:4064 app/levels.c:346
 #: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1481
 #: app/qmask.c:278 app/resize.c:220 app/resize.c:1393
 #: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
@@ -285,10 +285,10 @@ msgstr "Luminosité-Contraste ne peux opérer sur des images indexées."
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
 #: app/color_balance.c:276 app/color_notebook.c:124 app/convert.c:511
-#: app/curves.c:563 app/file_new_dialog.c:210 app/file_new_dialog.c:356
-#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
-#: app/layers_dialog.c:3485 app/layers_dialog.c:3667 app/layers_dialog.c:3762
-#: app/layers_dialog.c:4022 app/levels.c:342 app/module_db.c:314
+#: app/curves.c:557 app/file_new_dialog.c:210 app/file_new_dialog.c:356
+#: app/gdisplay_color_ui.c:157 app/gimpui.c:122 app/hue_saturation.c:375
+#: app/layers_dialog.c:3522 app/layers_dialog.c:3706 app/layers_dialog.c:3801
+#: app/layers_dialog.c:4062 app/levels.c:342 app/module_db.c:314
 #: app/posterize.c:203 app/preferences_dialog.c:1477 app/qmask.c:276
 #: app/resize.c:214 app/resize.c:1393 app/resolution_calibrate.c:109
 #: app/threshold.c:276 modules/cdisplay_gamma.c:330
@@ -297,7 +297,7 @@ msgid "OK"
 msgstr "Valider"
 
 #: app/brightness_contrast.c:222 app/by_color_select.c:721
-#: app/color_balance.c:278 app/curves.c:565 app/file_new_dialog.c:358
+#: app/color_balance.c:278 app/curves.c:559 app/file_new_dialog.c:358
 #: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
 #: app/resize.c:217 app/threshold.c:278 app/tools.c:1543
 #: app/transform_core.c:406 modules/colorsel_water.c:634
@@ -315,7 +315,7 @@ msgid "Contrast:"
 msgstr "Contraste :"
 
 #. The preview toggle
-#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
+#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:681
 #: app/fileops.c:413 app/hue_saturation.c:567 app/levels.c:575
 #: app/palette.c:3216 app/posterize.c:244 app/threshold.c:353
 msgid "Preview"
@@ -369,7 +369,7 @@ msgstr "Rafraîchir"
 msgid "No Brushes available"
 msgstr "Aucun pinceau disponible."
 
-#: app/brush_select.c:448 app/layers_dialog.c:416 app/tool_options.c:526
+#: app/brush_select.c:448 app/layers_dialog.c:417 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Opacité :"
 
@@ -454,7 +454,7 @@ msgid "Replace"
 msgstr "Remplacer"
 
 #: app/by_color_select.c:787 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:120
+#: app/gdisplay_color_ui.c:144
 msgid "Add"
 msgstr "Ajouter"
 
@@ -482,12 +482,12 @@ msgstr "Inverser"
 msgid "All"
 msgstr "Tout"
 
-#: app/channel.c:188 app/channel.c:190 app/layer.c:321 app/layer.c:323
+#: app/channel.c:188 app/channel.c:190 app/layer.c:325 app/layer.c:328
 msgid "copy"
 msgstr "copier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1729
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:334 app/layer.c:1759
 #, c-format
 msgid "%s copy"
 msgstr "Copie de %s"
@@ -517,11 +517,11 @@ msgid "Wrap Around"
 msgstr "Espace enroulé"
 
 #: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:290
-#: app/layers_dialog.c:3587
+#: app/layers_dialog.c:3626
 msgid "Background"
 msgstr "Fond"
 
-#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3589
+#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3628
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -563,17 +563,17 @@ msgid "Empty Channel Copy"
 msgstr "Copie de canal vide"
 
 #: app/channels_dialog.c:1433 app/color_balance.c:348 app/color_select.c:250
-#: app/curves.c:588 app/histogram_tool.c:303 app/levels.c:375
+#: app/curves.c:582 app/histogram_tool.c:303 app/levels.c:375
 msgid "Red"
 msgstr "Rouge"
 
 #: app/channels_dialog.c:1437 app/color_balance.c:373 app/color_select.c:251
-#: app/curves.c:589 app/histogram_tool.c:304 app/levels.c:376
+#: app/curves.c:583 app/histogram_tool.c:304 app/levels.c:376
 msgid "Green"
 msgstr "Vert"
 
 #: app/channels_dialog.c:1441 app/color_balance.c:398 app/color_select.c:252
-#: app/curves.c:590 app/histogram_tool.c:305 app/levels.c:377
+#: app/curves.c:584 app/histogram_tool.c:305 app/levels.c:377
 msgid "Blue"
 msgstr "Bleu"
 
@@ -777,7 +777,7 @@ msgstr "Teinte"
 msgid "Saturation"
 msgstr "Saturation"
 
-#: app/color_select.c:249 app/curves.c:587 app/histogram_tool.c:302
+#: app/color_select.c:249 app/curves.c:581 app/histogram_tool.c:302
 #: app/layers_dialog.c:389 app/levels.c:374 app/paint_funcs.c:98
 #: app/tool_options.c:932
 msgid "Value"
@@ -982,7 +982,7 @@ msgid "Width:"
 msgstr "Largeur :"
 
 #: app/crop.c:1096 app/file_new_dialog.c:398 app/file_new_dialog.c:416
-#: app/layers_dialog.c:3528 app/resize.c:279 app/resize.c:304 app/resize.c:536
+#: app/layers_dialog.c:3566 app/resize.c:279 app/resize.c:304 app/resize.c:536
 #: app/scale_tool.c:83 app/scale_tool.c:90 app/tool_options.c:364
 msgid "Height:"
 msgstr "Hauteur :"
@@ -996,57 +996,57 @@ msgid "Auto Shrink"
 msgstr "Réduction automatique"
 
 #. The shell and main vbox
-#: app/curves.c:392 app/curves.c:558 app/tools.c:1162
+#: app/curves.c:393 app/curves.c:552 app/tools.c:1162
 msgid "Curves"
 msgstr "Courbes"
 
-#: app/curves.c:439
+#: app/curves.c:440
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Les courbes des images indexées ne peuvent pas être ajustées."
 
-#: app/curves.c:580
+#: app/curves.c:574
 msgid "Modify Curves for Channel:"
 msgstr "Modifier les courbes pour le canal :"
 
-#: app/curves.c:591 app/levels.c:378
+#: app/curves.c:585 app/levels.c:378
 msgid "Alpha"
 msgstr "Alpha"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:670
+#: app/curves.c:664
 msgid "Curve Type:"
 msgstr "Type de courbe :"
 
-#: app/curves.c:677
+#: app/curves.c:671
 msgid "Smooth"
 msgstr "Régulariser"
 
-#: app/curves.c:678
+#: app/curves.c:672
 msgid "Free"
 msgstr "Libre"
 
-#: app/curves.c:704 app/levels.c:603 app/module_db.c:865
+#: app/curves.c:698 app/levels.c:603 app/module_db.c:865
 msgid "Load"
 msgstr "Charger"
 
-#: app/curves.c:712 app/devices.c:753 app/levels.c:613 app/palette.c:2047
+#: app/curves.c:706 app/devices.c:753 app/levels.c:613 app/palette.c:2047
 #: app/preferences_dialog.c:380 app/preferences_dialog.c:1479
 msgid "Save"
 msgstr "Enregistrer"
 
-#: app/curves.c:1278
+#: app/curves.c:1305
 msgid "Load Curves"
 msgstr "Charger courbes"
 
-#: app/curves.c:1293
+#: app/curves.c:1320
 msgid "Save Curves"
 msgstr "Enregistrer courbes"
 
-#: app/curves.c:1584
+#: app/curves.c:1611
 msgid "Load/Save Curves"
 msgstr "Charger/Enregistrer courbes"
 
-#: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
+#: app/curves.c:1656 app/curves.c:1674 app/levels.c:1481 app/levels.c:1499
 #: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
@@ -1481,31 +1481,31 @@ msgstr "indexé-vide"
 msgid "indexed"
 msgstr "indexé"
 
-#: app/gdisplay_color_ui.c:121
+#: app/gdisplay_color_ui.c:145
 msgid "Remove"
 msgstr "Enlever"
 
-#: app/gdisplay_color_ui.c:122
+#: app/gdisplay_color_ui.c:146
 msgid "Up"
 msgstr "Haut"
 
-#: app/gdisplay_color_ui.c:123
+#: app/gdisplay_color_ui.c:147
 msgid "Down"
 msgstr "Bas"
 
-#: app/gdisplay_color_ui.c:124
+#: app/gdisplay_color_ui.c:148
 msgid "Configure"
 msgstr "Configurer"
 
-#: app/gdisplay_color_ui.c:127
+#: app/gdisplay_color_ui.c:151
 msgid "Color Display Filters"
 msgstr "Filtres d'affichage couleur"
 
-#: app/gdisplay_color_ui.c:153
+#: app/gdisplay_color_ui.c:177
 msgid "Available Filters"
 msgstr "Filtres disponibles"
 
-#: app/gdisplay_color_ui.c:176
+#: app/gdisplay_color_ui.c:203
 msgid "Active Filters"
 msgstr "Filtres actifs"
 
@@ -1654,31 +1654,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Utilise Netscape à la place"
 
-#: app/gimpimage.c:2322
+#: app/gimpimage.c:2314
 msgid "Layer cannot be raised any further"
 msgstr "Impossible de remonter encore ce calque"
 
-#: app/gimpimage.c:2350
+#: app/gimpimage.c:2342
 msgid "Layer cannot be lowered any further"
 msgstr "Impossible de descendre encore ce calque"
 
-#: app/gimpimage.c:2376
+#: app/gimpimage.c:2368
 msgid "Layer is already on top"
 msgstr "Calque déjà en haut"
 
-#: app/gimpimage.c:2382
+#: app/gimpimage.c:2374
 msgid "Can't raise Layer without alpha"
 msgstr "Impossible de remonter un Calque sans alpha"
 
-#: app/gimpimage.c:2410
+#: app/gimpimage.c:2402
 msgid "Layer is already on bottom"
 msgstr "Calque déjà en bas"
 
-#: app/gimpimage.c:2465
+#: app/gimpimage.c:2457
 msgid "BG has no alpha, layer was placed above"
 msgstr "Fond sans alpha, calque placé par dessus"
 
-#: app/gimpimage.c:2536
+#: app/gimpimage.c:2529
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1686,11 +1686,11 @@ msgstr ""
 "Il n'y a pas assez de calques visibles pour une\n"
 "fusion. Il en faut au moins deux."
 
-#: app/gimpimage.c:2620
+#: app/gimpimage.c:2613
 msgid "There are not enough visible layers for a merge down."
 msgstr "Il n'y a pas assez de calques visibles pour une fusion."
 
-#: app/gimpimage.c:3037
+#: app/gimpimage.c:3063
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1698,7 +1698,7 @@ msgstr ""
 "Impossible d'ajouter un masque au\n"
 "calque car il en a déjà un."
 
-#: app/gimpimage.c:3043
+#: app/gimpimage.c:3069
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1706,7 +1706,7 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "au calque dans une image indexée."
 
-#: app/gimpimage.c:3049
+#: app/gimpimage.c:3075
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1714,21 +1714,21 @@ msgstr ""
 "Impossible d'ajouter un masque\n"
 "dans un calque sans canal alpha."
 
-#: app/gimpimage.c:3058
+#: app/gimpimage.c:3084
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossible d'ajouter un masque de calque de dimensions différente que le "
 "calque spécifié."
 
-#: app/gimpimage.c:3165
+#: app/gimpimage.c:3192
 msgid "Channel cannot be raised any further"
 msgstr "Le canal ne peux pas être plus remonté"
 
-#: app/gimpimage.c:3216
+#: app/gimpimage.c:3243
 msgid "Channel cannot be lowered any further"
 msgstr "Le canal ne peux pas être abaissé plus"
 
-#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3464 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "SansTitre"
@@ -2317,11 +2317,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
-#: app/image_new.c:71 app/layers_dialog.c:3586
+#: app/image_new.c:71 app/layers_dialog.c:3625
 msgid "Foreground"
 msgstr "Avant-Plan"
 
-#: app/image_new.c:81 app/layers_dialog.c:3588
+#: app/image_new.c:81 app/layers_dialog.c:3627
 msgid "White"
 msgstr "Blanc"
 
@@ -2647,11 +2647,11 @@ msgstr "L'inversion ne fonctionne pas sur les dessins indexés."
 msgid "Invert operation failed."
 msgstr "Échec de l'opération d'inversion."
 
-#: app/layer.c:259
+#: app/layer.c:261
 msgid "Zero width or height layers not allowed."
 msgstr "Les calques de largeur ou hauteur nulle ne sont pas permis."
 
-#: app/layer.c:507
+#: app/layer.c:517
 #, c-format
 msgid "%s mask"
 msgstr "masque %s"
@@ -2660,7 +2660,7 @@ msgstr "masque %s"
 msgid "Layer Select"
 msgstr "Sélection de calque"
 
-#: app/layers_dialog.c:267 app/layers_dialog.c:3518
+#: app/layers_dialog.c:267 app/layers_dialog.c:3556
 msgid "New Layer"
 msgstr "Nouveau calque"
 
@@ -2732,70 +2732,70 @@ msgstr "Noircir seulement"
 msgid "Lighten Only"
 msgstr "Éclaircir seulement"
 
-#: app/layers_dialog.c:399
+#: app/layers_dialog.c:400
 msgid "Keep Trans."
 msgstr "Garder trans."
 
-#: app/layers_dialog.c:408
+#: app/layers_dialog.c:409
 msgid "Keep Transparency"
 msgstr "Garder la transparence"
 
-#: app/layers_dialog.c:1910
+#: app/layers_dialog.c:1928
 msgid "Empty Layer Copy"
 msgstr "Copie de calque vide"
 
-#: app/layers_dialog.c:2172 app/layers_dialog.c:3329 app/layers_dialog.c:3696
+#: app/layers_dialog.c:2191 app/layers_dialog.c:3365 app/layers_dialog.c:3735
 msgid "Floating Selection"
 msgstr "Sélection flottante"
 
-#: app/layers_dialog.c:3479
+#: app/layers_dialog.c:3516
 msgid "New Layer Options"
 msgstr "Options du nouveau calque"
 
 #. The name label and entry
-#: app/layers_dialog.c:3508
+#: app/layers_dialog.c:3545
 msgid "Layer Name:"
 msgstr "Nom du calque :"
 
 #. The size labels
-#: app/layers_dialog.c:3522
+#: app/layers_dialog.c:3560
 msgid "Layer Width:"
 msgstr "Largeur du calque :"
 
-#: app/layers_dialog.c:3582
+#: app/layers_dialog.c:3621
 msgid "Layer Fill Type"
 msgstr "Type de remplissage de calque"
 
-#: app/layers_dialog.c:3661
+#: app/layers_dialog.c:3700
 msgid "Edit Layer Attributes"
 msgstr "Éditer les attributs du calque"
 
-#: app/layers_dialog.c:3688
+#: app/layers_dialog.c:3727
 msgid "Layer name:"
 msgstr "Nom du calque :"
 
-#: app/layers_dialog.c:3756
+#: app/layers_dialog.c:3795
 msgid "Add Mask Options"
 msgstr "Options d'ajout de masque"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3774
+#: app/layers_dialog.c:3813
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser le masque de calque à :"
 
-#: app/layers_dialog.c:3779
+#: app/layers_dialog.c:3818
 msgid "White (Full Opacity)"
 msgstr "Blanc (opacité complète)"
 
-#: app/layers_dialog.c:3781
+#: app/layers_dialog.c:3820
 msgid "Black (Full Transparency)"
 msgstr "Noir (transparence totale)"
 
-#: app/layers_dialog.c:3783
+#: app/layers_dialog.c:3822
 msgid "Layer's Alpha Channel"
 msgstr "Canal alpha du calque"
 
-#: app/layers_dialog.c:3844 app/layers_dialog.c:3930
+#: app/layers_dialog.c:3884 app/layers_dialog.c:3970
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2803,27 +2803,27 @@ msgstr ""
 "Hauteur ou largeur non valide.\n"
 "Les deux doivent être positives."
 
-#: app/layers_dialog.c:4016
+#: app/layers_dialog.c:4056
 msgid "Layer Merge Options"
 msgstr "Options de fusion du calque"
 
-#: app/layers_dialog.c:4041
+#: app/layers_dialog.c:4081
 msgid "Final, Merged Layer should be:"
 msgstr "Le calque final, fusionné, devra être :"
 
-#: app/layers_dialog.c:4042
+#: app/layers_dialog.c:4082
 msgid "Final, Anchored Layer should be:"
 msgstr "Le calque final, ancré, devra être :"
 
-#: app/layers_dialog.c:4047
+#: app/layers_dialog.c:4087
 msgid "Expanded as necessary"
 msgstr "Étendu autant que nécessaire"
 
-#: app/layers_dialog.c:4049
+#: app/layers_dialog.c:4089
 msgid "Clipped to image"
 msgstr "Rogné à la taille de l'image"
 
-#: app/layers_dialog.c:4051
+#: app/layers_dialog.c:4091
 msgid "Clipped to bottom layer"
 msgstr "Rogné à la taille du calque le plus bas"
 
@@ -2865,15 +2865,15 @@ msgstr "Niveaux d'entrée :"
 msgid "Output Levels:"
 msgstr "Niveaux de sortie :"
 
-#: app/levels.c:1068
+#: app/levels.c:1092
 msgid "Load Levels"
 msgstr "Charger niveaux"
 
-#: app/levels.c:1083
+#: app/levels.c:1107
 msgid "Save Levels"
 msgstr "Enregistrer niveaux"
 
-#: app/levels.c:1412
+#: app/levels.c:1436
 msgid "Load/Save Levels"
 msgstr "Charger/Enregistrer niveaux"
 

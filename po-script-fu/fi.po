@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2000-10-30 21:58-0800\n"
+"POT-Creation-Date: 2000-12-09 11:20-0800\n"
 "PO-Revision-Date: 2000-06-16 19:40+0300\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -23,7 +23,7 @@ msgstr "Script-Fu Konsoli"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
 msgstr "Sulje"
 
@@ -53,105 +53,103 @@ msgstr "Mahdotonta avata streamia SIOD tulostus putkesta"
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalutate moodi sallii ainoastaan epäinteraktiivisen käytön"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1113
-#, c-format
-msgid ""
-"Script-Fu Error\n"
-"%s"
-msgstr ""
-"Script-Fu Virhe\n"
-"%s"
-
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1162
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1206
+#: plug-ins/script-fu/script-fu-scripts.c:1209
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1211
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1191
+#: plug-ins/script-fu/script-fu-scripts.c:1234
 msgid "Script Arguments"
 msgstr "Script parametrit"
 
-#. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1214
+#: plug-ins/script-fu/script-fu-scripts.c:1257
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1256
+#: plug-ins/script-fu/script-fu-scripts.c:1304
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Värien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Tiedoston selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1358
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu kuvioiden selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1413
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu väriliukumien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1373
+#: plug-ins/script-fu/script-fu-scripts.c:1421
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu siveltimien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 msgid "Reset to Defaults"
 msgstr "Palauta alkuarvot"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1442
+#: plug-ins/script-fu/script-fu-scripts.c:1493
 msgid "About"
 msgstr "Tietoja"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1456
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1465
+#: plug-ins/script-fu/script-fu-scripts.c:1516
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Peru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1579
+#: plug-ins/script-fu/script-fu-scripts.c:1682
 msgid "NOT SET"
 msgstr "EI PÄÄLLÄ"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1648
+#: plug-ins/script-fu/script-fu-scripts.c:1711
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "Tekija:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1945
+#: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "Päivämäärä"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1953
+#: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Image Types:"
 msgstr "Kuva tyypit:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2106
+#: plug-ins/script-fu/script-fu-scripts.c:2189
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Merkistön valinta"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2256
+#, fuzzy, c-format
+msgid ""
+"Script-Fu Error while executing\n"
+" %s\n"
+"%s"
+msgstr "Script-Fu Tiedoston selain"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -165,19 +163,19 @@ msgstr "Palvelimen portti:"
 msgid "Server Logfile:"
 msgstr "Palvelimen logi-tiedosto:"
 
-#: plug-ins/script-fu/script-fu.c:164
+#: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:177
+#: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
+#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
 msgstr "Lue uudestaan kaikki skriptat"
 
-#: plug-ins/script-fu/script-fu.c:1027
+#: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
@@ -2158,3 +2156,10 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
+
+#~ msgid ""
+#~ "Script-Fu Error\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Script-Fu Virhe\n"
+#~ "%s"
