@@ -1,5 +1,11 @@
 2003-03-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumbnail):
+	call gimp_imagefile_update() on success. Ensures that the
+	previews are updated whenever we write the thumbnail.
+
+2003-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcellrenderertoggle.c
 	(gimp_cell_renderer_toggle_activate)
 	* app/widgets/gimpcellrendererviewable.c

@@ -535,6 +535,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   g_free (thumb_name);
 
+  if (success)
+    gimp_imagefile_update (imagefile, thumb_size);
+
   return success;
 }
 
