@@ -174,8 +174,8 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
           airbrush->paint_options = paint_options;
 
 	  timeout = (paint_options->pressure_options->rate ?
-		     (10000 / (options->rate * 2.0 * paint_core->cur_coords.pressure)) :
-		     (10000 / options->rate));
+		  (10000 / (options->rate * PRESSURE_SCALE * paint_core->cur_coords.pressure)) :
+	    (10000 / options->rate));
 
 	  airbrush->timeout_id = g_timeout_add (timeout,
                                                 gimp_airbrush_timeout,
@@ -217,7 +217,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   saved_pressure = paint_options->pressure_options->pressure;
 
   if (saved_pressure)
-    opacity *= 2.0 * paint_core->cur_coords.pressure;
+    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   paint_options->pressure_options->pressure = FALSE;
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, opacity);

@@ -1,3 +1,21 @@
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/maze_face.c: fixed a compiler warning.
+
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
+	Applied a patch from Philip Lafleur (bug #142808):
+
+	* app/paint/gimppaintcore.h: define PRESSURE_SCALE to 1.5
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c: use the PRESSURE_SCALE constant.
+
 2004-05-24  Michael Natterer  <mitch@gimp.org>
 
 	Long overdue core container cleanup:

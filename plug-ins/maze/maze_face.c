@@ -72,17 +72,19 @@ typedef struct
 gchar buffer[BUFSIZE];
 
 
-gboolean    maze_dialog         (void);
+gboolean     maze_dialog         (void);
 
-static void maze_msg            (gchar     *msg);
-static void maze_response       (GtkWidget *widget,
-                                 gint       response_id,
-				 gpointer   data);
-static void maze_help           (void);
+static void  maze_msg            (const gchar *msg);
+static void  maze_response       (GtkWidget   *widget,
+                                  gint         response_id,
+                                  gpointer     data);
+static void  maze_help           (void);
+
 #ifdef SHOW_PRNG_PRIVATES
-static void maze_entry_callback (GtkWidget *widget,
-				 gpointer   data);
+static void  maze_entry_callback (GtkWidget   *widget,
+                                  gpointer     data);
 #endif
+
 
 /* Looking back, it would probably have been easier to completely
  * re-write the whole entry/scale thing to work with the divbox stuff.
@@ -175,7 +177,6 @@ maze_dialog (void)
   GtkWidget *hbox;
   GtkWidget *frame;
   gint       trow = 0;
-  gchar     *message;
 
   gimp_ui_init ("maze", FALSE);
 
@@ -557,9 +558,6 @@ maze_help (void)
   GimpParamDef    *params;
   GimpParamDef    *return_vals;
 
-  gint   baz;
-  gchar *message;
-
   if (gimp_procedural_db_proc_info ("plug_in_web_browser",
 				    &proc_blurb,
 				    &proc_help,
@@ -570,24 +568,27 @@ maze_help (void)
 				    &nparams, &nreturn_vals,
 				    &params, &return_vals))
     {
-      /* open URL for help */
-      message = g_strdup_printf (_("Opening %s"), MAZE_URL);
+      gchar *message = g_strdup_printf (_("Opening %s"), MAZE_URL);
+      gint   baz;
+
       maze_msg (message);
       g_free (message);
+
       gimp_run_procedure ("plug_in_web_browser", &baz,
 			  GIMP_PDB_STRING, MAZE_URL,
 			  GIMP_PDB_END);
     }
   else
     {
-      message = g_strdup_printf (_("See %s"), MAZE_URL);
+      gchar *message = g_strdup_printf (_("See %s"), MAZE_URL);
+
       maze_msg (message);
       g_free (message);
     }
 }
 
 static void
-maze_msg (gchar *msg)
+maze_msg (const gchar *msg)
 {
   gtk_label_set_text (GTK_LABEL (msg_label), msg);
 }

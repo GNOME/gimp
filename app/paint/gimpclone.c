@@ -446,7 +446,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
     }
 
   if (pressure_options->opacity)
-    opacity *= 2.0 * paint_core->cur_coords.pressure;
+    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_paste_canvas (paint_core, drawable,

@@ -23,8 +23,10 @@
 #include "core/gimpobject.h"
 
 
-#define PAINT_CORE_SUBSAMPLE       4
-#define PAINT_CORE_SOLID_SUBSAMPLE 2
+#define PAINT_CORE_SUBSAMPLE        4
+#define PAINT_CORE_SOLID_SUBSAMPLE  2
+
+#define PRESSURE_SCALE              1.5
 
 
 /* the different states that the painting function can be called with  */
