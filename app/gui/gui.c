@@ -596,6 +596,11 @@ gui_display_changed (GimpContext *context,
               if (display2->gimage == image)
                 {
                   gimp_context_set_display (context, display2);
+
+                  /*  stop the emission of the original signal (the emission of
+                   *  the recursive signal is finished)
+                   */
+                  g_signal_stop_emission_by_name (context, "display-changed");
                   return;
                 }
             }
