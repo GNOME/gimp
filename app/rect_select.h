@@ -25,6 +25,7 @@
 void   rect_select_button_press    (Tool *, GdkEventButton *, gpointer);
 void   rect_select_button_release  (Tool *, GdkEventButton *, gpointer);
 void   rect_select_motion          (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_arrow_keys      (Tool *, GdkEventKey *   , gpointer);
 void   rect_select_modifier_update (Tool *, GdkEventKey *   , gpointer);
 void   rect_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 void   rect_select_oper_update     (Tool *, GdkEventMotion *, gpointer);

@@ -361,6 +361,7 @@ tools_new_free_select (void)
   tool->button_press_func   = free_select_button_press;
   tool->button_release_func = free_select_button_release;
   tool->motion_func         = free_select_motion;
+  tool->arrow_keys_func     = rect_select_arrow_keys;
   tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;

@@ -609,6 +609,24 @@ rect_select_modifier_update (Tool        *tool,
 }
 
 void
+rect_select_arrow_keys (Tool        *tool,
+                        GdkEventKey *kevent,
+                        gpointer     gdisp_ptr)
+{
+  RectSelect *rect_sel;
+  GDisplay   *gdisp;
+
+  rect_sel = (RectSelect *) tool->private;
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  if ((rect_sel->op == SELECTION_MOVE_MASK) ||
+      (rect_sel->op == SELECTION_MOVE && gimage_floating_sel (gdisp->gimage)))
+    {
+      edit_sel_arrow_keys_func (tool, kevent, gdisp_ptr);
+    }
+}
+
+void
 rect_select_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   gpointer        gdisp_ptr)
@@ -727,6 +745,7 @@ tools_new_rect_select (void)
   tool->button_press_func   = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func         = rect_select_motion;
+  tool->arrow_keys_func     = rect_select_arrow_keys;
   tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;

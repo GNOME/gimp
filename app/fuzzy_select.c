@@ -30,6 +30,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
+#include "floating_sel.h"
 #include "fuzzy_select.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
@@ -663,6 +664,7 @@ tools_new_fuzzy_select (void)
   tool->button_press_func   = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func         = fuzzy_select_motion;
+  tool->arrow_keys_func     = rect_select_arrow_keys;
   tool->modifier_key_func   = rect_select_modifier_update;
   tool->cursor_update_func  = rect_select_cursor_update;
   tool->oper_update_func    = rect_select_oper_update;

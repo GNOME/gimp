@@ -1,5 +1,15 @@
 2002-05-03  Sven Neumann  <sven@gimp.org>
 
+	* app/rect_select.[ch]: added an arrow_keys_func to allow to move
+	the selection mask or a floating selection using the arrow keys in
+	order to be more consistent with the Move tool (bug #78731).
+
+	* app/ellipse_select.c
+	* app/free_select.c
+	* app/fuzzy_select.c: use the same new arrow_keys_func.
+	
+2002-05-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/borderaverage.c
 	* plug-ins/common/convmatrix.c
 	* plug-ins/common/nlfilt.c
