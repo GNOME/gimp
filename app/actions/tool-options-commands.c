@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"

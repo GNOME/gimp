@@ -33,7 +33,7 @@
 #include "widgets/gimpitemtreeview.h"
 
 #include "channels-actions.h"
-#include "gui/channels-commands.h"
+#include "channels-commands.h"
 
 #include "gimp-intl.h"
 

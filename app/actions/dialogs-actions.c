@@ -28,7 +28,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "dialogs-actions.h"
-#include "gui/dialogs-commands.h"
+#include "dialogs-commands.h"
 
 #include "gimp-intl.h"
 

@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
@@ -34,7 +34,7 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpsessioninfo.h"
 
-#include "dialogs.h"
+#include "gui/dialogs.h"
 #include "dockable-commands.h"
 
 

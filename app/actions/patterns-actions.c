@@ -33,7 +33,7 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "gui/data-commands.h"
+#include "data-commands.h"
 #include "patterns-actions.h"
 
 #include "gimp-intl.h"

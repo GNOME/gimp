@@ -1,3 +1,25 @@
+2004-04-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/*-commands.[ch]: removed...
+
+	* app/actions/*-commands.[ch]: ...and added here.
+
+	* app/gui/Makefile.am
+	* app/gui/*-menu.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/actions/Makefile.am
+	* app/actions/*-actions.c: changed accordingly.
+
+	* app/actions/plug-in-actions.[ch]
+	* app/actions/tools-actions.[ch]: new files.
+
+	* app/Makefile.am: had to add more -u evilness because gui/
+	and actions/ have cyclic dependencies.
+
+	* menus/image-menu.xml: added some more items.
+
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpwidgets-constructors.[ch]: added new function

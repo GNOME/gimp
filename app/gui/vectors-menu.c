@@ -32,7 +32,8 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
 
-#include "vectors-commands.h"
+#include "actions/vectors-commands.h"
+
 #include "vectors-menu.h"
 #include "menus.h"
 

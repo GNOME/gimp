@@ -36,7 +36,8 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "plug-in-commands.h"
+#include "actions/plug-in-commands.h"
+
 #include "plug-in-menus.h"
 
 #include "gimp-intl.h"

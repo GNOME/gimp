@@ -76,10 +76,22 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_2_1_LDFLAGS = \
-	$(mwindows)				\
-	-u $(SYMPREFIX)gimp_container_filter	\
-	-u $(SYMPREFIX)gimp_xml_parser_new	\
-	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
+	$(mwindows)					\
+	-u $(SYMPREFIX)gimp_container_filter		\
+	-u $(SYMPREFIX)gimp_xml_parser_new		\
+	-u $(SYMPREFIX)gimp_drawable_stroke_vectors	\
+	\
+	-u $(SYMPREFIX)convert_to_indexed		\
+	-u $(SYMPREFIX)grid_dialog_new			\
+	-u $(SYMPREFIX)info_dialog_new			\
+	-u $(SYMPREFIX)info_window_create		\
+	-u $(SYMPREFIX)offset_dialog_create		\
+	-u $(SYMPREFIX)palette_import_dialog_show	\
+	-u $(SYMPREFIX)resize_widget_new		\
+	-u $(SYMPREFIX)stroke_dialog_new		\
+	-u $(SYMPREFIX)file_open_dialog_show		\
+	-u $(SYMPREFIX)file_save_dialog_show		\
+	-u $(SYMPREFIX)color_notebook_new
 
 gimp_2_1_LDADD = \
 	config/libappconfig.a		\

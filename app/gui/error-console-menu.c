@@ -28,7 +28,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "error-console-commands.h"
+#include "actions/error-console-commands.h"
+
 #include "error-console-menu.h"
 
 #include "gimp-intl.h"

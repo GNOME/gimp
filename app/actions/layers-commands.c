@@ -26,7 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
@@ -58,9 +58,10 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
+#include "gui/resize-dialog.h"
+
 #include "layers-commands.h"
 #include "image-commands.h"
-#include "resize-dialog.h"
 
 #include "gimp-intl.h"
 

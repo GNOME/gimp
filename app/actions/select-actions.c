@@ -35,9 +35,9 @@
 #include "display/gimpdisplayshell.h"
 
 #include "select-actions.h"
-#include "gui/select-commands.h"
-#include "gui/tools-commands.h"
-#include "gui/vectors-commands.h"
+#include "select-commands.h"
+#include "tools-commands.h"
+#include "vectors-commands.h"
 
 #include "gimp-intl.h"
 

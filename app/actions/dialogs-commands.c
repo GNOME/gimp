@@ -24,14 +24,14 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
 
-#include "dialogs.h"
+#include "gui/dialogs.h"
 #include "dialogs-commands.h"
 
 

@@ -29,7 +29,7 @@
 #include "widgets/gimppaletteeditor.h"
 
 #include "palette-editor-actions.h"
-#include "gui/palette-editor-commands.h"
+#include "palette-editor-commands.h"
 
 #include "gimp-intl.h"
 

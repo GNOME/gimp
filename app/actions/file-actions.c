@@ -39,7 +39,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "file-actions.h"
-#include "gui/file-commands.h"
+#include "file-commands.h"
 
 #include "gimp-intl.h"
 

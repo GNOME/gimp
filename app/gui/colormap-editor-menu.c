@@ -30,7 +30,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "colormap-editor-commands.h"
+#include "actions/colormap-editor-commands.h"
+
 #include "colormap-editor-menu.h"
 
 #include "gimp-intl.h"

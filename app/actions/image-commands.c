@@ -23,7 +23,7 @@
 #include "libgimpbase/gimputils.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "config/gimpguiconfig.h"
 
@@ -49,10 +49,11 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpprogress.h"
 
-#include "convert-dialog.h"
+#include "gui/convert-dialog.h"
+#include "gui/grid-dialog.h"
+#include "gui/resize-dialog.h"
+
 #include "image-commands.h"
-#include "grid-dialog.h"
-#include "resize-dialog.h"
 
 #include "gimp-intl.h"
 

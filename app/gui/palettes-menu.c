@@ -33,8 +33,9 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "data-commands.h"
-#include "palettes-commands.h"
+#include "actions/data-commands.h"
+#include "actions/palettes-commands.h"
+
 #include "palettes-menu.h"
 #include "menus.h"
 

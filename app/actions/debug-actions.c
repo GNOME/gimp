@@ -27,7 +27,7 @@
 #include "widgets/gimpactiongroup.h"
 
 #include "debug-actions.h"
-#include "gui/debug-commands.h"
+#include "debug-commands.h"
 
 
 static GimpActionEntry debug_actions[] =

@@ -33,9 +33,9 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "gui/data-commands.h"
+#include "data-commands.h"
 #include "gradients-actions.h"
-#include "gui/gradients-commands.h"
+#include "gradients-commands.h"
 
 #include "gimp-intl.h"
 

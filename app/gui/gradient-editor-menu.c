@@ -34,7 +34,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "gradient-editor-commands.h"
+#include "actions/gradient-editor-commands.h"
+
 #include "gradient-editor-menu.h"
 #include "menus.h"
 

@@ -34,7 +34,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "fonts-actions.h"
-#include "gui/fonts-commands.h"
+#include "fonts-commands.h"
 
 #include "gimp-intl.h"
 

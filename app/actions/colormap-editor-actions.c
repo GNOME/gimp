@@ -31,7 +31,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "colormap-editor-actions.h"
-#include "gui/colormap-editor-commands.h"
+#include "colormap-editor-commands.h"
 
 #include "gimp-intl.h"
 

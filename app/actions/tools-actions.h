@@ -16,12 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FONTS_COMMANDS_H__
-#define __FONTS_COMMANDS_H__
+#ifndef __TOOLS_ACTIONS_H__
+#define __TOOLS_ACTIONS_H__
 
 
-void   fonts_refresh_cmd_callback (GtkWidget *widget,
-                                   gpointer   data);
+void   tools_actions_setup  (GimpActionGroup *group,
+                             gpointer         data);
+void   tools_actions_update (GimpActionGroup *group,
+                             gpointer         data);
 
 
-#endif /* __FONTS_COMMANDS_H__ */
+#endif /* __TOOLS_ACTIONS_H__ */

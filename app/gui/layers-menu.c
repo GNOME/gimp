@@ -34,7 +34,8 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
 
-#include "layers-commands.h"
+#include "actions/layers-commands.h"
+
 #include "layers-menu.h"
 #include "menus.h"
 

@@ -31,10 +31,11 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "debug-commands.h"
-#include "dialogs-commands.h"
-#include "file-commands.h"
-#include "help-commands.h"
+#include "actions/debug-commands.h"
+#include "actions/dialogs-commands.h"
+#include "actions/file-commands.h"
+#include "actions/help-commands.h"
+
 #include "menus.h"
 #include "plug-in-menus.h"
 #include "toolbox-menu.h"

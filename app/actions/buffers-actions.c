@@ -32,7 +32,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "buffers-actions.h"
-#include "gui/buffers-commands.h"
+#include "buffers-commands.h"
 
 #include "gimp-intl.h"
 

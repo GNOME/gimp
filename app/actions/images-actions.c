@@ -32,7 +32,7 @@
 #include "widgets/gimpcontainerview.h"
 
 #include "images-actions.h"
-#include "gui/images-commands.h"
+#include "images-commands.h"
 
 #include "gimp-intl.h"
 

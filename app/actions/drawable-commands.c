@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -42,7 +42,7 @@
 #include "display/gimpdisplay.h"
 
 #include "drawable-commands.h"
-#include "offset-dialog.h"
+#include "gui/offset-dialog.h"
 
 #include "gimp-intl.h"
 

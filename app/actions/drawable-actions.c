@@ -37,7 +37,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "drawable-actions.h"
-#include "gui/drawable-commands.h"
+#include "drawable-commands.h"
 
 #include "gimp-intl.h"
 

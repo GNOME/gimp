@@ -31,7 +31,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "buffers-commands.h"
+#include "actions/buffers-commands.h"
+
 #include "buffers-menu.h"
 
 #include "gimp-intl.h"

@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "config/gimpguiconfig.h"
 
@@ -48,12 +48,13 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
-#include "dialogs.h"
+#include "gui/dialogs.h"
+#include "gui/file-new-dialog.h"
+#include "gui/file-open-dialog.h"
+#include "gui/file-save-dialog.h"
+#include "gui/menus.h"
+
 #include "file-commands.h"
-#include "file-new-dialog.h"
-#include "file-open-dialog.h"
-#include "file-save-dialog.h"
-#include "menus.h"
 
 #include "gimp-intl.h"
 

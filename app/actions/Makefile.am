@@ -9,58 +9,120 @@ libappactions_a_SOURCES = \
 	brushes-actions.h		\
 	buffers-actions.c		\
 	buffers-actions.h		\
+	buffers-commands.c		\
+	buffers-commands.h		\
 	channels-actions.c		\
 	channels-actions.h		\
+	channels-commands.c		\
+	channels-commands.h		\
 	colormap-editor-actions.c	\
 	colormap-editor-actions.h	\
+	colormap-editor-commands.c	\
+	colormap-editor-commands.h	\
+	data-commands.c			\
+	data-commands.h			\
 	debug-actions.c			\
 	debug-actions.h			\
+	debug-commands.c		\
+	debug-commands.h		\
 	dialogs-actions.c		\
 	dialogs-actions.h		\
+	dialogs-commands.c		\
+	dialogs-commands.h		\
 	dockable-actions.c		\
 	dockable-actions.h		\
+	dockable-commands.c		\
+	dockable-commands.h		\
 	documents-actions.c		\
 	documents-actions.h		\
+	documents-commands.c		\
+	documents-commands.h		\
 	drawable-actions.c		\
 	drawable-actions.h		\
+	drawable-commands.c		\
+	drawable-commands.h		\
 	edit-actions.c			\
 	edit-actions.h			\
+	edit-commands.c			\
+	edit-commands.h			\
 	error-console-actions.c		\
 	error-console-actions.h		\
+	error-console-commands.c	\
+	error-console-commands.h	\
 	file-actions.c			\
 	file-actions.h			\
+	file-commands.c			\
+	file-commands.h			\
 	fonts-actions.c			\
 	fonts-actions.h			\
+	fonts-commands.c		\
+	fonts-commands.h		\
 	gradient-editor-actions.c	\
 	gradient-editor-actions.h	\
+	gradient-editor-commands.c	\
+	gradient-editor-commands.h	\
 	gradients-actions.c		\
 	gradients-actions.h		\
+	gradients-commands.c		\
+	gradients-commands.h		\
 	help-actions.c			\
 	help-actions.h			\
+	help-commands.c			\
+	help-commands.h			\
 	image-actions.c			\
 	image-actions.h			\
+	image-commands.c		\
+	image-commands.h		\
 	images-actions.c		\
 	images-actions.h		\
+	images-commands.c		\
+	images-commands.h		\
 	layers-actions.c		\
 	layers-actions.h		\
+	layers-commands.c		\
+	layers-commands.h		\
 	palette-editor-actions.c	\
 	palette-editor-actions.h	\
+	palette-editor-commands.c	\
+	palette-editor-commands.h	\
 	palettes-actions.c		\
 	palettes-actions.h		\
+	palettes-commands.c		\
+	palettes-commands.h		\
 	patterns-actions.c		\
 	patterns-actions.h		\
+	plug-in-actions.c		\
+	plug-in-actions.h		\
+	plug-in-commands.c		\
+	plug-in-commands.h		\
 	qmask-actions.c			\
 	qmask-actions.h			\
+	qmask-commands.c		\
+	qmask-commands.h		\
 	select-actions.c		\
 	select-actions.h		\
+	select-commands.c		\
+	select-commands.h		\
 	templates-actions.c		\
 	templates-actions.h		\
+	templates-commands.c		\
+	templates-commands.h		\
 	tool-options-actions.c		\
 	tool-options-actions.h		\
+	tool-options-commands.c		\
+	tool-options-commands.h		\
+	tools-actions.c			\
+	tools-actions.h			\
+	tools-commands.c		\
+	tools-commands.h		\
 	vectors-actions.c		\
 	vectors-actions.h		\
+	vectors-commands.c		\
+	vectors-commands.h		\
 	view-actions.c			\
-	view-actions.h
+	view-actions.h			\
+	view-commands.c			\
+	view-commands.h
 
 
 EXTRA_DIST = makefile.msc

@@ -38,7 +38,7 @@
 
 #include "dialogs-actions.h"
 #include "dockable-actions.h"
-#include "gui/dockable-commands.h"
+#include "dockable-commands.h"
 
 #include "gimp-intl.h"
 

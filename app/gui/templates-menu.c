@@ -31,7 +31,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "templates-commands.h"
+#include "actions/templates-commands.h"
+
 #include "templates-menu.h"
 #include "menus.h"
 

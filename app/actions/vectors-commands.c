@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -54,7 +54,8 @@
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
-#include "stroke-dialog.h"
+#include "gui/stroke-dialog.h"
+
 #include "vectors-commands.h"
 
 #include "gimp-intl.h"

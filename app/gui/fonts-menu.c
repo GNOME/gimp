@@ -33,7 +33,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "fonts-commands.h"
+#include "actions/fonts-commands.h"
+
 #include "fonts-menu.h"
 
 #include "gimp-intl.h"

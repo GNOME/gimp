@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -33,8 +33,9 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
-#include "color-notebook.h"
-#include "dialogs.h"
+#include "gui/color-notebook.h"
+#include "gui/dialogs.h"
+
 #include "gradient-editor-commands.h"
 
 #include "gimp-intl.h"

@@ -33,7 +33,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "qmask-actions.h"
-#include "gui/qmask-commands.h"
+#include "qmask-commands.h"
 
 #include "gimp-intl.h"
 

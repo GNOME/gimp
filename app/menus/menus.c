@@ -37,6 +37,8 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
+#include "actions/file-commands.h"
+
 #include "brushes-menu.h"
 #include "buffers-menu.h"
 #include "channels-menu.h"
@@ -46,7 +48,6 @@
 #include "error-console-menu.h"
 #include "file-open-menu.h"
 #include "file-save-menu.h"
-#include "file-commands.h"
 #include "fonts-menu.h"
 #include "gradient-editor-menu.h"
 #include "gradients-menu.h"

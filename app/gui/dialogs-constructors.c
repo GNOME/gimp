@@ -69,20 +69,21 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpnavigationview.h"
 
+#include "actions/channels-commands.h"
+#include "actions/edit-commands.h"
+#include "actions/file-commands.h"
+#include "actions/images-commands.h"
+#include "actions/layers-commands.h"
+#include "actions/templates-commands.h"
+#include "actions/vectors-commands.h"
+
 #include "about-dialog.h"
-#include "channels-commands.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "edit-commands.h"
-#include "file-commands.h"
 #include "file-new-dialog.h"
-#include "images-commands.h"
-#include "layers-commands.h"
 #include "module-browser.h"
 #include "preferences-dialog.h"
-#include "templates-commands.h"
 #include "tips-dialog.h"
-#include "vectors-commands.h"
 
 #include "gimp-intl.h"
 

@@ -38,7 +38,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "layers-actions.h"
-#include "gui/layers-commands.h"
+#include "layers-commands.h"
 
 #include "gimp-intl.h"
 

@@ -31,7 +31,8 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "images-commands.h"
+#include "actions/images-commands.h"
+
 #include "images-menu.h"
 
 #include "gimp-intl.h"

@@ -16,12 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENTS_COMMANDS_H__
-#define __GRADIENTS_COMMANDS_H__
+#ifndef __PLUG_IN_ACTIONS_H__
+#define __PLUG_IN_ACTIONS_H__
 
 
-void   gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
-					       gpointer   data);
+void   plug_in_actions_setup  (GimpActionGroup *group,
+                               gpointer         data);
+void   plug_in_actions_update (GimpActionGroup *group,
+                               gpointer         data);
 
 
-#endif /* __GRADIENTS_COMMANDS_H__ */
+#endif /* __PLUG_IN_ACTIONS_H__ */

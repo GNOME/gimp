@@ -33,7 +33,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "tool-options-actions.h"
-#include "gui/tool-options-commands.h"
+#include "tool-options-commands.h"
 
 #include "gimp-intl.h"
 

@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "widgets/gimpfontview.h"
 

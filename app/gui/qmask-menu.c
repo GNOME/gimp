@@ -32,7 +32,8 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "qmask-commands.h"
+#include "actions/qmask-commands.h"
+
 #include "qmask-menu.h"
 #include "menus.h"
 

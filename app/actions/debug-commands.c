@@ -24,7 +24,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimpobject.h"
 
@@ -32,7 +32,7 @@
 #include "widgets/gimpmenufactory.h"
 
 #include "debug-commands.h"
-#include "menus.h"
+#include "gui/menus.h"
 
 
 #ifdef ENABLE_DEBUG_MENU

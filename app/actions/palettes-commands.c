@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimppalette.h"
 #include "core/gimpcontainer.h"
@@ -33,7 +33,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppreview.h"
 
-#include "palette-import-dialog.h"
+#include "gui/palette-import-dialog.h"
+
 #include "palettes-commands.h"
 
 #include "gimp-intl.h"

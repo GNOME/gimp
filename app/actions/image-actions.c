@@ -38,7 +38,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "image-actions.h"
-#include "gui/image-commands.h"
+#include "image-commands.h"
 
 #include "gimp-intl.h"
 

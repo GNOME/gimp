@@ -54,9 +54,10 @@
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "actions/dialogs-commands.h"
+
 #include "color-history.h"
 #include "dialogs.h"
-#include "dialogs-commands.h"
 #include "gui.h"
 #include "gui-vtable.h"
 #include "menus.h"

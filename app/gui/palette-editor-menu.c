@@ -28,8 +28,9 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimppaletteeditor.h"
 
+#include "actions/palette-editor-commands.h"
+
 #include "menus.h"
-#include "palette-editor-commands.h"
 #include "palette-editor-menu.h"
 
 #include "gimp-intl.h"

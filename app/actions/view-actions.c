@@ -40,7 +40,7 @@
 #include "display/gimpdisplayshell-selection.h"
 
 #include "view-actions.h"
-#include "gui/view-commands.h"
+#include "view-commands.h"
 
 #include "gimp-intl.h"
 

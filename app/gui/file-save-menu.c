@@ -35,7 +35,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "file-commands.h"
+#include "actions/file-commands.h"
+
 #include "file-save-menu.h"
 #include "menus.h"
 

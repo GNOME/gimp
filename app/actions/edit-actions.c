@@ -42,7 +42,7 @@
 #include "display/gimpdisplayshell-selection.h"
 
 #include "edit-actions.h"
-#include "gui/edit-commands.h"
+#include "edit-commands.h"
 
 #include "gimp-intl.h"
 

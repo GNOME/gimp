@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -34,6 +34,8 @@
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
+
+#include "tools-commands.h"
 
 
 #define return_if_no_gimp(gimp,data) \

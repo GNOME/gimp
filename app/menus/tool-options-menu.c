@@ -32,8 +32,9 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
+#include "actions/tool-options-commands.h"
+
 #include "menus.h"
-#include "tool-options-commands.h"
 #include "tool-options-menu.h"
 
 #include "gimp-intl.h"

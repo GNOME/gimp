@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
@@ -39,8 +39,9 @@
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimpviewabledialog.h"
 
-#include "dialogs.h"
-#include "file-new-dialog.h"
+#include "gui/dialogs.h"
+#include "gui/file-new-dialog.h"
+
 #include "templates-commands.h"
 
 #include "gimp-intl.h"

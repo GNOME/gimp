@@ -33,9 +33,9 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "gui/data-commands.h"
+#include "data-commands.h"
 #include "palettes-actions.h"
-#include "gui/palettes-commands.h"
+#include "palettes-commands.h"
 
 #include "gimp-intl.h"
 

@@ -32,7 +32,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "documents-actions.h"
-#include "gui/documents-commands.h"
+#include "documents-commands.h"
 
 #include "gimp-intl.h"
 

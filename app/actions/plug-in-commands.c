@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -38,8 +38,9 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gui/plug-in-menus.h"
+
 #include "plug-in-commands.h"
-#include "plug-in-menus.h"
 
 
 #define return_if_no_display(gdisp,data) \

@@ -212,9 +212,86 @@
     </menu>
 
     <menu action="tools-menu">
+      <menuitem action="dialogs-show-toolbox" />
+      <menuitem action="tools-default-colors" />
+      <menuitem action="tools-swap-colors" />
+      <separator />
+      <menu action="tools-select-menu">
+	<menuitem action="tools-rect-select" />
+	<menuitem action="tools-ellipse-select" />
+	<menuitem action="tools-free-select" />
+	<menuitem action="tools-by-color-select" />
+	<menuitem action="tools-iscissors" />
+      </menu>
+      <menu action="tools-paint-menu">
+	<menuitem action="tools-bucket-fill" />
+	<menuitem action="tools-blend" />
+	<menuitem action="tools-pencil" />
+	<menuitem action="tools-paintbrush" />
+	<menuitem action="tools-eraser" />
+	<menuitem action="tools-airbrush" />
+	<menuitem action="tools-ink" />
+	<menuitem action="tools-clone" />
+	<menuitem action="tools-convolve" />
+	<menuitem action="tools-smudge" />
+	<menuitem action="tools-dodge-burn" />
+      </menu>
+      <menu action="tools-transform-menu">
+	<menuitem action="tools-move" />
+	<menuitem action="tools-crop" />
+	<menuitem action="tools-rotate" />
+	<menuitem action="tools-shear" />
+	<menuitem action="tools-perspective" />
+	<menuitem action="tools-flip" />
+      </menu>
+      <menu action="tools-color-menu">
+	<menuitem action="tools-color-balance" />
+	<menuitem action="tools-hue-saturation" />
+	<menuitem action="tools-colorize" />
+	<menuitem action="tools-brightness-contrast" />
+	<menuitem action="tools-threshold" />
+	<menuitem action="tools-levels" />
+	<menuitem action="tools-curves" />
+	<menuitem action="tools-posterize" />
+      </menu>
+      <menuitem action="tools-vectors" />
+      <menuitem action="tools-color-picker" />
+      <menuitem action="tools-zoom" />
+      <menuitem action="tools-measure" />
+      <menuitem action="tools-text" />
     </menu>
 
     <menu action="dialogs-menu">
+      <menu action="dialogs-new-dock-menu">
+	<menuitem action="dialogs-new-dock-lcp" />
+	<menuitem action="dialogs-new-dock-data" />
+	<menuitem action="dialogs-new-dock-stuff" />
+      </menu>
+      <menuitem action="dialogs-tool-options" />
+      <menuitem action="dialogs-device-status" />
+      <separator />
+      <menuitem action="dialogs-layers" />
+      <menuitem action="dialogs-channels" />
+      <menuitem action="dialogs-vectors" />
+      <menuitem action="dialogs-indexed-palette" />
+      <menuitem action="dialogs-histogram" />
+      <menuitem action="dialogs-selection-editor" />
+      <menuitem action="dialogs-navigation" />
+      <menuitem action="dialogs-undo-history" />
+      <separator />
+      <menuitem action="dialogs-colors" />
+      <menuitem action="dialogs-brushes" />
+      <menuitem action="dialogs-patterns" />
+      <menuitem action="dialogs-graidents" />
+      <menuitem action="dialogs-palettes" />
+      <menuitem action="dialogs-fonts" />
+      <menuitem action="dialogs-buffers" />
+      <separator />
+      <menuitem action="dialogs-images" />
+      <menuitem action="dialogs-document-history" />
+      <menuitem action="dialogs-templates" />
+      <menuitem action="dialogs-tools" />
+      <menuitem action="dialogs-error-console" />
     </menu>
 
     <menu action="plug-in-menu">

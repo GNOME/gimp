@@ -33,8 +33,9 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
+#include "actions/data-commands.h"
+
 #include "brushes-menu.h"
-#include "data-commands.h"
 #include "menus.h"
 
 #include "gimp-intl.h"

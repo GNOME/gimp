@@ -33,7 +33,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "data-commands.h"
+#include "actions/data-commands.h"
+
 #include "patterns-menu.h"
 #include "menus.h"
 

@@ -33,7 +33,7 @@
 #include "widgets/gimpitemtreeview.h"
 
 #include "vectors-actions.h"
-#include "gui/vectors-commands.h"
+#include "vectors-commands.h"
 
 #include "gimp-intl.h"
 

@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "actions-types.h"
 
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
@@ -44,9 +44,10 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
-#include "dialogs.h"
+#include "gui/dialogs.h"
+#include "gui/stroke-dialog.h"
+
 #include "edit-commands.h"
-#include "stroke-dialog.h"
 
 #include "gimp-intl.h"
 

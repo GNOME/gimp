@@ -32,7 +32,8 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
 
-#include "channels-commands.h"
+#include "actions/channels-commands.h"
+
 #include "channels-menu.h"
 #include "menus.h"
 

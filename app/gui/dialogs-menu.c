@@ -36,7 +36,8 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "dockable-commands.h"
+#include "actions/dockable-commands.h"
+
 #include "dialogs-menu.h"
 #include "menus.h"
 

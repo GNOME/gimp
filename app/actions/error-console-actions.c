@@ -29,7 +29,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "error-console-actions.h"
-#include "gui/error-console-commands.h"
+#include "error-console-commands.h"
 
 #include "gimp-intl.h"
 
