@@ -412,6 +412,8 @@ file_open_dialog_create (void)
   gtk_widget_show (GTK_WIDGET (open_options_genbuttonlabel));
   gtk_widget_hide (GTK_WIDGET (open_options_preview));
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
+
+  gtk_widget_show (open_options);
 }
 
 static void

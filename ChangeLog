@@ -1,5 +1,11 @@
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/commands.c: some nicer prototypes.
+
+	* app/fileops.c: oops, forgot to gtk_widget_show() the open_options.
+
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/commands.[ch]
 	* app/fileops.[ch]
 	* app/gdisplay.c

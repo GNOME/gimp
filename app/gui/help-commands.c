@@ -87,26 +87,26 @@
 
 
 /*  local functions  */
-static void     image_resize_callback        (GtkWidget *,
-					      gpointer   );
-static void     image_scale_callback         (GtkWidget *,
-					      gpointer   );
-static void     gimage_mask_feather_callback (GtkWidget *,
-					      gdouble    ,
-					      GimpUnit   ,
-					      gpointer   );
-static void     gimage_mask_border_callback  (GtkWidget *,
-					      gdouble    ,
-					      GimpUnit   ,
-		  			      gpointer   );
-static void     gimage_mask_grow_callback    (GtkWidget *,
-					      gdouble    ,
-					      GimpUnit   ,
-					      gpointer   );
-static void     gimage_mask_shrink_callback  (GtkWidget *,
-					      gdouble    ,
-					      GimpUnit   ,
-					      gpointer   );
+static void     image_resize_callback        (GtkWidget *widget,
+					      gpointer   data);
+static void     image_scale_callback         (GtkWidget *widget,
+					      gpointer   data);
+static void     gimage_mask_feather_callback (GtkWidget *widget,
+					      gdouble    size,
+					      GimpUnit   unit,
+					      gpointer   data);
+static void     gimage_mask_border_callback  (GtkWidget *widget,
+					      gdouble    size,
+					      GimpUnit   unit,
+		  			      gpointer   data);
+static void     gimage_mask_grow_callback    (GtkWidget *widget,
+					      gdouble    size,
+					      GimpUnit   unit,
+					      gpointer   data);
+static void     gimage_mask_shrink_callback  (GtkWidget *widget,
+					      gdouble    size,
+					      GimpUnit   unit,
+					      gpointer   data);
 
 
 /*  local variables  */
