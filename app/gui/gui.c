@@ -44,6 +44,7 @@
 #include "tools/gimp-tools.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -324,6 +325,7 @@ gui_restore_callback (Gimp               *gimp,
   dialogs_init (gimp);
 
   gimp_devices_init (gimp, gui_device_change_notify);
+  gimp_controllers_init (gimp);
   session_init (gimp);
 
   (* status_callback) (NULL, _("Tool Options"), 1.0);
@@ -354,6 +356,7 @@ gui_restore_after_callback (Gimp               *gimp,
                            image_ui_manager, 0);
 
   gimp_devices_restore (gimp);
+  gimp_controllers_restore (gimp, image_ui_manager);
 
   if (status_callback == splash_update)
     splash_destroy ();
@@ -418,6 +421,9 @@ gui_exit_callback (Gimp     *gimp,
   if (gui_config->save_device_status)
     gimp_devices_save (gimp);
 
+  if (TRUE /* gui_config->save_controllers */)
+    gimp_controllers_save (gimp);
+
   gimp_displays_delete (gimp);
 
   gimp_tools_save (gimp);
@@ -448,6 +454,7 @@ gui_exit_after_callback (Gimp     *gimp,
   render_exit (gimp);
 
   dialogs_exit (gimp);
+  gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
 
   themes_exit (gimp);

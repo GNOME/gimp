@@ -45,6 +45,8 @@
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcontrollers.h"
+#include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpitemfactory.h"
@@ -397,7 +399,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
   /* draw the transform tool preview */
   gimp_display_shell_preview_transform (shell);
-  
+
   /* draw the guides */
   gimp_display_shell_draw_guides (shell);
 
@@ -459,7 +461,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gboolean         return_val    = FALSE;
   gboolean         update_cursor = FALSE;
 
-  static GimpToolInfo *space_shaded_tool  = NULL;
+  static GimpToolInfo *space_shaded_tool = NULL;
 
   if (! canvas->window)
     {
@@ -847,10 +849,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventScroll     *sevent = (GdkEventScroll *) event;
         GdkScrollDirection  direction;
+        GimpController     *wheel;
+
+        wheel = gimp_controllers_get_wheel (gimp);
+
+        if (wheel &&
+            gimp_controller_wheel_scrolled (GIMP_CONTROLLER_WHEEL (wheel),
+                                            sevent))
+          return TRUE;
 
         direction = sevent->direction;
 
-       if (state & GDK_SHIFT_MASK)
+        if (state & GDK_SHIFT_MASK)
           {
             switch (direction)
               {

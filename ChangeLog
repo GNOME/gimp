@@ -1,3 +1,30 @@
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
+	Started to fix bug #106920 in a more genreral way:
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpcontroller.[ch]: new abstract base class
+	which provides an API for pluggable input controller modules
+	(mouse wheel, usb/midi stuff etc.).
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontrollerwheel.[ch]: subclass of the above
+	which maps wheel mouse scroll events to controller events.
+
+	* app/widgets/gimpcontrollers.[ch]: manager for controllers.
+	reads $(gimpdir)/controllerrc and keeps a mapping of controller
+	events to GtkActions.
+
+	* app/gui/gui.c: initialize and shut down the controller stuff.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): if a wheel controller
+	exists, dispatch GdkEventScroll to it first and return if it was
+	handled.
+
 2004-06-15  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/text_tool.pdb: deprecate the XLFD-based API

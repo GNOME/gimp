@@ -86,6 +86,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcolorselect.h	\
 	gimpcolorselection.c	\
 	gimpcolorselection.h	\
+	gimpcontroller.c	\
+	gimpcontroller.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
 	gimpfileentry.c		\
@@ -151,6 +153,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorselector.h	\
 	gimpcolorselect.h	\
 	gimpcolorselection.h	\
+	gimpcontroller.h	\
 	gimpdialog.h		\
 	gimpfileentry.h		\
 	gimpframe.h		\
