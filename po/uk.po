@@ -2561,7 +2561,7 @@ msgstr "UI град╕╓нта"
 
 #: app/internal_procs.c:110
 msgid "Guide procedures"
-msgstr "Процедури направляючо╖"
+msgstr "Процедури напрямних"
 
 #: app/internal_procs.c:113
 msgid "Help procedures"
@@ -3320,11 +3320,11 @@ msgstr "/Вигляд/Панель стану"
 
 #: app/menus.c:348
 msgid "/View/Toggle Guides"
-msgstr "/Вигляд/Направляюч╕"
+msgstr "/Вигляд/Напрямн╕"
 
 #: app/menus.c:350
 msgid "/View/Snap to Guides"
-msgstr "/Вигляд/При╓днання до направляючих"
+msgstr "/Вигляд/При╓днання до напрямних"
 
 #: app/menus.c:355
 msgid "/View/New View"
@@ -5733,7 +5733,7 @@ msgstr "м'яке плаваюче вид╕лення"
 
 #: app/undo.c:2927
 msgid "guide"
-msgstr "направляюча"
+msgstr "напрямна"
 
 #: app/undo.c:2928
 msgid "text"

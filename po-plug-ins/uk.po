@@ -3593,16 +3593,16 @@ msgstr "Фрактальний сл╕д"
 #. Settings
 #: plug-ins/common/fractaltrace.c:765
 msgid "Outside Type"
-msgstr ""
+msgstr "Тип оточення"
 
 #: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
 msgid "Warp"
-msgstr ""
+msgstr "Деформац╕я"
 
 #: plug-ins/common/fractaltrace.c:776 plug-ins/fits/fits.c:1009
 #: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
 msgid "White"
-msgstr ""
+msgstr "Б╕лий"
 
 #: plug-ins/common/fractaltrace.c:783
 msgid "Mandelbrot Parameters"
@@ -4749,7 +4749,7 @@ msgstr ""
 #: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:265
 #: plug-ins/gflare/gflare.c:597
 msgid "Screen"
-msgstr ""
+msgstr "Екран"
 
 #: plug-ins/common/newsprint.c:1310
 msgid "Black Pullout (%):"
@@ -4757,19 +4757,19 @@ msgstr ""
 
 #: plug-ins/common/newsprint.c:1333
 msgid "Separate to:"
-msgstr ""
+msgstr "Розд╕лити на:"
 
 #: plug-ins/common/newsprint.c:1378
 msgid "Lock Channels"
-msgstr ""
+msgstr "Ф╕ксувати канали"
 
 #: plug-ins/common/newsprint.c:1388
 msgid "Factory Defaults"
-msgstr ""
+msgstr "Початков╕ параметри"
 
 #: plug-ins/common/newsprint.c:1420
 msgid "Oversample:"
-msgstr ""
+msgstr "Перекриття:"
 
 #: plug-ins/common/nlfilt.c:159
 msgid "<Image>/Filters/Enhance/NL Filter..."
@@ -7024,7 +7024,7 @@ msgstr "неможливо вид╕лити пам'ять для мапи кольор╕в"
 
 #: plug-ins/common/xwd.c:421
 msgid "can't read color entries"
-msgstr ""
+msgstr "неможливо зчитати записи кольор╕в"
 
 #: plug-ins/common/xwd.c:481
 #, c-format
@@ -7040,7 +7040,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:519
 msgid "cannot operate on unknown image types"
-msgstr ""
+msgstr "неможливо виконувати д╕╖ ╕з зображенням нев╕домого типу"
 
 #: plug-ins/common/xwd.c:528
 msgid "can't open file for writing"
@@ -7129,11 +7129,11 @@ msgstr "Перегляд бази даних"
 
 #: plug-ins/fits/fits.c:362
 msgid "Error during open of FITS file"
-msgstr ""
+msgstr "Помилка п╕д чис в╕дкривання файлу FITS"
 
 #: plug-ins/fits/fits.c:367
 msgid "FITS file keeps no displayable images"
-msgstr ""
+msgstr "Файл FITS не м╕стить зображень, як╕ можна в╕добразити"
 
 #: plug-ins/fits/fits.c:446
 msgid "FITS save cannot handle images with alpha channels"
@@ -7141,7 +7141,7 @@ msgstr ""
 
 #: plug-ins/fits/fits.c:457
 msgid "Cannot operate on unknown image types"
-msgstr ""
+msgstr "Неможливо виконувати д╕╖ з зображеннями нев╕домого типу"
 
 #: plug-ins/fits/fits.c:982
 msgid "Load FITS File"
@@ -7252,15 +7252,15 @@ msgstr "Гама:"
 
 #: plug-ins/flame/flame.c:1050
 msgid "Sample Density:"
-msgstr ""
+msgstr "Щ╕льн╕сть зразка:"
 
 #: plug-ins/flame/flame.c:1060
 msgid "Spatial Oversample:"
-msgstr ""
+msgstr "Просторове перекриття:"
 
 #: plug-ins/flame/flame.c:1070
 msgid "Spatial Filter Radius:"
-msgstr ""
+msgstr "Рад╕ус просторового ф╕льтру:"
 
 #: plug-ins/flame/flame.c:1096
 msgid "Colormap:"
@@ -7276,7 +7276,7 @@ msgstr "Камера"
 
 #: plug-ins/flame/flame.c:1176
 msgid "Zoom:"
-msgstr ""
+msgstr "Масштаб:"
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
@@ -7300,48 +7300,48 @@ msgstr "Св╕тл╕ше:"
 
 #: plug-ins/fp/fp_gtk.c:30
 msgid "More Sat:"
-msgstr ""
+msgstr "Б╕льше насиченост╕:"
 
 #: plug-ins/fp/fp_gtk.c:31
 msgid "Less Sat:"
-msgstr ""
+msgstr "Менше насиченост╕:"
 
 #. All the previews
 #: plug-ins/fp/fp_gtk.c:33 plug-ins/fp/fp_gtk.c:91
 msgid "Current:"
-msgstr ""
+msgstr "Поточне:"
 
 #: plug-ins/fp/fp_gtk.c:87
 msgid "Before and After"
-msgstr ""
+msgstr "До ╕ п╕сля"
 
 #: plug-ins/fp/fp_gtk.c:95
 msgid "Original:"
-msgstr ""
+msgstr "Початкове:"
 
 #: plug-ins/fp/fp_gtk.c:197
 msgid "Hue Variations"
-msgstr ""
+msgstr "Вар╕анти в╕дт╕нку"
 
 #: plug-ins/fp/fp_gtk.c:212
 msgid "Roughness"
-msgstr ""
+msgstr "Шорстк╕сть"
 
 #: plug-ins/fp/fp_gtk.c:242
 msgid "Affected Range"
-msgstr ""
+msgstr "Оброблюваний д╕апазон"
 
 #: plug-ins/fp/fp_gtk.c:252
 msgid "Shadows"
-msgstr ""
+msgstr "Т╕н╕"
 
 #: plug-ins/fp/fp_gtk.c:256
 msgid "Midtones"
-msgstr ""
+msgstr "П╕втони"
 
 #: plug-ins/fp/fp_gtk.c:260
 msgid "Highlights"
-msgstr ""
+msgstr "Виблиски"
 
 #: plug-ins/fp/fp_gtk.c:273
 msgid "Windows"
@@ -7395,15 +7395,15 @@ msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:1020
 msgid "Shadows:"
-msgstr ""
+msgstr "Т╕н╕:"
 
 #: plug-ins/fp/fp_gtk.c:1020
 msgid "Midtones:"
-msgstr ""
+msgstr "П╕втони:"
 
 #: plug-ins/fp/fp_gtk.c:1020
 msgid "Highlights:"
-msgstr ""
+msgstr "Виблиски:"
 
 #: plug-ins/fp/fp_gtk.c:1034
 msgid "Advanced Filter Pack Options"
@@ -10891,7 +10891,7 @@ msgstr "Як сильно розмивати т╕нь"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
-msgstr ""
+msgstr "Пор╕г в╕дхилення:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
@@ -10933,7 +10933,7 @@ msgstr "Про..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "Show some information about program"
-msgstr ""
+msgstr "Показати ╕нформац╕ю про програму"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
