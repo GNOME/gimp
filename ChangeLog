@@ -1,5 +1,10 @@
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/sample_colorize.c: made debugging output
+	conditional and fixed some user-visible strings.
+
+2003-10-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c: setup size entries in the order
 	suggested by the GimpSizeEntry documentation.
 

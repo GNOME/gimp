@@ -524,7 +524,7 @@ p_smp_menu_callback(gint32 id, gpointer data)
 {
    gint32 *id_ptr;
 
-   if(TRUE)  printf("MENU_CB: id: %d,  data %p,  dst: %x, samp %x\n", id, data, (int)&g_values.sample_id,  (int)&g_values.dst_id);
+   if (g_Sdebug)  printf("MENU_CB: id: %d,  data %p,  dst: %x, samp %x\n", id, data, (int)&g_values.sample_id,  (int)&g_values.dst_id);
 
    if((id_ptr = (gint32 *)data) != NULL)
    {
@@ -1437,7 +1437,7 @@ p_smp_dialog (void)
   gtk_widget_show (option_menu);
 
   /* Add extra menu items for Gradient */
-  menu_item = gtk_menu_item_new_with_label (_("** From GRADIENT **"));
+  menu_item = gtk_menu_item_new_with_label (_("From Gradient"));
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_widget_show (menu_item);
 
@@ -1446,7 +1446,7 @@ p_smp_dialog (void)
                     (gpointer)SMP_GRADIENT);
 
   /* Add extra menu items for Inverted Gradient */
-  menu_item = gtk_menu_item_new_with_label (_("** From INVERSE GRADIENT **"));
+  menu_item = gtk_menu_item_new_with_label (_("From Reverse Gradient"));
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_widget_show (menu_item);
 
@@ -1611,7 +1611,7 @@ p_smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("In Level:"));
+  label = gtk_label_new (_("Input Levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1661,7 +1661,7 @@ p_smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, l_ty, l_ty+1,
 		    GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Out Level:"));
+  label = gtk_label_new (_("Output Levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1741,7 +1741,7 @@ p_smp_dialog (void)
 				g_values.rnd_subcolors);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Smooth Samplecolors"));
+  check_button = gtk_check_button_new_with_label (_("Smooth Samples"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
