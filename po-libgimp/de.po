@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-02 16:21+0200\n"
-"PO-Revision-Date: 2004-09-02 16:23+0200\n"
+"POT-Creation-Date: 2004-09-05 01:18+0200\n"
+"PO-Revision-Date: 2004-09-05 01:20+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Sichtbare Ebenen vereinen"
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s kennt keine Ebeneneigenschaften wie Versatz, Grösse und Transparenz"
+msgstr "%s kennt keine Ebeneneigenschaften wie Versatz, Größe und Transparenz"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
@@ -494,8 +494,16 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
+#: libgimpwidgets/gimppreviewarea.c:114
+msgid "Check Size"
+msgstr "Schachbrett Größe"
+
+#: libgimpwidgets/gimppreviewarea.c:121
+msgid "Check Style"
+msgstr "Schachbrett Muster"
+
 #. a toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:235
+#: libgimpwidgets/gimppreview.c:246
 msgid "_Preview"
 msgstr "_Vorschau"
 

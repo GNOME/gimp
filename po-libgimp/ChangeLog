@@ -1,3 +1,9 @@
+2004-09-05  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimpwidgets/gimppreviewarea.c.
+
+	* de.po: updated german translation.
+
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
 	* de.po: updated german translation.

@@ -27,6 +27,7 @@ libgimpwidgets/gimpintstore.c
 libgimpwidgets/gimpmemsizeentry.c
 libgimpwidgets/gimppatheditor.c
 libgimpwidgets/gimppickbutton.c
+libgimpwidgets/gimppreviewarea.c
 libgimpwidgets/gimppreview.c
 libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
