@@ -1,3 +1,8 @@
+2003-03-06  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* INSTALL: updated for GTK+ 2.2.
+
 2003-03-05  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: require GTK+ 2.2. The 2.0.x series is no longer
@@ -15,7 +20,7 @@
 
 	* app/gui/gui.c: free return value of gdk_get_display ()
 
-	* app/widgets/gimpcontainertreeview.c: use gtk_list_store_move_before ()
+	* app/widgets/gimpcontainertreeview.c: use gtk_list_store_move_before()
 	for reordering.
 
 2003-03-05  Sven Neumann  <sven@gimp.org>

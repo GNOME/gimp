@@ -32,8 +32,8 @@ by running:
 
 Basically this does the following for you:
 
-        cvsroot/gimp# aclocal-1.6; automake-1.6 -a; autoconf
-        cvsroot/gimp# glib-gettextize; intltoolize
+        cvsroot/gimp# aclocal-1.7; libtoolize; automake-1.7 -a;
+        cvsroot/gimp# autoconf; glib-gettextize; intltoolize
 
         The above commands create the "configure" script.  Now you
         can run the configure script in cvsroot/gimp to create all
@@ -53,9 +53,10 @@ autogen.sh and they will be passed on to configure.
 
 autogen.sh by default passes --enable-gtk-doc to configure in order to
 enable the creation of the GIMP API reference manuals in the devel-docs
-directory. You will need a recent version of gtk-doc as well as a working
-setup for handling DocBook XML. If you run into any problems here, you
-can disable creation of the docs using --disable-gtk-doc with autogen.sh.
+directory. You will need a recent version of gtk-doc as well as a
+working setup for handling DocBook XML. If you run into any problems
+here, you can disable creation of the docs by passing --disable-gtk-doc
+to autogen.sh.
 
 
 CVS
@@ -72,10 +73,10 @@ anonymous CVS server:
 
 The interesting modules and the suggested branches to use are:
 
-   glib        (glib-2-0)
-   atk         (atk-1-0)
-   pango       (pango-1-0)
-   gtk+        (gtk-2-0)
+   glib        (glib-2-2)
+   atk         (gnome-2-2)
+   pango       (pango-1-2)
+   gtk+        (gtk-2-2)
    libart_lgpl
    gtkhtml2
    intltool

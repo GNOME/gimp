@@ -7,10 +7,10 @@ There are some basic steps to building and installing the GIMP:
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK version 2.0.0 or better. Do not try
-     to use an older GTK+ version (1.2.x), it will not work. GTK+-2.0
-     itself needs recent versions of GLib-2.0, Pango and ATK. Grab them
-     from ftp://ftp.gtk.org/. GTK+-2.0 and friends can be installed side 
+  2. You need to have installed GTK version 2.2.0 or better. Do not try
+     to use an older GTK+ version (1.2.x), it will not work. GTK+-2.2
+     itself needs recent versions of GLib-2.2, Pango and ATK. Grab them
+     from ftp://ftp.gtk.org/. GTK+-2.2 and friends can be installed side 
      by side with GTK+-1.2.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
@@ -36,7 +36,7 @@ There are some basic steps to building and installing the GIMP:
      with an installed stable version of The GIMP, we install a binary
      called gimp-1.3.
 
-Please make sure you don't have any old GTK+-2.0, jpeg, etc. libraries 
+Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
 new ones.
 
