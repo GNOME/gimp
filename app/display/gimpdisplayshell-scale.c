@@ -360,6 +360,7 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   gdouble    zoom_factor;
   gint       scalesrc;
   gint       scaledest;
+  gint       a, b, gcd;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -379,8 +380,31 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
-  gimp_display_shell_scale_calc_fraction (zoom_factor,
-                                          &scalesrc, &scaledest);
+  /* choosing 240 because it has a lot of nice divisors and the
+   * chance of a nice fraction is bigger */
+
+  scalesrc = scaledest = 240;
+
+  if (zoom_factor > 1.0)
+    scalesrc  = CLAMP (ceil (1.0 / zoom_factor * 240.0), 1, 240);
+  else
+    scaledest = CLAMP (floor (zoom_factor * 240.0), 1, 240);
+
+  /* determine gcd to shorten the fraction */
+  a = MAX (scalesrc, scaledest);
+  b = MIN (scalesrc, scaledest);
+
+  gcd = b;
+
+  while (a % b != 0)
+    {
+      gcd = a % b;
+      a = b;
+      b = gcd;
+    }
+
+  scalesrc /= gcd;
+  scaledest /= gcd;
 
   gimp_display_shell_scale_by_values (shell,
                                       (scaledest << 8) + scalesrc,
