@@ -48,7 +48,6 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 
 #include "gimpcropoptions.h"
@@ -1081,7 +1080,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_box_pack_start (GTK_BOX (crop->crop_info->vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
                                    "gimp-crop-tool-dialog",
                                    crop->crop_info->shell);
 }

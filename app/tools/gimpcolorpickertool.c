@@ -43,7 +43,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 
 #include "gimpcolorpickeroptions.h"
@@ -562,7 +561,7 @@ gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
   gtk_widget_show (color_area);
   gtk_widget_show (frame);
 
-  gimp_dialog_factory_add_foreign (global_dialog_factory,
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
                                    "gimp-color-picker-tool-dialog",
                                    info_dialog->shell);
 

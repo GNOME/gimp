@@ -24,11 +24,6 @@
 
 #include "tools-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
@@ -40,8 +35,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-
-#include "gui/dialogs.h"
 
 #include "gimpimagemaptool.h"
 #include "gimptoolcontrol.h"
@@ -256,10 +249,15 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_widget_show (vbox);
 
       if (image_map_tool->shell_identifier)
-        gimp_dialog_factory_add_foreign (global_dialog_factory,
-                                         image_map_tool->shell_identifier,
-                                         image_map_tool->shell);
+        {
+          GimpDialogFactory *dialog_factory;
 
+          dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+
+          gimp_dialog_factory_add_foreign (dialog_factory,
+                                           image_map_tool->shell_identifier,
+                                           image_map_tool->shell);
+        }
     }
 
   drawable = gimp_image_active_drawable (gdisp->gimage);

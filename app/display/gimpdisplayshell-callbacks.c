@@ -49,8 +49,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "gui/dialogs.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -995,9 +993,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case GDK_Tab:
             if (! state)
               {
-                /* Hide or show all dialogs */
+                GimpDialogFactory *dialog_factory;
 
-                gimp_dialog_factories_toggle (global_toolbox_factory);
+                dialog_factory = gimp_dialog_factory_from_name ("toolbox");
+
+                /*  Hide or show all dialogs  */
+                gimp_dialog_factories_toggle (dialog_factory);
               }
             else if (! gimp_image_is_empty (gimage))
               {

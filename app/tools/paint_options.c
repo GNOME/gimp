@@ -34,6 +34,7 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
 #include "widgets/gimpviewablebutton.h"
@@ -89,8 +90,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  dialog_factory = g_object_get_data (G_OBJECT (tool_options),
-                                      "gimp-tool-options-dialog-factory");
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   /*  the main table  */
   table = gtk_table_new (3, 3, FALSE);

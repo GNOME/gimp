@@ -1,3 +1,20 @@
+2003-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptextoptions.c
+	* app/tools/gimptransformtool.c
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimptoolbox-color-area.c:
+	don't #include "gui/dialogs.h" to get the global factories but use
+	gimp_dialog_factory_from_name() instead.
+
 2003-05-28  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.[ch]: wrap gui_libs_init() so we don't need to

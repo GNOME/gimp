@@ -48,7 +48,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 
 #include "gimpmeasureoptions.h"
@@ -398,7 +397,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
 				      NULL);
 
-      gimp_dialog_factory_add_foreign (global_dialog_factory,
+      gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
                                        "gimp-measure-tool-dialog",
                                        measure_tool_info->shell);
     }

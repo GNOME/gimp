@@ -36,6 +36,7 @@
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
@@ -249,8 +250,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  dialog_factory = g_object_get_data (G_OBJECT (tool_options),
-                                      "gimp-tool-options-dialog-factory");
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
 
   table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);

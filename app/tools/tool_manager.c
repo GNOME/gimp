@@ -33,11 +33,6 @@
 
 #include "display/gimpdisplay.h"
 
-#ifdef __GNUC__
-#warning FIXME: #include "gui/dialogs.h"
-#endif
-#include "gui/dialogs.h"
-
 #include "gimpairbrushtool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
@@ -51,8 +46,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "tools.h"
-
-#include "app_procs.h"
 
 #include "gimp-intl.h"
 
@@ -209,15 +202,7 @@ tool_manager_restore (Gimp *gimp)
 
       if (options_gui_func)
         {
-          g_object_set_data (G_OBJECT (tool_info->tool_options),
-                             "gimp-tool-options-dialog-factory",
-                             global_dock_factory);
-
-          options_gui = options_gui_func (tool_info->tool_options);
-
-          g_object_set_data (G_OBJECT (tool_info->tool_options),
-                             "gimp-tool-options-dialog-factory",
-                             NULL);
+          options_gui = (* options_gui_func) (tool_info->tool_options);
         }
       else
         {

@@ -41,7 +41,6 @@
 #include "gimptoolbox-color-area.h"
 
 #include "gui/color-notebook.h"
-#include "gui/dialogs.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
@@ -396,8 +395,12 @@ color_area_edit (GimpContext *context)
 
   if (! color_notebook)
     {
+      GimpDialogFactory *toplevel_factory;
+
+      toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
+
       color_notebook = color_notebook_new (title,
-                                           global_dialog_factory,
+                                           toplevel_factory,
                                            "gimp-toolbox-color-dialog",
 					   (const GimpRGB *) &color,
 					   color_area_select_callback,
