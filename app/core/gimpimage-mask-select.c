@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "gimpchannel.h"
+#include "gimpchannel-combine.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
 #include "gimpimage-mask-select.h"

@@ -32,6 +32,7 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpchannel-combine.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"

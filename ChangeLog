@@ -1,3 +1,17 @@
+2003-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpchannel-combine.[ch]: new files split out of
+	gimpchannel.[ch].
+
+	* app/core/gimpchannel.[ch]: removed the combine functions here.
+
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpimage-mask-select.c
+	* tools/pdbgen/pdb/channel.pdb: changed #includes accordingly.
+
+	* app/pdb/channel_cmds.c: regenerated.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontainer.[ch]: added new function

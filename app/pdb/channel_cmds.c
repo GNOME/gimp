@@ -28,6 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimpchannel-combine.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 

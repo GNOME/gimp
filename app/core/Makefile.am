@@ -43,6 +43,8 @@ libappcore_a_sources = \
 	gimpbuffer.h			\
 	gimpchannel.c			\
 	gimpchannel.h			\
+	gimpchannel-combine.c		\
+	gimpchannel-combine.h		\
 	gimpcontainer.c			\
 	gimpcontainer.h			\
 	gimpcontext.c			\
