@@ -1,5 +1,10 @@
 2004-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolview.[ch]: if in list mode, add an "eye"
+	column which toggles tool visibility.
+
+2004-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/tools-actions.c (tools_actions_update): don't use
 	action_data_get_context() to update the "tools" action group
 	because it may return NULL. Use gimp_get_user_context() instead

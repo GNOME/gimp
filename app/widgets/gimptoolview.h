@@ -40,6 +40,8 @@ struct _GimpToolView
 {
   GimpContainerEditor  parent_instance;
 
+  GQuark               visible_handler_id;
+
   GtkWidget           *reset_button;
 };
 
