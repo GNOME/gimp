@@ -1,3 +1,16 @@
+2004-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: removed the "Edit Color"
+	dialog callbacks and use gimp_editor_add_action_button() for
+	the edit button. Removed button sensitivity logic. Hide the
+	color dialog when the image's mode changes.
+
+	* app/actions/colormap-editor-actions.c: added missing tooltip
+	for the edit action.
+
+	* app/actions/colormap-editor-commands.c: implement the dialog
+	here.
+
 2004-10-24  DindinX  <dindinx@gimp.org>
 
 	* app/core/gimpdrawable-desaturate.c: only return early if there's
