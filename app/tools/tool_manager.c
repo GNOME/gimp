@@ -242,25 +242,20 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      if (tool_manager->active_tool->gdisp ||
-          GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp)
-        {
-          GimpDisplay *gdisp;
+      GimpDisplay *gdisp;
 
-          gdisp = tool_manager->active_tool->gdisp;
+      gdisp = tool_manager->active_tool->gdisp;
 
-          if (! gdisp)
-            gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
+      if (! gdisp && GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
+        gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
 
-          tool_manager_control_active (gimp, HALT, gdisp);
-        }
+      if (gdisp)
+        tool_manager_control_active (gimp, HALT, gdisp);
 
       g_object_unref (tool_manager->active_tool);
     }
 
-  tool_manager->active_tool = tool;
-
-  g_object_ref (tool_manager->active_tool);
+  tool_manager->active_tool = g_object_ref (tool);
 }
 
 void
@@ -342,8 +337,9 @@ tool_manager_control_active (Gimp           *gimp,
   if (! tool_manager->active_tool)
     return;
 
-  if (gdisp && (tool_manager->active_tool->gdisp                  == gdisp ||
-                GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp == gdisp))
+  if (gdisp && (tool_manager->active_tool->gdisp == gdisp ||
+                (GIMP_IS_DRAW_TOOL (tool_manager->active_tool) &&
+                 GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp == gdisp)))
     {
       gimp_tool_control (tool_manager->active_tool,
                          action,
@@ -772,11 +768,18 @@ static void
 tool_manager_image_undo_start (GimpImage       *gimage,
                                GimpToolManager *tool_manager)
 {
-  if (tool_manager->active_tool        &&
-      tool_manager->active_tool->gdisp &&
-      tool_manager->active_tool->gdisp->gimage == gimage)
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_preserve (tool_manager->active_tool->control))
     {
-      if (! gimp_tool_control_preserve (tool_manager->active_tool->control))
+      GimpDisplay *gdisp;
+
+      gdisp = tool_manager->active_tool->gdisp;
+
+      if (! gdisp || gdisp->gimage != gimage)
+        if (GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
+          gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
+
+      if (gdisp && gdisp->gimage == gimage)
         tool_manager_control_active (gimage->gimp, HALT,
                                      tool_manager->active_tool->gdisp);
     }
