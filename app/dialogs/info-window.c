@@ -66,8 +66,9 @@ struct _InfoWinData
 
   GtkWidget   *pos_labels[4];
   GtkWidget   *unit_labels[2];
-  GtkWidget   *rgb_labels[4];
-  GtkWidget   *hsv_labels[4];
+  GtkWidget   *rgb_labels[3];
+  GtkWidget   *hsv_labels[3];
+  GtkWidget   *alpha_label;
 
   gboolean     showing_extended;
 };
@@ -122,6 +123,7 @@ info_window_create_extended (InfoDialog *info_win,
   GtkWidget   *hbox2;
   GtkWidget   *abox;
   GtkWidget   *table;
+  GtkWidget   *vbox;
   GtkWidget   *label;
   GtkWidget   *image;
   GtkWidget   *sep;
@@ -144,13 +146,13 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_widget_show (image);
 
   abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (abox), table);
   gtk_widget_show (table);
 
@@ -195,14 +197,18 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_frame_set_label_widget (GTK_FRAME (frame), image);
   gtk_widget_show (image);
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   hbox2 = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
   /* RGB */
 
-  table = gtk_table_new (4, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (hbox2), table, FALSE, FALSE, 0);
@@ -229,14 +235,7 @@ info_window_create_extended (InfoDialog *info_win,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  /* Alpha */
-  label = gtk_label_new (_("A:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 3; i++)
     {
       iwd->rgb_labels[i] = label = gtk_label_new (_("N/A"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -248,13 +247,13 @@ info_window_create_extended (InfoDialog *info_win,
   /* HSV */
 
   sep = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (hbox2), sep, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), sep, FALSE, FALSE, 4);
   gtk_widget_show (sep);
 
-  table = gtk_table_new (4, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox2), table, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Hue */
@@ -278,14 +277,7 @@ info_window_create_extended (InfoDialog *info_win,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  /* Alpha */
-  label = gtk_label_new (_("A:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 3; i++)
     {
       iwd->hsv_labels[i] = label = gtk_label_new (_("N/A"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -293,6 +285,22 @@ info_window_create_extended (InfoDialog *info_win,
                         GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (label);
     }
+
+  /* Alpha */
+
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
+  label = gtk_label_new (_("A:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  iwd->alpha_label = label = gtk_label_new (_("N/A"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
 			    hbox, gtk_label_new (_("Extended")));
@@ -515,11 +523,13 @@ info_window_update_extended (GimpDisplay *gdisp,
   if (! (color = gimp_image_projection_get_color_at (gdisp->gimage, tx, ty))
       || (tx < 0.0 && ty < 0.0))
     {
-      for (i = 0; i < 4; i++)
+      for (i = 0; i < 3; i++)
         {
           gtk_label_set_text (GTK_LABEL (iwd->rgb_labels[i]), _("N/A"));
           gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[i]), _("N/A"));
         }
+
+      gtk_label_set_text (GTK_LABEL (iwd->alpha_label), _("N/A"));
     }
   else
     {
@@ -528,22 +538,22 @@ info_window_update_extended (GimpDisplay *gdisp,
 
       sample_type = gimp_image_projection_type (gdisp->gimage);
 
-      for (i = RED_PIX;
-           i <= (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type) ? 
-                 ALPHA_PIX : BLUE_PIX);
-           i++)
+      for (i = RED_PIX; i <= BLUE_PIX; i++)
         {
           g_snprintf (buf, sizeof (buf), "%d", (gint) color[i]);
           gtk_label_set_text (GTK_LABEL (iwd->rgb_labels[i]), buf);
-
-          if (i == ALPHA_PIX)
-            gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[i]), buf);
         }
       
-      if (i == ALPHA_PIX)
+      if (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type))
         {
-          gtk_label_set_text (GTK_LABEL (iwd->rgb_labels[i]), _("N/A"));
-          gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[i]), _("N/A"));
+          g_snprintf (buf, sizeof (buf), "%d (%d%%)",
+                      (gint) color[ALPHA_PIX],
+                      (gint) ((gdouble) color[ALPHA_PIX] / 2.55));
+          gtk_label_set_text (GTK_LABEL (iwd->alpha_label), buf);
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (iwd->alpha_label), _("N/A"));
         }
 
       gimp_rgb_set_uchar (&rgb,
