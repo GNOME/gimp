@@ -8,51 +8,37 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-09 11:34+0100\n"
-"PO-Revision-Date: 2003-01-09 11:35+0100\n"
+"POT-Creation-Date: 2003-01-10 16:29+0100\n"
+"PO-Revision-Date: 2003-01-10 16:29+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:110
-msgid "The GIMP is not properly installed for the current user\n"
-msgstr "GIMP är inte korrekt installerat för den aktuella användaren\n"
-
-#: app/app_procs.c:111
-msgid ""
-"User installation was skipped because the '--nointerface' flag was "
-"encountered\n"
-msgstr ""
-"Användarinstallationen hoppades över eftersom \"--nointerface\"-flaggan "
-"påträffades\n"
-
 #: app/app_procs.c:112
 msgid ""
-"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+"GIMP is not properly installed for the current user.\n"
+"User installation was skipped because the '--no-interface' flag was used.\n"
+"To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"För att utföra användarinstallationen startar du GIMP utan\n"
-"\"--nointerface\"-flaggan\n"
+"GIMP är inte korrekt installerat för den aktuella användaren.\n"
+"Användarinstallationen hoppades över eftersom \"--no-interface\"-flaggan "
+"användes.\n"
+"Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
-#: app/main.c:168
+#: app/main.c:170
 msgid ""
-"ERROR: GIMP could not initialize the GUI.\n"
-"\n"
+"GIMP could not initialize the GUI.\n"
+"Make sure a proper setup for your display environment exists."
 msgstr ""
-"FEL: GIMP kunde inte initiera det grafiska användargränssnittet.\n"
-"\n"
-
-#: app/main.c:169
-msgid "Make sure a proper setup for your display environment exists.\n"
-msgstr ""
-"Försäkra dig om att det finns en korrekt konfiguration för din "
-"displaymiljö.\n"
+"GIMP kunde inte initiera det grafiska användargränssnittet.\n"
+"Försäkra dig om att det finns en korrekt konfiguration för din displaymiljö."
 
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:323
+#: app/main.c:327
 #, c-format
 msgid ""
 "\n"
@@ -61,11 +47,11 @@ msgstr ""
 "\n"
 "Ogiltig flagga \"%s\"\n"
 
-#: app/main.c:445
+#: app/main.c:449
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:453
+#: app/main.c:457
 #, c-format
 msgid ""
 "\n"
@@ -76,15 +62,15 @@ msgstr ""
 "Användning: %s [flagga ...] [fil ...]\n"
 "\n"
 
-#: app/main.c:454
+#: app/main.c:458
 msgid "Options:\n"
 msgstr "Alternativ:\n"
 
-#: app/main.c:455
+#: app/main.c:459
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <kommandon>  Kör i flerjobbsläge.\n"
 
-#: app/main.c:456
+#: app/main.c:460
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -92,7 +78,7 @@ msgstr ""
 "  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte ett "
 "separat dialogfönster.\n"
 
-#: app/main.c:457
+#: app/main.c:461
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -100,73 +86,75 @@ msgstr ""
 "  -d, --no-data            Läs in inte in penslar, färgskalor, färgpaletter, "
 "mönster.\n"
 
-#: app/main.c:458
+#: app/main.c:462
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Kör utan användargränssnitt.\n"
 
-#: app/main.c:459
+#: app/main.c:463
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Använd en alternativ gimprc-fil.\n"
 
-#: app/main.c:460
+#: app/main.c:464
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Skriv ut denna hjälptext.\n"
 
-#: app/main.c:461
+#: app/main.c:465
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    Försök att återställa sparad session.\n"
 
-#: app/main.c:462
+#: app/main.c:466
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Visa inte startfönstret.\n"
 
-#: app/main.c:463
+#: app/main.c:467
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Visa ingen bild i startfönstret.\n"
 
-#: app/main.c:464
+#: app/main.c:468
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Skriv ut versionsinformation.\n"
 
-#: app/main.c:465
+#: app/main.c:469
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:466
+#: app/main.c:470
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Använd inte delat minne mellan GIMP och tillägg.\n"
 
-#: app/main.c:467
+#: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Använd inte MMX-rutiner.\n"
 
-#: app/main.c:468
+#: app/main.c:472
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Aktivera ickefatal signalhanterare för "
-"felsökning.\n"
+"  --debug-handlers         Aktivera icke ödesdiger signalhanterare för\n"
+"                           felsökning.\n"
 
-#: app/main.c:469
+#: app/main.c:473
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Använd en speciell X-display.\n"
 
-#: app/main.c:470
+#: app/main.c:474
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Använd en alternativ system-gimprc-fil.\n"
 
-#: app/main.c:472
+#: app/main.c:475
 msgid ""
+"  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
-"                           Felsökningsläge för fatala signaler.\n"
+"  --enable-stack-trace <never | query | always>\n"
+"                           Felsökningsläge för ödesdigra signaler.\n"
 "\n"
 
-#: app/main.c:490
+#: app/main.c:494
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
@@ -854,8 +842,9 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:342
-#: app/core/gimpcontext.c:1229 app/core/gimpgradient.c:369
-#: app/core/gimppalette.c:355 app/core/gimppattern.c:368
+#: app/core/gimpcontext.c:1229 app/core/gimpdrawable.c:251
+#: app/core/gimpgradient.c:369 app/core/gimppalette.c:355
+#: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:308
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -895,11 +884,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
-#: app/core/gimpdrawable.c:283 app/core/gimpdrawable.c:286
+#: app/core/gimpdrawable.c:284 app/core/gimpdrawable.c:287
 msgid "copy"
 msgstr "kopia"
 
-#: app/core/gimpdatafactory.c:392 app/core/gimpdrawable.c:295
+#: app/core/gimpdatafactory.c:392 app/core/gimpdrawable.c:296
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
@@ -5684,17 +5673,17 @@ msgstr "Transformeringsverktygsprocedurer"
 msgid "Units"
 msgstr "Enheter"
 
-#: app/pdb/procedural_db.c:179 app/pdb/procedural_db.c:192
+#: app/pdb/procedural_db.c:181 app/pdb/procedural_db.c:194
 #, c-format
 msgid "PDB calling error %s not found"
 msgstr "PDB-anropsfel, hittade inte %s"
 
-#: app/pdb/procedural_db.c:211
+#: app/pdb/procedural_db.c:213
 #, c-format
 msgid "PDB calling error %s"
 msgstr "PDB-anropsfel %s"
 
-#: app/pdb/procedural_db.c:292
+#: app/pdb/procedural_db.c:297
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -7388,11 +7377,11 @@ msgstr "Handtagsposition: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Distans: %0.6f"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:197
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
-#: app/widgets/gimphelp.c:202
+#: app/widgets/gimphelp.c:199
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -7402,7 +7391,7 @@ msgstr ""
 "Den var förmodligen inte kompilerad eftersom\n"
 "du inte har GtkXmHTML installerat."
 
-#: app/widgets/gimphelp.c:205
+#: app/widgets/gimphelp.c:202
 msgid "Use Netscape instead"
 msgstr "Använd Netscape istället"
 
@@ -7732,6 +7721,30 @@ msgstr "Fix storlek"
 #: libgimptool/gimptoolenums.c:118
 msgid "Fixed Aspect Ratio"
 msgstr "Fixt aspektförhållande"
+
+#~ msgid "The GIMP is not properly installed for the current user\n"
+#~ msgstr "GIMP är inte korrekt installerat för den aktuella användaren\n"
+
+#~ msgid ""
+#~ "User installation was skipped because the '--nointerface' flag was "
+#~ "encountered\n"
+#~ msgstr ""
+#~ "Användarinstallationen hoppades över eftersom \"--nointerface\"-flaggan "
+#~ "påträffades\n"
+
+#~ msgid ""
+#~ "To perform user installation, run the GIMP without the '--nointerface' "
+#~ "flag\n"
+#~ msgstr ""
+#~ "För att utföra användarinstallationen startar du GIMP utan\n"
+#~ "\"--nointerface\"-flaggan\n"
+
+#~ msgid ""
+#~ "ERROR: GIMP could not initialize the GUI.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FEL: GIMP kunde inte initiera det grafiska användargränssnittet.\n"
+#~ "\n"
 
 #~ msgid "to replicate the selection"
 #~ msgstr "markeringen ska replikeras"

@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-01-07 20:04+0100\n"
-"PO-Revision-Date: 2003-01-07 20:04+0100\n"
+"POT-Creation-Date: 2003-01-10 16:34+0100\n"
+"PO-Revision-Date: 2003-01-10 16:34+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -329,12 +329,12 @@ msgid "Anchor"
 msgstr "Ankare"
 
 #: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
-msgstr "Duplicera"
+msgid "_Duplicate"
+msgstr "_Duplicera"
 
 #: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
-msgstr "Redigera"
+msgid "_Edit"
+msgstr "_Redigera"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
@@ -356,35 +356,35 @@ msgstr "_Återställ"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:128
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:129 libgimpwidgets/gimpstock.c:181
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:137
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:138
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:159
 msgid "Crop"
 msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:177
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:182
 msgid "_Shear"
 msgstr "_Luta"
 
@@ -487,6 +487,12 @@ msgstr "_Vattenfärg"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "Duplicate"
+#~ msgstr "Duplicera"
+
+#~ msgid "Edit"
+#~ msgstr "Redigera"
 
 #~ msgid "a layer mask"
 #~ msgstr "en lagermask"
