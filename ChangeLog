@@ -1,5 +1,10 @@
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolordialog.c (gimp_color_dialog_new): use
+	GIMP_HELP_COLOR_DIALOG as help_id.
+
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/dialogs-commands.c: purely cosmetic.
 
 2004-10-14  Michael Natterer  <mitch@gimp.org>

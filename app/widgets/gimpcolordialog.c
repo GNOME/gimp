@@ -32,6 +32,7 @@
 
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -284,6 +285,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "title",       title,
                          "role",        role,
                          "help-func",   gimp_color_dialog_help_func,
+                         "help-id",     GIMP_HELP_COLOR_DIALOG,
                          "stock-id",    stock_id,
                          "description", desc,
                          "parent",      parent,
