@@ -1,3 +1,8 @@
+2001-07-22  Stanislav Brabec  <utx@penguin.cz>
+
+	* plugins/common/despeckle.c: Reflect my fix from 2001-03-01
+	(range limits) in script-fu comments.
+
 2001-07-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
@@ -3913,7 +3918,7 @@ Mon May 21 04:08:29 CEST 2001  Marc Lehmann <pcg@goof.com>
 
         On request of Martin Weber <martweb@gmx.net>: 
         * plug-ins/bmp/bmpread.c:
-        GIMP couldn't read bmp files with a ba chunk. This kind of files
+        GIMP couldn't read bmp files with a bad chunk. This kind of files
         can be found in OS/2 1.x. 
 
 2001-04-11  Michael Natterer  <mitch@gimp.org>
