@@ -1,3 +1,9 @@
+Fri Jan 14 19:43:01 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/paint_core.h: use ToolFlags enum instead of int
+	
+	* app/smudge.c: fixed bug #5176 (smudge tool crash)
+
 2000-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/info_window.c:

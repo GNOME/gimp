@@ -55,7 +55,6 @@ struct _SmudgeOptions
   gdouble       rate;
   gdouble       rate_d;
   GtkObject    *rate_w;
-
 };
 
 static PixelRegion  accumPR;
@@ -68,20 +67,20 @@ static SmudgeOptions * smudge_options = NULL;
 static gdouble  non_gui_rate;
 
 /*  function prototypes */
-static void   smudge_motion     (PaintCore *, PaintPressureOptions *,
-				 gdouble, GimpDrawable *);
-static void   smudge_init       (PaintCore *, GimpDrawable *);
-static void   smudge_finish     (PaintCore *, GimpDrawable *);
+static void      smudge_motion     (PaintCore *, PaintPressureOptions *,
+				    gdouble, GimpDrawable *);
+static gboolean  smudge_init       (PaintCore *, GimpDrawable *);
+static void      smudge_finish     (PaintCore *, GimpDrawable *);
 
-static void   smudge_nonclipped_painthit_coords (PaintCore *paint_core,
-						 gint      *x,
-						 gint      *y, 
-						 gint      *w,
-						 gint      *h);
-static void   smudge_allocate_accum_buffer      (gint       w,
-						 gint       h, 
-						 gint       bytes,
-						 guchar    *do_fill);
+static void      smudge_nonclipped_painthit_coords (PaintCore *paint_core,
+						    gint      *x,
+						    gint      *y, 
+						    gint      *w,
+						    gint      *h);
+static void      smudge_allocate_accum_buffer      (gint       w,
+						    gint       h, 
+						    gint       bytes,
+						    guchar    *do_fill);
 
 static void
 smudge_options_reset (void)
@@ -143,17 +142,24 @@ smudge_paint_func (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
 		   int           state)
 {
+  /* initialization fails if the user starts outside the drawable */
+  static gboolean initialized = FALSE;
+
   switch (state)
     {
     case INIT_PAINT:
-      smudge_init (paint_core, drawable);
+      initialized = smudge_init (paint_core, drawable);
       break;
     case MOTION_PAINT:
-      smudge_motion (paint_core, smudge_options->paint_options.pressure_options,
-		     smudge_options->rate, drawable);
+      if (!initialized)
+	initialized = smudge_init (paint_core, drawable);
+      if (initialized)
+	smudge_motion (paint_core, smudge_options->paint_options.pressure_options,
+		       smudge_options->rate, drawable);
       break;
     case FINISH_PAINT:
       smudge_finish (paint_core, drawable);
+      initialized = FALSE;
       break;
     }
 
@@ -185,41 +191,40 @@ smudge_nonclipped_painthit_coords (PaintCore *paint_core,
   *h = paint_core->brush->mask->height + 2;
 }
 
-static void
+static gboolean
 smudge_init (PaintCore    *paint_core,
 	     GimpDrawable *drawable)
 {
   GImage *gimage;
-  TempBuf * area;
+  TempBuf *area;
   PixelRegion  srcPR;
-  gint x,y,w,h;
+  gint x, y, w, h;
   gint was_clipped;
   guchar *do_fill = NULL;
 
-  /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
-  
   if (! (gimage = drawable_gimage (drawable)))
-    return;
+    return FALSE;
 
   /*  If the image type is indexed, don't smudge  */
   if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
       (drawable_type (drawable) == INDEXEDA_GIMAGE))
-    return;
+    return FALSE;
 
   area = paint_core_get_paint_area (paint_core, drawable, 1.0);
 
-  if (!area)
-    was_clipped = TRUE;
-  else if (x != area->x || y != area->y || w != area->width || h != area->height)
+  if (!area) 
+    return FALSE;
+  
+  /*  adjust the x and y coordinates to the upper left corner of the brush  */
+  smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
+  
+  if (x != area->x || y != area->y || w != area->width || h != area->height)
     was_clipped = TRUE;
   else 
     was_clipped = FALSE;
 
-  if (!area) return;
-
   /* When clipped, accum_data may contain pixels that map to
-     off-canvas pixels of the under-the- brush image, particularly
+     off-canvas pixels of the under-the-brush image, particulary
      when the brush image contains an edge or corner of the
      image. These off-canvas pixels are not a part of the current
      composite, but may be composited in later generations. do_fill
@@ -229,10 +234,10 @@ smudge_init (PaintCore    *paint_core,
 
   if (was_clipped)
     do_fill = gimp_drawable_get_color_at (drawable,
-					  (gint)paint_core->curx,
-					  (gint) paint_core->cury);
+                 CLAMP ((gint) paint_core->curx, 0, gimp_drawable_width (drawable) - 1),
+                 CLAMP ((gint) paint_core->cury, 0, gimp_drawable_height (drawable) - 1));
   
-  smudge_allocate_accum_buffer (w, h, drawable_bytes(drawable), do_fill);
+  smudge_allocate_accum_buffer (w, h, gimp_drawable_bytes (drawable), do_fill);
 
   accumPR.x = area->x - x; 
   accumPR.y = area->y - y;
@@ -258,7 +263,10 @@ smudge_init (PaintCore    *paint_core,
 	+ accumPR.rowstride * accumPR.y 
 	+ accumPR.x * accumPR.bytes;
 
-  if(do_fill) g_free(do_fill);
+  if (do_fill) 
+    g_free(do_fill);
+
+  return TRUE;
 }
 
 static void
@@ -272,16 +280,16 @@ smudge_allocate_accum_buffer (gint    w,
   accum_data = g_malloc (w * h * bytes);
  
   if (do_fill != NULL)
-  {
-    /* guchar color[3] = {0,0,0}; */
-    accumPR.x = 0; 
-    accumPR.y = 0;
-    accumPR.w = w;
-    accumPR.h = h;
-    accumPR.rowstride = accumPR.bytes * w;
-    accumPR.data = accum_data;
-    color_region (&accumPR, (const guchar*)do_fill);
-  }
+    {
+      /* guchar color[3] = {0,0,0}; */
+      accumPR.x = 0; 
+      accumPR.y = 0;
+      accumPR.w = w;
+      accumPR.h = h;
+      accumPR.rowstride = accumPR.bytes * w;
+      accumPR.data = accum_data;
+      color_region (&accumPR, (const guchar*)do_fill);
+    }
 }
 
 Tool *

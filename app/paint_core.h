@@ -95,7 +95,7 @@ struct _paint_core
 
   int             pick_colors;   /*  pick color if ctrl or alt is pressed  */
   int             pick_state;    /*  was ctrl or alt pressed when clicked? */
-  int		  flags;	 /*  tool flags, see ToolFlags above       */
+  ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
 
   guint           context_id;    /*  for the statusbar          */
 };
