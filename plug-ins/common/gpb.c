@@ -59,14 +59,17 @@ static gint run_flag = 0;
 static gint num_layers_with_alpha;
 
 /* Parameters related to one single gih file, collected in a struct
- * just for clarity. */
+ * just for clarity.
+ */
 static struct {
   gint step;
   gint ncells;
   gint dim;
   gint cols;
   gint rows;
+  gchar *placement;
   gint rank[MAXDIM];
+  gchar *selection[MAXDIM];
 } gihparms;
 
 /* Declare some local functions.
@@ -169,6 +172,13 @@ entry_callback (GtkWidget *widget,
       strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)), MAXDESCLEN);
       info.description[MAXDESCLEN]  = 0;
     }
+}
+
+static void
+cb_callback (GtkWidget *widget,
+	     gpointer   data)
+{
+  *((char **) data) = gtk_entry_get_text (GTK_ENTRY (widget));
 }
 
 static void
@@ -315,12 +325,14 @@ static gint
 gih_save_dialog ()
 {
   GtkWidget *dlg;
-  GtkWidget *table;
+  GtkWidget *table, *dimtable;
   GtkWidget *label;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
   GtkWidget *entry;
   GtkWidget *box;
+  GtkWidget *cb;
+  GList *cbitems = NULL;
   gint i;
   gchar **argv;
   gint argc;
@@ -352,6 +364,36 @@ gih_save_dialog ()
   gtk_widget_show (table);
 
   common_save_dialog (dlg, table);
+
+  /*
+   * Number of cells: ___
+   */
+
+  gtk_table_resize (GTK_TABLE (table),
+		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
+
+  label = gtk_label_new ("Number of cells:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1,
+		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  adjustment = gtk_adjustment_new (gihparms.ncells, 1, 1000, 1, 10, 10);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  box = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
+  gtk_table_attach (GTK_TABLE (table), box, 1, 2,
+		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) adjustment_callback, &gihparms.ncells);
+  gtk_widget_show (spinbutton);
+  gtk_widget_show (box);
 
   /*
    * Display as: __ rows x __ cols
@@ -404,36 +446,6 @@ gih_save_dialog ()
   gtk_widget_show (box);
   
   /*
-   * Number of cells: ___
-   */
-
-  gtk_table_resize (GTK_TABLE (table),
-		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
-
-  label = gtk_label_new ("Number of cells:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1,
-		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  adjustment = gtk_adjustment_new (gihparms.ncells, 1, 1000, 1, 10, 10);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-  box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), box, 1, 2,
-		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) adjustment_callback, &gihparms.ncells);
-  gtk_widget_show (spinbutton);
-  gtk_widget_show (box);
-
-  /*
    * Dimension: ___
    */
 
@@ -477,7 +489,7 @@ gih_save_dialog ()
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  box = gtk_hbox_new (FALSE, 0);
+  dimtable = gtk_table_new (MAXDIM, 1, FALSE);
   for (i = 0; i < MAXDIM; i++)
     {
       adjustment = gtk_adjustment_new (gihparms.rank[i], 0, 100, 1, 1, 1);
@@ -486,15 +498,64 @@ gih_save_dialog ()
 				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 2);
+      box = gtk_hbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
+      gtk_table_attach (GTK_TABLE (dimtable), box, i, i + 1, 0, 1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 3, 0);
       gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 			  (GtkSignalFunc) adjustment_callback, &gihparms.rank[i]);
       gtk_widget_show (spinbutton);
+      gtk_widget_show (box);
     }
+  gtk_table_attach (GTK_TABLE (table), dimtable, 1, 2,
+		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
+		    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (dimtable);
+
+  /*
+   * Selection: ______ ______ ______ ______ ______
+   */
+  
+  gtk_table_resize (GTK_TABLE (table),
+		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
+
+  label = gtk_label_new ("Selection:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1,
+		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  cbitems = g_list_append (cbitems, "incremental");
+  cbitems = g_list_append (cbitems, "angular");
+  cbitems = g_list_append (cbitems, "random");
+  cbitems = g_list_append (cbitems, "velocity");
+  cbitems = g_list_append (cbitems, "pressure");
+  cbitems = g_list_append (cbitems, "xtilt");
+  cbitems = g_list_append (cbitems, "ytilt");
+
+  box = gtk_hbox_new (FALSE, 0);
+  for (i = 0; i < MAXDIM; i++)
+    {
+      cb = gtk_combo_new ();
+      gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
+      if (gihparms.selection[i])
+	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), gihparms.selection[i]);
+      gtk_entry_set_editable (GTK_ENTRY (GTK_COMBO (cb)->entry), FALSE);
+
+      gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 2);
+      gtk_signal_connect (GTK_OBJECT (GTK_COMBO (cb)->entry), "changed",
+			  (GtkSignalFunc) cb_callback, &gihparms.selection[i]);
+      gtk_widget_show (cb);
+    }
+
+  g_list_free (cbitems);
+
   gtk_table_attach (GTK_TABLE (table), box, 1, 2,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
 		    GTK_SHRINK, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (box);
+  
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -701,6 +762,24 @@ gpb_save_image (char   *filename,
 }
 
 static void
+init_pipe_parameters ()
+{
+  int i;
+
+  gihparms.step = 100;
+  gihparms.ncells = 1;
+  gihparms.dim = 1;
+  gihparms.cols = 1;
+  gihparms.rows = 1;
+  gihparms.placement = "constant";
+  for (i = 0; i < MAXDIM; i++)
+    gihparms.selection[i] = "random";
+  gihparms.rank[0] = 1;
+  for (i = 1; i < MAXDIM; i++)
+    gihparms.rank[i] = 0;
+}
+
+static void
 parse_brush_pipe_parameters (gchar *parameters)
 {
   guchar *p, *q, *r, *s;	/* Don't you love single-char identifiers?  */
@@ -741,11 +820,28 @@ parse_brush_pipe_parameters (gchar *parameters)
 	  if (r)
 	    gihparms.rows = atoi (r + 1);
 	}
-      else if (strncmp (p, "rank", 4) == 0 && r)
+      else if (strcmp (p, "placement") == 0)
 	{
-	  i = atoi (p + 4);
-	  if (i >= 0 && i < gihparms.dim)
-	    gihparms.rank[i] = atoi (r + 1);
+	  if (r)
+	    gihparms.placement = g_strdup (r + 1);
+	}
+      else if (strncmp (p, "rank", strlen ("rank")) == 0 && r)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("rank"));
+	      if (i >= 0 && i < gihparms.dim)
+		gihparms.rank[i] = atoi (r + 1);
+	    }
+	}
+      else if (strncmp (p, "sel", strlen ("sel")) == 0 && r)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("sel"));
+	      if (i >= 0 && i < gihparms.dim)
+		gihparms.selection[i] = g_strdup (r + 1);
+	    }
 	}
       if (r)
 	*r = ':';
@@ -753,12 +849,16 @@ parse_brush_pipe_parameters (gchar *parameters)
 
   IFDBG(2) g_message ("parsed parasite: "
 		      "ncells:%d step:%d dim:%d cols:%d rows:%d "
-		      "rank0:%d rank1:%d rank2:%d rank3:%d",
+		      "placement:%s "
+		      "rank0:%d rank1:%d rank2:%d rank3:%d"
+		      "sel%d:%s sel%d:%s sel%d:%s ",
 		      gihparms.ncells, gihparms.step,
-		      gihparms.dim,
-		      gihparms.cols, gihparms.rows,
+		      gihparms.dim, gihparms.cols, gihparms.rows,
+		      gihparms.placement,
 		      gihparms.rank[0], gihparms.rank[1],
-		      gihparms.rank[2], gihparms.rank[3]);
+		      gihparms.rank[2], gihparms.rank[3],
+		      gihparms.selection[0], gihparms.selection[1],
+		      gihparms.selection[2], gihparms.selection[3]);
 }
 
 static gchar *
@@ -769,13 +869,17 @@ build_brush_pipe_parameters ()
   
   int i;
 
-  g_string_sprintf (s, "ncells:%d step:%d dim:%d cols:%d rows:%d",
+  g_string_sprintf (s, "ncells:%d step:%d dim:%d cols:%d rows:%d placement:%s",
 		    gihparms.ncells, gihparms.step,
 		    gihparms.dim,
-		    gihparms.cols, gihparms.rows);
+		    gihparms.cols, gihparms.rows,
+		    gihparms.placement);
 
   for (i = 0; i < gihparms.dim; i++)
-    g_string_sprintfa (s, " rank%d:%d", i, gihparms.rank[i]);
+    {
+      g_string_sprintfa (s, " rank%d:%d", i, gihparms.rank[i]);
+      g_string_sprintfa (s, " sel%d:%s", i, gihparms.selection[i]);
+    }
 
   str = s->str;
   g_string_free (s, FALSE);
@@ -792,6 +896,7 @@ gih_save_image (char   *filename,
   GDrawable *drawable;
   GPixelRgn pixel_rgn;
   FILE *file;
+  Parasite *pipe_parasite;
   gchar *msg, *pars, *ncells;
   gint32 *layer_ID;
   gint nlayers, layer, row, col;
@@ -826,6 +931,13 @@ gih_save_image (char   *filename,
       g_free (ncells);
       return FALSE;
     }
+
+  pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
+				PARASITE_PERSISTENT,
+				strlen (pars) + 1, pars);
+  gimp_image_attach_parasite (image_ID, pipe_parasite);
+  parasite_free (pipe_parasite);
+
   g_free (pars);
   g_free (ncells);
 
@@ -958,11 +1070,12 @@ run (char    *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gih_save", &info);
 	  pipe_parasite = gimp_image_find_parasite (image_ID, "gimp-brush-pipe-parameters");
+	  init_pipe_parameters ();
 	  if (pipe_parasite)
 	    {
 	      parse_brush_pipe_parameters (pipe_parasite->data);
 	    }
-	  
+
 	  if (!gih_save_dialog ())
 	    return;
 	  break;

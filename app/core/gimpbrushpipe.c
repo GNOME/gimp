@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "appenv.h"
 #include "brush_header.h"
@@ -34,6 +35,26 @@
 #include "paint_core.h"
 #include "gimprc.h"
 #include "libgimp/gimpintl.h"
+
+/* Code duplicated from plug-ins/common/gpb.c...
+ * The struct, and code to parse/build it probably should be in libgimp.
+ */
+
+/* Parameters related to one single gih file, collected in a struct
+ * just for clarity.
+ */
+#define MAXDIM 4
+static struct {
+  gint step;
+  gint ncells;
+  gint dim;
+  gint cols;
+  gint rows;
+  gchar *placement;
+  gint rank[MAXDIM];
+  gchar *selection[MAXDIM];
+} gihparms;
+
 
 static GimpBrushClass* gimp_brush_class;
 static GtkObjectClass* gimp_object_class;
@@ -107,23 +128,60 @@ gimp_brush_pixmap_get_type (void)
 static GimpBrush *
 gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 {
-  GimpBrushPixmap *pixmap;
+  GimpBrushPipe *pipe;
+  int i, brushix, value;
+  double angle;
 
   g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), NULL);
 
-  pixmap = GIMP_BRUSH_PIXMAP (paint_core->brush);
+  pipe = GIMP_BRUSH_PIXMAP (paint_core->brush)->pipe;
 
-  if (pixmap->pipe->nbrushes == 1)
-    return GIMP_BRUSH (pixmap->pipe->current);
+  if (pipe->nbrushes == 1)
+    return GIMP_BRUSH (pipe->current);
 
-  /* Just select the next one for now. This is the place where we
-   * will select the correct brush based on various parameters
-   * in paint_core.
-   */
-  pixmap->pipe->index[0] = (pixmap->pipe->index[0] + 1) % pixmap->pipe->nbrushes;
-  pixmap->pipe->current = pixmap->pipe->brushes[pixmap->pipe->index[0]];
+  brushix = 0;
+  for (i = 0; i < pipe->dimension; i++)
+    {
+      switch (pipe->select[i])
+	{
+	case PIPE_SELECT_CONSTANT:
+	  /* What constant? */
+	  value = 0;
+	  break;
+	case PIPE_SELECT_INCREMENTAL:
+	  value = pipe->index[i] = (pipe->index[i] + 1) % pipe->rank[i];
+	  break;
+	case PIPE_SELECT_ANGULAR:
+	  angle = atan2 (paint_core->cury - paint_core->lasty,
+			 paint_core->curx - paint_core->lastx);
+	  if (angle < 0)
+	    angle += 2.*G_PI;
+	  value = RINT (angle / (2.*G_PI) * pipe->rank[i]);
+	  break;
+	case PIPE_SELECT_RANDOM:
+	  /* This probably isn't the right way */
+	  value = rand () % pipe->rank[i];
+	  break;
+	case PIPE_SELECT_PRESSURE:
+	  value = RINT (paint_core->curpressure * (pipe->rank[i] - 1));
+	  break;
+	case PIPE_SELECT_TILT_X:
+	  value = RINT (paint_core->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  break;
+	case PIPE_SELECT_TILT_Y:
+	  value = RINT (paint_core->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  break;
+	}
+      brushix += pipe->stride[i] * value;
+      /* g_print ("value at %d: %d, brushix: %d\n", i, value, brushix); */
+    }
 
-  return GIMP_BRUSH (pixmap->pipe->current);
+  /* If out of bounds, just select the first brush... */
+  brushix = BOUNDS (brushix, 0, pipe->nbrushes-1);
+
+  pipe->current = pipe->brushes[brushix];
+
+  return GIMP_BRUSH (pipe->current);
 }
 
 static void
@@ -138,6 +196,7 @@ gimp_brush_pipe_destroy(GtkObject *object)
   pipe = GIMP_BRUSH_PIPE (object);
 
   g_free (pipe->rank);
+  g_free (pipe->stride);
 
   for (i = 1; i < pipe->nbrushes; i++)
     gimp_object_destroy (pipe->brushes[i]);
@@ -190,6 +249,91 @@ gimp_brush_pipe_get_type (void)
   return type;
 }
 
+static void
+init_pipe_parameters ()
+{
+  int i;
+
+  gihparms.step = 100;
+  gihparms.ncells = 1;
+  gihparms.dim = 1;
+  gihparms.cols = 1;
+  gihparms.rows = 1;
+  gihparms.placement = "constant";
+  for (i = 0; i < MAXDIM; i++)
+    gihparms.selection[i] = "random";
+  gihparms.rank[0] = 1;
+  for (i = 1; i < MAXDIM; i++)
+    gihparms.rank[i] = 0;
+}
+
+static void
+parse_brush_pipe_parameters (gchar *parameters)
+{
+  guchar *p, *q, *r, *s;	/* Don't you love single-char identifiers?  */
+  gint i;
+
+  q = parameters;
+  while ((p = strtok (q, " \r\n")) != NULL)
+    {
+      q = NULL;
+      r = strchr (p, ':');
+      if (r)
+	*r = 0;
+
+      if (strcmp (p, "ncells") == 0)
+	{
+	  if (r)
+	    gihparms.ncells = atoi (r + 1);
+	}
+      else if (strcmp (p, "step") == 0)
+	{
+	  if (r)
+	    gihparms.step = atoi (r + 1);
+	}
+      else if (strcmp (p, "dim") == 0)
+	{
+	  if (r)
+	    gihparms.dim = atoi (r + 1);
+	}
+      else if (strcmp (p, "cols") == 0)
+	{
+	  if (r)
+	    gihparms.cols = atoi (r + 1);
+	}
+      else if (strcmp (p, "rows") == 0)
+	{
+	  if (r)
+	    gihparms.rows = atoi (r + 1);
+	}
+      else if (strcmp (p, "placement") == 0)
+	{
+	  if (r)
+	    gihparms.placement = g_strdup (r + 1);
+	}
+      else if (strncmp (p, "rank", strlen ("rank")) == 0)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("rank"));
+	      if (i >= 0 && i < gihparms.dim)
+		gihparms.rank[i] = atoi (r + 1);
+	    }
+	}
+      else if (strncmp (p, "sel", strlen ("sel")) == 0)
+	{
+	  if (r)
+	    {
+	      i = atoi (p + strlen ("sel"));
+	      if (i >= 0 && i < gihparms.dim)
+		gihparms.selection[i] = g_strdup (r + 1);
+	    }
+	}
+      if (r)
+	*r = ':';
+    }
+}
+
 GimpBrushPipe *
 gimp_brush_pipe_load (char *filename)
 {
@@ -198,8 +342,10 @@ gimp_brush_pipe_load (char *filename)
   FILE *fp;
   guchar buf[1024];
   guchar *name;
+  int i;
   int num_of_brushes;
-  guchar *params;
+  int totalcells;
+  gchar *params;
 
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
@@ -233,16 +379,62 @@ gimp_brush_pipe_load (char *filename)
       return NULL;
     }
 
-  /* Here we should parse the params to get the dimension, ranks,
-   * placement options, etc. But just use defaults for now.
-   */
-  pipe->dimension = 1;
-  pipe->rank = g_new (int, 1);
-  pipe->rank[0] = num_of_brushes;
-  pipe->select = g_new (PipeSelectModes, 1);
-  pipe->select[0] = PIPE_SELECT_INCREMENTAL;
-  pipe->index = g_new (int, 1);
-  pipe->index[0] = 0;
+  while (*params && isspace(*params))
+    params++;
+
+  if (*params)
+    {
+      init_pipe_parameters ();
+      parse_brush_pipe_parameters (params);
+      pipe->dimension = gihparms.dim;
+      pipe->rank = g_new (int, pipe->dimension);
+      pipe->select = g_new (PipeSelectModes, pipe->dimension);
+      pipe->index = g_new (int, pipe->dimension);
+      for (i = 0; i < pipe->dimension; i++)
+	{
+	  pipe->rank[i] = gihparms.rank[i];
+	  if (strcmp (gihparms.selection[i], "incremental") == 0)
+	    pipe->select[i] = PIPE_SELECT_INCREMENTAL;
+	  else if (strcmp (gihparms.selection[i], "angular") == 0)
+	    pipe->select[i] = PIPE_SELECT_ANGULAR;
+	  else if (strcmp (gihparms.selection[i], "velocity") == 0)
+	    pipe->select[i] = PIPE_SELECT_VELOCITY;
+	  else if (strcmp (gihparms.selection[i], "random") == 0)
+	    pipe->select[i] = PIPE_SELECT_RANDOM;
+	  else if (strcmp (gihparms.selection[i], "pressure") == 0)
+	    pipe->select[i] = PIPE_SELECT_PRESSURE;
+	  else if (strcmp (gihparms.selection[i], "xtilt") == 0)
+	    pipe->select[i] = PIPE_SELECT_TILT_X;
+	  else if (strcmp (gihparms.selection[i], "ytilt") == 0)
+	    pipe->select[i] = PIPE_SELECT_TILT_Y;
+	  else
+	    pipe->select[i] = PIPE_SELECT_CONSTANT;
+	  pipe->index[i] = 0;
+	}
+    }
+  else
+    {
+      pipe->dimension = 1;
+      pipe->rank = g_new (int, 1);
+      pipe->rank[0] = num_of_brushes;
+      pipe->select = g_new (PipeSelectModes, 1);
+      pipe->select[0] = PIPE_SELECT_INCREMENTAL;
+      pipe->index = g_new (int, 1);
+      pipe->index[0] = 0;
+    }
+
+  totalcells = 1;		/* Not all necessarily present, maybe */
+  for (i = 0; i < pipe->dimension; i++)
+    totalcells *= pipe->rank[i];
+  pipe->stride = g_new (int, pipe->dimension);
+  for (i = 0; i < pipe->dimension; i++)
+    {
+      if (i == 0)
+	pipe->stride[i] = totalcells / pipe->rank[i];
+      else
+	pipe->stride[i] = pipe->stride[i-1] / pipe->rank[i];
+    }
+  g_assert (pipe->stride[pipe->dimension-1] == 1);
 
   pattern = (GPatternP) g_malloc (sizeof (GPattern));
   pattern->filename = NULL;

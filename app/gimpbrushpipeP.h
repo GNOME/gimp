@@ -20,6 +20,18 @@
 #ifndef __GIMPBRUSHPIPEP_H__
 #define __GIMPBRUSHPIPEP_H__
 
+typedef enum
+{
+  PIPE_SELECT_CONSTANT,
+  PIPE_SELECT_INCREMENTAL,
+  PIPE_SELECT_ANGULAR,
+  PIPE_SELECT_VELOCITY,
+  PIPE_SELECT_RANDOM,
+  PIPE_SELECT_PRESSURE,
+  PIPE_SELECT_TILT_X,
+  PIPE_SELECT_TILT_Y
+} PipeSelectModes;
+
 /* A GimpBrushPixmap always exists as part in one and only one GimpBrushPipe
  * It contains a back-pointer to the GimpBrushPipe so that we can select
  * the next brush in the pipe with just a reference to the GimpBrushPipe.
@@ -38,8 +50,10 @@ struct _GimpBrushPipe
   GimpBrushPixmap *current;	/* Currently selected brush */
   int dimension;
   int *rank;			/* Size in each dimension */
+  int *stride;			/* Aux for indexing */
   int nbrushes;			/* Might be less than the product of the
-				 * ranks in some special case */
+				 * ranks in some odd special case
+				 */
   GimpBrushPixmap **brushes;
   PipeSelectModes *select;	/* One mode per dimension */
   int *index;			/* Current index for incremental dimensions */

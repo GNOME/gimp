@@ -1499,7 +1499,7 @@ read_tube_block (FILE *f,
   parasite_text =
     g_strdup_printf ("ncells:%d step:%d dim:%d cols:%d rows:%d "
 		     "rank0:%d "
-		     "spacing:%s sel0:%s",
+		     "placement:%s sel0:%s",
 		     cell_count, step_size, 1, column_count, row_count,
 		     cell_count,
 		     (placement_mode == tpmRandom ? "random" :

@@ -1,3 +1,24 @@
+1999-08-28  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimpbrushpipe.c: Implement the selection of brush based on
+	cursor direction, pressure, tilt, or a random value. (Hmm, forgot
+	velocity, later.) (In addition to just incrementally stepping.)
+	Read the brush pipe parameters from the gih file's second line.
+	There is no way to tune the parameters in the GIMP, they must
+	currently be set when saving the gih file (in the gpb plug-in).
+	
+	* app/gimpbrushpipe.h
+	* app/gimpbrushpipeP.h: Move the PipeSelectModes enum to the
+	"private" header. Add a stride array to GimpBrushPipe to make
+	indexing easier.
+
+	* plug-ins/common/gpb.c: Add selection mode fields to the dialog.
+	Attach the pipe parameters entered as a parasite, too.
+
+	* docs/parasites.txt
+	* plug-ins/common/psp.c: Use "placement", not "spacing" (which
+	means another thing).
+
 Fri Aug 27 18:08:55 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/color_display.h: just include parasiteF.h

@@ -25,17 +25,6 @@
 #include "gimpbrush.h"
 #include "temp_buf.h"
 
-typedef enum
-{
-  PIPE_SELECT_INCREMENTAL,
-  PIPE_SELECT_DIRECTION,
-  PIPE_SELECT_VELOCITY,
-  PIPE_SELECT_RANDOM,
-  PIPE_SELECT_PRESSURE,
-  PIPE_SELECT_TILT_X,
-  PIPE_SELECT_TILT_Y
-} PipeSelectModes;
-
 typedef struct _GimpBrushPixmap GimpBrushPixmap;
 typedef struct _GimpBrushPipe GimpBrushPipe;
 
