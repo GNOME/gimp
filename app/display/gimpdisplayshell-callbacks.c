@@ -1264,7 +1264,7 @@ gimp_display_shell_color_button_press (GtkWidget        *widget,
 
       gimp_rgba_set_uchar (&color, r, g, b, 255);
       gimp_item_factory_set_color (color_button->item_factory,
-                                   "/Default from Theme", &color, FALSE);
+                                   "/From Theme", &color, FALSE);
 
       gimp_rgba_set_uchar (&color,
                            render_blend_light_check[0],

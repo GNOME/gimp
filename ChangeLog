@@ -1,5 +1,10 @@
 2002-11-24  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_color_button_press): fixed menu path.
+
+2002-11-24  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gserialize.[ch]: removed from CVS, may always be pulled
 	out of the Attic if needed again.
 
