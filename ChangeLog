@@ -1,3 +1,8 @@
+Sun Feb 14 23:11:30 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * libgimp/gimptile.c (gimp_tile_cache_ntiles): Round up, not down,
+        when setting the tilecachesize, in case we ever do 63x63 tiles ;)
+
 Sun Feb 14 20:43:55 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/channels_dialog.c: don't #include resize.h - it's not needed
