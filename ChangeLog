@@ -1,3 +1,7 @@
+Mon Jun  8 16:18:00 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/menus.c: fix stupid <Separator> menu bug
+
 Mon Jun  8 16:39:19 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/commands.c
