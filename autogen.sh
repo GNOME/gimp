@@ -27,6 +27,17 @@ ORIGDIR=`pwd`
 cd $srcdir
 
 
+function check_version ()
+{
+    if expr $1 \>= $2 > /dev/null; then
+	echo "yes (version $1)"
+	DIE=0
+    else
+	echo "Too old (found version $1)!"
+	DIE=1
+    fi
+}
+
 echo
 echo "I am testing that you have the required versions of libtool, autoconf," 
 echo "automake, glib-gettextize and intltoolize. This test is not foolproof,"
@@ -39,12 +50,7 @@ echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
 if (libtool --version) < /dev/null > /dev/null 2>&1; then
     VER=`libtoolize --version \
          | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    if expr $VER \>= $LIBTOOL_REQUIRED_VERSION >/dev/null; then
-	echo "yes (version $VER)"
-    else
-	echo "Too old (found version $VER)!"
-	DIE=1
-    fi
+    check_version $VER $LIBTOOL_REQUIRED_VERSION
 else
     echo
     echo "  You must have libtool installed to compile $PROJECT."
@@ -57,12 +63,7 @@ echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if (autoconf --version) < /dev/null > /dev/null 2>&1; then
     VER=`autoconf --version \
          | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    if expr $VER \>= $AUTOCONF_REQUIRED_VERSION >/dev/null; then
-	echo "yes (version $VER)"
-    else
-	echo "Too old (found version $VER)!"
-	DIE=1
-    fi
+    check_version $VER $AUTOCONF_REQUIRED_VERSION
 else
     echo
     echo "  You must have autoconf installed to compile $PROJECT."
@@ -75,12 +76,7 @@ echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 if (automake --version) < /dev/null > /dev/null 2>&1; then
     VER=`automake --version \
          | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    if expr $VER \>= $AUTOMAKE_REQUIRED_VERSION >/dev/null; then
-	echo "yes (version $VER)"
-    else
-	echo "Too old (found version $VER)!"
-	DIE=1
-    fi
+    check_version $VER $AUTOMAKE_REQUIRED_VERSION
 else
     echo
     echo "  You must have automake installed to compile $PROJECT."
@@ -93,12 +89,7 @@ echo -n "checking for glib-gettextize >= $GLIB_REQUIRED_VERSION ... "
 if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
     VER=`glib-gettextize --version \
          | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
-    if expr $VER \>= $GLIB_REQUIRED_VERSION >/dev/null; then
-	echo "yes (version $VER)"
-    else
-	echo "Too old (found version $VER)!"
-	DIE=1
-    fi
+    check_version $VER $GLIB_REQUIRED_VERSION
 else
     echo
     echo "  You must have glib-gettextize installed to compile $PROJECT."
@@ -111,12 +102,7 @@ echo -n "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
 if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`intltoolize --version \
          | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
-    if expr $VER \>= $INTLTOOL_REQUIRED_VERSION >/dev/null; then
-	echo "yes (version $VER)"
-    else
-	echo "Too old (found version $VER)!"
-        DIE=1
-    fi
+    check_version $VER $INTLTOOL_REQUIRED_VERSION
 else
     echo
     echo "You must have intltool installed to compile $PROJECT."
