@@ -3,7 +3,8 @@
  *
  *   Print plug-in HP PCL driver for the GIMP.
  *
- *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1999 Michael Sweet (mike@easysw.com) and
+ *	Robert Krawitz (rlk@alum.mit.edu)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -25,15 +26,92 @@
  *                          parameter.
  *   pcl_imageable_area() - Return the imageable area of the page.
  *   pcl_print()          - Print an image to an HP printer.
- *   dither_black4()      - Dither grayscale pixels to 4 levels of black.
- *   dither_cmyk4()       - Dither RGB pixels to 4 levels of cyan, magenta,
- *                          yellow, and black.
  *   pcl_mode0()          - Send PCL graphics using mode 0 (no) compression.
  *   pcl_mode2()          - Send PCL graphics using mode 2 (TIFF) compression.
  *
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1999/12/16 19:44:01  olofk
+ *   Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
+ *
+ *           Fix of KDE/Kwm  selection add/sub/inter problem
+ *           NOTE: This is a workaround, not a real fix.
+ *           Many Thanks to Matthias Ettrich
+ *
+ *           * app/disp_callbacks.c
+ *
+ *           Updated unsharp-mask to version 0.10
+ *
+ *           * plug-ins/unsharp/dialog_f.c
+ *           * plug-ins/unsharp/dialog_f.h
+ *           * plug-ins/unsharp/dialog_i.c
+ *           * plug-ins/unsharp/dialog_i.h
+ *           * plug-ins/unsharp/unsharp.c
+ *
+ *           Updated print plug-in to version 3.0.1
+ *
+ *           * plug-ins/print/README (new file)
+ *           * plug-ins/print/print-escp2.c
+ *           * plug-ins/print/print-pcl.c
+ *           * plug-ins/print/print-ps.c
+ *           * plug-ins/print/print-util.c
+ *           * plug-ins/print/print.c
+ *           * plug-ins/print/print.h
+ *
+ *           Updated all files in the help/C/dialogs dir. This is
+ *           a first alpha glimpse of the help system. Please give
+ *           me feedback of the content. However since it's in alpha
+ *           stage it means that there is spell, grammatical, etc errors.
+ *           There is may also be pure errors which I hope "you" will
+ *           report to either olof@gimp.org or karin@gimp.org. Please
+ *           don't report spell, grammatical, etc error at this stage in dev.
+ *
+ *           If you have any plans to commit to the help system please write
+ *           to olof@gimp.org. (This is mandatory not a please ;-).
+ *
+ *           * help/C/welcome.html
+ *           * help/C/dialogs/about.html ..............
+ *
+ *   Revision 1.13  1999/11/23 02:11:37  rlk
+ *   Rationalize variables, pass 3
+ *
+ *   Revision 1.12  1999/11/23 01:45:00  rlk
+ *   Rationalize variables -- pass 2
+ *
+ *   Revision 1.11  1999/11/10 01:13:44  rlk
+ *   multi-pass
+ *
+ *   Revision 1.10  1999/10/26 23:36:51  rlk
+ *   Comment out all remaining 16-bit code, and rename 16-bit functions to "standard" names
+ *
+ *   Revision 1.9  1999/10/26 02:10:30  rlk
+ *   Mostly fix save/load
+ *
+ *   Move all gimp, glib, gtk stuff into print.c (take it out of everything else).
+ *   This should help port it to more general purposes later.
+ *
+ *   Revision 1.8  1999/10/25 23:31:59  rlk
+ *   16-bit clean
+ *
+ *   Revision 1.7  1999/10/21 01:27:37  rlk
+ *   More progress toward full 16-bit rendering
+ *
+ *   Revision 1.6  1999/10/19 02:04:59  rlk
+ *   Merge all of the single-level print_cmyk functions
+ *
+ *   Revision 1.5  1999/10/17 23:44:07  rlk
+ *   16-bit everything (untested)
+ *
+ *   Revision 1.4  1999/10/17 23:01:01  rlk
+ *   Move various dither functions into print-utils.c
+ *
+ *   Revision 1.3  1999/10/14 01:59:59  rlk
+ *   Saturation
+ *
+ *   Revision 1.2  1999/09/12 00:12:24  rlk
+ *   Current best stuff
+ *
  *   Revision 1.11  1999/05/29 16:35:27  yosh
  *   * configure.in
  *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
@@ -188,26 +266,9 @@
 
 #include "print.h"
 
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
-
-/*
- * Constants for 4-level dithering functions...
- */
-
-#define LEVEL_3	255
-#define LEVEL_2	213
-#define LEVEL_1	127
-#define LEVEL_0	0
-
-
 /*
  * Local functions...
  */
-
-static void	dither_black4(guchar *, int, int, int, unsigned char *);
-static void	dither_cmyk4(guchar *, int, int, int, unsigned char *,
-		             unsigned char *, unsigned char *, unsigned char *);
 static void	pcl_mode0(FILE *, unsigned char *, int, int);
 static void	pcl_mode2(FILE *, unsigned char *, int, int);
 
@@ -229,33 +290,33 @@ pcl_parameters(int  model,	/* I - Printer model */
 		**valptrs;
   static char	*media_sizes[] =
 		{
-		  N_("Letter"),
-		  N_("Legal"),
-		  N_("A4"),
-		  N_("Tabloid"),
-		  N_("A3"),
-		  N_("12x18")
+		  ("Letter"),
+		  ("Legal"),
+		  ("A4"),
+		  ("Tabloid"),
+		  ("A3"),
+		  ("12x18")
 		};
   static char	*media_types[] =
 		{
-		  N_("Plain"),
-		  N_("Premium"),
-		  N_("Glossy"),
-		  N_("Transparency")
+		  ("Plain"),
+		  ("Premium"),
+		  ("Glossy"),
+		  ("Transparency")
 		};
   static char	*media_sources[] =
 		{
-		  N_("Manual"),
-		  N_("Tray 1"),
-		  N_("Tray 2"),
-		  N_("Tray 3"),
-		  N_("Tray 4"),
+		  ("Manual"),
+		  ("Tray 1"),
+		  ("Tray 2"),
+		  ("Tray 3"),
+		  ("Tray 4"),
 		};
   static char	*resolutions[] =
 		{
-		  N_("150 DPI"),
-		  N_("300 DPI"),
-		  N_("600 DPI")
+		  ("150 DPI"),
+		  ("300 DPI"),
+		  ("600 DPI")
 		};
 
 
@@ -287,7 +348,7 @@ pcl_parameters(int  model,	/* I - Printer model */
     {
       *count = 4;
       p = media_types;
-    };
+    }
   }
   else if (strcmp(name, "InputSlot") == 0)
   {
@@ -300,7 +361,7 @@ pcl_parameters(int  model,	/* I - Printer model */
     {
       *count = 0;
       return (NULL);
-    };
+    }
   }
   else if (strcmp(name, "Resolution") == 0)
   {
@@ -314,9 +375,13 @@ pcl_parameters(int  model,	/* I - Printer model */
   else
     return (NULL);
 
-  valptrs = g_new(char *, *count);
+  valptrs = malloc(*count * sizeof(char *));
   for (i = 0; i < *count; i ++)
-    valptrs[i] = g_strdup(p[i]);
+    {
+      /* strdup doesn't appear to be POSIX... */
+      valptrs[i] = malloc(strlen(p[i]) + 1);
+      strcpy(valptrs[i], p[i]);
+    }
 
   return (valptrs);
 }
@@ -378,7 +443,7 @@ pcl_imageable_area(int  model,		/* I - Printer model */
         *top    = length - 0;
         *bottom = 33;
         break;
-  };
+  }
 }
 
 
@@ -388,27 +453,26 @@ pcl_imageable_area(int  model,		/* I - Printer model */
 
 void
 pcl_print(int       model,		/* I - Model */
-          char      *ppd_file,		/* I - PPD file (not used) */
-          char      *resolution,	/* I - Resolution */
-          char      *media_size,	/* I - Media size */
-          char      *media_type,	/* I - Media type */
-          char      *media_source,	/* I - Media source */
-          int       output_type,	/* I - Output type (color/grayscale) */
-          int       orientation,	/* I - Orientation of image */
-          float     scaling,		/* I - Scaling of image */
-          int       left,		/* I - Left offset of image (points) */
-          int       top,		/* I - Top offset of image (points) */
           int       copies,		/* I - Number of copies */
           FILE      *prn,		/* I - File to print to */
-          GDrawable *drawable,		/* I - Image to print */
-          guchar    *lut,		/* I - Brightness lookup table */
-          guchar    *cmap)		/* I - Colormap (for indexed images) */
+          Image     image,		/* I - Image to print */
+	  unsigned char    *cmap,	/* I - Colormap (for indexed images) */
+	  lut_t     *lut,		/* I - Brightness lookup table */
+	  vars_t    *v)
 {
+  char 		*ppd_file = v->ppd_file;
+  char 		*resolution = v->resolution;
+  char 		*media_size = v->media_size;
+  char 		*media_type = v->media_type;
+  int 		output_type = v->output_type;
+  int		orientation = v->orientation;
+  float 	scaling = v->scaling;
+  int		top = v->top;
+  int		left = v->left;
   int		x, y;		/* Looping vars */
   int		xdpi, ydpi;	/* Resolution */
-  GPixelRgn	rgn;		/* Image region */
+  unsigned short *out;
   unsigned char	*in,		/* Input pixels */
-		*out,		/* Output pixels */
 		*black,		/* Black bitmap data */
 		*cyan,		/* Cyan bitmap data */
 		*magenta,	/* Magenta bitmap data */
@@ -434,27 +498,32 @@ pcl_print(int       model,		/* I - Model */
   convert_t	colorfunc;	/* Color conversion function... */
   void		(*writefunc)(FILE *, unsigned char *, int, int);
 				/* PCL output function */
+  int           image_height,
+                image_width,
+                image_bpp;
 
 
  /*
   * Setup a read-only pixel region for the entire image...
   */
 
-  gimp_pixel_rgn_init(&rgn, drawable, 0, 0, drawable->width, drawable->height,
-                      FALSE, FALSE);
+  Image_init(image);
+  image_height = Image_height(image);
+  image_width = Image_width(image);
+  image_bpp = Image_bpp(image);
 
  /*
   * Choose the correct color conversion function...
   */
 
-  if ((drawable->bpp < 3 && cmap == NULL) || model <= 500)
+  if ((image_bpp < 3 && cmap == NULL) || model <= 500)
     output_type = OUTPUT_GRAY;		/* Force grayscale output */
 
   if (output_type == OUTPUT_COLOR)
   {
     out_bpp = 3;
 
-    if (drawable->bpp >= 3)
+    if (image_bpp >= 3)
       colorfunc = rgb_to_rgb;
     else
       colorfunc = indexed_to_rgb;
@@ -463,13 +532,13 @@ pcl_print(int       model,		/* I - Model */
   {
     out_bpp = 1;
 
-    if (drawable->bpp >= 3)
+    if (image_bpp >= 3)
       colorfunc = rgb_to_gray;
     else if (cmap == NULL)
       colorfunc = gray_to_gray;
     else
       colorfunc = indexed_to_gray;
-  };
+  }
 
  /*
   * Figure out the output resolution...
@@ -507,8 +576,8 @@ pcl_print(int       model,		/* I - Model */
     * Scale to pixels per inch...
     */
 
-    out_width  = drawable->width * -72.0 / scaling;
-    out_height = drawable->height * -72.0 / scaling;
+    out_width  = image_width * -72.0 / scaling;
+    out_height = image_height * -72.0 / scaling;
   }
   else
   {
@@ -517,13 +586,13 @@ pcl_print(int       model,		/* I - Model */
     */
 
     out_width  = page_width * scaling / 100.0;
-    out_height = out_width * drawable->height / drawable->width;
+    out_height = out_width * image_height / image_width;
     if (out_height > page_height)
     {
       out_height = page_height * scaling / 100.0;
-      out_width  = out_height * drawable->width / drawable->height;
-    };
-  };
+      out_width  = out_height * image_width / image_height;
+    }
+  }
 
  /*
   * Landscape width/height...
@@ -535,8 +604,8 @@ pcl_print(int       model,		/* I - Model */
     * Scale to pixels per inch...
     */
 
-    temp_width  = drawable->height * -72.0 / scaling;
-    temp_height = drawable->width * -72.0 / scaling;
+    temp_width  = image_height * -72.0 / scaling;
+    temp_height = image_width * -72.0 / scaling;
   }
   else
   {
@@ -545,13 +614,13 @@ pcl_print(int       model,		/* I - Model */
     */
 
     temp_width  = page_width * scaling / 100.0;
-    temp_height = temp_width * drawable->width / drawable->height;
+    temp_height = temp_width * image_width / image_height;
     if (temp_height > page_height)
     {
       temp_height = page_height;
-      temp_width  = temp_height * drawable->height / drawable->width;
-    };
-  };
+      temp_width  = temp_height * image_height / image_width;
+    }
+  }
 
  /*
   * See which orientation has the greatest area (or if we need to rotate the
@@ -574,8 +643,8 @@ pcl_print(int       model,		/* I - Model */
 	orientation = ORIENT_LANDSCAPE;
       else
 	orientation = ORIENT_PORTRAIT;
-    };
-  };
+    }
+  }
 
   if (orientation == ORIENT_LANDSCAPE)
   {
@@ -590,7 +659,7 @@ pcl_print(int       model,		/* I - Model */
     x    = top;
     top  = left;
     left = x;
-  };
+  }
 
   if (left < 0)
     left = (page_width - out_width) / 2 + page_left;
@@ -610,7 +679,7 @@ pcl_print(int       model,		/* I - Model */
   * Let the user know what we're doing...
   */
 
-  gimp_progress_init(_("Printing..."));
+  Image_progress_init(image);
 
  /*
   * Send PCL initialization commands...
@@ -642,7 +711,7 @@ pcl_print(int       model,		/* I - Model */
   {
     fputs("\033&l27A", prn);
     top = 1191 - top;
-  };
+  }
 
   fputs("\033&l0L", prn);			/* Turn off perforation skip */
   fputs("\033&l0E", prn);			/* Reset top margin to 0 */
@@ -765,8 +834,8 @@ pcl_print(int       model,		/* I - Model */
         fputs("\033*r-3U", prn);		/* Simple CMY color */
       else
         fputs("\033*r-4U", prn);		/* Simple KCMY color */
-    };
-  };
+    }
+  }
 
   if (model < 3 || model == 500)
     fputs("\033*b0M", prn);			/* Mode 0 (no compression) */
@@ -797,22 +866,22 @@ pcl_print(int       model,		/* I - Model */
 
   if (output_type == OUTPUT_GRAY)
   {
-    black   = g_malloc(length);
+    black   = malloc(length);
     cyan    = NULL;
     magenta = NULL;
     yellow  = NULL;
   }
   else
   {
-    cyan    = g_malloc(length);
-    magenta = g_malloc(length);
-    yellow  = g_malloc(length);
+    cyan    = malloc(length);
+    magenta = malloc(length);
+    yellow  = malloc(length);
   
     if (model != 501 && model != 1200)
-      black = g_malloc(length);
+      black = malloc(length);
     else
       black = NULL;
-  };
+  }
     
  /*
   * Output the page, rotating as necessary...
@@ -825,14 +894,14 @@ pcl_print(int       model,		/* I - Model */
 
   if (landscape)
   {
-    in  = g_malloc(drawable->height * drawable->bpp);
-    out = g_malloc(drawable->height * out_bpp);
+    in  = malloc(image_height * image_bpp);
+    out = malloc(image_height * out_bpp * 2);
 
-    errdiv  = drawable->width / out_height;
-    errmod  = drawable->width % out_height;
+    errdiv  = image_width / out_height;
+    errmod  = image_width % out_height;
     errval  = 0;
     errlast = -1;
-    errline  = drawable->width - 1;
+    errline  = image_width - 1;
     
     for (x = 0; x < out_height; x ++)
     {
@@ -842,15 +911,15 @@ pcl_print(int       model,		/* I - Model */
 #endif /* DEBUG */
 
       if ((x & 255) == 0)
-        gimp_progress_update((double)x / (double)out_height);
+	Image_note_progress(image, x, out_height);
 
       if (errline != errlast)
       {
         errlast = errline;
-        gimp_pixel_rgn_get_col(&rgn, in, errline, 0, drawable->height);
-      };
+	Image_get_col(image, in, errline);
+      }
 
-      (*colorfunc)(in, out, drawable->height, drawable->bpp, lut, cmap);
+      (*colorfunc)(in, out, image_height, image_bpp, lut, cmap, v);
 
       if (xdpi == 300 && model == 800)
       {
@@ -860,14 +929,14 @@ pcl_print(int       model,		/* I - Model */
 
 	if (output_type == OUTPUT_GRAY)
 	{
-          dither_black4(out, x, drawable->height, out_width, black);
+          dither_black4(out, x, image_height, out_width, black);
           (*writefunc)(prn, black, length / 2, 0);
           (*writefunc)(prn, black + length / 2, length / 2, 1);
 	}
 	else 
 	{
-          dither_cmyk4(out, x, drawable->height, out_width, cyan, magenta,
-                       yellow, black);
+          dither_cmyk4(out, x, image_height, out_width, cyan, magenta,
+			  yellow, black);
 
           (*writefunc)(prn, black, length / 2, 0);
           (*writefunc)(prn, black + length / 2, length / 2, 0);
@@ -877,7 +946,7 @@ pcl_print(int       model,		/* I - Model */
           (*writefunc)(prn, magenta + length / 2, length / 2, 0);
           (*writefunc)(prn, yellow, length / 2, 0);
           (*writefunc)(prn, yellow + length / 2, length / 2, 1);
-	};
+	}
       }
       else
       {
@@ -887,21 +956,21 @@ pcl_print(int       model,		/* I - Model */
 
 	if (output_type == OUTPUT_GRAY)
 	{
-          dither_black(out, x, drawable->height, out_width, black);
+          dither_black(out, x, image_height, out_width, black);
           (*writefunc)(prn, black, length, 1);
 	}
 	else
 	{
-          dither_cmyk(out, x, drawable->height, out_width, cyan, magenta,
-                      yellow, black);
+          dither_cmyk(out, x, image_height, out_width, cyan, 0, magenta,
+			0, yellow, 0, black, 1);
 
           if (black != NULL)
             (*writefunc)(prn, black, length, 0);
           (*writefunc)(prn, cyan, length, 0);
           (*writefunc)(prn, magenta, length, 0);
           (*writefunc)(prn, yellow, length, 1);
-	};
-      };
+	}
+      }
 
       errval += errmod;
       errline -= errdiv;
@@ -909,16 +978,16 @@ pcl_print(int       model,		/* I - Model */
       {
         errval -= out_height;
         errline --;
-      };
-    };
+      }
+    }
   }
   else
   {
-    in  = g_malloc(drawable->width * drawable->bpp);
-    out = g_malloc(drawable->width * out_bpp);
+    in  = malloc(image_width * image_bpp);
+    out = malloc(image_width * out_bpp * 2);
 
-    errdiv  = drawable->height / out_height;
-    errmod  = drawable->height % out_height;
+    errdiv  = image_height / out_height;
+    errmod  = image_height % out_height;
     errval  = 0;
     errlast = -1;
     errline  = 0;
@@ -931,15 +1000,15 @@ pcl_print(int       model,		/* I - Model */
 #endif /* DEBUG */
 
       if ((y & 255) == 0)
-        gimp_progress_update((double)y / (double)out_height);
+	Image_note_progress(image, y, out_height);
 
       if (errline != errlast)
       {
         errlast = errline;
-        gimp_pixel_rgn_get_row(&rgn, in, 0, errline, drawable->width);
-      };
+	Image_get_row(image, in, errline);
+      }
 
-      (*colorfunc)(in, out, drawable->width, drawable->bpp, lut, cmap);
+      (*colorfunc)(in, out, image_width, image_bpp, lut, cmap, v);
 
       if (xdpi == 300 && model == 800)
       {
@@ -949,14 +1018,14 @@ pcl_print(int       model,		/* I - Model */
 
 	if (output_type == OUTPUT_GRAY)
 	{
-          dither_black4(out, y, drawable->width, out_width, black);
+          dither_black4(out, y, image_width, out_width, black);
           (*writefunc)(prn, black, length / 2, 0);
           (*writefunc)(prn, black + length / 2, length / 2, 1);
 	}
 	else 
 	{
-          dither_cmyk4(out, y, drawable->width, out_width, cyan, magenta,
-                       yellow, black);
+          dither_cmyk4(out, y, image_width, out_width, cyan, magenta,
+			  yellow, black);
 
           (*writefunc)(prn, black, length / 2, 0);
           (*writefunc)(prn, black + length / 2, length / 2, 0);
@@ -966,7 +1035,7 @@ pcl_print(int       model,		/* I - Model */
           (*writefunc)(prn, magenta + length / 2, length / 2, 0);
           (*writefunc)(prn, yellow, length / 2, 0);
           (*writefunc)(prn, yellow + length / 2, length / 2, 1);
-	};
+	}
       }
       else
       {
@@ -976,21 +1045,21 @@ pcl_print(int       model,		/* I - Model */
 
 	if (output_type == OUTPUT_GRAY)
 	{
-          dither_black(out, x, drawable->width, out_width, black);
+          dither_black(out, y, image_width, out_width, black);
           (*writefunc)(prn, black, length, 1);
 	}
 	else
 	{
-          dither_cmyk(out, x, drawable->width, out_width, cyan, magenta,
-                      yellow, black);
+          dither_cmyk(out, y, image_width, out_width, cyan, 0, magenta,
+			0, yellow, 0, black, 1);
 
           if (black != NULL)
             (*writefunc)(prn, black, length, 0);
           (*writefunc)(prn, cyan, length, 0);
           (*writefunc)(prn, magenta, length, 0);
           (*writefunc)(prn, yellow, length, 1);
-	};
-      };
+	}
+      }
 
       errval += errmod;
       errline += errdiv;
@@ -998,25 +1067,25 @@ pcl_print(int       model,		/* I - Model */
       {
         errval -= out_height;
         errline ++;
-      };
-    };
-  };
+      }
+    }
+  }
 
  /*
   * Cleanup...
   */
 
-  g_free(in);
-  g_free(out);
+  free(in);
+  free(out);
 
   if (black != NULL)
-    g_free(black);
+    free(black);
   if (cyan != NULL)
   {
-    g_free(cyan);
-    g_free(magenta);
-    g_free(yellow);
-  };
+    free(cyan);
+    free(magenta);
+    free(yellow);
+  }
 
   switch (model)			/* End raster graphics */
   {
@@ -1029,345 +1098,12 @@ pcl_print(int       model,		/* I - Model */
     default :
         fputs("\033*rbC", prn);
         break;
-  };
+  }
 
   fputs("\033&l0H", prn);		/* Eject page */
   fputs("\033E", prn);			/* PCL reset */
 }
 
-
-/*
- * 'dither_black4()' - Dither grayscale pixels to 4 levels of black.
- */
-
-static void
-dither_black4(guchar        *gray,	/* I - Grayscale pixels */
-              int           row,	/* I - Current Y coordinate */
-              int           src_width,	/* I - Width of input row */
-              int           dst_width,	/* I - Width of output rows */
-              unsigned char *black)	/* O - Black bitmap pixels */
-{
-  int		x,		/* Current X coordinate */
-		xerror,		/* X error count */
-		xstep,		/* X step */
-		xmod,		/* X error modulus */
-		length;		/* Length of output bitmap in bytes */
-  unsigned char	bit,		/* Current bit */
-		*kptr;		/* Current black pixel */
-  int		k,		/* Current black value */
-		ditherk,	/* Next error value in buffer */
-		*kerror0,	/* Pointer to current error row */
-		*kerror1;	/* Pointer to next error row */
-  int		ditherbit;	/* Random dither bitmask */
-
-
-  xstep  = src_width / dst_width;
-  xmod   = src_width % dst_width;
-  length = (dst_width + 7) / 8;
-
-  kerror0 = error[row & 1][3];
-  kerror1 = error[1 - (row & 1)][3];
-
-  memset(black, 0, length * 2);
-
-  for (x = 0, bit = 128, kptr = black, xerror = 0, ditherbit = rand(),
-           ditherk = kerror0[0];
-       x < dst_width;
-       x ++, kerror0 ++, kerror1 ++)
-  {
-    k = 255 - *gray + ditherk / 8;
-
-    if (k > ((LEVEL_2 + LEVEL_3) / 2))
-    {
-      kptr[0]      |= bit;
-      kptr[length] |= bit;
-      k -= LEVEL_3;
-    }
-    else if (k > ((LEVEL_1 + LEVEL_2) / 2))
-    {
-      kptr[length] |= bit;
-      k -= LEVEL_2;
-    }
-    else if (k > ((LEVEL_0 + LEVEL_1) / 2))
-    {
-      kptr[0] |= bit;
-      k -= LEVEL_1;
-    };
-
-    if (ditherbit & bit)
-    {
-      kerror1[0] = 5 * k;
-      ditherk    = kerror0[1] + 3 * k;
-    }
-    else
-    {
-      kerror1[0] = 3 * k;
-      ditherk    = kerror0[1] + 5 * k;
-    };
-
-    if (bit == 1)
-    {
-      kptr ++;
-
-      bit       = 128;
-      ditherbit = rand();
-    }
-    else
-      bit >>= 1;
-
-    gray   += xstep;
-    xerror += xmod;
-    if (xerror >= dst_width)
-    {
-      xerror -= dst_width;
-      gray ++;
-    };
-  };
-}
-
-
-/*
- * 'dither_cmyk4()' - Dither RGB pixels to 4 levels of cyan, magenta, yellow,
- *                    and black.
- */
-
-static void
-dither_cmyk4(guchar        *rgb,	/* I - RGB pixels */
-             int           row,		/* I - Current Y coordinate */
-             int           src_width,	/* I - Width of input row */
-             int           dst_width,	/* I - Width of output rows */
-             unsigned char *cyan,	/* O - Cyan bitmap pixels */
-             unsigned char *magenta,	/* O - Magenta bitmap pixels */
-             unsigned char *yellow,	/* O - Yellow bitmap pixels */
-             unsigned char *black)	/* O - Black bitmap pixels */
-{
-  int		x,		/* Current X coordinate */
-		xerror,		/* X error count */
-		xstep,		/* X step */
-		xmod,		/* X error modulus */
-		length;		/* Length of output bitmap in bytes */
-  int		c, m, y, k,	/* CMYK values */
-		divk,		/* Inverse of K */
-		diff;		/* Average color difference */
-  unsigned char	bit,		/* Current bit */
-		*cptr,		/* Current cyan pixel */
-		*mptr,		/* Current magenta pixel */
-		*yptr,		/* Current yellow pixel */
-		*kptr;		/* Current black pixel */
-  int		ditherc,	/* Next error value in buffer */
-		*cerror0,	/* Pointer to current error row */
-		*cerror1;	/* Pointer to next error row */
-  int		dithery,	/* Next error value in buffer */
-		*yerror0,	/* Pointer to current error row */
-		*yerror1;	/* Pointer to next error row */
-  int		ditherm,	/* Next error value in buffer */
-		*merror0,	/* Pointer to current error row */
-		*merror1;	/* Pointer to next error row */
-  int		ditherk,	/* Next error value in buffer */
-		*kerror0,	/* Pointer to current error row */
-		*kerror1;	/* Pointer to next error row */
-  int		ditherbit;	/* Random dither bitmask */
-
-
-  xstep  = 3 * (src_width / dst_width);
-  xmod   = src_width % dst_width;
-  length = (dst_width + 7) / 8;
-
-  cerror0 = error[row & 1][0];
-  cerror1 = error[1 - (row & 1)][0];
-
-  merror0 = error[row & 1][1];
-  merror1 = error[1 - (row & 1)][1];
-
-  yerror0 = error[row & 1][2];
-  yerror1 = error[1 - (row & 1)][2];
-
-  kerror0 = error[row & 1][3];
-  kerror1 = error[1 - (row & 1)][3];
-
-  memset(cyan, 0, length * 2);
-  memset(magenta, 0, length * 2);
-  memset(yellow, 0, length * 2);
-  memset(black, 0, length * 2);
-
-  for (x = 0, bit = 128, cptr = cyan, mptr = magenta, yptr = yellow,
-           kptr = black, xerror = 0, ditherbit = rand(), ditherc = cerror0[0],
-           ditherm = merror0[0], dithery = yerror0[0], ditherk = kerror0[0];
-       x < dst_width;
-       x ++, cerror0 ++, cerror1 ++, merror0 ++, merror1 ++, yerror0 ++,
-           yerror1 ++, kerror0 ++, kerror1 ++)
-  {
-   /*
-    * First compute the standard CMYK separation color values...
-    */
-
-    c = 255 - rgb[0];
-    m = 255 - rgb[1];
-    y = 255 - rgb[2];
-    k = MIN(c, MIN(m, y));
-
-   /*
-    * Since we're printing black, adjust the black level based upon
-    * the amount of color in the pixel (colorful pixels get less black)...
-    */
-
-    diff = 255 - (abs(c - m) + abs(c - y) + abs(m - y)) / 3;
-    diff = diff * diff * diff / 65025; /* diff = diff^3 */
-    k    = diff * k / 255;
-    divk = 255 - k;
-
-    if (divk == 0)
-      c = m = y = 0;	/* Grayscale */
-    else
-    {
-     /*
-      * Full color; update the CMY values for the black value and reduce
-      * CMY as necessary to give better blues, greens, and reds... :)
-      */
-
-      c  = (255 - rgb[1] / 4) * (c - k) / divk;
-      m  = (255 - rgb[2] / 4) * (m - k) / divk;
-      y  = (255 - rgb[0] / 4) * (y - k) / divk;
-    };
-
-    k += ditherk / 8;
-    if (k > ((LEVEL_2 + LEVEL_3) / 2))
-    {
-      kptr[0]      |= bit;
-      kptr[length] |= bit;
-      k -= LEVEL_3;
-    }
-    else if (k > ((LEVEL_1 + LEVEL_2) / 2))
-    {
-      kptr[length] |= bit;
-      k -= LEVEL_2;
-    }
-    else if (k > ((LEVEL_0 + LEVEL_1) / 2))
-    {
-      kptr[0] |= bit;
-      k -= LEVEL_1;
-    };
-
-    if (ditherbit & bit)
-    {
-      kerror1[0] = 5 * k;
-      ditherk    = kerror0[1] + 3 * k;
-    }
-    else
-    {
-      kerror1[0] = 3 * k;
-      ditherk    = kerror0[1] + 5 * k;
-    };
-
-    c += ditherc / 8;
-    if (c > ((LEVEL_2 + LEVEL_3) / 2))
-    {
-      cptr[0]      |= bit;
-      cptr[length] |= bit;
-      c -= LEVEL_3;
-    }
-    else if (c > ((LEVEL_1 + LEVEL_2) / 2))
-    {
-      cptr[length] |= bit;
-      c -= LEVEL_2;
-    }
-    else if (c > ((LEVEL_0 + LEVEL_1) / 2))
-    {
-      cptr[0] |= bit;
-      c -= LEVEL_1;
-    };
-
-    if (ditherbit & bit)
-    {
-      cerror1[0] = 5 * c;
-      ditherc    = cerror0[1] + 3 * c;
-    }
-    else
-    {
-      cerror1[0] = 3 * c;
-      ditherc    = cerror0[1] + 5 * c;
-    };
-
-    m += ditherm / 8;
-    if (m > ((LEVEL_2 + LEVEL_3) / 2))
-    {
-      mptr[0]      |= bit;
-      mptr[length] |= bit;
-      m -= LEVEL_3;
-    }
-    else if (m > ((LEVEL_1 + LEVEL_2) / 2))
-    {
-      mptr[length] |= bit;
-      m -= LEVEL_2;
-    }
-    else if (m > ((LEVEL_0 + LEVEL_1) / 2))
-    {
-      mptr[0] |= bit;
-      m -= LEVEL_1;
-    };
-
-    if (ditherbit & bit)
-    {
-      merror1[0] = 5 * m;
-      ditherm    = merror0[1] + 3 * m;
-    }
-    else
-    {
-      merror1[0] = 3 * m;
-      ditherm    = merror0[1] + 5 * m;
-    };
-
-    y += dithery / 8;
-    if (y > ((LEVEL_2 + LEVEL_3) / 2))
-    {
-      yptr[0]      |= bit;
-      yptr[length] |= bit;
-      y -= LEVEL_3;
-    }
-    else if (y > ((LEVEL_1 + LEVEL_2) / 2))
-    {
-      yptr[length] |= bit;
-      y -= LEVEL_2;
-    }
-    else if (y > ((LEVEL_0 + LEVEL_1) / 2))
-    {
-      yptr[0] |= bit;
-      y -= LEVEL_1;
-    };
-
-    if (ditherbit & bit)
-    {
-      yerror1[0] = 5 * y;
-      dithery    = yerror0[1] + 3 * y;
-    }
-    else
-    {
-      yerror1[0] = 3 * y;
-      dithery    = yerror0[1] + 5 * y;
-    };
-
-    if (bit == 1)
-    {
-      cptr ++;
-      mptr ++;
-      yptr ++;
-      kptr ++;
-
-      bit       = 128;
-      ditherbit = rand();
-    }
-    else
-      bit >>= 1;
-
-    rgb    += xstep;
-    xerror += xmod;
-    if (xerror >= dst_width)
-    {
-      xerror -= dst_width;
-      rgb    += 3;
-    };
-  };
-}
 
 
 /*
@@ -1423,7 +1159,7 @@ pcl_mode2(FILE          *prn,		/* I - Print file or command */
     {
       line ++;
       length --;
-    };
+    }
 
     line   -= 2;
     length += 2;
@@ -1443,7 +1179,7 @@ pcl_mode2(FILE          *prn,		/* I - Print file or command */
       comp_ptr += tcount + 1;
       start    += tcount;
       count    -= tcount;
-    };
+    }
 
     if (length <= 0)
       break;
@@ -1462,7 +1198,7 @@ pcl_mode2(FILE          *prn,		/* I - Print file or command */
     {
       line ++;
       length --;
-    };
+    }
 
    /*
     * Output the repeated sequences (max 128 at a time).
@@ -1478,8 +1214,8 @@ pcl_mode2(FILE          *prn,		/* I - Print file or command */
 
       comp_ptr += 2;
       count    -= tcount;
-    };
-  };
+    }
+  }
 
  /*
   * Send a line of raster graphics...

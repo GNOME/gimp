@@ -1,31 +1,113 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for gradient_editor</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">gradient_editor help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/gradient_editor/gradient_editor.html)<p>
-        Sorry but the help file for gradient_editor is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>The Gradient Editor</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">The Gradient
+      Editor</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"> 
+      <P>
+      The Gradient Editor allows you to create or edit complex gradients that you
+      can use with e.g the blend tool.
+      <P>
+      You'll find a list of all available gradients under Gradients, and the currently
+      selected gradient can be seen in a preview window. &nbsp; The buttons to
+      the right let you create, copy, delete, save and refresh gradients and save
+      as POV-Ray format. You can also zoom the gradient with the zoom buttons present
+      in the main dialog.
+      <P>
+      The triangles at the bottom of the gradient preview window are color section
+      markings. Two kinds of marks exist: black endpoints and white midpoints.
+      The area between two black points is called a segment. You select a segment
+      by clicking on it. A selected segment turns a darker shade of gray. Most
+      work that you do in the gradient editor will be about changing and editing
+      those segments in one way or another.
+      <P>
+      &#176; You can move an entire selection by clicking in the darker gray field
+      and dragging.
+      <P>
+      &#176; If you move a white midpoint and affect the color transition by dragging
+      it.
+      <P>
+      &#176; Dragging a black endpoint &nbsp;will stretch the area between that
+      endpoint and the midpoint
+      <P>
+      &#176; If you click on an endpoint, then press Shift and drag, you will compress
+      or expand the entire selection.
+      <P>
+      &#176; You can extend or add to a selection by pressing the Shift key and
+      clicking on another segment.
+      <P>
+      Any of the described manipulations can be used on extended selections.
+      <H4>
+	The Popup Menu
+      </H4>
+      <P>
+      If you press the right mouse button in the gradient preview window, a menu
+      will appear for further editing of the selected segment.
+      <P>
+      You can edit the left or right color by invoking left or right endpoint color.
+      The Load from and Save to menu options allow you to load a color from an
+      RGBA channel to an endpoint,or to save a RGBA channel.
+      <P>
+      In the Blending function for segment submenu, you will find some functions
+      that control how the appearance of the gradient in your selection.
+      <P>
+      The coloring type for segment submenu lets you choose a color model for your
+      selection or segment. You can choose Plain RGB and two kinds of HSV.
+      <P>
+      The Segment commands will work on the selected segment. If you have selected
+      more than one segment, they will not be treated as a unit.
+      <P>
+      &#176; Split segment at midpoint: Puts an endpoint at the midpoint and then
+      divides the two new segments.
+      <P>
+      &#176; Split segment uniformly: Splits to a specified amount o f segments.
+      <P>
+      &#176; Delete segment: Deletes the entire selection.
+      <P>
+      &#176; Re-center segment's midpoint: Re-centers the midpoints
+      <P>
+      &#176; Re-distribute handles in segment: Evenly distributes all the points
+      in the segment.
+      <P>
+      The Selection operations submenu allows you to flip or replicate the segment
+      and also allows you to blend the endpoints' colors and/or opacity:
+      <P>
+      Please see page XXXX in the Gimp User's Manual. The help text presented her
+      is only a subset of what you are able to do in the Gradient Editor.
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/gradient_editor/gradient_editor.html)
+      <P>
+      Sorry but the help file for gradient_editor is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>

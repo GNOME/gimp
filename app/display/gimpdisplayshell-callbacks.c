@@ -202,6 +202,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_LEAVE_NOTIFY:
+      if ( ( (GdkEventCrossing*) event)->mode != GDK_CROSSING_NORMAL )
+         return TRUE;       
       gdisplay_update_cursor (gdisp, 0, 0);
       gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), "");
       info_window_update_RGB (gdisp, -1, -1);
@@ -211,6 +213,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_ENTER_NOTIFY:
+      if ( ( (GdkEventCrossing*) event)->mode != GDK_CROSSING_NORMAL )
+         return TRUE;  
       /* Actually, should figure out tx,ty here */
       break;
 

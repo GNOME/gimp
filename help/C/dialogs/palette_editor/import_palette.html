@@ -1,31 +1,93 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for import_palette</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">import_palette help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/palette_editor/import_palette.html)<p>
-        Sorry but the help file for import_palette is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>Import Palette</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">Import
+      Palette</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"> 
+      <P>
+      It's in the Import Palette dialog you set the import source. You can import
+      (create) a palette from a image, a gradient or a index palette (read index
+      image).
+      <P>
+      <DL>
+	<DT>
+	  Import from Gradient:
+	<DD>
+	  Select gradient as source<BR>
+	  Set the name of the palette you are about to create.<BR>
+	  Click on select in the Preview area in order to bring up the Gradient selection
+	  dialog where you will choose source gradient<BR>
+	  Set the amount of colors that you want in the palette in the Sample Size
+	  field.
+	<DT>
+	<DD>
+	<DT>
+	  Import from Image:
+	<DD>
+	  Select Image as source<BR>
+	  Set the name of the palette you are about to create.<BR>
+	  Choose the one of the currently opened images that you want to create a palette
+	  out of. NOTE: That you will create the palette from all visible layers with
+	  in that image. (I.e like if you had merged all visible layers). Please see
+	  <A HREF="../layers/layers.html">Layers</A> for an explanation of layer functions.
+	  <BR>
+	  Set the Interval, which will control -- TODO<BR>
+	  Set the amount of colors that you want in the palette in the Sample Size
+	  field.
+	<DT>
+	<DD>
+	<DT>
+	  Import from Index Palette
+	<DD>
+	  Select Image as source<BR>
+	  Set the name of the palette you are about to create.<BR>
+	  Choose the one of the currently opened index images that you want to create
+	  a palette out of.<BR>
+	  Set the amount of colors that you want in the palette in the Sample Size
+	  field. NOTE: It's no use to have a higher amount of colors in the palette
+	  than the currently amount of colors present in the index image. You can view
+	  and alter the the index palette in the <A HREF="../indexed_palette.html">Index
+	  Palette</A> dialog, this will also give you an opportunity to evaluate how
+	  many colors that are present in the indexed palette.
+	<DT>
+      </DL>
+      <P>
+      When you are done click Import and a new palette will be created. Close cancels
+      that whole operation.
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/palette_editor/import_palette.html)
+      <P>
+      Sorry but the help file for import_palette is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>

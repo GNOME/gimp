@@ -1,6 +1,6 @@
 /* $Id$
  *
- * unsharp.c 0.8 -- This is a plug-in for the GIMP 1.0
+ * unsharp.c 0.10 -- This is a plug-in for the GIMP 1.0
  *  http://www.steppe.com/~winston/gimp/unsharp.html
  *
  * Copyright (C) 1999 Winston Chang
@@ -34,7 +34,7 @@
 #include "dialog_f.h"
 #include "dialog_i.h"
 
-#define PLUG_IN_VERSION "0.8"
+#define PLUG_IN_VERSION "0.10"
 
 
 /* to show both pretty unoptimized code and ugly optimized code blocks
@@ -153,7 +153,8 @@ static void query () {
 		{ PARAM_IMAGE, "image", "(unused)" },
 		{ PARAM_DRAWABLE, "drawable", "Drawable to draw on" },
 		{ PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-		{ PARAM_FLOAT, "amount", "Strength of effect." }
+		{ PARAM_FLOAT, "amount", "Strength of effect" },
+		{ PARAM_FLOAT, "threshold", "Threshold" }
 	};
 	static gint nargs = sizeof(args) / sizeof(args[0]);
 	/* for return vals */
@@ -167,7 +168,7 @@ static void query () {
 	                        "Winston Chang <wchang3@students.wisc.edu>",
 	                        "Winston Chang",
 	                        "1999",
-	                        "<Image>/Filters/Enhance/Unsharp Mask...",
+	                        "<Image>/Filters/Enhance/Unsharp Mask",
 	                        "GRAY*, RGB*",
 	                        PROC_PLUG_IN,
 	                        nargs, nreturn_vals,
@@ -202,16 +203,18 @@ static void run(char *name, int nparams, GParam *param, int *nreturn_vals,
 			break;
 
 		case RUN_NONINTERACTIVE:
-			if (nparams != 4) status = STATUS_CALLING_ERROR;
+			if (nparams != 6) status = STATUS_CALLING_ERROR;
 			/* get the parameters */
 			else if (status == STATUS_SUCCESS) {
 				unsharp_params.radius = param[3].data.d_float;
 				unsharp_params.amount = param[4].data.d_float; 
+				unsharp_params.threshold = param[5].data.d_int32;
+				
+				/* make sure there are legal values */
+				if ( (unsharp_params.radius < 0.0) ||
+			         (unsharp_params.amount<0.0) )
+					status = STATUS_CALLING_ERROR;
 			}
-			/* make sure there are legal values */
-			if (status == STATUS_SUCCESS && 
-			         ( (unsharp_params.radius < 0) || (unsharp_params.amount<0) ) )
-				status = STATUS_CALLING_ERROR;
 			break;
 
 		case RUN_WITH_LAST_VALS:
@@ -806,6 +809,8 @@ static gint unsharp_mask_dialog()
 
 }
 
+
+/* This doesn't work yet. */
 #ifdef PREVIEW
 /* 'preview_init()' - Initialize the preview window... */
 

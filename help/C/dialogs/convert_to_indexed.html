@@ -1,31 +1,140 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for convert_to_indexed</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">convert_to_indexed help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/convert_to_indexed.html)<p>
-        Sorry but the help file for convert_to_indexed is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>Indexed Mode</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">Indexed
+      Mode</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"><P>
+      <P>
+      This mode enables you to convert your RGB or Grayscale Image to an Indexed
+      image. An Indexed image is a image which only can have the colors specified
+      in it's color palette present in the image file. The maximum number of colors
+      in a Index image is 256. If you want to make e.g transparent GIF images then
+      you can only have a maximum of 255 colors since the last color (i.e color
+      number 256) will be used to determine if the pixel is opaque or transparent.
+      <H4>
+	Palette Options
+      </H4>
+      <DL>
+	<DD>
+	<DT>
+	  <EM>Generate optimal palette:</EM>
+	<DD>
+	  This is most of the time the best options to create a indexed image with.
+	  Gimp will evaluate your colors and create a color palette suitable for the
+	  image. You can specify the amount of colors that you want to have in your
+	  index image but remember that you can't have more than 255 colors if are
+	  about to create a index image with transparency.
+	<DT>
+	  <EM>Use custom palette:</EM>
+	<DD>
+	  If you want to use a predefined palette you have to use this option. You
+	  have to choose your palette from the drop down menu, by default it's Web
+	  palette. The Web palette is the palette used by e.g Netscape. This will help
+	  you create web safe index images images (There is some debate if you should
+	  index against the Web palette or not. Please see The Gimp User's Manual page
+	  XXXX for further information).
+	  <DL>
+	    <DT>
+	      <EM>Custom Palette Options:</EM>
+	    <DD>
+	      Remove unused colo(u)rs from final palette: If palette contains colors that
+	      aren't used in the Index image you can remove those colors and make the image
+	      file size smaller. This is a good option so keep it enabled.
+	  </DL>
+	<DT>
+	  <EM>Use black/white (1-bit) palette:</EM>
+	<DD>
+	  This option will create a "grayscale" image only built up of either black
+	  or white pixels.
+      </DL>
+      <H4>
+	Dithering
+      </H4>
+      <P>
+      An Index image can only be built up of a maximum of 256 colors. Most of the
+      time this is quite limited and you will not be able to have all the colors
+      in your image represented in this limited color space. The image will look
+      like it is built up of "bands" or "color areas". To make Index images look
+      better you can dither them. This means that you will mix two or several colors
+      to mimic the missing color. The disadvantage is that the image can look like
+      it's built up of "dots".
+      <P>
+      <DL>
+	<DT>
+	  <EM>No colo(u)r dithering:</EM>
+	<DD>
+	  Will disable dithering totally
+	<DT>
+	  <EM>Positioned colo(u)r dithering:</EM>
+	<DD>
+	  This is a option to use when you are dealing with animations (e.g gif
+	  animations). The problem with dithering with e.g Floyd Steinberg dithering
+	  in animations is that the dithering will not be constant. If you instead
+	  use positioned dithering the dithering in constant areas will remain constant
+	  across your frames. It is not as good as Floyd Steinberg dithering but is
+	  better than no dithering at all.
+	<DT>
+	  <EM>Floyd Steinberg dithering colo(u)r dithering (reduced colo(u)r
+	  bleeding)</EM>
+	<DD>
+	  When you use normal Floyd Steinberg dithering you will experience that the
+	  colors will bleed to much . This is very visible when you index gradients,
+	  the effect is that the gradient will look unnatural. If you encounter this
+	  effect it's advisable to use this option (i.e Floyd Steinberg dithering reduced
+	  colour bleeding).
+	<DT>
+	  <EM>Floyd Steinberg dithering (normal):</EM>
+	<DD>
+	  This is the best option to use when you are indexing images. It's only in
+	  special cases that you will use the other dithering methods available.
+	<DT>
+	<DD>
+	<DT>
+	  <EM>Enable dithering of transparency:</EM>
+	<DD>
+	  Index images only have one transparency mode either it is off (the pixel
+	  is totally solid) or on (the pixel is totally transparent). This makes it
+	  very difficult to index images with smooth transitions from opaque to
+	  transparent. When you enable dithering of transparency Gimp will try to mimic
+	  the smooth transition by dithering pixels on and off. Note: A good alternative
+	  to transparency dithering is the
+	  <CODE><A HREF="../filters/semiflatten.html">right-click|Filters|Colors|Semi-Flatten</A></CODE>
+	  function.
+      </DL>
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/convert_to_indexed.html)
+      <P>
+      Sorry but the help file for convert_to_indexed is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>

@@ -1,31 +1,92 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for environment</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">environment help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/preferences/environment.html)<p>
-        Sorry but the help file for environment is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>Preferences / Environment</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">Environment</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"><P>
+      <P>
+      <DL>
+	<DT>
+	  Conservative Memory Usage
+	<DD>
+	  Gimp is optimized to speed i.e speed is more important than memory usage.
+	  Enabling Conservative Memory Usage will "optimize" Gimp to use less memory.
+	  The tradeoff is of course speed but if your system is low on memory then
+	  it can be an option to use Conservative Memory Usage.
+	<DT>
+	  Tile Cache Size:
+	<DD>
+	  This is the most important parameter that Gimp has, if you set it to low
+	  Gimp will be very slow. There isn't a upper level of how much memory that
+	  you can give Gimp i.e give Gimp as much as you can. But don't give Gimp more
+	  that your physical memory (i.e pure memory without swap). In reality you
+	  have to measure how much memory you usually use and give Gimp a little less
+	  than the rest of it.
+	<DT>
+	  Maximum Image Size:
+	<DD>
+	  Gimp will warn you if you try to create images bigger than this value.
+	<DT>
+	<DD>
+	<DT>
+	  Install Colormap:
+	<DD>
+	  Not used since we use GdkRgb now
+	<DT>
+	  Colormap Cycling:
+	<DD>
+	  Still TODO
+	<DT>
+	<DD>
+	<DT>
+	  Try to Write a Thumbnail File:
+	<DD>
+	  By default when you save a image a thumbnail file will be created storing
+	  a little image of your image. When you mark a image in the file open dialog
+	  you will see this thumbnail. If you set this option to Never you have to
+	  press on the thumbnail button in the file open dialog to be able to see a
+	  thumbnail of your image.
+	<DT>
+	  "File &gt; Save" saves the image:
+	<DD>
+	  This is by default set to Always but if you e.g saves your image on a networked
+	  disk (nfs, smb etc.) then saves some times are slow and saving always isn't
+	  that necessary. Instead you will only save when the file is really changed.
+	<DD>
+      </DL>
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/preferences/environment.html)
+      <P>
+      Sorry but the help file for environment is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>

@@ -1,31 +1,213 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for interface</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">interface help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/preferences/interface.html)<p>
-        Sorry but the help file for interface is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>Preferences / Interface</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">Interface</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"><H4>
+      </H4>
+      <H3>
+	Interface Settings
+      </H3>
+      <DL>
+	<DT>
+	<DD>
+	<DT>
+	  Preview Size:
+	<DD>
+	  Set the size of the preview thumbnails present in e.g the Layers &amp; Channels
+	  dialog. NOTE: That setting the size to None will disable the preview function.
+	<DT>
+	  Nav Preview Size:
+	<DD>
+	  Will affect the size of the
+	  <A HREF="../navigation_window.html">navigation</A> window present from the
+	  bottom right corner of the image widow or as right-click|View|Nav Window
+	<DT>
+	  Levels of Undo:
+	<DD>
+	  By default Gimp has five levels of undo. The amount of undo levels is only
+	  limited by disk space. A high amount of undo levels requires a large amount
+	  of disk space so use it with care. The default value is reasonably good for
+	  most use.
+	<DT>
+	  Resent Document List Size:
+	<DD>
+	  Will set the amount of previously opened or saved documents that you can
+	  direct access in the Toolbox|File menu.
+	<DT>
+	  Nav window per display:
+	<DD>
+	  If you check enable this feature the Navigation will behave like the Layers
+	  &amp; Channels dialog with Auto enabled. I.e it will switch as you switch
+	  image.
+	<DT>
+	<DD>
+	<DT>
+	  Show Tool Tips:
+	<DD>
+	  Lets you enable or disable tool tips in Gimp.
+	<DT>
+	  Context Sensitive Help with "F1"
+	<DD>
+	  Lets you enable or disable the &lt;ModKey&gt;-F1 way of enabling context
+	  sensitive help. It can sometimes interfere with the window manager. You can
+	  still access the context help in the Toolbox|Help menu.
+      </DL>
+      <H3>
+	Image Windows Settings
+      </H3>
+      <P>
+      <DL>
+	<DT>
+	  Resize Window on Zoom:
+	<DD>
+	  Lets you enable (disable) window resize on zoom. Normally when you zoom the
+	  window size will not be affected. If you enable this function the size of
+	  the window will be fitted to the size of the image when you zoom in our out.
+	  I.e zoom in will enlarge the window and zoom out will shrink the window.
+	<DT>
+	  Show Rulers:
+	<DD>
+	  Controls what ever you want to show the rulers or not by default.
+	<DT>
+	  Show Statusbar:
+	<DD>
+	  Controls what ever you want to show the statusbar or not by default.
+	<DT>
+	  Marching Ants Speed
+	<DD>
+	  When you make a selection in Gimp you will the will be a "blinking" boundary
+	  of the selection. This "blinking" boundary is refered as marching ants. This
+	  options controls how fast the ants will march.
+	<DT>
+	  Image Title Format
+	<DD>
+	  Lets you set the window title of the image window. The default custom value
+	  is reasonably sane but you are able to choose form Standard, Show zoom
+	  percentage, Show zoom ratio, Show reversed zoom ratio and Custom. To build
+	  a custom image title can you use some macros along with ordinary characters.
+	<DT>
+	<DD>
+	  <TABLE CELLPADDING="2">
+	    <CAPTION>
+	      Title Format
+	    </CAPTION>
+	    <TR>
+	      <TD>%%</TD>
+	      <TD>literal percent sign</TD>
+	    </TR>
+	    <TR>
+	      <TD>%f</TD>
+	      <TD>bare filename, or "Untitled"</TD>
+	    </TR>
+	    <TR>
+	      <TD>%F</TD>
+	      <TD>full path to file</TD>
+	    </TR>
+	    <TR>
+	      <TD>%p</TD>
+	      <TD>PDB image id</TD>
+	    </TR>
+	    <TR>
+	      <TD>%i</TD>
+	      <TD>view instance number</TD>
+	    </TR>
+	    <TR>
+	      <TD>%t</TD>
+	      <TD>image type (RGB, indexed, grayscale)</TD>
+	    </TR>
+	    <TR>
+	      <TD>%z</TD>
+	      <TD>zoom factor as a percentage</TD>
+	    </TR>
+	    <TR>
+	      <TD>%s</TD>
+	      <TD>source scale factor</TD>
+	    </TR>
+	    <TR>
+	      <TD>%d</TD>
+	      <TD>destination scale factor</TD>
+	    </TR>
+	    <TR>
+	      <TD>%D*</TD>
+	      <TD>expands to * if the image is dirty</TD>
+	    </TR>
+	  </TABLE>
+	<DT>
+	<DD>
+	<DT>
+	  Perfect-but-slow Pointer Tracking:
+	<DD>
+	  When you are drawing in Gimp, Gimp will not catch your pointer every moment.
+	  Instead Gimp catch it a certain time interval. This means if you draw a circle
+	  very fast Gimp will not draw a circle but lines between each pointer grab.
+	  However if you turn on Perfect...Tracking Gimp will record every single movement
+	  and make a perfect circe even if you draw it very fast. You will however
+	  not be able to draw in real time instead that drawing will "played" with
+	  a time delay since you "recorded" every movement. (Well this is not exactly
+	  what's happens but it makes it easier to explain it this way).
+	<DT>
+	  Disable Cursor Updating
+	<DD>
+	  Normally when you paint with e.g the airbrush you will have a little pencil
+	  as cursor. If you disable cursor updating the cursor will always be a little
+	  pencil even if you shift tool. I.e the cursor will always be the same shape
+	  as the last tool you used before you disabled updating.
+	<DT>
+      </DL>
+      <H3>
+	Tool Options Settings<A href="index.html"></A>
+      </H3>
+      <P>
+      <DL>
+	<DT>
+	  Use Global Paint Options
+	<DD>
+	  Normally when you paint in Gimp you set the opacity and paint mode in the
+	  brush dialog. If you disable Use Global Paint Options you will have the
+	  opportunity to set both Opacity and paintmode separately for each tool (the
+	  tool option dialog will change and you will have new controls for opacity
+	  and paint mode).
+	<DT>
+	  Display brush and pattern indicators on Toolbar
+	<DD>
+	  In the toolbox you have a area displaying the currently active brush, pattern
+	  and gradient. If you don't want the area to be present in the toolbox you
+	  can disable it here.
+      </DL>
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/preferences/interface.html)
+      <P>
+      Sorry but the help file for interface is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>

@@ -1,3 +1,120 @@
+Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
+
+	Fix of KDE/Kwm  selection add/sub/inter problem  
+	NOTE: This is a workaround, not a real fix. 
+	Many Thanks to Matthias Ettrich 
+
+	* app/disp_callbacks.c
+
+	Updated unsharp-mask to version 0.10
+
+	* plug-ins/unsharp/dialog_f.c
+	* plug-ins/unsharp/dialog_f.h
+	* plug-ins/unsharp/dialog_i.c
+	* plug-ins/unsharp/dialog_i.h
+	* plug-ins/unsharp/unsharp.c
+
+	Updated print plug-in to version 3.0.1
+
+	* plug-ins/print/README (new file)
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-ps.c
+	* plug-ins/print/print-util.c
+	* plug-ins/print/print.c
+	* plug-ins/print/print.h
+
+	Updated all files in the help/C/dialogs dir. This is
+	a first alpha glimpse of the help system. Please give 
+	me feedback of the content. However since it's in alpha
+	stage it means that there is spell, grammatical, etc errors. 
+	There is may also be pure errors which I hope "you" will
+	report to either olof@gimp.org or karin@gimp.org. Please 
+	don't report spell, grammatical, etc error at this stage in dev.
+
+	If you have any plans to commit to the help system please write
+	to olof@gimp.org. (This is mandatory not a please ;-).
+
+	* help/C/welcome.html
+	* help/C/dialogs/about.html
+	* help/C/dialogs/border_selection.html
+	* help/C/dialogs/brush_editor.html
+	* help/C/dialogs/brush_selection.html
+	* help/C/dialogs/convert_to_indexed.html
+	* help/C/dialogs/copy_named.html
+	* help/C/dialogs/cut_named.html
+	* help/C/dialogs/device_status.html
+	* help/C/dialogs/document_index.html
+	* help/C/dialogs/edit_qmask_attributes.html
+	* help/C/dialogs/error_console.html
+	* help/C/dialogs/feather_selection.html
+	* help/C/dialogs/file_new.html
+	* help/C/dialogs/file_open.html
+	* help/C/dialogs/file_save.html
+	* help/C/dialogs/gradient_selection.html
+	* help/C/dialogs/grow_selection.html
+	* help/C/dialogs/help.html
+	* help/C/dialogs/indexed_palette.html
+	* help/C/dialogs/info_window.html
+	* help/C/dialogs/input_devices.html
+	* help/C/dialogs/layers_and_channels.html
+	* help/C/dialogs/module_browser.html
+	* help/C/dialogs/navigation_window.html
+	* help/C/dialogs/offset.html
+	* help/C/dialogs/palette_selection.html
+	* help/C/dialogs/paste_named.html
+	* help/C/dialogs/pattern_selection.html
+	* help/C/dialogs/really_close.html
+	* help/C/dialogs/really_quit.html
+	* help/C/dialogs/resize_image.html
+	* help/C/dialogs/scale_image.html
+	* help/C/dialogs/shrink_selection.html
+	* help/C/dialogs/tip_of_the_day.html
+	* help/C/dialogs/tool_options.html
+	* help/C/dialogs/undo_history.html
+	* help/C/dialogs/channels/channels.html
+	* help/C/dialogs/channels/edit_channel_attributes.html
+	* help/C/dialogs/channels/new_channel.html
+	* help/C/dialogs/color_selectors/built_in.html
+	* help/C/dialogs/color_selectors/gtk.html
+	* help/C/dialogs/color_selectors/triangle.html
+	* help/C/dialogs/color_selectors/watercolor.html
+	* help/C/dialogs/display_filters/display_filters.html
+	* help/C/dialogs/display_filters/gamma.html
+	* help/C/dialogs/gradient_editor/copy_gradient.html
+	* help/C/dialogs/gradient_editor/delete_gradient.html
+	* help/C/dialogs/gradient_editor/gradient_editor.html
+	* help/C/dialogs/gradient_editor/new_gradient.html
+	* help/C/dialogs/gradient_editor/rename_gradient.html
+	* help/C/dialogs/gradient_editor/replicate_segment.html
+	* help/C/dialogs/gradient_editor/save_as_pov_ray.html
+	* help/C/dialogs/gradient_editor/split_segments_uniformly.html
+	* help/C/dialogs/layers/add_mask.html
+	* help/C/dialogs/layers/apply_mask.html
+	* help/C/dialogs/layers/edit_layer_attributes.html
+	* help/C/dialogs/layers/layers.html
+	* help/C/dialogs/layers/merge_visible_layers.html
+	* help/C/dialogs/layers/new_layer.html
+	* help/C/dialogs/layers/resize_layer.html
+	* help/C/dialogs/layers/scale_layer.html
+	* help/C/dialogs/palette_editor/import_palette.html
+	* help/C/dialogs/palette_editor/merge_palette.html
+	* help/C/dialogs/palette_editor/new_palette.html
+	* help/C/dialogs/palette_editor/palette_editor.html˜
+	* help/C/dialogs/paths/export_path.html
+	* help/C/dialogs/paths/import_path.html
+	* help/C/dialogs/paths/paths.html
+	* help/C/dialogs/paths/rename_path.html
+	* help/C/dialogs/preferences/directories.html
+	* help/C/dialogs/preferences/display.html
+	* help/C/dialogs/preferences/environment.html
+	* help/C/dialogs/preferences/interface.html
+	* help/C/dialogs/preferences/monitor.html
+	* help/C/dialogs/preferences/new_file.html
+	* help/C/dialogs/preferences/preferences.html
+	* help/C/dialogs/preferences/session.html
+
+  
 Wed Dec 15 00:10:54 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/channel_ops.c

@@ -1,31 +1,105 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
+<HTML>
+<HEAD>
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for palette_editor</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">palette_editor help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/dialogs/palette_editor/palette_editor.html)<p>
-        Sorry but the help file for palette_editor is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+  <TITLE>Palette Editor</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
+<TABLE width="100%" cellspacing="1" cellpadding="1">
+  <TR bgcolor="black">
+    <TD width="100%" align="center"><FONT size="+2" color="white">Palette
+      Editor</FONT></TD>
+  </TR>
+  <TR bgcolor="white" >
+    <TD width="100%" align="left"><P>
+      <P>
+      In the palette editor you can edit palettes, create new palettes, import
+      palettes, merge and delete palettes. You also have a option to refresh palettes.
+      You have to use this option to make palettes installed after you started
+      Gimp available and ready for use.
+      <P>
+      <DL>
+	<DT>
+	  Edit Palette:
+	<DD>
+	  Either you can choose the palette to edit in the palette select dialog or
+	  you activate it in the palette editor with a single left clicking on it.
+	  The palette that you are about to edit will now appear in the edit area.
+	  If the palette has a large amount of colors then each color cell in the palette
+	  can be rather small. To be able to view and edit the palette you can therefore
+	  zoom in and out with the zoom buttons.<BR>
+	  <BR>
+	  To change the name of a color cell you first mark it by left clicking on
+	  it. The Name field next to the zoom buttons will be activated and you can
+	  change the name.<BR>
+	  <BR>
+	  The edit menu will appear if you right click in the edit frame. Choose to
+	  edit and the standard Gimp Color selector will appear and you will be able
+	  to change to color in the color cell that you right-clicked in. New will
+	  add a color at the end of the palette. The new color cell will inherit the
+	  color of the cell that you brought up the menu in. To alter the newly created
+	  cell you have to right-click in it and choose edit. Delete in the right click
+	  pop up menu will delete the color cell from which you brought up the menu
+	  in (you will not get a confirmation window).<BR>
+	<DT>
+	  New Palette
+	<DD>
+	  Will create a new empty palette in the edit frame, a confirmation window
+	  with where you <A HREF="new_palette.html">name</A> the new palette will appear.
+	  When you have created your new palette, you have to insert color cells. You
+	  do that by right-clicking anywhere in the edit area and choose new from the
+	  popup menu.<BR>
+	<DT>
+	  Delete Palette
+	<DD>
+	  Will delete your palette. NOTE: It will delete the palette without the presence
+	  of confirmation dialog. Remember it's a UNIX program from the beginning i.e
+	  you are supposed to know what you are doing.<BR>
+	<DT>
+	  Import Palette
+	<DD>
+	  Will bring up the <A HREF="import_palette.html">Import</A> dialog where you
+	  can create a new platte from a gradient, image or indexed palette.
+	<DT>
+	<DT>
+	  Merge Palette
+	<DD>
+	  You are able to merge palettes in the editor, the new palette is a combination
+	  of the selected palettes. To merge two or several palettes you have to mark
+	  the palettes that you want to merge and click on Merge which will bring up
+	  the <A HREF="merge_palette.html">Name</A> dialog. There are two ways to mark
+	  palettes either you &lt;Modkey&gt; click, you will then mark a single palette
+	  each time (or unmark). You can also &lt;Modkey&gt; click which will mark
+	  all palettes from the first marked to the last marked palette.
+      </DL>
+      <H3>
+	Additional Information
+      </H3>
+      <P>
+      For further information see The Gimp User's Manual page XXXX and the Gimp
+      User's Tutorial page YYYY
+      <P>
+      Shortcut Key
+      <P>
+      Modifier
+      <P>
+      Drag and Drop
+      <P>
+      Xinput
+      <P>
+      ----DEV----
+      <P>
+      HMM WHY is there a SAVE when palettes are saved asap you edit them.
+      <P>
+      <A href="index.html">Index</A>
+      <P>
+      (/dialogs/palette_editor/palette_editor.html)
+      <P>
+      Sorry but the help file for palette_editor is not yet done.
+      <P>
+      /Karin &amp; Olof
+      <P>
+    </TD>
+  </TR>
+</TABLE>
+</BODY></HTML>
