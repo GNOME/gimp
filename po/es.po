@@ -1,6 +1,7 @@
 # translation of es.po to 
 # translation of es.po to
 # translation of es.po to
+# translation of es.po to
 # traducción de es.po al Spanish
 # translation of es.po to Spanish
 # Spanish translation file for Gimp 2.x.
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-22 22:02+0100\n"
-"PO-Revision-Date: 2004-11-22 22:10+0100\n"
+"PO-Revision-Date: 2004-11-22 23:47+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10174,7 +10175,7 @@ msgstr "Cerrar esta solapa"
 #: app/widgets/gimperrorconsole.c:235 app/widgets/gimperrordialog.c:252
 #, c-format
 msgid "%s Message"
-msgstr "%s mensaje"
+msgstr "Mensaje de %s"
 
 #: app/widgets/gimperrordialog.c:229
 msgid "Too many error messages!"
