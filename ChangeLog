@@ -1,3 +1,7 @@
+2002-05-28  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: cleaned up, nicer output.
+
 2002-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.c (gimp_config_serialize): fixed error code
