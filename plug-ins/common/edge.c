@@ -326,7 +326,7 @@ edge (GimpDrawable *drawable)
 		      /* make convolution */
 		      sum1 = (PIX(2,0) - PIX(0,0)) +
 			 2 * (PIX(2,1) - PIX(0,1)) +
-			     (PIX(2,2) - PIX(2,0));
+			     (PIX(2,2) - PIX(0,2));
 		      sum2 = (PIX(0,2) - PIX(0,0)) +
 			 2 * (PIX(1,2) - PIX(1,0)) +
 			     (PIX(2,2) - PIX(2,0));

@@ -1,3 +1,9 @@
+2003-03-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/edge.c (edge): fixed a typo in the kernel for
+	sobel vertical edge detection spotted by Sunil Mohan Adapa (bug
+	#107441).
+
 2003-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderer.[ch]: removed the constructors
