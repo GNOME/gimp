@@ -39,6 +39,7 @@
 #include "gimpconfig-params.h"
 #include "gimpconfig-substitute.h"
 #include "gimpconfig-types.h"
+#include "gimpscanner.h"
 
 #include "libgimp/gimpintl.h"
 
