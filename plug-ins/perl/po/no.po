@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.21\n"
-"POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
-"PO-Revision-Date: 2000-05-23 11:57+02:00\n"
+"POT-Creation-Date: Tue Jan  2 13:48:44 2001\n"
+"PO-Revision-Date: 2001-01-02 13:49+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1170,9 +1170,8 @@ msgid "unable to accept unix connection: $!\n"
 msgstr "kunne ikke akseptere unix forbindelse: $!\n"
 
 #: Gimp/Lib.xs:0
-#, fuzzy
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "kunne ikke konvertere Gimp::Drawable til Gimp::GDrawable (id %d)"
+msgstr "kunne ikke konvertere Gimp::Drawable til Gimp::GimpDrawable (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
