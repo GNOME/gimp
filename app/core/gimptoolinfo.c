@@ -60,7 +60,7 @@ static gchar * gimp_tool_info_get_description (GimpViewable      *viewable,
                                                gchar            **tooltip);
 
 
-static GimpDataClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
 
 GType
@@ -83,7 +83,7 @@ gimp_tool_info_get_type (void)
         (GInstanceInitFunc) gimp_tool_info_init,
       };
 
-      tool_info_type = g_type_register_static (GIMP_TYPE_DATA,
+      tool_info_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
                                                "GimpToolInfo",
                                                &tool_info_info, 0);
     }

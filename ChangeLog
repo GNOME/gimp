@@ -1,5 +1,14 @@
 2004-05-24  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptoolinfo.[ch]: derive GimpToolInfo from
+	GimpViewable, it doesn't make sense for it to be a GimpData.
+
+	* app/widgets/gimptooloptionseditor.c
+	(gimp_tool_options_editor_get_title): do not append " Options" to
+	the tool name. Fixes bug #142280.
+
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mblur.c: fixed range check of blur type
 	parameter (bug #142965).
 

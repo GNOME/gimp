@@ -281,7 +281,7 @@ gimp_tool_options_editor_get_title (GimpDocked *docked)
 
   tool_info = gimp_context_get_tool (context);
 
-  return g_strdup_printf (_("%s Options"), tool_info->blurb);
+  return g_strdup (tool_info->blurb);
 }
 
 

@@ -35,7 +35,7 @@ typedef struct _GimpToolInfoClass GimpToolInfoClass;
 
 struct _GimpToolInfo
 {
-  GimpData             parent_instance;
+  GimpViewable         parent_instance;
 
   Gimp                *gimp;
 
@@ -61,7 +61,7 @@ struct _GimpToolInfo
 
 struct _GimpToolInfoClass
 {
-  GimpDataClass  parent_class;
+  GimpViewableClass    parent_class;
 };
 
 
