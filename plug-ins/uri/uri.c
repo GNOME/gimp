@@ -38,6 +38,7 @@
 
 
 #define TIMEOUT "300"
+#define BUFSIZE 1024
 
 static void   query (void);
 static void   run   (gchar      *name,
@@ -210,8 +211,7 @@ load_image (gchar             *filename,
       else
 	{
 	  FILE     *input;
-	  gint      bufsize = strlen (filename) + 1024;
-	  gchar     buf[bufsize + 1];
+	  gchar     buf[BUFSIZE];
 	  gboolean  connected = FALSE;
 	  gboolean  file_found = FALSE;
 	  gchar     sizestr[32];
@@ -232,7 +232,7 @@ load_image (gchar             *filename,
 
 	  /*  hardcoded and not-really-foolproof scanning of wget putput  */
 
-	  if (fgets (buf, bufsize, input) == NULL)
+	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      /*  no message here because failing on the first line means
 	       *  that wget was not found
@@ -245,7 +245,7 @@ load_image (gchar             *filename,
 	  DEBUG (buf);
 
 	  /*  The second line is the local copy of the file  */
-	  if (fgets (buf, bufsize, input) == NULL)
+	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
@@ -259,7 +259,7 @@ load_image (gchar             *filename,
 	  gimp_progress_init ("Connecting to server... "
 			      "(timeout is "TIMEOUT" seconds)");
 
-	  if (fgets (buf, bufsize, input) == NULL)
+	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
@@ -277,7 +277,7 @@ load_image (gchar             *filename,
 	  gimp_progress_init ("Opening URL... "
 			      "(timeout is "TIMEOUT" seconds)");
 
-	  if (fgets (buf, bufsize, input) == NULL)
+	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
@@ -298,7 +298,7 @@ load_image (gchar             *filename,
 	  DEBUG (buf);
 
 	  /*  The fifth line is either the length of the file or an error  */
-	  if (fgets (buf, bufsize, input) == NULL)
+	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
@@ -373,7 +373,7 @@ load_image (gchar             *filename,
 		}
 	      else if (dot == ':')  /* the time string contains a ':' */
 		{
-		  fgets (buf, bufsize, input);
+		  fgets (buf, BUFSIZE, input);
 
 		  DEBUG (buf);
 
