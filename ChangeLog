@@ -1,5 +1,12 @@
 2002-05-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimppaletteeditor.c: return FALSE from button press
+	event callbacks so the color drag handlers work again. Cleaned up
+	the palette editor a bit.
+
+2002-05-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint-core/paint-core.c (combine_sub_region): this is
 	getting silly: this time (maybe) really fix #83418 and #26072: of
 	course the local buffer needs to take the sizes of all three

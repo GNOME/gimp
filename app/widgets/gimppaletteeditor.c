@@ -173,7 +173,6 @@ static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GtkWidget *scrolledwindow;
-  GtkWidget *palette_region;
   GtkWidget *eventbox;
   GtkWidget *alignment;
   GtkWidget *hbox;
@@ -207,25 +206,26 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (eventbox), alignment);
   gtk_widget_show (alignment);
 
-  editor->color_area = palette_region = gtk_preview_new (GTK_PREVIEW_COLOR);
+  editor->color_area = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (editor->color_area), GDK_RGB_DITHER_MAX);
-  gtk_preview_size (GTK_PREVIEW (palette_region), PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (editor->color_area),
+                    PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
-  gtk_widget_set_events (palette_region, PALETTE_EVENT_MASK);
-  gtk_container_add (GTK_CONTAINER (alignment), palette_region);
-  gtk_widget_show (palette_region);
+  gtk_widget_set_events (editor->color_area, PALETTE_EVENT_MASK);
+  gtk_container_add (GTK_CONTAINER (alignment), editor->color_area);
+  gtk_widget_show (editor->color_area);
 
   g_signal_connect (G_OBJECT (editor->color_area), "event",
 		    G_CALLBACK (palette_editor_color_area_events),
 		    editor);
 
   /*  dnd stuff  */
-  gtk_drag_source_set (palette_region,
+  gtk_drag_source_set (editor->color_area,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_palette_target_table,
                        G_N_ELEMENTS (color_palette_target_table),
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (palette_region,
+  gimp_dnd_color_source_set (editor->color_area,
                              palette_editor_drag_color,
 			     editor);
 
@@ -496,7 +496,7 @@ palette_editor_color_area_events (GtkWidget         *widget,
     {
     case GDK_EXPOSE:
       palette_editor_redraw (editor);
-      return FALSE;
+      break;
 
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
@@ -561,26 +561,6 @@ palette_editor_color_area_events (GtkWidget         *widget,
 
 	      gtk_widget_set_sensitive (editor->color_name, TRUE);
 	      /* palette_update_current_entry (editor); */
-
-	      if (bevent->button == 3)
-		{
-                  GimpItemFactory *factory;
-
-                  factory = gimp_item_factory_from_path ("<PaletteEditor>");
-
-                  gimp_item_factory_popup_with_data (factory, editor, NULL);
-		}
-	    }
-	  else
-	    {
-	      if (bevent->button == 3)
-		{
-                  GimpItemFactory *factory;
-
-                  factory = gimp_item_factory_from_path ("<PaletteEditor>");
-
-                  gimp_item_factory_popup_with_data (factory, editor, NULL);
-		}
 	    }
 	}
       break;
@@ -589,7 +569,7 @@ palette_editor_color_area_events (GtkWidget         *widget,
       break;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 /*  functions for drawing & updating the palette dialog color area  **********/

@@ -727,13 +727,13 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
         gimp_colormap_editor_set_index (editor, col);
         gimp_item_factory_popup_with_data (factory, editor, NULL);
       }
-      break;
+      return TRUE;
 
     default:
       break;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 static void
