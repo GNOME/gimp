@@ -207,6 +207,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->gdisp                 = NULL;
   shell->item_factory          = NULL;
 
+  shell->scale                 = 0;
+  shell->dot_for_dot           = gimprc.default_dot_for_dot;
+
   shell->offset_x              = 0;
   shell->offset_y              = 0;
 
@@ -395,7 +398,8 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 }
 
 GtkWidget *
-gimp_display_shell_new (GimpDisplay *gdisp)
+gimp_display_shell_new (GimpDisplay *gdisp,
+                        guint        scale)
 {
   GimpDisplayShell *shell;
   GtkWidget        *main_vbox;
@@ -414,6 +418,12 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
+  /*  the toplevel shell */
+  shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
+
+  shell->gdisp = gdisp;
+  shell->scale = scale;
+
   image_width  = gdisp->gimage->width;
   image_height = gdisp->gimage->height;
 
@@ -424,11 +434,11 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   s_width  = gdk_screen_width () * 0.75;
   s_height = gdk_screen_height () * 0.75;
 
-  scalesrc  = SCALESRC (gdisp);
-  scaledest = SCALEDEST (gdisp);
+  scalesrc  = SCALESRC (shell);
+  scaledest = SCALEDEST (shell);
 
-  n_width  = SCALEX (gdisp, image_width);
-  n_height = SCALEX (gdisp, image_height);
+  n_width  = SCALEX (shell, image_width);
+  n_height = SCALEX (shell, image_height);
 
   /*  Limit to the size of the screen...  */
   while (n_width > s_width || n_height > s_height)
@@ -440,17 +450,13 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 	  scalesrc++;
 
       n_width  = image_width * 
-	(scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
+	(scaledest * SCREEN_XRES (shell)) / (scalesrc * gdisp->gimage->xresolution);
       n_height = image_height *
-	(scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
+	(scaledest * SCREEN_XRES (shell)) / (scalesrc * gdisp->gimage->xresolution);
     }
 
-  gdisp->scale = (scaledest << 8) + scalesrc;
+  shell->scale = (scaledest << 8) + scalesrc;
 
-  /*  the toplevel shell */
-  shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
-
-  shell->gdisp        = gdisp;
   shell->item_factory = gimp_item_factory_from_path ("<Image>");
 
   /*  The accelerator table for images  */
@@ -697,7 +703,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  create the contents of the status area *********************************/
 
   /*  the statusbar  */
-  shell->statusbar = gimp_statusbar_new (gdisp);
+  shell->statusbar = gimp_statusbar_new (shell);
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
   gimp_help_set_help_data (shell->statusbar, NULL, "#status_area");
 
@@ -774,9 +780,9 @@ gimp_display_shell_close (GimpDisplayShell *shell,
    *  it before nuking it--this only applies if its the last view
    *  to an image canvas.  (a gimage with disp_count = 1)
    */
-  if (! kill_it &&
-      (gimage->disp_count == 1) &&
-      gimage->dirty &&
+  if (! kill_it               &&
+      gimage->disp_count == 1 &&
+      gimage->dirty           &&
       gimprc.confirm_on_close)
     {
       gchar *basename;
@@ -834,8 +840,10 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
   g_return_if_fail (image_coords != NULL);
   g_return_if_fail (display_coords != NULL);
 
-  scalex = SCALEFACTOR_X (shell->gdisp);
-  scaley = SCALEFACTOR_Y (shell->gdisp);
+  *display_coords = *image_coords;
+
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
 
   display_coords->x = scalex * image_coords->x;
   display_coords->y = scaley * image_coords->y;
@@ -856,14 +864,153 @@ gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
   g_return_if_fail (display_coords != NULL);
   g_return_if_fail (image_coords != NULL);
 
-  scalex = SCALEFACTOR_X (shell->gdisp);
-  scaley = SCALEFACTOR_Y (shell->gdisp);
+  *image_coords = *display_coords;
+
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
 
   image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
   image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
 
   image_coords->x /= scalex;
   image_coords->y /= scaley;
+}
+
+void
+gimp_display_shell_transform_xy (GimpDisplayShell *shell,
+                                 gint              x,
+                                 gint              y,
+                                 gint             *nx,
+                                 gint             *ny,
+                                 gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx != NULL);
+  g_return_if_fail (ny != NULL);
+
+  /*  transform from image coordinates to screen coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
+                           &offset_x, &offset_y);
+
+  *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
+  *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
+
+  *nx += shell->disp_xoffset;
+  *ny += shell->disp_yoffset;
+}
+
+void
+gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
+                                   gint              x,
+                                   gint              y,
+                                   gint             *nx,
+                                   gint             *ny,
+                                   gboolean          round,
+                                   gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx != NULL);
+  g_return_if_fail (ny != NULL);
+
+  x -= shell->disp_xoffset;
+  y -= shell->disp_yoffset;
+
+  /*  transform from screen coordinates to image coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
+                           &offset_x, &offset_y);
+
+  if (round)
+    {
+      *nx = ROUND ((x + shell->offset_x) / scalex - offset_x);
+      *ny = ROUND ((y + shell->offset_y) / scaley - offset_y);
+    }
+  else
+    {
+      *nx = (gint) ((x + shell->offset_x) / scalex - offset_x);
+      *ny = (gint) ((y + shell->offset_y) / scaley - offset_y);
+    }
+}
+
+void
+gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
+                                    gdouble           x,
+                                    gdouble           y,
+                                    gdouble          *nx,
+                                    gdouble          *ny,
+                                    gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx != NULL);
+  g_return_if_fail (ny != NULL);
+
+  /*  transform from gimp coordinates to screen coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
+                           &offset_x, &offset_y);
+
+  *nx = scalex * (x + offset_x) - shell->offset_x;
+  *ny = scaley * (y + offset_y) - shell->offset_y;
+
+  *nx += shell->disp_xoffset;
+  *ny += shell->disp_yoffset;
+}
+
+void
+gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
+                                     gdouble           x,
+                                     gdouble           y,
+                                     gdouble          *nx,
+                                     gdouble          *ny,
+                                     gboolean          use_offsets)
+{
+  gdouble scalex;
+  gdouble scaley;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (nx != NULL);
+  g_return_if_fail (ny != NULL);
+
+  x -= shell->disp_xoffset;
+  y -= shell->disp_yoffset;
+
+  /*  transform from screen coordinates to gimp coordinates  */
+  scalex = SCALEFACTOR_X (shell);
+  scaley = SCALEFACTOR_Y (shell);
+
+  if (use_offsets)
+    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
+                           &offset_x, &offset_y);
+
+  *nx = (x + shell->offset_x) / scalex - offset_x;
+  *ny = (y + shell->offset_y) / scaley - offset_y;
 }
 
 void
@@ -1024,7 +1171,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   SET_SENSITIVE ("/View/Zoom/1:16", gdisp);
 
   SET_SENSITIVE ("/View/Dot for Dot", gdisp);
-  SET_ACTIVE    ("/View/Dot for Dot", gdisp && gdisp->dot_for_dot);
+  SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
 
   SET_SENSITIVE ("/View/Info Window...",       gdisp);
   SET_SENSITIVE ("/View/Navigation Window...", gdisp);
@@ -1131,10 +1278,10 @@ gimp_display_shell_find_guide (GimpDisplayShell *shell,
     {
       gdouble image_x, image_y;
 
-      gdisplay_untransform_coords_f (shell->gdisp,
-                                     x, y,
-                                     &image_x, &image_y,
-                                     TRUE);
+      gimp_display_shell_untransform_xy_f (shell,
+                                           x, y,
+                                           &image_x, &image_y,
+                                           TRUE);
 
       return gimp_image_find_guide (shell->gdisp->gimage,
                                     (gint) image_x,
@@ -1167,10 +1314,10 @@ gimp_display_shell_snap_point (GimpDisplayShell *shell,
       gdouble  image_x, image_y;
       gint     image_tx, image_ty;
 
-      gdisplay_untransform_coords_f (shell->gdisp,
-                                     x, y,
-                                     &image_x, &image_y,
-                                     TRUE);
+      gimp_display_shell_untransform_xy_f (shell,
+                                           x, y,
+                                           &image_x, &image_y,
+                                           TRUE);
 
       snapped = gimp_image_snap_point (shell->gdisp->gimage,
                                        (gint) image_x,
@@ -1180,10 +1327,11 @@ gimp_display_shell_snap_point (GimpDisplayShell *shell,
 
       if (snapped)
         {
-          gdisplay_transform_coords_f (shell->gdisp,
-                                       (gdouble) image_tx, (gdouble) image_ty,
-                                       tx, ty,
-                                       FALSE);
+          gimp_display_shell_transform_xy_f (shell,
+                                             (gdouble) image_tx,
+                                             (gdouble) image_ty,
+                                             tx, ty,
+                                             FALSE);
         }
     }
 
@@ -1237,7 +1385,7 @@ gimp_display_shell_mask_value (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
   /*  move the coordinates from screen space to image space  */
-  gdisplay_untransform_coords (shell->gdisp, x, y, &x, &y, FALSE, FALSE);
+  gimp_display_shell_untransform_xy (shell, x, y, &x, &y, FALSE, FALSE);
 
   return gimp_image_mask_value (shell->gdisp->gimage, x, y);
 }
@@ -1286,8 +1434,8 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       return FALSE;
     }
 
-  gdisplay_transform_coords (shell->gdisp, *x1, *y1, x1, y1, 0);
-  gdisplay_transform_coords (shell->gdisp, *x2, *y2, x2, y2, 0);
+  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1, 0);
+  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2, 0);
 
   /*  Make sure the extents are within bounds  */
   *x1 = CLAMP (*x1, 0, shell->disp_width);
@@ -1331,11 +1479,11 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
   if (guide->position < 0)
     return;
 
-  gdisplay_transform_coords (shell->gdisp,
-                             guide->position,
-			     guide->position,
-                             &x, &y,
-                             FALSE);
+  gimp_display_shell_transform_xy (shell,
+                                   guide->position,
+                                   guide->position,
+                                   &x, &y,
+                                   FALSE);
 
   switch (guide->orientation)
     {
@@ -1525,7 +1673,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   if (x > 0 && y > 0)
     {
-      gdisplay_untransform_coords (shell->gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
+      gimp_display_shell_untransform_xy (shell, x, y, &t_x, &t_y, FALSE, FALSE);
     }
 
   gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar), t_x, t_y);
@@ -1651,7 +1799,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
                                                       (gchar *) stipple, 8, 1);
         normal_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL       |
+                                             GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
 
         gdk_gc_set_rgb_fg_color (normal_hgc, &fg);
@@ -1661,7 +1809,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
                                                       (gchar *) stipple, 1, 8);
         normal_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL       |
+                                             GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
 
         gdk_gc_set_rgb_fg_color (normal_vgc, &fg);
@@ -1681,7 +1829,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
                                                       (gchar *) stipple, 8, 1);
         active_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL       |
+                                             GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
 
         gdk_gc_set_rgb_fg_color (active_hgc, &fg);
@@ -1691,7 +1839,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
                                                       (gchar *) stipple, 1, 8);
         active_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL       |
+                                             GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
 
         gdk_gc_set_rgb_fg_color (active_vgc, &fg);
@@ -1699,11 +1847,11 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
       }
     }
 
-  gdisplay_transform_coords (shell->gdisp, 0, 0, &x1, &y1, FALSE);
-  gdisplay_transform_coords (shell->gdisp,
-			     shell->gdisp->gimage->width,
-                             shell->gdisp->gimage->height,
-			     &x2, &y2, FALSE);
+  gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
+  gimp_display_shell_transform_xy (shell,
+                                   shell->gdisp->gimage->width,
+                                   shell->gdisp->gimage->height,
+                                   &x2, &y2, FALSE);
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
 
   if (x1 < 0) x1 = 0;
@@ -1713,8 +1861,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
   if (guide->orientation == ORIENTATION_HORIZONTAL)
     {
-      gdisplay_transform_coords (shell->gdisp,
-                                 0, guide->position, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       0, guide->position, &x, &y, FALSE);
 
       if (active)
 	gdk_draw_line (shell->canvas->window, active_hgc, x1, y, x2, y);
@@ -1723,8 +1871,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
     }
   else if (guide->orientation == ORIENTATION_VERTICAL)
     {
-      gdisplay_transform_coords (shell->gdisp,
-                                 guide->position, 0, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       guide->position, 0, &x, &y, FALSE);
 
       if (active)
 	gdk_draw_line (shell->canvas->window, active_vgc, x, y1, x, y2);
@@ -1772,8 +1920,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   s_width  = gdk_screen_width ();
   s_height = gdk_screen_height ();
 
-  width  = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
-  height = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
+  width  = SCALEX (shell, shell->gdisp->gimage->width);
+  height = SCALEY (shell, shell->gdisp->gimage->height);
 
   disp_width  = shell->disp_width;
   disp_height = shell->disp_height;
@@ -1938,8 +2086,8 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   gint    dx, dy;
   gint    i, j;
 
-  sx = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
-  sy = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
+  sx = SCALEX (shell, shell->gdisp->gimage->width);
+  sy = SCALEY (shell, shell->gdisp->gimage->height);
 
   /*  Bounds check  */
   x1 = CLAMP (x,     0, shell->disp_width);
@@ -2221,16 +2369,16 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 's': /* user source zoom factor */
-	      i += print (title, title_len, i, "%d", SCALESRC (shell->gdisp));
+	      i += print (title, title_len, i, "%d", SCALESRC (shell));
 	      break;
 
 	    case 'd': /* user destination zoom factor */
-	      i += print (title, title_len, i, "%d", SCALEDEST (shell->gdisp));
+	      i += print (title, title_len, i, "%d", SCALEDEST (shell));
 	      break;
 
 	    case 'z': /* user zoom factor (percentage) */
 	      i += print (title, title_len, i, "%d",
-                          100 * SCALEDEST (shell->gdisp) / SCALESRC (shell->gdisp));
+                          100 * SCALEDEST (shell) / SCALESRC (shell));
 	      break;
 
 	    case 'D': /* dirty flag */

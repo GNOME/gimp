@@ -40,17 +40,17 @@ typedef struct _GimpStatusbarClass GimpStatusbarClass;
 
 struct _GimpStatusbar
 {
-  GtkStatusbar  parent_instance;
+  GtkStatusbar      parent_instance;
 
-  GimpDisplay  *gdisp;
+  GimpDisplayShell *shell;
 
-  GtkWidget    *cursor_frame;
-  GtkWidget    *cursor_label;
-  gchar         cursor_format_str[CURSOR_FORMAT_LENGTH];
+  GtkWidget        *cursor_frame;
+  GtkWidget        *cursor_label;
+  gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
 
-  GtkWidget    *progressbar;
-  guint         progressid;
-  GtkWidget    *cancelbutton;
+  GtkWidget        *progressbar;
+  guint             progressid;
+  GtkWidget        *cancelbutton;
 };
 
 struct _GimpStatusbarClass
@@ -61,24 +61,24 @@ struct _GimpStatusbarClass
 
 GType       gimp_statusbar_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_statusbar_new           (GimpDisplay   *gdisp);
+GtkWidget * gimp_statusbar_new           (GimpDisplayShell *shell);
 
-void        gimp_statusbar_push          (GimpStatusbar *statusbar,
-                                          const gchar   *context_id,
-                                          const gchar   *message);
-void        gimp_statusbar_push_coords   (GimpStatusbar *statusbar,
-                                          const gchar   *context_id,
-                                          const gchar   *title,
-                                          gdouble        x,
-                                          const gchar   *separator,
-                                          gdouble        y);
-void        gimp_statusbar_pop           (GimpStatusbar *statusbar,
-                                          const gchar   *context_id);
+void        gimp_statusbar_push          (GimpStatusbar    *statusbar,
+                                          const gchar      *context_id,
+                                          const gchar      *message);
+void        gimp_statusbar_push_coords   (GimpStatusbar    *statusbar,
+                                          const gchar      *context_id,
+                                          const gchar      *title,
+                                          gdouble           x,
+                                          const gchar      *separator,
+                                          gdouble           y);
+void        gimp_statusbar_pop           (GimpStatusbar    *statusbar,
+                                          const gchar      *context_id);
 
-void	    gimp_statusbar_update_cursor (GimpStatusbar *shell,
-                                          gdouble        x,
-                                          gdouble        y);
-void        gimp_statusbar_resize_cursor (GimpStatusbar *shell);
+void	    gimp_statusbar_update_cursor (GimpStatusbar    *statusbar,
+                                          gdouble           x,
+                                          gdouble           y);
+void        gimp_statusbar_resize_cursor (GimpStatusbar    *statusbar);
 
 
 G_END_DECLS

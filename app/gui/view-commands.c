@@ -288,7 +288,8 @@ view_new_view_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage, gdisp->scale);
+  gimp_create_display (gdisp->gimage->gimp, gdisp->gimage,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->scale);
 }
 
 void

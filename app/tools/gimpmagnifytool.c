@@ -266,8 +266,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       /* these change the user zoom level, so should not be changed to
        * the resolution-aware scale macros -- austin
        */
-      scalesrc  = SCALESRC (gdisp);
-      scaledest = SCALEDEST (gdisp);
+      scalesrc  = SCALESRC (shell);
+      scaledest = SCALEDEST (shell);
 
       win_width  = shell->disp_width;
       win_height = shell->disp_height;
@@ -275,8 +275,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       height = (win_height * scalesrc) / scaledest;
 
       /* we need to compute the mouse movement in screen coordinates */
-      if ( (SCALEX (gdisp, w) < options->threshold) || 
-           (SCALEY (gdisp, h) < options->threshold) )
+      if ( (SCALEX (shell, w) < options->threshold) || 
+           (SCALEY (shell, h) < options->threshold) )
 	scale = 1;
       else
 	scale = MIN ((width / w), (height / h));

@@ -288,8 +288,8 @@ init_edit_selection (GimpTool    *tool,
                                  RINT (edit_select->origx),
                                  RINT (edit_select->origy));
 
-  GIMP_TOOL (edit_select)->gdisp = gdisp;
   gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);
+  GIMP_TOOL (edit_select)->gdisp = gdisp;
 
   g_object_ref (G_OBJECT (edit_select));
 
@@ -564,26 +564,28 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
 			  GdkSegment            *dest_segs,
 			  gint                   num_segs)
 {
-  GimpDisplay *gdisp;
-  gint         x, y;
-  gint         i;
+  GimpDisplayShell *shell;
+  gint              x, y;
+  gint              i;
 
-  gdisp = GIMP_TOOL (edit_select)->gdisp;
+  shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (edit_select)->gdisp->shell);
 
   for (i = 0; i < num_segs; i++)
     {
-      gdisplay_transform_coords (gdisp, 
-				 src_segs[i].x1 + edit_select->cumlx, 
-				 src_segs[i].y1 + edit_select->cumly,
-				 &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       src_segs[i].x1 + edit_select->cumlx, 
+                                       src_segs[i].y1 + edit_select->cumly,
+                                       &x, &y,
+                                       FALSE);
 
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (gdisp,
-				 src_segs[i].x2 + edit_select->cumlx, 
-				 src_segs[i].y2 + edit_select->cumly,
-				 &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       src_segs[i].x2 + edit_select->cumlx, 
+                                       src_segs[i].y2 + edit_select->cumly,
+                                       &x, &y,
+                                       FALSE);
 
       dest_segs[i].x2 = x;
       dest_segs[i].y2 = y;

@@ -43,6 +43,7 @@
 #include "pdb/procedural_db.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gui/paths-dialog.h"
 
@@ -374,6 +375,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 				      GimpDisplay     *gdisp)
 {
   GimpBezierSelectTool  *bezier_sel;
+  GimpDisplayShell      *shell;
   GimpBezierSelectPoint *points;
   GimpBezierSelectPoint *start_pt;
   GimpBezierSelectPoint *curve_start;
@@ -382,6 +384,8 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
   gint                   halfwidth, halfheight;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   grab_pointer = FALSE;
 
@@ -395,8 +399,8 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
     }
 
   /* get halfwidth in image coord */
-  halfwidth  = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
-  halfheight = UNSCALEY (gdisp, BEZIER_HALFWIDTH);
+  halfwidth  = UNSCALEX (shell, BEZIER_HALFWIDTH);
+  halfheight = UNSCALEY (shell, BEZIER_HALFWIDTH);
 
   curTool  = tool_manager_get_active (gdisp->gimage->gimp);
   curSel   = bezier_sel;
@@ -1793,11 +1797,14 @@ gimp_bezier_select_tool_cursor_update (GimpTool        *tool,
 {
   GimpBezierSelectTool *bezier_sel;
   GimpDrawTool         *draw_tool;
+  GimpDisplayShell     *shell;
   GimpToolCursorType    tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
   GimpCursorModifier    cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (gdisp == tool->gdisp &&
       draw_tool->draw_state != GIMP_DRAW_TOOL_STATE_INVISIBLE)
@@ -1807,8 +1814,8 @@ gimp_bezier_select_tool_cursor_update (GimpTool        *tool,
       gboolean in_selection_area;
       gint     halfwidth, halfheight;
 
-      halfwidth  = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
-      halfheight = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
+      halfwidth  = UNSCALEX (shell, BEZIER_HALFWIDTH);
+      halfheight = UNSCALEX (shell, BEZIER_HALFWIDTH);
 
       on_control_pnt = bezier_on_control_point (gdisp, bezier_sel,
                                                 coords->x, coords->y,
@@ -1973,8 +1980,10 @@ bezier_draw (GimpDisplay          *gdisp,
 
   while (points && num_points)
     {
-      gdisplay_transform_coords (gdisp, points->x, points->y,
-				 &points->sx, &points->sy, 0);
+      gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                       points->x, points->y,
+                                       &points->sx, &points->sy,
+                                       FALSE);
 
       if (points->next_curve)
 	points = points->next_curve;

@@ -426,18 +426,21 @@ gimp_measure_tool_motion (GimpTool        *tool,
                           GdkModifierType  state,
                           GimpDisplay     *gdisp)
 {
-  GimpMeasureTool *measure_tool;
-  MeasureOptions  *options;
-  gint             ax, ay;
-  gint             bx, by;
-  gint             dx, dy;
-  gint             i;
-  gint             tmp;
-  gdouble          angle;
-  gdouble          distance;
-  gchar            status_str[STATUSBAR_SIZE];
+  GimpMeasureTool  *measure_tool;
+  GimpDisplayShell *shell;
+  MeasureOptions   *options;
+  gint              ax, ay;
+  gint              bx, by;
+  gint              dx, dy;
+  gint              i;
+  gint              tmp;
+  gdouble           angle;
+  gdouble           distance;
+  gchar             status_str[STATUSBAR_SIZE];
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   options = (MeasureOptions *) tool->tool_info->tool_options;
 
@@ -556,7 +559,7 @@ gimp_measure_tool_motion (GimpTool        *tool,
 	  by = 0;
 	}
 
-      if (gdisp->dot_for_dot)
+      if (shell->dot_for_dot)
 	{
 	  distance = sqrt (SQR (ax - bx) + SQR (ay - by));
 	
@@ -779,11 +782,14 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
 	  if (measure_tool->num_points == 2)
             {
-              gdouble target;
-              gdouble arc_radius;
+              GimpDisplayShell *shell;
+              gdouble           target;
+              gdouble           arc_radius;
 
-              target     = FUNSCALEX (tool->gdisp, (TARGET >> 1));
-              arc_radius = FUNSCALEX (tool->gdisp, ARC_RADIUS);
+              shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
+              target     = FUNSCALEX (shell, (TARGET >> 1));
+              arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
               gimp_draw_tool_draw_line
                 (draw_tool,

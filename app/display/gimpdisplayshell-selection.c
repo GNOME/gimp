@@ -628,18 +628,18 @@ selection_transform_segs (Selection  *select,
 
   for (i = 0; i < num_segs; i++)
     {
-      gdisplay_transform_coords (select->shell->gdisp,
-                                 src_segs[i].x1, src_segs[i].y1,
-				 &x, &y,
-                                 FALSE);
+      gimp_display_shell_transform_xy (select->shell,
+                                       src_segs[i].x1, src_segs[i].y1,
+                                       &x, &y,
+                                       FALSE);
 
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (select->shell->gdisp,
-                                 src_segs[i].x2, src_segs[i].y2,
-				 &x, &y,
-                                 FALSE);
+      gimp_display_shell_transform_xy (select->shell,
+                                       src_segs[i].x2, src_segs[i].y2,
+                                       &x, &y,
+                                       FALSE);
 
       dest_segs[i].x2 = x;
       dest_segs[i].y2 = y;

@@ -418,8 +418,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                 &state);
   time = gdk_event_get_time (event);
 
-  image_coords = display_coords;
-
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
   gimp_display_shell_untransform_coords (shell,
                                          &display_coords,
@@ -810,6 +808,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             compressed_motion = gimp_display_shell_compress_motion (shell);
             break;
           }
+
         if (compressed_motion)
           {
             g_print ("gimp_display_shell_compress_motion() returned an event\n");
@@ -821,8 +820,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                           gimp_devices_get_current (gimage->gimp),
                                           &state);
             time = gdk_event_get_time (event);
-
-            image_coords = display_coords;
 
             /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
             gimp_display_shell_untransform_coords (shell,

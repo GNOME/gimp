@@ -775,10 +775,10 @@ render_image_init_info (RenderInfo       *info,
   info->y          = y + shell->offset_y;
   info->w          = w;
   info->h          = h;
-  info->scalex     = SCALEFACTOR_X (shell->gdisp);
-  info->scaley     = SCALEFACTOR_Y (shell->gdisp);
-  info->src_x      = UNSCALEX (shell->gdisp, info->x);
-  info->src_y      = UNSCALEY (shell->gdisp, info->y);
+  info->scalex     = SCALEFACTOR_X (shell);
+  info->scaley     = SCALEFACTOR_Y (shell);
+  info->src_x      = UNSCALEX (shell, info->x);
+  info->src_y      = UNSCALEY (shell, info->y);
   info->src_bpp    = gimp_image_projection_bytes (shell->gdisp->gimage);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;

@@ -44,6 +44,10 @@ struct _GimpFuzzySelectTool
   gdouble      first_threshold;  /*  initial value of threshold slider       */
 
   GimpChannel *fuzzy_mask;
+
+  /*  Segments which make up the fuzzy selection boundary  */
+  GdkSegment  *segs;
+  gint         num_segs;
 };
 
 struct _GimpFuzzySelectToolClass

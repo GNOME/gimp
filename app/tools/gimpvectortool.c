@@ -43,7 +43,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
 
 #include "gimpvectortool.h"
 #include "selection_options.h"
@@ -238,17 +237,14 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpVectorTool   *vector_tool;
-  VectorOptions    *options;
-  GimpDisplayShell *shell;
-  GimpAnchor       *anchor = NULL;
-  GimpStroke       *stroke = NULL;
+  GimpVectorTool *vector_tool;
+  VectorOptions  *options;
+  GimpAnchor     *anchor = NULL;
+  GimpStroke     *stroke = NULL;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
   options = (VectorOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)

@@ -1,3 +1,47 @@
+2002-06-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.[ch]: removed gdisp->scale,
+	gdisp->dot_for_dot, the scaling marcos and the
+	gdisplay_[un]transform[_f]() functions.
+
+	* app/display/gimpdisplayshell.[ch]: added them here. Named the
+	transform functions gimp_display_shell_[un]transform_xy[_f]().
+
+	Made the gimp_display_shell_[un]transform_coords() functions copy
+	all values of the GimpCoords struct, not just x and y.
+
+	* app/display/gimpstatusbar.[ch]: keep a pointer to
+	GimpDisplayShell, not GimpDisplay.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpnavigationview.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/select-commands.c
+	* app/gui/view-commands.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpvectortool.c: changed accordingly.
+
+	* app/gui/layers-commands.c: if(gimage->selection_mask) is always
+	TRUE, use if(!gimp_image_mask_is_empty(gimage)) instead.
+
+	* app/tools/gimpfuzzyselecttool.[ch]: moved global variables
+	to the object struct.
+
 2002-06-25  Simon Budig  <simon@gimp.org>
 
 	* docs/Wilber.svg: Fixed the SVG so that the Adobe Plugin

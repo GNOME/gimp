@@ -594,14 +594,17 @@ info_window_free (InfoDialog *info_win)
 void
 info_window_update (GimpDisplay *gdisp)
 {
-  InfoWinData *iwd;
-  gint         type;
-  gdouble      unit_factor;
-  gint         unit_digits;
-  gchar        format_buf[32];
-  InfoDialog  *info_win;
+  GimpDisplayShell *shell;
+  InfoWinData      *iwd;
+  gint              type;
+  gdouble           unit_factor;
+  gint              unit_digits;
+  gchar             format_buf[32];
+  InfoDialog       *info_win;
 
-  info_win = GIMP_DISPLAY_SHELL (gdisp->shell)->info_dialog;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  info_win = shell->info_dialog;
 
   if (! info_win && info_window_auto != NULL)
     info_win = info_window_auto;
@@ -646,7 +649,7 @@ info_window_update (GimpDisplay *gdisp)
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
-	      SCALEDEST (gdisp), SCALESRC (gdisp));
+	      SCALEDEST (shell), SCALESRC (shell));
 
   type = gimp_image_base_type (gdisp->gimage);
 

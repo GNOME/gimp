@@ -37,6 +37,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gui/info-dialog.h"
 
@@ -228,7 +229,8 @@ gimp_scale_tool_transform (GimpTransformTool *transform_tool,
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
 				gdisp->gimage->unit);
-      if (gdisp->dot_for_dot)
+
+      if (GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot)
 	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,

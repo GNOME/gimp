@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
 #include "gimpstatusbar.h"
 
 #include "libgimp/gimpintl.h"
@@ -102,7 +103,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   gtk_widget_hide (gtk_statusbar->frame);
 
-  statusbar->gdisp                 = NULL;
+  statusbar->shell                 = NULL;
   statusbar->cursor_format_str[0]  = '\0';
   statusbar->progressid            = 0;
 
@@ -151,15 +152,15 @@ gimp_statusbar_update (GtkStatusbar *gtk_statusbar,
 }
 
 GtkWidget * 
-gimp_statusbar_new (GimpDisplay *gdisp)
+gimp_statusbar_new (GimpDisplayShell *shell)
 {
   GimpStatusbar *statusbar;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   statusbar = g_object_new (GIMP_TYPE_STATUSBAR, NULL);
 
-  statusbar->gdisp = gdisp;
+  statusbar->shell = shell;
 
   return GTK_WIDGET (statusbar);
 }
@@ -193,7 +194,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
 
-  if (statusbar->gdisp->dot_for_dot)
+  if (statusbar->shell->dot_for_dot)
     {
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
@@ -205,13 +206,13 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     {
       gdouble unit_factor;
 
-      unit_factor = gimp_unit_get_factor (statusbar->gdisp->gimage->unit);
+      unit_factor = gimp_unit_get_factor (statusbar->shell->gdisp->gimage->unit);
 
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
-		  x * unit_factor / statusbar->gdisp->gimage->xresolution,
+		  x * unit_factor / statusbar->shell->gdisp->gimage->xresolution,
 		  separator,
-		  y * unit_factor / statusbar->gdisp->gimage->yresolution);
+		  y * unit_factor / statusbar->shell->gdisp->gimage->yresolution);
     }
 
   gimp_statusbar_push (statusbar, context_id, buf);
@@ -236,16 +237,16 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
                               gdouble        x,
                               gdouble        y)
 {
-  GimpDisplay *gdisp;
+  GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  gdisp = statusbar->gdisp;
+  shell = statusbar->shell;
 
   if (x < 0 ||
       y < 0 ||
-      x >= gdisp->gimage->width ||
-      y >= gdisp->gimage->height)
+      x >= shell->gdisp->gimage->width ||
+      y >= shell->gdisp->gimage->height)
     {
       gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
     } 
@@ -253,7 +254,7 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
     {
       gchar buffer[CURSOR_STR_LENGTH];
 
-      if (gdisp->dot_for_dot)
+      if (shell->dot_for_dot)
 	{
 	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
                       "",
@@ -265,13 +266,13 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
 	{
 	  gdouble unit_factor;
 
-          unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+          unit_factor = gimp_unit_get_factor (shell->gdisp->gimage->unit);
   
 	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
                       "",
-                      x * unit_factor / gdisp->gimage->xresolution,
+                      x * unit_factor / shell->gdisp->gimage->xresolution,
                       ", ",
-                      y * unit_factor / gdisp->gimage->yresolution);
+                      y * unit_factor / shell->gdisp->gimage->yresolution);
 	}
 
       gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
@@ -283,44 +284,47 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
 {
   static PangoLayout *layout = NULL;
 
-  GimpDisplay *gdisp;
-  gchar        buffer[CURSOR_STR_LENGTH];
-  gint         cursor_label_width;
-  gint         label_frame_size_difference;
+  GimpDisplayShell *shell;
+  gchar             buffer[CURSOR_STR_LENGTH];
+  gint              cursor_label_width;
+  gint              label_frame_size_difference;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
-  gdisp = statusbar->gdisp;
+  shell = statusbar->shell;
 
-  if (gdisp->dot_for_dot)
+  if (shell->dot_for_dot)
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
 		  "%%s%%d%%s%%d");
 
       g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
-		  "", gdisp->gimage->width, ", ", gdisp->gimage->height);
+		  "",   shell->gdisp->gimage->width,
+                  ", ", shell->gdisp->gimage->height);
     }
   else /* show real world units */
     {
-      gdouble unit_factor;
+      GimpUnit unit;
+      gdouble  unit_factor;
 
-      unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      unit        = shell->gdisp->gimage->unit;
+      unit_factor = gimp_unit_get_factor (unit);
 
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
 		  "%%s%%.%df%%s%%.%df %s",
-		  gimp_unit_get_digits (gdisp->gimage->unit),
-		  gimp_unit_get_digits (gdisp->gimage->unit),
-		  gimp_unit_get_symbol (gdisp->gimage->unit));
+		  gimp_unit_get_digits (unit),
+		  gimp_unit_get_digits (unit),
+		  gimp_unit_get_symbol (unit));
 
       g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
 		  "",
-		  (gdouble) gdisp->gimage->width * unit_factor /
-		  gdisp->gimage->xresolution,
+		  (gdouble) shell->gdisp->gimage->width * unit_factor /
+		  shell->gdisp->gimage->xresolution,
 		  ", ",
-		  (gdouble) gdisp->gimage->height * unit_factor /
-		  gdisp->gimage->yresolution);
+		  (gdouble) shell->gdisp->gimage->height * unit_factor /
+		  shell->gdisp->gimage->yresolution);
     }
 
   /* one static layout for all displays should be fine */

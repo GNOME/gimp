@@ -557,7 +557,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	  dy = core->cur_coords.y - core->last_coords.y;
 
 	  /*  show distance in statusbar  */
-	  if (gdisp->dot_for_dot)
+	  if (shell->dot_for_dot)
 	    {
 	      dist = sqrt (SQR (dx) + SQR (dy));
 

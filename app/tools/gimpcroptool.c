@@ -858,14 +858,14 @@ static void
 crop_recalc (GimpTool     *tool,
 	     GimpCropTool *crop)
 {
-  gdisplay_transform_coords (tool->gdisp,
-                             crop->x1, crop->y1,
-			     &crop->dx1, &crop->dy1,
-                             FALSE);
-  gdisplay_transform_coords (tool->gdisp,
-                             crop->x2, crop->y2,
-			     &crop->dx2, &crop->dy2,
-                             FALSE);
+  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+                                   crop->x1, crop->y1,
+                                   &crop->dx1, &crop->dy1,
+                                   FALSE);
+  gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+                                   crop->x2, crop->y2,
+                                   &crop->dx2, &crop->dy2,
+                                   FALSE);
 
 #define SRW 10
 #define SRH 10
@@ -917,12 +917,16 @@ crop_start (GimpTool     *tool,
 
   if (old_gdisp != tool->gdisp)
     {
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (origin_sizeentry),
 				tool->gdisp->gimage->unit) ;
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_sizeentry),
 				tool->gdisp->gimage->unit);
 
-      if (tool->gdisp->dot_for_dot)
+      if (shell->dot_for_dot)
 	{
 	  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (origin_sizeentry),
 				    GIMP_UNIT_PIXEL);
@@ -954,12 +958,14 @@ crop_start (GimpTool     *tool,
 static void
 crop_info_create (GimpTool *tool)
 {
-  GimpDisplay *gdisp;
-  GtkWidget   *spinbutton;
-  GtkWidget   *bbox;
-  GtkWidget   *button;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  GtkWidget        *spinbutton;
+  GtkWidget        *bbox;
+  GtkWidget        *button;
 
-  gdisp = (GimpDisplay *) tool->gdisp;
+  gdisp = tool->gdisp;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  create the info dialog  */
   crop_info = info_dialog_new (_("Crop & Resize Information"),
@@ -984,7 +990,7 @@ crop_info_create (GimpTool *tool)
 					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
   origin_sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Y:"), orig_vals, 1,
-			       gdisp->dot_for_dot ? 
+			       shell->dot_for_dot ? 
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       G_CALLBACK (crop_origin_changed),
@@ -1001,7 +1007,7 @@ crop_info_create (GimpTool *tool)
 					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
   size_sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Height:"), size_vals, 1,
-			       gdisp->dot_for_dot ? 
+			       shell->dot_for_dot ? 
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       G_CALLBACK (crop_size_changed),

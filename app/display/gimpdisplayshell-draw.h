@@ -27,6 +27,36 @@
 #include "gui/gui-types.h"
 
 
+/*  some useful macros  */
+
+/* unpacking the user scale level (char) */
+#define  SCALESRC(s)      (s->scale & 0x00ff)
+#define  SCALEDEST(s)     (s->scale >> 8)
+
+/* finding the effective screen resolution (double) */
+#define  SCREEN_XRES(s)   (s->dot_for_dot ? \
+                           s->gdisp->gimage->xresolution : gimprc.monitor_xres)
+#define  SCREEN_YRES(s)   (s->dot_for_dot ? \
+                           s->gdisp->gimage->yresolution : gimprc.monitor_yres)
+
+/* calculate scale factors (double) */
+#define  SCALEFACTOR_X(s) ((SCALEDEST(s) * SCREEN_XRES(s)) / \
+			   (SCALESRC(s) * s->gdisp->gimage->xresolution))
+#define  SCALEFACTOR_Y(s) ((SCALEDEST(s) * SCREEN_YRES(s)) / \
+			   (SCALESRC(s) * s->gdisp->gimage->yresolution))
+
+/* scale values */
+#define  SCALEX(s,x)      ((gint) (x * SCALEFACTOR_X(s)))
+#define  SCALEY(s,y)      ((gint) (y * SCALEFACTOR_Y(s)))
+
+/* unscale values */
+#define  UNSCALEX(s,x)    ((gint) (x / SCALEFACTOR_X(s)))
+#define  UNSCALEY(s,y)    ((gint) (y / SCALEFACTOR_Y(s)))
+/* (and float-returning versions) */
+#define  FUNSCALEX(s,x)   (x / SCALEFACTOR_X(s))
+#define  FUNSCALEY(s,y)   (y / SCALEFACTOR_Y(s))
+
+
 #define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
 #define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))
 #define GIMP_DISPLAY_SHELL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
@@ -44,6 +74,9 @@ struct _GimpDisplayShell
   GimpDisplay      *gdisp;
 
   GimpItemFactory  *item_factory;
+
+  gint              scale;             /*  scale factor from original raw image    */
+  gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
 
   gint              offset_x;          /*  offset of display image into raw image  */
   gint              offset_y;
@@ -120,7 +153,8 @@ struct _GimpDisplayShellClass
 
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp);
+GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
+                                                      guint             scale);
 
 void        gimp_display_shell_close                 (GimpDisplayShell *shell,
                                                       gboolean          kill_it);
@@ -136,6 +170,33 @@ void        gimp_display_shell_transform_coords      (GimpDisplayShell *shell,
 void        gimp_display_shell_untransform_coords    (GimpDisplayShell *shell,
                                                       GimpCoords       *display_coords,
                                                       GimpCoords       *image_coords);
+
+void        gimp_display_shell_transform_xy          (GimpDisplayShell *shell,
+                                                      gint              x,
+                                                      gint              y,
+                                                      gint             *nx,
+                                                      gint             *ny,
+                                                      gboolean          use_offsets);
+void        gimp_display_shell_untransform_xy        (GimpDisplayShell *shell,
+                                                      gint              x,
+                                                      gint              y,
+                                                      gint             *nx,
+                                                      gint             *ny,
+                                                      gboolean          round,
+                                                      gboolean          use_offsets);
+
+void        gimp_display_shell_transform_xy_f        (GimpDisplayShell *shell,
+                                                      gdouble           x,
+                                                      gdouble           y,
+                                                      gdouble          *nx,
+                                                      gdouble          *ny,
+                                                      gboolean          use_offsets);
+void        gimp_display_shell_untransform_xy_f      (GimpDisplayShell *shell,
+                                                      gdouble           x,
+                                                      gdouble           y,
+                                                      gdouble          *nx,
+                                                      gdouble          *ny,
+                                                      gboolean          use_offsets);
 
 void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
                                                       Gimp             *gimp);

@@ -142,8 +142,6 @@ gimp_display_init (GimpDisplay *gdisp)
 
   gdisp->shell                    = NULL;
 
-  gdisp->scale                    = 0;
-  gdisp->dot_for_dot              = gimprc.default_dot_for_dot;
   gdisp->draw_guides              = TRUE;
   gdisp->snap_to_guides           = TRUE;
 
@@ -224,11 +222,8 @@ gimp_display_new (GimpImage *gimage,
   /*  refs the image  */
   gimp_display_connect (gdisp, gimage);
 
-  /*  FIXME: this needs to go to GimpDisplayShell  */
-  gdisp->scale = scale;
-
   /*  create the shell for the image  */
-  gdisp->shell = gimp_display_shell_new (gdisp);
+  gdisp->shell = gimp_display_shell_new (gdisp, scale);
 
   gtk_widget_show (gdisp->shell);
 
@@ -394,192 +389,20 @@ gimp_display_finish_draw (GimpDisplay *gdisp)
 }
 
 
-/*  stuff that will go to GimpDisplayShell  */
-
-void
-gdisplay_transform_coords (GimpDisplay *gdisp,
-			   gint         x,
-			   gint         y,
-			   gint        *nx,
-			   gint        *ny,
-			   gboolean     use_offsets)
-{
-  GimpDisplayShell *shell;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              offset_x;
-  gint              offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (gdisp);
-  scaley = SCALEFACTOR_Y (gdisp);
-
-  if (use_offsets)
-    {
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &offset_x, &offset_y);
-    }
-  else
-    {
-      offset_x = offset_y = 0;
-    }
-
-  *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
-  *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
-
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
-}
-
-void
-gdisplay_untransform_coords (GimpDisplay *gdisp,
-			     gint         x,
-			     gint         y,
-			     gint        *nx,
-			     gint        *ny,
-			     gboolean     round,
-			     gboolean     use_offsets)
-{
-  GimpDisplayShell *shell;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              offset_x;
-  gint              offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to image coordinates  */
-  scalex = SCALEFACTOR_X (gdisp);
-  scaley = SCALEFACTOR_Y (gdisp);
-
-  if (use_offsets)
-    {
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &offset_x, &offset_y);
-    }
-  else
-    {
-      offset_x = offset_y = 0;
-    }
-
-  if (round)
-    {
-      *nx = ROUND ((x + shell->offset_x) / scalex - offset_x);
-      *ny = ROUND ((y + shell->offset_y) / scaley - offset_y);
-    }
-  else
-    {
-      *nx = (int) ((x + shell->offset_x) / scalex - offset_x);
-      *ny = (int) ((y + shell->offset_y) / scaley - offset_y);
-    }
-}
-
-void
-gdisplay_transform_coords_f (GimpDisplay *gdisp,
-			     gdouble      x,
-			     gdouble      y,
-			     gdouble     *nx,
-			     gdouble     *ny,
-			     gboolean     use_offsets)
-{
-  GimpDisplayShell *shell;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              offset_x;
-  gint              offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  /*  transform from gimp coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (gdisp);
-  scaley = SCALEFACTOR_Y (gdisp);
-
-  if (use_offsets)
-    {
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &offset_x, &offset_y);
-    }
-  else
-    {
-      offset_x = offset_y = 0;
-    }
-
-  *nx = scalex * (x + offset_x) - shell->offset_x;
-  *ny = scaley * (y + offset_y) - shell->offset_y;
-
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
-}
-
-void
-gdisplay_untransform_coords_f (GimpDisplay *gdisp,
-			       gdouble      x,
-			       gdouble      y,
-			       gdouble     *nx,
-			       gdouble     *ny,
-			       gboolean     use_offsets)
-{
-  GimpDisplayShell *shell;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              offset_x;
-  gint              offset_y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to gimp coordinates  */
-  scalex = SCALEFACTOR_X (gdisp);
-  scaley = SCALEFACTOR_Y (gdisp);
-
-  if (use_offsets)
-    {
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &offset_x, &offset_y);
-    }
-  else
-    {
-      offset_x = offset_y = 0;
-    }
-
-  *nx = (x + shell->offset_x) / scalex - offset_x;
-  *ny = (y + shell->offset_y) / scaley - offset_y;
-}
-
-
 /*  private functions  */
 
 static void
 gimp_display_flush_whenever (GimpDisplay *gdisp, 
                              gboolean     now)
 {
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
    */
-  if (! GIMP_DISPLAY_SHELL (gdisp->shell)->select)
+  if (! shell->select)
     {
       g_warning ("gimp_display_flush_whenever(): called unrealized");
       return;
@@ -620,14 +443,13 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
   gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
 
   /*  Next the displays...  */
-  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
+  gimp_display_shell_flush (shell);
 
   /*  ensure the consistency of the tear-off menus  */
   if (! now && gimp_context_get_display (gimp_get_user_context
                                          (gdisp->gimage->gimp)) == gdisp)
     {
-      gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                               gdisp->gimage->gimp);
+      gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp);
     }
 }
 
@@ -797,20 +619,20 @@ gimp_display_paint_area (GimpDisplay *gdisp,
   h = (y2 - y1);
 
   /*  calculate the extents of the update as limited by what's visible  */
-  gdisplay_untransform_coords (gdisp,
-                               0, 0,
-                               &x1, &y1,
-                               FALSE, FALSE);
-  gdisplay_untransform_coords (gdisp,
-                               shell->disp_width, shell->disp_height,
-			       &x2, &y2,
-                               FALSE, FALSE);
+  gimp_display_shell_untransform_xy (shell,
+                                     0, 0,
+                                     &x1, &y1,
+                                     FALSE, FALSE);
+  gimp_display_shell_untransform_xy (shell,
+                                     shell->disp_width, shell->disp_height,
+                                     &x2, &y2,
+                                     FALSE, FALSE);
 
   gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
 
   /*  display the area  */
-  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
+  gimp_display_shell_transform_xy (shell, x, y, &x1, &y1, FALSE);
+  gimp_display_shell_transform_xy (shell, x + w, y + h, &x2, &y2, FALSE);
 
   gimp_display_shell_add_expose_area (shell,
                                       x1, y1, (x2 - x1), (y2 - y1));

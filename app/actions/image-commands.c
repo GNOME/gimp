@@ -35,6 +35,7 @@
 #include "core/gimpimage-scale.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 #include "display/gimpprogress.h"
 
 #include "convert-dialog.h"
@@ -134,7 +135,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 					    gimage->xresolution,
 					    gimage->yresolution,
 					    gimage->unit,
-					    gdisp->dot_for_dot,
+					    GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 					    G_CALLBACK (image_resize_callback),
 					    NULL,
 					    image_resize);
@@ -171,7 +172,7 @@ image_scale_cmd_callback (GtkWidget *widget,
 					   gimage->xresolution,
 					   gimage->yresolution,
 					   gimage->unit,
-					   gdisp->dot_for_dot,
+					   GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 					   G_CALLBACK (image_scale_callback),
 					   NULL,
 					   image_scale);

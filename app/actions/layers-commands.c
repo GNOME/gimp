@@ -895,7 +895,7 @@ layers_add_mask_query (GimpLayer *layer)
 			   G_CONNECT_SWAPPED);
 
   /*  The radio frame and box  */
-  if (gimage->selection_mask)
+  if (! gimp_image_mask_is_empty (gimage))
     {
       options->add_mask_type = GIMP_ADD_SELECTION_MASK;
 

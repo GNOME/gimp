@@ -23,36 +23,6 @@
 #include "core/gimpobject.h"
 
 
-/*  some useful macros  */
-
-/* unpacking the user scale level (char) */
-#define  SCALESRC(g)      (g->scale & 0x00ff)
-#define  SCALEDEST(g)     (g->scale >> 8)
-
-/* finding the effective screen resolution (double) */
-#define  SCREEN_XRES(g)   (g->dot_for_dot ? \
-                           g->gimage->xresolution : gimprc.monitor_xres)
-#define  SCREEN_YRES(g)   (g->dot_for_dot ? \
-                           g->gimage->yresolution : gimprc.monitor_yres)
-
-/* calculate scale factors (double) */
-#define  SCALEFACTOR_X(g) ((SCALEDEST(g) * SCREEN_XRES(g)) / \
-			   (SCALESRC(g) * g->gimage->xresolution))
-#define  SCALEFACTOR_Y(g) ((SCALEDEST(g) * SCREEN_YRES(g)) / \
-			   (SCALESRC(g) * g->gimage->yresolution))
-
-/* scale values */
-#define  SCALEX(g,x)      ((gint) (x * SCALEFACTOR_X(g)))
-#define  SCALEY(g,y)      ((gint) (y * SCALEFACTOR_Y(g)))
-
-/* unscale values */
-#define  UNSCALEX(g,x)    ((gint) (x / SCALEFACTOR_X(g)))
-#define  UNSCALEY(g,y)    ((gint) (y / SCALEFACTOR_Y(g)))
-/* (and float-returning versions) */
-#define  FUNSCALEX(g,x)   (x / SCALEFACTOR_X(g))
-#define  FUNSCALEY(g,y)   (y / SCALEFACTOR_Y(g))
-
-
 typedef struct _IdleRenderStruct IdleRenderStruct;
 
 struct _IdleRenderStruct
@@ -90,8 +60,6 @@ struct _GimpDisplay
 
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
-  gint        scale;            /*  scale factor from original raw image    */
-  gboolean    dot_for_dot;      /*  is monitor resolution being ignored?    */
   gboolean    draw_guides;      /*  should the guides be drawn?             */
   gboolean    snap_to_guides;   /*  should the guides be snapped to?        */
 
@@ -129,35 +97,6 @@ void          gimp_display_flush                (GimpDisplay *gdisp);
 void          gimp_display_flush_now            (GimpDisplay *gdisp);
 
 void          gimp_display_finish_draw          (GimpDisplay *gdisp);
-
-
-/*  stuff that will go to GimpDisplayShell  */
-
-void          gdisplay_transform_coords         (GimpDisplay          *gdisp,
-                                                 gint                  x,
-                                                 gint                  y,
-                                                 gint                 *nx,
-                                                 gint                 *ny,
-                                                 gboolean              use_offsets);
-void          gdisplay_untransform_coords       (GimpDisplay          *gdisp,
-                                                 gint                  x,
-                                                 gint                  y,
-                                                 gint                 *nx,
-                                                 gint                 *ny,
-                                                 gboolean              round,
-                                                 gboolean              use_offsets);
-void          gdisplay_transform_coords_f       (GimpDisplay          *gdisp,
-                                                 gdouble               x,
-                                                 gdouble               y,
-                                                 gdouble              *nx,
-                                                 gdouble              *ny,
-                                                 gboolean              use_offsets);
-void          gdisplay_untransform_coords_f     (GimpDisplay          *gdisp,
-                                                 gdouble               x,
-                                                 gdouble               y,
-                                                 gdouble              *nx,
-                                                 gdouble              *ny,
-                                                 gboolean              use_offsets);
 
 
 #endif /*  __GIMP_DISPLAY_H__  */

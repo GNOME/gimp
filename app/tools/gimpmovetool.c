@@ -311,12 +311,15 @@ gimp_move_tool_button_release (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpMoveTool *move;
-  gboolean      delete_guide;
-  gint          x1, y1;
-  gint          x2, y2;
+  GimpMoveTool     *move;
+  GimpDisplayShell *shell;
+  gboolean          delete_guide;
+  gint              x1, y1;
+  gint              x2, y2;
 
   move = GIMP_MOVE_TOOL (tool);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 
@@ -329,14 +332,15 @@ gimp_move_tool_button_release (GimpTool        *tool,
       gimp_tool_control_set_scroll_lock (tool->control, FALSE);
 
       delete_guide = FALSE;
-      gdisplay_untransform_coords (gdisp,
-                                   0, 0,
-                                   &x1, &y1,
-                                   FALSE, FALSE);
-      gdisplay_untransform_coords (gdisp,
-                                   shell->disp_width, shell->disp_height,
-				   &x2, &y2,
-                                   FALSE, FALSE);
+
+      gimp_display_shell_untransform_xy (shell,
+                                         0, 0,
+                                         &x1, &y1,
+                                         FALSE, FALSE);
+      gimp_display_shell_untransform_xy (shell,
+                                         shell->disp_width, shell->disp_height,
+                                         &x2, &y2,
+                                         FALSE, FALSE);
 
       if (x1 < 0) x1 = 0;
       if (y1 < 0) y1 = 0;
@@ -411,10 +415,10 @@ gimp_move_tool_motion (GimpTool        *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      gdisplay_transform_coords (gdisp,
-                                 coords->x, coords->y,
-                                 &tx, &ty,
-                                 FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       coords->x, coords->y,
+                                       &tx, &ty,
+                                       FALSE);
 
       if (tx < 0 ||
           ty < 0 ||

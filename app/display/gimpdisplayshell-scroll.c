@@ -161,8 +161,8 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  sx = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
-  sy = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
+  sx = SCALEX (shell, shell->gdisp->gimage->width);
+  sy = SCALEY (shell, shell->gdisp->gimage->height);
 
   shell->offset_x = CLAMP (shell->offset_x, 0,
 			   MAX (sx - shell->disp_width, 0));

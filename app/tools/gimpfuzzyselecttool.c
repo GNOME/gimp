@@ -77,12 +77,8 @@ static void   gimp_fuzzy_select_tool_draw           (GimpDrawTool    *draw_tool)
 
 static GdkSegment * fuzzy_select_calculate     (GimpFuzzySelectTool *fuzzy_sel,
                                                 GimpDisplay         *gdisp,
-                                                gint                *nsegs);
+                                                gint                *num_segs);
 
-
-/*  XSegments which make up the fuzzy selection boundary  */
-static GdkSegment *segs     = NULL;
-static gint        num_segs = 0;
 
 static GimpSelectionToolClass *parent_class = NULL;
 
@@ -161,23 +157,23 @@ gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
 static void
 gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *select_tool;
+  GimpTool *tool;
 
-  tool        = GIMP_TOOL (fuzzy_select);
-  select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
+  tool = GIMP_TOOL (fuzzy_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_FUZZY_SELECT_TOOL_CURSOR);
 
-
-  fuzzy_select->fuzzy_mask      = NULL;
   fuzzy_select->x               = 0;
   fuzzy_select->y               = 0;
   fuzzy_select->first_x         = 0;
   fuzzy_select->first_y         = 0;
   fuzzy_select->first_threshold = 0.0;
+
+  fuzzy_select->fuzzy_mask      = NULL;
+  fuzzy_select->segs            = NULL;
+  fuzzy_select->num_segs        = 0;
 }
 
 static void
@@ -191,6 +187,13 @@ gimp_fuzzy_select_tool_finalize (GObject *object)
     {
       g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
       fuzzy_sel->fuzzy_mask = NULL;
+    }
+
+  if (fuzzy_sel->segs)
+    {
+      g_free (fuzzy_sel->segs);
+      fuzzy_sel->segs     = NULL;
+      fuzzy_sel->num_segs = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -232,7 +235,8 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
     }
 
   /*  calculate the region boundary  */
-  segs = fuzzy_select_calculate (fuzzy_sel, gdisp, &num_segs);
+  fuzzy_sel->segs = fuzzy_select_calculate (fuzzy_sel, gdisp,
+                                            &fuzzy_sel->num_segs);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
@@ -303,10 +307,11 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
     }
 
   /*  If the segment array is allocated, free it  */
-  if (segs)
+  if (fuzzy_sel->segs)
     {
-      g_free (segs);
-      segs = NULL;
+      g_free (fuzzy_sel->segs);
+      fuzzy_sel->segs     = NULL;
+      fuzzy_sel->num_segs = 0;
     }
 }
 
@@ -355,10 +360,11 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  make sure the XSegment array is freed before we assign the new one  */
-  if (segs)
-    g_free (segs);
-  segs = new_segs;
-  num_segs = num_new_segs;
+  if (fuzzy_sel->segs)
+    g_free (fuzzy_sel->segs);
+
+  fuzzy_sel->segs     = new_segs;
+  fuzzy_sel->num_segs = num_new_segs;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -367,9 +373,10 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 static GdkSegment *
 fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 			GimpDisplay         *gdisp,
-			gint                *nsegs)
+			gint                *num_segs)
 {
   GimpTool         *tool;
+  GimpDisplayShell *shell;
   SelectionOptions *sel_options;
   PixelRegion       maskPR;
   GimpChannel      *new;
@@ -381,12 +388,13 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   tool = GIMP_TOOL (fuzzy_sel);
 
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_display_shell_set_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                          GDK_WATCH);
+  gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 
   x = fuzzy_sel->x;
   y = fuzzy_sel->y;
@@ -422,33 +430,33 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 		     gimp_drawable_width (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)), 
 		     gimp_drawable_height (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)), 
 		     FALSE);
-  bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
+  bsegs = find_mask_boundary (&maskPR, num_segs, WithinBounds,
 			      0, 0,
 			      gimp_drawable_width (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
 			      gimp_drawable_height (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)));
 
-  segs = g_new (GdkSegment, *nsegs);
+  segs = g_new (GdkSegment, *num_segs);
 
-  for (i = 0; i < *nsegs; i++)
+  for (i = 0; i < *num_segs; i++)
     {
-      gdisplay_transform_coords (gdisp,
-                                 bsegs[i].x1, bsegs[i].y1,
-                                 &x, &y,
-                                 ! sel_options->sample_merged);
+      gimp_display_shell_transform_xy (shell,
+                                       bsegs[i].x1, bsegs[i].y1,
+                                       &x, &y,
+                                       ! sel_options->sample_merged);
       segs[i].x1 = x;
       segs[i].y1 = y;
 
-      gdisplay_transform_coords (gdisp,
-                                 bsegs[i].x2, bsegs[i].y2,
-                                 &x, &y,
-                                 ! sel_options->sample_merged);
+      gimp_display_shell_transform_xy (shell,
+                                       bsegs[i].x2, bsegs[i].y2,
+                                       &x, &y,
+                                       ! sel_options->sample_merged);
       segs[i].x2 = x;
       segs[i].y2 = y;
     }
 
   g_free (bsegs);
 
-  gimp_display_shell_unset_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell));
+  gimp_display_shell_unset_override_cursor (shell);
 
   return segs;
 }
@@ -460,8 +468,9 @@ gimp_fuzzy_select_tool_draw (GimpDrawTool *draw_tool)
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (draw_tool);
 
-  if (segs)
+  if (fuzzy_sel->segs)
     gdk_draw_segments (draw_tool->win,
                        draw_tool->gc,
-                       segs, num_segs);
+                       fuzzy_sel->segs,
+                       fuzzy_sel->num_segs);
 }

@@ -524,8 +524,8 @@ gimp_navigation_view_marker_changed (GimpNavigationPreview *preview,
       gint    xoffset;
       gint    yoffset;
 
-      xratio = SCALEFACTOR_X (view->shell->gdisp);
-      yratio = SCALEFACTOR_Y (view->shell->gdisp);
+      xratio = SCALEFACTOR_X (view->shell);
+      yratio = SCALEFACTOR_Y (view->shell);
 
       xoffset = x * xratio - view->shell->offset_x;
       yoffset = y * yratio - view->shell->offset_y;
@@ -668,8 +668,8 @@ gimp_navigation_view_shell_scaled (GimpDisplayShell   *shell,
 
       /* Update the zoom scale string */
       g_snprintf (scale_str, sizeof (scale_str), "%d:%d",
-                  SCALEDEST (view->shell->gdisp), 
-                  SCALESRC (view->shell->gdisp));
+                  SCALEDEST (view->shell), 
+                  SCALESRC (view->shell));
 
       gtk_label_set_text (GTK_LABEL (view->zoom_label), scale_str);
     }
@@ -679,8 +679,8 @@ gimp_navigation_view_shell_scaled (GimpDisplayShell   *shell,
       gdouble f;
       gint    val;
 
-      f = (((gdouble) SCALEDEST (view->shell->gdisp)) / 
-           ((gdouble) SCALESRC (view->shell->gdisp)));
+      f = (((gdouble) SCALEDEST (view->shell)) / 
+           ((gdouble) SCALESRC (view->shell)));
   
       if (f < 1.0)
         val = - RINT (1.0 / f) + 1;
@@ -714,13 +714,12 @@ gimp_navigation_view_update_marker (GimpNavigationView *view)
   gdouble xratio;
   gdouble yratio;
 
-  xratio = SCALEFACTOR_X (view->shell->gdisp);
-  yratio = SCALEFACTOR_Y (view->shell->gdisp);
+  xratio = SCALEFACTOR_X (view->shell);
+  yratio = SCALEFACTOR_Y (view->shell);
 
-  if (GIMP_PREVIEW (view->preview)->dot_for_dot !=
-      view->shell->gdisp->dot_for_dot)
+  if (GIMP_PREVIEW (view->preview)->dot_for_dot != view->shell->dot_for_dot)
     gimp_preview_set_dot_for_dot (GIMP_PREVIEW (view->preview),
-                                  view->shell->gdisp->dot_for_dot);
+                                  view->shell->dot_for_dot);
 
   gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (view->preview),
                                       RINT (view->shell->offset_x    / xratio),

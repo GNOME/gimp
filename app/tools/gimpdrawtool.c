@@ -282,14 +282,17 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
                               gdouble       x2,
                               gdouble       y2)
 {
-  gdouble tx1, ty1;
-  gdouble tx2, ty2;
+  GimpDisplayShell *shell;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), 0.0);
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), 0.0);
 
-  gdisplay_transform_coords_f (gdisp, x1, y1, &tx1, &ty1, FALSE);
-  gdisplay_transform_coords_f (gdisp, x2, y2, &tx2, &ty2, FALSE);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
 
   return sqrt (SQR (tx2 - tx1) + SQR (ty2 - ty1));
 }
@@ -303,14 +306,17 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
                           gdouble       y2,
                           gint          radius)
 {
-  gdouble tx1, ty1;
-  gdouble tx2, ty2;
+  GimpDisplayShell *shell;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
-  gdisplay_transform_coords_f (gdisp, x1, y1, &tx1, &ty1, FALSE);
-  gdisplay_transform_coords_f (gdisp, x2, y2, &tx2, &ty2, FALSE);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
 
   return (SQR (tx2 - tx1) + SQR (ty2 - ty1)) < SQR (radius);
 }
@@ -331,14 +337,14 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               x1, y1,
-                               &tx1, &ty1,
-                               use_offsets);
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               x2, y2,
-                               &tx2, &ty2,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x1, y1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x2, y2,
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   gdk_draw_line (draw_tool->win,
                  draw_tool->gc,
@@ -368,14 +374,14 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   tx2 = MAX (x, x + width);
   ty2 = MAX (y, y + height);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               tx1, ty1,
-                               &tx1, &ty1,
-                               use_offsets);
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               tx2, ty2,
-                               &tx2, &ty2,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tx1, ty1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tx2, ty2,
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   gdk_draw_rectangle (draw_tool->win,
                       draw_tool->gc,
@@ -408,14 +414,14 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   tx2 = MAX (x, x + width);
   ty2 = MAX (y, y + height);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               tx1, ty1,
-                               &tx1, &ty1,
-                               use_offsets);
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               tx2, ty2,
-                               &tx2, &ty2,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tx1, ty1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tx2, ty2,
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   gdk_draw_arc (draw_tool->win,
                 draw_tool->gc,
@@ -442,10 +448,10 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               x, y,
-                               &tx, &ty,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x, y,
+                                     &tx, &ty,
+                                     use_offsets);
 
   gimp_draw_tool_shift_to_north_west (tx, ty,
                                       width, height,
@@ -484,10 +490,10 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               x, y,
-                               &tx, &ty,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x, y,
+                                     &tx, &ty,
+                                     use_offsets);
 
   /* well... */
   radius_x *= 2;
@@ -528,10 +534,10 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  gdisplay_transform_coords_f (draw_tool->gdisp,
-                               x, y,
-                               &tx, &ty,
-                               use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x, y,
+                                     &tx, &ty,
+                                     use_offsets);
 
   gimp_draw_tool_shift_to_center (tx, ty,
                                   width, height,
@@ -632,17 +638,23 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
                           GtkAnchorType   anchor,
                           gboolean        use_offsets)
 {
-  gdouble tx, ty;
-  gdouble handle_tx, handle_ty;
+  GimpDisplayShell *shell;
+  gdouble           tx, ty;
+  gdouble           handle_tx, handle_ty;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
-  gdisplay_transform_coords_f (gdisp, x, y, &tx, &ty, use_offsets);
-  gdisplay_transform_coords_f (gdisp,
-                               handle_x, handle_y,
-                               &handle_tx, &handle_ty,
-                               use_offsets);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_transform_xy_f (shell,
+                                     x, y,
+                                     &tx, &ty,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     handle_x, handle_y,
+                                     &handle_tx, &handle_ty,
+                                     use_offsets);
 
   switch (type)
     {
@@ -698,10 +710,10 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 
   for (i = 0; i < n_points ; i++)
     {
-      gdisplay_transform_coords_f (draw_tool->gdisp,
-                                   points[i*2], points[i*2+1],
-                                   &sx, &sy,
-                                   use_offsets);
+      gimp_display_shell_transform_xy_f (shell,
+                                         points[i*2], points[i*2+1],
+                                         &sx, &sy,
+                                         use_offsets);
       coords[i].x = ROUND (sx);
       coords[i].y = ROUND (sy);
     }
@@ -740,10 +752,10 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
 
   for (i = 0; i < n_points ; i++)
     {
-      gdisplay_transform_coords_f (draw_tool->gdisp,
-                                   points[i].x, points[i].y,
-                                   &sx, &sy,
-                                   use_offsets);
+      gimp_display_shell_transform_xy_f (shell,
+                                         points[i].x, points[i].y,
+                                         &sx, &sy,
+                                         use_offsets);
       coords[i].x = ROUND (sx);
       coords[i].y = ROUND (sy);
     }

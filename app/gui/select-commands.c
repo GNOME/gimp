@@ -31,6 +31,7 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -135,7 +136,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 			      gdisp->gimage->unit,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
-			      gdisp->dot_for_dot,
+			      GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimp_image_mask_feather_callback, gdisp->gimage);
   gtk_widget_show (qbox);
@@ -170,7 +171,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 			 gdisp->gimage->unit,
 			 MIN (gdisp->gimage->xresolution,
 			      gdisp->gimage->yresolution),
-			 gdisp->dot_for_dot,
+			 GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 			 G_OBJECT (gdisp->gimage), "disconnect",
 			 gimp_image_mask_shrink_callback, gdisp->gimage);
 
@@ -203,7 +204,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 			      gdisp->gimage->unit,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
-			      gdisp->dot_for_dot,
+			      GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimp_image_mask_grow_callback, gdisp->gimage);
   gtk_widget_show (qbox);
@@ -225,7 +226,7 @@ select_border_cmd_callback (GtkWidget *widget,
 			      gdisp->gimage->unit,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
-			      gdisp->dot_for_dot,
+			      GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
 			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimp_image_mask_border_callback, gdisp->gimage);
   gtk_widget_show (qbox);
