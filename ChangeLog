@@ -1,3 +1,9 @@
+Sat Aug 21 13:30:38 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: corrected the guides placement and added 
+	the possibility to use an info window (e.g. for the case
+	that the user chooses not to have a statusbar)
+
 Sat Aug 21 01:18:08 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/gimprc.[ch]: removed cubic_interpolation variable.
