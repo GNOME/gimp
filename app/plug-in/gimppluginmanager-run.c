@@ -2393,10 +2393,6 @@ plug_in_make_menu (void)
 #ifdef ENABLE_NLS
   bindtextdomain (std_plugins_domain, LOCALEDIR);
   domains = g_slist_append (domains, std_plugins_domain);
-
-  /* this will go away */
-  bindtextdomain ("gimp-perl", LOCALEDIR);         
-  domains = g_slist_append (domains, "gimp-perl");
 #endif 
 
   tmp = plug_in_defs;
@@ -2463,10 +2459,6 @@ plug_in_make_menu (void)
 	      
 	      if (plug_in_def->locale_domain)
 		menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, 
-						  &proc_def->db_info);
-	      /* this will go away */
-	      else if (strncmp (proc_def->db_info.name, "perl_fu", 7) == 0)
-		menus_create_item_from_full_path (&entry, "gimp-perl", 
 						  &proc_def->db_info);
 	      else
 		menus_create_item_from_full_path (&entry, std_plugins_domain, 

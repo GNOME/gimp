@@ -1,3 +1,8 @@
+Sun Mar  5 03:25:33 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* app/plug_in.c: Remove the two gimp-perl specific hacks that
+        should now no longer be necessary.
+
 2000-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am
