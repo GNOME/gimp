@@ -46,24 +46,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GIMP_DISABLE_DEPRECATED
-#endif
-#undef GIMP_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "curl0.xpm"
-#include "curl1.xpm"
-#include "curl2.xpm"
-#include "curl3.xpm"
-#include "curl4.xpm"
-#include "curl5.xpm"
-#include "curl6.xpm"
-#include "curl7.xpm"
+#include "pagecurl-icons.h"
+
 
 #define PLUG_IN_NAME    "plug_in_pagecurl"
 #define PLUG_IN_VERSION "July 2004, 1.0"
@@ -159,19 +148,19 @@ static CurlParams curl;
 static gint32        image_id;
 static GimpDrawable *curl_layer;
 
-static gchar **curl_pixmaps[] =
+static const guint8 *curl_pixbufs[] =
 {
-  curl0_xpm,
-  curl1_xpm,
-  curl2_xpm,
-  curl3_xpm,
-  curl4_xpm,
-  curl5_xpm,
-  curl6_xpm,
-  curl7_xpm
+  curl0,
+  curl1,
+  curl2,
+  curl3,
+  curl4,
+  curl5,
+  curl6,
+  curl7
 };
 
-static GtkWidget *curl_pixmap_widget = NULL;
+static GtkWidget *curl_image = NULL;
 
 static gint   sel_x1, sel_y1, sel_x2, sel_y2;
 static gint   true_sel_width, true_sel_height;
@@ -411,9 +400,10 @@ dialog_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-curl_pixmap_update (void)
+curl_pixbuf_update (void)
 {
-  gint index;
+  GdkPixbuf *pixbuf;
+  gint       index;
 
   switch (curl.edge)
     {
@@ -427,7 +417,9 @@ curl_pixmap_update (void)
 
   index += curl.orientation * 4;
 
-  gimp_pixmap_set (GIMP_PIXMAP (curl_pixmap_widget), curl_pixmaps[index]);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, curl_pixbufs[index], FALSE, NULL);
+  gtk_image_set_from_pixbuf (GTK_IMAGE (curl_image), pixbuf);
+  g_object_unref (pixbuf);
 }
 
 static gboolean
@@ -471,23 +463,23 @@ dialog (void)
    gtk_table_set_row_spacings (GTK_TABLE (table), 6);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
-   curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[0]);
+   curl_image = gtk_image_new ();
 
-   gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 0, 2, 1, 2,
+   gtk_table_attach (GTK_TABLE (table), curl_image, 0, 2, 1, 2,
 		     GTK_SHRINK, GTK_SHRINK, 0, 0);
-   gtk_widget_show (curl_pixmap_widget);
+   gtk_widget_show (curl_image);
 
-   curl_pixmap_update ();
+   curl_pixbuf_update ();
 
    {
-     gint   i;
-     gchar *name[] =
+     static const gchar *name[] =
      {
        N_("Lower right"),
        N_("Lower left"),
        N_("Upper left"),
        N_("Upper right")
      };
+     gint i;
 
      button = NULL;
      for (i = CURL_EDGE_FIRST; i <= CURL_EDGE_LAST; i++)
@@ -517,7 +509,7 @@ dialog (void)
                            &curl.edge);
 
 	 g_signal_connect (button, "toggled",
-                           G_CALLBACK (curl_pixmap_update),
+                           G_CALLBACK (curl_pixbuf_update),
                            NULL);
        }
    }
@@ -532,12 +524,12 @@ dialog (void)
    gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {
-     gint   i;
-     gchar *name[] =
+     static const gchar *name[] =
      {
        N_("_Vertical"),
        N_("_Horizontal")
      };
+     gint i;
 
      button = NULL;
      for (i = 0; i <= CURL_ORIENTATION_LAST; i++)
@@ -561,7 +553,7 @@ dialog (void)
                            &curl.orientation);
 
 	 g_signal_connect (button, "toggled",
-                           G_CALLBACK (curl_pixmap_update),
+                           G_CALLBACK (curl_pixbuf_update),
                            NULL);
        }
    }

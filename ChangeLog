@@ -1,5 +1,12 @@
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pagecurl/pagecurl.c: applied a patch from Karine Proot
+	that replaces the XPM icons with pixbufs (bug #140202).
+
+	* plug-ins/pagecurl/curl[0-7].xpm: removed.
+
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/Makefile.am: fixed typo.
 
 	* plug-ins/pagecurl/Makefile.am
