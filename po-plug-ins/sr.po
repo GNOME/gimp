@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-26 05:08+0100\n"
-"PO-Revision-Date: 2003-10-26 05:16+0100\n"
+"POT-Creation-Date: 2003-11-01 14:15+0100\n"
+"PO-Revision-Date: 2003-11-01 15:12+0100\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiangnome-listaL@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:495
-#: plug-ins/FractalExplorer/Dialogs.c:1586 plug-ins/gfig/gfig.c:2766
+#: plug-ins/FractalExplorer/Dialogs.c:1586 plug-ins/gfig/gfig.c:2763
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
 msgid "About"
 msgstr "О програму"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:521 plug-ins/Lighting/lighting_ui.c:1150
-#: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
-#: plug-ins/common/curve_bend.c:1219 plug-ins/common/destripe.c:582
+#: plug-ins/FractalExplorer/Dialogs.c:521 plug-ins/Lighting/lighting_ui.c:1148
+#: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1191
+#: plug-ins/common/curve_bend.c:1221 plug-ins/common/destripe.c:582
 #: plug-ins/common/emboss.c:713 plug-ins/common/fractaltrace.c:776
 #: plug-ins/common/grid.c:671 plug-ins/common/iwarp.c:1229
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/nlfilt.c:455
@@ -448,7 +448,7 @@ msgstr "<Image>/Филтери/Исцртавање/Извиђач _фракта
 msgid "Rendering Fractal..."
 msgstr "Исцртава фрактал..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:769 plug-ins/gfig/gfig.c:4335
+#: plug-ins/FractalExplorer/FractalExplorer.c:769 plug-ins/gfig/gfig.c:4333
 #: plug-ins/gflare/gflare.c:3104
 #, c-format
 msgid ""
@@ -842,28 +842,28 @@ msgstr ""
 msgid "_Environment Map"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1127
+#: plug-ins/Lighting/lighting_ui.c:1125
 msgid "Lighting Effects"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/gimpressionist/preview.c:122
+#: plug-ins/Lighting/lighting_ui.c:1186 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/MapObject/mapobject_ui.c:1445
+#: plug-ins/Lighting/lighting_ui.c:1193 plug-ins/MapObject/mapobject_ui.c:1445
 msgid "Recompute preview image"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1196
+#: plug-ins/Lighting/lighting_ui.c:1195
 msgid "I_nteractive"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1211
+#: plug-ins/Lighting/lighting_ui.c:1210
 msgid "Enable/disable real time preview of changes"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1214
+#: plug-ins/Lighting/lighting_ui.c:1213
 msgid "Preview Options"
 msgstr "Опције прегледа"
 
@@ -1093,7 +1093,7 @@ msgstr ""
 msgid "O_rientation"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1380
+#: plug-ins/MapObject/mapobject_ui.c:1378
 msgid "Map to Object"
 msgstr ""
 
@@ -1170,7 +1170,7 @@ msgstr ""
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
 #: plug-ins/common/wmf.c:2140 plug-ins/common/xbm.c:873
 #: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
-#: plug-ins/gfig/gfig.c:2214 plug-ins/gfig/gfig.c:2582 plug-ins/sgi/sgi.c:367
+#: plug-ins/gfig/gfig.c:2211 plug-ins/gfig/gfig.c:2579 plug-ins/sgi/sgi.c:367
 #: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr ""
@@ -1918,7 +1918,7 @@ msgid "Fill (right to left)"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:441 plug-ins/common/align_layers.c:474
-#: plug-ins/gfig/gfig.c:2811
+#: plug-ins/gfig/gfig.c:2808
 msgid "Snap to Grid"
 msgstr ""
 
@@ -2004,7 +2004,7 @@ msgstr ""
 msgid "Step"
 msgstr ""
 
-#: plug-ins/common/animationplay.c:1315
+#: plug-ins/common/animationplay.c:1316
 #, c-format
 msgid "Frame %d of %d"
 msgstr ""
@@ -2757,126 +2757,126 @@ msgstr ""
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1190
+#: plug-ins/common/curve_bend.c:1191
 msgid "Curve Bend"
 msgstr ""
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1253
+#: plug-ins/common/curve_bend.c:1255
 msgid "_Preview Once"
 msgstr ""
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1262
+#: plug-ins/common/curve_bend.c:1264
 msgid "Automatic Pre_view"
 msgstr ""
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1272 plug-ins/common/mosaic.c:546
-#: plug-ins/common/ripple.c:461 plug-ins/gfig/gfig.c:3378
+#: plug-ins/common/curve_bend.c:1274 plug-ins/common/mosaic.c:546
+#: plug-ins/common/ripple.c:461 plug-ins/gfig/gfig.c:3376
 msgid "Options"
 msgstr ""
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1287
+#: plug-ins/common/curve_bend.c:1289
 msgid "Rotat_e:"
 msgstr ""
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1305
+#: plug-ins/common/curve_bend.c:1307
 msgid "Smoo_thing"
 msgstr ""
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1315 plug-ins/common/gqbist.c:860
+#: plug-ins/common/curve_bend.c:1317 plug-ins/common/gqbist.c:860
 #: plug-ins/common/mosaic.c:554 plug-ins/common/ripple.c:470
 msgid "_Antialiasing"
 msgstr ""
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1325
+#: plug-ins/common/curve_bend.c:1327
 msgid "Work on Cop_y"
 msgstr ""
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1335
+#: plug-ins/common/curve_bend.c:1337
 msgid "Modify Curves"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1364
+#: plug-ins/common/curve_bend.c:1366
 msgid "Curve for Border"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1369
+#: plug-ins/common/curve_bend.c:1371
 msgid "_Upper"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1372
+#: plug-ins/common/curve_bend.c:1374
 msgid "_Lower"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1383
+#: plug-ins/common/curve_bend.c:1385
 msgid "Curve Type"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1390
 msgid "Smoot_h"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1391
+#: plug-ins/common/curve_bend.c:1393
 msgid "_Free"
 msgstr ""
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1407
+#: plug-ins/common/curve_bend.c:1409
 msgid "_Copy"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1412
+#: plug-ins/common/curve_bend.c:1414
 msgid "Copy the active curve to the other border"
 msgstr ""
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1419
+#: plug-ins/common/curve_bend.c:1421
 msgid "_Mirror"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1424
+#: plug-ins/common/curve_bend.c:1426
 msgid "Mirror the active curve to the other border"
 msgstr ""
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1433
 msgid "S_wap"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1438
 msgid "Swap the two curves"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1450
 msgid "Reset the active curve"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1467
 msgid "Load the curves from a file"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1479
 msgid "Save the curves to a file"
 msgstr ""
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2028
+#: plug-ins/common/curve_bend.c:2030
 msgid "Load Curve Points from file"
 msgstr ""
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2060
+#: plug-ins/common/curve_bend.c:2062
 msgid "Save Curve Points to file"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:2962
+#: plug-ins/common/curve_bend.c:2964
 msgid "Curve Bend..."
 msgstr ""
 
@@ -3970,7 +3970,7 @@ msgstr ""
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:2788
+#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:2785
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
@@ -4019,7 +4019,7 @@ msgstr ""
 msgid "GIMP Table Magic"
 msgstr ""
 
-#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3438
+#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3436
 msgid "Warning"
 msgstr ""
 
@@ -4560,7 +4560,7 @@ msgstr ""
 msgid "Comment:"
 msgstr ""
 
-#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3138
+#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3135
 #: plug-ins/imagemap/imap_settings.c:92
 msgid "Filename:"
 msgstr ""
@@ -4736,7 +4736,7 @@ msgstr ""
 msgid "Combine"
 msgstr ""
 
-#: plug-ins/common/mng.c:1321 plug-ins/gfig/gfig.c:2536
+#: plug-ins/common/mng.c:1321 plug-ins/gfig/gfig.c:2533
 msgid "Replace"
 msgstr ""
 
@@ -4962,7 +4962,7 @@ msgid "_Factory Defaults"
 msgstr ""
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:2545
+#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:2542
 msgid "Antialiasing"
 msgstr ""
 
@@ -7142,7 +7142,7 @@ msgid "Smear"
 msgstr ""
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:1124 plug-ins/gfig/gfig.c:2722
+#: plug-ins/flame/flame.c:1124 plug-ins/gfig/gfig.c:2719
 msgid "Black"
 msgstr ""
 
@@ -7713,8 +7713,8 @@ msgstr ""
 msgid "BLANK/NaN Pixel Replacement"
 msgstr ""
 
-#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2216
-#: plug-ins/gfig/gfig.c:2723
+#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2213
+#: plug-ins/gfig/gfig.c:2720
 msgid "White"
 msgstr ""
 
@@ -7789,7 +7789,7 @@ msgstr "Уврнути"
 msgid "Horseshoe"
 msgstr "Потковица"
 
-#: plug-ins/flame/flame.c:730 plug-ins/gfig/gfig.c:2707
+#: plug-ins/flame/flame.c:730 plug-ins/gfig/gfig.c:2704
 msgid "Polar"
 msgstr "Поларни"
 
@@ -8036,508 +8036,508 @@ msgstr ""
 msgid "Save Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1410
+#: plug-ins/gfig/gfig.c:1407
 msgid "Show previous object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1423
+#: plug-ins/gfig/gfig.c:1420
 msgid "Show next object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1435
+#: plug-ins/gfig/gfig.c:1432
 msgid "All"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1436
+#: plug-ins/gfig/gfig.c:1433
 msgid "Show all objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1535
+#: plug-ins/gfig/gfig.c:1532
 msgid "Number of Sides/Points/Turns:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1551
+#: plug-ins/gfig/gfig.c:1548
 msgid "Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1552
+#: plug-ins/gfig/gfig.c:1549
 msgid "Anti-Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1556 plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/gfig/gfig.c:1553 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:497
 msgid "Orientation:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1588
+#: plug-ins/gfig/gfig.c:1585
 msgid "Create line"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1593
+#: plug-ins/gfig/gfig.c:1590
 msgid "Create circle"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1598
+#: plug-ins/gfig/gfig.c:1595
 msgid "Create ellipse"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1603
+#: plug-ins/gfig/gfig.c:1600
 msgid "Create arch"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1612
+#: plug-ins/gfig/gfig.c:1609
 msgid "Create reg polygon"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1620
+#: plug-ins/gfig/gfig.c:1617
 msgid "Create star"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1629
+#: plug-ins/gfig/gfig.c:1626
 msgid "Create spiral"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1639
+#: plug-ins/gfig/gfig.c:1636
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1645
+#: plug-ins/gfig/gfig.c:1642
 msgid "Move an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1650
+#: plug-ins/gfig/gfig.c:1647
 msgid "Move a single point"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1655
+#: plug-ins/gfig/gfig.c:1652
 msgid "Copy an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1660
+#: plug-ins/gfig/gfig.c:1657
 msgid "Delete an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1816 plug-ins/gfig/gfig.c:2192
-#: plug-ins/gfig/gfig.c:3364
+#: plug-ins/gfig/gfig.c:1813 plug-ins/gfig/gfig.c:2189
+#: plug-ins/gfig/gfig.c:3362
 msgid "Brush"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1817
+#: plug-ins/gfig/gfig.c:1814
 msgid "Airbrush"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1818
+#: plug-ins/gfig/gfig.c:1815
 msgid "Pencil"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1819 plug-ins/gfig/gfig.c:2580
+#: plug-ins/gfig/gfig.c:1816 plug-ins/gfig/gfig.c:2577
 msgid "Pattern"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1826
+#: plug-ins/gfig/gfig.c:1823
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2173 plug-ins/rcm/rcm_dialog.c:130
+#: plug-ins/gfig/gfig.c:2170 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2174
+#: plug-ins/gfig/gfig.c:2171
 msgid "New"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2175
+#: plug-ins/gfig/gfig.c:2172
 msgid "Multiple"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2180
+#: plug-ins/gfig/gfig.c:2177
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2185
+#: plug-ins/gfig/gfig.c:2182
 msgid "Draw on:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2194 plug-ins/imagemap/imap_selection.c:365
+#: plug-ins/gfig/gfig.c:2191 plug-ins/imagemap/imap_selection.c:365
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2196
+#: plug-ins/gfig/gfig.c:2193
 msgid "Selection+Fill"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2202
+#: plug-ins/gfig/gfig.c:2199
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2206
+#: plug-ins/gfig/gfig.c:2203
 msgid "Using:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2213 plug-ins/gimpressionist/general.c:120
+#: plug-ins/gfig/gfig.c:2210 plug-ins/gimpressionist/general.c:120
 msgid "Transparent"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2215 plug-ins/gfig/gfig.c:2581
+#: plug-ins/gfig/gfig.c:2212 plug-ins/gfig/gfig.c:2578
 msgid "Foreground"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2217 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig.c:2214 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:127
 msgid "Copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2221
+#: plug-ins/gfig/gfig.c:2218
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2226
+#: plug-ins/gfig/gfig.c:2223
 msgid "With BG of:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2229
+#: plug-ins/gfig/gfig.c:2226
 msgid "Reverse Line"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2236
+#: plug-ins/gfig/gfig.c:2233
 msgid "Draw lines in reverse order"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2244
+#: plug-ins/gfig/gfig.c:2241
 msgid "Scale to Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2252
+#: plug-ins/gfig/gfig.c:2249
 msgid "Scale drawings to images size"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2274
+#: plug-ins/gfig/gfig.c:2271
 msgid "Approx. Circles/Ellipses"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2281
+#: plug-ins/gfig/gfig.c:2278
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2331
+#: plug-ins/gfig/gfig.c:2328
 msgid "Gfig Brush Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2369
+#: plug-ins/gfig/gfig.c:2366
 msgid "Fade out:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2392
+#: plug-ins/gfig/gfig.c:2389
 msgid "Gradient:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2412
+#: plug-ins/gfig/gfig.c:2409
 msgid "Pressure:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2430
+#: plug-ins/gfig/gfig.c:2427
 msgid "No Options..."
 msgstr ""
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:2445
+#: plug-ins/gfig/gfig.c:2442
 msgid "Set Brush..."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2534
+#: plug-ins/gfig/gfig.c:2531
 msgid "Add"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2535
+#: plug-ins/gfig/gfig.c:2532
 msgid "Subtract"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2537
+#: plug-ins/gfig/gfig.c:2534
 msgid "Intersect"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2541
+#: plug-ins/gfig/gfig.c:2538
 msgid "Selection Type:"
 msgstr ""
 
 #. 3
-#: plug-ins/gfig/gfig.c:2554
+#: plug-ins/gfig/gfig.c:2551
 msgid "Feather"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2572
+#: plug-ins/gfig/gfig.c:2569
 msgid "Radius:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2586
+#: plug-ins/gfig/gfig.c:2583
 msgid "Fill Type:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2599
+#: plug-ins/gfig/gfig.c:2596
 msgid "Fill Opacity:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2607
+#: plug-ins/gfig/gfig.c:2604
 msgid "Each Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2608
+#: plug-ins/gfig/gfig.c:2605
 msgid "All Selections"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2612
+#: plug-ins/gfig/gfig.c:2609
 msgid "Fill after:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2619
+#: plug-ins/gfig/gfig.c:2616
 msgid "Segment"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2620
+#: plug-ins/gfig/gfig.c:2617
 msgid "Sector"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2624
+#: plug-ins/gfig/gfig.c:2621
 msgid "Arc as:"
 msgstr ""
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:2683
+#: plug-ins/gfig/gfig.c:2680
 msgid "Show Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2694
+#: plug-ins/gfig/gfig.c:2691
 msgid "Reload Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2706 plug-ins/imagemap/imap_menu.c:366
+#: plug-ins/gfig/gfig.c:2703 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2708
+#: plug-ins/gfig/gfig.c:2705
 msgid "Isometric"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2712
+#: plug-ins/gfig/gfig.c:2709
 msgid "Grid Type:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2721 plug-ins/gflare/gflare.c:568
+#: plug-ins/gfig/gfig.c:2718 plug-ins/gflare/gflare.c:568
 msgid "Normal"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2724
+#: plug-ins/gfig/gfig.c:2721
 msgid "Grey"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2725
+#: plug-ins/gfig/gfig.c:2722
 msgid "Darker"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2726
+#: plug-ins/gfig/gfig.c:2723
 msgid "Lighter"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2727
+#: plug-ins/gfig/gfig.c:2724
 msgid "Very Dark"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2731
+#: plug-ins/gfig/gfig.c:2728
 msgid "Grid Color:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2735
+#: plug-ins/gfig/gfig.c:2732
 msgid "Max Undo:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2743
+#: plug-ins/gfig/gfig.c:2740
 msgid "Show Position"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2754
+#: plug-ins/gfig/gfig.c:2751
 msgid "Hide Control Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2799
+#: plug-ins/gfig/gfig.c:2796
 msgid "Show Grid"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2807
+#: plug-ins/gfig/gfig.c:2804
 msgid "Show grid"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2816
+#: plug-ins/gfig/gfig.c:2813
 msgid "Snap to grid"
 msgstr ""
 
 #. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
 #. it from the user interface
-#: plug-ins/gfig/gfig.c:2824
+#: plug-ins/gfig/gfig.c:2821
 msgid "Lock on Grid"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2839
+#: plug-ins/gfig/gfig.c:2836
 msgid "Grid spacing:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2903
+#: plug-ins/gfig/gfig.c:2900
 msgid "Object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2940
+#: plug-ins/gfig/gfig.c:2937
 msgid "Create a new Gfig object collection for editing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2950
+#: plug-ins/gfig/gfig.c:2947
 msgid "Load a single Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2958
+#: plug-ins/gfig/gfig.c:2955
 msgid "Edit Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2962
+#: plug-ins/gfig/gfig.c:2959
 msgid "_Merge"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2966
+#: plug-ins/gfig/gfig.c:2963
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2975
+#: plug-ins/gfig/gfig.c:2972
 msgid "Delete currently selected Gfig Object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2985
+#: plug-ins/gfig/gfig.c:2982
 msgid "Select folder and rescan Gfig object collections"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3048 plug-ins/gimpressionist/size.c:98
+#: plug-ins/gfig/gfig.c:3045 plug-ins/gimpressionist/size.c:98
 msgid "Size:"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3075
+#: plug-ins/gfig/gfig.c:3072
 msgid "XY Position:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3096
+#: plug-ins/gfig/gfig.c:3093
 msgid "Object Details"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3125
+#: plug-ins/gfig/gfig.c:3122
 msgid "Collection Details"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3132
+#: plug-ins/gfig/gfig.c:3129
 msgid "Draw Name:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3144 plug-ins/gfig/gfig.c:3150
+#: plug-ins/gfig/gfig.c:3141 plug-ins/gfig/gfig.c:3147
 msgid "(none)"
 msgstr ""
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3298
+#: plug-ins/gfig/gfig.c:3296
 msgid "Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3318 plug-ins/gfig/gfig.c:3359
+#: plug-ins/gfig/gfig.c:3316 plug-ins/gfig/gfig.c:3357
 msgid "Paint"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3372 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:3370 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3435
+#: plug-ins/gfig/gfig.c:3433
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3761
+#: plug-ins/gfig/gfig.c:3759
 msgid "Enter Gfig Object Name"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3786
+#: plug-ins/gfig/gfig.c:3784
 msgid "Gfig Object Name:"
 msgstr ""
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3837
+#: plug-ins/gfig/gfig.c:3835
 msgid "Rescan for Gfig Objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3854
+#: plug-ins/gfig/gfig.c:3852
 msgid "Add Gfig Path"
 msgstr ""
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3922
+#: plug-ins/gfig/gfig.c:3920
 msgid "Load Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3947
+#: plug-ins/gfig/gfig.c:3945
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4061
+#: plug-ins/gfig/gfig.c:4059
 #, c-format
 msgid "Gfig Layer %d"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4135
+#: plug-ins/gfig/gfig.c:4133
 msgid "About Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4160
+#: plug-ins/gfig/gfig.c:4158
 msgid "Gfig - GIMP plug-in"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4165
+#: plug-ins/gfig/gfig.c:4163
 msgid "Release 2.0"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4218
+#: plug-ins/gfig/gfig.c:4216
 msgid "New Gfig Object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4339
+#: plug-ins/gfig/gfig.c:4337
 msgid "Delete Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4367 plug-ins/gfig/gfig.c:4406
+#: plug-ins/gfig/gfig.c:4365 plug-ins/gfig/gfig.c:4404
 msgid "<NONE>"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4444
+#: plug-ins/gfig/gfig.c:4442
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:4546
+#: plug-ins/gfig/gfig.c:4544
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5425
+#: plug-ins/gfig/gfig.c:5427
 msgid "Error reading file"
 msgstr ""
 
@@ -9506,20 +9506,20 @@ msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:152
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "Гимпов прегледач помоћи"
 
 #: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:585
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
-msgstr ""
+msgstr "<Неименовани>"
 
 #: plug-ins/helpbrowser/dialog.c:535
 msgid "Document Not Found"
-msgstr ""
+msgstr "Документ није нађен"
 
 #: plug-ins/helpbrowser/dialog.c:537
 msgid "Could not locate help document"
-msgstr ""
+msgstr "Не могу да нађем документ помоћи"
 
 #: plug-ins/helpbrowser/dialog.c:539
 msgid ""
@@ -9527,141 +9527,141 @@ msgid ""
 "above. This means that the topic has not yet been written or your "
 "installation is not complete. Ensure that your installation is complete "
 "before reporting this error as a bug."
-msgstr ""
+msgstr "Тражени документ не постоји у вашој путањи Гимпа за помоћ која је приказана изнад. Ово значи да ова тема још увек није написана или да је ваша инсталација непотпуна. Проверите да ли је ваша инсталација потпуна пре него што пријавите ово као грешку."
 
 #: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr ""
+msgstr "<Image>/Филтери/Исцртавање/Природа/Ifs_Compose..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:609
 msgid "Asymmetry:"
-msgstr ""
+msgstr "Асиметрија:"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:623
 msgid "Shear:"
-msgstr ""
+msgstr "Одсеци"
 
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:637
 msgid "Flip"
-msgstr ""
+msgstr "Окрени"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:668
 msgid "Simple"
-msgstr ""
+msgstr "Једноставна"
 
 #: plug-ins/ifscompose/ifscompose.c:677
 msgid "IfsCompose: Target"
-msgstr ""
+msgstr "IfsCompose: одредиште"
 
 #: plug-ins/ifscompose/ifscompose.c:683
 msgid "Scale Hue by:"
-msgstr ""
+msgstr "Размери нијансу за:"
 
 #: plug-ins/ifscompose/ifscompose.c:698
 msgid "Scale Value by:"
-msgstr ""
+msgstr "Размери вредност за:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:715
 msgid "Full"
-msgstr ""
+msgstr "Пуна"
 
 #: plug-ins/ifscompose/ifscompose.c:722
 msgid "IfsCompose: Red"
-msgstr ""
+msgstr "IfsCompose: црвена"
 
 #: plug-ins/ifscompose/ifscompose.c:729
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsCompose: зелена"
 
 #: plug-ins/ifscompose/ifscompose.c:736
 msgid "IfsCompose: Blue"
-msgstr ""
+msgstr "IfsCompose: плава"
 
 #: plug-ins/ifscompose/ifscompose.c:743
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsCompose: црна"
 
 #: plug-ins/ifscompose/ifscompose.c:805
 msgid "IfsCompose"
-msgstr ""
+msgstr "IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:886 plug-ins/imagemap/imap_cmd_move.c:86
 #: plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
-msgstr ""
+msgstr "Премести"
 
 #: plug-ins/ifscompose/ifscompose.c:895
 msgid "Rotate/Scale"
-msgstr ""
+msgstr "Ротирај/размери"
 
 #: plug-ins/ifscompose/ifscompose.c:904
 msgid "Stretch"
-msgstr ""
+msgstr "Развуци"
 
 #: plug-ins/ifscompose/ifscompose.c:924
 msgid "Render Options"
-msgstr ""
+msgstr "Опције исцртавања"
 
 #: plug-ins/ifscompose/ifscompose.c:938 plug-ins/print/gimp_main_window.c:480
 msgid "Auto"
-msgstr ""
+msgstr "Сам"
 
 #: plug-ins/ifscompose/ifscompose.c:989 plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
-msgstr ""
+msgstr "Изабери _све"
 
 #: plug-ins/ifscompose/ifscompose.c:996
 msgid "Recompute _Center"
-msgstr ""
+msgstr "Прерачунај _центар"
 
 #: plug-ins/ifscompose/ifscompose.c:1026
 msgid "Spatial Transformation"
-msgstr ""
+msgstr "Просторна трансформација"
 
 #: plug-ins/ifscompose/ifscompose.c:1032
 msgid "Color Transformation"
-msgstr ""
+msgstr "Трансформација боје"
 
 #: plug-ins/ifscompose/ifscompose.c:1042
 msgid "Relative Probability:"
-msgstr ""
+msgstr "Релативна вероватноћа:"
 
 #: plug-ins/ifscompose/ifscompose.c:1261
 msgid "IfsCompose Options"
-msgstr ""
+msgstr "IfsCompose опције"
 
 #: plug-ins/ifscompose/ifscompose.c:1281
 msgid "Max. Memory:"
-msgstr ""
+msgstr "Највише меморије:"
 
 #: plug-ins/ifscompose/ifscompose.c:1308
 msgid "Subdivide:"
-msgstr ""
+msgstr "Даље подели:"
 
 #: plug-ins/ifscompose/ifscompose.c:1321
 msgid "Spot Radius:"
-msgstr ""
+msgstr "Полупречник тачке:"
 
 #: plug-ins/ifscompose/ifscompose.c:1394
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr ""
+msgstr "Исцртавам IFS (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1413
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr ""
+msgstr "Копирам IFS на слику (%d/%d)..."
 
 #: plug-ins/ifscompose/ifscompose.c:1552
 #, c-format
 msgid "Transformation %s"
-msgstr ""
+msgstr "Трансформација %s"
 
 #: plug-ins/ifscompose/ifscompose.c:2622
 #, c-format
@@ -9669,47 +9669,50 @@ msgid ""
 "Cannot save file '%s'.\n"
 "Check the path and permissions."
 msgstr ""
+"Не могу да сачувам датотеку „%s“.\n"
+"Проверите путању и овлашћења."
 
 #: plug-ins/ifscompose/ifscompose.c:2710
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
-msgstr ""
+msgstr "Чини се да датотека „%s“ није IFS композитна датотека."
 
 #: plug-ins/ifscompose/ifscompose.c:2715 plug-ins/ifscompose/ifscompose.c:2725
 msgid "Load failed"
-msgstr ""
+msgstr "Неуспешно учитавање"
 
 #: plug-ins/ifscompose/ifscompose.c:2738
 msgid "Save as IFS file"
-msgstr ""
+msgstr "Сачувај као IFS датотеку"
 
 #: plug-ins/ifscompose/ifscompose.c:2763
 msgid "Load IFS file"
-msgstr ""
+msgstr "Учитај IFS датотеку"
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
-msgstr ""
+msgstr "Додатак за мапе слика 2.0"
 
 #: plug-ins/imagemap/imap_about.c:44
 msgid "Copyright(c) 1999-2003 by Maurits Rijk"
-msgstr ""
+msgstr "Сва права задржана 1999–2003 Мауриц Ријк (Maurits Rijk)"
 
+# bug: this shouldn't be marked for translation
 #: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
-msgstr ""
+msgstr "lpeek.mrijk@consunet.nl"
 
 #: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
-msgstr ""
+msgstr "  Објављено под Гнуовом општом јавном лиценцом (GPL)  "
 
 #: plug-ins/imagemap/imap_circle.c:64
 msgid "C_ircle"
-msgstr ""
+msgstr "_Круг"
 
 #: plug-ins/imagemap/imap_circle.c:265
 msgid "Center _x:"
-msgstr ""
+msgstr "Центар _x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
@@ -9719,89 +9722,89 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:409
 #: plug-ins/imagemap/imap_rectangle.c:416
 msgid "pixels"
-msgstr ""
+msgstr "тачака"
 
 #: plug-ins/imagemap/imap_circle.c:272
 msgid "Center _y:"
-msgstr ""
+msgstr "Центар _y:"
 
 #: plug-ins/imagemap/imap_cmd_clear.c:51
 msgid "Clear"
-msgstr ""
+msgstr "Очисти"
 
 #: plug-ins/imagemap/imap_cmd_create.c:58
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:150
 msgid "Create"
-msgstr ""
+msgstr "Направи"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_toolbar.c:124
 msgid "Cut"
-msgstr ""
+msgstr "Исеци"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
 #: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
-msgstr ""
+msgstr "Обриши"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:61
 #: plug-ins/imagemap/imap_polygon.c:725
 msgid "Delete Point"
-msgstr ""
+msgstr "Обриши тачку"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
-msgstr ""
+msgstr "Уреди објекат"
 
 #. Create the areas
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:116
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:146
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:250
 msgid "Use Gimp Guides"
-msgstr ""
+msgstr "Користи Гимпове вођице"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:159
 msgid "Al_ternate"
-msgstr ""
+msgstr "Н_аизменичне"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:164
 msgid "A_ll"
-msgstr ""
+msgstr "_Све"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:168
 msgid "Add Additional Guides"
-msgstr ""
+msgstr "Додај још вођица"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 msgid "L_eft Border"
-msgstr ""
+msgstr "Л_ева ивица"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
 msgid "_Right Border"
-msgstr ""
+msgstr "_Десна ивица"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 msgid "_Upper Border"
-msgstr ""
+msgstr "_Горња ивица"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
 msgid "Lo_wer Border"
-msgstr ""
+msgstr "Доњ_а ивица"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:198
 msgid "_Base URL:"
-msgstr ""
+msgstr "_Основна адреса:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:72
 #: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
-msgstr ""
+msgstr "Сачини вођице"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr ""
+msgstr "Резултујуће границе вођице: %d,%d до %d,%d (%d површи)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
@@ -9810,298 +9813,304 @@ msgid ""
 "allows you to rapidly create the most common image map type -\n"
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
+"Вођице су предефинисани правоугаоници који покривају слику. \n"
+"Постављате их помоћу њихове ширине, висине, и размака међу њима. \n"
+"Ово вам омогућава да брзо сачините најчешће врсте мапа — скуп \n"
+"„сличица“, згодне за палете за навигацију."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164
 msgid "_Left Start at:"
-msgstr ""
+msgstr "_Лево почиње на:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:174
 msgid "_Top Start at:"
-msgstr ""
+msgstr "_Врх почиње на:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "_Horz. Spacing:"
-msgstr ""
+msgstr "_Водор. размак:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:185
 msgid "_No. Across:"
-msgstr ""
+msgstr "_Бр. попреко:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_Vert. Spacing:"
-msgstr ""
+msgstr "_Успр. размак:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:197
 msgid "No. _Down:"
-msgstr ""
+msgstr "Бр. _доле:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "Base _URL:"
-msgstr ""
+msgstr "Основна _адреса:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:222
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr ""
+msgstr "Величина слике: %d x %d"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:227
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr ""
+msgstr "Резултујуће границе вођица: 0,0 до 0,0 (0 обалсти)"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:262
 msgid "Guides"
-msgstr ""
+msgstr "Вођице"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:62
 #: plug-ins/imagemap/imap_polygon.c:739
 msgid "Insert Point"
-msgstr ""
+msgstr "Уметни тачку"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
-msgstr ""
+msgstr "Пребаци ниже"
 
 #: plug-ins/imagemap/imap_cmd_move_sash.c:68
 msgid "Move Sash"
-msgstr ""
+msgstr "Пребаци окно"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:56
 msgid "Move Selected Objects"
-msgstr ""
+msgstr "Премести изабране објекте"
 
 #: plug-ins/imagemap/imap_cmd_move_to_front.c:51
 #: plug-ins/imagemap/imap_toolbar.c:152
 msgid "Move To Front"
-msgstr ""
+msgstr "Пребаци на врх"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
-msgstr ""
+msgstr "Пребаци горе"
 
 #: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:130
 msgid "Paste"
-msgstr ""
+msgstr "Убаци"
 
 #: plug-ins/imagemap/imap_cmd_select_all.c:51
 msgid "Select All"
-msgstr ""
+msgstr "Изабери све"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:51
 msgid "Select Next"
-msgstr ""
+msgstr "Изабери следеће"
 
 #: plug-ins/imagemap/imap_cmd_select_prev.c:51
 msgid "Select Previous"
-msgstr ""
+msgstr "Изабери претходно"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:64
 msgid "Select Region"
-msgstr ""
+msgstr "Изабери област"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:158
 msgid "Send To Back"
-msgstr ""
+msgstr "Пошаљи у позадину"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:53
 msgid "Unselect"
-msgstr ""
+msgstr "Од-изабери"
 
 #: plug-ins/imagemap/imap_cmd_unselect_all.c:53
 msgid "Unselect All"
-msgstr ""
+msgstr "Избор на ништа"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:195
 msgid "Link Type"
-msgstr ""
+msgstr "Врста везе"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:204
 msgid "_Web Site"
-msgstr ""
+msgstr "_Веб страница"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:210
 msgid "_Ftp Site"
-msgstr ""
+msgstr "_FTP место"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:216
 msgid "_Gopher"
-msgstr ""
+msgstr "_Gopher"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:222
 msgid "Ot_her"
-msgstr ""
+msgstr "Оста_ло"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:228
 msgid "F_ile"
-msgstr ""
+msgstr "Д_атотека"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "WAI_S"
-msgstr ""
+msgstr "WAI_S"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "Tel_net"
-msgstr ""
+msgstr "Тел_нет"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "e-_mail"
-msgstr ""
+msgstr "е-_пошта"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "_URL to activate when this area is clicked: (required)"
-msgstr ""
+msgstr "_Адреса која се активира по клику на ову површ: (обавезно)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "Select HTML file"
-msgstr ""
+msgstr "Изаберите HTML датотеку"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:263
 msgid "Relati_ve link"
-msgstr ""
+msgstr "Рела_тивна веза"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
+msgstr "Име/ИД одредишног оквира: (необавезно — користи се само за оквире)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "ALT te_xt: (optional)"
-msgstr ""
+msgstr "ALT текст: (необавезно)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:275
 msgid "_Link"
-msgstr ""
+msgstr "_Веза"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:309
 msgid "Dimensions"
-msgstr ""
+msgstr "Величина"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:313
 msgid "Pre_view"
-msgstr ""
+msgstr "Из_глед"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
 msgid "_JavaScript"
-msgstr ""
+msgstr "_ЈаваСкрипт"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:450
 msgid "Area Settings"
-msgstr ""
+msgstr "Подешавања површи"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:494
 #, c-format
 msgid "Area #%d Settings"
-msgstr ""
+msgstr "Подешавања површи #%d"
 
 #: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
-msgstr ""
+msgstr "Грешка при отварању датотеке"
 
 #: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
-msgstr ""
+msgstr "Учитај мапу слике"
 
 #: plug-ins/imagemap/imap_file.c:80
 msgid "File exists!"
-msgstr ""
+msgstr "Датотека постоји!"
 
 #: plug-ins/imagemap/imap_file.c:85
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
+"Датотека већ постоји.\n"
+"  Заиста желите да је преснимите?"
 
 #: plug-ins/imagemap/imap_file.c:110
 msgid "Save Imagemap"
-msgstr ""
+msgstr "Сачувај мапу слике"
 
 #: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
-msgstr ""
+msgstr "Подешавање мреже"
 
 #: plug-ins/imagemap/imap_grid.c:205
 msgid "_Snap-To Grid Enabled"
-msgstr ""
+msgstr "Укључено _пријањање уз мрежу"
 
 #: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
-msgstr ""
+msgstr "Видљивост и врста мреже"
 
 #: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
-msgstr ""
+msgstr "_Сакривено"
 
 #: plug-ins/imagemap/imap_grid.c:226
 msgid "_Lines"
-msgstr ""
+msgstr "_Линије"
 
 #: plug-ins/imagemap/imap_grid.c:235
 msgid "C_rosses"
-msgstr ""
+msgstr "У_крштања"
 
 #: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
-msgstr ""
+msgstr "Величина подеока мреже"
 
 #: plug-ins/imagemap/imap_grid.c:251
 msgid "_Width"
-msgstr ""
+msgstr "_Ширина"
 
 #: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
-msgstr ""
+msgstr "_Висина"
 
 #: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
-msgstr ""
+msgstr "Померај мреже"
 
 #: plug-ins/imagemap/imap_grid.c:279
 msgid "pixels from l_eft"
-msgstr ""
+msgstr "тачака од _леве стране"
 
 #: plug-ins/imagemap/imap_grid.c:284
 msgid "pixels from _top"
-msgstr ""
+msgstr "тачака од _врха"
 
 #: plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
-msgstr ""
+msgstr "_Изглед"
 
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr ""
+msgstr "<Image>/Филтери/Веб/_Мапа слике..."
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
-msgstr ""
+msgstr "Неки подаци су измењени!"
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Do you really want to discard your changes?"
-msgstr ""
+msgstr "Да ли заиста желите да одбаците ваше измене?"
 
 #: plug-ins/imagemap/imap_main.c:946
 #, c-format
 msgid "File \"%s\" saved."
-msgstr ""
+msgstr "Датотека „%s“ је сачувана."
 
 #: plug-ins/imagemap/imap_main.c:950
 msgid "Couldn't save file:"
-msgstr ""
+msgstr "Не могу да сачувам датотеку:"
 
 #: plug-ins/imagemap/imap_main.c:976
 msgid "Image size has changed."
-msgstr ""
+msgstr "Величина слике је измењена."
 
 #: plug-ins/imagemap/imap_main.c:977
 msgid "Resize area's?"
-msgstr ""
+msgstr "Промени величину површи?"
 
 #: plug-ins/imagemap/imap_main.c:1005
 msgid "Couldn't read file:"
-msgstr ""
+msgstr "Не могу да читам датотеку:"
 
 #: plug-ins/imagemap/imap_main.c:1052
 #, c-format
@@ -10132,11 +10141,11 @@ msgstr "_Уређивање"
 
 #: plug-ins/imagemap/imap_menu.c:273
 msgid "Deselect _All"
-msgstr ""
+msgstr "Од-изабери _све"
 
 #: plug-ins/imagemap/imap_menu.c:278
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "Уреди податке површи..."
 
 #: plug-ins/imagemap/imap_menu.c:293
 msgid "_View"
@@ -10144,15 +10153,15 @@ msgstr "П_реглед"
 
 #: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
-msgstr ""
+msgstr "Списак површи"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Source..."
-msgstr ""
+msgstr "Извор..."
 
 #: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
-msgstr ""
+msgstr "Сиви тонови"
 
 #: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
@@ -10160,7 +10169,7 @@ msgstr "Увећај на"
 
 #: plug-ins/imagemap/imap_menu.c:357
 msgid "_Mapping"
-msgstr ""
+msgstr "_Мапирање"
 
 #: plug-ins/imagemap/imap_menu.c:360 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
@@ -10168,7 +10177,7 @@ msgstr "Стрелица"
 
 #: plug-ins/imagemap/imap_menu.c:363
 msgid "Select Contiguous Region"
-msgstr ""
+msgstr "Изабери непрекидну област"
 
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
@@ -10180,11 +10189,11 @@ msgstr "Подешавања мреже..."
 
 #: plug-ins/imagemap/imap_menu.c:386
 msgid "Use GIMP Guides..."
-msgstr ""
+msgstr "Користи Гимпове вођице..."
 
 #: plug-ins/imagemap/imap_menu.c:388
 msgid "Create Guides..."
-msgstr ""
+msgstr "Направи вођице..."
 
 #: plug-ins/imagemap/imap_menu.c:395
 msgid "_Help"
@@ -10200,23 +10209,23 @@ msgstr "_Полигон"
 
 #: plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
-msgstr ""
+msgstr "x (тачака)"
 
 #: plug-ins/imagemap/imap_polygon.c:483
 msgid "y (pixels)"
-msgstr ""
+msgstr "y (тачака)"
 
 #: plug-ins/imagemap/imap_polygon.c:522
 msgid "_Insert"
-msgstr ""
+msgstr "_Уметни"
 
 #: plug-ins/imagemap/imap_polygon.c:528
 msgid "A_ppend"
-msgstr ""
+msgstr "На_додај"
 
 #: plug-ins/imagemap/imap_polygon.c:534
 msgid "_Remove"
-msgstr ""
+msgstr "У_клони"
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
@@ -10228,11 +10237,11 @@ msgstr "Увећај"
 
 #: plug-ins/imagemap/imap_popup.c:156
 msgid "Guides..."
-msgstr ""
+msgstr "Вођице..."
 
 #: plug-ins/imagemap/imap_preferences.c:212
 msgid "Couldn't save resource file:"
-msgstr ""
+msgstr "Не могу да сачувам датотеку са ресурсима:"
 
 #: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
@@ -10240,31 +10249,31 @@ msgstr "Изабери боју"
 
 #: plug-ins/imagemap/imap_preferences.c:446
 msgid "Default Map Type"
-msgstr ""
+msgstr "Подразумевана врста мапе"
 
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "_Prompt for area info"
-msgstr ""
+msgstr "_Питај за податке о површи"
 
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "_Require default URL"
-msgstr ""
+msgstr "_Захтевај подразумевану адресу"
 
 #: plug-ins/imagemap/imap_preferences.c:469
 msgid "Show area _handles"
-msgstr ""
+msgstr "Прикажи _ручке површи"
 
 #: plug-ins/imagemap/imap_preferences.c:471
 msgid "_Keep NCSA circles true"
-msgstr ""
+msgstr "_Задржи NCSA кругове тачним"
 
 #: plug-ins/imagemap/imap_preferences.c:473
 msgid "Show area URL _tip"
-msgstr ""
+msgstr "Прикажи адресу површи у _облачићу"
 
 #: plug-ins/imagemap/imap_preferences.c:476
 msgid "_Use double-sized grab handles"
-msgstr ""
+msgstr "_Користи два пута веће ручке за превлачење"
 
 #: plug-ins/imagemap/imap_preferences.c:483
 msgid "_Menu"
@@ -10272,27 +10281,27 @@ msgstr "_Мени"
 
 #: plug-ins/imagemap/imap_preferences.c:487
 msgid "Number of _Undo levels (1 - 99):"
-msgstr ""
+msgstr "Број нивоа _поништавања (1–99):"
 
 #: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of M_RU entries (1 - 16):"
-msgstr ""
+msgstr "Број _скорих уноса (1–16):"
 
 #: plug-ins/imagemap/imap_preferences.c:517
 msgid "Normal:"
-msgstr ""
+msgstr "Обичан:"
 
 #: plug-ins/imagemap/imap_preferences.c:523
 msgid "Selected:"
-msgstr ""
+msgstr "Изабран:"
 
 #: plug-ins/imagemap/imap_preferences.c:533
 msgid "Co_ntiguous Region"
-msgstr ""
+msgstr "_Непрекидна област"
 
 #: plug-ins/imagemap/imap_preferences.c:539
 msgid "_Automatically convert"
-msgstr ""
+msgstr "_Сам претвори"
 
 #: plug-ins/imagemap/imap_preferences.c:560
 msgid "General Preferences"
@@ -10304,15 +10313,15 @@ msgstr "П_равоугаоник"
 
 #: plug-ins/imagemap/imap_rectangle.c:390
 msgid "Upper left _x:"
-msgstr ""
+msgstr "Горе лево _x:"
 
 #: plug-ins/imagemap/imap_rectangle.c:397
 msgid "Upper left _y:"
-msgstr ""
+msgstr "Горе лево _y:"
 
 #: plug-ins/imagemap/imap_selection.c:174 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
-msgstr ""
+msgstr "Уреди"
 
 #: plug-ins/imagemap/imap_selection.c:343
 msgid "URL"
@@ -10328,7 +10337,7 @@ msgstr "Примедба"
 
 #: plug-ins/imagemap/imap_settings.c:88
 msgid "Settings for this Mapfile"
-msgstr ""
+msgstr "Подешавања за ову датотеку мапе"
 
 #: plug-ins/imagemap/imap_settings.c:95
 msgid "Image name:"
@@ -10348,7 +10357,7 @@ msgstr "_Аутор:"
 
 #: plug-ins/imagemap/imap_settings.c:104
 msgid "Default _URL:"
-msgstr ""
+msgstr "Подразумевана _адреса:"
 
 #: plug-ins/imagemap/imap_settings.c:106
 msgid "_Description:"
@@ -10356,7 +10365,7 @@ msgstr "_Опис:"
 
 #: plug-ins/imagemap/imap_settings.c:126
 msgid "Map file format"
-msgstr ""
+msgstr "Начин записа мапе"
 
 #: plug-ins/imagemap/imap_source.c:62
 msgid "View Source"
@@ -10364,7 +10373,7 @@ msgstr "Погледај изворни код"
 
 #: plug-ins/imagemap/imap_stock.c:45
 msgid "Edit Map Info..."
-msgstr ""
+msgstr "Уреди податке о мапи..."
 
 #: plug-ins/imagemap/imap_toolbar.c:103
 msgid "Open"
@@ -10372,7 +10381,7 @@ msgstr "Отвори"
 
 #: plug-ins/imagemap/imap_toolbar.c:105
 msgid "Save"
-msgstr ""
+msgstr "Сачувај"
 
 #: plug-ins/imagemap/imap_toolbar.c:108
 msgid "Preferences"
@@ -10396,54 +10405,54 @@ msgstr "Умањи"
 
 #: plug-ins/imagemap/imap_toolbar.c:148
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Уредите податке о мапи"
 
 #: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
-msgstr ""
+msgstr "Изаберите постојећу површ"
 
 #: plug-ins/imagemap/imap_tools.c:149
 msgid "Fuzzy Select"
-msgstr ""
+msgstr "Приближан избор"
 
 #: plug-ins/imagemap/imap_tools.c:150
 msgid "Select contiguous regions"
-msgstr ""
+msgstr "Изаберите напрекидне области"
 
 #: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Дефиниши правоугаону површ"
 
 #: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Дефиниши кружну/закривљену површ"
 
 #: plug-ins/imagemap/imap_tools.c:163
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Дефиниши полигонску површ"
 
 #: plug-ins/imagemap/imap_tools.c:168
 msgid "Edit selected area info"
-msgstr ""
+msgstr "Измени податке изабране површи"
 
 #: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
-msgstr ""
+msgstr "Обриши изабрану површ"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Образујем лавиринт помоћу Примовог алгоритма..."
 
 #: plug-ins/maze/algorithms.c:459
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Образујем лавиринт за поплочавање помоћу Примовог алгоритма..."
 
 #: plug-ins/maze/maze.c:157
 #, c-format
 msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
-msgstr ""
+msgstr "Образује лавиринт користећи или прво-дубински начин тражења или Примов алгоритам. Може да образује и лавиринте за поплочавање. Погледајте %s за више помоћи."
 
 #: plug-ins/maze/maze.c:159
 msgid "Draws a maze."
@@ -10451,134 +10460,141 @@ msgstr "Црта лавиринт."
 
 #: plug-ins/maze/maze.c:164
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
-msgstr ""
+msgstr "<Image>/Филтери/Исцртавање/Одсечак/_Лавиринт..."
 
 #: plug-ins/maze/maze.c:411
 msgid "Drawing Maze..."
-msgstr ""
+msgstr "Исцртава лавиринт..."
 
 #: plug-ins/maze/maze_face.c:193
 msgid "Help"
-msgstr ""
+msgstr "Помоћ"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:221
 msgid "Width (Pixels):"
-msgstr ""
+msgstr "Ширина (тачака):"
 
 #: plug-ins/maze/maze_face.c:233 plug-ins/maze/maze_face.c:249
 msgid "Pieces:"
-msgstr ""
+msgstr "Делови:"
 
 #: plug-ins/maze/maze_face.c:238
 msgid "Height (Pixels):"
-msgstr ""
+msgstr "Висина (тачака):"
 
 #: plug-ins/maze/maze_face.c:261
 msgid "Multiple (57):"
-msgstr ""
+msgstr "Умножак (57):"
 
 #: plug-ins/maze/maze_face.c:274
 msgid "Offset (1):"
-msgstr ""
+msgstr "Померај (1):"
 
 #: plug-ins/maze/maze_face.c:303
 msgid "Depth First"
-msgstr ""
+msgstr "Прво дубина"
 
 #: plug-ins/maze/maze_face.c:310
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Примов алгоритам"
 
 #: plug-ins/maze/maze_face.c:329
 #, c-format
 msgid "Selection is %dx%d"
-msgstr ""
+msgstr "Избор је %dx%d"
 
 #: plug-ins/maze/maze_face.c:435
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"Величина избора није парна.\n"
+"Плочасти лавиринт неће радити савршено."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:604
 #, c-format
 msgid "Opening %s"
-msgstr ""
+msgstr "Отварам %s"
 
 #: plug-ins/maze/maze_face.c:613
 #, c-format
 msgid "See %s"
-msgstr ""
+msgstr "Видите %s"
 
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
-msgstr ""
+msgstr "<Image>/Филтери/Дисторзије/_Магареће уши..."
 
 #: plug-ins/pagecurl/pagecurl.c:501
 msgid "Pagecurl Effect"
-msgstr ""
+msgstr "Ефекат магарећих ушију"
 
 #: plug-ins/pagecurl/pagecurl.c:523
 msgid "Curl Location"
-msgstr ""
+msgstr "Положај ушију"
 
 #: plug-ins/pagecurl/pagecurl.c:548
 msgid "Upper Left"
-msgstr ""
+msgstr "Горе лево"
 
 #: plug-ins/pagecurl/pagecurl.c:549
 msgid "Upper Right"
-msgstr ""
+msgstr "Горе десно"
 
 #: plug-ins/pagecurl/pagecurl.c:550
 msgid "Lower Left"
-msgstr ""
+msgstr "Доле лево"
 
 #: plug-ins/pagecurl/pagecurl.c:551
 msgid "Lower Right"
-msgstr ""
+msgstr "Доле десно"
 
 #: plug-ins/pagecurl/pagecurl.c:581
 msgid "Curl Orientation"
-msgstr ""
+msgstr "Усмерење ушију"
 
 #: plug-ins/pagecurl/pagecurl.c:620
 msgid "Shade under Curl"
-msgstr ""
+msgstr "Затамњење испод ушију"
 
 #: plug-ins/pagecurl/pagecurl.c:631
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
+"Користи текући прелив\n"
+"уместо боје четке/позадине"
 
 #: plug-ins/pagecurl/pagecurl.c:644
 msgid "Curl Opacity"
-msgstr ""
+msgstr "Провидност ушију"
 
 #: plug-ins/pagecurl/pagecurl.c:774
 msgid "Curl Layer"
-msgstr ""
+msgstr "Уши слоја"
 
+# Да ли су ово „уши“ или „свитак“?
 #: plug-ins/pagecurl/pagecurl.c:1011
 msgid "Page Curl..."
-msgstr ""
+msgstr "Уши папира..."
 
 #: plug-ins/print/gimp_color_window.c:194
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "Прилагођење боја штампе"
 
 #: plug-ins/print/gimp_color_window.c:242
 msgid "Brightness:"
-msgstr ""
+msgstr "Светлина:"
 
 #: plug-ins/print/gimp_color_window.c:250
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
+"Поставите светлину штампе.\n"
+"0 представља пуну црну, 2 представља пуну белу"
 
 #: plug-ins/print/gimp_color_window.c:262
 msgid "Contrast:"
@@ -10586,25 +10602,27 @@ msgstr "Контраст:"
 
 #: plug-ins/print/gimp_color_window.c:270
 msgid "Set the contrast of the print"
-msgstr ""
+msgstr "Поставите контраст при штампи"
 
 #: plug-ins/print/gimp_color_window.c:289
 msgid "Adjust the cyan balance of the print"
-msgstr ""
+msgstr "Прилагодите равнотежу цијана при штампи"
 
 #: plug-ins/print/gimp_color_window.c:308
 msgid "Adjust the magenta balance of the print"
-msgstr ""
+msgstr "Прилагодите равнотежу магенте при штампи"
 
 #: plug-ins/print/gimp_color_window.c:327
 msgid "Adjust the yellow balance of the print"
-msgstr ""
+msgstr "Прилагодите равнотежу жуте при штампи"
 
 #: plug-ins/print/gimp_color_window.c:346
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
+"Прилагодите засићење (равнотежу боја) штампе\n"
+"Користите засићење нула да произведете излаз у сивим тоновима помоћу црног и мастила у боји"
 
 #: plug-ins/print/gimp_color_window.c:359
 msgid "Density:"
@@ -10615,18 +10633,18 @@ msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
-msgstr ""
+msgstr "Прилагодите густину (количину мастила) штампе. Смањите густину ако мастило пролази кроз папир или се размазује; увећајте густину ако црне пообласти нису пуне."
 
 #: plug-ins/print/gimp_color_window.c:389
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
-msgstr ""
+msgstr "Прилагодите гаму штампе. Веће вредсности углавном производе светлију штампу, а мање вредности углавном производе тамнију штампу. Црна и бела ће остати исте, за разлику од подешавања светлине."
 
 #: plug-ins/print/gimp_color_window.c:405
 msgid "Dither Algorithm:"
-msgstr ""
+msgstr "Алгоритам за мешање:"
 
 #: plug-ins/print/gimp_color_window.c:413
 msgid ""
@@ -10637,6 +10655,11 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
+"Изаберите који се алгоритам за мешање користи.\n"
+"Адаптивни хибридни обично производи најбољи уопштени квалитет.\n"
+"Уређено је брже и производи готово исти квалитет за фотографије.\n"
+"Брзо и врло брзо су знатно бржи, и раде пристојно за текст и цртеже.\n"
+"Хибридни Флојд-Штајнбергов углавном производи лош излаз."
 
 #.
 #. * Create the main dialog
@@ -10675,6 +10698,12 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"Поставите слику на страници.\n"
+"Кликните и превуците првим дугметом да распоредите слику.\n"
+"Кликните и превуците другим дугметом да преместите слику са већом прецизношћу; свака јединица кретања помера слику за једну штампарску тачку (1/72 инча)\n"
+"Кликните и превуците трећим (средњим) дугметом да преместите слику за јединице величине слике.\n"
+"Држањем тастера Shift притиснутим при клику и превлачењу ограничава слику на једино усправно или водоравно кретање.\n"
+"Уколико кликнете неко друго дугме при превлачењу миша, слика ће се вратити на почетни положај."
 
 #: plug-ins/print/gimp_main_window.c:482
 msgid "Portrait"
@@ -10804,7 +10833,7 @@ msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
-msgstr ""
+msgstr "Унесите праву наредбу за штампање на ваш штампач. Немојте уклањати „-l“ или „-oraw“ из ниске наредбе, или штампање вероватно неће успети!"
 
 #.
 #. * Output file selection dialog.
@@ -10863,6 +10892,27 @@ msgid ""
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
+"\n"
+"\n"
+"Сва права задржана 1997–2001 Мајкл Свит (Sweet), Роберт Кравиц \n"
+"(Krawitz), и остатак развојног тима Гимп-Штампе.\n"
+"\n"
+"Посетите нашу веб страницу на http://gimp-print.sourceforge.net.\n"
+"\n"
+"Овај програм је бесплатан софтвер; можете га делити и/или мењати\n"
+"у складу са условима ГНУ Опште Јавне Лиценце објављеном од стране\n"
+"Free Software Foundation; или верзијом 2 Лиценце, или\n"
+"(по вешем избору) било које новије верзије.\n"
+"\n"
+"Овај програм је дат са надом да ће бити користан, али\n"
+"БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; чак и без наговештене гаранције\n"
+"ПРОДAВЦА или ПОДЕСНОСТИ ЗА ОДРЕћЕНУ УПОТРЕБУ.\n"
+"Погледати ГНУ Општу Јавну Лиценцу за више детаља.\n"
+"\n"
+"Требало би да сте добили и копију ГНУ Опште Јавне Лиценце\n"
+"заједно са овим програмом; ако нисте, пишите на адресу: \n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
+"Boston, MA 02111-1307, USA.\n"
 
 #: plug-ins/print/gimp_main_window.c:912
 msgid "Printer Settings"
@@ -11107,7 +11157,8 @@ msgstr "Прилагоди излаз..."
 #: plug-ins/print/gimp_main_window.c:1462
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr "Прилагоди равнотежу боја, светлину, контраст, засићење и алгоритам за тачкање"
+msgstr ""
+"Прилагоди равнотежу боја, светлину, контраст, засићење и алгоритам за тачкање"
 
 #: plug-ins/print/print.c:170
 msgid "<Image>/File/_Print..."
