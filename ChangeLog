@@ -1,3 +1,8 @@
+Wed Jul 28 16:17:29 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdbgen.pl: eval "defined $_" -> eval "defined scalar $_"
+	(portability nit)
+
 Wed Jul 28 15:03:28 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl: add sample_colorize and

@@ -54,9 +54,9 @@ $evalcode = <<'CODE';
 	my $dest = shift;
 
 	foreach (@_) {
-	    if (eval "defined $_") {
+	    if (eval "defined scalar $_") {
 		(my $var = $_) =~ s/^(\W)//;
-		for ($1) {
+		 for ($1) {
 		    /\$/ && do { $$dest->{$var} =   $$var  ; last; };
 		    /\@/ && do { $$dest->{$var} = [ @$var ]; last; };
 		    /\%/ && do { $$dest->{$var} = { %$var }; last; };
