@@ -38,7 +38,9 @@ enum
 
 static void      gimp_undo_class_init  (GimpUndoClass *klass);
 static void      gimp_undo_init        (GimpUndo      *undo);
-static void      gimp_undo_destroy     (GtkObject     *object);
+
+static void      gimp_undo_finalize    (GObject       *object);
+
 static void      gimp_undo_real_push   (GimpUndo      *undo,
                                         GimpImage     *gimage);
 static void      gimp_undo_real_pop    (GimpUndo      *undo,
@@ -60,19 +62,22 @@ gimp_undo_get_type (void)
 
   if (! undo_type)
     {
-      static const GtkTypeInfo undo_info =
+      static const GTypeInfo undo_info =
       {
-        "GimpUndo",
-        sizeof (GimpUndo),
         sizeof (GimpUndoClass),
-        (GtkClassInitFunc) gimp_undo_class_init,
-        (GtkObjectInitFunc) gimp_undo_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_undo_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpUndo),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_undo_init,
       };
 
-      undo_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &undo_info);
+      undo_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+					  "GimpUndo",
+					  &undo_info, 0);
   }
 
   return undo_type;
@@ -81,11 +86,11 @@ gimp_undo_get_type (void)
 static void
 gimp_undo_class_init (GimpUndoClass *klass)
 {
-  GtkObjectClass     *object_class;
-  GimpViewableClass  *viewable_class;
+  GObjectClass      *object_class;
+  GimpViewableClass *viewable_class;
 
-  object_class = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -109,8 +114,8 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
-  object_class->destroy       = gimp_undo_destroy;
-  
+  object_class->finalize      = gimp_undo_finalize;
+
   viewable_class->get_preview = gimp_undo_get_preview;
 
   klass->push                 = gimp_undo_real_push;
@@ -129,7 +134,7 @@ gimp_undo_init (GimpUndo *undo)
 }
 
 static void
-gimp_undo_destroy (GtkObject *object)
+gimp_undo_finalize (GObject *object)
 {
   GimpUndo *undo;
 
@@ -147,8 +152,7 @@ gimp_undo_destroy (GtkObject *object)
       undo->preview = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpUndo *
@@ -161,7 +165,7 @@ gimp_undo_new (const gchar      *name,
 {
   GimpUndo *undo;
 
-  undo = GIMP_UNDO (gtk_object_new (GIMP_TYPE_UNDO, NULL));
+  undo = GIMP_UNDO (g_object_new (GIMP_TYPE_UNDO, NULL));
   
   gimp_object_set_name (GIMP_OBJECT (undo), name);
   

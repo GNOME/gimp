@@ -28,9 +28,10 @@
 #include "gimpundostack.h"
 
 
-static void  gimp_undo_stack_class_init  (GimpUndoStackClass *klass);
-static void  gimp_undo_stack_init        (GimpUndoStack      *stack);
-static void  gimp_undo_stack_destroy     (GtkObject          *object);
+static void  gimp_undo_stack_class_init      (GimpUndoStackClass *klass);
+static void  gimp_undo_stack_init            (GimpUndoStack      *stack);
+
+static void  gimp_undo_stack_finalize        (GObject            *object);
 
 static void  gimp_undo_stack_add_callback    (GimpContainer      *container,
                                               GimpObject         *object,
@@ -50,20 +51,22 @@ gimp_undo_stack_get_type (void)
 
   if (! undo_stack_type)
     {
-      static const GtkTypeInfo undo_stack_info =
+      static const GTypeInfo undo_stack_info =
       {
-        "GimpUndoStack",
-        sizeof (GimpUndoStack),
         sizeof (GimpUndoStackClass),
-        (GtkClassInitFunc) gimp_undo_stack_class_init,
-        (GtkObjectInitFunc) gimp_undo_stack_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_undo_stack_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpUndoStack),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_undo_stack_init,
       };
 
-      undo_stack_type = gtk_type_unique (GIMP_TYPE_UNDO, 
-                                         &undo_stack_info);
+      undo_stack_type = g_type_register_static (GIMP_TYPE_UNDO,
+						"GimpUndoStack", 
+						&undo_stack_info, 0);
     }
 
   return undo_stack_type;
@@ -72,13 +75,13 @@ gimp_undo_stack_get_type (void)
 static void
 gimp_undo_stack_class_init (GimpUndoStackClass *klass)
 {
-  GtkObjectClass  *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_undo_stack_destroy;
+  object_class->finalize = gimp_undo_stack_finalize;
 }
 
 static void
@@ -104,7 +107,7 @@ gimp_undo_stack_init (GimpUndoStack *stack)
 }
 
 static void
-gimp_undo_stack_destroy (GtkObject *object)
+gimp_undo_stack_finalize (GObject *object)
 {
   GimpUndoStack *stack;
 
@@ -116,8 +119,7 @@ gimp_undo_stack_destroy (GtkObject *object)
       stack->undos = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpUndoStack *

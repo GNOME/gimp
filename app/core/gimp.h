@@ -107,7 +107,8 @@ struct _GimpClass
 };
 
 
-GtkType       gimp_get_type             (void);
+GType         gimp_get_type             (void);
+
 Gimp        * gimp_new                  (void);
 
 void          gimp_initialize           (Gimp              *gimp);

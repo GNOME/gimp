@@ -25,9 +25,10 @@
 
 #define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())
 #define GIMP_TOOL_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
-#define GIMP_IS_TOOL_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
 #define GIMP_TOOL_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
+#define GIMP_IS_TOOL_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
 #define GIMP_IS_TOOL_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_INFO))
+#define GIMP_TOOL_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
 
 
 typedef struct _GimpToolInfoClass GimpToolInfoClass;
@@ -37,7 +38,7 @@ struct _GimpToolInfo
 {
   GimpData          parent_instance;
 
-  GtkType           tool_type;
+  GType             tool_type;
 
   gchar            *blurb;
   gchar            *help;
@@ -64,10 +65,10 @@ struct _GimpToolInfoClass
 };
 
 
-GtkType        gimp_tool_info_get_type     (void);
+GType          gimp_tool_info_get_type     (void);
 
 GimpToolInfo * gimp_tool_info_new          (GimpContext  *context,
-					    GtkType       tool_type,
+					    GType         tool_type,
 					    gboolean      tool_context,
 					    const gchar  *identifier,
 					    const gchar  *blurb,

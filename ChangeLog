@@ -1,3 +1,16 @@
+2001-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* TODO.xml: added a TODO entry about additional image/file info.
+
+	* app/file-save.c: #include "core/gimpdocuments.h"
+
+	* app/core/gimpcontainer.[ch]: made virtual functions out of some
+	signals.
+
+	* app/core/*.[ch]: more GObject stuff: ported all
+	gimp_foo_get_type() functions and replaced almost all "destroy"
+	implementations with either "finalize" or "dispose" functions.
+
 2001-08-11  Seth Burgess      <sjburges@gimp.org>
 	
 	* plug-ins/common/colortoalpha.c: set nparams != 4 for 
@@ -30,8 +43,13 @@
 
 	* app/widgets/gimpdnd.[ch]: make it DND-able.
 
+<<<<<<< ChangeLog
+	* app/widgets/gimppreview.c: fix preview rendering correctly this
+	time.
+=======
 	* app/widgets/gimppreview.c: fix  preview rendering correctly this
 	time.
+>>>>>>> 1.3709
 
 2001-08-10  Sven Neumann  <sven@gimp.org>
 

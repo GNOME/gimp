@@ -67,26 +67,29 @@ static void   gimp_context_destroy_callback (GimpContext *context,
 static GimpObjectClass *parent_class = NULL;
 
 
-GtkType 
+GType 
 gimp_get_type (void)
 {
-  static GtkType object_type = 0;
+  static GType object_type = 0;
 
   if (! object_type)
     {
-      GtkTypeInfo object_info =
+      static const GTypeInfo object_info =
       {
-        "Gimp",
-        sizeof (Gimp),
         sizeof (GimpClass),
-        (GtkClassInitFunc) gimp_class_init,
-        (GtkObjectInitFunc) gimp_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (Gimp),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_init,
       };
 
-      object_type = gtk_type_unique (GIMP_TYPE_OBJECT, &object_info);
+      object_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					    "Gimp", 
+					    &object_info, 0);
     }
 
   return object_type;
@@ -170,10 +173,14 @@ gimp_destroy (GtkObject *object)
 
   gimp = GIMP (object);
 
-  gimp_set_current_context (gimp, NULL);
+  if (gimp->current_context)
+    gimp_set_current_context (gimp, NULL);
 
-  gimp_set_user_context (gimp, NULL);
-  gimp_set_default_context (gimp, NULL);
+  if (gimp->user_context)
+    gimp_set_user_context (gimp, NULL);
+
+  if (gimp->default_context)
+    gimp_set_default_context (gimp, NULL);
 
   if (gimp->standard_context)
     {
@@ -181,9 +188,11 @@ gimp_destroy (GtkObject *object)
       gimp->standard_context = NULL;
     }
 
-  gimp_image_new_exit (gimp);
+  if (gimp->image_base_type_names)
+    gimp_image_new_exit (gimp);
 
-  gimp_documents_exit (gimp);
+  if (gimp->documents)
+    gimp_documents_exit (gimp);
 
   if (gimp->tool_info_list)
     {
@@ -191,7 +200,8 @@ gimp_destroy (GtkObject *object)
       gimp->tool_info_list = NULL;
     }
 
-  procedural_db_free (gimp);
+  if (gimp->procedural_ht)
+    procedural_db_free (gimp);
 
   if (gimp->brush_factory)
     {
@@ -251,9 +261,11 @@ gimp_destroy (GtkObject *object)
       gimp->images = NULL;
     }
 
-  gimp_parasites_exit (gimp);
+  if (gimp->parasites)
+    gimp_parasites_exit (gimp);
 
-  gimp_units_exit (gimp);
+  if (gimp->user_units)
+    gimp_units_exit (gimp);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

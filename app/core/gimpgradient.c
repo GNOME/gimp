@@ -45,7 +45,9 @@
 
 static void       gimp_gradient_class_init      (GimpGradientClass *klass);
 static void       gimp_gradient_init            (GimpGradient      *gradient);
-static void       gimp_gradient_destroy         (GtkObject         *object);
+
+static void       gimp_gradient_finalize        (GObject           *object);
+
 static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
 						 gint               width,
 						 gint               height);
@@ -76,19 +78,22 @@ gimp_gradient_get_type (void)
 
   if (! gradient_type)
     {
-      static const GtkTypeInfo gradient_info =
+      static const GTypeInfo gradient_info =
       {
-        "GimpGradient",
-        sizeof (GimpGradient),
         sizeof (GimpGradientClass),
-        (GtkClassInitFunc) gimp_gradient_class_init,
-        (GtkObjectInitFunc) gimp_gradient_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_gradient_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpGradient),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_gradient_init,
       };
 
-      gradient_type = gtk_type_unique (GIMP_TYPE_DATA, &gradient_info);
+      gradient_type = g_type_register_static (GIMP_TYPE_DATA,
+					      "GimpGradient",
+					      &gradient_info, 0);
   }
 
   return gradient_type;
@@ -97,24 +102,24 @@ gimp_gradient_get_type (void)
 static void
 gimp_gradient_class_init (GimpGradientClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
-  data_class     = (GimpDataClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  data_class     = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_gradient_destroy;
+  object_class->finalize          = gimp_gradient_finalize;
 
   viewable_class->get_new_preview = gimp_gradient_get_new_preview;
 
-  data_class->dirty         = gimp_gradient_dirty;
-  data_class->save          = gimp_gradient_save;
-  data_class->get_extension = gimp_gradient_get_extension;
-  data_class->duplicate     = gimp_gradient_duplicate;
+  data_class->dirty               = gimp_gradient_dirty;
+  data_class->save                = gimp_gradient_save;
+  data_class->get_extension       = gimp_gradient_get_extension;
+  data_class->duplicate           = gimp_gradient_duplicate;
 }
 
 static void
@@ -125,17 +130,19 @@ gimp_gradient_init (GimpGradient *gradient)
 }
 
 static void
-gimp_gradient_destroy (GtkObject *object)
+gimp_gradient_finalize (GObject *object)
 {
   GimpGradient *gradient;
 
   gradient = GIMP_GRADIENT (object);
 
   if (gradient->segments)
-    gimp_gradient_segments_free (gradient->segments);
+    {
+      gimp_gradient_segments_free (gradient->segments);
+      gradient->segments = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *
@@ -330,7 +337,7 @@ gimp_gradient_load (const gchar *filename)
     {
       g_message ("%s(): invalid number of segments in \"%s\"",
 		 G_GNUC_FUNCTION, filename);
-      gtk_object_sink (GTK_OBJECT (gradient));
+      g_object_unref (G_OBJECT (gradient));
       fclose (file);
       return NULL;
     }

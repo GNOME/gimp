@@ -38,6 +38,7 @@ typedef enum
 #define GIMP_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER, GimpContainerClass))
 #define GIMP_IS_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER))
 #define GIMP_IS_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER))
+#define GIMP_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER, GimpContainerClass))
 
 
 typedef struct _GimpContainerClass GimpContainerClass;
@@ -60,26 +61,29 @@ struct _GimpContainerClass
 {
   GimpObjectClass  parent_class;
 
-  void         (* add)                (GimpContainer *container,
-				       GimpObject    *object);
-  void         (* remove)             (GimpContainer *container,
-				       GimpObject    *object);
-  void         (* reorder)            (GimpContainer *container,
-				       GimpObject    *object,
-				       gint           new_index);
-  gboolean     (* have)               (GimpContainer *container,
-				       GimpObject    *object);
-  void         (* foreach)            (GimpContainer *container,
-				       GFunc          func,
-				       gpointer       user_data);
-  GimpObject * (* get_child_by_name)  (GimpContainer *container,
-				       gchar         *name);
-  GimpObject * (* get_child_by_index) (GimpContainer *container,
-				       gint           index);
-  gint         (* get_child_index)    (GimpContainer *container,
-				       GimpObject    *object);
-  void         (* freeze)             (GimpContainer *container);
-  void         (* thaw)               (GimpContainer *container);
+  /*  signals  */
+  void         (* add)                (GimpContainer       *container,
+				       GimpObject          *object);
+  void         (* remove)             (GimpContainer       *container,
+				       GimpObject          *object);
+  void         (* reorder)            (GimpContainer       *container,
+				       GimpObject          *object,
+				       gint                 new_index);
+  void         (* freeze)             (GimpContainer       *container);
+  void         (* thaw)               (GimpContainer       *container);
+
+  /*  virtual functions  */
+  gboolean     (* have)               (const GimpContainer *container,
+				       const GimpObject    *object);
+  void         (* foreach)            (const GimpContainer *container,
+				       GFunc                func,
+				       gpointer             user_data);
+  GimpObject * (* get_child_by_name)  (const GimpContainer *container,
+				       const gchar         *name);
+  GimpObject * (* get_child_by_index) (const GimpContainer *container,
+				       gint                 index);
+  gint         (* get_child_index)    (const GimpContainer *container,
+				       const GimpObject    *object);
 };
 
 
@@ -100,6 +104,10 @@ gboolean     gimp_container_reorder            (GimpContainer       *container,
 						GimpObject          *object,
 						gint                 new_index);
 
+void         gimp_container_freeze             (GimpContainer       *container);
+void         gimp_container_thaw               (GimpContainer       *container);
+gboolean     gimp_container_frozen             (GimpContainer       *container);
+
 gboolean     gimp_container_have               (GimpContainer       *container,
 						GimpObject          *object);
 void         gimp_container_foreach            (GimpContainer       *container,
@@ -112,10 +120,6 @@ GimpObject * gimp_container_get_child_by_index (const GimpContainer *container,
 						gint                 index);
 gint         gimp_container_get_child_index    (const GimpContainer *container,
 						const GimpObject    *object);
-
-void         gimp_container_freeze             (GimpContainer       *container);
-void         gimp_container_thaw               (GimpContainer       *container);
-gboolean     gimp_container_frozen             (GimpContainer       *container);
 
 GQuark       gimp_container_add_handler        (GimpContainer       *container,
 						const gchar         *signame,

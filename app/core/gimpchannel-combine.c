@@ -52,32 +52,36 @@
 
 static void   gimp_channel_class_init (GimpChannelClass *klass);
 static void   gimp_channel_init       (GimpChannel      *channel);
-static void   gimp_channel_destroy    (GtkObject        *object);
+
+static void   gimp_channel_finalize   (GObject          *object);
 
 
 static GimpDrawableClass * parent_class = NULL;
 
 
-GtkType
+GType
 gimp_channel_get_type (void)
 {
-  static GtkType channel_type = 0;
+  static GType channel_type = 0;
 
-  if (!channel_type)
+  if (! channel_type)
     {
-      GtkTypeInfo channel_info =
+      static const GTypeInfo channel_info =
       {
-	"GimpChannel",
+        sizeof (GimpChannelClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_channel_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpChannel),
-	sizeof (GimpChannelClass),
-	(GtkClassInitFunc) gimp_channel_class_init,
-	(GtkObjectInitFunc) gimp_channel_init,
-        /* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_channel_init,
       };
 
-      channel_type = gtk_type_unique (GIMP_TYPE_DRAWABLE, &channel_info);
+      channel_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
+					     "GimpChannel",
+					     &channel_info, 0);
     }
 
   return channel_type;
@@ -86,13 +90,13 @@ gimp_channel_get_type (void)
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_channel_destroy;
+  object_class->finalize = gimp_channel_finalize;
 }
 
 static void
@@ -118,23 +122,27 @@ gimp_channel_init (GimpChannel *channel)
 }
 
 static void
-gimp_channel_destroy (GtkObject *object)
+gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel;
 
-  g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (object));
 
   channel = GIMP_CHANNEL (object);
 
-  /* free the segments?  */
   if (channel->segs_in)
-    g_free (channel->segs_in);
-  if (channel->segs_out)
-    g_free (channel->segs_out);
+    {
+      g_free (channel->segs_in);
+      channel->segs_in = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  if (channel->segs_out)
+    {
+      g_free (channel->segs_out);
+      channel->segs_out = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -240,7 +248,6 @@ void
 gimp_channel_set_color (GimpChannel   *channel,
 			const GimpRGB *color)
 {
-  g_return_if_fail (channel != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
@@ -258,7 +265,6 @@ gimp_channel_set_color (GimpChannel   *channel,
 const GimpRGB *
 gimp_channel_get_color (const GimpChannel *channel)
 {
-  g_return_val_if_fail (channel != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
 
   return &channel->color;
@@ -267,7 +273,6 @@ gimp_channel_get_color (const GimpChannel *channel)
 gint
 gimp_channel_get_opacity (const GimpChannel *channel)
 {
-  g_return_val_if_fail (channel != NULL, 0);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
 
   return (gint) (channel->color.a * 100.999);
@@ -277,7 +282,6 @@ void
 gimp_channel_set_opacity (GimpChannel *channel,
 			  gint         opacity)
 {
-  g_return_if_fail (channel != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   opacity = CLAMP (opacity, 0, 100);
@@ -292,6 +296,8 @@ gimp_channel_scale (GimpChannel *channel,
 {
   PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   if (new_width == 0 || new_height == 0)
     return;
@@ -346,6 +352,8 @@ gimp_channel_resize (GimpChannel *channel,
   gint         clear;
   gint         w, h;
   gint         x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   if (!new_width || !new_height)
     return;
@@ -443,6 +451,8 @@ gimp_channel_new_mask (GimpImage *gimage,
   GimpRGB      black = { 0.0, 0.0, 0.0, 0.5 };
   GimpChannel *new_channel;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
   /*  Create the new channel  */
   new_channel = gimp_channel_new (gimage, width, height,
 				  _("Selection Mask"), &black);
@@ -467,6 +477,8 @@ gimp_channel_boundary (GimpChannel  *mask,
 {
   gint        x3, y3, x4, y4;
   PixelRegion bPR;
+
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
 
   if (! mask->boundary_known)
     {
@@ -532,6 +544,8 @@ gimp_channel_value (GimpChannel *mask,
   Tile *tile;
   gint  val;
 
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), 0);
+
   /*  Some checks to cut back on unnecessary work  */
   if (mask->bounds_known)
     {
@@ -568,6 +582,8 @@ gimp_channel_bounds (GimpChannel *mask,
   gint         tx1, tx2, ty1, ty2;
   gint         minx, maxx;
   gpointer     pr;
+
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
 
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
@@ -676,6 +692,8 @@ gimp_channel_is_empty (GimpChannel *mask)
   gint         x, y;
   gpointer     pr;
 
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+
   if (mask->bounds_known)
     return mask->empty;
 
@@ -732,6 +750,8 @@ gimp_channel_add_segment (GimpChannel *mask,
   gint         x2;
   gpointer     pr;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   /*  check horizontal extents...  */
   x2 = x + width;
   if (x2 < 0) x2 = 0;
@@ -775,6 +795,8 @@ gimp_channel_sub_segment (GimpChannel *mask,
   gint         x2;
   gpointer     pr;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   /*  check horizontal extents...  */
   x2 = x + width;
   if (x2 < 0) x2 = 0;
@@ -815,6 +837,8 @@ gimp_channel_combine_rect (GimpChannel *mask,
   gint        x2, y2;
   PixelRegion maskPR;
   guchar      color;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   y2 = y + h;
   x2 = x + w;
@@ -884,6 +908,8 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
   gfloat cx, cy;
   gfloat rad;
   gfloat dist;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (!w || !h)
     return;
@@ -1021,7 +1047,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 }
 
 static void
-gimp_channel_combine_sub_region_add (void        *unused,
+gimp_channel_combine_sub_region_add (gpointer     unused,
 				     PixelRegion *srcPR,
 				     PixelRegion *destPR)
 {
@@ -1047,7 +1073,7 @@ gimp_channel_combine_sub_region_add (void        *unused,
 }
 
 static void
-gimp_channel_combine_sub_region_sub (void        *unused,
+gimp_channel_combine_sub_region_sub (gpointer     unused,
 				     PixelRegion *srcPR,
 				     PixelRegion *destPR)
 {
@@ -1072,7 +1098,7 @@ gimp_channel_combine_sub_region_sub (void        *unused,
 }
 
 static void
-gimp_channel_combine_sub_region_intersect (void        *unused,
+gimp_channel_combine_sub_region_intersect (gpointer     unused,
 					   PixelRegion *srcPR,
 					   PixelRegion *destPR)
 {
@@ -1103,6 +1129,9 @@ gimp_channel_combine_mask (GimpChannel *mask,
   PixelRegion srcPR, destPR;
   gint        x1, y1, x2, y2;
   gint        w, h;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
   x1 = CLAMP (off_x, 0, GIMP_DRAWABLE (mask)->width);
   y1 = CLAMP (off_y, 0, GIMP_DRAWABLE (mask)->height);
@@ -1155,6 +1184,9 @@ gimp_channel_feather (GimpChannel *input,
 {
   gint        x1, y1, x2, y2;
   PixelRegion srcPR;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (input));
+  g_return_if_fail (GIMP_IS_CHANNEL (output));
 
   x1 = CLAMP (off_x, 0, GIMP_DRAWABLE (output)->width);
   y1 = CLAMP (off_y, 0, GIMP_DRAWABLE (output)->height);
@@ -1213,6 +1245,8 @@ gimp_channel_clear (GimpChannel *mask)
   PixelRegion maskPR;
   guchar      bg = 0;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   /*  push the current channel onto the undo stack  */
   gimp_channel_push_undo (mask);
 
@@ -1248,6 +1282,8 @@ gimp_channel_invert (GimpChannel *mask)
   PixelRegion  maskPR;
   GimpLut     *lut;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   /*  push the current channel onto the undo stack  */
   gimp_channel_push_undo (mask);
 
@@ -1270,6 +1306,8 @@ gimp_channel_sharpen (GimpChannel *mask)
   PixelRegion  maskPR;
   GimpLut     *lut;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   /*  push the current channel onto the undo stack  */
   gimp_channel_push_undo (mask);
 
@@ -1289,6 +1327,8 @@ gimp_channel_all (GimpChannel *mask)
 {
   PixelRegion maskPR;
   guchar      bg = 255;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   /*  push the current channel onto the undo stack  */
   gimp_channel_push_undo (mask);
@@ -1316,6 +1356,8 @@ gimp_channel_border (GimpChannel *mask,
 {
   PixelRegion bPR;
   gint        x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (radius_x < 0 || radius_y < 0)
     return;
@@ -1361,6 +1403,8 @@ gimp_channel_grow (GimpChannel *mask,
 {
   PixelRegion bPR;
   gint        x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (radius_x == 0 && radius_y == 0)
     return;
@@ -1417,6 +1461,8 @@ gimp_channel_shrink (GimpChannel  *mask,
   PixelRegion bPR;
   gint        x1, y1, x2, y2;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
   if (radius_x == 0 && radius_y == 0)
     return;
 
@@ -1464,6 +1510,8 @@ gimp_channel_translate (GimpChannel *mask,
   PixelRegion  srcPR, destPR;
   guchar       empty = 0;
   gint         x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   tmp_mask = NULL;
 
@@ -1538,6 +1586,9 @@ gimp_channel_load (GimpChannel *mask,
 {
   PixelRegion srcPR, destPR;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
   /*  push the current mask onto the undo stack  */
   gimp_channel_push_undo (mask);
 
@@ -1562,6 +1613,9 @@ gimp_channel_layer_alpha (GimpChannel *mask,
   PixelRegion srcPR, destPR;
   guchar      empty = 0;
   gint        x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   /*  push the current mask onto the undo stack  */
   gimp_channel_push_undo (mask);
@@ -1599,6 +1653,9 @@ gimp_channel_layer_mask (GimpChannel *mask,
   guchar      empty = 0;
   gint        x1, y1, x2, y2;
 
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
   /*  push the current mask onto the undo stack  */
   gimp_channel_push_undo (mask);
 
@@ -1633,5 +1690,7 @@ gimp_channel_layer_mask (GimpChannel *mask,
 void
 gimp_channel_invalidate_bounds (GimpChannel *channel)
 {
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
   channel->bounds_known = FALSE;
 }

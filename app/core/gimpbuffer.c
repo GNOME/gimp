@@ -35,7 +35,9 @@
 
 static void      gimp_buffer_class_init      (GimpBufferClass *klass);
 static void      gimp_buffer_init            (GimpBuffer      *buffer);
-static void      gimp_buffer_destroy         (GtkObject       *object);
+
+static void      gimp_buffer_finalize        (GObject         *object);
+
 static TempBuf * gimp_buffer_get_new_preview (GimpViewable    *viewable,
 					      gint             width,
 					      gint             height);
@@ -44,26 +46,29 @@ static TempBuf * gimp_buffer_get_new_preview (GimpViewable    *viewable,
 static GimpViewableClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_buffer_get_type (void)
 {
-  static GtkType buffer_type = 0;
+  static GType buffer_type = 0;
 
   if (! buffer_type)
     {
-      static const GtkTypeInfo buffer_info =
+      static const GTypeInfo buffer_info =
       {
-        "GimpBuffer",
-        sizeof (GimpBuffer),
         sizeof (GimpBufferClass),
-        (GtkClassInitFunc) gimp_buffer_class_init,
-        (GtkObjectInitFunc) gimp_buffer_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_buffer_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpBuffer),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_buffer_init,
       };
 
-      buffer_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &buffer_info);
+      buffer_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+					    "GimpBuffer",
+					    &buffer_info, 0);
   }
 
   return buffer_type;
@@ -72,15 +77,15 @@ gimp_buffer_get_type (void)
 static void
 gimp_buffer_class_init (GimpBufferClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy           = gimp_buffer_destroy;
+  object_class->finalize          = gimp_buffer_finalize;
 
   viewable_class->get_new_preview = gimp_buffer_get_new_preview;
 }
@@ -92,7 +97,7 @@ gimp_buffer_init (GimpBuffer *buffer)
 }
 
 static void
-gimp_buffer_destroy (GtkObject *object)
+gimp_buffer_finalize (GObject *object)
 {
   GimpBuffer *buffer;
 
@@ -104,8 +109,7 @@ gimp_buffer_destroy (GtkObject *object)
       buffer->tiles = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *

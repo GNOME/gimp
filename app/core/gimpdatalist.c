@@ -57,26 +57,29 @@ static GimpListClass *parent_class = NULL;
 GType
 gimp_data_list_get_type (void)
 {
-  static GType type = 0;
+  static GType list_type = 0;
 
-  if (!type)
+  if (! list_type)
     {
-      GtkTypeInfo info =
+      static const GTypeInfo list_info =
       {
-	"GimpDataList",
+        sizeof (GimpDataListClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_data_list_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpDataList),
-	sizeof (GimpDataListClass),
-	(GtkClassInitFunc) gimp_data_list_class_init,
-	(GtkObjectInitFunc) gimp_data_list_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_data_list_init,
       };
 
-      type = gtk_type_unique (GIMP_TYPE_LIST, &info);
+      list_type = g_type_register_static (GIMP_TYPE_LIST,
+					  "GimpDataList", 
+					  &list_info, 0);
     }
 
-  return type;
+  return list_type;
 }
 
 static void
@@ -84,7 +87,7 @@ gimp_data_list_class_init (GimpDataListClass *klass)
 {
   GimpContainerClass *container_class;
   
-  container_class = (GimpContainerClass *) klass;
+  container_class = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

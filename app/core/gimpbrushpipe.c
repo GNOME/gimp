@@ -57,13 +57,124 @@
 #include "libgimp/gimpintl.h"
 
 
+static void        gimp_brush_pipe_class_init       (GimpBrushPipeClass *klass);
+static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
+
+static void        gimp_brush_pipe_finalize         (GObject       *object);
+
 static GimpBrush * gimp_brush_pipe_select_brush     (GimpPaintTool *paint_tool);
 static gboolean    gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool);
-static void        gimp_brush_pipe_destroy          (GtkObject *object);
 
 
 static GimpBrushClass *parent_class = NULL;
 
+
+GType
+gimp_brush_pipe_get_type (void)
+{
+  static GType brush_type = 0;
+
+  if (! brush_type)
+    {
+      static const GTypeInfo brush_info =
+      {
+        sizeof (GimpBrushPipeClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_brush_pipe_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpBrushPipe),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_brush_pipe_init,
+      };
+
+      brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
+					   "GimpBrushPipe", 
+					   &brush_info, 0);
+    }
+
+  return brush_type;
+}
+
+static void
+gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
+{
+  GObjectClass   *object_class;
+  GimpBrushClass *brush_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+  brush_class  = GIMP_BRUSH_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize        = gimp_brush_pipe_finalize;
+
+  brush_class->select_brush     = gimp_brush_pipe_select_brush;
+  brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;
+}
+
+static void
+gimp_brush_pipe_init (GimpBrushPipe *pipe)
+{
+  pipe->current   = NULL;
+  pipe->dimension = 0;
+  pipe->rank      = NULL;
+  pipe->stride    = NULL;
+  pipe->nbrushes  = 0;
+  pipe->brushes   = NULL;
+  pipe->select    = NULL;
+  pipe->index     = NULL;
+}
+
+static void
+gimp_brush_pipe_finalize (GObject *object)
+{
+  GimpBrushPipe *pipe;
+
+  g_return_if_fail (GIMP_IS_BRUSH_PIPE (object));
+
+  pipe = GIMP_BRUSH_PIPE (object);
+
+  if (pipe->rank)
+    {
+      g_free (pipe->rank);
+      pipe->rank = NULL;
+    }
+  if (pipe->stride)
+    {
+      g_free (pipe->stride);
+      pipe->stride = NULL;
+    }
+
+  if (pipe->brushes)
+    {
+      gint i;
+
+      for (i = 0; i < pipe->nbrushes; i++)
+	if (pipe->brushes[i])
+	  g_object_unref (G_OBJECT (pipe->brushes[i]));
+
+      g_free (pipe->brushes);
+      pipe->brushes = NULL;
+    }
+
+  if (pipe->select)
+    {
+      g_free (pipe->select);
+      pipe->select = NULL;
+    }
+  if (pipe->index)
+    {
+      g_free (pipe->index);
+      pipe->index = NULL;
+    }
+
+  GIMP_BRUSH (pipe)->mask   = NULL;
+  GIMP_BRUSH (pipe)->pixmap = NULL;
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 
 static GimpBrush *
 gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
@@ -149,90 +260,6 @@ gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool)
       return FALSE;
 
   return TRUE;
-}
-
-static void
-gimp_brush_pipe_destroy (GtkObject *object)
-{
-  GimpBrushPipe *pipe;
-  gint           i;
-
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_PIPE (object));
-
-  pipe = GIMP_BRUSH_PIPE (object);
-
-  g_free (pipe->rank);
-  g_free (pipe->stride);
-
-  for (i = 0; i < pipe->nbrushes; i++)
-    if (pipe->brushes[i])
-      g_object_unref (G_OBJECT (pipe->brushes[i]));
-
-  g_free (pipe->brushes);
-  g_free (pipe->select);
-  g_free (pipe->index);
-
-  GIMP_BRUSH (pipe)->mask   = NULL;
-  GIMP_BRUSH (pipe)->pixmap = NULL;
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
-{
-  GtkObjectClass *object_class;
-  GimpBrushClass *brush_class;
-
-  object_class = (GtkObjectClass *) klass;
-  brush_class  = (GimpBrushClass *) klass;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  brush_class->select_brush     = gimp_brush_pipe_select_brush;
-  brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;
-
-  object_class->destroy = gimp_brush_pipe_destroy;
-}
-
-void
-gimp_brush_pipe_init (GimpBrushPipe *pipe)
-{
-  pipe->current   = NULL;
-  pipe->dimension = 0;
-  pipe->rank      = NULL;
-  pipe->stride    = NULL;
-  pipe->nbrushes  = 0;
-  pipe->brushes   = NULL;
-  pipe->select    = NULL;
-  pipe->index     = NULL;
-}
-
-GtkType
-gimp_brush_pipe_get_type (void)
-{
-  static GtkType type = 0;
-
-  if (!type)
-    {
-      GtkTypeInfo info =
-      {
-	"GimpBrushPipe",
-	sizeof (GimpBrushPipe),
-	sizeof (GimpBrushPipeClass),
-	(GtkClassInitFunc) gimp_brush_pipe_class_init,
-	(GtkObjectInitFunc) gimp_brush_pipe_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL
-      };
-
-      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
-    }
-
-  return type;
 }
 
 GimpData *

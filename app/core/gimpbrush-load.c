@@ -67,7 +67,9 @@ enum
 
 static void        gimp_brush_class_init       (GimpBrushClass *klass);
 static void        gimp_brush_init             (GimpBrush      *brush);
-static void        gimp_brush_destroy          (GtkObject      *object);
+
+static void        gimp_brush_finalize         (GObject        *object);
+
 static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 						gint            width,
 						gint            height);
@@ -85,37 +87,41 @@ static GimpDataClass *parent_class = NULL;
 GType
 gimp_brush_get_type (void)
 {
-  static GType type = 0;
+  static GType brush_type = 0;
 
-  if (! type)
+  if (! brush_type)
     {
-      static const GtkTypeInfo info =
+      static const GTypeInfo brush_info =
       {
-        "GimpBrush",
-        sizeof (GimpBrush),
         sizeof (GimpBrushClass),
-        (GtkClassInitFunc) gimp_brush_class_init,
-        (GtkObjectInitFunc) gimp_brush_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_brush_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpBrush),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_brush_init,
       };
 
-    type = gtk_type_unique (GIMP_TYPE_DATA, &info);
+      brush_type = g_type_register_static (GIMP_TYPE_DATA,
+					   "GimpBrush", 
+					   &brush_info, 0);
   }
-  return type;
+
+  return brush_type;
 }
 
 static void
 gimp_brush_class_init (GimpBrushClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
-  data_class     = (GimpDataClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  data_class     = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -128,7 +134,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy           = gimp_brush_destroy;
+  object_class->finalize          = gimp_brush_finalize;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
 
@@ -141,31 +147,36 @@ gimp_brush_class_init (GimpBrushClass *klass)
 static void
 gimp_brush_init (GimpBrush *brush)
 {
-  brush->mask      = NULL;
-  brush->pixmap    = NULL;
+  brush->mask     = NULL;
+  brush->pixmap   = NULL;
 
-  brush->spacing   = 20;
-  brush->x_axis.x  = 15.0;
-  brush->x_axis.y  =  0.0;
-  brush->y_axis.x  =  0.0;
-  brush->y_axis.y  = 15.0;
+  brush->spacing  = 20;
+  brush->x_axis.x = 15.0;
+  brush->x_axis.y =  0.0;
+  brush->y_axis.x =  0.0;
+  brush->y_axis.y = 15.0;
 }
 
 static void
-gimp_brush_destroy (GtkObject *object)
+gimp_brush_finalize (GObject *object)
 {
   GimpBrush *brush;
 
   brush = GIMP_BRUSH (object);
 
   if (brush->mask)
-    temp_buf_free (brush->mask);
+    {
+      temp_buf_free (brush->mask);
+      brush->mask = NULL;
+    }
 
   if (brush->pixmap)
-    temp_buf_free (brush->pixmap);
+    {
+      temp_buf_free (brush->pixmap);
+      brush->pixmap = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *

@@ -38,7 +38,8 @@ enum
 
 static void   gimp_parasite_list_class_init (GimpParasiteListClass *klass);
 static void   gimp_parasite_list_init       (GimpParasiteList      *list);
-static void   gimp_parasite_list_destroy    (GtkObject             *list);
+
+static void   gimp_parasite_list_finalize   (GObject               *object);
 
 static gint   free_a_parasite               (gpointer               key,
 					     gpointer               parasite,
@@ -47,38 +48,45 @@ static gint   free_a_parasite               (gpointer               key,
 
 static guint parasite_list_signals[LAST_SIGNAL] = { 0 };
 
+static GimpObjectClass *parent_class = NULL;
+
 
 GType
 gimp_parasite_list_get_type (void)
 {
-  static GType type = 0;
+  static GType list_type = 0;
 
-  if (! type)
+  if (! list_type)
     {
-      GtkTypeInfo info =
+      static const GTypeInfo list_info =
       {
-	"GimpParasiteList",
+        sizeof (GimpParasiteListClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_parasite_list_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpParasiteList),
-	sizeof (GimpParasiteListClass),
-	(GtkClassInitFunc) gimp_parasite_list_class_init,
-	(GtkObjectInitFunc) gimp_parasite_list_init,
-	NULL,
-	NULL,
-	(GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_parasite_list_init,
       };
 
-      type = gtk_type_unique (GIMP_TYPE_OBJECT, &info);
+      list_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					  "GimpParasiteList", 
+					  &list_info, 0);
     }
 
-  return type;
+  return list_type;
 }
 
 static void
 gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
 
   parasite_list_signals[ADD] =
     g_signal_new ("add",
@@ -100,10 +108,10 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 		  G_TYPE_NONE, 1,
 		  GTK_TYPE_POINTER);
 
-  object_class->destroy = gimp_parasite_list_destroy;
+  object_class->finalize = gimp_parasite_list_finalize;
 
-  klass->add            = NULL;
-  klass->remove         = NULL;
+  klass->add             = NULL;
+  klass->remove          = NULL;
 }
 
 static void
@@ -122,18 +130,8 @@ gimp_parasite_list_new (void)
   return list;
 }
 
-static gint
-free_a_parasite (void *key, 
-		 void *parasite, 
-		 void *unused)
-{
-  gimp_parasite_free ((GimpParasite *) parasite);
-
-  return TRUE;
-}
-
 static void
-gimp_parasite_list_destroy (GtkObject *object)
+gimp_parasite_list_finalize (GObject *object)
 {
   GimpParasiteList *list;
 
@@ -145,7 +143,20 @@ gimp_parasite_list_destroy (GtkObject *object)
     {
       g_hash_table_foreach_remove (list->table, free_a_parasite, NULL);
       g_hash_table_destroy (list->table);
+      list->table = NULL;
     }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gint
+free_a_parasite (void *key, 
+		 void *parasite, 
+		 void *unused)
+{
+  gimp_parasite_free ((GimpParasite *) parasite);
+
+  return TRUE;
 }
 
 static void
@@ -269,7 +280,7 @@ GimpParasite *
 gimp_parasite_list_find (GimpParasiteList *list, 
 			 const gchar      *name)
 {
-  g_return_val_if_fail (list != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PARASITE_LIST (list), NULL);
 
   if (list->table)
     return (GimpParasite *) g_hash_table_lookup (list->table, name);

@@ -167,7 +167,7 @@ struct _GimpImageClass
 
 /* function declarations */
 
-GtkType         gimp_image_get_type          (void);
+GType           gimp_image_get_type          (void);
 
 GimpImage     * gimp_image_new               (Gimp               *gimp,
 					      gint                width,

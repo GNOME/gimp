@@ -31,6 +31,7 @@
 #define GIMP_PATTERN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN, GimpPatternClass))
 #define GIMP_IS_PATTERN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATTERN))
 #define GIMP_IS_PATTERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN))
+#define GIMP_PATTERN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATTERN, GimpPatternClass))
 
 
 typedef struct _GimpPatternClass GimpPatternClass;

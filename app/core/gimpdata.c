@@ -51,7 +51,9 @@ enum
 
 static void          gimp_data_class_init         (GimpDataClass *klass);
 static void          gimp_data_init               (GimpData      *data);
-static void          gimp_data_destroy            (GtkObject     *object);
+
+static void          gimp_data_finalize           (GObject       *object);
+
 static void          gimp_data_name_changed       (GimpObject    *object);
 static void          gimp_data_real_dirty         (GimpData      *data);
 
@@ -68,19 +70,22 @@ gimp_data_get_type (void)
 
   if (! data_type)
     {
-      static const GtkTypeInfo data_info =
+      static const GTypeInfo data_info =
       {
-        "GimpData",
-        sizeof (GimpData),
         sizeof (GimpDataClass),
-        (GtkClassInitFunc) gimp_data_class_init,
-        (GtkObjectInitFunc) gimp_data_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_data_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpData),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_data_init,
       };
 
-      data_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &data_info);
+      data_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+					  "GimpData",
+					  &data_info, 0);
   }
 
   return data_type;
@@ -89,11 +94,11 @@ gimp_data_get_type (void)
 static void
 gimp_data_class_init (GimpDataClass *klass)
 {
-  GtkObjectClass  *object_class;
+  GObjectClass    *object_class;
   GimpObjectClass *gimp_object_class;
 
-  object_class      = (GtkObjectClass *) klass;
-  gimp_object_class = (GimpObjectClass *) klass;
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -133,7 +138,7 @@ gimp_data_class_init (GimpDataClass *klass)
 		  gimp_cclosure_marshal_POINTER__VOID,
 		  G_TYPE_POINTER, 0);
 
-  object_class->destroy           = gimp_data_destroy;
+  object_class->finalize          = gimp_data_finalize;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
 
@@ -151,16 +156,19 @@ gimp_data_init (GimpData *data)
 }
 
 static void
-gimp_data_destroy (GtkObject *object)
+gimp_data_finalize (GObject *object)
 {
   GimpData *data;
 
   data = GIMP_DATA (object);
 
-  g_free (data->filename);
+  if (data->filename)
+    {
+      g_free (data->filename);
+      data->filename = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

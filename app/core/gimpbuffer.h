@@ -45,7 +45,7 @@ struct _GimpBufferClass
 };
 
 
-GtkType      gimp_buffer_get_type (void);
+GType        gimp_buffer_get_type (void);
 
 GimpBuffer * gimp_buffer_new      (TileManager *tiles,
 				   const gchar *name);

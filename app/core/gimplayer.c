@@ -62,7 +62,9 @@ enum
 
 static void      gimp_layer_class_init           (GimpLayerClass     *klass);
 static void      gimp_layer_init                 (GimpLayer          *layer);
-static void      gimp_layer_destroy              (GtkObject          *object);
+
+static void      gimp_layer_finalize             (GObject            *object);
+
 static void      gimp_layer_invalidate_preview   (GimpViewable       *viewable);
 
 static void      gimp_layer_transform_color      (GimpImage          *gimage,
@@ -77,26 +79,29 @@ static guint  layer_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawableClass *parent_class   = NULL;
 
 
-GtkType
+GType
 gimp_layer_get_type (void)
 {
-  static GtkType layer_type = 0;
+  static GType layer_type = 0;
 
   if (! layer_type)
     {
-      GtkTypeInfo layer_info =
+      static const GTypeInfo layer_info =
       {
-	"GimpLayer",
+        sizeof (GimpLayerClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_layer_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpLayer),
-	sizeof (GimpLayerClass),
-	(GtkClassInitFunc) gimp_layer_class_init,
-	(GtkObjectInitFunc) gimp_layer_init,
-        /* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_layer_init,
       };
 
-      layer_type = gtk_type_unique (GIMP_TYPE_DRAWABLE, &layer_info);
+      layer_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
+					   "GimpLayer",
+					   &layer_info, 0);
     }
 
   return layer_type;
@@ -105,13 +110,11 @@ gimp_layer_get_type (void)
 static void
 gimp_layer_class_init (GimpLayerClass *klass)
 {
-  GtkObjectClass    *object_class;
-  GimpDrawableClass *drawable_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  drawable_class = (GimpDrawableClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -160,7 +163,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy              = gimp_layer_destroy;
+  object_class->finalize             = gimp_layer_finalize;
 
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 
@@ -185,6 +188,37 @@ gimp_layer_init (GimpLayer *layer)
   layer->fs.boundary_known = FALSE;
   layer->fs.segs           = NULL;
   layer->fs.num_segs       = 0;
+}
+
+static void
+gimp_layer_finalize (GObject *object)
+{
+  GimpLayer *layer;
+
+  g_return_if_fail (GIMP_IS_LAYER (object));
+
+  layer = GIMP_LAYER (object);
+
+  if (layer->mask)
+    {
+      g_object_unref (G_OBJECT (layer->mask));
+      layer->mask = NULL;
+    }
+
+  if (layer->fs.segs)
+    {
+      g_free (layer->fs.segs);
+      layer->fs.segs = NULL;
+    }
+
+  /*  free the floating selection if it exists  */
+  if (layer->fs.backing_store)
+    {
+      tile_manager_destroy (layer->fs.backing_store);
+      layer->fs.backing_store = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -621,39 +655,6 @@ gimp_layer_create_mask (GimpLayer   *layer,
   g_free (mask_name);
 
   return mask;
-}
-
-static void
-gimp_layer_destroy (GtkObject *object)
-{
-  GimpLayer *layer;
-  
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_LAYER (object));
-
-  layer = GIMP_LAYER (object);
-
-  if (layer->mask)
-    {
-      g_object_unref (G_OBJECT (layer->mask));
-      layer->mask = NULL;
-    }
-
-  if (layer->fs.segs)
-    {
-      g_free (layer->fs.segs);
-      layer->fs.segs = NULL;
-    }
-
-  /*  free the floating selection if it exists  */
-  if (gimp_layer_is_floating_sel (layer))
-    {
-      tile_manager_destroy (layer->fs.backing_store);
-      layer->fs.backing_store = NULL;
-    }
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 void

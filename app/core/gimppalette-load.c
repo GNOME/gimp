@@ -42,7 +42,9 @@
 
 static void       gimp_palette_class_init       (GimpPaletteClass  *klass);
 static void       gimp_palette_init             (GimpPalette       *palette);
-static void       gimp_palette_destroy          (GtkObject         *object);
+
+static void       gimp_palette_finalize         (GObject           *object);
+
 static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
@@ -65,19 +67,22 @@ gimp_palette_get_type (void)
 
   if (! palette_type)
     {
-      GtkTypeInfo palette_info =
+      static const GTypeInfo palette_info =
       {
-        "GimpPalette",
-        sizeof (GimpPalette),
         sizeof (GimpPaletteClass),
-        (GtkClassInitFunc) gimp_palette_class_init,
-        (GtkObjectInitFunc) gimp_palette_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_palette_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpPalette),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_palette_init,
       };
 
-      palette_type = gtk_type_unique (GIMP_TYPE_DATA, &palette_info);
+      palette_type = g_type_register_static (GIMP_TYPE_DATA,
+					     "GimpPalette", 
+					     &palette_info, 0);
     }
 
   return palette_type;
@@ -86,23 +91,23 @@ gimp_palette_get_type (void)
 static void
 gimp_palette_class_init (GimpPaletteClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
-  data_class     = (GimpDataClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  data_class     = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_palette_destroy;
+  object_class->finalize          = gimp_palette_finalize;
 
   viewable_class->get_new_preview = gimp_palette_get_new_preview;
 
-  data_class->dirty         = gimp_palette_dirty;
-  data_class->save          = gimp_palette_save;
-  data_class->get_extension = gimp_palette_get_extension;
+  data_class->dirty               = gimp_palette_dirty;
+  data_class->save                = gimp_palette_save;
+  data_class->get_extension       = gimp_palette_get_extension;
 }
 
 static void
@@ -110,14 +115,13 @@ gimp_palette_init (GimpPalette *palette)
 {
   palette->colors    = NULL;
   palette->n_colors  = 0;
-
   palette->n_columns = 0;
 }
 
 static void
-gimp_palette_destroy (GtkObject *object)
+gimp_palette_finalize (GObject *object)
 {
-  GimpPalette      *palette;
+  GimpPalette *palette;
 
   g_return_if_fail (GIMP_IS_PALETTE (object));
 
@@ -130,8 +134,7 @@ gimp_palette_destroy (GtkObject *object)
       palette->colors = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *

@@ -83,7 +83,7 @@ struct _MaskUndo
 
 /*  function declarations  */
 
-GtkType         gimp_channel_get_type          (void);
+GType           gimp_channel_get_type          (void);
 
 GimpChannel   * gimp_channel_new               (GimpImage         *gimage,
 						gint               width,

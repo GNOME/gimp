@@ -49,7 +49,6 @@ enum
 
 static void   gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void   gimp_layer_mask_init       (GimpLayerMask      *layermask);
-static void   gimp_layer_mask_destroy    (GtkObject          *object);
 
 
 static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
@@ -57,26 +56,29 @@ static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
 static GimpChannelClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_layer_mask_get_type (void)
 {
-  static GtkType layer_mask_type = 0;
+  static GType layer_mask_type = 0;
 
   if (! layer_mask_type)
     {
-      GtkTypeInfo layer_mask_info =
+      static const GTypeInfo layer_mask_info =
       {
-	"GimpLayerMask",
+        sizeof (GimpLayerMaskClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_layer_mask_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpLayerMask),
-	sizeof (GimpLayerMaskClass),
-	(GtkClassInitFunc) gimp_layer_mask_class_init,
-	(GtkObjectInitFunc) gimp_layer_mask_init,
-        /* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_layer_mask_init,
       };
 
-      layer_mask_type = gtk_type_unique (GIMP_TYPE_CHANNEL, &layer_mask_info);
+      layer_mask_type = g_type_register_static (GIMP_TYPE_CHANNEL,
+						"GimpLayerMask",
+						&layer_mask_info, 0);
     }
 
   return layer_mask_type;
@@ -85,10 +87,6 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
@@ -117,31 +115,15 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  object_class->destroy = gimp_layer_mask_destroy;
 }
 
 static void
 gimp_layer_mask_init (GimpLayerMask *layer_mask)
 {
   layer_mask->layer      = NULL;
-
   layer_mask->apply_mask = TRUE;
   layer_mask->edit_mask  = TRUE;
   layer_mask->show_mask  = FALSE;
-}
-
-static void
-gimp_layer_mask_destroy (GtkObject *object)
-{
-  GimpLayerMask *layer_mask;
-
-  g_return_if_fail (GIMP_IS_LAYER_MASK (object));
-
-  layer_mask = GIMP_LAYER_MASK (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GimpLayerMask *

@@ -70,8 +70,9 @@ struct _GimpDataFactoryClass
 };
 
 
-GtkType           gimp_data_factory_get_type (void);
-GimpDataFactory * gimp_data_factory_new      (GtkType                            data_type,
+GType             gimp_data_factory_get_type (void);
+
+GimpDataFactory * gimp_data_factory_new      (GType                              data_type,
 					      const gchar                      **data_path,
 					      const GimpDataFactoryLoaderEntry  *loader_entries,
 					      gint                               n_loader_entries,

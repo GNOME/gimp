@@ -37,7 +37,8 @@
 static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
 static void      gimp_tool_info_init            (GimpToolInfo      *tool_info);
 
-static void      gimp_tool_info_destroy         (GtkObject         *object);
+static void      gimp_tool_info_finalize        (GObject           *object);
+
 static TempBuf * gimp_tool_info_get_new_preview (GimpViewable      *viewable,
 						 gint               width,
 						 gint               height);
@@ -46,26 +47,29 @@ static TempBuf * gimp_tool_info_get_new_preview (GimpViewable      *viewable,
 static GimpDataClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_tool_info_get_type (void)
 {
-  static GtkType tool_info_type = 0;
+  static GType tool_info_type = 0;
 
   if (! tool_info_type)
     {
-      GtkTypeInfo tool_info_info =
+      static const GTypeInfo tool_info_info =
       {
-        "GimpToolInfo",
-        sizeof (GimpToolInfo),
         sizeof (GimpToolInfoClass),
-        (GtkClassInitFunc) gimp_tool_info_class_init,
-        (GtkObjectInitFunc) gimp_tool_info_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_tool_info_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpToolInfo),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_tool_info_init,
       };
 
-      tool_info_type = gtk_type_unique (GIMP_TYPE_DATA, &tool_info_info);
+      tool_info_type = g_type_register_static (GIMP_TYPE_DATA,
+					       "GimpToolInfo",
+					       &tool_info_info, 0);
     }
 
   return tool_info_type;
@@ -74,15 +78,15 @@ gimp_tool_info_get_type (void)
 static void
 gimp_tool_info_class_init (GimpToolInfoClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_tool_info_destroy;
+  object_class->finalize          = gimp_tool_info_finalize;
 
   viewable_class->get_new_preview = gimp_tool_info_get_new_preview;
 }
@@ -110,20 +114,44 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
 }
 
 static void
-gimp_tool_info_destroy (GtkObject *object)
+gimp_tool_info_finalize (GObject *object)
 {
   GimpToolInfo *tool_info;
 
   tool_info = (GimpToolInfo *) object;
 
-  g_free (tool_info->blurb);
-  g_free (tool_info->help);
+  if (tool_info->blurb)
+    {
+      g_free (tool_info->blurb);
+      tool_info->blurb = NULL;
+    }
+  if (tool_info->help)
+    {
+      g_free (tool_info->help);
+      tool_info->blurb = NULL;
+    }
 
-  g_free (tool_info->menu_path);
-  g_free (tool_info->menu_accel);
+  if (tool_info->menu_path)
+    {
+      g_free (tool_info->menu_path);
+      tool_info->menu_path = NULL;
+    }
+  if (tool_info->menu_accel)
+    {
+      g_free (tool_info->menu_accel);
+      tool_info->menu_accel = NULL;
+    }
 
-  g_free (tool_info->help_domain);
-  g_free (tool_info->help_data);
+  if (tool_info->help_domain)
+    {
+      g_free (tool_info->help_domain);
+      tool_info->help_domain = NULL;
+    }
+  if (tool_info->help_data)
+    {
+      g_free (tool_info->help_data);
+      tool_info->help_data = NULL;
+    }
 
   if (tool_info->stock_pixbuf)
     {
@@ -131,8 +159,7 @@ gimp_tool_info_destroy (GtkObject *object)
       tool_info->stock_pixbuf = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *

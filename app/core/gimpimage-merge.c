@@ -458,34 +458,81 @@ gimp_image_destroy (GtkObject *object)
 
   gimage = GIMP_IMAGE (object);
 
-  g_hash_table_remove (gimage->gimp->image_table,
-		       GINT_TO_POINTER (gimage->ID));
+  if (gimage->gimp && gimage->gimp->image_table)
+    {
+      g_hash_table_remove (gimage->gimp->image_table,
+			   GINT_TO_POINTER (gimage->ID));
+      gimage->gimp = NULL;
+    }
 
-  gimp_image_free_projection (gimage);
-  gimp_image_free_shadow (gimage);
-  
+  if (gimage->projection)
+    gimp_image_free_projection (gimage);
+
+  if (gimage->shadow)
+    gimp_image_free_shadow (gimage);
+
   if (gimage->cmap)
-    g_free (gimage->cmap);
-  
-  g_object_unref (G_OBJECT (gimage->layers));
-  g_object_unref (G_OBJECT (gimage->channels));
-  g_slist_free (gimage->layer_stack);
+    {
+      g_free (gimage->cmap);
+      gimage->cmap = NULL;
+    }
 
-  g_object_unref (G_OBJECT (gimage->selection_mask));
+  if (gimage->layers)
+    {
+      g_object_unref (G_OBJECT (gimage->layers));
+      gimage->layers = NULL;
+    }
+  if (gimage->channels)
+    {
+      g_object_unref (G_OBJECT (gimage->channels));
+      gimage->channels = NULL;
+    }
+  if (gimage->layer_stack)
+    {
+      g_slist_free (gimage->layer_stack);
+      gimage->layer_stack = NULL;
+    }
+
+  if (gimage->selection_mask)
+    {
+      g_object_unref (G_OBJECT (gimage->selection_mask));
+      gimage->selection_mask = NULL;
+    }
 
   if (gimage->comp_preview)
-    temp_buf_free (gimage->comp_preview);
+    {
+      temp_buf_free (gimage->comp_preview);
+      gimage->comp_preview = NULL;
+    }
 
   if (gimage->parasites)
-    g_object_unref (G_OBJECT (gimage->parasites));
+    {
+      g_object_unref (G_OBJECT (gimage->parasites));
+      gimage->parasites = NULL;
+    }
 
-  g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
-  g_list_free (gimage->guides);
+  if (gimage->guides)
+    {
+      g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
+      g_list_free (gimage->guides);
+      gimage->guides = NULL;
+    }
 
   undo_free (gimage);
 
-  g_object_unref (G_OBJECT (gimage->new_undo_stack));
-  g_object_unref (G_OBJECT (gimage->new_redo_stack));
+  if (gimage->new_undo_stack)
+    {
+      g_object_unref (G_OBJECT (gimage->new_undo_stack));
+      gimage->new_undo_stack = NULL;
+    }
+  if (gimage->new_redo_stack)
+    {
+      g_object_unref (G_OBJECT (gimage->new_redo_stack));
+      gimage->new_redo_stack = NULL;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -577,10 +624,13 @@ gimp_image_allocate_projection (GimpImage *gimage)
 static void
 gimp_image_free_projection (GimpImage *gimage)
 {
-  if (gimage->projection)
-    tile_manager_destroy (gimage->projection);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimage->projection = NULL;
+  if (gimage->projection)
+    {
+      tile_manager_destroy (gimage->projection);
+      gimage->projection = NULL;
+    }
 }
 
 static void
@@ -605,7 +655,6 @@ gimp_image_new (Gimp              *gimp,
   GimpImage *gimage;
   gint       i;
 
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   gimage = GIMP_IMAGE (g_object_new (GIMP_TYPE_IMAGE, NULL));
@@ -658,7 +707,6 @@ gimp_image_new (Gimp              *gimp,
 gint
 gimp_image_get_ID (GimpImage *gimage)
 {
-  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
   return gimage->ID;
@@ -668,7 +716,6 @@ GimpImage *
 gimp_image_get_by_ID (Gimp *gimp,
 		      gint  image_id)
 {
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (gimp->image_table == NULL)
@@ -682,6 +729,8 @@ void
 gimp_image_set_filename (GimpImage   *gimage,
 			 const gchar *filename)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   gimp_object_set_name (GIMP_OBJECT (gimage), filename);
 }
 
@@ -690,6 +739,8 @@ gimp_image_set_resolution (GimpImage *gimage,
 			   gdouble    xresolution,
 			   gdouble    yresolution)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   /* nothing to do if setting res to the same as before */
   if ((ABS (gimage->xresolution - xresolution) < 1e-5) &&
       (ABS (gimage->yresolution - yresolution) < 1e-5))
@@ -714,6 +765,7 @@ gimp_image_get_resolution (const GimpImage *gimage,
 			   gdouble         *xresolution,
 			   gdouble         *yresolution)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (xresolution && yresolution);
 
   *xresolution = gimage->xresolution;
@@ -724,6 +776,8 @@ void
 gimp_image_set_unit (GimpImage *gimage,
 		     GimpUnit   unit)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   undo_push_resolution (gimage);
 
   gimage->unit = unit;
@@ -732,6 +786,8 @@ gimp_image_set_unit (GimpImage *gimage,
 GimpUnit
 gimp_image_get_unit (const GimpImage *gimage)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_INCH);
+
   return gimage->unit;
 }
 
@@ -739,24 +795,32 @@ void
 gimp_image_set_save_proc (GimpImage     *gimage, 
 			  PlugInProcDef *proc)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   gimage->save_proc = proc;
 }
 
 PlugInProcDef *
 gimp_image_get_save_proc (const GimpImage *gimage)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
   return gimage->save_proc;
 }
 
 gint
 gimp_image_get_width (const GimpImage *gimage)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
+
   return gimage->width;
 }
 
 gint
 gimp_image_get_height (const GimpImage *gimage)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), 0);
+
   return gimage->height;
 }
 
@@ -773,9 +837,10 @@ gimp_image_resize (GimpImage *gimage,
   GList       *list;
   GList       *guide_list;
 
-  gimp_set_busy (gimage->gimp);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (new_width > 0 && new_height > 0);
 
-  g_assert (new_width > 0 && new_height > 0);
+  gimp_set_busy (gimage->gimp);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -879,12 +944,8 @@ gimp_image_scale (GimpImage *gimage,
   gdouble      img_scale_w = 1.0;
   gdouble      img_scale_h = 1.0;
 
-  if ((new_width == 0) || (new_height == 0))
-    {
-      g_message ("%s(): Scaling to zero width or height has been rejected.",
-		 G_GNUC_FUNCTION);
-      return;
-    }
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (new_width > 0 && new_height > 0);
 
   gimp_set_busy (gimage->gimp);
 
@@ -1009,7 +1070,6 @@ gimp_image_check_scaling (const GimpImage *gimage,
 {
   GList *list;
 
-  g_return_val_if_fail (gimage != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -1033,6 +1093,8 @@ gimp_image_shadow (GimpImage *gimage,
 		   gint       height, 
 		   gint       bpp)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
   if (gimage->shadow &&
       ((width != tile_manager_width (gimage->shadow)) ||
        (height != tile_manager_height (gimage->shadow)) ||
@@ -1049,11 +1111,13 @@ gimp_image_shadow (GimpImage *gimage,
 void
 gimp_image_free_shadow (GimpImage *gimage)
 {
-  /*  Free the shadow buffer from the specified gimage if it exists  */
-  if (gimage->shadow)
-    tile_manager_destroy (gimage->shadow);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimage->shadow = NULL;
+  if (gimage->shadow)
+    {
+      tile_manager_destroy (gimage->shadow);
+      gimage->shadow = NULL;
+    }
 }
 
 void
@@ -1074,6 +1138,8 @@ gimp_image_apply_image (GimpImage	 *gimage,
   PixelRegion  src1PR, destPR, maskPR;
   gint         operation;
   gint         active [MAX_CHANNELS];
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  get the selection mask if one exists  */
   mask = (gimage_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
@@ -1181,6 +1247,8 @@ gimp_image_replace_image (GimpImage    *gimage,
   guchar      *temp_data;
   gint         operation;
   gint         active [MAX_CHANNELS];
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  get the selection mask if one exists  */
   mask = (gimage_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
@@ -1299,6 +1367,10 @@ gimp_image_get_foreground (const GimpImage    *gimage,
   GimpRGB  color;
   guchar   pfg[3];
 
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (fg != NULL);
+
   gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
@@ -1314,7 +1386,10 @@ gimp_image_get_background (const GimpImage    *gimage,
   GimpRGB  color;
   guchar   pbg[3];
 
-  /*  Get the palette color  */
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (bg != NULL);
+
   gimp_context_get_background (gimp_get_current_context (gimage->gimp), &color);
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);

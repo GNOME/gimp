@@ -28,6 +28,7 @@
 #define GIMP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
 #define GIMP_IS_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER))
 #define GIMP_IS_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
+#define GIMP_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER, GimpLayerClass))
 
 
 typedef struct _GimpLayerClass GimpLayerClass;
@@ -87,7 +88,7 @@ struct _FStoLayerUndo
 
 /*  function declarations  */
 
-GtkType         gimp_layer_get_type            (void);
+GType           gimp_layer_get_type            (void);
 
 GimpLayer     * gimp_layer_new                 (GimpImage        *gimage,
 						gint              width,

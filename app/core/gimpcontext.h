@@ -80,6 +80,7 @@ typedef enum
 #define GIMP_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
 #define GIMP_IS_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTEXT))
 #define GIMP_IS_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
+#define GIMP_CONTEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS (obj, GIMP_TYPE_CONTEXT, GimpContextClass))
 
 
 typedef struct _GimpContextClass GimpContextClass;

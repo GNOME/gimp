@@ -37,7 +37,8 @@
 
 static void   gimp_data_factory_class_init (GimpDataFactoryClass *klass);
 static void   gimp_data_factory_init       (GimpDataFactory      *factory);
-static void   gimp_data_factory_destroy    (GtkObject            *object);
+
+static void   gimp_data_factory_finalize   (GObject              *object);
 
 static void   gimp_data_factory_data_load_callback (const gchar *filename,
 						    gpointer     callback_data);
@@ -46,26 +47,29 @@ static void   gimp_data_factory_data_load_callback (const gchar *filename,
 static GimpObjectClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_data_factory_get_type (void)
 {
-  static guint factory_type = 0;
+  static GType factory_type = 0;
 
   if (! factory_type)
     {
-      GtkTypeInfo factory_info =
+      static const GTypeInfo factory_info =
       {
-	"GimpDataFactory",
+        sizeof (GimpDataFactoryClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_data_factory_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpDataFactory),
-	sizeof (GimpDataFactoryClass),
-	(GtkClassInitFunc) gimp_data_factory_class_init,
-	(GtkObjectInitFunc) gimp_data_factory_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_data_factory_init,
       };
 
-      factory_type = gtk_type_unique (GIMP_TYPE_OBJECT, &factory_info);
+      factory_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					     "GimpDataFactory",
+					     &factory_info, 0);
     }
 
   return factory_type;
@@ -74,13 +78,13 @@ gimp_data_factory_get_type (void)
 static void
 gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_data_factory_destroy;
+  object_class->finalize = gimp_data_factory_finalize;
 }
 
 static void
@@ -95,7 +99,7 @@ gimp_data_factory_init (GimpDataFactory *factory)
 }
 
 static void
-gimp_data_factory_destroy (GtkObject *object)
+gimp_data_factory_finalize (GObject *object)
 {
   GimpDataFactory *factory;
 
@@ -107,12 +111,11 @@ gimp_data_factory_destroy (GtkObject *object)
       factory->container = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpDataFactory *
-gimp_data_factory_new (GtkType                            data_type,
+gimp_data_factory_new (GType                              data_type,
 		       const gchar                      **data_path,
 		       const GimpDataFactoryLoaderEntry  *loader_entries,
 		       gint                               n_loader_entries,
@@ -121,7 +124,7 @@ gimp_data_factory_new (GtkType                            data_type,
 {
   GimpDataFactory *factory;
 
-  g_return_val_if_fail (gtk_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
+  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
   g_return_val_if_fail (data_path != NULL, NULL);
   g_return_val_if_fail (loader_entries != NULL, NULL);
   g_return_val_if_fail (n_loader_entries > 0, NULL);
@@ -148,7 +151,6 @@ void
 gimp_data_factory_data_init (GimpDataFactory *factory,
 			     gboolean         no_data /* FIXME */)
 {
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   gimp_container_freeze (factory->container);
@@ -172,7 +174,6 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
   GimpList *gimp_list;
   GList    *list;
 
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   if (gimp_container_num_children (factory->container) == 0)
@@ -208,7 +209,6 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 {
   GimpList *list;
 
-  g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   if (gimp_container_num_children (factory->container) == 0)
@@ -231,7 +231,6 @@ GimpData *
 gimp_data_factory_data_new (GimpDataFactory *factory,
 			    const gchar     *name)
 {
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
@@ -252,7 +251,6 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 GimpData *
 gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 {
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
   if (factory->data_get_standard_func)

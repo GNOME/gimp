@@ -47,7 +47,7 @@ typedef enum
 } AutoCropType;
 
 
-typedef guchar       * (* GetColorFunc)    (GtkObject   *crop_object,
+typedef guchar       * (* GetColorFunc)    (GObject     *crop_object,
 					    gint         ,
 					    gint         );
 typedef AutoCropType   (* ColorsEqualFunc) (guchar      *,
@@ -63,7 +63,7 @@ static void           gimp_image_crop_adjust_guides (GimpImage    *gimage,
 						     gint          x2,
 						     gint          y2);
 
-static AutoCropType   gimp_image_crop_guess_bgcolor (GtkObject    *get_color_obj,
+static AutoCropType   gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
 						     GetColorFunc  get_color_func,
 						     gint          bytes,
 						     gboolean      has_alpha,
@@ -243,7 +243,7 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
   GimpDrawable    *active_drawable = NULL;
   GetColorFunc     get_color_func;
   ColorsEqualFunc  colors_equal_func;
-  GtkObject       *get_color_obj;
+  GObject         *get_color_obj;
   guchar           bgcolor[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gboolean         has_alpha;
   PixelRegion      PR;
@@ -276,14 +276,14 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 
       bytes          = gimp_drawable_bytes (GIMP_DRAWABLE (active_drawable));
       has_alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (active_drawable));
-      get_color_obj  = GTK_OBJECT (active_drawable);
+      get_color_obj  = G_OBJECT (active_drawable);
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
     }
   else
     {
       has_alpha      = TRUE; 
       bytes          = gimp_image_composite_bytes (gimage);
-      get_color_obj  = GTK_OBJECT (gimage);
+      get_color_obj  = G_OBJECT (gimage);
       get_color_func = (GetColorFunc) gimp_image_get_color_at;
    }
 
@@ -434,7 +434,7 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
 }
 
 static AutoCropType
-gimp_image_crop_guess_bgcolor (GtkObject    *get_color_obj,
+gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
 			       GetColorFunc  get_color_func,
 			       gint          bytes,
 			       gboolean      has_alpha,
@@ -448,7 +448,7 @@ gimp_image_crop_guess_bgcolor (GtkObject    *get_color_obj,
   guchar *tr = NULL;
   guchar *bl = NULL;
   guchar *br = NULL;
-  gint i, alpha;
+  gint    i, alpha;
 
   for (i = 0; i < bytes; i++)
     color[i] = 0; 

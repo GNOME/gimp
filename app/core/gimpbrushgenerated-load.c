@@ -50,7 +50,6 @@
 static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
 static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
 
-static void       gimp_brush_generated_destroy   (GtkObject          *object);
 static gboolean   gimp_brush_generated_save      (GimpData           *data);
 static void       gimp_brush_generated_dirty     (GimpData           *data);
 static gchar    * gimp_brush_generated_get_extension (GimpData       *data);
@@ -60,43 +59,42 @@ static GimpData * gimp_brush_generated_duplicate (GimpData           *data);
 static GimpBrushClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_brush_generated_get_type (void)
 {
-  static GtkType type = 0;
+  static GType brush_type = 0;
 
-  if (!type)
+  if (! brush_type)
     {
-      GtkTypeInfo info =
+      static const GTypeInfo brush_info =
       {
-	"GimpBrushGenerated",
+        sizeof (GimpBrushGeneratedClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_brush_generated_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpBrushGenerated),
-	sizeof (GimpBrushGeneratedClass),
-	(GtkClassInitFunc) gimp_brush_generated_class_init,
-	(GtkObjectInitFunc) gimp_brush_generated_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_brush_generated_init,
       };
 
-      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
+      brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
+					   "GimpBrushGenerated", 
+					   &brush_info, 0);
     }
 
-  return type;
+  return brush_type;
 }
 
 static void
 gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpDataClass  *data_class;
+  GimpDataClass *data_class;
 
-  object_class = (GtkObjectClass *) klass;
-  data_class   = (GimpDataClass *) klass;
+  data_class = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy = gimp_brush_generated_destroy;
 
   data_class->save          = gimp_brush_generated_save;
   data_class->dirty         = gimp_brush_generated_dirty;
@@ -112,13 +110,6 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
   brush->angle        = 0.0;
   brush->aspect_ratio = 1.0;
   brush->freeze       = 0;
-}
-
-static void
-gimp_brush_generated_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean

@@ -54,7 +54,9 @@
 
 static void       gimp_pattern_class_init      (GimpPatternClass *klass);
 static void       gimp_pattern_init            (GimpPattern      *pattern);
-static void       gimp_pattern_destroy         (GtkObject        *object);
+
+static void       gimp_pattern_finalize        (GObject          *object);
+
 static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
                                                 gint              width,
                                                 gint              height);
@@ -72,19 +74,22 @@ gimp_pattern_get_type (void)
 
   if (! pattern_type)
     {
-      static const GtkTypeInfo pattern_info =
+      static const GTypeInfo pattern_info =
       {
-        "GimpPattern",
-        sizeof (GimpPattern),
         sizeof (GimpPatternClass),
-        (GtkClassInitFunc) gimp_pattern_class_init,
-        (GtkObjectInitFunc) gimp_pattern_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_pattern_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpPattern),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_pattern_init,
       };
 
-      pattern_type = gtk_type_unique (GIMP_TYPE_DATA, &pattern_info);
+      pattern_type = g_type_register_static (GIMP_TYPE_DATA,
+					     "GimpPattern", 
+					     &pattern_info, 0);
   }
 
   return pattern_type;
@@ -93,17 +98,17 @@ gimp_pattern_get_type (void)
 static void
 gimp_pattern_class_init (GimpPatternClass *klass)
 {
-  GtkObjectClass    *object_class;
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = (GtkObjectClass *) klass;
-  viewable_class = (GimpViewableClass *) klass;
-  data_class     = (GimpDataClass *) klass;
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  data_class     = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy           = gimp_pattern_destroy;
+  object_class->finalize          = gimp_pattern_finalize;
 
   viewable_class->get_new_preview = gimp_pattern_get_new_preview;
 
@@ -118,7 +123,7 @@ gimp_pattern_init (GimpPattern *pattern)
 }
 
 static void
-gimp_pattern_destroy (GtkObject *object)
+gimp_pattern_finalize (GObject *object)
 {
   GimpPattern *pattern;
 
@@ -130,8 +135,7 @@ gimp_pattern_destroy (GtkObject *object)
       pattern->mask = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static TempBuf *

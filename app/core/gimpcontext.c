@@ -308,8 +308,33 @@ static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 static GimpObjectClass * parent_class = NULL;
 
 
-/*****************************************************************************/
-/*  private functions  *******************************************************/
+GType
+gimp_context_get_type (void)
+{
+  static GType context_type = 0;
+
+  if (! context_type)
+    {
+      static const GTypeInfo context_info =
+      {
+        sizeof (GimpContextClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_context_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpContext),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_context_init,
+      };
+
+      context_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					     "GimpContext", 
+					     &context_info, 0);
+    }
+
+  return context_type;
+}
 
 static void
 gimp_context_class_init (GimpContextClass *klass)
@@ -729,31 +754,6 @@ gimp_context_get_arg (GtkObject *object,
 
 /*****************************************************************************/
 /*  public functions  ********************************************************/
-
-GType
-gimp_context_get_type (void)
-{
-  static GType context_type = 0;
-
-  if (! context_type)
-    {
-      GtkTypeInfo context_info =
-      {
-	"GimpContext",
-	sizeof (GimpContext),
-	sizeof (GimpContextClass),
-	(GtkClassInitFunc) gimp_context_class_init,
-	(GtkObjectInitFunc) gimp_context_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL
-      };
-
-      context_type = gtk_type_unique (GIMP_TYPE_OBJECT, &context_info);
-    }
-
-  return context_type;
-}
 
 GimpContext *
 gimp_context_new (Gimp        *gimp,

@@ -35,24 +35,26 @@ enum
 
 enum
 {
-  ARG_0,
-  ARG_NAME
+  PROP_0,
+  PROP_NAME
 };
 
 
-static void   gimp_object_class_init (GimpObjectClass *klass);
-static void   gimp_object_init       (GimpObject      *object);
+static void   gimp_object_class_init   (GimpObjectClass *klass);
+static void   gimp_object_init         (GimpObject      *object);
 
-static void   gimp_object_destroy    (GtkObject       *object);
-static void   gimp_object_set_arg    (GtkObject       *object,
-				      GtkArg          *arg,
-				      guint            arg_id);
-static void   gimp_object_get_arg    (GtkObject       *object,
-				      GtkArg          *arg,
-				      guint            arg_id);
+static void   gimp_object_finalize     (GObject         *object);
+static void   gimp_object_set_property (GObject         *object,
+					guint            property_id,
+					const GValue    *value,
+					GParamSpec      *pspec);
+static void   gimp_object_get_property (GObject         *object,
+					guint            property_id,
+					GValue          *value,
+					GParamSpec      *pspec);
 
 
-static guint           object_signals[LAST_SIGNAL] = { 0 };
+static guint   object_signals[LAST_SIGNAL] = { 0 };
 
 static GtkObjectClass *parent_class = NULL;
 
@@ -64,19 +66,22 @@ gimp_object_get_type (void)
 
   if (! object_type)
     {
-      GtkTypeInfo object_info =
+      static const GTypeInfo object_info =
       {
-        "GimpObject",
-        sizeof (GimpObject),
         sizeof (GimpObjectClass),
-        (GtkClassInitFunc) gimp_object_class_init,
-        (GtkObjectInitFunc) gimp_object_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_object_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpObject),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_object_init,
       };
 
-      object_type = gtk_type_unique (GTK_TYPE_OBJECT, &object_info);
+      object_type = g_type_register_static (GTK_TYPE_OBJECT,
+					    "GimpObject", 
+					    &object_info, 0);
     }
 
   return object_type;
@@ -85,14 +90,11 @@ gimp_object_get_type (void)
 static void
 gimp_object_class_init (GimpObjectClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  gtk_object_add_arg_type ("GimpObject::name", GTK_TYPE_STRING,
-			   GTK_ARG_READWRITE, ARG_NAME);
 
   object_signals[NAME_CHANGED] =
     g_signal_new ("name_changed",
@@ -103,11 +105,18 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_object_destroy;
-  object_class->set_arg = gimp_object_set_arg;
-  object_class->get_arg = gimp_object_get_arg;
+  object_class->finalize     = gimp_object_finalize;
+  object_class->set_property = gimp_object_set_property;
+  object_class->get_property = gimp_object_get_property;
 
-  klass->name_changed   = NULL;
+  klass->name_changed        = NULL;
+
+  g_object_class_install_property (object_class,
+				   PROP_NAME,
+				   g_param_spec_string ("name",
+							NULL, NULL,
+							NULL,
+							G_PARAM_READWRITE));
 }
 
 static void
@@ -117,7 +126,7 @@ gimp_object_init (GimpObject *object)
 }
 
 static void
-gimp_object_destroy (GtkObject *object)
+gimp_object_finalize (GObject *object)
 {
   GimpObject *gimp_object;
 
@@ -129,45 +138,47 @@ gimp_object_destroy (GtkObject *object)
       gimp_object->name = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_object_set_arg (GtkObject *object,
-		     GtkArg    *arg,
-		     guint      arg_id)
+gimp_object_set_property (GObject      *object,
+			  guint         property_id,
+			  const GValue *value,
+			  GParamSpec   *pspec)
 {
   GimpObject *gimp_object;
 
   gimp_object = GIMP_OBJECT (object);
 
-  switch (arg_id)
+  switch (property_id)
     {
-    case ARG_NAME:
-      gimp_object_set_name (gimp_object, GTK_VALUE_STRING (*arg));
+    case PROP_NAME:
+      gimp_object_set_name (gimp_object, g_value_get_string (value));
       break;
     default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
 static void
-gimp_object_get_arg (GtkObject *object,
-		     GtkArg    *arg,
-		     guint      arg_id)
+gimp_object_get_property (GObject    *object,
+			  guint       property_id,
+			  GValue     *value,
+			  GParamSpec *pspec)
 {
   GimpObject *gimp_object;
 
   gimp_object = GIMP_OBJECT (object);
 
-  switch (arg_id)
+  switch (property_id)
     {
-    case ARG_NAME:
-      GTK_VALUE_STRING (*arg) = g_strdup (gimp_object->name);
+    case PROP_NAME:
+      g_value_set_string (value, gimp_object->name);
       break;
     default:
-      arg->type = GTK_TYPE_INVALID;
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
