@@ -32,6 +32,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -50,6 +51,7 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimpcoloroptions.h"
 #include "gimpcurvestool.h"
 #include "gimptoolcontrol.h"
 
@@ -89,34 +91,20 @@ static void   gimp_curves_tool_finalize       (GObject          *object);
 
 static void   gimp_curves_tool_initialize     (GimpTool         *tool,
 					       GimpDisplay      *gdisp);
-static void   gimp_curves_tool_button_press   (GimpTool         *tool,
-                                               GimpCoords       *coords,
-                                               guint32           time,
-					       GdkModifierType   state,
-					       GimpDisplay      *gdisp);
 static void   gimp_curves_tool_button_release (GimpTool         *tool,
                                                GimpCoords       *coords,
                                                guint32           time,
 					       GdkModifierType   state,
 					       GimpDisplay      *gdisp);
-static void   gimp_curves_tool_motion         (GimpTool         *tool,
-                                               GimpCoords       *coords,
-                                               guint32           time,
-					       GdkModifierType   state,
-					       GimpDisplay      *gdisp);
-static void   gimp_curves_tool_cursor_update  (GimpTool         *tool,
-                                               GimpCoords       *coords,
-                                               GdkModifierType   state,
-                                               GimpDisplay      *gdisp);
 
+static void   gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
+					       GimpImageType     sample_type,
+					       GimpRGB          *color,
+					       gint              color_index);
 static void   gimp_curves_tool_map            (GimpImageMapTool *image_map_tool);
 static void   gimp_curves_tool_dialog         (GimpImageMapTool *image_map_tool);
 static void   gimp_curves_tool_reset          (GimpImageMapTool *image_map_tool);
 
-static void   curves_color_update             (GimpTool         *tool,
-					       GimpDisplay      *gdisp,
-					       GimpDrawable     *drawable,
-					       GimpCoords       *coords);
 static void   curves_add_point                (GimpCurvesTool   *c_tool,
 					       gint              x,
 					       gint              y,
@@ -164,7 +152,8 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CURVES_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_COLOR_OPTIONS,
+                gimp_color_options_gui,
                 FALSE,
                 "gimp-curves-tool",
                 _("Curves"),
@@ -211,21 +200,22 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
   GObjectClass          *object_class;
   GimpToolClass         *tool_class;
+  GimpColorToolClass    *color_tool_class;
   GimpImageMapToolClass *image_map_tool_class;
 
   object_class         = G_OBJECT_CLASS (klass);
   tool_class           = GIMP_TOOL_CLASS (klass);
+  color_tool_class     = GIMP_COLOR_TOOL_CLASS (klass);
   image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_curves_tool_finalize;
+  object_class->finalize       = gimp_curves_tool_finalize;
 
-  tool_class->initialize     = gimp_curves_tool_initialize;
-  tool_class->button_press   = gimp_curves_tool_button_press;
-  tool_class->button_release = gimp_curves_tool_button_release;
-  tool_class->motion         = gimp_curves_tool_motion;
-  tool_class->cursor_update  = gimp_curves_tool_cursor_update;
+  tool_class->initialize       = gimp_curves_tool_initialize;
+  tool_class->button_release   = gimp_curves_tool_button_release;
+
+  color_tool_class->picked     = gimp_curves_tool_color_picked;
 
   image_map_tool_class->map    = gimp_curves_tool_map;
   image_map_tool_class->dialog = gimp_curves_tool_dialog;
@@ -314,6 +304,10 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
+  /*  always pick colors  */
+  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                          GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
+
   /* set the sensitivity of the channel menu based on the drawable type */
   gimp_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
                                   (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
@@ -324,52 +318,6 @@ gimp_curves_tool_initialize (GimpTool    *tool,
                                 GINT_TO_POINTER (c_tool->channel));
 
   curves_update (c_tool, ALL);
-}
-
-static void
-gimp_curves_tool_button_press (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-			       GdkModifierType  state,
-			       GimpDisplay     *gdisp)
-{
-  GimpCurvesTool *c_tool;
-  GimpDrawable   *drawable;
-
-  c_tool = GIMP_CURVES_TOOL (tool);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  tool->gdisp = gdisp;
-
-  g_assert (drawable == tool->drawable);
-
-#if 0
-  if (drawable != tool->drawable)
-    {
-      gimp_tool_control_set_preserve (tool->control, TRUE);
-      gimp_image_map_abort (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
-      gimp_tool_control_set_preserve (tool->control, FALSE);
-
-      tool->drawable = drawable;
-
-      c_tool->color  = gimp_drawable_is_rgb (drawable);
-
-      GIMP_IMAGE_MAP_TOOL (tool)->drawable  = drawable;
-      GIMP_IMAGE_MAP_TOOL (tool)->image_map = gimp_image_map_new (TRUE,
-                                                                  drawable);
-
-      gimp_option_menu_set_sensitive 
-        (GTK_OPTION_MENU (c_tool->channel_menu),
-         (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
-         c_tool);
-    }
-#endif
-
-  gimp_tool_control_activate (tool->control);
-
-  curves_color_update (tool, gdisp, drawable, coords);
-  gtk_widget_queue_draw (c_tool->graph);
 }
 
 static void
@@ -385,8 +333,6 @@ gimp_curves_tool_button_release (GimpTool        *tool,
   c_tool = GIMP_CURVES_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  curves_color_update (tool, gdisp, drawable, coords);
 
   if (state & GDK_SHIFT_MASK)
     {
@@ -404,107 +350,39 @@ gimp_curves_tool_button_release (GimpTool        *tool,
         }
     }
 
-  gimp_tool_control_halt (tool->control);
-
-  gtk_widget_queue_draw (c_tool->graph);
+  /*  chain up to halt the tool */
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool,
+                                                  coords, time, state, gdisp);
 }
 
 static void
-gimp_curves_tool_motion (GimpTool        *tool,
-                         GimpCoords      *coords,
-                         guint32          time,
-			 GdkModifierType  state,
-			 GimpDisplay     *gdisp)
+gimp_curves_tool_color_picked (GimpColorTool *color_tool,
+			       GimpImageType  sample_type,
+			       GimpRGB       *color,
+			       gint           color_index)
 {
   GimpCurvesTool *c_tool;
   GimpDrawable   *drawable;
+  guchar          r, g, b, a;
 
-  c_tool = GIMP_CURVES_TOOL (tool);
+  c_tool = GIMP_CURVES_TOOL (color_tool);
+  drawable = GIMP_IMAGE_MAP_TOOL (c_tool)->drawable;
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
 
-  curves_color_update (tool, gdisp, drawable, coords);
+  c_tool->col_value[GIMP_HISTOGRAM_RED]   = r;
+  c_tool->col_value[GIMP_HISTOGRAM_GREEN] = g;
+  c_tool->col_value[GIMP_HISTOGRAM_BLUE]  = b;
+  
+  if (gimp_drawable_has_alpha (drawable))
+    c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = a;
+      
+  if (gimp_drawable_is_indexed (drawable))
+    c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color_index;
+      
+  c_tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (MAX (r, g), b);
+
   gtk_widget_queue_draw (c_tool->graph);
-}
-
-static void
-gimp_curves_tool_cursor_update (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                GdkModifierType  state,
-                                GimpDisplay     *gdisp)
-{
-  if (gimp_display_coords_in_active_drawable (gdisp, coords))
-    {
-      gimp_tool_control_set_tool_cursor (tool->control,
-                                         GIMP_COLOR_PICKER_TOOL_CURSOR);
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             (state & (GDK_SHIFT_MASK |
-                                                       GDK_CONTROL_MASK) ?
-                                              GIMP_CURSOR_MODIFIER_PLUS  :
-                                              GIMP_CURSOR_MODIFIER_NONE));
-    }
-  else
-    {
-      gimp_tool_control_set_tool_cursor (tool->control,
-                                         GIMP_TOOL_CURSOR_NONE);
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_NONE);
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
-}
-
-static void
-curves_color_update (GimpTool       *tool,
-                     GimpDisplay    *gdisp,
-                     GimpDrawable   *drawable,
-                     GimpCoords     *coords)
-{
-  GimpCurvesTool *c_tool;
-  guchar         *color;
-  gint            x;
-  gint            y;
-
-  if (! (tool && gimp_tool_control_is_active (tool->control)))
-    return;
-
-  c_tool = GIMP_CURVES_TOOL (tool);
-
-  gimp_item_offsets (GIMP_ITEM (drawable), &x, &y);
-
-  x = RINT (coords->x) - x;
-  y = RINT (coords->y) - y;
-
-  color = gimp_image_map_get_color_at (GIMP_IMAGE_MAP_TOOL (tool)->image_map,
-                                       x, y);
-  if (color)
-    {
-      gint maxval;
-
-      c_tool->col_value[GIMP_HISTOGRAM_RED]   = color[RED_PIX];
-      c_tool->col_value[GIMP_HISTOGRAM_GREEN] = color[GREEN_PIX];
-      c_tool->col_value[GIMP_HISTOGRAM_BLUE]  = color[BLUE_PIX];
-      
-      if (gimp_drawable_has_alpha (drawable))
-        c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[3];
-      
-      if (gimp_drawable_is_indexed (drawable))
-        c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[4];
-      
-      maxval = MAX (color[RED_PIX], color[GREEN_PIX]);
-      c_tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
-      
-      g_free (color);
-    }
-  else
-    {
-      gint i;
-
-      for (i = 0; i <= GIMP_HISTOGRAM_ALPHA; i++)
-        c_tool->col_value[i] = -1;
-      
-      return;
-    }
 }
 
 static void

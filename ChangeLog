@@ -1,5 +1,10 @@
 2003-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcurvestool.c: simplified by using the functions
+	inherited from GimpColorTool.
+
+2003-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.c (gimp_drawable_get_color_at):
 	* app/core/gimpimage-projection.c (gimp_image_projection_get_color_at):
 	use OPAQUE_OPACITY instead of 255.
