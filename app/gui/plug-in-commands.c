@@ -140,7 +140,8 @@ plug_in_run_cmd_callback (GtkWidget *widget,
     }
 
   /* run the plug-in procedure */
-  plug_in_run (gimp, proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
+  plug_in_run (gimp, gimp_get_user_context (gimp),
+               proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
   /* remember only "standard" plug-ins */
   if (proc_rec->proc_type == GIMP_PLUGIN           &&
@@ -173,6 +174,7 @@ plug_in_repeat_cmd_callback (GtkWidget *widget,
   interactive = action ? TRUE : FALSE;
 
   plug_in_repeat (gdisp->gimage->gimp,
+                  gimp_get_user_context (gdisp->gimage->gimp),
                   gimp_display_get_ID (gdisp),
                   gimp_image_get_ID (gdisp->gimage),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),

@@ -68,10 +68,8 @@
 
 #include "plug-in-types.h"
 
-#include "base/tile.h"
-#include "base/tile-manager.h"
-
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
 
 #include "plug-in.h"
@@ -154,15 +152,17 @@ plug_in_exit (Gimp *gimp)
 }
 
 void
-plug_in_call_query (Gimp      *gimp,
-                    PlugInDef *plug_in_def)
+plug_in_call_query (Gimp        *gimp,
+                    GimpContext *context,
+                    PlugInDef   *plug_in_def)
 {
   PlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, context, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -193,15 +193,17 @@ plug_in_call_query (Gimp      *gimp,
 }
 
 void
-plug_in_call_init (Gimp      *gimp,
-                   PlugInDef *plug_in_def)
+plug_in_call_init (Gimp        *gimp,
+                   GimpContext *context,
+                   PlugInDef   *plug_in_def)
 {
   PlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, context, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -233,18 +235,21 @@ plug_in_call_init (Gimp      *gimp,
 
 PlugIn *
 plug_in_new (Gimp        *gimp,
+             GimpContext *context,
              ProcRecord  *proc_rec,
              const gchar *prog)
 {
   PlugIn *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (prog != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (prog), NULL);
 
   plug_in = g_new0 (PlugIn, 1);
 
   plug_in->gimp               = gimp;
+  plug_in->context            = g_object_ref (context);
 
   plug_in->ref_count          = 1;
 
@@ -309,6 +314,8 @@ plug_in_unref (PlugIn *plug_in)
 
       if (plug_in->progress)
         plug_in_progress_end (plug_in);
+
+      g_object_unref (plug_in->context);
 
       g_free (plug_in);
     }

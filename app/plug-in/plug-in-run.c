@@ -33,6 +33,7 @@
 #include "base/tile.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "pdb/procedural_db.h"
 
@@ -56,18 +57,20 @@ static Argument * plug_in_get_return_vals (PlugIn     *plug_in,
 /*  public functions  */
 
 Argument *
-plug_in_run (Gimp       *gimp,
-             ProcRecord *proc_rec,
-	     Argument   *args,
-	     gint        argc,
-	     gboolean    synchronous,
-	     gboolean    destroy_return_vals,
-	     gint        gdisp_ID)
+plug_in_run (Gimp        *gimp,
+             GimpContext *context,
+             ProcRecord  *proc_rec,
+	     Argument    *args,
+	     gint         argc,
+	     gboolean     synchronous,
+	     gboolean     destroy_return_vals,
+	     gint         gdisp_ID)
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (proc_rec != NULL, NULL);
   g_return_val_if_fail (argc == 0 || args != NULL, NULL);
   g_return_val_if_fail (proc_rec->proc_type != GIMP_EXTENSION ||
@@ -79,7 +82,7 @@ plug_in_run (Gimp       *gimp,
       goto done;
     }
 
-  plug_in = plug_in_new (gimp, proc_rec,
+  plug_in = plug_in_new (gimp, context, proc_rec,
                          proc_rec->exec_method.plug_in.filename);
 
   if (plug_in)
@@ -175,16 +178,18 @@ plug_in_run (Gimp       *gimp,
 }
 
 void
-plug_in_repeat (Gimp    *gimp,
-                gint     display_ID,
-                gint     image_ID,
-                gint     drawable_ID,
-                gboolean with_interface)
+plug_in_repeat (Gimp        *gimp,
+                GimpContext *context,
+                gint         display_ID,
+                gint         image_ID,
+                gint         drawable_ID,
+                gboolean     with_interface)
 {
   Argument *args;
   gint      i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (gimp->last_plug_in)
     {
@@ -202,7 +207,8 @@ plug_in_repeat (Gimp    *gimp,
       args[2].value.pdb_int = drawable_ID;
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, gimp->last_plug_in, args, 3, FALSE, TRUE, display_ID);
+      plug_in_run (gimp, context, gimp->last_plug_in,
+                   args, 3, FALSE, TRUE, display_ID);
 
       g_free (args);
     }

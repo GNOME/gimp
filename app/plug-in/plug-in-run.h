@@ -22,22 +22,24 @@
 
 /*  Run a plug-in as if it were a procedure database procedure
  */
-Argument * plug_in_run    (Gimp       *gimp,
-                           ProcRecord *proc_rec,
-                           Argument   *args,
-                           gint        argc,
-                           gboolean    synchronous,
-                           gboolean    destroy_return_vals,
-                           gint        gdisp_ID);
+Argument * plug_in_run    (Gimp        *gimp,
+                           GimpContext *context,
+                           ProcRecord  *proc_rec,
+                           Argument    *args,
+                           gint         argc,
+                           gboolean     synchronous,
+                           gboolean     destroy_return_vals,
+                           gint         gdisp_ID);
 
 /*  Run the last plug-in again with the same arguments. Extensions
  *  are exempt from this "privelege".
  */
-void       plug_in_repeat (Gimp       *gimp,
-                           gint        display_ID,
-                           gint        image_ID,
-                           gint        drawable_ID,
-                           gboolean    with_interface);
+void       plug_in_repeat (Gimp        *gimp,
+                           GimpContext *context,
+                           gint         display_ID,
+                           gint         image_ID,
+                           gint         drawable_ID,
+                           gboolean     with_interface);
 
 
 #endif /* __PLUG_IN_RUN_H__ */

@@ -72,7 +72,8 @@ struct _PlugInHelpDomainDef
 
 static void            plug_ins_init_file (const GimpDatafileData *file_data,
                                            gpointer                user_data);
-static void            plug_ins_add_to_db       (Gimp             *gimp);
+static void            plug_ins_add_to_db       (Gimp             *gimp,
+                                                 GimpContext      *context);
 static PlugInProcDef * plug_ins_proc_def_insert (Gimp             *gimp,
                                                  PlugInProcDef    *proc_def);
 
@@ -83,18 +84,21 @@ void
 plug_ins_init (Gimp               *gimp,
                GimpInitStatusFunc  status_callback)
 {
-  gchar   *filename;
-  gchar   *basename;
-  gchar   *path;
-  GSList  *tmp;
-  GList   *extensions = NULL;
-  gdouble  n_plugins;
-  gdouble  n_extensions;
-  gdouble  nth;
-  GError  *error = NULL;
+  GimpContext *context;
+  gchar       *filename;
+  gchar       *basename;
+  gchar       *path;
+  GSList      *tmp;
+  GList       *extensions = NULL;
+  gdouble      n_plugins;
+  gdouble      n_extensions;
+  gdouble      nth;
+  GError      *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
+
+  context = gimp_context_new (gimp, "temp", NULL);
 
   plug_in_init (gimp);
 
@@ -164,7 +168,7 @@ plug_ins_init (Gimp               *gimp,
 	    g_print (_("Querying plug-in: '%s'\n"),
 		     gimp_filename_to_utf8 (plug_in_def->prog));
 
-	  plug_in_call_query (gimp, plug_in_def);
+	  plug_in_call_query (gimp, context, plug_in_def);
 	}
     }
 
@@ -236,7 +240,7 @@ plug_ins_init (Gimp               *gimp,
   g_free (filename);
 
   /* add the plug-in procs to the procedure database */
-  plug_ins_add_to_db (gimp);
+  plug_ins_add_to_db (gimp, context);
 
   /* sort file procs */
   gimp->load_procs = g_slist_sort_with_data (gimp->load_procs,
@@ -316,7 +320,7 @@ plug_ins_init (Gimp               *gimp,
 	    g_print (_("Initializing plug-in: '%s'\n"),
                      gimp_filename_to_utf8 (plug_in_def->prog));
 
-	  plug_in_call_init (gimp, plug_in_def);
+	  plug_in_call_init (gimp, context, plug_in_def);
 	}
     }
 
@@ -358,7 +362,8 @@ plug_ins_init (Gimp               *gimp,
 
 	  (* status_callback) (NULL, proc_def->db_info.name, nth / n_plugins);
 
-	  plug_in_run (gimp, &proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
+	  plug_in_run (gimp, context, &proc_def->db_info,
+                       NULL, 0, FALSE, TRUE, -1);
 	}
 
       (* status_callback) (NULL, NULL, 1.0);
@@ -372,6 +377,8 @@ plug_ins_init (Gimp               *gimp,
 
   g_slist_free (gimp->plug_in_defs);
   gimp->plug_in_defs = NULL;
+
+  g_object_unref (context);
 }
 
 void
@@ -907,13 +914,11 @@ plug_ins_init_file (const GimpDatafileData *file_data,
 }
 
 static void
-plug_ins_add_to_db (Gimp *gimp)
+plug_ins_add_to_db (Gimp        *gimp,
+                    GimpContext *context)
 {
-  GimpContext   *context;
   PlugInProcDef *proc_def;
   GSList        *list;
-
-  context = gimp_context_new (gimp, "temp", NULL);
 
   for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
@@ -965,8 +970,6 @@ plug_ins_add_to_db (Gimp *gimp)
             }
 	}
     }
-
-  g_object_unref (context);
 }
 
 static PlugInProcDef *

@@ -55,7 +55,7 @@ static void  stroke_dialog_response            (GtkWidget    *widget,
                                                 GtkWidget    *dialog);
 static void  stroke_dialog_paint_info_selected (GtkWidget    *menu,
                                                 GimpViewable *viewable,
-                                                gpointer      insert_date,
+                                                gpointer      insert_data,
                                                 GtkWidget    *dialog);
 
 
@@ -331,7 +331,7 @@ stroke_dialog_response (GtkWidget  *widget,
             options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
           }
 
-        gimp_item_stroke (item, drawable, options, FALSE);
+        gimp_item_stroke (item, drawable, context, options, FALSE);
         gimp_image_flush (image);
       }
       /* fallthrough */
@@ -345,7 +345,7 @@ stroke_dialog_response (GtkWidget  *widget,
 static void
 stroke_dialog_paint_info_selected (GtkWidget    *menu,
                                    GimpViewable *viewable,
-                                   gpointer      insert_date,
+                                   gpointer      insert_data,
                                    GtkWidget    *dialog)
 {
   g_object_set_data (G_OBJECT (dialog), "gimp-paint-info", viewable);

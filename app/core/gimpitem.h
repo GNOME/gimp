@@ -116,6 +116,7 @@ struct _GimpItemClass
                               gpointer                progress_data);
   gboolean   (* stroke)      (GimpItem               *item,
                               GimpDrawable           *drawable,
+                              GimpContext            *context,
                               GimpObject             *stroke_desc,
                               gboolean                use_default_values);
 
@@ -225,6 +226,7 @@ void            gimp_item_transform        (GimpItem       *item,
 
 gboolean        gimp_item_stroke           (GimpItem       *item,
                                             GimpDrawable   *drawable,
+                                            GimpContext    *context,
                                             GimpObject     *stroke_desc,
                                             gboolean        use_default_values);
 

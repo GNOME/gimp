@@ -29,6 +29,7 @@
 struct _PlugIn
 {
   Gimp         *gimp;
+  GimpContext  *context;
 
   gint          ref_count;
 
@@ -79,11 +80,14 @@ void       plug_in_init           (Gimp        *gimp);
 void       plug_in_exit           (Gimp        *gimp);
 
 void       plug_in_call_query     (Gimp        *gimp,
+                                   GimpContext *context,
                                    PlugInDef   *plug_in_def);
 void       plug_in_call_init      (Gimp        *gimp,
+                                   GimpContext *context,
                                    PlugInDef   *plug_in_def);
 
 PlugIn   * plug_in_new            (Gimp        *gimp,
+                                   GimpContext *context,
                                    ProcRecord  *proc_rec,
                                    const gchar *prog);
 
@@ -100,7 +104,7 @@ void       plug_in_pop            (Gimp        *gimp);
 
 void       plug_in_main_loop      (PlugIn      *plug_in);
 void       plug_in_main_loop_quit (PlugIn      *plug_in);
- 
+
 gchar    * plug_in_get_undo_desc  (PlugIn      *plug_in);
 
 

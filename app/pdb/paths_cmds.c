@@ -606,7 +606,7 @@ path_stroke_current_invoker (Gimp        *gimp,
         {
           GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
-          success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
+          success = gimp_item_stroke (GIMP_ITEM (vectors), drawable, context,
                                       GIMP_OBJECT (tool_info->paint_info),
                                       TRUE /* use defaults, not tool option values */);
         }

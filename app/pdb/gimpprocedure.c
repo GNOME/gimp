@@ -310,7 +310,7 @@ procedural_db_execute (Gimp        *gimp,
         case GIMP_PLUGIN:
         case GIMP_EXTENSION:
         case GIMP_TEMPORARY:
-          return_args = plug_in_run (gimp, procedure,
+          return_args = plug_in_run (gimp, context, procedure,
                                      args, procedure->num_args,
                                      TRUE, FALSE, -1);
           break;

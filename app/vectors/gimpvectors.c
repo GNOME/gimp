@@ -114,6 +114,7 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              gpointer          progress_data);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
+                                             GimpContext      *context,
                                              GimpObject       *stroke_desc,
                                              gboolean          use_default_values);
 
@@ -563,6 +564,7 @@ gimp_vectors_transform (GimpItem               *item,
 static gboolean
 gimp_vectors_stroke (GimpItem     *item,
                      GimpDrawable *drawable,
+                     GimpContext  *context,
                      GimpObject   *stroke_desc,
                      gboolean      use_default_values)
 {
@@ -596,13 +598,12 @@ gimp_vectors_stroke (GimpItem     *item,
                                     paint_info->paint_options_type);
 
           /*  undefine the paint-relevant context properties and get them
-           *  from the current context
+           *  from the passed context
            */
           gimp_context_define_properties (GIMP_CONTEXT (paint_options),
                                           GIMP_CONTEXT_PAINT_PROPS_MASK,
                                           FALSE);
-          gimp_context_set_parent (GIMP_CONTEXT (paint_options),
-                                   gimp_get_user_context (gimage->gimp));
+          gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
         }
       else
         {

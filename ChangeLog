@@ -1,3 +1,44 @@
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
+	Context cleanup continued:
+
+	* app/core/gimpitem.[ch]: added context parameter to
+	GimpItem::stroke().
+
+	* app/core/gimpchannel.c (gimp_channel_stroke)
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): use it to get
+	default values from instead of gimp_get_user_context().
+
+	* app/core/gimpselection.c
+	* app/gui/stroke-dialog.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
+	* app/plug-in/plug-in.[ch]: added GimpContext member to the PlugIn
+	struct. Added context parameter to plug_in_new(),
+	plug_in_call_query() and plug_in_call_init().
+
+	* app/plug-in/plug-in-run.[ch]: added context parameters to
+	plug_in_run() and plug_in_repeat().
+
+	* app/gui/plug-in-commands.c
+	* app/gui/vectors-commands.c
+	* app/pdb/procedural_db.c
+	* app/widgets/gimphelp.c: pass a context to plug_in_run() and
+	plug_in_repeat().
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): call
+	procedures with the plug-in's context.
+
+	* app/plug-in/plug-ins.c: use a temporary context for running the
+	plug-ins' query() and init() functions. Use the same context for
+	running automatic extensions. This temporarily separates the main
+	Script-Fu extension from the user context (i.e. scripts have no
+	way of setting/getting the global FG, BG, brush etc.).
+
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
 	* NEWS

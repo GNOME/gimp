@@ -334,7 +334,7 @@ vectors_selection_to_vectors (GimpImage *gimage,
   args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = -1;  /*  unused  */
 
-  plug_in_run (gimage->gimp,
+  plug_in_run (gimage->gimp, gimp_get_user_context (gimage->gimp),
                proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gdisp->ID : 0);
 

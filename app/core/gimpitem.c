@@ -899,6 +899,7 @@ gimp_item_transform (GimpItem               *item,
 gboolean
 gimp_item_stroke (GimpItem      *item,
                   GimpDrawable  *drawable,
+                  GimpContext   *context,
                   GimpObject    *stroke_desc,
                   gboolean       use_default_values)
 {
@@ -906,13 +907,15 @@ gimp_item_stroke (GimpItem      *item,
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
                         GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   if (item_class->stroke)
-    return item_class->stroke (item, drawable, stroke_desc, use_default_values);
+    return item_class->stroke (item, drawable, context,
+                               stroke_desc, use_default_values);
 
   return FALSE;
 }
