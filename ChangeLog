@@ -1,7 +1,12 @@
 2004-08-30  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c (gimp_brush_select_preview_draw): fixed
+	drawing of brushes that extend beyond the preview.
+
+2004-08-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpvectortool.[ch] (gimp_vector_tool_status_set):
-	avoid extensive use of strdup() and strcmp(). The strings are all
+	avoid excessive use of strdup() and strcmp(). The strings are all
 	constant anyway.
 
 2004-08-30  Michael Natterer  <mitch@gimp.org>
@@ -18,7 +23,7 @@
 
 	* app/plug-in/plug-in-progress.c
 	* app/plug-in/plug-in-run.c
-	* app/plug-in/plug-in.c: switch bach to real refcouting for
+	* app/plug-in/plug-in.c: switch back to real refcounting for
 	plug_in->progress (reopens bug #150194) and enabled the PDB
 	progress code.
 

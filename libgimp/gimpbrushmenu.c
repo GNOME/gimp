@@ -411,24 +411,27 @@ gimp_brush_select_preview_draw (GimpPreviewArea *area,
                                 gint             y,
                                 gint             width,
                                 gint             height,
-                                const guchar    *mask_data)
+                                const guchar    *mask_data,
+                                gint             rowstride)
 {
   const guchar *src;
   guchar       *dest;
   guchar       *buf;
-  guint         pixels = width * height;
+  gint          i, j;
 
-  buf = g_new (guchar, pixels);
+  buf = g_new (guchar, width * height);
 
   src  = mask_data;
   dest = buf;
 
-  while (pixels--)
+  for (j = 0; j < height; j++)
     {
-      *dest = 255 - *src;
+      const guchar *s = src;
 
-      src++;
-      dest++;
+      for (i = 0; i < width; i++, s++, dest++)
+        *dest = 255 - *s;
+
+      src += rowstride;
     }
 
   gimp_preview_area_draw (area,
@@ -463,7 +466,9 @@ gimp_brush_select_preview_update (GtkWidget    *preview,
                             preview->allocation.height,
                             0xFF, 0xFF, 0xFF);
 
-  gimp_brush_select_preview_draw (area, x, y, width, height, mask_data);
+  gimp_brush_select_preview_draw (area,
+                                  x, y, width, height,
+                                  mask_data, brush_width);
 }
 
 static void
@@ -519,7 +524,7 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
   /*  Draw the brush  */
   gimp_brush_select_preview_draw (GIMP_PREVIEW_AREA (preview),
                                   0, 0, brush_sel->width, brush_sel->height,
-                                  brush_sel->mask_data);
+                                  brush_sel->mask_data, brush_sel->width);
 }
 
 static void
