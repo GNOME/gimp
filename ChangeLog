@@ -1,3 +1,155 @@
+2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-deserialize.h
+	* app/config/gimpconfig-error.c
+	* app/config/gimpconfig-error.h
+	* app/config/gimpconfig-params.h
+	* app/config/gimpconfig-path.c
+	* app/config/gimpconfig-path.h
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-serialize.h
+	* app/config/gimpconfig.c
+	* app/config/gimpconfig.h
+	* app/config/gimpconfigwriter.c
+	* app/config/gimpconfigwriter.h
+	* app/config/gimpscanner.c
+	* app/config/gimpscanner.h: removed
+
+	* libgimpconfig/gimpconfig-deserialize.c
+	* libgimpconfig/gimpconfig-deserialize.h
+	* libgimpconfig/gimpconfig-error.h
+	* libgimpconfig/gimpconfig-iface.c
+	* libgimpconfig/gimpconfig-iface.h
+	* libgimpconfig/gimpconfig-params.h
+	* libgimpconfig/gimpconfig-path.c
+	* libgimpconfig/gimpconfig-path.h
+	* libgimpconfig/gimpconfig-serialize.c
+	* libgimpconfig/gimpconfig-serialize.h
+	* libgimpconfig/gimpconfig-utils.c
+	* libgimpconfig/gimpconfig-utils.h
+	* libgimpconfig/gimpconfig.h
+	* libgimpconfig/gimpconfigwriter.c
+	* libgimpconfig/gimpconfigwriter.h
+	* libgimpconfig/gimpscanner.c
+	* libgimpconfig/gimpscanner.h: copied from app/config
+	by yosh.
+
+	* libgimpconfig/.cvsignore: added
+	
+	* libgimpconfig/Makefile.am: modified
+
+	* Makefile.am
+	* configure.in
+	* app/Makefile.am
+	* app/actions/templates-commands.c
+	* app/actions/tool-options-commands.c
+	* app/base/base.c
+	* app/base/temp-buf.c
+	* app/config/Makefile.am
+	* app/config/config-types.h
+	* app/config/gimpconfig-utils.c
+	* app/config/gimpconfig-utils.h
+	* app/config/gimpconfig-file.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c
+	* app/config/gimprc-deserialize.c
+	* app/config/gimprc-serialize.c
+	* app/config/gimprc-unknown.c
+	* app/config/gimprc.c
+	* app/config/test-config.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-modules.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimp-units.c
+	* app/core/gimp.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpgrid.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-grid.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimpstrokedesc.c
+	* app/core/gimpstrokeoptions.c
+	* app/core/gimptemplate.c
+	* app/core/gimptoolinfo.c
+	* app/core/gimptooloptions.c
+	* app/core/gimpviewable.c
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/dialogs/template-options-dialog.c
+	* app/display/gimpdisplayoptions.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/color-history.c
+	* app/gui/session.c
+	* app/gui/themes.c
+	* app/paint/gimpairbrushoptions.c
+	* app/paint/gimpcloneoptions.c
+	* app/paint/gimpconvolveoptions.c
+	* app/paint/gimpdodgeburnoptions.c
+	* app/paint/gimperaseroptions.c
+	* app/paint/gimpinkoptions.c
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppenciloptions.c
+	* app/paint/gimpsmudgeoptions.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/gimprc_cmds.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.c
+	* app/text/gimp-fonts.c
+	* app/text/gimptext-parasite.c
+	* app/text/gimptext.c
+	* app/text/gimptextlayer.c
+	* app/text/gimptextundo.c
+	* app/tools/gimp-tools.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpcolorpickeroptions.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpflipoptions.c
+	* app/tools/gimphistogramoptions.c
+	* app/tools/gimpimagemapoptions.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpmeasureoptions.c
+	* app/tools/gimpmoveoptions.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptextoptions.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectoroptions.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollers.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdeviceinfo.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimpdialogfactory.h
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpsessioninfo.c
+	* app/widgets/gimpsessioninfo.h
+	* app/widgets/gimpsizebox.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptemplateview.c: changed accordingly
+
+	Moving things from app/config to libgimpconfig.
+
 2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpconfig/Makefile.am

@@ -1558,6 +1558,7 @@ tools/pdbgen/Makefile
 regexrepl/Makefile
 libgimp/Makefile
 libgimpbase/Makefile
+libgimpconfig/Makefile
 libgimpcolor/Makefile
 libgimpmath/Makefile
 libgimpmodule/Makefile
@@ -1637,6 +1638,8 @@ devel-docs/libgimp/Makefile
 devel-docs/libgimp/version
 devel-docs/libgimpbase/Makefile
 devel-docs/libgimpbase/version
+devel-docs/libgimpconfig/Makefile
+devel-docs/libgimpconfig/version
 devel-docs/libgimpcolor/Makefile
 devel-docs/libgimpcolor/version
 devel-docs/libgimpmath/Makefile
