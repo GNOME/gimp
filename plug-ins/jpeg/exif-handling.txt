@@ -1,0 +1,97 @@
+             How GIMP should handle EXIF data
+
+                     Bill Skaggs 1/2/05
+
+This is a summary of how an image editing program is supposed to
+handle each of the EXIF fields, according to the EXIF specs.  Note
+that this expresses my understanding based on a quick reading, and
+should not be taken as gospel.  For details on the contents of each of
+these fields, consult the formal EXIF specifications, available from
+http://www.exif.org/specifications.html.
+
+(Note: according to the EXIF specs, an EXIF jpeg file must have a name
+that is ASCII, in 8.3 format, with extension .JPG, but of course we
+are not going to enforce this.)
+
+
+
+Fields that should be used to set up the GIMP image when an EXIF file
+is loaded, either by using them to configure the image (e.g.,
+orientation), or by placing them in parasites that can be accessed by
+non-exif-aware functions.  
+
+Orientation 
+XResolution 
+YResolution 
+ResolutionUnit
+ImageDescription 
+Artist 
+Copyright 
+Colorspace
+ComponentsConfiguration 
+UserComment 
+SubjectArea 
+SubjectLocation
+ImageUniqueID 
+PixelXDimension 
+PixelYDimension 
+
+
+
+Fields that should be modified by GIMP when an EXIF jpeg file is
+saved.  A letter "M" indicates fields whose presence is mandatory
+according to the spec. 
+
+Orientation 
+XResolution (M) 
+YResolution (M) 
+ResolutionUnit (M) 
+Software 
+DateTime 
+ImageDescription 
+Artist 
+Colorspace (M)
+PixelXDimension (M) 
+PixelYDimension (M) 
+ComponentsConfiguration (M)
+UserComment 
+SubsecTime 
+SubjectArea 
+SubjectLocation 
+FileSource
+ImageUniqueID 
+thumbnail Compression (M) 
+thumbnail XResolution (M)
+thumbnail YResolution (M) 
+thumbnail JPEGInterchangeFormat (M)
+thumbnail JPEGInterchangeFormatLength (M)  
+
+
+
+Fields that should be used and saved related to color management:
+
+TransferFunction 
+WhitePoint 
+PrimaryChromaticity 
+YCbCrCoefficients
+ReferenceBlackWhite
+
+
+
+Fields that should be deleted if they exist when saving a file as
+jpeg, because they only apply to uncompressed (TIFF) data.  This
+applies both to the main image and to the thumbnail, if there is one. 
+
+ImageWidth 
+ImageLength 
+BitsPerSample
+Compression 
+SamplesPerPixel 
+PhotometricInterpretation 
+StripOffsets
+PlanarConfiguration 
+YCbCrSubSampling
+
+
+
+Any field not mentioned here should be passed through unchanged.
