@@ -36,7 +36,9 @@ plug-ins/common/grid.c
 plug-ins/common/film.c
 plug-ins/common/mail.c
 plug-ins/common/normalize.c
+plug-ins/common/nova.c
 plug-ins/common/oilify.c
+plug-ins/common/papertile.c
 plug-ins/common/png.c
 plug-ins/common/ps.c
 plug-ins/common/rotate.c
@@ -125,4 +127,5 @@ plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/sel2path.c
+plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c

@@ -1,3 +1,19 @@
+Wed Nov 17 00:14:11 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpcolorbutton.c: hide the colorselection dialog when
+	the button is set insensitive
+	
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/sinus/Makefile.am
+	* plug-ins/sinus/sinus.c
+	* plug-ins/sinus/sinus_logo.h
+	* plug-ins/gap/iter_ALT/mod/plug_in_sinus_iter_ALT.inc
+	* po-plug-ins/POTFILES.in: made supernova, papertile and sinus use
+	the gimpcolorbutton, internationalized the plug-ins while I was on it
+
 1999-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpchainbutton.c: the chainbutton's parent_class is a

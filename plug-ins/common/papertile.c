@@ -21,11 +21,10 @@
  *============================================================================*/
 
 #include <stdlib.h>
-#include <glib.h>
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <libgimp/gimp.h>
-#include <math.h>
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 /*============================================================================*/
 /* DEFINES                                                                    */
@@ -35,7 +34,6 @@
 #define PLUGIN_TITLE              "Paper Tile"
 #define PLUGIN_PATH               "<Image>/Filters/Map/Paper Tile"
 
-#define round(x)                  (floor((x)+0.5))
 
 /*============================================================================*/
 /* TYPES                                                                      */
@@ -69,7 +67,7 @@ struct _PluginParams
   gboolean                              centering;
   gboolean                              wrap_around;
   BackgroundType                        background_type;
-  gdouble                               background_color[4];
+  guchar                                background_color[4];
 };
 
 /*============================================================================*/
@@ -107,7 +105,7 @@ static struct {
     TRUE,                                    /* centering             */
     FALSE,                                   /* wrap_around           */
     BACKGROUND_TYPE_INVERTED,                /* background_type       */
-    { 0.0, 0.0, 1.0, 1.0 }                   /* background_color[4]   */
+    { 0, 0, 255, 255 }                       /* background_color[4]   */
   },
 
   0,                                         /* image                 */
@@ -151,7 +149,7 @@ params_load_from_gimp ( void )
     if( p.params.background_type == BACKGROUND_TYPE_TRANSPARENT ){
       p.params.background_type = BACKGROUND_TYPE_INVERTED;
     }
-    p.params.background_color[3] = 1.0;
+    p.params.background_color[3] = 255;
   }
 }
 
@@ -167,213 +165,11 @@ static struct {
   GtkAdjustment *                       division_x_adj;
   GtkAdjustment *                       division_y_adj;
   GtkAdjustment *                       move_max_rate_adj;
-
-  struct {
-    GtkWidget *                         widget;
-    GtkWidget *                         preview;
-    GtkWidget *                         dialog;
-    guint                               width;
-    guint                               height;
-    guchar *                            row_buffer[2];
-  }                                     color_button;
+  
+  GtkWidget *                           color_button;
 
 } w;
 
-/*============================================================================*/
-/* COLOR BUTTON WIDGET                                                        */
-/*============================================================================*/
-
-static void
-color_button_destroyed ( GtkWidget *widget )
-{
-  g_free( w.color_button.row_buffer[0] );
-  g_free( w.color_button.row_buffer[1] );
-}
-
-/*----------------------------------------------------------------------------*/
-
-static inline void
-color_button_update ( void )
-{
-  gint x;
-  gdouble v, R, G, B, A;
-
-  for( x = 0; x < w.color_button.width; x++ ){
-    A = p.params.background_color[3];
-    R = p.params.background_color[0] * A * 255.0;
-    G = p.params.background_color[1] * A * 255.0;
-    B = p.params.background_color[2] * A * 255.0;
-    v = ( ( ( x / 4 ) & 0x1 ) ? 0.6 : 0.4 ) * ( 1.0 - A ) * 255.0;
-    w.color_button.row_buffer[0][x*3  ] = (guchar)( R + v );
-    w.color_button.row_buffer[0][x*3+1] = (guchar)( G + v );
-    w.color_button.row_buffer[0][x*3+2] = (guchar)( B + v );
-    v = ( ( ( x / 4 ) & 0x1 ) ? 0.4 : 0.6 ) * ( 1.0 - A ) * 255.0;
-    w.color_button.row_buffer[1][x*3  ] = (guchar)( R + v );
-    w.color_button.row_buffer[1][x*3+1] = (guchar)( G + v );
-    w.color_button.row_buffer[1][x*3+2] = (guchar)( B + v );
-  }
-
-  for( x= 0; x < w.color_button.height; x++ ){
-    gtk_preview_draw_row( GTK_PREVIEW(w.color_button.preview),
-			  w.color_button.row_buffer[(x/4)&0x1],
-			  0, x, w.color_button.width );
-  }
-
-  if( GTK_WIDGET_REALIZED(w.color_button.preview) ){
-    gtk_preview_put
-      ( GTK_PREVIEW(w.color_button.preview),
-	w.color_button.preview->window,
-	w.color_button.preview->style->black_gc,
-	( w.color_button.preview->allocation.width -
-	  GTK_PREVIEW(w.color_button.preview)->buffer_width ) / 2,
-	( w.color_button.preview->allocation.height -
-	  GTK_PREVIEW(w.color_button.preview)->buffer_height ) / 2,
-	0, 0,
-	GTK_PREVIEW(w.color_button.preview)->buffer_width,
-	GTK_PREVIEW(w.color_button.preview)->buffer_height );
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-
-static void
-color_button_dialog_destroyed ( GtkWidget *widget )
-{
-  w.color_button.dialog = NULL;
-}
-
-/*----------------------------------------------------------------------------*/
-
-static void
-color_button_dialog_changed ( GtkColorSelection *sel )
-{
-  gtk_color_selection_get_color( sel, p.params.background_color );
-  color_button_update();
-}
-
-/*----------------------------------------------------------------------------*/
-
-static gboolean
-color_button_dialog_deleted ( GtkWidget *widget )
-{
-  GtkColorSelectionDialog *dialog =
-    GTK_COLOR_SELECTION_DIALOG(w.color_button.dialog);
-  GtkColorSelection *sel = GTK_COLOR_SELECTION(dialog->colorsel);
-  gint i;
-
-  for( i = 0; i < 8; i++ ) sel->values[i] = sel->old_values[i];
-
-  color_button_dialog_changed( sel );
-  return FALSE;
-}
-
-/*----------------------------------------------------------------------------*/
-
-static void
-color_button_dialog_ok_clicked ( GtkWidget *widget )
-{
-  GtkColorSelectionDialog *dialog =
-    GTK_COLOR_SELECTION_DIALOG(w.color_button.dialog);
-  GtkColorSelection *sel = GTK_COLOR_SELECTION(dialog->colorsel);
-
-  color_button_dialog_changed( sel );
-  gtk_widget_destroy( w.color_button.dialog );
-}
-
-/*----------------------------------------------------------------------------*/
-
-static void
-color_button_dialog_cancel_clicked ( GtkWidget *widget )
-{
-  GtkColorSelectionDialog *dialog =
-    GTK_COLOR_SELECTION_DIALOG(w.color_button.dialog);
-  GtkColorSelection *sel = GTK_COLOR_SELECTION(dialog->colorsel);
-  gint i;
-
-  for( i = 0; i < 8; i++ ) sel->values[i] = sel->old_values[i];
-
-  color_button_dialog_changed( sel );
-  gtk_widget_destroy( w.color_button.dialog );
-}
-
-/*----------------------------------------------------------------------------*/
-
-static void
-color_button_dialog_open ( void )
-{
-  if( w.color_button.dialog == NULL ){
-
-    GtkColorSelectionDialog *  dialog;
-    GtkColorSelection *        sel;
-    gint                       i;
-
-    w.color_button.dialog =
-      gtk_color_selection_dialog_new( "Background Color" );
-    dialog = GTK_COLOR_SELECTION_DIALOG(w.color_button.dialog);
-    sel    = GTK_COLOR_SELECTION(dialog->colorsel);
-
-    gtk_color_selection_set_opacity( sel, p.drawable_has_alpha );
-    gtk_widget_destroy( dialog->help_button );
-    gtk_signal_connect( GTK_OBJECT(sel), "color_changed",
-			GTK_SIGNAL_FUNC(color_button_dialog_changed),
-			NULL );
-    gtk_signal_connect( GTK_OBJECT(dialog->ok_button), "clicked",
-			GTK_SIGNAL_FUNC(color_button_dialog_ok_clicked),
-			NULL );
-    gtk_signal_connect( GTK_OBJECT(dialog->cancel_button), "clicked",
-			GTK_SIGNAL_FUNC(color_button_dialog_cancel_clicked),
-			NULL );
-    gtk_signal_connect( GTK_OBJECT(dialog), "delete_event",
-			GTK_SIGNAL_FUNC(color_button_dialog_deleted),
-			NULL );
-    gtk_signal_connect( GTK_OBJECT(dialog), "destroy",
-			GTK_SIGNAL_FUNC(color_button_dialog_destroyed),
-			NULL );
-
-    gtk_color_selection_set_color( sel, p.params.background_color );
-    for( i = 0; i < 8; i++ ) sel->old_values[i] = sel->values[i];
-    gtk_color_selection_set_color( sel, p.params.background_color );
-
-    gtk_widget_show_all( w.color_button.dialog );
-
-  } else {
-
-    gtk_widget_show_all( w.color_button.dialog );
-    gdk_window_raise( w.color_button.dialog->window );
-        
-  }
-}
-
-/*----------------------------------------------------------------------------*/
-
-static inline void
-color_button_create ( void )
-{
-  static const guint WIDTH  = 120;
-  static const guint HEIGHT =  20;
-
-  w.color_button.width         = WIDTH;
-  w.color_button.height        = HEIGHT;
-  w.color_button.row_buffer[0] = g_new( guchar, 3 * WIDTH );
-  w.color_button.row_buffer[1] = g_new( guchar, 3 * WIDTH );
-  w.color_button.preview       = gtk_preview_new( GTK_PREVIEW_COLOR );
-  w.color_button.widget        = gtk_button_new();
-  w.color_button.dialog        = NULL;
-
-  gtk_preview_size( GTK_PREVIEW(w.color_button.preview), WIDTH, HEIGHT );
-  gtk_widget_set_usize( w.color_button.preview, WIDTH, HEIGHT );
-  gtk_widget_set_usize( w.color_button.widget, WIDTH + 1, HEIGHT + 1 );
-
-  gtk_signal_connect( GTK_OBJECT(w.color_button.widget), "destroy",
-		      GTK_SIGNAL_FUNC(color_button_destroyed), NULL );
-  gtk_signal_connect( GTK_OBJECT(w.color_button.widget), "clicked",
-		      GTK_SIGNAL_FUNC(color_button_dialog_open), NULL );
-  gtk_container_set_border_width( GTK_CONTAINER(w.color_button.widget), 0 );
-  gtk_container_add( GTK_CONTAINER(w.color_button.widget),
-		     w.color_button.preview );
-
-  color_button_update();
-}
 
 /*============================================================================*/
 /* ADJUSTMENTS                                                                */
@@ -536,17 +332,15 @@ wrap_around_toggled ( GtkToggleButton *button )
 static void
 background_type_toggled ( GtkToggleButton *button, BackgroundType *type )
 {
-  if( gtk_toggle_button_get_active( button ) ){
-    if( *type != p.params.background_type ){
-      p.params.background_type = *type;
-      gtk_widget_set_sensitive( w.color_button.widget,
-				*type == BACKGROUND_TYPE_COLOR );
-      if( *type != BACKGROUND_TYPE_COLOR && w.color_button.dialog ){
-	gtk_widget_destroy( w.color_button.dialog );
-	w.color_button.dialog = NULL;
-      }
+  if ( gtk_toggle_button_get_active( button ) )
+    {
+      if( *type != p.params.background_type )
+	{
+	  p.params.background_type = *type;
+	  gtk_widget_set_sensitive (w.color_button,
+				    *type == BACKGROUND_TYPE_COLOR);
+	}
     }
-  }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -565,13 +359,13 @@ dialog_create ( void )
   GtkWidget *box;
   GtkWidget *label;
 
-  /* SPECIRL WIDGETS */
-  adjustments_create();
-  color_button_create();
+  /* SPECIAL WIDGETS */
+  adjustments_create(); 
+
 
   /* DIALOG WINDOW */
   w.dialog = gtk_window_new( GTK_WINDOW_DIALOG );
-  gtk_window_set_title( GTK_WINDOW(w.dialog), PLUGIN_TITLE );
+  gtk_window_set_title( GTK_WINDOW(w.dialog), _("Paper Tile") );
   gtk_window_set_policy( GTK_WINDOW(w.dialog), FALSE, FALSE, FALSE );
   gtk_window_set_position( GTK_WINDOW(w.dialog), GTK_WIN_POS_MOUSE );
   gtk_container_set_border_width( GTK_CONTAINER(w.dialog), 5 );
@@ -596,26 +390,26 @@ dialog_create ( void )
   gtk_container_set_border_width( GTK_CONTAINER(vbox), 0 );
   gtk_box_pack_start( GTK_BOX(main_hbox), vbox, TRUE, TRUE, 0 );
 
-  frame = gtk_frame_new( "Division" );
+  frame = gtk_frame_new (_("Division"));
   gtk_container_set_border_width( GTK_CONTAINER(frame), 5 );
   gtk_box_pack_start( GTK_BOX(vbox), frame, TRUE, FALSE, 0 );
   table = gtk_table_new( 3, 2, FALSE );
   gtk_container_set_border_width( GTK_CONTAINER(table), 5 );
   gtk_container_add( GTK_CONTAINER(frame), table );
-  label = gtk_label_new( "X:" );
+  label = gtk_label_new( _("X:") );
   gtk_table_attach_defaults( GTK_TABLE(table), label, 0, 1, 0, 1 );
   button = gtk_spin_button_new( w.division_x_adj, 1.5, 0 );
   gtk_table_attach_defaults( GTK_TABLE(table), button, 1, 2, 0, 1 );
-  label = gtk_label_new( "Y:" );
+  label = gtk_label_new( _("Y:") );
   gtk_table_attach_defaults( GTK_TABLE(table), label, 0, 1, 1, 2 );
   button = gtk_spin_button_new( w.division_y_adj, 1.5, 0 );
   gtk_table_attach_defaults( GTK_TABLE(table), button, 1, 2, 1, 2 );
-  label = gtk_label_new( "Size:" );
+  label = gtk_label_new( _("Size:") );
   gtk_table_attach_defaults( GTK_TABLE(table), label, 0, 1, 2, 3 );
   button = gtk_spin_button_new( w.tile_size_adj, 1.5, 0 );
   gtk_table_attach_defaults( GTK_TABLE(table), button, 1, 2, 2, 3 );
 
-  frame = gtk_frame_new( "Fractional Pixels" );
+  frame = gtk_frame_new( _("Fractional Pixels") );
   gtk_container_set_border_width( GTK_CONTAINER(frame), 5 );
   gtk_box_pack_start( GTK_BOX(vbox), frame, TRUE, FALSE, 0 );
   box = gtk_vbox_new( FALSE, 0 );
@@ -630,12 +424,12 @@ dialog_create ( void )
       FRACTIONAL_TYPE_FORCE
     };
     static const gchar *name[] = {
-      "Background",
-      "Ignore",
-      "Force"
+      N_("Background"),
+      N_("Ignore"),
+      N_("Force")
     };
     for( i = 0; i < 3; i++ ){
-      button = gtk_radio_button_new_with_label( group, name[i] );
+      button = gtk_radio_button_new_with_label( group, gettext (name[i]) );
       gtk_signal_connect( GTK_OBJECT(button), "toggled",
 			  GTK_SIGNAL_FUNC(fractional_type_toggled), &type[i] );
       gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(button),
@@ -644,7 +438,7 @@ dialog_create ( void )
       group = gtk_radio_button_group( GTK_RADIO_BUTTON(button) );
     }
   }
-  button = gtk_check_button_new_with_label( "Centering" );
+  button = gtk_check_button_new_with_label( _("Centering") );
   gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(button),
 				p.params.centering );
   gtk_signal_connect( GTK_OBJECT(button), "toggled",
@@ -656,24 +450,24 @@ dialog_create ( void )
   gtk_container_set_border_width( GTK_CONTAINER(vbox), 0 );
   gtk_box_pack_start( GTK_BOX(main_hbox), vbox, TRUE, TRUE, 0 );
   
-  frame = gtk_frame_new( "Movement" );
+  frame = gtk_frame_new( _("Movement") );
   gtk_container_set_border_width( GTK_CONTAINER(frame), 5 );
   gtk_box_pack_start( GTK_BOX(vbox), frame, TRUE, FALSE, 0 );
   table = gtk_table_new( 2, 2, FALSE );
   gtk_container_set_border_width( GTK_CONTAINER(table), 5 );
   gtk_container_add( GTK_CONTAINER(frame), table );
-  label = gtk_label_new( "Max(%):" );
+  label = gtk_label_new( _("Max(%):") );
   gtk_table_attach_defaults( GTK_TABLE(table), label, 0, 1, 0, 1 );
   button = gtk_spin_button_new( w.move_max_rate_adj, 1.5, 0 );
   gtk_table_attach_defaults( GTK_TABLE(table), button, 1, 2, 0, 1 );
-  button = gtk_check_button_new_with_label( "Wrap Around" );
+  button = gtk_check_button_new_with_label( _("Wrap Around") );
   gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(button),
 				p.params.wrap_around );
   gtk_signal_connect( GTK_OBJECT(button), "toggled",
 		      GTK_SIGNAL_FUNC(wrap_around_toggled), NULL );
   gtk_table_attach_defaults( GTK_TABLE(table), button, 0, 2, 1, 2 );
 
-  frame = gtk_frame_new( "Background Type" );
+  frame = gtk_frame_new( _("Background Type") );
   gtk_container_set_border_width( GTK_CONTAINER(frame), 5 );
   gtk_box_pack_start( GTK_BOX(vbox), frame, TRUE, FALSE, 0 );
   box = gtk_vbox_new( FALSE, 0 );
@@ -691,20 +485,25 @@ dialog_create ( void )
       BACKGROUND_TYPE_COLOR
     };
     static const gchar *name[] = {
-      "Transparent",
-      "Inverted Image",
-      "Image",
-      "Foreground Color",
-      "Background Color",
-      "Custom Color"
+      N_("Transparent"),
+      N_("Inverted Image"),
+      N_("Image"),
+      N_("Foreground Color"),
+      N_("Background Color"),
+      N_("Custom Color")
     };
     for( i = p.drawable_has_alpha ? 0 : 1; i < 6; i++ ){
       if( type[i] != BACKGROUND_TYPE_COLOR ){
-	button = gtk_radio_button_new_with_label( group, name[i] );
+	button = gtk_radio_button_new_with_label( group, gettext (name[i]) );
       } else {
-	button = gtk_radio_button_new( group );
-	gtk_container_set_border_width( GTK_CONTAINER(button), 0 );
-	gtk_container_add( GTK_CONTAINER(button), w.color_button.widget );
+	button = gtk_radio_button_new (group );
+	gtk_container_set_border_width (GTK_CONTAINER (button), 0);
+        w.color_button = gimp_color_button_new (_("Background Color"), 100, 16,
+						p.params.background_color, 
+						p.drawable_has_alpha ? 4 : 3);
+	gtk_widget_set_sensitive (w.color_button,
+				  p.params.background_type == BACKGROUND_TYPE_COLOR);
+	gtk_container_add (GTK_CONTAINER (button), w.color_button);
       }
       gtk_signal_connect( GTK_OBJECT(button), "toggled",
 			  GTK_SIGNAL_FUNC(background_type_toggled), &type[i] );
@@ -716,12 +515,15 @@ dialog_create ( void )
   }
   
   /* ACTION AREA */
-  button = gtk_button_new_with_label( "OK" );
+  button = gtk_button_new_with_label( _("Ok") );
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect( GTK_OBJECT(button), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_ok_clicked), NULL );
   gtk_container_add( GTK_CONTAINER(action_box), button );
+  gtk_widget_grab_default (button);
 
-  button = gtk_button_new_with_label( "CANCEL" );
+  button = gtk_button_new_with_label( _("Cancel") );
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect( GTK_OBJECT(button), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_cancel_clicked), NULL );
   gtk_container_add( GTK_CONTAINER(action_box), button );
@@ -1039,10 +841,10 @@ filter ( void )
     }
     break;
   case BACKGROUND_TYPE_COLOR:
-    pixel[0] = p.params.background_color[0] * 255.0;
-    pixel[1] = p.params.background_color[1] * 255.0;
-    pixel[2] = p.params.background_color[2] * 255.0;
-    pixel[3] = p.params.background_color[3] * 255.0;
+    pixel[0] = p.params.background_color[0];
+    pixel[1] = p.params.background_color[1];
+    pixel[2] = p.params.background_color[2];
+    pixel[3] = p.params.background_color[3];
     for( y = clear_y0; y < clear_y1; y++ ){
       for( x = clear_x0; x < clear_x1; x++ ){
 	dindex = p.drawable->bpp * ( p.drawable->width * y + x );
@@ -1105,32 +907,6 @@ filter ( void )
   g_free( row_buffer );
 }
 
-/*============================================================================*/
-/* UNDO                                                                       */
-/*============================================================================*/
-
-static inline void
-undo_group_start ( void )
-{
-  GParam *params;
-  gint    numof_params;
-  params = gimp_run_procedure( "gimp_undo_push_group_start",
-                               &numof_params, PARAM_IMAGE, p.image, PARAM_END );
-  gimp_destroy_params( params, numof_params );
-}
-
-/*----------------------------------------------------------------------------*/
-
-static inline void
-undo_group_end ( void )
-{
-  GParam *params;
-  gint    numof_params;
-
-  params = gimp_run_procedure( "gimp_undo_push_group_end",
-                               &numof_params, PARAM_IMAGE, p.image, PARAM_END );
-  gimp_destroy_params( params, numof_params );
-}
 
 /*============================================================================*/
 /* PLUGIN INTERFACES                                                          */
@@ -1236,11 +1012,11 @@ plugin_run ( gchar *          name,
   if( status == STATUS_SUCCESS && p.run ){
     if( p.run_mode == RUN_INTERACTIVE ){
       params_save_to_gimp();
-      undo_group_start();
+      gimp_undo_push_group_start (p.image);
     }
     filter();
     if( p.run_mode == RUN_INTERACTIVE ){
-      undo_group_end();
+      gimp_undo_push_group_end (p.image);
       gimp_displays_flush();
     }
   }

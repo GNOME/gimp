@@ -1,7 +1,7 @@
 /*  GIMP header image file format (INDEXED): \tmp\logo.h  */
 
-static unsigned int width = 100;
-static unsigned int height = 100;
+/* static unsigned int width = 100;  */
+/* static unsigned int height = 100; */
 
 /*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */
 

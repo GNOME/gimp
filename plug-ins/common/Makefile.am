@@ -747,6 +747,7 @@ nova_SOURCES = \
 	nova.c
 
 nova_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -763,6 +764,7 @@ papertile_SOURCES = \
 	papertile.c
 
 papertile_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
