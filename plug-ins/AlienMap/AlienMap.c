@@ -39,8 +39,8 @@
 
 /***** Macros *****/
 
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define ALIEN_MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define ALIEN_MAX(a, b) (((a) > (b)) ? (a) : (b))
 
 
 /***** Magic numbers *****/
@@ -313,15 +313,15 @@ run (char    *name,
 
         /* Calculate preview size */
         if (sel_width > sel_height) {
-        	pwidth  = MIN(sel_width, PREVIEW_SIZE);
+        	pwidth  = ALIEN_MIN(sel_width, PREVIEW_SIZE);
         	pheight = sel_height * pwidth / sel_width;
         } else {
-        	pheight = MIN(sel_height, PREVIEW_SIZE);
+        	pheight = ALIEN_MIN(sel_height, PREVIEW_SIZE);
         	pwidth  = sel_width * pheight / sel_height;
         } /* else */
 
-        preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
-        preview_height = MAX(pheight, 2);
+        preview_width  = ALIEN_MAX(pwidth, 2);  /* Min size is 2 */
+        preview_height = ALIEN_MAX(pheight, 2);
 
         /* See how we will run */
         switch (run_mode) {

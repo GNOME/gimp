@@ -1,3 +1,19 @@
+Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* plugins/illusion/illusion.c:
+	* plugins/papertile/papertile.c:
+	* plugins/fractaltrace/fractaltrace.c:
+	* plugins/flame/flame.c: Changed MAIN(); to MAIN()
+
+	*gimprc_user: added a commented out (install-colormap)
+	option
+
+	*app/install.c: comsetic update to show info about .gimp/scripts
+
+	*plugins/sparkle/sparckle.c:
+	*plugins/despeckle/despeckle.c: made a local MIN/MAX instead
+	of redefing the normal one (causes problems on some compilers)
+
 Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/move.c: 

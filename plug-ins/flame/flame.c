@@ -105,7 +105,7 @@ struct {
 frame_spec f = {0.0, &config.cp, 1, 0.0};
 
 
-MAIN();
+MAIN()
 
 
 static void query()

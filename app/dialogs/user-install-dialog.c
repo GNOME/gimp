@@ -274,6 +274,16 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tplug-ins.\n", -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "scripts\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis subdirectory is used by the GIMP to store \n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser created and isntalled scripts. The default gimprc\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tfile checks this subdirectory in addition to the system\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\t-wide gimp scripts subdirectory when searching for scripts\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   "tmp\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tThis subdirectory is used by the GIMP to temporarily\n", -1);

@@ -12,3 +12,7 @@
 # have edited this file.
 
 (show-tips yes)
+
+# Install a GIMP colormap by default -- only for 8-bit displays
+# (install-colormap)
+

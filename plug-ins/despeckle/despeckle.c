@@ -42,7 +42,34 @@
  *
  * Revision History:
  *
+ *   
+ *   Revison ? 1998/03/16 adrian
+ *   changed MIN, MAX to DESPECKLE_MIN, DESPECKLE_MAX   
+ *   since some compilers dont like max/min   
+ *   being defined twice.
+ *
+ *   -Adrian
+ *
  *   $Log$
+ *   Revision 1.7  1998/03/16 23:02:25  adrian
+ *   Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
+ *
+ *           * plugins/illusion/illusion.c:
+ *           * plugins/papertile/papertile.c:
+ *           * plugins/fractaltrace/fractaltrace.c:
+ *           * plugins/flame/flame.c: Changed MAIN(); to MAIN()
+ *
+ *           *gimprc_user: added a commented out (install-colormap)
+ *           option
+ *
+ *           *app/install.c: comsetic update to show info about .gimp/scripts
+ *
+ *           *plugins/sparkle/sparckle.c:
+ *           *plugins/despeckle/despeckle.c: made a local MIN/MAX instead
+ *           of redefing the normal one (causes problems on some compilers)
+ *
+ *   -adrian
+ *
  *   Revision 1.6  1998/03/16 06:33:44  yosh
  *   configure saves CFLAGS properly
  *   all plugins should parse gtkrc now
@@ -129,8 +156,8 @@
  * Macros...
  */
 
-#define MIN(a,b)		(((a) < (b)) ? (a) : (b))
-#define MAX(a,b)		(((a) > (b)) ? (a) : (b))
+#define DESPECKLE_MIN(a,b)		(((a) < (b)) ? (a) : (b))
+#define DESPECKLE_MAX(a,b)		(((a) > (b)) ? (a) : (b))
 
 
 /*
@@ -730,8 +757,8 @@ despeckle_dialog(void)
   gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show(frame);
 
-  preview_width  = MIN(sel_width, PREVIEW_SIZE);
-  preview_height = MIN(sel_height, PREVIEW_SIZE);
+  preview_width  = DESPECKLE_MIN(sel_width, PREVIEW_SIZE);
+  preview_height = DESPECKLE_MIN(sel_height, PREVIEW_SIZE);
 
   preview = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_preview_size(GTK_PREVIEW(preview), preview_width, preview_height);
@@ -739,8 +766,8 @@ despeckle_dialog(void)
   gtk_widget_show(preview);
 
   hscroll_data = gtk_adjustment_new(0, 0, sel_width - 1, 1.0,
-				    MIN(preview_width, sel_width),
-				    MIN(preview_width, sel_width));
+				    DESPECKLE_MIN(preview_width, sel_width),
+				    DESPECKLE_MIN(preview_width, sel_width));
 
   gtk_signal_connect(hscroll_data, "value_changed",
 		     (GtkSignalFunc)preview_scroll_callback, NULL);
@@ -751,8 +778,8 @@ despeckle_dialog(void)
   gtk_widget_show(scrollbar);
 
   vscroll_data = gtk_adjustment_new(0, 0, sel_height - 1, 1.0,
-				    MIN(preview_height, sel_height),
-				    MIN(preview_height, sel_height));
+				    DESPECKLE_MIN(preview_height, sel_height),
+				    DESPECKLE_MIN(preview_height, sel_height));
 
   gtk_signal_connect(vscroll_data, "value_changed",
 		     (GtkSignalFunc)preview_scroll_callback, NULL);
@@ -766,8 +793,8 @@ despeckle_dialog(void)
 
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
+  preview_x2 = preview_x1 + DESPECKLE_MIN(preview_width, sel_width);
+  preview_y2 = preview_y1 + DESPECKLE_MIN(preview_height, sel_height);
 
  /*
   * Filter type controls...
@@ -904,8 +931,8 @@ preview_scroll_callback(void)
 {
   preview_x1 = sel_x1 + GTK_ADJUSTMENT(hscroll_data)->value;
   preview_y1 = sel_y1 + GTK_ADJUSTMENT(vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
+  preview_x2 = preview_x1 + DESPECKLE_MIN(preview_width, sel_width);
+  preview_y2 = preview_y1 + DESPECKLE_MIN(preview_height, sel_height);
 
   preview_update();
 }
