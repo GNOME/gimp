@@ -1,3 +1,9 @@
+2002-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_get_filename): get the image's
+	uri with gimp_image_get_uri(), not gimp_object_get_name(), so it
+	automatically becomes "Unnamed" if it's not set.
+
 2002-05-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpintl.h: removed (wrong) definition of LOCALEDIR.
