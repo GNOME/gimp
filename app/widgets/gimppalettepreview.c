@@ -101,8 +101,8 @@ gimp_palette_preview_get_size (GimpPreview *preview,
 			       gint        *width,
 			       gint        *height)
 {
-  *width  = size * 3;
-  *height = size;
+  *width  = size;
+  *height = size / 2;
 }
 
 static void

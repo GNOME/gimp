@@ -1,3 +1,11 @@
+2002-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpgradientpreview.c
+	* app/widgets/gimppalettepreview.c: set "height" to size/2 instead
+	of "width" to size*3 in get_size() so the preview size is
+	contollable in smaller steps using the container views' "Preview
+	Size" context menu.
+
 2002-10-09  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
