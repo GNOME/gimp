@@ -40,7 +40,7 @@
 	  (set! img (car (gimp-image-duplicate org-img)))
 	  (gimp-image-undo-disable img) 
 	  (if (> (car (gimp-drawable-type org-layer)) 1 )
-	      (gimp-convert-rgb img))
+	      (gimp-image-convert-rgb img))
 	  (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
 	  (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
 	  (set! source-layer-width (car (gimp-drawable-width  source-layer)))
@@ -160,7 +160,7 @@
 
 	  (if (= optimize TRUE)
 	      (begin
-		(gimp-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
+		(gimp-image-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
 		(set! img-out (car (plug-in-animationoptimize 0
 							      img
 							      bl-layer)))))

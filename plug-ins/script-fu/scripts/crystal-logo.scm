@@ -143,7 +143,7 @@
     (gimp-levels disp-map 0 0 255 1.0 96 255)
 
     (if (= (car (gimp-drawable-is-rgb bg-layer)) 1)
-	(gimp-convert-rgb img))
+	(gimp-image-convert-rgb img))
 
    
 

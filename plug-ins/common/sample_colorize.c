@@ -3109,7 +3109,7 @@ p_main_colorize (gint mc_flags)
          {
            if (mc_flags & MC_DST_REMAP)
              {
-               gimp_convert_rgb (gimp_drawable_get_image (g_values.dst_id));
+               gimp_image_convert_rgb (gimp_drawable_get_image (g_values.dst_id));
              }
          }
 

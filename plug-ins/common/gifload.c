@@ -895,7 +895,7 @@ ReadImage (FILE        *fd,
 #ifdef GIFDEBUG
 		  g_print ("GIF: Promoting image to RGB...\n");
 #endif
-		  gimp_convert_rgb (image_ID);
+		  gimp_image_convert_rgb (image_ID);
 
 		  break;
 		}

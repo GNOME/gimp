@@ -152,7 +152,7 @@
     (gimp-bucket-fill text-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
-    (gimp-convert-rgb img)
+    (gimp-image-convert-rgb img)
 
     (gimp-color-balance layer1 0 TRUE (shadows (rval hc)) (shadows (gval hc)) (shadows (bval hc)))
     (gimp-color-balance layer1 1 TRUE (midtones (rval hc)) (midtones (gval hc)) (midtones (bval hc)))

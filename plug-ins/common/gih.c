@@ -555,7 +555,7 @@ gih_load_one_brush (gint   fd,
     case 4:
       image_type = GIMP_RGBA_IMAGE;
       if (gimp_image_base_type (image_ID) == GIMP_GRAY)
-	gimp_convert_rgb (image_ID);
+	gimp_image_convert_rgb (image_ID);
       break;
 
     default:

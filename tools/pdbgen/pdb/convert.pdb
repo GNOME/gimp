@@ -33,7 +33,7 @@ CODE
     );
 }
 
-sub convert_rgb {
+sub image_convert_rgb {
     $blurb = 'Convert specified image to RGB color';
 
     $help = <<'HELP';
@@ -47,7 +47,7 @@ HELP
     &simple_invoke('GIMP_RGB');
 }
 
-sub convert_grayscale {
+sub image_convert_grayscale {
     $blurb = 'Convert specified image to grayscale (256 intensity levels)';
 
     $help = <<'HELP';
@@ -61,7 +61,7 @@ HELP
     &simple_invoke('GIMP_GRAY');
 }
 
-sub convert_indexed {
+sub image_convert_indexed {
     $blurb = 'Convert specified image to and Indexed image';
 
     $help = <<'HELP';
@@ -163,7 +163,7 @@ CODE
 	      "core/gimpimage-convert.h" "core/gimpdatafactory.h"
 	      "core/gimppalette.h");
 
-@procs = qw(convert_rgb convert_grayscale convert_indexed);
+@procs = qw(image_convert_rgb image_convert_grayscale image_convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Convert';

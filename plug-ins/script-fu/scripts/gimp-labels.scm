@@ -76,7 +76,8 @@
 	  (gimp-selection-clear img)))
     
     (if (= index TRUE)
-   	(gimp-convert-indexed img FS-DITHER MAKE-PALETTE num-colors FALSE FALSE ""))
+   	(gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors
+				    FALSE FALSE ""))
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

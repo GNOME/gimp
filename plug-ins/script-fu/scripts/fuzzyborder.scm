@@ -43,7 +43,7 @@
 	(if 	(> 	(car (gimp-drawable-type inLayer))
                		1
             	)
-		(gimp-convert-rgb theImage)
+		(gimp-image-convert-rgb theImage)
 	)
         (set! theWidth (car (gimp-image-width inImage)))
 	(set! theHeight (car (gimp-image-height inImage)))
