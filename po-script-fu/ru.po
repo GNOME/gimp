@@ -1,20 +1,22 @@
+# translation of gimp.SCRIPTFU.po to russian
 # translation of gimp.SCRIPT-FU.ru.po to russian
 # Copyright (C) 2000-2002,2003 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 2000-2002.
-# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003
+# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003.
+# Roxana Chernogolova <padavan@mail.ru>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.SCRIPT-FU.ru\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
-"PO-Revision-Date: 2003-07-06 20:25+0400\n"
+"Project-Id-Version: gimp.SCRIPTFU\n"
+"POT-Creation-Date: 2004-01-10 15:28+0300\n"
+"PO-Revision-Date: 2003-12-30 01:59+0300\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -125,13 +127,13 @@ msgid "Image Types:"
 msgstr "Типы изображений:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1996
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "%s"
 msgstr ""
-"Ошибка Скрипт-Фу во время исполнения\n"
+"Ошибка во время исполнения\n"
 " %s\n"
 "%s"
 
@@ -148,12 +150,10 @@ msgid "Server Logfile:"
 msgstr "Регистрационный файл сервера:"
 
 #: plug-ins/script-fu/script-fu.c:122
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu.c:147
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
 
@@ -162,9 +162,8 @@ msgid "Re-read all available scripts"
 msgstr "Перечитать все доступные скрипты"
 
 #: plug-ins/script-fu/script-fu.c:276
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить сценарии"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -179,7 +178,7 @@ msgstr "Поиск по названию"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:123
 #: plug-ins/dbbrowser/dbbrowser_utils.c:137
 msgid "Search by _Blurb"
-msgstr "Поиск по обложке"
+msgstr "Поиск по аннотации"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
@@ -191,7 +190,7 @@ msgstr "Название:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:354
 msgid "Blurb:"
-msgstr "Обложка:"
+msgstr "Аннотация:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:366
 msgid "In:"
@@ -211,7 +210,7 @@ msgstr "Поиск по имени -- подождите пожалуйста"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:603
 msgid "Searching by blurb - please wait"
-msgstr "Поиск по обложке -- подождите пожалуйста"
+msgstr "Поиск по аннотации -- подождите пожалуйста"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
@@ -222,12 +221,10 @@ msgid "No matches"
 msgstr "Не найдено"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/3D контур..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Объемный контур..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Объемный контур..."
 
@@ -238,7 +235,7 @@ msgstr "Радиус размывания рельефа (Альфа-слой)"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default Bumpmap Settings"
-msgstr "Исходная настройка рельефа"
+msgstr "Исходные настройки рельефа"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
@@ -392,7 +389,6 @@ msgid "Text"
 msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/3D Truchet..."
 
@@ -437,7 +433,7 @@ msgstr "Размер блока"
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "End Blend"
-msgstr "Конец затемнения"
+msgstr "Конечный цвет градиента"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
@@ -452,11 +448,11 @@ msgstr "Число разрезов по Y"
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Start Blend"
-msgstr "Начало смешивания"
+msgstr "Начальный цвет градиента"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 msgid "Supersample"
-msgstr "Интерполировать"
+msgstr "Улучшенный шаблон"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:3
@@ -465,14 +461,13 @@ msgid "Thickness"
 msgstr "Толщина"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
 msgstr "<Image>/Скрипт-Фу/Декор/Добавить фаску..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep Bump Layer"
-msgstr "Сохранить слой рельефа"
+msgstr "Отдельный слой для рельефа"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -484,7 +479,6 @@ msgid "Work on Copy"
 msgstr "Работать с копией"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
 msgstr "<Image>/Скрипт-Фу/Декор/Добавить рамку..."
 
@@ -494,18 +488,17 @@ msgstr "Цвет рамки"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X Size"
-msgstr "X размер рамки"
+msgstr "Ширина гризонтальной планки"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y Size"
-msgstr "Y размер рамки"
+msgstr "Ширина вертикальной планки"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Delta Value on Color"
-msgstr "Дельта значения цвета"
+msgstr "Рельефность рамки"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Стрелка..."
 
@@ -538,7 +531,7 @@ msgstr "Цвет свечения"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
-msgstr "Слева"
+msgstr "Влево"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
@@ -548,7 +541,7 @@ msgstr "Ориентация"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
-msgstr "Справа"
+msgstr "Вправо"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
@@ -562,21 +555,19 @@ msgid "Up"
 msgstr "Верх"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Гор.линейка..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
-msgstr "Высота строки"
+msgstr "Высота линейки"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar Length"
-msgstr "Длина строки"
+msgstr "Длина линейки"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Маркер..."
 
@@ -592,9 +583,10 @@ msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
 msgstr ""
+"\n"
+"\t\t    SF-ADJUSTMENT _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Кнопка..."
 
@@ -629,14 +621,14 @@ msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
 msgstr ""
+"\n"
+"\t\t    SF-COLOR      _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Чужое свечение..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужое свечение..."
 
@@ -645,26 +637,24 @@ msgid "Glow Size (pixels * 4)"
 msgstr "Размер свечения (точек * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Чужой неон..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужой Неон..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
-msgstr "Затухание"
+msgstr "Угасание"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 msgid "Number of Bands"
-msgstr "Число связей"
+msgstr "Число обводов"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 msgid "Width of Bands"
-msgstr "Ширина лент"
+msgstr "Ширина обводов"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of Gaps"
@@ -675,14 +665,13 @@ msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr "<Image>/Скрипт-Фу/Утилиты/ASCII -> Слой изображения..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Изображение..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
-msgstr "Размер буфера (% высоты текста)"
+msgstr "Размер отступа (% высоты текста)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
@@ -697,27 +686,22 @@ msgid "Transparent Background"
 msgstr "Прозрачный фон"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Основа I..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Основа II..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Простая выпуклая кнопка..."
 
@@ -742,12 +726,10 @@ msgid "Upper-Left color"
 msgstr "Верхний-левый цвет"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Стрелка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Маркер..."
 
@@ -756,18 +738,15 @@ msgid "Diameter"
 msgstr "Диаметр"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Кнопка..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Заголовок..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Гор.линейка..."
@@ -788,13 +767,12 @@ msgid "Width"
 msgstr "Ширина"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Blend..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Плавный переход..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
-msgstr "Промежуточные кадры"
+msgstr "Переходные кадры"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
@@ -805,14 +783,12 @@ msgid "Max. Blur Radius"
 msgstr "Макс. радиус размывания"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Смесь..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Градиентная..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Смешанная..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Градиентная..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
@@ -824,15 +800,15 @@ msgstr "Другой градиент"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-HSV"
-msgstr "План-Фон-HSV"
+msgstr "П.план-Фон-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-RGB"
-msgstr "План-Фон-RGB"
+msgstr "П.план-Фон-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-Transparent"
-msgstr "План-Прозрачное"
+msgstr "П.план-Прозрачное"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
@@ -850,21 +826,18 @@ msgstr "Градиент"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient Reverse"
-msgstr "Градиент"
+msgstr "Перевернуть градиент"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
 msgstr "Смещение (точек)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Пятнистая корова..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Пятнистая корова..."
 
@@ -877,9 +850,8 @@ msgid "Spots density Y"
 msgstr "Плотность пятен по Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Плавный переход..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
@@ -891,11 +863,13 @@ msgstr "Послесвечение"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Необходимо хотя бы два слоя!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 msgstr ""
+"Эффект плавного перехода в слое переднего плана (текстовом) и фона; версия "
+"2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -903,11 +877,11 @@ msgstr "Ширина короны"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr "Затухание"
+msgstr "Угасание"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
-msgstr "Ширина затухания"
+msgstr "Размер кромки угасания"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
@@ -918,7 +892,6 @@ msgid "Speed (pixels/frame)"
 msgstr "Скорость (точек/кадр)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Камуфляж..."
 
@@ -937,7 +910,7 @@ msgstr "Цвет 3"
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
-msgstr "Зернистость"
+msgstr "Крупность разбиения"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
@@ -950,7 +923,6 @@ msgid "Smooth"
 msgstr "Сгладить"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
 msgstr "<Image>/Скрипт-Фу/Парметры трафарета/Вырезать..."
 
@@ -960,7 +932,7 @@ msgstr "Вырезать белые участки"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to Carve"
-msgstr "Изображение -> гравюра"
+msgstr "Изображение для вырезания"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
@@ -980,12 +952,10 @@ msgid "Padding Around Text"
 msgstr "Заполнение вокруг текста"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Мел..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Мел..."
 
@@ -994,22 +964,20 @@ msgid "Chalk Color"
 msgstr "Цвет мелка"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Chip Away..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Осколки..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Осколки..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
-msgstr "Степень размывания"
+msgstr "Округлость рельефа"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip Amount"
-msgstr "Количество осколков"
+msgstr "Зернистость"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
@@ -1017,7 +985,7 @@ msgstr "Падающая тень"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Заболнить фон шаблоном"
+msgstr "Заполнить фон шаблоном"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
@@ -1028,9 +996,8 @@ msgid "Keep Background"
 msgstr "Сохранить фон"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr "<Image>/Скрипт-Фу/Параметры трафарета/Chrome-It..."
+msgstr "<Image>/Скрипт-Фу/Параметры трафарета/Хромировать..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
@@ -1061,7 +1028,7 @@ msgstr "Белые участки хрома"
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment Map"
-msgstr "Coupled-Map-Lattice"
+msgstr "Карта окружения"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
@@ -1069,12 +1036,10 @@ msgid "Highlight Balance"
 msgstr "Баланс бликов"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Хром..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Хром..."
 
@@ -1083,9 +1048,8 @@ msgid "Offsets (pixels * 2)"
 msgstr "Смещения (точек * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Circuit..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Ток..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Печатная плата..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
@@ -1104,7 +1068,7 @@ msgstr "Без фона (только для отдельного слоя)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify Mask Size"
-msgstr "Размер маски маслянной краски"
+msgstr "Размер маски рисования маслом"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1113,9 +1077,8 @@ msgid "Separate Layer"
 msgstr "Отделить слой"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Clothify..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Холст..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1141,7 +1104,6 @@ msgid "Elevation"
 msgstr "Возвышение"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
 msgstr "<Image>/Скрипт-Фу/Декор/Кофейное пятно..."
 
@@ -1158,12 +1120,10 @@ msgid "Stains"
 msgstr "Пятна"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Комикс..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Комикс..."
 
@@ -1177,12 +1137,10 @@ msgid "Outline Size"
 msgstr "Размер контура"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Прохладный метал..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Прохладный метал..."
 
@@ -1192,16 +1150,14 @@ msgid "Effect Size (pixels)"
 msgstr "Размер эффекта (точек)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "<Image>/Edit/Copy _Visible"
-msgstr "<Image>/Правка/Скопировать видимые"
+msgstr "<Image>/Правка/Скопировать видимое"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Кристалл..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
 msgstr "<Image>/Скрипт-Фу/Выделение/Исказить выделение..."
 
@@ -1224,17 +1180,16 @@ msgstr "Распространение"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "Порог (Больше 1<-->255 Меньше)"
+msgstr "Порог (От 1 до 255)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<Image>/Скрипт-Фу/Тень/Падающая тень..."
+msgstr "<Image>/Скрипт-Фу/Тени/Тень..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow Resizing"
-msgstr "Позволить изменение размере"
+msgstr "Позволить изменение размера"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: plug-ins/script-fu/scripts/news-text.scm.h:3
@@ -1267,9 +1222,8 @@ msgid "Opacity"
 msgstr "Непрозрачность"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Очистить каждую иную строку..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Очистить каждую вторую строку..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1308,9 +1262,8 @@ msgid "Rows/Cols"
 msgstr "Строки/столбцы"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Увести контур..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Угасание вне контура..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1329,26 +1282,25 @@ msgstr "Очистить участки невыделенной маски"
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade From %"
-msgstr "Затухание от %"
+msgstr "Угасание от %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade To   %"
-msgstr "Затухание к %"
+msgstr "Угасание к %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
 msgstr "Использовать растущее выделение"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Flatland..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Карта высот..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail Level"
-msgstr "Уровень деталей"
+msgstr "Уровень детализации"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
@@ -1376,63 +1328,54 @@ msgid "Scale Y"
 msgstr "Масштаб Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Карта шрифта..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active Colors"
-msgstr "Цвет контура"
+msgstr "Текущие цвета пер.плана и фона"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
-msgstr ""
+msgstr "Черный на белом"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _Size (pixels)"
 msgstr "Размер шрифта (точек)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use Font _Name as Text"
-msgstr ""
+msgstr "Использовать название шрифта в качестве текста"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
-#, fuzzy
 msgid "_Border (pixels)"
 msgstr "Размер рамки (точек)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color Scheme"
-msgstr "Цвет 3"
+msgstr "Цветовая схема"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "Фильтр (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
-msgstr ""
+msgstr "Указывать названия шрифтов"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
-#, fuzzy
 msgid "_Text"
 msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Мороз..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Ледяная..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Ледяная..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
 msgstr "<Image>/Скрипт-Фу/Декор/Нечеткая рамка..."
 
@@ -1447,16 +1390,14 @@ msgstr "Размывать рамку"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow Weight (%)"
-msgstr "Вес тени (%)"
+msgstr "Размер тени (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Большой заголовок..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Маленький заголовок.."
@@ -1477,7 +1418,7 @@ msgstr "Цвет бликов"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index Image"
-msgstr "Индекcное изображение"
+msgstr "Индексированное изображение"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
@@ -1492,7 +1433,7 @@ msgstr "Удалить фон"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-By-Color Threshold"
-msgstr "Порог выбора-по-цвету"
+msgstr "Порог выбора по цвету"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
@@ -1500,14 +1441,12 @@ msgid "Shadow Color"
 msgstr "Цвет тени"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки доп.кнопок трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
@@ -1516,25 +1455,21 @@ msgstr ""
 "кнопки..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки главной трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки кнопок трубы..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Глянец..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Глянцевая..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Глянцевая..."
 
@@ -1547,9 +1482,8 @@ msgid "Blend Gradient (Text)"
 msgstr "Градиент (Текст)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
-#, fuzzy
 msgid "Outline Gradient Reverse"
-msgstr "Радиус размывания контура"
+msgstr "Перевернуть градиент контура"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
@@ -1557,7 +1491,7 @@ msgstr "Шаблон (Контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
-msgstr "Шаблон (Перекрывание)"
+msgstr "Шаблон (Наложение)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
@@ -1570,27 +1504,25 @@ msgstr "Тень"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "Перевернуть градиент текста"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
-msgstr "Использовать перекрывание шаблонов"
+msgstr "Использовать наложение шаблонов"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Использовать для контура шабловн вместо градиента"
+msgstr "Использовать для контура шаблон вместо градиента"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Использовать для текста шаблон вместо градиента"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Горячее свечение..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Горячее свечение..."
 
@@ -1599,12 +1531,10 @@ msgid "Effect Size (pixels * 3)"
 msgstr "Размер эффекта (точек * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Выпуклый градиент..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Выпуклый градиент..."
 
@@ -1619,25 +1549,22 @@ msgid "Border Size (pixels)"
 msgstr "Размер рамки (точек)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Пользовательский градиент..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "<Image>/Скрипт-Фу/Визуализация/Сетка..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "Горизонтали"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "Вертикали"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
 msgstr "<Image>/Скрипт-Фу/Утилиты/Построить HSV-график..."
 
@@ -1671,7 +1598,7 @@ msgstr "Начало по Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Использовать границы выделения вместо нижних"
+msgstr "Использовать границы выделения"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
@@ -1679,14 +1606,13 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
-msgstr "Цвет кадра"
+msgstr "Цвет обрамления"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame Size"
-msgstr "Размер кадра"
+msgstr "Размер обрамления"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
 msgstr "<Image>/Скрипт-Фу/Утилиты/Показать структуру изображения..."
 
@@ -1700,7 +1626,7 @@ msgstr "Создать новое изображение"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert Layer Names"
-msgstr "Вставить названия слоя"
+msgstr "Вставить названия слоев"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
 msgid "Make New Background"
@@ -1724,14 +1650,13 @@ msgstr "Заполнение для прозрачных участков"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
 msgid "Shear Length"
-msgstr "Длина сдвига"
+msgstr "Величина сдвига"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
 msgid "Space Between Layers"
 msgstr "Интервал между слоями"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Земля..."
 
@@ -1744,7 +1669,6 @@ msgid "Sea Depth"
 msgstr "Морская глубина"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Lava..."
 msgstr "<Image>/Скрипт-Фу/Визуализация/Лава..."
 
@@ -1762,7 +1686,6 @@ msgid "Use Current Gradient"
 msgstr "Использовать текущий градиент"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
 msgstr "<Image>/Скрипт-Фу/Визуализация/Линейная новая..."
 
@@ -1788,6 +1711,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1795,6 +1721,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1802,24 +1731,23 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"    (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый эллипс..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый прямоугольник..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник..."
 
@@ -1837,12 +1765,10 @@ msgid "Spacing"
 msgstr "Интервал"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Неон..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Неон..."
 
@@ -1869,7 +1795,6 @@ msgid "Density (%)"
 msgstr "Плотность (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Old Photo..."
 msgstr "<Image>/Скрипт-Фу/Декор/Старое фото..."
 
@@ -1886,7 +1811,6 @@ msgid "Sepia"
 msgstr "Сепия"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
 msgstr "<Image>/Скрипт-Фу/Тень/Перспектива..."
 
@@ -1907,7 +1831,6 @@ msgid "Relative Length of Shadow"
 msgstr "Относительная длина тени"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
 msgstr "<Image>/Скрипт-Фу/Алхимия/Хищник..."
 
@@ -1924,7 +1847,6 @@ msgid "Pixelize"
 msgstr "Пикселизовать"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Круглая кнопка..."
 
@@ -1969,7 +1891,6 @@ msgid "Upper Color (Active)"
 msgstr "Верхний цвет (Активный)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Визуализация карты..."
 
@@ -1986,17 +1907,16 @@ msgid "Tile"
 msgstr "Плитка"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
 msgstr "<Image>/Скрипт-Фу/Аниматоры/Рябь..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr "Черный"
+msgstr "Зполнять черным"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge Behaviour"
-msgstr "Поведение края"
+msgstr "Край:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -2009,14 +1929,13 @@ msgstr "Сила ряби"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr "Пятно"
+msgstr "Размывать"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Заворачивать"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
 msgstr "<Image>/Скрипт-Фу/Декор/Закругленные уголки..."
 
@@ -2038,9 +1957,11 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Скрипт-Фу/Выделение/В кисть..."
 
@@ -2049,21 +1970,18 @@ msgid "Brush Name"
 msgstr "Название кисти"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Круглое..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Закруглить..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
 msgstr "Относительный радиус"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
 msgstr "<Image>/Скрипт-Фу/Декор/Слайд..."
 
@@ -2073,7 +1991,7 @@ msgstr "Цвет шрифта"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr "Число"
+msgstr "Номер"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
@@ -2084,7 +2002,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Скоростной текст..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Разное/Сфера..."
 
@@ -2101,7 +2018,6 @@ msgid "Sphere Color"
 msgstr "Цвет сферы"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
 msgstr "<Image>/Скрипт-Фу/Аниматоры/Вращающийся шар..."
 
@@ -2111,16 +2027,15 @@ msgstr "Кадры"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "Индекс из n цветов (0 = оставить в RGB)"
+msgstr "Индексировать в n цветов (0 = оставить в RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
 msgstr "Повернуть слева на право"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Сетка..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Spyrogimp..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2136,17 +2051,19 @@ msgstr "Круг"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color Method"
-msgstr ""
+msgstr "Метод окраски"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
+"Рисование спирографов, эпитрохоид. Дополнительная информация находится на "
+"сайте http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Эпитрохоида"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
@@ -2166,7 +2083,7 @@ msgstr "Шестиугольник"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Hole Ratio"
-msgstr ""
+msgstr "Размер отверстия"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
@@ -2242,30 +2159,26 @@ msgid "Type"
 msgstr "Тип"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Взрыв звезды..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Звездная вспышка..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездная вспышка..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
-msgstr "Цвет взрыва"
+msgstr "Цвет вспышки"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Effect Size (pixels * 30)"
 msgstr "Размер эффекта (точек * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Starscape..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Звездный фон..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездный фон..."
 
@@ -2274,7 +2187,6 @@ msgid "Effect Size (pixels * 4)"
 msgstr "Размер эффекта (точек * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirl-Tile..."
 
@@ -2283,9 +2195,8 @@ msgid "Whirl Amount"
 msgstr "Количество вихрей"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirl-Tile..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirly..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2300,12 +2211,10 @@ msgid "Whirl Angle"
 msgstr "Угол вихря"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
 msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/След частицы..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/След частицы..."
 
@@ -2338,12 +2247,10 @@ msgid "Fill Angle"
 msgstr "Заполнить угол"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Текстура..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Текстура..."
 
@@ -2376,9 +2283,8 @@ msgid "Text Pattern"
 msgstr "Шаблон текста"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
-msgstr "<Image>/Фильтры/Размывание/Tileable Blur..."
+msgstr "<Image>/Фильтры/Размывание/Размывание кромки..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur Horizontally"
@@ -2405,7 +2311,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Заголовок Web-страницы..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Truchet..."
 
@@ -2414,7 +2319,6 @@ msgid "Foreground Color"
 msgstr "Цвет переднего плана"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
 msgstr "<Image>/Скрипт-Фу/Алхимия/Нерезкая маска..."
 
@@ -2427,7 +2331,6 @@ msgid "Mask Size"
 msgstr "Размер маски"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Waves..."
 msgstr "<Image>/Скрипт-Фу/Аниматоры/Волны..."
 
@@ -2444,9 +2347,8 @@ msgid "Wavelength"
 msgstr "Длина волны"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Weave..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Плетение..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon Spacing"
@@ -2477,20 +2379,18 @@ msgid "Thread Length"
 msgstr "Длина нити"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Расш./Web-браузер/Регистрация дополнений"
+msgstr "<Toolbox>/Справка/Web-браузер/Регистрация дополнений"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-msgstr ""
+msgstr "<Toolbox>/Справка/Web-браузер/Сайт разработчиков"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
-msgstr ""
+msgstr "<Toolbox>/Справка/Web-браузер/Официальный сайт"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Скрипт-Фу/Тень/Xach-эффект..."
 
@@ -2526,9 +2426,8 @@ msgstr "Смещение бликов по X"
 msgid "Highlight Y Offset"
 msgstr "Смещение бликов по Y"
 
-#, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Вихрь (tileable)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО разработчика"

@@ -1,17 +1,21 @@
-# Copyright (C) 1999-2002 Free Software Foundation, Inc.
+# translation of gimp.LIBGIMP.po to russian
+# Copyright (C) 1999-2002, 2003 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 1999-2002.
+# Roxana Chernogolova <padavan@mail.ru>, 2003.
+# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp-1.3+\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
-"PO-Revision-Date: 2003-07-06 17:42+0400\n"
-"Last-Translator: Valek Filippov <frob@df.ru>\n"
-"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"Project-Id-Version: gimp.LIBGIMP\n"
+"POT-Creation-Date: 2004-01-10 15:38+0300\n"
+"PO-Revision-Date: 2003-12-30 01:58+0300\n"
+"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
+"Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
@@ -19,7 +23,7 @@ msgstr "Выбор кисти"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "Выбрать..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
@@ -54,13 +58,13 @@ msgid "%s can't handle transparency"
 msgstr "%s неможет обработать прозрачность"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s неможет обработать слои"
+msgstr "%s неможет обработать маски слоя"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "Применить маски слоя"
 
 #: libgimp/gimpexport.c:278
 #, c-format
@@ -94,12 +98,11 @@ msgstr ""
 "(Результат можно подстроить вручную)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s может обработать только RGB или индексированные изображения"
+msgstr "%s может обработать только двухцветное или индексированные изображения"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -145,24 +148,22 @@ msgid "Export File"
 msgstr "Экспортировать файл"
 
 #: libgimp/gimpexport.c:460
-#, fuzzy
 msgid "_Ignore"
 msgstr "Игнорировать"
 
 #: libgimp/gimpexport.c:462
-#, fuzzy
 msgid "_Export"
 msgstr "Экспорт"
 
 #. the headline
 #: libgimp/gimpexport.c:484
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Ваше изображение должно быть экспортированно до того как оно может быть "
-"сохранено по следующим причинам:"
+"Ваше изображение должно быть экспортированно до того, как оно будет "
+"сохранено %s по следующим причинам:"
 
 #: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
@@ -208,7 +209,7 @@ msgstr "процент"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(неверная строка UTF-8)"
 
 #: libgimpbase/gimputils.c:198
 #, c-format
@@ -241,24 +242,24 @@ msgid "%.1f MB"
 msgstr "%.1f МБ"
 
 #: libgimpbase/gimputils.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "%d КБ"
+msgstr "%d МБ"
 
 #: libgimpbase/gimputils.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f GB"
-msgstr "%.2f МБ"
+msgstr "%.2f ГБ"
 
 #: libgimpbase/gimputils.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB"
-msgstr "%.1f МБ"
+msgstr "%.1f ГБ"
 
 #: libgimpbase/gimputils.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "%d КБ"
+msgstr "%d ГБ"
 
 #: libgimpmodule/gimpmodule.c:175
 #, c-format
@@ -268,7 +269,7 @@ msgstr "Загрузка модуля: \"%s\"\n"
 #: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
 #: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
 #: libgimpmodule/gimpmodule.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 "Ошибка загрузки модуля \"%s\":\n"
@@ -301,28 +302,24 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
 msgstr "/Цвет переднего плана"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
 msgstr "/Цвет фона"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
 msgstr "/Чёрный"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-#, fuzzy
 msgid "/_White"
 msgstr "/Белый"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr ""
+msgstr "Шкала"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
@@ -391,11 +388,11 @@ msgstr "Шестнадцатиричный триплет:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Текущий:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Прежний:"
 
 #: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
@@ -426,7 +423,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
-msgstr "Прицепить"
+msgstr "Прикрепить"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
@@ -458,11 +455,11 @@ msgstr "Видимый"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Расстояние между буквами"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Расстояние между строками"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
@@ -509,6 +506,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
+"Используйте это значение для генерации случайного зерна - это даст "
+"возможность повторить заданную \"случайную\" операцию"
 
 #: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
@@ -529,9 +528,8 @@ msgid "Color Deficient Vision"
 msgstr "Зрение со сниженным цветовосприятием"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "Тип недостаточности цвета:"
+msgstr "Тип сниженного цветовосприятия:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
@@ -547,29 +545,27 @@ msgstr "Тританопия (нечувствительность к синем
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Фильтр цветовой гаммы"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr "Гамма:"
+msgstr "Гамма"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Гамма"
+msgstr "Гамма:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Фильтр повышенной контрастности"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr "Контрастность"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Циклы контрастности:"
+msgstr "Степень контрастности:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
@@ -609,65 +605,63 @@ msgstr ""
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Тип выбора цвета - CMYK"
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:152
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
 msgid "Cyan"
-msgstr ""
+msgstr "Голубой"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
-msgstr ""
+msgstr "Пурпурный"
 
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
-msgstr ""
+msgstr "Желтый"
 
 #: modules/colorsel_cmyk.c:159
-#, fuzzy
 msgid "Black"
-msgstr "/Чёрный"
+msgstr "Чёрный"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Содержание черного (%)"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Тип выбора цвета - треугольник"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
 msgstr "Треугольник"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Тип выбора цвета - акварель"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Акварель"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
@@ -687,9 +681,8 @@ msgstr "Давление"
 #~ "(%s \"%s\")\n"
 #~ "к файлу %s."
 
-#, fuzzy
 #~ msgid "Parameter Settings"
-#~ msgstr "Выбор шаблона"
+#~ msgstr "Установки параметров"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Нет (нормальное зрение)"

@@ -1,20 +1,21 @@
 # translation of gimp.PLUGINS.po to russian
-# Copyright (C) 1999-2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 1999-2002, 2003, 2004 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 1999-2002.
-# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003.
+# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Chernogolova <padavan@mail.ru>, 2003.
+# Grigory Bakunov <blackasp@yandex.ru>, 2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.PLUGINS\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
-"PO-Revision-Date: 2003-08-24 20:17+0400\n"
-"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
+"POT-Creation-Date: 2004-01-10 15:38+0300\n"
+"PO-Revision-Date: 2004-01-11 23:08+0300\n"
+"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:529 plug-ins/gfig/gfig.c:2904
@@ -83,7 +84,6 @@ msgid "Redo last zoom"
 msgstr "Повторить последнее изменение масштаба"
 
 #: plug-ins/FractalExplorer/Dialogs.c:693
-#, fuzzy
 msgid "_Parameters"
 msgstr "Параметры"
 
@@ -202,7 +202,7 @@ msgstr "Спираль"
 
 #: plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Man'o'war"
-msgstr ""
+msgstr "Man'o'war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:844
 msgid "Lambda"
@@ -223,7 +223,6 @@ msgid "Number of Colors"
 msgstr "Число цветов"
 
 #: plug-ins/FractalExplorer/Dialogs.c:913
-#, fuzzy
 msgid "Number of colors:"
 msgstr "Число цветов:"
 
@@ -232,7 +231,6 @@ msgid "Change the number of colors in the mapping"
 msgstr "Изменить число цветов в отображении"
 
 #: plug-ins/FractalExplorer/Dialogs.c:923
-#, fuzzy
 msgid "Use loglog smoothing"
 msgstr "Использовать loglog cглаживание"
 
@@ -366,7 +364,6 @@ msgid "Color Mode"
 msgstr "Цветовой режим"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1119
-#, fuzzy
 msgid "As specified above"
 msgstr "Как указано выше"
 
@@ -379,7 +376,6 @@ msgstr ""
 "функция). Результат демонстрируется в окне просмотра."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1141
-#, fuzzy
 msgid "Apply active gradient to final image"
 msgstr "Применить действующий градиент к итоговому изображению"
 
@@ -392,7 +388,6 @@ msgid "FractalExplorer Gradient"
 msgstr "Градиент исследователя Фракталов"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1191
-#, fuzzy
 msgid "_Fractals"
 msgstr "Фракталы"
 
@@ -411,18 +406,14 @@ msgstr "Фракталы"
 #: plug-ins/flame/flame.c:431 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:714 plug-ins/ifscompose/ifscompose.c:2591
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
-"Невозможно открыть \"%s\" для записи:\n"
-"%s"
+msgstr "Невозможно открыть '%s' для записи: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1837
-#, fuzzy, c-format
+#, c-format
 msgid "Could not write '%s': %s"
-msgstr ""
-"Не удалось записать \"%s\":\n"
-"%s"
+msgstr "Не удалось записать '%s': %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1857
 msgid "Save: No filename given"
@@ -430,9 +421,8 @@ msgstr "Сохранение: не задано имя файла"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1864 plug-ins/gfig/gfig.c:1096
-#, fuzzy
 msgid "Cannot save to a folder."
-msgstr "Сохранение: невозможно сохранить в каталог."
+msgstr "Невозможно сохранить в каталог."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1906
 msgid "Load Fractal Parameters"
@@ -461,30 +451,27 @@ msgstr "Сохранить параметры фрактала"
 #: plug-ins/flame/flame.c:401 plug-ins/gfig/gfig.c:716
 #: plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461 plug-ins/xjt/xjt.c:2533
 #: plug-ins/xjt/xjt.c:2541
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr ""
-"Невозможно открыть \"%s\" для записи:\n"
-"%s"
+msgstr "Невозможно открыть '%s' для записи: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2132
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr ""
-"\"%s\"\n"
+"'%s'\n"
 "не является файлом Исследователя Фракталов"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2137
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr ""
-"Файл \"%s\" поврежден.\n"
+"Файл '%s' поврежден.\n"
 "Строка %d раздела параметров неправильна"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
-#, fuzzy
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Image>/Фильтры/Визуализация/Шаблон/Исследователь фракталов..."
+msgstr "<Image>/Фильтры/Визуализация/Исследователь фракталов..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:389
 msgid "Rendering Fractal..."
@@ -492,7 +479,7 @@ msgstr "Отображение фрактала..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3825
 #: plug-ins/gflare/gflare.c:3112
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr ""
 "Вы действительно хотите удалить\n"
@@ -599,8 +586,7 @@ msgstr "Прозрачный фон"
 
 #: plug-ins/Lighting/lighting_ui.c:378
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Сделать результирующее изображение прозрачным с нулевой высотой рельефа"
+msgstr "Сделать результирующее изображение прозрачным с нулевой высотой рельефа"
 
 #: plug-ins/Lighting/lighting_ui.c:381
 msgid "Cre_ate New Image"
@@ -638,8 +624,7 @@ msgstr "Порог:"
 
 #: plug-ins/Lighting/lighting_ui.c:445 plug-ins/MapObject/mapobject_ui.c:656
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
-"Останавливаться когда различие между пикселами меньше, чем это значение"
+msgstr "Останавливаться когда различие между пикселами меньше, чем это значение"
 
 #: plug-ins/Lighting/lighting_ui.c:487 plug-ins/MapObject/mapobject_ui.c:682
 msgid "Light Settings"
@@ -759,8 +744,7 @@ msgstr "Окружение:"
 
 #: plug-ins/Lighting/lighting_ui.c:717 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Степень окрашивания собственным цветом там куда не попадают прямые лучи"
+msgstr "Степень окрашивания собственным цветом там куда не попадают прямые лучи"
 
 #: plug-ins/Lighting/lighting_ui.c:729
 msgid "_Diffuse:"
@@ -780,8 +764,7 @@ msgstr "Рассеяние:"
 
 #: plug-ins/Lighting/lighting_ui.c:792 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Повышение значений делает объект отражающим больше света (кажется светлее)"
+msgstr "Повышение значений делает объект отражающим больше света (кажется светлее)"
 
 #: plug-ins/Lighting/lighting_ui.c:804
 msgid "_Specular:"
@@ -913,9 +896,8 @@ msgid "Enable/disable real time preview of changes"
 msgstr "Включить/отключить немедленный предварительный просмотр"
 
 #: plug-ins/Lighting/lighting_ui.c:1190
-#, fuzzy
 msgid "Preview Options"
-msgstr "Параметры сохранения"
+msgstr "Параметры пред.просмотра"
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -1200,7 +1182,7 @@ msgstr "\"%s\" не пригодный BMP-файл"
 #: plug-ins/bmp/bmpread.c:217 plug-ins/bmp/bmpread.c:235
 #: plug-ins/bmp/bmpread.c:253 plug-ins/bmp/bmpread.c:258
 #: plug-ins/bmp/bmpread.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr ""
 "Ошибка считывания заголовка BMP-файла\n"
@@ -1231,14 +1213,12 @@ msgstr "Фон"
 
 #: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:613
 #: plug-ins/common/pcx.c:574
-#, fuzzy
 msgid "Cannot save images with alpha channel."
-msgstr "Изображение с альфа-каналом нельзя сохранить как PNM."
+msgstr "Невозможно сохранить изображения с альфа-каналом."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:628
 #: plug-ins/common/ps.c:966 plug-ins/common/xwd.c:521 plug-ins/fits/fits.c:441
 #: plug-ins/xjt/xjt.c:1686
-#, fuzzy
 msgid "Cannot operate on unknown image types."
 msgstr "Невозможно выполнить действия с изображением неизвестного типа"
 
@@ -1355,8 +1335,7 @@ msgid "Use cosine-function for green component."
 msgstr "Использовать косинусоидальную функцию для зеленого компонента."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Канал зелёного: используется линейное отображение вместо любой "
 "тригонометрической функции"
@@ -1370,8 +1349,7 @@ msgid "Use cosine-function for blue component."
 msgstr "Использовать косинусоидальную функцию для синего компонента."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Канал синего: используется линейное отображение вместо любой "
 "тригонометрической функции"
@@ -1712,7 +1690,7 @@ msgstr "CML_исследователь: выполнение..."
 
 #: plug-ins/common/CML_explorer.c:1150
 msgid "Coupled-Map-Lattice Explorer"
-msgstr ""
+msgstr "Coupled-Map-Lattice Explorer"
 
 #: plug-ins/common/CML_explorer.c:1210
 msgid "Random Seed"
@@ -1837,15 +1815,15 @@ msgstr "Использовать циклический диапазон"
 
 #: plug-ins/common/CML_explorer.c:1708
 msgid "Mod. Rate:"
-msgstr ""
+msgstr "Частота модификации:"
 
 #: plug-ins/common/CML_explorer.c:1717
 msgid "Env. Sensitivity:"
-msgstr ""
+msgstr "Чуствительность окружения:"
 
 #: plug-ins/common/CML_explorer.c:1726
 msgid "Diffusion Dist.:"
-msgstr ""
+msgstr "Расстояние диффузии"
 
 #: plug-ins/common/CML_explorer.c:1735
 msgid "# of Subranges:"
@@ -1873,7 +1851,7 @@ msgstr "Вывести график настроек"
 
 #: plug-ins/common/CML_explorer.c:1829
 msgid "Ch. Sensitivity:"
-msgstr "Чувствительность каналаЖ"
+msgstr "Чувствительность канала:"
 
 #: plug-ins/common/CML_explorer.c:1839
 msgid "Mutation Rate:"
@@ -1881,7 +1859,7 @@ msgstr "Скорость мутаций:"
 
 #: plug-ins/common/CML_explorer.c:1849
 msgid "Mutation Dist.:"
-msgstr ""
+msgstr "Расстояние изменений"
 
 #: plug-ins/common/CML_explorer.c:1878
 msgid "Graph of the current settings"
@@ -1900,7 +1878,7 @@ msgid "Save Parameters to"
 msgstr "Сохранить параметры в"
 
 #: plug-ins/common/CML_explorer.c:2169 plug-ins/common/channel_mixer.c:1248
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr ""
 "Параметры были сохранены в\n"
@@ -1932,14 +1910,14 @@ msgid "Error: it's not CML parameter file."
 msgstr "Ошибка: это не файл параметров CML"
 
 #: plug-ins/common/CML_explorer.c:2348
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr ""
 "Внимание: \"%s\"\n"
 "это файл старого формата."
 
 #: plug-ins/common/CML_explorer.c:2350
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr ""
 "Внимание: \"%s\"\n"
@@ -1966,7 +1944,7 @@ msgstr "<Image>/Слои/Выровнять видимые слои..."
 
 #: plug-ins/common/align_layers.c:175
 msgid "There are not enough layers to align."
-msgstr ""
+msgstr "Недостаточно слоев для выравнивания."
 
 #: plug-ins/common/align_layers.c:400
 msgid "Align Visible Layers"
@@ -2109,14 +2087,12 @@ msgid "Frame %d of %d"
 msgstr "Кадр %d из %d"
 
 #: plug-ins/common/animoptimize.c:196
-#, fuzzy
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-msgstr "<Image>/Фильтры/Анимация/Оптимизация "
+msgstr "<Image>/Фильтры/Анимация/Оптимизация (для GIF)"
 
 #: plug-ins/common/animoptimize.c:214
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize (Difference)"
-msgstr "<Image>/Фильтры/Анимация/Оптимизация "
+msgstr "U<Image>/Фильтры/Анимация/Оптимизация (разн.)"
 
 #: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"
@@ -2429,9 +2405,9 @@ msgid "Number of unique colors: %d"
 msgstr "Число цветов: %d"
 
 #: plug-ins/common/ccanalyze.c:599
-#, fuzzy, c-format
+#, c-format
 msgid "Uncompressed size: %s"
-msgstr "Размер несжатого файла в байтах: %d"
+msgstr "Размер несжатого файла в байтах: %s"
 
 #: plug-ins/common/ccanalyze.c:606
 #, c-format
@@ -2449,9 +2425,8 @@ msgid "Compression ratio (approx.): %d to 1"
 msgstr "Степень сжатия (приблизит.): %d к 1"
 
 #: plug-ins/common/channel_mixer.c:225
-#, fuzzy
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-msgstr "<Image>/Фильтры/Цвета/Составить..."
+msgstr "<Image>/Фильтры/Цвета/Смешать..."
 
 #: plug-ins/common/channel_mixer.c:529
 #, fuzzy
@@ -2471,7 +2446,7 @@ msgstr "Уровень на выходе:"
 #. The monochrome toggle
 #: plug-ins/common/channel_mixer.c:661
 msgid "_Monochrome"
-msgstr ""
+msgstr "Монохромный"
 
 #: plug-ins/common/channel_mixer.c:673
 #, fuzzy
@@ -2634,55 +2609,55 @@ msgstr "Черный:"
 
 #: plug-ins/common/compose.c:171 plug-ins/common/decompose.c:158
 msgid "LAB"
-msgstr ""
+msgstr "LAB"
 
 #: plug-ins/common/compose.c:179
 msgid "Luma_y470:"
-msgstr ""
+msgstr "Luma_y470:"
 
 #: plug-ins/common/compose.c:180
 msgid "Blueness_cb470:"
-msgstr ""
+msgstr "Blueness_cb470:"
 
 #: plug-ins/common/compose.c:181
 msgid "Redness_cr470:"
-msgstr ""
+msgstr "Redness_cr470:"
 
 #: plug-ins/common/compose.c:186
 msgid "Luma_y709:"
-msgstr ""
+msgstr "Luma_y709:"
 
 #: plug-ins/common/compose.c:187
 msgid "Blueness_cb709:"
-msgstr ""
+msgstr "Blueness_cb709:"
 
 #: plug-ins/common/compose.c:188
 msgid "Redness_cr709:"
-msgstr ""
+msgstr "Redness_cr709:"
 
 #: plug-ins/common/compose.c:193
 msgid "Luma_y470f:"
-msgstr ""
+msgstr "Luma_y470f:"
 
 #: plug-ins/common/compose.c:194
 msgid "Blueness_cb470f:"
-msgstr ""
+msgstr "Blueness_cb470f:"
 
 #: plug-ins/common/compose.c:195
 msgid "Redness_cr470f:"
-msgstr ""
+msgstr "Redness_cr470f:"
 
 #: plug-ins/common/compose.c:200
 msgid "Luma_y709f:"
-msgstr ""
+msgstr "Luma_y709f:"
 
 #: plug-ins/common/compose.c:201
 msgid "Blueness_cb709f:"
-msgstr ""
+msgstr "Blueness_cb709f:"
 
 #: plug-ins/common/compose.c:202
 msgid "Redness_cr709f:"
-msgstr ""
+msgstr "Redness_cr709f:"
 
 #: plug-ins/common/compose.c:297
 msgid "<Image>/Filters/Colors/C_ompose..."
@@ -2769,7 +2744,6 @@ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
 msgstr "<Image>/Фильтры/Общие/Матрица свёртки..."
 
 #: plug-ins/common/convmatrix.c:226
-#, fuzzy
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
 msgstr ""
 "Матрица свёртки не работает\n"
@@ -2887,8 +2861,7 @@ msgstr "<Image>/Фильтры/Искажения/Изгиб кривой..."
 
 #: plug-ins/common/curve_bend.c:698
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr ""
-"\"Изгиб кривой\" действует только на слоях (а был вызван на канале или маске)"
+msgstr "\"Изгиб кривой\" действует только на слоях (а был вызван на канале или маске)"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3102,51 +3075,51 @@ msgstr "Альфа"
 
 #: plug-ins/common/decompose.c:163
 msgid "luma_y470"
-msgstr ""
+msgstr "luma_y470"
 
 #: plug-ins/common/decompose.c:164
 msgid "blueness_cb470"
-msgstr ""
+msgstr "blueness_cb470"
 
 #: plug-ins/common/decompose.c:165
 msgid "redness_cr470"
-msgstr ""
+msgstr "redness_cr470"
 
 #: plug-ins/common/decompose.c:167
 msgid "luma_y709"
-msgstr ""
+msgstr "luma_y709"
 
 #: plug-ins/common/decompose.c:168
 msgid "blueness_cb709"
-msgstr ""
+msgstr "blueness_cb709"
 
 #: plug-ins/common/decompose.c:169
 msgid "redness_cr709"
-msgstr ""
+msgstr "redness_cr709"
 
 #: plug-ins/common/decompose.c:171
 msgid "luma_y470f"
-msgstr ""
+msgstr "luma_y470f"
 
 #: plug-ins/common/decompose.c:172
 msgid "blueness_cb470f"
-msgstr ""
+msgstr "blueness_cb470f"
 
 #: plug-ins/common/decompose.c:173
 msgid "redness_cr470f"
-msgstr ""
+msgstr "redness_cr470f"
 
 #: plug-ins/common/decompose.c:175
 msgid "luma_y709f"
-msgstr ""
+msgstr "luma_y709f"
 
 #: plug-ins/common/decompose.c:176
 msgid "blueness_cb709f"
-msgstr ""
+msgstr "blueness_cb709f"
 
 #: plug-ins/common/decompose.c:177
 msgid "redness_cr709f"
-msgstr ""
+msgstr "redness_cr709f"
 
 #: plug-ins/common/decompose.c:242
 msgid "<Image>/Filters/Colors/_Decompose..."
@@ -3166,9 +3139,8 @@ msgid "Extract Channels:"
 msgstr "Извлечь каналы:"
 
 #: plug-ins/common/decompose.c:1219
-#, fuzzy
 msgid "Decompose to _Layers"
-msgstr "Разобрать"
+msgstr "Разобрать на слои"
 
 #: plug-ins/common/deinterlace.c:91
 msgid "<Image>/Filters/Enhance/_Deinterlace..."
@@ -3324,11 +3296,11 @@ msgid "_Width:"
 msgstr "Ширина:"
 
 #: plug-ins/common/dicom.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a DICOM file."
 msgstr ""
 "\"%s\"\n"
-"не является файлом PCX"
+"не является файлом DICOM"
 
 #: plug-ins/common/diffraction.c:184
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
@@ -3433,11 +3405,11 @@ msgstr "Алгоритм"
 
 #: plug-ins/common/edge.c:650
 msgid "_Sobel"
-msgstr ""
+msgstr "Собел"
 
 #: plug-ins/common/edge.c:651
 msgid "_Prewitt"
-msgstr ""
+msgstr "По _Превитту"
 
 #: plug-ins/common/edge.c:652 plug-ins/common/lic.c:744
 msgid "_Gradient"
@@ -3445,15 +3417,15 @@ msgstr "Градиент"
 
 #: plug-ins/common/edge.c:653
 msgid "_Roberts"
-msgstr ""
+msgstr "По _Робертсу"
 
 #: plug-ins/common/edge.c:654
 msgid "_Differential"
-msgstr ""
+msgstr "Дифференциальный"
 
 #: plug-ins/common/edge.c:655
 msgid "_Laplace"
-msgstr ""
+msgstr "Лаплас"
 
 #: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:674
 msgid "_Amount:"
@@ -3757,9 +3729,8 @@ msgstr "IIR Гауссово размывание"
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:980
 #: plug-ins/sgi/sgi.c:518 plug-ins/xjt/xjt.c:1682
-#, fuzzy
 msgid "Cannot operate on indexed color images."
-msgstr "xjt: Невозможно использовать на индексированных изображениях"
+msgstr "Невозможно использовать для работы с индексированными изображениями"
 
 #: plug-ins/common/gauss_iir.c:363 plug-ins/common/gauss_rle.c:357
 msgid "Blur Horizontally"
@@ -3798,12 +3769,11 @@ msgid "RLE Gaussian Blur"
 msgstr "RLE Гауссово размывание"
 
 #: plug-ins/common/gbr.c:335 plug-ins/common/gbr.c:346
-#, fuzzy
 msgid "Unsupported brush format"
-msgstr "Неподдерживаемое число цветов (%d)"
+msgstr "Неподдерживаемый формат кисти"
 
 #: plug-ins/common/gbr.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr ""
 "Ошибка в файле кисти GIMP\n"
@@ -3864,8 +3834,7 @@ msgstr "Масштаб: Дополнение ранее извесное как 
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Устаревшее создание Adam D. Moss /adam@gimp.org / adam@foxbox.org/ 1998-2000"
+msgstr "Устаревшее создание Adam D. Moss /adam@gimp.org / adam@foxbox.org/ 1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3876,14 +3845,12 @@ msgid "Icon Name:"
 msgstr "Название пиктограммы: "
 
 #: plug-ins/common/gif.c:689
-#, fuzzy
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 "Невозможно дальнейшее уменьшение цветов.\n"
 "Сохраняется как непрозрачное."
 
 #: plug-ins/common/gif.c:911
-#, fuzzy
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3892,12 +3859,10 @@ msgstr ""
 "7-битном ASCII. Комментарий не сохранён."
 
 #: plug-ins/common/gif.c:972
-#, fuzzy
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Невозможно сохранить RGB-изображение как GIF - сначала преобразуйте его в "
-"индексированное или серое."
+"Невозможно сохранить изображение в формате RGB. Преобразуйте его в "
+"индексированный формат или в градации серого."
 
 #: plug-ins/common/gif.c:1114
 msgid ""
@@ -3912,10 +3877,12 @@ msgstr ""
 #: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr ""
+"Задержка встроена чтобы предотвратить перезагрузку процессора сложной "
+"анимацией"
 
 #: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
-msgstr "GIF Предупреждение"
+msgstr "Предупреждение GIF"
 
 #: plug-ins/common/gif.c:1214
 msgid ""
@@ -3995,18 +3962,17 @@ msgid "The default comment is limited to %d characters."
 msgstr "Комментарий по умолчанию ограничен длиною в %d символов."
 
 #: plug-ins/common/gifload.c:312
-#, fuzzy
 msgid "This is not a GIF file"
-msgstr "\"%s\" не является файлом HRZ"
+msgstr "не является файлом GIF"
 
 #: plug-ins/common/gifload.c:350
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
 #: plug-ins/common/gifload.c:858
-#, fuzzy, c-format
+#, c-format
 msgid "Background (%d%s)"
-msgstr "Фон (%dms)"
+msgstr "Фон (%d%s)"
 
 #: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:783
 #: plug-ins/common/iwarp.c:815
@@ -4015,9 +3981,9 @@ msgid "Frame %d"
 msgstr "Кадр %d"
 
 #: plug-ins/common/gifload.c:908
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d (%d%s)"
-msgstr "Кадр %d (%dms)"
+msgstr "Кадр %d (%d%s)"
 
 #: plug-ins/common/gifload.c:938
 #, c-format
@@ -4132,9 +4098,8 @@ msgid "Save (middle transform) as QBE file..."
 msgstr "Сохранение (среднего преобразования) как QBE-файла..."
 
 #: plug-ins/common/gqbist.c:806
-#, fuzzy
 msgid "G-Qbist"
-msgstr "G-Q-бист 1.12"
+msgstr "G-Q-бист"
 
 #: plug-ins/common/gradmap.c:121
 msgid "<Image>/Filters/Colors/Map/_Gradient Map"
@@ -4199,16 +4164,13 @@ msgid "Warning"
 msgstr "Внимание"
 
 #: plug-ins/common/gtm.c:431
-#, fuzzy
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Вы с ума сошли?\n"
-"\n"
 "Вы почти создали огромный\n"
-"HTML-файл, который почти наверняка\n"
+"HTML-файл, который наверняка\n"
 "обрушит ваш навигатор."
 
 #. HTML Page Options
@@ -4286,7 +4248,7 @@ msgstr "Параметры таблицы"
 
 #: plug-ins/common/gtm.c:567
 msgid "_Border:"
-msgstr ""
+msgstr "Border:"
 
 #: plug-ins/common/gtm.c:571
 msgid "The number of pixels in the table border."
@@ -4303,6 +4265,8 @@ msgstr "Высота для каждой ячейки таблицы. Может
 #: plug-ins/common/gtm.c:613
 msgid "Cell-_Padding:"
 msgstr ""
+"Набивка ячеек\n"
+"(cellpadding):"
 
 #: plug-ins/common/gtm.c:617
 msgid "The amount of cellpadding."
@@ -4311,6 +4275,8 @@ msgstr "Размер заполнения ячеек."
 #: plug-ins/common/gtm.c:626
 msgid "Cell-_Spacing:"
 msgstr ""
+"Интервал ячеек\n"
+"(cellspacing):"
 
 #: plug-ins/common/gtm.c:630
 msgid "The amount of cellspacing."
@@ -4615,7 +4581,7 @@ msgstr "Делать типичный JPEG (читается всеми деко
 
 #: plug-ins/common/jpeg.c:1865
 msgid "Save EXIF data"
-msgstr ""
+msgstr "Сохранить данные EXIF"
 
 #: plug-ins/common/jpeg.c:1891
 msgid "Subsampling:"
@@ -4730,27 +4696,22 @@ msgid "Send to Mail"
 msgstr "Послать по почте"
 
 #: plug-ins/common/mail.c:485
-#, fuzzy
 msgid "_Recipient:"
 msgstr "Получатель:"
 
 #: plug-ins/common/mail.c:497
-#, fuzzy
 msgid "_Sender:"
 msgstr "Отправитель:"
 
 #: plug-ins/common/mail.c:509
-#, fuzzy
 msgid "S_ubject:"
 msgstr "Тема:"
 
 #: plug-ins/common/mail.c:521
-#, fuzzy
 msgid "Comm_ent:"
 msgstr "Комментарий:"
 
 #: plug-ins/common/mail.c:533
-#, fuzzy
 msgid "_Filename:"
 msgstr "Имя файла:"
 
@@ -4760,18 +4721,16 @@ msgid "Encapsulation:"
 msgstr "Инкапсуляция:"
 
 #: plug-ins/common/mail.c:579
-#, fuzzy
 msgid "_Uuencode"
 msgstr "Uuencode"
 
 #: plug-ins/common/mail.c:580
-#, fuzzy
 msgid "_MIME"
 msgstr "MIME"
 
 #: plug-ins/common/mail.c:680
 msgid "some sort of error with the file extension or lack thereof"
-msgstr ""
+msgstr "некоторая ошибка в расширении файла"
 
 #: plug-ins/common/mapcolor.c:144
 msgid "First Source Color"
@@ -4798,9 +4757,8 @@ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
 msgstr "<Image>/Фильтры/Цвета/Отображение/Изменение цветового диапазона..."
 
 #: plug-ins/common/mapcolor.c:397 plug-ins/common/mapcolor.c:712
-#, fuzzy
 msgid "Cannot operate on gray or indexed color images."
-msgstr "xjt: Невозможно использовать на индексированных изображениях"
+msgstr "Невозможно применять к индексированным изображениям."
 
 #: plug-ins/common/mapcolor.c:418
 msgid "Adjusting Foreground/Background..."
@@ -4913,33 +4871,31 @@ msgstr "Сохранить время создания"
 
 #: plug-ins/common/mng.c:1277
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: plug-ins/common/mng.c:1278
 msgid "JNG"
-msgstr ""
+msgstr "JNG"
 
 #: plug-ins/common/mng.c:1287
 msgid "PNG + Delta PNG"
-msgstr ""
+msgstr "PNG + Delta PNG"
 
 #: plug-ins/common/mng.c:1288
 msgid "JNG + Delta PNG"
-msgstr ""
+msgstr "JNG + Delta PNG"
 
 #: plug-ins/common/mng.c:1289
-#, fuzzy
 msgid "All PNG"
-msgstr "Все"
+msgstr "Все PNG"
 
 #: plug-ins/common/mng.c:1290
-#, fuzzy
 msgid "All JNG"
-msgstr "Все"
+msgstr "Все JNG"
 
 #: plug-ins/common/mng.c:1296
 msgid "Default Chunks Type:"
-msgstr ""
+msgstr "Тип:"
 
 #: plug-ins/common/mng.c:1304
 msgid "Combine"
@@ -4951,7 +4907,7 @@ msgstr "Заместить"
 
 #: plug-ins/common/mng.c:1310
 msgid "Default Frame Disposal:"
-msgstr ""
+msgstr "Кадры:"
 
 #: plug-ins/common/mng.c:1322
 msgid "PNG Compression Level:"
@@ -5391,14 +5347,14 @@ msgid "Save as Pattern"
 msgstr "Сохранить как шаблон"
 
 #: plug-ins/common/pcx.c:312
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from '%s'"
 msgstr ""
 "Невозможно прочесть заголовок из\n"
 "\"%s\""
 
 #: plug-ins/common/pcx.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a PCX file"
 msgstr ""
 "\"%s\"\n"
@@ -5406,7 +5362,7 @@ msgstr ""
 
 #: plug-ins/common/pcx.c:371
 msgid "Unusual PCX flavour, giving up"
-msgstr ""
+msgstr "Необычный вид файла PCX. Выход."
 
 #: plug-ins/common/pixelize.c:170
 msgid "<Image>/Filters/Blur/_Pixelize..."
@@ -5465,7 +5421,6 @@ msgid "Temporary Procedure"
 msgstr "Временная процедура"
 
 #: plug-ins/common/plugindetails.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details"
 msgstr "<Toolbox>/Расш./О дополнениях..."
 
@@ -5542,7 +5497,7 @@ msgstr "Просмотр списка"
 #. notebook->ctree
 #: plug-ins/common/plugindetails.c:1070
 msgid "Menu Path/Name"
-msgstr "Путь/название меню"
+msgstr "Путь/Название меню"
 
 #: plug-ins/common/plugindetails.c:1087
 msgid "Tree View"
@@ -5555,29 +5510,30 @@ msgstr "Поиск:"
 #: plug-ins/common/png.c:647
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr ""
+msgstr "Ошибка при чтении '%s'. Файл поврежден?"
 
 #. Aie! Unknown type
 #: plug-ins/common/png.c:779
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr ""
+msgstr "Неизвестная цветовая модель в файле PNG '%s'."
 
 #: plug-ins/common/png.c:832
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
+"В файле формата PNG указано смещение, которое располагает слой за пределами "
+"изображения."
 
 #: plug-ins/common/png.c:1146
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr ""
+msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: plug-ins/common/png.c:1518
-#, fuzzy
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Невозможно сохранить прозрачность,\n"
@@ -5588,14 +5544,12 @@ msgid "Save as PNG"
 msgstr "Сохранить как PNG"
 
 #: plug-ins/common/png.c:1548
-#, fuzzy
 msgid "_Load Defaults"
-msgstr "Исходные настройки"
+msgstr "Загрузить исходные настройки"
 
 #: plug-ins/common/png.c:1549
-#, fuzzy
 msgid "_Save Defaults"
-msgstr "Исходные настройки"
+msgstr "Сохранить исходные настройки"
 
 #. parameter settings
 #: plug-ins/common/png.c:1562 plug-ins/common/sample_colorize.c:1376
@@ -5615,7 +5569,6 @@ msgid "Save _Gamma"
 msgstr "Сохранить гамму"
 
 #: plug-ins/common/png.c:1603
-#, fuzzy
 msgid "Save Layer O_ffset"
 msgstr "Сохранить смещение слоя"
 
@@ -5640,8 +5593,9 @@ msgid "Co_mpression Level:"
 msgstr "Степень сжатия:"
 
 #: plug-ins/common/png.c:1777
+#, fuzzy
 msgid "Could not load PNG defaults"
-msgstr ""
+msgstr "Документ справки не найден"
 
 #: plug-ins/common/pnm.c:426 plug-ins/common/pnm.c:447
 #: plug-ins/common/pnm.c:454 plug-ins/common/pnm.c:463
@@ -5746,9 +5700,9 @@ msgstr ""
 "отмечено - то в круг."
 
 #: plug-ins/common/ps.c:868
-#, fuzzy, c-format
+#, c-format
 msgid "Could not interpret '%s'"
-msgstr "Невозможно интерпретировать файл"
+msgstr "Невозможно интерпретировать файл '%s'"
 
 #: plug-ins/common/ps.c:955
 msgid "PostScript save cannot handle images with alpha channels"
@@ -5881,7 +5835,7 @@ msgstr "Размер просмотра:"
 
 #: plug-ins/common/psd.c:468
 msgid "Invalid UTF-8 string in PSD file"
-msgstr ""
+msgstr "Ошибочная строка UTF-8 в файле PSD"
 
 #: plug-ins/common/psp.c:404
 msgid "Save as PSP"
@@ -5972,13 +5926,11 @@ msgstr "Амплитуда:"
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr ""
-"Вы не может повернуть все изображение, если в нем есть выделенная область."
+msgstr "Вы не может повернуть все изображение, если в нем есть выделенная область."
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr ""
-"Вы не можете повернуть все изображение, если в нем есть плавающее выделение."
+msgstr "Вы не можете повернуть все изображение, если в нем есть плавающее выделение."
 
 #: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
@@ -6016,15 +5968,13 @@ msgstr "Образец:"
 
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1433
-#, fuzzy
 msgid "From Gradient"
-msgstr "Выбранный градиент"
+msgstr "Из градиента"
 
 #. Add extra menu items for Inverted Gradient
 #: plug-ins/common/sample_colorize.c:1442
-#, fuzzy
 msgid "From Reverse Gradient"
-msgstr "Перечитать градиенты"
+msgstr "Из обращенного градиента"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1458
@@ -6039,12 +5989,10 @@ msgid "Show Color"
 msgstr "Показать цвет"
 
 #: plug-ins/common/sample_colorize.c:1605
-#, fuzzy
 msgid "Input Levels:"
 msgstr "Уровень на входе:"
 
 #: plug-ins/common/sample_colorize.c:1655
-#, fuzzy
 msgid "Output Levels:"
 msgstr "Уровень на выходе:"
 
@@ -6065,7 +6013,6 @@ msgstr "Использовать субцвета"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1735
-#, fuzzy
 msgid "Smooth Samples"
 msgstr "Сглаживать цвета образца"
 
@@ -6130,7 +6077,6 @@ msgid "Specified window not found"
 msgstr "Указанное окно не найдено"
 
 #: plug-ins/common/screenshot.c:479
-#, fuzzy
 msgid "Error obtaining Screen Shot"
 msgstr "Ошибка в процессе создания снимка"
 
@@ -6144,9 +6090,8 @@ msgid "a _Single Window"
 msgstr "Одно окно"
 
 #: plug-ins/common/screenshot.c:547
-#, fuzzy
 msgid "S_elect Window After"
-msgstr "Тип вспышки"
+msgstr "Выбрать окно через"
 
 #: plug-ins/common/screenshot.c:560 plug-ins/common/screenshot.c:600
 #: plug-ins/winsnap/winsnap.c:1019
@@ -6158,9 +6103,8 @@ msgid "the _Whole Screen"
 msgstr "Весь экран"
 
 #: plug-ins/common/screenshot.c:587
-#, fuzzy
 msgid "Grab _After"
-msgstr "через"
+msgstr "Сделать скриншот через"
 
 #: plug-ins/common/sel_gauss.c:114
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
@@ -6234,9 +6178,8 @@ msgid "Shift _Amount:"
 msgstr "Величина сдвига:"
 
 #: plug-ins/common/sinus.c:196
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-msgstr "<Image>/Фильтры/Визуализация/Шаблон/Q-бист..."
+msgstr "<Image>/Фильтры/Визуализация/Шаблон/Синус..."
 
 #: plug-ins/common/sinus.c:281
 msgid "Sinus: rendering..."
@@ -6574,7 +6517,7 @@ msgstr "Ящерица"
 
 #: plug-ins/common/spheredesigner.c:284
 msgid "Phong"
-msgstr ""
+msgstr "Фонг"
 
 #: plug-ins/common/spheredesigner.c:285
 msgid "Noise"
@@ -6692,7 +6635,7 @@ msgstr "Величина:"
 
 #: plug-ins/common/spheredesigner.c:2908
 msgid "Exp:"
-msgstr ""
+msgstr "Exp:"
 
 #: plug-ins/common/spheredesigner.c:3066
 msgid "Rendering Sphere..."
@@ -6755,18 +6698,18 @@ msgid "Bottom-_Right"
 msgstr "Снизу справа"
 
 #: plug-ins/common/sunras.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "Невозможно открыть файл как файл SUN-raster"
+msgstr "Невозможно открыть '%s' как файл SUN-raster"
 
 #: plug-ins/common/sunras.c:398
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Такой тип файлов SUN-raster не поддерживается"
 
 #: plug-ins/common/sunras.c:421
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "Невозможно прочесть цветовые записи"
+msgstr "Невозможно прочесть цветовые записи из '%s'"
 
 #: plug-ins/common/sunras.c:429
 msgid "Type of colormap not supported"
@@ -6807,37 +6750,37 @@ msgstr "RLE-кодирование"
 
 #: plug-ins/common/svg.c:242 plug-ins/common/svg.c:624
 msgid "Unknown reason"
-msgstr ""
+msgstr "Неизвестная причина"
 
 #: plug-ins/common/svg.c:246
-#, fuzzy
 msgid "Rendering SVG..."
-msgstr "Визуализация сферы..."
+msgstr "Визуализация SVG..."
 
 #: plug-ins/common/svg.c:256
 msgid "Rendered SVG"
-msgstr ""
+msgstr "Созданный SVG"
 
 #: plug-ins/common/svg.c:421
 msgid ""
 "SVG file does not\n"
 "specify a size!"
 msgstr ""
+"В файле SVG\n"
+"не указан размер!"
 
 #: plug-ins/common/svg.c:427
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d на %d"
 
 #: plug-ins/common/svg.c:630
-#, fuzzy
 msgid "Open SVG"
-msgstr "Открыть"
+msgstr "Открыть SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:642
 msgid "Render Scalable Vector Graphics"
-msgstr ""
+msgstr "Создать Scalable Vector Graphics"
 
 #: plug-ins/common/svg.c:701 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
@@ -6845,33 +6788,32 @@ msgid "Height:"
 msgstr "Высота:"
 
 #: plug-ins/common/svg.c:775
-#, fuzzy
 msgid "Ratio _X:"
-msgstr "Вращение:"
+msgstr "Пропорция _X:"
 
 #: plug-ins/common/svg.c:811
-#, fuzzy
 msgid "Constrain aspect ratio"
-msgstr "Пропорции:"
+msgstr "Пропорции"
 
 #: plug-ins/common/svg.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%a"
-msgstr "точки растра"
+msgstr "точек растра/%a"
 
 #. Path Import
 #: plug-ins/common/svg.c:842
 msgid "Import _Paths"
-msgstr ""
+msgstr "Импорт _Контуров"
 
 #: plug-ins/common/svg.c:848
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
+"Импортировать элементы контура из SVG, так чтобы они могли быть использованы "
+"инструментом \"Контур\""
 
 #: plug-ins/common/svg.c:861
 msgid "Merge Imported Paths"
-msgstr ""
+msgstr "Обьединить импортированные контуры"
 
 #: plug-ins/common/tga.c:424
 #, c-format
@@ -6935,9 +6877,9 @@ msgid "Threshold:"
 msgstr "Порог:"
 
 #: plug-ins/common/tiff.c:688
-#, fuzzy, c-format
+#, c-format
 msgid "Page %d"
-msgstr "Кадр %d"
+msgstr "Страница %d"
 
 #: plug-ins/common/tiff.c:702
 msgid "TIFF Channel"
@@ -7086,8 +7028,7 @@ msgid "ID"
 msgstr "Идентификатор"
 
 #: plug-ins/common/uniteditor.c:85
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Строка, которая будет использоваться для идентификации единицы в "
 "конфигурационном файле GIMP."
@@ -7151,9 +7092,8 @@ msgid "The unit's plural form."
 msgstr "Множественное число единицы."
 
 #: plug-ins/common/uniteditor.c:117
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Toolbox>/Расш./Редактор единиц..."
+msgstr "<Toolbox>/Расш./Редактор единиц"
 
 #: plug-ins/common/uniteditor.c:171
 msgid "New Unit"
@@ -7534,6 +7474,8 @@ msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
+"Просмотрщик не указан.\n"
+"Необходимо указать его в диалоге Настройки."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7541,6 +7483,8 @@ msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
 msgstr ""
+"Невозможно разобрать команду указанного просмотрщика:\n"
+"%s"
 
 #: plug-ins/common/webbrowser.c:174
 #, c-format
@@ -7548,6 +7492,8 @@ msgid ""
 "Could not execute specified web browser:\n"
 "%s"
 msgstr ""
+"Невозможно запустить указанный просмотрщик:\n"
+"%s"
 
 #: plug-ins/common/whirlpinch.c:184
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
@@ -7739,20 +7685,20 @@ msgid "Scale (log 2):"
 msgstr "Масштаб (log 2):"
 
 #: plug-ins/common/wmf.c:396
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for reading."
-msgstr "Невозможно открыть \"%s\" для записи"
+msgstr "Невозможно открыть \"%s\" для чтения"
 
 #: plug-ins/common/wmf.c:415
 msgid "Rendered WMF"
-msgstr ""
+msgstr "Созданный WMF"
 
 #: plug-ins/common/xbm.c:240
 msgid "Created with The GIMP"
 msgstr "Создано в Gimp"
 
 #: plug-ins/common/xbm.c:802
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
@@ -7789,7 +7735,6 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: plug-ins/common/xbm.c:955
-#, fuzzy
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
 "colors.\n"
@@ -7851,15 +7796,13 @@ msgid "_Mask File Extension:"
 msgstr "Расширение файла маски:"
 
 #: plug-ins/common/xpm.c:340
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s'"
-msgstr ""
-"Ошибка при открытии файла \"%s\":\n"
-"%s"
+msgstr "Ошибка при открытии файла %s"
 
 #: plug-ins/common/xpm.c:344
 msgid "XPM file invalid"
-msgstr ""
+msgstr "Неверный файл XPM"
 
 #: plug-ins/common/xpm.c:770
 msgid "Save as XPM"
@@ -7870,10 +7813,10 @@ msgid "_Alpha Threshold:"
 msgstr "Порог альфа-канала:"
 
 #: plug-ins/common/xwd.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr ""
-"Невозможно прочесть заголовок из\n"
+"Невозможно прочесть заголовок XWD из\n"
 "\"%s\""
 
 #: plug-ins/common/xwd.c:426
@@ -7892,9 +7835,8 @@ msgstr ""
 "В настоящее время это не поддерживается.\n"
 
 #: plug-ins/common/xwd.c:510
-#, fuzzy
 msgid "Cannot save images with alpha channels."
-msgstr "Изображение с альфа-каналом нельзя сохранить как PNM."
+msgstr "Невозможно сохранить изображения с альфа-каналами."
 
 #: plug-ins/common/xwd.c:1233
 msgid "EOF encountered on "
@@ -7925,9 +7867,8 @@ msgid "Nothing to crop."
 msgstr "Нечего кадрировать."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
-#, fuzzy
 msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Toolbox>/Расш./Просмотр базы данных..."
+msgstr "<Toolbox>/Расш./Просмотр базы данных"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -8662,9 +8603,8 @@ msgid "Hide Control Points"
 msgstr "Скрыть контр.точки"
 
 #: plug-ins/gfig/gfig.c:2650
-#, fuzzy
 msgid "Show Grid"
-msgstr "Выровнять по направляющей"
+msgstr "Показать сетку"
 
 #. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
 #. it from the user interface
@@ -8673,9 +8613,8 @@ msgid "Lock on Grid"
 msgstr "Выравнивать по сетке"
 
 #: plug-ins/gfig/gfig.c:2688
-#, fuzzy
 msgid "Grid spacing:"
-msgstr "Интервал сетки:"
+msgstr "Размер сетки:"
 
 #: plug-ins/gfig/gfig.c:2752
 msgid "Object"
@@ -8729,11 +8668,11 @@ msgid "Select"
 msgstr "Выбор"
 
 #: plug-ins/gfig/gfig.c:3093
-#, fuzzy, c-format
+#, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr ""
 "%d несохраненныx объектов Gfig.\n"
-"Хотите выйти?"
+"Выйти?"
 
 #: plug-ins/gfig/gfig.c:3263
 msgid "Enter Gfig Object Name"
@@ -8759,7 +8698,7 @@ msgstr "Загрузка набора объектов Gfig"
 
 #: plug-ins/gfig/gfig.c:3454
 msgid "Error in copy layer for onlayers"
-msgstr ""
+msgstr "Ошибка копирования слоя"
 
 #: plug-ins/gfig/gfig.c:3567
 #, c-format
@@ -8775,9 +8714,8 @@ msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - дополнение GIMP"
 
 #: plug-ins/gfig/gfig.c:3673
-#, fuzzy
 msgid "Release 2.0"
-msgstr "Выпуск 1.3"
+msgstr "Версия 2.0"
 
 #: plug-ins/gfig/gfig.c:3708
 msgid "New Gfig Object"
@@ -8821,8 +8759,7 @@ msgstr "Показать кадр линии"
 
 #: plug-ins/gfig/gfig-bezier.c:559
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
-"Нарисовать линию между контрольными точками. Только при создании кривой"
+msgstr "Нарисовать линию между контрольными точками. Только при создании кривой"
 
 #: plug-ins/gfig/gfig-dobject.c:423
 msgid "Hey where has the object gone ?"
@@ -8901,7 +8838,7 @@ msgid "invalid formatted GFlare file: %s\n"
 msgstr "неправильно сформатированный файл Град.вспышки: %s\n"
 
 #: plug-ins/gflare/gflare.c:1457
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
 "(gflare-path \"%s\")\n"
@@ -8979,7 +8916,6 @@ msgid "New GFlare"
 msgstr "Новая градиентная вспышка"
 
 #: plug-ins/gflare/gflare.c:2986
-#, fuzzy
 msgid "Enter a name for the new GFlare"
 msgstr "Введите название для новой градиентной вспышки"
 
@@ -8993,7 +8929,6 @@ msgid "Copy GFlare"
 msgstr "Скопировать Град.вспышку"
 
 #: plug-ins/gflare/gflare.c:3059
-#, fuzzy
 msgid "Enter a name for the copied GFlare"
 msgstr "Ввести название для скопированной Град.вспышки"
 
@@ -9169,7 +9104,6 @@ msgid "Can only save drawables!"
 msgstr "Возможно только сохранение рисунков!"
 
 #: plug-ins/gimpressionist/brush.c:201
-#, fuzzy
 msgid "Save Brush"
 msgstr "Сохранить кисть"
 
@@ -9315,10 +9249,8 @@ msgid "Shadow depth:"
 msgstr "Глубина тени:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Глубина падающей тени, определяет как далеко от объекта она должна быть"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr "Глубина падающей тени, определяет как далеко от объекта она должна быть"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9352,18 +9284,19 @@ msgid ""
 " (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file."
 msgstr ""
+"Рекомендуется добавить строку\n"
+" (gimpressionist-path \"%s\")\n"
+"(или аналогичную) в файл gimprc."
 
 #: plug-ins/gimpressionist/gimpressionist.c:344
-#, fuzzy
 msgid "The GIMPressionist"
-msgstr "Гимпрессионист!"
+msgstr "Гимпрессионист"
 
 #: plug-ins/gimpressionist/gimpressionist.c:428
 msgid "Gimpressionist"
 msgstr "Гимпрессионист"
 
 #: plug-ins/gimpressionist/gimpressionist.c:433
-#, fuzzy
 msgid "A_bout"
 msgstr "О программе"
 
@@ -9443,8 +9376,7 @@ msgstr "Адаптивное"
 
 #: plug-ins/gimpressionist/orientation.c:179
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
-"Выбирается наиболее совпадающее с оригинальным изображением направление"
+msgstr "Выбирается наиболее совпадающее с оригинальным изображением направление"
 
 #: plug-ins/gimpressionist/orientation.c:187
 #: plug-ins/gimpressionist/size.c:166
@@ -9633,7 +9565,7 @@ msgid "Focus the brush strokes around the center of the image"
 msgstr "Сосредотачивать мазки вокруг центра изображения"
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 "Не удалось сохранить файл PPM \"%s\":\n"
@@ -9722,13 +9654,11 @@ msgid "The largest brush to create"
 msgstr "Наибольшая создаваемая кисть"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Размер мазка будет определяться яркостью области"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Размер мазка будет определяться расстоянием от центра изображения"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -9814,7 +9744,7 @@ msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "Просмотрщик справки GIMP"
 
 #: plug-ins/helpbrowser/dialog.c:461 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
@@ -9827,7 +9757,7 @@ msgstr "Документ не найден"
 
 #: plug-ins/helpbrowser/dialog.c:531
 msgid "Could not locate help document"
-msgstr ""
+msgstr "Документ справки не найден"
 
 #: plug-ins/helpbrowser/dialog.c:533
 msgid ""
@@ -9836,6 +9766,9 @@ msgid ""
 "installation is not complete. Ensure that your installation is complete "
 "before reporting this error as a bug."
 msgstr ""
+"Запращиваемый документ справки не найден в указанном месте. Это означает что "
+"эта тема еще не была написана или установка GIMP не полна. Прежде чем "
+"сообщать об ошибке убедитесь что установка завершена."
 
 #: plug-ins/ifscompose/ifscompose.c:371
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -9972,9 +9905,8 @@ msgid "Transformation %s"
 msgstr "Преобразование %s"
 
 #: plug-ins/ifscompose/ifscompose.c:2673 plug-ins/ifscompose/ifscompose.c:2685
-#, fuzzy
 msgid "Open failed"
-msgstr "Открыть файл"
+msgstr "Не удалось открыть"
 
 #: plug-ins/ifscompose/ifscompose.c:2680
 #, c-format
@@ -9986,9 +9918,8 @@ msgid "Save as IFS file"
 msgstr "Сохранить как файл IFS"
 
 #: plug-ins/ifscompose/ifscompose.c:2742
-#, fuzzy
 msgid "Open IFS file"
-msgstr "Открыть файл"
+msgstr "Открыть файл IFS"
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
@@ -10066,7 +9997,7 @@ msgstr "Использовать направляющие Gimp"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:159
 msgid "Al_ternate"
-msgstr ""
+msgstr "Т_екст подсказки"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:164
 msgid "A_ll"
@@ -10267,8 +10198,7 @@ msgstr "Относительная ссылка"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
-"Название/ID целевого кадра: (необязательно - используется только для кадров)"
+msgstr "Название/ID целевого кадра: (необязательно - используется только для кадров)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "ALT te_xt: (optional)"
@@ -10737,8 +10667,7 @@ msgstr "Создание лабиринта с использованием ал
 
 #: plug-ins/maze/algorithms.c:459
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
-"Конструирование рассеченного лабиринта с использованием алгоритма Prim..."
+msgstr "Конструирование рассеченного лабиринта с использованием алгоритма Prim..."
 
 #: plug-ins/maze/maze.c:156
 #, c-format
@@ -10746,11 +10675,13 @@ msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
 msgstr ""
+"Создает лабиринт используя алгоритм глубокого поиска или алгоритм Примма. "
+"Может создавать\n"
+"лабиринты в виде черепицы. См. раздел справки %s."
 
 #: plug-ins/maze/maze.c:162
-#, fuzzy
 msgid "Draws a maze."
-msgstr "Название рисунка:"
+msgstr "Рисование лабиринта."
 
 #: plug-ins/maze/maze.c:167
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
@@ -11201,6 +11132,26 @@ msgid ""
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
+"\n"
+"\n"
+"Все права принадлежат (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
+"и остальным членам Gimp-Print Development Team.\n"
+"\n"
+"Посетите нашу страницу http://gimp-print.sourceforge.net.\n"
+"\n"
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 
 #: plug-ins/print/gimp_main_window.c:920
 msgid "Printer Settings"
@@ -11239,6 +11190,8 @@ msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
+"Указать новый логический принтер. Он представляет собой поименованый набор "
+"настроек."
 
 #: plug-ins/print/gimp_main_window.c:993
 msgid "Size of paper that you wish to print to"
@@ -11262,15 +11215,15 @@ msgstr "Высота бумаги для печати"
 
 #: plug-ins/print/gimp_main_window.c:1052
 msgid "Type of media you're printing to"
-msgstr ""
+msgstr "Тип носителя на который производится печать"
 
 #: plug-ins/print/gimp_main_window.c:1055
 msgid "Media Type:"
-msgstr ""
+msgstr "Тип носителя:"
 
 #: plug-ins/print/gimp_main_window.c:1068
 msgid "Source (input slot) of media you're printing to"
-msgstr ""
+msgstr "Название лотка из которого будет происходить печать"
 
 #: plug-ins/print/gimp_main_window.c:1071
 msgid "Media Source:"
@@ -11301,6 +11254,8 @@ msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
+"Выберите масштабирование в процентах относительно размера страницы или "
+"плотность точек на один дюйм"
 
 #: plug-ins/print/gimp_main_window.c:1183
 msgid "Percent"
@@ -11435,8 +11390,7 @@ msgid "Adjust Output..."
 msgstr "Подстройка вывода..."
 
 #: plug-ins/print/gimp_main_window.c:1470
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr "Подстройка цветогого баланса, яркости, контрастности, насыщенности"
 
 #: plug-ins/print/print.c:169
@@ -11561,7 +11515,7 @@ msgid "Selection To Path Advanced Settings"
 msgstr "Дополнительные настройки Выделение->Контур"
 
 #: plug-ins/sgi/sgi.c:530
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Невозможно открыть \"%s\" для записи"
 
@@ -11590,15 +11544,13 @@ msgstr ""
 "(Не поддерживается SGI)"
 
 #: plug-ins/twain/twain.c:532
-#, fuzzy
 msgid "<Toolbox>/File/Acquire/_TWAIN..."
 msgstr "<Toolbox>/Файл/Захватить/TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:666
-#, fuzzy
 msgid "Transferring TWAIN data..."
-msgstr "Передача TWAIN-данных"
+msgstr "Передача TWAIN-данных..."
 
 #: plug-ins/winsnap/winsnap.c:947
 msgid "Grab a single window"
@@ -11659,19 +11611,19 @@ msgid "Clear Transparent"
 msgstr "Очистить прозрачное"
 
 #: plug-ins/xjt/xjt.c:1701 plug-ins/xjt/xjt.c:3327
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create working folder '%s': %s"
-msgstr "Невозможно создать рабочий каталог: %s"
+msgstr "Невозможно создать рабочий каталог '%s': %s"
 
 #: plug-ins/xjt/xjt.c:3196
-#, fuzzy, c-format
+#, c-format
 msgid "Error: Could not read XJT property file '%s'."
-msgstr "Ошибка: невозможно прочитать файл свойств XJT %s"
+msgstr "Ошибка: невозможно прочитать файл свойств XJT '%s'"
 
 #: plug-ins/xjt/xjt.c:3201
-#, fuzzy, c-format
+#, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr "Ошибка: файл свойств XJT %s пуст"
+msgstr "Ошибка: файл свойств XJT '%s' пуст"
 
 #~ msgid "About..."
 #~ msgstr "О дополнении..."
@@ -11790,13 +11742,11 @@ msgstr "Ошибка: файл свойств XJT %s пуст"
 #~ "Ошибка при открытии файла \"%s\":\n"
 #~ "%s"
 
-#, fuzzy
 #~ msgid "Show grid"
-#~ msgstr "Показать изображение"
+#~ msgstr "Показать сетку"
 
-#, fuzzy
 #~ msgid "Snap to grid"
-#~ msgstr "Выровнять по направляющей"
+#~ msgstr "Выровнять по сетке"
 
 #~ msgid "GFlare: cannot operate on indexed color images"
 #~ msgstr ""
@@ -11895,3 +11845,4 @@ msgstr "Ошибка: файл свойств XJT %s пуст"
 
 #~ msgid "Your comment string is too long."
 #~ msgstr "Слишком длинная строка комментария."
+
