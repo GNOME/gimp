@@ -265,6 +265,8 @@ paths_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Import Path...", gimage);
   SET_SENSITIVE ("Export Path...", pp);
 
+  SET_SENSITIVE ("Edit Path Attributes...", pp);
+
   /*  new point  */
   SET_POINT_SENSITIVE (0, pp);
 
@@ -1237,7 +1239,7 @@ paths_dialog_edit_path_query (GtkWidget *widget)
 			       NULL,
 			       &mask);
 
-  qbox = gimp_query_string_box (_("Rename path"),
+  qbox = gimp_query_string_box (_("Edit Path Attributes"),
 				gimp_standard_help_func,
 				"paths/dialogs/rename_path.html",
 				_("Enter a new name for the path"),
@@ -1593,7 +1595,6 @@ paths_dialog_null_callback (GtkWidget *widget,
   /* Maybe some more here later? */
 }
 
-
 void 
 paths_dialog_sel_to_path_callback (GtkWidget *widget, 
 				   gpointer   data)
@@ -1698,6 +1699,14 @@ paths_dialog_stroke_path_callback (GtkWidget *widget,
 
   /* Now do the stroke....*/
   paths_stroke (paths_dialog->gimage, paths_dialog->current_path_list, bzp);
+}
+
+void
+paths_dialog_edit_path_attributes_callback (GtkWidget *widget,
+					    gpointer   data)
+{
+  if (paths_dialog && paths_dialog->paths_list)
+    paths_dialog_edit_path_query (paths_dialog->paths_list);
 }
 
 static void
@@ -2121,14 +2130,14 @@ pathpoint_new (gint    type,
 }
 
 PATHP
-path_new(GimpImage *gimage,
-	 PathType   ptype,
-	 GSList    *path_details,
-	 gint       closed,
-	 gint       state,
-	 gint       locked,
-	 gint       tattoo,  
-	 gchar     *name)
+path_new (GimpImage *gimage,
+	  PathType   ptype,
+	  GSList    *path_details,
+	  gint       closed,
+	  gint       state,
+	  gint       locked,
+	  gint       tattoo,  
+	  gchar     *name)
 {
   PATHP path = g_new0(PATH,1);
 
@@ -2147,9 +2156,9 @@ path_new(GimpImage *gimage,
 }
 
 PathsList *
-pathsList_new(GimpImage *gimage,
-	      gint       last_selected_row,
-	      GSList    *bz_paths)
+pathsList_new (GimpImage *gimage,
+	       gint       last_selected_row,
+	       GSList    *bz_paths)
 {
   PATHIMAGELISTP pip = g_new0(PATHIMAGELIST,1);
   pip->gimage = gimage;

@@ -1058,6 +1058,8 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Add Alpha Channel", !alpha);
   SET_SENSITIVE ("Alpha to Selection", fs && ac && gimage && lp && alpha);
 
+  SET_SENSITIVE ("Edit Layer Attributes...", ac && gimage && lp);
+
 #undef SET_OPS_SENSITIVE
 #undef SET_SENSITIVE
 
@@ -1762,6 +1764,20 @@ layers_dialog_add_alpha_channel_callback (GtkWidget *widget,
 
   layer_add_alpha (layer);
   gdisplays_flush ();
+}
+
+void
+layers_dialog_edit_layer_attributes_callback (GtkWidget *widget,
+					      gpointer   data)
+{
+  if (layersD && layersD->active_layer)
+    {
+      LayerWidget *layer_widget;
+
+      layer_widget = layer_widget_get_ID (layersD->active_layer);
+
+      layers_dialog_edit_layer_query (layer_widget);
+    }
 }
 
 /*******************************/

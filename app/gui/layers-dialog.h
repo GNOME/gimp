@@ -39,5 +39,6 @@ void  layers_dialog_flatten_image_callback         (GtkWidget *, gpointer);
 void  layers_dialog_alpha_select_callback          (GtkWidget *, gpointer);
 void  layers_dialog_mask_select_callback           (GtkWidget *, gpointer);
 void  layers_dialog_add_alpha_channel_callback     (GtkWidget *, gpointer);
+void  layers_dialog_edit_layer_attributes_callback (GtkWidget *, gpointer);
 
 #endif /* __LAYERS_DIALOG_H__ */

@@ -27,5 +27,6 @@ void channels_dialog_channel_to_sel_callback            (GtkWidget *, gpointer);
 void channels_dialog_add_channel_to_sel_callback        (GtkWidget *, gpointer);
 void channels_dialog_sub_channel_from_sel_callback      (GtkWidget *, gpointer);
 void channels_dialog_intersect_channel_with_sel_callback(GtkWidget *, gpointer);
+void channels_dialog_edit_channel_attributes_callback   (GtkWidget *, gpointer);
 
 #endif /* __CHANNELS_DIALOG_H__ */

@@ -735,7 +735,12 @@ static GimpItemFactoryEntry layers_entries[] =
   { { N_("/Add Alpha Channel"), NULL, layers_dialog_add_alpha_channel_callback, 0 },
     "add_alpha_channel.html", NULL },
   { { N_("/Alpha to Selection"), NULL, layers_dialog_alpha_select_callback, 0 },
-    "alpha_to_selection.html", NULL }
+    "alpha_to_selection.html", NULL },
+
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Edit Layer Attributes..."), NULL, layers_dialog_edit_layer_attributes_callback, 0 },
+    "dialogs/edit_layer_attributes.html", NULL }
 };
 static guint n_layers_entries = (sizeof (layers_entries) /
 				 sizeof (layers_entries[0]));
@@ -768,7 +773,12 @@ static GimpItemFactoryEntry channels_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 },
-    "delete_channel.html", NULL }
+    "delete_channel.html", NULL },
+
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Edit Channel Attributes..."), NULL, channels_dialog_edit_channel_attributes_callback, 0 },
+    "dialogs/edit_channel_attributes.html", NULL }
 };
 static guint n_channels_entries = (sizeof (channels_entries) /
 				   sizeof (channels_entries[0]));
@@ -800,7 +810,12 @@ static GimpItemFactoryEntry paths_entries[] =
   { { N_("/Import Path..."), "<control>I", paths_dialog_import_path_callback, 0 },
     "dialogs/import_path.html", NULL },
   { { N_("/Export Path..."), "<control>E", paths_dialog_export_path_callback, 0 },
-    "dialogs/export_path.html", NULL }
+    "dialogs/export_path.html", NULL },
+
+  { { "/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+  { { N_("/Edit Path Attributes..."), NULL, paths_dialog_edit_path_attributes_callback, 0 },
+    "dialogs/edit_path_attributes.html", NULL }
 };
 static guint n_paths_entries = (sizeof (paths_entries) /
 				sizeof (paths_entries[0]));

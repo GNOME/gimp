@@ -649,6 +649,8 @@ channels_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Delete Channel", !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (5, !fs_sens && aux_sens);
 
+  SET_SENSITIVE ("Edit Channel Attributes...", !fs_sens && aux_sens);
+
 #undef SET_OPS_SENSITIVE
 #undef SET_SENSITIVE
 }
@@ -1109,6 +1111,20 @@ channels_dialog_intersect_channel_with_sel_callback (GtkWidget *widget,
       gimage_mask_load (gimage, new_channel);
       channel_delete (new_channel);
       gdisplays_flush ();
+    }
+}
+
+void
+channels_dialog_edit_channel_attributes_callback (GtkWidget *widget,
+						  gpointer   data)
+{
+  if (channelsD && channelsD->active_channel)
+    {
+      ChannelWidget *channel_widget;
+
+      channel_widget = channel_widget_get_ID (channelsD->active_channel);
+
+      channels_dialog_edit_channel_query (channel_widget);
     }
 }
 
