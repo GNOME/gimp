@@ -1,3 +1,7 @@
+2004-10-17  David Lodge <dave@cirt.net>
+                                                                                
+        * en_GB.po: Updated British English translation.
+                                                                                
 2004-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* it.po: removed newline that was breaking the build.
