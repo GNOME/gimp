@@ -380,7 +380,7 @@ parse_gimprc ()
     }
 
   if (!image_title_format)
-    image_title_format = DEFAULT_IMAGE_TITLE_FORMAT;
+    image_title_format = g_strdup(DEFAULT_IMAGE_TITLE_FORMAT);
 }
 
 void

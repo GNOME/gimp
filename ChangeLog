@@ -1,3 +1,9 @@
+1999-03-04  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/gimprc.c: Added a g_strdup() on DEFAULT_IMAGE_TITLE_FORMAT,
+	otherwise it would try to free a constant string when cancling out of
+	prefs or changing the title-style.
+
 Wed Mar  3 18:38:31 MET 1999 Sven Neumann <sven@gimp.org>
 
 	More unit/resolution stuff (most of it from Michael).
