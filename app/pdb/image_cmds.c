@@ -2717,16 +2717,22 @@ image_thumbnail_invoker (Gimp     *gimp,
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
     
       /* Adjust the width/height ratio */
-      dwidth  = gimage->width;
-      dheight = gimage->height;
+      dwidth  = gimp_image_get_width  (gimage);
+      dheight = gimp_image_get_height (gimage);
     
       if (dwidth > dheight)
 	req_height = MAX (1, (req_width * dheight) / dwidth);
       else
 	req_width  = MAX (1, (req_height * dwidth) / dheight);
     
-      buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-					   req_width, req_height);
+      if (gimage->gimp->config->layer_previews)
+	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+					     req_width, req_height);
+      else
+	buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
+					       req_width, req_height,
+					       gimp_image_has_alpha (gimage) ?
+					       4 : 3);
     
       if (buf)
 	{
@@ -2737,6 +2743,10 @@ image_thumbnail_invoker (Gimp     *gimp,
 	  bpp            = buf->bytes;
     
 	  temp_buf_free (buf);
+	}
+      else
+	{
+	  success = FALSE;
 	}
     }
 

@@ -1,3 +1,23 @@
+2004-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.[ch]: added new function
+	gimp_viewable_get_dummy_preview() which currently returns a
+	completely white and opaque TempBuf of the requested size.  Added
+	this useless function because this is the place where to implement
+	a nicer preview if someone volunteers.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: use the new function if
+	gimp->config->layer_previews is FALSE instead of returning no
+	preview at all. Fixes bug #112012.
+
+	Cleaned up the preview functions a bit and raised
+	the limit for drawable previews from 128x128 to 256x256.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: warn when gimpprint is older than version 4.2.6.

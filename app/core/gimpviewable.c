@@ -555,6 +555,22 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   return NULL;
 }
 
+TempBuf *
+gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
+                                 gint           width,
+                                 gint           height,
+                                 gint           bpp)
+{
+  guchar col[MAX_CHANNELS] = { 255, 255, 255, 255 };
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (width  > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (bpp > 0, NULL);
+
+  return temp_buf_new (width, height, bpp, 0, 0, col);
+}
+
 GdkPixbuf *
 gimp_viewable_get_preview_pixbuf (GimpViewable *viewable,
                                   gint          width,

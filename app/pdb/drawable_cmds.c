@@ -31,6 +31,7 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
+#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"
@@ -1657,7 +1658,7 @@ drawable_get_pixel_invoker (Gimp     *gimp,
     {
       if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
 	  y < gimp_item_height (GIMP_ITEM (drawable)))
-	{  
+	{
 	  num_channels = gimp_drawable_bytes (drawable);
 	  pixel = g_new (guint8, num_channels);
     
@@ -1987,40 +1988,50 @@ drawable_thumbnail_invoker (Gimp     *gimp,
     success = FALSE;
 
   req_width = args[1].value.pdb_int;
-  if (req_width <= 0)
+  if (req_width <= 0 || req_width > 256)
     success = FALSE;
 
   req_height = args[2].value.pdb_int;
-  if (req_height <= 0)
+  if (req_height <= 0 || req_height > 256)
     success = FALSE;
 
   if (success)
     {
-      TempBuf *buf;
-      gint     dwidth, dheight;
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      TempBuf   *buf;
+      gint       dwidth, dheight;
     
-      if (req_width <= 128 && req_height <= 128)
-	{        
-	  /* Adjust the width/height ratio */
-	  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
-	  dheight = gimp_item_height (GIMP_ITEM (drawable));
+      /* Adjust the width/height ratio */
+      dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
+      dheight = gimp_item_height (GIMP_ITEM (drawable));
     
-	  if (dwidth > dheight)
-	    req_height = MAX (1, (req_width * dheight) / dwidth);
-	  else
-	    req_width  = MAX (1, (req_height * dwidth) / dheight);
+      if (dwidth > dheight)
+	req_height = MAX (1, (req_width * dheight) / dwidth);
+      else
+	req_width  = MAX (1, (req_height * dwidth) / dheight);
     
-	  buf = gimp_viewable_get_preview (GIMP_VIEWABLE (drawable),
-					   req_width, req_height);
+      if (gimage->gimp->config->layer_previews)
+	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
+					     req_width, req_height);
+      else
+	buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+					       req_width, req_height,
+					       gimp_drawable_has_alpha (drawable) ?
+					       4 : 3);
     
-	  if (buf)
-	    {
-	      num_bytes      = buf->height * buf->width * buf->bytes;
-	      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	      width          = buf->width;        
-	      height         = buf->height;
-	      bpp            = buf->bytes;
-	    }
+      if (buf)
+	{
+	  num_bytes      = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+	  width          = buf->width;
+	  height         = buf->height;
+	  bpp            = buf->bytes;
+    
+	  temp_buf_free (buf);
+	}
+      else
+	{
+	  success = FALSE;
 	}
     }
 
@@ -2090,7 +2101,7 @@ static ProcRecord drawable_thumbnail_proc =
 {
   "gimp_drawable_thumbnail",
   "Get a thumbnail of a drawable.",
-  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel is also returned if the drawable has one.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 256 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel is also returned if the drawable has one.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",

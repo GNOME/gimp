@@ -123,6 +123,11 @@ TempBuf   * gimp_viewable_get_new_preview        (GimpViewable  *viewable,
                                                   gint           width,
                                                   gint           height);
 
+TempBuf   * gimp_viewable_get_dummy_preview      (GimpViewable  *vieable,
+                                                  gint           width,
+                                                  gint           height,
+                                                  gint           bpp);
+
 GdkPixbuf * gimp_viewable_get_preview_pixbuf     (GimpViewable  *viewable,
                                                   gint           width,
                                                   gint           height);
