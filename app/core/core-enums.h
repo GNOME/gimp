@@ -251,6 +251,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpDashPreset;
 
 
+#define GIMP_TYPE_ICON_TYPE (gimp_icon_type_get_type ())
+
+GType gimp_icon_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ICON_TYPE_STOCK_ID,      /*< desc="Stock ID"      >*/
+  GIMP_ICON_TYPE_INLINE_PIXBUF, /*< desc="Inline Pixbuf" >*/
+  GIMP_ICON_TYPE_IMAGE_FILE     /*< desc="Image File"    >*/
+} GimpIconType;
+
+
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;

@@ -53,6 +53,8 @@ static GTokenType plug_in_proc_def_deserialize   (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_menu_path_deserialize  (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
+static GTokenType plug_in_icon_deserialize       (GScanner      *scanner,
+                                                  PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
                                                   ProcArg       *arg);
 static GTokenType plug_in_mime_type_deserialize  (GScanner      *scanner,
@@ -75,6 +77,7 @@ enum
   HAS_INIT,
   PROC_ARG,
   MENU_PATH,
+  ICON,
   MIME_TYPE
 };
 
@@ -85,6 +88,7 @@ plug_in_rc_parse (Gimp         *gimp,
                   GError      **error)
 {
   GScanner   *scanner;
+  GEnumClass *enum_class;
   GTokenType  token;
   gboolean    retval  = FALSE;
   gint        version = GIMP_PROTOCOL_VERSION;
@@ -97,6 +101,8 @@ plug_in_rc_parse (Gimp         *gimp,
 
   if (! scanner)
     return FALSE;
+
+  enum_class = g_type_class_ref (GIMP_TYPE_ICON_TYPE);
 
   g_scanner_scope_add_symbol (scanner, 0,
                               "protocol-version",
@@ -115,6 +121,8 @@ plug_in_rc_parse (Gimp         *gimp,
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "menu-path", GINT_TO_POINTER (MENU_PATH));
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
+                              "icon", GINT_TO_POINTER (ICON));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "mime-type", GINT_TO_POINTER (MIME_TYPE));
 
@@ -175,6 +183,8 @@ plug_in_rc_parse (Gimp         *gimp,
     {
       retval = TRUE;
     }
+
+  g_type_class_unref (enum_class);
 
   gimp_scanner_destroy (scanner);
 
@@ -304,6 +314,10 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
         return token;
     }
 
+  token = plug_in_icon_deserialize (scanner, proc_def);
+  if (token != G_TOKEN_LEFT_PAREN)
+    return token;
+
   if (! gimp_scanner_parse_string (scanner, &proc_def->extensions))
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &proc_def->prefixes))
@@ -374,6 +388,98 @@ plug_in_menu_path_deserialize (GScanner      *scanner,
     return G_TOKEN_STRING;
 
   proc_def->menu_paths = g_list_append (proc_def->menu_paths, menu_path);
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+    return G_TOKEN_RIGHT_PAREN;
+
+  return G_TOKEN_LEFT_PAREN;
+}
+
+static GTokenType
+plug_in_icon_deserialize (GScanner      *scanner,
+                          PlugInProcDef *proc_def)
+{
+  GEnumClass   *enum_class;
+  GEnumValue   *enum_value;
+  GimpIconType  icon_type;
+  gint          icon_data_length;
+  gchar        *icon_data;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
+    return G_TOKEN_LEFT_PAREN;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
+      GPOINTER_TO_INT (scanner->value.v_symbol) != ICON)
+    return G_TOKEN_SYMBOL;
+
+  enum_class = g_type_class_peek (GIMP_TYPE_ICON_TYPE);
+
+  switch (g_scanner_peek_next_token (scanner))
+    {
+    case G_TOKEN_IDENTIFIER:
+      g_scanner_get_next_token (scanner);
+
+      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class),
+                                             scanner->value.v_identifier);
+      if (!enum_value)
+        enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class),
+                                               scanner->value.v_identifier);
+
+      if (!enum_value)
+        {
+          g_scanner_error (scanner,
+                           _("invalid value '%s' for icon type"),
+                           scanner->value.v_identifier);
+          return G_TOKEN_NONE;
+        }
+      break;
+
+    case G_TOKEN_INT:
+      g_scanner_get_next_token (scanner);
+
+      enum_value = g_enum_get_value (enum_class,
+                                     (gint) scanner->value.v_int64);
+
+      if (!enum_value)
+        {
+          g_scanner_error (scanner,
+                           _("invalid value '%ld' for icon type"),
+                           (glong) scanner->value.v_int64);
+          return G_TOKEN_NONE;
+        }
+      break;
+
+    default:
+      return G_TOKEN_IDENTIFIER;
+    }
+
+  icon_type = enum_value->value;
+
+  if (! gimp_scanner_parse_int (scanner, &icon_data_length))
+    return G_TOKEN_INT;
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      icon_data_length = -1;
+
+      if (! gimp_scanner_parse_string_no_validate (scanner, &icon_data))
+        return G_TOKEN_STRING;
+      break;
+
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      if (icon_data_length < 0)
+        return G_TOKEN_STRING;
+
+      if (! gimp_scanner_parse_data (scanner, icon_data_length, &icon_data))
+        return G_TOKEN_STRING;
+      break;
+    }
+
+  proc_def->icon_type        = icon_type;
+  proc_def->icon_data_length = icon_data_length;
+  proc_def->icon_data        = icon_data;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -501,6 +607,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
                   GError      **error)
 {
   GimpConfigWriter *writer;
+  GEnumClass       *enum_class;
   PlugInDef        *plug_in_def;
   PlugInProcDef    *proc_def;
   GSList           *list;
@@ -517,6 +624,8 @@ plug_in_rc_write (GSList       *plug_in_defs,
 					error);
   if (!writer)
     return FALSE;
+
+  enum_class = g_type_class_ref (GIMP_TYPE_ICON_TYPE);
 
   gimp_config_writer_open (writer, "protocol-version");
   gimp_config_writer_printf (writer, "%d", GIMP_PROTOCOL_VERSION);
@@ -535,6 +644,8 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
 	  for (list2 = plug_in_def->proc_defs; list2; list2 = list2->next)
 	    {
+              GEnumValue *enum_value;
+
 	      proc_def = list2->data;
 
 	      if (proc_def->installed_during_init)
@@ -566,6 +677,28 @@ plug_in_rc_write (GSList       *plug_in_defs,
                   gimp_config_writer_string (writer, list3->data);
                   gimp_config_writer_close (writer);
                 }
+
+              gimp_config_writer_open (writer, "icon");
+              enum_value = g_enum_get_value (enum_class, proc_def->icon_type);
+              gimp_config_writer_identifier (writer, enum_value->value_nick);
+              gimp_config_writer_printf (writer, "%d",
+                                         proc_def->icon_data_length);
+
+              switch (proc_def->icon_type)
+                {
+                case GIMP_ICON_TYPE_STOCK_ID:
+                case GIMP_ICON_TYPE_IMAGE_FILE:
+                  gimp_config_writer_string (writer, proc_def->icon_data);
+                  break;
+
+                case GIMP_ICON_TYPE_INLINE_PIXBUF:
+                  gimp_config_writer_data (writer, proc_def->icon_data_length,
+                                           proc_def->icon_data);
+                  break;
+                }
+
+              gimp_config_writer_close (writer);
+
               gimp_config_writer_linefeed (writer);
 
 	      gimp_config_writer_string (writer, proc_def->extensions);
@@ -654,6 +787,8 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	  gimp_config_writer_close (writer);
 	}
     }
+
+  g_type_class_unref (enum_class);
 
   return gimp_config_writer_finish (writer, "end of plug-ins", error);
 }

@@ -34,7 +34,5 @@ void
 file_open_menu_setup (GimpUIManager *manager,
                       const gchar   *ui_path)
 {
-  file_dialog_menu_setup (manager, ui_path,
-                          manager->gimp->load_procs,
-                          "gimp_xcf_load");
+  file_dialog_menu_setup (manager, ui_path, manager->gimp->load_procs);
 }

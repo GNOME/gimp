@@ -110,6 +110,10 @@ init_generated_constants (void)
   setvar (cintern ("BLUE-HUES"), flocons (5), NIL);
   setvar (cintern ("MAGENTA-HUES"), flocons (6), NIL);
 
+  setvar (cintern ("ICON-TYPE-STOCK-ID"), flocons (0), NIL);
+  setvar (cintern ("ICON-TYPE-INLINE-PIXBUF"), flocons (1), NIL);
+  setvar (cintern ("ICON-TYPE-IMAGE-FILE"), flocons (2), NIL);
+
   setvar (cintern ("RGB"), flocons (0), NIL);
   setvar (cintern ("GRAY"), flocons (1), NIL);
   setvar (cintern ("INDEXED"), flocons (2), NIL);

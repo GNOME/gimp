@@ -161,6 +161,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_ICON_TYPE_STOCK_ID,
+  GIMP_ICON_TYPE_INLINE_PIXBUF,
+  GIMP_ICON_TYPE_IMAGE_FILE
+} GimpIconType;
+
+typedef enum
+{
   GIMP_RGB,
   GIMP_GRAY,
   GIMP_INDEXED

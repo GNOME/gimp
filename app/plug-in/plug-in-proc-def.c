@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -38,7 +39,11 @@
 PlugInProcDef *
 plug_in_proc_def_new (void)
 {
-  return g_new0 (PlugInProcDef, 1);
+  PlugInProcDef *proc_def = g_new0 (PlugInProcDef, 1);
+
+  proc_def->icon_data_length = -1;
+
+  return proc_def;
 }
 
 void
@@ -76,11 +81,22 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_list_foreach (proc_def->menu_paths, (GFunc) g_free, NULL);
   g_list_free (proc_def->menu_paths);
 
+  g_free (proc_def->icon_data);
+  g_free (proc_def->image_types);
+
   g_free (proc_def->extensions);
   g_free (proc_def->prefixes);
   g_free (proc_def->magics);
   g_free (proc_def->mime_type);
-  g_free (proc_def->image_types);
+
+  g_slist_foreach (proc_def->extensions_list, (GFunc) g_free, NULL);
+  g_slist_free (proc_def->extensions_list);
+
+  g_slist_foreach (proc_def->prefixes_list, (GFunc) g_free, NULL);
+  g_slist_free (proc_def->prefixes_list);
+
+  g_slist_foreach (proc_def->magics_list, (GFunc) g_free, NULL);
+  g_slist_free (proc_def->magics_list);
 
   g_free (proc_def);
 }
@@ -147,6 +163,57 @@ plug_in_proc_def_get_label (const PlugInProcDef *proc_def,
     *ellipses = '\0';
 
   return label;
+}
+
+const gchar *
+plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def)
+{
+  g_return_val_if_fail (proc_def != NULL, NULL);
+
+  switch (proc_def->icon_type)
+    {
+    case GIMP_ICON_TYPE_STOCK_ID:
+      return proc_def->icon_data;
+
+    default:
+      return NULL;
+    }
+}
+
+GdkPixbuf *
+plug_in_proc_def_get_pixbuf (const PlugInProcDef *proc_def)
+{
+  GdkPixbuf *pixbuf = NULL;
+  GError    *error  = NULL;
+
+  g_return_val_if_fail (proc_def != NULL, NULL);
+
+  switch (proc_def->icon_type)
+    {
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      pixbuf = gdk_pixbuf_new_from_inline (proc_def->icon_data_length,
+                                           proc_def->icon_data, TRUE, &error);
+      if (! pixbuf)
+        {
+          g_printerr (error->message);
+          g_clear_error (&error);
+        }
+      break;
+
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      pixbuf = gdk_pixbuf_new_from_file (proc_def->icon_data, &error);
+      if (! pixbuf)
+        {
+          g_printerr (error->message);
+          g_clear_error (&error);
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  return pixbuf;
 }
 
 gchar *

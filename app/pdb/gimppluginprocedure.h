@@ -21,26 +21,34 @@
 
 #include <time.h>      /* time_t */
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "pdb/procedural_db.h"  /* ProcRecord */
 
 
 struct _PlugInProcDef
 {
+  /*  common members  */
   gchar           *prog;
   gchar           *menu_label;
   GList           *menu_paths;
+  GimpIconType     icon_type;
+  gint             icon_data_length;
+  gchar           *icon_data;
+  gchar           *image_types;
+  PlugInImageType  image_types_val;
+  time_t           mtime;
+  gboolean	   installed_during_init;
+  ProcRecord       db_info;
+
+  /*  file proc specific members  */
   gchar           *extensions;
   gchar           *prefixes;
   gchar           *magics;
   gchar           *mime_type;
-  gchar           *image_types;
-  PlugInImageType  image_types_val;
-  ProcRecord       db_info;
   GSList          *extensions_list;
   GSList          *prefixes_list;
   GSList          *magics_list;
-  time_t           mtime;
-  gboolean	   installed_during_init;
 };
 
 
@@ -51,6 +59,8 @@ const ProcRecord * plug_in_proc_def_get_proc     (const PlugInProcDef *proc_def)
 const gchar      * plug_in_proc_def_get_progname (const PlugInProcDef *proc_def);
 gchar            * plug_in_proc_def_get_label    (const PlugInProcDef *proc_def,
                                                   const gchar         *locale_domain);
+const gchar      * plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def);
+GdkPixbuf        * plug_in_proc_def_get_pixbuf   (const PlugInProcDef *proc_def);
 gchar            * plug_in_proc_def_get_help_id  (const PlugInProcDef *proc_def,
                                                   const gchar         *help_domain);
 

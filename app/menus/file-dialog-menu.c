@@ -34,8 +34,7 @@
 void
 file_dialog_menu_setup (GimpUIManager *manager,
                         const gchar   *ui_path,
-                        GSList        *file_procs,
-                        const gchar   *xcf_proc_name)
+                        GSList        *file_procs)
 {
   GSList *list;
   guint   merge_id;
@@ -46,12 +45,15 @@ file_dialog_menu_setup (GimpUIManager *manager,
     {
       PlugInProcDef *file_proc = list->data;
       gchar         *path;
+      gchar         *p;
 
       if (! file_proc->menu_paths)
         continue;
 
-      if (! strcmp (file_proc->db_info.name, xcf_proc_name))
-        path = g_strdup_printf ("%s/%s", ui_path, "Internal");
+      p = strchr (file_proc->menu_paths->data, '/');
+
+      if (p)
+        path = g_strdup_printf ("%s%s", ui_path, p);
       else
         path = g_strdup (ui_path);
 

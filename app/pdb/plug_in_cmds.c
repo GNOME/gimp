@@ -53,6 +53,7 @@ static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
 static ProcRecord plugin_menu_register_proc;
+static ProcRecord plugin_icon_register_proc;
 
 void
 register_plug_in_procs (Gimp *gimp)
@@ -63,6 +64,7 @@ register_plug_in_procs (Gimp *gimp)
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
   procedural_db_register (gimp, &plugin_menu_register_proc);
+  procedural_db_register (gimp, &plugin_icon_register_proc);
 }
 
 static int
@@ -624,4 +626,117 @@ static ProcRecord plugin_menu_register_proc =
   0,
   NULL,
   { { plugin_menu_register_invoker } }
+};
+
+static Argument *
+plugin_icon_register_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
+{
+  gboolean success = TRUE;
+  gchar *procedure_name;
+  gint32 icon_type;
+  gint32 icon_data_length;
+  guint8 *icon_data;
+
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
+    success = FALSE;
+
+  icon_type = args[1].value.pdb_int;
+  if (icon_type < GIMP_ICON_TYPE_STOCK_ID || icon_type > GIMP_ICON_TYPE_IMAGE_FILE)
+    success = FALSE;
+
+  icon_data_length = args[2].value.pdb_int;
+
+  icon_data = (guint8 *) args[3].value.pdb_pointer;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
+        {
+          GSList *list;
+
+          for (list = gimp->current_plug_in->plug_in_def->proc_defs;
+               list;
+               list = g_slist_next (list))
+            {
+              PlugInProcDef *proc_def = list->data;
+
+              if (! strcmp (procedure_name, proc_def->db_info.name))
+                {
+                  if (proc_def->icon_data)
+                    {
+                      g_free (proc_def->icon_data);
+                      proc_def->icon_data_length = -1;
+                      proc_def->icon_data        = NULL;
+                    }
+
+                  proc_def->icon_type = icon_type;
+
+                  switch (proc_def->icon_type)
+                    {
+                    case GIMP_ICON_TYPE_STOCK_ID:
+                    case GIMP_ICON_TYPE_IMAGE_FILE:
+                      proc_def->icon_data_length = -1;
+                      proc_def->icon_data        = g_strdup (icon_data);
+                      break;
+
+                    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+                      proc_def->icon_data_length = icon_data_length;
+                      proc_def->icon_data        = g_memdup (icon_data,
+                                                             icon_data_length);
+                      break;
+                    }
+
+                  break;
+                }
+            }
+
+          if (! list)
+            success = FALSE;
+        }
+    }
+
+  return procedural_db_return_args (&plugin_icon_register_proc, success);
+}
+
+static ProcArg plugin_icon_register_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "procedure_name",
+    "The procedure for which to install the icon"
+  },
+  {
+    GIMP_PDB_INT32,
+    "icon_type",
+    "The type of the icon"
+  },
+  {
+    GIMP_PDB_INT32,
+    "icon_data_length",
+    "The length of 'icon_data'"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "icon_data",
+    "The procedure's icon. The format depends on the 'icon_type' parameter"
+  }
+};
+
+static ProcRecord plugin_icon_register_proc =
+{
+  "gimp_plugin_icon_register",
+  "Register an icon for a plug-in procedure.",
+  "This procedure installs an icon for the given procedure.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
+  GIMP_INTERNAL,
+  4,
+  plugin_icon_register_inargs,
+  0,
+  NULL,
+  { { plugin_icon_register_invoker } }
 };

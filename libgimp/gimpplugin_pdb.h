@@ -29,14 +29,18 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_progress_init          (const gchar *message);
-gboolean gimp_progress_update        (gdouble      percentage);
-gboolean gimp_plugin_domain_register (const gchar *domain_name,
-				      const gchar *domain_path);
-gboolean gimp_plugin_help_register   (const gchar *domain_name,
-				      const gchar *domain_uri);
-gboolean gimp_plugin_menu_register   (const gchar *procedure_name,
-				      const gchar *menu_path);
+gboolean gimp_progress_init          (const gchar  *message);
+gboolean gimp_progress_update        (gdouble       percentage);
+gboolean gimp_plugin_domain_register (const gchar  *domain_name,
+				      const gchar  *domain_path);
+gboolean gimp_plugin_help_register   (const gchar  *domain_name,
+				      const gchar  *domain_uri);
+gboolean gimp_plugin_menu_register   (const gchar  *procedure_name,
+				      const gchar  *menu_path);
+gboolean gimp_plugin_icon_register   (const gchar  *procedure_name,
+				      GimpIconType  icon_type,
+				      gint          icon_data_length,
+				      const guint8 *icon_data);
 
 
 G_END_DECLS

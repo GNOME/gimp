@@ -22,8 +22,7 @@
 
 void   file_dialog_menu_setup (GimpUIManager *manager,
                                const gchar   *ui_path,
-                               GSList        *file_procs,
-                               const gchar   *xcf_proc_name);
+                               GSList        *file_procs);
 
 
 #endif /* __FILE_DIALOG_MENU_H__ */

@@ -27,6 +27,8 @@
 
 #include "core/gimpmarshal.h"
 
+#include "plug-in/plug-in-proc.h"
+
 #include "gimppluginaction.h"
 
 
@@ -43,19 +45,21 @@ enum
 };
 
 
-static void   gimp_plug_in_action_init       (GimpPlugInAction      *action);
-static void   gimp_plug_in_action_class_init (GimpPlugInActionClass *klass);
+static void   gimp_plug_in_action_init          (GimpPlugInAction      *action);
+static void   gimp_plug_in_action_class_init    (GimpPlugInActionClass *klass);
 
-static void   gimp_plug_in_action_set_property (GObject      *object,
-                                                guint         prop_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec);
-static void   gimp_plug_in_action_get_property (GObject      *object,
-                                                guint         prop_id,
-                                                GValue       *value,
-                                                GParamSpec   *pspec);
+static void   gimp_plug_in_action_set_property  (GObject      *object,
+                                                 guint         prop_id,
+                                                 const GValue *value,
+                                                 GParamSpec   *pspec);
+static void   gimp_plug_in_action_get_property  (GObject      *object,
+                                                 guint         prop_id,
+                                                 GValue       *value,
+                                                 GParamSpec   *pspec);
 
-static void   gimp_plug_in_action_activate     (GtkAction    *action);
+static void   gimp_plug_in_action_activate      (GtkAction    *action);
+static void   gimp_plug_in_action_connect_proxy (GtkAction    *action,
+                                                 GtkWidget    *proxy);
 
 
 static GtkActionClass *parent_class                = NULL;
@@ -101,7 +105,8 @@ gimp_plug_in_action_class_init (GimpPlugInActionClass *klass)
   object_class->set_property = gimp_plug_in_action_set_property;
   object_class->get_property = gimp_plug_in_action_get_property;
 
-  action_class->activate = gimp_plug_in_action_activate;
+  action_class->activate      = gimp_plug_in_action_activate;
+  action_class->connect_proxy = gimp_plug_in_action_connect_proxy;
 
   g_object_class_install_property (object_class, PROP_PROC_DEF,
                                    g_param_spec_pointer ("proc-def",
@@ -163,6 +168,60 @@ gimp_plug_in_action_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_plug_in_action_activate (GtkAction *action)
+{
+  GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
+
+  gimp_plug_in_action_selected (plug_in_action);
+}
+
+static void
+gimp_plug_in_action_connect_proxy (GtkAction *action,
+                                   GtkWidget *proxy)
+{
+  GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
+
+  GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
+
+  if (GTK_IS_IMAGE_MENU_ITEM (proxy) && plug_in_action->proc_def)
+    {
+      GdkPixbuf *pixbuf;
+
+      pixbuf = plug_in_proc_def_get_pixbuf (plug_in_action->proc_def);
+
+      if (pixbuf)
+        {
+          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
+          GtkSettings *settings = gtk_settings_get_for_screen (screen);
+          gint         width;
+          gint         height;
+          GtkWidget   *image;
+
+          gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU,
+                                             &width, &height);
+
+          if (width  != gdk_pixbuf_get_width  (pixbuf) ||
+              height != gdk_pixbuf_get_height (pixbuf))
+            {
+              GdkPixbuf *copy;
+
+              copy = gdk_pixbuf_scale_simple (pixbuf, width, height,
+                                              GDK_INTERP_BILINEAR);
+              g_object_unref (pixbuf);
+              pixbuf = copy;
+            }
+
+          image = gtk_image_new_from_pixbuf (pixbuf);
+          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), image);
+          g_object_unref (pixbuf);
+        }
+    }
+}
+
+
+/*  public functions  */
+
 GimpPlugInAction *
 gimp_plug_in_action_new (const gchar   *name,
                          const gchar   *label,
@@ -177,14 +236,6 @@ gimp_plug_in_action_new (const gchar   *name,
                        "stock_id", stock_id,
                        "proc-def", proc_def,
                        NULL);
-}
-
-static void
-gimp_plug_in_action_activate (GtkAction *action)
-{
-  GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
-
-  gimp_plug_in_action_selected (plug_in_action);
 }
 
 void

@@ -283,7 +283,7 @@ plug_in_actions_add_proc (GimpActionGroup *group,
     }
 
   entry.name        = proc_def->db_info.name;
-  entry.stock_id    = NULL;
+  entry.stock_id    = plug_in_proc_def_get_stock_id (proc_def);
   entry.label       = label_translated;
   entry.accelerator = NULL;
   entry.tooltip     = NULL;

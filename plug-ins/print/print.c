@@ -169,6 +169,10 @@ query (void)
 
   gimp_plugin_menu_register ("file_print_gimp",
                              N_("<Image>/File/Send"));
+  gimp_plugin_icon_register ("file_print_gimp",
+                             GIMP_ICON_TYPE_STOCK_ID,
+                             strlen (GTK_STOCK_PRINT) + 1,
+                             GTK_STOCK_PRINT);
 }
 
 

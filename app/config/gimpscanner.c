@@ -249,6 +249,24 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
 }
 
 gboolean
+gimp_scanner_parse_data (GScanner  *scanner,
+                         gint       length,
+                         guint8   **dest)
+{
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
+    return FALSE;
+
+  g_scanner_get_next_token (scanner);
+
+  if (scanner->value.v_string)
+    *dest = g_memdup (scanner->value.v_string, length);
+  else
+    *dest = NULL;
+
+  return TRUE;
+}
+
+gboolean
 gimp_scanner_parse_int (GScanner *scanner,
                         gint     *dest)
 {

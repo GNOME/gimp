@@ -68,14 +68,14 @@ static ProcArg xcf_load_args[] =
     "The name of the file to load, in the on-disk character set and encoding" },
   { GIMP_PDB_STRING,
     "raw_filename",
-    "The basename of the file, in UTF-8" },
+    "The basename of the file, in UTF-8" }
 };
 
 static ProcArg xcf_load_return_vals[] =
 {
   { GIMP_PDB_IMAGE,
     "image",
-    "Output image" },
+    "Output image" }
 };
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -83,16 +83,19 @@ static PlugInProcDef xcf_plug_in_load_proc =
   "gimp_xcf_load",
   N_("GIMP XCF image"),
   NULL,
-  "xcf",
-  "",
-  "0,string,gimp\\040xcf\\040",
-  "image/x-xcf",
+  GIMP_ICON_TYPE_STOCK_ID,
+  -1,
+  "gimp-wilber",
   NULL, /* ignored for load */
   0,    /* ignored for load */
+  0,
+  FALSE,
   {
     "gimp_xcf_load",
     "loads file saved in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will load the specified file.",
+    "The xcf file format has been designed specifically for loading and "
+    "saving tiled and layered images in the GIMP. This procedure will load "
+    "the specified file.",
     "Spencer Kimball & Peter Mattis",
     "Spencer Kimball & Peter Mattis",
     "1995-1996",
@@ -103,10 +106,13 @@ static PlugInProcDef xcf_plug_in_load_proc =
     xcf_load_return_vals,
     { { xcf_load_invoker } },
   },
+  "xcf",
+  "",
+  "0,string,gimp\\040xcf\\040",
+  "image/x-xcf",
   NULL, /* fill me in at runtime */
   NULL, /* fill me in at runtime */
-  NULL, /* fill me in at runtime */
-  0
+  NULL  /* fill me in at runtime */
 };
 
 static ProcArg xcf_save_args[] =
@@ -125,7 +131,7 @@ static ProcArg xcf_save_args[] =
     "The name of the file to save the image in, in the on-disk character set and encoding" },
   { GIMP_PDB_STRING,
     "raw_filename",
-    "The basename of the file, in UTF-8" },
+    "The basename of the file, in UTF-8" }
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -133,16 +139,19 @@ static PlugInProcDef xcf_plug_in_save_proc =
   "gimp_xcf_save",
   N_("GIMP XCF image"),
   NULL,
-  "xcf",
-  "",
-  NULL,
-  "image/x-xcf",
+  GIMP_ICON_TYPE_STOCK_ID,
+  -1,
+  "gimp-wilber",
   "RGB*, GRAY*, INDEXED*",
   0, /* fill me in at runtime */
+  0,
+  FALSE,
   {
     "gimp_xcf_save",
     "saves file in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will save the specified image in the xcf file format.",
+    "The xcf file format has been designed specifically for loading and "
+    "saving tiled and layered images in the GIMP. This procedure will save "
+    "the specified image in the xcf file format.",
     "Spencer Kimball & Peter Mattis",
     "Spencer Kimball & Peter Mattis",
     "1995-1996",
@@ -153,10 +162,13 @@ static PlugInProcDef xcf_plug_in_save_proc =
     NULL,
     { { xcf_save_invoker } },
   },
+  "xcf",
+  "",
+  NULL,
+  "image/x-xcf",
   NULL, /* fill me in at runtime */
   NULL, /* fill me in at runtime */
-  NULL, /* fill me in at runtime */
-  0
+  NULL  /* fill me in at runtime */
 };
 
 
@@ -183,8 +195,8 @@ xcf_init (Gimp *gimp)
   procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
   procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
 
-  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>");
-  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>");
+  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>/Internal");
+  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>/Internal");
 
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);

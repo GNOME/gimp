@@ -320,6 +320,54 @@ gimp_config_writer_string (GimpConfigWriter *writer,
 }
 
 /**
+ * gimp_config_writer_identifier:
+ * @writer: a #GimpConfigWriter
+ * @string: a NUL-terminated string
+ *
+ * Writes an identifier to @writer. The @string is *not* quoted and special
+ * characters are *not* escaped.
+ **/
+void
+gimp_config_writer_identifier (GimpConfigWriter *writer,
+                               const gchar      *identifier)
+{
+  g_return_if_fail (writer != NULL);
+  g_return_if_fail (identifier != NULL);
+
+  if (writer->error)
+    return;
+
+  g_string_append_printf (writer->buffer, " %s", identifier);
+}
+
+void
+gimp_config_writer_data (GimpConfigWriter *writer,
+                         gint              length,
+                         const guint8     *data)
+{
+  gint i;
+
+  g_return_if_fail (writer != NULL);
+  g_return_if_fail (length > 0);
+  g_return_if_fail (data != NULL);
+
+  if (writer->error)
+    return;
+
+  g_string_append (writer->buffer, " \"");
+
+  for (i = 0; i < length; i++)
+    {
+      if (g_ascii_isalpha (data[i]))
+        g_string_append_c (writer->buffer, data[i]);
+      else
+        g_string_append_printf (writer->buffer, "\\%o", data[i]);
+    }
+
+  g_string_append (writer->buffer, "\"");
+}
+
+/**
  * gimp_config_writer_revert:
  * @writer: a #GimpConfigWriter
  *

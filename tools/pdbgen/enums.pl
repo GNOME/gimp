@@ -289,6 +289,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRADIENT_SPIRAL_CLOCKWISE => '9',
 		       GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE => '10' }
 	},
+    GimpIconType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_ICON_TYPE_STOCK_ID
+			  GIMP_ICON_TYPE_INLINE_PIXBUF
+			  GIMP_ICON_TYPE_IMAGE_FILE) ],
+	  mapping => { GIMP_ICON_TYPE_STOCK_ID => '0',
+		       GIMP_ICON_TYPE_INLINE_PIXBUF => '1',
+		       GIMP_ICON_TYPE_IMAGE_FILE => '2' }
+	},
     GimpImageBaseType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

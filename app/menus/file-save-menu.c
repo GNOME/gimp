@@ -34,7 +34,5 @@ void
 file_save_menu_setup (GimpUIManager *manager,
                       const gchar   *ui_path)
 {
-  file_dialog_menu_setup (manager, ui_path,
-                          manager->gimp->save_procs,
-                          "gimp_xcf_save");
+  file_dialog_menu_setup (manager, ui_path, manager->gimp->save_procs);
 }

@@ -343,6 +343,26 @@ gimp_dash_preset_get_type (void)
 }
 
 
+static const GEnumValue gimp_icon_type_enum_values[] =
+{
+  { GIMP_ICON_TYPE_STOCK_ID, N_("Stock ID"), "stock-id" },
+  { GIMP_ICON_TYPE_INLINE_PIXBUF, N_("Inline Pixbuf"), "inline-pixbuf" },
+  { GIMP_ICON_TYPE_IMAGE_FILE, N_("Image File"), "image-file" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_icon_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpIconType", gimp_icon_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
   { GIMP_RGB, N_("RGB Color"), "rgb" },

@@ -41,8 +41,13 @@ void               gimp_config_writer_print        (GimpConfigWriter  *writer,
 void               gimp_config_writer_printf       (GimpConfigWriter  *writer,
                                                     const gchar       *format,
                                                     ...);
+void               gimp_config_writer_identifier   (GimpConfigWriter  *writer,
+                                                    const gchar       *identifier);
 void               gimp_config_writer_string       (GimpConfigWriter  *writer,
                                                     const gchar       *string);
+void               gimp_config_writer_data         (GimpConfigWriter  *writer,
+                                                    gint               length,
+                                                    const guint8      *data);
 void               gimp_config_writer_comment      (GimpConfigWriter  *writer,
 						    const gchar       *comment);
 void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);

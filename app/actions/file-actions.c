@@ -56,9 +56,13 @@ static void   file_actions_last_opened_reorder (GimpContainer   *container,
 
 static GimpActionEntry file_actions[] =
 {
-  { "file-menu",              NULL, N_("_File")        },
-  { "file-open-recent-menu",  NULL, N_("Open _Recent") },
-  { "file-acquire-menu",      NULL, N_("_Acquire")     },
+  { "file-menu", NULL, N_("_File") },
+
+  { "file-open-recent-menu", GTK_STOCK_OPEN,
+    N_("Open _Recent"), "", NULL },
+
+  { "file-acquire-menu", NULL,
+    N_("_Acquire"), NULL, NULL },
 
   { "file-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N", NULL,

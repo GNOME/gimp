@@ -48,7 +48,6 @@ file_dialog_actions_setup (GimpActionGroup *group,
   for (list = file_procs; list; list = g_slist_next (list))
     {
       PlugInProcDef         *file_proc = list->data;
-      const gchar           *stock_id  = NULL;
       gchar                 *help_id;
       GimpPlugInActionEntry  entry;
       gchar                 *label;
@@ -61,8 +60,7 @@ file_dialog_actions_setup (GimpActionGroup *group,
 
       if (is_xcf)
         {
-          stock_id = GIMP_STOCK_WILBER;
-          help_id  = g_strdup (GIMP_HELP_FILE_SAVE_XCF);
+          help_id = g_strdup (GIMP_HELP_FILE_SAVE_XCF);
         }
       else
         {
@@ -84,7 +82,7 @@ file_dialog_actions_setup (GimpActionGroup *group,
         label = strrchr (file_proc->menu_paths->data, '/') + 1;
 
       entry.name        = file_proc->db_info.name;
-      entry.stock_id    = stock_id;
+      entry.stock_id    = plug_in_proc_def_get_stock_id (file_proc);
       entry.label       = label;
       entry.accelerator = NULL;
       entry.tooltip     = NULL;

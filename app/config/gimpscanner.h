@@ -39,6 +39,9 @@ gboolean   gimp_scanner_parse_string             (GScanner     *scanner,
                                                   gchar       **dest);
 gboolean   gimp_scanner_parse_string_no_validate (GScanner     *scanner,
                                                   gchar       **dest);
+gboolean   gimp_scanner_parse_data               (GScanner     *scanner,
+                                                  gint          length,
+                                                  guint8      **dest);
 gboolean   gimp_scanner_parse_int                (GScanner     *scanner,
                                                   gint         *dest);
 gboolean   gimp_scanner_parse_float              (GScanner     *scanner,

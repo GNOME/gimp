@@ -194,3 +194,43 @@ gimp_plugin_menu_register (const gchar *procedure_name,
 
   return success;
 }
+
+/**
+ * gimp_plugin_icon_register:
+ * @procedure_name: The procedure for which to install the icon.
+ * @icon_type: The type of the icon.
+ * @icon_data_length: The length of 'icon_data'.
+ * @icon_data: The procedure's icon. The format depends on the 'icon_type' parameter.
+ *
+ * Register an icon for a plug-in procedure.
+ *
+ * This procedure installs an icon for the given procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_plugin_icon_register (const gchar  *procedure_name,
+			   GimpIconType  icon_type,
+			   gint          icon_data_length,
+			   const guint8 *icon_data)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_icon_register",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, procedure_name,
+				    GIMP_PDB_INT32, icon_type,
+				    GIMP_PDB_INT32, icon_data_length,
+				    GIMP_PDB_INT8ARRAY, icon_data,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

@@ -1,3 +1,64 @@
+2004-05-18  Michael Natterer  <mitch@gimp.org>
+
+	Allow plug-ins to register menu icons. Fixes bug #120500.
+
+	* app/core/core-enums.[ch]: added enum GimpIconType which can
+	be one of { STOCK_ID, IMAGE_FILE, INLINE_PIXBUF }.
+
+	* app/config/gimpconfigwriter.[ch] (gimp_config_writer_data)
+	* app/config/gimpscanner.[ch] (gimp_scanner_parse_data): new
+	functions which write/parse raw binary data. Needed for storing
+	inline pixbufs in pluginrc.
+
+	* app/config/gimpconfigwriter.[ch] (gimp_config_writer_identifier):
+	new function which writes out an unquoted and unescaped string.
+
+	* app/plug-in/plug-in-proc.[ch] (struct PlugInProcDef): added
+	new members "icon_type", "icon_data_length" and "icon_data".
+	Reordered members so file_proc specific stuff is at the end.
+
+	(plug_in_proc_def_get_stock_id)
+	(plug_in_proc_def_get_pixbuf): new functions to access the
+	procedure's icon.
+
+	* app/plug-in/plug-in-rc.c: save/restore the registered icons.
+
+	* app/actions/file-dialog-actions.c
+	* app/actions/plug-in-actions.c: set the action's stock ID from
+	the procedure's stock ID.
+
+	* app/widgets/gimppluginaction.c
+	(gimp_plug_in_action_connect_proxy): if the procedure provides a
+	pixbuf, set it as icon for the menu item.
+
+	* app/menus/file-dialog-menu.[ch]
+	* app/menus/file-open-menu.c
+	* app/menus/file-save-menu.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_icon_register): new PDB
+	function which can be called during query().
+
+	* tools/pdbgen/enums.pl
+	* app/pdb/internal_procs.c
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpenums.h
+	* libgimp/gimpplugin_pdb.c
+	* libgimp/gimpplugin_pdb.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/print/print.c: register stock_id icons.
+
+	* plug-ins/common/screenshot.c: register an inline_pixbuf icon for
+	testing purposes (used emblem-camera.png from gnome-icon-theme).
+
+	* app/actions/dialogs-actions.c
+	* app/actions/file-actions.c: unrelated: added some more icons
+	to menu items.
+
 2004-05-18  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/sel_gauss.c: HIGified, fixed indendation, speed
