@@ -1,3 +1,8 @@
+2003-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-install-dialog.c: replaced the 0755 by properly
+	or'ed symbolic values (undid this change from Sven accidentially).
+
 2003-01-01 Garry R. Osgood <grosgood@rcn.com>
 	
 	* MAINTAINERS: Updated my CVS.

@@ -1045,9 +1045,13 @@ user_install_run (void)
   while (gtk_events_pending ())
     gtk_main_iteration ();
 
-  if (mkdir (gimp_directory (), 0755) == -1)
+  if (mkdir (gimp_directory (),
+             S_IRUSR | S_IWUSR | S_IXUSR |
+             S_IRGRP | S_IXGRP |
+             S_IROTH | S_IXOTH) == -1)
     {
-      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+      g_set_error (&error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
                    gimp_directory (), g_strerror (errno));
       goto break_out_of_loop;
