@@ -37,16 +37,16 @@
 #define TARGET_WIDTH   15
 
 /* default types */
-#define CLONE_DEFAULT_TYPE IMAGE_CLONE
-#define CLONE_DEFAULT_ALIGNED AlignNo
+#define CLONE_DEFAULT_TYPE     IMAGE_CLONE
+#define CLONE_DEFAULT_ALIGNED  ALIGN_NO
 
 /*  the clone structures  */
 
 typedef enum
 {
-  AlignNo,
-  AlignYes,
-  AlignRegister
+  ALIGN_NO,
+  ALIGN_YES,
+  ALIGN_REGISTERED
 } AlignType;
 
 typedef struct _CloneOptions CloneOptions;
@@ -278,7 +278,7 @@ clone_paint_func (PaintCore    *paint_core,
 	  dest_x = x1;
 	  dest_y = y1;
 
-          if (clone_options->aligned == AlignRegister)
+          if (clone_options->aligned == ALIGN_REGISTERED)
             {
 	      offset_x = 0;
 	      offset_y = 0;
@@ -310,7 +310,7 @@ clone_paint_func (PaintCore    *paint_core,
 	  src_y = paint_core->cury;
 	  first = TRUE;
 	}
-      else if (clone_options->aligned == AlignNo)
+      else if (clone_options->aligned == ALIGN_NO)
       {
 	first = TRUE;
 	orig_src_x = src_x;
@@ -323,7 +323,7 @@ clone_paint_func (PaintCore    *paint_core,
 
     case FINISH_PAINT :
       draw_core_stop (paint_core->core, active_tool);
-      if (clone_options->aligned == AlignNo && !first)
+      if (clone_options->aligned == ALIGN_NO && !first)
       {
 	src_x = orig_src_x;
 	src_y = orig_src_y;
