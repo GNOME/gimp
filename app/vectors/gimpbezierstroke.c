@@ -478,13 +478,26 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
   switch (feature)
     {
     case GIMP_ANCHOR_FEATURE_EDGE:
-      if (g_list_previous (anchor_list))
-        ((GimpAnchor *) g_list_previous (anchor_list)->data)->position =
-          anchor->position;
+      if (anchor->type == GIMP_ANCHOR_ANCHOR)
+        {
+          if (g_list_previous (anchor_list))
+            ((GimpAnchor *) g_list_previous (anchor_list)->data)->position =
+              anchor->position;
 
-      if (g_list_next (anchor_list))
-        ((GimpAnchor *) g_list_next (anchor_list)->data)->position =
-          anchor->position;
+          if (g_list_next (anchor_list))
+            ((GimpAnchor *) g_list_next (anchor_list)->data)->position =
+              anchor->position;
+        }
+      else
+        {
+          if (g_list_previous (anchor_list) &&
+              ((GimpAnchor *) g_list_previous (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
+            anchor->position = ((GimpAnchor *) g_list_previous (anchor_list)->data)->position;
+          if (g_list_next (anchor_list) &&
+              ((GimpAnchor *) g_list_next (anchor_list)->data)->type == GIMP_ANCHOR_ANCHOR)
+            anchor->position = ((GimpAnchor *) g_list_next (anchor_list)->data)->position;
+        }
+
       break;
 
     default:

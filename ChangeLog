@@ -1,3 +1,18 @@
+2003-06-25  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: If an control handle gets
+	converted to an edge simply move it to its next anchor.
+
+	* app/tools/gimpvectortool.c: Improved interactive handling
+	of vectors. Still work in progress, esp. I am not sure about
+	the assignment of the modifier keys. Right now it is:
+
+	   Drag (Anchor/Handle): Regular Movement
+	   Shift-Click (Anchor): select multiple anchors (does not work yet)
+	   Shift-Drag: (Handle): move opposite handle symmetrically
+	   Ctrl-Drag (Anchor): Drag out control point
+	   S-C-Click: (Anchor/Handle): Convert to Edge
+
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.[ch]: added new function
