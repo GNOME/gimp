@@ -1,3 +1,11 @@
+Thu Jul 29 17:18:42 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/tools.pdb: hard code orientation constants for
+	shear and flip too maintain backwards compatibility
+
+	* app/gimpimage.h: remove ORIENTATION chop to avoid namespace
+	collision
+
 Thu Jul 29 23:58:08 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/makefile.{cygwin,msc}: Add gdiplay_color. Create gimp.def

@@ -192,10 +192,7 @@ package Gimp::CodeGen::enums;
 			  ORIENTATION_VERTICAL) ],
 	  mapping => { ORIENTATION_UNKNOWN => '0',
 		       ORIENTATION_HORIZONTAL => '1',
-		       ORIENTATION_VERTICAL => '2' },
-	  nicks   => { ORIENTATION_UNKNOWN => 'UNKNOWN',
-		       ORIENTATION_HORIZONTAL => 'HORIZONTAL',
-		       ORIENTATION_VERTICAL => 'VERTICAL' }
+		       ORIENTATION_VERTICAL => '2' }
 	},
     ChannelType =>
 	{ contig => 1,

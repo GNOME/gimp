@@ -57,7 +57,7 @@ typedef enum
 
 #define COLORMAP_SIZE    768
 
-typedef enum { /*< chop=ORIENTATION_ >*/
+typedef enum {
   ORIENTATION_UNKNOWN,
   ORIENTATION_HORIZONTAL,
   ORIENTATION_VERTICAL
