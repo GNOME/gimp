@@ -1,3 +1,8 @@
+2003-05-14  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/blur.c (blur): Use integer instead of FP to
+	check for last iteration, possibly fixing bug #84731.
+
 2003-05-14  Dave Neary  <bolsh@gimp.org>
 
         * plug-ins/common/screenshot.c: Attach default comment to

@@ -430,6 +430,7 @@ blur (GimpDrawable *drawable)
   gint x1, y1, x2, y2;
   gint cnt;
   gint has_alpha, ind;
+  gint repeat_count;
 
   /*
    *  Get the input area. This is the bounding box of the selection in
@@ -469,7 +470,9 @@ blur (GimpDrawable *drawable)
   cr = cur_row + bytes;
   nr = next_row + bytes;
 
-  for (cnt = 1; cnt <= pivals.blur_rcount; cnt++)
+  repeat_count = (gint) pivals.blur_rcount;
+
+  for (cnt = 1; cnt <= repeat_count; cnt++)
     {
       /*
        *  prepare the first row and previous row
@@ -558,7 +561,7 @@ blur (GimpDrawable *drawable)
       /*
        *  if we have more cycles to perform, swap the src and dest Pixel Regions
        */
-      if (cnt < pivals.blur_rcount)
+      if (cnt < repeat_count)
 	{
 	  if (tp != NULL)
 	    {
