@@ -253,9 +253,9 @@ unsharp_mask (GimpDrawable *drawable,
               gdouble       amount)
 {
   GimpPixelRgn srcPR, destPR;
-  glong width, height;
-  glong bytes;
-  gint  x1, y1, x2, y2;
+  glong        width, height;
+  glong        bytes;
+  gint         x1, y1, x2, y2;
 
   /* Get the input */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -272,9 +272,9 @@ unsharp_mask (GimpDrawable *drawable,
   unsharp_region (srcPR, destPR, width, height, bytes, radius, amount,
                   x1, x2, y1, y2, TRUE);
 
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
 }
 
 /* perform an unsharp mask on the region, given a source region, dest.
@@ -344,12 +344,12 @@ unsharp_region (GimpPixelRgn srcPR,
   for (row = 0; row < y; row++)
     {
       gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, x);
-      gimp_pixel_rgn_get_row( &destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, x);
       blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
 
       if (show_progress && row % 5 == 0)
-        gimp_progress_update ((gdouble) row / (3*y));
+        gimp_progress_update ((gdouble) row / (3 * y));
     }
 
   /* allocate column buffers */
@@ -404,21 +404,21 @@ unsharp_region (GimpPixelRgn srcPR,
         }
       /* update progress bar every five rows */
       if (show_progress && row%5 == 0)
-        gimp_progress_update ((gdouble) row / (3*y) + 0.67);
+        gimp_progress_update ((gdouble) row / (3 * y) + 0.67);
 
-      gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
     }
 
   if (show_progress)
     gimp_progress_update (0.0);
 
   /* free the memory we took */
-  g_free(cmatrix);
-  g_free(ctable);
-  g_free(dest_col);
-  g_free(cur_col);
-  g_free(dest_row);
-  g_free(cur_row);
+  g_free (cmatrix);
+  g_free (ctable);
+  g_free (dest_col);
+  g_free (cur_col);
+  g_free (dest_row);
+  g_free (cur_row);
 }
 
 /* this function is written as if it is blurring a column at a time,
@@ -436,9 +436,10 @@ blur_line (gdouble *ctable,
 {
   gdouble scale;
   gdouble sum;
-  gint i=0, j=0;
-  gint row;
-  gint cmatrix_middle = cmatrix_length/2;
+  gint    i = 0;
+  gint    j = 0;
+  gint    row;
+  gint    cmatrix_middle = cmatrix_length / 2;
 
   gdouble *cmatrix_p;
   guchar  *cur_col_p;
@@ -544,12 +545,12 @@ static gint
 gen_convolve_matrix (gdouble   radius,
                      gdouble **cmatrix_p)
 {
-  gint matrix_length;
-  gint matrix_midpoint;
-  gdouble* cmatrix;
-  gint i,j;
-  gdouble std_dev;
-  gdouble sum;
+  gint     matrix_length;
+  gint     matrix_midpoint;
+  gdouble *cmatrix;
+  gint     i,j;
+  gdouble  std_dev;
+  gdouble  sum;
 
   /* we want to generate a matrix that goes out a certain radius
    * from the center, so we have to go out ceil(rad-0.5) pixels,
@@ -602,7 +603,7 @@ gen_convolve_matrix (gdouble   radius,
   /* find center val -- calculate an odd number of quanta to make it symmetric,
    * even if the center point is weighted slightly higher than others. */
   sum = 0;
-  for (j=0; j<=50; j++)
+  for (j = 0; j <= 50; j++)
     {
       sum += exp (-(0.5+0.02*j)*(0.5+0.02*j) /
                   (2*std_dev*std_dev));
@@ -632,9 +633,9 @@ gen_lookup_table (gdouble *cmatrix,
   gdouble* lookup_table_p = lookup_table;
   gdouble* cmatrix_p      = cmatrix;
 
-  for (i=0; i<cmatrix_length; i++)
+  for (i = 0; i < cmatrix_length; i++)
     {
-      for (j=0; j<256; j++)
+      for (j = 0; j < 256; j++)
         {
           *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
         }
@@ -668,8 +669,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-                      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 12);
@@ -680,8 +680,10 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                                        &unsharp_params.update_preview);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (preview_update), NULL);
+                    G_CALLBACK (preview_update),
+                    NULL);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -807,9 +809,9 @@ preview_update (GimpPreview *preview)
                   preview_buf_y1, preview_buf_y2,
                   FALSE);
 
-  gimp_pixel_rgn_get_rect(&destPR, render_buffer,
-                          preview_buf_x1, preview_buf_y1,
-                          preview_buf_width, preview_buf_height);
+  gimp_pixel_rgn_get_rect (&destPR, render_buffer,
+                           preview_buf_x1, preview_buf_y1,
+                           preview_buf_width, preview_buf_height);
 
   /*
    * Draw the preview image on the screen...
@@ -827,4 +829,3 @@ preview_update (GimpPreview *preview)
 
   g_free (render_buffer);
 }
-

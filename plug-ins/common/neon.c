@@ -706,28 +706,31 @@ neon_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (neon_preview_update), NULL);
+                    G_CALLBACK (neon_preview_update),
+                    NULL);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for evals.radius  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                      _("_Radius:"), 100, 8,
-                                     evals.radius, 0.0,
-                                     /* [DindinX] this value seems insane */
+                                     evals.radius, 0.0, 64.0, 1, 10, 2,
+                                     FALSE, 0.0,
                                      8 * MAX (drawable->width, drawable->height),
-                                     1, 10, 2,
-                                     TRUE, 0, 0,
                                      NULL, NULL);
 
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.radius);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -739,6 +742,9 @@ neon_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.amount);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dlg);
 
@@ -757,4 +763,3 @@ neon_preview_update (GtkWidget *preview)
         evals.amount,
         preview);
 }
-

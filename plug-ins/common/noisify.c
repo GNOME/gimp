@@ -229,9 +229,8 @@ run (const gchar      *name,
         gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == GIMP_RUN_INTERACTIVE) {
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
-      }
     }
   else
     {
@@ -250,10 +249,11 @@ noisify_func (const guchar *src,
               gint          bpp,
               gpointer      data)
 {
-  GRand *gr = (GRand*) data;
-  gint noise = 0, b;
+  GRand *gr    = data;
+  gint   noise = 0;
+  gint   b;
 
-  if (!nvals.independent)
+  if (! nvals.independent)
     noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
 
   for (b = 0; b < bpp; b++)
@@ -282,39 +282,41 @@ noisify (GimpDrawable *drawable,
   GRand *gr = g_rand_new ();
 
   if (preview_mode)
-  {
-    guchar       *preview_src, *preview_dst;
-    GimpPixelRgn  src_rgn;
-    gint          i;
+    {
+      guchar       *preview_src, *preview_dst;
+      GimpPixelRgn  src_rgn;
+      gint          i;
 
-    preview_src = g_new (guchar, preview_width * preview_height * preview_bpp);
-    preview_dst = g_new (guchar, preview_width * preview_height * preview_bpp);
+      preview_src = g_new (guchar, preview_width * preview_height * preview_bpp);
+      preview_dst = g_new (guchar, preview_width * preview_height * preview_bpp);
 
-    gimp_pixel_rgn_init (&src_rgn, drawable,
-                         preview_x1, preview_y1,
-                         preview_width, preview_height,
-                         FALSE, FALSE);
-    gimp_pixel_rgn_get_rect (&src_rgn, preview_src,
-                             preview_x1, preview_y1,
-	                           preview_width, preview_height);
+      gimp_pixel_rgn_init (&src_rgn, drawable,
+                           preview_x1, preview_y1,
+                           preview_width, preview_height,
+                           FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_rgn, preview_src,
+                               preview_x1, preview_y1,
+                               preview_width, preview_height);
 
-    for (i=0 ; i<preview_width * preview_height ; i++)
-      noisify_func (preview_src + i * preview_bpp,
-                    preview_dst + i * preview_bpp,
-                    preview_bpp,
-                    gr);
+      for (i = 0; i < preview_width * preview_height; i++)
+        noisify_func (preview_src + i * preview_bpp,
+                      preview_dst + i * preview_bpp,
+                      preview_bpp,
+                      gr);
 
-    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                            0, 0, preview_width, preview_height,
-                            gimp_drawable_type (drawable->drawable_id),
-                            preview_dst,
-                            preview_width * preview_bpp);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, preview_width, preview_height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              preview_dst,
+                              preview_width * preview_bpp);
 
-    g_free (preview_src);
-    g_free (preview_dst);
-  }
+      g_free (preview_src);
+      g_free (preview_dst);
+    }
   else
-    gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
+    {
+      gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
+    }
 
   g_rand_free (gr);
 }
@@ -331,7 +333,9 @@ preview_scroll_callback (GimpDrawable *drawable)
 }
 
 static void
-noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
+noisify_add_channel (GtkWidget    *table,
+                     gint          channel,
+                     gchar        *name,
                      GimpDrawable *drawable)
 {
   GtkObject *adj;
@@ -352,8 +356,10 @@ noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
 }
 
 static void
-noisify_add_alpha_channel (GtkWidget *table, gint channel, gchar *name,
-                     GimpDrawable *drawable)
+noisify_add_alpha_channel (GtkWidget    *table,
+                           gint          channel,
+                           gchar        *name,
+                           GimpDrawable *drawable)
 {
   GtkObject *adj;
 
@@ -374,7 +380,7 @@ noisify_add_alpha_channel (GtkWidget *table, gint channel, gchar *name,
 
 static gint
 noisify_dialog (GimpDrawable *drawable,
-                gint       channels)
+                gint          channels)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -543,7 +549,7 @@ noisify_dialog (GimpDrawable *drawable,
 static gdouble
 gauss (GRand *gr)
 {
-  gint i;
+  gint    i;
   gdouble sum = 0.0;
 
   for (i = 0; i < 4; i++)
@@ -569,20 +575,20 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
     {
       gint i;
       switch (noise_int.channels)
-       {
-       case 1:
-         n = 1;
-         break;
-       case 2:
-         n = 1;
-         break;
-       case 3:
-         n = 3;
-         break;
-       default:
-         n = 3;
-         break;
-       }
+        {
+        case 1:
+          n = 1;
+          break;
+        case 2:
+          n = 1;
+          break;
+        case 3:
+          n = 3;
+          break;
+        default:
+          n = 3;
+          break;
+        }
 
       for (i = 0; i < n; i++)
         if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))

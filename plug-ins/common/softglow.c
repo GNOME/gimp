@@ -54,16 +54,16 @@ typedef struct
  * Function prototypes.
  */
 
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+static void      query             (void);
+static void      run               (const gchar      *name,
+                                    gint              nparams,
+                                    const GimpParam  *param,
+                                    gint             *nreturn_vals,
+                                    GimpParam       **return_vals);
 
-static void      softglow                (GimpDrawable *drawable,
-                                          GtkWidget    *preview);
-static gboolean  softglow_dialog         (GimpDrawable *drawable);
+static void      softglow          (GimpDrawable *drawable,
+                                    GtkWidget    *preview);
+static gboolean  softglow_dialog   (GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
@@ -530,11 +530,11 @@ transfer_pixels (gdouble *src1,
   gint    i;
   gdouble sum;
 
-  for(i = 0; i < width; i++)
+  for (i = 0; i < width; i++)
     {
       sum = src1[i] + src2[i];
-      if (sum > 255) sum = 255;
-      else if (sum < 0) sum = 0;
+
+      sum = CLAMP0255 (sum);
 
       *dest = (guchar) sum;
       dest += jump;
@@ -668,7 +668,7 @@ softglow_dialog (GimpDrawable *drawable)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 12);
@@ -678,8 +678,10 @@ softglow_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (softglow), drawable);
+                            G_CALLBACK (softglow),
+                            drawable);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -698,7 +700,8 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.glow_radius);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -711,7 +714,8 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.brightness);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -724,7 +728,8 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.sharpness);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dlg);
 
@@ -734,4 +739,3 @@ softglow_dialog (GimpDrawable *drawable)
 
   return run;
 }
-

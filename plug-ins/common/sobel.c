@@ -59,7 +59,7 @@ static void   sobel  (GimpDrawable     *drawable,
  * Sobel interface
  */
 static gboolean  sobel_dialog         (GimpDrawable *drawable);
-static void      sobel_update_preview (GtkWidget    *preview);
+static void      sobel_preview_update (GtkWidget    *preview);
 
 /*
  * Sobel helper functions
@@ -237,7 +237,7 @@ sobel_dialog (GimpDrawable *drawable)
   /*  parameter settings  */
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
   gtk_widget_show (vbox);
 
   /*  preview  */
@@ -248,8 +248,10 @@ sobel_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (sobel_update_preview), NULL);
+                    G_CALLBACK (sobel_preview_update),
+                    NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -260,7 +262,8 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.horizontal);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -271,9 +274,11 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result (one direction only)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result "
+                                                 "(one direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.keep_sign);
   gtk_widget_show (toggle);
@@ -282,7 +287,8 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.keep_sign);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dlg);
 
@@ -294,7 +300,7 @@ sobel_dialog (GimpDrawable *drawable)
 }
 
 static void
-sobel_update_preview (GtkWidget *preview)
+sobel_preview_update (GtkWidget *preview)
 {
   sobel (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
          bvals.horizontal,

@@ -1,3 +1,14 @@
+2004-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/neon.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/unsharp.c: fixed various coding style and naming
+	issues and added some missing signal connections to update the new
+	previews.
+
 2004-09-02  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/despeckle.c: don't assume the preview has always the
