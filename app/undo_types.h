@@ -60,6 +60,7 @@ typedef enum
     LAYER_SCALE_UNDO,
     LAYER_RESIZE_UNDO,
     QMASK_UNDO,		   /*  34 */
+    RESOLUTION_UNDO,
 
     MISC_UNDO = 100
 } UndoType;

@@ -89,6 +89,7 @@ static int undo_pop_gimage_mod       (GImage *, UndoState, UndoType, void *);
 static int undo_pop_guide            (GImage *, UndoState, UndoType, void *);
 static int undo_pop_parasite         (GImage *, UndoState, UndoType, void *);
 static int undo_pop_qmask            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_resolution       (GImage *, UndoState, UndoType, void *);
 static int undo_pop_layer_rename     (GImage *, UndoState, UndoType, void *);
 static int undo_pop_cantundo         (GImage *, UndoState, UndoType, void *);
 
@@ -112,6 +113,7 @@ static void     undo_free_gimage_mod      (UndoState, void *);
 static void     undo_free_guide           (UndoState, void *);
 static void     undo_free_parasite        (UndoState, void *);
 static void     undo_free_qmask           (UndoState, void *);
+static void     undo_free_resolution      (UndoState, void *);
 static void     undo_free_layer_rename    (UndoState, void *);
 static void     undo_free_cantundo        (UndoState, void *);
 
@@ -2219,7 +2221,7 @@ undo_push_qmask (GImage *gimage,
 
   size = sizeof (QmaskUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
+  if ((new = undo_push (gimage, size, QMASK_UNDO, TRUE)))
     {
       data               = g_new (QmaskUndo, 1);
       new->data          = data;
@@ -2286,7 +2288,7 @@ undo_push_guide (GImage *gimage,
 
   size = sizeof (GuideUndo);
 
-  if ((new = undo_push (gimage, size, GIMAGE_MOD, TRUE)))
+  if ((new = undo_push (gimage, size, GUIDE_UNDO, TRUE)))
     {
       ((Guide *)(guide))->ref_count++;
       data               = g_new (GuideUndo, 1);
@@ -2342,6 +2344,82 @@ undo_free_guide (UndoState state,
   if (data->guide->position < 0 && data->guide->ref_count <= 0)
       gimage_delete_guide (data->gimage, data->guide);
 
+  g_free (data_ptr);
+}
+
+/****************/
+/*  Resolution  */
+
+typedef struct _ResolutionUndo ResolutionUndo;
+
+struct _ResolutionUndo
+{
+  gdouble xres;
+  gdouble yres;
+  GUnit   unit;
+};
+
+int
+undo_push_resolution (GImage *gimage)
+{
+  Undo *new;
+  ResolutionUndo *data;
+  long size;
+
+  size = sizeof (ResolutionUndo);
+
+  if ((new = undo_push (gimage, size, RESOLUTION_UNDO, TRUE)))
+    {
+      data               = g_new (ResolutionUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_resolution;
+      new->free_func     = undo_free_resolution;
+
+      data->xres = gimage->xresolution;
+      data->yres = gimage->yresolution;
+      data->unit = gimage->unit;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static int
+undo_pop_resolution (GImage    *gimage,
+		     UndoState state,
+		     UndoType  type,
+		     void      *data_ptr)
+{
+  ResolutionUndo *data;
+  gdouble tmpres;
+  GUnit   tmpunit;
+
+  data = data_ptr;
+
+  tmpres = gimage->xresolution;
+  gimage->xresolution = data->xres;
+  data->xres = tmpres;
+
+  tmpres = gimage->yresolution;
+  gimage->yresolution = data->yres;
+  data->yres = tmpres;
+
+  if (data->unit != gimage->unit)
+    {
+      tmpunit = gimage->unit;
+      gimage->unit = data->unit;
+      data->unit = tmpunit;
+      gdisplays_resize_cursor_label (gimage);
+    }
+
+  return TRUE;
+}
+
+static void
+undo_free_resolution (UndoState state,
+		      void      *data_ptr)
+{
   g_free (data_ptr);
 }
 
@@ -2706,6 +2784,7 @@ static struct undo_name_t {
     {LAYER_SCALE_UNDO,	N_("layer scale")},
     {LAYER_RESIZE_UNDO,	N_("layer resize")},
     {QMASK_UNDO,	N_("quickmask")},
+    {RESOLUTION_UNDO,	N_("resolution")},
     {MISC_UNDO,		N_("misc")}
 };
 #define NUM_NAMES (sizeof (undo_name) / sizeof (struct undo_name_t))

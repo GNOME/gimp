@@ -343,6 +343,8 @@ gimp_image_set_resolution (GimpImage *gimage,
 			   gdouble    xresolution,
 			   gdouble    yresolution)
 {
+  undo_push_resolution (gimage);
+  
   gimage->xresolution = xresolution;
   gimage->yresolution = yresolution;
 }
@@ -362,6 +364,8 @@ void
 gimp_image_set_unit (GimpImage *gimage,
 		     GUnit      unit)
 {
+  undo_push_resolution (gimage);
+
   gimage->unit = unit;
 }
 
