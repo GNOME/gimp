@@ -1,46 +1,48 @@
-# Punjabi translation of gimp-libgimp.
+# translation of pa.po to Punjabi
 # Copyright (C) 2004 THE gimp-libgimp'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp-libgimp packageJaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
-# 
-# 
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: pa VERSION\n"
+"Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-05 20:04+0100\n"
-"PO-Revision-Date: 2004-04-11 06:45+0530\n"
-"Last-Translator: Punjab Linux Technology <punjablinux@netscape.net>\n"
-"Language-Team: Punjabi\n"
+"POT-Creation-Date: 2004-07-20 03:47+0200\n"
+"PO-Revision-Date: 2004-07-20 16:17+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
+"Language-Team: Punjabi <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
-msgstr "ਬੁਰਸ਼ ਚੋਣ"
+msgstr "ਬੁਰਸ਼ ਚੋਣ"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr "ਝਲਕ਼਼਼"
+msgstr "ਝਲਕ਼"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s ਪਰਤ੾ ਦਾ ਪ੍ਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
+msgstr "%s ਪਰਤਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
 
 #: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
-msgstr "ਦਿੱਖ ਪਰਤ੾ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਦਿੱਖ ਪਰਤਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
 
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s ਪਰਤ ਪੂਰਤੀ, ਅਾਕਾਰ ਜ੾ ਧੁੰਦਲਾਪਣ ਦਾ ਪ੍ਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
+msgstr "%s ਪਰਤ ਪੂਰਤੀ, ਆਕਾਰ ਜਾਂ ਧੁੰਦਲਾਪਣ ਦਾ ਪ੍ਰਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s ਸਿਰਫ ਪਰਤ੾ ਦਾ ਸਜੀਵਤਾ ਫਰੇਮ੾ ਦੇ ਤੌਰ ਤੇ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ ਪਰਤਾਂ ਦਾ ਸਜੀਵਤਾ ਫਰੇਮਾਂ ਦੇ ਤੌਰ ਤੇ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -48,17 +50,17 @@ msgstr "ਸਜੀਵਤਾ ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲੋ"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
 msgid "Flatten Image"
-msgstr "ਫੈਲਿਅਾ ਚਿੱਤਰ"
+msgstr "ਫੈਲਿਆ ਚਿੱਤਰ"
 
 #: libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s ਪਾਰਦਰਸ਼ਤਾ ਦਾ ਪ੍ਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
+msgstr "%s ਪਾਰਦਰਸ਼ਤਾ ਦਾ ਪ੍ਰਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
 
 #: libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s ਪਰਤ ਮਖੌਟੇ ਦਾ ਪ੍ਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
+msgstr "%s ਪਰਤ ਮਖੌਟੇ ਦਾ ਪ੍ਰਬੰਧਨ ਨਹੀ ਕਰ ਸਕਦਾ"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -67,7 +69,7 @@ msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ"
 #: libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s ਸਿਰਫ RGB ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ RGB ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
@@ -76,7 +78,7 @@ msgstr "RGB ਵਿੱਚ ਬਦਲੋ"
 #: libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
-msgstr "%s ਸਿਰਫ ਗਰੇ-ਪੈਮਾਨਾ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ ਗਰੇ-ਪੈਮਾਨਾ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
@@ -85,64 +87,64 @@ msgstr "ਭੂਰੇ-ਪੈਮਾਨੇ ਵਿੱਚ ਬਦਲੋ"
 #: libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "%s ਸਿਰਫ ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr "ਮੂਲ ਵਿਵਸਥਾਵ੾ ਵਰਤ ਕੇ ਵਿਸ਼ਾ-ਸੂਚੀ ਵਿੱਚ ਬਦਲੋ\n"
-"(ਨਤੀਜਾ ਵੇਖਣ ਲੲੀ ੲਿਸ ਨੂੰ ਦਸਤਾਵੇਜ਼ੀ ਕਰੋ)"
+msgstr ""
+"ਮੂਲ ਵਿਵਸਥਾਵਾਂ ਵਰਤ ਕੇ ਵਿਸ਼ਾ-ਸੂਚੀ ਵਿੱਚ ਬਦਲੋ\n"
+"(ਨਤੀਜਾ ਵੇਖਣ ਲਈ ਇਸ ਨੂੰ ਦਸਤਾਵੇਜ਼ੀ ਕਰੋ)"
 
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s ਸਿਰਫ ਬਿੱਟ-ਮੈਪ (ਦੋ ਰੰਗ) ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ ਬਿੱਟ-ਮੈਪ (ਦੋ ਰੰਗ) ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:307
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"ਬਿੱਟ-ਮੈਪ ਮੂਲ ਵਿਵਸਥਾਵ੾ ਵਰਤ ਕੇ ਵਿਸ਼ਾ-ਸੂਚੀ ਵਿੱਚ ਬਦਲੋ\n"
-"(ਨਤੀਜਾ ਵੇਖਣ ਲੲੀ ੲਿਸ ਨੂੰ ਦਸਤਾਵੇਜ਼ੀ ਕਰੋ)"
+"ਬਿੱਟ-ਮੈਪ ਮੂਲ ਵਿਵਸਥਾਵਾਂ ਵਰਤ ਕੇ ਵਿਸ਼ਾ-ਸੂਚੀ ਵਿੱਚ ਬਦਲੋ\n"
+"(ਨਤੀਜਾ ਵੇਖਣ ਲਈ ਇਸ ਨੂੰ ਦਸਤਾਵੇਜ਼ੀ ਕਰੋ)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr ""
-"%s RGB ਜ੾ ਗਰੇ ਪੈਮਾਨਾ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s RGB ਜਾਂ ਗਰੇ ਪੈਮਾਨਾ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s RGB ਜ੾ ਵਿਸ਼ਾ-ਸੂਚੀ ਪੈਮਾਨਾ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s RGB ਜਾਂ ਵਿਸ਼ਾ-ਸੂਚੀ ਪੈਮਾਨਾ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s ਸਿਰਫ ਗਰੇ-ਪੈਮਾਨਾ ਜ੾ ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿਤਰ੾ ਦਾ ਪ੍ਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
+msgstr "%s ਸਿਰਫ ਗਰੇ-ਪੈਮਾਨਾ ਜਾਂ ਵਿਸ਼ਾ-ਸੂਚੀ ਚਿੱਤਰਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰ ਸਕਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:346
 #, c-format
 msgid "%s needs an alpha channel"
-msgstr "%s ੲਿੱਕ ਅੈਲਫਾ ਚੈਨਲ ਲੋੜਦਾ ਹੈ"
+msgstr "%s ਇੱਕ ਐਲਫਾ ਚੈਨਲ ਲੋਡ਼ਦਾ ਹੈ"
 
 #: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
-msgstr "ਅੈਲਫਾ ਚੈਨਲ ਜੋੜੋ"
+msgstr "ਐਲਫਾ ਚੈਨਲ ਜੋਡ਼ੋ"
 
 #: libgimp/gimpexport.c:382
 msgid "Confirm Save"
-msgstr "ਸੰਭਾਲ ਦੀ ਪੁਸ਼ਟੀ"
+msgstr "ਸੰਭਾਲ ਦੀ ਪੁਸ਼ਟੀ"
 
 #: libgimp/gimpexport.c:388
 msgid "Confirm"
-msgstr "ਪੁਸ਼ਟੀ"
+msgstr "ਪੁਸ਼ਟੀ"
 
 #: libgimp/gimpexport.c:457
 msgid "Export File"
-msgstr "ਫਾੲਿਲ ਭੇਜੋ"
+msgstr "ਫਾਇਲ ਭੇਜੋ"
 
 #: libgimp/gimpexport.c:461
 msgid "_Ignore"
@@ -158,12 +160,11 @@ msgstr "ਭੇਜੋ"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr ""
-"ਤੁਹਾਡਾ ਚਿੱਤਰ ਹੇਠਲੇ ਕਾਰਨ੾ ਕਰਕੇ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲਣ ਤੋਂ ਪਹਿਲ੾ ਭੇਜਣੀ ਚਾਹੀਦੀ ਹੈ:"
+msgstr "ਤੁਹਾਡਾ ਚਿੱਤਰ ਹੇਠਲੇ ਕਾਰਨਾਂ ਕਰਕੇ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲਣ ਤੋਂ ਪਹਿਲਾਂ ਭੇਜਣੀ ਚਾਹੀਦੀ ਹੈ:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "ਭੇਜ ਪਰਿਵਰਤਨ ਤੁਹਾਡੇ ਮੁੱਢਲੇ ਚਿੱਤਰ ਨੂੰ ਤਬਦੀਲ ਨਹੀ ਕਰੇਗਾ ੤"
+msgstr "ਭੇਜ ਪਰਿਵਰਤਨ ਤੁਹਾਡੇ ਮੁੱਢਲੇ ਚਿੱਤਰ ਨੂੰ ਤਬਦੀਲ ਨਹੀ ਕਰੇਗਾ ।"
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -171,8 +172,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"ਤੁਸੀ ਪਰਤ ਮਖੌਟਾ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲ ਰਹੇ ਹੋ ੤\n"
-"ੲਿਹ ਦਿੱਖ ਪਰਤ੾ ਨੂੰ ਨਹੀ ਸੰਭਾਲੇਗਾ ੤"
+"ਤੁਸੀ ਪਰਤ ਮਖੌਟਾ %s ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲ ਰਹੇ ਹੋ ।\n"
+"ਇਹ ਦਿੱਖ ਪਰਤਾਂ ਨੂੰ ਨਹੀ ਸੰਭਾਲੇਗਾ ।"
 
 #: libgimp/gimpexport.c:671
 #, c-format
@@ -180,8 +181,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"ਤੁਸੀ ਚੈਨਲ %s (ਸੰਭਾਲੀ ਚੋਣ) ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲ ਰਹੇ ਹੋ ੤\n"
-"ੲਿਹ ਦਿੱਖ ਪਰਤ੾ ਨੂੰ ਨਹੀ ਸੰਭਾਲੇਗਾ ੤"
+"ਤੁਸੀ ਚੈਨਲ %s (ਸੰਭਾਲੀ ਚੋਣ) ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲ ਰਹੇ ਹੋ ।\n"
+"ਇਹ ਦਿੱਖ ਪਰਤਾਂ ਨੂੰ ਨਹੀ ਸੰਭਾਲੇਗਾ ।"
 
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
@@ -193,7 +194,7 @@ msgstr "ਢਾਲਵਾ ਚੋਣ"
 
 #: libgimp/gimpmenu.c:407
 msgid "None"
-msgstr "ਕੋੲੀ ਨਹੀ"
+msgstr "ਕੋਈ ਨਹੀ"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -201,7 +202,7 @@ msgstr "ਤਰਤੀਬ ਚੋਣ"
 
 #: libgimp/gimpunitcache.c:57
 msgid "percent"
-msgstr "ਪ੍ਤੀਸ਼ਤ"
+msgstr "ਪ੍ਤੀਸ਼ਤ"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
@@ -210,17 +211,17 @@ msgstr "(ਅਯੋਗ UTF-8 ਸਤਰ)"
 #: libgimpbase/gimputils.c:244
 #, c-format
 msgid "%d Bytes"
-msgstr "%d ਬਾੲੀਟ"
+msgstr "%d ਬਾਈਟ"
 
 #: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
-msgstr "%.2f ਕਿਲੋ-ਬਾੲੀਟ"
+msgstr "%.2f ਕਿਲੋ-ਬਾਈਟ"
 
 #: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f ਕਿਲੋ-ਬਾੲੀਟ"
+msgstr "%.1f ਕਿਲੋ-ਬਾਈਟ"
 
 #: libgimpbase/gimputils.c:257
 #, c-format
@@ -230,17 +231,17 @@ msgstr "%d ਕੇਬੀ"
 #: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f ਅੈਮਬੀ"
+msgstr "%.2f ਐਮਬੀ"
 
 #: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f ਅੈਮਬੀ"
+msgstr "%.1f ਐਮਬੀ"
 
 #: libgimpbase/gimputils.c:272
 #, c-format
 msgid "%d MB"
-msgstr "%d ਅੈਮਬੀ"
+msgstr "%d ਐਮਬੀ"
 
 #: libgimpbase/gimputils.c:279
 #, c-format
@@ -260,23 +261,23 @@ msgstr "%d ਜੀਬੀ"
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "ਲੋਡ ਮੈਡਿੳੂਲ: '%s'\n"
+msgstr "ਲੋਡ ਮੈਡਿਊਲ: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "ਮੈਡਿੳੂਲ '%s' ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
+msgstr "ਮੈਡਿਊਲ '%s' ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr "ਤਿਅਾਗ ਮੈਡਿੳੂਲ: '%s'\n"
+msgstr "ਤਿਆਗ ਮੈਡਿਊਲ: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
-msgstr "ਮੈਡਿੳੂਲ ਗਲਤੀ"
+msgstr "ਮੈਡਿਊਲ ਗਲਤੀ"
 
 #: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
@@ -288,12 +289,12 @@ msgstr "ਲੋਡ ਅਸਫਲ"
 
 #: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
-msgstr "ਲੋਡ ਨਹੀ ਹੋੲਿਅਾ"
+msgstr "ਲੋਡ ਨਹੀ ਹੋਇਆ"
 
 #: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾੳੁਣ ਵਿੱਚ ਅਸਫਲ ੤"
+msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ।"
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -350,7 +351,7 @@ msgstr "ਰੰਗਤ"
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
-msgstr "ਸੰਤਿ੍ਪਤੀ"
+msgstr "ਸੰਤ੍ਰਿਪਤੀ"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
@@ -370,15 +371,15 @@ msgstr "ਨੀਲਾ"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
-msgstr "ਅੈਲਫਾ"
+msgstr "ਐਲਫਾ"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr "HTML ਵਿੱਚ ਵਰਤੀ ਜ੾ਦੀ ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ "
+msgstr "HTML ਵਿੱਚ ਵਰਤੀ ਜਾਂਦੀ ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ "
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr "ਹੈਕਸ ਤਿੱਕੜੀ:"
+msgstr "ਹੈਕਸ ਤਿੱਕਡ਼ੀ:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -394,25 +395,33 @@ msgstr "ਫੋਲਡਰ ਚੁਣੋ"
 
 #: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
-msgstr "ਫਾੲਿਲ ਚੁਣੋ"
+msgstr "ਫਾਇਲ ਚੁਣੋ"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
-msgstr "ਕਿਲੋ-ਬਾੲੀਟ"
+msgstr "ਕਿਲੋ-ਬਾਈਟ"
 
 #: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
-msgstr "ਮੈਗਾ ਬਾੲੀਟ"
+msgstr "ਮੈਗਾ ਬਾਈਟ"
 
 #: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
-msgstr "ਗੀਗਾ ਬਾੲੀਟ"
+msgstr "ਗੀਗਾ ਬਾਈਟ"
+
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "ਲਿਖਣਯੋਗ"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "ਫੋਲਡਰ"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "ਅਾੲੀਡਰੌਪਰ ਦਬਾਓ, ਫਿਰ ਅਾਪਣੇ ਪਰਦੇ ੳੁੱਪਰ ਕਿਤੇ ਵੀ ਚੁਣਨ ਲੲੀ ੲਿੱਕ ਰੰਗ ਦਬਾਓ ੤"
+msgstr "ਆਈਡਰੌਪਰ ਦਬਾਓ, ਫਿਰ ਆਪਣੇ ਪਰਦੇ ਉੱਪਰ ਕਿਤੇ ਵੀ ਚੁਣਨ ਲਈ ਇੱਕ ਰੰਗ ਦਬਾਓ ।"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -432,7 +441,7 @@ msgstr "ਸੰਬੰਧਿਤ"
 
 #: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr "ਨਵੇ ਵ੾ਗ ਚਿਪਕਾਓ"
+msgstr "ਨਵੇ ਵਾਂਗ ਚਿਪਕਾਓ"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
@@ -440,7 +449,7 @@ msgstr "ਵਿੱਚ ਚਿਪਕਾਓ"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
-msgstr "ਮੁੜ ਨਿਰਧਾਰਨ"
+msgstr "ਮੁਡ਼ ਨਿਰਧਾਰਨ"
 
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
@@ -452,11 +461,11 @@ msgstr "ਅੱਖਰ ਵਿਸਥਾਪਨ"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr "ਲਾੲੀਨ ਵਿਸਥਾਪਨ"
+msgstr "ਲਾਈਨ ਵਿਸਥਾਪਨ"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr "ਮੁੜ-ਅਾਕਾਰ"
+msgstr "ਮੁਡ਼-ਆਕਾਰ"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
@@ -464,7 +473,7 @@ msgstr "ਪੈਮਾਨਾ"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
-msgstr "ਫੈਲਾੳੁ"
+msgstr "ਫੈਲਾਉ"
 
 #: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
@@ -480,37 +489,37 @@ msgstr "ਧੱਕਾ"
 
 #: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
-msgstr "ਹੋਰ਼਼਼"
+msgstr "ਹੋਰ਼"
 
 #: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
-msgstr "ੲਿਕਾੲੀ ਚੋਣ"
+msgstr "ਇਕਾਈ ਚੋਣ"
 
 #: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
-msgstr "ੲਿਕਾੲੀ"
+msgstr "ਇਕਾਈ"
 
 #: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
-msgstr "ਗੁਣ੾ਕ"
+msgstr "ਗੁਣਾਂਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"ਬੇਤਰਤੀਬੇ ਨੰਬਰ ੳੁਤਪਾਦਕ ਮੂਲ ਲੲੀ ੲਿਹ ਮੁੱਲ ਚੁਣੋ - ੲਿਸ ਨਾਲ ਤੁਸੀ ਦਰਸਾੲੇ "
-"\"ਬੇਤਰਤੀਬ\" ਕਿਰਿਅਾ ਦੁਹਰਾ ਸਕਦੇ ਹੋ"
+"ਬੇਤਰਤੀਬੇ ਨੰਬਰ ਉਤਪਾਦਕ ਮੂਲ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀ ਦਰਸਾਏੲ \"ਬੇਤਰਤੀਬ\" ਕਿਰਿਆ ਦੁਹਰਾ "
+"ਸਕਦੇ ਹੋ"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
-msgstr "ਨਵ੾ ਮੂਲ"
+msgstr "ਨਵਾਂ ਮੂਲ"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr "ੳੁਪਜੇ ਬੇਤਰਤੀਬ ਨੰਬਰ ਸਮੇਤ ਮੂਲ ਬੇਤਰਤੀਬ ਨੰਬਰ ੳੁਤਪਾਦਕ"
+msgstr "ਉਪਜੇ ਬੇਤਰਤੀਬ ਨੰਬਰ ਸਮੇਤ ਮੂਲ ਬੇਤਰਤੀਬ ਨੰਬਰ ਉਤਪਾਦਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
 msgstr "ਬੇਤਰਤੀਬੀ"
 
@@ -520,7 +529,7 @@ msgstr "ਰੰਗ ਕਮੀ ਕਪਟ ਫਿਟਰ (Brettel-Vienot-Mollon algori
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
-msgstr "ਰੰਗ ਕਮੀ ਵਾਲੀ ਦਿ੍ਸ਼ਟੀ"
+msgstr "ਰੰਗ ਕਮੀ ਵਾਲੀ ਦਿੱਖ"
 
 #: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
@@ -528,19 +537,19 @@ msgstr "ਰੰਗ ਕਮੀ ਕਿਸਮ:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr "ਪਰੋਤ੾ਨੋਪੀਅਾ (ਲਾਲ ਨੂੰ ਭਾਵੁਕਤਾ)"
+msgstr "ਪਰੋਤਾਂਨੋਪੀਆ (ਲਾਲ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "ਡਯੂਟਰ੾ਨੋਪੀਅਾ (ਹਰੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
+msgstr "ਡਯੂਟਰਾਂਨੋਪੀਆ (ਹਰੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "ਟਰੀਟ੾ਨੋਪੀਅਾ (ਨੀਲੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
+msgstr "ਟਰੀਟਾਂਨੋਪੀਆ (ਨੀਲੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr "ਗਾਮਾ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
+msgstr "ਗਾਮਾ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
@@ -552,15 +561,15 @@ msgstr "ਗਾਮਾ:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr "ਵਧੇਰੇ ਵਖਰੇਂਵ੾ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
+msgstr "ਵਧੇਰੇ ਵਖਰੇਂਵਾਂ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr "ਵਖਰੇਂਵ੾"
+msgstr "ਵਖਰੇਂਵਾਂ"
 
 #: modules/cdisplay_highcontrast.c:308
 msgid "Contrast C_ycles:"
-msgstr "ਵਖਰੇਂਵ੾ ਚੱਕਰ:"
+msgstr "ਵਖਰੇਂਵਾਂ ਚੱਕਰ:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
@@ -572,19 +581,19 @@ msgstr "ਰੰਗ ਸਬੂਤ"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr "ਪ੍ਤੱਖ ਗਿਅਾਨਸ਼ੀਲ"
+msgstr "ਪ੍ਰਤੱਖ ਗਿਆਨਸ਼ੀਲ"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr "ਸੰਬੰਧਿਤ ਕਲੋਰੀਮੈਟਿ੍ਕ"
+msgstr "ਸੰਬੰਧਿਤ ਕਲੋਰੀਮੈਟ੍ਰਿਕ"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr "ਪੂਰਨ ਕਲੋਰੀਮੈਟਿ੍ਕ"
+msgstr "ਪੂਰਨ ਕਲੋਰੀਮੈਟ੍ਰਿਕ"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr "ੳੁਦੇਸ਼:"
+msgstr "ਉਦੇਸ਼:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
@@ -624,7 +633,7 @@ msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
 msgid "Cyan"
-msgstr "ਸਿਅਾਨ"
+msgstr "ਸਿਆਨ"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
@@ -640,7 +649,7 @@ msgstr "ਕਾਲਾ"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr "ਕਾਲਾ ਖਿੱਚਿਅਾ ਹੋੲਿਅਾ (%):"
+msgstr "ਕਾਲਾ ਖਿੱਚਿਆ ਹੋਇਆ (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"

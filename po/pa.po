@@ -1,20 +1,21 @@
+# translation of pa.po to Punjabi
 # Copyright (C) 2004 THE gimp.HEAD'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp.HEAD package.
 # Punjab Linux Technology <punjablinux@netscape.net>, 2004.
-# , fuzzy
-# 
-# 
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp VERSION\n"
+"Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-30 15:38+0530\n"
-"PO-Revision-Date: 2004-06-27 19:41+0530\n"
-"Last-Translator: Amanpreet Singh Alam <amanlinux@netscape.net>\n"
-"Language-Team: Punjabi <indlinux-punjabi@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2004-07-20 16:09+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
+"Language-Team: Punjabi <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: app/app_procs.c:183
 msgid ""
@@ -142,8 +143,7 @@ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> ਇੱਕ ਬਦਲਵੀ ਸਿਸਟਮ gimprc ਫਾਇਲ ਵਰਤੋ ।\n"
 
 #: app/main.c:514
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr "  --dump-gimprc             ਮੂਲ ਵਿਵਸਥਾ ਨਾਲ ਆਉਟਪੁੱਟ ਇੱਕ gimprc ਫਾਇਲ \n"
 
 #: app/main.c:515
@@ -153,8 +153,7 @@ msgid ""
 msgstr "  -c, --console-messages   ਤਖਤੀ ਦੀ ਬਜਾਏ ਕੰਨਸੋਲ ਤੇ ਚੇਤਵਾਨੀ ਵੇਖਾਉ ।\n"
 
 #: app/main.c:516
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "  --debug-handlers         ਨਾ-ਘਾਤਕ ਡੀਬੱਗ ਸੰਕੇਤ ਹੈਡਲਰਾਂ ਨੂੰ ਯੋਗ ਕਰੋ । \n"
 
 #: app/main.c:517
@@ -438,7 +437,7 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"ਜਦੋ ਇਹ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਗਿਆ ਤਾਂ ਇਹ ਯਕੀਨੀ ਬਣਾਇਆ ਜਾਵੇਗਾ ਕਿ ਚਿੱਤਰ ਦਾ ਰਹੇਕ ਪਿਕਸਲ ਨੂੰਸਕਰੀਨ "
+"ਜਦੋ ਇਹ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਗਿਆ ਤਾਂ ਇਹ ਯਕੀਨੀ ਬਣਾਇਆ ਜਾਵੇਗਾ ਕਿ ਚਿੱਤਰ ਦਾ ਹਰੇਕ ਪਿਕਸਲ ਨੂੰਸਕਰੀਨ "
 "ਦੇ ਪਿਕਸਲ ਨਾਲ ਮੇਲ ਦਿੱਤਾ ਜਾਵੇਗਾ ।"
 
 #: app/config/gimprc-blurbs.h:70
@@ -501,8 +500,7 @@ msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr "ਇੱਕ ਨਿੱਜੀ ਰੰਗ-ਖਾਕਾ ਇੰਸਟਾਲ ਕਰੋ,  ਜੋ ਕਿ ਫਰਜ਼ੀ-ਰੰਗ ਦਿੱਖ ਲਈ ਬਹੁਤ ਜ਼ਰੂਰੀ ਹੈ"
 
 #: app/config/gimprc-blurbs.h:167
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:171
@@ -575,16 +573,14 @@ msgstr ""
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr ""
-"ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਅਕਾਰ ਦੇ ਵਾਧੇ ਅਤੇ ਘਟਾ ਸਾਰਆਪਣੇ ਆਪ ਨੂੰ ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ ।"
+msgstr "ਜਦੋ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਅਕਾਰ ਦੇ ਵਾਧੇ ਅਤੇ ਘਟਾ ਸਾਰਆਪਣੇ ਆਪ ਨੂੰ ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ ।"
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "ਜੈਪਮ ਨੂੰ ਆਪਣੇ ਅਖੀਰੀ ਸੰਭਾਲੇ ਅਜਲਾਸ ਨੂੰ ਸ਼ੁਰੂ ਵੇਲੇ ਮੁਡ਼-ਪ੍ਰਾਪਤ ਕਰਨ ਦੀ ਆਗਿਆ ਦਿਉ ।"
 
 #: app/config/gimprc-blurbs.h:253
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "ਜੈਮਪ ਅਜਲਾਸ ਦੌਰਾਨ ਮੌਜੂਦਾ ਸੰਦ, ਤਰਤੀਬ, ਰੰਗ ਅਤੇ ਬੁਰਸ਼ ਵਗੈਰਾ ਨੂੰ ਯਾਦ ਰੱਖੋ ।"
 
 #: app/config/gimprc-blurbs.h:257
@@ -1751,8 +1747,7 @@ msgid "The foreground color of the grid."
 msgstr "ਗਰਿੱਡ ਦਾ ਮੁੱਖ-ਭੂਮੀ ਰੰਗ"
 
 #: app/core/gimpgrid.c:139
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr "ਗਰਿੱਡ ਦਾ ਪਿੱਠਭੂਮੀ ਰੰਗ; ਕੇਵਲ ਦੂਹਰੀ ਧਾਰੀਦਾਰ ਰੇਖਾ ਸ਼ੈਲੀ ਨਾਲ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ ।"
 
 #: app/core/gimpgrid.c:145
@@ -1764,8 +1759,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "ਗਰਿੱਡ ਰੇਖਾਵਾਂ ਵਿੱਚ ਲੰਬਕਾਰੀ ਦੂਰੀ"
 
 #: app/core/gimpgrid.c:159
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 
 #: app/core/gimpgrid.c:166
@@ -2157,8 +2151,7 @@ msgstr ""
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 
 #: app/core/gimppattern.c:367
@@ -2536,8 +2529,7 @@ msgid "Mode:"
 msgstr "ਮੋਡਃ"
 
 #: app/gui/brush-select.c:322
-msgid ""
-"Unable to run brush callback. The corresponding plug-in may have crashed."
+msgid "Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr ""
 
 #: app/gui/brushes-menu.c:45
@@ -3237,8 +3229,7 @@ msgid "/By Extension"
 msgstr "/ਐਕਸ਼ਟੇਸ਼ਨ ਅਨੁਸਾਰ"
 
 #: app/gui/font-select.c:234
-msgid ""
-"Unable to run font callback. The corresponding plug-in may have crashed."
+msgid "Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr ""
 
 #: app/gui/fonts-menu.c:44
@@ -3502,8 +3493,7 @@ msgid "Re-distribute _Handles in Selection"
 msgstr ""
 
 #: app/gui/gradient-select.c:272
-msgid ""
-"Unable to run gradient callback. The corresponding plug-in may have crashed."
+msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
 
 #: app/gui/gradients-commands.c:73
@@ -5134,8 +5124,7 @@ msgid "Preview"
 msgstr "ਨਮੂਨਾ"
 
 #: app/gui/palette-select.c:250
-msgid ""
-"Unable to run palette callback. The corresponding plug-in may have crashed."
+msgid "Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr ""
 
 #: app/gui/palettes-commands.c:82
@@ -5175,8 +5164,7 @@ msgid "/_Refresh Palettes"
 msgstr "/ਰੰਗ-ਪੱਟੀ ਤਾਜ਼ਾ"
 
 #: app/gui/pattern-select.c:252
-msgid ""
-"Unable to run pattern callback. The corresponding plug-in may have crashed."
+msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
 
 #. disabled because they are useless now
@@ -6578,8 +6566,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "ਉਪਰ ਦਿੱਤੀਆਂ ਵਿਵਸਥਾਵਾਂ ਨੂੰ ਮਨਜ਼ੂਰ ਕਰਨ ਲਈ \"ਜਾਰੀ ਰੱਖੋ\" ਨੂੰ ਦਬਾਉ ।"
 
 #: app/gui/user-install-dialog.c:956
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr "<b>ਜੈਮਪ ਦੀ ਅਨੁਕੂਲ ਕਾਰਜਕੁਸ਼ਤਾ ਲਈ, ਕੁਝ ਵਿਵਸਥਾਵਾਂ ਨੂੰ ਅਨੁਕੂਲ ਕਰਨਾ ਪਵੇਗਾ ।</b>"
 
 #: app/gui/user-install-dialog.c:963
@@ -6636,8 +6623,7 @@ msgstr "ਸਵੈਪ ਫੋਲਡਰਃ"
 msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
-msgstr ""
-"ਜੈਮਪ ਨੇ ਇਹ ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਸਿਸਟਮ ਤੋ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ । ਪਰ , ਇਹ ਅਕਸਰਠੀਕ ਮੁੱਲ ਨਹੀ ਦਿੰਦੀ ਹੈ ।"
+msgstr "ਜੈਮਪ ਨੇ ਇਹ ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਸਿਸਟਮ ਤੋ ਪ੍ਰਾਪਤ ਕੀਤੀ ਹੈ । ਪਰ , ਇਹ ਅਕਸਰਠੀਕ ਮੁੱਲ ਨਹੀ ਦਿੰਦੀ ਹੈ ।"
 
 #: app/gui/user-install-dialog.c:1263
 #, c-format
@@ -6865,8 +6851,7 @@ msgid "Threshold"
 msgstr "ਮੁੱਢਲਾ ਮੁੱਲ"
 
 #: app/pdb/image_cmds.c:3660
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 
 #: app/pdb/internal_procs.c:80
@@ -8234,8 +8219,7 @@ msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/ਸੰਦ/ਪੇਂਟ ਸੰਦ/ਧੱਬਾ"
 
 #: app/tools/gimptextoptions.c:146
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
 #: app/tools/gimptextoptions.c:153
@@ -9142,10 +9126,8 @@ msgid "Auto"
 msgstr "ਸਵੈ"
 
 #: app/widgets/gimpimagedock.c:222
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
-msgstr ""
-"ਜੇਕਰ ਯੋਗ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਤਖਤੀ ਸਵੈ ਹੀ ਚਿੱਤਰ ਜਿਸ ਤੇ ਤੁਸੀ ਕੰਮ ਕਰ ਰਹੇ ਹੋ ਦੇ ਨਾਲ ਚਲੇਗਾ ।"
+msgid "When enabled the dialog automatically follows the image you are working on."
+msgstr "ਜੇਕਰ ਯੋਗ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਤਖਤੀ ਸਵੈ ਹੀ ਚਿੱਤਰ ਜਿਸ ਤੇ ਤੁਸੀ ਕੰਮ ਕਰ ਰਹੇ ਹੋ ਦੇ ਨਾਲ ਚਲੇਗਾ ।"
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"
@@ -9329,8 +9311,7 @@ msgstr "ਚੁਣਿਆ ਨਮੂਨਾ ਹਟਾਉ"
 
 #: app/widgets/gimptemplateview.c:388
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "ਕੀ ਤੁਸੀ ਯਕੀਨਨ ਹੀ ਨਮੂਨਾ '%s' ਨੂੰ ਸੂਚੀ ਅਤੇ ਡਿਸਕ ਤੋ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ ?"
 
 #: app/widgets/gimptemplateview.c:392
@@ -9718,5 +9699,3 @@ msgstr "XCF ਗਲਤੀ: ਨਾ-ਸਹਿਯੋਗੀ XCF ਫਾਇਲ ਵਰ�
 msgid "Create and edit images or photographs"
 msgstr "ਚਿੱਤਰ ਜਾਂ ਤਸਵੀਰਾਂ ਬਣਾਉ ਜਾਂ ਸੋਧੋ"
 
-#~ msgid "Text Modified"
-#~ msgstr "ਪਾਠ ਸੋਧ"
