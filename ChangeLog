@@ -1,3 +1,23 @@
+2004-01-06  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/png.c: Implemented default settings, for both
+	the UI and the PDB. Settings are stored in gimprc, but right now
+	saving is broken since gimp_gimprc_set is broken right now.
+
+	There are 3 new PDB entry points: file_png_save_defaults, which is
+	a save function that only takes drawable and filename info, and
+	uses the stored gimprc settings for the rest of the parameters.
+	This is hooked up to the save magic, so using gimp_file_save to
+	save as png now won't make big files anymore. The other two are
+	file_png_get_defaults and file_png_set_defaults, which query
+	and set the gimprc setting respectively.
+
+	I also did some cleanup, and added a comment boolean to the
+	file_png_save2 interface. The string serialization to the gimprc
+	is sort of dumb, but it works.
+
+	Next step is to do similar for jpeg and gif.
+	
 2004-01-06  Sven Neumann  <sven@gimp.org>
 
 	Fixes to the new thumbnail code. Will need more changes...
