@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2001-08-29 22:50+0200\n"
+"POT-Creation-Date: 2001-11-11 22:48+0100\n"
 "PO-Revision-Date: 2000-06-28 00:04+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -15,51 +15,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
 msgstr "kennt keine Ebenen"
 
-#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
+#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
-#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
+#: libgimp/gimpexport.c:179
+#, fuzzy
+msgid "can't handle layer offsets, size or opacity"
+msgstr "kennt keine Ebenen"
+
+#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
 msgstr "kann Ebenen nur als Animation abspeichern"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
 msgstr "Als Animation speichern"
 
-#: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
-#: libgimp/gimpexport.c:196
+#: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
 msgstr "kennt keine Transparenz"
 
-#: libgimp/gimpexport.c:205
+#: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
 msgstr "kennt nur RGB"
 
-#: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "In RGB umwandeln"
 
-#: libgimp/gimpexport.c:214
+#: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
 msgstr "kennt nur Graustufen"
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "In Graustufen umwandeln"
 
-#: libgimp/gimpexport.c:223
+#: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
 msgstr "kennt nur indizierte Paletten"
 
-#: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -67,53 +72,85 @@ msgstr ""
 "Mit Standardeinstellungen in indiziertes Format umwandeln\n"
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
-#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
 msgstr "kennt nur RGB und Graustufen"
 
-#: libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
 msgstr "kennt nur RGB und indizierte Paletten"
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
 msgstr "kennt nur Graustufen und indizierte Paletten"
 
-#: libgimp/gimpexport.c:263
+#: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
 msgstr "benötigt einen Alphakanal"
 
-#: libgimp/gimpexport.c:264
+#: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
 #.
-#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:333
+#: libgimp/gimpexport.c:356
+msgid "Confirm Save"
+msgstr ""
+
+#: libgimp/gimpexport.c:360
+msgid "Confirm"
+msgstr ""
+
+#: libgimp/gimpexport.c:362
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: libgimp/gimpexport.c:376
+#, c-format
+msgid ""
+"You are about to save %s as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:414
 msgid "Export File"
 msgstr "Datei exportieren"
 
-#: libgimp/gimpexport.c:338
+#: libgimp/gimpexport.c:419
 msgid "Export"
 msgstr "Exportieren"
 
-#: libgimp/gimpexport.c:340
+#: libgimp/gimpexport.c:421
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: libgimp/gimpexport.c:357
+#: libgimp/gimpexport.c:438
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 
 #. the footline
-#: libgimp/gimpexport.c:422
+#: libgimp/gimpexport.c:503
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
+
+#: libgimp/gimpexport.c:571
+msgid "a layer mask"
+msgstr ""
+
+#: libgimp/gimpexport.c:573
+msgid "a channel (saved selection)"
+msgstr ""
 
 #. pseudo unit
 #: libgimp/gimpunit.c:52
@@ -162,31 +199,31 @@ msgstr "Pica"
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimpwidgets/gimpcolorbutton.c:71
+#: libgimpwidgets/gimpcolorbutton.c:78
 msgid "/Use Foreground Color"
 msgstr "/Vordergrundfarbe verwenden"
 
-#: libgimpwidgets/gimpcolorbutton.c:72
+#: libgimpwidgets/gimpcolorbutton.c:79
 msgid "/Use Background Color"
 msgstr "/Hintergrundfarbe verwenden"
 
-#: libgimpwidgets/gimpfileselection.c:361
+#: libgimpwidgets/gimpfileselection.c:362
 msgid "Select File"
 msgstr "Datei auswählen"
 
-#: libgimpwidgets/gimpunitmenu.c:255
+#: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Mehr..."
 
-#: libgimpwidgets/gimpunitmenu.c:511
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: libgimpwidgets/gimpunitmenu.c:548
+#: libgimpwidgets/gimpunitmenu.c:570
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimpwidgets/gimpunitmenu.c:549
+#: libgimpwidgets/gimpunitmenu.c:574
 msgid "Factor"
 msgstr "Faktor"
 
@@ -222,9 +259,6 @@ msgstr "KiloByte"
 #: libgimpwidgets/gimpwidgets.c:1054
 msgid "MegaBytes"
 msgstr "MegaByte"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
 
 #~ msgid "OK"
 #~ msgstr "OK"

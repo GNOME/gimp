@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-10-31 03:12+0100\n"
+"POT-Creation-Date: 2001-11-12 18:33+0100\n"
 "PO-Revision-Date: 2001-10-31 03:12+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:283
 #: plug-ins/FractalExplorer/Dialogs.c:1373 plug-ins/gdyntext/gdyntext_ui.c:600
-#: plug-ins/gfig/gfig.c:3383 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/gfig/gfig.c:3383 plug-ins/imagemap/imap_about.c:36
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Om"
@@ -193,8 +193,8 @@ msgstr "Återställ parametrar till standardvärden"
 
 # src/menus.c:280
 #: plug-ins/FractalExplorer/Dialogs.c:538 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/gfig/gfig.c:5264 plug-ins/imagemap/imap_menu.c:218
-#: plug-ins/imagemap/imap_toolbar.c:114
+#: plug-ins/gfig/gfig.c:5264 plug-ins/imagemap/imap_menu.c:219
+#: plug-ins/imagemap/imap_toolbar.c:116
 msgid "Save"
 msgstr "Spara"
 
@@ -245,7 +245,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:622 plug-ins/common/sinus.c:1849
 #: plug-ins/common/sinus.c:1867 plug-ins/common/sinus.c:1953
-#: plug-ins/imagemap/imap_preferences.c:542
+#: plug-ins/imagemap/imap_preferences.c:543
 msgid "Colors"
 msgstr "Färger"
 
@@ -420,11 +420,11 @@ msgstr "Enligt ovan"
 
 #: plug-ins/FractalExplorer/Dialogs.c:859
 msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
 msgstr ""
-"Skapa en färgkarta med de alternativ du angav ovan "
-"(färgintensitet/-funktion). Resultatet visas i förhandsgranskningsbilden"
+"Skapa en färgkarta med de alternativ du angav ovan (färgintensitet/-"
+"funktion). Resultatet visas i förhandsgranskningsbilden"
 
 #: plug-ins/FractalExplorer/Dialogs.c:869
 msgid "Apply Active Gradient to Final Image"
@@ -578,8 +578,8 @@ msgstr "Välj katalog och genomsök samlingen igen"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1399 plug-ins/gfig/gfig.c:3577
 #: plug-ins/gflare/gflare.c:3176 plug-ins/gimpressionist/presets.c:677
-#: plug-ins/ifscompose/ifscompose.c:793 plug-ins/imagemap/imap_cmd_delete.c:53
-#: plug-ins/imagemap/imap_selection.c:178
+#: plug-ins/ifscompose/ifscompose.c:793 plug-ins/imagemap/imap_cmd_delete.c:56
+#: plug-ins/imagemap/imap_selection.c:180 plug-ins/imagemap/imap_tools.c:158
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1994,7 +1994,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:496 plug-ins/common/oilify.c:470
-#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:348
+#: plug-ins/common/pixelize.c:337 plug-ins/common/plasma.c:348
 #: plug-ins/common/png.c:1063 plug-ins/common/polar.c:959
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
@@ -2415,7 +2415,7 @@ msgstr ""
 #: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:432
 #: plug-ins/common/ps.c:2702 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Färg"
@@ -2768,9 +2768,9 @@ msgstr ""
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
 #: plug-ins/gfig/gfig.c:2844 plug-ins/gfig/gfig.c:5291
-#: plug-ins/gflare/gflare.c:3175 plug-ins/imagemap/imap_cmd_copy.c:49
-#: plug-ins/imagemap/imap_cmd_copy_object.c:50
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:134
+#: plug-ins/gflare/gflare.c:3175 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/imagemap/imap_cmd_copy_object.c:53
+#: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:136
 msgid "Copy"
 msgstr "Kopiera"
 
@@ -3324,7 +3324,7 @@ msgid "Add >>"
 msgstr "Lägg till >>"
 
 #: plug-ins/common/film.c:1131 plug-ins/common/iwarp.c:1044
-#: plug-ins/imagemap/imap_polygon.c:464
+#: plug-ins/imagemap/imap_polygon.c:466
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -3574,7 +3574,7 @@ msgstr "Mellanrum:"
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
 #: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:377
-#: plug-ins/imagemap/imap_settings.c:96
+#: plug-ins/imagemap/imap_settings.c:98
 msgid "Description:"
 msgstr "Beskrivning:"
 
@@ -3873,8 +3873,8 @@ msgid "Drawing Grid..."
 msgstr ""
 
 #: plug-ins/common/grid.c:650 plug-ins/gfig/gfig.c:3405
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
-#: plug-ins/imagemap/imap_toolbar.c:165
+#: plug-ins/imagemap/imap_menu.c:403 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/imagemap/imap_toolbar.c:167
 msgid "Grid"
 msgstr "Rutnät"
 
@@ -4145,8 +4145,8 @@ msgid "Deform Mode"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:1041 plug-ins/ifscompose/ifscompose.c:859
-#: plug-ins/ifscompose/ifscompose.c:1126 plug-ins/imagemap/imap_cmd_move.c:80
-#: plug-ins/imagemap/imap_cmd_object_move.c:53
+#: plug-ins/ifscompose/ifscompose.c:1126 plug-ins/imagemap/imap_cmd_move.c:83
+#: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Flytta"
 
@@ -4455,7 +4455,7 @@ msgid "Subject:"
 msgstr "Ämne:"
 
 #: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3758
-#: plug-ins/imagemap/imap_settings.c:82
+#: plug-ins/imagemap/imap_settings.c:84
 msgid "Filename:"
 msgstr "Filnamn:"
 
@@ -4873,21 +4873,26 @@ msgstr ""
 msgid "Save as Pattern"
 msgstr "Spara som GIF"
 
-#: plug-ins/common/pixelize.c:163
+#: plug-ins/common/pixelize.c:182
 msgid "<Image>/Filters/Blur/Pixelize..."
 msgstr ""
 
-#: plug-ins/common/pixelize.c:238
+#: plug-ins/common/pixelize.c:281
 msgid "Pixelizing..."
 msgstr ""
 
-#: plug-ins/common/pixelize.c:275
+#: plug-ins/common/pixelize.c:320
 msgid "Pixelize"
 msgstr ""
 
-#: plug-ins/common/pixelize.c:304
+#: plug-ins/common/pixelize.c:356
 msgid "Pixel Width:"
 msgstr ""
+
+#: plug-ins/common/pixelize.c:361
+#, fuzzy
+msgid "Pixel Height:"
+msgstr "Brickhöjd:"
 
 #. don't translate '<Image>', it's a special
 #. * keyword of the gtk toolkit
@@ -4927,40 +4932,40 @@ msgstr "Temporär procedur"
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:217
+#: plug-ins/common/plugindetails.c:218
 msgid "Details <<"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:227 plug-ins/common/plugindetails.c:1110
+#: plug-ins/common/plugindetails.c:228 plug-ins/common/plugindetails.c:1111
 msgid "Details >>"
 msgstr ""
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:313
+#: plug-ins/common/plugindetails.c:314
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr ""
 
 #. menu path
-#: plug-ins/common/plugindetails.c:331
+#: plug-ins/common/plugindetails.c:332
 msgid "Menu Path:"
 msgstr ""
 
 #. show the name
-#: plug-ins/common/plugindetails.c:352
+#: plug-ins/common/plugindetails.c:353
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
 #: plug-ins/gap/gap_dbbrowser_utils.c:335
 msgid "Name:"
 msgstr "Namn:"
 
 #. show the description
-#: plug-ins/common/plugindetails.c:374
+#: plug-ins/common/plugindetails.c:375
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #: plug-ins/gap/gap_dbbrowser_utils.c:352
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:396
+#: plug-ins/common/plugindetails.c:397
 #: plug-ins/dbbrowser/dbbrowser_utils.c:473
 #: plug-ins/gap/gap_dbbrowser_utils.c:469
 #, fuzzy
@@ -4968,15 +4973,15 @@ msgid "Help:"
 msgstr "Hjälp :"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:436 plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:437 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Typ:"
 
-#: plug-ins/common/plugindetails.c:995
+#: plug-ins/common/plugindetails.c:996
 msgid "Plugin Descriptions"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1000
+#: plug-ins/common/plugindetails.c:1001
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
 #: plug-ins/gap/gap_dbbrowser_utils.c:185
@@ -4984,37 +4989,37 @@ msgid "Search by Name"
 msgstr ""
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1034
+#: plug-ins/common/plugindetails.c:1035
 msgid "Name"
 msgstr "Namn"
 
-#: plug-ins/common/plugindetails.c:1035 plug-ins/common/plugindetails.c:1063
+#: plug-ins/common/plugindetails.c:1036 plug-ins/common/plugindetails.c:1064
 msgid "Ins Date"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1036
+#: plug-ins/common/plugindetails.c:1037
 msgid "Menu Path"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1037 plug-ins/common/plugindetails.c:1064
+#: plug-ins/common/plugindetails.c:1038 plug-ins/common/plugindetails.c:1065
 #, fuzzy
 msgid "Image Types"
 msgstr "magenta"
 
-#: plug-ins/common/plugindetails.c:1055
+#: plug-ins/common/plugindetails.c:1056
 msgid "List View"
 msgstr "Listvy"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1062
+#: plug-ins/common/plugindetails.c:1063
 msgid "Menu Path/Name"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1079
+#: plug-ins/common/plugindetails.c:1080
 msgid "Tree View"
 msgstr "Trädvy"
 
-#: plug-ins/common/plugindetails.c:1099
+#: plug-ins/common/plugindetails.c:1100
 #: plug-ins/dbbrowser/dbbrowser_utils.c:220
 #: plug-ins/gap/gap_dbbrowser_utils.c:148
 msgid "Search:"
@@ -7064,7 +7069,7 @@ msgstr ""
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/gap/gap_dbbrowser_utils.c:507 plug-ins/imagemap/imap_settings.c:92
+#: plug-ins/gap/gap_dbbrowser_utils.c:507 plug-ins/imagemap/imap_settings.c:94
 msgid "Author:"
 msgstr "Författare:"
 
@@ -7420,7 +7425,7 @@ msgid "Press Button"
 msgstr ""
 
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4014
-#: plug-ins/imagemap/imap_cmd_select.c:49
+#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:133
 msgid "Select"
 msgstr "Markera"
 
@@ -7522,7 +7527,7 @@ msgstr ""
 # data/ui/nautilus-gtranslator-view-ui.xml.h:1 src/dialogs.c:732
 # src/menus.c:276
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Open"
 msgstr "Öppna"
 
@@ -8708,8 +8713,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2043
-#: plug-ins/imagemap/imap_cmd_insert_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:683
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
 msgid "Insert Point"
 msgstr ""
 
@@ -8720,8 +8725,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_delete_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:669
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
 msgid "Delete Point"
 msgstr "Ta bort punkt"
 
@@ -9202,9 +9207,9 @@ msgstr ""
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:53
-#: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:131
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:133
 msgid "Cut"
 msgstr "Klipp ut"
 
@@ -9708,7 +9713,7 @@ msgstr ""
 msgid "Selected char:"
 msgstr ""
 
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
 #, fuzzy
 msgid "Insert"
 msgstr "Lägg till"
@@ -9721,7 +9726,7 @@ msgstr ""
 #: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
+#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_rectangle.c:382
 #: plug-ins/imagemap/imap_rectangle.c:388
 #: plug-ins/imagemap/imap_rectangle.c:394
@@ -9953,8 +9958,8 @@ msgstr "Föreg"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1917 plug-ins/gfig/gfig.c:5304
-#: plug-ins/gflare/gflare.c:3174 plug-ins/imagemap/imap_menu.c:277
-#: plug-ins/imagemap/imap_selection.c:174
+#: plug-ins/gflare/gflare.c:3174 plug-ins/imagemap/imap_menu.c:280
+#: plug-ins/imagemap/imap_selection.c:176 plug-ins/imagemap/imap_tools.c:153
 msgid "Edit"
 msgstr "Redigera"
 
@@ -10095,8 +10100,8 @@ msgstr "Mönster"
 #: plug-ins/gfig/gfig.c:2367
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to "
-"circles/ellipses if Approx. Circles/Ellipses toggle is set."
+"paints with currently selected brush with a pattern. Only applies to circles/"
+"ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2779 plug-ins/rcm/rcm_dialog.c:125
@@ -10122,7 +10127,7 @@ msgid "Draw on:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2800 plug-ins/imagemap/imap_selection.c:361
+#: plug-ins/gfig/gfig.c:2800 plug-ins/imagemap/imap_selection.c:363
 #: plug-ins/rcm/rcm_dialog.c:671
 msgid "Selection"
 msgstr "Val"
@@ -10277,8 +10282,9 @@ msgstr "magenta"
 msgid "Reload Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3313 plug-ins/imagemap/imap_menu.c:384
+#: plug-ins/gfig/gfig.c:3313 plug-ins/imagemap/imap_menu.c:387
 #: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:63
+#: plug-ins/imagemap/imap_tools.c:138
 msgid "Rectangle"
 msgstr "Rektangel"
 
@@ -10670,7 +10676,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3758 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:468
 msgid "General"
 msgstr "Allmänt"
 
@@ -10733,12 +10739,14 @@ msgid "Shape of Second Flares"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:4128 plug-ins/imagemap/imap_circle.c:60
-#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_menu.c:390 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_tools.c:143
 msgid "Circle"
 msgstr "Cirkel"
 
-#: plug-ins/gflare/gflare.c:4144 plug-ins/imagemap/imap_menu.c:389
-#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/gflare/gflare.c:4144 plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_polygon.c:71 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/imagemap/imap_tools.c:148
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -11271,7 +11279,7 @@ msgstr ""
 
 # src/menus.c:293
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:872
-#: plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_polygon.c:448
 msgid "Update"
 msgstr "Uppdatera"
 
@@ -11384,23 +11392,21 @@ msgstr ""
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
 msgid ""
-"<html><head><title>Document not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't find "
-"document</h3><tt>%s</tt></center><p><small>This either means that the help "
-"for this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
+"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
+"center><p><small>This either means that the help for this topic has not been "
+"written yet or that something is wrong with your installation. Please check "
+"carefully before you report this as a bug.</small></body></html>"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
 msgid ""
-"<html><head><title>Directory not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't change to "
-"directory</h3><tt>%s</tt><h3>while trying to "
-"access</h3><tt>%s</tt></center><p><small>This either means that the help for "
-"this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
+"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
+"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
+"the help for this topic has not been written yet or that something is wrong "
+"with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
 
@@ -11413,8 +11419,8 @@ msgstr "GIF-kommentar: "
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
-#: plug-ins/imagemap/imap_settings.c:152
+#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
+#: plug-ins/imagemap/imap_settings.c:154
 msgid "<Untitled>"
 msgstr ""
 
@@ -11541,8 +11547,8 @@ msgid "Relative Probability:"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:1167
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
-#: plug-ins/imagemap/imap_menu.c:294
+#: plug-ins/imagemap/imap_cmd_select_all.c:53
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Select All"
 msgstr "Markera allt"
 
@@ -11551,12 +11557,12 @@ msgid "Recompute Center"
 msgstr ""
 
 # src/menus.c:302
-#: plug-ins/ifscompose/ifscompose.c:1191 plug-ins/imagemap/imap_toolbar.c:122
+#: plug-ins/ifscompose/ifscompose.c:1191 plug-ins/imagemap/imap_toolbar.c:124
 msgid "Undo"
 msgstr "Ångra"
 
 # src/menus.c:306
-#: plug-ins/ifscompose/ifscompose.c:1203 plug-ins/imagemap/imap_toolbar.c:125
+#: plug-ins/ifscompose/ifscompose.c:1203 plug-ins/imagemap/imap_toolbar.c:127
 msgid "Redo"
 msgstr "Gör om"
 
@@ -11588,7 +11594,7 @@ msgstr ""
 msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:39
+#: plug-ins/imagemap/imap_about.c:42
 msgid ""
 "Imagemap plug-in 1.3\n"
 "\n"
@@ -11606,29 +11612,29 @@ msgstr ""
 msgid "Center y:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_clear.c:50 plug-ins/imagemap/imap_menu.c:298
+#: plug-ins/imagemap/imap_cmd_clear.c:53 plug-ins/imagemap/imap_menu.c:301
 msgid "Clear"
 msgstr "Töm"
 
-#: plug-ins/imagemap/imap_cmd_create.c:52
+#: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr "Skapa"
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:50
+#: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:71
-#: plug-ins/imagemap/imap_cmd_guides.c:132
+#: plug-ins/imagemap/imap_cmd_guides.c:73
+#: plug-ins/imagemap/imap_cmd_guides.c:134
 msgid "Create Guides"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:111
+#: plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:138
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -11636,95 +11642,105 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
+#: plug-ins/imagemap/imap_cmd_guides.c:166 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
 msgstr "Bredd"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:169
+#: plug-ins/imagemap/imap_cmd_guides.c:171
 msgid "Left Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_cmd_guides.c:176 plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
 msgstr "Höjd"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:179
+#: plug-ins/imagemap/imap_cmd_guides.c:181
 msgid "Top Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:184
+#: plug-ins/imagemap/imap_cmd_guides.c:186
 msgid "Horz. Spacing"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "No. Across"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:196
 msgid "Vert. Spacing"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:199
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. Down"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:207
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 #, fuzzy
 msgid "Base URL:"
 msgstr "URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:224
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:229
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:264
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Hjälplinjer"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:52
-#: plug-ins/imagemap/imap_cmd_object_down.c:51
-#: plug-ins/imagemap/imap_selection.c:169
+#: plug-ins/imagemap/imap_cmd_move_down.c:55
+#: plug-ins/imagemap/imap_cmd_object_down.c:54
+#: plug-ins/imagemap/imap_selection.c:171
 msgid "Move Down"
 msgstr "Flytta ner"
 
-#: plug-ins/imagemap/imap_cmd_move_sash.c:64
+#: plug-ins/imagemap/imap_cmd_move_sash.c:67
 msgid "Move Sash"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:52
+#: plug-ins/imagemap/imap_cmd_move_selected.c:55
 msgid "Move Selected Objects"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:52
-#: plug-ins/imagemap/imap_cmd_object_up.c:51
-#: plug-ins/imagemap/imap_selection.c:166
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:54
+#: plug-ins/imagemap/imap_toolbar.c:158
+msgid "Move To Front"
+msgstr ""
+
+#: plug-ins/imagemap/imap_cmd_move_up.c:55
+#: plug-ins/imagemap/imap_cmd_object_up.c:54
+#: plug-ins/imagemap/imap_selection.c:168
 msgid "Move Up"
 msgstr "Flytta upp"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:137
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_menu.c:293
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:139
 msgid "Paste"
 msgstr "Klistra in"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:51
+#: plug-ins/imagemap/imap_cmd_select_next.c:55
 msgid "Select Next"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:63
+#: plug-ins/imagemap/imap_cmd_select_prev.c:54
+#, fuzzy
+msgid "Select Previous"
+msgstr "Val"
+
+#: plug-ins/imagemap/imap_cmd_select_region.c:66
 msgid "Select Region"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:160
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:54
+#: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Send To Back"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:49
+#: plug-ins/imagemap/imap_cmd_unselect.c:52
 msgid "Unselect"
 msgstr "Avmarkera"
 
@@ -11764,7 +11780,7 @@ msgstr "Annat"
 #. * always first in the list, else call psearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:945
+#: plug-ins/imagemap/imap_menu.c:212 plug-ins/print/print.c:945
 #: plug-ins/print/print.c:946 plug-ins/print/print.c:1027
 #: plug-ins/print/print.c:1028 plug-ins/print/print.c:1127
 #: plug-ins/print/print.c:1128 plug-ins/print/print.c:1364
@@ -11825,7 +11841,7 @@ msgstr "Inställningar"
 msgid "Area #%d Settings"
 msgstr "Inställningar"
 
-#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:67
 msgid "Error opening file"
 msgstr ""
 
@@ -11892,150 +11908,150 @@ msgstr ""
 msgid "pixels from top"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:145
+#: plug-ins/imagemap/imap_main.c:146
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:662
+#: plug-ins/imagemap/imap_main.c:663
 msgid "Data changed"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:666
+#: plug-ins/imagemap/imap_main.c:667
 msgid ""
 "Some data has been changed.\n"
-"Do you really want to continue?"
+"Do you really want to discard your changes?"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:875
+#: plug-ins/imagemap/imap_main.c:876
 #, c-format
 msgid "File \"%s\" saved."
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:879
+#: plug-ins/imagemap/imap_main.c:880
 msgid "Couldn't save file:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:904
+#: plug-ins/imagemap/imap_main.c:905
 msgid "Image size changed"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:908
+#: plug-ins/imagemap/imap_main.c:909
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:939
+#: plug-ins/imagemap/imap_main.c:940
 msgid "Couldn't read file:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:985
+#: plug-ins/imagemap/imap_main.c:986
 #, c-format
 msgid "URL: %s"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:215
+#: plug-ins/imagemap/imap_menu.c:216
 msgid "Open..."
 msgstr "Öppna..."
 
-#: plug-ins/imagemap/imap_menu.c:221
+#: plug-ins/imagemap/imap_menu.c:222
 msgid "Save As..."
 msgstr "Spara som..."
 
-#: plug-ins/imagemap/imap_menu.c:224
+#: plug-ins/imagemap/imap_menu.c:225
 msgid "Preferences..."
 msgstr "Inställningar..."
 
-#: plug-ins/imagemap/imap_menu.c:230
+#: plug-ins/imagemap/imap_menu.c:231
 msgid "Quit"
 msgstr "Avsluta"
 
-#: plug-ins/imagemap/imap_menu.c:243
+#: plug-ins/imagemap/imap_menu.c:244
 #, c-format
 msgid "Undo %s"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:254
+#: plug-ins/imagemap/imap_menu.c:256
 #, c-format
 msgid "Redo %s"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:301
+#: plug-ins/imagemap/imap_menu.c:304
 msgid "Edit Area Info..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:313
+#: plug-ins/imagemap/imap_menu.c:316
 msgid "View"
 msgstr "Vy"
 
-#: plug-ins/imagemap/imap_menu.c:317
+#: plug-ins/imagemap/imap_menu.c:320
 #, fuzzy
 msgid "Area List"
 msgstr "Inställningar"
 
-#: plug-ins/imagemap/imap_menu.c:321
+#: plug-ins/imagemap/imap_menu.c:324
 msgid "Source..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:329
+#: plug-ins/imagemap/imap_menu.c:332
 msgid "Grayscale"
 msgstr "Gråtoner"
 
-#: plug-ins/imagemap/imap_menu.c:341
+#: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom In"
 msgstr "Zooma in"
 
-#: plug-ins/imagemap/imap_menu.c:344
+#: plug-ins/imagemap/imap_menu.c:347
 msgid "Zoom Out"
 msgstr "Zooma ut"
 
-#: plug-ins/imagemap/imap_menu.c:349
+#: plug-ins/imagemap/imap_menu.c:352
 msgid "Zoom To"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:379
+#: plug-ins/imagemap/imap_menu.c:382
 msgid "Mapping"
 msgstr "Koppling"
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
+#: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "Edit Map Info..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:399
+#: plug-ins/imagemap/imap_menu.c:402
 msgid "Goodies"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
+#: plug-ins/imagemap/imap_menu.c:404 plug-ins/imagemap/imap_popup.c:149
 #, fuzzy
 msgid "Grid Settings..."
 msgstr "Inställningar"
 
-#: plug-ins/imagemap/imap_menu.c:403
+#: plug-ins/imagemap/imap_menu.c:406
 msgid "Create Guides..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:413 plug-ins/maze/maze_face.c:193
 msgid "Help"
 msgstr "Hjälp"
 
-#: plug-ins/imagemap/imap_menu.c:413
+#: plug-ins/imagemap/imap_menu.c:416
 #, fuzzy
 msgid "About ImageMap..."
 msgstr "Om..."
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "x (pixels)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "y (pixels)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_polygon.c:458
+#: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr "Lägg till"
 
@@ -12059,63 +12075,63 @@ msgstr "Ut"
 msgid "Guides..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:204
+#: plug-ins/imagemap/imap_preferences.c:205
 msgid "Couldn't save resource file:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:356
+#: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
 msgstr "Välj färg"
 
-#: plug-ins/imagemap/imap_preferences.c:434
+#: plug-ins/imagemap/imap_preferences.c:435
 msgid "Default Map Type"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:453
+#: plug-ins/imagemap/imap_preferences.c:454
 msgid "Prompt for area info"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:455
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Require default URL"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:457
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Show area handles"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:459
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Keep NCSA circles true"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:461
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Show area URL tip"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:464
+#: plug-ins/imagemap/imap_preferences.c:465
 msgid "Use double-sized grab handles"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:488
+#: plug-ins/imagemap/imap_preferences.c:489
 msgid "Number of Undo levels (1 - 99):"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:491
+#: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of MRU entries (1 - 16):"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:494
+#: plug-ins/imagemap/imap_preferences.c:495
 msgid "Menu"
 msgstr "Meny"
 
-#: plug-ins/imagemap/imap_preferences.c:530
+#: plug-ins/imagemap/imap_preferences.c:531
 msgid "Normal:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:536
+#: plug-ins/imagemap/imap_preferences.c:537
 msgid "Selected:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:564
+#: plug-ins/imagemap/imap_preferences.c:565
 msgid "General Preferences"
 msgstr ""
 
@@ -12127,90 +12143,86 @@ msgstr ""
 msgid "Upper left y:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_selection.c:339
+#: plug-ins/imagemap/imap_selection.c:341
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:339
+#: plug-ins/imagemap/imap_selection.c:341
 #, fuzzy
 msgid "Target"
 msgstr "Mål"
 
 # src/sidebar.c:107
-#: plug-ins/imagemap/imap_selection.c:339
+#: plug-ins/imagemap/imap_selection.c:341
 msgid "Comment"
 msgstr "Kommentar"
 
-#: plug-ins/imagemap/imap_settings.c:71
+#: plug-ins/imagemap/imap_settings.c:73
 msgid "Settings for this Mapfile"
 msgstr ""
 
-#: plug-ins/imagemap/imap_settings.c:85
+#: plug-ins/imagemap/imap_settings.c:87
 #, fuzzy
 msgid "Image name:"
 msgstr "magenta"
 
-#: plug-ins/imagemap/imap_settings.c:86
+#: plug-ins/imagemap/imap_settings.c:88
 msgid "Select Image File"
 msgstr ""
 
-#: plug-ins/imagemap/imap_settings.c:90
+#: plug-ins/imagemap/imap_settings.c:92
 msgid "Title:"
 msgstr "Titel:"
 
-#: plug-ins/imagemap/imap_settings.c:94
+#: plug-ins/imagemap/imap_settings.c:96
 msgid "Default URL:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_settings.c:111
+#: plug-ins/imagemap/imap_settings.c:113
 msgid "Map file format"
 msgstr ""
 
-#: plug-ins/imagemap/imap_source.c:58
+#: plug-ins/imagemap/imap_source.c:61
 msgid "View Source"
 msgstr "Visa källa"
 
-#: plug-ins/imagemap/imap_toolbar.c:117
+#: plug-ins/imagemap/imap_toolbar.c:119
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: plug-ins/imagemap/imap_toolbar.c:144
+#: plug-ins/imagemap/imap_toolbar.c:146
 msgid "Zoom in"
 msgstr "Zooma in"
 
-#: plug-ins/imagemap/imap_toolbar.c:147
+#: plug-ins/imagemap/imap_toolbar.c:149
 msgid "Zoom out"
 msgstr "Zooma ut"
 
-#: plug-ins/imagemap/imap_toolbar.c:152
+#: plug-ins/imagemap/imap_toolbar.c:154
 msgid "Edit Map Info"
 msgstr ""
 
-#: plug-ins/imagemap/imap_toolbar.c:156
-msgid "Move To Front"
-msgstr ""
-
-#: plug-ins/imagemap/imap_tools.c:131
+#: plug-ins/imagemap/imap_tools.c:134
 msgid "Select existing area"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:135
+#: plug-ins/imagemap/imap_tools.c:139
 msgid "Define Rectangle area"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:139
+#: plug-ins/imagemap/imap_tools.c:144
 msgid "Define Circle/Oval area"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:143
+#: plug-ins/imagemap/imap_tools.c:149
 msgid "Define Polygon area"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:147
+#: plug-ins/imagemap/imap_tools.c:154
 msgid "Edit selected area info"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:151
+#: plug-ins/imagemap/imap_tools.c:159
 msgid "Delete selected area"
 msgstr ""
 

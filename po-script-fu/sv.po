@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-10-30 16:34+0100\n"
+"POT-Creation-Date: 2001-11-12 23:06+0100\n"
 "PO-Revision-Date: 2001-10-30 16:38+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -20,32 +20,32 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu-konsolläget tillåter endast interaktiv användning"
 
-#: plug-ins/script-fu/script-fu-console.c:172
+#: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsoll"
 
-#: plug-ins/script-fu/script-fu-console.c:196
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
 msgstr "SIOD-utdata"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:265
 msgid "Current Command"
 msgstr "Aktuellt kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Bläddra..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
+#: plug-ins/script-fu/script-fu-console.c:590
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kan inte öppna en ström på SIOD-utdataröret"
 
-#: plug-ins/script-fu/script-fu-console.c:598
+#: plug-ins/script-fu/script-fu-console.c:596
 msgid "Unable to open the SIOD output pipe"
 msgstr "Kan inte öppna SIOD-utdataröret"
 
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:641
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast interaktiv användning"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-09-27 16:28+0200\n"
+"POT-Creation-Date: 2001-11-12 23:06+0100\n"
 "PO-Revision-Date: 2001-06-22 14:41+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -18,34 +18,34 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Der Skript-Fu Konsole-Modus kann nur interaktiv gestartet werden"
 
-#: plug-ins/script-fu/script-fu-console.c:172
+#: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
-#: plug-ins/script-fu/script-fu-console.c:196
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
 msgstr "SIOD Ausgabe"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:265
 msgid "Current Command"
 msgstr "Aktuelles Kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:287
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
+#: plug-ins/script-fu/script-fu-console.c:590
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kann mit dem SIOD-Ausgabe-pipe keinen Stream erstellen"
 
-#: plug-ins/script-fu/script-fu-console.c:598
+#: plug-ins/script-fu/script-fu-console.c:596
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Kann SIOD-Ausgabe-Pipe nicht öffnen"
 
 # <Toolbox>/Xtns/Web-Browser/gimp.org/
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:641
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
@@ -111,14 +111,17 @@ msgstr ""
 "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Author:"
 msgstr "Autor:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:519
 #: plug-ins/script-fu/script-fu-scripts.c:2030
 msgid "Copyright:"
 msgstr "Copyright:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:511
 #: plug-ins/script-fu/script-fu-scripts.c:2036
 msgid "Date:"
 msgstr "Datum:"
@@ -169,6 +172,65 @@ msgstr "Alle Skripte neu einlesen"
 #: plug-ins/script-fu/script-fu.c:286
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:142
+#: plug-ins/dbbrowser/dbbrowser_utils.c:161
+#, fuzzy
+msgid "DB Browser (init...)"
+msgstr "Durchsuchen..."
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:147
+#: plug-ins/dbbrowser/dbbrowser_utils.c:166
+msgid "Search by Name"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+msgid "Search by Blurb"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:220
+msgid "Search:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#, fuzzy
+msgid "Name:"
+msgstr "Datum:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#, fuzzy
+msgid "Blurb:"
+msgstr "Weichzeichnen Y"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+msgid "In:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:419
+msgid "Out:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:473
+msgid "Help:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:594
+msgid "DB Browser (by name - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:618
+msgid "DB Browser (by blurb - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:628
+msgid "DB Browser (please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:694
+#, fuzzy
+msgid "DB Browser"
+msgstr "Durchsuchen..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid ""
