@@ -1483,11 +1483,12 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
-
 
   if (strcmp (name, "file_mng_save") == 0)
     {
