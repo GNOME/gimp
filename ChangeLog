@@ -1,3 +1,9 @@
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpnavigationpreview.c: destroy GdkGCs in
+	GtkWidget::unrealize().
+
 2003-11-10  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpcanvas.[ch]	

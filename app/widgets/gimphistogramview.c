@@ -48,7 +48,6 @@ enum
 
 static void  gimp_histogram_view_class_init   (GimpHistogramViewClass *klass);
 static void  gimp_histogram_view_init         (GimpHistogramView *view);
-static void  gimp_histogram_view_finalize     (GObject           *object);
 static void  gimp_histogram_view_set_property (GObject           *object,
 					       guint              property_id,
 					       const GValue      *value,
@@ -57,6 +56,7 @@ static void  gimp_histogram_view_get_property (GObject           *object,
 					       guint              property_id,
 					       GValue            *value,
 					       GParamSpec        *pspec);
+static void  gimp_histogram_view_unrealize    (GtkWidget         *widget);
 static void  gimp_histogram_view_size_request (GtkWidget         *widget,
                                                GtkRequisition    *requisition);
 static gboolean  gimp_histogram_view_expose   (GtkWidget         *widget,
@@ -120,8 +120,8 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 
   object_class->get_property = gimp_histogram_view_get_property;
   object_class->set_property = gimp_histogram_view_set_property;
-  object_class->finalize     = gimp_histogram_view_finalize;
 
+  widget_class->unrealize    = gimp_histogram_view_unrealize;
   widget_class->size_request = gimp_histogram_view_size_request;
   widget_class->expose_event = gimp_histogram_view_expose;
 
@@ -148,18 +148,6 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->histogram = NULL;
   view->start     = 0;
   view->end       = 255;
-}
-
-static void
-gimp_histogram_view_finalize (GObject *object)
-{
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
-
-  if (view->range_gc)
-    {
-      g_object_unref (view->range_gc);
-      view->range_gc = NULL;
-    }
 }
 
 static void
@@ -206,6 +194,21 @@ gimp_histogram_view_get_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_histogram_view_unrealize (GtkWidget *widget)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+
+  if (view->range_gc)
+    {
+      g_object_unref (view->range_gc);
+      view->range_gc = NULL;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
+    GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void

@@ -53,8 +53,8 @@ enum
 static void   gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass);
 static void   gimp_navigation_preview_init       (GimpNavigationPreview      *preview);
 
-static void   gimp_navigation_preview_destroy          (GtkObject      *object);
 static void   gimp_navigation_preview_realize          (GtkWidget      *widget);
+static void   gimp_navigation_preview_unrealize        (GtkWidget      *widget);
 static void   gimp_navigation_preview_size_allocate    (GtkWidget      *widget,
                                                         GtkAllocation  *allocation);
 static gboolean gimp_navigation_preview_expose         (GtkWidget      *widget,
@@ -111,10 +111,8 @@ gimp_navigation_preview_get_type (void)
 static void
 gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 {
-  GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
   widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -150,9 +148,8 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_TYPE_NONE, 1,
 		  GDK_TYPE_SCROLL_DIRECTION);
 
-  object_class->destroy              = gimp_navigation_preview_destroy;
-
   widget_class->realize              = gimp_navigation_preview_realize;
+  widget_class->unrealize            = gimp_navigation_preview_unrealize;
   widget_class->size_allocate        = gimp_navigation_preview_size_allocate;
   widget_class->expose_event         = gimp_navigation_preview_expose;
   widget_class->button_press_event   = gimp_navigation_preview_button_press;
@@ -188,27 +185,9 @@ gimp_navigation_preview_init (GimpNavigationPreview *preview)
 }
 
 static void
-gimp_navigation_preview_destroy (GtkObject *object)
-{
-  GimpNavigationPreview *nav_preview;
-
-  nav_preview = GIMP_NAVIGATION_PREVIEW (object);
-
-  if (nav_preview->gc)
-    {
-      g_object_unref (nav_preview->gc);
-      nav_preview->gc = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
 gimp_navigation_preview_realize (GtkWidget *widget)
 {
-  GimpNavigationPreview *nav_preview;
-
-  nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
+  GimpNavigationPreview *nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->realize)
     GTK_WIDGET_CLASS (parent_class)->realize (widget);
@@ -219,6 +198,21 @@ gimp_navigation_preview_realize (GtkWidget *widget)
   gdk_gc_set_line_attributes (nav_preview->gc,
 			      BORDER_PEN_WIDTH,
 			      GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
+}
+
+static void
+gimp_navigation_preview_unrealize (GtkWidget *widget)
+{
+  GimpNavigationPreview *nav_preview = GIMP_NAVIGATION_PREVIEW (widget);
+
+  if (nav_preview->gc)
+    {
+      g_object_unref (nav_preview->gc);
+      nav_preview->gc = NULL;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
+    GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
