@@ -124,7 +124,8 @@ static void     crop_tool_crop_image          (GimpImage       *gimage,
 
 static void     crop_recalc                   (GimpCropTool    *crop,
                                                gboolean         recalc_highlight);
-static void     crop_start                    (GimpCropTool    *crop);
+static void     crop_start                    (GimpCropTool    *crop,
+                                               gboolean         dialog);
 
 /*  Crop dialog functions  */
 static void     crop_info_update              (GimpCropTool    *crop);
@@ -293,7 +294,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
       crop->x2 = crop->x1 = ROUND (coords->x);
       crop->y2 = crop->y1 = ROUND (coords->y);
 
-      crop_start (crop);
+      crop_start (crop, (state & GDK_SHIFT_MASK) == 0);
     }
 
   crop->lastx = crop->startx = ROUND (coords->x);
@@ -319,7 +320,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
     {
       if (crop->function == CROPPING)
         crop_response (NULL, options->crop_mode, crop);
-      else
+      else if (crop->crop_info)
         crop_info_update (crop);
     }
 }
@@ -860,8 +861,9 @@ static void
 crop_recalc (GimpCropTool *crop,
              gboolean      recalc_highlight)
 {
-  GimpTool         *tool  = GIMP_TOOL (crop);
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GimpTool         *tool    = GIMP_TOOL (crop);
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GimpCropOptions  *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (! tool->gdisp)
     return;
@@ -896,71 +898,89 @@ crop_recalc (GimpCropTool *crop,
 #undef SRW
 #undef SRH
 
+  if (! options->keep_aspect)
+    {
+      if ((crop->y2 - crop->y1) != 0)
+        {
+          if (crop->change_aspect_ratio)
+            crop->aspect_ratio = ((gdouble) (crop->x2 - crop->x1) /
+                                  (gdouble) (crop->y2 - crop->y1));
+        }
+      else
+        {
+          crop->aspect_ratio = 0.0;
+        }
+    }
+
   if (crop->crop_info)
     crop_info_update (crop);
 }
 
 static void
-crop_start (GimpCropTool *crop)
+crop_start (GimpCropTool *crop,
+            gboolean      dialog)
 {
   GimpTool         *tool  = GIMP_TOOL (crop);
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   crop_recalc (crop, TRUE);
 
-  if (! crop->crop_info)
+  if (dialog && ! crop->crop_info)
     crop_info_create (crop);
 
-  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (crop->crop_info->shell),
-                                     GIMP_VIEWABLE (tool->gdisp->gimage));
+  if (crop->crop_info)
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (crop->crop_info->shell),
+                                         GIMP_VIEWABLE (tool->gdisp->gimage));
 
-  g_signal_handlers_block_by_func (crop->origin_sizeentry,
-                                   crop_origin_changed,
-                                   crop);
-  g_signal_handlers_block_by_func (crop->size_sizeentry,
-                                   crop_size_changed,
-                                   crop);
+      g_signal_handlers_block_by_func (crop->origin_sizeentry,
+                                       crop_origin_changed,
+                                       crop);
+      g_signal_handlers_block_by_func (crop->size_sizeentry,
+                                       crop_size_changed,
+                                       crop);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 0,
-                                  tool->gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 1,
-                                  tool->gdisp->gimage->yresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 0,
+                                      tool->gdisp->gimage->xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 1,
+                                      tool->gdisp->gimage->yresolution, FALSE);
 
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 0,
-                            0, tool->gdisp->gimage->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 1,
-                            0, tool->gdisp->gimage->height);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 0,
+                                0, tool->gdisp->gimage->width);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->origin_sizeentry), 1,
+                                0, tool->gdisp->gimage->height);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->size_sizeentry), 0,
-                                  tool->gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->size_sizeentry), 1,
-                                  tool->gdisp->gimage->yresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->size_sizeentry), 0,
+                                      tool->gdisp->gimage->xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (crop->size_sizeentry), 1,
+                                      tool->gdisp->gimage->yresolution, FALSE);
 
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->size_sizeentry), 0,
-                            0, tool->gdisp->gimage->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->size_sizeentry), 1,
-                            0, tool->gdisp->gimage->height);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->size_sizeentry), 0,
+                                0, tool->gdisp->gimage->width);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (crop->size_sizeentry), 1,
+                                0, tool->gdisp->gimage->height);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
-                            shell->unit);
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->size_sizeentry),
-                            shell->unit);
+      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->origin_sizeentry),
+                                shell->unit);
+      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (crop->size_sizeentry),
+                                shell->unit);
 
-  g_signal_handlers_unblock_by_func (crop->origin_sizeentry,
-                                     crop_origin_changed,
-                                     crop);
-  g_signal_handlers_unblock_by_func (crop->size_sizeentry,
-                                     crop_size_changed,
-                                     crop);
+      g_signal_handlers_unblock_by_func (crop->origin_sizeentry,
+                                         crop_origin_changed,
+                                         crop);
+      g_signal_handlers_unblock_by_func (crop->size_sizeentry,
+                                         crop_size_changed,
+                                         crop);
+
+      /* restore sensitivity of buttons */
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
+                                         GIMP_CROP_MODE_CROP,   TRUE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
+                                         GIMP_CROP_MODE_RESIZE, TRUE);
+    }
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, _("Crop: "), 0, " x ", 0);
-
-  /* restore sensitivity of buttons */
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
-                                     GIMP_CROP_MODE_CROP,   TRUE);
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
-                                     GIMP_CROP_MODE_RESIZE, TRUE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->gdisp);
 }
@@ -1049,7 +1069,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 2, 0);
 
   spinbutton = info_dialog_add_spinbutton (crop->crop_info, _("Aspect ratio:"),
-                                           &(crop->aspect_ratio),
+                                           &crop->aspect_ratio,
                                            0, 65536, 0.01, 0.1, 1, 0.5, 2,
                                            G_CALLBACK (crop_aspect_changed),
                                            crop);
@@ -1057,7 +1077,7 @@ crop_info_create (GimpCropTool *crop)
   /* Create the area selection buttons */
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_set_spacing (GTK_BOX (bbox), 4);
+  gtk_box_set_spacing (GTK_BOX (bbox), 6);
 
   button = gtk_button_new_with_label (_("From selection"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -1086,23 +1106,6 @@ crop_info_create (GimpCropTool *crop)
 static void
 crop_info_update (GimpCropTool *crop)
 {
-  GimpTool        *tool    = GIMP_TOOL (crop);
-  GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
-
-  if (! options->keep_aspect)
-    {
-      if ((crop->y2 - crop->y1) != 0)
-        {
-          if (crop->change_aspect_ratio)
-            crop->aspect_ratio = ((gdouble) (crop->x2 - crop->x1) /
-                                  (gdouble) (crop->y2 - crop->y1));
-        }
-      else
-        {
-          crop->aspect_ratio = 0.0;
-        }
-    }
-
   crop->orig_vals[0] = crop->x1;
   crop->orig_vals[1] = crop->y1;
   crop->size_vals[0] = crop->x2 - crop->x1;
