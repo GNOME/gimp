@@ -1,3 +1,13 @@
+2003-12-19  Sven Neumann  <sven@gimp.org>
+
+	* gimp_tips.hu.txt
+	* gimp_tips.ko.txt
+	* gimp_tips.ru.txt
+	* gimp_tips.tr.txt
+	* gimp_tips.uk.txt: removed outdated tips files in the old format.
+
+	* makefile.mingw: removed outdated mingw makefile.
+
 2003-12-19  Artur Flinta  <aflinta@cvs.gnome.org>
 
 	* pl.po: Updated Polish translation.
