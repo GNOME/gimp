@@ -47,12 +47,6 @@
 #include "appenv.h"
 #include "gimprc.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtkctree.h>
-
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/folder.xpm"
@@ -77,6 +71,13 @@
 
 #define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
+
+enum {
+  DIRENT_COLUMN,
+  PIXBUF_COLUMN,
+  DESC_COLUMN,
+  NUM_COLUMNS
+};
 
 
 static void     user_install_continue_callback (GtkWidget *widget,
@@ -494,17 +495,28 @@ add_label (GtkBox   *box,
 }
 
 static void
-user_install_ctree_select_row (GtkWidget      *widget,
-			       gint            row, 
-			       gint            column, 
-			       GdkEventButton *bevent,
-			       gpointer        data)
+user_install_sel_changed (GtkTreeSelection *sel,
+			  gpointer          data)
 {
-  GtkNotebook *notebook;
+  GtkNotebook  *notebook = GTK_NOTEBOOK (data);
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gint          index = 0;
 
-  notebook = (GtkNotebook*) data;
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    gtk_tree_model_get (model, &iter, DESC_COLUMN, &index, -1);
 
-  gtk_notebook_set_current_page (notebook, row);
+  gtk_notebook_set_current_page (notebook, index);
+}
+
+static void
+user_install_tv_fix_size_request (GtkWidget     *widget,
+				  GtkAllocation *allocation)
+{
+  gtk_widget_set_size_request (widget, allocation->width, allocation->height);
+  g_signal_handlers_disconnect_by_func (widget,
+					user_install_tv_fix_size_request,
+					NULL);
 }
 
 void
@@ -542,7 +554,7 @@ user_install_dialog_create (Gimp *gimp)
 
   eek_box = gtk_hbox_new (FALSE, 8);
 
-  g_object_ref (G_OBJECT (GTK_DIALOG (dialog)->action_area));
+  g_object_ref (GTK_DIALOG (dialog)->action_area);
   gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area->parent),
                         GTK_DIALOG (dialog)->action_area);
   gtk_box_pack_end (GTK_BOX (eek_box), GTK_DIALOG (dialog)->action_area,
@@ -561,7 +573,7 @@ user_install_dialog_create (Gimp *gimp)
 
   /*  B/W Style for the page contents  */
   page_style = gtk_widget_get_modifier_style (dialog);
-  g_object_ref (G_OBJECT (page_style));
+  g_object_ref (page_style);
 
   page_style->fg[GTK_STATE_NORMAL]   = black_color;
   page_style->text[GTK_STATE_NORMAL] = black_color;
@@ -678,7 +690,7 @@ user_install_dialog_create (Gimp *gimp)
 
   add_label (GTK_BOX (page),
 	     _("The GIMP - GNU Image Manipulation Program\n"
-	       "Copyright (C) 1995-2000\n"
+	       "Copyright (C) 1995-2002\n"
 	       "Spencer Kimball, Peter Mattis and the GIMP Development Team."));
 
   sep = gtk_hseparator_new ();
@@ -706,24 +718,22 @@ user_install_dialog_create (Gimp *gimp)
   
   /*  Page 2  */
   {
-    GtkWidget    *hbox;
-    GtkWidget    *vbox;
-    GtkWidget    *ctree;
-    GtkWidget    *notebook2;
-    GtkWidget    *page2;
-    GtkWidget    *label;
-    GtkCTreeNode *main_node = NULL;
-    GtkCTreeNode *sub_node = NULL;
-    GdkPixmap    *file_pixmap;
-    GdkBitmap    *file_mask;
-    GdkPixmap    *folder_pixmap;
-    GdkBitmap    *folder_mask;
-    gchar        *str;
+    GtkWidget         *hbox;
+    GtkWidget         *vbox;
+    GtkWidget         *tv;
+    GdkPixbuf         *file_pixbuf;
+    GdkPixbuf         *folder_pixbuf;
+    GtkWidget         *notebook2;
+    GtkWidget         *page2;
+    GtkWidget         *label;
+    gchar             *str;
+    GtkTreeStore      *tree;
+    GtkTreeViewColumn *column;
+    GtkCellRenderer   *cell;
+    GtkTreeSelection  *sel;
+    GtkTreeIter        iter, child;
+    gint               i;
 
-    gint i;
-
-    gchar *node[1];
-    
     page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 					      _("Personal GIMP Folder"),
 					      _("Click \"Continue\" to create "
@@ -733,13 +743,31 @@ user_install_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (page), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    ctree = gtk_ctree_new (1, 0);
-    PAGE_STYLE (ctree);
-    gtk_ctree_set_indent (GTK_CTREE (ctree), 12);
-    gtk_clist_set_shadow_type (GTK_CLIST (ctree), GTK_SHADOW_NONE);
-    gtk_clist_set_selection_mode (GTK_CLIST (ctree), GTK_SELECTION_BROWSE);
-    gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
-    gtk_widget_show (ctree);
+    tree = gtk_tree_store_new (NUM_COLUMNS, G_TYPE_STRING, GDK_TYPE_PIXBUF,
+					    G_TYPE_INT);
+    tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
+    g_object_unref (tree);
+
+    column = gtk_tree_view_column_new ();
+
+    cell = gtk_cell_renderer_pixbuf_new ();
+    gtk_tree_view_column_pack_start (column, cell, FALSE);
+    gtk_tree_view_column_set_attributes (column, cell,
+					 "pixbuf", PIXBUF_COLUMN,
+					 NULL);
+
+    cell = gtk_cell_renderer_text_new ();
+    gtk_tree_view_column_pack_start (column, cell, TRUE);
+    gtk_tree_view_column_set_attributes (column, cell,
+					 "text", DIRENT_COLUMN,
+					 NULL);
+
+    gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
+
+    PAGE_STYLE (tv);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+    gtk_box_pack_start (GTK_BOX (hbox), tv, FALSE, FALSE, 0);
+    gtk_widget_show (tv);
 
     vbox = gtk_vbox_new (FALSE, 6);
     gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -767,52 +795,34 @@ user_install_dialog_create (Gimp *gimp)
     gtk_widget_show (page2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
 
-    node[0] = (gchar *) gimp_directory ();
+    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
+    g_signal_connect (G_OBJECT (sel), "changed",
+		      G_CALLBACK (user_install_sel_changed),
+		      notebook2);
 
-    main_node = gtk_ctree_insert_node (GTK_CTREE (ctree), NULL, NULL,
-				       node, 4,
-				       NULL, NULL, NULL, NULL,
-				       FALSE, TRUE);	  
+    file_pixbuf = gdk_pixbuf_new_from_xpm_data ((const char **) new_xpm);
+    folder_pixbuf = gdk_pixbuf_new_from_xpm_data ((const char **) folder_xpm);
 
-    g_signal_connect (G_OBJECT (ctree), "select_row",
-                      G_CALLBACK (user_install_ctree_select_row),
-                      notebook2);
-
-    file_pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
-						&file_mask,
-						&page_style->bg[GTK_STATE_NORMAL],
-						new_xpm);
-    folder_pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
-						  &folder_mask,
-						  &page_style->bg[GTK_STATE_NORMAL],
-						  folder_xpm);
+    gtk_tree_store_append (tree, &iter, NULL);
+    gtk_tree_store_set (tree, &iter,
+			DIRENT_COLUMN, gimp_directory (),
+			PIXBUF_COLUMN, folder_pixbuf,
+			DESC_COLUMN, 0,
+			-1);
 
     for (i = 0; i < num_tree_items; i++)
       {
-	node[0] = tree_items[i].text;
-
-	if (tree_items[i].directory)
-	  {
-	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), 
-                                              main_node, NULL,
-					      node, 4,
-					      folder_pixmap, folder_mask,
-					      folder_pixmap, folder_mask,
-					      FALSE, TRUE);	  
-	  }
-	else
-	  {
-	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), 
-                                              main_node, NULL,
-					      node, 4,
-					      file_pixmap, file_mask,
-					      file_pixmap, file_mask,
-					      FALSE, TRUE);
-	  }
+	gtk_tree_store_append (tree, &child, &iter);
+	gtk_tree_store_set (tree, &child,
+			    DIRENT_COLUMN, tree_items[i].text,
+			    PIXBUF_COLUMN,
+			    tree_items[i].directory ? folder_pixbuf
+						    : file_pixbuf,
+			    DESC_COLUMN, i + 1,
+			    -1);
 
 	page2 = gtk_vbox_new (FALSE, 0);
 	label = gtk_label_new (gettext (tree_items[i].description));
-	PAGE_STYLE (label);
 	PAGE_STYLE (label);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -823,15 +833,14 @@ user_install_dialog_create (Gimp *gimp)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), page2, NULL);
       }
 
-    gtk_clist_set_column_width (GTK_CLIST (ctree), 0,
-				gtk_clist_optimal_column_width (GTK_CLIST (ctree), 0));
+    gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
-    gtk_widget_set_size_request (ctree, -1, ctree->requisition.height);
+    g_signal_connect (tv, "size_allocate",
+		      G_CALLBACK (user_install_tv_fix_size_request),
+		      NULL);
 
-    g_object_unref (file_pixmap);
-    g_object_unref (file_mask);
-    g_object_unref (folder_pixmap);
-    g_object_unref (folder_mask);
+    g_object_unref (file_pixbuf);
+    g_object_unref (folder_pixbuf);
   }
   
   /*  Page 3  */
@@ -873,6 +882,9 @@ user_install_dialog_create (Gimp *gimp)
 					    NULL);
 
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+
+  gtk_widget_grab_focus (continue_button);
+  gtk_widget_grab_default (continue_button);
 
   gtk_widget_show (dialog);
 }
@@ -1050,8 +1062,9 @@ user_install_run (void)
 
 	  log_buffer = gtk_text_buffer_new (NULL);
 	  log_view = gtk_text_view_new_with_buffer (log_buffer);
+	  g_object_unref (log_buffer);
 
-	  g_object_unref (G_OBJECT (log_buffer));
+	  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
 
 	  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
 	  gtk_widget_show (log_view);
