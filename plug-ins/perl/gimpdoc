@@ -100,8 +100,10 @@ EOF
       $_[0] =~ s/</&lt;/;
       $_[0] =~ s/>/&gt;/;
 
+      # FIX: the following three lines are only required for my m4 macro package.
       $_[0] =~ s/{/_lbr/;
-      $_[0] =~ s/}/_rbr/;
+      $_[0] =~ s/}/{}_rbr{}/;
+      $_[0] =~ s/_lbr/{}_lbr{}/;
 
       # do a best effort to replace function names by links
       $_[0] =~ s{\b([a-z_]+_[a-z_]+)\b}{
@@ -214,7 +216,11 @@ sub weight {
 }
     
 sub gen_alternatives(\@$\@) {
-   my @new = [@_];
+   my @vals = @{+shift};
+   my $name = shift;
+   my @args = @{+shift};
+   killcounts(@vals); killcounts(@args);
+   my @new = [\@vals,$name,\@args];
    my @res;
    do {
       my @prev = @new;
@@ -224,7 +230,6 @@ sub gen_alternatives(\@$\@) {
          my $name = $alt->[1];
          my @args = @{$alt->[2]};
          # try to get rid of array counts
-         push @new, [\@vals,$name,\@args] if killcounts(@vals) | killcounts(@args);
          unless ($name =~ /[$ ]/) {
             for my $class (qw(
                   Gimp Layer Image Drawable Selection Channel Display
@@ -232,9 +237,14 @@ sub gen_alternatives(\@$\@) {
                   PixelRgn GDrawable Patterns Parasite
                )) {
                my @pre = @{$class."::PREFIXES"};
+               prefix:
                for (@pre) {
                   my $n2 = $name;
                   if ($_ && $n2 =~ s/^$_//) {
+                     for my $p (@pre) {
+                        last if $_ eq $p;
+                        last prefix if Gimp::_gimp_procedure_available($p.$n2);
+                     }
                      if ($class eq "Drawable" && @args && $args[0][0] == &PARAM_DRAWABLE) {
                         push @new, [\@vals,"\$drawable->$n2",[@args[1..$#args]]];
                      } elsif ($class eq "Layer" && @args && $args[0][0] == &PARAM_LAYER) {
@@ -243,11 +253,17 @@ sub gen_alternatives(\@$\@) {
                         push @new, [\@vals,"\$channel->$n2",[@args[1..$#args]]];
                      } elsif ($class eq "Image" && @args && $args[0][0] == &PARAM_IMAGE) {
                         push @new, [\@vals,"\$image->$n2",[@args[1..$#args]]];
-                     } elsif ($class =~ /Gimp|Gradient|Palette|Edit|Patterns|Parasite|PixelRgn/) {
-                        push @new, [\@vals,"${class}->$n2",\@args];
-                     } else {
-                        push @new, [\@vals,"$n2$nbsp$class",\@args];
+                     } elsif (@args < 1 or ($args[0][0] != &PARAM_IMAGE
+                                         && $args[0][0] != &PARAM_DRAWABLE
+                                         && $args[0][0] != &PARAM_CHANNEL
+                                         && $args[0][0] != &PARAM_LAYER)) {
+                        if ($class =~ /Gimp|Gradient|Palette|Edit|Patterns|Parasite|PixelRgn/) {
+                           push @new, [\@vals,"${class}->$n2",\@args];
+                        } else {
+                           push @new, [\@vals,"$n2$nbsp$class",\@args];
+                        }
                      }
+                     last prefix;
                   }
                }
             }

@@ -180,11 +180,6 @@ that are checked are shown as well (the null prefix "" is implicit).
 
  gimp_patterns_
 
-=item Parasite
-
- parasite_
- gimp_
-
 =back
 
 =head1 AUTHOR

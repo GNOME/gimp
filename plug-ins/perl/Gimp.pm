@@ -526,7 +526,7 @@ _pseudoclass qw(Gradients	gimp_gradients_);
 _pseudoclass qw(Edit		gimp_edit_);
 _pseudoclass qw(Progress	gimp_progress_);
 _pseudoclass qw(Region		);
-_pseudoclass qw(Parasite	parasite_ gimp_);
+_pseudoclass qw(Parasite	);
 
 # "C"-Classes
 _pseudoclass qw(GDrawable	gimp_gdrawable_ gimp_drawable_);
