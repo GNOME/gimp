@@ -1,3 +1,8 @@
+2001-11-07  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.po: Adjust a few entries because of new tips file, in
+	  addition to a few more minor corrections.
+
 2001-11-06  Abel Cheung  <maddog@linux.org.hk>
 
 	* zh_TW.po: Fixed a few entries.

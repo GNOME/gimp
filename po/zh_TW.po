@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
 "POT-Creation-Date: 2001-10-20 18:07+0800\n"
-"PO-Revision-Date: 2001-11-04 23:34+0800\n"
+"PO-Revision-Date: 2001-11-07 05:10+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr "貝茲曲線的路徑已經閉合。"
 
 #: app/bezier_select.c:502
 msgid "Corrupt curve"
-msgstr "殘破的曲線"
+msgstr "損毀的曲線"
 
 #: app/bezier_select.c:3000
 msgid "Curve not closed!"
@@ -927,7 +927,7 @@ msgstr "清淅化"
 
 #: app/crop.c:184 app/tools.c:377
 msgid "Crop & Resize"
-msgstr "切除邊沿和重定尺寸"
+msgstr "裁剪和重定尺寸"
 
 #: app/crop.c:195
 msgid "Current Layer only"
@@ -945,7 +945,7 @@ msgstr "操作類型"
 
 #: app/crop.c:221 app/crop.c:1069
 msgid "Crop"
-msgstr "切除邊沿"
+msgstr "裁剪"
 
 #: app/crop.c:223 app/crop.c:1071
 msgid "Resize"
@@ -953,16 +953,16 @@ msgstr "重定尺寸"
 
 #: app/crop.c:522 app/crop.c:530
 msgid "Crop: "
-msgstr "切除邊沿："
+msgstr "裁剪："
 
 #: app/crop.c:1042
 msgid "Crop: 0 x 0"
-msgstr "切除邊沿：0 x 0"
+msgstr "裁剪：0 x 0"
 
 #. create the info dialog
 #: app/crop.c:1063
 msgid "Crop & Resize Information"
-msgstr "切除邊沿和重定尺寸的資訊"
+msgstr "裁剪和重定尺寸的資訊"
 
 #. add the information fields
 #: app/crop.c:1079
@@ -5031,7 +5031,7 @@ msgstr "臨界值範圍："
 
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.zh_TW.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
@@ -5057,8 +5057,8 @@ msgid ""
 "Please check your installation."
 msgstr ""
 "GIMP 提示檔案似乎不存在！\n"
-"在 GIMP 資料檔目錄裡的提示子目錄\n"
-"應該有一個檔案名為 gimp_tips.txt。\n"
+"在 GIMP 資料檔目錄裡的提示檔副目錄\n"
+"應該有一個檔案名為 gimp_tips.zh_TW.txt。\n"
 "請檢查安裝是否正確無誤。"
 
 #: app/tool_options.c:126
@@ -5107,7 +5107,7 @@ msgstr "單位："
 
 #: app/tool_options.c:474 app/tools.c:601
 msgid "Bucket Fill"
-msgstr "填色"
+msgstr "油漆桶填色"
 
 #: app/tool_options.c:476
 msgid "Blend Tool"
@@ -5263,11 +5263,11 @@ msgstr "拉近和拉遠"
 
 #: app/tools.c:378
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/工具/變換工具/切除邊沿和重定尺寸"
+msgstr "/工具/變換工具/裁剪和重定尺寸"
 
 #: app/tools.c:383
 msgid "Crop or resize the image"
-msgstr "切除圖像邊沿或重定圖像尺寸"
+msgstr "裁剪圖像或重定圖像尺寸"
 
 #. the transform type radio buttons
 #: app/tools.c:405 app/tools.c:433 app/tools.c:461 app/tools.c:489
@@ -5317,7 +5317,7 @@ msgstr "由圖像選擇顏色"
 
 #: app/tools.c:602
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/工具/繪圖工具/填色"
+msgstr "/工具/繪圖工具/油漆桶填色"
 
 #: app/tools.c:607
 msgid "Fill with a color or pattern"
@@ -5730,7 +5730,7 @@ msgstr "gimage 修改"
 
 #: app/undo.c:2940
 msgid "crop"
-msgstr "切除邊沿"
+msgstr "裁剪"
 
 #: app/undo.c:2941
 msgid "layer scale"
