@@ -108,6 +108,7 @@ INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
+	$(PANGOFT2_CFLAGS)		\
 	-I$(includedir)			\
 @STRIP_END@
 

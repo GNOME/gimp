@@ -1,5 +1,9 @@
 2001-08-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am: added PANGOFT2_CFLAGS to INCLUDES.
+
+2001-08-19  Sven Neumann  <sven@gimp.org>
+
 	* app/devices.h
 	* app/disp_callbacks.c
 	* app/interface.c: applied a patch from <David.Odin@bigfoot.com> that
