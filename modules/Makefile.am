@@ -11,6 +11,10 @@ INCLUDES = \
         $(GTK_CFLAGS)                   \
         -I$(includedir)
 
+EXTRA_DIST = \
+	makefile.msc		\
+	module.def
+
 module_LTLIBRARIES = \
 	libcolorsel_gtk.la 	\
 	libcolorsel_triangle.la

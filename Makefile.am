@@ -6,6 +6,7 @@ bin_SCRIPTS = gimptool
 
 EXTRA_DIST = \
 	README.i18n		\
+	README.win32		\
 	ChangeLog.pre-1-0	\
 	MAINTAINERS		\
 	TODO			\
@@ -15,12 +16,15 @@ EXTRA_DIST = \
 	gimp1_1_splash.ppm	\
 	rmshm			\
 	user_install		\
+	user_install.bat	\
 	gimp_tips.txt		\
 	ps-menurc		\
 	gimp.1			\
 	gimptool.1		\
 	gtkrc.forest2		\
-	gimp.m4
+	gimp.m4			\
+	gimprc.win32		\
+	config.h.win32
 
 gimpdata_DATA = \
 	gimprc			\

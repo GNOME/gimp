@@ -369,7 +369,11 @@ EXTRA_DIST = \
 	tools/penedit.xpm	\
 	tools/pennorm.xpm	\
 	tools/penstroke.xpm	\
-	tools/ptoselection.xpm
+	tools/ptoselection.xpm	\
+	makefile.msc		\
+	gimp.def		\
+	gimp.rc			\
+	wilber.ico
 
 
 CPPFLAGS = \

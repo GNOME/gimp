@@ -554,8 +554,8 @@ install_run (InstallCallback callback)
 	}
       else
 	executable = FALSE;
-    }
 #endif /* !NATIVE_WIN32 */
+    }
 
   if (executable == FALSE)
     gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,

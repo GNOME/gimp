@@ -16,7 +16,12 @@ INCLUDES = \
 
 EXTRA_DIST = \
 	chain.xpm		\
-	gimpfeatures.h.in
+	gimpfeatures.h.in	\
+	makefile.msc		\
+	gimp.def		\
+	gimpi.def		\
+	gimpui.def		\
+	gimpfeatures.h.win32
 
 lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a

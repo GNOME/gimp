@@ -1,3 +1,18 @@
+1999-03-08  Tor Lillqvist  <tml@iki.fi>
+
+	* app/devices.c (devices_write_rc): A line had been deleted by
+ 	mistake.
+
+	* app/frac.c: Removed some CRs.
+
+	* app/install.c (install_run): Typo.
+
+	* modules/module.def: New file.
+
+	* Makefile.am app/Makefile.am libgimp/Makefile.am
+ 	modules/Makefile.am: Added Win32 implementation files to
+ 	distributed file set.
+
 Mon Mar  8 21:23:10 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/layer_cmds.c: updated gimp_layer_new and gimp_layer_set_mode to

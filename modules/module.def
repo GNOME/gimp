@@ -1,0 +1,3 @@
+EXPORTS
+	module_init
+	module_unload

@@ -625,6 +625,8 @@ devices_write_rc (void)
   char *filename;
   FILE *fp;
 
+  devices_save_current_info ();
+
   filename = gimp_personal_rc_file ("devicerc");
   fp = fopen (filename, "wb");
   g_free (filename);
