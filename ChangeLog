@@ -1,3 +1,9 @@
+Tue Dec 22 17:43:08 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* gimp1_1_splash.ppm: Replaced tigert's lovely splash
+	screen with something more approriate for a unstable
+	development release. 
+
 Sun Dec 20 23:34:37 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c: another patch from Xach. Eek, I should have
