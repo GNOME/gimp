@@ -878,11 +878,10 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
                                               coords, anchor,
                                               EXTEND_SIMPLE);
 
-          gimp_stroke_anchor_select (stroke, anchor, TRUE);
-
-          anchor = gimp_bezier_stroke_extend (stroke,
-                                              coords, anchor,
-                                              EXTEND_SIMPLE);
+          /* we return the GIMP_ANCHOR_ANCHOR */
+          gimp_bezier_stroke_extend (stroke,
+                                     coords, anchor,
+                                     EXTEND_SIMPLE);
 
           break;
 
@@ -1035,17 +1034,15 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
                                                         neighbor,
                                                         EXTEND_SIMPLE);
                 case 2:
-                  neighbor = gimp_bezier_stroke_extend (stroke,
-                                                        coords,
-                                                        neighbor,
-                                                        EXTEND_SIMPLE);
-
-                  gimp_stroke_anchor_select (stroke, neighbor, TRUE);
-
                   anchor = gimp_bezier_stroke_extend (stroke,
                                                       coords,
                                                       neighbor,
                                                       EXTEND_SIMPLE);
+
+                  neighbor = gimp_bezier_stroke_extend (stroke,
+                                                        coords,
+                                                        anchor,
+                                                        EXTEND_SIMPLE);
                   break;
                 default:
                   g_warning ("inconsistent bezier curve: "

@@ -396,8 +396,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                           vector_tool->cur_anchor,
                                           EXTEND_EDITABLE);
 
-      /* We want to drag out the control point later */
-      state |= GDK_CONTROL_MASK;
       vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
 
       if (!options->polygonal)
@@ -435,27 +433,22 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       break;  /* here it is...  :-)  */
 
     case VECTORS_CONNECT_STROKES:
-      gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
-                                  gdisp, &anchor, &stroke);
-      if (anchor && stroke &&
-          vector_tool->cur_anchor && vector_tool->cur_stroke &&
-          anchor != vector_tool->cur_anchor &&
-          gimp_stroke_is_extendable (stroke, anchor) &&
-          gimp_stroke_is_extendable (vector_tool->cur_stroke,
-                                     vector_tool->cur_anchor))
+      if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                      gdisp, &anchor, &stroke)
+          && gimp_stroke_is_extendable (stroke, anchor))
         {
-          gimp_stroke_connect_stroke (vector_tool->cur_stroke,
-                                      vector_tool->cur_anchor,
-                                      stroke, anchor);
-          if (stroke != vector_tool->cur_stroke
-              && gimp_stroke_is_empty (stroke))
-            gimp_vectors_stroke_remove (vector_tool->vectors, stroke);
-
+          vector_tool->cur_stroke = stroke;
           vector_tool->cur_anchor = anchor;
-          vector_tool->function = VECTORS_MOVE_ANCHOR;
+          vector_tool->last_x = anchor->position.x;
+          vector_tool->last_y = anchor->position.y;
         }
+      else
+        {
+          vector_tool->function = VECTORS_FINISHED;
+        }
+
       break;
-      
+
     case VECTORS_MOVE_CURVE:
       if (gimp_vector_tool_on_curve (tool, coords, gdisp,
                                      NULL, &pos, &segment_start, &stroke)
@@ -501,6 +494,23 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       break;
 
+    case VECTORS_MOVE_STROKE:
+    case VECTORS_MOVE_VECTORS:
+      if (gimp_vector_tool_on_handle (tool, coords,
+                                      GIMP_ANCHOR_ANCHOR, gdisp,
+                                      &anchor, &stroke) ||
+          gimp_vector_tool_on_curve (tool, coords, gdisp,
+                                     NULL, NULL, &anchor, &stroke))
+          {
+            vector_tool->cur_anchor = anchor;
+            vector_tool->cur_stroke = stroke;
+          }
+
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
+      
+      break;
+
     default:
       break;
     }
@@ -520,8 +530,28 @@ gimp_vector_tool_button_release (GimpTool        *tool,
 {
   GimpVectorTool *vector_tool;
   GimpViewable   *viewable;
+  GimpAnchor     *anchor=NULL;
+  GimpStroke     *stroke=NULL;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
+
+  if (vector_tool->function == VECTORS_CONNECT_STROKES
+      && gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                     gdisp, &anchor, &stroke)
+      && anchor != vector_tool->cur_anchor
+      && gimp_stroke_is_extendable (stroke, anchor))
+    {
+      gimp_vectors_freeze (vector_tool->vectors);
+      gimp_stroke_connect_stroke (vector_tool->cur_stroke,
+                                  vector_tool->cur_anchor,
+                                  stroke, anchor);
+      if (stroke != vector_tool->cur_stroke
+          && gimp_stroke_is_empty (stroke))
+        gimp_vectors_stroke_remove (vector_tool->vectors, stroke);
+
+      vector_tool->cur_anchor = anchor;
+      gimp_vectors_thaw (vector_tool->vectors);
+    }
 
   vector_tool->function = VECTORS_FINISHED;
 
@@ -584,6 +614,30 @@ gimp_vector_tool_motion (GimpTool        *tool,
                                        vector_tool->cur_anchor,
                                        vector_tool->cur_position,
                                        coords, vector_tool->restriction);
+      break;
+
+    case VECTORS_MOVE_STROKE:
+      gimp_stroke_translate (vector_tool->cur_stroke,
+                             coords->x - vector_tool->last_x,
+                             coords->y - vector_tool->last_y);
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
+
+      break;
+
+    case VECTORS_MOVE_VECTORS:
+      gimp_item_translate (GIMP_ITEM (vector_tool->vectors),
+                           coords->x - vector_tool->last_x,
+                           coords->y - vector_tool->last_y, FALSE);
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
+
+      break;
+
+    case VECTORS_CONNECT_STROKES:
+      vector_tool->last_x = coords->x;
+      vector_tool->last_y = coords->y;
+
       break;
 
     default:
@@ -808,99 +862,94 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   GimpVectorTool    *vector_tool;
   GimpVectorOptions *options;
   GimpAnchor        *anchor = NULL;
-  GimpVectorMode     edit_mode;
+  GdkModifierType    modifier_mask = GDK_CONTROL_MASK;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
-  edit_mode = options->edit_mode;
-
-  if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
+  switch (options->edit_mode)
     {
-      vector_tool->function =
-          edit_mode == GIMP_VECTOR_MODE_ADJUST ?
-                             VECTORS_FINISHED :
-                             VECTORS_CREATE_VECTOR;
-      return;
-    }
-
-  if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
-                                  gdisp, &anchor, NULL))
-    {
-      if (state & GDK_CONTROL_MASK)
+    case GIMP_VECTOR_MODE_CREATE:
+      if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
-          if (state & GDK_SHIFT_MASK)
+          vector_tool->function = VECTORS_CREATE_VECTOR;
+        }
+      else if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                           gdisp, &anchor, NULL))
+        {
+          if (state & modifier_mask)
             {
-              if (state & GDK_MOD1_MASK)
-                vector_tool->function = VECTORS_CONNECT_STROKES;
-              else
-                vector_tool->function = VECTORS_CONVERT_EDGE;
+              vector_tool->function = VECTORS_MOVE_ANCHOR;
             }
           else
             {
-              if (edit_mode == GIMP_VECTOR_MODE_ADJUST
-                  && anchor->type == GIMP_ANCHOR_ANCHOR)
-                {
-                  vector_tool->function = VECTORS_DELETE_ANCHOR;
-                }
+              if (anchor->type == GIMP_ANCHOR_ANCHOR)
+                vector_tool->function = VECTORS_MOVE_ANCHOR;
               else
-                {
-                  if (!options->polygonal)
-                    vector_tool->function = VECTORS_MOVE_HANDLE;
-                  else
-                    vector_tool->function = VECTORS_MOVE_ANCHOR;
-                }
+                vector_tool->function = VECTORS_MOVE_HANDLE;
+            }
+        }
+      else if (gimp_vector_tool_on_curve (tool, coords, gdisp,
+                                         NULL, NULL, NULL, NULL))
+        {
+          vector_tool->function = VECTORS_MOVE_CURVE;
+        }
+      else
+        {
+          if (vector_tool->cur_stroke && vector_tool->cur_anchor
+              && gimp_stroke_is_extendable (vector_tool->cur_stroke,
+                                            vector_tool->cur_anchor))
+            vector_tool->function = VECTORS_ADD_ANCHOR;
+          else
+            vector_tool->function = VECTORS_CREATE_STROKE;
+        }
+
+      break;
+
+    case GIMP_VECTOR_MODE_ADJUST:
+      if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
+        {
+          vector_tool->function = VECTORS_FINISHED;
+        }
+      else if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                           gdisp, &anchor, NULL))
+        {
+          if (state & modifier_mask)
+            {
+              vector_tool->function = VECTORS_DELETE_ANCHOR;
+            }
+          else
+            {
+              vector_tool->function = VECTORS_CONNECT_STROKES;
+              vector_tool->cur_anchor = NULL;  /* slightly misplaced here */
+            }
+        }
+      else if (gimp_vector_tool_on_curve (tool, coords, gdisp,
+                                         NULL, NULL, NULL, NULL))
+        {
+          if (state & modifier_mask)
+            {
+              vector_tool->function = VECTORS_DELETE_SEGMENT;
+            }
+          else
+            {
+              vector_tool->function = VECTORS_INSERT_ANCHOR;
             }
         }
       else
         {
-          vector_tool->function = VECTORS_MOVE_ANCHOR;
+          vector_tool->function = VECTORS_FINISHED;
         }
-    }
-  else
-    {
-      if (gimp_vector_tool_on_curve (tool,
-                                     coords, gdisp,
-                                     NULL, NULL, NULL, NULL))
-        {
-          if (edit_mode == GIMP_VECTOR_MODE_ADJUST)
-            {
-              if (state & GDK_CONTROL_MASK)
-                {
-                  vector_tool->function = VECTORS_DELETE_SEGMENT;
-                }
-              else
-                {
-                  vector_tool->function = VECTORS_INSERT_ANCHOR;
-                }
-            }
-          else
-            {
-              if (!options->polygonal)
-                vector_tool->function = VECTORS_MOVE_CURVE;
-              else
-                vector_tool->function = VECTORS_ADD_ANCHOR;
-            }
-        }
+
+      break;
+
+    case GIMP_VECTOR_MODE_MOVE:
+      if (state & modifier_mask)
+        vector_tool->function = VECTORS_MOVE_VECTORS;
       else
-        {
-          if (vector_tool->cur_stroke && vector_tool->cur_anchor &&
-              gimp_stroke_is_extendable (vector_tool->cur_stroke,
-                                         vector_tool->cur_anchor))
-            {
-              vector_tool->function =
-                  edit_mode == GIMP_VECTOR_MODE_ADJUST ?
-                                     VECTORS_FINISHED :
-                                     VECTORS_ADD_ANCHOR;
-            }
-          else
-            {
-              vector_tool->function =
-                  edit_mode == GIMP_VECTOR_MODE_ADJUST ?
-                                     VECTORS_FINISHED :
-                                     VECTORS_CREATE_STROKE;
-            }
-        }
+        vector_tool->function = VECTORS_MOVE_STROKE;
+
+      break;
     }
 }
 
@@ -942,6 +991,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       break;
     case VECTORS_MOVE_ANCHOR:
     case VECTORS_MOVE_CURVE:
+    case VECTORS_MOVE_STROKE:
+    case VECTORS_MOVE_VECTORS:
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case VECTORS_CONNECT_STROKES:
@@ -1059,6 +1110,17 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
           g_array_free (coords, TRUE);
         }
+    }
+
+  if (vector_tool->function == VECTORS_CONNECT_STROKES
+      && vector_tool->cur_anchor)
+    {
+      gimp_draw_tool_draw_line (draw_tool,
+                                vector_tool->cur_anchor->position.x,
+                                vector_tool->cur_anchor->position.y,
+                                vector_tool->last_x,
+                                vector_tool->last_y,
+                                FALSE);
     }
 }
 

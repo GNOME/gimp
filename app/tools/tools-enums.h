@@ -112,6 +112,7 @@ typedef enum /*< pdb-skip >*/
 {
   GIMP_VECTOR_MODE_CREATE,      /*< desc="Extend Stroke/Move Nodes" >*/
   GIMP_VECTOR_MODE_ADJUST,      /*< desc="Insert/Delete Nodes"      >*/
+  GIMP_VECTOR_MODE_MOVE,        /*< desc="Move Stroke/Path"         >*/
 } GimpVectorMode;
 
 

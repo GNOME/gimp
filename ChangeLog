@@ -1,3 +1,22 @@
+2003-08-29  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: Do not modify the selection
+	state of the anchors. When extending EXTEND_EDITABLE return
+	the anchor created (not the handle at the end of the list)
+
+	* app/tools/tools-enums.h: Added new mode-enum for the vector tool.
+	* app/tools/tools-enums.c: regenerated
+	
+	* app/tools/gimpvectortool.[ch]: Implemented moving (Shortcuts
+	ALT and ALT+CTRL. The whole assignment of modifiers right now
+	gets revised. Right now you have to use the Tool options to
+	switch between the modes of operation. Connecting strokes now
+	works in Insert/Delete mode by clicking on startpoint and
+	dragging to target endpoint.
+
+	I will write a mail to gimp-devel when the shortcuts are
+	setteled a bit more. Sorry for the inconvenience.
+
 2003-08-29  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): move the
