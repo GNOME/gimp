@@ -1,3 +1,9 @@
+2003-10-23  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-tools-16.png
+	* themes/Default/images/stock-tools-24.png: make the outline
+	  more crisp
+
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpimagedock.c (gimp_image_dock_init): set a
