@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* SVG loading file filter for the GIMP
+/* SVG loader for The GIMP
  * (C) Copyright 2003  Dom Lachowicz <cinamod@hotmail.com>
  *
- * Largely rewritten by Sven Neumann <sven@gimp.org>
+ * Largely rewritten in September 2003 by Sven Neumann <sven@gimp.org>
  */
 
 #include "config.h"
@@ -307,6 +307,7 @@ load_image (const gchar *filename)
   return image;
 }
 
+/*  This is the callback used from load_rsvg_pixbuf().  */
 static void
 load_set_size_callback (gint     *width,
                         gint     *height,
@@ -350,6 +351,8 @@ load_set_size_callback (gint     *width,
     }
 }
 
+
+/*  This function renders a pixbuf from an SVG file according to vals.  */
 static GdkPixbuf *
 load_rsvg_pixbuf (const gchar  *filename,
                   SvgLoadVals  *vals,
@@ -405,6 +408,7 @@ load_rsvg_pixbuf (const gchar  *filename,
   return pixbuf;
 }
 
+/*  This is the callback used from load_rsvg_size().  */
 static void
 load_get_size_callback (gint     *width,
                         gint     *height,
@@ -415,10 +419,15 @@ load_get_size_callback (gint     *width,
   vals->width  = *width;
   vals->height = *height;
 
-  /*  this cancels loading  */
+  /*  cancel loading  */
   vals->resolution = 0.0;
 }
 
+/*  This function retrieves the pixel size from an SVG file. Parsing
+ *  stops after the first chunk that provided the parser with enough
+ *  information to determine the size. This is usally the opening
+ *  <svg> element and should thus be in the first chunk (1024 bytes).
+ */
 static gboolean
 load_rsvg_size (const gchar  *filename,
                 SvgLoadVals  *vals,
@@ -469,39 +478,112 @@ load_rsvg_size (const gchar  *filename,
   return success;
 }
 
+
+/*  User interface  */
+
+static GimpSizeEntry *size       = NULL;
+static GtkObject     *xadj       = NULL;
+static GtkObject     *yadj       = NULL;
+static GtkWidget     *constrain  = NULL;
+static gdouble        ratio_x    = 1.0;
+static gdouble        ratio_y    = 1.0;
+static gint           svg_width  = 0;
+static gint           svg_height = 0;
+
+static void  load_dialog_set_ratio (gdouble x,
+                                    gdouble y);
+
+
 static void
-load_ok_callback (GtkWidget *widget,
-                  gpointer   data)
+load_dialog_ok_callback (GtkWidget *widget,
+                         gpointer   data)
 
 {
-  GimpSizeEntry *size = g_object_get_data (G_OBJECT (data), "size-entry");
-
-  load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
-  load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
+  load_vals.width  = gimp_size_entry_get_refval (size, 0);
+  load_vals.height = gimp_size_entry_get_refval (size, 1);
 
   load_interface.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
+static void
+load_dialog_size_callback (GtkWidget *widget,
+                           gpointer   data)
+{
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+    {
+      gdouble x = gimp_size_entry_get_refval (size, 0) / (gdouble) svg_width;
+      gdouble y = gimp_size_entry_get_refval (size, 1) / (gdouble) svg_height;
 
-static gboolean  resolution_dependant = FALSE;
+      if (x != ratio_x)
+        {
+          load_dialog_set_ratio (x, x);
+        }
+      else if (y != ratio_y)
+        {
+          load_dialog_set_ratio (y, y);
+        }
+    }
+}
 
 static void
-load_resolution_callback (GimpSizeEntry *res,
-                          GimpSizeEntry *size)
+load_dialog_ratio_callback (GtkAdjustment *adj,
+                            gpointer       data)
 {
-  if (resolution_dependant && load_vals.resolution > 0.0)
-    {
-      gdouble f = gimp_size_entry_get_refval (res, 0) / load_vals.resolution;
+  gdouble x = gtk_adjustment_get_value (GTK_ADJUSTMENT (xadj));
+  gdouble y = gtk_adjustment_get_value (GTK_ADJUSTMENT (yadj));
 
-      gimp_size_entry_set_refval (size, 0,
-                                  f * gimp_size_entry_get_refval (size, 0));
-      gimp_size_entry_set_refval (size, 1,
-                                  f * gimp_size_entry_get_refval (size, 1));
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+    {
+      if (x != ratio_x)
+        y = x;
+      else
+        x = y;
     }
 
-  load_vals.resolution = gimp_size_entry_get_refval (res, 0);
+  load_dialog_set_ratio (x, y);
+}
+
+static void
+load_dialog_resolution_callback (GimpSizeEntry *res,
+                                 const gchar   *filename)
+{
+  SvgLoadVals  vals = { 0.0, 0, 0 };
+
+  load_vals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
+
+  if (!load_rsvg_size (filename, &vals, NULL))
+    return;
+
+  svg_width  = MAX (vals.width,  1);
+  svg_height = MAX (vals.height, 1);
+
+  load_dialog_set_ratio (ratio_x, ratio_y);
+}
+
+static void
+load_dialog_set_ratio (gdouble x,
+                       gdouble y)
+{
+  ratio_x = x;
+  ratio_y = y;
+
+  g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
+
+  gimp_size_entry_set_refval (size, 0, svg_width  * x);
+  gimp_size_entry_set_refval (size, 1, svg_height * y);
+
+  g_signal_handlers_unblock_by_func (size, load_dialog_size_callback, NULL);
+
+  g_signal_handlers_block_by_func (xadj, load_dialog_ratio_callback, NULL);
+  g_signal_handlers_block_by_func (yadj, load_dialog_ratio_callback, NULL);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (xadj), x);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj), y);
+
+  g_signal_handlers_unblock_by_func (xadj, load_dialog_ratio_callback, NULL);
+  g_signal_handlers_unblock_by_func (yadj, load_dialog_ratio_callback, NULL);
 }
 
 static gboolean
@@ -513,8 +595,8 @@ load_dialog (const gchar *filename)
   GtkWidget *image;
   GdkPixbuf *preview;
   GtkWidget *table;
+  GtkWidget *table2;
   GtkWidget *abox;
-  GtkWidget *size;
   GtkWidget *res;
   GtkWidget *label;
   GtkWidget *spinbutton;
@@ -523,7 +605,6 @@ load_dialog (const gchar *filename)
   GtkObject *adj;
   GError    *error = NULL;
 
-  SvgLoadVals  vals2;
   SvgLoadVals  vals = { SVG_DEFAULT_RESOLUTION,
                         - SVG_PREVIEW_SIZE, - SVG_PREVIEW_SIZE };
 
@@ -538,13 +619,14 @@ load_dialog (const gchar *filename)
       return FALSE;
     }
 
-  vals2.resolution = 2 * load_vals.resolution;
-  load_rsvg_size (filename, &vals2, NULL);
-
+  /*  query the initial size  */
   vals.resolution = load_vals.resolution;
+
   load_rsvg_size (filename, &vals, NULL);
 
-  resolution_dependant = (vals.width != vals2.width);
+  svg_width = MAX (vals.width,  1);
+  svg_height = MAX (vals.height, 1);
+
 
   gimp_ui_init ("svg", FALSE);
 
@@ -556,7 +638,7 @@ load_dialog (const gchar *filename)
                             GTK_STOCK_CANCEL, gtk_widget_destroy,
                             NULL, 1, NULL, FALSE, TRUE,
 
-                            GTK_STOCK_OK, load_ok_callback,
+                            GTK_STOCK_OK, load_dialog_ok_callback,
                             NULL, NULL, NULL, TRUE, FALSE,
 
                             NULL);
@@ -592,11 +674,12 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), image);
   gtk_widget_show (image);
 
-  table = gtk_table_new (3, 5, FALSE);
+  table = gtk_table_new (7, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 8);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
@@ -628,69 +711,133 @@ load_dialog (const gchar *filename)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
-  size = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
-                              TRUE, FALSE, FALSE, 10,
-                              GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+                                               TRUE, FALSE, FALSE, 10,
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE));
   gtk_table_set_col_spacing (GTK_TABLE (size), 1, 4);
 
-  g_object_set_data (G_OBJECT (dialog), "size-entry", size);
+  gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size),
-                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_container_add (GTK_CONTAINER (abox), GTK_WIDGET (size));
+  gtk_widget_show (GTK_WIDGET (size));
 
-  gtk_container_add (GTK_CONTAINER (abox), size);
-  gtk_widget_show (size);
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 0,
+  gimp_size_entry_set_refval_boundaries (size, 0,
                                          GIMP_MIN_IMAGE_SIZE,
                                          GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 1,
+  gimp_size_entry_set_refval_boundaries (size, 1,
                                          GIMP_MIN_IMAGE_SIZE,
                                          GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, vals.width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, vals.height);
+  gimp_size_entry_set_refval (size, 0, svg_width);
+  gimp_size_entry_set_refval (size, 1, svg_height);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0,
-				  load_vals.resolution, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1,
-				  load_vals.resolution, FALSE);
+  gimp_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
+  gimp_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
+
+  g_signal_connect (size, "value_changed",
+		    G_CALLBACK (load_dialog_size_callback),
+                    NULL);
+
+  /*  Scale ratio  */
+  label = gtk_label_new (_("Ratio X:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Y:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  table2 = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_container_add (GTK_CONTAINER (abox), table2);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  spinbutton =
+    gimp_spin_button_new (&xadj,
+                          ratio_x,
+                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) svg_width,
+                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) svg_width,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
+  gtk_widget_show (spinbutton);
+
+  g_signal_connect (xadj, "value_changed",
+		    G_CALLBACK (load_dialog_ratio_callback),
+		    NULL);
+
+  spinbutton =
+    gimp_spin_button_new (&yadj,
+                          ratio_y,
+                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) svg_height,
+                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) svg_height,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
+  gtk_widget_show (spinbutton);
+
+  g_signal_connect (yadj, "value_changed",
+		    G_CALLBACK (load_dialog_ratio_callback),
+		    NULL);
+
+  /*  the constrain ratio chainbutton  */
+  constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (constrain), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (table2), constrain, 1, 2, 0, 2);
+  gtk_widget_show (constrain);
+
+  gimp_help_set_help_data (GIMP_CHAIN_BUTTON (constrain)->button,
+                           _("Constrain aspect ratio"), NULL);
+
+  gtk_widget_show (table2);
 
   /*  Resolution   */
   label = gtk_label_new (_("Resolution:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 3,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
 
   res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
                              FALSE, FALSE, FALSE, 10,
                              GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (res), 1, 4);
 
-  gtk_table_attach (GTK_TABLE (table), res, 1, 2, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), res, 1, 2, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (res);
 
+  /* don't let the resolution become too small, librsvg tends to
+     crash with very small resolutions */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (res), 0,
-                                         GIMP_MIN_RESOLUTION,
-                                         GIMP_MAX_RESOLUTION);
+                                         5.0, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (res), 0, load_vals.resolution);
 
   g_signal_connect (res, "value-changed",
-                    G_CALLBACK (load_resolution_callback),
-                    size);
+                    G_CALLBACK (load_dialog_resolution_callback),
+                    (gpointer) filename);
 
   /*  Path Import  */
-  toggle = gtk_check_button_new_with_label (_("Import Paths"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 3, 4,
+  toggle = gtk_check_button_new_with_mnemonic (_("Import _Paths"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 5, 6,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+                           _("Import path elements of the SVG so they can "
+                             "be used with the GIMP path tool. This only "
+                             "works properly with an import ratio of 1.0."),
+                           NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
   g_signal_connect (toggle, "toggled",
@@ -701,8 +848,8 @@ load_dialog (const gchar *filename)
                     G_CALLBACK (gimp_toggle_button_sensitive_update),
                     NULL);
 
-  toggle2 = gtk_check_button_new_with_label (_("Merge Imported Paths"));
-  gtk_table_attach (GTK_TABLE (table), toggle2, 1, 2, 4, 5,
+  toggle2 = gtk_check_button_new_with_mnemonic (_("Merge Imported Paths"));
+  gtk_table_attach (GTK_TABLE (table), toggle2, 1, 2, 6, 7,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_set_sensitive (toggle2, load_vals.import);
   gtk_widget_show (toggle2);
