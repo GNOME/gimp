@@ -789,6 +789,7 @@ build_palette_button (void)
 {
   GSList *list;
   PaletteEntries *entries;
+  PaletteEntries *theWebPalette = NULL;
   int i, default_palette;
 
   UserHasWebPal = FALSE;
@@ -812,10 +813,10 @@ build_palette_button (void)
       entries = (PaletteEntries *) list->data;
       
       /* Preferentially, the initial default is 'Web' if available */
-      if (default_palette==-1 &&
-	  g_strcasecmp (entries->name, "Web")==0)
+      if (theWebPalette == NULL &&
+	  g_strcasecmp (entries->name, "Web") == 0)
 	{
-	  theCustomPalette = entries;
+	  theWebPalette = entries;
 	  UserHasWebPal = TRUE;
 	}
       
@@ -829,23 +830,32 @@ build_palette_button (void)
 	}
     }
       
-  /* default to first one with <= 256 colors (only used if 'web' palette not avail.) */
+  /* default to first one with <= 256 colors 
+     (only used if 'web' palette not available) */
    if (default_palette == -1)
      {
-       for (i = 0, list = palette_entries_list;
-	    list && default_palette == -1;
-	    i++, list = g_slist_next (list))
+       if (theWebPalette)
 	 {
-	   entries = (PaletteEntries *) list->data;
-	   
-	   if (entries->n_colors <= 256)
+	   theCustomPalette = theWebPalette;
+	   default_palette = 1;  /*  dummy value  */
+	 }
+       else
+	 {
+	   for (i = 0, list = palette_entries_list;
+		list && default_palette == -1;
+		i++, list = g_slist_next (list))
 	     {
-	       theCustomPalette = entries;
-	       default_palette = i;
+	       entries = (PaletteEntries *) list->data;
+	       
+	       if (entries->n_colors <= 256)
+		 {
+		   theCustomPalette = entries;
+		   default_palette = i;
+		 }
 	     }
 	 }
      }
-   
+
    if (default_palette == -1)
      return NULL;
    else

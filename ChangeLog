@@ -1,3 +1,10 @@
+2000-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/convert.c (build_palette_button): changed the logic that sets
+	the default for "Custom Palette" so it goes through the whole list
+	instead of stopping at the "Web" palette. The Indexed-Conversion 
+	dialog now also remembers palettes appearing after the "Web" palette.
+
 2000-11-19  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Little-endian fix for 16bit TIFF
@@ -5,7 +12,8 @@
 
 2000-11-19  Michael Natterer  <mitch@gimp.org>
 
-	* libgimp/gimpenv.c: a missing newline confused gtk-doc. Minor doc fixes.
+	* libgimp/gimpenv.c: a missing newline confused gtk-doc. Minor doc 
+	fixes.
 
 2000-11-18  Nick Lamb  <njl195@zepler.org.uk>
 
