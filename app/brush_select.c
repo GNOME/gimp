@@ -1030,6 +1030,10 @@ new_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
   brush = gimp_brush_generated_new(10, .5, 0.0, 1.0);
   gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
   select_brush(GIMP_BRUSH(brush));
+  if (brush_edit_generated_dialog)
+    brush_edit_generated_set_brush(brush_edit_generated_dialog,
+				   get_active_brush());
+  edit_brush_callback(w, e, data);
   return TRUE;
 }
 

@@ -1,3 +1,8 @@
+1999-03-07  Jay Cox  <jaycox@earthlink.net>
+
+	* app/brush_select.c: pop up the brush-edit dialog whenever the
+ 	user creates a new brush.
+
 Sat Mar  6 03:04:31 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.c: correctly initialize the zoom indicator
