@@ -56,7 +56,7 @@ register "firetext",
 	 "Marc Lehmann",
 	 "19990802",
 	 N_"<Toolbox>/Xtns/Render/Logos/Firetext",
-	 "*",
+	 undef,
 	 [
           [PF_TEXT,	"text",		"The text to render (can be multi-line)", "burn,\nBurn,\nBURN!"],
           [PF_FONT,	"font",		"The font to use"],

@@ -307,7 +307,7 @@ register
 	"film \"Lost In Space\".",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
   N_"<Toolbox>/Xtns/Render/Logos/Glowing Steel",
-  "*",
+  undef,
   [
    [PF_STRING, "string", "string", "GET LOST"],
    # The font in the poster was like "cobalt extended"

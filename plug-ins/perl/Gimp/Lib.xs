@@ -33,6 +33,10 @@
 #include "XSUB.h"
 #include "gppport.h"
 
+#ifndef pTHX_
+#define pTHX_
+#endif
+
 #include "../perl-intl.h"
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
@@ -188,7 +192,7 @@ static SV *newSVn (STRLEN len)
 static GHashTable *gdrawable_cache;
 
 /* magic stuff.  literally.  */
-static int gdrawable_free (SV *obj, MAGIC *mg)
+static int gdrawable_free (pTHX_ SV *obj, MAGIC *mg)
 {
   GDrawable *gdr = (GDrawable *)SvIV(obj);
 
@@ -265,7 +269,7 @@ static GTile *old_tile (SV *sv)
 }
 
 /* magic stuff.  literally.  */
-static int gpixelrgn_free (SV *obj, MAGIC *mg)
+static int gpixelrgn_free (pTHX_ SV *obj, MAGIC *mg)
 {
 /*  GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(obj); */
 /* automatically done on detach */
@@ -2211,6 +2215,10 @@ gimp_pixel_rgn_data(...)
 
 BOOT:
 	trace_file = PerlIO_stderr ();
+#if GIMP_CHECK_VERSION(1,1,17)
+	gimp_plugin_add_domain ("gimp-perl", datadir "/locale");
+#endif
+
 
 #
 # this function overrides a pdb function for speed

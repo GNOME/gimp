@@ -18,6 +18,9 @@ Revision history for Gimp-Perl extension.
         - applied Perl-Server reuseaddress fix by gphan@webjuice.com.
         - corrected the libintl fix to really work.
         - added fr and ru translations.
+        - experimental 5.6 thread compatibility improvements.
+        - corrected menu hiliting problem in firetext and glowing_steel.
+        - add a call to gimp_plugin_add_domain to Lib.xs.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to
