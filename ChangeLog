@@ -1,3 +1,11 @@
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/enumcode.pl
+	* libgimp/Makefile.am: register all enums in libgimp/gimenums.h
+	with the type system.
+
+	* libgimp/gimpenums.h: regenerated.
+
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: gimp_user_version should be 2.2.

@@ -162,11 +162,12 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-libgimp_2_0_la_SOURCES = \
+libgimp_2_0_la_sources = \
 	gimp.c			\
 	gimp.h			\
 	gimpcompat.h		\
 	gimptypes.h		\
+	gimpenums.h		\
 	${PDB_WRAPPERS_C}	\
 	${PDB_WRAPPERS_H}	\
 	gimpbrushes.c		\
@@ -218,6 +219,13 @@ libgimp_2_0_la_SOURCES = \
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
+libgimp_2_0_la_built_sources = \
+	gimpenums.c
+
+libgimp_2_0_la_SOURCES = \
+	$(libgimp_2_0_la_sources)	\
+	$(libgimp_2_0_la_built_sources)
+
 libgimpui_2_0_la_SOURCES = \
 	gimpui.c		\
 	gimpui.h		\
@@ -253,12 +261,12 @@ gimpinclude_HEADERS = \
 	gimp.h			\
 	gimpcompat.h		\
 	gimptypes.h		\
+	gimpenums.h		\
 	${PDB_WRAPPERS_H}	\
 	gimpbrushes.h		\
 	gimpbrushselect.h	\
 	gimpchannel.h		\
 	gimpdrawable.h		\
-	gimpenums.h		\
 	gimpfontselect.h	\
 	gimpgradients.h		\
 	gimpgradientselect.h	\
@@ -316,3 +324,21 @@ libgimpui_2_0_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(lib
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependencies
+gen_sources = xgen-cec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/gimpenums.c: $(srcdir)/gimpenums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpenums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    type = g_@type@_register_static (\"@EnumName@\", values);\n\n  return type;\n}\n" \
+		$(srcdir)/gimpenums.h > xgen-cec \
+	&& cp xgen-cec $(@F) \
+	&& rm -f xgen-cec

@@ -123,23 +123,26 @@ HEADER
 
 foreach (sort keys %enums) {
     if (! ($enums{$_}->{header} =~ /libgimp/)) {
+        my $gtype = $func = $_;
+
+	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U\1\E_/g; s/_$// }
+	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+)/\L\1\E_/g; s/_$// }
+
+	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
+	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
 	print ENUMFILE "typedef enum\n{\n";
 
 	my $enum = $enums{$_}; my $body = "";
+
 	foreach $symbol (@{$enum->{symbols}}) {
 	    my $sym = $symbol;
-	    if ($sym =~ /^GIMP\_/) {
-		$body .= "  $sym";
-	    } else {
-		$body .= "  GIMP_$sym";
-	    }
+	    $body .= "  $sym";
 	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
 	    $body .= ",\n";
 	}
 
 	$body =~ s/,\n$//s;
 	$body .= "\n} ";
-	$body .= "Gimp" unless /^Gimp/;
 	$body .= "$_;\n\n";
 	print ENUMFILE $body
     }

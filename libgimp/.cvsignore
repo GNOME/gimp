@@ -6,3 +6,4 @@ _libs
 .libs
 .deps
 *.la
+gimpenums.c
