@@ -1,5 +1,13 @@
 2003-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/menus.c (menus_last_opened_add): removed redundant
+	"Gimp" parameter, cleanup.
+
+	* app/gui/image-menu.c (image_menu_setup)
+	* app/gui/toolbox-menu.c (toolbox_menu_setup): changed accordingly.
+
+2003-09-09  Michael Natterer  <mitch@gimp.org>
+
 	Got rid of the last global variables except the_gimp:
 
 	* app/Makefile.am

@@ -287,16 +287,20 @@ menus_clear (Gimp *gimp)
 }
 
 void
-menus_last_opened_add (GimpItemFactory *item_factory,
-                       Gimp            *gimp)
+menus_last_opened_add (GimpItemFactory *item_factory)
 {
   GimpItemFactoryEntry *last_opened_entries;
+  gint                  n_last_opened_entries;
   gint                  i;
-  gint                  n = GIMP_GUI_CONFIG (gimp->config)->last_opened_size;
 
-  last_opened_entries = g_new (GimpItemFactoryEntry, n);
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
-  for (i = 0; i < n; i++)
+  n_last_opened_entries =
+    GIMP_GUI_CONFIG (item_factory->gimp->config)->last_opened_size;
+
+  last_opened_entries = g_new (GimpItemFactoryEntry, n_last_opened_entries);
+
+  for (i = 0; i < n_last_opened_entries; i++)
     {
       last_opened_entries[i].entry.path =
         g_strdup_printf ("/File/Open Recent/%02d", i + 1);
@@ -317,14 +321,14 @@ menus_last_opened_add (GimpItemFactory *item_factory,
     }
 
   gimp_item_factory_create_items (item_factory,
-                                  n, last_opened_entries,
-                                  gimp, 2, TRUE, FALSE);
+                                  n_last_opened_entries, last_opened_entries,
+                                  item_factory->gimp, 2, TRUE, FALSE);
 
   gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
                                    "/File/Open Recent/(None)",
                                    FALSE);
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n_last_opened_entries; i++)
     {
       GtkWidget *widget;
 
@@ -343,17 +347,17 @@ menus_last_opened_add (GimpItemFactory *item_factory,
 
   g_free (last_opened_entries);
 
-  g_signal_connect_object (gimp->documents, "add",
+  g_signal_connect_object (item_factory->gimp->documents, "add",
                            G_CALLBACK (menus_last_opened_update),
                            item_factory, 0);
-  g_signal_connect_object (gimp->documents, "remove",
+  g_signal_connect_object (item_factory->gimp->documents, "remove",
                            G_CALLBACK (menus_last_opened_update),
                            item_factory, 0);
-  g_signal_connect_object (gimp->documents, "reorder",
+  g_signal_connect_object (item_factory->gimp->documents, "reorder",
                            G_CALLBACK (menus_last_opened_reorder),
                            item_factory, 0);
 
-  menus_last_opened_update (gimp->documents, NULL, item_factory);
+  menus_last_opened_update (item_factory->gimp->documents, NULL, item_factory);
 }
 
 void

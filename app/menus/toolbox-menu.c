@@ -284,7 +284,7 @@ toolbox_menu_setup (GimpItemFactory *factory)
   GList        *list;
   gint          i, pos;
 
-  menus_last_opened_add (factory, factory->gimp);
+  menus_last_opened_add (factory);
 
   plug_in_menus_create (factory, factory->gimp->plug_in_proc_defs);
 

@@ -1103,7 +1103,7 @@ image_menu_setup (GimpItemFactory *factory)
                                      "/filters-separator", FALSE);
     }
 
-  menus_last_opened_add (factory, factory->gimp);
+  menus_last_opened_add (factory);
 
   /*  create tool menu items  */
   {
