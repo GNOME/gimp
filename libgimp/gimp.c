@@ -1637,10 +1637,10 @@ gimp_config (GPConfig *config)
   _tile_width     = config->tile_width;
   _tile_height    = config->tile_height;
   _shm_ID         = config->shm_ID;
-  _install_cmap   = config->install_cmap;
-  _show_tool_tips = config->show_tool_tips;
   _check_size     = config->check_size;
   _check_type     = config->check_type;
+  _install_cmap   = config->install_cmap;
+  _show_tool_tips = config->show_tool_tips;
   _min_colors     = config->min_colors;
   _gdisp_ID       = config->gdisp_ID;
   _wm_class       = g_strdup (config->wm_class);

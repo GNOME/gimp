@@ -1,3 +1,18 @@
+2004-09-13  Michael Natterer  <mitch@gimp.org>
+
+	Restore binary compatibility of the wire protocol that was
+	broken by the recent GPConfig changes:
+
+	* libgimpbase/gimpprotocol.[ch] (struct _GPConfig)
+	(_gp_config_read)
+	(_gp_config_write): argh, we can't use the two bytes padding
+	because that's just a binary compatible struct change, but inserts
+	two bytes into the byte stream that goes over the wire. Use the
+	first two bytes of the former "gdouble gamma" instead.
+
+	* app/plug-in/plug-in-run.c (plug_in_run)
+	* libgimp/gimp.c (gimp_config): changed accordingly.
+
 2004-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c: simulate the behaviour of GNU gettext and

@@ -466,10 +466,10 @@ _gp_config_read (GIOChannel  *channel,
                          (guint32 *) &config->shm_ID, 1, user_data))
     goto cleanup;
   if (! wire_read_int8 (channel,
-                        (guint8 *) &config->gimp_reserved_1, 1, user_data))
+                        (guint8 *) &config->check_size, 1, user_data))
     goto cleanup;
   if (! wire_read_int8 (channel,
-                        (guint8 *) &config->gimp_reserved_2, 1, user_data))
+                        (guint8 *) &config->check_type, 1, user_data))
     goto cleanup;
   if (! wire_read_int8 (channel,
                         (guint8 *) &config->gimp_reserved_3, 1, user_data))
@@ -494,12 +494,6 @@ _gp_config_read (GIOChannel  *channel,
     goto cleanup;
   if (! wire_read_int8 (channel,
                         (guint8 *) &config->show_tool_tips, 1, user_data))
-    goto cleanup;
-  if (! wire_read_int8 (channel,
-                        (guint8 *) &config->check_size, 1, user_data))
-    goto cleanup;
-  if (! wire_read_int8 (channel,
-                        (guint8 *) &config->check_type, 1, user_data))
     goto cleanup;
   if (! wire_read_int32 (channel,
                          (guint32 *) &config->min_colors, 1, user_data))
@@ -547,9 +541,9 @@ _gp_config_write (GIOChannel  *channel,
     return;
   if (! wire_write_int32 (channel, (guint32*) &config->shm_ID, 1, user_data))
     return;
-  if (! wire_write_int8 (channel, (guint8*) &config->gimp_reserved_1, 1, user_data))
+  if (! wire_write_int8 (channel, (guint8*) &config->check_size, 1, user_data))
     return;
-  if (! wire_write_int8 (channel, (guint8*) &config->gimp_reserved_2, 1, user_data))
+  if (! wire_write_int8 (channel, (guint8*) &config->check_type, 1, user_data))
     return;
   if (! wire_write_int8 (channel, (guint8*) &config->gimp_reserved_3, 1, user_data))
     return;
@@ -566,10 +560,6 @@ _gp_config_write (GIOChannel  *channel,
   if (! wire_write_int8 (channel, (guint8*) &config->install_cmap, 1, user_data))
     return;
   if (! wire_write_int8 (channel, (guint8*) &config->show_tool_tips, 1, user_data))
-    return;
-  if (! wire_write_int8 (channel, (guint8*) &config->check_size, 1, user_data))
-    return;
-  if (! wire_write_int8 (channel, (guint8*) &config->check_type, 1, user_data))
     return;
   if (! wire_write_int32 (channel, (guint32*) &config->min_colors, 1, user_data))
     return;
