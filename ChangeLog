@@ -1,3 +1,16 @@
+2003-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: replaced the "gboolean
+	title_dirty" in GimpDisplayShell by "guint title_idle_id".
+	(gimp_display_shell_flush): Call gimp_display_shell_update_title()
+	unconditionally. Don't call info_window_update().
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c: ditto.
+
+	* app/display/gimpdisplayshell-title.c: update the title in an
+	idle function. Call info_window_update() from the idle function.
+
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpdisplayconfig.[ch]

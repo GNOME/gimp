@@ -26,6 +26,11 @@
 
 #include "display-types.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
@@ -33,6 +38,8 @@
 #include "core/gimpimage.h"
 
 #include "file/file-utils.h"
+
+#include "gui/info-window.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -45,20 +52,41 @@
 #define MAX_TITLE_BUF 256
 
 
-static void  gimp_display_shell_format_title (GimpDisplayShell *gdisp,
-					      gchar            *title,
-					      gint              title_len,
-					      const gchar      *format);
+static gboolean gimp_display_shell_update_title_idle (gpointer          data);
+static void     gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
+                                                      gchar            *title,
+                                                      gint              title_len,
+                                                      const gchar      *format);
+
+
+/*  public functions  */
 
 void
 gimp_display_shell_update_title (GimpDisplayShell *shell)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->title_idle_id)
+    g_source_remove (shell->title_idle_id);
+
+  shell->title_idle_id = g_idle_add (gimp_display_shell_update_title_idle,
+                                     shell);
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_display_shell_update_title_idle (gpointer data)
+{
+  GimpDisplayShell  *shell;
   GimpDisplayConfig *config;
   gchar              title[MAX_TITLE_BUF];
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
+  shell  = GIMP_DISPLAY_SHELL (data);
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
+  shell->title_idle_id = 0;
 
   /* format the title */
   gimp_display_shell_format_title (shell, title, sizeof (title),
@@ -74,6 +102,13 @@ gimp_display_shell_update_title (GimpDisplayShell *shell)
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "title");
   gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title", title);
+
+#ifdef __GNUC__
+#warning FIXME: dont call info_window_update() here.
+#endif
+  info_window_update (shell->gdisp);
+
+  return FALSE;
 }
 
 
@@ -259,7 +294,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   i += print (title, title_len, i, "%s",
                               gimp_object_get_name (GIMP_OBJECT (drawable)));
                 else
-                  i += print (title, title_len, i, "%s", "(none)");
+                  i += print (title, title_len, i, "%s", _("(none)"));
               }
               break;
 

@@ -39,6 +39,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
 
@@ -420,14 +421,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_scale_setup (shell);
 
   if (resize_window || redisplay)
-    {
-      gimp_display_shell_expose_full (shell);
-
-      /* title may have changed if it includes the zoom ratio */
-      shell->title_dirty = TRUE;
-
-      gimp_display_shell_flush (shell);
-    }
+    gimp_display_shell_expose_full (shell);
 
   /* re-enable the active tool */
   tool_manager_control_active (gimp, RESUME, shell->gdisp);

@@ -263,7 +263,7 @@ static void
 gimp_display_shell_clean_dirty_handler (GimpImage        *gimage,
                                         GimpDisplayShell *shell)
 {
-  shell->title_dirty = TRUE;
+  gimp_display_shell_update_title (shell);
 }
 
 static void
@@ -272,14 +272,14 @@ gimp_display_shell_undo_event_handler (GimpImage        *gimage,
                                        GimpUndo         *undo,
                                        GimpDisplayShell *shell)
 {
-  shell->title_dirty = TRUE;
+  gimp_display_shell_update_title (shell);
 }
 
 static void
 gimp_display_shell_name_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
-  shell->title_dirty = TRUE;
+  gimp_display_shell_update_title (shell);
 }
 
 static void

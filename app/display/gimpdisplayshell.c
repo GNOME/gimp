@@ -89,6 +89,8 @@ static void      gimp_display_shell_destroy            (GtkObject        *object
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
 							GdkEventAny      *aevent);
 
+static void      gimp_display_shell_real_scaled        (GimpDisplayShell *shell);
+
 static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
 static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
@@ -171,7 +173,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 
   widget_class->delete_event = gimp_display_shell_delete_event;
 
-  klass->scaled              = NULL;
+  klass->scaled              = gimp_display_shell_real_scaled;
   klass->scrolled            = NULL;
   klass->reconnect           = NULL;
 }
@@ -217,8 +219,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
                                            3);
   shell->render_gc             = NULL;
-
-  shell->title_dirty           = FALSE;
 
   shell->icon_size             = 32;
   shell->icon_idle_id          = 0;
@@ -350,6 +350,12 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->padding_gc = NULL;
     }
 
+  if (shell->title_idle_id)
+    {
+      g_source_remove (shell->title_idle_id);
+      shell->title_idle_id = 0;
+    }
+
   if (shell->info_dialog)
     {
       info_window_free (shell->info_dialog);
@@ -378,6 +384,12 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
   gimp_display_shell_close (shell, FALSE);
 
   return TRUE;
+}
+
+static void
+gimp_display_shell_real_scaled (GimpDisplayShell *shell)
+{
+  gimp_display_shell_update_title (shell);
 }
 
 GtkWidget *
@@ -1112,15 +1124,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->title_dirty)
-    {
-      gimp_display_shell_update_title (shell);
-
-      shell->title_dirty = FALSE;
-    }
-
-  /*  update the gdisplay's info dialog  */
-  info_window_update (shell->gdisp);
+  gimp_display_shell_update_title (shell);
 }
 
 void

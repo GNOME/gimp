@@ -112,7 +112,7 @@ struct _GimpDisplayShell
   guchar           *render_buf;        /*  buffer for rendering the image     */
   GdkGC            *render_gc;         /*  GC for rendering the image         */
 
-  gboolean          title_dirty;       /*  checked by _flush()                */
+  guint             title_idle_id;     /*  title update idle ID               */
 
   gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */
