@@ -1,3 +1,8 @@
+2004-11-20  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Need to call gettext in
+	script-fu_menu_compare. Spotted by Sven. Removed obsolete #define's.
+
 2004-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: renamed variable

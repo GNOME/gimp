@@ -45,15 +45,6 @@
 #include "script-fu-intl.h"
 
 
-#define RESPONSE_RESET         1
-#define RESPONSE_ABOUT         2
-
-#define TEXT_WIDTH           100
-#define COLOR_SAMPLE_WIDTH   100
-#define COLOR_SAMPLE_HEIGHT   15
-#define SLIDER_WIDTH          80
-
-
 typedef struct
 {
   gchar *pdb_name;
@@ -1014,7 +1005,8 @@ script_fu_menu_compare (gconstpointer a,
   const SFMenu *menu_b = b;
 
   if (menu_a->menu_path && menu_b->menu_path)
-    return g_utf8_collate (menu_a->menu_path, menu_b->menu_path);
+    return g_utf8_collate (gettext (menu_a->menu_path),
+                           gettext (menu_b->menu_path));
 
   return 0;
 }
