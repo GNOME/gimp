@@ -124,7 +124,7 @@ query ()
                           "loads files of the tiff file format",
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
-                          "Nick Lamb <njl195@.ecs.soton.ac.uk>",
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           "1995-1996,1998",
                           "<Load>/Tiff",
 			  NULL,
@@ -248,7 +248,7 @@ static gint32 load_image (char *filename) {
   unsigned short *redmap, *greenmap, *bluemap;
   guchar cmap[768];
   int image_type= 0, layer_type= 0;
-  unsigned short *extra_types, extra = 0;
+  unsigned short extra, *extra_types;
 
   int col, row, start, i, j;
   unsigned char sample;
@@ -274,7 +274,7 @@ static gint32 load_image (char *filename) {
 
   tif = TIFFOpen (filename, "r");
   if (!tif) {
-    g_error ("TIFF Can't open \"%s\"\n", filename);
+    g_message("TIFF Can't open \n%s", filename);
     gimp_quit ();
   }
 
@@ -287,7 +287,7 @@ static gint32 load_image (char *filename) {
     bps = 1;
 
   if (bps > 8) {
-    g_error("TIFF Can't handle samples wider than 8-bit\n");
+    g_message("TIFF Can't handle samples wider than 8-bit");
     gimp_quit();
   }
 
@@ -297,17 +297,17 @@ static gint32 load_image (char *filename) {
     extra = 0;
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols)) {
-    g_error ("TIFF Can't get image width\n");
+    g_message("TIFF Can't get image width");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows)) {
-    g_error ("TIFF Can't get image length\n");
+    g_message("TIFF Can't get image length");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet)) {
-    g_error ("TIFF Can't get photometric\n");
+    g_message("TIFF Can't get photometric");
     gimp_quit ();
   }
 
@@ -318,9 +318,12 @@ static gint32 load_image (char *filename) {
     alpha = 0;
   }
 
-  /* some programs seem to think alpha etc. aren't "extra" samples (?) */
-  if (spp > 3) {
+  if (photomet == PHOTOMETRIC_RGB && spp > extra + 3) {
     extra= spp - 3; 
+    alpha= 1;
+  } else if (photomet != PHOTOMETRIC_RGB && spp > extra + 1) {
+    extra= spp - 1;
+    alpha= 1;
   }
 
   maxval = (1 << bps) - 1;
@@ -343,16 +346,16 @@ static gint32 load_image (char *filename) {
       break;
 
     case PHOTOMETRIC_MASK:
-      g_error ("TIFF Can't handle PHOTOMETRIC_MASK\n");
+      g_message ("TIFF Can't handle PHOTOMETRIC_MASK");
       gimp_quit ();
       break;
     default:
-      g_error ("TIFF Unknown photometric: %d\n", photomet);
+      g_message ("TIFF Unknown photometric\n Number %d", photomet);
       gimp_quit ();
   }
 
   if ((image = gimp_image_new (cols, rows, image_type)) == -1) {
-    g_error ("TIFF Can't allocate new image\n");
+    g_message("TIFF Can't create a new image\n");
     gimp_quit ();
   }
   gimp_image_set_filename (image, filename);
@@ -360,7 +363,7 @@ static gint32 load_image (char *filename) {
   /* Install colormap for INDEXED images only */
   if (image_type == INDEXED) {
     if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) {
-      g_error ("TIFF Can't get colormaps\n");
+      g_message("TIFF Can't get colormaps");
       gimp_quit ();
     }
 
@@ -416,14 +419,14 @@ static gint32 load_image (char *filename) {
     /* Special cases: Scanline is compatible with GIMP storage */
     if (extra == 0 && bps == 8) {  
       if (TIFFReadScanline (tif, d, row, 0) < 0) {
-        g_error ("TIFF Bad data read on line %d\n", row);
+        g_message("TIFF Bad data read on line %d", row);
         gimp_quit ();
       }
 
     /* Or read in and process each sample -- slower */
     } else {
       if (TIFFReadScanline (tif, source, row, 0) < 0) {
-        g_error ("TIFF Bad data read on line %d\n", row);
+        g_message("TIFF Bad data read on line %d\n", row);
         gimp_quit ();
       }
 
@@ -602,11 +605,10 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   rowsperstrip = 0;
 
   tif = TIFFOpen (filename, "w");
-  if (!tif)
-    {
-      g_print ("can't open \"%s\"\n", filename);
-      return 0;
-    }
+  if (!tif) {
+    g_print ("Can't write image to\n%s", filename);
+    return 0;
+  }
 
   name = malloc (strlen (filename) + 11);
   sprintf (name, "Saving %s:", filename);
@@ -752,11 +754,10 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	      break;
 	    }
 
-	  if (!success)
-	    {
-	      g_print ("failed a scanline write on row %d\n", row);
+	  if (!success) {
+	      g_message("TIFF Failed a scanline write on row %d", row);
 	      return 0;
-	    }
+	  }
 	}
 
       gimp_progress_update ((double) row / (double) rows);

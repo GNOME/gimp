@@ -1,5 +1,5 @@
 /* cel.c -- KISS CEL file format plug-in for The GIMP
- * (copyright) 1997,1998 Nick Lamb (njl195@ecs.soton.ac.uk)
+ * (copyright) 1997,1998 Nick Lamb (njl195@zepler.org.uk)
  *
  * Skeleton cloned from Michael Sweet's PNG plug-in. KISS format courtesy
  * of the KISS/GS documentation. Problem reports to the above address
@@ -91,7 +91,8 @@ static void query(void) {
   gimp_install_procedure("file_cel_load",
       "Loads files in KISS CEL file format",
       "This plug-in loads individual KISS cell files.",
-      "Nick Lamb", "Nick Lamb", "May 1998", "<Load>/CEL", NULL, PROC_PLUG_IN, 
+      "Nick Lamb", "Nick Lamb <njl195@zepler.org.uk>", "May 1998",
+      "<Load>/CEL", NULL, PROC_PLUG_IN, 
       nload_args, nload_return_vals, load_args, load_return_vals);
 
   gimp_register_magic_load_handler("file_cel_load", "cel",
@@ -100,7 +101,8 @@ static void query(void) {
   gimp_install_procedure("file_cel_save",
       "Saves files in KISS CEL file format",
       "This plug-in saves individual KISS cell files.",
-      "Nick Lamb", "Nick Lamb", "May 1998", "<Save>/CEL", "INDEXEDA",
+      "Nick Lamb", "Nick Lamb <njl195@zepler.org.uk>", "May 1998",
+      "<Save>/CEL", "INDEXEDA",
       PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
   gimp_register_save_handler("file_cel_save", "cel", "");
@@ -226,7 +228,7 @@ static gint32 load_image(char *file, char *brief) {
   image = gimp_image_new(width + offx, height + offy, INDEXED);
 
   if (image == -1) {
-    g_message("Can't create a new image");
+    g_message("CEL Can't create a new image");
     gimp_quit();
   }
 
@@ -286,7 +288,7 @@ static gint32 load_image(char *file, char *brief) {
       }
       break;
     default:
-      g_error("Unsupported number of colours (%d)\n", colours);
+      g_message("Unsupported number of colours (%d)", colours);
       gimp_quit();
     }
     
@@ -397,7 +399,7 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   fp = fopen(file, "w");
 
   if (fp == NULL) {
-    g_message("Couldn't write image to\n%s", file);
+    g_message("CEL Couldn't write image to\n%s", file);
     gimp_quit();
   }
 

@@ -1,3 +1,20 @@
+Sat May 30 23:42:12 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/interface.c: plug mem leak in message_box
+
+	* plug-ins/mail/mail.c: use g_message
+
+	* plug-ins/script-fu/scripts/carve-it.scm: fix for gimp-layer-new
+	params from Kevin Cozens <kcozens@interlog.com>
+
+	* plug-ins/CEL/CEL.c
+	* plug-ins/pcx/pcx.c
+	* plug-ins/tiff/tiff.c: updates from author
+
+	* plug-ins/png/png.c: correct copyright
+
+	* plug-ins/print/print.h: use correct version
+
 Fri May 29 23:54:42 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* more changes to use g_message. All of app uses it now, plus

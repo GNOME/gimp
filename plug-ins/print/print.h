@@ -22,12 +22,26 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.6  1998/05/14 00:32:53  yosh
- *   updated print plugin
+ *   Revision 1.7  1998/05/31 06:49:17  yosh
+ *   * app/interface.c: plug mem leak in message_box
  *
- *   stubbed out nonworking frac code
+ *   * plug-ins/mail/mail.c: use g_message
+ *
+ *   * plug-ins/script-fu/scripts/carve-it.scm: fix for gimp-layer-new params from
+ *   Kevin Cozens <kcozens@interlog.com>
+ *
+ *   * plug-ins/CEL/CEL.c
+ *   * plug-ins/pcx/pcx.c
+ *   * plug-ins/tiff/tiff.c: updates from author
+ *
+ *   * plug-ins/png/png.c: correct copyright
+ *
+ *   * plug-ins/print/print.h: use correct version
  *
  *   -Yosh
+ *
+ *   Revision 1.12  1998/05/16  14:25:51  mike
+ *   Updated for v2.0.2.
  *
  *   Revision 1.11  1998/05/08  19:20:50  mike
  *   Updated for new driver interface.
@@ -92,14 +106,8 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"2.0 - 8 May 1998"
+#define PLUG_IN_VERSION		"2.0.2 - 16 May 1998"
 #define PLUG_IN_NAME		"Print"
-
-#define MEDIA_LETTER		0	/* 8.5x11" a.k.a. "A" size */
-#define MEDIA_LEGAL		1	/* 8.5x14" */
-#define MEDIA_TABLOID		2	/* 11x17" a.k.a. "B" size */
-#define MEDIA_A4		3	/* 8.27x11.69" (210x297mm) */
-#define MEDIA_A3		4	/* 11.69x16.54" (297x420mm) */
 
 #define OUTPUT_GRAY		0	/* Grayscale output */
 #define OUTPUT_COLOR		1	/* Color output */

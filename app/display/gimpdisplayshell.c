@@ -943,6 +943,8 @@ message_box (char        *message,
       gtk_widget_show (label);
     }
 
+  g_free (message);
+
   msg_box->mbox = mbox;
   msg_box->callback = callback;
   msg_box->data = data;

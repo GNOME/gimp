@@ -4,6 +4,9 @@
 ;   http://www.peachpit.com
 ;   This script requires a grayscale image containing a single layer.
 ;   This layer is used as the mask for the carving effect
+;   NOTE: This script requires the image to be carved to either be an
+;   RGB colour or grayscale image with a single layer. An indexed file
+;   can not be used due to the use of gimp-histogram and gimp-levels.
 
 
 (define (carve-brush brush-size)
@@ -65,12 +68,12 @@
 	 (csl-mask 0)
 	 (inset-layer 0)
 	 (il-mask 0)
-	 (bg-height (car (gimp-drawable-height bg-layer)))
 	 (bg-width (car (gimp-drawable-width bg-layer)))
+	 (bg-height (car (gimp-drawable-height bg-layer)))
 	 (bg-type (car (gimp-drawable-type bg-layer)))
 	 (bg-image (car (gimp-drawable-image bg-layer)))
-	 (layer1 (car (gimp-layer-new img bg-height bg-width bg-type "Layer1" 100 NORMAL)))
-	 (inset-layer (car (gimp-layer-new img bg-height bg-width bg-type "inset1" 100 NORMAL)))
+	 (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 NORMAL)))
+	 (inset-layer (car (gimp-layer-new img bg-width bg-height bg-type "inset1" 100 NORMAL)))
  	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush))))
@@ -175,7 +178,7 @@
 
 (script-fu-register "script-fu-carve-it"
 		    "<Image>/Script-Fu/Stencil Ops/Carve-It"
-		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image"
+		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1997"

@@ -2,12 +2,14 @@
 
 /* This code is based in parts on code by Francisco Bustamante, but the
    largest portion of the code has been rewritten and is now maintained
-   occasionally by Nick Lamb njl195@ecs.soton.ac.uk */
+   occasionally by Nick Lamb njl195@zepler.org.uk */
 
 /* New for 1998 -- Load 1, 4, 8 & 24 bit PCX files */
 /*              -- Save 8 & 24 bit PCX files */
 /* 1998-01-19 - fixed some endianness problems (Raphael Quinet) */
 /* 1998-02-05 - merged patch with "official" tree, some tidying up (njl) */
+/* 1998-05-17 - changed email address, more tidying up (njl) */
+/* 1998-05-31 - g_message (njl) */
 
 /* Please contact me if you can't use your PCXs with this tool, I want
    The GIMP to have the best file filters on the planet */
@@ -15,7 +17,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -73,7 +74,7 @@ static void query () {
                           "Loads files in Zsoft PCX file format",
                           "FIXME: write help for pcx_load",
                           "Francisco Bustamante & Nick Lamb",
-                          "Nick Lamb <njl195@ecs.soton.ac.uk>",
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           "January 1997",
                           "<Load>/PCX",
 			  NULL,
@@ -85,7 +86,7 @@ static void query () {
                           "Saves files in ZSoft PCX file format",
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
-                          "Nick Lamb <njl195@ecs.soton.ac.uk>",
+                          "Nick Lamb <njl195@zepler.org.uk>",
                           "January 1997",
                           "<Save>/PCX",
 			  "INDEXED, RGB, GRAY",
@@ -101,10 +102,10 @@ static void query () {
 /* Declare internal functions. */
 
 static gint32 load_image (char *filename);
-static void load_1(FILE *fp, int width, int height, guchar *buffer, int bytes);
-static void load_4(FILE *fp, int width, int height, guchar *buffer, int bytes);
-static void load_8(FILE *fp, int width, int height, guchar *buffer, int bytes);
-static void load_24(FILE *fp, int width, int height, guchar *buffer, int bytes);
+static void load_1(FILE *fp, int width, int height, char *buffer, int bytes);
+static void load_4(FILE *fp, int width, int height, char *buffer, int bytes);
+static void load_8(FILE *fp, int width, int height, char *buffer, int bytes);
+static void load_24(FILE *fp, int width, int height, char *buffer, int bytes);
 static void readline(FILE *fp, guchar* buffer, int bytes);
 
 static gint save_image (char *filename, gint32 image, gint32 layer);
@@ -128,21 +129,17 @@ static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
 
-  if (strcmp (name, "file_pcx_load") == 0)
-    {
+  if (strcmp (name, "file_pcx_load") == 0) {
       image_ID = load_image (param[1].data.d_string);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[0].data.d_status = STATUS_SUCCESS;
-          values[1].type = PARAM_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          values[0].data.d_status = STATUS_EXECUTION_ERROR;
-        }
+      if (image_ID != -1) {
+        *nreturn_vals = 2;
+        values[0].data.d_status = STATUS_SUCCESS;
+        values[1].type = PARAM_IMAGE;
+        values[1].data.d_image = image_ID;
+      } else {
+        values[0].data.d_status = STATUS_EXECUTION_ERROR;
+      }
     }
   else if (strcmp (name, "file_pcx_save") == 0)
     {
@@ -208,17 +205,17 @@ static gint32 load_image (char *filename) {
 
   fd = fopen (filename, "rb");
   if (!fd) {
-    fprintf(stderr, "PCX: Can't open \"%s\"\n", filename);
+    g_message("PCX Can't open\n%s", filename);
     return -1;
   }
 
   if (fread(&pcx_header, 128, 1, fd) == 0) {
-    fprintf(stderr, "PCX: Can't read header from \"%s\"\n", filename);
+    g_message("PCX Can't read header from\n%s", filename);
     return -1;
   }
 
   if(pcx_header.manufacturer != 10) {
-    fprintf(stderr, "PCX: File \"%s\" is not a PCX file\n", filename);
+    g_message("%s\nis not a PCX file", filename);
     return -1;
   }
 
@@ -259,7 +256,7 @@ static gint32 load_image (char *filename) {
   dest = (guchar *) g_malloc (width * height * 3);
     load_24(fd, width, height, dest, qtohs (pcx_header.bytesperline));
   } else {
-    fprintf(stderr, "PCX: Unusual PCX flavour, giving up\n");
+    g_message("Unusual PCX flavour, giving up");
     return -1;
   }
 
@@ -274,7 +271,7 @@ static gint32 load_image (char *filename) {
   return image;
 }
 
-static void load_8(FILE *fp, int width, int height, guchar *buffer, int bytes) {
+static void load_8(FILE *fp, int width, int height, char *buffer, int bytes) {
   int row;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
@@ -288,7 +285,7 @@ static void load_8(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   g_free(line);
 }
 
-static void load_24(FILE *fp, int width, int height, guchar *buffer, int bytes) {
+static void load_24(FILE *fp, int width, int height, char *buffer, int bytes) {
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes * 3);
@@ -306,7 +303,7 @@ static void load_24(FILE *fp, int width, int height, guchar *buffer, int bytes) 
   g_free(line);
 }
 
-static void load_1(FILE *fp, int width, int height, guchar *buffer, int bytes) {
+static void load_1(FILE *fp, int width, int height, char *buffer, int bytes) {
   int x, y;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
@@ -325,7 +322,7 @@ static void load_1(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   g_free(line);
 }
 
-static void load_4(FILE *fp, int width, int height, guchar *buffer, int bytes) {
+static void load_4(FILE *fp, int width, int height, char *buffer, int bytes) {
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
@@ -367,7 +364,7 @@ static void readline(FILE *fp, guchar *buffer, int bytes) {
   }
 }
 
-static gint save_image (char *filename, gint32 image, gint32 layer) {
+gint save_image (char *filename, gint32 image, gint32 layer) {
   FILE *fp;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -417,13 +414,13 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       break;
 
     default:
-      fprintf(stderr, "PCX: Can't save this image type\n");
+      g_message("PCX Can't save this image type\nFlatten your image");
       return -1;
       break;
   }
   
   if ((fp = fopen(filename, "wb")) == NULL) {
-    fprintf(stderr, "PCX: Can't open \"%s\"\n", filename);
+    g_message("PCX Can't open \n%s", filename);
     return -1;
   }
 
@@ -461,7 +458,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       }
       break;
     default:
-      fprintf(stderr, "PCX: Can't save this image type\n");
+      g_message("Can't save this image as PCX\nFlatten your image");
       return -1;
       break;
   }

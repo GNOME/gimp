@@ -335,19 +335,19 @@ save_image (char *filename,
       /* fork off a uuencode process */
       if ((pid = fork ()) < 0)
 	  {
-	      g_warning ("mail: fork failed: %s\n", g_strerror (errno));
+	      g_message ("mail: fork failed: %s\n", g_strerror (errno));
 	      return -1;
 	  }
       else if (pid == 0)
 	  {
 	      if (-1 == dup2 (fileno (mailpipe), fileno (stdout)))
 		  {
-		      g_warning ("mail: dup2 failed: %s\n", g_strerror (errno));
+		      g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
 		  }
 	      
 	      execlp (UUENCODE, UUENCODE, tmpname, filename, NULL);
 	      /* What are we doing here? exec must have failed */
-	      g_warning ("mail: exec failed: uuencode: %s\n", g_strerror (errno));
+	      g_message ("mail: exec failed: uuencode: %s\n", g_strerror (errno));
 	      
 	      
 	      /* close the pipe now */
@@ -361,7 +361,7 @@ save_image (char *filename,
 	      if (!WIFEXITED (status) ||
 		  WEXITSTATUS (status) != 0)
 		  {
-		      g_warning ("mail: mail didnt work or something on  file %s\n", tmpname);
+		      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
 		      return 0;
 		  }
 	  }
@@ -656,7 +656,7 @@ find_extension (char *filename)
     {
       if (!ext || ext[1] == 0 || strchr (ext, '/'))
 	{
-	  g_warning ("mail: some sort of error with the file extension or lack thereof \n");
+	  g_message ("mail: some sort of error with the file extension or lack thereof \n");
 	  
 	  return NULL;
 	}

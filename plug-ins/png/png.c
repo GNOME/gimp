@@ -4,7 +4,7 @@
  *   Portable Network Graphics (PNG) plug-in for The GIMP -- an image
  *   manipulation program
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com) and
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com) and
  *   Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz).
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -37,6 +37,24 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.7  1998/05/31 06:49:16  yosh
+ *   * app/interface.c: plug mem leak in message_box
+ *
+ *   * plug-ins/mail/mail.c: use g_message
+ *
+ *   * plug-ins/script-fu/scripts/carve-it.scm: fix for gimp-layer-new params from
+ *   Kevin Cozens <kcozens@interlog.com>
+ *
+ *   * plug-ins/CEL/CEL.c
+ *   * plug-ins/pcx/pcx.c
+ *   * plug-ins/tiff/tiff.c: updates from author
+ *
+ *   * plug-ins/png/png.c: correct copyright
+ *
+ *   * plug-ins/print/print.h: use correct version
+ *
+ *   -Yosh
+ *
  *   Revision 1.6  1998/04/13 05:43:08  yosh
  *   Have fun recompiling gimp everyone. It's the great FSF address change!
  *
