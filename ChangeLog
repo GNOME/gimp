@@ -1,5 +1,12 @@
 2004-08-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptransformtool.h: removed the recently added
+	"gdouble aspect_ratio"...
+
+	* app/tools/gimpscaletool.[ch]: ...and added it where it belongs.
+
+2004-08-06  Michael Natterer  <mitch@gimp.org>
+
 	Transform tool cleanup:
 
 	* app/tools/gimptransformtool.[ch]: added new virtual function

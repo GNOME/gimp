@@ -194,7 +194,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 
   spinbutton = info_dialog_add_spinbutton (tr_tool->info_dialog,
                                            _("Aspect Ratio:"),
-                                           &tr_tool->aspect_ratio,
+                                           &scale->aspect_ratio_val,
                                            0, 65536, 0.01, 0.1, 1, 0.5, 2,
                                            G_CALLBACK (gimp_scale_tool_aspect_changed),
                                            tr_tool);
@@ -270,17 +270,17 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
     ratio_y = (double) (y4 - y3) / (double) (y2 - y1);
 
   /* Detecting initial update, aspect_ratio reset */
-  if ((ratio_x == 1) && (ratio_y == 1))
-    tr_tool->aspect_ratio = 0;
+  if (ratio_x == 1 && ratio_y == 1)
+    scale->aspect_ratio_val = 0.0;
 
   /* Only when one or the two options are disabled, is necessary to
    * update the value Taking care of the initial update too
    */
   if (! options->constrain_1 ||
       ! options->constrain_2 ||
-      tr_tool->aspect_ratio == 0 )
+      scale->aspect_ratio_val == 0 )
     {
-      tr_tool->aspect_ratio =
+      scale->aspect_ratio_val =
         ((tr_tool->trans_info[X1] - tr_tool->trans_info[X0]) /
          (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]));
     }
@@ -490,11 +490,11 @@ static void
 gimp_scale_tool_size_changed (GtkWidget         *widget,
                               GimpTransformTool *tr_tool)
 {
-  GimpTool             *tool = GIMP_TOOL (tr_tool);
+  GimpTool             *tool  = GIMP_TOOL (tr_tool);
+  GimpScaleTool        *scale = GIMP_SCALE_TOOL (tr_tool);
   GimpTransformOptions *options;
   gint                  width;
   gint                  height;
-  gdouble               ratio;
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
@@ -510,7 +510,7 @@ gimp_scale_tool_size_changed (GtkWidget         *widget,
 
       if (options->constrain_1 && options->constrain_2)
         {
-          ratio = tr_tool->aspect_ratio;
+          gdouble ratio = scale->aspect_ratio_val;
 
           /* Calculating height and width taking into account the aspect ratio*/
           if (width != (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]))
@@ -541,13 +541,15 @@ static void
 gimp_scale_tool_aspect_changed (GtkWidget         *widget,
                                 GimpTransformTool *tr_tool)
 {
-  tr_tool->aspect_ratio = GTK_ADJUSTMENT (widget)->value;
+  GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
+
+  scale->aspect_ratio_val = GTK_ADJUSTMENT (widget)->value;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
   tr_tool->trans_info[Y1] =
     ((gdouble) (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]) /
-     tr_tool->aspect_ratio) +
+     scale->aspect_ratio_val) +
     tr_tool->trans_info[Y0];
 
   gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
