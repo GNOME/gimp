@@ -228,6 +228,7 @@ shift (GimpDrawable *drawable)
   gr = g_rand_new ();
 
   pft = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -265,8 +266,7 @@ shift (GimpDrawable *drawable)
 					(amount + 1) / 2.0 );
 	      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
                 {
-		  gimp_pixel_fetcher_get_pixel2 (pft, x, y + ydist,
-						 PIXEL_WRAP, dest);
+		  gimp_pixel_fetcher_get_pixel (pft, x, y + ydist, dest);
 		  dest += dest_rgn.rowstride;
                 }
 	      destline += bytes;
@@ -281,8 +281,7 @@ shift (GimpDrawable *drawable)
 					(amount + 1) / 2.0);
 	      for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
                 {
-		  gimp_pixel_fetcher_get_pixel2 (pft, x + xdist, y,
-						 PIXEL_WRAP, dest);
+		  gimp_pixel_fetcher_get_pixel (pft, x + xdist, y, dest);
 		  dest += bytes;
                 }
 	      destline += dest_rgn.rowstride;

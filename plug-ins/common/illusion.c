@@ -229,7 +229,7 @@ illusion_func (gint x,
       yy = y - param->offset * cos (angle);
     }
 
-  gimp_pixel_fetcher_get_pixel2 (param->pft, xx, yy, PIXEL_SMEAR, pixel);
+  gimp_pixel_fetcher_get_pixel (param->pft, xx, yy, pixel);
 
   if (param->has_alpha)
     {
@@ -264,6 +264,7 @@ filter (GimpDrawable *drawable)
   height = y2 - y1;
 
   param.pft = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edge_mode (param.pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.center_x = (x1 + x2) / 2.0;
   param.center_y = (y1 + y2) / 2.0;

@@ -1,13 +1,27 @@
 2003-12-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpmisc.[ch]: applied a modified version of a patch
+	from Maurits Rijk that cleans up the remaining API (bug #125141).
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/shift.c
+	* plug-ins/gflare/gflare.c: changed accordingly.
+
+2003-12-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_edit_area_info.c (create_info_tab):
 	removed an unused variable.
 
 	* plug-ins/imagemap/imap_cern.l: include <string.h> for strcpy().
 
-	* plug-ins/imagemap/imap_csim.l: include <unistd.h> for isatty().
+	* plug-ins/imagemap/imap_csim.l
+	* plug-ins/imagemap/imap_ncsa.l: include <unistd.h> for isatty().
 
 	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_ncsa_lex.c
 	* plug-ins/imagemap/imap_csim_lex.c: regenerated.
 
 2003-12-26  Sven Neumann  <sven@gimp.org>
@@ -23,7 +37,7 @@
 	* plug-ins/imagemap/imap_csim_parse.[ch]
 	* plug-ins/imagemap/imap_ncsa_parse.[ch]: regenerated.
 
-	* plug-ins/imagemap/Makefile.am: added y.tab.h (created by bison)
+	* plug-ins/imagemap/Makefile.am: added y.tab.[ch] (created by bison)
 	to CLEANFILES.
 
 2003-12-25  Sven Neumann  <sven@gimp.org>

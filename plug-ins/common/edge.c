@@ -114,9 +114,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static EdgeVals evals =
 {
-  2.0,         /* amount   */
-  SOBEL,       /* Edge detection algorithm */
-  PIXEL_SMEAR  /* wrapmode */
+  2.0,         			/* amount */
+  SOBEL,       			/* Edge detection algorithm */
+  GIMP_PIXEL_FETCHER_EDGE_SMEAR /* wrapmode */
 };
 
 /***** Functions *****/
@@ -271,12 +271,12 @@ edge (GimpDrawable *drawable)
   gint maxval;
   gint cur_progress;
   gint max_progress;
-  gint wrapmode;
 
   if (evals.amount < 1.0)
     evals.amount = 1.0;
 
   pft = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edgemode (pft, evals.wrapmode);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -288,7 +288,6 @@ edge (GimpDrawable *drawable)
     alpha--;
 
   maxval = 255;
-  wrapmode = evals.wrapmode;
 
   cur_progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
@@ -341,15 +340,15 @@ edge (GimpDrawable *drawable)
                   ** version
                   */
 
-                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y-1, wrapmode, pix00);
-                  gimp_pixel_fetcher_get_pixel2(pft, x  , y-1, wrapmode, pix10);
-                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y-1, wrapmode, pix20);
-                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y  , wrapmode, pix01);
-                  gimp_pixel_fetcher_get_pixel2(pft, x  , y  , wrapmode, pix11);
-                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y  , wrapmode, pix21);
-                  gimp_pixel_fetcher_get_pixel2(pft, x-1, y+1, wrapmode, pix02);
-                  gimp_pixel_fetcher_get_pixel2(pft, x  , y+1, wrapmode, pix12);
-                  gimp_pixel_fetcher_get_pixel2(pft, x+1, y+1, wrapmode, pix22);
+                  gimp_pixel_fetcher_get_pixel (pft, x-1, y-1, pix00);
+                  gimp_pixel_fetcher_get_pixel (pft, x  , y-1, pix10);
+                  gimp_pixel_fetcher_get_pixel (pft, x+1, y-1, pix20);
+                  gimp_pixel_fetcher_get_pixel (pft, x-1, y  , pix01);
+                  gimp_pixel_fetcher_get_pixel (pft, x  , y  , pix11);
+                  gimp_pixel_fetcher_get_pixel (pft, x+1, y  , pix21);
+                  gimp_pixel_fetcher_get_pixel (pft, x-1, y+1, pix02);
+                  gimp_pixel_fetcher_get_pixel (pft, x  , y+1, pix12);
+                  gimp_pixel_fetcher_get_pixel (pft, x+1, y+1, pix22);
 
                   for (chan = 0; chan < alpha; chan++)
                     {
@@ -628,9 +627,9 @@ edge_dialog (GimpDrawable *drawable)
   GSList    *group = NULL;
   gboolean   run;
 
-  gboolean use_wrap  = (evals.wrapmode == PIXEL_WRAP);
-  gboolean use_smear = (evals.wrapmode == PIXEL_SMEAR);
-  gboolean use_black = (evals.wrapmode == PIXEL_BLACK);
+  gboolean use_wrap  = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_WRAP);
+  gboolean use_smear = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_SMEAR);
+  gboolean use_black = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
   gimp_ui_init ("edge", FALSE);
 
@@ -728,11 +727,11 @@ edge_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dlg);
 
   if (use_wrap)
-    evals.wrapmode = PIXEL_WRAP;
+    evals.wrapmode = GIMP_PIXEL_FETCHER_EDGE_WRAP;
   else if (use_smear)
-    evals.wrapmode = PIXEL_SMEAR;
+    evals.wrapmode = GIMP_PIXEL_FETCHER_EDGE_SMEAR;
   else if (use_black)
-    evals.wrapmode = PIXEL_BLACK;
+    evals.wrapmode = GIMP_PIXEL_FETCHER_EDGE_BLACK;
 
   return run;
 }

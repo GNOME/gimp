@@ -1095,6 +1095,8 @@ static void
 plugin_do_asupsample (void)
 {
   tk_read  = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edge_mode (tk_read, GIMP_PIXEL_FETCHER_EDGE_BLACK);
+
   tk_write = gimp_pixel_fetcher_new (drawable);
   gimp_pixel_fetcher_set_shadow (tk_write, TRUE);
 
@@ -1136,7 +1138,7 @@ plugin_render_func (gdouble   x,
   ix = floor (x + 0.5);
   iy = floor (y + 0.5);
 
-  gimp_pixel_fetcher_get_pixel2 (tk_read, ix, iy, PIXEL_BLACK, src);
+  gimp_pixel_fetcher_get_pixel (tk_read, ix, iy, src);
 
   for (b = 0; b < 3; b++)
     src_pix[b] = dinfo.is_color ? src[b] : src[0];

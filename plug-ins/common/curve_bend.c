@@ -2535,6 +2535,7 @@ p_init_gdrw (t_GDRW    *gdrw,
 {
   gdrw->drawable = drawable;
   gdrw->pft = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edge_mode (gdrw->pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
   gdrw->tile_width = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
 
@@ -2565,7 +2566,7 @@ p_get_pixel (t_GDRW *gdrw,
 {
   pixel[1] = 255;
   pixel[3] = 255;  /* simulate full visible alpha channel */
-  gimp_pixel_fetcher_get_pixel2 (gdrw->pft, x, y, PIXEL_BLACK, pixel);
+  gimp_pixel_fetcher_get_pixel (gdrw->pft, x, y, pixel);
 }
 
 static void

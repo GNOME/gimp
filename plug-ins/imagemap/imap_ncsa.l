@@ -22,6 +22,14 @@
  *
  */
 
+#include "config.h"
+
+#include <string.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include "imap_ncsa_parse.h"
 
 #ifdef FLEX_SCANNER

@@ -30,92 +30,92 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-
-enum
+typedef enum
 {
-  PIXEL_WRAP,
-  PIXEL_SMEAR,
-  PIXEL_BLACK
-};
+  GIMP_PIXEL_FETCHER_EDGE_NONE,
+  GIMP_PIXEL_FETCHER_EDGE_WRAP,
+  GIMP_PIXEL_FETCHER_EDGE_SMEAR,
+  GIMP_PIXEL_FETCHER_EDGE_BLACK
+} GimpPixelFetcherEdgeMode;
+
 
 typedef struct _GimpPixelFetcher GimpPixelFetcher;
-typedef struct _GimpRgnIterator GimpRgnIterator;
-
-GimpPixelFetcher * gimp_pixel_fetcher_new          (GimpDrawable     *drawable);
-void               gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
-void		   gimp_pixel_fetcher_set_shadow   (GimpPixelFetcher *pf,
-						    gboolean          shadow);
-void               gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf,
-						    gint              x,
-						    gint              y,
-						    guchar           *pixel);
-void               gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf,
-						    gint              x,
-						    gint              y,
-						    gint              wrapmode,
-						    guchar           *pixel);
-void               gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf,
-						    gint              x,
-						    gint              y,
-						    const guchar     *pixel);
-void               gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
+typedef struct _GimpRgnIterator  GimpRgnIterator;
 
 
-void		   gimp_get_bg_guchar              (GimpDrawable *drawable,
-						    gboolean      transparent,
-						    guchar       *bg);
-void		   gimp_get_fg_guchar              (GimpDrawable *drawable,
-						    gboolean      transparent,
-						    guchar       *fg);
+GimpPixelFetcher * gimp_pixel_fetcher_new           (GimpDrawable     *drawable);
+void 		   gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher *pf,
+                                                     GimpPixelFetcherEdgeMode mode);
+
+void               gimp_pixel_fetcher_set_bg_color  (GimpPixelFetcher *pf);
+void		   gimp_pixel_fetcher_set_shadow    (GimpPixelFetcher *pf,
+						     gboolean          shadow);
+void               gimp_pixel_fetcher_get_pixel     (GimpPixelFetcher *pf,
+						     gint              x,
+						     gint              y,
+						     guchar           *pixel);
+void               gimp_pixel_fetcher_put_pixel     (GimpPixelFetcher *pf,
+						     gint              x,
+						     gint              y,
+						     const guchar     *pixel);
+void               gimp_pixel_fetcher_destroy       (GimpPixelFetcher *pf);
 
 
-typedef void (* GimpRgnFunc1) (const guchar *src,
-                               gint          bpp,
-                               gpointer      data);
-typedef void (* GimpRgnFunc2) (const guchar *src,
-                               guchar       *dest,
-                               gint          bpp,
-                               gpointer      data);
-typedef void (* GimpRgnFuncSrc) (gint x,
-				 gint y,
-				 const guchar *src,
-				 gint bpp,
-				 gpointer data);
-typedef void (* GimpRgnFuncDest) (gint x,
-				  gint y,
-				  guchar *dest,
-				  gint bpp,
-				  gpointer data);
-typedef void (* GimpRgnFuncSrcDest) (gint x,
-				     gint y,
-				     const guchar *src,
-				     guchar *dest,
-				     gint bpp,
-				     gpointer data);
+void		   gimp_get_bg_guchar               (GimpDrawable     *drawable,
+						     gboolean          transparent,
+						     guchar           *bg);
+void		   gimp_get_fg_guchar               (GimpDrawable     *drawable,
+						     gboolean          transparent,
+						     guchar           *fg);
 
-GimpRgnIterator *gimp_rgn_iterator_new 		   (GimpDrawable *drawable,
-						    GimpRunMode   run_mode);
-void 		 gimp_rgn_iterator_free 	   (GimpRgnIterator *iter);
-void		 gimp_rgn_iterator_src 		   (GimpRgnIterator *iter,
-						    GimpRgnFuncSrc func,
-						    gpointer       data);
-void		 gimp_rgn_iterator_dest 	   (GimpRgnIterator *iter,
-						    GimpRgnFuncDest  func,
-						    gpointer data);
+
+typedef void   (* GimpRgnFunc1)       (const guchar *src,
+                                       gint          bpp,
+                                       gpointer      data);
+typedef void   (* GimpRgnFunc2)       (const guchar *src,
+                                       guchar       *dest,
+                                       gint          bpp,
+                                       gpointer      data);
+typedef void   (* GimpRgnFuncSrc)     (gint          x,
+                                       gint          y,
+                                       const guchar *src,
+                                       gint          bpp,
+                                       gpointer      data);
+typedef void   (* GimpRgnFuncDest)    (gint          x,
+                                       gint          y,
+                                       guchar       *dest,
+                                       gint          bpp,
+                                       gpointer      data);
+typedef void   (* GimpRgnFuncSrcDest) (gint          x,
+                                       gint          y,
+                                       const guchar *src,
+                                       guchar       *dest,
+                                       gint          bpp,
+                                       gpointer      data);
+
+GimpRgnIterator * gimp_rgn_iterator_new 	   (GimpDrawable      *drawable,
+						    GimpRunMode        run_mode);
+void 		 gimp_rgn_iterator_free 	   (GimpRgnIterator   *iter);
+void		 gimp_rgn_iterator_src 		   (GimpRgnIterator   *iter,
+						    GimpRgnFuncSrc     func,
+						    gpointer           data);
+void		 gimp_rgn_iterator_dest 	   (GimpRgnIterator   *iter,
+						    GimpRgnFuncDest    func,
+						    gpointer           data);
 void		 gimp_rgn_iterator_src_dest 	   (GimpRgnIterator   *iter,
 						    GimpRgnFuncSrcDest func,
 						    gpointer           data);
 
 
-void gimp_rgn_iterate1 (GimpDrawable *drawable,
-			GimpRunMode   run_mode,
-			GimpRgnFunc1  func,
-			gpointer      data);
+void             gimp_rgn_iterate1                 (GimpDrawable       *drawable,
+                                                    GimpRunMode         run_mode,
+                                                    GimpRgnFunc1        func,
+                                                    gpointer            data);
 
-void gimp_rgn_iterate2 (GimpDrawable *drawable,
-			GimpRunMode   run_mode,
-			GimpRgnFunc2  func,
-			gpointer      data);
+void             gimp_rgn_iterate2                 (GimpDrawable        *drawable,
+                                                    GimpRunMode          run_mode,
+                                                    GimpRgnFunc2         func,
+                                                    gpointer             data);
 
 G_END_DECLS
 

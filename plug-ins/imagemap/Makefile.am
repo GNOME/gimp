@@ -149,7 +149,7 @@ LDADD = \
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
-CLEANFILES = y.tab.h
+CLEANFILES = y.tab.c y.tab.h
 
 ## The following rules are not necessary for most users.  They are
 ## only used by the maintainers who modify the symbols and grammar

@@ -4,4 +4,5 @@ Makefile
 _libs
 .libs
 imagemap
+y.tab.c
 y.tab.h

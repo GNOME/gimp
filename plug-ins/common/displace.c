@@ -109,13 +109,13 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static DisplaceVals dvals =
 {
-  20.0,    /* amount_x */
-  20.0,    /* amount_y */
-  TRUE,    /* do_x */
-  TRUE,    /* do_y */
-  -1,      /* displace_map_x */
-  -1,      /* displace_map_y */
-  PIXEL_WRAP     /* displace_type */
+  20.0,    			/* amount_x */
+  20.0,    			/* amount_y */
+  TRUE,    			/* do_x */
+  TRUE,    			/* do_y */
+  -1,      			/* displace_map_x */
+  -1,      			/* displace_map_y */
+  GIMP_PIXEL_FETCHER_EDGE_WRAP  /* displace_type */
 };
 
 
@@ -377,13 +377,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (PIXEL_WRAP));
+                     GINT_TO_POINTER (GIMP_PIXEL_FETCHER_EDGE_WRAP));
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == PIXEL_WRAP);
+				dvals.displace_type == GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -391,13 +391,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (PIXEL_SMEAR));
+                     GINT_TO_POINTER (GIMP_PIXEL_FETCHER_EDGE_SMEAR));
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == PIXEL_SMEAR);
+				dvals.displace_type == GIMP_PIXEL_FETCHER_EDGE_SMEAR);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -405,13 +405,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (PIXEL_BLACK));
+                     GINT_TO_POINTER (GIMP_PIXEL_FETCHER_EDGE_BLACK));
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == PIXEL_BLACK);
+				dvals.displace_type == GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
   gtk_widget_show (toggle_hbox);
   gtk_widget_show (table);
@@ -470,6 +470,7 @@ displace (GimpDrawable *drawable)
   myrow = NULL;
 
   pft = gimp_pixel_fetcher_new (drawable);
+  gimp_pixel_fetcher_set_edge_mode (pft, dvals.displace_type);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -577,14 +578,10 @@ displace (GimpDrawable *drawable)
 	      else
 		yi = -((int) -needy + 1);
 
-	      gimp_pixel_fetcher_get_pixel2 (pft, xi, yi,
-					     dvals.displace_type, pixel[0]);
-	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi,
-					     dvals.displace_type, pixel[1]);
-	      gimp_pixel_fetcher_get_pixel2 (pft, xi, yi + 1,
-					     dvals.displace_type, pixel[2]);
-	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi + 1,
-					     dvals.displace_type, pixel[3]);
+	      gimp_pixel_fetcher_get_pixel (pft, xi, yi, pixel[0]);
+	      gimp_pixel_fetcher_get_pixel (pft, xi + 1, yi, pixel[1]);
+	      gimp_pixel_fetcher_get_pixel (pft, xi, yi + 1, pixel[2]);
+	      gimp_pixel_fetcher_get_pixel (pft, xi + 1, yi + 1, pixel[3]);
 
 	      for (k = 0; k < bytes; k++)
 		{
