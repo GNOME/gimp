@@ -1,5 +1,12 @@
 2004-09-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/flame/flame.c: renamed functions from doit() to
+	something less silly.
+
+2004-09-05  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.1.4 release.
 
 2004-09-05  Simon Budig  <simon@gimp.org>

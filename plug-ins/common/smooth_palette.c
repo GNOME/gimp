@@ -35,17 +35,17 @@
 
 
 /* Declare local functions. */
-static void     query  (void);
-static void     run    (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
+static void      query          (void);
+static void      run            (const gchar      *name,
+                                 gint              nparams,
+                                 const GimpParam  *param,
+                                 gint             *nreturn_vals,
+                                 GimpParam       **return_vals);
 
-static gboolean dialog (GimpDrawable     *drawable);
+static gboolean  dialog         (GimpDrawable     *drawable);
 
-static gint32   doit   (GimpDrawable     *drawable,
-                        gint32           *layer_id);
+static gint32    smooth_palette (GimpDrawable     *drawable,
+                                 gint32           *layer_id);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -182,7 +182,8 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
                                   gimp_tile_width ());
 
-          values[1].data.d_image = doit (drawable, &values[2].data.d_layer);
+          values[1].data.d_image = smooth_palette (drawable,
+                                                   &values[2].data.d_layer);
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
@@ -236,8 +237,8 @@ pix_swap (guchar *pal,
 }
 
 static gint32
-doit (GimpDrawable *drawable,
-      gint32    *layer_id)
+smooth_palette (GimpDrawable *drawable,
+                gint32       *layer_id)
 {
   gint32        new_image_id;
   GimpDrawable *new_layer;

@@ -57,7 +57,7 @@ static void      run               (const gchar      *name,
                                     const GimpParam  *param,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
-static void      doit              (GimpDrawable     *drawable);
+static void      flame             (GimpDrawable     *drawable);
 
 static gboolean  dialog            (void);
 static void      set_flame_preview (void);
@@ -234,7 +234,7 @@ run (const gchar      *name,
 	  gimp_tile_cache_ntiles (2 * (drawable->width /
 				       gimp_tile_width () + 1));
 
-	  doit (drawable);
+	  flame (drawable);
 
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
@@ -300,7 +300,7 @@ drawable_to_cmap (control_point *cp)
 }
 
 static void
-doit (GimpDrawable *drawable)
+flame (GimpDrawable *drawable)
 {
   gint    width, height;
   guchar *tmp;

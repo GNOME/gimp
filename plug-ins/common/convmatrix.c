@@ -108,7 +108,7 @@ static void run   (const gchar      *name,
 
 static gboolean  dialog       (void);
 
-static void      doit         (void);
+static void      convmatrix   (void);
 static void      check_config (void);
 
 
@@ -304,7 +304,7 @@ run (const gchar      *name,
 	  gimp_tile_cache_ntiles (2 * (drawable->width /
 				       gimp_tile_width () + 1));
 
-	  doit ();
+	  convmatrix ();
 
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
@@ -511,8 +511,9 @@ calcmatrix (guchar **srcrow,
 
   return sum;
 }
+
 static void
-doit (void)
+convmatrix (void)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, row, col;
