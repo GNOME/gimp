@@ -1,8 +1,14 @@
+2004-06-17  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.1.1. Allow to disable the
+	build of the linux_input controller module.
+
 2004-06-17  Philip Lafleur  <plafleur@cvs.gnome.org>
 
-	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_tiles_affine):
-	Make transforms (most notably perspective transforms) conform exactly
-	to specified edges. Includes a patch by David Gowers. Fixes bug #144352.
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): Make transforms (most
+	notably perspective transforms) conform exactly to specified
+	edges. Includes a patch by David Gowers. Fixes bug #144352.
 
 2004-06-16  Manish Singh  <yosh@gimp.org>
 

@@ -12,7 +12,7 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [1])
-m4_define([gimp_micro_version], [0])
+m4_define([gimp_micro_version], [1])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
@@ -1212,8 +1212,13 @@ AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
 # Check for linux input
 #######################
 
+AC_ARG_WITH(linux-input,
+              [  --without-linux-input   don't build linux input event controller module])
+
 have_linux_input=no
-AC_CHECK_HEADER(linux/input.h, have_linux_input=yes)
+if test "x$with_linux_input" != "xno"; then
+  AC_CHECK_HEADER(linux/input.h, have_linux_input=yes)
+fi
 
 AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)
 

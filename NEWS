@@ -6,10 +6,55 @@ are being added. In a not too distant future the next stable GIMP
 release, GIMP 2.2, will emerge out of this.
 
 
-Overview of Changes since 2.0
-=============================
 
-GIMP 2.1 includes the following enhancements:
+Overview of Changes in GIMP 2.1.1
+=================================
+
+- Added support for loading patterns in formats supported by GdkPixbuf
+  (most notably PNG and JPEG).
+
+- Use ARGB cursors when supported by the windowing system. Added nice
+  new tool cursors.
+
+- Added previews to Solid Noise and Unsharp Mask plug-ins.
+
+- Improvements for painting with pressure-sensitive devices.
+
+- Added preview for transform tools.
+
+- Merged the Gaussian Blur plug-ins.
+
+- Simplified the Blur plug-in.
+
+- Reorganized the Preferences dialog.
+
+- Dispatch Enter, Return, Backspace and Delete key events to the tools
+  and use them where it makes sense.
+
+- Some optimizations to the tile system, the gradient rendering and to 
+  the cubic interpolation routine.
+
+- Show the brush outline while painting.
+
+- Added an interface that allows to add controller modules. Such a module
+  can dispatch events to The GIMP which are mapped to actions by a
+  user-configurable mapping table.  Added a mouse wheel controller and a
+  generic linux input event controller module.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Manish Singh, Philip Lafleur, Yeti,
+   Dave Neary, Jakub Steiner, David Gowers, Geert Jordaens, William Skaggs,
+   Henrik Brix Andersen, Simon Budig, lots of translators and the
+   contributors that I accidentally missed...
+
+
+
+Overview of Changes in GIMP 2.1.0
+=================================
+
+GIMP 2.1.0 includes the following enhancements over GIMP 2.0:
 
  - Major user interface improvements.
 
