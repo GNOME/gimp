@@ -51,6 +51,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   GtkWidget      *hbox;
   GtkWidget      *frame;
   GtkWidget      *editor;
+  GtkObject      *adj;
 
   vbox = gimp_paint_options_gui (tool_options);
 
@@ -65,11 +66,12 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /*  size slider  */
-  gimp_prop_scale_entry_new (config, "size",
-                             GTK_TABLE (table), 0, 0,
-                             _("Size:"),
-                             1.0, 2.0, 1,
-                             FALSE, 0.0, 0.0);
+  adj = gimp_prop_scale_entry_new (config, "size",
+                                   GTK_TABLE (table), 0, 0,
+                                   _("Size:"),
+                                   1.0, 2.0, 1,
+                                   FALSE, 0.0, 0.0);
+  gimp_scale_entry_set_logarithmic (adj, TRUE);
 
   /* angle adjust slider */
   gimp_prop_scale_entry_new (config, "tilt-angle",
