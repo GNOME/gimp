@@ -1,3 +1,19 @@
+Sun Oct 11 15:45:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.h
+	* plug-ins/jpeg.c
+	* plug-ins/tiff.c: applied gimp-austin-981010-0, fixes compilation
+	warnings for jpeg and tiff plugin
+
+	* plug-ins/tiff/tiff.c: applied gimp-austin-981011-0, adds comment
+	parasite support to tiff plugin
+
+	* app/color_select.c: applied gimp-austin-981011-1, fixes color
+	selector redraw bug
+
+	* app/layer.c: applied gimp-austin-981011-2, fixes marching ants
+	weirdness (doesn't move when selection moved)
+
 Sat Oct 10 00:48:30 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/temp_buf.c: applied gimp-entity-980929-1, adds

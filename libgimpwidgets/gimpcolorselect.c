@@ -99,8 +99,8 @@ static gint color_select_hex_entry_leave (GtkWidget *, GdkEvent *, gpointer);
 
 static void color_select_image_fill (GtkWidget *, ColorSelectFillType, int *);
 
-static void color_select_draw_z_marker (ColorSelectP, int);
-static void color_select_draw_xy_marker (ColorSelectP, int);
+static void color_select_draw_z_marker (ColorSelectP, GdkRectangle *);
+static void color_select_draw_xy_marker (ColorSelectP, GdkRectangle *);
 
 static void color_select_update_red (ColorSelectFill *);
 static void color_select_update_green (ColorSelectFill *);
@@ -856,7 +856,7 @@ color_select_xy_expose (GtkWidget      *widget,
   if (!csp->gc)
     csp->gc = gdk_gc_new (widget->window);
 
-  color_select_draw_xy_marker (csp, 1);
+  color_select_draw_xy_marker (csp, &event->area);
 
   return FALSE;
 }
@@ -875,7 +875,7 @@ color_select_xy_events (GtkWidget    *widget,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
 
       csp->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
       csp->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
@@ -892,7 +892,7 @@ color_select_xy_events (GtkWidget    *widget,
       gdk_pointer_grab (csp->xy_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
 
       color_select_update (csp, UPDATE_VALUES);
       break;
@@ -900,7 +900,7 @@ color_select_xy_events (GtkWidget    *widget,
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
 
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
 
       csp->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
       csp->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
@@ -915,7 +915,7 @@ color_select_xy_events (GtkWidget    *widget,
 	csp->pos[1] = 255;
 
       gdk_pointer_ungrab (bevent->time);
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES);
       break;
 
@@ -928,7 +928,7 @@ color_select_xy_events (GtkWidget    *widget,
 	  mevent->y = ty;
 	}
 
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
 
       csp->pos[0] = (mevent->x * 255) / (XY_DEF_WIDTH - 1);
       csp->pos[1] = 255 - (mevent->y * 255) / (XY_DEF_HEIGHT - 1);
@@ -942,7 +942,7 @@ color_select_xy_events (GtkWidget    *widget,
       if (csp->pos[1] > 255)
 	csp->pos[1] = 255;
 
-      color_select_draw_xy_marker (csp, 1);
+      color_select_draw_xy_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES);
       break;
 
@@ -961,7 +961,7 @@ color_select_z_expose (GtkWidget      *widget,
   if (!csp->gc)
     csp->gc = gdk_gc_new (widget->window);
 
-  color_select_draw_z_marker (csp, 1);
+  color_select_draw_z_marker (csp, &event->area);
 
   return FALSE;
 }
@@ -980,7 +980,7 @@ color_select_z_events (GtkWidget    *widget,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
@@ -991,14 +991,14 @@ color_select_z_events (GtkWidget    *widget,
       gdk_pointer_grab (csp->z_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES);
       break;
 
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
 
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
@@ -1007,7 +1007,7 @@ color_select_z_events (GtkWidget    *widget,
 	csp->pos[2] = 255;
 
       gdk_pointer_ungrab (bevent->time);
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES | UPDATE_XY_COLOR);
       break;
 
@@ -1020,7 +1020,7 @@ color_select_z_events (GtkWidget    *widget,
 	  mevent->y = ty;
 	}
 
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (mevent->y * 255) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
@@ -1028,7 +1028,7 @@ color_select_z_events (GtkWidget    *widget,
       if (csp->pos[2] > 255)
 	csp->pos[2] = 255;
 
-      color_select_draw_z_marker (csp, 1);
+      color_select_draw_z_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES);
       break;
 
@@ -1116,23 +1116,23 @@ color_select_slider_update (GtkAdjustment *adjustment,
 
       if (update_z_marker)
 	{
-	  color_select_draw_z_marker (csp, 1);
+	  color_select_draw_z_marker (csp, NULL);
 	  color_select_update (csp, UPDATE_POS | UPDATE_XY_COLOR);
-	  color_select_draw_z_marker (csp, 1);
+	  color_select_draw_z_marker (csp, NULL);
 	}
       else
 	{
 	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, 1);
+	    color_select_draw_z_marker (csp, NULL);
 	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, 1);
+	    color_select_draw_xy_marker (csp, NULL);
 
 	  color_select_update (csp, UPDATE_POS);
 
 	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, 1);
+	    color_select_draw_z_marker (csp, NULL);
 	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, 1);
+	    color_select_draw_xy_marker (csp, NULL);
 	}
 
       color_select_update (csp, UPDATE_NEW_COLOR);
@@ -1189,23 +1189,23 @@ color_select_entry_update (GtkWidget *w,
 
       if (update_z_marker)
 	{
-	  color_select_draw_z_marker (csp, 1);
+	  color_select_draw_z_marker (csp, NULL);
 	  color_select_update (csp, UPDATE_POS | UPDATE_XY_COLOR);
-	  color_select_draw_z_marker (csp, 1);
+	  color_select_draw_z_marker (csp, NULL);
 	}
       else
 	{
 	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, 1);
+	    color_select_draw_z_marker (csp, NULL);
 	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, 1);
+	    color_select_draw_xy_marker (csp, NULL);
 
 	  color_select_update (csp, UPDATE_POS);
 
 	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, 1);
+	    color_select_draw_z_marker (csp, NULL);
 	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, 1);
+	    color_select_draw_xy_marker (csp, NULL);
 	}
 
       color_select_update (csp, UPDATE_NEW_COLOR);
@@ -1335,31 +1335,49 @@ color_select_image_fill (GtkWidget           *preview,
 
 static void
 color_select_draw_z_marker (ColorSelectP csp,
-			    int          update)
+			    GdkRectangle *clip)
 {
   int width;
+  int height;
   int y;
+  int minx;
+  int miny;
 
   if (csp->gc)
     {
       y = (Z_DEF_HEIGHT - 1) - ((Z_DEF_HEIGHT - 1) * csp->pos[2]) / 255;
       width = csp->z_color->requisition.width;
+      height = csp->z_color->requisition.height;
+      minx = 0;
+      miny = 0;
       if (width <= 0)
 	return;
 
-      gdk_gc_set_function (csp->gc, GDK_INVERT);
-      gdk_draw_line (csp->z_color->window, csp->gc, 0, y, width, y);
-      gdk_gc_set_function (csp->gc, GDK_COPY);
+      if (clip)
+        {
+	  width  = MIN(width,  clip->x + clip->width);
+	  height = MIN(height, clip->y + clip->height);
+	  minx   = MAX(0, clip->x);
+	  miny   = MAX(0, clip->y);
+	}
+
+      if (y >= miny && y < height)
+        {
+	  gdk_gc_set_function (csp->gc, GDK_INVERT);
+	  gdk_draw_line (csp->z_color->window, csp->gc, minx, y, width, y);
+	  gdk_gc_set_function (csp->gc, GDK_COPY);
+	}
     }
 }
 
 static void
 color_select_draw_xy_marker (ColorSelectP csp,
-			     int          update)
+			     GdkRectangle *clip)
 {
   int width;
   int height;
   int x, y;
+  int minx, miny;
 
   if (csp->gc)
     {
@@ -1367,12 +1385,27 @@ color_select_draw_xy_marker (ColorSelectP csp,
       y = (XY_DEF_HEIGHT - 1) - ((XY_DEF_HEIGHT - 1) * csp->pos[1]) / 255;
       width = csp->xy_color->requisition.width;
       height = csp->xy_color->requisition.height;
+      minx = 0;
+      miny = 0;
       if ((width <= 0) || (height <= 0))
 	return;
 
       gdk_gc_set_function (csp->gc, GDK_INVERT);
-      gdk_draw_line (csp->xy_color->window, csp->gc, 0, y, width, y);
-      gdk_draw_line (csp->xy_color->window, csp->gc, x, 0, x, height);
+
+      if (clip)
+        {
+	  width  = MIN(width,  clip->x + clip->width);
+	  height = MIN(height, clip->y + clip->height);
+	  minx   = MAX(0, clip->x);
+	  miny   = MAX(0, clip->y);
+	}
+
+      if (y >= miny && y < height)
+	gdk_draw_line (csp->xy_color->window, csp->gc, minx, y, width, y);
+
+      if (x >= minx && x < width)
+	gdk_draw_line (csp->xy_color->window, csp->gc, x, miny, x, height);
+
       gdk_gc_set_function (csp->gc, GDK_COPY);
     }
 }

@@ -926,6 +926,9 @@ layer_invalidate_boundary (layer)
       mask->boundary_known = FALSE;
     }
 
+  if (layer_is_floating_sel(layer))
+      floating_sel_invalidate(layer);
+
   /*  clear the affected region surrounding the layer  */
   /* gdisplays_selection_visibility (GIMP_DRAWABLE(layer)->gimage,
      SelectionLayerOff); */

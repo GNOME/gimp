@@ -36,6 +36,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+
 typedef struct
 {
   gint  compression;
@@ -68,7 +69,10 @@ static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 static void   save_toggle_update   (GtkWidget *widget,
 				    gpointer   data);
+static void   comment_entry_callback  (GtkWidget *widget,
+				       gpointer   data);
 
+#define DEFAULT_COMMENT "Created with The GIMP"
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -89,6 +93,7 @@ static TiffSaveInterface tsint =
   FALSE                /*  run  */
 };
 
+static char *image_comment;
 
 MAIN ()
 
@@ -149,6 +154,9 @@ query ()
   gimp_register_save_handler ("file_tiff_save", "tif,tiff", "");
 }
 
+
+
+
 static void
 run (char    *name,
      int      nparams,
@@ -187,6 +195,21 @@ run (char    *name,
   else if (strcmp (name, "file_tiff_save") == 0)
     {
       int image = param[1].data.d_int32;
+
+      /* get the image comment either from a parasite, or from our
+       * compiled-in default */
+      {
+	GParasite *parasite;
+
+	image_comment = NULL;
+	parasite = gimp_image_find_parasite(image, "GIF2", "CMNT");
+	if (!gparasite_is_error(parasite))
+	  image_comment = g_strdup(parasite->data);
+	gparasite_free(parasite);
+	if (!image_comment)
+	  image_comment = g_strdup(DEFAULT_COMMENT);	  
+      }
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -400,6 +423,26 @@ static gint32 load_image (char *filename) {
   gimp_image_attach_parasite(image, parasite);
   gparasite_free(parasite);
 
+
+  /* Attach a parasite containing the image description.  Pretend to
+   * be a GIF2 comment so other plugins will use this description as
+   * an image comment where appropriate. */
+  {
+    char *img_desc;
+
+    if (TIFFGetField (tif, TIFFTAG_IMAGEDESCRIPTION, &img_desc))
+    {
+      int len;
+
+      len = strlen(img_desc) + 1;
+      len = MIN(len, 241);
+      img_desc[len-1] = '\000';
+
+      parasite = gparasite_new("GIF2", "CMNT", 1, len, img_desc);
+      gimp_image_attach_parasite(image, parasite);
+      gparasite_free(parasite);
+    }
+  }
 
   /* any resolution info in the file? */
   {
@@ -802,7 +845,6 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
   TIFFSetField (tif, TIFFTAG_FILLORDER, fillorder);
   TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
-  TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, "Created with The GIMP");
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
   TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
   /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
@@ -817,6 +859,20 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, resolution);
 	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
       }
+  }
+
+  /* do we have a comment?  If so, create a new parasite to hold it,
+   * and attach it to the image. The attach function automatically
+   * detaches a previous incarnation of the parasite. */
+  if (image_comment && *image_comment != '\000')
+  {
+    GParasite *parasite;
+
+    TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
+    parasite = gparasite_new ("GIF2", "CMNT", 1,
+			      strlen(image_comment)+1, image_comment);
+    gimp_image_attach_parasite (image, parasite);
+    gparasite_free (parasite);
   }
 
   if (drawable_type == INDEXED_IMAGE)
@@ -871,6 +927,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
 	    default:
+	      success = FALSE;
 	      break;
 	    }
 
@@ -900,6 +957,9 @@ save_dialog ()
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *entry;
   GSList *group;
   gchar **argv;
   gint argc;
@@ -941,11 +1001,14 @@ save_dialog ()
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
+  /* hbox for compression and fillorder settings */
+  hbox = gtk_hbox_new (FALSE, 5);
+
   /*  compression  */
   frame = gtk_frame_new ("Compression");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
   toggle_vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
@@ -985,7 +1048,7 @@ save_dialog ()
   frame = gtk_frame_new ("Fill Order");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
   toggle_vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
@@ -1010,6 +1073,33 @@ save_dialog ()
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
+  gtk_widget_show (frame);
+
+
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+
+  /* comment entry */
+  frame = gtk_frame_new(NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
+  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
+
+  hbox = gtk_hbox_new (FALSE, 5);
+  label = gtk_label_new ("Comment: ");
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+  entry = gtk_entry_new ();
+  gtk_widget_show (entry);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_entry_set_text (GTK_ENTRY (entry), image_comment);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+                      (GtkSignalFunc) comment_entry_callback,
+                      NULL);
+
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
@@ -1062,4 +1152,27 @@ save_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
+}
+
+static void
+comment_entry_callback (GtkWidget *widget,
+			gpointer   data)
+{
+  int len;
+  char *text;
+
+  text = gtk_entry_get_text (GTK_ENTRY (widget));
+  len = strlen(text);
+
+  /* Temporary kludge for overlength strings - just return */
+  if (len > 240)
+    {
+      g_message ("TIFF save: Your comment string is too long.\n");
+      return;
+    }
+
+  g_free(image_comment);
+  image_comment = g_strdup(text);
+
+  /* g_print ("COMMENT: %s\n", image_comment); */
 }
