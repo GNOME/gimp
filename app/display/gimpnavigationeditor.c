@@ -37,6 +37,7 @@
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-scroll.h"
 #include "display/gimpdisplay-scale.h"
 
@@ -176,7 +177,7 @@ nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
   xoffset = x * xratio - gdisp->offset_x;
   yoffset = y * yratio - gdisp->offset_y;
 
-  scroll_display (gdisp, xoffset, yoffset);
+  gimp_display_scroll (gdisp, xoffset, yoffset);
 }
 
 static void
@@ -184,7 +185,7 @@ nav_dialog_zoom (GimpNavigationPreview *nav_preview,
 		 GimpZoomType           direction,
 		 NavigationDialog      *nav_dialog)
 {
-  change_scale (nav_dialog->gdisp, direction);
+  gimp_display_scale (nav_dialog->gdisp, direction);
 }
 
 static void
@@ -1207,7 +1208,7 @@ nav_dialog_update_real_view (NavigationDialog *nav_dialog,
   xoffset = xpnt - gdisp->offset_x;
   yoffset = ypnt - gdisp->offset_y;
 
-  scroll_display (nav_dialog->gdisp, xoffset, yoffset);
+  gimp_display_scroll (nav_dialog->gdisp, xoffset, yoffset);
 }
 
 static void
@@ -1352,7 +1353,7 @@ nav_dialog_preview_events (GtkWidget *widget,
 	case 4:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, GIMP_ZOOM_IN);
+	      gimp_display_scale (gdisp, GIMP_ZOOM_IN);
 	    }
 	  else
 	    {
@@ -1369,7 +1370,7 @@ nav_dialog_preview_events (GtkWidget *widget,
 	case 5:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, GIMP_ZOOM_OUT);
+	      gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
 	    }
 	  else
 	    {
@@ -1440,10 +1441,10 @@ nav_dialog_preview_events (GtkWidget *widget,
 	  ty = nav_dialog->dispy + 1;
 	  break;
 	case GDK_equal:
-	  change_scale (gdisp, GIMP_ZOOM_IN);
+	  gimp_display_scale (gdisp, GIMP_ZOOM_IN);
 	  break;
 	case GDK_minus:
-	  change_scale (gdisp, GIMP_ZOOM_OUT);
+	  gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
 	  break;
 	default:
 	  break;
@@ -1507,7 +1508,7 @@ navwindow_zoomin (GtkWidget *widget,
   if(! nav_dialog || nav_dialog->frozen)
     return;
 
-  change_scale (nav_dialog->gdisp, GIMP_ZOOM_IN);
+  gimp_display_scale (nav_dialog->gdisp, GIMP_ZOOM_IN);
 }
 
 static void
@@ -1521,7 +1522,7 @@ navwindow_zoomout (GtkWidget *widget,
   if (! nav_dialog || nav_dialog->frozen)
     return;
 
-  change_scale (nav_dialog->gdisp, GIMP_ZOOM_OUT);
+  gimp_display_scale (nav_dialog->gdisp, GIMP_ZOOM_OUT);
 }
 
 static void
@@ -1549,7 +1550,7 @@ zoom_adj_changed (GtkAdjustment *adj,
     }
 
   nav_dialog->block_adj_sig = TRUE;
-  change_scale (nav_dialog->gdisp, (scaledest * 100) + scalesrc);
+  gimp_display_scale (nav_dialog->gdisp, (scaledest * 100) + scalesrc);
   nav_dialog->block_adj_sig = FALSE;
 }
 

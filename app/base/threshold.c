@@ -37,6 +37,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpthresholdtool.h"
 #include "tool_manager.h"

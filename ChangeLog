@@ -1,3 +1,80 @@
+2001-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* RELEASE-TO-CVS.patch: gdk_pixbuf_new_from_stream -> _from_inline
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplay-foreach.[ch]: new files for functions
+	operating on all displays (will go away as soon as the display
+	behaves like a proper view which doesn't need to be updated
+	explicitly).
+
+	* app/display/gimpdisplay-callbacks.c
+	* app/display/gimpdisplay-scale.[ch]
+	* app/display/gimpdisplay-scroll.[ch]
+	* app/display/gimpdisplay.[ch]: "scale" and "scroll" namespace
+	cleanup, moved bounds_checking() to gimpdisplay-scroll.[ch], lots
+	of unfinished, intermediate stuff.
+
+	* app/display/gimpdisplayshell.[ch]: added some GObject framework
+	for the GimpDisplayShell object (not used yet).
+
+	* app/app_procs.c
+	* app/docindex.c
+	* app/image_map.c
+	* app/nav_window.c
+	* app/path.c
+	* app/qmask.c
+	* app/undo.c
+	* app/gui/channels-commands.c
+	* app/gui/convert-dialog.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/layer-select.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/paths-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/view-commands.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimplistitem.c
+	* tools/pdbgen/pdb/display.pdb
+	* app/pdb/display_cmds.c: changed accordingly (mostly including
+	"gimpdisplay-foreach.h" instead of "gimpdisplay.h")
+
 2001-10-10  DindinX <dindinx@wanadoo.fr>
 
 	* app/display/gimpdisplay-callbacks.c: fixed a buglet. Key-release

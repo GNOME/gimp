@@ -42,6 +42,7 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"

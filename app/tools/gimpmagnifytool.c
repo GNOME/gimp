@@ -380,7 +380,7 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 	(win_height / 2);
 
       /*  resize the image  */
-      resize_display (gdisp, gimprc.allow_resize_windows, TRUE);
+      gimp_display_scale_resize (gdisp, gimprc.allow_resize_windows, TRUE);
     }
 }
 

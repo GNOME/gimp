@@ -25,11 +25,12 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimpobject.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpdnd.h"
 

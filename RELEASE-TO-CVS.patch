@@ -4,7 +4,7 @@ RCS file: /cvs/gnome/gimp/libgimpbase/gimpparasiteio.c,v
 retrieving revision 1.9
 diff -u -r1.9 gimpparasiteio.c
 --- libgimpbase/gimpparasiteio.c	2001/08/01 00:35:48	1.9
-+++ libgimpbase/gimpparasiteio.c	2001/10/02 17:32:26
++++ libgimpbase/gimpparasiteio.c	2001/10/13 12:48:21
 @@ -161,8 +161,8 @@
  
    for (i = 0; i < params->dim; i++)
@@ -16,13 +16,29 @@ diff -u -r1.9 gimpparasiteio.c
      }
  
    str = s->str;
+Index: libgimpwidgets/gimpstock.c
+===================================================================
+RCS file: /cvs/gnome/gimp/libgimpwidgets/gimpstock.c,v
+retrieving revision 1.3
+diff -u -r1.3 gimpstock.c
+--- libgimpwidgets/gimpstock.c	2001/08/05 16:07:01	1.3
++++ libgimpwidgets/gimpstock.c	2001/10/13 12:48:21
+@@ -48,7 +48,7 @@
+   gtk_icon_source_set_size (source, size);
+   gtk_icon_source_set_size_wildcarded (source, FALSE);
+ 
+-  pixbuf = gdk_pixbuf_new_from_stream (-1, inline_data, FALSE, NULL);
++  pixbuf = gdk_pixbuf_new_from_inline (-1, inline_data, FALSE, NULL);
+ 
+   g_assert (pixbuf);
+ 
 Index: plug-ins/ifscompose/ifscompose_storage.c
 ===================================================================
 RCS file: /cvs/gnome/gimp/plug-ins/ifscompose/ifscompose_storage.c,v
 retrieving revision 1.8
 diff -u -r1.8 ifscompose_storage.c
 --- plug-ins/ifscompose/ifscompose_storage.c	2001/08/01 00:35:57	1.8
-+++ plug-ins/ifscompose/ifscompose_storage.c	2001/10/02 17:32:26
++++ plug-ins/ifscompose/ifscompose_storage.c	2001/10/13 12:48:21
 @@ -27,6 +27,7 @@
  
  #include "ifscompose.h"

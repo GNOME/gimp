@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpairbrushtool.h"
 #include "paint_options.h"

@@ -59,6 +59,7 @@
 #include "core/gimpscanconvert.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"

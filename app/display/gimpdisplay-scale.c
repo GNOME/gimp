@@ -32,85 +32,36 @@
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplay-ops.h"
 #include "gimpdisplay-scale.h"
+#include "gimpdisplay-scroll.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
 
 
-void
-bounds_checking (GimpDisplay *gdisp)
-{
-  gint sx, sy;
+/*  local function prototypes  */
 
-  sx = SCALEX (gdisp, gdisp->gimage->width);
-  sy = SCALEY (gdisp, gdisp->gimage->height);
+static gdouble   img2real (GimpDisplay *gdisp,
+                           gboolean     xdir,
+                           gdouble      a);
 
-  gdisp->offset_x = CLAMP (gdisp->offset_x, 0,
-			   LOWPASS (sx - gdisp->disp_width));
 
-  gdisp->offset_y = CLAMP (gdisp->offset_y, 0,
-			   LOWPASS (sy - gdisp->disp_height));
-}
-
+/*  public functions  */
 
 void
-resize_display (GimpDisplay *gdisp,
-		gboolean     resize_window,
-		gboolean     redisplay)
-{
-  /* freeze the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
-
-  if (resize_window)
-    gdisplay_shrink_wrap (gdisp);
-
-  bounds_checking (gdisp);
-  setup_scale (gdisp);
-
-  if (resize_window || redisplay)
-    {
-      gdisplay_expose_full (gdisp);
-      gdisplays_flush ();
-      /* title may have changed if it includes the zoom ratio */
-      gdisplay_update_title (gdisp);
-    }
-
-  /* re-enable the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
-}
-
-
-void
-shrink_wrap_display (GimpDisplay *gdisp)
-{
-  /* freeze the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
-
-  gdisplay_shrink_wrap (gdisp);
-
-  bounds_checking (gdisp);
-  setup_scale (gdisp);
-
-  gdisplay_expose_full (gdisp);
-  gdisplays_flush ();
-
-  /* re-enable the active tool */
-  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
-}
-
-
-void
-change_scale (GimpDisplay  *gdisp,
-	      GimpZoomType  zoom_type)
+gimp_display_scale (GimpDisplay  *gdisp,
+                    GimpZoomType  zoom_type)
 {
   guchar  scalesrc, scaledest;
   gdouble offset_x, offset_y;
   glong   sx, sy;
 
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   /* user zoom control, so resolution versions not needed -- austin */
-  scalesrc = SCALESRC (gdisp);
+  scalesrc  = SCALESRC (gdisp);
   scaledest = SCALEDEST (gdisp);
 
   offset_x = gdisp->offset_x + (gdisp->disp_width / 2.0);
@@ -159,7 +110,8 @@ change_scale (GimpDisplay  *gdisp,
   sy = (gdisp->gimage->height * scaledest) / scalesrc;
 
   /*  The slider value is a short, so make sure we are within its
-      range.  If we are trying to scale past it, then stop the scale  */
+   *  range.  If we are trying to scale past it, then stop the scale
+   */
   if (sx < 0xffff && sy < 0xffff)
     {
       gdisp->scale = (scaledest << 8) + scalesrc;
@@ -171,41 +123,20 @@ change_scale (GimpDisplay  *gdisp,
       gdisp->offset_x = (int) (offset_x - (gdisp->disp_width / 2));
       gdisp->offset_y = (int) (offset_y - (gdisp->disp_height / 2));
 
-      /*  resize the image  */
-      resize_display (gdisp, gimprc.allow_resize_windows, TRUE);
+      /*  resize the display  */
+      gimp_display_scale_resize (gdisp, gimprc.allow_resize_windows, TRUE);
     }
 }
 
-
-/* scale image coord to realworld units (cm, inches, pixels) */
-/* 27/Feb/1999 I tried inlining this, but the result was slightly
- * slower (poorer cache locality, probably) -- austin */
-static gdouble
-img2real (GimpDisplay *gdisp,
-	  gboolean     xdir,
-	  gdouble      a)
-{
-  gdouble res;
-
-  if (gdisp->dot_for_dot)
-    return a;
-
-  if (xdir)
-    res = gdisp->gimage->xresolution;
-  else
-    res = gdisp->gimage->yresolution;
-
-  return a * gimp_unit_get_factor (gdisp->gimage->unit) / res;
-}
-
-
 void
-setup_scale (GimpDisplay *gdisp)
+gimp_display_scale_setup (GimpDisplay *gdisp)
 {
   GtkRuler *hruler;
   GtkRuler *vruler;
   gfloat    sx, sy;
   gfloat    stepx, stepy;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   sx = SCALEX (gdisp, gdisp->gimage->width);
   sy = SCALEY (gdisp, gdisp->gimage->height);
@@ -281,4 +212,79 @@ setup_scale (GimpDisplay *gdisp)
 
   if (gdisp->nav_popup)
     nav_dialog_update_window_marker (gdisp->nav_popup);
+}
+
+void
+gimp_display_scale_resize (GimpDisplay *gdisp,
+                           gboolean     resize_window,
+                           gboolean     redisplay)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  /* freeze the active tool */
+  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
+
+  if (resize_window)
+    gdisplay_shrink_wrap (gdisp);
+
+  gimp_display_scroll_clamp_offsets (gdisp);
+  gimp_display_scale_setup (gdisp);
+
+  if (resize_window || redisplay)
+    {
+      gdisplay_expose_full (gdisp);
+      gdisplays_flush ();
+      /* title may have changed if it includes the zoom ratio */
+      gdisplay_update_title (gdisp);
+    }
+
+  /* re-enable the active tool */
+  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
+}
+
+
+void
+gimp_display_scale_shrink_wrap (GimpDisplay *gdisp)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  /* freeze the active tool */
+  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
+
+  gdisplay_shrink_wrap (gdisp);
+
+  gimp_display_scroll_clamp_offsets (gdisp);
+  gimp_display_scale_setup (gdisp);
+
+  gdisplay_expose_full (gdisp);
+  gdisplays_flush ();
+
+  /* re-enable the active tool */
+  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
+}
+
+
+/*  private functions  */
+
+/* scale image coord to realworld units (cm, inches, pixels)
+ *
+ * 27/Feb/1999 I tried inlining this, but the result was slightly
+ * slower (poorer cache locality, probably) -- austin
+ */
+static gdouble
+img2real (GimpDisplay *gdisp,
+	  gboolean     xdir,
+	  gdouble      a)
+{
+  gdouble res;
+
+  if (gdisp->dot_for_dot)
+    return a;
+
+  if (xdir)
+    res = gdisp->gimage->xresolution;
+  else
+    res = gdisp->gimage->yresolution;
+
+  return a * gimp_unit_get_factor (gdisp->gimage->unit) / res;
 }

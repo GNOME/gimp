@@ -81,7 +81,8 @@ HELP
     %invoke = ( code => 'gdisplays_flush ();' );
 }
 
-@headers = qw("display/display-types.h" "display/gimpdisplay.h");
+@headers = qw("display/display-types.h" "display/gimpdisplay.h"
+	      "display/gimpdisplay-foreach.h");
 
 @procs = qw(display_new display_delete displays_flush);
 %exports = (app => [@procs], lib => [@procs]);

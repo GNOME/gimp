@@ -33,7 +33,7 @@
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"
@@ -46,7 +46,6 @@
 static void   gimp_layer_list_view_class_init (GimpLayerListViewClass *klass);
 static void   gimp_layer_list_view_init       (GimpLayerListView      *view);
 
-static void   gimp_layer_list_view_destroy        (GtkObject         *object);
 static void   gimp_layer_list_view_style_set      (GtkWidget         *widget,
 						   GtkStyle          *prev_style);
 
@@ -107,17 +106,13 @@ gimp_layer_list_view_get_type (void)
 static void
 gimp_layer_list_view_class_init (GimpLayerListViewClass *klass)
 {
-  GtkObjectClass         *object_class;
   GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
 
-  object_class         = (GtkObjectClass *) klass;
-  widget_class         = (GtkWidgetClass *) klass;
-  container_view_class = (GimpContainerViewClass *) klass;
+  widget_class         = GTK_WIDGET_CLASS (klass);
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy               = gimp_layer_list_view_destroy;
 
   widget_class->style_set             = gimp_layer_list_view_style_set;
 
@@ -227,17 +222,6 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   view->mode_changed_handler_id           = 0;
   view->opacity_changed_handler_id        = 0;
   view->preserve_trans_changed_handler_id = 0;
-}
-
-static void
-gimp_layer_list_view_destroy (GtkObject *object)
-{
-  GimpLayerListView *view;
-
-  view = GIMP_LAYER_LIST_VIEW (object);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GDISPLAY_H__
-#define __GDISPLAY_H__
+#ifndef __GIMP_DISPLAY_H__
+#define __GIMP_DISPLAY_H__
 
 
 #include "core/gimpobject.h"
@@ -83,6 +83,9 @@ struct _IdleRenderStruct
   gboolean  active;
   GSList   *update_areas;   /*  flushed update areas */
 };
+
+
+extern GSList *display_list; /* EEK */
 
 
 #define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
@@ -204,6 +207,11 @@ GimpDisplay * gdisplay_new                      (GimpImage            *gimage,
 void          gdisplay_reconnect                (GimpDisplay          *gdisp,
                                                  GimpImage            *gimage);
 void          gdisplay_remove_and_delete        (GimpDisplay          *gdisp);
+void          gdisplay_add_update_area          (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y,
+                                                 gint                  w,
+                                                 gint                  h);
 gint          gdisplay_mask_value               (GimpDisplay          *gdisp,
                                                  gint                  x,
                                                  gint                  y);
@@ -297,42 +305,14 @@ void	      gdisplay_set_dot_for_dot	        (GimpDisplay          *gdisp,
 void          gdisplay_resize_cursor_label      (GimpDisplay          *gdisp);
 void          gdisplay_update_title             (GimpDisplay          *gdisp);
 void          gdisplay_flush_displays_only      (GimpDisplay          *gdisp); /* no rerender! */
+void          gdisplay_flush_whenever           (GimpDisplay          *gdisp, 
+                                                 gboolean              now);
 
 GimpDisplay * gdisplay_active                   (void);
 GimpDisplay * gdisplay_get_by_ID                (Gimp                 *gimp,
                                                  gint                  ID);
 
-
-/*  function declarations  */
-
-GimpDisplay * gdisplays_check_valid             (GimpDisplay          *gdisp,
-                                                 GimpImage            *gimage);
-void          gdisplays_reconnect               (GimpImage            *old,
-                                                 GimpImage            *new);
-void          gdisplays_update_title            (GimpImage            *gimage);
-void          gdisplays_resize_cursor_label     (GimpImage            *gimage);
-void          gdisplays_setup_scale             (GimpImage            *gimage);
-void          gdisplays_update_area             (GimpImage            *gimage,
-                                                 gint                  x,
-                                                 gint                  y,
-                                                 gint                  w,
-                                                 gint                  h);
-void          gdisplays_expose_guides           (GimpImage            *gimage);
-void          gdisplays_expose_guide            (GimpImage            *gimage,
-                                                 GimpGuide            *guide);
-void          gdisplays_update_full             (GimpImage            *gimage);
-void          gdisplays_shrink_wrap             (GimpImage            *gimage);
-void          gdisplays_expose_full             (void);
-void          gdisplays_selection_visibility    (GimpImage            *gimage,
-                                                 GimpSelectionControl  control);
-gboolean      gdisplays_dirty                   (void);
-void          gdisplays_delete                  (void);
-void          gdisplays_flush                   (void);
-void          gdisplays_flush_now               (void);
 void          gdisplays_finish_draw             (void);
-void          gdisplays_nav_preview_resized     (void);
-void          gdisplays_foreach                 (GFunc                 func,
-                                                 gpointer              user_data);
 
 
-#endif /*  __GDISPLAY_H__  */
+#endif /*  __GIMP_DISPLAY_H__  */

@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-ops.h"
 #include "display/gimpdisplay-scale.h"
 #include "display/gimpdisplay-selection.h"
@@ -51,7 +52,7 @@ view_zoomin_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  change_scale (gdisp, GIMP_ZOOM_IN);
+  gimp_display_scale (gdisp, GIMP_ZOOM_IN);
 }
 
 void
@@ -61,7 +62,7 @@ view_zoomout_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  change_scale (gdisp, GIMP_ZOOM_OUT);
+  gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
 }
 
 void
@@ -72,7 +73,7 @@ view_zoom_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  change_scale (gdisp, action);
+  gimp_display_scale (gdisp, action);
 }
 
 void
@@ -242,5 +243,5 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  shrink_wrap_display (gdisp);
+  gimp_display_scale_shrink_wrap (gdisp);
 }

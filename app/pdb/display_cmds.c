@@ -30,6 +30,7 @@
 #include "procedural_db.h"
 
 #include "core/gimpimage.h"
+#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay.h"
 
 static ProcRecord display_new_proc;

@@ -45,6 +45,7 @@
 #include "core/gimpparasitelist.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"

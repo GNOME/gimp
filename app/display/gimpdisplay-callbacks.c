@@ -57,6 +57,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-callbacks.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplay-selection.h"
 #include "gimpdisplay-scale.h"
 #include "gimpdisplay-scroll.h"
@@ -139,14 +140,14 @@ static void
 gdisplay_vscrollbar_update (GtkAdjustment *adjustment,
 			    GimpDisplay   *gdisp)
 {
-  scroll_display (gdisp, 0, (adjustment->value - gdisp->offset_y));
+  gimp_display_scroll (gdisp, 0, (adjustment->value - gdisp->offset_y));
 }
 
 static void
 gdisplay_hscrollbar_update (GtkAdjustment *adjustment,
 			    GimpDisplay   *gdisp)
 {
-  scroll_display (gdisp, (adjustment->value - gdisp->offset_x), 0);
+  gimp_display_scroll (gdisp, (adjustment->value - gdisp->offset_x), 0);
 }
 
 gboolean
@@ -219,7 +220,7 @@ gdisplay_canvas_events (GtkWidget   *canvas,
                         gdisp);
 
       /*  setup scale properly  */
-      setup_scale (gdisp);
+      gimp_display_scale_setup (gdisp);
     }
 
   /*  Find out what device the event occurred upon  */
@@ -243,7 +244,7 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 	  gdisp->disp_width  = gdisp->canvas->allocation.width;
 	  gdisp->disp_height = gdisp->canvas->allocation.height;
 
-	  resize_display (gdisp, FALSE, FALSE);
+	  gimp_display_scale_resize (gdisp, FALSE, FALSE);
 	}
       break;
 
@@ -422,9 +423,9 @@ gdisplay_canvas_events (GtkWidget   *canvas,
       if (state & GDK_SHIFT_MASK)
 	{
 	  if (sevent->direction == GDK_SCROLL_UP)
-	    change_scale (gdisp, GIMP_ZOOM_IN);
+	    gimp_display_scale (gdisp, GIMP_ZOOM_IN);
 	  else
-	    change_scale (gdisp, GIMP_ZOOM_OUT);
+	    gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
 	}
       else
 	{

@@ -8,6 +8,8 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdisplay.h			\
 	gimpdisplay-callbacks.c		\
 	gimpdisplay-callbacks.h		\
+	gimpdisplay-foreach.c		\
+	gimpdisplay-foreach.h		\
 	gimpdisplay-marching-ants.h	\
 	gimpdisplay-ops.c		\
 	gimpdisplay-ops.h		\

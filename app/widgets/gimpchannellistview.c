@@ -34,7 +34,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpmarshal.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpchannellistview.h"
 #include "gimpcomponentlistitem.h"

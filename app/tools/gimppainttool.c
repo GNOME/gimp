@@ -47,6 +47,7 @@
 #include "core/gimpmarshal.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"

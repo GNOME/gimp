@@ -16,15 +16,41 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __INTERFACE_H__
-#define __INTERFACE_H__
+#ifndef __GIMP_DISPLAY_SHELL_H__
+#define __GIMP_DISPLAY_SHELL_H__
 
 
-void   create_display_shell (GDisplay     *gdisp,
-			     gint          width,
-			     gint          height,
-			     gchar        *title,
-			     gint          type);
+#include <gtk/gtkwindow.h>
 
 
-#endif /* __INTERFACE_H__ */
+#define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
+#define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))
+#define GIMP_DISPLAY_SHELL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
+#define GIMP_IS_DISPLAY_SHELL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY_SHELL))
+#define GIMP_IS_DISPLAY_SHELL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_SHELL))
+#define GIMP_DISPLAY_SHELL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
+
+
+typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
+
+struct _GimpDisplayShell
+{
+  GtkWindow  parent_instance;
+};
+
+struct _GimpDisplayShellClass
+{
+  GtkWindowClass  parent_class;
+};
+
+
+GType  gimp_display_shell_get_type (void);
+
+void   create_display_shell (GimpDisplay *gdisp,
+			     gint         width,
+			     gint         height,
+			     gchar       *title,
+			     gint         type);
+
+
+#endif /* __GIMP_DISPLAY_SHELL_H__ */

@@ -33,7 +33,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
 #include "tools/tools-types.h"
 
 #include "base/base.h"
@@ -46,7 +45,7 @@
 
 #include "xcf/xcf.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
 

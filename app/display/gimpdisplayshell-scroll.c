@@ -32,9 +32,11 @@
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplay-scale.h"
 #include "gimpdisplay-scroll.h"
 
+#include "gimprc.h"
 #include "nav_window.h"
 
 
@@ -83,9 +85,9 @@ grab_and_scroll (GimpDisplay    *gdisp,
   if (mevent && mevent->window != gdisp->canvas->window)
     return;
 
-  scroll_display (gdisp,
-		  startx - mevent->x - gdisp->offset_x,
-		  starty - mevent->y - gdisp->offset_y);
+  gimp_display_scroll (gdisp,
+                       startx - mevent->x - gdisp->offset_x,
+                       starty - mevent->y - gdisp->offset_y);
 }
 
 
@@ -109,7 +111,7 @@ scroll_to_pointer_position (GimpDisplay    *gdisp,
   else if (mevent->y > gdisp->disp_height)
     off_y = mevent->y - gdisp->disp_height;
 
-  if (scroll_display (gdisp, off_x, off_y))
+  if (gimp_display_scroll (gdisp, off_x, off_y))
     {
 #ifdef __GNUC__
 #warning FIXME: replace gdk_input_window_get_pointer()
@@ -127,14 +129,16 @@ scroll_to_pointer_position (GimpDisplay    *gdisp,
 }
 
 gboolean
-scroll_display (GimpDisplay *gdisp,
-		gint      x_offset,
-		gint      y_offset)
+gimp_display_scroll (GimpDisplay *gdisp,
+                     gint         x_offset,
+                     gint         y_offset)
 {
   gint      old_x, old_y;
   gint      src_x, src_y;
   gint      dest_x, dest_y;
   GdkEvent *event;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
   old_x = gdisp->offset_x;
   old_y = gdisp->offset_y;
@@ -142,7 +146,7 @@ scroll_display (GimpDisplay *gdisp,
   gdisp->offset_x += x_offset;
   gdisp->offset_y += y_offset;
 
-  bounds_checking (gdisp);
+  gimp_display_scroll_clamp_offsets (gdisp);
 
   /*  the actual changes in offset  */
   x_offset = (gdisp->offset_x - old_x);
@@ -150,7 +154,9 @@ scroll_display (GimpDisplay *gdisp,
 
   if (x_offset || y_offset)
     {
-      setup_scale (gdisp);
+      /* FIXME: I'm sure this is useless if all other places are correct --mitch
+       */
+      gimp_display_scale_setup (gdisp);
 
       src_x = (x_offset < 0) ? 0 : x_offset;
       src_y = (y_offset < 0) ? 0 : y_offset;
@@ -226,3 +232,21 @@ scroll_display (GimpDisplay *gdisp,
 
   return FALSE;
 }
+
+void
+gimp_display_scroll_clamp_offsets (GimpDisplay *gdisp)
+{
+  gint sx, sy;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  sx = SCALEX (gdisp, gdisp->gimage->width);
+  sy = SCALEY (gdisp, gdisp->gimage->height);
+
+  gdisp->offset_x = CLAMP (gdisp->offset_x, 0,
+			   LOWPASS (sx - gdisp->disp_width));
+
+  gdisp->offset_y = CLAMP (gdisp->offset_y, 0,
+			   LOWPASS (sy - gdisp->disp_height));
+}
+

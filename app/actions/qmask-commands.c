@@ -27,7 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -36,6 +36,7 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpcolorpanel.h"
 

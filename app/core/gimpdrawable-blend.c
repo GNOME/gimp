@@ -46,6 +46,7 @@
 #include "widgets/gimpdnd.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "app_procs.h"
 #include "errors.h"

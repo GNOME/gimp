@@ -101,7 +101,7 @@ gimp_list_item_class_init (GimpListItemClass *klass)
 {
   GtkWidgetClass *widget_class;
 
-  widget_class = (GtkWidgetClass *) klass;
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

@@ -26,7 +26,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimppreview.h"
 

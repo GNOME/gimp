@@ -29,7 +29,7 @@
 
 #include "core/gimpdrawable.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
@@ -59,10 +59,10 @@ static void   gimp_drawable_list_item_visibility_changed (GimpDrawable   *drawab
 static GimpListItemClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_drawable_list_item_get_type (void)
 {
-  static GtkType list_item_type = 0;
+  static GType list_item_type = 0;
 
   if (! list_item_type)
     {
@@ -90,8 +90,8 @@ gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass)
   GtkWidgetClass    *widget_class;
   GimpListItemClass *list_item_class;
 
-  widget_class    = (GtkWidgetClass *) klass;
-  list_item_class = (GimpListItemClass *) klass;
+  widget_class    = GTK_WIDGET_CLASS (klass);
+  list_item_class = GIMP_LIST_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

@@ -31,6 +31,7 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "tools/gimpbezierselecttool.h"
 

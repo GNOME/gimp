@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
@@ -34,6 +34,7 @@
 #include "pdb/procedural_db.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "convert-dialog.h"
 #include "offset-dialog.h"

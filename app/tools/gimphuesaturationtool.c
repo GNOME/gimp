@@ -35,6 +35,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"

@@ -30,7 +30,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpviewable.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
@@ -63,10 +63,10 @@ static gchar * gimp_component_list_item_get_name           (GtkWidget    *widget
 static GimpListItemClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_component_list_item_get_type (void)
 {
-  static GtkType list_item_type = 0;
+  static GType list_item_type = 0;
 
   if (! list_item_type)
     {
@@ -91,15 +91,11 @@ gimp_component_list_item_get_type (void)
 static void
 gimp_component_list_item_class_init (GimpComponentListItemClass *klass)
 {
-  GtkWidgetClass    *widget_class;
-  GtkItemClass      *item_class;
   GimpListItemClass *list_item_class;
 
-  widget_class    = (GtkWidgetClass *) klass;
-  item_class      = (GtkItemClass *) klass;
-  list_item_class = (GimpListItemClass *) klass;
+  list_item_class = GIMP_LIST_ITEM_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_LIST_ITEM);
+  parent_class = g_type_class_peek_parent (klass);
 
   list_item_class->set_viewable = gimp_component_list_item_set_viewable;
 }
@@ -143,7 +139,6 @@ gimp_component_list_item_new (GimpImage   *gimage,
 {
   GimpListItem *list_item;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
   g_return_val_if_fail (channel >= RED_CHANNEL && channel <= ALPHA_CHANNEL,

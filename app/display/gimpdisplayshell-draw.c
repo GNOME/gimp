@@ -51,12 +51,21 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local functions  */
-static void     gdisplay_destroy (GtkWidget *widget,
-                                  GDisplay  *display);
-static gboolean gdisplay_delete  (GtkWidget *widget,
-                                  GdkEvent  *event,
-                                  GDisplay  *display);
+static void       gimp_display_shell_class_init   (GimpDisplayShellClass *klass);
+static void       gimp_display_shell_init         (GimpDisplayShell      *shell);
+
+static void       gimp_display_shell_destroy      (GtkObject   *object);
+static gboolean   gimp_display_shell_delete_event (GtkWidget   *widget,
+                                                   GdkEventAny *aevent);
+
+static void       gdisplay_destroy (GtkWidget *widget,
+                                    GDisplay  *display);
+static gboolean   gdisplay_delete  (GtkWidget *widget,
+                                    GdkEvent  *event,
+                                    GDisplay  *display);
+
+
+static GtkWindowClass *parent_class = NULL;
 
 
 static GtkTargetEntry display_target_table[] =
@@ -69,6 +78,69 @@ static GtkTargetEntry display_target_table[] =
   GIMP_TARGET_BUFFER
 };
 
+
+GType
+gimp_display_shell_get_type (void)
+{
+  static GType shell_type = 0;
+
+  if (! shell_type)
+    {
+      static const GTypeInfo shell_info =
+      {
+        sizeof (GimpDisplayShellClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_display_shell_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpDisplayShell),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_display_shell_init,
+      };
+
+      shell_type = g_type_register_static (GTK_TYPE_WINDOW,
+                                           "GimpDisplayShell",
+                                           &shell_info, 0);
+    }
+
+  return shell_type;
+}
+
+static void
+gimp_display_shell_class_init (GimpDisplayShellClass *klass)
+{
+  GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
+
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->destroy      = gimp_display_shell_destroy;
+
+  widget_class->delete_event = gimp_display_shell_delete_event;
+}
+
+static void
+gimp_display_shell_init (GimpDisplayShell *shell)
+{
+}
+
+static void
+gimp_display_shell_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gboolean
+gimp_display_shell_delete_event (GtkWidget   *widget,
+                                 GdkEventAny *aevent)
+{
+  return TRUE;
+}
 
 static void
 gdisplay_destroy (GtkWidget *widget,

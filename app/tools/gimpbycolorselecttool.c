@@ -45,6 +45,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"

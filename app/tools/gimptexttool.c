@@ -42,6 +42,7 @@
 #include "widgets/gimpfontselection.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"

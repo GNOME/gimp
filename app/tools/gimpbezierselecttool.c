@@ -41,6 +41,7 @@
 #include "pdb/procedural_db.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gui/paths-dialog.h"
 

@@ -35,6 +35,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"

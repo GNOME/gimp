@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "display/display-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "image_map.h"
 

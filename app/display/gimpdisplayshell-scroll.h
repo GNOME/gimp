@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCROLL_H__
-#define __SCROLL_H__
+#ifndef __GIMP_DISPLAY_SCROLL_H__
+#define __GIMP_DISPLAY_SCROLL_H__
 
 
 /*  routines for grabbing the image and scrolling via the pointer  */
@@ -31,9 +31,11 @@ void      scroll_to_pointer_position (GimpDisplay    *gdisp,
 				      GdkEventMotion *mevent);
 
 /* generic scroll-by-offset function */
-gboolean  scroll_display             (GimpDisplay    *gdisp,
-				      gint            x_offset,
-				      gint            y_offset);
+gboolean  gimp_display_scroll               (GimpDisplay    *gdisp,
+                                             gint            x_offset,
+                                             gint            y_offset);
+
+void      gimp_display_scroll_clamp_offsets (GimpDisplay    *gdisp);
 
 
-#endif  /*  __SCROLL_H__  */
+#endif  /*  __GIMP_DISPLAY_SCROLL_H__  */

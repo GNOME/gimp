@@ -37,6 +37,7 @@
 #include "gui/info-dialog.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"

@@ -33,7 +33,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdnd.h"
 #include "gimplayerlistitem.h"
@@ -87,10 +87,10 @@ static GimpRGB  green_color;
 static GimpRGB  red_color;
 
 
-GtkType
+GType
 gimp_layer_list_item_get_type (void)
 {
-  static GtkType list_item_type = 0;
+  static GType list_item_type = 0;
 
   if (! list_item_type)
     {
@@ -116,15 +116,13 @@ gimp_layer_list_item_get_type (void)
 static void
 gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
 {
-  GtkObjectClass    *object_class;
   GtkWidgetClass    *widget_class;
   GimpListItemClass *list_item_class;
 
-  object_class    = (GtkObjectClass *) klass;
-  widget_class    = (GtkWidgetClass *) klass;
-  list_item_class = (GimpListItemClass *) klass;
+  widget_class    = GTK_WIDGET_CLASS (klass);
+  list_item_class = GIMP_LIST_ITEM_CLASS (klass);
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE_LIST_ITEM);
+  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->drag_motion         = gimp_layer_list_item_drag_motion;
   widget_class->drag_drop           = gimp_layer_list_item_drag_drop;

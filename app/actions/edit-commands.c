@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
@@ -34,6 +34,7 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
 

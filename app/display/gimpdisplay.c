@@ -109,11 +109,6 @@ static void     gdisplay_delete             (GimpDisplay  *gdisp);
 static GSList * gdisplay_free_area_list     (GSList       *list);
 static GSList * gdisplay_process_area_list  (GSList       *list,
 					     GimpArea     *ga1);
-static void     gdisplay_add_update_area    (GimpDisplay  *gdisp,
-					     gint          x,
-					     gint          y,
-					     gint          w,
-					     gint          h);
 static void     gdisplay_add_display_area   (GimpDisplay  *gdisp,
 					     gint          x,
 					     gint          y,
@@ -852,7 +847,7 @@ gdisplay_flush_displays_only (GimpDisplay *gdisp)
 }
 
 
-static void
+void
 gdisplay_flush_whenever (GimpDisplay *gdisp, 
 			 gboolean     now)
 {
@@ -931,19 +926,20 @@ gdisplay_flush_now (GimpDisplay *gdisp)
 void 
 gdisplays_finish_draw (void)
 {
-  GSList      *list = display_list;
+  GSList      *list;
   GimpDisplay *gdisp;
 
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
       
       if (gdisp->idle_render.active)
 	{
-	  gtk_idle_remove (gdisp->idle_render.idleid);
-	  while (idlerender_callback(gdisp));
+	  g_source_remove (gdisp->idle_render.idleid);
+          gdisp->idle_render.idleid = 0;
+
+	  while (idlerender_callback (gdisp));
 	}
-      list = g_slist_next (list);
     }
 }
 
@@ -1113,22 +1109,15 @@ gdisplay_update_icon_scheduler (GimpImage *gimage,
 
   gdisp = (GimpDisplay *) data;
 
-  if (gdisp == gdisplays_check_valid (gdisp, gimage))
+  gdisp->icon_needs_update = 1;
+  if (!gdisp->icon_timeout_id)
     {
-      gdisp->icon_needs_update = 1;
-      if (!gdisp->icon_timeout_id)
-        {
-	  gdisp->icon_timeout_id = g_timeout_add (7500,
-                                                  gdisplay_update_icon_timer,
-						  gdisp);
-	  if (!gdisp->icon_idle_id)
-	    gdisp->icon_idle_id = g_idle_add (gdisplay_update_icon_invoker,
+      gdisp->icon_timeout_id = g_timeout_add (7500,
+                                              gdisplay_update_icon_timer,
                                               gdisp);
-	}
-    }
-  else
-    {
-      g_printerr ("gdisplay_update_icon_scheduler called for invalid gdisplay\n");
+      if (!gdisp->icon_idle_id)
+        gdisp->icon_idle_id = g_idle_add (gdisplay_update_icon_invoker,
+                                          gdisp);
     }
 }
 
@@ -1567,7 +1556,7 @@ gdisplay_set_dot_for_dot (GimpDisplay *gdisp,
       gdisp->dot_for_dot = dot_for_dot;
 
       gdisplay_resize_cursor_label (gdisp);
-      resize_display (gdisp, gimprc.allow_resize_windows, TRUE);
+      gimp_display_scale_resize (gdisp, gimprc.allow_resize_windows, TRUE);
     }
 }
 
@@ -1645,7 +1634,7 @@ gdisplay_remove_and_delete (GimpDisplay *gdisp)
 }
 
 
-static void
+void
 gdisplay_add_update_area (GimpDisplay *gdisp,
 			  gint         x,
 			  gint         y,
@@ -2425,6 +2414,8 @@ gdisplay_active (void)
   event = gtk_get_current_event ();
   if (event != NULL)
     {
+      g_warning ("gdisplay_active(): deleging current event");
+
       gdk_event_free (event);
     }
 
@@ -2472,310 +2463,6 @@ gdisplay_update_title (GimpDisplay *gdisp)
 }
 
 void
-gdisplays_update_title (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_update_title (gdisp);
-    }
-}
-
-void
-gdisplays_resize_cursor_label (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_resize_cursor_label (gdisp);
-    }
-}
-
-void
-gdisplays_setup_scale (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	setup_scale (gdisp);
-    }
-}
-
-void
-gdisplays_update_area (GimpImage *gimage,
-		       gint       x,
-		       gint       y,
-		       gint       w,
-		       gint       h)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_add_update_area (gdisp, x, y, w, h);
-    }
-}
-
-void
-gdisplays_expose_guides (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-  GList       *guide_list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	{
-	  for (guide_list = gdisp->gimage->guides;
-	       guide_list;
-	       guide_list = g_list_next (guide_list))
-	    {
-	      gdisplay_expose_guide (gdisp, guide_list->data);
-	    }
-	}
-    }
-}
-
-void
-gdisplays_expose_guide (GimpImage *gimage,
-			GimpGuide *guide)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_expose_guide (gdisp, guide);
-    }
-}
-
-void
-gdisplays_update_full (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_add_update_area (gdisp, 0, 0,
-				  gdisp->gimage->width,
-				  gdisp->gimage->height);
-    }
-}
-
-void
-gdisplays_shrink_wrap (GimpImage *gimage)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	shrink_wrap_display (gdisp);
-    }
-}
-
-void
-gdisplays_expose_full (void)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      gdisplay_expose_full (gdisp);
-    }
-}
-
-void
-gdisplays_nav_preview_resized (void)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->window_nav_dialog)
-	nav_dialog_preview_resized (gdisp->window_nav_dialog);
-      
-      if (gdisp->nav_popup)
-	{
-	  nav_dialog_free (NULL, gdisp->nav_popup);
-	  gdisp->nav_popup = NULL;
-	}
-    }
-}
-
-void
-gdisplays_selection_visibility (GimpImage            *gimage,
-				GimpSelectionControl  control)
-{
-  GimpDisplay *gdisp;
-  GSList      *list;
-
-  /*  traverse the linked list of displays, handling each one  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp->gimage == gimage)
-	gdisplay_selection_visibility (gdisp, control);
-    }
-}
-
-gboolean
-gdisplays_dirty (void)
-{
-  gboolean  dirty = FALSE;
-  GSList   *list;
-
-  /*  traverse the linked list of displays  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      if (((GimpDisplay *) list->data)->gimage->dirty != 0)
-	dirty = TRUE;
-    }
-
-  return dirty;
-}
-
-void
-gdisplays_delete (void)
-{
-  GimpDisplay *gdisp;
-
-  /*  destroying the shell removes the GimpDisplay from the list, so
-   *  do a while loop "around" the first element to get them all
-   */
-  while (display_list)
-    {
-      gdisp = (GimpDisplay *) display_list->data;
-
-      gtk_widget_destroy (gdisp->shell);
-    }
-}
-
-GimpDisplay *
-gdisplays_check_valid (GimpDisplay *gtest, 
-		       GimpImage   *gimage)
-{
-  /* Give a gdisp check that it is still valid and points to the required
-   * GimpImage. If not return the first gDisplay that does point to the 
-   * gimage. If none found return NULL;
-   */
-
-  GimpDisplay *gdisp;
-  GimpDisplay *gdisp_found = NULL;
-  GSList      *list;
-
-  /*  traverse the linked list of displays  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp == gtest)
-	return gtest;
-
-      if (!gdisp_found && gdisp->gimage == gimage)
-	gdisp_found = gdisp;
-    }
-
-  return gdisp_found;
-}
-
-static void
-gdisplays_flush_whenever (gboolean now)
-{
-  static gboolean flushing = FALSE;
-
-  GSList *list;
-
-  /*  no flushing necessary without an interface  */
-  if (no_interface)
-    return;
-
-  /*  this prevents multiple recursive calls to this procedure  */
-  if (flushing == TRUE)
-    {
-      g_warning ("gdisplays_flush() called recursively.");
-      return;
-    }
-
-  flushing = TRUE;
-
-  /*  traverse the linked list of displays  */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisplay_flush_whenever ((GimpDisplay *) list->data, now);
-    }
-
-  flushing = FALSE;
-}
-
-void
-gdisplays_flush (void)
-{
-  gdisplays_flush_whenever (FALSE);
-}
-
-void
-gdisplays_flush_now (void)
-{
-  gdisplays_flush_whenever (TRUE);
-}
-
-static guint
-gdisplay_hash (GimpDisplay *display)
-{
-  return (gulong) display;
-}
-
-void
 gdisplay_reconnect (GimpDisplay *gdisp, 
 		    GimpImage   *gimage)
 {
@@ -2810,28 +2497,19 @@ gdisplay_reconnect (GimpDisplay *gdisp,
                     G_CALLBACK (gdisplay_cleandirty_handler),
                     gdisp);
 
-  gdisplays_update_title (gimage);
+  gdisplay_update_title (gdisp);
 
   gdisplay_expose_full (gdisp);
   gdisplay_flush (gdisp);
 }
 
-void
-gdisplays_reconnect (GimpImage *old,
-		     GimpImage *new)
-{
-  GSList      *list;
-  GimpDisplay *gdisp;
 
-  g_return_if_fail (old != NULL && new != NULL);
-  
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = list->data;
-      
-      if (gdisp->gimage == old)
-	gdisplay_reconnect (gdisp, new);
-    }
+/*  private functions  */
+
+static guint
+gdisplay_hash (GimpDisplay *display)
+{
+  return (gulong) display;
 }
 
 /* Called whenever the underlying gimage is dirtied or cleaned */
@@ -2842,11 +2520,4 @@ gdisplay_cleandirty_handler (GimpImage *gimage,
   GimpDisplay *gdisp = data;
 
   gdisplay_update_title (gdisp);
-}
-
-void
-gdisplays_foreach (GFunc    func, 
-		   gpointer user_data)
-{
-  g_slist_foreach (display_list, func, user_data);
 }

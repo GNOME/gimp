@@ -38,6 +38,7 @@
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-selection.h"
 
 #include "floating_sel.h"

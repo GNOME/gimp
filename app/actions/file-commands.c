@@ -22,12 +22,13 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "display/display-types.h"
+#include "gui-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpobject.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-ops.h"
 
 #include "file-commands.h"

@@ -33,7 +33,7 @@
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"

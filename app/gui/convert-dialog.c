@@ -32,7 +32,7 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"

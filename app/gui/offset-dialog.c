@@ -29,7 +29,7 @@
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
 
 #include "libgimp/gimpintl.h"
 
