@@ -62,11 +62,11 @@ static void
 browse_cb (GtkWidget      *widget,
            BrowseWidget_t *browse)
 {
-   if (!browse->file_selection)
+   if (!browse->file_chooser)
      {
        GtkWidget *dialog;
 
-       dialog = browse->file_selection =
+       dialog = browse->file_chooser =
 	 gtk_file_chooser_dialog_new (browse->name,
 				      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -84,7 +84,7 @@ browse_cb (GtkWidget      *widget,
                          G_CALLBACK (select_cb),
                          browse);
      }
-   gtk_window_present (GTK_WINDOW (browse->file_selection));
+   gtk_window_present (GTK_WINDOW (browse->file_chooser));
 }
 
 static void
@@ -113,7 +113,7 @@ browse_widget_new (const gchar *name)
    GtkWidget *button;
    GtkWidget *icon;
 
-   browse->file_selection = NULL;
+   browse->file_chooser = NULL;
    browse->name = name;
    browse->filter = NULL;
 

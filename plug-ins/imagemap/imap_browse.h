@@ -24,21 +24,24 @@
 #ifndef _IMAP_BROWSE_H
 #define _IMAP_BROWSE_H
 
-typedef gchar* (*BrowseFilter_t)(const gchar*, gpointer data);
+typedef gchar* (*BrowseFilter_t) (const gchar *, gpointer data);
 
-typedef struct {
-   const gchar *name;
-   BrowseFilter_t filter;
-   gpointer filter_data;
-   GtkWidget *hbox;
-   GtkWidget *file;
-   GtkWidget *button;
-   GtkWidget *file_selection;
+typedef struct
+{
+   const gchar    *name;
+   BrowseFilter_t  filter;
+   gpointer        filter_data;
+   GtkWidget      *hbox;
+   GtkWidget      *file;
+   GtkWidget      *button;
+   GtkWidget      *file_chooser;
 } BrowseWidget_t;
 
-BrowseWidget_t *browse_widget_new(const gchar *name);
-void browse_widget_set_filename(BrowseWidget_t *browse, const gchar *filename);
-void browse_widget_set_filter(BrowseWidget_t *browse, BrowseFilter_t filter, 
-			      gpointer data);
+BrowseWidget_t * browse_widget_new          (const gchar    *name);
+void             browse_widget_set_filename (BrowseWidget_t *browse,
+                                             const gchar    *filename);
+void             browse_widget_set_filter   (BrowseWidget_t *browse,
+                                             BrowseFilter_t  filter,
+                                             gpointer        data);
 
 #endif /* _IMAP_BROWSE_H */
