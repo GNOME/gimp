@@ -1,3 +1,8 @@
+Tue Apr 28 23:17:37 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/gradient.c: enable adjustment of the gradient list box
+	for scrolling
+
 Wed Apr 29 00:56:19 1998  Tim Janik  <timj@gtk.org>
 
 	* app/text_tool.c (text_create_dialog): enable adjustment of the
