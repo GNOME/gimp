@@ -23,6 +23,7 @@
 #include "channel.h"
 #include "layer.h"
 #include "paint_funcs.h"
+#include "tag.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
 
@@ -101,6 +102,7 @@ struct _GImage
 
   int width, height;		      /*  width and height attributes  */
   int base_type;                      /*  base gimage type             */
+  Tag base_tag;
 
   unsigned char * cmap;               /*  colormap--for indexed        */
   int num_cols;                       /*  number of cols--for indexed  */
@@ -123,6 +125,7 @@ struct _GImage
   int proj_bytes;                     /*  bpp in projection image      */
   int proj_level;                     /*  projection level             */
   TileManager *projection;            /*  The projection--layers &     */
+      
                                       /*  channels                     */
   struct _Canvas *projection_canvas;  /*  The projection--layers &     */
                                       /*  channels                     */
@@ -247,6 +250,7 @@ void            gimage_deflate                (GImage *);
 int             gimage_is_flat                (GImage *);
 int             gimage_is_empty               (GImage *);
 GimpDrawable *  gimage_active_drawable        (GImage *);
+Tag             gimage_tag                    (GImage *);
 int             gimage_base_type              (GImage *);
 int             gimage_base_type_with_alpha   (GImage *);
 char *          gimage_filename               (GImage *);
@@ -271,7 +275,8 @@ void            gimage_projection_realloc     (GImage *);
 
 /*  composite access functions  */
 
-TileManager *   gimage_composite              (GImage *);
+TileManager    *gimage_composite              (GImage *);
+struct _Canvas *gimage_composite_canvas       (GImage *);
 int             gimage_composite_type         (GImage *);
 int             gimage_composite_bytes        (GImage *);
 TempBuf *       gimage_composite_preview      (GImage *, ChannelType, int, int);

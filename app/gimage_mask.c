@@ -20,6 +20,7 @@
 #include <string.h>
 #include "appenv.h"
 #include "brushes.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -29,11 +30,17 @@
 #include "layer.h"
 #include "layers_dialog.h"
 #include "paint_core.h"
+#include "paint_funcs_area.h"
+#include "palette.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 #include "undo.h"
 
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
+
+int tilesx, tilesy; /*should find a better place for these--leftover from tiles*/
 
 /*  feathering variables  */
 double gimage_mask_feather_radius = 5;
@@ -178,7 +185,6 @@ gimage_mask_translate (gimage, off_x, off_y)
   channel_translate (gimage_get_mask (gimage), off_x, off_y);
 }
 
-
 TileManager *
 gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
      GImage * gimage;
@@ -313,7 +319,126 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   return tiles;
 }
 
+Canvas *
+gimage_mask_extract_canvas (gimage, drawable, cut_gimage, keep_indexed)
+     GImage * gimage;
+     GimpDrawable *drawable;
+     int cut_gimage;
+     int keep_indexed;
+{
+  Canvas * canvas;
+  Channel * sel_mask;
+  PixelArea srcPR, destPR, maskPR;
+  Tag d_tag, canvas_tag;
+  int x1, y1, x2, y2;
+  int off_x, off_y;
+  int non_empty;
+  COLOR16_NEW (bg_color, drawable_tag(drawable));
+  COLOR16_INIT (bg_color);
+  color16_background (&bg_color);
 
+  if (!drawable) 
+    return NULL;
+
+  /*  If there are no bounds, then just extract the entire image
+   *  This may not be the correct behavior, but after getting rid
+   *  of floating selections, it's still tempting to "cut" or "copy"
+   *  a small layer and expect it to work, even though there is no
+   *  actual selection mask
+   */
+  non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  if (non_empty && (!(x2 - x1) || !(y2 - y1)))
+    {
+      message_box ("Unable to cut/copy because the selected\nregion is empty.", NULL, NULL);
+      return NULL;
+    }
+
+  d_tag = drawable_tag (drawable);
+  canvas_tag = tag_set_alpha (d_tag, ALPHA_YES);
+  
+  if (tag_format (canvas_tag) == FORMAT_INDEXED)
+    {
+      if (!keep_indexed)
+	canvas_tag = tag_set_format (canvas_tag , FORMAT_RGB); 
+    }  
+
+  /*  get the selection mask */
+  if (non_empty)
+    sel_mask = gimage_get_mask (gimage);
+  else
+    sel_mask = NULL;
+
+  /*  If a cut was specified, and the selection mask is not empty, push an undo  */
+  if (cut_gimage && non_empty)
+    drawable_apply_image_16 (drawable, x1, y1, x2, y2, NULL);
+
+  drawable_offsets (drawable, &off_x, &off_y);
+
+  /*  Allocate the temp buffer  */
+  canvas = canvas_new (canvas_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+     
+  tilesx = x1 + off_x;
+  tilesy = y1 + off_y;
+
+  /* configure the pixel areas  */
+  pixelarea_init (&srcPR, drawable_data_canvas (drawable), NULL, 
+		x1, y1, (x2 - x1), (y2 - y1), cut_gimage);
+  pixelarea_init (&destPR, canvas, NULL, 
+		0, 0, (x2 - x1), (y2 - y1), TRUE);
+
+  /*  If there is a selection, extract from it  */
+  if (non_empty)
+    {
+      pixelarea_init (&maskPR, GIMP_DRAWABLE(sel_mask)->canvas, NULL, 
+		(x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1), FALSE);
+
+      extract_from_area (&srcPR, &destPR, &maskPR, &bg_color, 
+		drawable_cmap (drawable), cut_gimage);
+
+      if (cut_gimage)
+	{
+	  /*  Clear the region  */
+	  channel_clear (gimage_get_mask (gimage));
+
+	  /*  Update the region  */
+	  gdisplays_update_area (gimage->ID, tilesx, tilesy,
+				 canvas_width (canvas), canvas_height (canvas));
+
+	  /*  Invalidate the preview  */
+	  drawable_invalidate_preview (drawable);
+	}
+    }
+  /*  Otherwise, get the entire active layer  */
+  else
+    {
+      /*  If the layer is indexed...we need to extract pixels  */
+      if ( tag_format (d_tag)== FORMAT_INDEXED && !keep_indexed)
+        extract_from_area (&srcPR, &destPR, &maskPR, &bg_color, 
+		drawable_cmap (drawable), cut_gimage);
+      else
+	copy_area (&srcPR, &destPR); /* should work even if dest has alpha & src doesnt */
+      
+      /*  If we're cutting, remove either the layer (or floating selection),
+       *  the layer mask, or the channel
+       */
+      if (cut_gimage && drawable_layer (drawable))
+	{
+	  if (layer_is_floating_sel (drawable_layer (drawable)))
+	    floating_sel_remove (drawable_layer (drawable));
+	  else
+	    gimage_remove_layer (gimage, GIMP_LAYER (drawable));
+	}
+      else if (cut_gimage && drawable_layer_mask (drawable))
+	{
+	  gimage_remove_layer_mask (gimage, GIMP_LAYER_MASK(drawable)->layer, DISCARD);
+	}
+      else if (cut_gimage && drawable_channel (drawable))
+	gimage_remove_channel (gimage, GIMP_CHANNEL(drawable));
+    }
+
+  return canvas;
+}
+#if 0
 Layer *
 gimage_mask_float (gimage, drawable, off_x, off_y)
      GImage * gimage;
@@ -361,7 +486,55 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
 
   return layer;
 }
+#endif
 
+Layer *
+gimage_mask_float (gimage, drawable, off_x, off_y)
+     GImage * gimage;
+     GimpDrawable* drawable;
+     int off_x, off_y;  /*  optional offset  */
+{
+  Layer *layer;
+  Channel *mask = gimage_get_mask (gimage);
+  Canvas* canvas;
+  int non_empty;
+  int x1, y1, x2, y2;
+
+  /*  Make sure there is a region to float...  */
+  non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
+  if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
+    {
+      message_box ("Float Selection: No selection to float.", NULL, NULL);
+      return NULL;
+    }
+
+  /*  Start an undo group  */
+  undo_push_group_start (gimage, FLOAT_MASK_UNDO);
+
+  /*  Cut the selected region  */
+  canvas = gimage_mask_extract_canvas (gimage, drawable, TRUE, FALSE);
+
+  /*  Create a new layer from the buffer  */
+  layer = layer_from_canvas (gimage, drawable, canvas, "Floated Layer", OPAQUE_OPACITY, NORMAL);
+
+  /*  Set the offsets  */
+  GIMP_DRAWABLE(layer)->offset_x = tilesx + off_x;
+  GIMP_DRAWABLE(layer)->offset_y = tilesy + off_y;
+
+  /*  Free the temp buffer  */
+  canvas_delete (canvas);
+
+  /*  Add the floating layer to the gimage  */
+  floating_sel_attach (layer, drawable);
+
+  /*  End an undo group  */
+  undo_push_group_end (gimage);
+
+  /*  invalidate the gimage's boundary variables  */
+  mask->boundary_known = FALSE;
+
+  return layer;
+}
 
 void
 gimage_mask_clear (gimage)

@@ -52,6 +52,37 @@ static gint    selection_start_marching    (gpointer);
 GdkPixmap *marching_ants[9] = { NULL };
 GdkPixmap *cycled_ants_pixmap = NULL;
 
+static void print_segs (Selection *);
+
+static void
+print_segs (Selection *select)
+{
+  gint i;
+  
+  g_print ("segs_in:\n");
+  for (i = 0; i < select->num_segs_in; i++)
+      g_print ("%2d: (%d, %d) - (%d, %d)\n", i,
+	       select->segs_in[i].x1,
+	       select->segs_in[i].y1,
+	       select->segs_in[i].x2,
+	       select->segs_in[i].y2);
+
+  g_print ("segs_out:\n");
+  for (i = 0; i < select->num_segs_out; i++)
+      g_print ("%2d: (%d, %d) - (%d, %d)\n", i,
+	       select->segs_out[i].x1,
+	       select->segs_out[i].y1,
+	       select->segs_out[i].x2,
+	       select->segs_out[i].y2);
+
+  g_print ("segs_layer:\n");
+  for (i = 0; i < select->num_segs_layer; i++)
+      g_print ("%2d: (%d, %d) - (%d, %d)\n", i,
+	       select->segs_layer[i].x1,
+	       select->segs_layer[i].y1,
+	       select->segs_layer[i].x2,
+	       select->segs_layer[i].y2);
+}
 
 /*********************************/
 /*  Local function definitions   */
@@ -366,6 +397,7 @@ selection_generate_segs (Selection *select)
     select->segs_layer = NULL;
 
   g_free (segs_layer);
+  /*print_segs (select);*/
 }
 
 
@@ -401,7 +433,6 @@ static gint
 selection_start_marching (gpointer data)
 {
   Selection * select;
-
   select = (Selection *) data;
 
   /*  if the RECALC bit is set, reprocess the boundaries  */
@@ -491,7 +522,6 @@ selection_create (GdkWindow *win,
   Selection * new;
   int base_type;
   int i;
-
   gdisp = (GDisplay *) gdisp_ptr;
 
   new = (Selection *) g_malloc (sizeof (Selection));

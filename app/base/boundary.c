@@ -20,6 +20,8 @@
 #include "appenv.h"
 #include "errors.h"
 #include "boundary.h"
+#include "canvas.h"
+#include "pixelarea.h"
 
 /* half intensity for mask */
 #define HALF_WAY 127
@@ -45,11 +47,11 @@ static int        num_empty_l = 0;
 static int        max_empty_segs = 0;
 
 /* global state variables--improve parameter efficiency */
-static PixelRegion * cur_PR;
+static PixelArea * cur_PR;
 
 
 /*  local function prototypes  */
-static void find_empty_segs (PixelRegion *, int, int *, int, int *,
+static void find_empty_segs (PixelArea *, int, int *, int, int *,
 			     BoundaryType, int, int, int, int);
 static void make_seg (int, int, int, int, int);
 static void allocate_vert_segs (void);
@@ -60,6 +62,7 @@ static void generate_boundary (BoundaryType, int, int, int, int);
 
 /*  Function definitions  */
 
+#if 0
 static void
 find_empty_segs (PixelRegion  *maskPR,
 		 int           scanline,
@@ -129,6 +132,8 @@ find_empty_segs (PixelRegion  *maskPR,
 	    ((scanline % TILE_HEIGHT) * tile->ewidth + (x % TILE_WIDTH)) + (tile->bpp - 1);
 	  tilex = x / TILE_WIDTH;
 	}
+      canvas_ref (maskPR->canvas,
+      *data = address of alpha value at(x,y)
 
       empty_segs[*num_empty] = x;
       val = (*data > HALF_WAY) ? 1 : -1;
@@ -153,7 +158,114 @@ find_empty_segs (PixelRegion  *maskPR,
   if (tile)
     tile_unref (tile, FALSE);
 }
+#endif
 
+static void
+find_empty_segs (PixelArea  *maskPR,
+		 int           scanline,
+		 int           empty_segs[],
+		 int           max_empty,
+		 int          *num_empty,
+		 BoundaryType  type,
+		 int           x1,
+		 int           y1,
+		 int           x2,
+		 int           y2)
+{
+  guchar *data;
+  guint8 *d;
+  int x;
+  int start, end;
+  int val, last;
+  gint width;
+  gint chan;
+  gint mask_x, mask_y, mask_w, mask_h;
+  PixelArea area;
+  Tag tag = pixelarea_tag (maskPR);
+  gint num_channels = tag_num_channels (tag);
+  void *pag;
+ 
+  /* These are the values before being portion-ized? */
+  mask_x = pixelarea_x (maskPR);
+  mask_y = pixelarea_y (maskPR);
+  mask_w = pixelarea_width (maskPR);
+  mask_h = pixelarea_height (maskPR);
+
+  start = 0;
+  end   = 0;
+
+  *num_empty = 0;
+
+  if (scanline < mask_y  || scanline >= mask_y + mask_h)
+    {
+      empty_segs[(*num_empty)++] = 0;
+      empty_segs[(*num_empty)++] = G_MAXINT;
+      return;
+    }
+
+  if (type == WithinBounds)
+    {
+      if (scanline < y1 || scanline >= y2)
+	{
+	  empty_segs[(*num_empty)++] = 0;
+	  empty_segs[(*num_empty)++] = G_MAXINT;
+	  return;
+	}
+
+      start = x1;
+      end = x2;
+    }
+  else if (type == IgnoreBounds)
+    {
+      start = mask_x;
+      end = mask_x + mask_w;
+      if (scanline < y1 || scanline >= y2)
+	x2 = -1;
+    }
+
+  /*get pixelarea for scanline from start to end */
+  pixelarea_init (&area, maskPR->canvas, NULL, start, scanline, end, 1, FALSE);  
+
+  empty_segs[(*num_empty)++] = 0;
+  last = -1;
+  x = start; 
+
+  /*If format has an alpha, chan is set to that, 
+    else its just the gray channel*/
+   
+  chan = num_channels - 1;
+  
+  for (pag = pixelarea_register (1, &area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      data = pixelarea_data (&area);
+      d = (guint8*)data;
+      width = pixelarea_width (&area);
+      while( width --)
+      {
+	empty_segs[*num_empty] = x;
+	val = (d[chan] > HALF_WAY)? 1: -1;  	
+
+	/*  The IgnoreBounds case  */
+	if (val == 1 && type == IgnoreBounds)
+	  if (x >= x1 && x < x2)
+	    val = -1;
+
+	if (last * val < 0)
+	  (*num_empty)++;
+	last = val;
+
+	d += num_channels;
+        x++;
+      } 	  
+    }
+  
+  if (last > 0)
+    empty_segs[(*num_empty)++] = x;
+
+  empty_segs[(*num_empty)++] = G_MAXINT;
+}
 
 static void
 make_seg (int x1,
@@ -340,7 +452,7 @@ generate_boundary (BoundaryType type,
     }
 }
 
-
+#if 0
 BoundSeg *
 find_mask_boundary (PixelRegion  *maskPR,
 		    int          *num_elems,
@@ -374,7 +486,39 @@ find_mask_boundary (PixelRegion  *maskPR,
   /*  Return the new boundary  */
   return new_segs;
 }
+#endif
+BoundSeg *
+find_mask_boundary (PixelArea  *maskPR,
+		    int          *num_elems,
+		    BoundaryType  type,
+		    int           x1,
+		    int           y1,
+		    int           x2,
+		    int           y2)
+{
+  BoundSeg * new_segs = NULL;
+  /*  The mask paramater can be any PixelRegion.  If the region
+   *  has more than 1 bytes/pixel, the last byte of each pixel is
+   *  used to determine the boundary outline.
+   */
+  cur_PR = maskPR;
 
+  /*  Calculate the boundary  */
+  generate_boundary (type, x1, y1, x2, y2);
+
+  /*  Set the number of X segments  */
+  *num_elems = num_segs;
+
+  /*  Make a copy of the boundary  */
+  if (num_segs)
+    {
+      new_segs = (BoundSeg *) g_malloc (sizeof (BoundSeg) * num_segs);
+      memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
+    }
+
+  /*  Return the new boundary  */
+  return new_segs;
+}
 
 /************************/
 /*  Sorting a Boundary  */

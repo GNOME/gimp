@@ -750,11 +750,12 @@ gimp_drawable_configure_tag (GimpDrawable *drawable,
   
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
-  drawable->tiles = tile_manager_new (width, height, tag_bytes (drawable->tag));
+  /*drawable->tiles = tile_manager_new (width, height, tag_bytes (drawable->tag));*/
+  drawable->tiles = NULL;
   
   if (drawable->canvas)
     canvas_delete (drawable->canvas);
-  drawable->canvas = canvas_new (drawable->tag, width, height, STORAGE_TILED);
+  drawable->canvas = canvas_new (drawable->tag, width, height, STORAGE_FLAT);
 
   drawable->dirty = FALSE;
   drawable->visible = TRUE;

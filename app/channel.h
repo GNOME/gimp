@@ -22,8 +22,10 @@
 
 #include "boundary.h"
 #include "temp_buf.h"
+#include "tag.h"
 #include "tile_manager.h"
 
+struct _Canvas;
 /* OPERATIONS */
 
 #define ADD       0
@@ -65,6 +67,7 @@ typedef struct _mask_undo MaskUndo;
 struct _mask_undo
 {
   TileManager * tiles; /*  the actual mask  */
+  struct _Canvas * canvas; /*  the actual mask  */
   int x, y;            /*  offsets          */
 };
 
@@ -72,6 +75,7 @@ struct _mask_undo
 /* function declarations */
 
 Channel *       channel_new (int, int, int, char *, int, unsigned char *);
+Channel *       channel_new_tag (int, int, int, Tag, char *, int, unsigned char *);
 Channel *       channel_copy (Channel *);
 Channel *	channel_ref (Channel *);
 void   		channel_unref (Channel *);
@@ -92,6 +96,7 @@ void            channel_invalidate_previews (int);
 /* selection mask functions  */
 
 Channel *       channel_new_mask        (int, int, int);
+Channel *       channel_new_mask_tag    (int, int, int, Tag);
 int             channel_boundary        (Channel *, BoundSeg **, BoundSeg **,
 					 int *, int *, int, int, int, int);
 int             channel_bounds          (Channel *, int *, int *, int *, int *);

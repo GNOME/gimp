@@ -25,6 +25,7 @@
 #include "temp_buf.h"
 #include "tile_manager.h"
 
+struct _Canvas;
 #define APPLY   0
 #define DISCARD 1
 
@@ -101,6 +102,7 @@ Layer *		layer_ref (Layer *);
 void   		layer_unref (Layer *);
 
 Layer *         layer_from_tiles (void *, GimpDrawable *, TileManager *, char *, int, int);
+Layer *         layer_from_canvas (void *, GimpDrawable *, struct _Canvas *, char *, int, int);
 LayerMask *     layer_add_mask (Layer *, LayerMask *);
 LayerMask *     layer_create_mask (Layer *, AddMaskType);
 Layer *         layer_get_ID (int);
@@ -116,6 +118,8 @@ int             layer_pick_correlate (Layer *, int, int);
 
 LayerMask *     layer_mask_new	(int, int, int, char *, 
 				 int, unsigned char *);
+LayerMask *     layer_mask_new_tag(int, int, int, Tag, 
+				 char *, int, unsigned char *);
 LayerMask *	layer_mask_copy	(LayerMask *);
 void		layer_mask_delete	(LayerMask *);
 LayerMask *	layer_mask_get_ID    (int);

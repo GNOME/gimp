@@ -30,7 +30,7 @@ static int success;
 static Argument *return_args;
 
 extern TileManager *global_buf;
-
+extern struct _Canvas *global_buf_canvas;
 
 /**************/
 /*  EDIT_CUT  */
@@ -60,7 +60,7 @@ edit_cut_invoker (Argument *args)
     }
   /*  create the new image  */
   if (success)
-    success = (edit_cut (gimage, drawable) != NULL);
+    success = (edit_cut_16 (gimage, drawable) != NULL);
 
   return procedural_db_return_args (&edit_cut_proc, success);
 }
@@ -130,7 +130,7 @@ edit_copy_invoker (Argument *args)
 
   /*  create the new image  */
   if (success)
-    success = (edit_copy (gimage, drawable) != NULL);
+    success = (edit_copy_16 (gimage, drawable) != NULL);
 
   return procedural_db_return_args (&edit_copy_proc, success);
 }
@@ -206,7 +206,7 @@ edit_paste_invoker (Argument *args)
 
   /*  create the new image  */
   if (success)
-    success = edit_paste (gimage, drawable, global_buf, paste_into);
+    success = edit_paste_16 (gimage, drawable, global_buf_canvas, paste_into);
 
   return_args = procedural_db_return_args (&edit_paste_proc, success);
 

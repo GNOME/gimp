@@ -22,6 +22,7 @@
 
 #include "boundary.h"
 #include "drawable.h"
+#include "canvas.h" 
 #include "channel.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
@@ -48,6 +49,7 @@ struct _GimpLayer
   struct
   {
     TileManager *backing_store; /*  for obscured regions         */
+    Canvas *backing_store_canvas; /*  for obscured regions         */
     GimpDrawable *drawable;     /*  floating sel is attached to  */
     int initial;                /*  is fs composited yet?        */
 

@@ -26,6 +26,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "image_map.h"
+#include "paint_funcs_area.h"
 #include "pixelarea.h"
 
 #define WAITING 0

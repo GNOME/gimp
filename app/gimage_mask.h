@@ -21,6 +21,8 @@
 #include "boundary.h"
 #include "gimage.h"
 
+struct _Canvas;
+
 /*  mask functions  */
 int             gimage_mask_boundary      (GImage *, BoundSeg **, BoundSeg **, int *, int *);
 int             gimage_mask_bounds        (GImage *, int *, int *, int *, int *);
@@ -29,6 +31,7 @@ int             gimage_mask_value         (GImage *, int, int);
 int             gimage_mask_is_empty      (GImage *);
 void            gimage_mask_translate     (GImage *, int, int);
 TileManager *   gimage_mask_extract       (GImage *, GimpDrawable *, int, int);
+struct _Canvas      *   gimage_mask_extract_canvas(GImage *, GimpDrawable *, int, int);
 Layer *         gimage_mask_float         (GImage *, GimpDrawable *, int, int);
 void            gimage_mask_clear         (GImage *);
 void            gimage_mask_undo          (GImage *);

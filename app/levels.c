@@ -2557,4 +2557,5 @@ levels_invoker (Argument *args)
 
   return procedural_db_return_args (&levels_proc, success);
 #endif
+  return NULL;
 }

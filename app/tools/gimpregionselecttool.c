@@ -439,6 +439,7 @@ fuzzy_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 static GdkSegment *
 fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 {
+#if 0
   PixelRegion maskPR;
   FuzzySelect *fuzzy_sel;
   GDisplay *gdisp;
@@ -488,6 +489,8 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   g_free (bsegs);
 
   return segs;
+#endif
+  return NULL;
 }
 
 static void

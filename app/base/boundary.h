@@ -21,6 +21,7 @@
 #include "paint_funcs.h"
 
 typedef struct _BoundSeg BoundSeg;
+struct _PixelArea;
 
 struct _BoundSeg
 {
@@ -37,7 +38,8 @@ typedef enum
 } BoundaryType;
 
 
-BoundSeg *  find_mask_boundary (PixelRegion *, int *, BoundaryType, int, int, int, int);
+
+BoundSeg *  find_mask_boundary (struct _PixelArea *, int *, BoundaryType, int, int, int, int);
 BoundSeg *  sort_boundary (BoundSeg *, int, int *);
 
 #endif  /*  __BOUNDARY_H__  */
