@@ -1,3 +1,10 @@
+2005-01-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/jpeg.c: applied (a slightly modified version of)
+	a patch from Nils Philippsen that makes sure that the EXIF
+	thumbnail doesn't cause the EXIF data block exceed its maximum
+	size.  Fixes bug #164087.
+
 2005-01-18  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
