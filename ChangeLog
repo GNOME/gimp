@@ -1,3 +1,13 @@
+2003-01-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/plugin-def.pl
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/.cvsignore: Added PSD save support (alpha) to
+	devel branch, from a plug-in written by Monignotes (?). This 
+	should be integrated into the main PSD plug-in before 1.4 - or 
+	should at least use the same PsdImage structure.
+
 2003-01-11  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am: reverted my latest change since it broke
