@@ -33,6 +33,8 @@
       <menuitem action="file-quit" />
     </menu>
 
+<!-- Context
+
     <menu action="context-menu" name="Context">
       <menu action="context-colors-menu" name="Colors">
         <menuitem action="context-colors-default" />
@@ -104,6 +106,8 @@
         <menuitem action="context-font-select-next" />
       </menu>
     </menu>
+
+ -->
 
     <menu action="edit-menu" name="Edit">
       <placeholder name="Undo">

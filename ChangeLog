@@ -1,5 +1,10 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: commented out "Context" menu now that
+	we have a shortcut editor.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpgradient-load.c: don't leak empty SVG gradients.
 
 2004-07-27  Sven Neumann  <sven@gimp.org>
