@@ -1,3 +1,21 @@
+2002-06-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/fractaltrace.c (dialog_show): enable mnemonics
+
+	* plug-ins/common/blur.c (blur_prepare_row): function caused a 
+	"assertion `y >= 0 && y < pr->drawable->height' failed" in 
+	gimp_pixel_rgn_get_row.
+	
+2002-06-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/Makefile.am (EXTRA_DIST): removed *.xpm files for
+	which we now use GTK stock icons
+	* plug-ins/imagemap/open.xpm
+	* plug-ins/imagemap/save.xpm
+	* plug-ins/imagemap/zoom_in.xpm
+	* plug-ins/imagemap/zoom_out.xpm: removed these pixmaps since we now
+	use stock icons for those.
+
 2002-06-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/align_layers.c (align_layers_dialog): enable 

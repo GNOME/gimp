@@ -771,13 +771,13 @@ dialog_show (void)
 				 &parameters.outside_type,
 				 (gpointer) parameters.outside_type,
 
-				 _("Warp"),
+				 _("_Warp"),
 				 (gpointer) OUTSIDE_TYPE_WRAP, NULL,
-				 _("Transparent"),
+				 _("_Transparent"),
 				 (gpointer) OUTSIDE_TYPE_TRANSPARENT, NULL,
-				 _("Black"),
+				 _("_Black"),
 				 (gpointer) OUTSIDE_TYPE_BLACK, NULL,
-				 _("White"),
+				 _("_White"),
 				 (gpointer) OUTSIDE_TYPE_WHITE, NULL,
 
 				 NULL);
@@ -796,7 +796,7 @@ dialog_show (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("X1:"), 0, 0,
+			      _("X_1:"), 0, 0,
 			      parameters.x1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -805,7 +805,7 @@ dialog_show (void)
                     &parameters.x1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("X2:"), 0, 0,
+			      _("X_2:"), 0, 0,
 			      parameters.x2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -814,7 +814,7 @@ dialog_show (void)
                     &parameters.x2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Y1:"), 0, 0,
+			      _("Y_1:"), 0, 0,
 			      parameters.y1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -823,7 +823,7 @@ dialog_show (void)
                     &parameters.y1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Y2:"), 0, 0,
+			      _("Y_2:"), 0, 0,
 			      parameters.y2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -832,7 +832,7 @@ dialog_show (void)
                     &parameters.y2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Depth:"), 0, 0,
+			      _("_Depth:"), 0, 0,
 			      parameters.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -235,7 +235,6 @@ run (gchar   *name,
   GimpDrawable *drawable;
   GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
-  gchar prog_label[32];
   static GimpParam values[1];
 
   INIT_I18N_UI();
@@ -321,8 +320,7 @@ run (gchar   *name,
 	  /*
 	   *  JUST DO IT!
 	   */
-	  strcpy (prog_label, BLUR_VERSION);
-	  gimp_progress_init (prog_label);
+	  gimp_progress_init (_("Blurring..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
 	  /*
 	   *  Initialize the rand() function seed
@@ -377,24 +375,15 @@ run (gchar   *name,
 static inline void
 blur_prepare_row (GimpPixelRgn *pixel_rgn, 
 		  guchar    *data, 
-		  int        x, 
-		  int        y, 
-		  int        w)
+		  gint       x, 
+		  gint       y, 
+		  gint       w)
 {
   int b;
 
-  if (y == 0)
-    {
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y + 1), w);
-    }
-  else if (y == pixel_rgn->h)
-    {
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y - 1), w);
-    }
-  else
-    {
-      gimp_pixel_rgn_get_row(pixel_rgn, data, x, y, w);
-    }
+  y = CLAMP (y, 1, pixel_rgn->h - 1);
+  gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
+
   /*
    *  Fill in edge pixels
    */
@@ -426,8 +415,8 @@ blur (GimpDrawable *drawable)
   guchar *tmp;
   gint row, col;
   gint x1, y1, x2, y2;
-  gint cnt;
-  gint has_alpha, ind;
+  gint cnt, ind;
+  gboolean has_alpha;
 
   /*
    *  Get the input area. This is the bounding box of the selection in
@@ -489,7 +478,7 @@ blur (GimpDrawable *drawable)
 	      if (((rand() % 100)) <= (gint) pivals.blur_pct)
 		{
 		  ind++;
-		  if (ind==bytes || !(has_alpha))
+		  if (ind == bytes || !has_alpha)
 		    {
 		      /*
 		       *  If no alpha channel,
