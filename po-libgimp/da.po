@@ -1,17 +1,17 @@
-# Translation of the GIMP lib-gimp.
-# Copyright (C) 1999, 2000, 01, 02 Free Software Foundation, Inc.
+# Danish translation of the libgimp.
+# Copyright (C) 1999, 2000, 01, 02, 03 Free Software Foundation, Inc.
 # Kenneth Christiansen <kenneth@ripen.dk>, 1999.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
-# Ole Laursen <olau@hardworking.dk>, 2001, 02.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02, 03.
 #
 # Se ../po/da.po for en konventionsliste for hele Gimp'en.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
-"PO-Revision-Date: 2002-12-27 16:49+0100\n"
+"POT-Creation-Date: 2003-01-08 16:16+0100\n"
+"PO-Revision-Date: 2003-01-08 16:15+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -19,20 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-msgid "can't handle layers"
-msgstr "kan ikke håndtere lag"
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s kan ikke håndtere lag"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "Forén synlige lag"
 
 #: libgimp/gimpexport.c:179
-msgid "can't handle layer offsets, size or opacity"
-msgstr "kan ikke håndtere lagafsæt, -størrelse eller -uigennemsigtighed"
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s kan ikke håndtere lagafsæt, -størrelse eller -uigennemsigtighed"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-msgid "can only handle layers as animation frames"
-msgstr "kan kun håndtere lag som animationsbilleder"
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s kan kun håndtere lag som animationsbilleder"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -43,28 +46,32 @@ msgid "Flatten Image"
 msgstr "Fladgør billede"
 
 #: libgimp/gimpexport.c:215
-msgid "can't handle transparency"
-msgstr "kan ikke håndtere gennemsigtighed"
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s kan ikke håndtere gennemsigtighed"
 
 #: libgimp/gimpexport.c:224
-msgid "can only handle RGB images"
-msgstr "kan kun håndtere RGB-billeder"
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s kan kun håndtere RGB-billeder"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "Omdan til RGB"
 
 #: libgimp/gimpexport.c:233
-msgid "can only handle grayscale images"
-msgstr "kan kun håndtere gråtonebilleder"
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s kan kun håndtere gråtonebilleder"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "Omdan til gråtoner"
 
 #: libgimp/gimpexport.c:242
-msgid "can only handle indexed images"
-msgstr "kan kun håndtere indekserede billeder"
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s kan kun håndtere indekserede billeder"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
@@ -75,20 +82,24 @@ msgstr ""
 "(gør det manuelt for at finindstille resultatet)"
 
 #: libgimp/gimpexport.c:252
-msgid "can only handle RGB or grayscale images"
-msgstr "kan kun håndtere RGB- eller gråtonebilleder"
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s kan kun håndtere RGB- eller gråtonebilleder"
 
 #: libgimp/gimpexport.c:261
-msgid "can only handle RGB or indexed images"
-msgstr "kan kun håndtere RGB- eller indekserede billeder"
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s kan kun håndtere RGB- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:271
-msgid "can only handle grayscale or indexed images"
-msgstr "kan kun håndtere gråtone- eller indekserede billeder"
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s kan kun håndtere gråtone- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:282
-msgid "needs an alpha channel"
-msgstr "kræver en alfakanel"
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s kræver en alfakanel"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
@@ -99,26 +110,17 @@ msgstr "Tilføj alfakanel"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:357
 msgid "Confirm Save"
 msgstr "Bekræft gemning"
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:361
 msgid "Confirm"
 msgstr "Bekræft"
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:363
 msgid "Cancel"
 msgstr "Annullér"
-
-#: libgimp/gimpexport.c:376
-#, c-format
-msgid ""
-"You are about to save %s as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Du er ved at gemme %s som %s.\n"
-"Dette vil ikke gemme de synlige lag."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -144,17 +146,27 @@ msgid ""
 msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
 
 #. the footline
-#: libgimp/gimpexport.c:527
+#: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre det oprindelige billede."
 
 #: libgimp/gimpexport.c:595
-msgid "a layer mask"
-msgstr "en lagmaske"
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er ved at gemme en lagmaske som %s.\n"
+"Dette vil ikke gemme de synlige lag."
 
-#: libgimp/gimpexport.c:597
-msgid "a channel (saved selection)"
-msgstr "en kanal (gemt markering)"
+#: libgimp/gimpexport.c:600
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er ved at gemme en kanal (gemt markering) som %s.\n"
+"Dette vil ikke gemme de synlige lag."
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
@@ -171,8 +183,8 @@ msgid "Loading module: '%s'\n"
 msgstr "Indlæser modul: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -181,24 +193,24 @@ msgstr ""
 "Indlæsningsfejl for modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Springer over modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
 msgstr "Modulfejl"
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
 msgstr "Indlæst"
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
 msgstr "Indlæsning mislykkedes"
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Ikke indlæst"
 
@@ -294,6 +306,18 @@ msgstr "Vælg mappe"
 msgid "Select File"
 msgstr "Vælg fil"
 
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "KiloBytes"
+msgstr "Kilobyte"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "MegaBytes"
+msgstr "Megabyte"
+
+#: libgimpwidgets/gimpmemsizeentry.c:188
+msgid "GigaBytes"
+msgstr "Gigabyte"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -370,19 +394,19 @@ msgstr "T_rapezér"
 msgid "More..."
 msgstr "Flere..."
 
-#: libgimpwidgets/gimpunitmenu.c:526
+#: libgimpwidgets/gimpunitmenu.c:525
 msgid "Unit Selection"
 msgstr "Enhedsvalg"
 
-#: libgimpwidgets/gimpunitmenu.c:571
+#: libgimpwidgets/gimpunitmenu.c:570
 msgid "Unit"
 msgstr "Enhed"
 
-#: libgimpwidgets/gimpunitmenu.c:575
+#: libgimpwidgets/gimpunitmenu.c:574
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:960
+#: libgimpwidgets/gimpwidgets.c:984
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -390,97 +414,90 @@ msgstr ""
 "Benyt denne værdi som startværdi til generatoren af tilfældige tal - dette "
 "tillader dig at gentage en given \"tilfældig\" handling"
 
-#: libgimpwidgets/gimpwidgets.c:964
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr "_Tilfældiggør"
 
-#: libgimpwidgets/gimpwidgets.c:975
+#: libgimpwidgets/gimpwidgets.c:999
 msgid "Seed random number generator with a generated random number"
 msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
 
-#: libgimpwidgets/gimpwidgets.c:1289
-msgid "Bytes"
-msgstr "Byte"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
-msgstr "Kilobyte"
-
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr "Megabyte"
-
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "GigaBytes"
-msgstr "Gigabyte"
-
-#: modules/cdisplay_colorblind.c:100
+#: modules/cdisplay_colorblind.c:101
 msgid "Colorblind display filter"
 msgstr "Farveblindt visningsfilter"
 
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:167
 msgid "Color Deficient Vision"
 msgstr "Farveblindt syn"
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:327
 msgid "Color Deficiency Type:"
 msgstr "Farveblindhedstype:"
 
-#: modules/cdisplay_colorblind.c:336
+#: modules/cdisplay_colorblind.c:337
 msgid "Protonopia (insensitivity to red)"
 msgstr "Protonopia (kan ikke se rød)"
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:341
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Protonopia (kan ikke se grøn)"
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:345
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Protonopia (kan ikke se blå)"
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Filter til gammafarvevisning"
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Filter til højkontrastfarvevisning"
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
 msgstr "Kontrastcyklusser:"
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Trekantet farvevælger"
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:182
 msgid "_Triangle"
 msgstr "_Trekant"
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Vandfarve-farvevælger"
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 msgid "_Watercolor"
 msgstr "_Vandfarve"
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryk"
+
+#~ msgid "a layer mask"
+#~ msgstr "en lagmaske"
+
+#~ msgid "a channel (saved selection)"
+#~ msgstr "en kanal (gemt markering)"
+
+#~ msgid "Bytes"
+#~ msgstr "Byte"
 
 #~ msgid "_Time"
 #~ msgstr "_Tid"
