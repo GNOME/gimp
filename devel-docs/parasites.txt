@@ -37,6 +37,12 @@ Global data follows no strict rules.
         human-readable text in UTF-8 encoding.  A trailing \0 might
         be included and is not part of the comment.
 
+"gimp-brush-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a GIMP brush.
+        Currently, the gbr plug-in uses this parasite when loading and
+        saving .gbr files. A trailing \0 might be included and is not
+        part of the name.
+
 "gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
 	This is all very preliminary:
 
@@ -81,6 +87,12 @@ Global data follows no strict rules.
         to keep the XCF files backwards compatible. Although gimp-1.2
         does not know how to handle the image grid, it keeps the grid
         information intact.
+
+"gimp-pattern-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a GIMP pattern.
+        Currently, the pat plug-in uses this parasite when loading and
+        saving .pat files. A trailing \0 might be included and is not
+        part of the name.
 
 "gimp-text-layer" (LAYER, PERSISTENT)
         The associated GimpText object serialized to a string. For

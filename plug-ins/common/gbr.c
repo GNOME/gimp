@@ -50,39 +50,30 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Declare local data types
- */
-
 typedef struct
 {
   gchar description[256];
   gint  spacing;
-} t_info;
-
-t_info info =
-{   /* Initialize to this, change if non-interactive later */
-  "GIMP Brush",
-  10
-};
+} BrushInfo;
 
 
-/* Declare some local functions.
- */
-static void   query          (void);
-static void   run            (const gchar      *name,
-			      gint              nparams,
-			      const GimpParam  *param,
-			      gint             *nreturn_vals,
-			      GimpParam       **return_vals);
+/*  local function prototypes  */
 
-static gint32 load_image     (const gchar      *filename);
-static gint   save_image     (const gchar      *filename,
-			      gint32            image_ID,
-			      gint32            drawable_ID);
+static void       query          (void);
+static void       run            (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static gint   save_dialog    (void);
-static void   entry_callback (GtkWidget  *widget,
-			      gpointer    data);
+static gint32     load_image     (const gchar      *filename);
+static gboolean   save_image     (const gchar      *filename,
+                                  gint32            image_ID,
+                                  gint32            drawable_ID);
+
+static gboolean   save_dialog    (void);
+static void       entry_callback (GtkWidget        *widget,
+                                  gpointer          data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -91,6 +82,15 @@ GimpPlugInInfo PLUG_IN_INFO =
   NULL,  /* quit_proc  */
   query, /* query_proc */
   run,   /* run_proc   */
+};
+
+
+/*  private variables  */
+
+BrushInfo info =
+{
+  "GIMP Brush",
+  10
 };
 
 
@@ -196,10 +196,14 @@ run (const gchar      *name,
     }
   else if (strcmp (name, "file_gbr_save") == 0)
     {
+      GimpParasite *parasite;
+      gint32        orig_image_ID;
+
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */
+      orig_image_ID = image_ID;
+
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
@@ -214,23 +218,34 @@ run (const gchar      *name,
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
+
+	  /*  Possibly retrieve data  */
+	  gimp_get_data ("file_gbr_save", &info);
 	  break;
+
 	default:
 	  break;
 	}
 
+      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-brush-name");
+      if (parasite)
+        {
+          gchar *name = g_strndup (gimp_parasite_data (parasite),
+                                   gimp_parasite_data_size (parasite));
+          gimp_parasite_free (parasite);
+
+          strncpy (info.description, name, sizeof (info.description));
+          info.description[sizeof (info.description) - 1] = '\0';
+        }
+
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  strncpy (info.description, gimp_drawable_get_name (drawable_ID), 256);
-	  gimp_get_data ("file_gbr_save", &info);
 	  if (! save_dialog ())
 	    status = GIMP_PDB_CANCEL;
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
-	  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
 	  if (nparams != 7)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
@@ -238,12 +253,13 @@ run (const gchar      *name,
 	  else
 	    {
 	      info.spacing = (param[5].data.d_int32);
-	      strncpy (info.description, param[6].data.d_string, 256);
+	      strncpy (info.description, param[6].data.d_string,
+                       sizeof (info.description));
+              info.description[sizeof (info.description) - 1] = '\0';
 	    }
 	  break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_gbr_save", &info);
+	default:
 	  break;
 	}
 
@@ -251,7 +267,7 @@ run (const gchar      *name,
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
-	      gimp_set_data ("file_gbr_save", &info, sizeof(info));
+	      gimp_set_data ("file_gbr_save", &info, sizeof (info));
 	    }
 	  else
 	    {
@@ -261,6 +277,18 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
+
+      if (info.description && strlen (info.description))
+        {
+          gimp_image_attach_new_parasite (orig_image_ID, "gimp-brush-name",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          strlen (info.description) + 1,
+                                          info.description);
+        }
+      else
+        {
+          gimp_image_parasite_detach (orig_image_ID, "gimp-brush-name");
+        }
     }
   else
     {
@@ -274,7 +302,7 @@ static gint32
 load_image (const gchar *filename)
 {
   gchar             *temp;
-  gchar             *name = NULL;
+  gchar             *name;
   gint               fd;
   BrushHeader        bh;
   guchar            *brush_buf = NULL;
@@ -301,7 +329,7 @@ load_image (const gchar *filename)
   gimp_progress_init (temp);
   g_free (temp);
 
-  if (read (fd, &bh, sizeof (bh)) != sizeof (bh))
+  if (read (fd, &bh, sizeof (BrushHeader)) != sizeof (BrushHeader))
     {
       close (fd);
       return -1;
@@ -340,7 +368,8 @@ load_image (const gchar *filename)
       /*  fallthrough  */
 
     case 2:
-      if (bh.magic_number == GBRUSH_MAGIC && bh.header_size > sizeof (bh))
+      if (bh.magic_number == GBRUSH_MAGIC &&
+          bh.header_size  >  sizeof (BrushHeader))
         break;
 
     default:
@@ -349,17 +378,23 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  if ((bn_size = (bh.header_size - sizeof (bh))) > 0)
+  if ((bn_size = (bh.header_size - sizeof (BrushHeader))) > 0)
     {
-      name = g_new (gchar, bn_size);
-      if ((read (fd, name, bn_size)) < bn_size)
+      temp = g_new (gchar, bn_size);
+
+      if ((read (fd, temp, bn_size)) < bn_size)
 	{
 	  g_message (_("Error in GIMP brush file '%s'"),
                      gimp_filename_to_utf8 (filename));
 	  close (fd);
-	  g_free (name);
+	  g_free (temp);
 	  return -1;
 	}
+
+      name = gimp_any_to_utf8 (temp, -1,
+                               _("Invalid UTF-8 string in brush file '%s'."),
+                               gimp_filename_to_utf8 (filename));
+      g_free (temp);
     }
   else
     {
@@ -379,7 +414,6 @@ load_image (const gchar *filename)
       return -1;
     }
 
-
   switch (bh.bytes)
     {
     case 1:
@@ -389,7 +423,7 @@ load_image (const gchar *filename)
         /*  For backwards-compatibility, check if a pattern follows.
             The obsolete .gpb format did it this way.  */
 
-        if (read (fd, &ph, sizeof(ph)) == sizeof(ph))
+        if (read (fd, &ph, sizeof (PatternHeader)) == sizeof(PatternHeader))
           {
             /*  rearrange the bytes in each unsigned int  */
             ph.header_size  = g_ntohl (ph.header_size);
@@ -399,13 +433,14 @@ load_image (const gchar *filename)
             ph.bytes        = g_ntohl (ph.bytes);
             ph.magic_number = g_ntohl (ph.magic_number);
 
-            if (ph.magic_number == GPATTERN_MAGIC &&
-                ph.version == 1                   &&
-                ph.header_size > sizeof (ph)      &&
-                ph.bytes   == 3                   &&
-                ph.width   == bh.width            &&
-                ph.height  == bh.height           &&
-                lseek (fd, ph.header_size - sizeof (ph), SEEK_CUR) > 0)
+            if (ph.magic_number == GPATTERN_MAGIC        &&
+                ph.version      == 1                     &&
+                ph.header_size  > sizeof (PatternHeader) &&
+                ph.bytes        == 3                     &&
+                ph.width        == bh.width              &&
+                ph.height       == bh.height             &&
+                lseek (fd, ph.header_size - sizeof (PatternHeader),
+                       SEEK_CUR) > 0)
               {
                 guchar *plain_brush = brush_buf;
                 gint    i;
@@ -488,8 +523,11 @@ load_image (const gchar *filename)
   image_ID = gimp_image_new (bh.width, bh.height, base_type);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, name,
-			     bh.width, bh.height,
+  gimp_image_attach_new_parasite (image_ID, "gimp-brush-name",
+                                  GIMP_PARASITE_PERSISTENT,
+                                  strlen (name) + 1, name);
+
+  layer_ID = gimp_layer_new (image_ID, name, bh.width, bh.height,
 			     image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -497,8 +535,8 @@ load_image (const gchar *filename)
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height,
-		       TRUE, FALSE);
+                       0, 0, drawable->width, drawable->height,
+                       TRUE, FALSE);
 
   gimp_pixel_rgn_set_rect (&pixel_rgn, brush_buf,
 			   0, 0, bh.width, bh.height);
@@ -515,7 +553,7 @@ load_image (const gchar *filename)
   return image_ID;
 }
 
-static gint
+static gboolean
 save_image (const gchar *filename,
 	    gint32       image_ID,
 	    gint32       drawable_ID)
@@ -551,11 +589,9 @@ save_image (const gchar *filename,
   g_free (temp);
 
   drawable = gimp_drawable_get (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-		       0, 0, drawable->width, drawable->height,
-		       FALSE, FALSE);
 
-  bh.header_size  = g_htonl (sizeof (bh) + strlen (info.description) + 1);
+  bh.header_size  = g_htonl (sizeof (BrushHeader) +
+                             strlen (info.description) + 1);
   bh.version      = g_htonl (2);
   bh.width        = g_htonl (drawable->width);
   bh.height       = g_htonl (drawable->height);
@@ -563,20 +599,25 @@ save_image (const gchar *filename,
   bh.magic_number = g_htonl (GBRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
-  if (write (fd, &bh, sizeof (bh)) != sizeof (bh))
+  if (write (fd, &bh, sizeof (BrushHeader)) != sizeof (BrushHeader))
     {
       close (fd);
       return FALSE;
     }
 
-  if (write (fd, info.description, strlen(info.description) + 1) !=
+  if (write (fd, info.description, strlen (info.description) + 1) !=
       strlen (info.description) + 1)
     {
-      close(fd);
+      close (fd);
       return FALSE;
     }
 
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height,
+		       FALSE, FALSE);
+
   buffer = g_malloc (drawable->width * drawable->bpp);
+
   for (line = 0; line < drawable->height; line++)
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
@@ -587,13 +628,14 @@ save_image (const gchar *filename,
 	    buffer[x] = 255 - buffer[x];
 	}
 
-      if (write (fd, buffer,
-		 drawable->width * drawable->bpp) != drawable->width * drawable->bpp)
+      if (write (fd, buffer, drawable->width * drawable->bpp) !=
+          drawable->width * drawable->bpp)
 	{
 	  g_free (buffer);
 	  close (fd);
 	  return FALSE;
 	}
+
       gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
     }
 
@@ -603,7 +645,7 @@ save_image (const gchar *filename,
   return TRUE;
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
@@ -664,5 +706,7 @@ static void
 entry_callback (GtkWidget *widget,
 		gpointer   data)
 {
-  strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
+  strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
+           sizeof (info.description));
+  info.description[sizeof (info.description) - 1] = '\0';
 }

@@ -22,6 +22,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "app/core/gimppattern-header.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -32,8 +34,6 @@
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif
-
-#include "app/core/gimppattern-header.h"
 
 
 /*  local function prototypes  */
@@ -62,9 +62,10 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+
 /*  private variables  */
 
-static gchar  description[256] = "GIMP Pattern";
+static gchar description[256] = "GIMP Pattern";
 
 
 MAIN ()
@@ -170,10 +171,14 @@ run (const gchar      *name,
     }
   else if (strcmp (name, "file_pat_save") == 0)
     {
+      GimpParasite *parasite;
+      gint32        orig_image_ID;
+
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */
+      orig_image_ID = image_ID;
+
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
@@ -188,33 +193,47 @@ run (const gchar      *name,
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
+
+	  /*  Possibly retrieve data  */
+	  gimp_get_data ("file_pat_save", description);
 	  break;
+
 	default:
 	  break;
 	}
 
+      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-pattern-name");
+      if (parasite)
+        {
+          gchar *name = g_strndup (gimp_parasite_data (parasite),
+                                   gimp_parasite_data_size (parasite));
+          gimp_parasite_free (parasite);
+
+          strncpy (description, name, sizeof (description));
+          description[sizeof (description) - 1] = '\0';
+        }
+
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_pat_save", description);
 	  if (!save_dialog ())
 	    status = GIMP_PDB_CANCEL;
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams != 6)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
 	  else
-	    {
-	      strcpy (description, param[5].data.d_string);
-	    }
+            {
+              strncpy (description, param[5].data.d_string,
+                       sizeof (description));
+              description[sizeof (description) - 1] = '\0';
+            }
 	  break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_pat_save", description);
+	default:
 	  break;
 	}
 
@@ -222,7 +241,7 @@ run (const gchar      *name,
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
-	      gimp_set_data ("file_pat_save", description, 256);
+	      gimp_set_data ("file_pat_save", description, sizeof (description));
 	    }
 	  else
 	    {
@@ -232,6 +251,18 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
+
+      if (description && strlen (description))
+        {
+          gimp_image_attach_new_parasite (orig_image_ID, "gimp-pattern-name",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          strlen (description) + 1,
+                                          description);
+        }
+      else
+        {
+          gimp_image_parasite_detach (orig_image_ID, "gimp-pattern-name");
+        }
     }
   else
     {
@@ -247,6 +278,7 @@ load_image (const gchar *filename)
   gchar            *temp;
   gint              fd;
   PatternHeader     ph;
+  gchar            *name;
   guchar           *buffer;
   gint32            image_ID;
   gint32            layer_ID;
@@ -292,11 +324,20 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  if (lseek (fd, ph.header_size - sizeof (PatternHeader), SEEK_CUR) != ph.header_size)
+  temp = g_new (gchar, ph.header_size - sizeof (PatternHeader));
+
+  if (read (fd, temp, ph.header_size - sizeof (PatternHeader)) !=
+      ph.header_size - sizeof (PatternHeader))
     {
+      g_free (temp);
       close (fd);
       return -1;
     }
+
+  name = gimp_any_to_utf8 (temp, -1,
+                           _("Invalid UTF-8 string in pattern file '%s'."),
+                           gimp_filename_to_utf8 (filename));
+  g_free (temp);
 
   /* Now there's just raw data left. */
 
@@ -331,14 +372,20 @@ load_image (const gchar *filename)
   image_ID = gimp_image_new (ph.width, ph.height, base_type);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
-			    image_type, 100, GIMP_NORMAL_MODE);
+  gimp_image_attach_new_parasite (image_ID, "gimp-pattern-name",
+                                  GIMP_PARASITE_PERSISTENT,
+                                  strlen (name) + 1, name);
+
+  layer_ID = gimp_layer_new (image_ID, name, ph.width, ph.height,
+                             image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
+  g_free (name);
+
   drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-		       drawable->width, drawable->height,
-		       TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+                       0, 0, drawable->width, drawable->height,
+                       TRUE, FALSE);
 
   buffer = g_malloc (ph.width * ph.bytes);
 
@@ -488,6 +535,7 @@ static void
 entry_callback (GtkWidget *widget,
 		gpointer   data)
 {
-  if (data == description)
-    strncpy (description, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
+  strncpy (description, gtk_entry_get_text (GTK_ENTRY (widget)),
+           sizeof (description));
+  description[sizeof (description) - 1] = '\0';
 }
