@@ -60,7 +60,7 @@ make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id,
 {
    GtkToolItem *item = gtk_tool_button_new_from_stock (stock_id);
    g_signal_connect (item, "clicked", G_CALLBACK (callback), udata);
-   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
+   return make_toolbar_icon (toolbar, item, identifier, tooltip,
 			     callback, udata);
 }
 
@@ -71,12 +71,17 @@ make_toolbar_radio_icon(GtkWidget *toolbar, const gchar *stock_id,
 			 void (*callback)(GtkWidget*, gpointer),
 			 gpointer udata)
 {
-   GtkToolItem *item = 
-     gtk_radio_tool_button_new_with_stock_from_widget 
-     (GTK_RADIO_TOOL_BUTTON (prev), stock_id);
-   g_signal_connect (item, "toggled", G_CALLBACK (callback), udata);
-   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
-			     callback, udata);
+  GtkToolItem *item;
+
+  if (prev)
+    item = gtk_radio_tool_button_new_with_stock_from_widget
+      (GTK_RADIO_TOOL_BUTTON (prev), stock_id);
+  else
+    item = gtk_radio_tool_button_new_from_stock (NULL, stock_id);
+
+  g_signal_connect (item, "toggled", G_CALLBACK (callback), udata);
+  return make_toolbar_icon (toolbar, item, identifier, tooltip,
+                            callback, udata);
 }
 
 GtkWidget*
@@ -87,7 +92,7 @@ make_toolbar_toggle_icon(GtkWidget *toolbar, const gchar *stock_id,
 {
    GtkToolItem *item = gtk_toggle_tool_button_new_from_stock (stock_id);
    g_signal_connect (item, "toggled", G_CALLBACK (callback), udata);
-   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
+   return make_toolbar_icon (toolbar, item, identifier, tooltip,
 			     callback, udata);
 }
 
