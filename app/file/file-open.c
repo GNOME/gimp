@@ -362,7 +362,7 @@ file_open_layer (Gimp               *gimp,
 
   new_image = file_open_image (gimp, context, progress,
                                uri, uri,
-                               NULL, GIMP_RUN_NONINTERACTIVE,
+                               NULL, GIMP_RUN_INTERACTIVE,
                                status, &mime_type, error);
 
   if (new_image)
