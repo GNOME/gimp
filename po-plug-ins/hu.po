@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:02+0200\n"
-"PO-Revision-Date: 2004-07-17 10:05+0200\n"
+"POT-Creation-Date: 2004-10-15 19:14+0200\n"
+"PO-Revision-Date: 2004-10-19 16:48+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -1226,15 +1226,14 @@ msgstr "\"%s\" nem érvényes BMP-fájl"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Hiba a BMP-fájlfejléc innen való beolvasásakor: \"%s\""
 
-#: plug-ins/bmp/bmpread.c:435
+#: plug-ins/bmp/bmpread.c:437 plug-ins/bmp/bmpread.c:472
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Ismeretlen vagy érvénytelen BMP-tömörítési formátum."
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
-#: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:477 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
