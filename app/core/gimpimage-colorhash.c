@@ -35,7 +35,7 @@ struct _ColorHash
 {
   gint       pixel;   /*  R << 16 | G << 8 | B  */
   gint       index;   /*  colormap index        */
-  GimpImage *gimage;     
+  GimpImage *gimage;
 };
 
 
@@ -51,7 +51,11 @@ gimp_image_color_hash_init (void)
 
   /*  initialize the color hash table--invalidate all entries  */
   for (i = 0; i < HASH_TABLE_SIZE; i++)
-    color_hash_table[i].gimage = NULL;
+    {
+      color_hash_table[i].pixel  = 0;
+      color_hash_table[i].index  = 0;
+      color_hash_table[i].gimage = NULL;
+    }
 
   color_hash_misses = 0;
   color_hash_hits   = 0;
@@ -60,36 +64,45 @@ gimp_image_color_hash_init (void)
 void
 gimp_image_color_hash_exit (void)
 {
-  /*  print out the hash table statistics
-      printf ("RGB->indexed hash table lookups: %d\n", color_hash_hits + color_hash_misses);
-      printf ("RGB->indexed hash table hits: %d\n", color_hash_hits);
-      printf ("RGB->indexed hash table misses: %d\n", color_hash_misses);
-      printf ("RGB->indexed hash table hit rate: %f\n",
-      100.0 * color_hash_hits / (color_hash_hits + color_hash_misses));
-      */
+#if 0
+  /*  print out the hash table statistics  */
+  g_print ("RGB->indexed hash table lookups: %d\n",
+           color_hash_hits + color_hash_misses);
+  g_print ("RGB->indexed hash table hits: %d\n", color_hash_hits);
+  g_print ("RGB->indexed hash table misses: %d\n", color_hash_misses);
+  g_print ("RGB->indexed hash table hit rate: %f\n",
+           100.0 * color_hash_hits / (color_hash_hits + color_hash_misses));
+#endif
 }
 
 void
-gimp_image_color_hash_invalidate (GimpImage* gimage,
+gimp_image_color_hash_invalidate (GimpImage *gimage,
 				  gint       index)
 {
   gint i;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   if (index == -1) /* invalidate all entries */
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
 	if (color_hash_table[i].gimage == gimage)
-	  color_hash_table[i].gimage = NULL;
+          {
+            color_hash_table[i].pixel  = 0;
+            color_hash_table[i].index  = 0;
+            color_hash_table[i].gimage = NULL;
+          }
     }
   else
     {
       for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].gimage == gimage && 
+	if (color_hash_table[i].gimage == gimage &&
 	    color_hash_table[i].index  == index)
-	  color_hash_table[i].gimage = NULL;      
+          {
+            color_hash_table[i].pixel  = 0;
+            color_hash_table[i].index  = 0;
+            color_hash_table[i].gimage = NULL;
+          }
     }
 }
 
@@ -111,7 +124,7 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
   hash_index = pixel % HASH_TABLE_SIZE;
 
   if (color_hash_table[hash_index].gimage == gimage &&
-      color_hash_table[hash_index].pixel == pixel)
+      color_hash_table[hash_index].pixel  == pixel)
     {
       /*  Hash table lookup hit  */
 
@@ -134,8 +147,10 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
 	{
 	  diff = r - *col++;
 	  sum  = diff * diff;
+
 	  diff = g - *col++;
 	  sum += diff * diff;
+
 	  diff = b - *col++;
 	  sum += diff * diff;
 

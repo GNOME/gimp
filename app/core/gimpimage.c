@@ -117,7 +117,7 @@ static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
 static void     gimp_image_real_mode_changed     (GimpImage      *gimage);
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
-						  gint            ncol);
+						  gint            color_index);
 static void     gimp_image_real_flush            (GimpImage      *gimage);
 
 static void     gimp_image_mask_update           (GimpDrawable   *drawable,
@@ -820,7 +820,7 @@ gimp_image_real_mode_changed (GimpImage *gimage)
 
 static void
 gimp_image_real_colormap_changed (GimpImage *gimage,
-				  gint       ncol)
+				  gint       color_index)
 {
   if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
@@ -828,7 +828,7 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
-      gimp_image_color_hash_invalidate (gimage, ncol);
+      gimp_image_color_hash_invalidate (gimage, color_index);
     }
 }
 
@@ -1418,13 +1418,13 @@ gimp_image_update_guide (GimpImage *gimage,
 
 void
 gimp_image_colormap_changed (GimpImage *gimage,
-			     gint       col)
+			     gint       color_index)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (col >= -1 && col < gimage->num_cols);
+  g_return_if_fail (color_index >= -1 && color_index < gimage->num_cols);
 
   g_signal_emit (gimage, gimp_image_signals[COLORMAP_CHANGED], 0,
-		 col);
+		 color_index);
 }
 
 void
@@ -1560,7 +1560,7 @@ gimp_image_dirty (GimpImage *gimage)
 
   g_signal_emit (gimage, gimp_image_signals[DIRTY], 0);
 
-  TRC (("dirty %d -> %d\n", gimage->dirty-1, gimage->dirty));
+  TRC (("dirty %d -> %d\n", gimage->dirty - 1, gimage->dirty));
 
   return gimage->dirty;
 }
@@ -1574,7 +1574,7 @@ gimp_image_clean (GimpImage *gimage)
 
   g_signal_emit (gimage, gimp_image_signals[CLEAN], 0);
 
-  TRC (("clean %d -> %d\n", gimage->dirty+1, gimage->dirty));
+  TRC (("clean %d -> %d\n", gimage->dirty + 1, gimage->dirty));
 
   return gimage->dirty;
 }
@@ -1928,7 +1928,7 @@ gimp_image_parasite_attach (GimpImage    *gimage,
      parasite differs from the current one and we aren't undoable */
   if (gimp_parasite_is_undoable (parasite))
     gimp_image_undo_push_image_parasite (gimage,
-                                         _("Attach Paraite to Image"),
+                                         _("Attach Parasite to Image"),
                                          parasite);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
@@ -1978,8 +1978,8 @@ gimp_image_get_new_tattoo (GimpImage *gimage)
   gimage->tattoo_state++;
 
   if (gimage->tattoo_state <= 0)
-    g_warning ("%s: Tattoo state corrupted "
-	       "(integer overflow).", G_GNUC_PRETTY_FUNCTION);
+    g_warning ("%s: Tattoo state corrupted (integer overflow).",
+               G_GNUC_PRETTY_FUNCTION);
 
   return gimage->tattoo_state;
 }
@@ -1996,10 +1996,9 @@ gboolean
 gimp_image_set_tattoo_state (GimpImage  *gimage,
 			     GimpTattoo  val)
 {
-  GList       *list;
-  gboolean     retval = TRUE;
-  GimpChannel *channel;
-  GimpTattoo   maxval = 0;
+  GList      *list;
+  gboolean    retval = TRUE;
+  GimpTattoo  maxval = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -2028,9 +2027,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
     {
       GimpTattoo ctattoo;
 
-      channel = (GimpChannel *) list->data;
-
-      ctattoo = gimp_item_get_tattoo (GIMP_ITEM (channel));
+      ctattoo = gimp_item_get_tattoo (GIMP_ITEM (list->data));
       if (ctattoo > maxval)
 	maxval = ctattoo;
 
@@ -2038,7 +2035,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
         retval = FALSE; /* Oopps duplicated tattoo in vectors */
     }
 
-  /* Find the max tatto value in the vectors */
+  /* Find the max tattoo value in the vectors */
   for (list = GIMP_LIST (gimage->vectors)->list;
        list;
        list = g_list_next (list))
@@ -2101,9 +2098,7 @@ gimp_image_active_drawable (const GimpImage *gimage)
     }
   else if (gimage->active_layer)
     {
-      GimpLayer *layer;
-
-      layer = gimage->active_layer;
+      GimpLayer *layer = gimage->active_layer;
 
       if (layer->mask && layer->mask->edit_mask)
 	return GIMP_DRAWABLE (layer->mask);
@@ -2194,7 +2189,8 @@ gimp_image_set_active_channel (GimpImage   *gimage,
    *  If it doesn't exist, find the first channel that does
    */
   if (! gimp_container_have (gimage->channels, GIMP_OBJECT (channel)))
-    channel = (GimpChannel *) gimp_container_get_child_by_index (gimage->channels, 0);
+    channel = (GimpChannel *)
+      gimp_container_get_child_by_index (gimage->channels, 0);
 
   if (channel != gimage->active_channel)
     {
@@ -2234,9 +2230,7 @@ gimp_image_unset_active_channel (GimpImage *gimage)
 
       if (gimage->layer_stack)
 	{
-	  GimpLayer *layer;
-
-	  layer = (GimpLayer *) gimage->layer_stack->data;
+	  GimpLayer *layer = gimage->layer_stack->data;
 
 	  gimp_image_set_active_layer (gimage, layer);
 	}
@@ -2301,7 +2295,7 @@ gimp_image_get_layer_index (const GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), -1);
 
   return gimp_container_get_child_index (gimage->layers,
-					 GIMP_OBJECT (layer));
+                                         GIMP_OBJECT (layer));
 }
 
 gint
@@ -2312,7 +2306,7 @@ gimp_image_get_channel_index (const GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), -1);
 
   return gimp_container_get_child_index (gimage->channels,
-					 GIMP_OBJECT (channel));
+                                         GIMP_OBJECT (channel));
 }
 
 gint
@@ -2323,15 +2317,14 @@ gimp_image_get_vectors_index (const GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), -1);
 
   return gimp_container_get_child_index (gimage->vectors,
-					 GIMP_OBJECT (vectors));
+                                         GIMP_OBJECT (vectors));
 }
 
 GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
 				GimpTattoo       tattoo)
 {
-  GimpLayer *layer;
-  GList     *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2339,10 +2332,10 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       if (gimp_item_get_tattoo (GIMP_ITEM (layer)) == tattoo)
-	return layer;
+        return layer;
     }
 
   return NULL;
@@ -2352,8 +2345,7 @@ GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
 				  GimpTattoo       tattoo)
 {
-  GimpChannel *channel;
-  GList       *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2361,10 +2353,10 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      channel = (GimpChannel *) list->data;
+      GimpChannel *channel = list->data;
 
       if (gimp_item_get_tattoo (GIMP_ITEM (channel)) == tattoo)
-	return channel;
+        return channel;
     }
 
   return NULL;
@@ -2374,8 +2366,7 @@ GimpVectors *
 gimp_image_get_vectors_by_tattoo (const GimpImage *gimage,
 				  GimpTattoo       tattoo)
 {
-  GimpVectors *vectors;
-  GList       *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2383,10 +2374,10 @@ gimp_image_get_vectors_by_tattoo (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      vectors = (GimpVectors *) list->data;
+      GimpVectors *vectors = list->data;
 
       if (gimp_item_get_tattoo (GIMP_ITEM (vectors)) == tattoo)
-	return vectors;
+        return vectors;
     }
 
   return NULL;
@@ -2572,22 +2563,27 @@ gboolean
 gimp_image_raise_layer (GimpImage *gimage,
 			GimpLayer *layer)
 {
-  gint curpos;
+  gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  curpos = gimp_container_get_child_index (gimage->layers,
-					   GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (gimage->layers,
+                                          GIMP_OBJECT (layer));
 
-  /* is this the top layer already? */
-  if (curpos == 0)
+  if (index == 0)
     {
       g_message (_("Layer cannot be raised higher."));
       return FALSE;
     }
 
-  return gimp_image_position_layer (gimage, layer, curpos - 1,
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      g_message (_("Cannot raise a layer without alpha."));
+      return FALSE;
+    }
+
+  return gimp_image_position_layer (gimage, layer, index - 1,
                                     TRUE, _("Raise Layer"));
 }
 
@@ -2595,24 +2591,21 @@ gboolean
 gimp_image_lower_layer (GimpImage *gimage,
 			GimpLayer *layer)
 {
-  gint curpos;
-  gint length;
+  gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  curpos = gimp_container_get_child_index (gimage->layers,
-					   GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (gimage->layers,
+                                          GIMP_OBJECT (layer));
 
-  /* is this the bottom layer already? */
-  length = gimp_container_num_children (gimage->layers);
-  if (curpos >= length - 1)
+  if (index == gimp_container_num_children (gimage->layers) - 1)
     {
       g_message (_("Layer cannot be lowered more."));
       return FALSE;
     }
 
-  return gimp_image_position_layer (gimage, layer, curpos + 1,
+  return gimp_image_position_layer (gimage, layer, index + 1,
                                     TRUE, _("Lower Layer"));
 }
 
@@ -2620,15 +2613,15 @@ gboolean
 gimp_image_raise_layer_to_top (GimpImage *gimage,
 			       GimpLayer *layer)
 {
-  gint curpos;
+  gint index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  curpos = gimp_container_get_child_index (gimage->layers,
-					   GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (gimage->layers,
+                                          GIMP_OBJECT (layer));
 
-  if (curpos == 0)
+  if (index == 0)
     {
       g_message (_("Layer is already on top."));
       return FALSE;
@@ -2648,18 +2641,18 @@ gboolean
 gimp_image_lower_layer_to_bottom (GimpImage *gimage,
 				  GimpLayer *layer)
 {
-  gint curpos;
+  gint index;
   gint length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  curpos = gimp_container_get_child_index (gimage->layers,
-					   GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (gimage->layers,
+                                          GIMP_OBJECT (layer));
 
   length = gimp_container_num_children (gimage->layers);
 
-  if (curpos >= length - 1)
+  if (index == length - 1)
     {
       g_message (_("Layer is already on the bottom."));
       return FALSE;
@@ -2689,11 +2682,7 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   num_layers = gimp_container_num_children (gimage->layers);
 
-  if (new_index < 0)
-    new_index = 0;
-
-  if (new_index >= num_layers)
-    new_index = num_layers - 1;
+  new_index = CLAMP (new_index, 0, num_layers - 1);
 
   if (new_index == index)
     return TRUE;
@@ -2849,6 +2838,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
 
   index = gimp_container_get_child_index (gimage->channels,
 					  GIMP_OBJECT (channel));
+
   if (index == 0)
     {
       g_message (_("Channel cannot be raised higher."));
@@ -2870,6 +2860,7 @@ gimp_image_lower_channel (GimpImage   *gimage,
 
   index = gimp_container_get_child_index (gimage->channels,
 					  GIMP_OBJECT (channel));
+
   if (index == gimp_container_num_children (gimage->channels) - 1)
     {
       g_message (_("Channel cannot be lowered more."));
@@ -3040,6 +3031,7 @@ gimp_image_raise_vectors (GimpImage   *gimage,
 
   index = gimp_container_get_child_index (gimage->vectors,
 					  GIMP_OBJECT (vectors));
+
   if (index == 0)
     {
       g_message (_("Path cannot be raised higher."));
@@ -3061,6 +3053,7 @@ gimp_image_lower_vectors (GimpImage   *gimage,
 
   index = gimp_container_get_child_index (gimage->vectors,
 					  GIMP_OBJECT (vectors));
+
   if (index == gimp_container_num_children (gimage->vectors) - 1)
     {
       g_message (_("Path cannot be lowered more."));
@@ -3139,8 +3132,7 @@ gimp_image_pick_correlate_layer (const GimpImage *gimage,
 				 gint             x,
 				 gint             y)
 {
-  GimpLayer *layer;
-  GList     *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3148,7 +3140,7 @@ gimp_image_pick_correlate_layer (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       if (gimp_layer_pick_correlate (layer, x, y))
 	return layer;

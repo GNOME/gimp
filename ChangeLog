@@ -1,5 +1,18 @@
 2004-01-14  Michael Natterer  <mitch@gimp.org>
 
+	Some code review:
+
+	* app/core/gimpimage.c: named the gint paramater in all
+	colormap_changed related functions to "color_index", fixed typo in
+	parasite undo description, moved some variables to local scopes,
+	changed the layer raise/lower functions to look like the channel
+	and vector ones, cosmetics.
+
+	* app/core/gimpimage-colorhash.c: removed trailing whitespace,
+	initialize / reset more stuff to 0, cosmetics.
+
+2004-01-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am: fix typo in the uninstall-local target for
 	gimp-console.
 
