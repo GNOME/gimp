@@ -41,13 +41,15 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpunit.h"
 
+#include "file/file-open.h"
+
 #include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
 
-#include "gui/file-open-dialog.h"
 #include "gui/gui.h"
 #include "gui/splash.h"
+#include "gui/user-install-dialog.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -57,7 +59,6 @@
 #include "gimprc.h"
 #include "plug_in.h"
 #include "undo.h"
-#include "user_install.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"

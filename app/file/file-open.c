@@ -39,6 +39,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpdocuments.h"
 
 #include "file-open.h"
 #include "file-utils.h"
@@ -137,6 +138,55 @@ file_open_image (Gimp              *gimp,
     }
 
   return NULL;
+}
+
+GimpPDBStatusType
+file_open_with_display (Gimp        *gimp,
+                        const gchar *filename)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
+
+  return file_open_with_proc_and_display (gimp, filename, filename, NULL);
+}
+
+GimpPDBStatusType
+file_open_with_proc_and_display (Gimp          *gimp,
+                                 const gchar   *filename,
+                                 const gchar   *raw_filename,
+                                 PlugInProcDef *file_proc)
+{
+  GimpImage         *gimage;
+  gchar             *absolute;
+  GimpPDBStatusType  status;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
+
+  if ((gimage = file_open_image (gimp,
+				 filename,
+				 raw_filename,
+				 _("Open"),
+				 file_proc,
+				 RUN_INTERACTIVE,
+				 &status)) != NULL)
+    {
+      /* enable & clear all undo steps */
+      gimp_image_undo_enable (gimage);
+
+      /* set the image to clean  */
+      gimp_image_clean_all (gimage);
+
+      gimp_create_display (gimage->gimp, gimage, 0x0101);
+
+      g_object_unref (G_OBJECT (gimage));
+
+      absolute = file_open_absolute_filename (gimp, filename);
+
+      gimp_documents_add (gimp, filename);
+
+      g_free (absolute);
+    }
+
+  return status;
 }
 
 gchar *

@@ -1,5 +1,22 @@
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am
+	* user_install.[ch]: removed...
+
+	* gui/Makefile.am
+	* gui/user-install-dialog.[ch]: ...added here.
+
+	* gui/file-open-dialog.[ch]: removed file_open_with_display() and
+	file_open_with_proc_and_display() here...
+
+	* file/file-open.[ch]: ...and added them here.
+
+	* app_procs.c
+	* widgets/gimpdnd.c
+	* widgets/gimpdocumentview.c: changed accordingly.
+
+2001-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/qmask.[ch]: removed.
 

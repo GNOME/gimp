@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 
+#include "file/file-open.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 

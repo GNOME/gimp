@@ -1,5 +1,9 @@
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* POTFILES.in: app/user_install.c -> app/gui/user-install-dialog.c
+
+2001-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: app/qmask.c -> app/display/gimpdisplayshell-qmask.c
 
 2001-11-08  Michael Natterer  <mitch@gimp.org>

@@ -45,7 +45,7 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "gui/file-open-dialog.h"
+#include "file/file-open.h"
 
 #include "app_procs.h"
 

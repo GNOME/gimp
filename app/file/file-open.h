@@ -20,16 +20,24 @@
 #define __FILE_OPEN_H__
 
 
-GimpImage * file_open_image             (Gimp              *gimp,
-					 const gchar       *filename,
-					 const gchar       *raw_filename,
-					 const gchar       *open_mode,
-					 PlugInProcDef     *file_proc,
-					 RunModeType        run_mode,
-					 GimpPDBStatusType *status);
+GimpImage         * file_open_image                 (Gimp          *gimp,
+                                                     const gchar   *filename,
+                                                     const gchar   *raw_filename,
+                                                     const gchar   *open_mode,
+                                                     PlugInProcDef *file_proc,
+                                                     RunModeType    run_mode,
+                                                     GimpPDBStatusType *status);
 
-gchar     * file_open_absolute_filename (Gimp              *gimp,
-                                         const gchar       *name);
+GimpPDBStatusType   file_open_with_display          (Gimp          *gimp,
+                                                     const gchar   *filename);
+
+GimpPDBStatusType   file_open_with_proc_and_display (Gimp          *gimp,
+                                                     const gchar   *filename,
+                                                     const gchar   *raw_filename,
+                                                     PlugInProcDef *file_proc);
+
+gchar             * file_open_absolute_filename     (Gimp          *gimp,
+                                                     const gchar   *name);
 
 
 #endif /* __FILE_OPEN_H__ */

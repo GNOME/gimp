@@ -113,6 +113,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	toolbox.h			\
 	tools-commands.c		\
 	tools-commands.h		\
+	user-install-dialog.c		\
+	user-install-dialog.h		\
 	view-commands.c			\
 	view-commands.h			\
 @STRIP_END@

@@ -63,23 +63,19 @@
 
 /*  local function prototypes  */
 
-static gint     file_open_with_proc_and_display (Gimp          *gimp,
-                                                 const gchar   *filename,
-						 const gchar   *raw_filename,
-						 PlugInProcDef *file_proc);
-static void     file_open_dialog_create         (Gimp          *gimp);
-static void     file_open_genbutton_callback    (GtkWidget     *widget,
-						 gpointer       data);
-static void     file_open_clistrow_callback     (GtkWidget     *widget,
-						 gint           row,
-                                                 gint           column,
-                                                 GdkEvent      *event,
-                                                 gpointer       data);
-static void     file_open_ok_callback           (GtkWidget     *widget,
-						 gpointer       data);
-static void     file_open_type_callback         (GtkWidget     *widget,
-						 gpointer       data);
-static GSList * clist_to_slist                  (GtkCList      *file_list);
+static void     file_open_dialog_create      (Gimp      *gimp);
+static void     file_open_genbutton_callback (GtkWidget *widget,
+                                              gpointer   data);
+static void     file_open_clistrow_callback  (GtkWidget *widget,
+                                              gint       row,
+                                              gint       column,
+                                              GdkEvent  *event,
+                                              gpointer   data);
+static void     file_open_ok_callback        (GtkWidget *widget,
+                                              gpointer   data);
+static void     file_open_type_callback      (GtkWidget *widget,
+                                              gpointer   data);
+static GSList * clist_to_slist               (GtkCList  *file_list);
 
 
 
@@ -172,55 +168,9 @@ file_open_dialog_show (Gimp *gimp)
   file_dialog_show (fileload);
 }
 
-GimpPDBStatusType
-file_open_with_display (Gimp        *gimp,
-                        const gchar *filename)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
-
-  return file_open_with_proc_and_display (gimp, filename, filename, NULL);
-}
 
 
 /*  private functions  */
-
-static gint
-file_open_with_proc_and_display (Gimp          *gimp,
-                                 const gchar   *filename,
-                                 const gchar   *raw_filename,
-                                 PlugInProcDef *file_proc)
-{
-  GimpImage         *gimage;
-  gchar             *absolute;
-  GimpPDBStatusType  status;
-
-  if ((gimage = file_open_image (gimp,
-				 filename,
-				 raw_filename,
-				 _("Open"),
-				 file_proc,
-				 RUN_INTERACTIVE,
-				 &status)) != NULL)
-    {
-      /* enable & clear all undo steps */
-      gimp_image_undo_enable (gimage);
-
-      /* set the image to clean  */
-      gimp_image_clean_all (gimage);
-
-      gimp_create_display (gimage->gimp, gimage, 0x0101);
-
-      g_object_unref (G_OBJECT (gimage));
-
-      absolute = file_open_absolute_filename (gimp, filename);
-
-      gimp_documents_add (gimp, filename);
-
-      g_free (absolute);
-    }
-
-  return status;
-}
 
 static void
 file_open_dialog_create (Gimp *gimp)

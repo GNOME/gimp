@@ -34,18 +34,18 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "display/display-types.h"
+#include "gui-types.h"
 
 #include "base/base-config.h"
 
 #include "core/gimpunit.h"
 
-#include "gui/gui.h"
-#include "gui/resolution-calibrate-dialog.h"
+#include "gui.h"
+#include "resolution-calibrate-dialog.h"
+#include "user-install-dialog.h"
 
 #include "appenv.h"
 #include "gimprc.h"
-#include "user_install.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,8 +27,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 	image_map.c		\
 	image_map.h		\
-	user_install.c		\
-	user_install.h		\
 ##
 ## stuff for core/
 ##

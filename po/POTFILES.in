@@ -13,7 +13,6 @@ app/nav_window.c
 app/plug_in.c
 app/undo.c
 app/undo_history.c
-app/user_install.c
 
 app/core/gimp.c
 app/core/gimpbrush.c
@@ -84,6 +83,7 @@ app/gui/splash.c
 app/gui/tips-dialog.c
 app/gui/tool-options-dialog.c
 app/gui/toolbox.c
+app/gui/user-install-dialog.c
 
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
