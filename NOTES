@@ -1,9 +1,7 @@
-Some notes on GIMP-0.99.18:
+Some notes on GIMP-0.99.19:
 
-Please read the file TODO-DIST to find more information about things
-that were not included or that are (possibly) broken in this distribution.
-
-
+Please remove everything from your old plugins dir before upgrading to
+0.99.19. Some plugins are no longer in the dist and will not be updated.
 
 -- Federico Mena <federico@nuclecu.unam.mx>
 -- Christoph Hoegl <darkwing@bsddmail.franken.de>

@@ -66,7 +66,7 @@
 #include "undo.h"
 
 /*  external functions  */
-extern layers_dialog_layer_merge_query (GImage *, int);
+extern void layers_dialog_layer_merge_query (GImage *, int);
 
 typedef struct {
   GtkWidget *dlg;

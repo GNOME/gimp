@@ -1860,7 +1860,7 @@ create_layer_widget (GImage *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
-  gtk_widget_ref (GTK_OBJECT (list_item));
+  gtk_widget_ref (GTK_WIDGET (list_item));
 
   /*  create the layer widget and add it to the list  */
   layer_widget = (LayerWidget *) g_malloc (sizeof (LayerWidget));

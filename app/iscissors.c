@@ -1268,7 +1268,7 @@ shape_of_boundary (Tool *tool)
   double weight;
   int left, right;
   int i, j;
-  int x, y;
+  /* int x, y; */
 
   /*  This function determines the kinkiness at each point in the
    *  original free-hand curve by finding the dotproduct between
@@ -1370,7 +1370,7 @@ process_kinks (Tool *tool)
   Iscissors * iscissors;
   GDisplay * gdisp;
   Kink * kinks, * k_left, * k_right;
-  int x, y;
+  /* int x, y; */
   int i;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;

@@ -954,7 +954,7 @@ create_channel_widget (GImage      *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
-  gtk_widget_ref (GTK_OBJECT (list_item));
+  gtk_widget_ref (GTK_WIDGET (list_item));
 
   /*  create the channel widget and add it to the list  */
   channel_widget = (ChannelWidget *) g_malloc (sizeof (ChannelWidget));
