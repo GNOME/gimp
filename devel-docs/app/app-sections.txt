@@ -1397,8 +1397,24 @@ gimp_display_disconnect
 </SECTION>
 
 <SECTION>
+<FILE>gimpdisplayoptions</FILE>
+<TITLE>GimpDisplayOptions</TITLE>
+GimpDisplayOptions
+<SUBSECTION Standard>
+GimpDisplayOptionsClass
+GIMP_DISPLAY_OPTIONS
+GIMP_IS_DISPLAY_OPTIONS
+GIMP_TYPE_DISPLAY_OPTIONS
+GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN
+gimp_display_options_get_type
+gimp_display_options_fullscreen_get_type
+GIMP_DISPLAY_OPTIONS_CLASS
+GIMP_IS_DISPLAY_OPTIONS_CLASS
+GIMP_DISPLAY_OPTIONS_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdisplayshell</FILE>
-GimpDisplayShellAppearance
 SCREEN_XRES
 SCREEN_YRES
 SCALESRC
@@ -3757,6 +3773,8 @@ gimp_docked_get_aux_info
 gimp_docked_get_preview
 gimp_docked_set_context
 gimp_docked_get_menu
+gimp_docked_get_title
+gimp_docked_title_changed
 <SUBSECTION Standard>
 GIMP_DOCKED
 GIMP_IS_DOCKED
@@ -5143,6 +5161,8 @@ gimp_config_reset_properties
 gimp_config_string_append_escaped
 gimp_config_build_data_path
 gimp_config_build_plug_in_path
+gimp_config_file_copy
+gimp_config_file_backup_on_error
 </SECTION>
 
 <SECTION>
@@ -5708,11 +5728,11 @@ gimp_marshal_VOID__VOID
 <FILE>display-enums</FILE>
 GIMP_TYPE_CURSOR_MODE
 GimpCursorMode
-GIMP_TYPE_DISPLAY_PADDING_MODE
-GimpDisplayPaddingMode
+GIMP_TYPE_CANVAS_PADDING_MODE
+GimpCanvasPaddingMode
 <SUBSECTION Standard>
 gimp_cursor_mode_get_type
-gimp_display_padding_mode_get_type
+gimp_canvas_padding_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -7080,6 +7100,7 @@ gimp_get_mod_name_alt
 gimp_get_mod_separator
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
+gimp_rgb_set_gdk_color
 </SECTION>
 
 <SECTION>

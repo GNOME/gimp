@@ -63,6 +63,7 @@ gimp_device_status_get_type
 gimp_dialog_factory_get_type
 gimp_display_config_get_type
 gimp_display_get_type
+gimp_display_options_get_type
 gimp_display_shell_get_type
 gimp_dock_get_type
 gimp_dockable_get_type
