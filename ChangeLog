@@ -1,5 +1,10 @@
 2004-01-22  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: libgimpmodule depends on gmodule-2.0 and gobject-2.0.
+	Incorporate both into GMODULE_CFLAGS and GMODULE_LIBS.
+
+2004-01-22  Sven Neumann  <sven@gimp.org>
+
 	* debian/*: removed outdated and unmaintained debian package
 	description. The debian package is well maintained without keeping
 	these files in our CVS tree.
