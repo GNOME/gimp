@@ -578,12 +578,12 @@ gimp_brush_generated_load (const gchar  *filename,
   GimpBrushGenerated      *brush;
   FILE                    *file;
   gchar                    string[256];
-  gchar                   *name = NULL;
-  GimpBrushGeneratedShape  shape = GIMP_BRUSH_GENERATED_CIRCLE;
+  gchar                   *name       = NULL;
+  GimpBrushGeneratedShape  shape      = GIMP_BRUSH_GENERATED_CIRCLE;
   gboolean                 have_shape = FALSE;
+  gint                     spikes     = 2;
   gdouble                  spacing;
   gdouble                  radius;
-  gint                     spikes = 2;
   gdouble                  hardness;
   gdouble                  aspect_ratio;
   gdouble                  angle;
@@ -613,7 +613,7 @@ gimp_brush_generated_load (const gchar  *filename,
                    _("Fatal parse error in brush file '%s': "
                      "Not a GIMP brush file."),
                    gimp_filename_to_utf8 (filename));
-      return NULL;
+      goto failed;
     }
 
   /* make sure we are reading a compatible version */
@@ -629,7 +629,7 @@ gimp_brush_generated_load (const gchar  *filename,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush version."),
                        gimp_filename_to_utf8 (filename));
-          return NULL;
+          goto failed;
         }
       else
         {
@@ -668,8 +668,7 @@ gimp_brush_generated_load (const gchar  *filename,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush shape."),
                        gimp_filename_to_utf8 (filename));
-          g_free (name);
-          return NULL;
+          goto failed;
         }
 
       shape = shape_val->value;
@@ -745,10 +744,11 @@ gimp_brush_generated_load (const gchar  *filename,
   if (name)
     g_free (name);
 
-  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-               _("Error while reading brush file '%s': %s"),
-               gimp_filename_to_utf8 (filename),
-               errno ? g_strerror (errno) : _("File is truncated"));
+  if (error && *error == NULL)
+    g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                 _("Error while reading brush file '%s': %s"),
+                 gimp_filename_to_utf8 (filename),
+                 errno ? g_strerror (errno) : _("File is truncated"));
 
   return NULL;
 }

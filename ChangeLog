@@ -1,3 +1,8 @@
+2004-08-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load):
+	plugged more file descriptor leaks.
+
 2004-08-10  DindinX  <david@dindinx.org>
 
 	* app/core/gimpbrushgenerated.c: don't leak a file descriptor when
