@@ -1,5 +1,10 @@
 2003-09-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c (create_image): need to detach from
+	the drawable or the tile cache won't be flushed (bug #121788).
+
+2003-09-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpnavigationview.c

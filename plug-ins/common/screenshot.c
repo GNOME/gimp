@@ -341,7 +341,7 @@ create_image (const GdkPixbuf *pixbuf)
   height = gdk_pixbuf_get_height (GDK_PIXBUF (pixbuf));
 
   image = gimp_image_new (width, height, GIMP_RGB);
-  layer = gimp_layer_new (image, _("Background"),
+  layer = gimp_layer_new (image, _("Screen Shot"),
                           width, height,
                           GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
 
@@ -368,6 +368,8 @@ create_image (const GdkPixbuf *pixbuf)
       if (status && ((i + 1) * 100 / height) % 10 == 0)
         status = gimp_progress_update ((i + 1.0) / height);
     }
+
+  gimp_drawable_detach (drawable);
 
   gimp_progress_update (1.0);
 
@@ -465,7 +467,7 @@ shoot (void)
 
   if (!screenshot)
     {
-      g_message (_("Error obtaining screenshot"));
+      g_message (_("Error obtaining Screen Shot"));
       return;
     }
 
