@@ -5,7 +5,7 @@
 # Sven Neumann <sven@gimp.org>
 # Christian Neumair <chris@gnome-de.org>
 # Roman Joost <roman@bromeco.de>
-# Hendrik Brandt <eru@gmx.li>, 2004.
+# Hendrik Brandt <heb@gnome-de.org>, 2004.
 # Sven Neumann <sven@gimp.org>, 2004.
 # 
 # 
@@ -13,13 +13,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 03:05+0100\n"
-"PO-Revision-Date: 2004-12-06 14:05+0100\n"
-"Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
+"POT-Creation-Date: 2004-12-09 16:56+0100\n"
+"PO-Revision-Date: 2004-12-09 16:58+0100\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -4901,7 +4901,7 @@ msgid "Render Stroke"
 msgstr "Nachziehen"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:82
 msgid "Flip"
 msgstr "Spiegeln"
 
@@ -5888,7 +5888,7 @@ msgstr "Sind Sie sicher, dass Sie fortfahren möchten?"
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1514
 #: app/dialogs/preferences-dialog.c:1668
-#: app/widgets/gimpcontrollereditor.c:195
+#: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
 msgstr "Allgemein"
 
@@ -6129,7 +6129,7 @@ msgstr "Datum:"
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/dialogs/module-dialog.c:505 app/widgets/gimpcontrollereditor.c:240
+#: app/dialogs/module-dialog.c:505 app/widgets/gimpcontrollereditor.c:242
 msgid "State:"
 msgstr "Status:"
 
@@ -7650,7 +7650,7 @@ msgstr "Ungültige Zeichenfolge in URI"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Öffnen von '%s' schlug fehl: %s"
 
-#: app/gui/splash.c:135
+#: app/gui/splash.c:120
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
@@ -8684,11 +8684,11 @@ msgstr "Wirkt auf:"
 msgid "Flip Type  %s"
 msgstr "Spiegeltyp  %s"
 
-#: app/tools/gimpfliptool.c:85
+#: app/tools/gimpfliptool.c:83
 msgid "Flip the layer or selection"
 msgstr "Die Ebene oder Auswahl spiegeln"
 
-#: app/tools/gimpfliptool.c:86
+#: app/tools/gimpfliptool.c:84
 msgid "_Flip"
 msgstr "Sp_iegeln"
 
@@ -9410,13 +9410,9 @@ msgstr "Breite beibehalten  %s"
 msgid "Keep aspect  %s"
 msgstr "Verhältnis von %s beibehalten"
 
-#: app/tools/gimptransformtool.c:251
+#: app/tools/gimptransformtool.c:253
 msgid "Transforming..."
 msgstr "Transformiere..."
-
-#: app/tools/gimptransformtool.c:357
-msgid "Transformations do not work on layers that contain layer masks."
-msgstr "Transformationen funktionieren nicht auf Ebenen, die Masken enthalten."
 
 #: app/tools/gimpvectoroptions.c:113
 msgid "Restrict editing to polygons"
@@ -9643,7 +9639,7 @@ msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:345
+#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Aktion"
 
@@ -9845,23 +9841,23 @@ msgstr "Kleinere Vorschaubilder"
 msgid "Larger Previews"
 msgstr "Größere Vorschaubilder"
 
-#: app/widgets/gimpcontrollereditor.c:208
+#: app/widgets/gimpcontrollereditor.c:210
 msgid "Dump events from this controller"
 msgstr "Ereignisse des Gerätes ausgeben"
 
-#: app/widgets/gimpcontrollereditor.c:213
+#: app/widgets/gimpcontrollereditor.c:215
 msgid "Enable this controller"
 msgstr "Gerät einschalten"
 
-#: app/widgets/gimpcontrollereditor.c:234
+#: app/widgets/gimpcontrollereditor.c:236
 msgid "Name:"
 msgstr "_Name:"
 
-#: app/widgets/gimpcontrollereditor.c:340
+#: app/widgets/gimpcontrollereditor.c:369
 msgid "Event"
 msgstr "Ereignis"
 
-#: app/widgets/gimpcontrollereditor.c:521
+#: app/widgets/gimpcontrollereditor.c:550
 msgid "Select Controller Event Action"
 msgstr "Ereigniskontrolleuraktion auswählen"
 
@@ -9998,9 +9994,8 @@ msgid "Keyboard"
 msgstr "Tastatur"
 
 #: app/widgets/gimpcontrollerkeyboard.c:230
-#, fuzzy
 msgid "Keyboard Events"
-msgstr "Tastatur"
+msgstr "Tastaturereignisse"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
@@ -10140,9 +10135,8 @@ msgid "Mouse Wheel"
 msgstr "Mausrad"
 
 #: app/widgets/gimpcontrollerwheel.c:229
-#, fuzzy
 msgid "Mouse Wheel Events"
-msgstr "Mausrad"
+msgstr "Mausradereignisse"
 
 #: app/widgets/gimpdataeditor.c:205
 msgid "Save"
@@ -10195,11 +10189,11 @@ msgstr "Automatisch bestimmt"
 msgid "By Extension"
 msgstr "Nach Endung"
 
-#: app/widgets/gimpfiledialog.c:498
+#: app/widgets/gimpfiledialog.c:496
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: app/widgets/gimpfiledialog.c:637
+#: app/widgets/gimpfiledialog.c:635
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Datei_typ %s:"
@@ -10428,7 +10422,7 @@ msgstr "Nicht definiert"
 msgid "Columns:"
 msgstr "Spalten:"
 
-#: app/widgets/gimppropwidgets.c:1487
+#: app/widgets/gimppropwidgets.c:1537
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Dieses Eingabefeld ist auf %d Zeichen beschränkt."
@@ -10619,11 +10613,11 @@ msgstr "Einstellungen löschen..."
 
 #: app/widgets/gimpuimanager.c:495
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "Ihre Installation von The Gimp ist unvollständig:"
 
 #: app/widgets/gimpuimanager.c:497
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "Bitte stellen Sie sicher, dass die XML-Menüdateien korrekt installiert sind."
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -10901,3 +10895,4 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Bildeditor"
+
