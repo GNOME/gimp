@@ -156,8 +156,14 @@ query (void)
   };
 
   gimp_install_procedure ("file_xpm_load",
-                          "loads files of the xpm file format",
-                          "FIXME: write help for xpm_load",
+                          "Load files in XPM (X11 Pixmap) format.",
+                          "Load files in XPM (X11 Pixmap) format. "
+                          "XPM is a portable image format designed to be "
+                          "included in C source code. XLib provides utility "
+                          "functions to read this format. Newer code should "
+                          "however be using gdk-pixbuf-csource instead. "
+                          "XPM supports coloured images, unlike the XBM "
+                          "format which XPM was designed to replace.",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
@@ -176,8 +182,14 @@ query (void)
                                     "0, string,/*\\040XPM\\040*/");
 
   gimp_install_procedure ("file_xpm_save",
-                          "saves files in the xpm file format (if you're on a 16 bit display...)",
-                          "FIXME: write help for xpm",
+                          "Save files in XPM (X11 Pixmap) format.",
+                          "Save files in XPM (X11 Pixmap) format. "
+                          "XPM is a portable image format designed to be "
+                          "included in C source code. XLib provides utility "
+                          "functions to read this format. Newer code should "
+                          "however be using gdk-pixbuf-csource instead. "
+                          "XPM supports coloured images, unlike the XBM "
+                          "format which XPM was designed to replace.",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
