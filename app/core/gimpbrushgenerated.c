@@ -36,8 +36,6 @@
 
 #include "base/temp-buf.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimpbrushgenerated.h"
 
 #include "gimp-intl.h"
@@ -193,43 +191,40 @@ gimp_brush_generated_duplicate (GimpData *data,
                                    stingy_memory_use);
 }
 
-static double
+static gdouble
 gauss (gdouble f)
 { 
   /* this aint' a real gauss function */
-  if (f < -.5)
+  if (f < -0.5)
     {
       f = -1.0 - f;
       return (2.0 * f*f);
     }
 
-  if (f < .5)
+  if (f < 0.5)
     return (1.0 - 2.0 * f*f);
 
-  f = 1.0 -f;
+  f = 1.0 - f;
   return (2.0 * f*f);
 }
-
-#ifdef __GNUC__
-#warning FIXME: extern GimpBaseConfig *base_config;
-#endif
-extern GimpBaseConfig *base_config;
 
 static void
 gimp_brush_generated_dirty (GimpData *data)
 {
   GimpBrushGenerated *brush;
-  register GimpBrush *gbrush = NULL;
-  register gint       x, y;
-  register guchar    *centerp;
-  register gdouble    d;
-  register gdouble    exponent;
-  register guchar     a;
-  register gint       length;
-  register guchar    *lookup;
-  register gdouble    sum, c, s, tx, ty;
-  gdouble buffer[OVERSAMPLING];
-  gint    width, height;
+  GimpBrush          *gbrush = NULL;
+  gint     x, y;
+  guchar  *centerp;
+  gdouble  d;
+  gdouble  exponent;
+  guchar   a;
+  gint     length;
+  gint     width, height;
+  guchar  *lookup;
+  gdouble  sum;
+  gdouble  c, s;
+  gdouble  short_radius;
+  gdouble  buffer[OVERSAMPLING];
 
   brush = GIMP_BRUSH_GENERATED (data);
 
@@ -238,100 +233,92 @@ gimp_brush_generated_dirty (GimpData *data)
 
   gbrush = GIMP_BRUSH (brush);
 
-  if (base_config->stingy_memory_use && gbrush->mask)
-    temp_buf_unswap (gbrush->mask);
-
   if (gbrush->mask)
-    {
-      temp_buf_free (gbrush->mask);
-    }
+    temp_buf_free (gbrush->mask);
 
-  /* compute the range of the brush. should do a better job than this? */
   s = sin (gimp_deg_to_rad (brush->angle));
   c = cos (gimp_deg_to_rad (brush->angle));
 
-  tx = MAX (fabs (c*ceil (brush->radius) - s*ceil (brush->radius)
-		  / brush->aspect_ratio), 
-	    fabs (c*ceil (brush->radius) + s*ceil (brush->radius)
-		  / brush->aspect_ratio));
-  ty = MAX (fabs (s*ceil (brush->radius) + c*ceil (brush->radius)
-		  / brush->aspect_ratio),
-	    fabs (s*ceil (brush->radius) - c*ceil (brush->radius)
-		  / brush->aspect_ratio));
+  short_radius = brush->radius / brush->aspect_ratio;
 
-  if (brush->radius > tx)
-    width = ceil (tx);
-  else
-    width = ceil (brush->radius);
-
-  if (brush->radius > ty)
-    height = ceil (ty);
-  else
-    height = ceil (brush->radius);
-
-  /* compute the axis for spacing */
-  GIMP_BRUSH (brush)->x_axis.x =        c * brush->radius;
-  GIMP_BRUSH (brush)->x_axis.y = -1.0 * s * brush->radius;
-
-  GIMP_BRUSH (brush)->y_axis.x = (s * brush->radius / brush->aspect_ratio);
-  GIMP_BRUSH (brush)->y_axis.y = (c * brush->radius / brush->aspect_ratio);
+  gbrush->x_axis.x =        c * brush->radius;
+  gbrush->x_axis.y = -1.0 * s * brush->radius;
+  gbrush->y_axis.x =        s * short_radius;
+  gbrush->y_axis.y =        c * short_radius;
   
-  gbrush->mask = temp_buf_new (width * 2 + 1,
+  width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
+                       gbrush->y_axis.x * gbrush->y_axis.x));
+  height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
+                       gbrush->y_axis.y * gbrush->y_axis.y));
+
+  gbrush->mask = temp_buf_new (width  * 2 + 1,
 			       height * 2 + 1,
 			       1, width, height, 0);
-  centerp = &gbrush->mask->data[height * gbrush->mask->width + width];
 
-  if ((1.0 - brush->hardness) < 0.000001)
-    exponent = 1000000; 
-  else
-    exponent = 1/(1.0 - brush->hardness);
+  centerp = temp_buf_data (gbrush->mask) + height * gbrush->mask->width + width;
 
   /* set up lookup table */
-  length = ceil (sqrt (2 * ceil (brush->radius+1) * ceil (brush->radius+1))+1) * OVERSAMPLING;
+  length = OVERSAMPLING * ceil (1 + sqrt (2 *
+                                          ceil (brush->radius + 1.0) *
+                                          ceil (brush->radius + 1.0)));
+
+  if ((1.0 - brush->hardness) < 0.000001)
+    exponent = 1000000.0; 
+  else
+    exponent = 1.0 / (1.0 - brush->hardness);
+
   lookup = g_malloc (length);
   sum = 0.0;
 
   for (x = 0; x < OVERSAMPLING; x++)
     {
       d = fabs ((x + 0.5) / OVERSAMPLING - 0.5);
+
       if (d > brush->radius)
 	buffer[x] = 0.0;
       else
-	/* buffer[x] =  (1.0 - pow (d/brush->radius, exponent)); */
-	buffer[x] = gauss (pow (d/brush->radius, exponent));
+	buffer[x] = gauss (pow (d / brush->radius, exponent));
+
       sum += buffer[x];
     }
 
   for (x = 0; d < brush->radius || sum > 0.00001; d += 1.0 / OVERSAMPLING)
     {
       sum -= buffer[x % OVERSAMPLING];
+
       if (d > brush->radius)
 	buffer[x % OVERSAMPLING] = 0.0;
       else
-	/* buffer[x%OVERSAMPLING] =  (1.0 - pow (d/brush->radius, exponent)); */
-	buffer[x % OVERSAMPLING] = gauss (pow (d/brush->radius, exponent));
-      sum += buffer[x%OVERSAMPLING];
+	buffer[x % OVERSAMPLING] = gauss (pow (d / brush->radius, exponent));
+
+      sum += buffer[x % OVERSAMPLING];
       lookup[x++] = RINT (sum * (255.0 / OVERSAMPLING));
     }
+
   while (x < length)
     {
       lookup[x++] = 0;
     }
+
   /* compute one half and mirror it */
   for (y = 0; y <= height; y++)
     {
       for (x = -width; x <= width; x++)
 	{
+          gdouble tx, ty;
+
 	  tx = c*x - s*y;
 	  ty = c*y + s*x;
 	  ty *= brush->aspect_ratio;
 	  d = sqrt (tx*tx + ty*ty);
-	  if (d < brush->radius+1)
+
+	  if (d < brush->radius + 1)
 	    a = lookup[(gint) RINT (d * OVERSAMPLING)];
 	  else
 	    a = 0;
-	  centerp[   y*gbrush->mask->width + x] = a;
-	  centerp[-1*y*gbrush->mask->width - x] = a;
+
+	  centerp[     y * gbrush->mask->width + x] = a;
+	  centerp[-1 * y * gbrush->mask->width - x] = a;
 	}
     }
 
