@@ -331,6 +331,23 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
     AC_MSG_RESULT(assuming no))
 fi
 
+AC_MSG_CHECKING(checking for regex in glibc)
+AC_TRY_RUN([
+#include <features.h>
+#include <stdio.h>
+#include <regex.h>
+int main()
+{
+#if __GLIBC__ >= 2
+  return (0);
+#else
+  return (1);
+#endif
+}], AC_DEFINE(HAVE_GLIBC_REGEX)
+    AC_MSG_RESULT(yes),
+    AC_MSG_RESULT(no),
+    AC_MSG_RESULT(assuming no))
+
 AC_HEADER_DIRENT
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
@@ -661,6 +678,8 @@ AC_SUBST(LT_AGE)
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
+
+AC_SUBST(HAVE_GLIBC_REGEX)
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)

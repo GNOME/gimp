@@ -1,3 +1,9 @@
+2001-01-02  Daniel Egger  <egger@suse.de>
+
+	* acconfig.h:
+	* configure.in: Added a check for a glibc compliant
+	regex implementation.
+
 2001-01-02  Simon Budig  <simon@gimp.org>
 
 	* app/paint_core.c: use floor() before casting to gint when 
