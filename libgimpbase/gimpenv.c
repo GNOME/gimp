@@ -33,12 +33,34 @@
 extern const char *__XOS2RedirRoot(const char *);
 #endif
 
-char *
-gimp_directory ()
+/**
+ * gimp_directory:
+ *
+ * Returns the user-specific GIMP settings directory. If the environment 
+ * variable GIMP_DIRECTORY exists, it is used. If it is an absolute path, 
+ * it is used as is.  If it is a relative path, it is taken to be a 
+ * subdirectory of the home directory. If it is relative path, and no home 
+ * directory can be determined, it is taken to be a subdirectory of
+ * gimp_data_directory().
+ *
+ * The usual case is that no GIMP_DIRECTORY environment variable exists, 
+ * and then we use the GIMPDIR subdirectory of the home directory. If no 
+ * home directory exists, we use a per-user subdirectory of
+ * gimp_data_directory().
+ * In any case, we always return some non-empty string, whether it
+ * corresponds to an existing directory or not.
+ *
+ * The returned string is allocated just once, and should *NOT* be
+ * freed with g_free().
+ *
+ * Returns: The user-specific GIMP settings directory.
+ */
+gchar*
+gimp_directory (void)
 {
-  static char *gimp_dir = NULL;
-  char *env_gimp_dir;
-  char *home_dir;
+  static gchar *gimp_dir = NULL;
+  gchar *env_gimp_dir;
+  gchar *home_dir;
 
   if (gimp_dir != NULL)
     return gimp_dir;
@@ -96,8 +118,19 @@ gimp_directory ()
   return gimp_dir;
 }
 
-char *
-gimp_personal_rc_file (char *basename)
+/**
+ * gimp_personal_rc_file:
+ * @basename: The basename of a rc_file.
+ *
+ * Returns the name of a file in the user-specific GIMP settings directory.
+ *
+ * The returned string is allocated dynamically and *SHOULD* be freed
+ * with g_free() after use.
+ *
+ * Returns: The name of a file in the user-specific GIMP settings directory.
+ */
+gchar*
+gimp_personal_rc_file (gchar *basename)
 {
   return g_strconcat (gimp_directory (),
 		      G_DIR_SEPARATOR_S,
@@ -105,11 +138,25 @@ gimp_personal_rc_file (char *basename)
 		      NULL);
 }
 
-char *
-gimp_data_directory ()
+/**
+ * gimp_data_directory:
+ *
+ * Returns the top directory for GIMP data. If the environment variable 
+ * GIMP_DATADIR exists, that is used.  It should be an absolute pathname.
+ * Otherwise, on Unix the compile-time defined directory is used.  On
+ * Win32, the installation directory as deduced from the executable's
+ * name is used.
+ *
+ * The returned string is allocated just once, and should *NOT* be
+ * freed with g_free().
+ *
+ * Returns: The top directory for GIMP data.
+ */
+gchar*
+gimp_data_directory (void)
 {
-  static char *gimp_data_dir = NULL;
-  char *env_gimp_data_dir = NULL;
+  static gchar *gimp_data_dir = NULL;
+  gchar *env_gimp_data_dir = NULL;
   
   if (gimp_data_dir != NULL)
     return gimp_data_dir;
@@ -136,8 +183,8 @@ gimp_data_directory ()
 #endif
 #else
       /* Figure it out from the executable name */
-      char filename[MAX_PATH];
-      char *sep1, *sep2;
+      gchar filename[MAX_PATH];
+      gchar *sep1, *sep2;
 
       if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
 	g_error ("GetModuleFilename failed\n");
@@ -167,16 +214,20 @@ gimp_data_directory ()
   return gimp_data_dir;
 }
 
-/* gimp_gtkrc returns the name of the GIMP's application-specific
- * gtkrc file.
+/**
+ * gimp_gtkrc:
+ *
+ * Returns the name of the GIMP's application-specific gtkrc file.
  *
  * The returned string is allocated just once, and should *NOT* be
  * freed with g_free().
+ *
+ * Returns: The name of the GIMP's application-specific gtkrc file.
  */ 
-char*
-gimp_gtkrc ()
+gchar*
+gimp_gtkrc (void)
 {
-  static char *gimp_gtkrc_filename = NULL;
+  static gchar *gimp_gtkrc_filename = NULL;
 
   if (gimp_gtkrc_filename != NULL)
     return gimp_gtkrc_filename;
@@ -188,3 +239,7 @@ gimp_gtkrc ()
 				     NULL);
   return gimp_gtkrc_filename;
 }
+
+
+
+

@@ -3262,22 +3262,22 @@ GimpChainButton   *gcb
 </MACRO>
 <FUNCTION>
 <NAME>gimp_directory</NAME>
-<RETURNS>char  *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_personal_rc_file</NAME>
-<RETURNS>char  *</RETURNS>
-char *basename
+<RETURNS>gchar *</RETURNS>
+gchar *basename
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_data_directory</NAME>
-<RETURNS>char  *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 void
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_gtkrc</NAME>
-<RETURNS>char  *</RETURNS>
+<RETURNS>gchar *</RETURNS>
 void
 </FUNCTION>
 <USER_FUNCTION>

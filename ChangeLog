@@ -1,5 +1,8 @@
-Sun Feb  6 23:45:09 CET 2000  Sven Neumann <sven@gimp.org>
+Sun Feb  7 00:14:26 CET 2000 Sven Neumann <sven@gimp.org>
 
+	* libgimp/gimpenv.[ch]: use g* types and moved the documentation
+	into the C file where it is parseable by the documentation system
+	
 	* libgimp/gimpmatrix.[ch]: use g* types and name the parameters 
 	in the header.
 

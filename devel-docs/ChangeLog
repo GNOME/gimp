@@ -1,10 +1,11 @@
-Sun Feb  6 23:44:17 CET 2000  Sven Neumann <sven@gimp.org>
+Sun Feb  7 00:14:26 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* devel-docs/libgimp/libgimp-decl.txt
-	* devel-docs/libgimp/tmpl/gimpmatrix.sgml: documented gimpmatrix
+	* libgimp/libgimp-decl.txt
+	* libgimp/tmpl/gimpenv.sgml: documented gimpenv
+	* libgimp/tmpl/gimpmatrix.sgml: documented gimpmatrix
 
-	* devel-docs/libgimp/tmpl/gimpcolorspace.sgml
-	* devel-docs/libgimp/tmpl/gimpmenu.sgml: cleanup
+	* libgimp/tmpl/gimpcolorspace.sgml
+	* libgimp/tmpl/gimpmenu.sgml: cleanup
 
 Sun Feb  6 22:15:20 CET 2000  Sven Neumann <sven@gimp.org>
 

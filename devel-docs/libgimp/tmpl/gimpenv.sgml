@@ -2,11 +2,12 @@
 gimpenv
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to access the GIMP environment.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A set of functions to find the locations of GIMP's data directories and
+configuration files.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
