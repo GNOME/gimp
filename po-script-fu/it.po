@@ -1,16 +1,18 @@
+# This is the Italian catalog for The GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Daniele Medri <madrid@linux.it>, 2000
+# Marco Ciampa <ciampix@libero.it>, 2003
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:55+0200\n"
-"PO-Revision-Date: sab giu 10 03:02:00 EDT 2000\n"
-"Last-Translator: Daniele Medri <madrid@linux.it>\n"
+"PO-Revision-Date: 2003-09-15 00:13+0200\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Date: sab giu 10 03:02:00 EDT 2000\n"
-"From: Daniele Medri <madrid@linux.it>\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -172,7 +174,7 @@ msgstr "Naviga..."
 #: plug-ins/dbbrowser/dbbrowser_utils.c:124
 #: plug-ins/dbbrowser/dbbrowser_utils.c:143
 msgid "Search by _Name"
-msgstr ""
+msgstr "Ricerca per _nome"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:126
 #: plug-ins/dbbrowser/dbbrowser_utils.c:145
@@ -181,12 +183,11 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:211
 msgid "_Search:"
-msgstr ""
+msgstr "Cerca:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#, fuzzy
 msgid "Name:"
-msgstr "Data:"
+msgstr "Nome:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #, fuzzy
@@ -203,11 +204,11 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:474
 msgid "Help:"
-msgstr ""
+msgstr "Aiuto:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:599
 msgid "Searching by name - please wait"
-msgstr ""
+msgstr "Ricerca per nome - attendere"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:622
 msgid "Searching by blurb - please wait"
@@ -215,21 +216,19 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "Searching - please wait"
-msgstr ""
+msgstr "Ricerca - attendere"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:669
 msgid "No matches"
-msgstr ""
+msgstr "Nessun riscontro"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Script-Fu/Alpha a logo/3D Outline..."
+msgstr "<Image>/Script-Fu/Alpha a logo/3D _outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/3D Outline..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/3D _outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -877,7 +876,7 @@ msgstr "Densità macchie Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
-msgstr ""
+msgstr "Aggiungi incandescenza"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
@@ -904,16 +903,15 @@ msgstr "Larghezza margine"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Prepara per il formato GIF"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Velocità (punti/quadro)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/Camouflage..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/_Camuffamento..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -1270,11 +1268,11 @@ msgstr "Colonne"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
-msgstr ""
+msgstr "Cancella"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Cancella/Riempi"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1370,41 +1368,36 @@ msgid "Scale Y"
 msgstr "Scala Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Utilità/Mappa caratteri..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Utilità/_Mappa caratteri..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Border (pixels)"
-msgstr "Dimensione bordo (pixel)"
+msgstr "Bordo (punti)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Filter (regexp)"
-msgstr ""
+msgstr "Filtro (espr. reg.)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Labels"
-msgstr ""
+msgstr "Etichette"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "Use Font Name as Text"
-msgstr ""
+msgstr "Usa il nome del carattere come testo"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Frosty..."
+msgstr "<Image>/Script-Fu/Alpha a logo/_Congelato..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Frosty..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Congelato..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-msgstr "<Image>/Script-Fu/Decorazioni/Bordo Fuzzy..."
+msgstr "<Image>/Script-Fu/Decorazioni/Bordo _fuzzy..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add Shadow"
@@ -1537,7 +1530,7 @@ msgstr "Ombra"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "Gradiente testo inverso"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
@@ -1597,16 +1590,15 @@ msgstr "<Image>/Script-Fu/Render/Circuiti..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "Divisioni X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "Divisioni Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr "<Image>/Script-Fu/Utilità/Disegna grafico HSV..."
+msgstr "<Image>/Script-Fu/Utilità/Disegna grafico _HSV..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG Opacity"
@@ -1960,17 +1952,16 @@ msgstr "<Image>/Script-Fu/Animatori/Rippling..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Nero"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Caratteristiche"
+msgstr "Comportamento del bordo"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
-msgstr "Numero di frame"
+msgstr "Numero di quadri"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
@@ -2016,26 +2007,23 @@ msgstr "<Image>/Script-Fu/Selezione/A pennello..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "Brush Name"
-msgstr ""
+msgstr "Nome pennello"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr "<Image>/Script-Fu/Selezione/A immagine"
+msgstr "<Image>/Script-Fu/Selezione/A _immagine"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Script-Fu/Selezione/Circolare..."
+msgstr "<Image>/Script-Fu/Selezione/Ci_rcolare..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
 msgstr "Raggio relativo"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr "<Image>/Script-Fu/Decorazioni/Diapositive..."
+msgstr "<Image>/Script-Fu/Decorazioni/Diapo_sitive..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font Color"
@@ -2051,12 +2039,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/SOTA Chrome..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Speed Text..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Velocità..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Varie/Sfera..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Varie/_Sfera..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2071,13 +2058,12 @@ msgid "Sphere Color"
 msgstr "Colore sfera"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-msgstr "<Image>/Script-Fu/Animatori/globo ruotante..."
+msgstr "<Image>/Script-Fu/Animatori/Globo ruotante..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr "Frame"
+msgstr "Quadro"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
@@ -2089,31 +2075,27 @@ msgstr "Gira da sinistra a destra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
-msgstr ""
+msgstr "Aerografo"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-#, fuzzy
 msgid "Brush"
-msgstr "Utilizza pennello"
+msgstr "Pennello"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-#, fuzzy
 msgid "Circle"
-msgstr "Tile"
+msgstr "Cerchio"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-#, fuzzy
 msgid "Color Method"
-msgstr "Colore 3"
+msgstr "Metodo colore"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Epitrochoid"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid "Frame"
-msgstr "Frame"
+msgstr "Quadro"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient: Loop Sawtooth"
@@ -2125,7 +2107,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Hexagon"
-msgstr ""
+msgstr "Esagono"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 #, fuzzy
@@ -2138,60 +2120,56 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 #, fuzzy
 msgid "Margin (pixels)"
-msgstr "Raggio (pixel)"
+msgstr "Margine (punti)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-#, fuzzy
 msgid "Outer Teeth"
-msgstr "Bordo esterno"
+msgstr "Dente esterno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Pencil"
-msgstr ""
+msgstr "Matita"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Pentagon"
-msgstr "Orientamento"
+msgstr "Pentagono"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "Poligono a 10 lati"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "Poligono a 8 lati"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "Poligono a 8 lati"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "Poligono a 9 lati"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Shape"
-msgstr ""
+msgstr "Forma"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-#, fuzzy
 msgid "Solid Color"
-msgstr "Colore Pad"
+msgstr "Colore pieno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spyrograph"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Square"
-msgstr "Quadrati"
+msgstr "Quadrato"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
@@ -2200,27 +2178,23 @@ msgstr "Angolo partenza"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Tool"
-msgstr ""
+msgstr "Strumento"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#, fuzzy
 msgid "Triangle"
-msgstr "Tile"
+msgstr "Triangolo"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
-#, fuzzy
 msgid "Type"
-msgstr "Tipo sfocatura"
+msgstr "Tipo"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Starburst..."
+msgstr "<Image>/Script-Fu/Alpha a logo/Esplosione di stella..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Starburst..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Esplosione di stella..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
@@ -2228,21 +2202,19 @@ msgstr "Colore esplosione"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Effect Size (pixels * 30)"
-msgstr "Dimensione effetto (pixel * 30)"
+msgstr "Dimensione effetto (punti * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Starscape..."
+msgstr "<Image>/Script-Fu/Alpha a logo/Cielo stellato..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Starscape..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Cielo stellato..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
-msgstr "Dimensione effetto (pixel * 4)"
+msgstr "Dimensione effetto (punti * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 #, fuzzy
@@ -2324,7 +2296,7 @@ msgstr "Terminazione sfumatura"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr ""
+msgstr "Esagoni"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
@@ -2332,7 +2304,7 @@ msgstr "Tipo di mosaico"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr ""
+msgstr "Ottagoni"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
@@ -2552,88 +2524,3 @@ msgstr "<Toolbox>/Xtns/Web Browser/Registro Plug-In"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web Browser/FAQ Utente"
 
-#~ msgid "Border"
-#~ msgstr "Bordo"
-
-#~ msgid "Fonts"
-#~ msgstr "Caratteri"
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Render/Make Grid System..."
-
-#~ msgid "Grids X"
-#~ msgstr "Griglia X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Griglia Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/Trochoid..."
-
-#, fuzzy
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Raggio base (pixel)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Elimina prima di disegnare"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Il carattere che avete scelto è invalido.\n"
-#~ "Si prega di controllare le vostre configurazioni.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animatori/Selezione ad immagine animata..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtro-Animazione per tutte le copie"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Riempi con colore sfondo"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Numero di copie"
-
-#, fuzzy
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Naviga..."
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Valori Base"
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-fu Selezione File"
-
-#~ msgid "NOT SET"
-#~ msgstr "NON CONFIGURATO"
-
-#~ msgid "Close"
-#~ msgstr "Chiudi"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancella"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Errore Script-Fu\n"
-#~ "%s"
-
-#~ msgid "Background Gradient"
-#~ msgstr "Gradiente sfondo"
-
-#~ msgid "Script Toggle"
-#~ msgstr "Selettore Script"
-
-#~ msgid "<Image>/Script-Fu/Animators/Color Cycling..."
-#~ msgstr "<Image>/Script-Fu/Animatori/Color Cycling..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Test/Sfera..."
