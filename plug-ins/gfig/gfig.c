@@ -6268,7 +6268,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   gtk_object_set_user_data(GTK_OBJECT(button),widget);
   gtk_widget_show (button);
   
-  button = gtk_button_new_with_label (_("(Cancel"));
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_cancel,
                       data);

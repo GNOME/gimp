@@ -1422,7 +1422,7 @@ newsprint_dialog (GDrawable *drawable)
   gtk_widget_show (frame);
 
   /* anti-alias control */
-  frame = gtk_frame_new (_("Anti-Alias"));
+  frame = gtk_frame_new (_("Antialiasing"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 

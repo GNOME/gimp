@@ -1,3 +1,8 @@
+Thu Jan 27 23:54:05 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/newsprint.c
+	* plug-ins/gfig/gfig.c: fixed typos 
+
 2000-01-27  Tor Lillqvist  <tml@iki.fi>
 
 	* app/main.c (on_signal): No need to use an #ifdef for G_OS_WIN32
