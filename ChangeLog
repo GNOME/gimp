@@ -1,3 +1,10 @@
+2000-12-19  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gap/gap_lib.c: Typo fixes.
+	* po-plug-ins/POTFILES.in: Added gee_zoom.c.
+	* plug-ins/common/gee.c, plug-ins/common/gee_zoom.c: Added i18n
+	of menu item.
+
 2000-12-19  Sven Neumann  <sven@gimp.org>
 
 	* app/curves.c: applied a patch from David Hodson that reverts
@@ -189,6 +196,7 @@
 	* plug-ins/common/gee.c: Using "env" instead of "environ" caused
 	a clash. Changed the other one to "environment".
 
+>>>>>>> 1.3131
 2000-12-17  Tor Lillqvist  <tml@iki.fi>
 
 	* config.h.win32: Typo.

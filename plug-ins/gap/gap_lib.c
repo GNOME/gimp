@@ -718,7 +718,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
    if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: DIRNAME:%s\n", l_dirname_ptr);
    l_dirp = opendir( l_dirname_ptr );  
    
-   if(!l_dirp) fprintf(stderr, "ERROR p_dir_ainfo: cant read directory %s\n", l_dirname_ptr);
+   if(!l_dirp) fprintf(stderr, "ERROR p_dir_ainfo: can't read directory %s\n", l_dirname_ptr);
    else
    {
      while ( (l_dp = readdir( l_dirp )) != NULL )
@@ -1254,7 +1254,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
 	 }
          else
          {
-            fprintf(stderr, "ERROR in p_save_named_frame: cant rename %s to %s\n",
+            fprintf(stderr, "ERROR in p_save_named_frame: can't rename %s to %s\n",
                             l_tmpname, sav_name);
             return -1;
          }
@@ -2466,7 +2466,7 @@ p_clear_or_count_video_paste(gint delete_flag)
   
   if(!l_dirp)
   {
-    printf("ERROR p_vid_edit_clear: cant read directory %s\n", l_dir);
+    printf("ERROR p_vid_edit_clear: can't read directory %s\n", l_dir);
     l_framecount = -1;
   }
   else
@@ -2919,7 +2919,7 @@ p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode)
        {
           gchar *l_lockmsg;
        
-          l_lockmsg = g_strdup_printf(_("Cant execute more than 1 Video Function\n"
+          l_lockmsg = g_strdup_printf(_("Can't execute more than 1 Video Function\n"
                                         "on the same AnimFrame Image at the same time\n"
                                         "LOCK ID:%s\n")
                                    , l_lock.key);

@@ -54,6 +54,7 @@ plug-ins/common/gauss_iir.c
 plug-ins/common/gauss_rle.c
 plug-ins/common/gbr.c
 plug-ins/common/gee.c
+plug-ins/common/gee_zoom.c
 plug-ins/common/gicon.c
 plug-ins/common/gif.c
 plug-ins/common/gih.c

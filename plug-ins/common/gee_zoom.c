@@ -136,7 +136,7 @@ query (void)
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",
-			 "<Image>/Filters/Toys/Gee-Zoom",
+			 N_("<Image>/Filters/Toys/Gee-Zoom"),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
 			 nargs, 0,

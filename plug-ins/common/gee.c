@@ -109,7 +109,7 @@ query (void)
 #ifdef HIDDEN
 			 NULL,
 #else
-			 "<Image>/Filters/Toys/Gee-Slime",
+			 N_("<Image>/Filters/Toys/Gee-Slime"),
 #endif
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
