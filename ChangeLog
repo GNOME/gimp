@@ -1,3 +1,10 @@
+2003-05-09  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/jigsaw.c: Pass the buffer size to all functions
+	using the buffer.
+	(DRAW_POINT, DARKEN_POINT, LIGHTEN_POINT): Use buffer size to
+	avoid buffer overflows. Fixes bug #100122.
+
 2003-05-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added "gboolean push_undo" to
