@@ -12,9 +12,12 @@ tipsdata_DATA = \
 	gimp_tips.hu.txt	\
 	gimp_tips.it.txt	\
 	gimp_tips.ja.txt	\
-	gimp_tips.lt.txt	\
 	gimp_tips.ko.txt	\
+	gimp_tips.lt.txt	\
+	gimp_tips.nl.txt	\
 	gimp_tips.pl.txt	\
+	gimp_tips.pt.txt	\
+	gimp_tips.ro.txt	\
 	gimp_tips.ru.txt	\
 	gimp_tips.sk.txt	\
 	gimp_tips.sl.txt	\
