@@ -111,9 +111,10 @@ gboolean gimp_image_undo_push_layer_preserve_trans  (GimpImage     *gimage,
                                                      GimpLayer     *layer);
 
 /*  text layer undo  */
-gboolean gimp_image_undo_push_text_layer            (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpTextLayer *layer);
+gboolean gimp_image_undo_push_text_layer         (GimpImage        *gimage,
+                                                  const gchar      *undo_desc,
+                                                  GimpTextLayer    *layer,
+                                                  const GParamSpec *pspec);
 
 /*  channel undos  */
 

@@ -1,3 +1,19 @@
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_size_entry_callback):
+	avoid to set the unit property with every size change; only set it
+	if it actually changed.
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_text_layer):
+	allow to pass a GParamSpec that identifies a single text property
+	to be changed. In this case, don't store a GimpText object on the
+	undo stack but only the changed value.
+
+	* app/tools/gimptexttool.c: use the new undo feature to reduce the
+	memory footprint of text undo for the common case.
+
+	* app/text/gimptextlayer.c: changed accordingly.
+
 2004-03-20  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage-qmask.c: Applied slightly modified patch

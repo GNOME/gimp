@@ -479,12 +479,13 @@ gimp_text_tool_idle_apply (GimpTextTool *text_tool)
 static void
 gimp_text_tool_apply (GimpTextTool *text_tool)
 {
-  GimpImage     *image;
-  GimpTextLayer *text_layer;
-  GObject       *src;
-  GObject       *dest;
-  GList         *list;
-  gboolean       undo_group;
+  const GParamSpec *pspec = NULL;
+  GimpImage        *image;
+  GimpTextLayer    *text_layer;
+  GObject          *src;
+  GObject          *dest;
+  GList            *list;
+  gboolean          undo_group;
 
   if (text_tool->idle_id)
     {
@@ -500,6 +501,17 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_return_if_fail (text_layer->text == text_tool->text);
 
+  /*  Walk over the list of changes and figure out if we are changing
+   *  a single property or need to push a full text undo.
+   */
+  for (list = text_tool->pending;
+       list && list->next && list->next->data == list->data;
+       list = list->next)
+    /* do nothing */;
+
+  if (g_list_length (list) == 1)
+    pspec = list->data;
+
   gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
 
   /*  If the layer contains a mask,
@@ -513,7 +525,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
     gimp_image_undo_push_drawable_mod (image, NULL,
                                        GIMP_DRAWABLE (text_layer));
 
-  gimp_image_undo_push_text_layer (image, NULL, text_layer);
+  gimp_image_undo_push_text_layer (image, NULL, text_layer, pspec);
 
   src  = G_OBJECT (text_tool->proxy);
   dest = G_OBJECT (text_tool->text);
@@ -523,14 +535,17 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_object_freeze_notify (dest);
 
-  for (list = text_tool->pending; list; list = list->next)
+  for (; list; list = list->next)
     {
-      GParamSpec *pspec = list->data;
-      GValue      value = { 0, };
+      GValue  value = { 0, };
 
       /*  look ahead and compress changes  */
       if (list->next && list->next->data == list->data)
         continue;
+
+      pspec = list->data;
+
+      g_printerr ("gimp_text_tool_apply: changing %s\n", pspec->name);
 
       g_value_init (&value, pspec->value_type);
 

@@ -500,7 +500,7 @@ gimp_text_layer_set (GimpTextLayer *layer,
   if (undo_group)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, undo_desc);
 
-  gimp_image_undo_push_text_layer (image, undo_desc, layer);
+  gimp_image_undo_push_text_layer (image, undo_desc, layer, NULL);
 
   va_start (var_args, first_property_name);
 
@@ -529,7 +529,7 @@ gimp_text_layer_discard (GimpTextLayer *layer)
 
   gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
                                    _("Discard Text Information"),
-                                   layer);
+                                   layer, NULL);
 
   gimp_text_layer_set_text (layer, NULL);
 }

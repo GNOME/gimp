@@ -1778,6 +1778,18 @@ gimp_prop_size_entry_callback (GimpSizeEntry *sizeentry,
   value      = gimp_size_entry_get_value (sizeentry, 0);
   unit_value = gimp_size_entry_get_unit (sizeentry);
 
+  if (unit_param_spec)
+    {
+      GimpUnit  old_unit;
+
+      g_object_get (config,
+                    unit_param_spec->name, &old_unit,
+                    NULL);
+
+      if (unit_value == old_unit)
+        unit_param_spec = NULL;
+    }
+
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
       g_object_set (config,
