@@ -60,6 +60,16 @@ static void         gimp_stroke_real_anchor_convert  (GimpStroke       *stroke,
                                                       GimpAnchorFeatureType  feature);
 static void         gimp_stroke_real_anchor_delete   (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor);
+
+static gboolean     gimp_stroke_real_is_extendable   (GimpStroke       *stroke,
+                                                      GimpAnchor       *neighbor);
+
+
+static GimpAnchor * gimp_stroke_real_extend          (GimpStroke           *stroke,
+                                                      const GimpCoords     *coords,
+                                                      GimpAnchor           *neighbor,
+                                                      GimpVectorExtendMode  extend_mode);
+
 static gdouble      gimp_stroke_real_get_length      (const GimpStroke *stroke);
 static gdouble      gimp_stroke_real_get_distance    (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
@@ -159,6 +169,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->anchor_move_absolute    = gimp_stroke_real_anchor_move_absolute;
   klass->anchor_convert          = gimp_stroke_real_anchor_convert;
   klass->anchor_delete           = gimp_stroke_real_anchor_delete;
+  klass->is_extendable           = gimp_stroke_real_is_extendable;
+  klass->extend                  = gimp_stroke_real_extend;
 
   klass->get_length              = gimp_stroke_real_get_length;
   klass->get_distance            = gimp_stroke_real_get_distance;
@@ -334,7 +346,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
 
   list = stroke->anchors;
 
-  if (exclusive)
+  if (exclusive || anchor == NULL)
     {
       while (list)
         {
@@ -440,7 +452,44 @@ gimp_stroke_real_anchor_delete (GimpStroke *stroke,
 {
   g_printerr ("gimp_stroke_anchor_delete: default implementation\n");
 }
+ 
+gboolean
+gimp_stroke_is_extendable (GimpStroke *stroke,
+                           GimpAnchor *neighbor)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
 
+  return GIMP_STROKE_GET_CLASS (stroke)->is_extendable (stroke, neighbor);
+}
+
+static gboolean
+gimp_stroke_real_is_extendable (GimpStroke *stroke,
+                                GimpAnchor *neighbor)
+{
+  return FALSE;
+}
+
+
+GimpAnchor *
+gimp_stroke_extend (GimpStroke           *stroke,
+                    const GimpCoords     *coords,
+                    GimpAnchor           *neighbor,
+                    GimpVectorExtendMode  extend_mode)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->extend (stroke, coords,
+                                                 neighbor, extend_mode);
+}
+
+static GimpAnchor *
+gimp_stroke_real_extend (GimpStroke           *stroke,
+                         const GimpCoords     *coords,
+                         GimpAnchor           *neighbor,
+                         GimpVectorExtendMode  extend_mode)
+{
+  return NULL;
+}
 
 gdouble
 gimp_stroke_get_length (const GimpStroke *stroke)

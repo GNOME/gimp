@@ -768,6 +768,26 @@ gimp_vectors_real_anchor_delete (GimpVectors *vectors,
 }
 
 
+void
+gimp_vectors_anchor_select (GimpVectors *vectors,
+                            GimpStroke  *target_stroke,
+                            GimpAnchor  *anchor,
+                            gboolean     exclusive)
+{
+  GList      *stroke_list;
+  GimpStroke *stroke;
+
+  for (stroke_list = vectors->strokes; stroke_list;
+       stroke_list = g_list_next (stroke_list))
+    {
+      stroke = GIMP_STROKE (stroke_list->data);
+      gimp_stroke_anchor_select (stroke,
+                                 stroke == target_stroke ? anchor : NULL,
+                                 exclusive);
+    }
+}
+
+
 gdouble
 gimp_vectors_get_length (const GimpVectors *vectors,
                          const GimpAnchor  *start)

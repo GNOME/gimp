@@ -130,13 +130,13 @@ moveto (FT_Vector *to,
   g_object_unref (context->stroke);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, NULL, EXTEND_SIMPLE);
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
@@ -159,13 +159,13 @@ lineto (FT_Vector *to,
   gimp_text_vector_coords (context, to, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
@@ -189,16 +189,16 @@ conicto (FT_Vector *control,
   gimp_text_vector_coords (context, control, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   gimp_text_vector_coords (context, to, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
@@ -223,19 +223,19 @@ cubicto (FT_Vector *control1,
   gimp_text_vector_coords (context, control1, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   gimp_text_vector_coords (context, to, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   gimp_text_vector_coords (context, control2, &coords);
 
   context->anchor =
-    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+    gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;

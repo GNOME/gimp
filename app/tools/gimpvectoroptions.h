@@ -37,6 +37,8 @@ typedef struct _GimpToolOptionsClass GimpVectorOptionsClass;
 struct _GimpVectorOptions
 {
   GimpSelectionOptions  parent_instance;
+
+  gboolean              edit_mode;
 };
 
 

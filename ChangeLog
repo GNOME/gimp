@@ -1,3 +1,23 @@
+2003-08-17  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.[ch]: Virtualized
+	gimp_bezier_stroke_extend, added gimp_stroke_is_extendable.
+
+	* app/text/gimptext-vectors.c: changed accordingly.
+
+	* app/vectors/gimpvectors.[ch]: added gimp_vectors_anchor_select.
+
+	* app/tools/gimpvectoroptions.[ch]: dummy switch for future
+	extensions
+	
+	* app/tools/gimpvectortool.[ch]: Major overhaul. Made use of
+	gimp_vector_tool_oper_update, cleaned up
+	gimp_vector_tool_button_press a lot and finally have a
+	working cursor_update. Still buggy, but I wanted to have it
+	in CVS.
+
+	
 2003-08-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c: warn the user if loading or saving

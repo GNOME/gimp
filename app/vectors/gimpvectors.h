@@ -118,8 +118,14 @@ void          gimp_vectors_anchor_move_absolute (GimpVectors        *vectors,
                                                  const GimpCoords   *coord,
                                                  gint                type);
 
-void            gimp_vectors_anchor_delete      (GimpVectors        *vectors,
+void          gimp_vectors_anchor_delete        (GimpVectors        *vectors,
                                                  GimpAnchor         *anchor);
+
+void          gimp_vectors_anchor_select        (GimpVectors        *vectors,
+                                                 GimpStroke         *target_stroke,
+                                                 GimpAnchor         *anchor,
+                                                 gboolean            exclusive);
+
 
 /* GimpStroke is a connected component of a GimpVectors object */
 

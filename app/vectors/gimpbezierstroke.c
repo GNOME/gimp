@@ -44,10 +44,11 @@ static void gimp_bezier_stroke_anchor_move_absolute (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor,
                                                      const GimpCoords  *coord,
                                                      GimpAnchorFeatureType feature);
-
 static void gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
                                                GimpAnchorFeatureType  feature);
+static gboolean gimp_bezier_stroke_is_extendable    (GimpStroke *stroke,
+                                                     GimpAnchor *neighbor);
 static GArray *   gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                                   const gdouble      precision,
                                                   gboolean          *closed);
@@ -136,6 +137,8 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_relative = gimp_bezier_stroke_anchor_move_relative;
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
+  stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
+  stroke_class->extend               = gimp_bezier_stroke_extend;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
 }
 
@@ -194,7 +197,7 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
   count = 0;
 
   while (count < n_coords)
-    last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
+    last_anchor = gimp_bezier_stroke_extend (stroke,
                                              &coords[count++],
                                              last_anchor,
                                              EXTEND_SIMPLE);
@@ -205,20 +208,107 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
 }
 
 
+static gboolean
+gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
+                                  GimpAnchor *neighbor)
+{
+  GimpBezierStroke *bezier_stroke;
+  GList            *listneighbor;
+  gint              loose_end;
+
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
+
+  if (stroke->closed)
+    return FALSE;
+
+  if (stroke->anchors == NULL)
+    return TRUE;
+  
+  /* assure that there is a neighbor specified */
+  g_return_val_if_fail (neighbor != NULL, FALSE);
+
+  loose_end = 0;
+  listneighbor = g_list_last (stroke->anchors);
+
+  /* Check if the neighbor is at an end of the control points */
+  if (listneighbor->data == neighbor)
+    {
+      loose_end = 1;
+    }
+  else
+    {
+      listneighbor = g_list_first (stroke->anchors);
+      if (listneighbor->data == neighbor)
+        {
+          loose_end = -1;
+        }
+      else
+        {
+          /*
+           * it isnt. if we are on a handle go to the nearest
+           * anchor and see if we can find an end from it.
+           * Yes, this is tedious.
+           */
+
+          listneighbor = g_list_find (stroke->anchors, neighbor);
+
+          if (listneighbor && neighbor->type == GIMP_ANCHOR_CONTROL)
+            {
+              if (listneighbor->prev &&
+                  ((GimpAnchor *) listneighbor->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+                {
+                  listneighbor = listneighbor->prev;
+                }
+              else if (listneighbor->next &&
+                       ((GimpAnchor *) listneighbor->next->data)->type == GIMP_ANCHOR_ANCHOR)
+                {
+                  listneighbor = listneighbor->next;
+                }
+              else
+                {
+                  loose_end = 0;
+                  listneighbor = NULL;
+                }
+            }
+
+          if (listneighbor)
+            /* we found a suitable ANCHOR_ANCHOR now, lets
+             * search for its loose end.
+             */
+            {
+              if (listneighbor->prev &&
+                  listneighbor->prev->prev == NULL)
+                {
+                  loose_end = -1;
+                  listneighbor = listneighbor->prev;
+                }
+              else if (listneighbor->next &&
+                       listneighbor->next->next == NULL)
+                {
+                  loose_end = 1;
+                  listneighbor = listneighbor->next;
+                }
+            }
+        }
+    }
+
+  return (loose_end != 0);
+}
+
 GimpAnchor *
-gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
+gimp_bezier_stroke_extend (GimpStroke           *stroke,
                            const GimpCoords     *coords,
                            GimpAnchor           *neighbor,
                            GimpVectorExtendMode  extend_mode)
 {
-  GimpAnchor *anchor = NULL;
-  GimpStroke *stroke;
-  GList      *listneighbor;
-  gint        loose_end, control_count;
+  GimpAnchor       *anchor = NULL;
+  GimpBezierStroke *bezier_stroke;
+  GList            *listneighbor;
+  gint              loose_end, control_count;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (bezier_stroke), NULL);
-
-  stroke = GIMP_STROKE (bezier_stroke);
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
+  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
 
   g_return_val_if_fail (!stroke->closed, NULL);
 
@@ -237,13 +327,13 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
           break;
 
         case EXTEND_EDITABLE:
-          anchor = gimp_bezier_stroke_extend (bezier_stroke,
+          anchor = gimp_bezier_stroke_extend (stroke,
                                               coords, anchor,
                                               EXTEND_SIMPLE);
 
           gimp_stroke_anchor_select (stroke, anchor, TRUE);
 
-          anchor = gimp_bezier_stroke_extend (bezier_stroke,
+          anchor = gimp_bezier_stroke_extend (stroke,
                                               coords, anchor,
                                               EXTEND_SIMPLE);
 
@@ -388,24 +478,24 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
               switch (control_count)
                 {
                 case 0:
-                  neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                  neighbor = gimp_bezier_stroke_extend (stroke,
                                                         &(neighbor->position),
                                                         neighbor,
                                                         EXTEND_SIMPLE);
                 case 1:
-                  neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                  neighbor = gimp_bezier_stroke_extend (stroke,
                                                         coords,
                                                         neighbor,
                                                         EXTEND_SIMPLE);
                 case 2:
-                  neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                  neighbor = gimp_bezier_stroke_extend (stroke,
                                                         coords,
                                                         neighbor,
                                                         EXTEND_SIMPLE);
 
                   gimp_stroke_anchor_select (stroke, neighbor, TRUE);
 
-                  anchor = gimp_bezier_stroke_extend (bezier_stroke,
+                  anchor = gimp_bezier_stroke_extend (stroke,
                                                       coords,
                                                       neighbor,
                                                       EXTEND_SIMPLE);

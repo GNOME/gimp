@@ -73,6 +73,14 @@ struct _GimpStrokeClass
   void          (* anchor_delete)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor);
 
+  gboolean      (* is_extendable)        (GimpStroke            *stroke,
+                                          GimpAnchor            *neighbor);
+
+  GimpAnchor  * (* extend)               (GimpStroke            *stroke,
+                                          const GimpCoords      *coords,
+                                          GimpAnchor            *neighbor,
+                                          GimpVectorExtendMode   extend_mode);
+                                          
   gdouble       (* get_length)           (const GimpStroke      *stroke);
   gdouble       (* get_distance)         (const GimpStroke      *stroke,
                                           const GimpCoords      *coord);
@@ -169,6 +177,14 @@ void         gimp_stroke_anchor_delete        (GimpStroke            *stroke,
                                                GimpAnchor            *anchor);
 
 
+gboolean     gimp_stroke_is_extendable        (GimpStroke            *stroke,
+                                               GimpAnchor            *neighbor);
+
+GimpAnchor * gimp_stroke_extend               (GimpStroke            *stroke,
+                                               const GimpCoords      *coords,
+                                               GimpAnchor            *neighbor,
+                                               GimpVectorExtendMode   extend_mode);
+                                          
 /* accessing the shape of the curve */
 
 gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke);

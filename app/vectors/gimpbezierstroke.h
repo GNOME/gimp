@@ -54,7 +54,7 @@ GimpStroke * gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
                                                  gint              n_coords,
                                                  gboolean          closed);
 
-GimpAnchor * gimp_bezier_stroke_extend     (GimpBezierStroke     *bezier_stroke,
+GimpAnchor * gimp_bezier_stroke_extend     (GimpStroke           *stroke,
                                             const GimpCoords     *coords,
                                             GimpAnchor           *neighbor,
                                             GimpVectorExtendMode  extend_mode);

@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Vector tool
+ * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -26,11 +29,12 @@
 /*  possible vector functions  */
 typedef enum 
 {
-  VECTORS_CREATING,
-  VECTORS_ADDING,
-  VECTORS_MOVING,
-  VECTORS_MOVING_ALL,
-  VECTORS_GUIDING,
+  VECTORS_CREATE_VECTOR,
+  VECTORS_CREATE_STROKE,
+  VECTORS_ADD_ANCHOR,
+  VECTORS_MOVE_ANCHOR,
+  VECTORS_MOVE_HANDLE,
+  VECTORS_CONVERT_EDGE,
   VECTORS_FINISHED
 } VectorFunction;
 
