@@ -1,3 +1,7 @@
+2000-09-04  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* no.po: Updated Norwegian translation.
+	
 Mon Aug 28 12:16:00 CEST 2000  Marc Lehmann <pcg@goof.com>
 
 	* ga.po: fixed bug that caused the build to fail.

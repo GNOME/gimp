@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2000-08-22 13:15+0200\n"
-"PO-Revision-Date: 2000-08-22 13:17+0200\n"
+"POT-Creation-Date: 2000-09-04 23:00+0200\n"
+"PO-Revision-Date: 2000-09-04 23:11+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -175,11 +175,11 @@ msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
 
-#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
 msgstr "Gjenles alle tilgjengelige skript"
 
-#: plug-ins/script-fu/script-fu.c:1021
+#: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
 
@@ -780,11 +780,11 @@ msgstr "Legg til skygge"
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Allow Resizing"
-msgstr ""
+msgstr "Tillat endring av størrelse"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
-msgstr ""
+msgstr "Amplityde"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
@@ -792,19 +792,19 @@ msgstr "Vinkel"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Anim-Filter for all Copies"
-msgstr ""
+msgstr "Anim-filter for alle kopier"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
-msgstr ""
+msgstr "Antialias"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
-msgstr ""
+msgstr "Påfør generert lagmaske"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Apply Layer Mask (or discard)"
-msgstr ""
+msgstr "Påfør lagmaske (eller forkast)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #, fuzzy
@@ -814,11 +814,11 @@ msgstr "Forfatter:"
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Azimuth"
-msgstr ""
+msgstr "Azimuth"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "BG Opacity"
-msgstr ""
+msgstr "BG ugjennomsiktighet"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
@@ -1028,7 +1028,7 @@ msgstr "Krom-metning"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Forkrom hvite områder"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
@@ -1036,7 +1036,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
-msgstr ""
+msgstr "Tøm ikke-valgt maskeområde"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
@@ -1117,7 +1117,7 @@ msgstr "Detaljnivå"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
-msgstr ""
+msgstr "Detalj i midten"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1221,11 +1221,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
-msgstr ""
+msgstr "Slutt X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End Y"
-msgstr ""
+msgstr "Slutt Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
@@ -1236,32 +1236,31 @@ msgstr "Utgangsvinkel"
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr ""
+msgstr "Miljøkart"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
-msgstr ""
+msgstr "Slett før tegning"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
-msgstr ""
+msgstr "Lik"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even/Odd"
-msgstr ""
+msgstr "Lik/odde"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
-msgstr ""
+msgstr "FG-BG-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-RGB"
-msgstr ""
+msgstr "FG-BG-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "FG-Transparent"
-msgstr "Behold bakgrunn"
+msgstr "FG-gjennomsiktig"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
@@ -1282,20 +1281,19 @@ msgstr ""
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Filename"
-msgstr ""
+msgstr "Filnavn"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
-#, fuzzy
 msgid "Fill Angle"
-msgstr "Utgangsvinkel"
+msgstr "Fyllvinkel"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Fyll BG med mønster"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
-msgstr ""
+msgstr "Fyll med BG-farge"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1428,9 +1426,8 @@ msgid "Glow Color"
 msgstr "Farge for glød"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#, fuzzy
 msgid "Glow Radius"
-msgstr "Radius"
+msgstr "Radius for glød"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 #, fuzzy
@@ -1461,20 +1458,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr ""
+msgstr "Rutenett X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr ""
+msgstr "Rutenett Y"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
-#, fuzzy
 msgid "Height"
-msgstr "Høyde:"
+msgstr "Høyde"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1510,7 +1506,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1533,9 +1529,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid "Index Image"
-msgstr "Bilde"
+msgstr "Indeksbilde"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
@@ -1543,11 +1538,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "Sett inn lagnavn"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
-msgstr ""
+msgstr "Midlertidige rammer"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
@@ -1588,28 +1583,24 @@ msgid "Left"
 msgstr "Venstre"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "Lighting (degrees)"
-msgstr "Skarphet (grader)"
+msgstr "Lyssetting (grader)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
-msgstr ""
+msgstr "Løkke"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Lower Color (Active)"
-msgstr "Tekstfarge (aktiv)"
+msgstr "Nedre farge (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Lower Color"
-msgstr "Farge på sfære"
+msgstr "Nedre farge"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
 msgid "Lower-Right color"
-msgstr "Farge på sfære"
+msgstr "Farge nede til høyre"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
@@ -1638,17 +1629,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Ingen bakgrunn (kun for separat lag)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr "Tekstfarge (aktiv)"
+msgstr "Ikke trykket (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Not Pressed"
-msgstr "Tekstfarge (aktiv)"
+msgstr "Ikke trykket"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
@@ -1661,16 +1650,16 @@ msgstr "Antall farger"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Number of Copies"
-msgstr ""
+msgstr "Antall kopier"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
-msgstr ""
+msgstr "Antall rammer"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Number of Lines"
-msgstr ""
+msgstr "Antall linjer"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
@@ -1679,46 +1668,42 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "Antall X-fliser"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Antall Y-fliser"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "Antall"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
-msgstr ""
+msgstr "Odde"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "Offset (pixels)"
-msgstr "Radius (piksler)"
+msgstr "Avstand (piksler)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
 msgid "Offset Radius"
-msgstr "Radius"
+msgstr "Avstandsradius"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid "Offset X"
-msgstr "Radius"
+msgstr "Avstand X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid "Offset Y"
-msgstr "Radius"
+msgstr "Avstand Y"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "Offsets (pixels * 2)"
-msgstr ""
+msgstr "Avstander (piksler * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #, fuzzy
@@ -1737,7 +1722,7 @@ msgstr "Orientering"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
-msgstr ""
+msgstr "Ytre grense"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #, fuzzy
@@ -1765,21 +1750,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Padding Around Text"
-msgstr ""
+msgstr "Fyll rundt tekst"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Padding X"
-msgstr "Fyll"
+msgstr "Fyll X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Padding Y"
-msgstr "Fyll"
+msgstr "Fyll Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "Fyll for gjennomsiktige områder"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
@@ -1787,9 +1770,8 @@ msgid "Padding"
 msgstr "Fyll"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
 msgid "Pattern (Outline)"
-msgstr "Mønster (tekst)"
+msgstr "Mønster (omriss)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
@@ -1808,9 +1790,8 @@ msgstr "Mønster (tekst)"
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "Pattern"
-msgstr "Skriver:"
+msgstr "Mønster"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -1818,7 +1799,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr ""
+msgstr "Pikselmengde"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
@@ -1828,7 +1809,7 @@ msgstr "Lag til piksler"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Pressed"
-msgstr ""
+msgstr "Presset"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
@@ -1847,7 +1828,7 @@ msgstr "Radius (piksler)"
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1856,26 +1837,24 @@ msgstr "Tilfeldig seed"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
-msgstr ""
+msgstr "Tilfeldighet"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
-msgstr ""
+msgstr "Relativ avstand til horisonten"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Length of Shadow"
-msgstr ""
+msgstr "Relativ lengde på skygge"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
-#, fuzzy
 msgid "Relative Radius"
-msgstr "Radius"
+msgstr "Relativ radius"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid "Remove Background"
-msgstr "Behold bakgrunn"
+msgstr "Fjern bakgrunn"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
@@ -1907,21 +1886,21 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "Rader"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
-msgstr ""
+msgstr "Rader/kolonner"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale X"
-msgstr ""
+msgstr "Skala X"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
-msgstr ""
+msgstr "Skala Y"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #, fuzzy
@@ -1931,14 +1910,13 @@ msgstr "Spreding"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr ""
+msgstr "Velg-etter-farge terskel"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
-#, fuzzy
 msgid "Separate Layer"
-msgstr "Mellomrom mellom lag"
+msgstr "Separat lag"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
@@ -1951,9 +1929,8 @@ msgstr "Radius"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid "Shadow Color"
-msgstr "Skygge"
+msgstr "Skyggefarge"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
@@ -1961,14 +1938,12 @@ msgid "Shadow Darkness"
 msgstr "Skygge"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
 msgid "Shadow Depth"
-msgstr "Skygge"
+msgstr "Skyggedybde"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
 msgid "Shadow Weight (%)"
-msgstr "Skygge"
+msgstr "Skyggetyngde (%)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -2043,7 +2018,7 @@ msgstr "Spredning"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Squares"
-msgstr ""
+msgstr "Ruter"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
@@ -2185,19 +2160,16 @@ msgid "Up"
 msgstr "Opp"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Upper Color (Active)"
-msgstr "Tekstfarge (aktiv)"
+msgstr "Øvre farge (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Upper Color"
-msgstr "Farge på sfære"
+msgstr "Øvre farge"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
 msgid "Upper-Left color"
-msgstr "Farge på sfære"
+msgstr "Farge oppe til venstre"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
@@ -2233,11 +2205,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
-msgstr ""
+msgstr "Bølgelengde"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
+msgstr "Hjulradius (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
@@ -2262,7 +2234,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Width"
-msgstr ""
+msgstr "Bredde"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -2272,4 +2244,3 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
-
