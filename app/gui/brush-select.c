@@ -86,14 +86,14 @@ static GSList *brush_active_dialogs = NULL;
 /*  public functions  */
 
 BrushSelect *
-brush_select_new (Gimp        *gimp,
-                  GimpContext *context,
-                  const gchar *title,
-		  const gchar *init_name,
-		  gdouble      init_opacity,
-		  gint         init_spacing,
-		  gint         init_mode,
-                  const gchar *callback_name)
+brush_select_new (Gimp                 *gimp,
+                  GimpContext          *context,
+                  const gchar          *title,
+		  const gchar          *initial_brush,
+		  gdouble               initial_opacity,
+		  GimpLayerModeEffects  initial_mode,
+		  gint                  initial_spacing,
+                  const gchar          *callback_name)
 {
   BrushSelect   *bsp;
   GtkWidget     *sep;
@@ -113,11 +113,11 @@ brush_select_new (Gimp        *gimp,
 
   first_call = FALSE;
 
-  if (init_name && strlen (init_name))
+  if (initial_brush && strlen (initial_brush))
     {
       active = (GimpBrush *)
 	gimp_container_get_child_by_name (gimp->brush_factory->container,
-					  init_name);
+					  initial_brush);
     }
 
   if (! active)
@@ -150,9 +150,9 @@ brush_select_new (Gimp        *gimp,
     }
 
   gimp_context_set_brush (bsp->context, active);
-  gimp_context_set_paint_mode (bsp->context, init_mode);
-  gimp_context_set_opacity (bsp->context, init_opacity);
-  bsp->spacing_value = init_spacing;
+  gimp_context_set_paint_mode (bsp->context, initial_mode);
+  gimp_context_set_opacity (bsp->context, initial_opacity);
+  bsp->spacing_value = initial_spacing;
 
   g_signal_connect (G_OBJECT (bsp->context), "brush_changed",
                     G_CALLBACK (brush_select_brush_changed),
@@ -234,10 +234,10 @@ brush_select_new (Gimp        *gimp,
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 
-  if (init_spacing >= 0)
+  if (initial_spacing >= 0)
     {
       /*  Use passed spacing instead of brushes default  */
-      gtk_adjustment_set_value (spacing_adj, init_spacing);
+      gtk_adjustment_set_value (spacing_adj, initial_spacing);
     }
 
   g_signal_connect (G_OBJECT (spacing_adj), "value_changed",

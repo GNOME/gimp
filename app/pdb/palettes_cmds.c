@@ -38,18 +38,18 @@
 #include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord palettes_refresh_proc;
+static ProcRecord palettes_get_list_proc;
 static ProcRecord palettes_get_palette_proc;
 static ProcRecord palettes_set_palette_proc;
-static ProcRecord palettes_get_list_proc;
 static ProcRecord palettes_get_palette_entry_proc;
 
 void
 register_palettes_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &palettes_refresh_proc);
+  procedural_db_register (gimp, &palettes_get_list_proc);
   procedural_db_register (gimp, &palettes_get_palette_proc);
   procedural_db_register (gimp, &palettes_set_palette_proc);
-  procedural_db_register (gimp, &palettes_get_list_proc);
   procedural_db_register (gimp, &palettes_get_palette_entry_proc);
 }
 
@@ -85,6 +85,68 @@ static ProcRecord palettes_refresh_proc =
   0,
   NULL,
   { { palettes_refresh_invoker } }
+};
+
+static Argument *
+palettes_get_list_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar **palettes;
+  GList *list;
+  gint i = 0;
+
+  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
+
+  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+    }
+
+  success = (i > 0);
+
+  return_args = procedural_db_return_args (&palettes_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = gimp->palette_factory->container->num_children;
+      return_args[2].value.pdb_pointer = palettes;
+    }
+
+  return return_args;
+}
+
+static ProcArg palettes_get_list_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_palettes",
+    "The number of palettes in the list"
+  },
+  {
+    GIMP_PDB_STRINGARRAY,
+    "palette_list",
+    "The list of palette names"
+  }
+};
+
+static ProcRecord palettes_get_list_proc =
+{
+  "gimp_palettes_get_list",
+  "Retrieves a list of all of the available palettes",
+  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp_palette_set_palette'.",
+  "Nathan Summers <rock@gimp.org>",
+  "Nathan Summers",
+  "2001",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  2,
+  palettes_get_list_outargs,
+  { { palettes_get_list_invoker } }
 };
 
 static Argument *
@@ -187,68 +249,6 @@ static ProcRecord palettes_set_palette_proc =
   0,
   NULL,
   { { palettes_set_palette_invoker } }
-};
-
-static Argument *
-palettes_get_list_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar **palettes;
-  GList *list;
-  gint i = 0;
-
-  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&palettes_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->palette_factory->container->num_children;
-      return_args[2].value.pdb_pointer = palettes;
-    }
-
-  return return_args;
-}
-
-static ProcArg palettes_get_list_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num_palettes",
-    "The number of palettes in the list"
-  },
-  {
-    GIMP_PDB_STRINGARRAY,
-    "palette_list",
-    "The list of palette names"
-  }
-};
-
-static ProcRecord palettes_get_list_proc =
-{
-  "gimp_palettes_get_list",
-  "Retrieves a list of all of the available palettes",
-  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp_palette_set_palette'.",
-  "Nathan Summers <rock@gimp.org>",
-  "Nathan Summers",
-  "2001",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  2,
-  palettes_get_list_outargs,
-  { { palettes_get_list_invoker } }
 };
 
 static Argument *

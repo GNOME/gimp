@@ -207,7 +207,7 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
   g_free (gradient_samples);
 
   if (gradient_name == NULL)
-    gradient_name = gimp_gradients_get_active ();
+    gradient_name = gimp_gradients_get_gradient ();
 
   gimp_gradients_get_gradient_data (gradient_name, wvals.ncolors, &dummy,
                                     &gradient_samples);
@@ -893,7 +893,7 @@ explorer_dialog (void)
 			   _("Create a color-map using a gradient from "
 			     "the gradient editor"), NULL);
 
-  gradient_name = gimp_gradients_get_active ();
+  gradient_name = gimp_gradients_get_gradient ();
   gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors);
   gradient = gimp_gradient_select_widget (_("FractalExplorer Gradient"),
 					  gradient_name,

@@ -29,14 +29,26 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar* gimp_brushes_get_brush_data (gchar                 *name,
-				    gdouble               *opacity,
-				    gint                  *spacing,
-				    GimpLayerModeEffects  *paint_mode,
-				    gint                  *width,
-				    gint                  *height,
-				    gint                  *length,
-				    guint8               **mask_data);
+gboolean             gimp_brushes_refresh        (void);
+gchar**              gimp_brushes_get_list       (gint                  *num_brushes);
+gchar*               gimp_brushes_get_brush      (gint                  *width,
+						  gint                  *height,
+						  gint                  *spacing);
+gboolean             gimp_brushes_set_brush      (gchar                 *name);
+gdouble              gimp_brushes_get_opacity    (void);
+gboolean             gimp_brushes_set_opacity    (gdouble                opacity);
+gint                 gimp_brushes_get_spacing    (void);
+gboolean             gimp_brushes_set_spacing    (gint                   spacing);
+GimpLayerModeEffects gimp_brushes_get_paint_mode (void);
+gboolean             gimp_brushes_set_paint_mode (GimpLayerModeEffects   paint_mode);
+gchar*               gimp_brushes_get_brush_data (gchar                 *name,
+						  gdouble               *opacity,
+						  gint                  *spacing,
+						  GimpLayerModeEffects  *paint_mode,
+						  gint                  *width,
+						  gint                  *height,
+						  gint                  *length,
+						  guint8               **mask_data);
 
 
 G_END_DECLS

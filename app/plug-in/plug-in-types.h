@@ -29,7 +29,7 @@ typedef enum
   GIMP_RUN_WITH_LAST_VALS
 } GimpRunMode;
 
-typedef enum
+typedef enum /*< pdb-skip >*/ /*< skip >*/
 {
   PLUG_IN_RGB_IMAGE      = 1 << 0,
   PLUG_IN_GRAY_IMAGE     = 1 << 1,

@@ -48,13 +48,9 @@ static void   tool_options_dialog_destroy           (GtkWidget    *widget,
 static void   tool_options_dialog_tool_changed      (GimpContext  *context,
                                                      GimpToolInfo *tool_info,
                                                      gpointer      data);
-
 static void   tool_options_dialog_drop_tool         (GtkWidget    *widget,
                                                      GimpViewable *viewable,
                                                      gpointer      data);
-static GimpViewable * tool_options_dialog_drag_tool (GtkWidget    *widget,
-                                                     gpointer      data);
-
 static void   tool_options_dialog_save_callback     (GtkWidget    *widget,
                                                      GimpContext  *context);
 static void   tool_options_dialog_restore_callback  (GtkWidget    *widget,
@@ -247,17 +243,6 @@ tool_options_dialog_drop_tool (GtkWidget    *widget,
   context = GIMP_CONTEXT (data);
 
   gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));
-}
-
-GimpViewable *
-tool_options_dialog_drag_tool (GtkWidget *widget,
-			       gpointer   data)
-{
-  GimpContext *context;
-
-  context = GIMP_CONTEXT (data);
-
-  return (GimpViewable *) gimp_context_get_tool (context);
 }
 
 static void

@@ -56,8 +56,7 @@ palettes_popup_invoker (Gimp     *gimp,
   gchar *palette_callback;
   gchar *popup_title;
   gchar *initial_palette;
-  ProcRecord *prec;
-  PaletteSelect *newdialog;
+  ProcRecord *proc;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL)
@@ -71,16 +70,17 @@ palettes_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, palette_callback)))
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, palette_callback)))
 	{
 	  if (initial_palette && strlen (initial_palette))
-	    newdialog = palette_select_new (gimp, NULL, popup_title,
-					    initial_palette,
-					    palette_callback);
+	    palette_select_new (gimp, NULL, popup_title,
+				initial_palette,
+				palette_callback);
 	  else
-	    newdialog = palette_select_new (gimp, NULL, popup_title,
-					    NULL,
-					    palette_callback);
+	    palette_select_new (gimp, NULL, popup_title,
+				NULL,
+				palette_callback);
 	}
       else
 	{
@@ -115,7 +115,7 @@ static ProcRecord palettes_popup_proc =
   "gimp_palettes_popup",
   "Invokes the Gimp palette selection.",
   "This procedure popups the palette selection dialog.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2002",
   GIMP_INTERNAL,
@@ -132,7 +132,7 @@ palettes_close_popup_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *palette_callback;
-  ProcRecord *prec;
+  ProcRecord *proc;
   PaletteSelect *psp;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
@@ -141,7 +141,8 @@ palettes_close_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, palette_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, palette_callback)) &&
 	  (psp = palette_select_get_by_callback (palette_callback)))
 	{
 	  palette_select_free (psp);
@@ -169,7 +170,7 @@ static ProcRecord palettes_close_popup_proc =
   "gimp_palettes_close_popup",
   "Popdown the Gimp palette selection.",
   "This procedure closes an opened palette selection dialog.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2002",
   GIMP_INTERNAL,
@@ -187,7 +188,7 @@ palettes_set_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *palette_callback;
   gchar *palette_name;
-  ProcRecord *prec;
+  ProcRecord *proc;
   PaletteSelect *psp;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
@@ -200,20 +201,18 @@ palettes_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, palette_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, palette_callback)) &&
 	  (psp = palette_select_get_by_callback (palette_callback)))
 	{
 	  GimpPalette *active = (GimpPalette *)
 	    gimp_container_get_child_by_name (gimp->palette_factory->container,
 					      palette_name);
     
-	  if (active)
-	    {
-	      /* Must alter the wigdets on screen as well */
-	      gimp_context_set_palette (psp->context, active);
-	    }
-	  else
-	    success = FALSE;
+	  success = (active != NULL);
+    
+	  if (success)
+	    gimp_context_set_palette (psp->context, active);
 	}
       else
 	success = FALSE;
@@ -241,7 +240,7 @@ static ProcRecord palettes_set_popup_proc =
   "gimp_palettes_set_popup",
   "Sets the current palette selection in a popup.",
   "Sets the current palette selection in a popup.",
-  "Michael Natterer",
+  "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2002",
   GIMP_INTERNAL,

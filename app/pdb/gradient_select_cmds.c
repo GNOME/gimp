@@ -58,8 +58,7 @@ gradients_popup_invoker (Gimp     *gimp,
   gchar *popup_title;
   gchar *initial_gradient;
   gint32 sample_size;
-  ProcRecord *prec;
-  GradientSelect *newdialog;
+  ProcRecord *proc;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL)
@@ -77,18 +76,19 @@ gradients_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, gradient_callback)))
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, gradient_callback)))
 	{
 	  if (initial_gradient && strlen (initial_gradient))
-	    newdialog = gradient_select_new (gimp, NULL, popup_title,
-					     initial_gradient,
-					     gradient_callback,
-					     sample_size);
+	    gradient_select_new (gimp, NULL, popup_title,
+				 initial_gradient,
+				 gradient_callback,
+				 sample_size);
 	  else
-	    newdialog = gradient_select_new (gimp, NULL, popup_title,
-					     NULL,
-					     gradient_callback,
-					     sample_size);
+	    gradient_select_new (gimp, NULL, popup_title,
+				 NULL,
+				 gradient_callback,
+				 sample_size);
 	}
       else
 	{
@@ -154,7 +154,8 @@ gradients_close_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+      if (! gimp->no_interface &&
+	  (prec = procedural_db_lookup (gimp, gradient_callback)) &&
 	  (gsp = gradient_select_get_by_callback (gradient_callback)))
 	{
 	  gradient_select_free (gsp);
@@ -213,7 +214,8 @@ gradients_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+      if (! gimp->no_interface &&
+	  (prec = procedural_db_lookup (gimp, gradient_callback)) &&
 	  (gsp = gradient_select_get_by_callback (gradient_callback)))
 	{
 	  GimpGradient *active = NULL;

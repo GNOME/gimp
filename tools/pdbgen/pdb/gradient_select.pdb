@@ -51,21 +51,22 @@ sub gradients_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradientSelect *newdialog' ],
+	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, gradient_callback)))
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, gradient_callback)))
     {
       if (initial_gradient && strlen (initial_gradient))
-	newdialog = gradient_select_new (gimp, NULL, popup_title,
-                                         initial_gradient,
-                                         gradient_callback,
-                                         sample_size);
+	gradient_select_new (gimp, NULL, popup_title,
+                             initial_gradient,
+                             gradient_callback,
+                             sample_size);
       else
-	newdialog = gradient_select_new (gimp, NULL, popup_title,
-                                         NULL,
-                                         gradient_callback,
-                                         sample_size);
+	gradient_select_new (gimp, NULL, popup_title,
+                             NULL,
+                             gradient_callback,
+                             sample_size);
     }
   else
     {
@@ -92,7 +93,8 @@ sub gradients_close_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+  if (! gimp->no_interface &&
+      (prec = procedural_db_lookup (gimp, gradient_callback)) &&
       (gsp = gradient_select_get_by_callback (gradient_callback)))
     {
       gradient_select_free (gsp);
@@ -124,7 +126,8 @@ sub gradients_set_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, gradient_callback)) &&
+  if (! gimp->no_interface &&
+      (prec = procedural_db_lookup (gimp, gradient_callback)) &&
       (gsp = gradient_select_get_by_callback (gradient_callback)))
     {
       GimpGradient *active = NULL;

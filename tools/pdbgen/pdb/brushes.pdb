@@ -91,6 +91,45 @@ CODE
     );
 }
 
+sub brushes_get_list {
+    $blurb = 'Retrieve a complete listing of the available brushes.';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available GIMP brushes. Each name
+returned can be used as input to the 'gimp_brushes_set_brush'.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{ name => 'brush_list', type => 'stringarray',
+	  desc => 'The list of brush names',
+	  alias => 'brushes',
+	  array => { name => 'num_brushes',
+		     desc => 'The number of brushes in the brush list',
+		     alias => 'gimp->brush_factory->container->num_children',
+                     no_declare => 1 } }
+    );
+
+    %invoke = (
+	vars => [ 'GList *list', 'int i = 0' ],
+	code => <<'CODE'
+{
+  brushes = g_new (char *, gimp->brush_factory->container->num_children);
+
+  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+    }
+
+  success = (i > 0);
+}
+CODE
+    );
+}
+
 sub brushes_get_brush {
     $blurb = 'Retrieve information about the currently active brush mask.';
 
@@ -248,45 +287,6 @@ HELP
     %invoke = ( code => 'gimp_context_set_paint_mode (gimp_get_current_context (gimp), paint_mode);' );
 }
 
-sub brushes_get_list {
-    $blurb = 'Retrieve a complete listing of the available brushes.';
-
-    $help = <<'HELP';
-This procedure returns a complete listing of available GIMP brushes. Each name
-returned can be used as input to the 'gimp_brushes_set_brush'.
-HELP
-
-    &std_pdb_misc;
-
-    @outargs = (
-	{ name => 'brush_list', type => 'stringarray',
-	  desc => 'The list of brush names',
-	  alias => 'brushes',
-	  array => { name => 'num_brushes',
-		     desc => 'The number of brushes in the brush list',
-		     alias => 'gimp->brush_factory->container->num_children',
-                     no_declare => 1 } }
-    );
-
-    %invoke = (
-	vars => [ 'GList *list', 'int i = 0' ],
-	code => <<'CODE'
-{
-  brushes = g_new (char *, gimp->brush_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-}
-CODE
-    );
-}
-
 sub brushes_get_brush_data {
     $blurb = <<'BLURB';
 Retrieve information about the currently active brush (including data).
@@ -353,11 +353,13 @@ CODE
 @headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
               "core/gimpcontext.h" "core/gimpdatafactory.h" "base/temp-buf.h");
 
-@procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
-	    brushes_get_opacity brushes_set_opacity brushes_get_spacing
-	    brushes_set_spacing brushes_get_paint_mode brushes_set_paint_mode
-	    brushes_get_list brushes_get_brush_data);
-%exports = (app => [@procs], lib => [$procs[10]]);
+@procs = qw(brushes_refresh brushes_get_list
+            brushes_get_brush brushes_set_brush
+	    brushes_get_opacity brushes_set_opacity
+            brushes_get_spacing brushes_set_spacing
+            brushes_get_paint_mode brushes_set_paint_mode
+	    brushes_get_brush_data);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brushes';
 

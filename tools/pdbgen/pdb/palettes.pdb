@@ -58,6 +58,8 @@ sub palette_outargs {
     }
 }
 
+# The defs
+
 sub palettes_refresh {
     $blurb = 'Refreshes current palettes.';
 
@@ -80,6 +82,45 @@ HELP
    */
 
   gimp_data_factory_data_init (gimp->palette_factory, FALSE);
+}
+CODE
+    );
+}
+
+sub palettes_get_list {
+    $blurb = 'Retrieves a list of all of the available palettes';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available palettes. Each name
+returned can be used as input to the command 'gimp_palette_set_palette'.
+HELP
+
+    &rock_pdb_misc;
+
+    @outargs = (
+        { name => 'palette_list', type => 'stringarray',
+          desc => 'The list of palette names',
+          alias => 'palettes',
+          array => { name => 'num_palettes',
+                     desc => 'The number of palettes in the list',
+                     alias => 'gimp->palette_factory->container->num_children',
+                     no_declare => 1 } }
+    );
+
+    %invoke = (
+        vars => [ 'GList *list', 'gint i = 0' ],
+        code => <<'CODE'
+{
+  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
+
+  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+    }
+
+  success = (i > 0);
 }
 CODE
     );
@@ -134,45 +175,6 @@ HELP
 
   if (success)
     gimp_context_set_palette (gimp_get_current_context (gimp), palette);
-}
-CODE
-    );
-}
-	
-sub palettes_get_list {
-    $blurb = 'Retrieves a list of all of the available palettes';
-
-    $help = <<'HELP';
-This procedure returns a complete listing of available palettes. Each name
-returned can be used as input to the command 'gimp_palette_set_palette'.
-HELP
-
-    &rock_pdb_misc;
-
-    @outargs = (
-        { name => 'palette_list', type => 'stringarray',
-          desc => 'The list of palette names',
-          alias => 'palettes',
-          array => { name => 'num_palettes',
-                     desc => 'The number of palettes in the list',
-                     alias => 'gimp->palette_factory->container->num_children',
-                     no_declare => 1 } }
-    );
-
-    %invoke = (
-        vars => [ 'GList *list', 'gint i = 0' ],
-        code => <<'CODE'
-{
-  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
 }
 CODE
     );
@@ -246,8 +248,9 @@ CODE
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
               "core/gimpdatafactory.h" "core/gimppalette.h");
 
-@procs = qw(palettes_refresh palettes_get_palette palettes_set_palette
-	    palettes_get_list palettes_get_palette_entry);
+@procs = qw(palettes_refresh  palettes_get_list
+            palettes_get_palette palettes_set_palette
+	    palettes_get_palette_entry);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palettes';

@@ -38,6 +38,7 @@
 #include "core/gimplist.h"
 
 static ProcRecord brushes_refresh_proc;
+static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_proc;
 static ProcRecord brushes_set_brush_proc;
 static ProcRecord brushes_get_opacity_proc;
@@ -46,13 +47,13 @@ static ProcRecord brushes_get_spacing_proc;
 static ProcRecord brushes_set_spacing_proc;
 static ProcRecord brushes_get_paint_mode_proc;
 static ProcRecord brushes_set_paint_mode_proc;
-static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
 register_brushes_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &brushes_refresh_proc);
+  procedural_db_register (gimp, &brushes_get_list_proc);
   procedural_db_register (gimp, &brushes_get_brush_proc);
   procedural_db_register (gimp, &brushes_set_brush_proc);
   procedural_db_register (gimp, &brushes_get_opacity_proc);
@@ -61,7 +62,6 @@ register_brushes_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_set_spacing_proc);
   procedural_db_register (gimp, &brushes_get_paint_mode_proc);
   procedural_db_register (gimp, &brushes_set_paint_mode_proc);
-  procedural_db_register (gimp, &brushes_get_list_proc);
   procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
@@ -97,6 +97,68 @@ static ProcRecord brushes_refresh_proc =
   0,
   NULL,
   { { brushes_refresh_invoker } }
+};
+
+static Argument *
+brushes_get_list_invoker (Gimp     *gimp,
+                          Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar **brushes;
+  GList *list;
+  int i = 0;
+
+  brushes = g_new (char *, gimp->brush_factory->container->num_children);
+
+  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+    }
+
+  success = (i > 0);
+
+  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = gimp->brush_factory->container->num_children;
+      return_args[2].value.pdb_pointer = brushes;
+    }
+
+  return return_args;
+}
+
+static ProcArg brushes_get_list_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_brushes",
+    "The number of brushes in the brush list"
+  },
+  {
+    GIMP_PDB_STRINGARRAY,
+    "brush_list",
+    "The list of brush names"
+  }
+};
+
+static ProcRecord brushes_get_list_proc =
+{
+  "gimp_brushes_get_list",
+  "Retrieve a complete listing of the available brushes.",
+  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_brushes_set_brush'.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  2,
+  brushes_get_list_outargs,
+  { { brushes_get_list_invoker } }
 };
 
 static Argument *
@@ -448,68 +510,6 @@ static ProcRecord brushes_set_paint_mode_proc =
   0,
   NULL,
   { { brushes_set_paint_mode_invoker } }
-};
-
-static Argument *
-brushes_get_list_invoker (Gimp     *gimp,
-                          Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar **brushes;
-  GList *list;
-  int i = 0;
-
-  brushes = g_new (char *, gimp->brush_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->brush_factory->container->num_children;
-      return_args[2].value.pdb_pointer = brushes;
-    }
-
-  return return_args;
-}
-
-static ProcArg brushes_get_list_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num_brushes",
-    "The number of brushes in the brush list"
-  },
-  {
-    GIMP_PDB_STRINGARRAY,
-    "brush_list",
-    "The list of brush names"
-  }
-};
-
-static ProcRecord brushes_get_list_proc =
-{
-  "gimp_brushes_get_list",
-  "Retrieve a complete listing of the available brushes.",
-  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_brushes_set_brush'.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  2,
-  brushes_get_list_outargs,
-  { { brushes_get_list_invoker } }
 };
 
 static Argument *

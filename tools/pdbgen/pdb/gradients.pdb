@@ -84,7 +84,7 @@ CODE
     );
 }
 
-sub gradients_get_active {
+sub gradients_get_gradient {
     $blurb = 'Retrieve the name of the active gradient.';
 
     $help = <<'HELP';
@@ -103,7 +103,7 @@ HELP
     %invoke = ( code => 'success = gimp_context_get_gradient (gimp_get_current_context (gimp)) != NULL;' );
 }
 
-sub gradients_set_active {
+sub gradients_set_gradient {
     $blurb = 'Sets the specified gradient as the active gradient.';
 
     $help = <<'HELP';
@@ -345,7 +345,7 @@ CODE
               "core/gimplist.h" "core/gimpgradient.h");
 
 @procs = qw(gradients_refresh gradients_get_list
-            gradients_get_active gradients_set_active
+            gradients_get_gradient gradients_set_gradient
 	    gradients_sample_uniform gradients_sample_custom
             gradients_get_gradient_data);
 %exports = (app => [@procs], lib => [@procs]);

@@ -38,8 +38,8 @@
 
 static ProcRecord gradients_refresh_proc;
 static ProcRecord gradients_get_list_proc;
-static ProcRecord gradients_get_active_proc;
-static ProcRecord gradients_set_active_proc;
+static ProcRecord gradients_get_gradient_proc;
+static ProcRecord gradients_set_gradient_proc;
 static ProcRecord gradients_sample_uniform_proc;
 static ProcRecord gradients_sample_custom_proc;
 static ProcRecord gradients_get_gradient_data_proc;
@@ -49,8 +49,8 @@ register_gradients_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &gradients_refresh_proc);
   procedural_db_register (gimp, &gradients_get_list_proc);
-  procedural_db_register (gimp, &gradients_get_active_proc);
-  procedural_db_register (gimp, &gradients_set_active_proc);
+  procedural_db_register (gimp, &gradients_get_gradient_proc);
+  procedural_db_register (gimp, &gradients_set_gradient_proc);
   procedural_db_register (gimp, &gradients_sample_uniform_proc);
   procedural_db_register (gimp, &gradients_sample_custom_proc);
   procedural_db_register (gimp, &gradients_get_gradient_data_proc);
@@ -144,15 +144,15 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_get_active_invoker (Gimp     *gimp,
-                              Argument *args)
+gradients_get_gradient_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
 
   success = gimp_context_get_gradient (gimp_get_current_context (gimp)) != NULL;
 
-  return_args = procedural_db_return_args (&gradients_get_active_proc, success);
+  return_args = procedural_db_return_args (&gradients_get_gradient_proc, success);
 
   if (success)
     return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gimp_context_get_gradient (gimp_get_current_context (gimp)))->name);
@@ -160,7 +160,7 @@ gradients_get_active_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg gradients_get_active_outargs[] =
+static ProcArg gradients_get_gradient_outargs[] =
 {
   {
     GIMP_PDB_STRING,
@@ -169,9 +169,9 @@ static ProcArg gradients_get_active_outargs[] =
   }
 };
 
-static ProcRecord gradients_get_active_proc =
+static ProcRecord gradients_get_gradient_proc =
 {
-  "gimp_gradients_get_active",
+  "gimp_gradients_get_gradient",
   "Retrieve the name of the active gradient.",
   "This procedure returns the name of the active gradient in the gradient editor.",
   "Federico Mena Quintero",
@@ -181,13 +181,13 @@ static ProcRecord gradients_get_active_proc =
   0,
   NULL,
   1,
-  gradients_get_active_outargs,
-  { { gradients_get_active_invoker } }
+  gradients_get_gradient_outargs,
+  { { gradients_get_gradient_invoker } }
 };
 
 static Argument *
-gradients_set_active_invoker (Gimp     *gimp,
-                              Argument *args)
+gradients_set_gradient_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -212,10 +212,10 @@ gradients_set_active_invoker (Gimp     *gimp,
 	}
     }
 
-  return procedural_db_return_args (&gradients_set_active_proc, success);
+  return procedural_db_return_args (&gradients_set_gradient_proc, success);
 }
 
-static ProcArg gradients_set_active_inargs[] =
+static ProcArg gradients_set_gradient_inargs[] =
 {
   {
     GIMP_PDB_STRING,
@@ -224,9 +224,9 @@ static ProcArg gradients_set_active_inargs[] =
   }
 };
 
-static ProcRecord gradients_set_active_proc =
+static ProcRecord gradients_set_gradient_proc =
 {
-  "gimp_gradients_set_active",
+  "gimp_gradients_set_gradient",
   "Sets the specified gradient as the active gradient.",
   "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients in the gradient editor. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
   "Federico Mena Quintero",
@@ -234,10 +234,10 @@ static ProcRecord gradients_set_active_proc =
   "1997",
   GIMP_INTERNAL,
   1,
-  gradients_set_active_inargs,
+  gradients_set_gradient_inargs,
   0,
   NULL,
-  { { gradients_set_active_invoker } }
+  { { gradients_set_gradient_invoker } }
 };
 
 static Argument *

@@ -26,6 +26,337 @@
 #include "gimp.h"
 
 /**
+ * gimp_brushes_refresh:
+ *
+ * Refresh current brushes.
+ *
+ * This procedure retrieves all brushes currently in the user's brush
+ * path and updates the brush dialog accordingly.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_refresh (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_refresh",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_brushes_get_list:
+ * @num_brushes: The number of brushes in the brush list.
+ *
+ * Retrieve a complete listing of the available brushes.
+ *
+ * This procedure returns a complete listing of available GIMP brushes.
+ * Each name returned can be used as input to the
+ * 'gimp_brushes_set_brush'.
+ *
+ * Returns: The list of brush names.
+ */
+gchar **
+gimp_brushes_get_list (gint *num_brushes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar **brush_list = NULL;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_list",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  *num_brushes = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_brushes = return_vals[1].data.d_int32;
+      brush_list = g_new (gchar *, *num_brushes);
+      for (i = 0; i < *num_brushes; i++)
+	brush_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return brush_list;
+}
+
+/**
+ * gimp_brushes_get_brush:
+ * @width: The brush width.
+ * @height: The brush height.
+ * @spacing: The brush spacing.
+ *
+ * Retrieve information about the currently active brush mask.
+ *
+ * This procedure retrieves information about the currently active
+ * brush mask. This includes the brush name, the width and height, and
+ * the brush spacing paramter. All paint operations and stroke
+ * operations use this mask to control the application of paint to the
+ * image.
+ *
+ * Returns: The brush name.
+ */
+gchar *
+gimp_brushes_get_brush (gint *width,
+			gint *height,
+			gint *spacing)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_brush",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      name = g_strdup (return_vals[1].data.d_string);
+      *width = return_vals[2].data.d_int32;
+      *height = return_vals[3].data.d_int32;
+      *spacing = return_vals[4].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_brushes_set_brush:
+ * @name: The brush name.
+ *
+ * Set the specified brush as the active brush.
+ *
+ * This procedure allows the active brush mask to be set by specifying
+ * its name. The name is simply a string which corresponds to one of
+ * the names of the installed brushes. If there is no matching brush
+ * found, this procedure will return an error. Otherwise, the specified
+ * brush becomes active and will be used in all subsequent paint
+ * operations.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_set_brush (gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_set_brush",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_brushes_get_opacity:
+ *
+ * Get the brush opacity.
+ *
+ * This procedure returns the opacity setting for brushes. This value
+ * is set globally and will remain the same even if the brush mask is
+ * changed. The return value is a floating point number between 0 and
+ * 100.
+ *
+ * Returns: The brush opacity.
+ */
+gdouble
+gimp_brushes_get_opacity (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble opacity = 0;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_opacity",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    opacity = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return opacity;
+}
+
+/**
+ * gimp_brushes_set_opacity:
+ * @opacity: The brush opacity.
+ *
+ * Set the brush opacity.
+ *
+ * This procedure modifies the opacity setting for brushes. This value
+ * is set globally and will remain the same even if the brush mask is
+ * changed. The value should be a floating point number between 0 and
+ * 100.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_set_opacity (gdouble opacity)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_set_opacity",
+				    &nreturn_vals,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_brushes_get_spacing:
+ *
+ * Get the brush spacing.
+ *
+ * This procedure returns the spacing setting for brushes. This value
+ * is set per brush and will change if a different brush is selected.
+ * The return value is an integer between 0 and 1000 which represents
+ * percentage of the maximum of the width and height of the mask.
+ *
+ * Returns: The brush spacing.
+ */
+gint
+gimp_brushes_get_spacing (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint spacing = 0;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_spacing",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    spacing = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return spacing;
+}
+
+/**
+ * gimp_brushes_set_spacing:
+ * @spacing: The brush spacing.
+ *
+ * Set the brush spacing.
+ *
+ * This procedure modifies the spacing setting for the current brush.
+ * This value is set on a per-brush basis and will change if a
+ * different brush mask is selected. The value should be a integer
+ * between 0 and 1000.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_set_spacing (gint spacing)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_set_spacing",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, spacing,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_brushes_get_paint_mode:
+ *
+ * Get the brush paint mode.
+ *
+ * This procedure returns the paint-mode setting for brushes. This
+ * value is set globally and will not change if a different brush is
+ * selected. The return value is an integer which corresponds to the
+ * values listed in the argument description.
+ *
+ * Returns: The paint mode.
+ */
+GimpLayerModeEffects
+gimp_brushes_get_paint_mode (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerModeEffects paint_mode = 0;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_get_paint_mode",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    paint_mode = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return paint_mode;
+}
+
+/**
+ * gimp_brushes_set_paint_mode:
+ * @paint_mode: The paint mode.
+ *
+ * Set the brush paint mode.
+ *
+ * This procedure modifies the paint_mode setting for the current
+ * brush. This value is set globally and will not change if a different
+ * brush mask is selected.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brushes_set_paint_mode",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, paint_mode,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_brushes_get_brush_data:
  * @name: the brush name (\"\" means current active pattern).
  * @opacity: The brush opacity.

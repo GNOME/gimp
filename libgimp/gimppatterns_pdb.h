@@ -29,12 +29,17 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar* gimp_patterns_get_pattern_data (gchar   *name,
-				       gint    *width,
-				       gint    *height,
-				       gint    *mask_bpp,
-				       gint    *length,
-				       guint8 **mask_data);
+gboolean gimp_patterns_refresh          (void);
+gchar**  gimp_patterns_get_list         (gint    *num_patterns);
+gchar*   gimp_patterns_get_pattern      (gint    *width,
+					 gint    *height);
+gboolean gimp_patterns_set_pattern      (gchar   *name);
+gchar*   gimp_patterns_get_pattern_data (gchar   *name,
+					 gint    *width,
+					 gint    *height,
+					 gint    *mask_bpp,
+					 gint    *length,
+					 guint8 **mask_data);
 
 
 G_END_DECLS

@@ -1,3 +1,54 @@
+2002-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/brush-select.[ch]: renamed parameters to be consistent
+	with the other foo-select.* files.
+
+	* app/gui/tool-options-dialog.c: removed unused function.
+
+	* app/plug-in/plug-in-types.h: PlugInImageType was accidentially
+	exported to the PDB.
+
+	* tools/pdbgen/enums.pl
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+
+	More brush, pattern, ... PDB wrapper cleanup:
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: even more cleanup, guard
+	all functions with if(!gimp->no_interface).
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: reordered functions to be
+	consistent across all files. Generate libgimp wrappers for *all*
+	functions because of API symmetry.
+
+	* tools/pdbgen/pdb/gradients.pdb: renamed gradients_[get|set]_active
+	to gradients_[get|set]_gradient because of API symmetry.
+
+	* libgimp/gimpcompat.h: added the old function names here, guard
+	the whole file with GIMP_ENABLE_COMPAT_CRUFT (it's back, yeah).
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gflare/gflare.c: use the new function names.
+
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalettes_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palette_select_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c: regenerated.
+
 2002-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h: register GimpChannelType and 

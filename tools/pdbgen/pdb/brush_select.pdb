@@ -54,25 +54,26 @@ sub brushes_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'BrushSelect *newdialog' ],
+	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, brush_callback)))
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, brush_callback)))
     {
       if (initial_brush && strlen (initial_brush))
-	newdialog = brush_select_new (gimp, NULL, popup_title,
-                                      initial_brush,
-                                      opacity / 100.0,
-                                      spacing,
-				      paint_mode,
-                                      brush_callback);
+	brush_select_new (gimp, NULL, popup_title,
+                          initial_brush,
+                          opacity / 100.0,
+ 			  paint_mode,
+                          spacing,
+                          brush_callback);
       else
-	newdialog = brush_select_new (gimp, NULL, popup_title,
-                                      NULL,
-                                      0.0,
-                                      0, 
-                                      0,
-                                      brush_callback);
+	brush_select_new (gimp, NULL, popup_title,
+                          NULL,
+                          0.0,
+                          0, 
+                          0,
+                          brush_callback);
     }
   else
     {
@@ -96,10 +97,11 @@ sub brushes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
+	vars => [ 'ProcRecord *proc', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, brush_callback)) &&
       (bsp = brush_select_get_by_callback (brush_callback)))
     {
       brush_select_free (bsp);
@@ -132,19 +134,21 @@ sub brushes_set_popup {
 	headers => [ qw("core/gimpbrush.h" "core/gimplist.h"
 	                "widgets/widgets-types.h"
                         "widgets/gimpbrushfactoryview.h") ],
-	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
+	vars => [ 'ProcRecord *proc', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, brush_callback)) &&
       (bsp = brush_select_get_by_callback (brush_callback)))
     {
-      GimpObject *object =
+      GimpBrush *active = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container,
 					  brush_name);
 
-      if (object)
+      success = (active != NULL);
+
+      if (success)
 	{
-	  GimpBrush     *active = GIMP_BRUSH (object);
 	  GtkAdjustment *spacing_adj;
 
           spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
@@ -157,8 +161,6 @@ sub brushes_set_popup {
 
 	  gtk_adjustment_set_value (spacing_adj, spacing);
 	}
-      else
-	success = FALSE;
     }
   else
     success = FALSE;

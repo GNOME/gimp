@@ -35,17 +35,17 @@ struct _BrushSelect
 };
 
 
-BrushSelect * brush_select_new             (Gimp        *gimp,
-                                            GimpContext *context,
-                                            const gchar *title,
-                                            const gchar *init_name,
-                                            gdouble      init_opacity, 
-                                            gint         init_spacing,
-                                            gint         init_mode,
-                                            const gchar *callback_name);
-void          brush_select_free            (BrushSelect *bsp);
+BrushSelect * brush_select_new             (Gimp                 *gimp,
+                                            GimpContext          *context,
+                                            const gchar          *title,
+                                            const gchar          *initial_brush,
+                                            gdouble               initial_opacity, 
+                                            GimpLayerModeEffects  initial_mode,
+                                            gint                  initial_spacing,
+                                            const gchar          *callback_name);
+void          brush_select_free            (BrushSelect          *bsp);
 
-BrushSelect * brush_select_get_by_callback (const gchar *callback_name);
+BrushSelect * brush_select_get_by_callback (const gchar          *callback_name);
 void          brush_select_dialogs_check   (void);
 
 

@@ -18,7 +18,8 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub pdb_misc {
-    $author = $copyright = 'Michael Natterer';
+    $author = 'Michael Natterer <mitch@gimp.org>';
+    $copyright = 'Michael Natterer';
     $date = '2002';
 }
 
@@ -41,19 +42,20 @@ sub palettes_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PaletteSelect *newdialog' ],
+	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, palette_callback)))
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, palette_callback)))
     {
       if (initial_palette && strlen (initial_palette))
-	newdialog = palette_select_new (gimp, NULL, popup_title,
-                                        initial_palette,
-                                        palette_callback);
+	palette_select_new (gimp, NULL, popup_title,
+                            initial_palette,
+                            palette_callback);
       else
-	newdialog = palette_select_new (gimp, NULL, popup_title,
-                                        NULL,
-                                        palette_callback);
+	palette_select_new (gimp, NULL, popup_title,
+                            NULL,
+                            palette_callback);
     }
   else
     {
@@ -77,10 +79,11 @@ sub palettes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PaletteSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PaletteSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, palette_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, palette_callback)) &&
       (psp = palette_select_get_by_callback (palette_callback)))
     {
       palette_select_free (psp);
@@ -109,23 +112,21 @@ sub palettes_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PaletteSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PaletteSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, palette_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, palette_callback)) &&
       (psp = palette_select_get_by_callback (palette_callback)))
     {
       GimpPalette *active = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container,
                                           palette_name);
 
-      if (active)
-	{
-	  /* Must alter the wigdets on screen as well */
-	  gimp_context_set_palette (psp->context, active);
-	}
-      else
-	success = FALSE;
+      success = (active != NULL);
+
+      if (success)
+	gimp_context_set_palette (psp->context, active);
     }
   else
     success = FALSE;

@@ -23,6 +23,8 @@
 #ifndef __GIMP_COMPAT_H__
 #define __GIMP_COMPAT_H__
 
+#ifdef GIMP_ENABLE_COMPAT_CRUFT
+
 G_BEGIN_DECLS
 
 /* This file contains aliases that are kept for historical
@@ -31,10 +33,19 @@ G_BEGIN_DECLS
  * These defines will be removed in the next development cycle. 
  */
 
+#define GimpRunModeType           GimpRunMode
 
-#define GimpRunModeType  GimpRunMode
+#define gimp_use_xshm             TRUE
+#define gimp_color_cube           ((guchar *) { 6, 6, 4, 24 })
+
+#define gimp_crop                 gimp_image_crop
+
+#define gimp_gradients_get_active gimp_gradients_get_gradient
+#define gimp_gradients_set_active gimp_gradients_set_gradient
 
 
 G_END_DECLS
+
+#endif  /* GIMP_ENABLE_COMPAT_CRUFT */
 
 #endif  /* __GIMP_COMPAT_H__ */

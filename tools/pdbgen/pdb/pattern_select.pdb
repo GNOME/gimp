@@ -41,19 +41,20 @@ sub patterns_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PatternSelect *newdialog' ],
+	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, pattern_callback)))
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, pattern_callback)))
     {
       if (initial_pattern && strlen (initial_pattern))
-	newdialog = pattern_select_new (gimp, NULL, popup_title,
-                                        initial_pattern,
-                                        pattern_callback);
+	pattern_select_new (gimp, NULL, popup_title,
+                            initial_pattern,
+                            pattern_callback);
       else
-	newdialog = pattern_select_new (gimp, NULL, popup_title,
-                                        NULL,
-                                        pattern_callback);
+	pattern_select_new (gimp, NULL, popup_title,
+                            NULL,
+                            pattern_callback);
     }
   else
     {
@@ -77,10 +78,11 @@ sub patterns_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, pattern_callback)) &&
       (psp = pattern_select_get_by_callback (pattern_callback)))
     {
       pattern_select_free (psp);
@@ -109,23 +111,21 @@ sub patterns_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
+	vars => [ 'ProcRecord *proc', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+  if (! gimp->no_interface &&
+      (proc = procedural_db_lookup (gimp, pattern_callback)) &&
       (psp = pattern_select_get_by_callback (pattern_callback)))
     {
       GimpPattern *active = (GimpPattern *)
         gimp_container_get_child_by_name (gimp->pattern_factory->container,
                                           pattern_name);
 
-      if (active)
-	{
-	  /* Must alter the wigdets on screen as well */
-	  gimp_context_set_pattern (psp->context, active);
-	}
-      else
-	success = FALSE;
+      success = (active != NULL);
+
+      if (success)
+	gimp_context_set_pattern (psp->context, active);
     }
   else
     success = FALSE;

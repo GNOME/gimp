@@ -93,7 +93,7 @@ gimp_gradients_get_list (gint *num_gradients)
 }
 
 /**
- * gimp_gradients_get_active:
+ * gimp_gradients_get_gradient:
  *
  * Retrieve the name of the active gradient.
  *
@@ -103,13 +103,13 @@ gimp_gradients_get_list (gint *num_gradients)
  * Returns: The name of the active gradient.
  */
 gchar *
-gimp_gradients_get_active (void)
+gimp_gradients_get_gradient (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gchar *name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_get_active",
+  return_vals = gimp_run_procedure ("gimp_gradients_get_gradient",
 				    &nreturn_vals,
 				    GIMP_PDB_END);
 
@@ -122,7 +122,7 @@ gimp_gradients_get_active (void)
 }
 
 /**
- * gimp_gradients_set_active:
+ * gimp_gradients_set_gradient:
  * @name: The name of the gradient to set.
  *
  * Sets the specified gradient as the active gradient.
@@ -137,13 +137,13 @@ gimp_gradients_get_active (void)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradients_set_active (gchar *name)
+gimp_gradients_set_gradient (gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradients_set_active",
+  return_vals = gimp_run_procedure ("gimp_gradients_set_gradient",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);

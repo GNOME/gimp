@@ -417,19 +417,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_RUN_NONINTERACTIVE => '1',
 		       GIMP_RUN_WITH_LAST_VALS => '2' }
 	},
-    PlugInImageType =>
-	{ contig => 0,
-	  header => 'plug-in/plug-in-types.h',
-	  symbols => [ qw(PLUG_IN_RGB_IMAGE PLUG_IN_GRAY_IMAGE
-			  PLUG_IN_INDEXED_IMAGE PLUG_IN_RGBA_IMAGE
-			  PLUG_IN_GRAYA_IMAGE PLUG_IN_INDEXEDA_IMAGE) ],
-	  mapping => { PLUG_IN_RGB_IMAGE => '1 << 0',
-		       PLUG_IN_GRAY_IMAGE => '1 << 1',
-		       PLUG_IN_INDEXED_IMAGE => '1 << 2',
-		       PLUG_IN_RGBA_IMAGE => '1 << 3',
-		       PLUG_IN_GRAYA_IMAGE => '1 << 4',
-		       PLUG_IN_INDEXEDA_IMAGE => '1 << 5' }
-	},
     HueRange =>
 	{ contig => 1,
 	  header => 'tools/gimphuesaturationtool.h',

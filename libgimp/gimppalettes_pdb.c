@@ -52,6 +52,45 @@ gimp_palettes_refresh (void)
 }
 
 /**
+ * gimp_palettes_get_list:
+ * @num_palettes: The number of palettes in the list.
+ *
+ * Retrieves a list of all of the available palettes
+ *
+ * This procedure returns a complete listing of available palettes.
+ * Each name returned can be used as input to the command
+ * 'gimp_palette_set_palette'.
+ *
+ * Returns: The list of palette names.
+ */
+gchar **
+gimp_palettes_get_list (gint *num_palettes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar **palette_list = NULL;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp_palettes_get_list",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  *num_palettes = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_palettes = return_vals[1].data.d_int32;
+      palette_list = g_new (gchar *, *num_palettes);
+      for (i = 0; i < *num_palettes; i++)
+	palette_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return palette_list;
+}
+
+/**
  * gimp_palettes_get_palette:
  * @num_colors: The palette num_colors.
  *
@@ -116,45 +155,6 @@ gimp_palettes_set_palette (gchar *name)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
-}
-
-/**
- * gimp_palettes_get_list:
- * @num_palettes: The number of palettes in the list.
- *
- * Retrieves a list of all of the available palettes
- *
- * This procedure returns a complete listing of available palettes.
- * Each name returned can be used as input to the command
- * 'gimp_palette_set_palette'.
- *
- * Returns: The list of palette names.
- */
-gchar **
-gimp_palettes_get_list (gint *num_palettes)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar **palette_list = NULL;
-  gint i;
-
-  return_vals = gimp_run_procedure ("gimp_palettes_get_list",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
-
-  *num_palettes = 0;
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      *num_palettes = return_vals[1].data.d_int32;
-      palette_list = g_new (gchar *, *num_palettes);
-      for (i = 0; i < *num_palettes; i++)
-	palette_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return palette_list;
 }
 
 /**

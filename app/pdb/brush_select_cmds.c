@@ -62,8 +62,7 @@ brushes_popup_invoker (Gimp     *gimp,
   gdouble opacity;
   gint32 spacing;
   gint32 paint_mode;
-  ProcRecord *prec;
-  BrushSelect *newdialog;
+  ProcRecord *proc;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL)
@@ -89,22 +88,23 @@ brushes_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, brush_callback)))
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, brush_callback)))
 	{
 	  if (initial_brush && strlen (initial_brush))
-	    newdialog = brush_select_new (gimp, NULL, popup_title,
-					  initial_brush,
-					  opacity / 100.0,
-					  spacing,
-					  paint_mode,
-					  brush_callback);
+	    brush_select_new (gimp, NULL, popup_title,
+			      initial_brush,
+			      opacity / 100.0,
+			       paint_mode,
+			      spacing,
+			      brush_callback);
 	  else
-	    newdialog = brush_select_new (gimp, NULL, popup_title,
-					  NULL,
-					  0.0,
-					  0, 
-					  0,
-					  brush_callback);
+	    brush_select_new (gimp, NULL, popup_title,
+			      NULL,
+			      0.0,
+			      0, 
+			      0,
+			      brush_callback);
 	}
       else
 	{
@@ -171,7 +171,7 @@ brushes_close_popup_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *brush_callback;
-  ProcRecord *prec;
+  ProcRecord *proc;
   BrushSelect *bsp;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
@@ -180,7 +180,8 @@ brushes_close_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, brush_callback)) &&
 	  (bsp = brush_select_get_by_callback (brush_callback)))
 	{
 	  brush_select_free (bsp);
@@ -229,7 +230,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
   gdouble opacity;
   gint32 spacing;
   gint32 paint_mode;
-  ProcRecord *prec;
+  ProcRecord *proc;
   BrushSelect *bsp;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
@@ -254,16 +255,18 @@ brushes_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, brush_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, brush_callback)) &&
 	  (bsp = brush_select_get_by_callback (brush_callback)))
 	{
-	  GimpObject *object =
+	  GimpBrush *active = (GimpBrush *)
 	    gimp_container_get_child_by_name (gimp->brush_factory->container,
 					      brush_name);
     
-	  if (object)
+	  success = (active != NULL);
+    
+	  if (success)
 	    {
-	      GimpBrush     *active = GIMP_BRUSH (object);
 	      GtkAdjustment *spacing_adj;
     
 	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
@@ -276,8 +279,6 @@ brushes_set_popup_invoker (Gimp     *gimp,
     
 	      gtk_adjustment_set_value (spacing_adj, spacing);
 	    }
-	  else
-	    success = FALSE;
 	}
       else
 	success = FALSE;

@@ -37,18 +37,18 @@
 #include "core/gimppattern.h"
 
 static ProcRecord patterns_refresh_proc;
+static ProcRecord patterns_get_list_proc;
 static ProcRecord patterns_get_pattern_proc;
 static ProcRecord patterns_set_pattern_proc;
-static ProcRecord patterns_get_list_proc;
 static ProcRecord patterns_get_pattern_data_proc;
 
 void
 register_patterns_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &patterns_refresh_proc);
+  procedural_db_register (gimp, &patterns_get_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_proc);
   procedural_db_register (gimp, &patterns_set_pattern_proc);
-  procedural_db_register (gimp, &patterns_get_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
 
@@ -75,6 +75,68 @@ static ProcRecord patterns_refresh_proc =
   0,
   NULL,
   { { patterns_refresh_invoker } }
+};
+
+static Argument *
+patterns_get_list_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar **patterns;
+  GList *list;
+  gint i = 0;
+
+  patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
+
+  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+    }
+
+  success = (i > 0);
+
+  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = gimp->pattern_factory->container->num_children;
+      return_args[2].value.pdb_pointer = patterns;
+    }
+
+  return return_args;
+}
+
+static ProcArg patterns_get_list_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_patterns",
+    "The number of patterns in the pattern list"
+  },
+  {
+    GIMP_PDB_STRINGARRAY,
+    "pattern_list",
+    "The list of pattern names"
+  }
+};
+
+static ProcRecord patterns_get_list_proc =
+{
+  "gimp_patterns_get_list",
+  "Retrieve a complete listing of the available patterns.",
+  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_patterns_set_pattern'.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  2,
+  patterns_get_list_outargs,
+  { { patterns_get_list_invoker } }
 };
 
 static Argument *
@@ -183,68 +245,6 @@ static ProcRecord patterns_set_pattern_proc =
   0,
   NULL,
   { { patterns_set_pattern_invoker } }
-};
-
-static Argument *
-patterns_get_list_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar **patterns;
-  GList *list;
-  gint i = 0;
-
-  patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->pattern_factory->container->num_children;
-      return_args[2].value.pdb_pointer = patterns;
-    }
-
-  return return_args;
-}
-
-static ProcArg patterns_get_list_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num_patterns",
-    "The number of patterns in the pattern list"
-  },
-  {
-    GIMP_PDB_STRINGARRAY,
-    "pattern_list",
-    "The list of pattern names"
-  }
-};
-
-static ProcRecord patterns_get_list_proc =
-{
-  "gimp_patterns_get_list",
-  "Retrieve a complete listing of the available patterns.",
-  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_patterns_set_pattern'.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  2,
-  patterns_get_list_outargs,
-  { { patterns_get_list_invoker } }
 };
 
 static Argument *

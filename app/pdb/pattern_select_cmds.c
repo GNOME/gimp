@@ -56,8 +56,7 @@ patterns_popup_invoker (Gimp     *gimp,
   gchar *pattern_callback;
   gchar *popup_title;
   gchar *initial_pattern;
-  ProcRecord *prec;
-  PatternSelect *newdialog;
+  ProcRecord *proc;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
   if (pattern_callback == NULL)
@@ -71,16 +70,17 @@ patterns_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, pattern_callback)))
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, pattern_callback)))
 	{
 	  if (initial_pattern && strlen (initial_pattern))
-	    newdialog = pattern_select_new (gimp, NULL, popup_title,
-					    initial_pattern,
-					    pattern_callback);
+	    pattern_select_new (gimp, NULL, popup_title,
+				initial_pattern,
+				pattern_callback);
 	  else
-	    newdialog = pattern_select_new (gimp, NULL, popup_title,
-					    NULL,
-					    pattern_callback);
+	    pattern_select_new (gimp, NULL, popup_title,
+				NULL,
+				pattern_callback);
 	}
       else
 	{
@@ -132,7 +132,7 @@ patterns_close_popup_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *pattern_callback;
-  ProcRecord *prec;
+  ProcRecord *proc;
   PatternSelect *psp;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
@@ -141,7 +141,8 @@ patterns_close_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, pattern_callback)) &&
 	  (psp = pattern_select_get_by_callback (pattern_callback)))
 	{
 	  pattern_select_free (psp);
@@ -187,7 +188,7 @@ patterns_set_popup_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *pattern_callback;
   gchar *pattern_name;
-  ProcRecord *prec;
+  ProcRecord *proc;
   PatternSelect *psp;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
@@ -200,20 +201,18 @@ patterns_set_popup_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (gimp, pattern_callback)) &&
+      if (! gimp->no_interface &&
+	  (proc = procedural_db_lookup (gimp, pattern_callback)) &&
 	  (psp = pattern_select_get_by_callback (pattern_callback)))
 	{
 	  GimpPattern *active = (GimpPattern *)
 	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					      pattern_name);
     
-	  if (active)
-	    {
-	      /* Must alter the wigdets on screen as well */
-	      gimp_context_set_pattern (psp->context, active);
-	    }
-	  else
-	    success = FALSE;
+	  success = (active != NULL);
+    
+	  if (success)
+	    gimp_context_set_pattern (psp->context, active);
 	}
       else
 	success = FALSE;
