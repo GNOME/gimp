@@ -378,6 +378,7 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
+/* Removed until Saving is implemented -- njl195@zepler.org
   gimp_install_procedure ("file_psp_save",
                           "saves images in the Paint Shop Pro PSP file format",
                           "This plug-in loads and saves images in "
@@ -392,10 +393,13 @@ query ()
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
+*/
 
   gimp_register_magic_load_handler ("file_psp_load", "psp,tub", "",
 				    "0,string,Paint Shop Pro Image File\n\032");
+/* Removed until Saving is implemented -- njl195@zepler.org
   gimp_register_save_handler ("file_psp_save", "psp,tub", "");
+*/
 }
 
 static void

@@ -1,3 +1,8 @@
+Mon Oct 11 02:45:06 BST 1999 Nick Lamb <njl195@zepler.org>
+
+	* plug-ins/common/psp.c: Saving is not implemented, so never add
+	PSP to the list of available Save formats
+
 Mon Oct 11 23:50:50 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	[both these are from patches by SHIRASAKI Yasuhiro]
