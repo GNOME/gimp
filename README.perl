@@ -48,7 +48,7 @@ PREREQUISITES
        Gtk, the perl extension for the above:
        ftp://ftp.gimp.org/pub/gtk/perl/
 
-          Gtk-0.5120 (or higher) is recommended. You might encounter some
+          Gtk-0.6123 (or higher) is recommended. You might encounter some
           problems compiling it for Perl5.004 (or any version), in that
           case you might want to try the updated gnome-perl version on the
           gnome-cvs-server. See the the gimp-perl pages for more info.

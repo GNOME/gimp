@@ -124,7 +124,7 @@ $GTK or print <<EOF;
 NOTICE:  unable to use the Perl-Gtk interface. Many features (like
          Gimp::Fu) rely on this extension. You can build without it (and
          many scripts will be disabled or run with reduced functionality
-         only), but it's better to install it (version 0.5120 or higher is
+         only), but it's better to install it (version 0.6123 or higher is
          required, you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or
          any CPAN mirror.
 

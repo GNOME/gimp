@@ -7,8 +7,6 @@
 # working btw).  You can follow step by step with the website at 
 # http://tigert.gimp.org/gimp/tutorials/beveled_text/
 
-BEGIN { <STDIN>; print "HO\n"; }
-
 use Gimp;
 use Gimp::Fu;
 use Gimp::Util;
