@@ -61,7 +61,7 @@ color_row_u16 (
 
 
 void
-blend_row__u16 (
+blend_row_u16 (
               PixelRow *src1_row,
 	      PixelRow *src2_row,
 	      PixelRow *dest_row,

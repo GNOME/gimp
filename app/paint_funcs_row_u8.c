@@ -884,7 +884,7 @@ gray_to_rgb_row_u8 (
 
 /*  apply the mask data to the alpha channel of the pixel data  */
 void
-apply_mask_to_alpha_channel_u8 (
+apply_mask_to_alpha_channel_row_u8 (
 				PixelRow *src_row,
 				PixelRow *mask_row,
 				Paint    *opac
