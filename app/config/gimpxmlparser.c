@@ -36,8 +36,9 @@ struct _GimpXmlParser
 };
 
 
-static gchar * parse_encoding (const gchar *text,
-                               gint         text_len);
+static gboolean parse_encoding (const gchar  *text,
+                                gint          text_len,
+                                gchar       **encodind);
 
 
 /**
@@ -111,7 +112,11 @@ gimp_xml_parser_parse_file (GimpXmlParser  *parser,
  * error occurs, either reading from @io or parsing the read data.
  *
  * This function tries to determine the character encoding from the
- * XML header and converts the content to UTF-8 for you.
+ * XML header and converts the content to UTF-8 for you. For this
+ * feature to work, the XML header with the encoding attribute must be
+ * contained in the first 4096 bytes read. Otherwise UTF-8 encoding
+ * will be assumed and parsing may break later if this assumption
+ * was wrong.
  *
  * Return value: %TRUE on success, %FALSE otherwise
  **/
@@ -121,7 +126,7 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
                                   GError        **error)
 {
   GIOStatus    status;
-  guchar       buffer[8196];
+  guchar       buffer[4096];
   gsize        len = 0;
   gsize        bytes;
   const gchar *io_encoding;
@@ -140,7 +145,7 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
     }
 
   /* try to determine the encoding */
-  while (len < sizeof (buffer) && !encoding)
+  while (len < sizeof (buffer))
     {
       status = g_io_channel_read_chars (io,
                                         buffer + len, 1, &bytes, error);
@@ -151,11 +156,15 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
       if (status == G_IO_STATUS_EOF)
         break;
 
-      encoding = parse_encoding (buffer, len);
+      if (parse_encoding (buffer, len, &encoding))
+        break;
     }
 
   if (encoding)
     {
+      g_printerr ("Charset encoding conversion from '%s' to 'UTF-8'\n",
+                  encoding);
+
       if (!g_io_channel_set_encoding (io, encoding, error))
         return FALSE;
 
@@ -200,49 +209,70 @@ gimp_xml_parser_free (GimpXmlParser *parser)
 }
 
 
-static gchar *
-parse_encoding (const gchar *text,
-                gint         text_len)
+/* Try to determine encoding from XML header.  This function returns
+   FALSE when it doesn't have enough text to parse.  It returns TRUE
+   and sets encoding when the XML header has been parsed.
+ */
+static gboolean
+parse_encoding (const gchar  *text,
+                gint          text_len,
+                gchar       **encoding)
 {
   const gchar *start;
   const gchar *end;
   gint         i;
 
-  g_return_val_if_fail (text, NULL);
+  g_return_val_if_fail (text, FALSE);
 
   if (text_len < 20)
-    return NULL;
+    return FALSE;
 
   start = g_strstr_len (text, text_len, "<?xml");
   if (!start)
-    return NULL;
+    return FALSE;
 
   end = g_strstr_len (start, text_len - (start - text), "?>");
   if (!end)
-    return NULL;
+    return FALSE;
+
+  *encoding = NULL;
 
   text_len = end - start;
   if (text_len < 12)
-    return NULL;
+    return TRUE;
 
-  start = g_strstr_len (start + 1, text_len - 1, "encoding=");
+  start = g_strstr_len (start + 1, text_len - 1, "encoding");
   if (!start)
-    return NULL;
+    return TRUE;
 
-  start += 9;
+  start += 8;
+
+  while (start < end && *start == ' ')
+    start++;
+
+  if (*start != '=')
+    return TRUE;
+
+  start++;
+
+  while (start < end && *start == ' ')
+    start++;
+
   if (*start != '\"' && *start != '\'')
-    return NULL;
+    return TRUE;
 
   text_len = end - start;
   if (text_len < 1)
-    return NULL;
+    return TRUE;
 
   for (i = 1; i < text_len; i++)
     if (start[i] == start[0])
       break;
 
   if (i == text_len || i < 3)
-    return NULL;
+    return TRUE;
 
-  return g_strndup (start + 1, i - 1);
+  *encoding = g_strndup (start + 1, i - 1);
+
+  return TRUE;
 }
