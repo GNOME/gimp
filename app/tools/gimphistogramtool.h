@@ -23,10 +23,6 @@
 #include "gimpimagemaptool.h"
 
 
-#define HISTOGRAM_WIDTH  256
-#define HISTOGRAM_HEIGHT 150
-
-
 #define GIMP_TYPE_HISTOGRAM_TOOL            (gimp_histogram_tool_get_type ())
 #define GIMP_HISTOGRAM_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramTool))
 #define GIMP_HISTOGRAM_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramToolClass))

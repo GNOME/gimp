@@ -95,6 +95,8 @@ libappwidgets_a_sources = \
 	gimpgradientpreview.h		\
 	gimphelp.c			\
 	gimphelp.h			\
+	gimphistogrambox.c		\
+	gimphistogrambox.h		\
 	gimphistogramview.c		\
 	gimphistogramview.h		\
 	gimpimagedock.c			\

@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 
+#include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
@@ -41,9 +42,6 @@
 
 #include "libgimp/gimpintl.h"
 
-
-#define HISTOGRAM_WIDTH  256
-#define HISTOGRAM_HEIGHT 150
 
 #define LOW        0x1
 #define HIGH       0x2
@@ -65,16 +63,10 @@ static void   gimp_threshold_tool_map        (GimpImageMapTool *image_map_tool);
 static void   gimp_threshold_tool_dialog     (GimpImageMapTool *image_map_tool);
 static void   gimp_threshold_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   threshold_update                (GimpThresholdTool *t_tool,
-					       gint               update);
-static void   threshold_low_threshold_adjustment_update  (GtkAdjustment *adj,
-							  gpointer       data);
-static void   threshold_high_threshold_adjustment_update (GtkAdjustment *adj,
-							  gpointer       data);
-static void   threshold_histogram_range                  (GimpHistogramView *,
-                                                          gint               ,
-                                                          gint               ,
-                                                          gpointer           );
+static void   gimp_threshold_tool_histogram_range (GimpHistogramView *view,
+                                                   gint               start,
+                                                   gint               end,
+                                                   GimpThresholdTool *t_tool);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -220,15 +212,16 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
-  g_signal_handlers_block_by_func (G_OBJECT (t_tool->histogram),
-                                   threshold_histogram_range,
+  g_signal_handlers_block_by_func (G_OBJECT (t_tool->histogram_box->histogram),
+                                   gimp_threshold_tool_histogram_range,
                                    t_tool);
-  gimp_histogram_view_update (t_tool->histogram, t_tool->hist);
-  g_signal_handlers_unblock_by_func (G_OBJECT (t_tool->histogram),
-                                     threshold_histogram_range,
+  gimp_histogram_view_update (t_tool->histogram_box->histogram, t_tool->hist);
+  gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
+                                 t_tool->threshold->low_threshold,
+                                 t_tool->threshold->high_threshold);
+  g_signal_handlers_unblock_by_func (G_OBJECT (t_tool->histogram_box->histogram),
+                                     gimp_threshold_tool_histogram_range,
                                      t_tool);
-
-  threshold_update (t_tool, ALL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 }
@@ -256,10 +249,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpThresholdTool *t_tool;
   GtkWidget         *hbox;
   GtkWidget         *vbox;
-  GtkWidget         *spinbutton;
-  GtkWidget         *label;
-  GtkWidget         *frame;
-  GtkObject         *data;
+  GtkWidget         *histbox;
 
   t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
@@ -271,53 +261,14 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  histbox = gimp_histogram_box_new (_("Threshold Range:"));
+  gtk_box_pack_start (GTK_BOX (vbox), histbox, FALSE, FALSE, 0);
+  gtk_widget_show (histbox);
 
-  label = gtk_label_new (_("Threshold Range:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  t_tool->histogram_box = GIMP_HISTOGRAM_BOX (histbox);
 
-  /*  low threshold spinbutton  */
-  data = gtk_adjustment_new (t_tool->threshold->low_threshold,
-                             0.0, 255.0, 1.0, 10.0, 0.0);
-  t_tool->low_threshold_data = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (t_tool->low_threshold_data, 1.0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (G_OBJECT (t_tool->low_threshold_data), "value_changed",
-                    G_CALLBACK (threshold_low_threshold_adjustment_update),
-                    t_tool);
-
-  /* high threshold spinbutton  */
-  data = gtk_adjustment_new (t_tool->threshold->high_threshold,
-                             0.0, 255.0, 1.0, 10.0, 0.0);
-  t_tool->high_threshold_data = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (t_tool->high_threshold_data, 1.0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (G_OBJECT (t_tool->high_threshold_data), "value_changed",
-                    G_CALLBACK (threshold_high_threshold_adjustment_update),
-                    t_tool);
-
-  /*  The threshold histogram  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  t_tool->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH,
-                                               HISTOGRAM_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (t_tool->histogram));
-  gtk_widget_show (GTK_WIDGET (t_tool->histogram));
-
-  g_signal_connect (G_OBJECT (t_tool->histogram), "range_changed",
-                    G_CALLBACK (threshold_histogram_range),
+  g_signal_connect (G_OBJECT (t_tool->histogram_box->histogram), "range_changed",
+                    G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 }
 
@@ -331,77 +282,23 @@ gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
   t_tool->threshold->low_threshold  = 127.0;
   t_tool->threshold->high_threshold = 255.0;
 
-  threshold_update (t_tool, ALL);
+  gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
+                                 t_tool->threshold->low_threshold,
+                                 t_tool->threshold->high_threshold);
 }
 
 static void
-threshold_update (GimpThresholdTool *t_tool,
-		  gint               update)
+gimp_threshold_tool_histogram_range (GimpHistogramView *widget,
+                                     gint               start,
+                                     gint               end,
+                                     GimpThresholdTool *t_tool)
 {
-  if (update & LOW)
-    gtk_adjustment_set_value (t_tool->low_threshold_data,
-                              t_tool->threshold->low_threshold);
-
-  if (update & HIGH)
-    gtk_adjustment_set_value (t_tool->high_threshold_data,
-                              t_tool->threshold->high_threshold);
-
-  if (update & HISTOGRAM)
-    gimp_histogram_view_range (t_tool->histogram,
-                               t_tool->threshold->low_threshold,
-                               t_tool->threshold->high_threshold);
-}
-
-static void
-threshold_low_threshold_adjustment_update (GtkAdjustment *adjustment,
-					   gpointer       data)
-{
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (data);
-
-  if (t_tool->threshold->low_threshold != adjustment->value)
+  if (start != t_tool->threshold->low_threshold ||
+      end   != t_tool->threshold->high_threshold)
     {
-      t_tool->threshold->low_threshold = adjustment->value;
-
-      threshold_update (t_tool, HISTOGRAM);
+      t_tool->threshold->low_threshold  = start;
+      t_tool->threshold->high_threshold = end;
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
     }
-}
-
-static void
-threshold_high_threshold_adjustment_update (GtkAdjustment *adjustment,
-					    gpointer       data)
-{
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (data);
-
-  if (t_tool->threshold->high_threshold != adjustment->value)
-    {
-      t_tool->threshold->high_threshold = adjustment->value;
-
-      threshold_update (t_tool, HISTOGRAM);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
-    }
-}
-
-static void
-threshold_histogram_range (GimpHistogramView *widget,
-			   gint               start,
-			   gint               end,
-			   gpointer           data)
-{
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (data);
-
-  t_tool->threshold->low_threshold  = start;
-  t_tool->threshold->high_threshold = end;
-
-  threshold_update (t_tool, LOW | HIGH);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 }

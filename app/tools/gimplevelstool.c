@@ -67,12 +67,10 @@
 #define DRAW               0x200
 #define ALL                0xFFF
 
-#define DA_WIDTH         256
+#define DA_WIDTH         GIMP_HISTOGRAM_VIEW_WIDTH
 #define DA_HEIGHT        25
 #define GRADIENT_HEIGHT  15
 #define CONTROL_HEIGHT   DA_HEIGHT - GRADIENT_HEIGHT
-#define HISTOGRAM_WIDTH  256
-#define HISTOGRAM_HEIGHT 150
 
 #define LEVELS_DA_MASK  GDK_EXPOSURE_MASK | \
                         GDK_ENTER_NOTIFY_MASK | \
@@ -301,7 +299,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, l_tool->hist);
   gimp_histogram_view_update (l_tool->histogram, l_tool->hist);
-  gimp_histogram_view_range (l_tool->histogram, -1, -1);
+  gimp_histogram_view_set_range (l_tool->histogram, -1, -1);
 }
 
 static void
@@ -394,8 +392,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  l_tool->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH,
-                                               HISTOGRAM_HEIGHT);
+  l_tool->histogram = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
+                                               GIMP_HISTOGRAM_VIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (l_tool->histogram));
 
   /* ignore button_events, since we don't want the user to be able to set the range */

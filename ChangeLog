@@ -1,5 +1,32 @@
 2002-09-07  Michael Natterer  <mitch@gimp.org>
 
+	Histogram cleanup:
+
+	* app/base/gimphistogram.c: Added g_return_if_fail() to all public
+	functions, reordered stuff, cleanup (no logic changed).
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimphistogrambox.[ch]: new widget containing a
+	GimpHistogramView and two range spinbuttons (as known from the
+	threshold tool). Users only need to connect to the histogram
+	view's "range_changed" signal. The spinbuttons are handled
+	internally.
+
+	* app/widgets/gimphistogramview.[ch]: define it's default size in
+	the header. Make sure "start" is always smaller than "end". Emit
+	"range_changed" in gimp_histogram_view_set_range().
+
+	* app/tools/gimplevelstool.c: changed accordingly.
+
+	* app/tools/gimpthresholdtool.[ch]: removed the code which
+	did the same and use the new widget.
+
+	* app/tools/gimphistogramtool.[ch]: ditto. Removed the "intensity"
+	info label. Cleanup.
+
+2002-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-new-dialog.c
 	* app/gui/offset-dialog.c
 	* app/gui/preferences-dialog.c

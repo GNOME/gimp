@@ -36,15 +36,13 @@ typedef struct _GimpThresholdToolClass GimpThresholdToolClass;
 
 struct _GimpThresholdTool
 {
-  GimpImageMapTool   parent_instance;
+  GimpImageMapTool  parent_instance;
 
-  Threshold         *threshold;
+  Threshold        *threshold;
 
   /*  dialog  */
-  GimpHistogram     *hist;
-  GimpHistogramView *histogram;
-  GtkAdjustment     *low_threshold_data;
-  GtkAdjustment     *high_threshold_data;  
+  GimpHistogram    *hist;
+  GimpHistogramBox *histogram_box;
 };
 
 struct _GimpThresholdToolClass

@@ -23,6 +23,10 @@
 #include <gtk/gtkdrawingarea.h>
 
 
+#define GIMP_HISTOGRAM_VIEW_WIDTH  256
+#define GIMP_HISTOGRAM_VIEW_HEIGHT 150
+
+
 #define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
 #define GIMP_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
 #define GIMP_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))
@@ -53,20 +57,18 @@ struct _GimpHistogramViewClass
 };
 
 
-/*  Histogram functions  */
+GType               gimp_histogram_view_get_type      (void) G_GNUC_CONST;
 
-GType               gimp_histogram_view_get_type  (void) G_GNUC_CONST;
-
-GimpHistogramView * gimp_histogram_view_new       (gint               width,
-                                                   gint               height);
-void                gimp_histogram_view_update    (GimpHistogramView *view,
-                                                   GimpHistogram     *histogram);
-void                gimp_histogram_view_range     (GimpHistogramView *view,
-                                                   gint               start,
-                                                   gint               end);
-void                gimp_histogram_view_channel   (GimpHistogramView *view,
-                                                   gint               channel);
-GimpHistogram     * gimp_histogram_view_histogram (GimpHistogramView *view);
+GimpHistogramView * gimp_histogram_view_new           (gint               width,
+                                                       gint               height);
+void                gimp_histogram_view_update        (GimpHistogramView *view,
+                                                       GimpHistogram     *histogram);
+void                gimp_histogram_view_set_range     (GimpHistogramView *view,
+                                                       gint               start,
+                                                       gint               end);
+void                gimp_histogram_view_channel       (GimpHistogramView *view,
+                                                       gint               channel);
+GimpHistogram     * gimp_histogram_view_get_histogram (GimpHistogramView *view);
 
 
 #endif /* __GIMP_HISTOGRAM_VIEW_H__ */
