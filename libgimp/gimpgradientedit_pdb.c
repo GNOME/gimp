@@ -522,47 +522,6 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
 }
 
 /**
- * gimp_gradient_segment_set_blending_function:
- * @name: The name of the gradient to operate on.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @blending_function: The Blending Function.
- *
- * Change the blending function of a segments range
- *
- * This function changes the blending function of a segment range to
- * the specified blending function.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.2
- */
-gboolean
-gimp_gradient_segment_set_blending_function (const gchar             *name,
-					     gint                     start_segment,
-					     gint                     end_segment,
-					     GimpGradientSegmentType  blending_function)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_gradient_segment_set_blending_function",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_INT32, start_segment,
-				    GIMP_PDB_INT32, end_segment,
-				    GIMP_PDB_INT32, blending_function,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_gradient_segment_get_coloring_type:
  * @name: The name of the gradient to operate on.
  * @segment: The index of the segment within the gradient.
@@ -605,7 +564,48 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
 }
 
 /**
- * gimp_gradient_segment_set_coloring_type:
+ * gimp_gradient_segment_range_set_blending_function:
+ * @name: The name of the gradient to operate on.
+ * @start_segment: The index of the first segment to operate on.
+ * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @blending_function: The Blending Function.
+ *
+ * Change the blending function of a segments range
+ *
+ * This function changes the blending function of a segment range to
+ * the specified blending function.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_gradient_segment_range_set_blending_function (const gchar             *name,
+						   gint                     start_segment,
+						   gint                     end_segment,
+						   GimpGradientSegmentType  blending_function)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_segment_range_set_blending_function",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, start_segment,
+				    GIMP_PDB_INT32, end_segment,
+				    GIMP_PDB_INT32, blending_function,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_gradient_segment_range_set_coloring_type:
  * @name: The name of the gradient to operate on.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
@@ -621,16 +621,16 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
  * Since: GIMP 2.2
  */
 gboolean
-gimp_gradient_segment_set_coloring_type (const gchar              *name,
-					 gint                      start_segment,
-					 gint                      end_segment,
-					 GimpGradientSegmentColor  coloring_type)
+gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
+					       gint                      start_segment,
+					       gint                      end_segment,
+					       GimpGradientSegmentColor  coloring_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_gradient_segment_set_coloring_type",
+  return_vals = gimp_run_procedure ("gimp_gradient_segment_range_set_coloring_type",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, start_segment,

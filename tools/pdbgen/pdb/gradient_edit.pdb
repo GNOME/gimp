@@ -407,7 +407,7 @@ CODE
     );
 }
 
-sub gradient_segment_set_blending_function
+sub gradient_segment_range_set_blending_function
 {
     &_gen_gradient_operate_on_segments_range(
         'blurb' => "Change the blending function of a segments range",
@@ -430,7 +430,7 @@ CODE
     );
 }
 
-sub gradient_segment_set_coloring_type
+sub gradient_segment_range_set_coloring_type
 {
     &_gen_gradient_operate_on_segments_range(
         'blurb' => "Change the coloring type of a segments range",
@@ -651,9 +651,9 @@ CODE
             gradient_segment_get_middle_pos gradient_segment_set_middle_pos
             gradient_segment_get_right_pos gradient_segment_set_right_pos
             gradient_segment_get_blending_function
-            gradient_segment_set_blending_function 
             gradient_segment_get_coloring_type
-            gradient_segment_set_coloring_type
+            gradient_segment_range_set_blending_function 
+            gradient_segment_range_set_coloring_type
             gradient_segment_range_flip
             gradient_segment_range_replicate
             gradient_segment_range_split_midpoint

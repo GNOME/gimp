@@ -49,9 +49,9 @@ static ProcRecord gradient_segment_set_middle_pos_proc;
 static ProcRecord gradient_segment_get_right_pos_proc;
 static ProcRecord gradient_segment_set_right_pos_proc;
 static ProcRecord gradient_segment_get_blending_function_proc;
-static ProcRecord gradient_segment_set_blending_function_proc;
 static ProcRecord gradient_segment_get_coloring_type_proc;
-static ProcRecord gradient_segment_set_coloring_type_proc;
+static ProcRecord gradient_segment_range_set_blending_function_proc;
+static ProcRecord gradient_segment_range_set_coloring_type_proc;
 static ProcRecord gradient_segment_range_flip_proc;
 static ProcRecord gradient_segment_range_replicate_proc;
 static ProcRecord gradient_segment_range_split_midpoint_proc;
@@ -76,9 +76,9 @@ register_gradient_edit_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradient_segment_get_right_pos_proc);
   procedural_db_register (gimp, &gradient_segment_set_right_pos_proc);
   procedural_db_register (gimp, &gradient_segment_get_blending_function_proc);
-  procedural_db_register (gimp, &gradient_segment_set_blending_function_proc);
   procedural_db_register (gimp, &gradient_segment_get_coloring_type_proc);
-  procedural_db_register (gimp, &gradient_segment_set_coloring_type_proc);
+  procedural_db_register (gimp, &gradient_segment_range_set_blending_function_proc);
+  procedural_db_register (gimp, &gradient_segment_range_set_coloring_type_proc);
   procedural_db_register (gimp, &gradient_segment_range_flip_proc);
   procedural_db_register (gimp, &gradient_segment_range_replicate_proc);
   procedural_db_register (gimp, &gradient_segment_range_split_midpoint_proc);
@@ -1225,126 +1225,6 @@ static ProcRecord gradient_segment_get_blending_function_proc =
 };
 
 static Argument *
-gradient_segment_set_blending_function_invoker (Gimp        *gimp,
-                                                GimpContext *context,
-                                                Argument    *args)
-{
-  gboolean success = TRUE;
-  gchar *name;
-  gint32 start_segment;
-  gint32 end_segment;
-  gint32 blending_function;
-  GimpGradient *gradient = NULL;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  start_segment = args[1].value.pdb_int;
-  if (start_segment < 0)
-    success = FALSE;
-
-  end_segment = args[2].value.pdb_int;
-
-  blending_function = args[3].value.pdb_int;
-  if (blending_function < GIMP_GRADIENT_SEGMENT_LINEAR || blending_function > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
-    success = FALSE;
-
-  if (success)
-    {
-      if (strlen (name))
-        {
-          gradient = (GimpGradient *)
-            gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                              name);
-        }
-      else
-        {
-          gradient = gimp_context_get_gradient (context);
-        }
-
-      if (gradient)
-        {
-          GimpGradientSegment *start_seg, *end_seg;
-          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
-          if (start_seg)
-            {
-              if ((end_segment < start_segment) && (end_segment >= 0))
-                {
-                  /* Do Nothing */
-                  success = FALSE;
-                }
-              else
-                {
-                  if (end_segment < 0)
-                    {
-                      end_seg = NULL;
-                    }
-                  else
-                    {
-                      end_seg = gimp_gradient_segment_get_nth (start_seg,
-                                                               end_segment - start_segment);
-                    }
-
-                  /* Success */
-                  gimp_gradient_segment_range_set_blending_function (gradient,
-                                                       start_seg,
-                                                       end_seg,
-                                                       blending_function);
-
-                }
-            }
-          else
-            {
-              success = FALSE;
-            }
-        }
-    }
-
-  return procedural_db_return_args (&gradient_segment_set_blending_function_proc, success);
-}
-
-static ProcArg gradient_segment_set_blending_function_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the gradient to operate on."
-  },
-  {
-    GIMP_PDB_INT32,
-    "start_segment",
-    "The index of the first segment to operate on"
-  },
-  {
-    GIMP_PDB_INT32,
-    "end_segment",
-    "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
-  },
-  {
-    GIMP_PDB_INT32,
-    "blending_function",
-    "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
-  }
-};
-
-static ProcRecord gradient_segment_set_blending_function_proc =
-{
-  "gimp_gradient_segment_set_blending_function",
-  "Change the blending function of a segments range",
-  "This function changes the blending function of a segment range to the specified blending function.",
-  "Shlomi Fish",
-  "Shlomi Fish",
-  "2003",
-  GIMP_INTERNAL,
-  4,
-  gradient_segment_set_blending_function_inargs,
-  0,
-  NULL,
-  { { gradient_segment_set_blending_function_invoker } }
-};
-
-static Argument *
 gradient_segment_get_coloring_type_invoker (Gimp        *gimp,
                                             GimpContext *context,
                                             Argument    *args)
@@ -1443,9 +1323,129 @@ static ProcRecord gradient_segment_get_coloring_type_proc =
 };
 
 static Argument *
-gradient_segment_set_coloring_type_invoker (Gimp        *gimp,
-                                            GimpContext *context,
-                                            Argument    *args)
+gradient_segment_range_set_blending_function_invoker (Gimp        *gimp,
+                                                      GimpContext *context,
+                                                      Argument    *args)
+{
+  gboolean success = TRUE;
+  gchar *name;
+  gint32 start_segment;
+  gint32 end_segment;
+  gint32 blending_function;
+  GimpGradient *gradient = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  start_segment = args[1].value.pdb_int;
+  if (start_segment < 0)
+    success = FALSE;
+
+  end_segment = args[2].value.pdb_int;
+
+  blending_function = args[3].value.pdb_int;
+  if (blending_function < GIMP_GRADIENT_SEGMENT_LINEAR || blending_function > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
+    success = FALSE;
+
+  if (success)
+    {
+      if (strlen (name))
+        {
+          gradient = (GimpGradient *)
+            gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                              name);
+        }
+      else
+        {
+          gradient = gimp_context_get_gradient (context);
+        }
+
+      if (gradient)
+        {
+          GimpGradientSegment *start_seg, *end_seg;
+          start_seg = gimp_gradient_segment_get_nth (gradient->segments, start_segment);
+          if (start_seg)
+            {
+              if ((end_segment < start_segment) && (end_segment >= 0))
+                {
+                  /* Do Nothing */
+                  success = FALSE;
+                }
+              else
+                {
+                  if (end_segment < 0)
+                    {
+                      end_seg = NULL;
+                    }
+                  else
+                    {
+                      end_seg = gimp_gradient_segment_get_nth (start_seg,
+                                                               end_segment - start_segment);
+                    }
+
+                  /* Success */
+                  gimp_gradient_segment_range_set_blending_function (gradient,
+                                                       start_seg,
+                                                       end_seg,
+                                                       blending_function);
+
+                }
+            }
+          else
+            {
+              success = FALSE;
+            }
+        }
+    }
+
+  return procedural_db_return_args (&gradient_segment_range_set_blending_function_proc, success);
+}
+
+static ProcArg gradient_segment_range_set_blending_function_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the gradient to operate on."
+  },
+  {
+    GIMP_PDB_INT32,
+    "start_segment",
+    "The index of the first segment to operate on"
+  },
+  {
+    GIMP_PDB_INT32,
+    "end_segment",
+    "The index of the last segment to operate on. If negative, the selection will extend to the end of the string."
+  },
+  {
+    GIMP_PDB_INT32,
+    "blending_function",
+    "The Blending Function: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
+  }
+};
+
+static ProcRecord gradient_segment_range_set_blending_function_proc =
+{
+  "gimp_gradient_segment_range_set_blending_function",
+  "Change the blending function of a segments range",
+  "This function changes the blending function of a segment range to the specified blending function.",
+  "Shlomi Fish",
+  "Shlomi Fish",
+  "2003",
+  GIMP_INTERNAL,
+  4,
+  gradient_segment_range_set_blending_function_inargs,
+  0,
+  NULL,
+  { { gradient_segment_range_set_blending_function_invoker } }
+};
+
+static Argument *
+gradient_segment_range_set_coloring_type_invoker (Gimp        *gimp,
+                                                  GimpContext *context,
+                                                  Argument    *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1519,10 +1519,10 @@ gradient_segment_set_coloring_type_invoker (Gimp        *gimp,
         }
     }
 
-  return procedural_db_return_args (&gradient_segment_set_coloring_type_proc, success);
+  return procedural_db_return_args (&gradient_segment_range_set_coloring_type_proc, success);
 }
 
-static ProcArg gradient_segment_set_coloring_type_inargs[] =
+static ProcArg gradient_segment_range_set_coloring_type_inargs[] =
 {
   {
     GIMP_PDB_STRING,
@@ -1546,9 +1546,9 @@ static ProcArg gradient_segment_set_coloring_type_inargs[] =
   }
 };
 
-static ProcRecord gradient_segment_set_coloring_type_proc =
+static ProcRecord gradient_segment_range_set_coloring_type_proc =
 {
-  "gimp_gradient_segment_set_coloring_type",
+  "gimp_gradient_segment_range_set_coloring_type",
   "Change the coloring type of a segments range",
   "This function changes the coloring type of a segment range to the specified coloring type.",
   "Shlomi Fish",
@@ -1556,10 +1556,10 @@ static ProcRecord gradient_segment_set_coloring_type_proc =
   "2003",
   GIMP_INTERNAL,
   4,
-  gradient_segment_set_coloring_type_inargs,
+  gradient_segment_range_set_coloring_type_inargs,
   0,
   NULL,
-  { { gradient_segment_set_coloring_type_invoker } }
+  { { gradient_segment_range_set_coloring_type_invoker } }
 };
 
 static Argument *

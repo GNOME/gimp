@@ -1,5 +1,14 @@
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/gradient_edit.pdb: set_blending_function() and
+	set_coloring_type() work on segment ranges, renamed them
+	accordingly. Spotted by Shlomi Fish.
+
+	* app/pdb/gradient_edit_cmds.c
+	* libgimp/gimpgradientedit_pdb.[ch]: regenerated.
+
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.[ch]: removed utility funtion
 	gimp_dnd_open_files().
 
