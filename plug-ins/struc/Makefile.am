@@ -9,8 +9,8 @@ struc_SOURCES = \
 	struc.h
 
 INCLUDES = \
-	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \

@@ -2,7 +2,8 @@
 
 	* plug-ins/xjt/Makefile.am (INCLUDES): Reorder to include
 	$(top_srcdir) first.  This prevents rebuilding on `make install'.
-
+	* plug-ins/struc/Makefile.am (INCLUDES): Likewise.
+	
 Sat Jun  5 16:19:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	app/errors.c
