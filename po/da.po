@@ -80,8 +80,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-06-18 00:13+0200\n"
-"PO-Revision-Date: 2002-06-18 00:13+0200\n"
+"POT-Creation-Date: 2002-07-13 15:34+0200\n"
+"PO-Revision-Date: 2002-07-13 15:36+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -637,7 +637,7 @@ msgstr ""
 "Fejl ved fortolkning af '%s' på linje %d:\n"
 "%s"
 
-#: app/core/core-enums.c:13
+#: app/core/core-enums.c:13 app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
 msgstr "Fg. til bg. (RGB)"
 
@@ -645,7 +645,7 @@ msgstr "Fg. til bg. (RGB)"
 msgid "FG to BG (HSV)"
 msgstr "Fg. til bg. (HSV)"
 
-#: app/core/core-enums.c:15
+#: app/core/core-enums.c:15 app/core/gimp-gradients.c:83
 msgid "FG to Transparent"
 msgstr "Fg. til gennemsigtig"
 
@@ -747,12 +747,12 @@ msgid "Spiral (anticlockwise)"
 msgstr "Spiral (mod uret)"
 
 #: app/core/core-enums.c:148 app/core/core-enums.c:168
-#: app/display/gimpdisplayshell.c:2162
+#: app/display/gimpdisplayshell.c:2304
 msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:149 app/core/core-enums.c:170
-#: app/gui/info-window.c:81 app/gui/info-window.c:660
+#: app/gui/info-window.c:81 app/gui/info-window.c:663
 msgid "Grayscale"
 msgstr "Gråtoner"
 
@@ -883,6 +883,14 @@ msgstr "Farveovergange"
 #: app/core/gimp.c:552
 msgid "Documents"
 msgstr "Dokumenter"
+
+#: app/core/gimp-gradients.c:73
+msgid "FG to BG (HSV counter-clockwise)"
+msgstr "Forgr. til baggr. (HSV mod uret)"
+
+#: app/core/gimp-gradients.c:78
+msgid "FG to BG (HSV clockwise hue)"
+msgstr "Forgr. til baggr. (HSV med uret)"
 
 #: app/core/gimpbrush.c:510
 #, c-format
@@ -1152,7 +1160,7 @@ msgstr "Miniature er forældet"
 msgid "Cannot create preview"
 msgstr "Kan ikke generere miniature"
 
-#: app/core/gimpimagefile.c:710 app/gui/info-window.c:630
+#: app/core/gimpimagefile.c:710 app/gui/info-window.c:633
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d punkter"
@@ -1405,8 +1413,8 @@ msgstr "Fatal fortolkningsfejl: mønsterfilen '%s' ser ud til at være afkortet.
 msgid "pixel"
 msgstr "billedpunkt"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:573
-#: app/tools/gimpmeasuretool.c:576 app/tools/gimppainttool.c:565
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:576
+#: app/tools/gimpmeasuretool.c:579 app/tools/gimppainttool.c:565
 msgid "pixels"
 msgstr "billedpunkter"
 
@@ -1478,50 +1486,50 @@ msgstr "/Standardfarve"
 msgid "Toggle QuickMask"
 msgstr "Slå hurtigmaske til/fra"
 
-#: app/display/gimpdisplayshell.c:975
+#: app/display/gimpdisplayshell.c:1116
 #, c-format
 msgid "Undo %s"
 msgstr "Fortryd '%s'"
 
-#: app/display/gimpdisplayshell.c:978
+#: app/display/gimpdisplayshell.c:1119
 #, c-format
 msgid "Redo %s"
 msgstr "Omgør '%s'"
 
-#: app/display/gimpdisplayshell.c:980 app/pdb/internal_procs.c:181
+#: app/display/gimpdisplayshell.c:1121 app/pdb/internal_procs.c:181
 msgid "Undo"
 msgstr "Fortryd"
 
-#: app/display/gimpdisplayshell.c:981
+#: app/display/gimpdisplayshell.c:1122
 msgid "Redo"
 msgstr "Omgør"
 
-#: app/display/gimpdisplayshell.c:2162
+#: app/display/gimpdisplayshell.c:2304
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/display/gimpdisplayshell.c:2165
+#: app/display/gimpdisplayshell.c:2307
 msgid "grayscale-empty"
 msgstr "gråtone-tom"
 
-#: app/display/gimpdisplayshell.c:2165
+#: app/display/gimpdisplayshell.c:2307
 msgid "grayscale"
 msgstr "gråtoner"
 
-#: app/display/gimpdisplayshell.c:2168
+#: app/display/gimpdisplayshell.c:2310
 msgid "indexed-empty"
 msgstr "indekseret-tom"
 
-#: app/display/gimpdisplayshell.c:2168
+#: app/display/gimpdisplayshell.c:2310
 msgid "indexed"
 msgstr "indekseret"
 
-#: app/display/gimpdisplayshell.c:2375
+#: app/display/gimpdisplayshell.c:2517
 #, c-format
 msgid "Close %s?"
 msgstr "Luk %s?"
 
-#: app/display/gimpdisplayshell.c:2377
+#: app/display/gimpdisplayshell.c:2519
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1594,7 +1602,7 @@ msgstr "Fremgang"
 msgid "Please wait..."
 msgstr "Vent venligst..."
 
-#: app/display/gimpstatusbar.c:132
+#: app/display/gimpstatusbar.c:133
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -2113,15 +2121,15 @@ msgstr "Nyt billede"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:159 app/gui/file-new-dialog.c:177
-#: app/tools/gimpcroptool.c:1000 app/tools/selection_options.c:403
+#: app/tools/gimpcroptool.c:1006 app/tools/selection_options.c:403
 msgid "Width:"
 msgstr "Bredde:"
 
 #: app/gui/file-new-dialog.c:165 app/gui/file-new-dialog.c:183
 #: app/gui/layers-commands.c:631 app/gui/resize-dialog.c:279
 #: app/gui/resize-dialog.c:304 app/gui/resize-dialog.c:543
-#: app/tools/gimpcroptool.c:1003 app/tools/gimpscaletool.c:186
-#: app/tools/gimpscaletool.c:195 app/tools/selection_options.c:416
+#: app/tools/gimpcroptool.c:1009 app/tools/gimpscaletool.c:187
+#: app/tools/gimpscaletool.c:196 app/tools/selection_options.c:416
 msgid "Height:"
 msgstr "Højde:"
 
@@ -2138,8 +2146,8 @@ msgstr "Opløsning x:"
 #: app/gui/file-new-dialog.c:298 app/gui/info-window.c:200
 #: app/gui/offset-dialog.c:128 app/gui/resize-dialog.c:367
 #: app/gui/resize-dialog.c:459 app/gui/resize-dialog.c:604
-#: app/gui/user-install-dialog.c:1250 app/tools/gimpcroptool.c:986
-#: app/tools/gimprotatetool.c:207 app/tools/gimpscaletool.c:213
+#: app/gui/user-install-dialog.c:1250 app/tools/gimpcroptool.c:992
+#: app/tools/gimprotatetool.c:208 app/tools/gimpscaletool.c:214
 #: app/tools/gimpsheartool.c:185
 msgid "Y:"
 msgstr "y:"
@@ -2397,44 +2405,44 @@ msgstr ""
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Tilføjer temaet '%s' (%s)\n"
 
-#: app/gui/image-commands.c:196 app/gui/layers-commands.c:288
+#: app/gui/image-commands.c:197 app/gui/layers-commands.c:288
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan ikke tilskære fordi den aktuelle markering er tom."
 
-#: app/gui/image-commands.c:288
+#: app/gui/image-commands.c:289
 msgid "Layers Merge Options"
 msgstr "Indstillinger for forening af lag"
 
-#: app/gui/image-commands.c:314
+#: app/gui/image-commands.c:315
 msgid "Final, Merged Layer should be:"
 msgstr "Det resulterende forenede lag skal:"
 
-#: app/gui/image-commands.c:315
+#: app/gui/image-commands.c:316
 msgid "Final, Anchored Layer should be:"
 msgstr "Det resulterende forankrede lag skal:"
 
 # bemærk at disse kommer lige efter ovenstående
-#: app/gui/image-commands.c:320
+#: app/gui/image-commands.c:321
 msgid "Expanded as necessary"
 msgstr "Udvides efter behov"
 
-#: app/gui/image-commands.c:322
+#: app/gui/image-commands.c:323
 msgid "Clipped to image"
 msgstr "Beskæres til billede"
 
-#: app/gui/image-commands.c:324
+#: app/gui/image-commands.c:325
 msgid "Clipped to bottom layer"
 msgstr "Beskæres til nederste lag"
 
-#: app/gui/image-commands.c:364
+#: app/gui/image-commands.c:365
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Fejl ved ny størrelse: både bredde og højde skal være større end nul."
 
-#: app/gui/image-commands.c:397
+#: app/gui/image-commands.c:398
 msgid "Layer Too Small"
 msgstr "Lag er for lille"
 
-#: app/gui/image-commands.c:401
+#: app/gui/image-commands.c:402
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -2444,11 +2452,11 @@ msgstr ""
 "formindske nogle lag helt bort.\n"
 "Ønsker du det?"
 
-#: app/gui/image-commands.c:484 app/tools/gimpscaletool.c:283
+#: app/gui/image-commands.c:485 app/tools/gimpscaletool.c:285
 msgid "Scaling..."
 msgstr "Skalerer..."
 
-#: app/gui/image-commands.c:499
+#: app/gui/image-commands.c:500
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Skaleringsfejl: Både bredde og højde skal være større end nul."
 
@@ -2483,12 +2491,12 @@ msgstr "x:"
 
 #: app/gui/info-window.c:208 app/gui/info-window.c:285
 #: app/gui/info-window.c:502 app/gui/info-window.c:548
-#: app/gui/info-window.c:564 app/tools/gimpcolorpickertool.c:584
-#: app/tools/gimpcolorpickertool.c:585 app/tools/gimpcolorpickertool.c:586
-#: app/tools/gimpcolorpickertool.c:587 app/tools/gimpcolorpickertool.c:588
+#: app/gui/info-window.c:564 app/tools/gimpcolorpickertool.c:588
 #: app/tools/gimpcolorpickertool.c:589 app/tools/gimpcolorpickertool.c:590
-#: app/tools/gimpcolorpickertool.c:606 app/tools/gimpcolorpickertool.c:613
-#: app/tools/gimpcolorpickertool.c:631 app/tools/gimpcolorpickertool.c:652
+#: app/tools/gimpcolorpickertool.c:591 app/tools/gimpcolorpickertool.c:592
+#: app/tools/gimpcolorpickertool.c:593 app/tools/gimpcolorpickertool.c:594
+#: app/tools/gimpcolorpickertool.c:610 app/tools/gimpcolorpickertool.c:617
+#: app/tools/gimpcolorpickertool.c:635 app/tools/gimpcolorpickertool.c:656
 msgid "N/A"
 msgstr "I/T"
 
@@ -2551,21 +2559,21 @@ msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
 #. image resolution
-#: app/gui/info-window.c:643
+#: app/gui/info-window.c:646
 #, c-format
 msgid "%g x %g dpi"
 msgstr "%g x %g dpi"
 
 # pænere med flertal
-#: app/gui/info-window.c:657
+#: app/gui/info-window.c:660
 msgid "RGB Color"
 msgstr "RGB-farver"
 
-#: app/gui/info-window.c:664
+#: app/gui/info-window.c:667
 msgid "Indexed Color"
 msgstr "Indekserede farver"
 
-#: app/gui/info-window.c:664
+#: app/gui/info-window.c:667
 msgid "colors"
 msgstr "farver"
 
@@ -4718,7 +4726,7 @@ msgid "Set Canvas Size"
 msgstr "Vælg lærredstørrelse"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:273 app/tools/gimpscaletool.c:183
+#: app/gui/resize-dialog.c:273 app/tools/gimpscaletool.c:184
 msgid "Original Width:"
 msgstr "Oprindelig bredde:"
 
@@ -4767,43 +4775,43 @@ msgid "Vertical:"
 msgstr "Lodret:"
 
 # feather bruges ikke i betydningen fjer her, men udvisk
-#: app/gui/select-commands.c:130
+#: app/gui/select-commands.c:131
 msgid "Feather Selection"
 msgstr "Udvisk markering"
 
 # 'over' kommer sig af at der følger antallet af skærmpunkter fra kanten
-#: app/gui/select-commands.c:133
+#: app/gui/select-commands.c:134
 msgid "Feather Selection by:"
 msgstr "Udvisk det markerede over:"
 
-#: app/gui/select-commands.c:165
+#: app/gui/select-commands.c:166
 msgid "Shrink Selection"
 msgstr "Formindsk markering"
 
-#: app/gui/select-commands.c:168
+#: app/gui/select-commands.c:169
 msgid "Shrink Selection by:"
 msgstr "Formindsk markering med:"
 
-#: app/gui/select-commands.c:177
+#: app/gui/select-commands.c:178
 msgid "Shrink from image border"
 msgstr "Formindsk fra billedkant"
 
-#: app/gui/select-commands.c:198
+#: app/gui/select-commands.c:199
 msgid "Grow Selection"
 msgstr "Forøg markering"
 
-#: app/gui/select-commands.c:201
+#: app/gui/select-commands.c:202
 msgid "Grow Selection by:"
 msgstr "Forøg markeringen med:"
 
 # 'border' er et udsagnsord her, betyder at der laves en ny markering i
 # form af en kant omkring den gamle - det burde stå 'generér' foran, men
 # det bliver for langt 
-#: app/gui/select-commands.c:220
+#: app/gui/select-commands.c:221
 msgid "Border Selection"
 msgstr "Rammemarkering"
 
-#: app/gui/select-commands.c:223
+#: app/gui/select-commands.c:224
 msgid "Border Selection by:"
 msgstr "Indram det markerede med:"
 
@@ -5644,11 +5652,11 @@ msgstr "Starter programudvidelser: "
 msgid "Extensions"
 msgstr "Programudvidelser"
 
-#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:977
+#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:983
 msgid "Crop"
 msgstr "Beskær"
 
-#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:974
+#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:980
 msgid "Resize"
 msgstr "Ændr størrelse"
 
@@ -5674,31 +5682,31 @@ msgstr "Virkningsgrad:"
 msgid "Pressure:"
 msgstr "Tryk:"
 
-#: app/tools/gimpbezierselecttool.c:282
+#: app/tools/gimpbezierselecttool.c:283
 msgid "Bezier Select"
 msgstr "Bezier-markering"
 
-#: app/tools/gimpbezierselecttool.c:283
+#: app/tools/gimpbezierselecttool.c:284
 msgid "Select regions using Bezier curves"
 msgstr "Markér områder vha. Bezier-kurver"
 
-#: app/tools/gimpbezierselecttool.c:284
+#: app/tools/gimpbezierselecttool.c:285
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Værktøjer/Markering/Beziermarkering"
 
-#: app/tools/gimpbezierselecttool.c:1207
+#: app/tools/gimpbezierselecttool.c:1211
 msgid "Bezier path already closed."
 msgstr "Bezier-bane allerede lukket."
 
-#: app/tools/gimpbezierselecttool.c:1229
+#: app/tools/gimpbezierselecttool.c:1233
 msgid "Corrupt curve"
 msgstr "Ødelagt kurve"
 
-#: app/tools/gimpbezierselecttool.c:3176
+#: app/tools/gimpbezierselecttool.c:3185
 msgid "Curve not closed!"
 msgstr "Kurve ikke lukket!"
 
-#: app/tools/gimpbezierselecttool.c:3460
+#: app/tools/gimpbezierselecttool.c:3469
 msgid "Paintbrush operation failed."
 msgstr "Malepensel-operation mislykkedes."
 
@@ -5816,7 +5824,7 @@ msgid "Allow completely transparent regions to be filled"
 msgstr "Tillad fuldstændigt gennemsigtige område at blive udfyldt"
 
 # mærkelig tekst, men vist nok rigtig
-#: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:710
+#: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:714
 #: app/tools/selection_options.c:294 app/tools/selection_options.c:362
 msgid "Sample Merged"
 msgstr "Slå prøver sammen"
@@ -5962,16 +5970,16 @@ msgstr "Indeks:"
 msgid "Hex Triplet"
 msgstr "Hex-triplet"
 
-#: app/tools/gimpcolorpickertool.c:733
+#: app/tools/gimpcolorpickertool.c:737
 msgid "Sample Average"
 msgstr "Prøvegennemsnit"
 
-#: app/tools/gimpcolorpickertool.c:749 app/tools/selection_options.c:211
+#: app/tools/gimpcolorpickertool.c:753 app/tools/selection_options.c:211
 #: app/widgets/gimpbrusheditor.c:149
 msgid "Radius:"
 msgstr "Radius:"
 
-#: app/tools/gimpcolorpickertool.c:761
+#: app/tools/gimpcolorpickertool.c:765
 msgid "Update Active Color"
 msgstr "Opdatér aktiv farve"
 
@@ -6008,41 +6016,41 @@ msgid "Crop: "
 msgstr "Beskær: "
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:944
+#: app/tools/gimpcroptool.c:948
 msgid "Crop: 0 x 0"
 msgstr "Beskær: 0 x 0"
 
 # 'information' er overflødigt
 #. create the info dialog
-#: app/tools/gimpcroptool.c:965
+#: app/tools/gimpcroptool.c:971
 msgid "Crop & Resize Information"
 msgstr "Beskæring og størrelse"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:983
+#: app/tools/gimpcroptool.c:989
 msgid "Origin X:"
 msgstr "x-nulpunkt:"
 
-#: app/tools/gimpcroptool.c:1026
+#: app/tools/gimpcroptool.c:1032
 msgid "From Selection"
 msgstr "Fra markering"
 
-#: app/tools/gimpcroptool.c:1033
+#: app/tools/gimpcroptool.c:1039
 msgid "Auto Shrink"
 msgstr "Automatisk formindskelse"
 
 # 'toggle' er ret mærkeligt, men refererer til hvilken tilstand værktøjet er i (fx zoom ind vs. zoom ud)
 #. tool toggle
-#: app/tools/gimpcroptool.c:1359 app/tools/gimpfliptool.c:302
-#: app/tools/gimpmagnifytool.c:463 app/tools/gimpmovetool.c:687
+#: app/tools/gimpcroptool.c:1365 app/tools/gimpfliptool.c:302
+#: app/tools/gimpmagnifytool.c:463 app/tools/gimpmovetool.c:691
 msgid "Tool Toggle (<Ctrl>)"
 msgstr "Værktøjstilstand (<Ctrl>)"
 
-#: app/tools/gimpcroptool.c:1372
+#: app/tools/gimpcroptool.c:1378
 msgid "Current Layer only"
 msgstr "Kun aktuelt lag"
 
-#: app/tools/gimpcroptool.c:1384
+#: app/tools/gimpcroptool.c:1390
 msgid "Allow Enlarging (<Alt>)"
 msgstr "Tillad forstørring (<Alt>)"
 
@@ -6184,15 +6192,15 @@ msgstr "Markér håndtegnede områder"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Værktøjer/Markering/Fri markering"
 
-#: app/tools/gimpfuzzyselecttool.c:100
+#: app/tools/gimpfuzzyselecttool.c:96
 msgid "Fuzzy Select"
 msgstr "Udflydende markering"
 
-#: app/tools/gimpfuzzyselecttool.c:101
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Select contiguous regions"
 msgstr "Markér sammenhængende områder"
 
-#: app/tools/gimpfuzzyselecttool.c:102
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Værktøjer/Markering/Udflydende markering"
 
@@ -6318,7 +6326,7 @@ msgid "Size:"
 msgstr "Størrelse:"
 
 #: app/tools/gimpinktool.c:1469 app/tools/gimpmeasuretool.c:394
-#: app/tools/gimprotatetool.c:186 app/widgets/gimpbrusheditor.c:188
+#: app/tools/gimprotatetool.c:187 app/widgets/gimpbrusheditor.c:188
 msgid "Angle:"
 msgstr "Vinkel:"
 
@@ -6434,12 +6442,12 @@ msgstr "/Værktøjer/Måleværktøj"
 msgid "Distance:"
 msgstr "Afstand:"
 
-#: app/tools/gimpmeasuretool.c:573 app/tools/gimpmeasuretool.c:578
-#: app/tools/gimpmeasuretool.c:586 app/tools/gimpmeasuretool.c:616
+#: app/tools/gimpmeasuretool.c:576 app/tools/gimpmeasuretool.c:581
+#: app/tools/gimpmeasuretool.c:589 app/tools/gimpmeasuretool.c:619
 msgid "degrees"
 msgstr "grader"
 
-#: app/tools/gimpmeasuretool.c:867
+#: app/tools/gimpmeasuretool.c:873
 msgid "Use Info Window"
 msgstr "Benyt infovindue"
 
@@ -6456,24 +6464,24 @@ msgstr "Flyt lag og markeringer"
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Værktøjer/Transformering/Flyt"
 
-#: app/tools/gimpmovetool.c:692
+#: app/tools/gimpmovetool.c:696
 msgid "Pick a Layer to Move"
 msgstr "Vælg et lag der skal flyttes"
 
-#: app/tools/gimpmovetool.c:696
+#: app/tools/gimpmovetool.c:700
 msgid "Move Current Layer"
 msgstr "Flyt aktuelt lag"
 
 #. move mask
-#: app/tools/gimpmovetool.c:706
+#: app/tools/gimpmovetool.c:710
 msgid "Move Mode (<Alt>)"
 msgstr "Flyttetilstand (<Alt>)"
 
-#: app/tools/gimpmovetool.c:711
+#: app/tools/gimpmovetool.c:715
 msgid "Move Pixels"
 msgstr "Flyt billedpunkter"
 
-#: app/tools/gimpmovetool.c:715
+#: app/tools/gimpmovetool.c:719
 msgid "Move Selection Outline"
 msgstr "Flyt markeringsramme"
 
@@ -6489,15 +6497,15 @@ msgstr "Mal med udflydende penselstrøg"
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Værktøjer/Tegning/Malepensel"
 
-#: app/tools/gimppathtool.c:115
+#: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
 msgid "Path Tool"
 msgstr "Baneværktøj"
 
-#: app/tools/gimppathtool.c:116
+#: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
 msgstr "Baneværktøjsprototype"
 
-#: app/tools/gimppathtool.c:117
+#: app/tools/gimppathtool.c:118
 msgid "/Tools/Path"
 msgstr "/Værktøjer/Bane"
 
@@ -6594,54 +6602,54 @@ msgstr "Markering: ERSTAT"
 msgid "Selection: "
 msgstr "Markering: "
 
-#: app/tools/gimprotatetool.c:99
+#: app/tools/gimprotatetool.c:100
 msgid "Rotate Tool"
 msgstr "Roteringsværktøj"
 
-#: app/tools/gimprotatetool.c:100
+#: app/tools/gimprotatetool.c:101
 msgid "Rotate the layer or selection"
 msgstr "Rotér laget eller markeringen"
 
 # 'værktøjer' efter 'transformering' er også overflødigt
-#: app/tools/gimprotatetool.c:101
+#: app/tools/gimprotatetool.c:102
 msgid "/Tools/Transform Tools/Rotate"
 msgstr "/Værktøjer/Transformering/Rotér"
 
 # en komplet tekst bliver for lang og er overflødig
-#: app/tools/gimprotatetool.c:178
+#: app/tools/gimprotatetool.c:179
 msgid "Rotation Information"
 msgstr "Rotation"
 
-#: app/tools/gimprotatetool.c:203
+#: app/tools/gimprotatetool.c:204
 msgid "Center X:"
 msgstr "Centrum x:"
 
-#: app/tools/gimprotatetool.c:278
+#: app/tools/gimprotatetool.c:280
 msgid "Rotating..."
 msgstr "Roterer..."
 
-#: app/tools/gimpscaletool.c:94
+#: app/tools/gimpscaletool.c:95
 msgid "Scale Tool"
 msgstr "Skaleringsværktøj"
 
-#: app/tools/gimpscaletool.c:95
+#: app/tools/gimpscaletool.c:96
 msgid "Scale the layer or selection"
 msgstr "Skalér laget eller markeringen"
 
-#: app/tools/gimpscaletool.c:96
+#: app/tools/gimpscaletool.c:97
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Værktøjer/Transformering/Skalér"
 
 # en komplet tekst bliver for lang og er overflødig
-#: app/tools/gimpscaletool.c:175
+#: app/tools/gimpscaletool.c:176
 msgid "Scaling Information"
 msgstr "Skalering"
 
-#: app/tools/gimpscaletool.c:191
+#: app/tools/gimpscaletool.c:192
 msgid "Current Width:"
 msgstr "Nuværende bredde:"
 
-#: app/tools/gimpscaletool.c:210
+#: app/tools/gimpscaletool.c:211
 msgid "Scale Ratio X:"
 msgstr "Skaleringsforhold x:"
 
@@ -6745,15 +6753,15 @@ msgstr ""
 "Omformning virker ikke på\n"
 "lag der indeholder lagmasker."
 
-#: app/tools/gimpvectortool.c:116
+#: app/tools/gimpvectortool.c:115
 msgid "Vector Tool"
 msgstr "Vektorværktøj"
 
-#: app/tools/gimpvectortool.c:117
+#: app/tools/gimpvectortool.c:116
 msgid "Vector angles and lengths"
 msgstr "Vektorvinkler og -længder"
 
-#: app/tools/gimpvectortool.c:118
+#: app/tools/gimpvectortool.c:117
 msgid "/Tools/Vector"
 msgstr "/Værktøjer/Vektor"
 
