@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-03 01:02+0100\n"
-"PO-Revision-Date: 2003-09-15 00:13+0200\n"
+"PO-Revision-Date: 2003-11-19 18:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -17,8 +17,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
-"La modalità console Script-Fu permette solamente invocazioni interattive"
+msgstr "La modalità console Script-Fu permette solo invocazioni interattive"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
@@ -26,12 +25,12 @@ msgstr "Console Script-Fu"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
-msgstr "SIOD Uscita"
+msgstr "Uscita SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
-msgstr "Comando Attuale"
+msgstr "Comando corrente"
 
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
@@ -39,17 +38,15 @@ msgstr "Naviga..."
 
 #: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Impossibile aprire un flusso sul pipe SIOD di uscita"
+msgstr "Impossibile aprire un flusso sulla pipe SIOD di uscita"
 
 #: plug-ins/script-fu/script-fu-console.c:588
-#, fuzzy
 msgid "Unable to open the SIOD output pipe"
-msgstr "Impossibile aprire un pipe SIOD di uscita"
+msgstr "Impossibile aprire una pipe SIOD di uscita"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-"La modalità di valutazione Script-Fu permette invocazioni non interattive"
+msgstr "La modalità di valutazione Script-Fu permette solo invocazioni non interattive"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -69,7 +66,7 @@ msgstr "Informazioni"
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1173
 msgid "Script Arguments"
-msgstr "Argomenti dello Script"
+msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
@@ -80,37 +77,36 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
-msgstr "Script-fu Selezione File"
+msgstr "Selezione colore Script-fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1324
 msgid "Script-Fu File Selection"
-msgstr "Script-fu Selezione File"
+msgstr "Selezione file Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1329
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-fu Selezione File"
+msgstr "Selezione cartella Script-fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Font Selection"
-msgstr "Script-fu Selezione Font"
+msgstr "Selezione carattere Script-fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-fu Pattern Selection"
-msgstr "Script-fu Selezione Pattern"
+msgstr "Selezione modello Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-fu Selezione Gradiente"
+msgstr "Selezione gradiente Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu Brush Selection"
-msgstr "Script-fu Selezione Pennello"
+msgstr "Selezione pennello Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1863
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Author:"
-msgstr "Autore :"
+msgstr "Autore:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1869
 #: plug-ins/dbbrowser/dbbrowser_utils.c:508
@@ -124,52 +120,51 @@ msgstr "Data:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1883
 msgid "Image Types:"
-msgstr "Tipi di Immagini:"
+msgstr "Tipi di immagini:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2005
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Script-fu Selezione File"
+msgstr ""
+"Errore durante l'esecuzione Script-Fu\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:601
 msgid "Script-Fu Server Options"
-msgstr "Script-fu Opzioni Server"
+msgstr "Opzioni server Script-Fu"
 
 #: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
-msgstr "Porta Server:"
+msgstr "Porta server:"
 
 #: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
-msgstr "Log server:"
+msgstr "File di log server:"
 
 #: plug-ins/script-fu/script-fu.c:120
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Toolbox>/Xtns/Script-Fu/_Console Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/Xtns/Script-Fu/E_segui server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
-msgstr "Ricarica script disponibili"
+msgstr "Ri-leggi script disponibili"
 
 #: plug-ins/script-fu/script-fu.c:274
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Xtns/Script-Fu/Aggiorna"
+msgstr "<Toolbox>/Xtns/Script-Fu/Aggio_rna gli script"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
-#, fuzzy
 msgid "DB Browser"
-msgstr "Naviga..."
+msgstr "Navigazione DB"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:124
 #: plug-ins/dbbrowser/dbbrowser_utils.c:143
@@ -178,12 +173,13 @@ msgstr "Ricerca per _nome"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:126
 #: plug-ins/dbbrowser/dbbrowser_utils.c:145
+#, fuzzy
 msgid "Search by _Blurb"
-msgstr ""
+msgstr "Ricerca per _blurb"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:211
 msgid "_Search:"
-msgstr "Cerca:"
+msgstr "_Cerca:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
 msgid "Name:"
@@ -192,15 +188,15 @@ msgstr "Nome:"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #, fuzzy
 msgid "Blurb:"
-msgstr "Sfocatura Y"
+msgstr "Sfocatura:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
 msgid "In:"
-msgstr ""
+msgstr "Ingresso:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:420
 msgid "Out:"
-msgstr ""
+msgstr "Uscita:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:474
 msgid "Help:"
@@ -211,8 +207,9 @@ msgid "Searching by name - please wait"
 msgstr "Ricerca per nome - attendere"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#, fuzzy
 msgid "Searching by blurb - please wait"
-msgstr ""
+msgstr "Ricerca per blurb - attendere"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "Searching - please wait"
@@ -393,7 +390,7 @@ msgstr "Testo"
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/3D Truchet..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/3_D Truchet..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -483,9 +480,8 @@ msgid "Work on Copy"
 msgstr "Lavora su una copia"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr "<Image>/Script-Fu/Decorazioni/Aggiungi bordo..."
+msgstr "<Immagine>/Script-Fu/Decorazioni/Aggiunta _bordo..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border Color"
@@ -887,11 +883,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Burn-In: necessita di due livelli in totale!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
+msgstr "L'effetto burn-in su un livello di primo piano (testo) ed un livello di sfondo; V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 #, fuzzy
@@ -899,14 +895,12 @@ msgid "Corona Width"
 msgstr "Larghezza nastro"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
-#, fuzzy
 msgid "Fadeout"
-msgstr "Larghezza margine"
+msgstr "Dissolvenza in uscita"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#, fuzzy
 msgid "Fadeout Width"
-msgstr "Larghezza margine"
+msgstr "Larghezza dissolvenza in uscita"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
@@ -967,7 +961,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Carved..."
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
-msgstr "Immagine sfondo"
+msgstr "Immagine di sfondo"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
@@ -1011,7 +1005,7 @@ msgstr "Ammontare scheggie"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
-msgstr "Ombra rilievo"
+msgstr "Crea ombra staccata"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
@@ -1023,7 +1017,7 @@ msgstr "Inverti"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Keep Background"
-msgstr "Utilizza sfondo"
+msgstr "Mantieni lo sfondo"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
 #, fuzzy
@@ -1033,23 +1027,23 @@ msgstr "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome Balance"
-msgstr "Bilanciamento cromatura"
+msgstr "Bilanciamento cromatico"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome Factor"
-msgstr "Fattore di cromatura"
+msgstr "Fattore di cromatico"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome Lightness"
-msgstr "Luminosità cromatura"
+msgstr "Luminosità cromatica"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Chrome Saturation"
-msgstr "Saturazione cromatura"
+msgstr "Saturazione cromatica"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome White Areas"
@@ -1113,7 +1107,7 @@ msgstr "Livello separato"
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Script-Fu/Alchemy/_Clothify..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1225,9 +1219,8 @@ msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Soglia (Alta 1<-->255 Piccola)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<Image>/Script-Fu/Ombre/Ombra in rilievo..."
+msgstr "<Immagine>/Script-Fu/Ombre/Crea _ombra staccata..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1252,12 +1245,12 @@ msgstr "Chiudi"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
-msgstr "Sposta X"
+msgstr "Spostamento in X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
-msgstr "Sposta Y"
+msgstr "Spostamento in Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
@@ -1385,7 +1378,7 @@ msgstr "Colore outline"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
-msgstr ""
+msgstr "Nero su bianco"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
 #, fuzzy
@@ -1881,9 +1874,8 @@ msgid "Sepia"
 msgstr "Seppia"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-msgstr "<Image>/Script-Fu/Ombre/Ombra in prospettiva..."
+msgstr "<Immagine>/Script-Fu/Ombre/_Prospettiva..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -1904,7 +1896,7 @@ msgstr "Lunghezza relativa dell'ombra"
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-msgstr "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Immagine>/Script-Fu/Alchemy/Predator..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge Amount"
@@ -2022,7 +2014,7 @@ msgstr "Aggiungi sfondo"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
 msgid "Add Drop-Shadow"
-msgstr "Aggiungi ombra rilievo"
+msgstr "Aggiungi ombra staccata"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Edge Radius"
@@ -2034,6 +2026,9 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"(set! nomefile2 (stringa-da-aggiungere cartella-dati\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 #, fuzzy
@@ -2130,14 +2125,18 @@ msgid "Color Method"
 msgstr "Metodo colore"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
+"Disegna spirograph, epitrochoid e figure di Lissajous. Ulteriori informazioni\n"
+"su http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#, fuzzy
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrochoid"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
@@ -2145,31 +2144,29 @@ msgstr "Quadro"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Gradiente: dente di sega ciclico"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Gradiente: triangolare ciclico"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
 msgstr "Esagono"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-#, fuzzy
 msgid "Hole Ratio"
-msgstr "Valore tonalità"
+msgstr "Rapporto buco"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
-msgstr ""
+msgstr "Dente interno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
 msgstr "Lissajous"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
-#, fuzzy
 msgid "Margin (pixels)"
 msgstr "Margine (punti)"
 
@@ -2210,6 +2207,7 @@ msgid "Solid Color"
 msgstr "Colore pieno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#, fuzzy
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
@@ -2466,42 +2464,41 @@ msgid "Thread Length"
 msgstr "Lunghezza filo"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Xtns/Web Browser/Registro Plug-In"
+msgstr "<Strumenti>/Xtns/Navigatore Web/Registro Plug-In"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-msgstr ""
+msgstr "<Strumenti>/Aiuto/GIMP Online/Sito degli _sviluppatori"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
-msgstr ""
+msgstr "<Strumenti>/Aiuto/GIMP Online/Sito web _principale"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-msgstr "<Image>/Script-Fu/Ombre/Xach-Effect..."
+msgstr "<Immagine>/Script-Fu/Ombre/Effetto-xach..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop Shadow Blur Radius"
-msgstr "Ombra rilieo con sfocatura radiale"
+msgstr "Ombra staccata con sfocatura radiale"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop Shadow Color"
-msgstr "Colore ombra rilievo"
+msgstr "Colore ombra staccata"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop Shadow Opacity"
-msgstr "Opacità ombra rilievo"
+msgstr "Opacità ombra staccata"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop Shadow X Offset"
-msgstr "Sposta X ombra rilievo"
+msgstr "Spostamento ombra staccata in X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop Shadow Y Offset"
-msgstr "Sposta Y ombra rilievo"
+msgstr "Spostamento ombra staccata in Y"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Opacity"
@@ -2509,60 +2506,10 @@ msgstr "Opacità illuminazione"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight X Offset"
-msgstr "Sposta X illuminazione"
+msgstr "Spostamento illuminazione in X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
-msgstr "Sposta Y illuminazione"
+msgstr "Spostamento illuminazione in Y"
 
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/Swirly (tileable)..."
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/FAQ Sviluppatori"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Bug"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Manuale"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP News"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Tutorial"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentazione"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Link"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing List"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Risorse"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/FAQ Utente"
