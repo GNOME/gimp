@@ -33,6 +33,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-error.h"
 
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"

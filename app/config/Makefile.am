@@ -8,6 +8,8 @@ libappconfig_a_SOURCES = \
 	gimpconfig.h			\
 	gimpconfig-deserialize.c	\
 	gimpconfig-deserialize.h	\
+	gimpconfig-error.c		\
+	gimpconfig-error.h		\
 	gimpconfig-params.c		\
 	gimpconfig-params.h		\
 	gimpconfig-path.c		\

@@ -39,7 +39,7 @@
 
 #include "config-types.h"
 
-#include "gimpconfig.h"
+#include "gimpconfig-error.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
 #include "gimpconfigwriter.h"

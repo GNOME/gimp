@@ -39,6 +39,7 @@
 
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-error.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
 #include "gimpconfig-serialize.h"

@@ -43,7 +43,7 @@
 
 #include "config-types.h"
 
-#include "gimpconfig.h"
+#include "gimpconfig-error.h"
 #include "gimpscanner.h"
 
 #include "gimp-intl.h"

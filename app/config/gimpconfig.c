@@ -392,28 +392,6 @@ gimp_config_deserialize_return (GScanner     *scanner,
   return TRUE;
 }
 
-GQuark
-gimp_config_error_quark (void)
-{
-  static GQuark q = 0;
-  if (q == 0)
-    q = g_quark_from_static_string ("gimp-config-error-quark");
-
-  return q;
-}
-
-void
-gimp_config_string_indent (GString *string,
-                           gint     indent_level)
-{
-  gint i;
-
-  g_return_if_fail (string != NULL);
-  g_return_if_fail (indent_level >= 0);
-
-  for (i = 0; i < indent_level; i++)
-    g_string_append_len (string, "    ", 4);
-}
 
 /**
  * gimp_config_duplicate:

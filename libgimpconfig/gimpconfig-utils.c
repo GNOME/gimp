@@ -2,8 +2,8 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Utitility functions for GimpConfig.
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
- * 
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -39,10 +39,10 @@
  * @a: a #GObject
  * @b: another #GObject of the same type as @a
  * @flags: a mask of GParamFlags
- * 
+ *
  * Compares all properties of @a and @b that have all @flags set. If
  * @flags is 0, all properties are compared.
- * 
+ *
  * Return value: a GList of differing GParamSpecs.
  **/
 GList *
@@ -109,7 +109,7 @@ gimp_config_connect_notify (GObject    *src,
  * gimp_config_connect:
  * @src: a #GObject
  * @dest: another #GObject of the same type as @src
- * 
+ *
  * Connects @dest with @src so that all property changes of @src are
  * applied to @dest using a "notify" handler.
  **/
@@ -130,7 +130,7 @@ gimp_config_connect (GObject *src,
  * gimp_config_disconnect:
  * @src: a #GObject
  * @dest: another #GObject of the same type as @src
- * 
+ *
  * Removes a connection between @dest and @src that was previously set
  * up using gimp_config_connect().
  **/
@@ -150,7 +150,7 @@ gimp_config_disconnect (GObject *src,
  * gimp_config_copy_properties:
  * @src: a #GObject
  * @dest: another #GObject of the same type as @src
- * 
+ *
  * Retrieves all read and writeable property settings from @src and
  * applies the values to @dest.
  **/
@@ -234,7 +234,7 @@ gimp_config_copy_properties (GObject *src,
 /**
  * gimp_config_reset_properties:
  * @object: a #GObject
- * 
+ *
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec.
  **/
@@ -248,7 +248,7 @@ gimp_config_reset_properties (GObject *object)
   guint          i;
 
   g_return_if_fail (G_IS_OBJECT (object));
-  
+
   klass = G_OBJECT_GET_CLASS (object);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -261,7 +261,7 @@ gimp_config_reset_properties (GObject *object)
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec;
- 
+
       prop_spec = property_specs[i];
 
       if (prop_spec->flags & G_PARAM_WRITABLE)
@@ -308,7 +308,7 @@ gimp_config_reset_properties (GObject *object)
  * gimp_config_string_append_escaped:
  * @string: pointer to a #GString
  * @val: a string to append or %NULL
- * 
+ *
  * Escapes and quotes @val and appends it to @string. The escape
  * algorithm is different from the one used by g_strescape() since it
  * leaves non-ASCII characters intact and thus preserves UTF-8
@@ -356,7 +356,7 @@ gimp_config_string_append_escaped (GString     *string,
                 case '"':
                   buf[1] = *p;
                   break;
-              
+
                 default:
                   len = 4;
                   buf[1] = '0' + (((*p) >> 6) & 07);
@@ -366,7 +366,7 @@ gimp_config_string_append_escaped (GString     *string,
                 }
 
               g_string_append_len (string, buf, len);
-              
+
               val = p + 1;
               len = 0;
             }
@@ -385,6 +385,19 @@ gimp_config_string_append_escaped (GString     *string,
     }
 }
 
+void
+gimp_config_string_indent (GString *string,
+                           gint     indent_level)
+{
+  gint i;
+
+  g_return_if_fail (string != NULL);
+  g_return_if_fail (indent_level >= 0);
+
+  for (i = 0; i < indent_level; i++)
+    g_string_append_len (string, "    ", 4);
+}
+
 
 /*
  * GimpConfig path utilities
@@ -399,7 +412,7 @@ gimp_config_build_data_path (const gchar *name)
                       NULL);
 }
 
-gchar * 
+gchar *
 gimp_config_build_plug_in_path (const gchar *name)
 {
   return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,

@@ -23,11 +23,12 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-error.h"
+
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpparasitelist.h"
-
-#include "config/gimpconfig.h"
 
 
 void

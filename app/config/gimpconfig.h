@@ -2,8 +2,8 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
- * 
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -21,14 +21,6 @@
 
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
-
-typedef enum
-{
-  GIMP_CONFIG_ERROR_OPEN,         /*  open failed          */
-  GIMP_CONFIG_ERROR_OPEN_ENOENT,  /*  file does not exist  */
-  GIMP_CONFIG_ERROR_WRITE,        /*  write failed         */
-  GIMP_CONFIG_ERROR_PARSE         /*  parser error         */
-} GimpConfigError;
 
 
 #define GIMP_TYPE_CONFIG_INTERFACE     (gimp_config_interface_get_type ())
@@ -108,14 +100,6 @@ const gchar * gimp_config_lookup_unknown_token  (GObject      *object,
 void          gimp_config_foreach_unknown_token (GObject      *object,
                                                  GimpConfigForeachFunc  func,
                                                  gpointer      user_data);
-
-
-#define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
-
-GQuark        gimp_config_error_quark   (void) G_GNUC_CONST;
-
-void          gimp_config_string_indent (GString *string,
-                                         gint     indent_level);
 
 
 #endif  /* __GIMP_CONFIG_H__ */

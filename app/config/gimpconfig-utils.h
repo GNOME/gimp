@@ -2,8 +2,8 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Utitility functions for GimpConfig.
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
- * 
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -36,6 +36,8 @@ void       gimp_config_reset_properties      (GObject      *object);
 
 void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);
+void       gimp_config_string_indent         (GString      *string,
+                                              gint          indent_level);
 
 gchar    * gimp_config_build_data_path       (const gchar  *name);
 gchar    * gimp_config_build_plug_in_path    (const gchar  *name);

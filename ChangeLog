@@ -1,3 +1,21 @@
+2003-07-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-error.[ch]: moved code from gimpconfig.[ch]
+	to these new files.
+
+	* app/config/gimpconfig-utils.[ch]: moved gimp_config_string_indent()
+	here from gimpconfig.[ch].
+
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfigwriter.c
+	* app/config/gimprc.c
+	* app/config/gimpscanner.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/widgets/gimpdevices.c: changed accordingly.
+
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimptext-vectors.c: added control points.
