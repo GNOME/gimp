@@ -415,7 +415,7 @@ def gimp_composite_installer_install2(fpout, name, function_table, requirements=
   print >>fpout, '%s_install (void)' % (functionnameify(name))
   print >>fpout, '{'
 
-  if len(function_table) > 1:
+  if len(function_table) >= 1:
     print >>fpout, '  static struct install_table *t = _%s;' % (functionnameify(name))
     print >>fpout, ''
     print >>fpout, '  if (%s_init ())' % functionnameify(name)

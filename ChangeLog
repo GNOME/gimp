@@ -1,3 +1,17 @@
+2005-03-03  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/make-installer.py:Applied patch from
+	starox-gimp@starox.org (Frederic Leroy) which fixed the parser of
+	the nm programme output to understand the output on 64bit
+	machines.  Fixes bug #168529
+	
+	* app/composite/ns.py: 
+	Applied patch from starox-gimp@starox.org (Frederic Leroy) which
+	fixed a bug that would appear when only one compositing function
+	was implemented.  Fixes bug #168529
+
+	Regenerated app/composite function tables.
+
 2005-03-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gifload.c (ReadImage): added a sanity check for
