@@ -737,6 +737,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (width > 0 && height > 0);
 
   gimp_item_configure (GIMP_ITEM (drawable), gimage,
                        offset_x, offset_y, width, height, name);

@@ -403,7 +403,7 @@ gimp_text_layer_new (GimpImage *image,
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
                            image,
-                           0, 0, 0, 0,
+                           0, 0, 1, 1,
                            gimp_image_base_type_with_alpha (image),
                            NULL);
 

@@ -1,5 +1,14 @@
 2004-04-03  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c (gimp_text_layer_new): create the
+	initial text layer with a size of 1 x 1 since tile_manager_new()
+	does not any longer accept 0 x 0.
+
+	* app/core/gimpdrawable.c (gimp_drawable_configure): check that
+	width and height are > 0.
+
+2004-04-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_main.c
 	* plug-ins/Lighting/lighting_shade.c: applied the first of two
 	patches attached to bug #138788 by William Skaggs.
