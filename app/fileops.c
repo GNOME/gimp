@@ -1169,7 +1169,7 @@ file_save_thumbnail (GimpImage  *gimage,
       basetype = gimp_image_base_type(gimage);
 
       fprintf (fp,
-	       "P7 332\n#IMGINFO:%dx%d %s (%d %s)\n"
+	       "P7 332\n#XVVERSION:\n#IMGINFO:%dx%d %s (%d %s)\n"
 	       "#END_OF_COMMENTS\n%d %d 255\n",
 	       gimage->width, gimage->height,
 	       (basetype == RGB) ? "RGB" :
