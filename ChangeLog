@@ -1,5 +1,14 @@
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: fix for Solaris /bin/sh (bug #118002).
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.[ch]: the Forte compiler doesn't
+	like the use of global variables in inline functions. Applied a
+	patch from Damien Carbery that fixes this (bug #118002).
+
+2003-07-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-blend.[ch]
 	* app/tools/gimpblendoptions.[ch]
 	* app/tools/gimpblendtool.c

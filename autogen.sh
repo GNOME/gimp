@@ -161,7 +161,9 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
-if ! $ACLOCAL $ACLOCAL_FLAGS; then
+$ACLOCAL $ACLOCAL_FLAGS
+RC=$?
+if test $RC -ne 0; then
    echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
    exit 1
 fi

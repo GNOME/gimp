@@ -18,7 +18,7 @@
 
 /*
  * This file is supposed to contain the generic (read: C) implementation
- * of the pixelfiddeling paint-functions. 
+ * of the pixelfiddeling paint-functions.
  */
 
 #ifndef __PAINT_FUNCS_GENERIC_H__
@@ -48,11 +48,11 @@
  * masking is always cheaper than passing parameters over the stack.      */
 /* FIXME: Move to a global place */
 #define HAS_ALPHA(bytes) (~bytes & 1)
-  
+
 /* FIXME: Move to a more global place */
 struct apply_layer_mode_struct
 {
-  guchar             bytes1 : 3; 
+  guchar             bytes1 : 3;
   guchar             bytes2 : 3;
   guchar            *src1;
   guchar            *src2;
@@ -65,9 +65,8 @@ struct apply_layer_mode_struct
   CombinationMode    combine;
 };
 
-static const guchar	no_mask = OPAQUE_OPACITY;
-static guchar		add_lut[511];
-static gint32		random_table[RANDOM_TABLE_SIZE];
+static guchar	     add_lut[511];
+static gint32	     random_table[RANDOM_TABLE_SIZE];
 
 void
 color_pixels (guchar       *dest,
@@ -75,7 +74,7 @@ color_pixels (guchar       *dest,
 	      guint         w,
 	      guint         bytes)
 {
-  /* dest % bytes and color % bytes must be 0 or we will crash 
+  /* dest % bytes and color % bytes must be 0 or we will crash
      when bytes = 2 or 4.
      Is this safe to assume?  Lets find out.
      This is 4-7X as fast as the simple version.
@@ -115,7 +114,7 @@ color_pixels (guchar       *dest,
 	}
 #endif /* sparc || __sparc__ */
       break;
-    
+
     case 3:
       c0 = color[0];
       c1 = color[1];
@@ -128,7 +127,7 @@ color_pixels (guchar       *dest,
 	  dest += 3;
 	}
       break;
-    
+
     case 4:
 #if defined(sparc) || defined(__sparc__)
       c0 = color[0];
@@ -153,7 +152,7 @@ color_pixels (guchar       *dest,
 	}
 #endif /* sparc || __sparc__ */
       break;
-    
+
     default:
       while (w--)
 	{
@@ -194,7 +193,11 @@ blend_pixels (const guchar *src1,
           else
             {
               for (b = 0; b < c; b++)
-                dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
+                {
+                  g_print ("%5d %5d %5d  ", src1[b] * a1, src2[b] + a2, a);
+                  dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
+                  g_print ("%3d\n", dest[b]);
+                }
               dest[c] = a >> 8;
             }
 
@@ -211,7 +214,7 @@ blend_pixels (const guchar *src1,
         {
           for (b = 0; b < bytes; b++)
             dest[b] = (src1[b] * blend1 + src2[b] * blend) / 255;
-          
+
           src1 += bytes;
           src2 += bytes;
           dest += bytes;
@@ -255,7 +258,7 @@ extract_alpha_pixels (const guchar *src,
 {
   const guint alpha = bytes - 1;
   gint          tmp;
-  
+
   if (mask)
     {
       const guchar *m = mask;
@@ -267,9 +270,9 @@ extract_alpha_pixels (const guchar *src,
         }
     }
   else
-    { 
+    {
       while (w--)
-        { 
+        {
           *dest++ = INT_MULT(src[alpha], OPAQUE_OPACITY, tmp);
           src += bytes;
         }
@@ -287,7 +290,7 @@ darken_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
   guchar s1, s2;
 
@@ -322,7 +325,7 @@ lighten_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
   guchar s1, s2;
 
@@ -519,7 +522,7 @@ multiply_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmp;
 
   if (has_alpha1 && has_alpha2)
@@ -575,7 +578,7 @@ divide_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, result;
 
   while (length--)
@@ -608,7 +611,7 @@ screen_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmp;
 
   while (length --)
@@ -638,7 +641,7 @@ overlay_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmp;
 
   while (length --)
@@ -672,7 +675,7 @@ dodge_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmp;
 
   while (length --)
@@ -706,9 +709,9 @@ burn_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
-  
+
   /* FIXME: Is the burn effect supposed to be dependant on the sign of this
    * temporary variable? */
   gint tmp;
@@ -744,7 +747,7 @@ hardlight_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmp;
 
   while (length --)
@@ -782,7 +785,7 @@ softlight_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b, tmpS, tmpM, tmp1, tmp2, tmp3;
 
   while (length --)
@@ -795,12 +798,12 @@ softlight_pixels (const guchar *src1,
           dest[b] = INT_MULT ((255 - src1[b]), tmpM, tmp2) +
             INT_MULT (src1[b], tmpS, tmp3);
         }
-      
+
       if (has_alpha1 && has_alpha2)
         dest[alpha] = MIN (src1[alpha], src2[alpha]);
       else if (has_alpha2)
         dest[alpha] = src2[alpha];
-      
+
       src1 += bytes1;
       src2 += bytes2;
       dest += bytes2;
@@ -835,7 +838,7 @@ grain_extract_pixels (const guchar *src1,
         dest[alpha] = MIN (src1[alpha], src2[alpha]);
       else if (has_alpha2)
         dest[alpha] = src2[alpha];
-      
+
       src1 += bytes1;
       src2 += bytes2;
       dest += bytes2;
@@ -889,7 +892,7 @@ add_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
 
   while (length --)
@@ -919,7 +922,7 @@ subtract_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
   gint diff;
 
@@ -953,7 +956,7 @@ difference_pixels (const guchar *src1,
 {
   const guint has_alpha1 = HAS_ALPHA (bytes1);
   const guint has_alpha2 = HAS_ALPHA (bytes2);
-  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
   guint b;
   gint diff;
 
@@ -1009,21 +1012,21 @@ dissolve_pixels (const guchar *src,
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
-      rand_val = g_rand_int_range (gr, 0, 256);       
+      rand_val = g_rand_int_range (gr, 0, 256);
 
       if (mask)
         {
           if (has_alpha)
             combined_opacity = opacity * src[alpha] * *mask / (255 * 255);
           else
-            combined_opacity = opacity * *mask / 255;       
+            combined_opacity = opacity * *mask / 255;
 
           mask++;
         }
       else
         {
           if (has_alpha)
-            combined_opacity = opacity * src[alpha] / 255;       
+            combined_opacity = opacity * src[alpha] / 255;
           else
             combined_opacity = opacity;
         }
@@ -1072,7 +1075,7 @@ replace_pixels (guchar   *src1,
       s1_a = src1[alpha];
       s2_a = src2[alpha];
       a_val = s1_a + mask_val * (s2_a - s1_a);
- 
+
       if (a_val == 0) /* In any case, write out versions of the blending function */
                       /* that result when combinations of s1_a, s2_a, and         */
 	              /* mask_val --> 0 (or mask_val -->1)                        */
@@ -1084,9 +1087,9 @@ replace_pixels (guchar   *src1,
             {
               for (b = 0; b < alpha; b++)
 	        {
-                  new_val = 0.5 + (gdouble) src1[b] + 
+                  new_val = 0.5 + (gdouble) src1[b] +
 		    mask_val * ((gdouble) src2[b] - (gdouble) src1[b]);
- 
+
                   dest[b] = affect[b] ? MIN (new_val, 255) : src1[b];
                 }
             }
@@ -1096,7 +1099,7 @@ replace_pixels (guchar   *src1,
             {
               for (b = 0; b < alpha; b++)
 	        {
-                  dest[b] = src1[b]; 
+                  dest[b] = src1[b];
                 }
             }
 
@@ -1105,7 +1108,7 @@ replace_pixels (guchar   *src1,
             {
               for (b = 0; b < alpha; b++)
 	        {
-                  dest[b] = affect[b] ? src2[b] : src1[b]; 
+                  dest[b] = affect[b] ? src2[b] : src1[b];
                 }
             }
 	}
@@ -1196,7 +1199,7 @@ flatten_pixels (const guchar *src,
   while (length --)
     {
       for (b = 0; b < alpha; b++)
-	dest[b] = INT_MULT (src[b], src[alpha], t1) + 
+	dest[b] = INT_MULT (src[b], src[alpha], t1) +
 	          INT_MULT (bg[b], (255 - src[alpha]), t2);
 
       src += bytes;
@@ -1368,6 +1371,7 @@ inline void
 initial_indexed_a_pixels (const guchar *src,
 			  guchar       *dest,
 			  const guchar *mask,
+			  const guchar *no_mask,
 			  const guchar *cmap,
 			  guint         opacity,
 			  guint         length)
@@ -1380,7 +1384,7 @@ initial_indexed_a_pixels (const guchar *src,
   if (mask)
     m = mask;
   else
-    m = &no_mask;
+    m = no_mask;
 
   while (length --)
     {
@@ -1403,6 +1407,7 @@ inline void
 initial_inten_pixels (const guchar *src,
 		      guchar       *dest,
 		      const guchar *mask,
+		      const guchar *no_mask,
 		      guint         opacity,
 		      const gint   *affect,
 		      guint         length,
@@ -1419,18 +1424,18 @@ initial_inten_pixels (const guchar *src,
   if (mask)
   {
     m = mask;
-    
+
     /*  This function assumes the source has no alpha channel and
      *  the destination has an alpha channel.  So dest_bytes = bytes + 1
      */
-   
+
     if (bytes == 3 && affect[0] && affect[1] && affect[2])
       {
 	if (!affect[bytes])
 	  opacity = 0;
-    
+
 	destp = dest + bytes;
-	
+
 	if (opacity != 0)
 	  while(length--)
 	    {
@@ -1475,13 +1480,13 @@ initial_inten_pixels (const guchar *src,
 	      destp += dest_bytes;
 	    }
       }
-    
-    /* fill the alpha channel */ 
+
+    /* fill the alpha channel */
     if (!affect[bytes])
       opacity = 0;
- 
+
     destp = dest + bytes;
-   
+
     if (opacity != 0)
       while (length--)
 	{
@@ -1496,23 +1501,23 @@ initial_inten_pixels (const guchar *src,
 	  destp += dest_bytes;
 	}
   }
-  
+
   /* If no mask */
   else
     {
-      m = &no_mask;
-      
+      m = no_mask;
+
       /*  This function assumes the source has no alpha channel and
        *  the destination has an alpha channel.  So dest_bytes = bytes + 1
        */
-      
+
       if (bytes == 3 && affect[0] && affect[1] && affect[2])
 	{
 	  if (!affect[bytes])
 	    opacity = 0;
 
 	  destp = dest + bytes;
-	  
+
 	  while(length--)
 	    {
 	      dest[0] = src[0];
@@ -1524,7 +1529,7 @@ initial_inten_pixels (const guchar *src,
 	    }
 	  return;
 	}
-      
+
       for (b =0; b < bytes; b++)
 	{
 	  destp = dest + b;
@@ -1545,13 +1550,13 @@ initial_inten_pixels (const guchar *src,
 		destp += dest_bytes;
 	      }
       }
-      
-      /* fill the alpha channel */ 
+
+      /* fill the alpha channel */
       if (!affect[bytes])
 	opacity = 0;
 
       destp = dest + bytes;
-    
+
       while (length--)
 	{
 	  *destp = opacity;
@@ -1582,13 +1587,13 @@ initial_inten_a_pixels (const guchar   *src,
 	{
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = src[b] * affect[b];
-	  
+
 	  /*  Set the alpha channel  */
 	  dest[alpha] = affect [alpha] ? INT_MULT3(opacity, src[alpha], *m, tmp)
 	    : 0;
-	  
+
 	  m++;
-	  
+
 	  dest += bytes;
 	  src += bytes;
 	}
@@ -1599,10 +1604,10 @@ initial_inten_a_pixels (const guchar   *src,
 	{
 	  for (b = 0; b < alpha; b++)
 	    dest[b] = src[b] * affect[b];
-	  
+
 	  /*  Set the alpha channel  */
 	  dest[alpha] = affect [alpha] ? INT_MULT(opacity , src[alpha], tmp) : 0;
-	  
+
 	  dest += bytes;
 	  src += bytes;
 	}
@@ -1621,7 +1626,7 @@ component_pixels (const guchar *src,
   while (length --)
     {
       *dest = *src;
-      
+
       src += bytes;
       dest++;
     }
@@ -1638,7 +1643,7 @@ layer_normal_mode (struct apply_layer_mode_struct *alms)
 static void
 layer_dissolve_mode (struct apply_layer_mode_struct *alms)
 {
-  const guint has_alpha1 = HAS_ALPHA (alms->bytes1); 
+  const guint has_alpha1 = HAS_ALPHA (alms->bytes1);
   const guint has_alpha2 = HAS_ALPHA (alms->bytes2);
   guint dest_bytes;
 
@@ -1649,7 +1654,7 @@ layer_dissolve_mode (struct apply_layer_mode_struct *alms)
     dest_bytes = alms->bytes2 + 1;
 
   dissolve_pixels (alms->src2, alms->mask, *(alms->dest),
-                   alms->x, alms->y, 
+                   alms->x, alms->y,
                    alms->opacity, alms->length,
                    alms->bytes2, dest_bytes,
                    has_alpha2);
@@ -1660,15 +1665,15 @@ layer_dissolve_mode (struct apply_layer_mode_struct *alms)
 static void
 layer_multiply_mode (struct apply_layer_mode_struct *alms)
 {
-  multiply_pixels (alms->src1, alms->src2, *(alms->dest), alms->length, 
-		   alms->bytes1, alms->bytes2); 
+  multiply_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
+		   alms->bytes1, alms->bytes2);
 }
 
 static void
 layer_divide_mode (struct apply_layer_mode_struct *alms)
 {
-  divide_pixels (alms->src1, alms->src2, *(alms->dest), alms->length, 
-		 alms->bytes1, alms->bytes2); 
+  divide_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
+		 alms->bytes1, alms->bytes2);
 }
 
 static void
@@ -1681,7 +1686,7 @@ layer_screen_mode (struct apply_layer_mode_struct *alms)
 static void
 layer_overlay_mode (struct apply_layer_mode_struct *alms)
 {
-  overlay_pixels (alms->src1, alms->src2, *(alms->dest), alms->length, 
+  overlay_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
 		  alms->bytes1, alms->bytes2);
 }
 
@@ -1716,7 +1721,7 @@ layer_darken_only_mode (struct apply_layer_mode_struct *alms)
 static void
 layer_lighten_only_mode (struct apply_layer_mode_struct *alms)
 {
-  lighten_pixels (alms->src1, alms->src2, *(alms->dest), alms->length, 
+  lighten_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
 		  alms->bytes1, alms->bytes2);
 }
 
@@ -1788,7 +1793,7 @@ layer_erase_mode (struct apply_layer_mode_struct *alms)
   /*  If both sources have alpha channels, call erase function.
    *  Otherwise, just combine in the normal manner
    */
-  alms->combine = 
+  alms->combine =
     (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (alms->bytes2)) ?  ERASE_INTEN : 0;
 }
 
@@ -1796,7 +1801,7 @@ static void
 layer_anti_erase_mode (struct apply_layer_mode_struct *alms)
 {
   *(alms->dest) = alms->src2;
-  alms->combine = 
+  alms->combine =
     (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (alms->bytes2)) ? ANTI_ERASE_INTEN : 0;
 }
 
@@ -1804,7 +1809,7 @@ static void
 layer_color_erase_mode (struct apply_layer_mode_struct *alms)
 {
   *(alms->dest) = alms->src2;
-  alms->combine = 
+  alms->combine =
     (HAS_ALPHA (alms->bytes1) && HAS_ALPHA (alms->bytes2)) ? COLOR_ERASE_INTEN : 0;
 }
 

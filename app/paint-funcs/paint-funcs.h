@@ -104,6 +104,7 @@ void  initial_indexed_pixels              (const guchar *src,
 void  initial_indexed_a_pixels            (const guchar *src,
 					   guchar *dest,
 					   const guchar *mask,
+					   const guchar *no_mask,
 					   const guchar *cmap,
 					   guint opacity, guint length);
 
@@ -113,6 +114,7 @@ void  initial_indexed_a_pixels            (const guchar *src,
 void  initial_inten_pixels                (const guchar *src,
 					   guchar *dest,
 					   const guchar *mask,
+					   const guchar *no_mask,
 					   guint opacity, const int *affect,
 					   guint length, guint bytes);
 

@@ -126,6 +126,9 @@ static LayerModeFunc layer_mode_funcs[] =
 };
 
 
+static const guchar  no_mask = OPAQUE_OPACITY;
+
+
 /*  Local function prototypes  */
 
 static gint *   make_curve               (gdouble  sigma,
@@ -4306,7 +4309,7 @@ initial_sub_region (struct initial_regions_struct *st,
           break;
 
         case INITIAL_INDEXED_ALPHA:
-          initial_indexed_a_pixels (s, d, m, data, opacity, src->w);
+          initial_indexed_a_pixels (s, d, m, &no_mask, data, opacity, src->w);
           break;
 
         case INITIAL_INTENSITY:
@@ -4320,7 +4323,7 @@ initial_sub_region (struct initial_regions_struct *st,
                                       src->w, src->bytes + 1);
             }
           else
-            initial_inten_pixels (s, d, m, opacity, affect, src->w, src->bytes);
+            initial_inten_pixels (s, d, m, &no_mask, opacity, affect, src->w, src->bytes);
           break;
 
         case INITIAL_INTENSITY_ALPHA:
