@@ -400,8 +400,15 @@ static void
 gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                GimpDisplayShell *shell)
 {
-  gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_scaled (shell);
+  if (shell->dot_for_dot)
+    {
+      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
+    }
+  else
+    {
+      gimp_display_shell_size_changed_handler (gimage, shell);
+    }
 }
 
 static void

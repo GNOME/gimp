@@ -1,5 +1,12 @@
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_resolution_changed_handler): if dot_for_dot is
+	off, resolution change has the same effect as size change, so call
+	gimp_display_shell_size_changed_handler(). Fixes display garbage.
+
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/winicon/icodialog.[ch]
 	* plug-ins/winicon/icoload.[ch]
 	* plug-ins/winicon/icosave.[ch]
