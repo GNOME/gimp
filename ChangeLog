@@ -1,5 +1,10 @@
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimagedock.c (gimp_image_dock_init): set a
+	tooltip on the "Auto" button since it isn't obvious what it does.
+
+2003-10-23  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-tools-[16|24].png	
 	* themes/Default/images/stock-device-status-24.png

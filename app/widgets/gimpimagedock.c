@@ -194,7 +194,9 @@ gimp_image_dock_init (GimpImageDock *dock)
 		    G_CALLBACK (gimp_image_dock_auto_clicked),
 		    dock);
 
-  gimp_help_set_help_data (dock->auto_button, NULL,
+  gimp_help_set_help_data (dock->auto_button,
+                           _("When enabled the dialog automatically "
+                             "follows the image you are working on."),
                            GIMP_HELP_DOCK_AUTO_BUTTON);
 }
 
