@@ -1,3 +1,13 @@
+Sat Nov 27 03:07:20 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* configure.in: Fix *the* perl configuration bug. tststs...
+
+Wed Nov 24 21:10:07 CET 1999  Marc Lehmann <pcg@goof.com>
+
+        * app/gimpimage.h, app/gimpimage.c,
+        tools/pdbgen/pdb/gimage.pdb: Implement gimp_image_undo_is_enabled,
+        patch by Raphael Quinet.
+
 Fri Nov 26 21:55:07 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/aa.c
@@ -39,6 +49,7 @@ Fri Nov 26 12:25:42 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_main.c: fixed a menu path.
 
+>>>>>>> 1.1871
 Fri Nov 26 01:33:04 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/histogram_tool.c: purely cosmetic change
