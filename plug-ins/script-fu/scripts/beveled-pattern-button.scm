@@ -50,10 +50,7 @@
 	 (ypadding 6)
 
 	 (width (+ (* 2 xpadding)
-		   (- (text-width text-extents)
-		      (text-width
-		       (gimp-text-get-extents-fontname
-			" " text-size PIXELS font)))))
+		   (text-width text-extents)))
 	 (height (+ (* 2 ypadding)
 		    (+ ascent descent)))
 	 

@@ -74,11 +74,7 @@
 	 (descent (text-descent text-extents))
 	 
 	 (img-width (+ (* 2 (+ padding bevel-width))
-		       (- (text-width text-extents)
-			  (text-width (gimp-text-get-extents-fontname " "
-							     size
-							     PIXELS
-							     font)))))
+		       (text-width text-extents)))
 	 (img-height (+ (* 2 (+ padding bevel-width))
 			(+ ascent descent)))
 
