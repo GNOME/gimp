@@ -153,6 +153,13 @@ static void   gimp_item_tree_view_chain_clicked     (GtkCellRendererToggle *togg
                                                      GdkModifierType    state,
                                                      GimpItemTreeView  *view);
 
+/*  utility function to avoid code duplication  */
+static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *toggle,
+                                                     gchar                 *path_str,
+                                                     GdkModifierType        state,
+                                                     GimpItemTreeView      *view,
+                                                     GimpUndoType           type);
+
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
 
@@ -1205,96 +1212,9 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
                                  GdkModifierType        state,
                                  GimpItemTreeView      *view)
 {
-  GimpContainerTreeView *tree_view;
-  GtkTreePath           *path;
-  GtkTreeIter            iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-
-  path = gtk_tree_path_new_from_string (path_str);
-
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
-    {
-      GimpPreviewRenderer *renderer;
-      GimpItem            *item;
-      GimpImage           *gimage;
-      gboolean             active;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
-                          -1);
-      g_object_get (toggle,
-                    "active", &active,
-                    NULL);
-
-      item = GIMP_ITEM (renderer->viewable);
-      g_object_unref (renderer);
-
-      gimage = gimp_item_get_image (item);
-
-      if (state & GDK_SHIFT_MASK)
-        {
-          GList    *visible   = NULL;
-          GList    *invisible = NULL;
-          GList    *list;
-          gboolean  iter_valid;
-
-          for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
-                                                           &iter);
-               iter_valid;
-               iter_valid = gtk_tree_model_iter_next (tree_view->model,
-                                                      &iter))
-            {
-              gtk_tree_model_get (tree_view->model, &iter,
-                                  tree_view->model_column_renderer, &renderer,
-                                  -1);
-
-              if ((GimpItem *) renderer->viewable != item)
-                {
-                  if (gimp_item_get_visible (GIMP_ITEM (renderer->viewable)))
-                    visible = g_list_prepend (visible, renderer->viewable);
-                  else
-                    invisible = g_list_prepend (invisible, renderer->viewable);
-                }
-
-              g_object_unref (renderer);
-            }
-
-          if (visible || invisible)
-            gimp_image_undo_group_start (gimage,
-                                         GIMP_UNDO_GROUP_ITEM_VISIBILITY,
-                                         _("Set Item Exclusive Visible"));
-
-          gimp_item_set_visible (item, TRUE, TRUE);
-
-          if (visible)
-            {
-              for (list = visible; list; list = g_list_next (list))
-                gimp_item_set_visible (GIMP_ITEM (list->data), FALSE, TRUE);
-            }
-          else if (invisible)
-            {
-              for (list = invisible; list; list = g_list_next (list))
-                gimp_item_set_visible (GIMP_ITEM (list->data), TRUE, TRUE);
-            }
-
-          if (visible || invisible)
-            gimp_image_undo_group_end (gimage);
-
-          g_list_free (visible);
-          g_list_free (invisible);
-        }
-      else
-        {
-          gimp_item_set_visible (item, ! active, TRUE);
-        }
-
-      gimp_image_flush (gimage);
-    }
-
-  gtk_tree_path_free (path);
+  gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
+                                      GIMP_UNDO_GROUP_ITEM_VISIBILITY);
 }
-
 
 /*  "Linked" callbacks  */
 
@@ -1324,11 +1244,49 @@ gimp_item_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
                                    GdkModifierType        state,
                                    GimpItemTreeView      *view)
 {
-  GimpContainerTreeView *tree_view;
+  gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
+                                      GIMP_UNDO_GROUP_ITEM_LINKED);
+}
+
+
+/*  Utility functions used from eye_clicked and chain_clicked.
+ *  Would make sense to do this in a generic fashion using
+ *  properties, but for now it's better than duplicating the code.
+ */
+static void
+gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
+                                    gchar                 *path_str,
+                                    GdkModifierType        state,
+                                    GimpItemTreeView      *view,
+                                    GimpUndoType           type)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
+  const gchar           *undo_desc;
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  gboolean (* getter)  (const GimpItem *item);
+  void     (* setter)  (GimpItem       *item,
+                        gboolean        value,
+                        gboolean        push_undo);
+
+  switch (type)
+    {
+    case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
+      getter  = gimp_item_get_visible;
+      setter  = gimp_item_set_visible;
+      undo_desc = _("Set Item Exclusive Visible");
+      break;
+
+    case GIMP_UNDO_GROUP_ITEM_LINKED:
+      getter  = gimp_item_get_linked;
+      setter  = gimp_item_set_linked;
+      undo_desc = _("Set Item Exclusive Linked");
+      break;
+
+    default:
+      return;
+    }
 
   path = gtk_tree_path_new_from_string (path_str);
 
@@ -1336,20 +1294,77 @@ gimp_item_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
     {
       GimpPreviewRenderer *renderer;
       GimpItem            *item;
-      gboolean             linked;
+      GimpImage           *gimage;
+      gboolean             active;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
                           -1);
       g_object_get (toggle,
-                    "active", &linked,
+                    "active", &active,
                     NULL);
 
       item = GIMP_ITEM (renderer->viewable);
-
-      gimp_item_set_linked (item, ! linked, TRUE);
-
       g_object_unref (renderer);
+
+      gimage = gimp_item_get_image (item);
+
+      if (state & GDK_SHIFT_MASK)
+        {
+          GList    *on  = NULL;
+          GList    *off = NULL;
+          GList    *list;
+          gboolean  iter_valid;
+
+          for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
+                                                           &iter);
+               iter_valid;
+               iter_valid = gtk_tree_model_iter_next (tree_view->model,
+                                                      &iter))
+            {
+              gtk_tree_model_get (tree_view->model, &iter,
+                                  tree_view->model_column_renderer, &renderer,
+                                  -1);
+
+              if ((GimpItem *) renderer->viewable != item)
+                {
+                  if (getter (GIMP_ITEM (renderer->viewable)))
+                    on = g_list_prepend (on, renderer->viewable);
+                  else
+                    off = g_list_prepend (off, renderer->viewable);
+                }
+
+              g_object_unref (renderer);
+            }
+
+          if (on || off)
+            gimp_image_undo_group_start (gimage, type, undo_desc);
+
+          setter (item, TRUE, TRUE);
+
+          if (on)
+            {
+              for (list = on; list; list = g_list_next (list))
+                setter (GIMP_ITEM (list->data), FALSE, TRUE);
+            }
+          else if (off)
+            {
+              for (list = off; list; list = g_list_next (list))
+                setter (GIMP_ITEM (list->data), TRUE, TRUE);
+            }
+
+          if (on || off)
+            gimp_image_undo_group_end (gimage);
+
+          g_list_free (on);
+          g_list_free (off);
+        }
+      else
+        {
+          setter (item, ! active, TRUE);
+        }
+
+      gimp_image_flush (gimage);
     }
 
   gtk_tree_path_free (path);

@@ -1,8 +1,15 @@
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c: introduced utility function
+	gimp_item_tree_view_toggle_clicked() and use it for the eye and
+	the chain toggles so both show the same behaviour when being
+	Shift-clicked.
+
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-utils.c
-	* app/gui/themes.c: use standard file error message
-	strings. Removes two more translatable strings.
+	* app/gui/themes.c: use standard file error message strings.
+	Removes two more translatable strings.
 
 2003-11-14  Michael Natterer  <mitch@gimp.org>
 
