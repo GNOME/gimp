@@ -1,3 +1,14 @@
+Sun Aug 22 15:49:10 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: add check for zlib for building psp plugin
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: add psp plugin
+
+	* plug-ins/common/mail.c: removed double gimp_destroy_params, fixing
+	a segfault
+
 1999-08-22  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/psp.c: Use g_message, not gimp_message.

@@ -81,6 +81,7 @@
     'polar' => { libdep => 'gtk' },
     'ps' => { libdep => 'gtk' },
     'psd' => { libdep => 'glib' },
+    'psp' => { libdep => 'gtk', optional => 1, libopt => 'z' },
     'randomize' => { libdep => 'gtk', libsupp => 'gpc' },
     'ripple' => { libdep => 'gtk' },
     'rotate' => { libdep => 'gtk' },

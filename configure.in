@@ -95,7 +95,7 @@ ALL_LINGUAS="fr sv ja it fi ko de hu nl pl ru no cs"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.2.3,,
+AM_PATH_GTK(1.2.1,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl
@@ -238,8 +238,17 @@ dnl Test for libjpeg
     fi
   fi
 
+dnl Test for libz
+  if test -z "$LIBZ"; then
+    AC_CHECK_LIB(z, gzsetparams,
+      AC_CHECK_HEADER(zlib.h,
+	PSP='psp'; LIBZ='-lz',
+	AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)),
+      AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***))
+  fi
+
 dnl Test for libpng
-  if test -z "$LIBPNG"; then
+  if test -z "$LIBPNG" && test -n "$LIBZ"; then
     AC_CHECK_LIB(png, png_read_info,
       AC_CHECK_HEADER(png.h,
 	png_ok=yes,
@@ -253,7 +262,7 @@ dnl Test for libpng
         png_ok=no)
       AC_MSG_RESULT($png_ok)
       if test "$png_ok" = yes; then
-        PNG='png'; LIBPNG='-lpng -lz'
+        PNG='png'; LIBPNG="-lpng $LIBZ"
       else
         AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
       fi
@@ -587,6 +596,8 @@ AC_SUBST(LIBTIFF)
 AC_SUBST(JPEG)
 AC_SUBST(XJT)
 AC_SUBST(LIBJPEG)
+AC_SUBST(PSP)
+AC_SUBST(LIBZ)
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG)
 AC_SUBST(AA)

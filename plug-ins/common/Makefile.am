@@ -97,6 +97,7 @@ libexec_PROGRAMS = \
 	polar \
 	ps \
 	psd \
+	$(PSP) \
 	randomize \
 	ripple \
 	rotate \
@@ -137,6 +138,7 @@ EXTRA_PROGRAMS = \
 	jpeg \
 	mpeg \
 	png \
+	psp \
 	tiff \
 	xpm
 
@@ -169,7 +171,7 @@ aa_SOURCES = \
 
 aa_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBAA)	\
+	$(LIBAA)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -602,7 +604,7 @@ jpeg_SOURCES = \
 
 jpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBJPEG)	\
+	$(LIBJPEG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -660,7 +662,7 @@ mpeg_SOURCES = \
 
 mpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBMPEG)	\
+	$(LIBMPEG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -782,7 +784,7 @@ png_SOURCES = \
 
 png_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBPNG)	\
+	$(LIBPNG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -816,6 +818,15 @@ psd_SOURCES = \
 psd_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
+	$(INTLLIBS)
+
+psp_SOURCES = \
+	psp.c
+
+psp_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(LIBZ)				\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 randomize_SOURCES = \
@@ -969,7 +980,7 @@ tiff_SOURCES = \
 
 tiff_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBTIFF)	\
+	$(LIBTIFF)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -1075,7 +1086,7 @@ xpm_SOURCES = \
 
 xpm_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBXPM)	\
+	$(LIBXPM)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 

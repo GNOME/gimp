@@ -68,7 +68,8 @@ foreach (sort keys %plugins) {
 
     my $optlib = ""; 
     if (exists $plugins{$_}->{optional}) {
-	$optlib = "\n\t\$(LIB\U$_\E)\t\\";
+	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
+	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\\";
     }
 
     if (exists $plugins{$_}->{libsupp}) {

@@ -470,17 +470,11 @@ save_dialog ()
                                     PARAM_END);         
 
   /* check to see if we actually got a value */
-  if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
-    {
-      gimp_destroy_params (return_vals, nreturn_vals);
-    }               
-  else
-    {
-      strncpy (mail_info.from, return_vals[1].data.d_string , 256);
-    }
+  if (return_vals[0].data.d_status == STATUS_SUCCESS &&
+      return_vals[1].data.d_string != NULL)
+    strncpy (mail_info.from, return_vals[1].data.d_string , 256);
 
-
-  gimp_destroy_params (return_vals, nreturn_vals);  
+  gimp_destroy_params (return_vals, nreturn_vals);
   
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Send to mail"));
