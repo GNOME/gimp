@@ -20,7 +20,7 @@
 #define __PLUG_IN_H__
 
 
-#include "procedural_db.h"
+#include "pdb/procedural_db.h"
 
 
 #define WRITE_BUFFER_SIZE  512

@@ -37,7 +37,6 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "plug_in.h"
-#include "procedural_db.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimphelpui.h"

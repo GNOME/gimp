@@ -34,27 +34,29 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "procedural_db.h"
 
-static void batch_run_cmd  (char              *cmd);
+#include "pdb/procedural_db.h"
+
+
+static void batch_run_cmd  (gchar             *cmd);
 static void batch_read     (gpointer           data,
 			    gint               source,
 			    GdkInputCondition  condition);
-static void batch_pserver  (int                run_mode,
-                            int                flags,
-                            int                extra);
+static void batch_pserver  (gint               run_mode,
+                            gint               flags,
+                            gint               extra);
 
 
 static ProcRecord *eval_proc;
 
 void
-batch_init ()
+batch_init (void)
 {
-  extern char **batch_cmds;
+  extern gchar **batch_cmds;
 
-  int read_from_stdin;
-  int i;
-  int perl_server_already_running = 0;
+  gboolean read_from_stdin;
+  gboolean perl_server_already_running = FALSE;
+  gint     i;
 
   eval_proc = procedural_db_lookup ("extension_script_fu_eval");
 
@@ -67,7 +69,7 @@ batch_init ()
        * perl-server tremendously. This is also fully compatible with 1.0.
        */
       {
-        int run_mode, flags, extra;
+        gint run_mode, flags, extra;
 
         if (sscanf (batch_cmds[i], "(extension%*[-_]perl%*[-_]server %i %i %i)", &run_mode, &flags, &extra) == 3)
           {
@@ -108,11 +110,11 @@ batch_init ()
 
 
 static void
-batch_run_cmd (char *cmd)
+batch_run_cmd (gchar *cmd)
 {
   Argument *args;
   Argument *vals;
-  int i;
+  gint      i;
 
   if (g_strcasecmp (cmd, "(gimp-quit 0)") == 0)
     {
@@ -157,8 +159,10 @@ batch_read (gpointer          data,
 	    GdkInputCondition condition)
 {
   static GString *string;
-  char buf[32], *t;
-  int nread, done;
+  gchar     buf[32];
+  gchar    *t;
+  gint      nread;
+  gboolean  done;
 
   if (condition & GDK_INPUT_READ)
     {
@@ -208,14 +212,14 @@ batch_read (gpointer          data,
 #endif /* !G_OS_WIN32 */
 
 static void
-batch_pserver  (int                run_mode,
-                int                flags,
-                int                extra)
+batch_pserver  (gint  run_mode,
+                gint  flags,
+                gint  extra)
 {
   ProcRecord *pserver_proc;
-  Argument *args;
-  Argument *vals;
-  int i;
+  Argument   *args;
+  Argument   *vals;
+  gint        i;
 
   pserver_proc = procedural_db_lookup ("extension_perl_server");
 

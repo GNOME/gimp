@@ -80,7 +80,6 @@
 #include "layer.h"
 #include "menus.h"
 #include "plug_in.h"
-#include "procedural_db.h"
 #include "temp_buf.h"
 #include "undo.h"
 

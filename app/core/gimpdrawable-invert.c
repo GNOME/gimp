@@ -30,7 +30,8 @@
 #include "lut_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
-#include "procedural_db.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -47,7 +47,6 @@
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "plug_in.h"
-#include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
 #include "tile.h"

@@ -40,7 +40,6 @@
 #include "paths_dialog.h"
 #include "paint_funcs.h"
 #include "preferences_dialog.h"
-#include "procedural_db.h"
 #include "scale.h"
 #include "tools.h"
 #include "gdisplay.h"

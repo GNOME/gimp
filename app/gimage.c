@@ -34,7 +34,6 @@
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "palette_import.h"
-#include "procedural_db.h"
 #include "tools.h"
 #include "undo.h"
 

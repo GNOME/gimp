@@ -49,8 +49,9 @@
 #include "gradient_header.h"
 #include "gradientP.h"
 #include "gradient_select.h"
-#include "procedural_db.h"
 #include "session.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

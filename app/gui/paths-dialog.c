@@ -53,7 +53,6 @@
 #include "paths_dialog.h"
 #include "paths_dialogP.h"
 #include "plug_in.h"
-#include "procedural_db.h"
 #include "undo.h"
 
 #include "libgimp/gimpmath.h"

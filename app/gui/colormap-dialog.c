@@ -38,7 +38,8 @@
 #include "gimpimage.h"
 #include "gimpset.h"
 #include "gimpui.h"
-#include "procedural_db.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"

@@ -1,3 +1,44 @@
+2001-01-21  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/app.pl: changed destdir for app-side PDB wrappers to
+	app/pdb
+
+	* app/Makefile.am: don't create libgimpim.a in app.
+
+	* configure.in
+	* app/pdb/Makefile.am
+	* app/pdb/internal_procs.[ch]
+	* app/pdb/procedural_db.[ch]
+	* app/pdb/*_cmds.c: moved PDB functions into their own subdirectory.
+
+	* app/internal_procs.[ch]
+	* app/procedural_db.[ch]
+	* app/*_cmds.c: removed here
+
+	* app/app_procs.c
+	* app/batch.c
+	* app/bezier_select.c
+	* app/brush_select.c
+	* app/bucket_fill.c
+	* app/colormap_dialog.c
+	* app/fileops.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimphelp.c
+	* app/gradient_select.c
+	* app/info_window.c
+	* app/invert.c
+	* app/lc_dialog.c
+	* app/menus.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/paths_dialog.c
+	* app/pattern_select.c
+	* app/plug_in.h
+	* app/text_tool.c
+	* app/xcf.c
+	* po/POTFILES.in: changed accordingly
+	
 2001-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

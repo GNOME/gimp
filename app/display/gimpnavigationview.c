@@ -39,9 +39,10 @@
 #include "gimpui.h"
 #include "gximage.h"
 #include "nav_window.h"
-#include "procedural_db.h"
 #include "scroll.h"
 #include "scale.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpunit.h"
 

@@ -33,9 +33,10 @@
 #include "gximage.h"
 #include "info_dialog.h"
 #include "info_window.h"
-#include "procedural_db.h"
 #include "scroll.h"
 #include "tools.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpunit.h"
 

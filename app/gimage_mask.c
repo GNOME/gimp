@@ -35,10 +35,11 @@
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "pixel_region.h"
-#include "procedural_db.h"
 #include "tile_manager.h"
 #include "tile_manager_pvt.h"
 #include "undo.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

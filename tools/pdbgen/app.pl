@@ -17,7 +17,7 @@
 
 package Gimp::CodeGen::app;
 
-$destdir = "$main::destdir/app";
+$destdir = "$main::destdir/app/pdb";
 
 *arg_types = \%Gimp::CodeGen::pdb::arg_types;
 *arg_parse = \&Gimp::CodeGen::pdb::arg_parse;

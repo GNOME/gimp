@@ -39,11 +39,12 @@
 #include "bezier_selectP.h"
 #include "paths_dialogP.h"
 #include "pixel_region.h"
-#include "procedural_db.h"
 #include "selection_options.h"
 #include "tools.h"
 #include "tool_options.h"
 #include "undo.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpmath.h"
 

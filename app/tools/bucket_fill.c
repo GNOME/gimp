@@ -39,12 +39,13 @@
 #include "paint_options.h"
 #include "patterns.h"
 #include "pixel_region.h"
-#include "procedural_db.h"
 #include "selection.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
 #include "tools.h"
 #include "undo.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -58,14 +58,12 @@ app/gradient.c
 app/gradient_select.c
 app/histogram_tool.c
 app/hue_saturation.c
-app/image_cmds.c
 app/image_new.c
 app/indicator_area.c
 app/info_dialog.c
 app/info_window.c
 app/ink.c
 app/interface.c
-app/internal_procs.c
 app/invert.c
 app/layer.c
 app/layer_select.c
@@ -83,6 +81,7 @@ app/paint_core.c
 app/paint_funcs.c
 app/paintbrush.c
 app/palette.c
+app/palette_import.c
 app/palette_select.c
 app/paths_dialog.c
 app/pattern_select.c
@@ -91,8 +90,6 @@ app/perspective_tool.c
 app/plug_in.c
 app/posterize.c
 app/preferences_dialog.c
-app/procedural_db.c
-app/procedural_db_cmds.c
 app/qmask.c
 app/rect_select.c
 app/resize.c
@@ -113,6 +110,10 @@ app/undo.c
 app/undo_history.c
 app/user_install.c
 app/xcf.c
+app/pdb/image_cmds.c
+app/pdb/internal_procs.c
+app/pdb/procedural_db.c
+app/pdb/procedural_db_cmds.c
 modules/colorsel_gtk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c

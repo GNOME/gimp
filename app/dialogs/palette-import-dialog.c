@@ -34,8 +34,9 @@
 #include "palette.h"
 #include "palette_import.h"
 #include "pixel_region.h"
-#include "procedural_db.h"
 #include "temp_buf.h"
+
+#include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -35,12 +35,14 @@
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
 #include "layers_dialogP.h"
-#include "procedural_db.h"
 #include "session.h"
 
-#include "libgimp/gimpintl.h"
+#include "pdb/procedural_db.h"
+
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 
 #define MENU_THUMBNAIL_SIZE  24

@@ -68,7 +68,6 @@
 #include "hue_saturation.h"
 #include "image_render.h"
 #include "interface.h"
-#include "internal_procs.h"
 #include "lc_dialog.h"
 #include "levels.h"
 #include "menus.h"
@@ -78,7 +77,6 @@
 #include "patterns.h"
 #include "plug_in.h"
 #include "module_db.h"
-#include "procedural_db.h"
 #include "session.h"
 #include "temp_buf.h"
 #include "tile_swap.h"
@@ -98,6 +96,8 @@
 #include "color_notebook.h"
 #include "color_select.h"
 #include "gimpparasite.h"
+
+#include "pdb/internal_procs.h"
 
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpfeatures.h"
