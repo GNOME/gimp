@@ -129,7 +129,7 @@ TempBuf   * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
                                               gint           width,
                                               gint           height);
 
-TempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *vieable,
+TempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
                                               gint           width,
                                               gint           height,
                                               gint           bpp);
