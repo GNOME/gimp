@@ -1,3 +1,35 @@
+2002-03-30  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpbase/Makefile.am: Additions for Win32: Use
+	-no-undefined. Use the gimpbase.def file. Produce MS style import
+	library if possible. Install (and uninstall) import
+	libraries. Pass definition of PREFIX in CPPFLAGS.
+
+	* libgimpbase/gimpbase.def: Do export gimp_signal_private.
+
+	* libgimpbase/gimpenv.c: Similar Win32 working as in the gimp-1-2
+	branch:
+	(gimp_directory): Replace funny chars in user name (when used as
+	part of last-resort personal gimp directory name) with
+	underscores.
+	(gimp_toplevel_directory): New (Win32-only) function. Deduces the
+	installation prefix at run-time.
+	(gimp_path_runtime_fix): New function. On Win32, replace the
+	string with one where the compile-time prefix has been replaced
+	with the run-time one.
+	(gimp_path_parse, gimp_env_get_dir): Call it.
+	
+	* libgimpbase/gimpsignal.c: Trim (lots of) trailing spaces in
+	copyright notice.
+	(gimp_signal_private): Bypass on Win32, return NULL. Or should we
+	call g_error(), thus requiring that calls of this are enclosed with
+	#ifdef G_OS_UNIX?
+
+	* libgimpbase/makefile.mingw.in: Add comment that it is seriously
+	out-of-date.
+
+	* libgimpbase/makefile.msc: Do compile gimpsignal.c.
+
 2002-03-29  Tor Lillqvist  <tml@iki.fi>
 
 	* configure.in: Start of changes for autoconfiscated build on

@@ -1,8 +1,44 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
+if OS_WIN32
+gimpbase_def = gimpbase.def
+libgimpbase_export_symbols = -export-symbols gimpbase.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimpbase-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimpbase-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimpbase-1.3.lib
+
+install-ms-lib:
+	$(INSTALL) gimpbase-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimpbase-1.3.lib
+
+gimpbase-1.3.lib: gimpbase.def
+	lib -name:libgimpbase-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpbase.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 libgimpbaseincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpbase
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DPREFIX=\""$(prefix)"\"		\
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
 	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
@@ -67,6 +103,15 @@ EXTRA_HEADERS =
 
 libgimpbase_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+	$(no_undefined) \
+	$(libgimpbase_export_symbols) \
 @STRIP_END@
 
+libgimpbase_1_3_la_DEPENDENCIES = $(gimpbase_def)
+
 libgimpbase_1_3_la_LIBADD = $(GLIB_LIBS)
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
+

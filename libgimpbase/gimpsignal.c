@@ -1,14 +1,14 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  * $Revision$
- */                                                                             
+ */
 
 #include <glib.h>
 
@@ -56,6 +56,7 @@ gimp_signal_private (gint                   signum,
 		     GimpSignalHandlerFunc  handler,
 		     gint                   flags)
 {
+#ifndef G_OS_WIN32
   gint ret;
   struct sigaction sa;
   struct sigaction osa;
@@ -87,4 +88,10 @@ gimp_signal_private (gint                   signum,
     g_error ("unable to set handler for signal %d\n", signum);
 
   return (GimpSignalHandlerFunc) osa.sa_handler;
+#else
+  return NULL;			/* Or g_error()? Should all calls to
+				 * this function really be inside
+				 * #ifdef G_OS_UNIX?
+				 */
+#endif
 }

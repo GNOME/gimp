@@ -24,6 +24,7 @@
 
 #include <glib.h>
 
+#include <ctype.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -33,6 +34,7 @@
 #endif
 
 #include "gimpenv.h"
+#include "gimpversion.h"
 
 #ifdef G_OS_WIN32
 #define STRICT
@@ -132,13 +134,33 @@ gimp_directory (void)
 	}
       else
 	{
+	  gchar *user_name = g_strdup (g_get_user_name ());
+
+#ifdef G_OS_WIN32
+	  gchar *p = user_name;
+
+	  while (*p)
+	    {
+	      /* Replace funny characters in the user name with an
+	       * underscore. The code below also replaces some
+	       * characters that in fact are legal in file names, but
+	       * who cares, as long as the definitely illegal ones are
+	       * caught.
+	       */
+	      if (!isalnum (*p) && !strchr ("-.,@=", *p))
+		*p = '_';
+	      p++;
+	    }
+#endif
+
 #ifndef G_OS_WIN32
 	  g_message ("warning: no home directory.");
 #endif
 	  gimp_dir = g_build_filename (gimp_data_directory (),
                                        GIMPDIR ".",
-                                       g_get_user_name (),
+                                       user_name,
                                        NULL);
+	  g_free (user_name);
 	}
     }
 
@@ -161,6 +183,60 @@ gimp_personal_rc_file (const gchar *basename)
 {
   return g_build_filename (gimp_directory (), basename, NULL);
 }
+
+#ifdef G_OS_WIN32
+gchar *
+gimp_toplevel_directory ()
+{
+  /* Figure it out from the executable name */
+  static gchar *toplevel = NULL;
+  gchar filename[MAX_PATH];
+  gchar *sep1, *sep2;
+  
+  if (toplevel != NULL)
+    return toplevel;
+  
+  if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
+    g_error ("GetModuleFilename failed\n");
+  
+  /* If the executable file name is of the format
+   * <foobar>\bin\*.exe or
+   * <foobar>\lib\gimp\GIMP_MAJOR_VERSION.GIMP_MINOR_VERSION\plug-ins\*.exe,
+   * use <foobar>. Otherwise, use the directory where the
+   * executable is.
+   */
+  
+  sep1 = strrchr (filename, '\\');
+  
+  *sep1 = '\0';
+  
+  sep2 = strrchr (filename, '\\');
+  
+  if (sep2 != NULL)
+    {
+      if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
+	{
+	  *sep2 = '\0';
+	}
+      else
+	{
+	  gchar test[MAX_PATH];
+	  
+	  sprintf (test, "\\lib\\gimp\\%d.%d\\plug-ins",
+		   GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+	  
+	  if (strlen (filename) > strlen (test) &&
+	      g_ascii_strcasecmp (filename + strlen (filename) - strlen (test),
+				  test) == 0)
+	    {
+	      filename[strlen (filename) - strlen (test)] = '\0';
+	    }
+	}
+    }
+  toplevel = g_strdup (filename);
+  return toplevel;
+}
+#endif
 
 /**
  * gimp_data_directory:
@@ -269,6 +345,51 @@ gimp_gtkrc (void)
 }
 
 /**
+ * gimp_path_runtime_fix:
+ * @path: A pointer to a string (allocated with g_malloc) that is (or could be) a pathname.
+ *
+ * On Windows, this function checks if the string pointed to by @path
+ * starts with the compile-time prefix, and in that case, replaces the
+ * prefix with the run-time one.  @path should be a pointer to a
+ * dynamically allocated (with g_malloc, g_strconcat, etc) string. If
+ * the replacement takes place, the original string is deallocated,
+ * and *@path is replaced with a pointer to a new string with the
+ * run-time prefix spliced in.
+ *
+ * On Unix, does nothing.
+ */
+
+void
+gimp_path_runtime_fix (gchar **path)
+{
+#if defined (G_OS_WIN32) && defined (PREFIX)
+  gchar *p;
+
+  /* Yes, I do mean forward slashes below */
+  if (strncmp (*path, PREFIX "/", strlen (PREFIX "/")) == 0)
+    {
+      /* This is a compile-time entry. Replace the path with the
+       * real one on this machine.
+       */
+      p = *path;
+      *path = g_strconcat (gimp_toplevel_directory (),
+			   "\\",
+			   *path + strlen (PREFIX "/"),
+			   NULL);
+      g_free (p);
+    }
+  /* Replace forward slashes with backslashes, just for
+   * completeness */
+  p = *path;
+  while ((p = strchr (p, '/')) != NULL)
+    {
+      *p = '\\';
+      p++;
+    }
+#endif
+}
+
+/**
  * gimp_path_parse:
  * @path:         A list of directories separated by #G_SEARCHPATH_SEPARATOR.
  * @max_paths:    The maximum number of directories to return.
@@ -314,6 +435,7 @@ gimp_path_parse (const gchar  *path,
       else
 #endif
 	{
+	  gimp_path_runtime_fix (&patharray[i]);
 	  dir = g_string_new (patharray[i]);
 	}
 
@@ -476,40 +598,12 @@ gimp_env_get_dir (const gchar *gimp_env_name,
     }
   else
     {
-#ifndef G_OS_WIN32
 #ifndef __EMX__
-      return (gchar *) env_dir;
+      gchar *retval = g_strdup (env_dir);
+      gimp_path_runtime_fix (&retval);
+      return retval;
 #else
       return g_strdup (__XOS2RedirRoot(env_dir));
-#endif
-#else
-      /* Figure it out from the executable name */
-      gchar filename[MAX_PATH];
-      gchar *sep1, *sep2;
-
-      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-	g_error ("GetModuleFilename failed\n");
-
-      /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe or <foobar>\plug-ins\filter.exe, use
-       * <foobar>. Otherwise, use the directory where the executable
-       * is.
-       */
-
-      sep1 = strrchr (filename, G_DIR_SEPARATOR);
-
-      *sep1 = '\0';
-
-      sep2 = strrchr (filename, G_DIR_SEPARATOR);
-
-      if (sep2 != NULL)
-	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0
-	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
-	    *sep2 = '\0';
-	}
-
-      return g_strdup (filename);
 #endif
     }
 }

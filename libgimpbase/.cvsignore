@@ -7,3 +7,5 @@ _libs
 .deps
 *.la
 gimpversion.h
+*.lib
+*.exp

@@ -29,7 +29,7 @@ PKG_LINK = \
 
 OBJECTS = \
 	gimpenv.obj \
-#	gimpsignal.obj \
+	gimpsignal.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \

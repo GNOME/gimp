@@ -24,7 +24,7 @@ EXPORTS
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
-;	gimp_signal_private
+	gimp_signal_private
 	gimp_sysconf_directory
 ;	gimp_unit_get_abbreviation
 ;	gimp_unit_get_deletion_flag
