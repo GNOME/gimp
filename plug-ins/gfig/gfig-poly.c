@@ -347,7 +347,7 @@ d_poly2lines (Dobject *obj)
     return; /* no-line */
 
   /* Undraw it to start with - removes control points */ 
-  obj->drawfunc (obj);
+  obj->class->drawfunc (obj);
 
   /* NULL out these points free later */
   obj->points = NULL;
@@ -404,14 +404,10 @@ d_poly2lines (Dobject *obj)
 
   /* hey we're a line now */
   obj->type = LINE;
-  obj->drawfunc  = d_draw_line;
-  obj->loadfunc  = d_load_line;
-  obj->savefunc  = d_save_line;
-  obj->paintfunc = d_paint_line;
-  obj->copyfunc  = d_copy_line;
+  obj->class = &dobj_class[LINE];
 
   /* draw it + control pnts */
-  obj->drawfunc (obj);
+  obj->class->drawfunc (obj);
 }
 
 void
@@ -445,7 +441,7 @@ d_star2lines (Dobject *obj)
     return; /* no-line */
 
   /* Undraw it to start with - removes control points */ 
-  obj->drawfunc (obj);
+  obj->class->drawfunc (obj);
 
   /* NULL out these points free later */
   obj->points = NULL;
@@ -532,14 +528,10 @@ d_star2lines (Dobject *obj)
 
   /* hey we're a line now */
   obj->type = LINE;
-  obj->drawfunc  = d_draw_line;
-  obj->loadfunc  = d_load_line;
-  obj->savefunc  = d_save_line;
-  obj->paintfunc = d_paint_line;
-  obj->copyfunc  = d_copy_line;
+  obj->class = &dobj_class[LINE];
 
   /* draw it + control pnts */
-  obj->drawfunc (obj);
+  obj->class->drawfunc (obj);
 }
 
 static Dobject *
@@ -556,6 +548,21 @@ d_copy_poly (Dobject *obj)
   return np;
 }
 
+void
+d_poly_object_class_init ()
+{
+  DobjClass *class = &dobj_class[POLY];
+
+  class->type      = POLY;
+  class->name      = "Poly";
+  class->drawfunc  = d_draw_poly;
+  class->loadfunc  = d_load_poly;
+  class->savefunc  = d_save_poly;
+  class->paintfunc = d_paint_poly;
+  class->copyfunc  = d_copy_poly;
+  class->createfunc = d_new_poly;
+}
+
 static Dobject *
 d_new_poly (gint x, gint y)
 {
@@ -564,13 +571,9 @@ d_new_poly (gint x, gint y)
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = POLY;
+  nobj->class = &dobj_class[POLY];
   nobj->type_data = 3; /* Default to three sides */
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_poly;
-  nobj->loadfunc  = d_load_poly;
-  nobj->savefunc  = d_save_poly;
-  nobj->paintfunc = d_paint_poly;
-  nobj->copyfunc  = d_copy_poly;
 
   return nobj;
 }

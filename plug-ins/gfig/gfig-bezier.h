@@ -34,6 +34,7 @@ void       d_draw_bezier           (Dobject *obj);
 void       d_update_bezier         (GdkPoint *pnt);
 void       d_bezier_start          (GdkPoint *pnt, gint shift_down);
 void       d_bezier_end            (GdkPoint *pnt, gint shift_down);
+void       d_bezier_object_class_init (void);
 
 void       bezier_dialog (void);
 

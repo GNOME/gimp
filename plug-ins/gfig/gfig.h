@@ -35,6 +35,7 @@ typedef void            (*DobjFunc)     (struct Dobject *);
 typedef struct Dobject *(*DobjGenFunc)  (struct Dobject *);
 typedef struct Dobject *(*DobjLoadFunc) (FILE *);
 typedef void            (*DobjSaveFunc) (struct Dobject *, GString *);
+typedef struct Dobject *(*DobjCreateFunc) (gint, gint);
 
 typedef enum
 {
@@ -159,7 +160,7 @@ typedef struct
 
 typedef enum
 {
-  LINE,
+  LINE = 0,
   CIRCLE,
   ELLIPSE,
   ARC,
@@ -182,19 +183,29 @@ typedef struct DobjPoints
   gint               found_me;
 } DobjPoints;
 
-/* The object itself */
-typedef struct Dobject
+typedef struct 
 {
-  DobjType      type;       /* What is the type? */
-  gint          type_data;  /* Extra data needed by the object */
-  DobjPoints   *points;     /* List of points */
-  Style         style;      /* this object's individual style settings */
-  gint          style_no;   /* style index of this specific object */
+  DobjType      type;       /* the object type for this class */
+  gchar        *name;
   DobjFunc      drawfunc;   /* How do I draw myself */
   DobjFunc      paintfunc;  /* Draw me on canvas */
   DobjGenFunc   copyfunc;   /* copy */
   DobjLoadFunc  loadfunc;   /* Load this type of object */
   DobjSaveFunc  savefunc;   /* Save me out */
+  DobjCreateFunc createfunc; /* create a new one */
+} DobjClass;
+
+DobjClass dobj_class[10];
+
+/* The object itself */
+typedef struct Dobject
+{
+  DobjType      type;       /* What is the type? */
+  DobjClass    *class;      /* What class does it belong to? */
+  gint          type_data;  /* Extra data needed by the object */
+  DobjPoints   *points;     /* List of points */
+  Style         style;      /* this object's individual style settings */
+  gint          style_no;   /* style index of this specific object */
 } Dobject;
 
 typedef struct DAllObjs
@@ -321,6 +332,7 @@ typedef struct
   GtkWidget   *fillstyle_combo;
   GimpRGB     *fg_color;
   GimpRGB     *bg_color;
+  gboolean     enable_repaint;
 } GFigContext;
 
 GFigContext *gfig_context;

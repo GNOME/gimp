@@ -28,10 +28,11 @@
 
 Dobject  * d_load_circle           (FILE *from);
 
-void d_update_circle (GdkPoint *pnt);
-void d_circle_start (GdkPoint *pnt,
-                     gint      shift_down);
-void d_circle_end (GdkPoint *pnt,
-                   gint      shift_down);
+void    d_update_circle            (GdkPoint *pnt);
+void    d_circle_start             (GdkPoint *pnt,
+				    gint      shift_down);
+void    d_circle_end               (GdkPoint *pnt,
+				    gint      shift_down);
+void    d_circle_object_class_init (void);
 
 #endif /* __GFIG_CIRCLE_H__ */

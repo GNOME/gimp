@@ -113,11 +113,10 @@ GFigObj  *pic_obj;
 gint      need_to_scale;
 
 
-/* Don't you just like BIGGG source files? */
-
-
-static gint       load_options            (GFigObj *gfig, FILE *fp);
-
+static gint       load_options            (GFigObj *gfig, 
+                                           FILE    *fp);
+static gboolean   match_element           (gchar   *buf,
+                                           gchar   *element_name);
 /* globals */
 
 GdkGC  *gfig_gc;
@@ -227,6 +226,9 @@ run (const gchar      *name,
                           gimp_tile_width ());
 
   gimp_drawable_detach (drawable);
+
+  /* initialize */
+  gfig_init_object_classes ();
 
   switch (run_mode)
     {
@@ -383,6 +385,22 @@ gfig_new (void)
   return g_new0 (GFigObj, 1);
 }
 
+static gboolean
+match_element (gchar *buf,
+               gchar *element_name)
+{
+  gchar *ptr = buf;
+
+  if (* ptr != '<')
+    return FALSE;
+
+  ptr++;
+
+  if (ptr == strstr (ptr, element_name))
+    return TRUE;
+
+  return FALSE;
+}
 
 static void
 gfig_load_objs (GFigObj *gfig,
@@ -404,35 +422,35 @@ gfig_load_objs (GFigObj *gfig,
       offset = ftell (fp);
       gfig_skip_style (&style, fp);
 
-      if (!strcmp (load_buf, "<Object Line>"))
+      if (match_element (load_buf, "Line"))
         {
           obj = d_load_line (fp);
         }
-      else if (!strcmp (load_buf, "<Object Circle>"))
+      else if (match_element (load_buf, "Circle"))
         {
           obj = d_load_circle (fp);
         }
-      else if (!strcmp (load_buf, "<Object Ellipse>"))
+      else if (match_element (load_buf, "Ellipse"))
         {
           obj = d_load_ellipse (fp);
         }
-      else if (!strcmp (load_buf, "<Object Poly>"))
+      else if (match_element (load_buf, "Poly"))
         {
           obj = d_load_poly (fp);
         }
-      else if (!strcmp (load_buf, "<Object Star>"))
+      else if (match_element (load_buf, "Star"))
         {
           obj = d_load_star (fp);
         }
-      else if (!strcmp (load_buf, "<Object Spiral>"))
+      else if (match_element (load_buf, "Spiral"))
         {
           obj = d_load_spiral (fp);
         }
-      else if (!strcmp (load_buf, "<Object Bezier>"))
+      else if (match_element (load_buf, "Bezier"))
         {
           obj = d_load_bezier (fp);
         }
-      else if (!strcmp (load_buf, "<Object Arc>"))
+      else if (match_element (load_buf, "Arc"))
         {
           obj = d_load_arc (fp);
         }
@@ -590,28 +608,28 @@ gfig_save_obj_start (Dobject *obj,
   switch (obj->type)
     {
     case LINE:
-      g_string_append_printf (string, "<Object Line>\n");
+      g_string_append_printf (string, "<Line>\n");
       break;
     case CIRCLE:
-      g_string_append_printf (string, "<Object Circle>\n");
+      g_string_append_printf (string, "<Circle>\n");
       break;
     case ELLIPSE:
-      g_string_append_printf (string, "<Object Ellipse>\n");
+      g_string_append_printf (string, "<Ellipse>\n");
       break;
     case ARC:
-      g_string_append_printf (string, "<Object Arc>\n");
+      g_string_append_printf (string, "<Arc>\n");
       break;
     case POLY:
-      g_string_append_printf (string, "<Object Poly>\n");
+      g_string_append_printf (string, "<Poly>\n");
       break;
     case STAR:
-      g_string_append_printf (string, "<Object Star>\n");
+      g_string_append_printf (string, "<Star>\n");
       break;
     case SPIRAL:
-      g_string_append_printf (string, "<Object Spiral>\n");
+      g_string_append_printf (string, "<Spiral>\n");
       break;
     case BEZIER:
-      g_string_append_printf (string, "<Object Bezier>\n");
+      g_string_append_printf (string, "<Bezier>\n");
       break;
     default:
       g_message ("Unknown object type in gfig_save_obj_start");
@@ -762,7 +780,7 @@ gfig_save_as_string ()
 
       if (objs->obj->points)
         {
-          objs->obj->savefunc (objs->obj, string);
+          objs->obj->class->savefunc (objs->obj, string);
         }
 
       gfig_save_obj_end (objs->obj, string);

@@ -389,6 +389,21 @@ d_copy_star (Dobject *obj)
   return np;
 }
 
+void
+d_star_object_class_init ()
+{
+  DobjClass *class = &dobj_class[STAR];
+
+  class->type      = STAR;
+  class->name      = "Star";
+  class->drawfunc  = d_draw_star;
+  class->loadfunc  = d_load_star;
+  class->savefunc  = d_save_star;
+  class->paintfunc = d_paint_star;
+  class->copyfunc  = d_copy_star;
+  class->createfunc = d_new_star;
+}
+
 static Dobject *
 d_new_star (gint x,
             gint y)
@@ -398,13 +413,9 @@ d_new_star (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = STAR;
+  nobj->class = &dobj_class[STAR];
   nobj->type_data = 3; /* Default to three sides 6 points*/
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_star;
-  nobj->loadfunc  = d_load_star;
-  nobj->savefunc  = d_save_star;
-  nobj->paintfunc = d_paint_star;
-  nobj->copyfunc  = d_copy_star;
 
   return nobj;
 }

@@ -325,6 +325,21 @@ d_copy_ellipse (Dobject * obj)
   return nc;
 }
 
+void
+d_ellipse_object_class_init ()
+{
+  DobjClass *class = &dobj_class[ELLIPSE];
+
+  class->type      = ELLIPSE;
+  class->name      = "Ellipse";
+  class->drawfunc  = d_draw_ellipse;
+  class->loadfunc  = d_load_ellipse;
+  class->savefunc  = d_save_ellipse;
+  class->paintfunc = d_paint_ellipse;
+  class->copyfunc  = d_copy_ellipse;
+  class->createfunc = d_new_ellipse;
+}
+
 static Dobject *
 d_new_ellipse (gint x, gint y)
 {
@@ -333,12 +348,8 @@ d_new_ellipse (gint x, gint y)
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = ELLIPSE;
+  nobj->class = &dobj_class[ELLIPSE];
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_ellipse;
-  nobj->loadfunc  = d_load_ellipse;
-  nobj->savefunc  = d_save_ellipse;
-  nobj->paintfunc = d_paint_ellipse;
-  nobj->copyfunc  = d_copy_ellipse;
 
   return nobj;
 }

@@ -242,13 +242,14 @@ gfig_dialog (void)
   for (k=0; k < 1000; k++)
     gfig_context->style[k] = NULL;
   gfig_context->num_styles = 0;
-  gfig_context->current_style = &gfig_context->default_style;
+  gfig_context->enable_repaint = FALSE;
 
   /* debug */
-/*   gfig_context->debug_styles = TRUE; */
+  gfig_context->debug_styles = FALSE;
 
   /* initial gimp and default styles */
   gfig_read_gimp_style (&gfig_context->gimp_style, "Gimp");
+  gfig_context->current_style = &gfig_context->default_style;
   gfig_style_set_all_sources (&gfig_context->gimp_style, STYLE_SOURCE_GIMP);
   gfig_style_append (&gfig_context->gimp_style);
   gfig_read_gimp_style (&gfig_context->default_style, "Base");
@@ -506,6 +507,7 @@ gfig_dialog (void)
       gfig_style_apply (&gfig_context->default_style);
     }
 
+  gfig_context->enable_repaint = TRUE;
   gfig_paint_callback ();
 
   gtk_main ();
@@ -566,7 +568,7 @@ gfig_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:  /* Close button */
-      gfig_style_copy (&gfig_context->default_style, gfig_context->current_style, NULL);
+      gfig_style_copy (&gfig_context->default_style, gfig_context->current_style, "object");
       gfig_save_as_parasite ();
       gtk_widget_destroy (widget);
       break;
@@ -1301,6 +1303,7 @@ gfig_select_obj_by_number (gint count)
         {
           gfig_context->selected_obj = objs->obj;
           gfig_context->current_style = &objs->obj->style;
+          gfig_style_set_context_from_style (&objs->obj->style);
           break;
         }
 
@@ -1691,7 +1694,7 @@ gfig_paint_callback (void)
   gint       count;
   gint       ccount = 0;
 
-  if (!gfig_context->current_obj)
+  if (!gfig_context->enable_repaint || !gfig_context->current_obj)
     return;
 
   objs = gfig_context->current_obj->obj_list;
@@ -1708,7 +1711,7 @@ gfig_paint_callback (void)
 
           gfig_style_apply (&objs->obj->style);
 
-          objs->obj->paintfunc (objs->obj);
+          objs->obj->class->paintfunc (objs->obj);
 
           /* Fill layer if required */
           if (selvals.painttype == PAINT_SELECTION_FILL_TYPE

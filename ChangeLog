@@ -1,3 +1,9 @@
+2004-07-06  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/*.[ch]:  a bunch of code clean-up and 
+	debugging.  Created "classes" for the objects, and
+	attached functions to classes rather than objects.
+
 2004-07-06  Sven Neumann  <sven@gimp.org>
 
 	Added an RGB histogram based on a patch by Tor Lillqvist. Fixes

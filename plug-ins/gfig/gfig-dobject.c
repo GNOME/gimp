@@ -65,6 +65,20 @@ static void     remove_obj_from_list (GFigObj *obj,
 static gint     scan_obj_points (DobjPoints *opnt,
                                  GdkPoint   *pnt);
 
+
+void
+gfig_init_object_classes ()
+{
+  d_arc_object_class_init ();
+  d_line_object_class_init ();
+  d_circle_object_class_init ();
+  d_ellipse_object_class_init ();
+  d_poly_object_class_init ();
+  d_spiral_object_class_init ();
+  d_star_object_class_init ();
+  d_bezier_object_class_init ();
+}
+
 /* Delete a list of points */
 void
 d_delete_dobjpoints (DobjPoints * pnts)
@@ -260,7 +274,7 @@ object_operation_start (GdkPoint *pnt,
       /* Copy the "operation object" */
       /* Then bung us into "copy/move" mode */
 
-      new_obj = (Dobject*) operation_obj->copyfunc (operation_obj);
+      new_obj = (Dobject*) operation_obj->class->copyfunc (operation_obj);
       if (new_obj)
         {
           gfig_style_copy (&new_obj->style, &operation_obj->style, "Object");
@@ -268,7 +282,7 @@ object_operation_start (GdkPoint *pnt,
           add_to_all_obj (gfig_context->current_obj, new_obj);
           operation_obj = new_obj;
           selvals.otype = MOVE_COPY_OBJ;
-          new_obj->drawfunc (new_obj);
+          new_obj->class->drawfunc (new_obj);
         }
       break;
     case DEL_OBJ:
@@ -294,7 +308,12 @@ object_operation_end (GdkPoint *pnt,
       d_draw_bezier (operation_obj);
     }
 
-  gfig_style_set_context_from_style (&operation_obj->style);
+  if (operation_obj)
+    {
+      gfig_style_set_context_from_style (&operation_obj->style);
+      gfig_paint_callback ();
+    }
+
   operation_obj = NULL;
 
   if (move_all_pnt)
@@ -416,7 +435,7 @@ remove_obj_from_list (GFigObj *obj,
             obj->obj_list = all->next;
 
           /* Draw obj (which will actually undraw it! */
-          del_obj->drawfunc (del_obj);
+          del_obj->class->drawfunc (del_obj);
 
           free_one_obj (del_obj);
           g_free (all);
@@ -546,7 +565,7 @@ copy_all_objs (DAllObjs *objs)
           new_all_objs = nobj;
         }
 
-      nobj->obj = (Dobject *) objs->obj->copyfunc (objs->obj);
+      nobj->obj = (Dobject *) objs->obj->class->copyfunc (objs->obj);
 
       objs = objs->next;
     }
@@ -558,7 +577,7 @@ copy_all_objs (DAllObjs *objs)
 static void
 draw_one_obj (Dobject * obj)
 {
-  obj->drawfunc (obj);
+  obj->class->drawfunc (obj);
 }
 
 void
@@ -634,12 +653,18 @@ add_to_all_obj (GFigObj *fobj,
   prepend_to_all_obj (fobj, nobj);
 
   /* initialize style when we add the object */
-/*   gfig_style_copy (&obj->style, &gfig_context->gimp_style, "Object"); */
   gfig_context->selected_obj = obj;
   gfig_context->current_style = &obj->style;
 }
 
 /* First button press -- start drawing object */
+/*
+ * object_start() creates a new object of the type specified in the
+ * button panel.  It is activated by a button press, and causes
+ * a small square to be drawn at the initial point.  The style of
+ * the new object is set to values taken from the style control
+ * widgets. 
+ */
 void
 object_start (GdkPoint *pnt,
               gint      shift_down)
@@ -698,6 +723,8 @@ object_start (GdkPoint *pnt,
 
   if (obj_creating)
     {
+      if (gfig_context->debug_styles)
+        fprintf (stderr, "Creating object, setting style from context\n");
       gfig_style_set_style_from_context (&obj_creating->style);
       gfig_context->current_style = &obj_creating->style;
     }

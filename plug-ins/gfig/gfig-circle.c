@@ -189,6 +189,21 @@ d_copy_circle (Dobject * obj)
   return nc;
 }
 
+void
+d_circle_object_class_init ()
+{
+  DobjClass *class = &dobj_class[CIRCLE];
+
+  class->type      = CIRCLE;
+  class->name      = "Circle";
+  class->drawfunc  = d_draw_circle;
+  class->loadfunc  = d_load_circle;
+  class->savefunc  = d_save_circle;
+  class->paintfunc = d_paint_circle;
+  class->copyfunc  = d_copy_circle;
+  class->createfunc = d_new_circle;
+}
+
 static Dobject *
 d_new_circle (gint x,
               gint y)
@@ -198,12 +213,8 @@ d_new_circle (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type   = CIRCLE;
+  nobj->class  = &dobj_class[CIRCLE];
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_circle;
-  nobj->loadfunc  = d_load_circle;
-  nobj->savefunc  = d_save_circle;
-  nobj->paintfunc = d_paint_circle;
-  nobj->copyfunc  = d_copy_circle;
 
   return nobj;
 }

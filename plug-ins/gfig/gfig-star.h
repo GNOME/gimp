@@ -35,5 +35,6 @@ void       d_star_start            (GdkPoint *pnt, gint shift_down);
 void       d_star_end              (GdkPoint *pnt, gint shift_down);
 
 Dobject  * d_load_star             (FILE *from);
+void       d_star_object_class_init (void);
 
 #endif /* __GFIG_STAR_H__ */

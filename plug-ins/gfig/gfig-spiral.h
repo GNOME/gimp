@@ -35,5 +35,6 @@ void       d_spiral_start          (GdkPoint *pnt, gint shift_down);
 void       d_spiral_end            (GdkPoint *pnt, gint shift_down);
 
 Dobject  * d_load_spiral           (FILE *from);
+void       d_spiral_object_class_init (void);
 
 #endif /* __GFIG_SPIRAL_H__ */

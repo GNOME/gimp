@@ -232,6 +232,9 @@ gfig_load_style (Style *style,
     }
 
   gfig_read_parameter_string   (style_text, nitems, "BrushName",  &style->brush_name);
+  if (! &style->brush_name )
+    g_message ("Error loading style: got NULL for brush name.");
+
   gfig_read_parameter_string   (style_text, nitems, "Pattern",    &style->pattern);
   gfig_read_parameter_string   (style_text, nitems, "Gradient",   &style->gradient);
   gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground", &style->foreground);
@@ -305,8 +308,13 @@ void
 gfig_save_style (Style *style, 
                  GString *string)
 {
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Saving style %s, brush name '%s'\n", style->name, style->brush_name);
+
   g_string_append_printf (string, "<Style %s>\n", style->name);
   g_string_append_printf (string, "BrushName:      %s\n",          style->brush_name);
+  if (!style->brush_name)
+    g_message ("Error saving style %s: saving NULL for brush name", style->name);
   g_string_append_printf (string, "BrushSource:    %d\n",          style->brush_source);
   g_string_append_printf (string, "FillType:       %d\n",          style->fill_type);
   g_string_append_printf (string, "FillTypeSource: %d\n",          style->fill_type_source);
@@ -328,15 +336,30 @@ gfig_save_styles (GString *string)
 {
   gint k;
 
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Saving global styles.\n");
+
+  gfig_style_copy (&gfig_context->default_style, gfig_context->current_style, "object");
+
   for (k = 1; k < gfig_context->num_styles; k++) 
     gfig_save_style (gfig_context->style[k], string);
 }
 
+/*
+ * set_foreground_callback() is the callback for the Foreground color select
+ * widget.  It reads the color from the widget, and applies this color
+ * to both the default style and the current style.  It then produces a
+ * repaint (which will be suppressed if gfig_context->enable_repaint is
+ * FALSE).
+ */
 void
 set_foreground_callback (GimpColorButton *button,
                          gpointer         data)
 {
   GimpRGB color2;
+
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Setting foreground color from color selector\n");
 
   gimp_color_button_get_color (button, &color2);
   gimp_rgba_set (&gfig_context->default_style.foreground,
@@ -363,6 +386,14 @@ set_background_callback (GimpColorButton *button,
   gfig_paint_callback ();
 }
 
+/*
+ * gfig_brush_changed_callback() is the callback for the brush
+ * selector widget.  It reads the brush name from the widget, and
+ * applies this to both the default style and the current style,
+ * as well as the gfig_context->bdesc values.  It then produces a
+ * repaint (which will be suppressed if gfig_context->enable_repaint is
+ * FALSE).
+ */
 void 
 gfig_brush_changed_callback (const gchar *brush_name,
                              gdouble opacity,
@@ -374,6 +405,9 @@ gfig_brush_changed_callback (const gchar *brush_name,
                              gboolean dialog_closing,
                              gpointer user_data)
 {
+  if (!brush_name)
+    g_message ("Error: setting brush name to NULL in color selector callback.");
+
   gfig_context->current_style->brush_name = (gchar *) brush_name;
   gfig_context->default_style.brush_name = (gchar *) brush_name;
 
@@ -431,9 +465,17 @@ gfig_style_copy (Style *style1,
 {
   if (name)
     style1->name = g_strdup (name);
+  else
+    g_message ("Eror: name is NULL in gfig_style_copy.");
+
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Copying style %s as style %s\n", style0->name, name);
 
   gfig_rgba_copy (&style1->foreground, &style0->foreground);
   gfig_rgba_copy (&style1->background, &style0->background);
+
+  if (!style0->brush_name)
+    g_message ("Error copying style %s: brush name is NULL.", style0->name);
 
   style1->brush_name = g_strdup (style0->brush_name);
 
@@ -442,6 +484,11 @@ gfig_style_copy (Style *style1,
   style1->pattern = g_strdup (style0->pattern);
 }
 
+/*
+ * gfig_style_apply() applies the settings from the specified style to
+ * the Gimp core.  It does not change any widgets, and does not cause
+ * a repaint.
+ */
 void
 gfig_style_apply (Style *style)
 {
@@ -475,12 +522,23 @@ gfig_style_append (Style *style)
   ++gfig_context->num_styles;
 }
 
+/*
+ * gfig_read_gimp_style() reads the style settings from the Gimp core,
+ * and applies them to the specified style, giving that style the
+ * specified name.  This is mainly useful as a way of initializing
+ * a style.  The function does not cause a repaint.
+ */
 void
 gfig_read_gimp_style (Style *style,
                       const gchar *name)
 {
   gint w, h;
 
+  if (!name)
+    g_message ("Error: name is NULL in gfig_read_gimp_style.");
+
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Reading Gimp settings as style %s\n", name);
   style->name = g_strdup (name);
 
   gimp_palette_get_foreground (&style->foreground);
@@ -490,13 +548,29 @@ gfig_read_gimp_style (Style *style,
                                                         &style->brush_spacing);
   style->gradient = gimp_gradients_get_gradient ();
   style->pattern = gimp_patterns_get_pattern (&w, &h);
+
+  gfig_context->bdesc.name = style->brush_name;
+  gfig_context->bdesc.width = style->brush_width;
+  gfig_context->bdesc.height = style->brush_height;
 }
 
+/*
+ * gfig_style_set_content_from_style() sets all of the style control widgets
+ * to values from the specified style.  This in turn sets the Gimp core's
+ * values to the same things.  Repainting is suppressed while this happens,
+ * so calling this function will not produce a repaint.
+ *
+ */
 void
 gfig_style_set_context_from_style (Style *style)
 {
+  gboolean enable_repaint;
+
   if (gfig_context->debug_styles)
     fprintf (stderr, "Setting context from style '%s' -- ", style->name);
+
+  enable_repaint = gfig_context->enable_repaint;
+  gfig_context->enable_repaint = FALSE;
 
   gfig_context->current_style = style;
 
@@ -515,16 +589,25 @@ gfig_style_set_context_from_style (Style *style)
   if (gfig_context->debug_styles)
     fprintf (stderr, "done.\n");
 
+  gfig_context->enable_repaint = enable_repaint;
 }
 
-
+/*
+ * gfig_style_set_style_from_context() sets the values in the specified
+ * style to those that appear in the style control widgets f
+ */
 void
 gfig_style_set_style_from_context (Style *style)
 {
   GimpRGB color;
 
+  style->name = "object";
+
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
                                &color);
+  if (gfig_context->debug_styles)
+    fprintf (stderr, "Setting foreground color to %lg %lg %lg\n", color.r, color.g, color.b);
+
   gfig_rgba_copy (&style->foreground, &color);
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
                                &color);

@@ -40,5 +40,6 @@ void    d_paint_poly            (Dobject *obj);
 
 void    d_poly2lines (Dobject *obj);
 void    d_star2lines (Dobject *obj);
+void    d_poly_object_class_init (void);
 
 #endif /* __GFIG_POLY_H__ */

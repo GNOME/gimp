@@ -341,6 +341,21 @@ d_copy_spiral (Dobject *obj)
   return np;
 }
 
+void
+d_spiral_object_class_init ()
+{
+  DobjClass *class = &dobj_class[SPIRAL];
+
+  class->type      = SPIRAL;
+  class->name      = "Spiral";
+  class->drawfunc  = d_draw_spiral;
+  class->loadfunc  = d_load_spiral;
+  class->savefunc  = d_save_spiral;
+  class->paintfunc = d_paint_spiral;
+  class->copyfunc  = d_copy_spiral;
+  class->createfunc = d_new_spiral;
+}
+
 static Dobject *
 d_new_spiral (gint x,
               gint y)
@@ -350,13 +365,9 @@ d_new_spiral (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = SPIRAL;
+  nobj->class = &dobj_class[SPIRAL];
   nobj->type_data = 4; /* Default to for turns */
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_spiral;
-  nobj->loadfunc  = d_load_spiral;
-  nobj->savefunc  = d_save_spiral;
-  nobj->paintfunc = d_paint_spiral;
-  nobj->copyfunc  = d_copy_spiral;
 
   return nobj;
 }

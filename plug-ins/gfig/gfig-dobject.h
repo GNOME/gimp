@@ -29,6 +29,7 @@ void      free_all_objs            (DAllObjs * objs);
 void      clear_undo               (void);
 void      new_obj_2edit            (GFigObj *obj);
 gint      gfig_obj_counts          (DAllObjs * objs);
+void      gfig_init_object_classes (void);
 
 #endif /* __GFIG_DOBJECT_H__ */
 

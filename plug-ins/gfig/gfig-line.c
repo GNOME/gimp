@@ -180,14 +180,25 @@ d_new_line (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = LINE;
+  nobj->class = &dobj_class[LINE];
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_line;
-  nobj->loadfunc  = d_load_line;
-  nobj->savefunc  = d_save_line;
-  nobj->paintfunc = d_paint_line;
-  nobj->copyfunc  = d_copy_line;
 
   return nobj;
+}
+
+void
+d_line_object_class_init ()
+{
+  DobjClass *class = &dobj_class[LINE];
+
+  class->type      = LINE;
+  class->name      = "Line";
+  class->drawfunc  = d_draw_line;
+  class->loadfunc  = d_load_line;
+  class->savefunc  = d_save_line;
+  class->paintfunc = d_paint_line;
+  class->copyfunc  = d_copy_line;
+  class->createfunc = d_new_line;
 }
 
 /* You guessed it delete the object !*/

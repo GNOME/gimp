@@ -583,14 +583,25 @@ d_new_arc (gint x,
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = ARC;
+  nobj->class = &dobj_class[ARC];
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_arc;
-  nobj->loadfunc  = d_load_arc;
-  nobj->savefunc  = d_save_arc;
-  nobj->paintfunc = d_paint_arc;
-  nobj->copyfunc  = d_copy_arc;
 
   return nobj;
+}
+
+void
+d_arc_object_class_init ()
+{
+  DobjClass *class = &dobj_class[ARC];
+
+  class->type      = ARC;
+  class->name      = "Arc";
+  class->drawfunc  = d_draw_arc;
+  class->loadfunc  = d_load_arc;
+  class->savefunc  = d_save_arc;
+  class->paintfunc = d_paint_arc;
+  class->copyfunc  = d_copy_arc;
+  class->createfunc = d_new_arc;
 }
 
 void
@@ -646,11 +657,7 @@ d_arc_end (GdkPoint *pnt,
       /* Complete arc */
       /* Convert to an arc ... */
       tmp_line->type = ARC;
-      tmp_line->drawfunc  = d_draw_arc;
-      tmp_line->loadfunc  = d_load_arc;
-      tmp_line->savefunc  = d_save_arc;
-      tmp_line->paintfunc = d_paint_arc;
-      tmp_line->copyfunc  = d_copy_arc;
+      tmp_line->class = &dobj_class[ARC];
       d_line_end (pnt, FALSE);
       /*d_draw_line (newarc);  Should undraw line */
       if (need_to_scale)

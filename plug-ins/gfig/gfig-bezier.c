@@ -354,6 +354,21 @@ d_copy_bezier (Dobject *obj)
   return np;
 }
 
+void
+d_bezier_object_class_init ()
+{
+  DobjClass *class = &dobj_class[BEZIER];
+
+  class->type      = BEZIER;
+  class->name      = "Bezier";
+  class->drawfunc  = d_draw_bezier;
+  class->loadfunc  = d_load_bezier;
+  class->savefunc  = d_save_bezier;
+  class->paintfunc = d_paint_bezier;
+  class->copyfunc  = d_copy_bezier;
+  class->createfunc = d_new_bezier;
+}
+
 static Dobject *
 d_new_bezier (gint x, gint y)
 {
@@ -362,13 +377,9 @@ d_new_bezier (gint x, gint y)
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = BEZIER;
+  nobj->class = &dobj_class[BEZIER];
   nobj->type_data = 4; /* Default to four turns */
   nobj->points = new_dobjpoint (x, y);
-  nobj->drawfunc  = d_draw_bezier;
-  nobj->loadfunc  = d_load_bezier;
-  nobj->savefunc  = d_save_bezier;
-  nobj->paintfunc = d_paint_bezier;
-  nobj->copyfunc  = d_copy_bezier;
 
   return nobj;
 }
