@@ -274,6 +274,7 @@ doit (GDrawable * drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height, bytes;
+  gint x_offset, y_offset;
   guchar *dest;
   gint x, y, alpha;
   
@@ -296,44 +297,55 @@ doit (GDrawable * drawable)
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2-sx1));
 
-      if ( abs ((y - grid_cfg.voffset) % grid_cfg.vspace) < grid_cfg.vwidth )
-	{ /* Draw row */
+      y_offset = grid_cfg.vspace + y - grid_cfg.voffset;
+
+      if ((y_offset + (grid_cfg.vwidth / 2)) % grid_cfg.vspace < grid_cfg.vwidth)
+	{
 	  for (x = sx1; x < sx2; x++)
 	    {
-	      pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.hcolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.hcolor, bytes, alpha);
 	    }
 	}
 
-      if ( abs ((y - grid_cfg.voffset + ((grid_cfg.iwidth - grid_cfg.vwidth) / 2)) % grid_cfg.vspace) 
-	   < grid_cfg.iwidth )
-        { /* Draw irow */
+      if ((y_offset + (grid_cfg.iwidth / 2)) % grid_cfg.vspace < grid_cfg.iwidth)
+        {
 	  for (x = sx1; x < sx2; x++)
 	    {
-              if (( abs ((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) >= grid_cfg.ispace
-                && ( abs (x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) < grid_cfg.ioffset)
-                || (abs (((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) - grid_cfg.hspace) >= grid_cfg.ispace
-                && (abs (((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) - grid_cfg.hspace) < grid_cfg.ioffset))) {
-	          pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
+	      x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
+
+              if ((x_offset % grid_cfg.hspace >= grid_cfg.ispace
+		   && 
+		   x_offset % grid_cfg.hspace < grid_cfg.ioffset) 
+		  || 
+		  (grid_cfg.hspace - (x_offset % grid_cfg.hspace) >= grid_cfg.ispace
+		   && 
+		   grid_cfg.hspace - (x_offset % grid_cfg.hspace) < grid_cfg.ioffset))
+		{
+		  pix_composite (&dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
                 }
 	    }
         }
 
       for (x = sx1; x < sx2; x++)
         {
-          if (abs ((x - grid_cfg.hoffset) % grid_cfg.hspace) < grid_cfg.hwidth)
+	  x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
+
+          if ((x_offset + (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
             {
-	      pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.vcolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.vcolor, bytes, alpha);
             }
 
-          if (abs (((x - grid_cfg.hoffset + ((grid_cfg.iwidth - grid_cfg.hwidth) / 2)) % grid_cfg.hspace) < grid_cfg.iwidth)
-            && (( (abs ((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) >= grid_cfg.ispace)
-               && (abs ((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) < grid_cfg.ioffset))
-            || (( (abs (((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) >= grid_cfg.ispace)
-               && (abs (((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) < grid_cfg.ioffset))
-            ))
-          )
+          if ((x_offset + (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth
+	      && 
+	      ((y_offset % grid_cfg.vspace >= grid_cfg.ispace
+		&& 
+		y_offset % grid_cfg.vspace < grid_cfg.ioffset)
+	       || 
+	       (grid_cfg.vspace - (y_offset % grid_cfg.vspace) >= grid_cfg.ispace
+		&& 
+		grid_cfg.vspace - (y_offset % grid_cfg.vspace) < grid_cfg.ioffset)))
             {
-	      pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
+	      pix_composite (&dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
             }
         }
 

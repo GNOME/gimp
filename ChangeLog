@@ -1,3 +1,7 @@
+Sun Feb 20 20:34:40 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/grid.c: hopefully got it right this time
+
 Sun Feb 20 18:40:34 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * app/fileops.c: Fix setting of filename on Save As (the filename
@@ -10,7 +14,6 @@ Sun Feb 20 10:46:00 CST 2000  Seth Burgess <sjburges@gimp.org>
 	it work right for positioning image as well, but I fear 
 	this may be WM dependant.  Please let me know if things 
 	hang of the edges for you... (Fixes #6257)
-
 	
 Sun Feb 20 03:46:12 CET 2000  Sven Neumann <sven@gimp.org>
 
