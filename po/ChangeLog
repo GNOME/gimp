@@ -1,3 +1,8 @@
+2000-04-06  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added gimage_cmds.c
+	* de.po: updated german translation
+
 2000-04-05  Gert Dewit  <Gert.Dewit@sos.be>
 
 	* nl.po: First 1.1 (and 1.2) Dutch translation effort

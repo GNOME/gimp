@@ -1,5 +1,12 @@
 2000-04-06  Sven Neumann  <sven@gimp.org>
 
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: (gimp_image_set_resolution) guard
+	against NaN and infinity. There are pics out there using these
+	values and it seems that NaN > GIMP_MIN_RESOLUTION. Fixes #8476.
+
+2000-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c: if we cannot load the font we'd like to use,
 	use the gtk+ default font. Fixes bug #8359.
 	

@@ -43,6 +43,7 @@ app/fuzzy_select.c
 app/gdisplay.c
 app/gdisplay_color_ui.c
 app/gdisplay_ops.c
+app/gimage_cmds.c
 app/gimage_mask.c
 app/gimpbrush.c
 app/gimpbrushlist.c
