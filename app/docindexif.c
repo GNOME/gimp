@@ -57,35 +57,9 @@ void open_file_in_position( gchar *filename, gint position )
   file_open( filename, filename );
 }
 
-
-#define IDEA_FILE_ITEMS (sizeof( idea_menu ) / sizeof( GtkMenuEntry ))
-
-static GtkMenuEntry idea_menu [] =
-{
-  { "<Main>/File/New", "<control>N", file_new_cmd_callback, NULL },
-  { "<Main>/File/Open...", "<control>O", file_open_callback, NULL },
-  { "<Main>/File/<separator>", NULL, NULL, NULL },
-  { "<Main>/File/Close Index", "<control>W",idea_hide_callback, NULL },
-};    
-
 GtkMenuFactory *create_idea_menu()
 {
-  int i;
-  GtkMenuFactory *factory;
-  GtkMenuFactory *subfactory;
-  GtkMenuEntry *current_menu_bar = g_malloc0( sizeof( idea_menu ) );
-
-  for ( i = 0; i < IDEA_FILE_ITEMS; i++ )
-    {
-      current_menu_bar[i] = idea_menu[i];
-    }
-
-  factory = gtk_menu_factory_new( GTK_MENU_FACTORY_MENU_BAR );
-  subfactory = gtk_menu_factory_new( GTK_MENU_FACTORY_MENU_BAR );
-  gtk_menu_factory_add_subfactory( factory, subfactory, "<Main>" );
-  gtk_menu_factory_add_entries( factory, current_menu_bar, IDEA_FILE_ITEMS );
-
-  return subfactory;
+  return NULL;
 }
 
 GtkWidget *create_idea_toolbar()

@@ -1,3 +1,9 @@
+1998-08-21  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindexif.c (create_idea_menu): 
+	* app/docindex.c (make_idea_window): 
+		Got rid of the menu bar in the document index.
+
 1998-08-19  Raph Levien  <raph@gimp.org>
 
 	This is the GdkRgb integration.

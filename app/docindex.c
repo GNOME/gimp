@@ -137,13 +137,17 @@ make_idea_window( int x, int y )
   /* allocate the window and attach the menu */
   ideas->window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
   ideas->menubar = create_idea_menu( ideas );
-  menu = ideas->menubar->widget;
-  /* Setup accelerator (hotkey) table */
-  accel = ideas->menubar->accel_group;
-
-  /* Add accelerators to window widget */
-  gtk_window_add_accel_group( GTK_WINDOW( ideas->window ), accel );
-
+  if( ideas->menubar )
+    {
+      menu = ideas->menubar->widget;
+      /* Setup accelerator (hotkey) table */
+      accel = ideas->menubar->accel_group;
+      
+      /* Add accelerators to window widget */
+      gtk_window_add_accel_group( GTK_WINDOW( ideas->window ), accel );
+    }
+  else menu = NULL;
+  
   /* Setup the status bar */
   ideas->status = gtk_statusbar_new();
   ideas->contextid = gtk_statusbar_get_context_id( GTK_STATUSBAR( ideas->status ), "main context" );
@@ -153,11 +157,13 @@ make_idea_window( int x, int y )
   
   /* Setup a vbox to contain the menu */
   main_vbox = gtk_vbox_new( FALSE, 0 );
-  gtk_box_pack_start( GTK_BOX( main_vbox ), menu, FALSE, FALSE, 0 );
+  if( menu )
+    gtk_box_pack_start( GTK_BOX( main_vbox ), menu, FALSE, FALSE, 0 );
   gtk_box_pack_start( GTK_BOX( main_vbox ), toolbar, FALSE, FALSE, 0 );
   gtk_box_pack_start( GTK_BOX( main_vbox ), scrolled_win, TRUE, TRUE, 0 ); 
   gtk_box_pack_start( GTK_BOX( main_vbox ), ideas->status, FALSE, FALSE, 0 );
-  gtk_widget_show( menu );
+  if( menu )
+    gtk_widget_show( menu );
   gtk_widget_show( scrolled_win );
   gtk_widget_show( ideas->status );
 
