@@ -1,5 +1,10 @@
 2004-11-28  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/gfig/gfig-dobject.c: copy the style of the object when
+	pushing it to the undo stack, so undoing works as expected.
+
+2004-11-28  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/gfig/gfig-style.c
 	* plug-ins/gfig/gfig-style.h: create a new function to get the current
 	style instead of using a global pointer for this

@@ -684,6 +684,7 @@ copy_all_objs (GList *objs)
     {
       GfigObject *object = objs->data;
       GfigObject *new_object = (GfigObject *) object->class->copyfunc (object);
+      gfig_style_copy (&new_object->style, &object->style, "Object");
 
       new_all_objs = g_list_append (new_all_objs, new_object);
 
