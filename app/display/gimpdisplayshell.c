@@ -334,49 +334,49 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   /*  active display callback  */
   g_signal_connect (shell, "button_press_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
   g_signal_connect (shell, "button_release_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
   g_signal_connect (shell, "key_press_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
   g_signal_connect (shell, "window_state_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
 
   /*  dnd stuff  */
+  gimp_dnd_file_dest_add     (GTK_WIDGET (shell),
+                              gimp_display_shell_drop_files,
+                              shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
-			      gimp_display_shell_drop_drawable,
+                              gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
-			      gimp_display_shell_drop_drawable,
+                              gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
-			      gimp_display_shell_drop_drawable,
+                              gimp_display_shell_drop_drawable,
                               shell);
   gimp_dnd_svg_dest_add      (GTK_WIDGET (shell),
-			      gimp_display_shell_drop_svg,
+                              gimp_display_shell_drop_svg,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_VECTORS,
-			      gimp_display_shell_drop_vectors,
+                              gimp_display_shell_drop_vectors,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
-			      gimp_display_shell_drop_pattern,
+                              gimp_display_shell_drop_pattern,
                               shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
-			      gimp_display_shell_drop_buffer,
+                              gimp_display_shell_drop_buffer,
                               shell);
   gimp_dnd_color_dest_add    (GTK_WIDGET (shell),
-			      gimp_display_shell_drop_color,
-                              shell);
-  gimp_dnd_file_dest_add     (GTK_WIDGET (shell),
-			      gimp_display_shell_drop_files,
+                              gimp_display_shell_drop_color,
                               shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
-		     GIMP_HELP_IMAGE_WINDOW, NULL);
+                     GIMP_HELP_IMAGE_WINDOW, NULL);
 }
 
 static void

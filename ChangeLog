@@ -1,3 +1,10 @@
+2004-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init): add
+	the file DND destination before all others so the DND code will
+	implicitly use its destination properties. Works around Konqueror
+	offering only file MOVE, not COPY and fixes bug #144168.
+
 2004-06-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sample_colorize.c: reindented, some minor cleanup.
