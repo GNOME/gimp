@@ -300,3 +300,51 @@ image_map_abort (ImageMap image_map)
 
   g_free (_image_map);
 }
+
+unsigned char *
+image_map_get_color_at (ImageMap image_map, int x, int y)
+{
+  Tile *tile;
+  unsigned char *src;
+  unsigned char *dest;
+  _ImageMap *_image_map;
+
+  if(!image_map)
+    return NULL;
+
+  _image_map = (_ImageMap *) image_map;
+
+  /* Check if done damage to original image */
+  if(!_image_map->undo_tiles)
+    return (gimp_drawable_get_color_at(_image_map->drawable,x,y));
+
+  if (!image_map ||
+      (!gimp_drawable_gimage(_image_map->drawable) && 
+       gimp_drawable_indexed(_image_map->drawable)) 
+      || x < 0 || y < 0 )
+  {
+    return NULL;
+  }
+
+  dest = g_new(unsigned char, 5);
+
+  tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
+				TRUE, FALSE);
+
+  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+
+  gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
+			gimp_drawable_type (_image_map->drawable), dest, src);
+
+  if(TYPE_HAS_ALPHA(gimp_drawable_type (_image_map->drawable)))
+    dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
+  else
+    dest[3] = 255;
+  if (gimp_drawable_indexed(_image_map->drawable))
+    dest[4] = src[0];
+  else
+    dest[4] = 0;
+  tile_release (tile, FALSE);
+  return dest;
+}
+

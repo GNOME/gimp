@@ -1,3 +1,15 @@
+Wed Apr  7 22:44:02 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+
+	* app/curves.c
+	* app/image_map.c
+	* app/image_map.h
+
+	Curves dialog now has "interactive feedback". Press and drag the 
+	mouse button in the image window and a marker will appear in the
+	curves dialog showing the channel value at that point.
+	
 Wed Apr  7 00:50:13 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c: when using fixed_size selections create the

@@ -34,5 +34,6 @@ ImageMap  image_map_create  (void *, GimpDrawable *);
 void      image_map_apply   (ImageMap, ImageMapApplyFunc, void *);
 void      image_map_commit  (ImageMap);
 void      image_map_abort   (ImageMap);
+unsigned char *image_map_get_color_at (ImageMap, int, int);
 
 #endif /* __IMAGE_MAP_H__ */

@@ -97,6 +97,7 @@ struct _CurvesDialog
   int            curve_type;
   int            points[5][17][2];
   unsigned char  curve[5][256];
+  int            col_value[5];
 
   GimpLut       *lut;
 };
@@ -197,9 +198,73 @@ curves_button_press (Tool           *tool,
 		     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  GimpDrawable * drawable;
 
   gdisp = gdisp_ptr;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimage_active_drawable (gdisp->gimage);
+
+  if(drawable != tool->drawable)
+    {
+      active_tool->preserve = TRUE;
+      image_map_abort (curves_dialog->image_map);
+      active_tool->preserve = FALSE;
+      curves_dialog->drawable = tool->drawable = drawable;
+      curves_dialog->color = drawable_color (drawable);
+      curves_dialog->image_map = image_map_create (gdisp, drawable);
+    }
+
+  if(tool)
+    tool->state = ACTIVE;
+
+}
+
+static void
+curves_colour_update(Tool           *tool,
+		     GDisplay       *gdisp,
+		     GimpDrawable   *drawable,
+		     gint           x,
+		     gint           y)
+{
+  unsigned char *color;
+  int offx, offy;
+  int has_alpha;
+  int is_indexed;
+  int sample_type;
+  int maxval;
+
+  if(!tool || tool->state != ACTIVE)
+    return;
+
+  drawable_offsets (drawable, &offx, &offy);
+
+  x -= offx;
+  y -= offy;
+
+  if (!(color = image_map_get_color_at(curves_dialog->image_map, x, y)))
+    return;
+
+  sample_type = gimp_drawable_type(drawable);
+  is_indexed = gimp_drawable_indexed (drawable);
+  has_alpha = TYPE_HAS_ALPHA(sample_type);
+
+  curves_dialog->col_value[HISTOGRAM_RED] = color[RED_PIX];
+  curves_dialog->col_value[HISTOGRAM_GREEN] = color[GREEN_PIX];
+  curves_dialog->col_value[HISTOGRAM_BLUE] = color[BLUE_PIX];
+
+  if (has_alpha)
+    {
+      curves_dialog->col_value [HISTOGRAM_ALPHA] = color[3];
+    }
+
+  if (is_indexed)
+    curves_dialog->col_value [HISTOGRAM_ALPHA] = color[4];
+
+  maxval = MAXIMUM(color[RED_PIX],color[GREEN_PIX]);
+  curves_dialog->col_value[HISTOGRAM_VALUE] = MAXIMUM(maxval,color[BLUE_PIX]);
+
+  g_free(color);
+
+  curves_update (curves_dialog, GRAPH | DRAW);
 }
 
 static void
@@ -207,6 +272,19 @@ curves_button_release (Tool           *tool,
 		       GdkEventButton *bevent,
 		       gpointer        gdisp_ptr)
 {
+  gint x, y;
+  GimpDrawable * drawable;
+  GDisplay *gdisp;
+
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  if(!curves_dialog || 
+     !gdisp || 
+     !(drawable = gimage_active_drawable (gdisp->gimage)))
+     return;
+
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  curves_colour_update(tool,gdisp,drawable,x,y);
 }
 
 static void
@@ -214,6 +292,19 @@ curves_motion (Tool           *tool,
 	       GdkEventMotion *mevent,
 	       gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+  gint x, y;
+  GimpDrawable * drawable;
+
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  if(!curves_dialog || 
+     !gdisp || 
+     !(drawable = gimage_active_drawable (gdisp->gimage)))
+     return;
+
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  curves_colour_update(tool,gdisp,drawable,x,y);
 }
 
 static void
@@ -433,6 +524,10 @@ curves_new_dialog ()
   for (i = 0; i < 5; i++)
     for (j = 0; j < 256; j++)
       cd->curve[i][j] = j;
+
+  for(i = 0; i < (sizeof(cd->col_value)/sizeof(cd->col_value[0])); i++)
+    cd->col_value[i] = 0;
+
   cd->lut = gimp_lut_new();
 
   for (i = 0; i < 5; i++)
@@ -661,6 +756,11 @@ curves_update (CurvesDialog *cd,
 			    255 - cd->points[cd->channel][i][1],
 			    RADIUS * 2, RADIUS * 2, 0, 23040);
 	  }
+
+      /* draw the colour line */
+      gdk_draw_line(cd->pixmap, cd->graph->style->black_gc,
+		    cd->col_value[cd->channel],RADIUS,
+		    cd->col_value[cd->channel],GRAPH_HEIGHT + RADIUS);
 
       gdk_draw_pixmap (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
 		       0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
@@ -1124,6 +1224,8 @@ curves_graph_events (GtkWidget    *widget,
 	}
 
       curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
+      gtk_grab_add(widget);
+
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -1132,6 +1234,9 @@ curves_graph_events (GtkWidget    *widget,
 
       if (cd->preview)
 	curves_preview (cd);
+
+      gtk_grab_remove(widget);
+
       break;
 
     case GDK_MOTION_NOTIFY:
