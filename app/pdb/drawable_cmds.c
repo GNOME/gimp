@@ -433,7 +433,7 @@ static ProcRecord drawable_type_with_alpha_proc =
 {
   "gimp_drawable_type_with_alpha",
   "Returns the drawable's type with alpha.",
-  "This procedure returns the drawable's type if an alpha channel were added. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
+  "This procedure returns the drawable's type as if had an alpha channel. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

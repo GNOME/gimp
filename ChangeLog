@@ -1,5 +1,13 @@
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: fixed docs for
+	gimp_drawable_type_with_alpha().
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/main.[ch] (ico_image_get_reduced_buf)
 	* plug-ins/winicon/icodialog.c
 	* plug-ins/winicon/icoload.c
