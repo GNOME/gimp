@@ -36,11 +36,11 @@
 #include "interface.h"
 #include "palette.h"
 
-#define ENTRY_WIDTH  18
-#define ENTRY_HEIGHT 14
+#define ENTRY_WIDTH  14
+#define ENTRY_HEIGHT 10
 #define SPACING 1
-#define COLUMNS 12
-#define ROWS 8
+#define COLUMNS 16
+#define ROWS 16
 
 #define PREVIEW_WIDTH ((ENTRY_WIDTH * COLUMNS) + (SPACING * (COLUMNS + 1)))
 #define PREVIEW_HEIGHT ((ENTRY_HEIGHT * ROWS) + (SPACING * (ROWS + 1)))
@@ -184,6 +184,7 @@ palette_create ()
 
       /*  The shell and main vbox  */
       palette->shell = gtk_dialog_new ();
+      gtk_window_set_policy (GTK_WINDOW (palette->shell), FALSE, FALSE, FALSE);
       gtk_window_set_title (GTK_WINDOW (palette->shell), "Color Palette");
       vbox = gtk_vbox_new (FALSE, 1);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);

@@ -971,8 +971,11 @@ layer_preview (layer, w, h)
 
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
+      /* handle some truncation errors */
+      if (w < 1) w = 1;
+      if (h < 1) h = 1;
       while ((w * (subsample + 1) * 2 < layer->width) &&
-	     (h * (subsample + 1) * 2 < layer->height))
+	     (h * (subsample + 1) * 2 < layer->height)) 
 	subsample = subsample + 1;
 
       pixel_region_init (&srcPR, layer->tiles, 0, 0, layer->width, layer->height, FALSE);
@@ -1021,6 +1024,8 @@ layer_mask_preview (layer, w, h)
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
+      if (w < 1) w = 1;
+      if (h < 1) h = 1;
       while ((w * (subsample + 1) * 2 < layer->width) &&
 	     (h * (subsample + 1) * 2 < layer->height))
 	subsample = subsample + 1;

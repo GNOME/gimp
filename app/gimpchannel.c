@@ -371,6 +371,8 @@ channel_preview (Channel *channel, int width, int height)
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
+      if (width < 1) width = 1;
+      if (height < 1) height = 1;
       while ((width * (subsample + 1) * 2 < channel->width) &&
 	     (height * (subsample + 1) * 2 < channel->height))
 	subsample = subsample + 1;
