@@ -135,7 +135,7 @@ run (char    *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ( _("deinterlace"));
+	  gimp_progress_init ( _("Deinterlace..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  deinterlace (drawable);
 

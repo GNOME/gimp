@@ -1252,7 +1252,7 @@ do_dialog (GDrawable *drawable)
   gint argc = 1;
   guchar     *color_cube;
   gchar **argv = g_new (gchar *, 1);
-  argv[0] = g_strdup (_("CurveBend"));
+  argv[0] = g_strdup ("CurveBend");
 
 
   /* Init GTK  */

@@ -17,6 +17,9 @@ rcm_SOURCES = \
 	rcm_misc.h	\
 	rcm_pixmaps.h
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

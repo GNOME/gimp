@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-12-27 19:32+0100\n"
-"PO-Revision-Date: 1999-12-27 19:45+0100\n"
+"POT-Creation-Date: 1999-12-28 19:40+0100\n"
+"PO-Revision-Date: 1999-12-28 19:45+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,14 +134,14 @@ msgstr ""
 #: plug-ins/bmp/bmpwrite.c:508 plug-ins/common/CML_explorer.c:1823
 #: plug-ins/common/CML_explorer.c:2692 plug-ins/common/CML_explorer.c:2787
 #: plug-ins/common/aa.c:369 plug-ins/common/align_layers.c:727
-#: plug-ins/common/align_layers.c:794 plug-ins/common/apply_lens.c:425
+#: plug-ins/common/align_layers.c:801 plug-ins/common/apply_lens.c:425
 #: plug-ins/common/blinds.c:354 plug-ins/common/blur.c:626
 #: plug-ins/common/bumpmap.c:973 plug-ins/common/checkerboard.c:390
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:417
 #: plug-ins/common/compose.c:827 plug-ins/common/convmatrix.c:722
 #: plug-ins/common/cubism.c:337 plug-ins/common/curve_bend.c:351
 #: plug-ins/common/decompose.c:993 plug-ins/common/depthmerge.c:752
-#: plug-ins/common/despeckle.c:881 plug-ins/common/destripe.c:696
+#: plug-ins/common/despeckle.c:887 plug-ins/common/destripe.c:696
 #: plug-ins/common/diffraction.c:688 plug-ins/common/displace.c:334
 #: plug-ins/common/edge.c:660 plug-ins/common/engrave.c:246
 #: plug-ins/common/exchange.c:286 plug-ins/common/film.c:1238
@@ -193,7 +193,7 @@ msgstr "Einstellungen annehmen und Filter anwenden"
 #: plug-ins/common/colortoalpha.c:426 plug-ins/common/compose.c:836
 #: plug-ins/common/convmatrix.c:731 plug-ins/common/cubism.c:346
 #: plug-ins/common/curve_bend.c:352 plug-ins/common/decompose.c:1002
-#: plug-ins/common/depthmerge.c:761 plug-ins/common/despeckle.c:890
+#: plug-ins/common/depthmerge.c:761 plug-ins/common/despeckle.c:896
 #: plug-ins/common/destripe.c:705 plug-ins/common/diffraction.c:697
 #: plug-ins/common/displace.c:343 plug-ins/common/edge.c:669
 #: plug-ins/common/engrave.c:255 plug-ins/common/exchange.c:295
@@ -209,7 +209,7 @@ msgstr "Einstellungen annehmen und Filter anwenden"
 #: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
 #: plug-ins/common/papertile.c:524 plug-ins/common/png.c:987
 #: plug-ins/common/ps.c:2132 plug-ins/common/ps.c:2396
-#: plug-ins/common/psp.c:485 plug-ins/common/screenshot.c:429
+#: plug-ins/common/psp.c:485 plug-ins/common/screenshot.c:408
 #: plug-ins/common/spheredesigner.c:2343 plug-ins/common/threshold_alpha.c:483
 #: plug-ins/common/warp.c:525 plug-ins/common/xbm.c:736
 #: plug-ins/common/xbm.c:1004 plug-ins/common/xpm.c:806
@@ -903,7 +903,7 @@ msgstr "Anzahl der Farben nicht unterstützt (%d)"
 #: plug-ins/common/CEL.c:399
 msgid "Only an indexed-alpha image can be saved in CEL format"
 msgstr ""
-"Nur indizierte Bilder mit Transparenz könnenim CEL Format gespeichert werden"
+"Nur indizierte Bilder mit Transparenz können im CEL Format gespeichert werden"
 
 #: plug-ins/common/CEL.c:412
 #, c-format
@@ -1449,11 +1449,9 @@ msgstr "Speichere als Text"
 msgid "Data Formatting"
 msgstr ""
 
-# gehört zu einem GAP-Dialog (z.b. wollen sie speichern ?). 'Auswahl' ist am allgemeinsten, so kollidiert es nicht mit anderen Vorkommen von 'Select'
 #: plug-ins/common/align_layers.c:136 plug-ins/common/align_layers.c:160
-#, fuzzy
 msgid "Collect"
-msgstr "Auswahl"
+msgstr "Zusammenfassen"
 
 #: plug-ins/common/align_layers.c:138
 msgid "Fill (left to right)"
@@ -1465,7 +1463,7 @@ msgstr "Füllen (von rechts nach links)"
 
 #: plug-ins/common/align_layers.c:142 plug-ins/common/align_layers.c:166
 msgid "Snap to grid"
-msgstr "am Giiter ausrichten"
+msgstr "am Gitter ausrichten"
 
 #: plug-ins/common/align_layers.c:148
 msgid "Left edge"
@@ -1512,6 +1510,10 @@ msgstr "<Image>/Filter/Sichtbare Ebenen anordnen..."
 msgid "Error: there are too few layers."
 msgstr "Fehler: zu wenig Ebenen"
 
+#: plug-ins/common/align_layers.c:501
+msgid "Align Visible Layers"
+msgstr "Sichtbare Ebenen anordnen"
+
 #: plug-ins/common/align_layers.c:582
 msgid "Parameter settings"
 msgstr "Parameter-Einstellungen"
@@ -1534,11 +1536,11 @@ msgstr "Vertikale Basis"
 
 #: plug-ins/common/align_layers.c:606
 msgid "Ignore the bottom layer even if visible"
-msgstr "Ignoriere die unterste Ebene auch wenn sichtbar"
+msgstr "Ignoriere die unterste Ebene auch wenn sie sichtbar ist"
 
 #: plug-ins/common/align_layers.c:610
 msgid "Use the (invisible) bottom layer as the base"
-msgstr "Benutze die unterste (unischtare) Ebene als Basis"
+msgstr "Benutze die unterste (unsichtare) Ebene als Basis"
 
 #: plug-ins/common/align_layers.c:614
 msgid "Grid size"
@@ -1589,13 +1591,6 @@ msgstr "Schrittweise"
 #: plug-ins/common/animationplay.c:825
 msgid "Frame %v of %u"
 msgstr "Frame %v von %u"
-
-#: plug-ins/common/animationplay.c:1004
-#, c-format
-msgid "playback: Asked for frame number %d in a %d-frame animation!\n"
-msgstr ""
-"Abspielen: Sie versuchen, Frame %d aus einer Animation mit nur %d Frames "
-"abzuspielen!\n"
 
 #: plug-ins/common/animoptimize.c:130
 msgid ""
@@ -1961,36 +1956,6 @@ msgstr "Wasserhöhe"
 msgid "Ambient"
 msgstr "Umgebungslicht (Ambient)"
 
-#: plug-ins/common/bz2.c:294 plug-ins/common/bz2.c:368
-#, c-format
-msgid "bz2: fork failed: %s\n"
-msgstr "bz2: fork schlug fehl: %s\n"
-
-#: plug-ins/common/bz2.c:302 plug-ins/common/bz2.c:376
-#, c-format
-msgid "bz2: fopen failed: %s\n"
-msgstr "bz2: fopen schlug fehl: %s\n"
-
-#: plug-ins/common/bz2.c:309 plug-ins/common/bz2.c:383
-#, c-format
-msgid "bz2: dup2 failed: %s\n"
-msgstr "bz2: dup2 schlug fehl: bzip2: %s\n"
-
-#: plug-ins/common/bz2.c:313
-#, c-format
-msgid "bz2: exec failed: bzip2: %s\n"
-msgstr "bz2: exec schlug fehl: bzip2: %s\n"
-
-#: plug-ins/common/bz2.c:331 plug-ins/common/bz2.c:405
-#, c-format
-msgid "bz2: bzip2 exited abnormally on file %s\n"
-msgstr "bz2: bzip2 hatte Probleme beim Bearbeiten von %s\n"
-
-#: plug-ins/common/bz2.c:387
-#, c-format
-msgid "bz2: exec failed: bunzip2: %s\n"
-msgstr "bz2: exec schlug fehl: bunzip2: %s\n"
-
 #: plug-ins/common/bz2.c:461
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr ""
@@ -2020,10 +1985,6 @@ msgstr "<Image>/Bild/Farben/Auto/Kontrastspreizung"
 #: plug-ins/common/c_astretch.c:115
 msgid "Auto-Stretching Contrast..."
 msgstr "Automat. Kontrastspreizung..."
-
-#: plug-ins/common/c_astretch.c:156
-msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr "c_astrech: cmap war NULL! Beende Programm...\n"
 
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
@@ -2081,10 +2042,6 @@ msgstr "<Image>/Bild/Farben/Auto/Farbverbesserung"
 #: plug-ins/common/color_enhance.c:122
 msgid "Color Enhance..."
 msgstr "Farbverbesserung..."
-
-#: plug-ins/common/color_enhance.c:164
-msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-msgstr "Farbverbesserung: cmap war NULL! Beende...\n"
 
 #: plug-ins/common/colorify.c:122
 msgid "Similar to the \"Color\" mode for layers."
@@ -2256,26 +2213,9 @@ msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr "Diese Funktion setzt ein Bild aus mehreren Graustufenbildern zusammen"
 
-#: plug-ins/common/compose.c:305
-#, c-format
-msgid "compose: Could not get layers for image %d"
-msgstr "Zusammenfassen: Kann die Ebenen von Bild %d nicht bekommen"
-
 #: plug-ins/common/compose.c:354
 msgid "Composing..."
 msgstr "Fasse Kanäle zusammen..."
-
-#: plug-ins/common/compose.c:421
-msgid "compose: drawables have different size"
-msgstr "Zusammenfassen: Ebenen haben verschiedene Grössen"
-
-#: plug-ins/common/compose.c:438
-msgid "compose: images have different size"
-msgstr "Zusammenfassen: Bilder haben verschiedene Grössen"
-
-#: plug-ins/common/compose.c:451
-msgid "compose: error in getting layer IDs"
-msgstr "Zusammenfassen: Fehler beim Erfragen der Ebenen-ID's"
 
 #: plug-ins/common/compose.c:468
 #, c-format
@@ -2471,10 +2411,6 @@ msgstr "Frei"
 msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/Filter/Verzerren/Kurve..."
 
-#: plug-ins/common/curve_bend.c:1255
-msgid "CurveBend"
-msgstr "Kurve"
-
 #: plug-ins/common/curve_bend.c:1376
 msgid "Curve Bend"
 msgstr "Kurve"
@@ -2482,16 +2418,16 @@ msgstr "Kurve"
 #. The Load button
 #: plug-ins/common/curve_bend.c:1391
 msgid "LoadCurve"
-msgstr "Lade Kurve"
+msgstr "Kurve laden"
 
 #. The Save button
 #: plug-ins/common/curve_bend.c:1400
 msgid "SaveCurve"
-msgstr "Speichere Kurve"
+msgstr "Kurve speichern"
 
 #: plug-ins/common/curve_bend.c:1407
 msgid "Rotate: "
-msgstr "Drehen:"
+msgstr "Drehen: "
 
 #: plug-ins/common/curve_bend.c:1420
 msgid "Curve for Border: "
@@ -2631,25 +2567,9 @@ msgstr ""
 msgid "<Image>/Image/Mode/Decompose..."
 msgstr "<Image>/Bild/Modus/Zerlegen..."
 
-#: plug-ins/common/decompose.c:303
-msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
-msgstr "plug_in_decompose: Kann nur mit RGB*-Bild arbeiten"
-
 #: plug-ins/common/decompose.c:309
 msgid "Decomposing..."
 msgstr "Zerlege Kanäle..."
-
-#: plug-ins/common/decompose.c:373
-msgid "decompose: not an RGB image"
-msgstr "Zerlegen: kein RGB-Bild"
-
-#: plug-ins/common/decompose.c:379
-msgid "decompose: No alpha channel available"
-msgstr "Zerlegen: Kein Alpha-Kanal verfügbar"
-
-#: plug-ins/common/decompose.c:409
-msgid "decompose: out of memory"
-msgstr "Zerlegen: Nicht genug Speicher"
 
 #: plug-ins/common/decompose.c:973 plug-ins/common/decompose.c:979
 msgid "Decompose"
@@ -2673,10 +2593,10 @@ msgstr ""
 
 #: plug-ins/common/deinterlace.c:82
 msgid "<Image>/Filters/Enhance/Deinterlace..."
-msgstr "<Image>/Filter/Verbessern/Streifen entfernen..."
+msgstr ""
 
 #: plug-ins/common/deinterlace.c:138
-msgid "deinterlace"
+msgid "Deinterlace..."
 msgstr ""
 
 #: plug-ins/common/deinterlace.c:237
@@ -2745,25 +2665,17 @@ msgstr "Faktor 1"
 msgid "Scale 2"
 msgstr "Faktor 2"
 
-#: plug-ins/common/depthmerge.c:1185
-msgid ""
-"Warning: I don't _like_ this color space.  This is a suggestion, not a "
-"threat.\n"
-msgstr ""
-"Warnung: Ich _mag_ diesen Farbraum nicht. Das ist ein Vorschlag, keine "
-"Drohung.\n"
-
-#: plug-ins/common/despeckle.c:293
+#: plug-ins/common/despeckle.c:299
 msgid "Despeckle filter, typically used to 'despeckle' a photographic image."
 msgstr ""
 
-#: plug-ins/common/despeckle.c:294
+#: plug-ins/common/despeckle.c:300
 msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
 
-#: plug-ins/common/despeckle.c:298
+#: plug-ins/common/despeckle.c:304
 msgid "<Image>/Filters/Enhance/Despeckle..."
 msgstr "<Image>/Filter/Verbessern/Flecken entfernen..."
 
@@ -2793,28 +2705,28 @@ msgstr "<Image>/Filter/Verbessern/Flecken entfernen..."
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:519
+#: plug-ins/common/despeckle.c:525
 msgid "Despeckling..."
 msgstr "Entferne Flecken..."
 
-#: plug-ins/common/despeckle.c:752 plug-ins/common/despeckle.c:753
+#: plug-ins/common/despeckle.c:758 plug-ins/common/despeckle.c:759
 msgid "Despeckle "
 msgstr "Fleckenentferner"
 
 # adaptiv ? TODO
-#: plug-ins/common/despeckle.c:835 plug-ins/gimpressionist/orientation.c:201
+#: plug-ins/common/despeckle.c:841 plug-ins/gimpressionist/orientation.c:201
 #: plug-ins/gimpressionist/size.c:199
 msgid "Adaptive"
 msgstr "Anpassend"
 
-#: plug-ins/common/despeckle.c:845
+#: plug-ins/common/despeckle.c:851
 msgid "Recursive"
 msgstr "Rekursiv"
 
 #.
 #. * Box size (radius) control...
 #.
-#: plug-ins/common/despeckle.c:859 plug-ins/gimpressionist/orientation.c:144
+#: plug-ins/common/despeckle.c:865 plug-ins/gimpressionist/orientation.c:144
 #: plug-ins/gimpressionist/size.c:143
 msgid "Radius"
 msgstr "Radius"
@@ -2822,14 +2734,14 @@ msgstr "Radius"
 #.
 #. * Black level control...
 #.
-#: plug-ins/common/despeckle.c:865
+#: plug-ins/common/despeckle.c:871
 msgid "Black Level"
 msgstr "Schwellwert Schwarz"
 
 #.
 #. * White level control...
 #.
-#: plug-ins/common/despeckle.c:871
+#: plug-ins/common/despeckle.c:877
 msgid "White Level"
 msgstr "Schwellwert Weiss"
 
@@ -4057,17 +3969,13 @@ msgstr "Dumm gelaufen, keine Hilfslinien.\n"
 msgid "loads files compressed with gzip"
 msgstr ""
 
-#: plug-ins/common/gz.c:161
+#: plug-ins/common/gz.c:161 plug-ins/common/gz.c:173
 msgid "You need to have gzip installed."
 msgstr "Sie müssen gzip installiert haben."
 
 #: plug-ins/common/gz.c:172
 msgid "saves files compressed with gzip"
 msgstr ""
-
-#: plug-ins/common/gz.c:173
-msgid "You need to have gzip installed"
-msgstr "Sie müssen gzip installiert haben"
 
 #: plug-ins/common/gz.c:267 plug-ins/common/gz.c:367 plug-ins/common/gz.c:497
 #, c-format
@@ -5071,11 +4979,11 @@ msgstr ""
 msgid "Remap Colorized..."
 msgstr ""
 
-#: plug-ins/common/screenshot.c:147
+#: plug-ins/common/screenshot.c:129
 msgid "Creates a screenshot of a single window or the whole screen"
 msgstr "Erstellt einen Screenshot eines Fensters oder des ganzen Bildschirms"
 
-#: plug-ins/common/screenshot.c:148
+#: plug-ins/common/screenshot.c:130
 msgid ""
 "This extension serves as a simple frontend to the X-window utility xwd and "
 "the xwd-file-plug-in. After specifying some options, xwd is called, the user "
@@ -5084,35 +4992,35 @@ msgid ""
 "it may grab the root window or use the window-id passed as a parameter."
 msgstr ""
 
-#: plug-ins/common/screenshot.c:158
+#: plug-ins/common/screenshot.c:140
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Datei/Holen/Screen Shot..."
 
-#: plug-ins/common/screenshot.c:407
+#: plug-ins/common/screenshot.c:386
 msgid "Screen Shot"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:420
+#: plug-ins/common/screenshot.c:399
 msgid "Grab"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:459
+#: plug-ins/common/screenshot.c:438
 msgid "Grab a single window"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:467
+#: plug-ins/common/screenshot.c:446
 msgid "Include decorations"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:500
+#: plug-ins/common/screenshot.c:479
 msgid "Grab the whole screen"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:513
+#: plug-ins/common/screenshot.c:492
 msgid "after"
 msgstr "nach"
 
-#: plug-ins/common/screenshot.c:522
+#: plug-ins/common/screenshot.c:501
 msgid "seconds delay"
 msgstr "Sekunden Pause"
 
@@ -5726,11 +5634,11 @@ msgstr "Variation:"
 
 #: plug-ins/flame/flame.c:726 plug-ins/flame/flame.c:1091
 msgid "Load Flame"
-msgstr "Lade Flamme"
+msgstr "Flamme laden"
 
 #: plug-ins/flame/flame.c:741 plug-ins/flame/flame.c:1099
 msgid "Save Flame"
-msgstr "Speichere Flamme"
+msgstr "Flamme sichern"
 
 #: plug-ins/flame/flame.c:881
 msgid "Flame"
@@ -6103,12 +6011,12 @@ msgid "GAP Question"
 msgstr "GAP-Frage"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334
-msgid "file alreay exists:"
+msgid "file already exists:"
 msgstr "Datei existiert bereits:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:412
 msgid "Decoding MPEG movie..."
-msgstr ""
+msgstr "Dekodiere MPEG Film..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:614
 msgid "Video"
@@ -10510,4 +10418,3 @@ msgstr "Einheit auswählen"
 #: libgimp/gimpunitmenu.c:489
 msgid "Factor"
 msgstr "Faktor"
-
