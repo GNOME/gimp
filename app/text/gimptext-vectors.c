@@ -22,9 +22,12 @@
 #include "config.h"
 
 #include <glib-object.h>
+
 #include <pango/pangoft2.h>
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
+
+#include <ft2build.h>
+#include FT_GLYPH_H
+#include FT_OUTLINE_H
 
 #include "text/text-types.h"
 
