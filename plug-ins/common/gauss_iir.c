@@ -576,20 +576,24 @@ gauss_iir (GimpDrawable *drawable,
   gint i, j;
   gint row, col, b;
   gint terms;
-  gint progress, max_progress;
+  gdouble progress, max_progress;
   gint initial_p[4];
   gint initial_m[4];
   guchar *guc_tmp1, *guc_tmp2;
   gint *gi_tmp1, *gi_tmp2;
   gdouble std_dev;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
   if (horz < 1.0 && vert < 1.0)
     return;
 
-  width = (x2 - x1);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  width  = (x2 - x1);
   height = (y2 - y1);
+
+  if (width < 1 || height < 1)
+    return;
+
   bytes = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
@@ -599,11 +603,15 @@ gauss_iir (GimpDrawable *drawable,
   src =  g_new (guchar, MAX (width, height) * bytes);
   dest = g_new (guchar, MAX (width, height) * bytes);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn,
+                       drawable, 0, 0, drawable->width, drawable->height,
+                       FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn,
+                       drawable, 0, 0, drawable->width, drawable->height,
+                       TRUE, TRUE);
 
-  progress = 0;
-  max_progress = (horz < 1.0 ) ? 0 : width * height * horz;
+  progress = 0.0;
+  max_progress  = (horz < 1.0 ) ? 0 : width * height * horz;
   max_progress += (vert < 1.0 ) ? 0 : width * height * vert;
 
   if (has_alpha)
@@ -611,7 +619,7 @@ gauss_iir (GimpDrawable *drawable,
   
   /*  First the vertical pass  */
   if (vert >= 1.0)
-    {
+    {    
       vert = fabs (vert) + 1.0;
       std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
 
@@ -681,15 +689,17 @@ gauss_iir (GimpDrawable *drawable,
 
 	  progress += height * vert;
 	  if ((col % 5) == 0)
-	    gimp_progress_update ((double) progress / (double) max_progress);
+	    gimp_progress_update (progress / max_progress);
 	}
 
       /*  prepare for the horizontal pass  */
-      gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE);
+      gimp_pixel_rgn_init (&src_rgn,
+                           drawable, 0, 0, drawable->width, drawable->height,
+                           FALSE, TRUE);
     }
 
   /*  Now the horizontal pass  */
-  if (horz >= 1.0)
+if (horz >= 1.0)
     {
       horz = fabs (horz) + 1.0;
 
@@ -764,7 +774,7 @@ gauss_iir (GimpDrawable *drawable,
 
 	  progress += width * horz;
 	  if ((row % 5) == 0)
-	    gimp_progress_update ((double) progress / (double) max_progress);
+	    gimp_progress_update (progress / max_progress);
 	}
     }
 

@@ -1,7 +1,12 @@
+2002-08-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: merged fix for bug #89825 from
+	stable branch.
+
 2002-08-04  Dave Neary  <bolsh@gimp.org>
 
-        * plug-ins/common/decompose.c: Add RGBA as a decompose
-        target.
+	* plug-ins/common/decompose.c: Add RGBA as a decompose target.
 
 2002-08-03  Manish Singh  <yosh@gimp.org>
 
