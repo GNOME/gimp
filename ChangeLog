@@ -1,3 +1,18 @@
+2000-10-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpbrush.c
+	* app/gimpbrushpipe.c
+	* app/pattern_header.h
+	* app/patterns.c: (Hopefully) fixed #8150.
+
+	- If something goes wrong during loading, free the resp. object
+	  immediately and close it's FD.
+	- When destroying, check each pointer before freeing it.
+	- Never use if (!gimp_brush_load_brush() || !pattern_load())
+	  but check the return values of both calls separately.
+	  (the original code tried to free an already destroyed temp_buf).
+	- stuff like below (s/sz_PatternHeader/sizeof(PatternHeader)/g etc.)
+
 2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/*.c: Add <string.h> where it is called for

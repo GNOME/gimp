@@ -15,25 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PATTERN_HEADER_H__
 #define __PATTERN_HEADER_H__
 
-typedef struct _PatternHeader PatternHeader;
-
 #define GPATTERN_FILE_VERSION    1
 #define GPATTERN_MAGIC    (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
-#define sz_PatternHeader (sizeof (PatternHeader))
 
 /*  All field entries are MSB  */
 
+typedef struct _PatternHeader PatternHeader;
+
 struct _PatternHeader
 {
-  unsigned int   header_size;  /*  header_size = sz_PatternHeader + pattern name  */
-  unsigned int   version;      /*  pattern file version #  */
-  unsigned int   width;        /*  width of pattern  */
-  unsigned int   height;       /*  height of pattern  */
-  unsigned int   bytes;        /*  depth of pattern in bytes  */
-  unsigned int   magic_number; /*  GIMP pattern magic number  */
+  guint   header_size;  /*  header_size = sizeof(PatternHeader) + pattern name  */
+  guint   version;      /*  pattern file version #  */
+  guint   width;        /*  width of pattern  */
+  guint   height;       /*  height of pattern  */
+  guint   bytes;        /*  depth of pattern in bytes  */
+  guint   magic_number; /*  GIMP pattern magic number  */
 };
 
 /*  In a pattern file, next comes the pattern name, null-terminated.  After that

@@ -52,14 +52,16 @@ gimp_brush_pixmap_destroy (GtkObject *object)
 {
   GimpBrushPixmap *pixmap;
 
+  g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (object));
 
   pixmap = GIMP_BRUSH_PIXMAP (object);
 
-  temp_buf_free (pixmap->pixmap_mask);
+  if (pixmap->pixmap_mask)
+    temp_buf_free (pixmap->pixmap_mask);
 
   if (GTK_OBJECT_CLASS (gimp_brush_class)->destroy)
-    (* GTK_OBJECT_CLASS (gimp_brush_class)->destroy) (object);
+    GTK_OBJECT_CLASS (gimp_brush_class)->destroy (object);
 }
 
 static void
@@ -210,14 +212,15 @@ gimp_brush_pipe_destroy (GtkObject *object)
   g_free (pipe->stride);
 
   for (i = 1; i < pipe->nbrushes; i++)
-    gtk_object_unref (GTK_OBJECT (pipe->brushes[i]));
+    if (pipe->brushes[i])
+      gtk_object_unref (GTK_OBJECT (pipe->brushes[i]));
 
   g_free (pipe->brushes);
   g_free (pipe->select);
   g_free (pipe->index);
 
   if (GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy)
-    (* GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy) (object);
+    GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy (object);
 }
 
 static void
@@ -234,9 +237,12 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 void
 gimp_brush_pipe_init (GimpBrushPipe *pipe)
 {
+  pipe->current   = NULL;
   pipe->dimension = 0;
   pipe->rank      = NULL;
+  pipe->stride    = NULL;
   pipe->nbrushes  = 0;
+  pipe->brushes   = NULL;
   pipe->select    = NULL;
   pipe->index     = NULL;
 }
@@ -319,13 +325,16 @@ gimp_brush_pipe_load (gchar *filename)
     {
       gimp_pixpipe_params_init (&params);
       gimp_pixpipe_params_parse (paramstring, &params);
+
       pipe->dimension = params.dim;
-      pipe->rank      = g_new (gint, pipe->dimension);
-      pipe->select    = g_new (PipeSelectModes, pipe->dimension);
-      pipe->index     = g_new (gint, pipe->dimension);
+      pipe->rank      = g_new0 (gint, pipe->dimension);
+      pipe->select    = g_new0 (PipeSelectModes, pipe->dimension);
+      pipe->index     = g_new0 (gint, pipe->dimension);
+
       /* placement is not used at all ?? */
       if (params.free_placement_string)
 	g_free (params.placement);
+
       for (i = 0; i < pipe->dimension; i++)
 	{
 	  pipe->rank[i] = params.rank[i];
@@ -364,7 +373,7 @@ gimp_brush_pipe_load (gchar *filename)
   totalcells = 1;		/* Not all necessarily present, maybe */
   for (i = 0; i < pipe->dimension; i++)
     totalcells *= pipe->rank[i];
-  pipe->stride = g_new (gint, pipe->dimension);
+  pipe->stride = g_new0 (gint, pipe->dimension);
   for (i = 0; i < pipe->dimension; i++)
     {
       if (i == 0)
@@ -390,6 +399,10 @@ gimp_brush_pipe_load (gchar *filename)
 	{
 	  pipe->brushes[pipe->nbrushes] =
 	    GIMP_BRUSH_PIXMAP (gtk_type_new (GIMP_TYPE_BRUSH_PIXMAP));
+
+	  gtk_object_ref (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
+	  gtk_object_sink (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
+
 	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
 	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
 	}
@@ -398,16 +411,20 @@ gimp_brush_pipe_load (gchar *filename)
 
       /* load the brush */
       if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[pipe->nbrushes]),
-				  fp, filename)
-	  || !pattern_load (pattern, fp, filename))
-       {
-	  g_message (_("Failed to load one of the\n"
-                       "brushes in the brush pipe."));
-	  fclose (fp);
+				  fp, filename))
+	{
+	  g_message (_("Failed to load one of the brushes in the brush pipe."));
 	  pattern_free (pattern);
 	  gtk_object_sink (GTK_OBJECT (pipe));
 	  return NULL;
-       }
+	}
+
+      if (!pattern_load (pattern, fp, filename))
+	{
+	  g_message (_("Failed to load one of the brushes in the brush pipe."));
+	  gtk_object_sink (GTK_OBJECT (pipe));
+	  return NULL;
+	}
 
       if (pipe->nbrushes == 0)
 	{
@@ -415,8 +432,10 @@ gimp_brush_pipe_load (gchar *filename)
 	  g_free (GIMP_BRUSH (pipe)->name);
 	  GIMP_BRUSH (pipe)->name = name;
 	}
+
       pipe->brushes[pipe->nbrushes]->pixmap_mask = pattern->mask;
       g_free (pattern->name);
+
       pipe->nbrushes++;
     }
 
@@ -432,8 +451,8 @@ GimpBrushPipe *
 gimp_brush_pixmap_load (gchar *filename)
 {
   GimpBrushPipe *pipe;
-  GPattern *pattern;
-  FILE *fp;
+  GPattern      *pattern;
+  FILE          *fp;
 
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
@@ -460,12 +479,17 @@ gimp_brush_pixmap_load (gchar *filename)
 
   /* load the brush */
   if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[0]),
-			      fp, filename)
-      || !pattern_load (pattern, fp, filename))
+			      fp, filename))
     {
       g_message (_("Failed to load pixmap brush."));
-      fclose (fp);
       pattern_free (pattern);
+      gtk_object_sink (GTK_OBJECT (pipe));
+      return NULL;
+    }
+
+  if (!pattern_load (pattern, fp, filename))
+    {
+      g_message (_("Failed to load pixmap brush."));
       gtk_object_sink (GTK_OBJECT (pipe));
       return NULL;
     }

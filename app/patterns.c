@@ -46,7 +46,6 @@ gint      num_patterns   = 0;
 static GPattern *standard_pattern = NULL;
 
 /*  local function prototypes  */
-static GSList * insert_pattern_in_list (GSList *, GPattern *);
 static void     load_pattern           (gchar *);
 static void     pattern_free_func      (gpointer, gpointer);
 static gint     pattern_compare_func   (gconstpointer, 
@@ -151,14 +150,14 @@ pattern_load (GPattern *pattern,
 	      FILE     *fp,
 	      gchar    *filename)
 {
-  gint bn_size;
-  guchar buf [sz_PatternHeader];
   PatternHeader header;
+  gint   bn_size;
+  guchar buf [sizeof (PatternHeader)];
   guint *hp;
-  gint i;
+  gint   i;
 
   /*  Read in the header size  */
-  if ((fread (buf, 1, sz_PatternHeader, fp)) < sz_PatternHeader)
+  if ((fread (buf, 1, sizeof (PatternHeader), fp)) < sizeof (PatternHeader))
     {
       fclose (fp);
       pattern_free (pattern);
@@ -167,7 +166,7 @@ pattern_load (GPattern *pattern,
 
   /*  rearrange the bytes in each unsigned int  */
   hp = (guint *) &header;
-  for (i = 0; i < (sz_PatternHeader / 4); i++)
+  for (i = 0; i < (sizeof (PatternHeader) / 4); i++)
     hp [i] = (buf [i * 4] << 24) + (buf [i * 4 + 1] << 16) +
              (buf [i * 4 + 2] << 8) + (buf [i * 4 + 3]);
 
@@ -185,8 +184,8 @@ pattern_load (GPattern *pattern,
   /*  Check for correct version  */
   if (header.version != GPATTERN_FILE_VERSION)
     {
-      g_message (_("Unknown GIMP version #%d in \"%s\"\n"), header.version,
-		 filename);
+      g_message (_("Unknown GIMP pattern version #%d in \"%s\"\n"),
+		 header.version, filename);
       fclose (fp);
       pattern_free (pattern);
       return FALSE;
@@ -197,12 +196,12 @@ pattern_load (GPattern *pattern,
     temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
 
   /*  Read in the pattern name  */
-  if ((bn_size = (header.header_size - sz_PatternHeader)))
+  if ((bn_size = (header.header_size - sizeof (PatternHeader))))
     {
       pattern->name = g_new (gchar, bn_size);
       if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
 	{
-	  g_message (_("Error in GIMP pattern file...aborting."));
+	  g_message (_("Error in GIMP pattern file \"%s\""), filename);
 	  fclose (fp);
 	  pattern_free (pattern);
 	  return FALSE;
@@ -216,7 +215,10 @@ pattern_load (GPattern *pattern,
   if ((fread (temp_buf_data (pattern->mask), 1,
 	      header.width * header.height * header.bytes, fp)) <
       header.width * header.height * header.bytes)
-    g_message (_("GIMP pattern file appears to be truncated."));
+    {
+      g_message (_("GIMP pattern file \"%s\" appears to be truncated."),
+		 filename);
+    }
 
   /*  success  */
   return TRUE;
@@ -252,20 +254,13 @@ pattern_compare_func (gconstpointer first,
 		 ((const GPattern *) second)->name);
 }
 
-static GSList *
-insert_pattern_in_list (GSList   *list,
-			GPattern *pattern)
-{
-  return g_slist_insert_sorted (list, pattern, pattern_compare_func);
-}
-
 static void
 load_pattern (gchar *filename)
 {
   GPattern *pattern;
   FILE *fp;
 
-  pattern = g_new (GPattern, 1);
+  pattern = g_new0 (GPattern, 1);
 
   pattern->filename = g_strdup (filename);
   pattern->name     = NULL;
@@ -280,7 +275,7 @@ load_pattern (gchar *filename)
 
   if (! pattern_load (pattern, fp, filename))
     {
-      g_message (_("Pattern load failed"));
+      g_message (_("Error loading pattern \"%s\""), filename);
       return;
     }
 
@@ -289,5 +284,6 @@ load_pattern (gchar *filename)
 
   /*temp_buf_swap (pattern->mask);*/
 
-  pattern_list = insert_pattern_in_list (pattern_list, pattern);
+  pattern_list = g_slist_insert_sorted (pattern_list, pattern,
+					pattern_compare_func);
 }

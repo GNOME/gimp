@@ -124,7 +124,7 @@ gimp_brush_get_type (void)
 GimpBrush *
 gimp_brush_new (gchar *filename)
 {
-  GimpBrush *brush = GIMP_BRUSH (gtk_type_new  (gimp_brush_get_type ()));
+  GimpBrush *brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
 
   if (gimp_brush_load (brush, filename))
     return brush;
@@ -215,7 +215,6 @@ gimp_brush_load (GimpBrush *brush,
 
   if (! gimp_brush_load_brush (brush, fp, filename))
     {
-      fclose (fp);
       return FALSE;
     }
 
@@ -243,6 +242,7 @@ gimp_brush_load_brush (GimpBrush *brush,
   /*  Read in the header size  */
   if ((fread (buf, 1, sizeof (BrushHeader), fp)) < sizeof (BrushHeader))
     {
+      fclose (fp);
       gtk_object_sink (GTK_OBJECT (brush));
       return FALSE;
     }
@@ -258,6 +258,7 @@ gimp_brush_load_brush (GimpBrush *brush,
     {
       if (header.version != 1)
 	{
+	  fclose (fp);
 	  gtk_object_sink (GTK_OBJECT (brush));
 	  return FALSE;
 	}
@@ -279,6 +280,7 @@ gimp_brush_load_brush (GimpBrush *brush,
       if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
 	{
 	  g_message (_("Error in GIMP brush file...aborting."));
+	  fclose (fp);
 	  gtk_object_sink (GTK_OBJECT (brush));
 	  return FALSE;
 	}
@@ -311,6 +313,7 @@ gimp_brush_load_brush (GimpBrush *brush,
     default:
       g_message (_("Unknown brush format version #%d in \"%s\"\n"),
 		 header.version, filename);
+      fclose (fp);
       gtk_object_sink (GTK_OBJECT (brush));
       return FALSE;
     }
