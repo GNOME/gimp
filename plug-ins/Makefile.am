@@ -48,7 +48,7 @@ SUBDIRS = 			\
 	$(TWAIN)		\
 	$(WEBBROWSER)		\
 	$(WINSNAP)		\
-	xjt			\
+	$(XJT)			\
 	common
 
 .PHONY: files
