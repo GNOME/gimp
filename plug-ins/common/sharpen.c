@@ -462,10 +462,12 @@ sharpen (void)
 	}
       else if (count == 2)
 	{
-	  if (y == sel_y1)
-	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[0], sel_x1, y, sel_width);
-	  else
-	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[2], sel_x1, y, sel_width);
+	  if (y == sel_y1)	/* first row */
+	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[0], 
+				    sel_x1, y, sel_width);
+	  else                  /* last row  */
+	    gimp_pixel_rgn_set_row (&dst_rgn, src_rows[(sel_height - 1) & 3], 
+				    sel_x1, y, sel_width);
 	};
 
       if ((y & 15) == 0)
