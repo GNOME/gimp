@@ -1,3 +1,9 @@
+2004-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_response):
+	call gimp_image_flush() after committing the image_map so the
+	menus are up-to-date. Fixes bug #157914.
+
 2004-11-11  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/display/gimpdisplayshell-preview.c: Use the transform

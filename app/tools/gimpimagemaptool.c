@@ -480,8 +480,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
                               gint              response_id,
                               GimpImageMapTool *image_map_tool)
 {
-  GimpTool            *tool = GIMP_TOOL (image_map_tool);
-  GimpImageMapOptions *options;
+  GimpTool *tool = GIMP_TOOL (image_map_tool);
 
   switch (response_id)
     {
@@ -493,22 +492,24 @@ gimp_image_map_tool_response (GtkWidget        *widget,
     case GTK_RESPONSE_OK:
       gtk_widget_hide (image_map_tool->shell);
 
-      gimp_tool_control_set_preserve (tool->control, TRUE);
-
-      options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
-
-      if (! options->preview)
-        {
-          gimp_image_map_tool_map (image_map_tool);
-        }
-
       if (image_map_tool->image_map)
         {
+          GimpImageMapOptions *options;
+
+          options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
+          if (! options->preview)
+            gimp_image_map_tool_map (image_map_tool);
+
           gimp_image_map_commit (image_map_tool->image_map);
           image_map_tool->image_map = NULL;
-        }
 
-      gimp_tool_control_set_preserve (tool->control, FALSE);
+          gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (tool->gdisp->gimage);
+        }
 
       tool->gdisp    = NULL;
       tool->drawable = NULL;
