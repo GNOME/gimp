@@ -1,5 +1,8 @@
-There are six basic steps to building and installing the
-GIMP:
+THIS IS A DEVELOPMENT VERSION OF THE GIMP !! YOU SHOULD BE USING THE
+STABLE VERSION 1.2 INSTEAD !! YOU HAVE BEEN WARNED!
+
+
+There are six basic steps to building and installing the GIMP:
 
   1. You need to have installed GTK version 1.2.8 or better. Do not try
      to use the unstable GTK+ versions 1.3.x, it will not work.
@@ -24,8 +27,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-1.2.0.tar.gz   # unpack the sources
-  % cd gimp-1.2.0                # change to the toplevel directory
+  % tar xvfz gimp-1.3.0.tar.gz   # unpack the sources
+  % cd gimp-1.3.0                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -56,8 +59,8 @@ recognizes. These are:
      is intended primarily as a convenience for developers.
 
   4. --enable-gimpdir=DIR. This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp (the
-     directory .gimp in the users home directory) to DIR.
+     the gimp uses to search for its configuration files from ~/.gimp-1.3 
+     (the directory .gimp-1.3 in the users home directory) to DIR.
   
   5. --enable-perl and --disable-perl. The perl extension does not build
      on all systems. If you experience problems use --disable-perl
