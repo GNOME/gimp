@@ -40,10 +40,11 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'guint scale = 0x101' ],
 	code => <<'CODE'
 {
-  success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
+  gdisp = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
+
+  success = (gdisp != NULL);
 }
 CODE
     );
@@ -81,7 +82,7 @@ HELP
     %invoke = ( code => 'gdisplays_flush ();' );
 }
 
-@headers = qw("display/display-types.h" "display/gimpdisplay.h"
+@headers = qw("core/gimp.h" "display/display-types.h" "display/gimpdisplay.h"
 	      "display/gimpdisplay-foreach.h");
 
 @procs = qw(display_new display_delete displays_flush);

@@ -35,7 +35,6 @@ app/core/gimppattern.c
 app/core/gimpunit.c
 
 app/display/gimpdisplay-callbacks.c
-app/display/gimpdisplay-ops.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 
