@@ -1,3 +1,12 @@
+2004-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tools-actions.c (tools_actions_update): don't use
+	action_data_get_context() to update the "tools" action group
+	because it may return NULL. Use gimp_get_user_context() instead
+	because the active tool is global regardless of the action group's
+	context. Fixes accidential tool hiding when closing the last
+	display.
+
 2004-05-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save_thumb): oops.

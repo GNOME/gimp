@@ -165,7 +165,7 @@ tools_actions_update (GimpActionGroup *group,
   GimpContext  *context;
   GimpToolInfo *tool_info = NULL;
 
-  context = action_data_get_context (data);
+  context = gimp_get_user_context (group->gimp);
 
   if (context)
     tool_info = gimp_context_get_tool (context);
@@ -176,7 +176,9 @@ tools_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("tools-visibility", tool_info);
-  SET_ACTIVE    ("tools-visibility", tool_info && tool_info->visible);
+
+  if (tool_info)
+    SET_ACTIVE ("tools-visibility", tool_info->visible);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
