@@ -18,18 +18,22 @@ INCLUDES = \
 
 noinst_LIBRARIES = libappcomposite.a
 
+libappcomposite_mmx_sources = \
+	gimp-composite-mmx.c		\
+	gimp-composite-mmx.h		\
+
 libappcomposite_a_sources = \
 	gimp-composite.c		\
 	gimp-composite-generic.c	\
 	gimp-composite-generic.h	\
 	gimp-composite.h		\
-	gimp-composite-mmx.c		\
-	gimp-composite-mmx.h		\
+	gimp-composite-dispatch.c		\
 	gimp-composite-util.h
 
 libappcomposite_a_built_sources = gimp-composite-dispatch.c
 
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
+
 
 
 gimp-composite.c: gimp-composite-dispatch.c
@@ -46,7 +50,7 @@ EXTRA_PROGRAMS = test-composite
 
 
 #
-# unit tests for GimpComposite
+# unit tests and meta tools for GimpComposite
 #
 
 TESTS = test-composite

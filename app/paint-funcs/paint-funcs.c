@@ -36,6 +36,8 @@
 
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
+#include "gimp-composite.h"
+int gimp_composite_use_old = 1;
 
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001
@@ -4544,6 +4546,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	    alms.bytes1  = src1->bytes;
 	    alms.bytes2  = src2->bytes;
 
+     if (gimp_composite_use_old) {
 	    /*  Determine whether the alpha channel of the destination can be
 	     *  affected by the specified mode--This keeps consistency with
 	     *  varying opacities
@@ -4553,6 +4556,36 @@ combine_sub_region (struct combine_regions_struct *st,
 	    layer_mode_funcs[mode] (&alms);
 
 	    combine = (alms.combine == NO_COMBINATION) ? type : alms.combine;
+     } else {
+       GimpCompositeContext ctx;
+
+       ctx.A = s1;
+       ctx.pixelformat_A = (src1->bytes == 1 ? GIMP_PIXELFORMAT_V8
+                            : src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                            : src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                            : src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                            : GIMP_PIXELFORMAT_ANY);
+       ctx.B = s2;
+       ctx.pixelformat_B = (src2->bytes == 1 ? GIMP_PIXELFORMAT_V8
+                            : src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                            : src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                            : src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                            : GIMP_PIXELFORMAT_ANY);
+       ctx.D = s;
+       ctx.pixelformat_D = gimp_composite_pixel_alpha[ctx.pixelformat_B];
+       ctx.n_pixels = src1->w;
+       ctx.combine = combine;
+       ctx.op = mode;
+       ctx.dissolve.x = src1->x;
+       ctx.dissolve.y = src1->y + h;
+       ctx.dissolve.opacity = opacity;
+
+       mode_affect = gimp_composite_operation_effects[mode].affect_opacity;
+       gimp_composite_dispatch(&ctx);
+       s = ctx.D;
+       combine = (ctx.combine == NO_COMBINATION) ? type : ctx.combine;
+     }
+
 	    break;
 	  }
 

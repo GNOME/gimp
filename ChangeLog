@@ -1,3 +1,30 @@
+2003-07-13  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/paint-funcs/Makefile.am include files from app/composite/
+
+	* app/paint-funcs/paint-funcs.c stubbed out code for using
+	gimp_composite.  To enable the use of gimp_composite, set the
+	value of gimp_composite_use_old to 0 (zero).
+
+	* app/base/base.c calls gimp_composite_init() hook to initialse
+	all the gimp_composite "stuff."
+
+	* app/composite/make-gimp-composite-dispatch.py now generates
+	gimp-composite-dispatch.h
+
+	* app/composite/gimp-composite-dispatch.[ch] are in CVS although
+	they are generated files.  This is preparation for building the
+	table at run-time, instead of compile time.
+
+	* app/composite/gimp-composite.c doesn't #include the main
+	dispatch table.  This is preparation for building the table at
+	run-time, instead of compile time.  
+
+	* app/composite/Makefile.am doesn't compile gimp-composite-mmx.c
+	(until the various remaining gcc problems and configuration issues
+	are worked out).
+	  
+
 2003-07-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig.c (gimp_config_reset): don't return stuff

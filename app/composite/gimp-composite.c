@@ -151,7 +151,10 @@ struct {
   char announce_function;
 } gimp_composite_debug;
 
-#include "gimp-composite-dispatch.c"
+/*#include "gimp-composite-dispatch.c"*/
+
+extern char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
+extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N]);
 
 void
 gimp_composite_dispatch(GimpCompositeContext *ctx)

@@ -11,6 +11,7 @@ libapppaint_funcs_a_SOURCES = \
 INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
+	-I$(top_srcdir)/app/composite	\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 

@@ -39,6 +39,9 @@ typedef enum
   GIMP_PIXELFORMAT_N
 } GimpPixelFormat;
 
+/*
+ * The following typedefs are temporary and only used in regression testing.
+	*/
 typedef struct
 {
   guint8  v;

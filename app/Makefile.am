@@ -78,8 +78,8 @@ gimp_1_3_LDADD = \
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\
 	paint-funcs/libapppaint-funcs.a					\
-	composite/libappcomposite.a					\
 	base/libappbase.a						\
+	composite/libappcomposite.a					\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
