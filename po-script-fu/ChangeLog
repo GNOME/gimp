@@ -1,3 +1,11 @@
+2003-08-13  Danilo ≈†egan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Updated Serbian translation by 
+	Serbian team (Prevod.org).
+
+	* ChangeLog: Reverted UTF-8 suckage that dolfin@cvs.gnome.org 
+	introduced.
+
 2003-08-13  Gil "Dolfin" Osher <dolfin@rpg.org.il>
 
 	* he.po: Added Hebrew translation.
@@ -6,7 +14,7 @@
 
         * es.po: Updated Spanish translation.
 
-2003-08-05  Danilo ? egan  <dsegan@gmx.net>
+2003-08-05  Danilo ≈†egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian
 	team (Prevod.org).
@@ -20,7 +28,7 @@
 
         * pt.po: Updated Portuguese translation.
 
-2003-07-26  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-07-26  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
         * sv.po: Updated Swedish translation.
 
@@ -53,7 +61,7 @@
 	* ca.po, en_GB.po, fi.po, ga.po, gl.po, hr.po, it.po, nl.po,
 	no.po, ro.po, sk.po, uk.po: Converted to UTF-8.
 
-2003-06-25  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-25  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
         * sv.po: Updated Swedish translation.
 
@@ -119,7 +127,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-02-25  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-02-25  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
         * sv.po: Updated Swedish translation.
 
@@ -207,7 +215,7 @@
 
 2002-09-23  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2002-08-31  Christian Neumair  <chris@gnome-de.org>
 
@@ -228,7 +236,7 @@
 
 2002-07-02  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 
 2002-06-30  Christophe Merlet  <christophe@merlet.net>
 
@@ -249,7 +257,7 @@
 
 2002-06-10  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2002-06-01  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
@@ -266,7 +274,7 @@
 
 2002-04-28  Fatih Demir <kabalak@gtranslator.org>
 
-	* tr.po: Committed updated Turkish translation by ?ñmer.
+	* tr.po: Committed updated Turkish translation by √ñmer.
 
 2002-04-13  Zbigniew Chyla  <cyba@gnome.pl>
 
@@ -347,7 +355,7 @@
 
 2002-01-27  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2002-01-25  Simos Xenitellis  <simos@hellug.gr>
 
@@ -364,7 +372,7 @@
 
 2001-12-16  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2001-12-15  Valek Filippov  <frob@df.ru>
 
@@ -394,7 +402,7 @@
 
 	* sv.po: Updated Swedish translation.
 
-2001-10-27  Tomas ?ñgren  <stric@ing.umu.se>
+2001-10-27  Tomas √ñgren  <stric@ing.umu.se>
 
 	* sv.po: s/satndard/standard/
 
@@ -607,7 +615,7 @@ Fri Jun 23 16:18:18 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 	* en_GB.po: applied gimp-cornwell-000620-0, updates
 	to the british translation from Piers Cornwell
 
-2000-06-16 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-16 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: started da finnish translation
 	
@@ -651,7 +659,7 @@ Wed May 31 13:38:48 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* ru.po: updated russian translation.
 
-2000-05-24  Artur Polaczy?±ski  <artie@kmfms.com>
+2000-05-24  Artur Polaczy√±ski  <artie@kmfms.com>
 
 	* pl.po: Updated translation.
 	+ Updated translation by Krzysztof Jakubowski 
