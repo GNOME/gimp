@@ -371,7 +371,7 @@ dodgeburn_motion (PaintCore *paint_core,
   temp_data = g_malloc (tempPR.h * tempPR.rowstride);
   tempPR.data = temp_data;
 
-  brush_opacity = PAINT_OPTIONS_GET_OPACITY (dodgeburn_options);
+  brush_opacity = gimp_context_get_opacity (NULL);
   exposure = (dodgeburn_options->exposure)/100.0;
 
   /*  DodgeBurn the region  */

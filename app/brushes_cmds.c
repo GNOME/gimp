@@ -24,9 +24,9 @@
 
 #include "gimpbrush.h"
 #include "gimpbrushlistP.h"
+#include "gimpcontext.h"
 #include "gimplist.h"
 #include "paint_funcs.h"
-#include "paint_options.h"
 
 static ProcRecord brushes_refresh_proc;
 static ProcRecord brushes_get_brush_proc;
@@ -204,7 +204,7 @@ brushes_get_opacity_invoker (Argument *args)
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = paint_options_get_opacity () * 100.0;
+  return_args[1].value.pdb_float = gimp_context_get_opacity (NULL) * 100.0;
 
   return return_args;
 }
@@ -245,7 +245,7 @@ brushes_set_opacity_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    paint_options_set_opacity (opacity / 100.0);
+    gimp_context_set_opacity (NULL, opacity / 100.0);
 
   return procedural_db_return_args (&brushes_set_opacity_proc, success);
 }
@@ -358,7 +358,7 @@ brushes_get_paint_mode_invoker (Argument *args)
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = paint_options_get_paint_mode ();
+  return_args[1].value.pdb_int = gimp_context_get_paint_mode (NULL);
 
   return return_args;
 }
@@ -399,7 +399,7 @@ brushes_set_paint_mode_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    paint_options_set_paint_mode (paint_mode);
+    gimp_context_set_paint_mode (NULL, paint_mode);
 
   return procedural_db_return_args (&brushes_set_paint_mode_proc, success);
 }

@@ -24,6 +24,7 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "interface.h"
 #include "layer.h"
 #include "paint_core.h"
@@ -618,8 +619,9 @@ gimage_mask_stroke_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
 			       int           state)
 {
-  GImage *gimage;
-  TempBuf * area;
+  GImage      *gimage;
+  TempBuf     *area;
+  GimpContext *context;
   unsigned char col[MAX_CHANNELS];
 
   if (! (gimage = drawable_gimage (drawable)))
@@ -638,10 +640,17 @@ gimage_mask_stroke_paint_func (PaintCore    *paint_core,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
+  if (gimp_context_get_current () == gimp_context_get_user () &&
+      ! global_paint_options)
+    context = tool_info[PAINTBRUSH].tool_context;
+  else
+    context = gimp_context_get_current ();
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (paint_options_get_opacity () * 255),
-			   paint_options_get_paint_mode (), SOFT, CONSTANT);
+			   (int) (gimp_context_get_opacity (context) * 255),
+			   gimp_context_get_paint_mode (context),
+			   SOFT, CONSTANT);
 
   return NULL;
 }

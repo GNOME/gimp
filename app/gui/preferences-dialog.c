@@ -19,13 +19,13 @@
 
 #include "appenv.h"
 #include "colormaps.h"
+#include "context_manager.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "interface.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
-#include "paint_options.h"
 #include "session.h"
 
 #include "config.h"
@@ -611,7 +611,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
 
   file_prefs_strset (&image_title_format, old_image_title_format);
 
-  paint_options_set_global (old_global_paint_options);
+  context_manager_set_global_paint_options (old_global_paint_options);
 }
 
 static void
@@ -666,7 +666,7 @@ file_prefs_toggle_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
   else if (data == &global_paint_options)
-    paint_options_set_global (GTK_TOGGLE_BUTTON (widget)->active);
+    context_manager_set_global_paint_options (GTK_TOGGLE_BUTTON (widget)->active);
   else if (data == &show_indicators)
     show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &thumbnail_mode)
@@ -1964,12 +1964,6 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &global_paint_options);
   gtk_widget_show (button);
 
-  label =
-    gtk_label_new (_("(Switching this off does not yet work consistently.)"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-  
   /* Indicators */
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);

@@ -174,6 +174,7 @@ bucket_options_new (void)
   return options;
 }
 
+/*  bucket fill action functions  */
 
 static void
 bucket_fill_button_press (Tool           *tool,
@@ -203,7 +204,6 @@ bucket_fill_button_press (Tool           *tool,
   tool->state = ACTIVE;
 }
 
-
 static void
 bucket_fill_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
@@ -223,17 +223,18 @@ bucket_fill_button_release (Tool           *tool,
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      return_vals = procedural_db_run_proc ("gimp_bucket_fill",
-					    &nreturn_vals,
-					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
-					    PDB_INT32, (gint32) bucket_options->fill_mode,
-					    PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (bucket_options),
-					    PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (bucket_options) * 100,
-					    PDB_FLOAT, (gdouble) bucket_options->threshold,
-					    PDB_INT32, (gint32) bucket_options->sample_merged,
-					    PDB_FLOAT, (gdouble) bucket_tool->target_x,
-					    PDB_FLOAT, (gdouble) bucket_tool->target_y,
-					    PDB_END);
+      return_vals =
+	procedural_db_run_proc ("gimp_bucket_fill",
+				&nreturn_vals,
+				PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
+				PDB_INT32, (gint32) bucket_options->fill_mode,
+				PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
+				PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
+				PDB_FLOAT, (gdouble) bucket_options->threshold,
+				PDB_INT32, (gint32) bucket_options->sample_merged,
+				PDB_FLOAT, (gdouble) bucket_tool->target_x,
+				PDB_FLOAT, (gdouble) bucket_tool->target_y,
+				PDB_END);
 
       if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();

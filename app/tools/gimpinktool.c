@@ -1414,8 +1414,8 @@ ink_paste (InkTool      *ink_tool,
   /*  apply the paint area to the gimage  */
   gimage_apply_image (gimage, drawable, &srcPR,
 		      FALSE, 
-		      (int) (PAINT_OPTIONS_GET_OPACITY (ink_options) * 255),
-		      PAINT_OPTIONS_GET_PAINT_MODE (ink_options),
+		      (int) (gimp_context_get_opacity (NULL) * 255),
+		      gimp_context_get_paint_mode (NULL),
 		      undo_tiles,  /*  specify an alternative src1  */
 		      canvas_buf->x, canvas_buf->y);
 

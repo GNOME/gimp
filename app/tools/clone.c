@@ -589,8 +589,8 @@ clone_motion (PaintCore    *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (PAINT_OPTIONS_GET_OPACITY (clone_options) * 255),
-			   PAINT_OPTIONS_GET_PAINT_MODE (clone_options),
+			   (int) (gimp_context_get_opacity (NULL) * 255),
+			   gimp_context_get_paint_mode (NULL),
 			   SOFT, CONSTANT);
 }
 

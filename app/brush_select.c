@@ -19,8 +19,10 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "gimpbrushlist.h"
+#include "gimpcontext.h"
 #include "gimplist.h"
 #include "gimpbrushgenerated.h"
+#include "gimprc.h"
 #include "brush_edit.h"
 #include "brush_select.h"
 #include "colormaps.h"
@@ -161,6 +163,7 @@ brush_select_new (gchar   *title,
   else
     {
       gtk_window_set_title (GTK_WINDOW (bsp->shell), title);
+
       if (init_name && strlen (init_name))
 	active = gimp_brush_list_get_brush (brush_list, init_name);
       if (active)
@@ -415,14 +418,16 @@ brush_select_new (gchar   *title,
       bsp->redraw = FALSE;
       if (!gotinitbrush)
 	{
-	  bsp->opacity_value = paint_options_get_opacity ();
+	  GimpContext *context = gimp_context_get_user ();
+
+	  bsp->opacity_value = gimp_context_get_opacity (context);
+	  bsp->paint_mode    = gimp_context_get_paint_mode (context);
 	  bsp->spacing_value = gimp_brush_get_spacing (active);
-	  bsp->paint_mode = paint_options_get_paint_mode ();
 	}
       else
 	{
 	  bsp->opacity_value = init_opacity;
-	  bsp->paint_mode = init_mode;
+	  bsp->paint_mode    = init_mode;
 	}
       brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
 								 active));
@@ -1309,7 +1314,10 @@ paint_mode_menu_callback (GtkWidget *w,
   BrushSelectP bsp = (BrushSelectP) gtk_object_get_user_data (GTK_OBJECT (w));
   
   if (bsp == brush_select_dialog)
-    paint_options_set_paint_mode ((int) client_data);
+    {
+      gimp_context_set_paint_mode (gimp_context_get_user (),
+				   (int) client_data);
+    }
   else
     {
       bsp->paint_mode = (int) client_data;
@@ -1324,8 +1332,11 @@ opacity_scale_update (GtkAdjustment *adjustment,
 {
   BrushSelectP bsp = (BrushSelectP) data;
   
-  if(bsp == brush_select_dialog)
-    paint_options_set_opacity (adjustment->value / 100.0);
+  if (bsp == brush_select_dialog)
+    {
+      gimp_context_set_opacity (gimp_context_get_user (),
+				adjustment->value / 100.0);
+    }
   else
     {
       bsp->opacity_value = (adjustment->value / 100.0);

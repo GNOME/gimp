@@ -126,8 +126,9 @@ pencil_motion (PaintCore    *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (PAINT_OPTIONS_GET_OPACITY (pencil_options) * 255),
-			   PAINT_OPTIONS_GET_PAINT_MODE (pencil_options), HARD, CONSTANT);
+			   (int) (gimp_context_get_opacity (NULL) * 255),
+			   gimp_context_get_paint_mode (NULL),
+			   HARD, CONSTANT);
 }
 
 static void *
@@ -149,7 +150,7 @@ pencil_non_gui (GimpDrawable *drawable,
   int i;
 
   if (paint_core_init (&non_gui_paint_core, drawable,
-                      stroke_array[0], stroke_array[1]))
+		       stroke_array[0], stroke_array[1]))
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = pencil_non_gui_paint_func;

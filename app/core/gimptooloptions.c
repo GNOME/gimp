@@ -27,10 +27,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  the global paint options  */
-static double   global_opacity = 1.0;
-static int      global_paint_mode = 0;
-
 /*  a list of all PaintOptions  */
 static GSList  *paint_options_list = NULL;
 
@@ -94,10 +90,20 @@ void
 tool_options_opacity_adjustment_update (GtkWidget *widget,
 					gpointer   data)
 {
-  double *val;
+  gimp_context_set_opacity (GIMP_CONTEXT (data),
+			    GTK_ADJUSTMENT (widget)->value / 100);
+}
 
-  val = (double *) data;
-  *val = GTK_ADJUSTMENT (widget)->value / 100;
+static void
+tool_options_paint_mode_update (GtkWidget *widget,
+				gpointer   data)
+{
+  GimpContext *context;
+
+  context = (GimpContext *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  gimp_context_set_paint_mode (GIMP_CONTEXT (context),
+			       (long) data);
 }
 
 void
@@ -122,18 +128,6 @@ tool_options_unitmenu_update (GtkWidget *widget,
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
       spinbutton = gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
     }
-}
-
-static void
-tool_options_paint_mode_update (GtkWidget *widget,
-				gpointer   data)
-{
-  PaintOptions *options;
-
-  options = (PaintOptions *) gtk_object_get_user_data (GTK_OBJECT (widget));
-
-  if (options)
-    options->paint_mode = (long) data;
 }
 
 static void
@@ -206,7 +200,7 @@ tool_options_new (gchar *title)
 
   GtkWidget *label;
 
-  options = (ToolOptions *) g_malloc (sizeof (ToolOptions));
+  options = g_new (ToolOptions, 1);
   tool_options_init (options, title, NULL);
 
   label = gtk_label_new (_("This tool has no options."));
@@ -233,20 +227,20 @@ selection_options_init (SelectionOptions     *options,
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == RECT_SELECT) ?
-		      N_("Rectangular Select Options") :
+		      _("Rectangular Select Options") :
 		      ((tool_type == ELLIPSE_SELECT) ?
-		       N_("Elliptical Selection Options") :
+		       _("Elliptical Selection Options") :
 		       ((tool_type == FREE_SELECT) ?
-			N_("Free-hand Selection Options") :
+			_("Free-hand Selection Options") :
 			((tool_type == FUZZY_SELECT) ?
-			 N_("Fuzzy Selection Options") :
+			 _("Fuzzy Selection Options") :
 			 ((tool_type == BEZIER_SELECT) ?
-			  N_("Bezier Selection Options") :
+			  _("Bezier Selection Options") :
 			  ((tool_type == ISCISSORS) ?
-			   N_("Intelligent Scissors Options") :
+			   _("Intelligent Scissors Options") :
 			   ((tool_type == BY_COLOR_SELECT) ?
-			    N_("By-Color Select Options") :
-			    N_("ERROR: Unknown Selection Type")))))))),
+			    _("By-Color Select Options") :
+			    _("ERROR: Unknown Selection Type")))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -480,7 +474,7 @@ selection_options_new (ToolType              tool_type,
 {
   SelectionOptions *options;
 
-  options = (SelectionOptions *) g_malloc (sizeof (SelectionOptions));
+  options = g_new (SelectionOptions, 1);
   selection_options_init (options, tool_type, reset_func);
 
   return options;
@@ -550,37 +544,36 @@ paint_options_init (PaintOptions         *options,
   GtkWidget *menu;
   GtkWidget *separator;
 
+  GimpContext *tool_context = tool_info[tool_type].tool_context;
+
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == BUCKET_FILL) ?
-		      N_("Bucket Fill Options") :
+		      _("Bucket Fill Options") :
 		      ((tool_type == BLEND) ?
-		       N_("Blend Options") :
+		       _("Blend Options") :
 		       ((tool_type == PENCIL) ?
-			N_("Pencil Options") :
+			_("Pencil Options") :
 			((tool_type == PAINTBRUSH) ?
-			 N_("Paintbrush Options") :
+			 _("Paintbrush Options") :
 			 ((tool_type == ERASER) ?
-			  N_("Erazer Options") :
+			  _("Erazer Options") :
 			  ((tool_type == AIRBRUSH) ?
-			   N_("Airbrush Options") :
+			   _("Airbrush Options") :
 			   ((tool_type == CLONE) ?
-			    N_("Clone Tool Options") :
+			    _("Clone Tool Options") :
 			    ((tool_type == CONVOLVE) ?
-			     N_("Convolver Options") :
+			     _("Convolver Options") :
 			     ((tool_type == INK) ?
-			      N_("Ink Options") :
-			       ((tool_type == DODGEBURN) ?
-				N_("Dodge or Burn Options") :
-				 ((tool_type == SMUDGE) ?
-				  N_("Smudge Options") :
-			      N_("ERROR: Unknown Paint Type")))))))))))),
+			      _("Ink Options") :
+			      ((tool_type == DODGEBURN) ?
+			       _("Dodge or Burn Options") :
+			       ((tool_type == SMUDGE) ?
+				_("Smudge Options") :
+				_("ERROR: Unknown Paint Type")))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */
-  options->opacity      = options->opacity_d    = 1.0;
-  options->paint_mode   = options->paint_mode_d = 0;
-
   options->global       = NULL;
   options->opacity_w    = NULL;
   options->paint_mode_w = NULL;
@@ -604,10 +597,11 @@ paint_options_init (PaintOptions         *options,
   gtk_widget_show (label);
 
   options->opacity_w =
-    gtk_adjustment_new (options->opacity_d * 100, 0.0, 100.0, 1.0, 1.0, 0.0);
+    gtk_adjustment_new (gimp_context_get_opacity (tool_context) * 100,
+			0.0, 100.0, 1.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
 		      (GtkSignalFunc) tool_options_opacity_adjustment_update,
-		      &options->opacity);
+		      tool_context);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -640,12 +634,20 @@ paint_options_init (PaintOptions         *options,
       gtk_container_add (GTK_CONTAINER (abox), options->paint_mode_w);
       gtk_widget_show (options->paint_mode_w);
 
+      /* eek */
+      gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",
+			   tool_info[tool_type].tool_context);
+
       menu =
-	paint_mode_menu_new (tool_options_paint_mode_update, (gpointer) options);
+	paint_mode_menu_new (tool_options_paint_mode_update, tool_context);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
+      gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
+				   gimp_context_get_paint_mode (tool_context));
       break;
     case CONVOLVE:
     case ERASER:
+    case DODGEBURN:
+    case SMUDGE:
       break;
     default:
       break;
@@ -676,7 +678,7 @@ paint_options_new (ToolType              tool_type,
   PaintOptions *options;
   GtkWidget *label;
 
-  options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
+  options = g_new (PaintOptions, 1);
   paint_options_init (options, tool_type, reset_func);
 
   options->global = gtk_vbox_new (FALSE, 2);
@@ -696,16 +698,25 @@ paint_options_new (ToolType              tool_type,
 void
 paint_options_reset (PaintOptions *options)
 {
+  GimpContext *default_context;
+
+  default_context = gimp_context_get_default ();
+
   if (options->opacity_w)
     {
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->opacity_w),
-				options->opacity_d * 100);
+				gimp_context_get_opacity (default_context) * 100);
     }
   if (options->paint_mode_w)
     {
-      options->paint_mode = options->paint_mode_d;
+      GimpContext *context;
+
+      context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (options->paint_mode_w), "tool_context");
+
+      gimp_context_set_paint_mode (GIMP_CONTEXT (context),
+				   gimp_context_get_paint_mode (default_context));
       gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
-				   options->paint_mode_d);
+				   gimp_context_get_paint_mode (default_context));
     }
 }
 
@@ -747,30 +758,6 @@ paint_options_set_global (gboolean global)
 
   /*  NULL means the main brush selection  */
   brush_select_show_paint_options (NULL, global);
-}
-
-double
-paint_options_get_opacity (void)
-{
-  return global_opacity;
-}
-
-void
-paint_options_set_opacity (double opacity)
-{
-  global_opacity = opacity;
-}
-
-int
-paint_options_get_paint_mode (void)
-{
-  return global_paint_mode;
-}
-
-void
-paint_options_set_paint_mode (int paint_mode)
-{
-  global_paint_mode = paint_mode;
 }
 
 

@@ -156,7 +156,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &opacity_arg );
-    $outargs[0]->{alias} = 'paint_options_get_opacity () * 100.0';
+    $outargs[0]->{alias} = 'gimp_context_get_opacity (NULL) * 100.0';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -173,7 +173,7 @@ HELP
 
     @inargs = ( &opacity_arg );
 
-    %invoke = ( code => 'paint_options_set_opacity (opacity / 100.0);' );
+    %invoke = ( code => 'gimp_context_set_opacity (NULL, opacity / 100.0);' );
 }
 
 sub brushes_get_spacing {
@@ -224,7 +224,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &paint_mode_arg );
-    $outargs[0]->{alias} = 'paint_options_get_paint_mode ()';
+    $outargs[0]->{alias} = 'gimp_context_get_paint_mode (NULL)';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -241,7 +241,7 @@ HELP
 
     @inargs = ( &paint_mode_arg );
 
-    %invoke = ( code => 'paint_options_set_paint_mode (paint_mode);' );
+    %invoke = ( code => 'gimp_context_set_paint_mode (NULL, paint_mode);' );
 }
 
 sub brushes_list {
@@ -354,7 +354,7 @@ CODE
     );
 }
 
-@headers = qw("gimplist.h" "gimpbrush.h" "gimpbrushlistP.h" "paint_options.h");
+@headers = qw("gimplist.h" "gimpbrush.h" "gimpbrushlistP.h" "gimpcontext.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing

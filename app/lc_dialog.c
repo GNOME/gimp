@@ -93,14 +93,9 @@ lc_dialog_create (GimpImage* gimage)
 	}
 
       if (gimage)
-	{
-	  lc_dialog_update (gimage);
-	  lc_dialog_update_image_list ();
-	}
-      else
-	{
-	  lc_dialog_update_image_list ();
-	}
+	lc_dialog_update (gimage);
+
+      lc_dialog_update_image_list ();
 
       return;
     }
@@ -158,7 +153,7 @@ lc_dialog_create (GimpImage* gimage)
 		      (GtkSignalFunc) lc_dialog_auto_callback,
 		      auto_button);
   gtk_widget_show (auto_button);
-  /*  State will be set, when the sub-dialogs exists (see below)  */
+  /*  State will be set when the sub-dialogs exists (see below)  */
 
   gtk_widget_show (util_box);
 

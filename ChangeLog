@@ -1,3 +1,39 @@
+1999-07-06  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+        * app/airbrush.c
+        * app/blend.c
+        * app/bucket_fill.c
+        * app/clone.c
+        * app/convolve.c
+        * app/dodgeburn.c
+        * app/eraser.c
+        * app/ink.c
+        * app/paintbrush.c
+        * app/pencil.c
+        * app/smudge.c: get opacity/paint mode from the current context
+        (currently always the user context).
+
+        * app/gimage_mask.c: the "stroke" command uses the paintbrush's
+        settings if the current context is the user context and we are in
+        per-tool paint options mode.
+
+        * app/context_manager.[ch]
+        * app/paint_options.h
+        * app/preferences_dialog.c
+        * app/tool_options.c
+        * app/tools.c: moved the global/per-tool paint options switching
+        to the context manager. The tool options themselves only contain
+        the widgets for them now. This should fix the segfaults happening
+        in per-tool mode.
+	Removed the disclaimer from the prefs. dlg. as it seems to work
+	now. The impl. in the context manager however is still a hack.
+
+        * app/brush_select.c
+        * app/brushes_cmds.c
+        * tools/pdbgen/pdb/brushes.pdb: same as above.
+
+        * app/lc_dialog.c: minimal code reduction. No functionality changed.
+
 Mon Jul  5 22:51:37 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* TODO: Removed zoom indicator in titlebar, since we already have

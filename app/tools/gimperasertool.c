@@ -198,12 +198,14 @@ eraser_motion (PaintCore    *paint_core,
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
-  opacity = 255 * paint_options_get_opacity() * (paint_core->curpressure / 0.5);
+  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
   if(opacity > OPAQUE_OPACITY) opacity=OPAQUE_OPACITY;
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,
-			   (int) (PAINT_OPTIONS_GET_OPACITY (eraser_options) * 255),
-			   ERASE_MODE, hard? HARD : SOFT, incremental ? INCREMENTAL : CONSTANT);
+			   (int) (gimp_context_get_opacity (NULL) * 255),
+			   ERASE_MODE,
+			   hard ? HARD : SOFT,
+			   incremental ? INCREMENTAL : CONSTANT);
 }
 
 

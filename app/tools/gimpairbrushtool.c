@@ -266,9 +266,9 @@ airbrush_time_out (gpointer client_data)
 
 
 static void
-airbrush_motion (PaintCore *paint_core,
+airbrush_motion (PaintCore    *paint_core,
 		 GimpDrawable *drawable,
-		 double     pressure)
+		 double        pressure)
 {
   gint opacity;
   GImage *gimage;
@@ -300,16 +300,16 @@ airbrush_motion (PaintCore *paint_core,
   /*  paste the newly painted area to the image  */
   paint_core_paste_canvas (paint_core, drawable,
 			   opacity,
-			   (int) (PAINT_OPTIONS_GET_OPACITY (airbrush_options) * 255),
-			   PAINT_OPTIONS_GET_PAINT_MODE (airbrush_options),
+			   (gint) (gimp_context_get_opacity (NULL) * 255),
+			   gimp_context_get_paint_mode (NULL),
 			   SOFT, CONSTANT);
 }
 
 
 static void *
-airbrush_non_gui_paint_func (PaintCore *paint_core,
+airbrush_non_gui_paint_func (PaintCore    *paint_core,
 			     GimpDrawable *drawable,
-			     int        state)
+			     int           state)
 {
   airbrush_motion (paint_core, drawable, non_gui_pressure);
 

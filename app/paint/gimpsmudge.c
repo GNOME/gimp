@@ -283,8 +283,8 @@ tools_free_smudge (Tool *tool)
 }
 
 static void
-smudge_motion (PaintCore *paint_core,
-		 GimpDrawable *drawable)
+smudge_motion (PaintCore    *paint_core,
+	       GimpDrawable *drawable)
 {
   GImage *gimage;
   TempBuf * area;
@@ -313,7 +313,7 @@ smudge_motion (PaintCore *paint_core,
   pixel_region_init (&srcPR, drawable_data (drawable), 
 	area->x, area->y, area->width, area->height, FALSE);
 
-  brush_opacity = PAINT_OPTIONS_GET_OPACITY (smudge_options);
+  brush_opacity = gimp_context_get_opacity (NULL);
   pressure = (smudge_options->pressure)/100.0;
  
   /* The tempPR will be the built up buffer (for smudge) */ 

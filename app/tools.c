@@ -27,6 +27,7 @@
 #include "clone.h"
 #include "color_balance.h"
 #include "color_picker.h"
+#include "context_manager.h"
 #include "convolve.h"
 #include "crop.h"
 #include "curves.h"
@@ -647,6 +648,9 @@ active_tool_free (void)
 void
 tools_select (ToolType type)
 {
+  /*  Care for switching to the tool's private context  */
+  context_manager_set_tool (type);
+
   if (active_tool)
     active_tool_free ();
 

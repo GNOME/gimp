@@ -19,28 +19,11 @@
 #define __PAINT_OPTIONS_H__
 
 #include "buildmenu.h"
-#include "gimprc.h"
 #include "tools.h"
 #include "tool_options.h"
 
 
-/*  these macros return the global or tool-specific values, according
- *  to the current mode
- */
-
-#define PAINT_OPTIONS_GET_OPACITY(options) \
-                                 (global_paint_options ? \
-				  paint_options_get_opacity () : \
-				  ((PaintOptions *)(options))->opacity)
-
-#define PAINT_OPTIONS_GET_PAINT_MODE(options) \
-                                    (global_paint_options ? \
-				     paint_options_get_paint_mode () : \
-				     ((PaintOptions *)(options))->paint_mode)
-
-
-/*  the paint options structures
- */
+/*  the paint options structures  */
 typedef struct _PaintOptions PaintOptions;
 struct _PaintOptions
 {
@@ -53,48 +36,31 @@ struct _PaintOptions
   GtkWidget   *global;
 
   /*  options used by all paint tools  */
-  double       opacity;
-  double       opacity_d;
   GtkObject   *opacity_w;
 
-  int          paint_mode;
-  int          paint_mode_d;
   GtkWidget   *paint_mode_w;
 };
 
 
-/*  paint tool options functions
- */
+/*  paint tool options functions  */
 PaintOptions *paint_options_new    (ToolType              tool_type,
 				    ToolOptionsResetFunc  reset_func);
 
 void          paint_options_reset  (PaintOptions         *options);
 
-/*  to be used by "derived" paint options only
- */
+/*  to be used by "derived" paint options only  */
 void          paint_options_init   (PaintOptions         *options,
 				    ToolType              tool_type,
 				    ToolOptionsResetFunc  reset_func);
 
 
-/*  functions for the global paint options
- */
+/*  functions for the global paint options  */
 
-/*  switch between global and per-tool paint options
- */
+/*  switch between global and per-tool paint options  */
 void    paint_options_set_global     (gboolean  global);
 
-/*  global paint options access functions
- */
-double  paint_options_get_opacity    (void);
-void    paint_options_set_opacity    (double    opacity);
 
-int     paint_options_get_paint_mode (void);
-void    paint_options_set_paint_mode (int       paint_mode);
-
-
-/*  a utility function which returns a paint mode menu
- */
+/*  a utility function which returns a paint mode menu  */
 GtkWidget *paint_mode_menu_new (MenuItemCallback  callback,
 				gpointer          user_data);
 

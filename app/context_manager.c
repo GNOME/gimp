@@ -20,7 +20,11 @@
 
 #include "appenv.h"
 #include "gdisplay.h"
+#include "gimprc.h"
 #include "tools.h"
+
+static GimpContext * global_user_context;
+
 
 static void
 context_manager_display_changed (GimpContext *context,
@@ -48,12 +52,10 @@ context_manager_init (void)
   GimpContext *context;
   gint i;
 
-  /*  Implicitly create the standard context
-   */
+  /*  Implicitly create the standard context  */
   context = gimp_context_get_standard ();
 
-  /*  To be loaded from disk later
-   */
+  /*  TODO: load from disk  */
   context = gimp_context_new ("Default", NULL, NULL);
   gimp_context_set_default (context);
 
@@ -64,10 +66,19 @@ context_manager_init (void)
   gimp_context_set_user (context);
   gimp_context_set_current (context);
 
+  global_user_context = gimp_context_new ("Don't use :)", NULL, context);
+
+  gtk_signal_connect (GTK_OBJECT (context), "display_changed",
+		      GTK_SIGNAL_FUNC (context_manager_display_changed),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (image_context), "remove",
+		      GTK_SIGNAL_FUNC (context_manager_image_removed),
+		      context);
+
   /*  Initialize the tools' contexts  */
   for (i = 0; i < num_tools; i++)
     {
-      switch (tool_info->tool_id)
+      switch (tool_info[i].tool_id)
 	{
 	case BUCKET_FILL:
 	case BLEND:
@@ -81,7 +92,7 @@ context_manager_init (void)
 	case DODGEBURN:
 	case SMUDGE:
 	  tool_info[i].tool_context =
-	    gimp_context_new (tool_info[i].private_tip, NULL, NULL);
+	    gimp_context_new (tool_info[i].private_tip, NULL, context);
 	  break;
 
 	default:
@@ -89,13 +100,6 @@ context_manager_init (void)
 	  break;
 	}
     }
-
-  gtk_signal_connect (GTK_OBJECT (context), "display_changed",
-		      GTK_SIGNAL_FUNC (context_manager_display_changed),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-		      GTK_SIGNAL_FUNC (context_manager_image_removed),
-		      context);
 }
 
 void
@@ -116,8 +120,77 @@ context_manager_free (void)
   gimp_context_set_user (NULL);
   gimp_context_set_current (NULL);
 
-  /*  Save to disk before destroying later
-   */
+  /*  TODO: Save to disk before destroying  */
   gtk_object_unref (GTK_OBJECT (gimp_context_get_default ()));
   gimp_context_set_default (NULL);
+}
+
+void
+context_manager_set_global_paint_options (gboolean global)
+{
+  GimpContext* context;
+
+  paint_options_set_global (global);
+
+  if (global)
+    {
+      if (active_tool &&
+	  (context = tool_info[active_tool->type].tool_context))
+	{
+	  gimp_context_define_opacity (context, TRUE);
+	  gimp_context_define_paint_mode (context, TRUE);
+	}
+
+      gimp_context_set_opacity (gimp_context_get_user (),
+				gimp_context_get_opacity (global_user_context));
+      gimp_context_set_paint_mode (gimp_context_get_user (),
+				   gimp_context_get_paint_mode (global_user_context));
+
+      gimp_context_define_opacity (global_user_context, FALSE);
+      gimp_context_define_paint_mode (global_user_context, FALSE);
+    }
+  else
+    {
+      gimp_context_define_opacity (global_user_context, TRUE);
+      gimp_context_define_paint_mode (global_user_context, TRUE);
+
+      if (active_tool &&
+	  (context = tool_info[active_tool->type].tool_context))
+	{
+	  gimp_context_set_opacity (gimp_context_get_user (),
+				    gimp_context_get_opacity (context));
+	  gimp_context_set_paint_mode (gimp_context_get_user (),
+				       gimp_context_get_paint_mode (context));
+
+	  gimp_context_define_opacity (context, FALSE);
+	  gimp_context_define_paint_mode (context, FALSE);
+	}
+    }
+}
+
+void
+context_manager_set_tool (ToolType tool_type)
+{
+  GimpContext* context;
+
+  if (! global_paint_options)
+    {
+      if (active_tool &&
+	  (context = tool_info[active_tool->type].tool_context))
+	{
+	  gimp_context_define_opacity (context, TRUE);
+	  gimp_context_define_paint_mode (context, TRUE);
+	}
+
+      if ((context = tool_info[tool_type].tool_context))
+	{
+	  gimp_context_set_opacity (gimp_context_get_user (),
+				    gimp_context_get_opacity (context));
+	  gimp_context_set_paint_mode (gimp_context_get_user (),
+				       gimp_context_get_paint_mode (context));
+
+	  gimp_context_define_opacity (context, FALSE);
+	  gimp_context_define_paint_mode (context, FALSE);
+	}
+    }
 }

@@ -433,9 +433,9 @@ paintbrush_motion (PaintCore *paint_core,
 
       /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, temp_blend,
-			       (int) (PAINT_OPTIONS_GET_OPACITY (paintbrush_options) * 255),
-			       PAINT_OPTIONS_GET_PAINT_MODE (paintbrush_options),
-			       PRESSURE, 
+			       (int) (gimp_context_get_opacity (NULL) * 255),
+			       gimp_context_get_paint_mode (NULL),
+			       PRESSURE,
 			       incremental ? INCREMENTAL : CONSTANT);
     }
 }
@@ -446,7 +446,9 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, non_gui_gradient_type);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,
+		     non_gui_gradient_length, non_gui_incremental,
+		     non_gui_gradient_type);
 
   return NULL;
 }

@@ -348,8 +348,8 @@ convolve_motion (PaintCore *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (PAINT_OPTIONS_GET_OPACITY (convolve_options) * 255),
-			   SOFT, INCREMENTAL);
+			     (int) (gimp_context_get_opacity (NULL) * 255),
+			     SOFT, INCREMENTAL);
 }
 
 static void
