@@ -1,12 +1,12 @@
-# Japanese message table for GIMP 1.1
+# Japanese message table for GIMP 1.2
 # Copyright (C) 1998-2000 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.26\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-09-10 14:59+09:00\n"
+"Project-Id-Version: GIMP 1.2.0\n"
+"POT-Creation-Date: 2000-10-09 12:42+0900\n"
+"PO-Revision-Date: 2000-10-09 12:42+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1573,11 +1573,8 @@ msgid "Brush pipes should have at least one brush."
 msgstr "ブラシパイプは一つ以上のブラシを持たなければなりません."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"ブラシパイプ中のブラシの\n"
-"読み込みに失敗しました."
+msgstr "ブラシパイプ中のブラシの読み込みに失敗しました."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
@@ -4150,24 +4147,24 @@ msgid "No Patterns available"
 msgstr "利用可能なパターンがありません"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "不明な GIMP バージョン #%d が \"%s\" 中にある\n"
+msgstr "不明な GIMP パターンバージョン #%d が \"%s\" 中にある\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "GIMP パターンファイル中に問題がある...中断."
+msgstr "GIMP パターンファイル \"%s\" 中に問題がある"
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "GIMP パターンファイルが切り詰められています."
+msgstr "GIMP パターンファイル \"%s\" は切り詰められています."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "ファイルを開けません: %s\n"
+msgstr "パラーン \"%s\" 読み込み中にエラー発生"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -6403,6 +6400,3 @@ msgstr "水彩"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "色使用歴"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "パターン読み込み失敗"
