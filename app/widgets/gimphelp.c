@@ -51,7 +51,7 @@
 #include "gimp-intl.h"
 
 
-#define DEBUG_HELP
+/*  #define GIMP_HELP_DEBUG  */
 
 
 typedef struct _GimpIdleHelp GimpIdleHelp;
@@ -119,7 +119,7 @@ gimp_idle_help (gpointer data)
   GimpIdleHelp *idle_help = data;
   const gchar  *procedure = NULL;
 
-#ifdef DEBUG_HELP
+#ifdef GIMP_HELP_DEBUG
   g_printerr ("Help Domain: %s\n",
               idle_help->help_domain ? idle_help->help_domain : "NULL");
   g_printerr ("Help ID: %s\n\n",
@@ -310,7 +310,7 @@ gimp_help_call (Gimp        *gimp,
       Argument *return_vals;
       gint      n_return_vals;
 
-#ifdef DEBUG_HELP
+#ifdef GIMP_HELP_DEBUG
       g_printerr ("Calling help via %s: %s %s %s\n",
                   procedure,
                   help_domain  ? help_domain  : NULL,

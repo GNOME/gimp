@@ -35,6 +35,7 @@ HelpDomain * domain_lookup   (const gchar  *domain_name);
 gchar      * domain_map      (HelpDomain   *domain,
                               GList        *help_locales,
                               const gchar  *help_id);
+void         domain_exit     (void);
 
 
 #endif /* ! __DOMAIN_H__ */

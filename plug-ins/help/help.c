@@ -185,15 +185,15 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GMainLoop *loop;
+      GMainLoop *loop = g_main_loop_new (NULL, FALSE);
 
       temp_proc_install ();
 
       gimp_extension_ack ();
       gimp_extension_enable ();
 
-      loop = g_main_loop_new (NULL, FALSE);
       g_main_loop_run (loop);
+
       g_main_loop_unref (loop);
     }
 

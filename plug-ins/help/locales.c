@@ -81,8 +81,8 @@ locales_parse (const gchar *help_locales)
     if (strcmp ((const gchar *) list->data, GIMP_HELP_DEFAULT_LOCALE) == 0)
       break;
 
-  if (!list)
-    locales = g_list_append (locales, GIMP_HELP_DEFAULT_LOCALE);
+  if (! list)
+    locales = g_list_append (locales, g_strdup (GIMP_HELP_DEFAULT_LOCALE));
 
 #ifdef GIMP_HELP_DEBUG
   g_printerr ("help: locales: ");

@@ -29,7 +29,7 @@
 #define GIMP_HELP_DEFAULT_ID      "gimp-main"
 #define GIMP_HELP_DEFAULT_LOCALE  "en"
 
-#define GIMP_HELP_DEBUG
+/*  #define GIMP_HELP_DEBUG  */
 
 
 #endif /* ! __HELP_H__ */
