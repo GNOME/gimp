@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.1\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
-"PO-Revision-Date: 2002-03-07 02:15+0000\n"
+"POT-Creation-Date: 2002-06-16 21:07+0100\n"
+"PO-Revision-Date: 2002-06-16 21:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +156,7 @@ msgstr "um canal (selecção gravada)"
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -260,9 +260,8 @@ msgstr ""
 "operação \"aleatória\""
 
 #: libgimpwidgets/gimpwidgets.c:850
-#, fuzzy
 msgid "_Time"
-msgstr "Hora"
+msgstr "_Hora"
 
 #: libgimpwidgets/gimpwidgets.c:859
 msgid ""
@@ -285,9 +284,8 @@ msgid "MegaBytes"
 msgstr "MegaBytes"
 
 #: libgimpwidgets/gimpwidgets.c:1178
-#, fuzzy
 msgid "GigaBytes"
-msgstr "MegaBytes"
+msgstr "GigaBytes"
 
 #~ msgid "OK"
 #~ msgstr "OK"
