@@ -49,7 +49,7 @@ DIE=0
 
 OS=`uname -s`
 case $OS in 
-    *ygwin* | *ingw*)
+    *YGWIN* | *INGW*)
 	echo "Looks like Win32, you will need libtool $LIBTOOL_WIN32 or newer."
 	echo
 	LIBTOOL_REQUIRED_VERSION=$LIBTOOL_WIN32
