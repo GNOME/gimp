@@ -276,32 +276,29 @@ gimp_color_picker_tool_info_create (GimpTool *tool)
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (tool->drawable)))
     {
     case GIMP_RGB:
-      info_dialog_add_label (info_dialog, _("Red:"),         red_buf);
-      info_dialog_add_label (info_dialog, _("Green:"),       green_buf);
-      info_dialog_add_label (info_dialog, _("Blue:"),        blue_buf);
-      info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
-      info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
+      info_dialog_add_label (info_dialog, _("Red:"),       red_buf);
+      info_dialog_add_label (info_dialog, _("Green:"),     green_buf);
+      info_dialog_add_label (info_dialog, _("Blue:"),      blue_buf);
       break;
 
     case GIMP_GRAY:
-      info_dialog_add_label (info_dialog, _("Intensity:"),   red_buf);
-      info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
-      info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
+      info_dialog_add_label (info_dialog, _("Intensity:"), red_buf);
       break;
 
     case GIMP_INDEXED:
-      info_dialog_add_label (info_dialog, _("Index:"),      index_buf);
-      info_dialog_add_label (info_dialog, _("Red:"),        red_buf);
-      info_dialog_add_label (info_dialog, _("Green:"),      green_buf);
-      info_dialog_add_label (info_dialog, _("Blue:"),       blue_buf);
-      info_dialog_add_label (info_dialog, _("Alpha:"),      alpha_buf);
-      info_dialog_add_label (info_dialog, _("Hex Triplet"), hex_buf);
+      info_dialog_add_label (info_dialog, _("Index:"),     index_buf);
+      info_dialog_add_label (info_dialog, _("Red:"),       red_buf);
+      info_dialog_add_label (info_dialog, _("Green:"),     green_buf);
+      info_dialog_add_label (info_dialog, _("Blue:"),      blue_buf);
       break;
 
     default:
       g_assert_not_reached ();
       break;
     }
+
+  info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
+  info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (info_dialog->vbox), hbox, FALSE, FALSE, 0);

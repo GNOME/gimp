@@ -1,3 +1,9 @@
+2003-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-window.c: show CMYK color values.
+
+	* app/tools/gimpcolorpickertool.c: reduced code duplication.
+
 2003-07-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/composite/make-gimp-composite-dispatch.py: made generated
