@@ -400,7 +400,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   p_update_point_labels(path_ptr);
 
   /* duplicate the curerent image (for flatten & preview)  */
-  pvals->tmp_image_id = p_gimp_channel_ops_duplicate(pvals->dst_image_id);
+  pvals->tmp_image_id = gimp_image_duplicate(pvals->dst_image_id);
 
   /* flatten image, and get the (only) resulting drawable */
   l_drawable_ptr = p_get_prevw_drawable(path_ptr);
@@ -752,7 +752,7 @@ mov_upvw_callback (GtkWidget *widget,
         /* replace the temporary image */
         if(path_ptr->preview_frame_nr  == path_ptr->ainfo_ptr->curr_frame_nr)
         {
-          l_new_tmp_image_id = p_gimp_channel_ops_duplicate(path_ptr->ainfo_ptr->image_id);
+          l_new_tmp_image_id = gimp_image_duplicate(path_ptr->ainfo_ptr->image_id);
         }
         else
         {
@@ -3204,7 +3204,7 @@ p_fetch_src_frame(t_mov_values *pvals,  gint32 wanted_frame_nr)
         /* always take the current source frame from the already opened image
 	 * not only for speedup reasons. (the diskfile may contain non actual imagedata)
 	 */
-        pvals->cache_tmp_image_id = p_gimp_channel_ops_duplicate(pvals->src_image_id);
+        pvals->cache_tmp_image_id = gimp_image_duplicate(pvals->src_image_id);
         wanted_frame_nr = pvals->cache_ainfo_ptr->curr_frame_nr;
      }
      else

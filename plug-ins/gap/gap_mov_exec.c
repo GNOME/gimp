@@ -118,7 +118,7 @@ p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr, gint apv_layersta
     if(mov_ptr->val_ptr->apv_src_frame >= 0)
     {
        /* anim preview uses one constant (prescaled) frame */
-       l_tmp_image_id = p_gimp_channel_ops_duplicate(mov_ptr->val_ptr->apv_src_frame);
+       l_tmp_image_id = gimp_image_duplicate(mov_ptr->val_ptr->apv_src_frame);
     }
     else
     {
@@ -835,7 +835,7 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
     if(l_pvals->src_stepmode < GAP_STEP_FRAME)
     {
       /* copy and scale the source object image */
-      l_tmp_image_id = p_gimp_channel_ops_duplicate(pvals_orig->src_image_id);
+      l_tmp_image_id = gimp_image_duplicate(pvals_orig->src_image_id);
       l_pvals->src_image_id = l_tmp_image_id;
 
       l_size_x = MAX(1, (gimp_image_width(l_tmp_image_id) * l_pvals->apv_scalex) / 100);

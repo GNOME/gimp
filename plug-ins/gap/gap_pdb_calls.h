@@ -59,8 +59,6 @@ gint32 p_gimp_image_delete_guide(gint32 image_id, gint32 guide_id);
 gint   p_gimp_selection_none(gint32 image_id);
 
 gint   p_gimp_rotate(gint32 drawable_id, gint32 interpolation, gdouble angle_deg);
-gint32 p_gimp_channel_ops_duplicate  (gint32     image_ID);
-
 
 gint   p_gimp_drawable_set_image(gint32 drawable_id, gint32 image_id);
 

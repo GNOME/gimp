@@ -524,32 +524,6 @@ gint p_gimp_rotate(gint32 drawable_id, gint32 interpolation, gdouble angle_deg)
 
 
 /* ============================================================================
- * p_gimp_channel_ops_duplicate
- * ============================================================================
- */
-gint32      p_gimp_channel_ops_duplicate  (gint32     image_ID)
-{
-  GimpParam *return_vals;
-  int nreturn_vals;
-  gint32 new_image_ID;
-
-  return_vals = gimp_run_procedure ("gimp_channel_ops_duplicate",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  new_image_ID = -1;
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-  {
-    new_image_ID = return_vals[1].data.d_image;
-  }
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return new_image_ID;
-}	/* end p_gimp_channel_ops_duplicate */
-
-
-/* ============================================================================
  * p_gimp_drawable_set_image
  *   
  * ============================================================================

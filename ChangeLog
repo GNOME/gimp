@@ -1,5 +1,15 @@
 2001-06-12  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpdrawable.h: removed one more
+	gimp_channel_ops_duplicate #define.
+
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_mov_exec.c
+	* plug-ins/gap/gap_pdb_calls.[ch]: removed a handmade PDB wrapper
+	and use gimp_image_duplicate().
+
+2001-06-12  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/3d-outline.scm
 	* plug-ins/script-fu/scripts/add-bevel.scm
 	* plug-ins/script-fu/scripts/blend-anim.scm
