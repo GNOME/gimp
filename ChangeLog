@@ -1,5 +1,9 @@
 2001-06-29  Adam D. Moss <adam@gimp.org>
 
+	* app/convert.c: More error recovery.  Not perfect.  Adequate.
+
+2001-06-29  Adam D. Moss <adam@gimp.org>
+
 	* app/convert.c: Make it even harder to trigger those
 	impossible-to-reach assertions, and handle things more gracefully
 	when we do reach them.  :P  Also removed some redundant calculations

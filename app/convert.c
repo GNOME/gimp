@@ -1865,16 +1865,6 @@ find_split_candidate (boxptr boxlist,
 }
 
 
-#if 0
-static boxptr
-find_biggest_color_pop (boxptr boxlist,
-			int    numboxes)
-/* Find the splittable box with the largest color population */
-/* Returns NULL if no splittable boxes remain */
-{
-  
-}
-#endif
 
 static boxptr
 find_biggest_volume (boxptr boxlist,
@@ -2198,13 +2188,6 @@ median_cut_gray (CFHistogram histogram,
       /* Select box to split.
        * Current algorithm: by population for first half, then by volume.
        */
-#if 0
-      if (numboxes*2 <= desired_colors)
-	{
-	  b1 = find_biggest_color_pop (boxlist, numboxes);
-	}
-      else
-#endif
 	{
 	  b1 = find_biggest_volume (boxlist, numboxes);
 	}
@@ -2247,25 +2230,15 @@ median_cut_rgb (CFHistogram histogram,
   boxptr b1,b2;
 
   while (numboxes < desired_colors) {
-#if 0
-    /* Select box to split.
-     * Current algorithm: by population for first half, then by volume.
-     */
-    if (1 || numboxes*2 <= desired_colors)
-      {
-	g_print ("O ");
-	b1 = find_biggest_color_pop (boxlist, numboxes);
-      }
-    else
-      {
-	g_print (". ");
-	b1 = find_biggest_volume (boxlist, numboxes);
-      }
-#endif
+
     b1 = find_split_candidate (boxlist, numboxes);
 
     if (b1 == NULL)		/* no splittable boxes left! */
-      break;
+      {
+	/* g_warning ("No splittable boxes left."); */
+	break;
+      }
+
     b2 = boxlist + numboxes;	/* where new box will go */
     /* Copy the color bounds to the new box. */
     b2->Rmax = b1->Rmax; b2->Gmax = b1->Gmax; b2->Bmax = b1->Bmax;
@@ -2273,9 +2246,9 @@ median_cut_rgb (CFHistogram histogram,
     /* Choose which axis to split the box on.
      * See notes in update_box about scaling distances.
      */
-    R = R_SCALE*b1->rerror;
-    G = G_SCALE*b1->gerror;
-    B = B_SCALE*b1->berror;
+    R = R_SCALE * b1->rerror;
+    G = G_SCALE * b1->gerror;
+    B = B_SCALE * b1->berror;
     /* We want to break any ties in favor of green, then red, blue last.
      */
     cmax = G; n = 1;
@@ -2292,12 +2265,14 @@ median_cut_rgb (CFHistogram histogram,
 	if (lb < b1->Rmin)
 	  {
 	    g_warning ("nope: b1->Rmax >= b1->Rmin");
-	    goto cut_rtn;
+	    b1->rerror = 0;
+	    goto cut_again;
 	  }
 	if (b2->Rmax < lb+1)
 	  {
 	    g_warning ("nope: b2->Rmax >= b2->Rmin");
-	    goto cut_rtn;
+	    b1->rerror = 0;
+	    goto cut_again;
 	  }
 	b1->Rmax = lb;
 	b2->Rmin = lb+1;
@@ -2307,12 +2282,14 @@ median_cut_rgb (CFHistogram histogram,
 	if (lb < b1->Gmin)
 	  {
 	    g_warning ("nope: b1->Gmax >= b1->Gmin");
-	    goto cut_rtn;
+	    b1->gerror = 0;
+	    goto cut_again;
 	  }
 	if (b2->Gmax < lb+1)
 	  {
 	    g_warning ("nope: b2->Gmax >= b2->Gmin");
-	    goto cut_rtn;
+	    b1->gerror = 0;
+	    goto cut_again;
 	  }
 	b1->Gmax = lb;
 	b2->Gmin = lb+1;
@@ -2322,12 +2299,14 @@ median_cut_rgb (CFHistogram histogram,
 	if (lb < b1->Bmin)
 	  {
 	    g_warning ("nope: b1->Bmax >= b1->Bmin");
-	    goto cut_rtn;
+	    b1->berror = 0;
+	    goto cut_again;
 	  }
 	if (b2->Bmax < lb+1)
 	  {
 	    g_warning ("nope: b2->Bmax >= b2->Bmin");
-	    goto cut_rtn;
+	    b1->berror = 0;
+	    goto cut_again;
 	  }
 	b1->Bmax = lb;
 	b2->Bmin = lb+1;
@@ -2337,9 +2316,9 @@ median_cut_rgb (CFHistogram histogram,
     update_box_rgb (histogram, b1);
     update_box_rgb (histogram, b2);
     numboxes++;
+  cut_again:
+    ;
   }
- cut_rtn:
-  ;
   return numboxes;
 }
 
