@@ -65,6 +65,15 @@ jpeg_apply_exif_data_to_image (const gchar   *filename,
   if (!exif_data)
     return;
 
+  /*
+   * Unfortunately libexif may return a non-null exif_data even if the file
+   * contains no exif data.  We check for validity by making sure it
+   * has an ExifVersion tag.
+  */
+  if (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
+                                EXIF_TAG_EXIF_VERSION))
+    return;
+
   gimp_metadata_store_exif (image_ID, exif_data);
 
   byte_order = exif_data_get_byte_order (exif_data);
