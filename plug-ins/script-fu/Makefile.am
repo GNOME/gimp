@@ -20,6 +20,7 @@ script_fu_SOURCES = \
 	script-fu-console.h	\
 	script-fu-constants.c	\
 	script-fu-constants.h	\
+	script-fu-intl.h	\
 	script-fu-scripts.c	\
 	script-fu-scripts.h	\
 	script-fu-server.c	\

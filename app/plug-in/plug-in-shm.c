@@ -1839,7 +1839,6 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       break;
 
     case PDB_TEMPORARY:
-      plug_in_def = current_plug_in->user_data;
       prog = "none";
 
       tmp = current_plug_in->temp_proc_defs;
@@ -1951,8 +1950,14 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  entry.help_page = help_page;
 	  entry.description = NULL;
 
+	  /* Below we use a hack to allow translations of Script-Fu paths.
+             Would be nice if we could solve this properly, but I haven't 
+             found a way yet ...  (Sven) */
+
 	  if (plug_in_def && plug_in_def->locale_domain)
 	    menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, proc);
+	  else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
+	    menus_create_item_from_full_path (&entry, "gimp-script-fu", proc);
 	  else
 	    menus_create_item_from_full_path (&entry, std_plugins_domain, proc);
 	}

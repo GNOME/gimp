@@ -1,4 +1,3 @@
-
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
@@ -239,10 +238,6 @@ plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_callback.c
 plug-ins/rcm/rcm_dialog.c
-plug-ins/script-fu/script-fu-console.c
-plug-ins/script-fu/script-fu-scripts.c
-plug-ins/script-fu/script-fu-server.c
-plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/sinus/sinus.c

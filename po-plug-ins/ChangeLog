@@ -1,3 +1,12 @@
+Sun Feb 27 20:22:53 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* POTFILES.in: removed script-fu
+
+	Script-Fu now has its own textdomain. I have tried my best to
+	move all translations into the new po-files in po-script-fu.
+
+	* de.po: updated german translation
+
 Tue Feb 22 18:41:49 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* de.po: updated german translation

@@ -38,7 +38,7 @@
 
 #include "libgimp/gimp.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "script-fu-intl.h"
 
 #include "gtk/gtk.h"
 #include "siod.h"

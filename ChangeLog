@@ -1,3 +1,26 @@
+Sun Feb 27 20:25:45 CET 2000  Sven Neumann <sven@gimp.org>
+
+	Script-Fu now has its own textdomain. This allows full
+	localisation of the Script-Fu UI. Now all that's missing
+	is a script that extracts the translatable trings out of 
+	the (script-fu-register ...) calls. 
+
+	* Makefile.am
+	* configure.in
+	* po-script-fu/*: new files.
+
+	* app/plug_in.c: allow translation of the temporary installed
+	Script-Fu scripts
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-intl.h: new file
+	
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/script-fu/script-fu.c: bind to the gimp-script-fu
+	textdomain and use gettext for all labels in the script UI.
+
 2000-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimphelpui.c: added documentation.

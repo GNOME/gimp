@@ -36,7 +36,7 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "script-fu-intl.h"
 
 #include "siod.h"
 #include "script-fu-console.h"
@@ -301,7 +301,7 @@ script_fu_console_interface (void)
   
   gtk_box_pack_start (GTK_BOX (hbox), cint.cc, 
 		      TRUE, TRUE, 0);
-  gtk_widget_set_usize (cint.cc, (ENTRY_WIDTH*5)/6, 0); 
+/*    gtk_widget_set_usize (cint.cc, (ENTRY_WIDTH*5)/6, 0);  */
   GTK_WIDGET_SET_FLAGS (cint.cc, GTK_CAN_DEFAULT);
   gtk_widget_grab_default (cint.cc);
   gtk_signal_connect (GTK_OBJECT (cint.cc), "key_press_event",
@@ -309,7 +309,7 @@ script_fu_console_interface (void)
 		      NULL);
 
   button = gtk_button_new_with_label (_("Browse..."));
-  gtk_widget_set_usize (button, (ENTRY_WIDTH)/6, 0);
+/*    gtk_widget_set_usize (button, (ENTRY_WIDTH)/6, 0); */
   gtk_box_pack_start (GTK_BOX (hbox), button, 
 		      FALSE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",

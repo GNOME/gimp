@@ -1,0 +1,175 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2000-02-27 20:03+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: plug-ins/script-fu/script-fu-console.c:157
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:193
+msgid "Script-Fu Console"
+msgstr ""
+
+#. Action area
+#: plug-ins/script-fu/script-fu-console.c:205
+#: plug-ins/script-fu/script-fu-scripts.c:1957
+msgid "Close"
+msgstr ""
+
+#. The info vbox
+#: plug-ins/script-fu/script-fu-console.c:213
+msgid "SIOD Output"
+msgstr ""
+
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:290
+msgid "Current Command"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:311
+msgid "Browse..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:574
+msgid "Unable to open SIOD output pipe"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:578
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:625
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr ""
+
+#. strip the first part of the menupath if it says _("Script-Fu")
+#: plug-ins/script-fu/script-fu-scripts.c:1207
+#: plug-ins/script-fu/script-fu-scripts.c:1209
+msgid "/Script-Fu/"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1211
+#, c-format
+msgid "Script-Fu: %s"
+msgstr ""
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1232
+msgid "Script Arguments"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1296
+msgid "Script-Fu Color Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1302
+msgid "Script Toggle"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1364
+msgid "Script-Fu File Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1396
+msgid "Script-fu Pattern Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1403
+msgid "Script-Fu Gradient Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1411
+msgid "Script-Fu Brush Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1436
+msgid "Reset to Defaults"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1462
+msgid "About"
+msgstr "Про"
+
+#. Action area
+#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-server.c:559
+msgid "OK"
+msgstr "Гаразд"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-server.c:568
+msgid "Cancel"
+msgstr "В╕дмова"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1590
+msgid "NOT SET"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1661
+msgid ""
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:1928
+msgid "Author:"
+msgstr "Автор:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1934
+msgid "Copyright:"
+msgstr "Авторське право:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1940
+msgid "Date:"
+msgstr "Дата:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1948
+msgid "Image Types:"
+msgstr "Типи зображень:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2097
+msgid "Script-Fu Font Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-server.c:551
+msgid "Script-Fu Server Options"
+msgstr ""
+
+#. The server port
+#: plug-ins/script-fu/script-fu-server.c:582
+msgid "Server Port: "
+msgstr ""
+
+#. The server logfile
+#: plug-ins/script-fu/script-fu-server.c:595
+msgid "Server Logfile: "
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:165
+msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:177
+msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
+msgid "Re-read all available scripts"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:1012
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr ""

@@ -34,7 +34,7 @@
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "script-fu-intl.h"
 
 extern FILE *siod_output;
 
@@ -142,7 +142,7 @@ query (void)
   };
   static gint nserver_args = sizeof (server_args) / sizeof (server_args[0]);
 
-  INIT_I18N ();
+  gimp_plugin_domain_add ("gimp-script-fu");
 
   gimp_install_procedure ("extension_script_fu",
 			  "A scheme interpreter for scripting GIMP operations",

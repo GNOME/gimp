@@ -38,7 +38,7 @@
 #include "siod.h"
 #include "script-fu-scripts.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "script-fu-intl.h"
 
 #ifdef G_OS_WIN32
 #define STRICT
@@ -1203,12 +1203,16 @@ script_fu_interface (SFScript *script)
   sf_interface.script = script;
   sf_interface.about_dialog = NULL;
   
-  title = g_new (guchar, strlen ("Script-Fu: ") + strlen (script->description));   
-  buf = strstr (script->description, "Script-Fu/");
+  /* strip the first part of the menupath if it contains _("/Script-Fu/") */
+  buf = strstr (gettext (script->description), _("/Script-Fu/"));
   if (buf)
-    sprintf ((char *)title, "Script-Fu: %s", (buf + 10));
+    title = g_strdup_printf (_("Script-Fu: %s"), (buf + strlen (_("/Script-Fu/"))));
   else 
-    sprintf ((char *)title, "Script-Fu: %s", script->description);
+    title = g_strdup_printf (_("Script-Fu: %s"), gettext (script->description));
+
+  buf = strstr (title, "...");
+  if (buf)
+    *buf = '\0';
 
   dlg = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
@@ -1251,7 +1255,7 @@ script_fu_interface (SFScript *script)
 
   for (i = start_args; i < script->num_args; i++)
     {
-      gchar    *label_text = script->arg_labels[i];
+      gchar    *label_text = gettext (script->arg_labels[i]);
       gfloat    label_yalign = 0.5;
       gboolean  widget_leftalign = TRUE;
 
@@ -1301,7 +1305,7 @@ script_fu_interface (SFScript *script)
 	case SF_TOGGLE:
 	  label_text = _("Script Toggle");
 	  script->args_widgets[i] =
-	    gtk_check_button_new_with_label (script->arg_labels[i]);
+	    gtk_check_button_new_with_label (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
 	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "toggled",
@@ -1433,7 +1437,8 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
 
-  button = gtk_button_new_with_label (_(" Reset to Defaults "));
+  button = gtk_button_new_with_label (_("Reset to Defaults"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) script_fu_reset_callback,
                       NULL);

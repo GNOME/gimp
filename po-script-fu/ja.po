@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2000-02-27 20:03+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: plug-ins/script-fu/script-fu-console.c:157
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
+
+#: plug-ins/script-fu/script-fu-console.c:193
+msgid "Script-Fu Console"
+msgstr "Script-Fu コンソール"
+
+#. Action area
+#: plug-ins/script-fu/script-fu-console.c:205
+#: plug-ins/script-fu/script-fu-scripts.c:1957
+msgid "Close"
+msgstr "閉じる"
+
+#. The info vbox
+#: plug-ins/script-fu/script-fu-console.c:213
+msgid "SIOD Output"
+msgstr "SIOD 出力"
+
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:290
+msgid "Current Command"
+msgstr "現在実行しているコマンド"
+
+#: plug-ins/script-fu/script-fu-console.c:311
+msgid "Browse..."
+msgstr "場所を指定..."
+
+#: plug-ins/script-fu/script-fu-console.c:574
+msgid "Unable to open SIOD output pipe"
+msgstr "SIOD 出力パイプが開けません"
+
+#: plug-ins/script-fu/script-fu-console.c:578
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr "SIOD 出力パイプ上のストリームが開けません"
+
+#: plug-ins/script-fu/script-fu-console.c:625
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
+
+#. strip the first part of the menupath if it says _("Script-Fu")
+#: plug-ins/script-fu/script-fu-scripts.c:1207
+#: plug-ins/script-fu/script-fu-scripts.c:1209
+#, fuzzy
+msgid "/Script-Fu/"
+msgstr "Script-Fu コンソール"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1211
+#, fuzzy, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu コンソール"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1232
+msgid "Script Arguments"
+msgstr "スクリプト引数"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1296
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu 色選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1302
+msgid "Script Toggle"
+msgstr "スクリプト切替え"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1364
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu ファイル選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1396
+msgid "Script-fu Pattern Selection"
+msgstr "Script-Fu パターン選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1403
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu グラデーション選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1411
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu ブラシ選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1436
+#, fuzzy
+msgid "Reset to Defaults"
+msgstr " 初期値に戻す "
+
+#: plug-ins/script-fu/script-fu-scripts.c:1462
+msgid "About"
+msgstr "このプラグインについて"
+
+#. Action area
+#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-server.c:559
+msgid "OK"
+msgstr "了解"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-server.c:568
+msgid "Cancel"
+msgstr "取消"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1590
+msgid "NOT SET"
+msgstr "未指定"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1661
+msgid ""
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
+msgstr ""
+"少なくとも選択したフォント中に一つ以上\n"
+"不正なものがあります.設定を確認して下さい.\n"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1928
+msgid "Author:"
+msgstr "作者:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1934
+msgid "Copyright:"
+msgstr "著作権表示:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1940
+msgid "Date:"
+msgstr "日付:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1948
+msgid "Image Types:"
+msgstr "画像種:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2097
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu フォント選択"
+
+#: plug-ins/script-fu/script-fu-server.c:551
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu サーバオプション"
+
+#. The server port
+#: plug-ins/script-fu/script-fu-server.c:582
+msgid "Server Port: "
+msgstr "サーバポート: "
+
+#. The server logfile
+#: plug-ins/script-fu/script-fu-server.c:595
+msgid "Server Logfile: "
+msgstr "サーバログファイル: "
+
+#: plug-ins/script-fu/script-fu.c:165
+msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Toolbox>/拡張/Script-Fu/コンソール..."
+
+#: plug-ins/script-fu/script-fu.c:177
+msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Toolbox>/拡張/Script-Fu/サーバ..."
+
+#: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
+msgid "Re-read all available scripts"
+msgstr "全てのスクリプトを再読み込み"
+
+#: plug-ins/script-fu/script-fu.c:1012
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"

@@ -775,6 +775,7 @@ Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
+po-script-fu/Makefile.in
 intl/Makefile
 tools/Makefile
 tools/pdbgen/Makefile
@@ -816,6 +817,7 @@ help/images/Makefile],
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
+   sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then

@@ -5,6 +5,7 @@ SUBDIRS = \
 	po		\
 	po-libgimp	\
 	po-plug-ins	\
+	po-script-fu	\
 	intl		\
 	libgimp		\
 	app		\
