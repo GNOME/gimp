@@ -994,7 +994,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
      case GIMP_TRANSFORM_TYPE_SELECTION:
       if (new_tiles)
         {
-          gimp_image_mask_push_undo (gdisp->gimage, NULL);
+          gimp_channel_push_undo (gimp_image_get_mask (gdisp->gimage), NULL);
 
           tile_manager_unref (GIMP_DRAWABLE (active_item)->tiles);
           GIMP_DRAWABLE (active_item)->tiles = new_tiles;

@@ -439,7 +439,7 @@ undo_pop_image_size (GimpUndo            *undo,
   undo->gimage->height = height;
 
   gimp_image_projection_allocate (undo->gimage);
-  gimp_image_mask_invalidate (undo->gimage);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
 
   if (undo->gimage->width  != isu->width ||
       undo->gimage->height != isu->height)
@@ -1029,7 +1029,7 @@ undo_pop_mask (GimpUndo            *undo,
   if (channel == gimp_image_get_mask (undo->gimage))
     {
       /* invalidate the current bounds and boundary of the mask */
-      gimp_image_mask_invalidate (undo->gimage);
+      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
     }
   else
     {
@@ -2355,7 +2355,7 @@ undo_pop_channel_mod (GimpUndo            *undo,
   else
     {
       /* invalidate the current bounds and boundary of the mask */
-      gimp_image_mask_invalidate (undo->gimage);
+      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->gimage)));
     }
 
   tiles = cmu->tiles;

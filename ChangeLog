@@ -1,5 +1,15 @@
 2003-09-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask.[ch]: removed the _push_undo() and
+	_invalidate() wrappers.
+
+	* app/core/gimpimage-mask-select.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimplayer-floating-sel.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
+2003-09-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: added new pure virtual function
 	GimpDrawable::invalidate_boundary().
 

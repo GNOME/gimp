@@ -20,13 +20,6 @@
 #define __GIMP_IMAGE_MASK_H__
 
 
-/*  pure wrappers around the resp. GimpSelection functions:  */
-
-void          gimp_image_mask_push_undo   (GimpImage       *gimage,
-                                           const gchar     *undo_desc);
-void          gimp_image_mask_invalidate  (GimpImage       *gimage);
-
-
 /*  really implemented here:  */
 
 TileManager * gimp_image_mask_extract     (GimpImage       *gimage,

@@ -27,7 +27,6 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-mask-select.h"
 #include "gimplayer.h"
 #include "gimpscanconvert.h"
@@ -59,7 +58,7 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_channel_clear (selection, _("Rect Select"), TRUE);
   else
-    gimp_image_mask_push_undo (gimage, _("Rect Select"));
+    gimp_channel_push_undo (selection, _("Rect Select"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -110,7 +109,7 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_channel_clear (selection, _("Ellipse Select"), TRUE);
   else
-    gimp_image_mask_push_undo (gimage, _("Ellipse Select"));
+    gimp_channel_push_undo (selection, _("Ellipse Select"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -165,7 +164,7 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_channel_clear (selection, undo_desc, TRUE);
   else
-    gimp_image_mask_push_undo (gimage, undo_desc);
+    gimp_channel_push_undo (selection, undo_desc);
 
 #define SUPERSAMPLE 3
 
@@ -224,7 +223,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_channel_clear (selection, undo_desc, TRUE);
   else
-    gimp_image_mask_push_undo (gimage, undo_desc);
+    gimp_channel_push_undo (selection, undo_desc);
 
 #define SUPERSAMPLE 3
 
@@ -303,7 +302,7 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
   if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_channel_clear (selection, undo_desc, TRUE);
   else
-    gimp_image_mask_push_undo (gimage, undo_desc);
+    gimp_channel_push_undo (selection, undo_desc);
 
   if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {

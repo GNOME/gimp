@@ -46,27 +46,6 @@
 
 /*  public functions  */
 
-void
-gimp_image_mask_push_undo (GimpImage   *gimage,
-                           const gchar *undo_desc)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_push_undo (gimp_image_get_mask (gimage), undo_desc);
-}
-
-void
-gimp_image_mask_invalidate (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (gimage)));
-}
-
-
-
-
-
 TileManager *
 gimp_image_mask_extract (GimpImage    *gimage,
                          GimpDrawable *drawable,
@@ -300,7 +279,8 @@ gimp_image_mask_load (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  gimp_image_mask_push_undo (gimage, _("Selection from Channel"));
+  gimp_channel_push_undo (gimp_image_get_mask (gimage),
+                          _("Selection from Channel"));
 
   /*  load the specified channel to the gimage mask  */
   gimp_channel_load (gimp_image_get_mask (gimage), channel, FALSE);
