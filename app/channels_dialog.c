@@ -50,19 +50,6 @@
 
 #include "channel_pvt.h"
 
-#define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
-                           GDK_ENTER_NOTIFY_MASK
-#define BUTTON_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | \
-                           GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK | \
-                           GDK_BUTTON_RELEASE_MASK
-
-#define CHANNEL_LIST_WIDTH  200
-#define CHANNEL_LIST_HEIGHT 150
-
-#define NORMAL      0
-#define SELECTED    1
-#define INSENSITIVE 2
-
 #define COMPONENT_BASE_ID 0x10000000
 
 typedef struct _ChannelsDialog ChannelsDialog;
@@ -71,6 +58,7 @@ struct _ChannelsDialog
 {
   GtkWidget     *vbox;
   GtkWidget     *channel_list;
+  GtkWidget     *scrolled_win;
   GtkWidget     *preview;
   GtkWidget     *ops_menu;
   GtkAccelGroup *accel_group;
@@ -113,6 +101,7 @@ struct _ChannelWidget
 /*  channels dialog widget routines  */
 static void channels_dialog_preview_extents      (void);
 static void channels_dialog_set_menu_sensitivity (void);
+static void channels_dialog_scroll_index         (gint index);
 static void channels_dialog_set_channel          (ChannelWidget *);
 static void channels_dialog_unset_channel        (ChannelWidget *);
 static void channels_dialog_position_channel     (Channel *, gint);
@@ -248,7 +237,6 @@ GtkWidget *
 channels_dialog_create ()
 {
   GtkWidget *vbox;
-  GtkWidget *listbox;
   GtkWidget *button_box;
 
   if (channelsD)
@@ -272,18 +260,18 @@ channels_dialog_create ()
   channelsD->vbox = vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
-  /*  The layers commands pulldown menu  */
+  /*  The channels commands pulldown menu  */
   menus_get_channels_menu (&channelsD->ops_menu, &channelsD->accel_group);
 
   /*  The channels listbox  */
-  listbox = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox), 
+  channelsD->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (channelsD->scrolled_win), 
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-  gtk_widget_set_usize (listbox, CHANNEL_LIST_WIDTH, CHANNEL_LIST_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 2);
+  gtk_widget_set_usize (channelsD->scrolled_win, LIST_WIDTH, LIST_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox), channelsD->scrolled_win, TRUE, TRUE, 2);
 
   channelsD->channel_list = gtk_list_new ();
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (channelsD->scrolled_win),
 					 channelsD->channel_list);
   gtk_list_set_selection_mode (GTK_LIST (channelsD->channel_list),
 			       GTK_SELECTION_MULTIPLE);
@@ -291,12 +279,12 @@ channels_dialog_create ()
 		      (GtkSignalFunc) channel_list_events,
 		      channelsD);
   gtk_container_set_focus_vadjustment (GTK_CONTAINER (channelsD->channel_list),
-				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar,
+				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (channelsD->scrolled_win)));
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (channelsD->scrolled_win)->vscrollbar,
 			  GTK_CAN_FOCUS);
 
   gtk_widget_show (channelsD->channel_list);
-  gtk_widget_show (listbox);
+  gtk_widget_show (channelsD->scrolled_win);
 
   /*  The ops buttons  */
   button_box = ops_button_box_new (lc_dialog->shell, tool_tips,
@@ -651,6 +639,27 @@ channels_dialog_set_menu_sensitivity ()
 }
 
 static void
+channels_dialog_scroll_index (gint index)
+{
+  GtkAdjustment *adj;
+  gint item_height;
+
+  item_height = 6 + (preview_size ? preview_size : channel_height);
+  adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (channelsD->scrolled_win));
+ 
+  if (index * item_height < adj->value)
+    {
+      adj->value = index * item_height;
+      gtk_adjustment_value_changed (adj);
+    }
+  else if ((index + 1) * item_height > adj->value + adj->page_size)
+    {
+      adj->value = (index + 1) * item_height - adj->page_size;
+      gtk_adjustment_value_changed (adj);
+    }
+}
+
+static void
 channels_dialog_set_channel (ChannelWidget *channel_widget)
 {
   GtkStateType state;
@@ -678,6 +687,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 				index + channelsD->num_components);
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
 				    channel_widget);
+/* 	  channels_dialog_scroll_index (index + channelsD->num_components); */
 	}
     }
   else
@@ -705,6 +715,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
 				    channel_widget);
+/* 	  channels_dialog_scroll_index (0); */
 	}
     }
   suspend_gimage_notify--;
@@ -802,6 +813,10 @@ channels_dialog_position_channel (Channel *channel,
     g_slist_insert (channelsD->channel_widgets, channel_widget,
 		    new_index + channelsD->num_components);
 
+/*   channels_dialog_scroll_index (new_index > 0 ?  */
+/* 				new_index + channelsD->num_components + 1 : */
+/* 				channelsD->num_components); */
+  
   suspend_gimage_notify--;
 }
 
@@ -855,7 +870,6 @@ channel_list_events (GtkWidget *widget,
 		     GdkEvent  *event)
 {
   ChannelWidget  *channel_widget;
-  GdkEventKey    *kevent;
   GdkEventButton *bevent;
   GtkWidget      *event_widget;
 
@@ -883,21 +897,6 @@ channel_list_events (GtkWidget *widget,
 	      return TRUE;
 	    }
 	  break;
-
-	case GDK_KEY_PRESS:
-	  kevent = (GdkEventKey *) event;
-	  switch (kevent->keyval)
-	    {
-	    case GDK_Up:
-	      /* g_print ("up arrow\n"); */
-	      break;
-	    case GDK_Down:
-	      /* g_print ("down arrow\n"); */
-	      break;
-	    default:
-	      return FALSE;
-	    }
-	  return FALSE;
 
 	default:
 	  break;

@@ -58,4 +58,20 @@ void         lc_dialog_menu_preview_dirty (GtkObject *,gpointer);
 /*  Main dialog structure  */
 extern LCDialog *lc_dialog;
 
+/*  some definitions used in all dialogs  */
+#define PREVIEW_EVENT_MASK (GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
+                            GDK_ENTER_NOTIFY_MASK)
+#define BUTTON_EVENT_MASK  (GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | \
+                            GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK | \
+                            GDK_BUTTON_RELEASE_MASK)
+
+#define LIST_WIDTH  200
+#define LIST_HEIGHT 150
+
+#define NORMAL      0
+#define SELECTED    1
+#define INSENSITIVE 2
+
+
+
 #endif  /*  __LC_DIALOGP_H__  */

@@ -1,3 +1,13 @@
+Sun Oct 24 22:10:16 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/lc_dialogP.h
+	* app/paths_dialog.c: some cosmetic changes. The layers dialog now
+	automatically scrolls to keep the active layer in view. This is 
+	disabled in the channels dialog until I figure out why it doesn't
+	work there.
+
 Sun Oct 24 15:24:15 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.c: get rid of remaining (invisible) layers

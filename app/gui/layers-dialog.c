@@ -59,22 +59,9 @@
 
 #include "layer_pvt.h"
 
-#define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
-                           GDK_ENTER_NOTIFY_MASK
-#define BUTTON_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | \
-                           GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK | \
-                           GDK_BUTTON_RELEASE_MASK
-
-#define LAYER_LIST_WIDTH  200
-#define LAYER_LIST_HEIGHT 150
-
 #define LAYER_PREVIEW 0
 #define MASK_PREVIEW  1
 #define FS_PREVIEW    2
-
-#define NORMAL      0
-#define SELECTED    1
-#define INSENSITIVE 2
 
 typedef struct _LayersDialog LayersDialog;
 
@@ -83,6 +70,7 @@ struct _LayersDialog
   GtkWidget     *vbox;
   GtkWidget     *mode_option_menu;
   GtkWidget     *layer_list;
+  GtkWidget     *scrolled_win;
   GtkWidget     *preserve_trans;
   GtkWidget     *mode_box;
   GtkWidget     *opacity_box;
@@ -137,6 +125,7 @@ struct _LayerWidget
 /*  layers dialog widget routines  */
 static void layers_dialog_preview_extents       (void);
 static void layers_dialog_set_menu_sensitivity  (void);
+static void layers_dialog_scroll_index          (gint index);
 static void layers_dialog_set_active_layer      (Layer *);
 static void layers_dialog_unset_layer           (Layer *);
 static void layers_dialog_position_layer        (Layer *, gint);
@@ -149,22 +138,22 @@ static void paint_mode_menu_callback            (GtkWidget *, gpointer);
 static gint paint_mode_menu_get_position        (gint);
 static void opacity_scale_update                (GtkAdjustment *, gpointer);
 static void preserve_trans_update               (GtkWidget *, gpointer);
-static gint layer_list_events                   (GtkWidget *, GdkEvent *);
+static gint layer_list_events                   (GtkWidget *, GdkEvent *, gpointer);
 
 /*  for (un)installing the menu accelarators  */
-static void layers_dialog_map_callback   (GtkWidget *, gpointer);
-static void layers_dialog_unmap_callback (GtkWidget *, gpointer);
+static void layers_dialog_map_callback          (GtkWidget *, gpointer);
+static void layers_dialog_unmap_callback        (GtkWidget *, gpointer);
 
 /*  ops buttons dnd callbacks  */
-static gboolean layers_dialog_drag_new_layer_callback (GtkWidget *,
-						       GdkDragContext *,
-						       gint, gint, guint);
+static gboolean layers_dialog_drag_new_layer_callback       (GtkWidget *,
+							     GdkDragContext *,
+							     gint, gint, guint);
 static gboolean layers_dialog_drag_duplicate_layer_callback (GtkWidget *,
 							     GdkDragContext *,
 							     gint, gint, guint);
-static gboolean layers_dialog_drag_trashcan_callback (GtkWidget *,
-						      GdkDragContext *,
-						      gint, gint, guint);
+static gboolean layers_dialog_drag_trashcan_callback        (GtkWidget *,
+							     GdkDragContext *,
+							     gint, gint, guint);
 
 /*  layer widget function prototypes  */
 static LayerWidget *layer_widget_get_ID (Layer *);
@@ -324,8 +313,7 @@ layers_dialog_create ()
   GtkWidget *label;
   GtkWidget *menu;
   GtkWidget *slider;
-  GtkWidget *listbox;
-  
+ 
   if (layersD)
     return layersD->vbox;
 
@@ -401,27 +389,27 @@ layers_dialog_create ()
   gtk_widget_show (util_box);
 
   /*  The layers listbox  */
-  listbox = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox), 
+  layersD->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (layersD->scrolled_win), 
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-  gtk_widget_set_usize (listbox, LAYER_LIST_WIDTH, LAYER_LIST_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 2);
+  gtk_widget_set_usize (layersD->scrolled_win, LIST_WIDTH, LIST_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox), layersD->scrolled_win, TRUE, TRUE, 2);
 
   layersD->layer_list = gtk_list_new ();
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (layersD->scrolled_win),
 					 layersD->layer_list);
   gtk_list_set_selection_mode (GTK_LIST (layersD->layer_list),
 			       GTK_SELECTION_BROWSE);
   gtk_signal_connect (GTK_OBJECT (layersD->layer_list), "event",
-		      (GtkSignalFunc) layer_list_events,
+		      (GtkSignalFunc) layer_list_events, 
 		      layersD);
-  gtk_container_set_focus_vadjustment (GTK_CONTAINER (layersD->layer_list),
-				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar,
+  gtk_container_set_focus_vadjustment (GTK_CONTAINER (layersD->layer_list), 
+				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (layersD->scrolled_win)));
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (layersD->scrolled_win)->vscrollbar,
 			  GTK_CAN_FOCUS);
       
   gtk_widget_show (layersD->layer_list);
-  gtk_widget_show (listbox);
+  gtk_widget_show (layersD->scrolled_win);
 
   /*  The ops buttons  */
   button_box = ops_button_box_new (lc_dialog->shell, tool_tips,
@@ -1059,6 +1047,27 @@ layers_dialog_set_menu_sensitivity ()
 }
 
 static void
+layers_dialog_scroll_index (gint index)
+{
+  GtkAdjustment *adj;
+  gint item_height;
+
+  item_height = 6 + (preview_size ? preview_size : layer_height);
+  adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (layersD->scrolled_win));
+ 
+  if (index * item_height < adj->value)
+    {
+      adj->value = index * item_height;
+      gtk_adjustment_value_changed (adj);
+    }
+  else if ((index + 1) * item_height > adj->value + adj->page_size)
+    {
+      adj->value = (index + 1) * item_height - adj->page_size;
+      gtk_adjustment_value_changed (adj);
+    }
+}
+
+static void
 layers_dialog_set_active_layer (Layer *layer)
 {
   LayerWidget  *layer_widget;
@@ -1079,6 +1088,8 @@ layers_dialog_set_active_layer (Layer *layer)
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), NULL);
       gtk_list_select_item (GTK_LIST (layersD->layer_list), index);
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), layer_widget);
+ 
+      layers_dialog_scroll_index (index);
     }
 
   suspend_gimage_notify--;
@@ -1137,6 +1148,10 @@ layers_dialog_position_layer (Layer *layer,
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), list, new_index);
   layersD->layer_widgets = g_slist_insert (layersD->layer_widgets,
 					   layer_widget, new_index);
+ 
+  
+  /*  Adjust the scrollbar so the layer is visible  */
+  layers_dialog_scroll_index (new_index > 0 ? new_index + 1: 0);
 
   suspend_gimage_notify--;
 }
@@ -1314,20 +1329,21 @@ preserve_trans_update (GtkWidget *widget,
     layer->preserve_trans = FALSE;
 }
 
+
 /********************************/
 /*  layer list events callback  */
 /********************************/
 
 static gint
 layer_list_events (GtkWidget *widget,
-		   GdkEvent  *event)
+		   GdkEvent  *event,
+		   gpointer   data)
 {
-  GdkEventKey    *kevent;
   GdkEventButton *bevent;
   GtkWidget      *event_widget;
   LayerWidget    *layer_widget;
 
-  event_widget = gtk_get_event_widget (event);
+  event_widget = gtk_get_event_widget (event);    
 
   if (GTK_IS_LIST_ITEM (event_widget))
     {
@@ -1347,26 +1363,10 @@ layer_list_events (GtkWidget *widget,
 	      return TRUE;
 	    }
 	  break;
-
 	case GDK_2BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
 	  layers_dialog_edit_layer_query (layer_widget);
 	  return TRUE;
-
-	case GDK_KEY_PRESS:
-	  kevent = (GdkEventKey *) event;
-	  switch (kevent->keyval)
-	    {
-	    case GDK_Up:
-	      /* g_print ("up arrow\n"); */
-	      break;
-	    case GDK_Down:
-	      /* g_print ("down arrow\n"); */
-	      break;
-	    default:
-	      return FALSE;
-	    }
-	  return FALSE;
 
 	default:
 	  break;
