@@ -1,3 +1,9 @@
+2005-01-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: applied a patch from Geert
+	Jordaens that seems to fix drawable transformation using the new
+	Lanczos interpolation routine :)
+
 2005-01-20  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

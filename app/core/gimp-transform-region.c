@@ -1245,7 +1245,7 @@ sample_linear (PixelSurround *surround,
   /* calculate alpha value of result pixel */
   alphachan = &data[alpha];
   a_val = BILINEAR (alphachan[0],   alphachan[bytes],
-                    alphachan[row], alphachan[row+bytes], du, dv);
+                    alphachan[row], alphachan[row + bytes], du, dv);
   if (a_val <= 0.0)
     {
       a_recip = 0.0;
@@ -1270,10 +1270,10 @@ sample_linear (PixelSurround *surround,
   for (i = 0; i < alpha; i++)
     {
       gint newval = (a_recip *
-                     BILINEAR (alphachan[0]         * data[i],
-                               alphachan[bytes]     * data[bytes+i],
-                               alphachan[row]       * data[row+i],
-                               alphachan[row+bytes] * data[row+bytes+i],
+                     BILINEAR (alphachan[0]           * data[i],
+                               alphachan[bytes]       * data[bytes + i],
+                               alphachan[row]         * data[row + i],
+                               alphachan[row + bytes] * data[row + bytes + i],
                                du, dv));
 
       color[i] = CLAMP (newval, 0, 255);
@@ -1645,10 +1645,22 @@ sample_cubic (PixelSurround *surround,
       gint newval = (a_recip *
                      gimp_drawable_transform_cubic
                      (dv,
-                      CUBIC_SCALED_ROW (du, i + data + row * 0, data + alpha + row * 0, bytes),
-                      CUBIC_SCALED_ROW (du, i + data + row * 1, data + alpha + row * 1, bytes),
-                      CUBIC_SCALED_ROW (du, i + data + row * 2, data + alpha + row * 2, bytes),
-                      CUBIC_SCALED_ROW (du, i + data + row * 3, data + alpha + row * 3, bytes)));
+                      CUBIC_SCALED_ROW (du,
+                                        i + data + row * 0,
+                                        data + alpha + row * 0,
+                                        bytes),
+                      CUBIC_SCALED_ROW (du,
+                                        i + data + row * 1,
+                                        data + alpha + row * 1,
+                                        bytes),
+                      CUBIC_SCALED_ROW (du,
+                                        i + data + row * 2,
+                                        data + alpha + row * 2,
+                                        bytes),
+                      CUBIC_SCALED_ROW (du,
+                                        i + data + row * 3,
+                                        data + alpha + row * 3,
+                                        bytes)));
 
       color[i] = CLAMP (newval, 0, 255);
     }
@@ -1680,8 +1692,8 @@ lanczos_sum (const guchar *data,
   gdouble sum = 0;
   gint    j, k;
 
-  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k+=bytes)
-    sum += (l[j] * data[row+k]);
+  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k += bytes)
+    sum += (l[j] * data[row + k + byte]);
 
   return sum;
 }
@@ -1697,10 +1709,10 @@ lanczos_sum_mul (const guchar  *data,
   gdouble sum = 0;
   gint    j, k;
 
-  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k+=bytes)
+  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k += bytes)
     sum += (l[j] *
-            data[row+k+byte] *
-            data[row+k+alpha]);
+            data[row + k + byte] *
+            data[row + k + alpha]);
 
   return sum;
 }
@@ -1749,7 +1761,8 @@ sample_lanczos (PixelSurround *surround,
   gint     iv = floor(v);
 
   /* lock the pixel surround */
-  data = pixel_surround_lock (surround, iu - 1 , iv - 1 );
+  data = pixel_surround_lock (surround,
+                              iu - LANCZOS_WIDTH, iv - LANCZOS_WIDTH);
 
   row = pixel_surround_rowstride (surround);
 
@@ -1767,53 +1780,36 @@ sample_lanczos (PixelSurround *surround,
 
   weight = lusum * lvsum;
 
-  if (alpha != 0)
+  for ( aval = 0, i = 0 ; i < LANCZOS_WIDTH2 ; i ++ )
+    aval += lv[i] * lanczos_sum (data, lu, i * row, bytes, alpha);
+
+  /* calculate alpha of result */
+  aval /= weight;
+
+  if ( aval <= 0.0 )
     {
-       for ( aval = 0, i = 0 ; i < LANCZOS_WIDTH2 ; i ++ )
-          aval += lv[i] * lanczos_sum (data, lu,
-                                       i * LANCZOS_WIDTH2 * bytes,
-                                       bytes, alpha);
-
-       /* calculate alpha of result */
-       aval /= weight;
-
-       if ( aval <= 0.0 )
-         {
-           arecip = 0.0;
-           color[alpha] = 0;
-         }
-       else if ( aval > 255.0 )
-         {
-           arecip = 1.0 / aval;
-           color[alpha] = 255;
-         }
-       else
-         {
-           arecip = 1.0 / aval;
-           color[alpha] = RINT (aval);
-         }
-
-       for (byte = 0; byte < alpha; byte++)
-         {
-           for (newval = 0, i = 0; i < LANCZOS_WIDTH2; i ++)
-             newval += lv[i] * lanczos_sum_mul (data, lu,
-                                                i * LANCZOS_WIDTH2 * bytes,
-                                                bytes, byte, alpha);
-           newval *= arecip;
-           color[byte] = CLAMP (newval, 0, 255);
-         }
+      arecip = 0.0;
+      color[alpha] = 0;
+    }
+  else if ( aval > 255.0 )
+    {
+      arecip = 1.0 / aval;
+      color[alpha] = 255;
     }
   else
     {
-      for (byte = 0; byte < bytes; byte++)
-        {
-          for (newval = 0, i = 0 ; i < LANCZOS_WIDTH2 ; i++ )
-            newval += lv[i] * lanczos_sum (data, lu,
-                                           i * LANCZOS_WIDTH2 * bytes,
-                                           bytes, byte);
-
-          newval /= weight;
-          color[byte] = CLAMP ((gint) newval, 0, 255);
-        }
+      arecip = 1.0 / aval;
+      color[alpha] = RINT (aval);
     }
+
+  for (byte = 0; byte < alpha; byte++)
+    {
+      for (newval = 0, i = 0; i < LANCZOS_WIDTH2; i ++)
+        newval += lv[i] * lanczos_sum_mul (data, lu,
+                                           i * row, bytes, byte, alpha);
+        newval *= arecip;
+        color[byte] = CLAMP (newval, 0, 255);
+    }
+
+  pixel_surround_release (surround);
 }
