@@ -29,6 +29,7 @@
 
 #include "base/tile-manager.h"
 
+#include "tools/gimpperspectivetool.h"
 #include "tools/gimptransformtool.h"
 #include "tools/tool_manager.h"
 
@@ -124,30 +125,13 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
       if ((z1 * z2 > 0) && (z3 * z4 > 0))
         {
-          gdouble      dx [4], dy [4];
-          gint          x [4],  y [4];
-          gfloat        u [4],  v [4];
           GimpChannel *mask;
           gint         mask_x1, mask_y1;
           gint         mask_x2, mask_y2;
           gint         mask_offx, mask_offy;
-          gint         i;
-
-          gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
-                                             dx + 0, dy + 0, FALSE);
-          gimp_display_shell_transform_xy_f (shell, tr_tool->tx2, tr_tool->ty2,
-                                             dx + 1, dy + 1, FALSE);
-          gimp_display_shell_transform_xy_f (shell, tr_tool->tx3, tr_tool->ty3,
-                                             dx + 2, dy + 2, FALSE);
-          gimp_display_shell_transform_xy_f (shell, tr_tool->tx4, tr_tool->ty4,
-                                             dx + 3, dy + 3, FALSE);
-
-          for (i = 0; i < 4; i++)
-            {
-              x [i] = (gint) dx [i];
-              y [i] = (gint) dy [i];
-            }
-
+          gint         columns, rows;
+          gint         col, row;
+          
           mask = NULL;
           mask_offx = mask_offy = 0;
 
@@ -161,15 +145,66 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                                  &mask_offx, &mask_offy);
             }
 
-          u [0] = mask_x1;  v [0] = mask_y1;
-          u [1] = mask_x2;  v [1] = mask_y1;
-          u [2] = mask_x1;  v [2] = mask_y2;
-          u [3] = mask_x2;  v [3] = mask_y2;
+          if (GIMP_IS_PERSPECTIVE_TOOL (tr_tool))
+            {
+              /* approximate perspective transform by subdivision
+               *
+               * increase number of columns/rows to increase precision
+               */
+              columns = 5;
+              rows    = 5;
+            }
+          else
+            {
+              /*  for affine transforms subdivision has no effect
+               */
+              columns = 1;
+              rows    = 1;
+            }
 
-          gimp_display_shell_draw_quad (tool->drawable,
-                              GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
-                              mask, mask_offx, mask_offy,
-                              x, y, u, v);
+          for (row = 0; row < rows; row++)
+            {
+              for (col = 0; col < columns; col++)
+                {
+                  gint     x [4], y [4];
+                  gfloat   u [4], v [4];
+                  gint     i, j;
+
+                  /*  calculate source coordinates for corners of (sub)rectangle
+                   */
+                  for (j = 0; j < 2; j++)
+                    for (i = 0; i < 2; i++)
+                      {
+                        u [j*2+i] = mask_x1 + ((mask_x2-mask_x1) * (col+j)) / columns;
+                        v [j*2+i] = mask_y1 + ((mask_y2-mask_y1) * (row+i)) / rows;
+                      }
+
+                  /*  transform source coordinates to display coordinates
+                   *  through tool and display_shell transforms
+                   */
+                  for (i = 0; i < 4; i++)
+                    {
+                      double du, dv;
+                      double dx, dy;
+
+                      gimp_matrix3_transform_point (&tr_tool->transform,
+                                                    u[i], v[i],
+                                                    &du, &dv);
+
+                      gimp_display_shell_transform_xy_f (shell,
+                                                         du, dv,
+                                                         &dx, &dy,
+                                                         FALSE);
+                      x [i] = (gint) dx;
+                      y [i] = (gint) dy;
+                    }
+
+                  gimp_display_shell_draw_quad (tool->drawable,
+                                    GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
+                                    mask, mask_offx, mask_offy,
+                                    x, y, u, v);
+                }
+            }
         }
     }
 }
