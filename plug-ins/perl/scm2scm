@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-require 5.005;
+use 5.005;
 
 # Copyright Marc Lehmann <pcg@goof.com>
 #

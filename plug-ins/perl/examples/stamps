@@ -4,50 +4,52 @@ use Gimp qw( :auto );
 use Gimp::Fu;
 
 sub stamps {
-	my ($size, $bgcolor, $fgcolor, $diameter, $gap) = @_;
+	my ($size, $hole, $paper, $diameter, $gap) = @_;
 
-	gimp_palette_set_background($fgcolor);
+	gimp_palette_set_background($paper);
 	$img = gimp_image_new($size, $size, RGB);
-	$layer = gimp_layer_new($img, $size, $size, RGB, "Layer 1", 100, NORMAL_MODE);
+	$layer = gimp_layer_new($img, $size, $size, RGB_IMAGE, "Layer 1", 100, NORMAL_MODE);
 	gimp_image_add_layer($layer, -1);
-	gimp_palette_set_background($bgcolor);
+	gimp_palette_set_background($hole);
 	$layer->gimp_edit_fill;
+	gimp_selection_none($img);
 
-	gimp_palette_set_background($fgcolor);
 	my $ncircles = int(($size + $gap) / ($diameter + $gap));
 	$x = 0;
 	for ($i=0; $i<$ncircles; $i++) {
 			gimp_ellipse_select($img,
 					$x, 0,
 					$diameter, $diameter,
-					REPLACE, 1, 0, 0);
+					SELECTION_ADD, 1, 0, 0);
 			gimp_ellipse_select($img,
 					0, $x,
 					$diameter, $diameter,
-					REPLACE, 1, 0, 0);
+					SELECTION_ADD, 1, 0, 0);
 			$x = $x + $diameter + $gap;
-			gimp_palette_set_foreground($fgcolor);
-			gimp_edit_fill($layer);
-			gimp_selection_none($img);
 	}
+	gimp_palette_set_background($paper);
+	gimp_edit_fill($layer);
+	gimp_selection_none($img);
+
+# here, at last, comes the clever part! :-)
 	$layer->channel_ops_offset(1, 0, -($diameter / 2), -($diameter / 2));
 	return $img;
 }
 
 register	"stamps", 
-		"Makes stamp-like perforations",
+		"Creates a rectangular image with stamp-like perforations.",
 		"Default values are not bad!",
-		"claesg\@algonet.se",
-		"Claes G Lindblad",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
 		"990314",
 		"<Toolbox>/Xtns/Render/Stamps",
 		"*",
 	[
-	[PF_INT32, "size", "Img size", 90],
-	[PF_COLOR, "fgcolor", "fg color", [255, 255, 255]],
-	[PF_COLOR, "bgcolor", "bg color", [0, 0, 0]],
-	[PF_INT32, "diameter", "Diameter", 10],
-	[PF_INT32, "gap", "Gap", 5]
+	[PF_INT32, "size", "img size", 90],
+	[PF_COLOR, "paper", "paper color", [255, 255, 255]],
+	[PF_COLOR, "hole", "hole color", [0, 0, 0]],
+	[PF_INT32, "diameter", "diameter", 10],
+	[PF_INT32, "gap", "gap", 5]
 	],
 	\&stamps;
 

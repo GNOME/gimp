@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+
+use Gimp qw( :auto );
+use Gimp::Fu;
+
+register	"MirrorSplit", 
+		"Splits and mirrors half of the image, according to settings.",
+		"Just tick appropriate radio button.",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"Claes G Lindblad <claesg\@algonet.se>",
+		"990405",
+		"<Image>/Filters/Distorts/MirrorSplit",
+		"*",
+		[
+		[PF_RADIO, "mirror", "Which half to mirror?", 0,
+			[Upper => 0, Lower => 1, Left => 2, Right => 3]
+		]
+		],
+	sub {
+		my ($img, $layer, $mirror) = @_;
+
+		$w = $layer->width();
+		$h = $layer->height();
+		$wspan = int ($w / 2 + 0.5);
+		$hspan = int ($h / 2 + 0.5);
+		eval { $img->undo_push_group_start };
+
+		my $oldname = gimp_layer_get_name($layer);
+		my $temp1 = gimp_layer_copy($layer, 1);
+		gimp_image_add_layer($img, $temp1, 0);
+
+		if ($mirror == 0) {	# upper half
+			$temp2 = gimp_flip($temp1, VERTICAL);
+			gimp_rect_select($img, 0, 0, $w, $hspan, SELECTION_REPLACE, 0, 0);
+		};
+		if ($mirror == 1) {	# lower half
+			$temp2 = gimp_flip($temp1, VERTICAL);
+			gimp_rect_select($img, 0, $hspan, $w, $h - $hspan, SELECTION_REPLACE, 0, 0);
+		};
+		if ($mirror == 2) {	# left half
+			$temp2 = gimp_flip($temp1, HORIZONTAL);
+			gimp_rect_select($img, 0, 0, $wspan, $h, SELECTION_REPLACE, 0, 0);
+		};
+		if ($mirror == 3) {	# right half
+			$temp2 = gimp_flip($temp1, HORIZONTAL);
+			gimp_rect_select($img, $wspan, 0, $w - $wspan, $h, SELECTION_REPLACE, 0, 0);
+		};
+
+		gimp_edit_cut($temp2);
+		my $temp3 = gimp_image_merge_down($img, $temp2, 2);
+		gimp_layer_set_name($temp3, $oldname);
+		eval { $img->undo_push_group_end };
+		return $img;
+	};
+exit main;

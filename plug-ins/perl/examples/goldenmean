@@ -17,7 +17,7 @@ sub goldenmean {
 	}
 
 	$img = gimp_image_new($width, $height, RGB);
-	$layer = gimp_layer_new($img, $width, $height, RGB, "Layer 1", 100, NORMAL_MODE);
+	$layer = gimp_layer_new($img, $width, $height, RGB_IMAGE, "Layer 1", 100, NORMAL_MODE);
 
 	gimp_image_add_layer($layer, -1);
 	gimp_palette_set_background([255, 255, 255]);

@@ -34,6 +34,8 @@ register "scratches",
           [PF_SPINNER	, "length"	, "The scratch length"		,  10, [  0, 400]],
           #[PF_BOOL,	, "bump_map"	, "Use bump map instead of displace", 0],
          ],
+         [],
+         ['gimp-1.1'],
          sub {
    my($image,$drawable,$anglex,$angley,$gamma,$length,$width)=@_;
 

@@ -16,6 +16,8 @@ bugs
 [KILL]  * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
+  * do not install scm2scm and scm2perl on 56.004
+  * create gimpstyle.pod
   
 important issues
 

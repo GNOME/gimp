@@ -12,7 +12,7 @@ sub TIEHASH {
 
 sub FETCH {
    eval { Gimp->find_parasite ($_[1])->data }
-    || $@ ? Gimp->get_data ($_[1]) : ();
+    || ($@ ? Gimp->get_data ($_[1]) : ());
 }
      
 sub STORE {

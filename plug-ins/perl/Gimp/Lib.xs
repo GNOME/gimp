@@ -564,6 +564,50 @@ canonicalize_colour (char *err, SV *sv, GParamColor *c)
   LEAVE;
 }
 
+/* check for common typoes.  */
+static void check_for_typoe (char *croak_str, char *p)
+{
+  STRLEN dc;
+  char b[80];
+  dTHR;
+
+  g_snprintf (b, sizeof b, "%s_MODE", p);	if (perl_get_cv (b, 0)) goto gotit;
+  g_snprintf (b, sizeof b, "%s_MASK", p);	if (perl_get_cv (b, 0)) goto gotit;
+  g_snprintf (b, sizeof b, "SELECTION_%s", p);	if (perl_get_cv (b, 0)) goto gotit;
+  g_snprintf (b, sizeof b, "%s_IMAGE", p);	if (perl_get_cv (b, 0)) goto gotit;
+
+  strcpy (b, "1"); if (strEQ (b, "TRUE" )) goto gotit;
+  strcpy (b, "0"); if (strEQ (b, "FALSE")) goto gotit;
+  
+  return;
+
+gotit:
+  sprintf (croak_str, "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'", p, b);
+}
+
+/* check for 'enumeration types', i.e. integer constants. do not allow
+   string constants here, and check for common typoes. */
+static int check_int (char *croak_str, SV *sv)
+{
+  dTHR;
+
+  if (SvTYPE (sv) == SVt_PV && !SvIOKp(sv))
+    {
+      STRLEN dc;
+      char *p = SvPV (sv, dc);
+
+      if (*p
+          && *p != '0' && *p != '1' & *p != '2' && *p != '3' && *p != '4'
+          && *p != '5' && *p != '6' & *p != '7' && *p != '8' && *p != '9')
+        {
+          sprintf (croak_str, "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string", p);
+          check_for_typoe (croak_str, p);
+          return 0;
+        }
+    }
+  return 1;
+}
+
 /* replacement newSVpv with only one argument.  */
 #define neuSVpv(arg) newSVpv((arg),0)
 
@@ -699,7 +743,8 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
   
   switch (arg->type)
     {
-      case PARAM_INT32:      	arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
+      case PARAM_INT32:		check_int (croak_str, sv);
+         			arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
       case PARAM_INT16:		arg->data.d_int16	= sv2gimp_extract_noref (SvIV, "INT16");
       case PARAM_INT8:		arg->data.d_int8	= sv2gimp_extract_noref (SvIV, "INT8");
       case PARAM_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");;

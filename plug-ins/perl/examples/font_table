@@ -104,10 +104,7 @@ sub font_table {
     
   }
 
-  return undef; # This may generate a warning, but it's better than
-                # getting a duplicate image, which is what I get if I
-                # return $lastimg
-  # return $lastimg;
+  return ();
 }
 
 sub display_fonts {

@@ -83,3 +83,6 @@ examples/centerguide
 examples/stampify
 examples/goldenmean
 examples/triangle
+examples/billboard
+examples/mirrorsplit
+

@@ -11,7 +11,7 @@ register	"Stampify",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990328",
-		"<Image>/Filters/Decor/Stampify",
+		"<Image>/Script-Fu/Decor/Stampify",
 		"*",
 		[
 	[PF_COLOR, "paper", "Paper colour", [242, 242, 242]],

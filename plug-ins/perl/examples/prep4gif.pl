@@ -35,7 +35,7 @@ sub prep {
 	if ($#layers <= 0) {
 		gimp_message("You need at least 2 layers to perform prep4gif");
 		print "Only ", scalar(@layers), " layers found!(", $layers[0],")\n";
-		return 0;
+		return;
 		}
 
 # Show the image early - this makes debugging a breeze	
@@ -85,7 +85,7 @@ sub prep {
 # Show all the changes.
 	gimp_displays_flush();
 	
-	undef;
+	();
 	}
 
 register

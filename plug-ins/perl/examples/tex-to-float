@@ -101,7 +101,7 @@ sub grey_file_to_float {
     gimp_undo_push_group_start($img1);
     
     # Load the new img
-    my $grey_img = gimp_file_load(RUN_NON_INTERACTIVE, $fn, $fn);
+    my $grey_img = gimp_file_load(RUN_NONINTERACTIVE, $fn, $fn);
     
     # Get name of new layer
     my $grey_layer = gimp_image_get_active_layer($grey_img);

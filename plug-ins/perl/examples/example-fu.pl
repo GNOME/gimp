@@ -8,7 +8,7 @@ register "gimp_fu_example_script",			# fill in a function name
          "Just a starting point to derive new ".        # a (possibly multiline) help text
             "scripts. Always remember to put a long".
             "help message here!",
-         "Marc Lehmann",				# don't forget your name (author)
+         "Marc Lehmann <pcg\@goof.com>",		# don't forget your name (author)
          "(c) 1998, 1999 Marc Lehmann",			# and your copyright!
          "19990316",					# the date this script was written
          "<Toolbox>/Xtns/Gimp::Fu Example",		# the menu path

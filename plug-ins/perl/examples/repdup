@@ -14,7 +14,7 @@ register	"RepDup",
 		"<Image>/Edit/Repeat & Duplicate",
 		"*",
 		[
-		[PF_SPINNER, "repeats", "Number of repetitions",
+		[PF_SPINNER, "repeats", "Number of repeats",
 			3, [1, 1000, 1] ],
 		[PF_SPINNER, "xoffset", "X-offset",
 			50, [-1000, 1000, 1] ],
@@ -33,7 +33,7 @@ register	"RepDup",
 		for ($i = 0; $i < $repeats; $i++) {
 			$b[1] = $b[1] + $xoffset;
 			$b[2] = $b[2] + $yoffset;
-			gimp_rect_select($img, $b[1], $b[2], $w, $h, REPLACE, 0, 0);
+			gimp_rect_select($img, $b[1], $b[2], $w, $h, SELECTION_REPLACE, 0, 0);
 			$bit_bucket = gimp_edit_paste($layer, 0);
 			gimp_floating_sel_anchor($bit_bucket);
 			gimp_selection_none($img);

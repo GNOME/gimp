@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.072;
+$VERSION = 1.08;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -56,6 +56,10 @@ $VERSION = 1.072;
 	BLUE_HUES	MAGENTA_HUES
 	
 	HORIZONTAL	VERTICAL
+
+        VALUE		RED		GREEN		BLUE
+
+        WRAP		SMEAR		BLACK
 ));
 
 @_procs = qw(
@@ -66,81 +70,90 @@ bootstrap Gimp $VERSION;
 
 # defs missing from libgimp
 
-sub BEHIND_MODE		(){ 2 };
+sub BEHIND_MODE		(){ 2 }
 
-sub FG_BG_RGB		(){ 0 };
-sub FG_BG_HSV		(){ 1 };
-sub FG_TRANS		(){ 2 };
-sub CUSTOM		(){ 3 };
+sub FG_BG_RGB		(){ 0 }
+sub FG_BG_HSV		(){ 1 }
+sub FG_TRANS		(){ 2 }
+sub CUSTOM		(){ 3 }
 
-sub LINEAR		(){ 0 };
-sub BILINEAR		(){ 1 };
-sub RADIAL		(){ 2 };
-sub SQUARE		(){ 3 };
-sub CONICAL_SYMMETRIC	(){ 4 };
-sub CONICAL_ASYMMETRIC	(){ 5 };
-sub SHAPEBURST_ANGULAR	(){ 6 };
-sub SHAPEBURST_SPHERICAL(){ 7 };
-sub SHAPEBURST_DIMPLED	(){ 8 };
-sub SPIRAL_CLOCKWISE	(){ 9 };
-sub SPIRAL_ANTICLOCKWISE(){10 };
+sub LINEAR		(){ 0 }
+sub BILINEAR		(){ 1 }
+sub RADIAL		(){ 2 }
+sub SQUARE		(){ 3 }
+sub CONICAL_SYMMETRIC	(){ 4 }
+sub CONICAL_ASYMMETRIC	(){ 5 }
+sub SHAPEBURST_ANGULAR	(){ 6 }
+sub SHAPEBURST_SPHERICAL(){ 7 }
+sub SHAPEBURST_DIMPLED	(){ 8 }
+sub SPIRAL_CLOCKWISE	(){ 9 }
+sub SPIRAL_ANTICLOCKWISE(){10 }
 
-sub REPEAT_NONE		(){ 0 };
-sub REPEAT_SAWTOOTH	(){ 1 };
-sub REPEAT_TRIANGULAR	(){ 2 };
+sub REPEAT_NONE		(){ 0 }
+sub REPEAT_SAWTOOTH	(){ 1 }
+sub REPEAT_TRIANGULAR	(){ 2 }
 
-sub FG_BUCKET_FILL	(){ 0 };
-sub BG_BUCKET_FILL	(){ 1 };
-sub PATTERN_BUCKET_FILL	(){ 2 };
+sub FG_BUCKET_FILL	(){ 0 }
+sub BG_BUCKET_FILL	(){ 1 }
+sub PATTERN_BUCKET_FILL	(){ 2 }
 
-sub RED_CHANNEL		(){ 0 };
-sub GREEN_CHANNEL	(){ 1 };
-sub BLUE_CHANNEL	(){ 2 };
-sub GRAY_CHANNEL	(){ 3 };
-sub INDEXED_CHANNEL	(){ 4 };
+sub RED_CHANNEL		(){ 0 }
+sub GREEN_CHANNEL	(){ 1 }
+sub BLUE_CHANNEL	(){ 2 }
+sub GRAY_CHANNEL	(){ 3 }
+sub INDEXED_CHANNEL	(){ 4 }
 
-sub WHITE_MASK		(){ 0 };
-sub BLACK_MASK		(){ 1 };
-sub ALPHA_MASK		(){ 2 };
+sub WHITE_MASK		(){ 0 }
+sub BLACK_MASK		(){ 1 }
+sub ALPHA_MASK		(){ 2 }
 
-sub APPLY		(){ 0 };
-sub DISCARD		(){ 1 };
+sub APPLY		(){ 0 }
+sub DISCARD		(){ 1 }
 
-sub EXPAND_AS_NECESSARY	(){ 0 };
-sub CLIP_TO_IMAGE	(){ 1 };
-sub CLIP_TO_BOTTOM_LAYER(){ 2 };
+sub EXPAND_AS_NECESSARY	(){ 0 }
+sub CLIP_TO_IMAGE	(){ 1 }
+sub CLIP_TO_BOTTOM_LAYER(){ 2 }
 
-sub SELECTION_ADD	(){ 0 };
-sub SELECTION_SUB	(){ 1 };
-sub SELECTION_REPLACE	(){ 2 };
-sub SELECTION_INTERSECT	(){ 3 };
+sub SELECTION_ADD	(){ 0 }
+sub SELECTION_SUB	(){ 1 }
+sub SELECTION_REPLACE	(){ 2 }
+sub SELECTION_INTERSECT	(){ 3 }
 
-sub PIXELS		(){ 0 };
-sub POINTS		(){ 1 };
+sub PIXELS		(){ 0 }
+sub POINTS		(){ 1 }
 
-sub IMAGE_CLONE		(){ 0 };
-sub PATTERN_CLONE	(){ 1 };
+sub IMAGE_CLONE		(){ 0 }
+sub PATTERN_CLONE	(){ 1 }
 
-sub BLUR		(){ 0 };
-sub SHARPEN		(){ 1 };
+sub BLUR		(){ 0 }
+sub SHARPEN		(){ 1 }
 
-sub ALL_HUES		(){ 0 };
-sub RED_HUES		(){ 1 };
-sub YELLOW_HUES		(){ 2 };
-sub GREEN_HUES		(){ 3 };
-sub CYAN_HUES		(){ 4 };
-sub BLUE_HUES		(){ 5 };
-sub MAGENTA_HUES	(){ 6 };
+sub ALL_HUES		(){ 0 }
+sub RED_HUES		(){ 1 }
+sub YELLOW_HUES		(){ 2 }
+sub GREEN_HUES		(){ 3 }
+sub CYAN_HUES		(){ 4 }
+sub BLUE_HUES		(){ 5 }
+sub MAGENTA_HUES	(){ 6 }
 
-sub MESSAGE_BOX		(){ 0 };
-sub CONSOLE		(){ 1 };
+sub MESSAGE_BOX		(){ 0 }
+sub CONSOLE		(){ 1 }
 
-sub SHADOWS		(){ 0 };
-sub MIDTONES		(){ 1 };
-sub HIGHLIGHTS		(){ 2 };
+sub SHADOWS		(){ 0 }
+sub MIDTONES		(){ 1 }
+sub HIGHLIGHTS		(){ 2 }
 
-sub HORIZONTAL		(){ 0 };
-sub VERTICAL		(){ 1 };
+sub HORIZONTAL		(){ 0 }
+sub VERTICAL		(){ 1 }
+
+sub VALUE		(){ 0 }
+sub RED			(){ 1 }
+sub GREEN		(){ 2 }
+sub BLUE		(){ 3 }
+
+sub WRAP		(){ 0 }
+sub SMEAR		(){ 1 }
+sub BLACK		(){ 2 }
 
 # internal constants shared with Perl-Server
 

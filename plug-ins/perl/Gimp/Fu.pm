@@ -933,15 +933,23 @@ sub register($$$$$$$$$;@) {
       for (0..$#{$params}) {
          $_[$_]=$params->[$_]->[3] unless defined($_[$_]);
       }
-      
-      if ($run_mode == &Gimp::RUN_INTERACTIVE) {
-         if (@_) {
-            my $res;
-            local $^W=0; # perl -w is braindamaged
-            my $VAR1; # Data::Dumper is braindamaged
-            # gimp is braindamaged, is doesn't deliver useful values!!
-            ($res,@_)=interact($function,$blurb,$help,$params,@{eval $Gimp::Data{"$function/_fu_data"}});
-            return unless $res;
+
+      if ($run_mode == &Gimp::RUN_INTERACTIVE
+          || $run_mode == &Gimp::RUN_WITH_LAST_VALS) {
+         my $fudata = $Gimp::Data{"$function/_fu_data"};
+         my $VAR1; # Data::Dumper is braindamaged
+         local $^W=0; # perl -w is braindamaged
+
+         if ($run_mode == &Gimp::RUN_WITH_LAST_VALS && $fudata ne "") {
+            @_ = @{eval $fudata};
+         } else {
+            if (@_) {
+               my $res;
+               local $^W=0; # perl -w is braindamaged
+               # gimp is braindamaged, is doesn't deliver useful values!!
+               ($res,@_)=interact($function,$blurb,$help,$params,@{eval $fudata});
+               return unless $res;
+            }
          }
       } elsif ($run_mode == &Gimp::RUN_FULLINTERACTIVE) {
          my($res);
@@ -949,9 +957,6 @@ sub register($$$$$$$$$;@) {
          undef @pre;
          return unless $res;
       } elsif ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
-      } elsif ($run_mode == &Gimp::RUN_WITH_LAST_VALS) {
-         my $VAR1; # Data::Dumper is braindamaged
-         @_=@{eval $Gimp::Data{"$function/_fu_data"}};
       } else {
          die "run_mode must be INTERACTIVE, NONINTERACTIVE or WITH_LAST_VALS\n";
       }

@@ -1,7 +1,15 @@
 Revision history for Gimp-Perl extension.
 
+1.08  Fri Apr  9 03:20:54 CEST 1999
 	- added guidegrid, git-text, roundrectsel, repdup, centerguide,
-          stampify, goldenmean, triangle.
+          stampify, goldenmean, triangle, billboard, mirrorsplit.
+        - improved error detection when some moron forgets to 'use strict'
+          and tries to use undefined symbols.
+        - added VALUE, RED, GREEN, BLUE constants for gimp_levels.
+        - added WRAP, SMEAR, BLACK constants for plug_in_displace.
+        - RUN_WITH_LAST_VALS is ignored if no LAST_VALS exist.
+        - fixed a bug in Gimp::Data, FETCH returned undef for valid keys.
+        - small compatibility fix in scm2scm.
 
 1.072 Sat Mar 27 21:04:39 CET 1999
 	- scripts will now be correctly installed when IN_GIMP.
