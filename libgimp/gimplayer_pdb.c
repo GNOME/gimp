@@ -187,12 +187,12 @@ gimp_layer_translate (gint32 layer_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-gint
+gboolean
 gimp_layer_is_floating_selection (gint32 layer_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint result;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_layer_is_floating_sel",
 				    &nreturn_vals,
@@ -201,7 +201,7 @@ gimp_layer_is_floating_selection (gint32 layer_ID)
 
   result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -235,42 +235,42 @@ gimp_layer_get_mask_id (gint32 layer_ID)
   return mask_ID;
 }
 
-gint
+gboolean
 gimp_layer_get_apply_mask (gint32 layer_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint result;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_apply_mask",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
 				    PARAM_END);
 
-  result = 0;
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return result;
 }
 
-gint
+gboolean
 gimp_layer_get_edit_mask (gint32 layer_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint result;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_edit_mask",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
 				    PARAM_END);
 
-  result = 0;
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -340,7 +340,7 @@ gimp_layer_get_opacity (gint32 layer_ID)
   return result;
 }
 
-gint
+gboolean
 gimp_layer_get_preserve_transparency (gint32 layer_ID)
 {
   GParam *return_vals;
@@ -352,51 +352,51 @@ gimp_layer_get_preserve_transparency (gint32 layer_ID)
 				    PARAM_LAYER, layer_ID,
 				    PARAM_END);
 
-  result = 0;
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return result;
 }
 
-gint
+gboolean
 gimp_layer_get_show_mask (gint32 layer_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint result;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_show_mask",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
 				    PARAM_END);
 
-  result = 0;
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return result;
 }
 
-gint
+gboolean
 gimp_layer_get_visible (gint32 layer_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint result;
+  gboolean result;
 
   return_vals = gimp_run_procedure ("gimp_layer_get_visible",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
 				    PARAM_END);
 
-  result = 0;
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    result = return_vals[1].data.d_int32;
+    result = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -404,8 +404,8 @@ gimp_layer_get_visible (gint32 layer_ID)
 }
 
 void
-gimp_layer_set_apply_mask (gint32 layer_ID,
-			   gint   apply_mask)
+gimp_layer_set_apply_mask (gint32   layer_ID,
+			   gboolean apply_mask)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -420,8 +420,8 @@ gimp_layer_set_apply_mask (gint32 layer_ID,
 }
 
 void
-gimp_layer_set_edit_mask (gint32 layer_ID,
-			  gint   edit_mask)
+gimp_layer_set_edit_mask (gint32   layer_ID,
+			  gboolean edit_mask)
 {
   GParam *return_vals;
   gint nreturn_vals;

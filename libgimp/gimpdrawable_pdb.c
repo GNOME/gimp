@@ -19,9 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <string.h>
-
 #include "gimp.h"
+
 
 void
 gimp_drawable_update (gint32 drawable_ID,

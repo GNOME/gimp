@@ -148,6 +148,8 @@ void           gimp_image_convert_indexed       (gint32         image_ID,
 						 gint           alpha_dither,
 						 gint           remove_unused,
 						 gchar         *palette);
+gint32      * gimp_image_list                   (gint          *nimages);
+
 
 /****************************************
  *              Guides                  *

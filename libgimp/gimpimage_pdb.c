@@ -19,142 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <string.h>
-
 #include "gimp.h"
-
-
-gint32
-gimp_image_add_hguide (gint32 image_id,
-		       gint32 yposition)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 guide_id;
-
-  return_vals = gimp_run_procedure ("gimp_image_add_hguide",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, yposition,
-				    PARAM_END);
-
-  guide_id = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    guide_id = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return guide_id;
-}
-
-gint32
-gimp_image_add_vguide (gint32 image_id,
-		       gint32 xposition)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 guide_id;
-
-  return_vals = gimp_run_procedure ("gimp_image_add_vguide",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, xposition,
-				    PARAM_END);
-
-  guide_id = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    guide_id = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return guide_id;
-}
-
-void
-gimp_image_delete_guide (gint32 image_id,
-			 gint32 guide_id)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_image_delete_guide",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, guide_id,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-gint32
-gimp_image_find_next_guide (gint32 image_id,
-			    gint32 guide_id)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 rtn_guide_id;
-
-  return_vals = gimp_run_procedure ("gimp_image_find_next_guide",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, guide_id,
-				    PARAM_END);
-
-  rtn_guide_id = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    rtn_guide_id = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return rtn_guide_id;
-}
-
-GOrientation
-gimp_image_get_guide_orientation (gint32 image_id,
-				  gint32 guide_id)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  GOrientation rtn_guide_orientation;
-
-  return_vals = gimp_run_procedure ("gimp_image_get_guide_orientation",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, guide_id,
-				    PARAM_END);
-
-  rtn_guide_orientation = ORIENTATION_UNKNOWN;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    rtn_guide_orientation = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return rtn_guide_orientation;
-}
-
-gint32
-gimp_image_get_guide_position (gint32 image_id,
-			       gint32 guide_id)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 rtn_guide_position;
-
-  return_vals = gimp_run_procedure ("gimp_image_get_guide_position",
-				    &nreturn_vals,
-				    PARAM_IMAGE, image_id,
-				    PARAM_INT32, guide_id,
-				    PARAM_END);
-
-  rtn_guide_position = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    rtn_guide_position = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return rtn_guide_position;
-}
-
 
 
 gint32
@@ -343,7 +208,7 @@ gimp_image_add_layer_mask (gint32 image_ID,
 			   gint32 mask_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_add_layer_mask",
 				    &nreturn_vals,
@@ -479,7 +344,7 @@ gimp_image_lower_channel (gint32 image_ID,
 			  gint32 channel_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_image_lower_channel",
 				    &nreturn_vals,
@@ -800,7 +665,7 @@ gchar*
 gimp_image_get_filename (gint32 image_ID)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
   char *filename;
 
   return_vals = gimp_run_procedure ("gimp_image_get_filename",
@@ -1061,8 +926,8 @@ gimp_image_get_resolution (gint32  image_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
-  double xres;
-  double yres;
+  gdouble xres;
+  gdouble yres;
 
   g_return_if_fail (xresolution && yresolution);
 
@@ -1274,3 +1139,28 @@ gimp_image_convert_indexed (gint32                 image_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }     
+
+gint32 *
+gimp_image_list (gint *nimages)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 *images;
+
+  return_vals = gimp_run_procedure ("gimp_image_list",
+				    &nreturn_vals,
+				    PARAM_END);
+
+  images = NULL;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      *nimages = return_vals[1].data.d_int32;
+      images = g_new (gint32, *nimages);
+      memcpy (images, return_vals[2].data.d_int32array, *nimages * 4);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return images;
+}
+

@@ -14,12 +14,12 @@
     gimage
     gimage_mask
     gimprc
-    gimphelp
     gradient
     gradient_select
     guides
-    interface
+    help
     layer
+    message
     misc
     palette
     parasite

@@ -1,8 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimphelp_pdb.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpguides_pdb.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */         
 
-#ifndef __GIMP_HELP_PDB_H__
-#define __GIMP_HELP_PDB_H__
+#ifndef __GIMP_GUIDES_PDB_H__
+#define __GIMP_GUIDES_PDB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,12 +29,22 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_help (gchar *prog_name,
-		  gchar *help_data);
+gint32        gimp_image_add_hguide            (gint32     image_ID,
+						gint32     yposition);
+gint32        gimp_image_add_vguide            (gint32     image_ID,
+						gint32     xposition);
+void          gimp_image_delete_guide          (gint32     image_ID,
+						gint32     guide_ID);
+gint32        gimp_image_find_next_guide       (gint32     image_ID,
+						gint32     guide_ID);
+GOrientation  gimp_image_get_guide_orientation (gint32     image_ID,
+						gint32     guide_ID);
+gint32        gimp_image_get_guide_position    (gint32     image_ID,
+						gint32     guide_ID);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_HELP_PDB_H__ */
+#endif /* __GIMP_GUIDES_PDB_H__ */

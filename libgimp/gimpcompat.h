@@ -62,6 +62,9 @@ extern "C" {
 
 #define gimp_plugin_help_func           gimp_standard_help_func
 
+#define gimp_query_database             gimp_procedural_db_query
+#define gimp_query_images               gimp_image_list
+
 #define Parasite                        GimpParasite
 #define PARASITE_PERSISTENT             GIMP_PARASITE_PERSISTENT
 #define PARASITE_UNDOABLE               GIMP_PARASITE_UNDOABLE

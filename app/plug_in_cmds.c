@@ -31,7 +31,8 @@ static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord temp_PDB_name_proc;
 static ProcRecord plugins_query_proc;
-static ProcRecord plugin_domain_add_proc;
+static ProcRecord plugin_domain_register_proc;
+static ProcRecord plugin_help_register_proc;
 
 void
 register_plug_in_procs (void)
@@ -40,7 +41,8 @@ register_plug_in_procs (void)
   procedural_db_register (&progress_update_proc);
   procedural_db_register (&temp_PDB_name_proc);
   procedural_db_register (&plugins_query_proc);
-  procedural_db_register (&plugin_domain_add_proc);
+  procedural_db_register (&plugin_domain_register_proc);
+  procedural_db_register (&plugin_help_register_proc);
 }
 
 static int
@@ -387,7 +389,7 @@ static ProcRecord plugins_query_proc =
 };
 
 static Argument *
-plugin_domain_add_invoker (Argument *args)
+plugin_domain_register_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -416,10 +418,10 @@ plugin_domain_add_invoker (Argument *args)
 	}
     }
 
-  return procedural_db_return_args (&plugin_domain_add_proc, success);
+  return procedural_db_return_args (&plugin_domain_register_proc, success);
 }
 
-static ProcArg plugin_domain_add_inargs[] =
+static ProcArg plugin_domain_register_inargs[] =
 {
   {
     PDB_STRING,
@@ -433,18 +435,69 @@ static ProcArg plugin_domain_add_inargs[] =
   }
 };
 
-static ProcRecord plugin_domain_add_proc =
+static ProcRecord plugin_domain_register_proc =
 {
-  "gimp_plugin_domain_add",
-  "Adds a textdomain for localisation.",
+  "gimp_plugin_domain_register",
+  "Registers a textdomain for localisation.",
   "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the gimp-std-plugins domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
   "Sven Neumann",
   "Sven Neumann",
   "2000",
   PDB_INTERNAL,
   2,
-  plugin_domain_add_inargs,
+  plugin_domain_register_inargs,
   0,
   NULL,
-  { { plugin_domain_add_invoker } }
+  { { plugin_domain_register_invoker } }
+};
+
+static Argument *
+plugin_help_register_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  gchar *help_path;
+  PlugInDef *plug_in_def;
+
+  help_path = (gchar *) args[0].value.pdb_pointer;
+  if (help_path == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      if (current_plug_in && current_plug_in->query)
+	{
+	  plug_in_def = current_plug_in->user_data;
+    
+	  if (plug_in_def->help_path)
+	    g_free (plug_in_def->help_path);
+	  plug_in_def->help_path = g_strdup (help_path);
+	}
+    }
+
+  return procedural_db_return_args (&plugin_help_register_proc, success);
+}
+
+static ProcArg plugin_help_register_inargs[] =
+{
+  {
+    PDB_STRING,
+    "help_path",
+    "The rootdir of the plug-in's help pages"
+  }
+};
+
+static ProcRecord plugin_help_register_proc =
+{
+  "gimp_plugin_help_register",
+  "Register a help path for a plug-in.",
+  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2000",
+  PDB_INTERNAL,
+  1,
+  plugin_help_register_inargs,
+  0,
+  NULL,
+  { { plugin_help_register_invoker } }
 };

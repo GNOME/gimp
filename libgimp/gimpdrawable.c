@@ -19,11 +19,10 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <string.h>
-
 #include <glib.h>
 
 #include "gimp.h"
+
 
 #define TILE_WIDTH   _gimp_tile_width
 #define TILE_HEIGHT  _gimp_tile_height
@@ -109,7 +108,7 @@ gimp_drawable_delete (GimpDrawable *drawable)
 }
 
 
-gchar*
+gchar *
 gimp_drawable_name (gint32 drawable_ID)
 {
   if (gimp_drawable_is_layer (drawable_ID))

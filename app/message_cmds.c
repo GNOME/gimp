@@ -27,7 +27,7 @@ static ProcRecord message_get_handler_proc;
 static ProcRecord message_set_handler_proc;
 
 void
-register_interface_procs (void)
+register_message_procs (void)
 {
   procedural_db_register (&message_proc);
   procedural_db_register (&message_get_handler_proc);

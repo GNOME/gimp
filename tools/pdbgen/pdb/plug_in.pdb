@@ -22,6 +22,11 @@ sub andy_pdb_misc {
     $date = '1998';
 }
 
+sub mitch_misc {
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2000';
+}
+
 sub neo_pdb_misc {
     $author = $copyright = 'Sven Neumann';
     $date = '2000';
@@ -245,8 +250,8 @@ CODE
     );
 }
 
-sub plugin_domain_add {
-    $blurb = 'Adds a textdomain for localisation.';
+sub plugin_domain_register {
+    $blurb = 'Registers a textdomain for localisation.';
 
     $help = <<'HELP';
 This procedure adds a textdomain to the list of domains Gimp searches 
@@ -292,6 +297,40 @@ CODE
     );
 }
 
+sub plugin_help_register {
+    $blurb = "Register a help path for a plug-in.";
+
+    $help = <<HELP;
+This procedure changes the help rootdir for the plug-in which calls it. All
+subsequent calls of gimp_help from this plug-in will be interpreted relative
+to this rootdir.  This procedure can only be called in the query function of
+a plug-in and it has to be called before any procedure is installed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+	{ name => 'help_path', type => 'string',
+	  desc => 'The rootdir of the plug-in\'s help pages' }
+    );
+
+    %invoke = (
+        success => 'TRUE',
+        vars => [ 'PlugInDef *plug_in_def' ],
+        code => <<'CODE',
+{
+  if (current_plug_in && current_plug_in->query)
+    {
+      plug_in_def = current_plug_in->user_data;
+
+      if (plug_in_def->help_path)
+        g_free (plug_in_def->help_path);
+      plug_in_def->help_path = g_strdup (help_path);
+    }
+}
+CODE
+    );
+}
 
 
 @headers = qw("plug_in.h" "regex.h" "appenv.h" <string.h> <stdlib.h>);
@@ -306,7 +345,7 @@ match_strings (regex_t *preg,
 CODE
 
 @procs = qw(progress_init progress_update temp_PDB_name plugins_query
-	    plugin_domain_add);
+	    plugin_domain_register plugin_help_register);
 %exports = (app => [@procs], lib => [@procs[0..2]]);
 
 $desc = 'Plug-in';

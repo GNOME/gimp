@@ -198,7 +198,6 @@ gimp_SOURCES = \
 	gimpdnd.h		\
 	gimphelp.c		\
 	gimphelp.h		\
-	gimphelp_cmds.c		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\
@@ -240,6 +239,7 @@ gimp_SOURCES = \
 	guides_cmds.c		\
 	gximage.c		\
 	gximage.h		\
+	help_cmds.c		\
 	histogramwidget.c	\
 	histogramwidget.h	\
 	histogram_tool.c	\
@@ -262,7 +262,6 @@ gimp_SOURCES = \
 	ink.h		        \
 	interface.c		\
 	interface.h		\
-	interface_cmds.c	\
 	internal_procs.c	\
 	internal_procs.h	\
 	invert.c		\
@@ -294,6 +293,7 @@ gimp_SOURCES = \
 	measure.h		\
 	menus.c			\
 	menus.h			\
+	message_cmds.c		\
 	misc_cmds.c		\
 	module_db.c		\
 	module_db.h		\

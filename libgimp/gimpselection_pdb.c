@@ -21,6 +21,7 @@
 
 #include "gimp.h"
 
+
 gint32
 gimp_selection_bounds (gint32  image_ID,
 		       gint   *non_empty,
@@ -37,8 +38,8 @@ gimp_selection_bounds (gint32  image_ID,
                                     &nreturn_vals,
                                     PARAM_IMAGE, image_ID,
                                     PARAM_END);
-  result = FALSE;
 
+  result = FALSE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       result = TRUE;
@@ -81,12 +82,12 @@ gimp_selection_float (gint32 image_ID,
   return layer_ID;
 }
 
-gint32
+gboolean
 gimp_selection_is_empty (gint32 image_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint32 is_empty;
+  gboolean is_empty;
   
   return_vals = gimp_run_procedure ("gimp_selection_is_empty",
 				    &nreturn_vals,
@@ -94,7 +95,7 @@ gimp_selection_is_empty (gint32 image_ID)
 				    PARAM_END);
   is_empty = TRUE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    is_empty = return_vals[1].data.d_int32;
+    is_empty = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -111,7 +112,6 @@ gimp_selection_none (gint32 image_ID)
                                     &nreturn_vals,
                                     PARAM_IMAGE, image_ID,
                                     PARAM_END);
-  gimp_destroy_params (return_vals, nreturn_vals);
 
-  return;
+  gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -1,6 +1,70 @@
 2000-05-31  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 
+	Episode IV...
+
+	* app/Makefile.am
+
+	* app/message_cmds.c: new name
+	* app/interface_cmds.c: removed
+
+	* app/help_cmds.c: new name
+	* app/gimphelp_cmds.c: removed
+
+	* app/internal_procs.c
+	* app/gimphelp_cmds.c
+	* app/plug_in_cmds.c: moved gimp_plugin_help_register to
+	plug_in_cmds.c, s/gimp_plugin_domain_add/gimp_plugin_domain_register/
+
+	* libgimp/Makefile.am
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpfileops_pdb.[ch]
+	* libgimp/gimpguides_pdb.[ch]
+	* libgimp/gimpmessage_pdb.[ch]
+	* libgimp/gimpprocedural_db_pdb.[ch]
+	* libgimp/gimpplugin_pdb.[ch]: new files containing PDB wrappers
+	moved out of libgimp/gimp.[ch]
+
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpdisplay_pdb.[ch]
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimphelp_pdb.[ch]
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimplayer_pdb.c
+	* libgimp/gimpparasite_pdb.c
+	* libgimp/gimpselection_pdb.c: various changes.
+
+	* libgimp/gimpunit.c: new file
+	* libgimp/gimpunit_pdb.[ch]: contains only PDB wrappers prefixed
+	with "_" which are called from libgimp/gimpunit.c only.
+
+	* libgimp/gimpunit.h: minor stuff
+
+	* libgimp/gimpcompat.h: declared the following functions obsolete:
+	 gimp_query_database
+	 gimp_query_images
+
+	* libgimp/gimp.[ch]: removed all PDB wrappers.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl: changed
+
+	* tools/pdbgen/lib.pl: tried to fix libgimp autogeneration and
+	fixed just a few comments.
+
+	* tools/pdbgen/pdb/interface.pdb
+	* tools/pdbgen/pdb/gimphelp.pdb: removed
+
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/message.pdb: new names
+
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/perl/Gimp/Lib.xs:
+	s/gimp_plugin_domain_add/gimp_plugin_domain_register/
+
+2000-05-31  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
 	* libgimp/Makefile.am
 	* libgimp/gimpchannel_pdb.h
 	* libgimp/gimpdisplay_pdb.h

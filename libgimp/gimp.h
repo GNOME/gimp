@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimp.h
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -26,6 +28,7 @@
 #include <libgimp/gimptypes.h>
 
 #include <libgimp/gimpcolorspace.h>
+#include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpenv.h>
 #include <libgimp/gimplimits.h>
@@ -37,17 +40,7 @@
 #include <libgimp/gimputils.h>
 #include <libgimp/gimpvector.h>
 
-#include <libgimp/gimpchannel_pdb.h>
-#include <libgimp/gimpdisplay_pdb.h>
-#include <libgimp/gimpdrawable_pdb.h>
-#include <libgimp/gimpgradient_pdb.h>
-#include <libgimp/gimphelp_pdb.h>
-#include <libgimp/gimpimage_pdb.h>
-#include <libgimp/gimplayer_pdb.h>
-#include <libgimp/gimppalette_pdb.h>
-#include <libgimp/gimpparasite_pdb.h>
-#include <libgimp/gimpselection_pdb.h>
-#include <libgimp/gimpunit_pdb.h>
+#include <libgimp/gimp_pdb.h>
 
 #include <libgimp/gimpcompat.h>  /* to be removed in 1.3 */
 
@@ -66,6 +59,11 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/* more convenient names for some pdb functions */  
+#define gimp_get_data         gimp_procedural_db_get_data
+#define gimp_get_data_size    gimp_procedural_db_get_data_size
+#define gimp_set_data         gimp_procedural_db_set_data
+#define gimp_query_procedure  gimp_procedural_db_proc_info
 
 GIMPVAR guint gimp_major_version;
 GIMPVAR guint gimp_minor_version;
@@ -224,85 +222,9 @@ gint        gimp_main                (gint      argc,
  */
 void G_GNUC_NORETURN gimp_quit       (void);
 
-/* Specify a range of data to be associated with 'id'.
- *  The data will exist for as long as the main gimp
- *  application is running.
- */
-void        gimp_set_data            (gchar    *id,
-				      gpointer  data,
-				      guint32   length);
-
-/* Retrieve the piece of data stored within the main
- *  gimp application specified by 'id'. The data is
- *  stored in the supplied buffer.  Make sure enough
- *  space is allocated.
- */
-void        gimp_get_data            (gchar    *id,
-				      gpointer  data);
-
-/* Get the size in bytes of the data stored by a gimp_get_data
- * id. As size of zero may indicate that there is no such
- * identifier in the database.
- */
-guint32     gimp_get_data_size       (gchar    *id);
-
-/* Initialize the progress bar with "message". If "message"
- *  is NULL, the message displayed in the progress window will
- *  be the name of the plug-in.
- */
-void        gimp_progress_init       (gchar    *message);
-
-/* Update the progress bar. If the progress bar has not been
- *  initialized then it will be automatically initialized as if
- *  "gimp_progress_init (NULL)" were called. "percentage" is a
- *  value between 0 and 1.
- */
-void        gimp_progress_update     (gdouble   percentage);
-
 /* Returns the default gdisplay (given at plug-in config time).
  */
 gint32      gimp_default_display     (void);
-
-
-/* Pops up a dialog box with "message". Useful for status and
- * error reports. If "message" is NULL, do nothing.
- */
-void        gimp_message             (const gchar    *message);
-
-
-/* Query the gimp application's procedural database.
- *  The arguments are regular expressions which select
- *  which procedure names will be returned in 'proc_names'.
- */
-void        gimp_query_database      (gchar          *name_regexp,
-				      gchar          *blurb_regexp,
-				      gchar          *help_regexp,
-				      gchar          *author_regexp,
-				      gchar          *copyright_regexp,
-				      gchar          *date_regexp,
-				      gchar          *proc_type_regexp,
-				      gint           *nprocs,
-				      gchar        ***proc_names);
-
-/* Query the gimp application's procedural database
- *  regarding a particular procedure.
- */
-gboolean    gimp_query_procedure     (gchar          *proc_name,
-				      gchar         **proc_blurb,
-				      gchar         **proc_help,
-				      gchar         **proc_author,
-				      gchar         **proc_copyright,
-				      gchar         **proc_date,
-				      gint           *proc_type,
-				      gint           *nparams,
-				      gint           *nreturn_vals,
-				      GimpParamDef  **params,
-				      GimpParamDef  **return_vals);
-
-/* Query the gimp application regarding all open images.
- *  The list of open image id's is returned in 'image_ids'.
- */
-gint32    * gimp_query_images        (gint         *nimages);
 
 
 /* Install a procedure in the procedure database.
@@ -341,25 +263,6 @@ void        gimp_install_temp_proc   (gchar        *name,
 /* Uninstall a temporary procedure
  */
 void        gimp_uninstall_temp_proc (gchar        *name);
-
-/* Install a load file format handler in the procedure database.
- */
-void        gimp_register_magic_load_handler (gchar *name,
-					      gchar *extensions,
-					      gchar *prefixes,
-					      gchar *magics);
-
-/* Install a load file format handler in the procedure database.
- */
-void        gimp_register_load_handler       (gchar *name,
-					      gchar *extensions,
-					      gchar *prefixes);
-
-/* Install a save file format handler in the procedure database.
- */
-void        gimp_register_save_handler       (gchar *name,
-					      gchar *extensions,
-					      gchar *prefixes);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
@@ -400,15 +303,6 @@ gint        gimp_min_colors        (void);
 void        gimp_request_wakeups   (void);
 
 gchar     * gimp_get_progname      (void);
-
-
-/****************************************
- *           Localisation               *
- ****************************************/
-
-void        gimp_plugin_domain_add           (gchar *domain_name);
-void        gimp_plugin_domain_add_with_path (gchar *domain_name, 
-					      gchar *domain_path);
 
 
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpdisplay_pdb.c
+ * gimpplugin_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,49 +22,60 @@
 #include "gimp.h"
 
 
-gint32
-gimp_display_new (gint32 image_ID)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  gint32 display_ID;
-
-  return_vals = gimp_run_procedure ("gimp_display_new",
-                                    &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_END);
-
-  display_ID = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    display_ID = return_vals[1].data.d_display;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return display_ID;
-}
-
 void
-gimp_display_delete (gint32 display_ID)
+gimp_progress_init (gchar *message)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_display_delete",
-                                    &nreturn_vals,
-                                    PARAM_DISPLAY, display_ID,
-                                    PARAM_END);
+  return_vals = gimp_run_procedure ("gimp_progress_init",
+				    &nreturn_vals,
+				    PARAM_STRING, message,
+				    PARAM_INT32, gimp_default_display (),
+				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
 void
-gimp_displays_flush (void)
+gimp_progress_update (gdouble percentage)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_displays_flush",
+  return_vals = gimp_run_procedure ("gimp_progress_update",
+				    &nreturn_vals,
+				    PARAM_FLOAT, percentage,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_plugin_domain_register (gchar *domain_name,
+			     gchar *domain_path)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_domain_register",
+				    &nreturn_vals,
+				    PARAM_STRING, domain_name,
+				    PARAM_STRING, domain_path,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_plugin_help_register (gchar *help_path)
+{
+  GParam *return_vals;
+  gint    nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_help_register",
                                     &nreturn_vals,
+                                    PARAM_STRING, help_path,
                                     PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -80,6 +80,7 @@ endif
 libgimp_la_SOURCES = \
 	gimp.c			\
 	gimp.h			\
+	gimp_pdb.h		\
 	gimpchannel_pdb.h	\
 	gimpchannel_pdb.c	\
 	gimpcolorspace.c	\
@@ -92,7 +93,10 @@ libgimp_la_SOURCES = \
 	gimpdrawable_pdb.h	\
 	gimpenv.c		\
 	gimpenv.h		\
+	gimpfileops_pdb.c	\
+	gimpfileops_pdb.h	\
 	gimpgradient_pdb.c	\
+	gimpguides_pdb.c	\
 	gimphelp.c		\
 	gimphelp_pdb.c		\
 	gimphelp_pdb.h		\
@@ -102,6 +106,8 @@ libgimp_la_SOURCES = \
 	gimplayer_pdb.h		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
+	gimpmessage_pdb.c	\
+	gimpmessage_pdb.h	\
 	gimppalette_pdb.c	\
 	gimpparasite.c		\
 	gimpparasite.h		\
@@ -111,6 +117,10 @@ libgimp_la_SOURCES = \
 	gimpparasite_pdb.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
+	gimpplugin_pdb.c	\
+	gimpplugin_pdb.h	\
+	gimpproceduraldb_pdb.c	\
+	gimpproceduraldb_pdb.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpselection_pdb.c	\
@@ -121,6 +131,7 @@ libgimp_la_SOURCES = \
 	gimptile.h		\
 	gimpunit_pdb.c		\
 	gimpunit_pdb.h		\
+	gimpunit.c		\
 	gimpunit.h		\
 	gimputils.c		\
 	gimputils.h		\
@@ -153,15 +164,20 @@ libgimpui_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h			\
+	gimp_pdb.h		\
 	gimpchannel_pdb.h	\
 	gimpdisplay_pdb.h	\
 	gimpdrawable_pdb.h	\
+	gimpfileops_pdb.h	\
 	gimpgradient_pdb.h	\
 	gimphelp_pdb.h		\
 	gimpimage_pdb.h		\
 	gimplayer_pdb.h		\
+	gimpmessage_pdb.h	\
 	gimppalette_pdb.h	\
 	gimpparasite_pdb.h	\
+	gimpplugin_pdb.h	\
+	gimpproceduraldb_pdb.h	\
 	gimpselection_pdb.h	\
 	gimpchainbutton.h	\
 	gimpcolorbutton.h	\
@@ -169,6 +185,7 @@ gimpinclude_HEADERS = \
 	gimpcolorselector.h	\
 	gimpcolorspace.h	\
         gimpcompat.h		\
+	gimpdrawable.h		\
 	gimpdialog.h		\
 	gimpenums.h		\
 	gimpenv.h		\
@@ -193,7 +210,6 @@ gimpinclude_HEADERS = \
 	gimptypes.h		\
 	gimpui.h		\
 	gimpunit.h		\
-	gimpunit_pdb.h		\
 	gimpunitmenu.h		\
 	gimputils.h		\
 	gimpvector.h		\

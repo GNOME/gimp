@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
  *
  * gimpunit.h
- * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,8 +27,8 @@
  * the gimp app and plugins.
  */
 
-#ifndef __GIMPUNIT_H__
-#define __GIMPUNIT_H__
+#ifndef __GIMP_UNIT_H__
+#define __GIMP_UNIT_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,4 +83,4 @@ gchar    * gimp_unit_get_plural          (GimpUnit  unit);
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMPUNIT_H__ */
+#endif /* __GIMP_UNIT_H__ */

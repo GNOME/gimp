@@ -1641,10 +1641,7 @@ gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, im
                                      type,nparams,nreturn_vals,apd,rpd,pii_run);
             else
               {
-                /* this is horrendously ugly :( */
-#if GIMP_CHECK_VERSION(1,1,18)
-	        gimp_plugin_domain_add_with_path ("gimp-perl", datadir "/locale");
-#endif
+	        gimp_plugin_domain_register ("gimp-perl", datadir "/locale");
 
                 gimp_install_procedure(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
                                        type,nparams,nreturn_vals,apd,rpd);

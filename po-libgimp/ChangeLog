@@ -1,3 +1,7 @@
+2000-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: s/gimpunit_pdb/gimpunit/
+
 Wed May 31 13:38:07 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

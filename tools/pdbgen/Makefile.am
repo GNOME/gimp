@@ -16,12 +16,12 @@ pdb_sources = \
 	pdb/gimage.pdb		\
 	pdb/gimage_mask.pdb	\
 	pdb/gimprc.pdb		\
-	pdb/gimphelp.pdb	\
 	pdb/gradient.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/guides.pdb		\
-	pdb/interface.pdb	\
+	pdb/help.pdb		\
 	pdb/layer.pdb		\
+	pdb/message.pdb		\
 	pdb/misc.pdb		\
 	pdb/palette.pdb		\
 	pdb/parasite.pdb	\

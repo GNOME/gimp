@@ -1,8 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimphelp_pdb.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpfileops_pdb.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */         
 
-#ifndef __GIMP_HELP_PDB_H__
-#define __GIMP_HELP_PDB_H__
+#ifndef __GIMP_FILE_OPS_PDB_H__
+#define __GIMP_FILE_OPS_PDB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,12 +29,28 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_help (gchar *prog_name,
-		  gchar *help_data);
+/* Install a load file format handler in the procedure database.
+ */
+void    gimp_register_magic_load_handler (gchar *name,
+					  gchar *extensions,
+					  gchar *prefixes,
+					  gchar *magics);
+
+/* Install a load file format handler in the procedure database.
+ */
+void    gimp_register_load_handler       (gchar *name,
+					  gchar *extensions,
+					  gchar *prefixes);
+
+/* Install a save file format handler in the procedure database.
+ */
+void    gimp_register_save_handler       (gchar *name,
+					  gchar *extensions,
+					  gchar *prefixes);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_HELP_PDB_H__ */
+#endif /* __GIMP_FILE_OPS_PDB_H__ */

@@ -1,8 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimphelp_pdb.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpplugin_pdb.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */         
 
-#ifndef __GIMP_HELP_PDB_H__
-#define __GIMP_HELP_PDB_H__
+#ifndef __GIMP_PLUG_IN_PDB_H__
+#define __GIMP_PLUG_IN_PDB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,12 +29,27 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void   gimp_help (gchar *prog_name,
-		  gchar *help_data);
+/* Initialize the progress bar with "message". If "message"
+ *  is NULL, the message displayed in the progress window will
+ *  be the name of the plug-in.
+ */
+void   gimp_progress_init          (gchar   *message);
+
+/* Update the progress bar. If the progress bar has not been
+ *  initialized then it will be automatically initialized as if
+ *  "gimp_progress_init (NULL)" were called. "percentage" is a
+ *  value between 0 and 1.
+ */
+void   gimp_progress_update        (gdouble  percentage);
+
+void   gimp_plugin_domain_register (gchar   *domain_name,
+				    gchar   *domain_path);
+
+void   gimp_plugin_help_register   (gchar   *help_path);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_HELP_PDB_H__ */
+#endif /* __GIMP_PLUG_IN_PDB_H__ */

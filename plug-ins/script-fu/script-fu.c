@@ -142,7 +142,7 @@ query (void)
   };
   static gint nserver_args = sizeof (server_args) / sizeof (server_args[0]);
 
-  gimp_plugin_domain_add ("gimp-script-fu");
+  gimp_plugin_domain_register ("gimp-script-fu", NULL);
 
   gimp_install_procedure ("extension_script_fu",
 			  "A scheme interpreter for scripting GIMP operations",

@@ -1,8 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimphelp_pdb.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpmessage_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,17 +22,15 @@
 #include "gimp.h"
 
 void
-gimp_help (gchar *prog_name,
-	   gchar *help_data)
+gimp_message (const gchar *message)
 {
-  GParam *return_vals;
-  gint    nreturn_vals;
+  GimpParam *return_vals;
+  gint nreturn_vals;
 
-  return_vals = gimp_run_procedure ("gimp_help",
-                                    &nreturn_vals,
-				    PARAM_STRING, prog_name,
-                                    PARAM_STRING, help_data,
-                                    PARAM_END);
+  return_vals = gimp_run_procedure ("gimp_message",
+				    &nreturn_vals,
+				    PARAM_STRING, message,
+				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

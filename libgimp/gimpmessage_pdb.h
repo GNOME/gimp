@@ -1,8 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimphelp_pdb.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpmessage_pdb.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */         
 
-#ifndef __GIMP_HELP_PDB_H__
-#define __GIMP_HELP_PDB_H__
+#ifndef __GIMP_MESSAGE_PDB_H__
+#define __GIMP_MESSAGE_PDB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,13 +28,13 @@ extern "C" {
 
 /* For information look into the C source or the html documentation */
 
-
-void   gimp_help (gchar *prog_name,
-		  gchar *help_data);
-
+/* Pops up a dialog box with "message". Useful for status and
+ * error reports. If "message" is NULL, do nothing.
+ */
+void   gimp_message (const gchar *message);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_HELP_PDB_H__ */
+#endif /* __GIMP_PLUG_IN_PDB_H__ */
