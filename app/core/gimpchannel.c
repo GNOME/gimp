@@ -52,6 +52,8 @@
 #include "gimppaintinfo.h"
 #include "gimpprojection.h"
 #include "gimpstrokeoptions.h"
+#include "gimptoolinfo.h"
+#include "gimptooloptions.h"
 
 #include "gimp-intl.h"
 
@@ -622,42 +624,19 @@ gimp_channel_stroke (GimpItem     *item,
                                      offset_x, offset_y);
       retval = TRUE;
     }
-  else if (GIMP_IS_PAINT_INFO (stroke_desc))
+  else if (GIMP_IS_PAINT_OPTIONS (stroke_desc))
     {
-      GimpImage        *gimage     = gimp_item_get_image (item);
-      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);
-      GimpPaintOptions *paint_options;
+      GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
       GimpPaintCore    *core;
 
-      if (use_default_values)
-        {
-          paint_options =
-            gimp_paint_options_new (gimage->gimp,
-                                    paint_info->paint_options_type);
-
-          /*  undefine the paint-relevant context properties and get them
-           *  from the passed context
-           */
-          gimp_context_define_properties (GIMP_CONTEXT (paint_options),
-                                          GIMP_CONTEXT_PAINT_PROPS_MASK,
-                                          FALSE);
-          gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
-        }
-      else
-        {
-          paint_options = paint_info->paint_options;
-        }
-
-      core = g_object_new (paint_info->paint_type, NULL);
+      core = g_object_new (GIMP_TOOL_OPTIONS (paint_options)->tool_info->paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                 paint_options,
                                                 segs_in, n_segs_in,
                                                 offset_x, offset_y);
-      g_object_unref (core);
 
-      if (use_default_values)
-        g_object_unref (paint_options);
+      g_object_unref (core);
     }
 
   return retval;
