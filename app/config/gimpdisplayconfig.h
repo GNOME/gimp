@@ -50,6 +50,7 @@ struct _GimpDisplayConfig
   gboolean                cursor_updating;
   gchar                  *image_title_format;
   gchar                  *image_status_format;
+  gboolean                show_menubar;
   gboolean                show_rulers;
   gboolean                show_statusbar;
   gboolean                confirm_on_close;
@@ -59,7 +60,6 @@ struct _GimpDisplayConfig
   GimpPreviewSize         nav_preview_size;
   GimpDisplayPaddingMode  canvas_padding_mode;
   GimpRGB                 canvas_padding_color;
-  gboolean                menu_bar_per_display;
 };
 
 struct _GimpDisplayConfigClass

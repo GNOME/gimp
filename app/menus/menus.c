@@ -638,6 +638,10 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/View/---"),
 
+  { { N_("/View/Toggle Menubar"), NULL,
+      view_toggle_menubar_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/toggle_menubar.html", NULL },
   { { N_("/View/Toggle Rulers"), "<control><shift>R",
       view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
     NULL,
@@ -2069,14 +2073,6 @@ menus_get_new_image_factory (Gimp     *gimp,
 {
   GimpItemFactory *image_factory;
 
-  if (! GIMP_DISPLAY_CONFIG (gimp->config)->menu_bar_per_display)
-    {
-      image_factory = gimp_item_factory_from_path ("<Image>");
-
-      if (image_factory)
-        return image_factory;
-    }
-
   image_factory = gimp_item_factory_new (gimp,
                                          menu_bar ?
                                          GTK_TYPE_MENU_BAR : GTK_TYPE_MENU,
@@ -2086,6 +2082,15 @@ menus_get_new_image_factory (Gimp     *gimp,
                                          image_entries,
                                          callback_data,
                                          TRUE);
+
+  if (menu_bar)
+    {
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (image_factory),
+                                     "/tearoff1", FALSE);
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (image_factory),
+                                     "/filters-separator", FALSE);
+    }
+
   menus_last_opened_add (image_factory, gimp);
 
   /*  create tool menu items  */

@@ -41,6 +41,8 @@ void   view_toggle_selection_cmd_callback      (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
                                                 gpointer   data);
+void   view_toggle_menubar_cmd_callback        (GtkWidget *widget,
+                                                gpointer   data);
 void   view_toggle_rulers_cmd_callback         (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_statusbar_cmd_callback      (GtkWidget *widget,

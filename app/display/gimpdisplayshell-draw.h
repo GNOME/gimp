@@ -73,7 +73,8 @@ struct _GimpDisplayShell
 
   GimpDisplay      *gdisp;
 
-  GimpItemFactory  *item_factory;
+  GimpItemFactory  *menubar_factory;
+  GimpItemFactory  *popup_factory;
 
   gdouble           monitor_xres;
   gdouble           monitor_yres;
@@ -207,7 +208,8 @@ void        gimp_display_shell_untransform_xy_f      (GimpDisplayShell *shell,
                                                       gboolean          use_offsets);
 
 void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
-                                                      Gimp             *gimp);
+                                                      Gimp             *gimp,
+                                                      gboolean          update_popup);
 
 GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
                                                       gdouble           x,

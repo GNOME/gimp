@@ -121,7 +121,7 @@ gimp_display_shell_events (GtkWidget        *widget,
       GdkEventKey *kevent;
 
     case GDK_KEY_PRESS:
-      if (! GIMP_DISPLAY_CONFIG (gimp->config)->menu_bar_per_display)
+      if (! GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget))
         {
           gchar *accel = NULL;
 
@@ -607,10 +607,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            if (! GIMP_DISPLAY_CONFIG (gimage->gimp->config)->menu_bar_per_display)
-              gimp_item_factory_popup_with_data (shell->item_factory,
-                                                 gimage,
-                                                 NULL);
+            gimp_item_factory_popup_with_data (shell->popup_factory,
+                                               gimage,
+                                               NULL);
             return_val = TRUE;
             break;
 
@@ -1568,7 +1567,7 @@ gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
   GtkItemFactory *factory;
   gint            x, y;
 
-  factory = GTK_ITEM_FACTORY (shell->item_factory);
+  factory = GTK_ITEM_FACTORY (shell->popup_factory);
 
   gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
                                            &x, &y,

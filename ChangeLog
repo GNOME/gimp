@@ -1,3 +1,43 @@
+2002-12-14  Michael Natterer  <mitch@gimp.org>
+
+	Changed menubar showing/hiding to work like rulers and statusbar:
+
+	* app/config/gimpconfig-blurbs.h
+	* app/config/gimpdisplayconfig.[ch]: renamed "menu_bar_per_display"
+	to "show_menubar". Removed GIMP_PARAM_RESTART flag.
+
+	* app/display/gimpdisplayshell.[ch]: chaged shell->item_factory to
+	shell->menubar_factory plus shell->popup_factory and always create
+	both of them. Added "gboolean update_popup" to
+	gimp_display_shell_set_menu_sensitivity() and call it recursively
+	with update_popup == TRUE if the display it is called for is the
+	active one.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c: changed accordinly.
+
+	* app/gui/gui.c: ditto. Set the menu sensitivity of new displays.
+
+	* app/gui/menus.c: added "<Image>/View/Toggle Menubar" menu item.
+	Moved some factory initialization code from gimpdisplayshell.c
+	here.
+
+	* app/gui/view-commands.[ch]: added
+	view_toggle_menubar_cmd_callback(). Update the menu sensitivity
+	manually in all callbacks which don't call gimp_image_flush().
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): moved the "Show
+	Menubar" toggle to the "Appearance" frame of the "Image Windows"
+	page. Added an own frame for the display zoom/scaling settings.
+
+	(preferences_dialog_create): Attach config_copy and config_orig
+	using g_object_set_data_full() instead of just g_object_set_data()
+	plus a g_object_weak_ref().
+
+	(prefs_default_resolution_callback): set the resolution for both
+	fields of the "size_sizeentry" instead of setting it for "x"
+	twice.
+
 2002-12-14  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_preferences.c: make sure that undo level

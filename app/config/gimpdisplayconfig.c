@@ -64,6 +64,7 @@ enum
   PROP_CURSOR_UPDATING,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
+  PROP_SHOW_MENUBAR,
   PROP_SHOW_RULERS,
   PROP_SHOW_STATUSBAR,
   PROP_CONFIRM_ON_CLOSE,
@@ -72,8 +73,7 @@ enum
   PROP_MONITOR_RES_FROM_GDK,
   PROP_NAV_PREVIEW_SIZE,
   PROP_CANVAS_PADDING_MODE,
-  PROP_CANVAS_PADDING_COLOR,
-  PROP_MENU_BAR_PER_DISPLAY
+  PROP_CANVAS_PADDING_COLOR
 };
 
 static GObjectClass *parent_class = NULL;
@@ -170,6 +170,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    IMAGE_STATUS_FORMAT_BLURB,
                                    DEFAULT_IMAGE_STATUS_FORMAT,
                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
+                                    "show-menubar", SHOW_MENUBAR_BLURB,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                                     "show-rulers", SHOW_RULERS_BLURB,
                                     TRUE,
@@ -214,11 +218,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                   CANVAS_PADDING_COLOR_BLURB,
                                   &white,
                                   0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_BAR_PER_DISPLAY,
-                                    "menu-bar-per-display",
-                                    MENU_BAR_PER_DISPLAY_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_RESTART);
 }
 
 static void
@@ -278,6 +277,9 @@ gimp_display_config_set_property (GObject      *object,
       g_free (display_config->image_status_format);
       display_config->image_status_format = g_value_dup_string (value);
       break;
+    case PROP_SHOW_MENUBAR:
+      display_config->show_menubar = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_RULERS:
       display_config->show_rulers = g_value_get_boolean (value);
       break;
@@ -304,9 +306,6 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_CANVAS_PADDING_COLOR:
       display_config->canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
-      break;
-    case PROP_MENU_BAR_PER_DISPLAY:
-      display_config->menu_bar_per_display = g_value_get_boolean (value);
       break;
 
     default:
@@ -357,6 +356,9 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_IMAGE_STATUS_FORMAT:
       g_value_set_string (value, display_config->image_status_format);
       break;
+    case PROP_SHOW_MENUBAR:
+      g_value_set_boolean (value, display_config->show_menubar);
+      break;
     case PROP_SHOW_RULERS:
       g_value_set_boolean (value, display_config->show_rulers);
       break;
@@ -383,9 +385,6 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_CANVAS_PADDING_COLOR:
       g_value_set_boxed (value, &display_config->canvas_padding_color);
-      break;
-    case PROP_MENU_BAR_PER_DISPLAY:
-      g_value_set_boolean (value, display_config->menu_bar_per_display);
       break;
 
     default:

@@ -115,16 +115,12 @@ preferences_dialog_create (Gimp *gimp)
   g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
                              (gpointer *) &prefs_dialog);
 
-  g_object_weak_ref (G_OBJECT (prefs_dialog),
-                     (GWeakNotify) g_object_unref,
-                     config_copy);
-  g_object_weak_ref (G_OBJECT (prefs_dialog),
-                     (GWeakNotify) g_object_unref,
-                     config_orig);
+  g_object_set_data (G_OBJECT (prefs_dialog), "gimp", gimp);
 
-  g_object_set_data (G_OBJECT (prefs_dialog), "gimp",        gimp);
-  g_object_set_data (G_OBJECT (prefs_dialog), "config-copy", config_copy);
-  g_object_set_data (G_OBJECT (prefs_dialog), "config-orig", config_orig);
+  g_object_set_data_full (G_OBJECT (prefs_dialog), "config-copy", config_copy,
+                          (GDestroyNotify) g_object_unref);
+  g_object_set_data_full (G_OBJECT (prefs_dialog), "config-orig", config_orig,
+                          (GDestroyNotify) g_object_unref);
 
   return prefs_dialog;
 }
@@ -350,7 +346,7 @@ prefs_default_resolution_callback (GtkWidget *widget,
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 0,
 				  xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 0,
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 1,
 				  yres, FALSE);
 }
 
@@ -364,23 +360,24 @@ prefs_res_source_callback (GtkWidget *widget,
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 
-  gui_get_screen_resolution (&xres, &yres);
-  from_gdk = TRUE;
+  from_gdk = GTK_TOGGLE_BUTTON (widget)->active;
 
-  if (! GTK_TOGGLE_BUTTON (widget)->active)
+  if (from_gdk)
+    {
+      gui_get_screen_resolution (&xres, &yres);
+    }
+  else
     {
       GimpSizeEntry *sizeentry;
 
       sizeentry = g_object_get_data (G_OBJECT (widget),
                                      "monitor_resolution_sizeentry");
-      
+
       if (sizeentry)
 	{
 	  xres = gimp_size_entry_get_refval (sizeentry, 0);
 	  yres = gimp_size_entry_get_refval (sizeentry, 1);
 	}
-
-      from_gdk = FALSE;
     }
 
   g_object_set (config,
@@ -1147,9 +1144,6 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_check_button_add (config, "tearoff-menus",
                           _("Enable _Tearoff Menus"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (config, "menu-bar-per-display",
-                          _("Menu _Bar Per Display"),
-                          GTK_BOX (vbox2));
 
   /* Window Positions */
   vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
@@ -1334,11 +1328,8 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_check_button_add (config, "default-dot-for-dot",
                           _("Use \"_Dot for Dot\" by default"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (config, "resize-windows-on-zoom",
-                          _("Resize Window on _Zoom"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (config, "resize-windows-on-resize",
-                          _("Resize Window on Image _Size Change"),
+  prefs_check_button_add (config, "show-menubar",
+                          _("Show Menubar"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "show-rulers",
                           _("Show _Rulers"),
@@ -1367,6 +1358,17 @@ prefs_dialog_new (Gimp    *gimp,
                                    GTK_TABLE (table), 1);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
+
+  /*  Zoom & Resize Behaviour  */
+  vbox2 = prefs_frame_new (_("Zoom & Resize Behaviour"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (config, "resize-windows-on-zoom",
+                          _("Resize Window on _Zoom"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "resize-windows-on-resize",
+                          _("Resize Window on Image _Size Change"),
+                          GTK_BOX (vbox2));
 
   /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),

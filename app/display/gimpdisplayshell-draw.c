@@ -210,7 +210,8 @@ static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->gdisp                 = NULL;
-  shell->item_factory          = NULL;
+  shell->menubar_factory       = NULL;
+  shell->popup_factory         = NULL;
 
   shell->scale                 = 0;
   shell->dot_for_dot           = TRUE;
@@ -340,11 +341,13 @@ gimp_display_shell_destroy (GtkObject *object)
       gimp_display_shell_disconnect (shell);
     }
 
-  if (shell->item_factory)
+  if (shell->menubar_factory)
     {
-      g_object_unref (shell->item_factory);
-      shell->item_factory = NULL;
+      g_object_unref (shell->menubar_factory);
+      shell->menubar_factory = NULL;
     }
+
+  shell->popup_factory = NULL;
 
   if (shell->select)
     {
@@ -418,6 +421,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   GtkWidget         *inner_table;
   GtkWidget         *arrow;
   GtkWidget         *image;
+  GtkWidget         *menubar;
   gint               image_width, image_height;
   gint               n_width, n_height;
   gint               s_width, s_height;
@@ -468,25 +472,16 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   shell->scale = (scaledest << 8) + scalesrc;
 
-  if (config->menu_bar_per_display)
-    {
-      shell->item_factory =
-        menus_get_new_image_factory (shell->gdisp->gimage->gimp,
-                                     shell->gdisp,
-                                     TRUE);
-    }
-  else
-    {
-      shell->item_factory =
-        menus_get_new_image_factory (shell->gdisp->gimage->gimp,
-                                     shell->gdisp->gimage->gimp,
-                                     FALSE);
-      g_object_ref (shell->item_factory);
-    }
+  shell->menubar_factory =
+    menus_get_new_image_factory (shell->gdisp->gimage->gimp,
+                                 shell->gdisp,
+                                 TRUE);
+
+  shell->popup_factory = gimp_item_factory_from_path ("<Image>");
 
   /*  The accelerator table for images  */
   gimp_window_add_accel_group (GTK_WINDOW (shell),
-			       GTK_ITEM_FACTORY (shell->item_factory),
+			       GTK_ITEM_FACTORY (shell->menubar_factory),
 			       gimp_display_shell_get_accel_context,
 			       shell);
 
@@ -529,48 +524,32 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   /*  the vbox containing all widgets  */
 
-  if (config->menu_bar_per_display)
-    {
-      GtkWidget *menu_bar;
-
-      main_vbox = gtk_vbox_new (FALSE, 0);
-
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (shell->item_factory),
-                                     "/tearoff1", FALSE);
-      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (shell->item_factory),
-                                     "/filters-separator", FALSE);
-
-      menu_bar = GTK_ITEM_FACTORY (shell->item_factory)->widget;
-
-      gtk_box_pack_start (GTK_BOX (main_vbox), menu_bar, FALSE, FALSE, 0);
-      gtk_widget_show (menu_bar);
-
-      /*  active display callback  */
-      g_signal_connect (G_OBJECT (menu_bar), "button_press_event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
-      g_signal_connect (G_OBJECT (menu_bar), "button_release_event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
-      g_signal_connect (G_OBJECT (menu_bar), "key_press_event",
-                        G_CALLBACK (gimp_display_shell_events),
-                        shell);
-    }
-  else
-    {
-      main_vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
-    }
-
+  main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
+
+  menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
+
+  if (config->show_menubar)
+    gtk_widget_show (menubar);
+
+  /*  active display callback  */
+  g_signal_connect (G_OBJECT (menubar), "button_press_event",
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
+  g_signal_connect (G_OBJECT (menubar), "button_release_event",
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
+  g_signal_connect (G_OBJECT (menubar), "key_press_event",
+                    G_CALLBACK (gimp_display_shell_events),
+                    shell);
 
   /*  another vbox for everything except the statusbar  */
   disp_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (disp_vbox), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), disp_vbox, TRUE, TRUE, 0);
   gtk_widget_show (disp_vbox);
-
-  if (config->menu_bar_per_display)
-    gtk_container_set_border_width (GTK_CONTAINER (disp_vbox), 2);
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
   upper_hbox = gtk_hbox_new (FALSE, 1);
@@ -805,9 +784,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   if (config->show_rulers)
     {
-      if (! config->menu_bar_per_display)
-        gtk_widget_show (shell->origin);
-
+      gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
     }
@@ -822,9 +799,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_show (shell->nav_ebox);
 
   if (config->show_statusbar)
-    {
-      gtk_widget_show (shell->statusbar);
-    }
+    gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);
 
@@ -1090,27 +1065,28 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
-                                         Gimp             *gimp)
+                                         Gimp             *gimp,
+                                         gboolean          update_popup)
 {
-  GtkItemFactory *item_factory;
-  GimpDisplay    *gdisp      = NULL;
-  GimpImage      *gimage     = NULL;
-  GimpImageType   type       = -1;
-  GimpDrawable   *drawable   = NULL;
-  GimpLayer      *layer      = NULL;
+  GtkItemFactory *item_factory = NULL;
+  GimpDisplay    *gdisp        = NULL;
+  GimpImage      *gimage       = NULL;
+  GimpImageType   type         = -1;
+  GimpDrawable   *drawable     = NULL;
+  GimpLayer      *layer        = NULL;
   GimpRGB         fg;
   GimpRGB         bg;
-  gboolean        is_rgb     = FALSE;
-  gboolean        is_gray    = FALSE;
-  gboolean        is_indexed = FALSE;
-  gboolean        fs         = FALSE;
-  gboolean        aux        = FALSE;
-  gboolean        lm         = FALSE;
-  gboolean        lp         = FALSE;
-  gboolean        sel        = FALSE;
-  gboolean        alpha      = FALSE;
-  gint            lind       = -1;
-  gint            lnum       = -1;
+  gboolean        is_rgb       = FALSE;
+  gboolean        is_gray      = FALSE;
+  gboolean        is_indexed   = FALSE;
+  gboolean        fs           = FALSE;
+  gboolean        aux          = FALSE;
+  gboolean        lm           = FALSE;
+  gboolean        lp           = FALSE;
+  gboolean        sel          = FALSE;
+  gboolean        alpha        = FALSE;
+  gint            lind         = -1;
+  gint            lnum         = -1;
 
   g_return_if_fail (! shell || GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -1118,17 +1094,15 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   if (shell)
     {
       gdisp = shell->gdisp;
-      item_factory = GTK_ITEM_FACTORY (shell->item_factory);
+
+      if (update_popup)
+        item_factory = GTK_ITEM_FACTORY (shell->popup_factory);
+      else
+        item_factory = GTK_ITEM_FACTORY (shell->menubar_factory);
     }
-  else
+  else if (update_popup)
     {
       item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-    }
-
-  if (! item_factory)
-    {
-      plug_in_set_menu_sensitivity (NULL, type);
-      return;
     }
 
   if (gdisp)
@@ -1273,13 +1247,17 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   SET_SENSITIVE ("/View/Snap to Guides", gdisp);
   SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
 
+  SET_SENSITIVE ("/View/Toggle Menubar", gdisp);
+  SET_ACTIVE    ("/View/Toggle Menubar",
+                 gdisp && GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget));
+
   SET_SENSITIVE ("/View/Toggle Rulers", gdisp);
   SET_ACTIVE    ("/View/Toggle Rulers",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->hrule) ? 1 : 0);
+                 gdisp && GTK_WIDGET_VISIBLE (shell->hrule));
 
   SET_SENSITIVE ("/View/Toggle Statusbar", gdisp);
   SET_ACTIVE    ("/View/Toggle Statusbar",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->statusbar) ? 1 : 0);
+                 gdisp && GTK_WIDGET_VISIBLE (shell->statusbar));
 
   SET_SENSITIVE ("/View/New View",    gdisp);
   SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
@@ -1351,6 +1329,20 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 #undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (GIMP_ITEM_FACTORY (item_factory), type);
+
+  /*  update the popup menu if this is the active display  */
+  if (shell && ! update_popup)
+    {
+      GimpContext *user_context;
+
+      user_context = gimp_get_user_context (gdisp->gimage->gimp);
+
+      if (gimp_context_get_display (user_context) == gdisp)
+        {
+          gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp,
+                                                   TRUE);
+        }
+    }
 }
 
 GimpGuide *

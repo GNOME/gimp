@@ -127,13 +127,17 @@
 #define PREVIEW_SIZE_BLURB \
 "Set the default preview size."
 
+#define SHOW_MENUBAR_BLURB \
+"Set the menubar visibility. This can also be toggled with the "\
+"View->Toggle Menubar command."
+
 #define SHOW_RULERS_BLURB \
 "Set the ruler visibility. This can also be toggled with the "\
-"View->Toggle Rulers command or Shift+Control+R."
+"View->Toggle Rulers command."
 
 #define SHOW_STATUSBAR_BLURB \
 "Controlling statusbar visibility. This can also be toggled with "\
-"the View->Toggle Statusbar command or Shift+Control+S."
+"the View->Toggle Statusbar command."
 
 #define INTERPOLATION_TYPE_BLURB \
 "Set the level of interpolation used for scaling and other transformations."
@@ -249,7 +253,6 @@
 #define NAVIGATION_PREVIEW_SIZE_BLURB  NULL
 #define CANVAS_PADDING_MODE_BLURB      NULL
 #define CANVAS_PADDING_COLOR_BLURB     NULL
-#define MENU_BAR_PER_DISPLAY_BLURB     NULL
 #define HELP_BROWSER_BLURB             NULL
 #define MAX_NEW_IMAGE_SIZE_BLURB       NULL
 

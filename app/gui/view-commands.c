@@ -203,6 +203,33 @@ view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
 }
 
 void
+view_toggle_menubar_cmd_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  GtkWidget        *menubar;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
+
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      if (GTK_WIDGET_VISIBLE (menubar))
+	gtk_widget_hide (menubar);
+    }
+  else
+    {
+      if (! GTK_WIDGET_VISIBLE (menubar))
+	gtk_widget_show (menubar);
+    }
+
+  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
+}
+
+void
 view_toggle_rulers_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
@@ -217,11 +244,9 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (GTK_WIDGET_VISIBLE (shell->hrule))
+      if (GTK_WIDGET_VISIBLE (shell->origin))
 	{
-          if (! config->menu_bar_per_display)
-            gtk_widget_hide (shell->origin);
-
+          gtk_widget_hide (shell->origin);
 	  gtk_widget_hide (shell->hrule);
 	  gtk_widget_hide (shell->vrule);
 
@@ -230,17 +255,17 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
     }
   else
     {
-      if (! GTK_WIDGET_VISIBLE (shell->hrule))
+      if (! GTK_WIDGET_VISIBLE (shell->origin))
 	{
-          if (! config->menu_bar_per_display)
-            gtk_widget_show (shell->origin);
-
+          gtk_widget_show (shell->origin);
 	  gtk_widget_show (shell->hrule);
 	  gtk_widget_show (shell->vrule);
 
 	  gtk_widget_queue_resize (GTK_WIDGET (shell->origin->parent));
 	}
     }
+
+  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
 }
 
 void
@@ -263,6 +288,8 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
       if (! GTK_WIDGET_VISIBLE (shell->statusbar))
 	gtk_widget_show (shell->statusbar);
     }
+
+  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
 }
 
 void
@@ -291,6 +318,9 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   gdisp->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+
+  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                           gdisp->gimage->gimp, FALSE);
 }
 
 void

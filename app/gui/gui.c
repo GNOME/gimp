@@ -416,22 +416,21 @@ static GimpObject *
 gui_display_new (GimpImage *gimage,
                  guint      scale)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
 
   gdisp = gimp_display_new (gimage, scale);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_set_menu_sensitivity (shell, gimage->gimp, FALSE);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
   if (double_speed)
-    {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-      g_signal_connect_after (G_OBJECT (shell->canvas), "expose_event",
-                              G_CALLBACK (gui_rotate_the_shield_harmonics),
-                              NULL);
-    }
+    g_signal_connect_after (G_OBJECT (shell->canvas), "expose_event",
+                            G_CALLBACK (gui_rotate_the_shield_harmonics),
+                            NULL);
 
   return GIMP_OBJECT (gdisp);
 }
@@ -629,7 +628,7 @@ gui_display_changed (GimpContext *context,
   if (display)
     shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_display_shell_set_menu_sensitivity (shell, gimp);
+  gimp_display_shell_set_menu_sensitivity (shell, gimp, TRUE);
 }
 
 static void
