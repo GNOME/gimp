@@ -1065,6 +1065,14 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   GimpUndoType  undo_type = GIMP_UNDO_GROUP_MASK;
   const gchar  *undo_desc = NULL;
 
+  /* Bail out early if it is not an arrow key event */
+
+  if (kevent->keyval != GDK_Left &&
+      kevent->keyval != GDK_Right &&
+      kevent->keyval != GDK_Up &&
+      kevent->keyval != GDK_Down)
+    return;
+
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...
    */

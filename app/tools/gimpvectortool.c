@@ -807,13 +807,6 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 
   if (gdisp == draw_tool->gdisp)
     {
-      xdist = FUNSCALEX (shell, pixels);
-      ydist = FUNSCALEY (shell, pixels);
-
-      gimp_vector_tool_undo_push (vector_tool, _("Move Anchors"));
-
-      gimp_vectors_freeze (vector_tool->vectors);
-
       switch (kevent->keyval)
         {
           case GDK_KP_Enter:
@@ -825,23 +818,47 @@ gimp_vector_tool_key_press (GimpTool     *tool,
           case GDK_Delete:
             gimp_vector_tool_delete_selected_anchors (vector_tool);
             break;
+
           case GDK_Left:
-            gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
-            break;
           case GDK_Right:
-            gimp_vector_tool_move_selected_anchors (vector_tool, xdist, 0);
-            break;
           case GDK_Up:
-            gimp_vector_tool_move_selected_anchors (vector_tool, 0, -ydist);
-            break;
           case GDK_Down:
-            gimp_vector_tool_move_selected_anchors (vector_tool, 0, ydist);
-            break;
+            xdist = FUNSCALEX (shell, pixels);
+            ydist = FUNSCALEY (shell, pixels);
+           
+            gimp_vector_tool_undo_push (vector_tool, _("Move Anchors"));
+           
+            gimp_vectors_freeze (vector_tool->vectors);
+           
+            switch (kevent->keyval)
+              {
+                case GDK_Left:
+                  gimp_vector_tool_move_selected_anchors (vector_tool,
+                                                          -xdist, 0);
+                  break;
+                case GDK_Right:
+                  gimp_vector_tool_move_selected_anchors (vector_tool,
+                                                          xdist, 0);
+                  break;
+                case GDK_Up:
+                  gimp_vector_tool_move_selected_anchors (vector_tool,
+                                                          0, -ydist);
+                  break;
+                case GDK_Down:
+                  gimp_vector_tool_move_selected_anchors (vector_tool,
+                                                          0, ydist);
+                  break;
+                default:
+                  break;
+              }
+
+              gimp_vectors_thaw (vector_tool->vectors);
+              vector_tool->have_undo = FALSE;
+              break;
+
           default:
             break;
         }
-      gimp_vectors_thaw (vector_tool->vectors);
-      vector_tool->have_undo = FALSE;
 
       gimp_image_flush (gdisp->gimage);
     }

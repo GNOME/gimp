@@ -533,10 +533,31 @@ gimp_crop_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_Up    : inc_y = -1; break;
-    case GDK_Left  : inc_x = -1; break;
-    case GDK_Right : inc_x =  1; break;
-    case GDK_Down  : inc_y =  1; break;
+    case GDK_Up:
+      inc_y = -1;
+      break;
+    case GDK_Left:
+      inc_x = -1;
+      break;
+    case GDK_Right:
+      inc_x = 1;
+      break;
+    case GDK_Down:
+      inc_y = 1;
+      break;
+    case GDK_KP_Enter:
+    case GDK_Return:
+      crop_tool_crop_image (gdisp->gimage,
+                            GIMP_CONTEXT (options),
+                            crop->x1, crop->y1,
+                            crop->x2, crop->y2,
+                            options->layer_only,
+                            options->crop_mode);
+      /*  Finish the tool  */
+      crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
+      return;
+    default:
+      return;
     }
 
   /*  If the shift key is down, move by an accelerated increment  */
