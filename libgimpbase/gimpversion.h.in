@@ -49,6 +49,8 @@ extern "C" {
 
 #define GIMP_HAVE_EXPORT                                1-1-10
 
+#define GIMP_HAVE_SYSCONFDIR                            1-1-28
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

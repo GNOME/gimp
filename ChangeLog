@@ -1,5 +1,9 @@
 2000-10-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpfeatures.h.in: added GIMP_HAVE_SYSCONFDIR
+
+2000-10-16  Sven Neumann  <sven@gimp.org>
+
 	* gimp.spec.in: make it work with my modifications of Ben's patch.
 
 	* modules/cdisplay_gamma.c
