@@ -326,6 +326,7 @@ brush_popup_open (BrushSelectP bsp,
   gint scr_w, scr_h;
   gchar *src, *buf;
 
+  /* make sure the popup exists and is not visible */
   if (bsp->brush_popup == NULL)
     {
       GtkWidget *frame;
@@ -342,8 +343,11 @@ brush_popup_open (BrushSelectP bsp,
       gtk_widget_show (bsp->brush_preview);
     }
   else
-    gtk_widget_hide (bsp->brush_popup);
+    {
+      gtk_widget_hide (bsp->brush_popup);
+    }
 
+  /* decide where to put the popup */
   gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
@@ -356,6 +360,7 @@ brush_popup_open (BrushSelectP bsp,
   gtk_preview_size (GTK_PREVIEW (bsp->brush_preview), brush->mask->width, brush->mask->height);
 
   gtk_widget_popup (bsp->brush_popup, x, y);
+  
   /*  Draw the brush  */
   buf = g_new (gchar, brush->mask->width);
   src = temp_buf_data (brush->mask);
@@ -371,6 +376,8 @@ brush_popup_open (BrushSelectP bsp,
       gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush->mask->width);
       src += brush->mask->width;
     }
+  g_free(buf);
+  
   /*  Draw the brush preview  */
   gtk_widget_draw (bsp->brush_preview, NULL);
 }

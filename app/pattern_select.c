@@ -215,6 +215,8 @@ pattern_popup_open (PatternSelectP psp,
   gint x_org, y_org;
   gint scr_w, scr_h;
   gchar *src, *buf;
+
+  /* make sure the popup exists and is not visible */
   if (psp->pattern_popup == NULL)
     {
       GtkWidget *frame;
@@ -229,7 +231,11 @@ pattern_popup_open (PatternSelectP psp,
       gtk_widget_show (psp->pattern_preview);
     }
   else
-    gtk_widget_hide (psp->pattern_popup);
+    {
+      gtk_widget_hide (psp->pattern_popup);
+    }
+
+  /* decide where to put the popup */
   gdk_window_get_origin (psp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
@@ -241,6 +247,7 @@ pattern_popup_open (PatternSelectP psp,
   y = (y + pattern->mask->height > scr_h) ? scr_h - pattern->mask->height : y;
   gtk_preview_size (GTK_PREVIEW (psp->pattern_preview), pattern->mask->width, pattern->mask->height);
   gtk_widget_popup (psp->pattern_popup, x, y);
+
   /*  Draw the pattern  */
   buf = g_new (gchar, pattern->mask->width * 3);
   src = temp_buf_data (pattern->mask);
@@ -263,15 +270,19 @@ pattern_popup_open (PatternSelectP psp,
       gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), buf, 0, y, pattern->mask->width);
       src += pattern->mask->width * pattern->mask->bytes;
     }
+  g_free(buf);
+  
   /*  Draw the pattern preview  */
   gtk_widget_draw (psp->pattern_preview, NULL);
 }
+
 static void
 pattern_popup_close (PatternSelectP psp)
 {
   if (psp->pattern_popup != NULL)
     gtk_widget_hide (psp->pattern_popup);
 }
+
 static void
 display_pattern (PatternSelectP psp,
 		 GPatternP      pattern,
