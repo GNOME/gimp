@@ -422,6 +422,7 @@ gauss_iir (GDrawable *drawable,
       /*  First the vertical pass  */
       for (col = 0; col < width; col++)
 	{
+      
 	  memset(val_p, 0, height * bytes * sizeof (gdouble));
 	  memset(val_m, 0, height * bytes * sizeof (gdouble));
 
@@ -497,7 +498,8 @@ gauss_iir (GDrawable *drawable,
   if (horz)
     {
       /*  prepare for the horizontal pass  */
-      gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE);
+  if (vert)    
+       gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE); 
       /*  Now the horizontal pass  */
       for (row = 0; row < height; row++)
 	{

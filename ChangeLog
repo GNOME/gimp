@@ -1,3 +1,8 @@
+Fri May 29 23:34:07 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/gaus_iir/gauss_iir.c: fix by sjburges to fix horiz
+	only blur.  Funky bug!
+
 Fri May 29 21:36:36 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/xcf.c: changed fopen parameters for better portability
@@ -24,10 +29,10 @@ Thu May 28 01:16:26 PDT 1998 Manish Singh <yosh@gimp.org>
 	Made script-fu a little friendlier.
 
 	* updated the regex code from grep 2.2
-	
+
 Wed May 27 11:22:46 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* plug-ins/ifscompose/ifscompose.h: removed definition of TRUE 
+	* plug-ins/ifscompose/ifscompose.h: removed definition of TRUE
         and FALSE
 
 Tue May 26 17:20:26 EDT 1998 Adrian Likins <adrian@gimp.org>
@@ -123,7 +128,7 @@ Sun May 17 14:02:44 PDT 1998 Manish Singh <yosh@gimp.org>
 Sun May 17 00:15:40 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.31 release
-	
+
 	* updated print plugin
 
 Fri May 15 23:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -137,7 +142,7 @@ Fri May 15 03:54:48 EDT 1998  Matthew Wilson  <msw@gimp.org>
 Fri May 15 03:03:00 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/iscissors.c: fixed bezierify on offset layers
-	
+
 Thu May 14 21:18:27 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/iscissors.c: a very sad attempt to fix some iscissors
