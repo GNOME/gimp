@@ -892,6 +892,8 @@ libgimpcolor/Makefile
 libgimpcolor/makefile.mingw
 libgimpmath/Makefile
 libgimpmath/makefile.mingw
+libgimpproxy/Makefile
+libgimptool/Makefile
 libgimpwidgets/Makefile
 libgimpwidgets/makefile.mingw
 app/Makefile
