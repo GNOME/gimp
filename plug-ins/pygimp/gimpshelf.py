@@ -26,14 +26,18 @@
 # making it dificult to work out what to save.  This module gives an interface
 # to the gimp module's primitive interface, which resembles the shelve module.
 
+# use cPickle and cStringIO if available
+
 try:
-    # use cPickle instead of pickle if it is available.
-    import cPickle
-    pickle = cPickle
-    del cPickle
+    import cPickle as pickle
 except ImportError:
     import pickle
-import StringIO
+
+try:
+    import cStringIO as StringIO
+except ImportError:
+    import StringIO
+
 import gimp
 
 import copy_reg

@@ -123,7 +123,8 @@ _type_mapping = {
 _registered_plugins_ = {}
 
 def register(func_name, blurb, help, author, copyright, date, menupath,
-	     imagetypes, params, results, function):
+	     imagetypes, params, results, function,
+	     on_query=None, on_run=None):
     '''This is called to register a new plugin.'''
     # First perform some sanity checks on the data
     def letterCheck(str):
@@ -149,7 +150,9 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 	    raise error, "result types must be integers"
 	if not letterCheck(ent[1]):
 	    raise error,"result name contains ilegal characters"
-    if menupath[:8] == '<Image>/':
+    if menupath[:8] == '<Image>/' or \
+       menupath[:7] == '<Load>/' or \
+       menupath[:7] == '<Save>/':
 	plugin_type = PLUGIN
     elif menupath[:10] == '<Toolbox>/':
 	plugin_type = EXTENSION
@@ -158,19 +161,24 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 
     if not func_name[:7] == 'python_' and \
        not func_name[:10] == 'extension_' and \
-       not func_name[:8] == 'plug_in_':
+       not func_name[:8] == 'plug_in_' and \
+       not func_name[:5] == 'file_':
 	func_name = 'python_fu_' + func_name
 
     _registered_plugins_[func_name] = (blurb, help, author, copyright,
 				       date, menupath, imagetypes,
 				       plugin_type, params, results,
-				       function)
+				       function, on_query, on_run)
+
+file_params = [(PDB_STRING, "filename", "The name of the file"),
+	       (PDB_STRING, "raw_filename", "The name of the file")]
 
 def _query():
     for plugin in _registered_plugins_.keys():
 	(blurb, help, author, copyright, date,
 	 menupath, imagetypes, plugin_type,
-	 params, results, function) = _registered_plugins_[plugin]
+	 params, results, function,
+         on_query, on_run) = _registered_plugins_[plugin]
 
 	fn = lambda x: (_type_mapping[x[0]], x[1], x[2])
 	params = map(fn, params)
@@ -178,20 +186,30 @@ def _query():
 	params.insert(0, (PDB_INT32, "run_mode",
 			  "Interactive, Non-Interactive"))
 	if plugin_type == PLUGIN:
-	    params.insert(1, (PDB_IMAGE, "image",
-			      "The image to work on"))
-	    params.insert(2, (PDB_DRAWABLE, "drawable",
-			      "The drawable to work on"))
+	    if menupath[:7] == '<Load>/':
+		params[1:1] = file_params
+	    else:
+		params.insert(1, (PDB_IMAGE, "image",
+				  "The image to work on"))
+		params.insert(2, (PDB_DRAWABLE, "drawable",
+				  "The drawable to work on"))
+
+		if menupath[:7] == '<Save>/':
+		    params[3:3] = file_params
+
 	results = map(fn, results)
 	gimp.install_procedure(plugin, blurb, help, author, copyright,
 			       date, menupath, imagetypes, plugin_type,
 			       params, results)
+	if on_query:
+	    on_query()
 
 def _get_defaults(func_name):
     import gimpshelf
     (blurb, help, author, copyright, date,
      menupath, imagetypes, plugin_type,
-     params, results, function) = _registered_plugins_[func_name]
+     params, results, function,
+     on_query, on_run) = _registered_plugins_[func_name]
 	
     key = "python-fu-save--" + func_name
     if gimpshelf.shelf.has_key(key):
@@ -209,7 +227,8 @@ def _set_defaults(func_name, defaults):
 def _interact(func_name):
     (blurb, help, author, copyright, date,
      menupath, imagetypes, plugin_type,
-     params, results, function) = _registered_plugins_[func_name]
+     params, results, function,
+     on_query, on_run) = _registered_plugins_[func_name]
 
     # short circuit for no parameters ...
     if len(params) == 0: return []
@@ -276,7 +295,7 @@ def _interact(func_name):
 	def get_value(self):
 	    return self.get_active()
     class RadioEntry(gtk.Frame):
-        def __init__(self, default=0, items=[("Yes", 1), ("No", 0)]):
+        def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
             import gtk
             gtk.Frame.__init__(self)
             box = gtk.HBox(gtk.FALSE, 5)
@@ -326,6 +345,9 @@ def _interact(func_name):
 	PF_PATTERN     : gimpui.PatternSelector,
 	PF_GRADIENT    : gimpui.GradientSelector,
     }
+
+    if on_run:
+	on_run()
 
     tooltips = gtk.Tooltips()
 
@@ -389,11 +411,17 @@ def _interact(func_name):
 def _run(func_name, params):
     run_mode = params[0]
     plugin_type = _registered_plugins_[func_name][7]
+    menupath = _registered_plugins_[func_name][5]
     func = _registered_plugins_[func_name][10]
 
     if plugin_type == PLUGIN:
-	start_params = params[1:3]
-	extra_params = params[3:]
+	if menupath[:7] == '<Save>/':
+	    end = 5
+        else:
+	    end = 3
+
+	start_params = params[1:end]
+	extra_params = params[end:]
     else:
 	start_params = ()
 	extra_params = params[1:]
@@ -492,4 +520,6 @@ def _get_logo(colormap):
     import gtk
     pix, mask = gtk.gdk.pixmap_colormap_create_from_xpm_d(None, colormap,
 							  None, _python_image)
-    return gtk.Pixmap(pix, mask)
+    image = gtk.Image()
+    image.set_from_pixmap(pix, mask)
+    return image

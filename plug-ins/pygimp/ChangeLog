@@ -1,3 +1,21 @@
+2003-02-08  Manish Singh  <yosh@gimp.org>
+
+	* gimpui.py: use dialog.run() for sub dialogs, since the main dialog
+	is also doing that. This does break consistency with the rest of
+	gimp, but will do for now. I wish there was a similar API that didn't
+	set the dialog modal. Fixed brush and pattern list to use the new
+	PDB names. Also make the filesel really have a title of "Files"
+
+	* gimpshelf.py: minor clean up, use cStringIO if available
+
+	* gimpfu.py: add support for Load/Save plug-ins. Use GtkImage
+	instead of deprecated GtkPixmap.
+
+	* gimpenums.py: regenerated
+
+	* plug-ins/Makefile.am
+	* plug-ins/colorhtml.py: the return of colorhtml to 1.3
+
 2003-01-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/gimpcons.py: import gtkcons only when we're about to use

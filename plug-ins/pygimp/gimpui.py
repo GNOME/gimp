@@ -182,21 +182,13 @@ class _Selector(gtk.HBox):
 	self.pack_start(self.button, expand=gtk.FALSE)
 	self.button.show()
 
-	self.dialog = gtk.Dialog()
-	self.dialog.set_title(self.get_title())
-	def delete_event(win, event):
-	    win.hide()
-	    return gtk.TRUE
-	self.dialog.connect("delete_event", delete_event)
-
-	box = gtk.VBox()
-	box.set_border_width(5)
-	self.dialog.vbox.pack_start(box)
-	box.show()
+	self.dialog = gtk.Dialog(self.get_title(), None, 0,
+				 (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+				  gtk.STOCK_OK, gtk.RESPONSE_OK))
 
 	swin = gtk.ScrolledWindow()
 	swin.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-	box.pack_start(swin)
+	dialog.vbox.pack_start(swin)
 	swin.show()
 		
 	items = map(None, self.get_list())
@@ -214,31 +206,18 @@ class _Selector(gtk.HBox):
 	swin.add_with_viewport(list)
 	list.show()
 
-	b = gtk.Button("OK")
-	self.dialog.action_area.pack_start(b)
-	b.set_flags(gtk.CAN_DEFAULT)
-	b.grab_default()
-	b.show()
-	b.connect("clicked", self.selection_ok, list)
-
-	b = gtk.Button("Cancel")
-	self.dialog.action_area.pack_start(b)
-	b.set_flags(gtk.CAN_DEFAULT)
-	b.show()
-	b.connect("clicked", self.dialog.hide)
-
-	self.dialog.set_usize(300, 225)
+	self.dialog.set_size_request(300, 225)
 
     def show_dialog(self, button):
 	self.dialog.show()
-		
-    def selection_ok(self, button, list):
+	response = self.dialog.run()
 	self.dialog.hide()
 
-	sel = list.get_selection()
-	if not sel: return
-	self.selected = sel[0].children()[0].get()
-	self.entry.set_text(self.selected)
+	if response == gtk.RESPONSE_OK:
+	    sel = list.get_selection()
+	    if not sel: return
+	    self.selected = sel[0].children()[0].get()
+	    self.entry.set_text(self.selected)
 
     def get_value(self):
 	return self.selected
@@ -252,7 +231,7 @@ class PatternSelector(_Selector):
     def get_title(self):
 	return "Patterns"
     def get_list(self):
-	num, patterns = gimp.pdb.gimp_patterns_list()
+	num, patterns = gimp.pdb.gimp_patterns_get_list()
 	return patterns
 
 class BrushSelector(_Selector):
@@ -264,7 +243,7 @@ class BrushSelector(_Selector):
     def get_title(self):
 	return "Brushes"
     def get_list(self):
-	num, brushes = gimp.pdb.gimp_brushes_list()
+	num, brushes = gimp.pdb.gimp_brushes_get_list()
 	return brushes
 
 class GradientSelector(_Selector):
@@ -280,7 +259,7 @@ class GradientSelector(_Selector):
 	return gradients
 
 class FontSelector(gtk.HBox):
-    def __init__(self, default="fixed"):
+    def __init__(self, default="Sans"):
 	gtk.HBox.__init__(self, gtk.FALSE, 5)
 	self.entry = gtk.Entry()
 	self.pack_start(self.entry)
@@ -297,20 +276,18 @@ class FontSelector(gtk.HBox):
 	    return gtk.TRUE
 	self.dialog.connect("delete_event", delete_event)
 
-	self.dialog.ok_button.connect("clicked", self.selection_ok)
-	self.dialog.cancel_button.connect("clicked", self.dialog.hide)
-
 	self.dialog.set_font_name(default)
 	self.selected = default
 	self.entry.set_text(self.selected)
 	
     def show_dialog(self, button):
 	self.dialog.show()
-		
-    def selection_ok(self, button):
+	response = self.dialog.run()
 	self.dialog.hide()
-	self.selected = self.dialog.get_font_name()
-	self.entry.set_text(self.selected)
+
+	if response == gtk.RESPONSE_OK:
+	    self.selected = self.dialog.get_font_name()
+	    self.entry.set_text(self.selected)
 
     def get_value(self):
 	return self.selected
@@ -326,15 +303,12 @@ class FileSelector(gtk.HBox):
 	self.pack_start(self.button, expand=gtk.FALSE)
 	self.button.show()
 
-	self.dialog = gtk.FileSelection("Fonts")
+	self.dialog = gtk.FileSelection("Files")
 	self.dialog.set_default_size(400, 300)
 	def delete_event(win, event):
 	    win.hide()
 	    return gtk.TRUE
 	self.dialog.connect("delete_event", delete_event)
-
-	self.dialog.ok_button.connect("clicked", self.selection_ok)
-	self.dialog.cancel_button.connect("clicked", self.dialog.hide)
 
 	self.dialog.set_filename(default)
 	self.selected = self.dialog.get_filename()
@@ -342,11 +316,12 @@ class FileSelector(gtk.HBox):
 		
     def show_dialog(self, button):
 	self.dialog.show()
-		
-    def selection_ok(self, button):
+	response = self.dialog.run()
 	self.dialog.hide()
-	self.selected = self.dialog.get_filename()
-	self.entry.set_text(self.selected)
+
+	if response == gtk.RESPONSE_OK:
+	    self.selected = self.dialog.get_filename()
+	    self.entry.set_text(self.selected)
 
     def get_value(self):
 	return self.selected
