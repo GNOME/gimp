@@ -1773,6 +1773,7 @@ palette_color_area_events (GtkWidget *widget,
 	      palette_draw_entries(palette,row,col);
 	      /*  Update the active color name  */
 	      gtk_entry_set_text (GTK_ENTRY (palette->color_name), palette->color->name);
+	      gtk_widget_set_sensitive (palette->color_name, TRUE);
 	     /*  palette_update_current_entry (palette); */
 	      if(bevent->button == 3)
 		{
@@ -2176,6 +2177,7 @@ palette_list_item_update(GtkWidget *widget,
   /* Stop errors in case no colours are selected */ 
   gtk_signal_handler_block(GTK_OBJECT (palette->color_name),palette->entry_sig_id);
   gtk_entry_set_text (GTK_ENTRY (palette->color_name), _("Undefined")); 
+  gtk_widget_set_sensitive (palette->color_name, FALSE);
   gtk_signal_handler_unblock(GTK_OBJECT (palette->color_name),palette->entry_sig_id);
 }
 

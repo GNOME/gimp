@@ -1,3 +1,8 @@
+Sun Jan  3 22:18:48 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/palette.c: applied a patch from Michael Natterer
+	that fixes a segfault in the palette dialog.
+
 Sat Jan  2 23:22:29 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/palette.c
