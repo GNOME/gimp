@@ -20,7 +20,7 @@
 #define __LUT_FUNCS_H__
 
 #include "gimplutF.h"
-#include "gimphistogram.h"
+#include "gimphistogramF.h"
 
 /* brightness contrast */
 void     brightness_contrast_lut_setup (GimpLut *lut,
