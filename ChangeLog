@@ -1,3 +1,13 @@
+2003-08-12  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/gui/image-menu.c (image_menu_update): have the grid/guide
+	menu entries reflect the presence of grid/guides in the image (as
+	suggested by jimmac)
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_snap_coords):
+	snap to grid/guides even if the grid/guides are hidden (as
+	suggested by jimmac)
+
 2003-08-12  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: revert one of Sven's -pedantic

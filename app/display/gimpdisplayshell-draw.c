@@ -1001,15 +1001,13 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
   *snapped_coords = *coords;
 
-  if (gimp_display_shell_get_show_guides (shell) &&
-      shell->snap_to_guides                      &&
+  if (shell->snap_to_guides                      &&
       shell->gdisp->gimage->guides)
     {
       snap_to_guides = TRUE;
     }
 
-  if (gimp_display_shell_get_show_grid (shell)    &&
-      gimp_display_shell_get_snap_to_grid (shell) &&
+  if (gimp_display_shell_get_snap_to_grid (shell) &&
       shell->gdisp->gimage->grid)
     {
       snap_to_grid = TRUE;

@@ -430,9 +430,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       view_snap_to_guides_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     "view/snap_to_guides.html", NULL },
-
-  MENU_SEPARATOR ("/View/---"),
-
   { { N_("/View/S_how Grid"), NULL,
       view_toggle_grid_cmd_callback, 0, "<ToggleItem>" },
     NULL,
@@ -1449,15 +1446,14 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_ACTIVE    ("/View/Show Selection",      gdisp && appearance->selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
   SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && appearance->active_layer);
-  SET_SENSITIVE ("/View/Show Guides",         gdisp);
+  SET_SENSITIVE ("/View/Show Guides",         gdisp && gimage->guides);
   SET_ACTIVE    ("/View/Show Guides",         gdisp && appearance->guides);
-  SET_SENSITIVE ("/View/Snap to Guides",      gdisp);
+  SET_SENSITIVE ("/View/Snap to Guides",      gdisp && gimage->guides);
   SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
-
-  SET_SENSITIVE ("/View/Show Grid",    gdisp);
-  SET_ACTIVE    ("/View/Show Grid",    gdisp && appearance->grid);
-  SET_SENSITIVE ("/View/Snap to Grid", gdisp);
-  SET_ACTIVE    ("/View/Snap to Grid", gdisp && shell->snap_to_grid);
+  SET_SENSITIVE ("/View/Show Grid",           gdisp && gimage->grid);
+  SET_ACTIVE    ("/View/Show Grid",           gdisp && appearance->grid);
+  SET_SENSITIVE ("/View/Snap to Grid",        gdisp && gimage->grid);
+  SET_ACTIVE    ("/View/Snap to Grid",        gdisp && shell->snap_to_grid);
 
   SET_SENSITIVE ("/View/Show Menubar",    gdisp);
   SET_ACTIVE    ("/View/Show Menubar",    gdisp && appearance->menubar);
