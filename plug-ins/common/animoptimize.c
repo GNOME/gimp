@@ -1,7 +1,7 @@
 /*
- * Animation Optimizer plug-in version 1.1.0 [ALPHA]
+ * Animation Optimizer plug-in version 1.1.1
  *
- * (c) Adam D. Moss, 1997-2001
+ * (c) Adam D. Moss, 1997-2003
  *     adam@gimp.org
  *     adam@foxbox.org
  *
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2003-08-12 : version 1.1.1
+ *              Disable the semi-broken background/foreground stuff
+ *              unless EXPERIMENTAL_BACKDROP_CODE is defined...
  *
  * 2001-04-28 : version 1.1.0 [ALPHA]
  *              Support automated background (or foreground) removal.
@@ -69,6 +73,11 @@
  * TODO:
  *   User interface
  */
+
+/*
+#define EXPERIMENTAL_BACKDROP_CODE
+*/
+
 
 #include "config.h"
 
@@ -197,6 +206,7 @@ query (void)
                           G_N_ELEMENTS (return_args),
 			  args, return_args);
 
+#ifdef EXPERIMENTAL_BACKDROP_CODE
   gimp_install_procedure ("plug_in_animation_remove_backdrop",
 			  "This procedure attempts to remove the backdrop"
 			  " from a GIMP layer-based animation, leaving"
@@ -227,6 +237,7 @@ query (void)
 			  G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
 			  args, return_args);
+#endif
 }
 
 static void
