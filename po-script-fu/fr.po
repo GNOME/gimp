@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp 1.1.20 (script-fu)\n"
-"POT-Creation-Date: 2000-04-30 11:43-0700\n"
+"POT-Creation-Date: 2000-05-09 20:27-0700\n"
 "PO-Revision-Date: 2000-03-06 17:39+0100\n"
 "Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -23,7 +23,7 @@ msgstr "Console pour Script-Fu"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:200
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Close"
 msgstr "Fermer"
 
@@ -54,7 +54,7 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1075
+#: plug-ins/script-fu/script-fu-scripts.c:1124
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error\n"
@@ -62,71 +62,71 @@ msgid ""
 msgstr "Script-Fu : %s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1125
-#: plug-ins/script-fu/script-fu-scripts.c:1127
+#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1175
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1127
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1154
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 msgid "Script Arguments"
 msgstr "Paramètres du Script"
 
 #. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1219
+#: plug-ins/script-fu/script-fu-scripts.c:1267
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1321
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1336
+#: plug-ins/script-fu/script-fu-scripts.c:1384
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1379
+#: plug-ins/script-fu/script-fu-scripts.c:1427
 msgid "Reset to Defaults"
 msgstr "Remettre aux valeurs par défaut"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1405
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "About"
 msgstr "À propos"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1419
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-scripts.c:1476
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Annuler"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1533
+#: plug-ins/script-fu/script-fu-scripts.c:1590
 msgid "NOT SET"
 msgstr "NON DÉFINI"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1602
+#: plug-ins/script-fu/script-fu-scripts.c:1659
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -134,23 +134,23 @@ msgstr ""
 "Au moins une fonte que vous avez choisie est invalide.\n"
 "Veuillez vérifier vos paramètres.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1881
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1887
+#: plug-ins/script-fu/script-fu-scripts.c:1950
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1893
+#: plug-ins/script-fu/script-fu-scripts.c:1956
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1901
+#: plug-ins/script-fu/script-fu-scripts.c:1964
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2054
+#: plug-ins/script-fu/script-fu-scripts.c:2117
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
@@ -174,11 +174,11 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Console..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Serveur..."
 
-#: plug-ins/script-fu/script-fu.c:1008 plug-ins/script-fu/script-fu.c:1009
+#: plug-ins/script-fu/script-fu.c:1009 plug-ins/script-fu/script-fu.c:1010
 msgid "Re-read all available scripts"
 msgstr "Relire la liste des scripts disponibles"
 
-#: plug-ins/script-fu/script-fu.c:1013
+#: plug-ins/script-fu/script-fu.c:1014
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Extensions/Script-Fu/Rafraîchir"
 
@@ -867,7 +867,7 @@ msgid "Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Type: TRUE=RLE, FALSE=IIR"
+msgid "Blur Type"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
@@ -1362,6 +1362,10 @@ msgid "Highlight Color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
 msgstr ""
 
@@ -1375,6 +1379,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "IIR"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
@@ -1578,7 +1586,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Opacity"
 msgstr ""
 
@@ -1678,6 +1685,10 @@ msgstr ""
 #, fuzzy
 msgid "Quarter Size"
 msgstr "Types d'images :"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "RLE"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"

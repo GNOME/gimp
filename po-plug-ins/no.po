@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-05-13 00:47+0200\n"
+"POT-Creation-Date: 2000-05-14 13:42-0700\n"
 "PO-Revision-Date: 2000-05-13 01:20+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -62,7 +62,7 @@ msgstr "Om"
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
 #: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
-#: plug-ins/common/gpb.c:270 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
 #: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
@@ -143,7 +143,7 @@ msgstr "Ok"
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:272
+#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
@@ -1500,7 +1500,7 @@ msgstr "Kan ikke åpne %s"
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
-#: plug-ins/common/gpb.c:769 plug-ins/common/gpb.c:809
+#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
@@ -3573,7 +3573,7 @@ msgstr "Lagre som børste"
 msgid "Spacing:"
 msgstr "Mellomrom:"
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:296
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
@@ -3726,63 +3726,63 @@ msgstr "Flisbredde:"
 msgid "Tile Height:"
 msgstr "Flishøyde:"
 
-#: plug-ins/common/gpb.c:283
+#: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
 msgstr "Mellomrom (prosent):"
 
-#: plug-ins/common/gpb.c:309
+#: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
 msgstr "Lagre som bildebørste"
 
-#: plug-ins/common/gpb.c:366
+#: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
 msgstr "Lagre pixmap som brush pipe"
 
-#: plug-ins/common/gpb.c:429
+#: plug-ins/common/gpb.c:428
 msgid "Pixels"
 msgstr "Piksler"
 
-#: plug-ins/common/gpb.c:434 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr "Cellestørrelse:"
 
-#: plug-ins/common/gpb.c:446
+#: plug-ins/common/gpb.c:445
 msgid "Number of Cells:"
 msgstr "Antall celler:"
 
-#: plug-ins/common/gpb.c:470
+#: plug-ins/common/gpb.c:469
 msgid " Rows of "
 msgstr " Rader med "
 
-#: plug-ins/common/gpb.c:482
+#: plug-ins/common/gpb.c:481
 msgid " Columns on each Layer"
 msgstr " Kolonner i hvert lag"
 
-#: plug-ins/common/gpb.c:486
+#: plug-ins/common/gpb.c:485
 msgid " (Width Mismatch!) "
 msgstr ""
 
-#: plug-ins/common/gpb.c:490
+#: plug-ins/common/gpb.c:489
 msgid " (Height Mismatch!) "
 msgstr ""
 
-#: plug-ins/common/gpb.c:495
+#: plug-ins/common/gpb.c:494
 msgid "Display as:"
 msgstr "Vis som:"
 
-#: plug-ins/common/gpb.c:504
+#: plug-ins/common/gpb.c:503
 msgid "Dimension:"
 msgstr "Dimensjon:"
 
-#: plug-ins/common/gpb.c:539
+#: plug-ins/common/gpb.c:538
 msgid "Ranks:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:572
+#: plug-ins/common/gpb.c:571
 msgid "Selection:"
 msgstr "Utvalg:"
 
-#: plug-ins/common/gpb.c:1024
+#: plug-ins/common/gpb.c:1023
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Lag %s har ikke en alpha-kanal, hoppet over"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.22\n"
-"POT-Creation-Date: 2000-05-14 10:51+0900\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
 "PO-Revision-Date: 2000-05-14 11:00+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -1700,22 +1700,22 @@ msgstr "  不明な識別子: %s\n"
 msgid "error parsing pluginrc"
 msgstr "pluginrc 読み込み中にエラー発生"
 
-#: app/gimprc.c:2810
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "%s を開けません; %s"
 
-#: app/gimprc.c:2829
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "%s を %s.old に変更できません; %s"
 
-#: app/gimprc.c:2835
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "%s を再オープンできません\n"
 
-#: app/gimprc.c:2847
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "%s に書き込めません; %s"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-13 01:06+0200\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
 "PO-Revision-Date: 2000-05-13 01:15+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1034,17 +1034,13 @@ msgstr ""
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr ""
-"Flytta den valda posten uppåt i listan"
-"<Shift> Till toppen"
+msgstr "Flytta den valda posten uppåt i listan<Shift> Till toppen"
 
 #: app/docindex.c:122
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr ""
-"Flytta den valda posten nedåt i listan"
-"Shift> Till botten"
+msgstr "Flytta den valda posten nedåt i listanShift> Till botten"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1210,7 +1206,8 @@ msgstr "Ingen markering."
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Sparning misslyckades.\n"
+msgstr ""
+"Sparning misslyckades.\n"
 "%s"
 
 #: app/fileops.c:475 app/fileops.c:507
@@ -1701,22 +1698,22 @@ msgstr "  oväntad token: %s\n"
 msgid "error parsing pluginrc"
 msgstr "fel vid tolkning av pluginrc"
 
-#: app/gimprc.c:2810
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kan ej öppna %s: %s"
 
-#: app/gimprc.c:2829
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kan ej döpa om %s till %s.old: %s"
 
-#: app/gimprc.c:2835
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Kan ej öppna %s igen\n"
 
-#: app/gimprc.c:2847
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kan ej skriva till %s: %s"

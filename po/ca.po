@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.21\n"
-"POT-Creation-Date: 2000-05-03 14:34+0200\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
 "PO-Revision-Date: 1999-10-26 14:55+0200\n"
 "Last-Translator: Softcatala <linux@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -44,7 +44,7 @@ msgstr "Pressió:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr ""
 
-#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:568
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:560
 msgid "The GIMP"
 msgstr "El GIMP"
 
@@ -119,14 +119,15 @@ msgstr "Surt"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:305 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1035
-#: app/layers_dialog.c:3437 app/layers_dialog.c:3619 app/layers_dialog.c:3711
-#: app/layers_dialog.c:3963 app/levels.c:340 app/palette.c:1826
+#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1027
+#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3756
+#: app/layers_dialog.c:4008 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
 #: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
-#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:358
+#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:331
+#: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -283,12 +284,13 @@ msgstr "L'opció Brillantor-contrast no funciona en imatges indexades"
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
-#: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3435 app/layers_dialog.c:3617 app/layers_dialog.c:3709
-#: app/layers_dialog.c:3961 app/levels.c:336 app/module_db.c:281
+#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
+#: app/layers_dialog.c:3480 app/layers_dialog.c:3662 app/layers_dialog.c:3754
+#: app/layers_dialog.c:4006 app/levels.c:336 app/module_db.c:281
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
-#: app/user_install.c:1188 modules/cdisplay_gamma.c:351
+#: app/user_install.c:1188 modules/cdisplay_gamma.c:329
+#: modules/cdisplay_highcontrast.c:323
 msgid "OK"
 msgstr "D'acord"
 
@@ -302,17 +304,19 @@ msgstr "Reinicialitza"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
-msgid "Brightness"
+#, fuzzy
+msgid "Brightness:"
 msgstr "Brillantor"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:265
-msgid "Contrast"
+#, fuzzy
+msgid "Contrast:"
 msgstr "Contrast"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:378 app/hue_saturation.c:562 app/levels.c:569
+#: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:569
 #: app/palette.c:3236 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "Vista prèvia"
@@ -324,14 +328,13 @@ msgstr "Editor del pinzell"
 #. The close button
 #: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:696
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:173
-#: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:305 app/gradient.c:800
-#: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1344
-#: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
-#: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:364 app/tips_dialog.c:159 app/tools.c:1087
-#: app/undo_history.c:752
+#: app/crop.c:1054 app/devices.c:755 app/docindex.c:772 app/errorconsole.c:281
+#: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
+#: app/histogram_tool.c:276 app/info_window.c:255 app/lc_dialog.c:195
+#: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2072
+#: app/palette.c:2088 app/palette.c:3118 app/palette_select.c:66
+#: app/pattern_select.c:172 app/preferences_dialog.c:364 app/tips_dialog.c:160
+#: app/tools.c:1087 app/undo_history.c:752
 msgid "Close"
 msgstr "Tanca"
 
@@ -367,11 +370,11 @@ msgstr "Refresca"
 msgid "No Brushes available"
 msgstr "no està disponible la previsualització"
 
-#: app/brush_select.c:448 app/layers_dialog.c:411 app/tool_options.c:526
+#: app/brush_select.c:448 app/layers_dialog.c:413 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Opacitat"
 
-#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:550
+#: app/brush_select.c:456 app/layers_dialog.c:366 app/tool_options.c:550
 msgid "Mode:"
 msgstr "Mode:"
 
@@ -452,11 +455,11 @@ msgid "Replace"
 msgstr "Substitueix"
 
 #: app/by_color_select.c:760 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:114
+#: app/gdisplay_color_ui.c:120
 msgid "Add"
 msgstr "Afegeix"
 
-#: app/by_color_select.c:761 app/layers_dialog.c:379 app/tool_options.c:926
+#: app/by_color_select.c:761 app/layers_dialog.c:381 app/tool_options.c:926
 msgid "Subtract"
 msgstr "Resta"
 
@@ -482,17 +485,17 @@ msgstr "Converteix"
 msgid "All"
 msgstr ""
 
-#: app/channel.c:188 app/channel.c:190 app/layer.c:312 app/layer.c:314
+#: app/channel.c:188 app/channel.c:190 app/layer.c:320 app/layer.c:322
 msgid "copy"
 msgstr "copia"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:320 app/layer.c:1674
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:328 app/layer.c:1744
 #, c-format
 msgid "%s copy"
 msgstr "%s còpia"
 
-#: app/channel.c:614
+#: app/channel.c:615
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
@@ -518,11 +521,11 @@ msgid "Wrap Around"
 msgstr "Wrap-Around"
 
 #: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
-#: app/layers_dialog.c:3537
+#: app/layers_dialog.c:3582
 msgid "Background"
 msgstr "Fons"
 
-#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3539
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3584
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -758,47 +761,47 @@ msgstr "Imatge:"
 msgid "none"
 msgstr "cap"
 
-#: app/commands.c:331
+#: app/commands.c:332
 msgid "Feather Selection"
 msgstr "Selecció de la ploma"
 
-#: app/commands.c:334
+#: app/commands.c:335
 #, fuzzy
 msgid "Feather Selection by:"
 msgstr "Ploma seleccionada per:"
 
-#: app/commands.c:367
+#: app/commands.c:368
 msgid "Shrink Selection"
 msgstr "Encongeix la selecció"
 
-#: app/commands.c:370
+#: app/commands.c:371
 #, fuzzy
 msgid "Shrink Selection by:"
 msgstr "Encongeix la selecció en:"
 
-#: app/commands.c:379
+#: app/commands.c:380
 msgid "Shrink from image border"
 msgstr "Encongeix des de la vora de la imatge"
 
-#: app/commands.c:401
+#: app/commands.c:402
 msgid "Grow Selection"
 msgstr "Selecció de l'augment"
 
-#: app/commands.c:404
+#: app/commands.c:405
 #, fuzzy
 msgid "Grow Selection by:"
 msgstr "Augmenta la selecció en:"
 
-#: app/commands.c:424
+#: app/commands.c:425
 msgid "Border Selection"
 msgstr "Selecció del contorn"
 
-#: app/commands.c:427
+#: app/commands.c:428
 #, fuzzy
 msgid "Border Selection by:"
 msgstr "Contorn seleccionat per:"
 
-#: app/commands.c:1314
+#: app/commands.c:1322
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Error en el canvi de la mida: tant l'amplada com l'alçada han de ser més "
@@ -961,7 +964,7 @@ msgid "Width:"
 msgstr "Amplada:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3478 app/resize.c:254 app/resize.c:279 app/resize.c:524
+#: app/layers_dialog.c:3523 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Alçada:"
@@ -988,7 +991,7 @@ msgstr "Les corbes dels dibuixables indexats no es poden ajustar."
 msgid "Modify Curves for Channel:"
 msgstr "Modifica les corbes per al canal: "
 
-#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:385
+#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:387
 #: app/levels.c:368 app/paint_funcs.c:97 app/tool_options.c:932
 msgid "Value"
 msgstr "Valor"
@@ -1030,12 +1033,12 @@ msgstr "Carrega nivells"
 msgid "Save Curves"
 msgstr "Desa nivells"
 
-#: app/curves.c:1569
+#: app/curves.c:1578
 #, fuzzy
 msgid "Load/Save Curves"
 msgstr "Carrega/desa nivells"
 
-#: app/curves.c:1614 app/curves.c:1632 app/levels.c:1429 app/levels.c:1447
+#: app/curves.c:1623 app/curves.c:1641 app/levels.c:1429 app/levels.c:1447
 #: app/paths_dialog.c:1902
 #, c-format
 msgid "Unable to open file %s"
@@ -1054,70 +1057,34 @@ msgstr "Estat del dispositiu"
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
-#: app/docindex.c:575
-msgid "This file cannot be moved up."
-msgstr "Aquest fitxer no es pot pujar."
+#: app/docindex.c:113
+msgid ""
+"Open the selected entry\n"
+"<Shift> Raise window if already open\n"
+"<Ctrl> Load Image dialog"
+msgstr ""
 
-#: app/docindex.c:579
-msgid "There's no selection to move up."
-msgstr "No hi ha res seleccionat per pujar."
-
-#: app/docindex.c:593
-msgid "This file cannot be moved down."
-msgstr "Aquest fitxer no es pot baixar."
-
-#: app/docindex.c:597
-msgid "There's no selection to move down."
-msgstr "No hi ha res seleccionat per baixar."
-
-#: app/docindex.c:613
-msgid "There's no selection to remove."
-msgstr "No hi ha res seleccionat per eliminar."
-
-#: app/docindexif.c:85
-msgid "Open"
-msgstr "Obre"
-
-#: app/docindexif.c:85
-msgid "Open a file"
-msgstr "Obre un fitxer"
-
-#: app/docindexif.c:90 app/gdisplay_color_ui.c:116
-msgid "Up"
-msgstr "Amunt"
-
-#: app/docindexif.c:90
-msgid "Move the selected entry up in the index"
+#: app/docindex.c:118
+#, fuzzy
+msgid ""
+"Move the selected entry up in the index\n"
+"<Shift> To top"
 msgstr "Mou les entrades seleccionades més amunt en l'índex"
 
-#: app/docindexif.c:95 app/gdisplay_color_ui.c:117
-msgid "Down"
-msgstr "Avall"
-
-#: app/docindexif.c:95
-msgid "Move the selected entry down in the index"
+#: app/docindex.c:122
+#, fuzzy
+msgid ""
+"Move the selected entry down in the index\n"
+"<Shift> To bottom"
 msgstr "Mou les entrades seleccionades més avall en l'índex"
 
-#: app/docindexif.c:100 app/gdisplay_color_ui.c:115
-msgid "Remove"
-msgstr "Elimina"
-
-#: app/docindexif.c:100
+#: app/docindex.c:126
 msgid "Remove the selected entry from the index"
 msgstr "Elimina de l'índex les entrades seleccionades"
 
-#: app/docindexif.c:105
-msgid "Close the Document Index"
-msgstr "Tanca l'índex del document"
-
-#. Set the GOWindow title
-#: app/docindexif.c:238
+#: app/docindex.c:766
 msgid "Document Index"
 msgstr "Índex del document"
-
-#: app/docindexif.c:245
-msgid "GTK successfully started"
-msgstr "El GTK s'ha iniciat amb èxit"
 
 #: app/dodgeburn.c:139
 msgid "Exposure:"
@@ -1251,17 +1218,17 @@ msgstr "píxels/%a"
 msgid "Image Type"
 msgstr "Tipus d'imatge"
 
-#: app/fileops.c:226 app/fileops.c:272
+#: app/fileops.c:249 app/fileops.c:295
 msgid "Load Image"
 msgstr "Carrega la imatge"
 
 #. format-chooser frame
-#: app/fileops.c:287
+#: app/fileops.c:310
 #, fuzzy
 msgid "Determine File Type"
 msgstr "Determina el tipus de fitxer:"
 
-#: app/fileops.c:360
+#: app/fileops.c:383
 #, fuzzy
 msgid ""
 "Generate\n"
@@ -1270,96 +1237,152 @@ msgstr ""
 "genera\n"
 "previsualitza"
 
-#: app/fileops.c:379
+#: app/fileops.c:402
 #, fuzzy
 msgid "No Selection."
 msgstr "No selecció"
 
-#: app/fileops.c:422 app/fileops.c:1641 app/fileops.c:1748
+#: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
 #, fuzzy, c-format
-msgid "Save failed: %s"
+msgid ""
+"Save failed.\n"
+"%s"
 msgstr "No s'ha pogut desar: "
 
-#: app/fileops.c:442 app/fileops.c:474
+#: app/fileops.c:475 app/fileops.c:507
 msgid "Save Image"
 msgstr "Desar la imatge"
 
-#: app/fileops.c:491
+#: app/fileops.c:524
 msgid "Save Options"
 msgstr "Desar les opcions"
 
-#: app/fileops.c:500
+#: app/fileops.c:533
 #, fuzzy
 msgid "Determine File Type:"
 msgstr "Determina el tipus de fitxer:"
 
-#: app/fileops.c:560
-msgid "Can't revert. No filename associated with this image"
+#: app/fileops.c:593
+#, fuzzy
+msgid ""
+"Revert failed.\n"
+"No filename associated with this image."
 msgstr ""
 "No es pot anar enrere. No hi ha cap nom de fitxer associat a aquesta imatge"
 
-#: app/fileops.c:576
-msgid "Revert failed."
+#: app/fileops.c:600
+#, fuzzy
+msgid "Revert"
+msgstr "Reinicialitza"
+
+#: app/fileops.c:611
+#, fuzzy, c-format
+msgid ""
+"Revert failed.\n"
+"%s"
 msgstr "No s'ha pogut anar enrere"
 
-#: app/fileops.c:1257
+#: app/fileops.c:708
+#, fuzzy, c-format
+msgid ""
+"%s failed.\n"
+"%s: Unknown file type."
+msgstr "No es pot omplir el tipus d'imatge desconegut."
+
+#: app/fileops.c:725
+#, fuzzy, c-format
+msgid ""
+"%s failed.\n"
+"%s is not a regular file."
+msgstr "%s es un fitxer irregular (%s)"
+
+#: app/fileops.c:746
+#, c-format
+msgid ""
+"%s failed.\n"
+"%s: Permission denied."
+msgstr ""
+
+#: app/fileops.c:795
+msgid "Open"
+msgstr "Obre"
+
+#: app/fileops.c:1102
+#, fuzzy, c-format
+msgid ""
+"Save failed.\n"
+"%s: Unknown file type."
+msgstr "No es pot omplir el tipus d'imatge desconegut."
+
+#: app/fileops.c:1117
+#, fuzzy, c-format
+msgid ""
+"Save failed.\n"
+"%s is not a regular file."
+msgstr "%s es un fitxer irregular (%s)"
+
+#: app/fileops.c:1136
+#, c-format
+msgid ""
+"Save failed.\n"
+"%s: Permission denied."
+msgstr ""
+
+#: app/fileops.c:1386
 #, fuzzy
 msgid "(This thumbnail may be out of date)"
 msgstr "(és possible que aquesta icona sigui obsoleta)"
 
-#: app/fileops.c:1258
+#: app/fileops.c:1387
 #, fuzzy
 msgid "(No Information)"
 msgstr "(sense informació)"
 
-#: app/fileops.c:1268
+#: app/fileops.c:1397
 #, fuzzy
 msgid "(Thumbnail saving is disabled)"
 msgstr "(s'ha desactivat l'opció de desar icones)"
 
-#: app/fileops.c:1272
+#: app/fileops.c:1401
 #, fuzzy
 msgid "(Could not write thumbnail file)"
 msgstr "(no s'ha pogut escriure el fitxer d'icones)"
 
-#: app/fileops.c:1276
+#: app/fileops.c:1405
 #, fuzzy
 msgid "(Thumbnail file not written)"
 msgstr "(no s'ha escrit el fitxer d'icones)"
 
-#: app/fileops.c:1293
+#: app/fileops.c:1422
 #, fuzzy
 msgid "No preview available"
 msgstr "no està disponible la previsualització"
 
-#: app/fileops.c:1411
+#: app/fileops.c:1545
 msgid "(could not make preview)"
 msgstr "(no s'ha pogut previsualitzar)"
 
-#: app/fileops.c:1484 app/fileops.c:1563
+#: app/fileops.c:1618 app/fileops.c:1698
 #, fuzzy, c-format
-msgid "Open failed: %s"
+msgid ""
+"Open failed.\n"
+"%s"
 msgstr "No s'ha pogut obrir:"
 
-#: app/fileops.c:1619
-#, c-format
-msgid "%s is an irregular file (%s)"
-msgstr "%s es un fitxer irregular (%s)"
-
-#: app/fileops.c:1687
+#: app/fileops.c:1820
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s ja existeix, voleu sobreescriure'l?"
 
-#: app/fileops.c:1691
+#: app/fileops.c:1822
 msgid "File Exists!"
 msgstr "El fitxer ja existeix!"
 
-#: app/fileops.c:1697
+#: app/fileops.c:1827
 msgid "Yes"
 msgstr "Sí"
 
-#: app/fileops.c:1699
+#: app/fileops.c:1827
 msgid "No"
 msgstr "No"
 
@@ -1420,19 +1443,31 @@ msgstr "indexat-buit"
 msgid "indexed"
 msgstr "indexat"
 
-#: app/gdisplay_color_ui.c:118
+#: app/gdisplay_color_ui.c:121
+msgid "Remove"
+msgstr "Elimina"
+
+#: app/gdisplay_color_ui.c:122
+msgid "Up"
+msgstr "Amunt"
+
+#: app/gdisplay_color_ui.c:123
+msgid "Down"
+msgstr "Avall"
+
+#: app/gdisplay_color_ui.c:124
 msgid "Configure"
 msgstr "Configura"
 
-#: app/gdisplay_color_ui.c:121
+#: app/gdisplay_color_ui.c:127
 msgid "Color Display Filters"
 msgstr "Filtres de visualització de colors"
 
-#: app/gdisplay_color_ui.c:145
+#: app/gdisplay_color_ui.c:153
 msgid "Available Filters"
 msgstr "Filtres disponibles"
 
-#: app/gdisplay_color_ui.c:168
+#: app/gdisplay_color_ui.c:176
 msgid "Active Filters"
 msgstr "Filtres actius"
 
@@ -1544,19 +1579,19 @@ msgstr "Impossible de llegir el camí des de %s"
 msgid "Can't fill unknown image type."
 msgstr "No es pot omplir el tipus d'imatge desconegut."
 
-#: app/gimpdrawable.c:498
+#: app/gimpdrawable.c:496
 msgid "parasite attach to drawable"
 msgstr "adjunció paràsita al dibuix"
 
-#: app/gimpdrawable.c:533
+#: app/gimpdrawable.c:531
 msgid "detach parasite from drawable"
 msgstr "extreure paràsit del dibuix"
 
-#: app/gimpdrawable.c:740
+#: app/gimpdrawable.c:738
 msgid "unnamed"
 msgstr "sense nom"
 
-#: app/gimpdrawable.c:757
+#: app/gimpdrawable.c:755
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Tipus de capa %d no suportat."
@@ -1568,39 +1603,39 @@ msgid ""
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/gimpimage.c:1178
+#: app/gimpimage.c:1183
 msgid "attach parasite to image"
 msgstr "adjuntar paràsit a la imatge"
 
-#: app/gimpimage.c:1203
+#: app/gimpimage.c:1208
 msgid "detach parasite from image"
 msgstr "extreure paràsit de la imatge"
 
-#: app/gimpimage.c:2307
+#: app/gimpimage.c:2312
 msgid "Layer cannot be raised any further"
 msgstr "No es pot situar la capa més amunt"
 
-#: app/gimpimage.c:2335
+#: app/gimpimage.c:2340
 msgid "Layer cannot be lowered any further"
 msgstr "No es pot situar la capa més avall"
 
-#: app/gimpimage.c:2361
+#: app/gimpimage.c:2366
 msgid "Layer is already on top"
 msgstr "La capa ja és al capdamunt"
 
-#: app/gimpimage.c:2367
+#: app/gimpimage.c:2372
 msgid "Can't raise Layer without alpha"
 msgstr "No es pot pujar la capa sense alfa"
 
-#: app/gimpimage.c:2395
+#: app/gimpimage.c:2400
 msgid "Layer is already on bottom"
 msgstr "La capa ja és al capdavall"
 
-#: app/gimpimage.c:2450
+#: app/gimpimage.c:2455
 msgid "BG has no alpha, layer was placed above"
 msgstr "El BG no té alfa, s'ha situat la capa damunt"
 
-#: app/gimpimage.c:2521
+#: app/gimpimage.c:2526
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1608,11 +1643,11 @@ msgstr ""
 "No hi ha prou capes visibles per una combinació.\n"
 "Almenys n'hi ha d'haver dues."
 
-#: app/gimpimage.c:2605
+#: app/gimpimage.c:2610
 msgid "There are not enough visible layers for a merge down."
 msgstr "No hi ha prou capes visibles per a una combinació."
 
-#: app/gimpimage.c:3007
+#: app/gimpimage.c:3028
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1620,7 +1655,7 @@ msgstr ""
 "No s'ha pogut afegir una capa de\n"
 "màscara perquè la capa ja en té una."
 
-#: app/gimpimage.c:3011
+#: app/gimpimage.c:3032
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1628,7 +1663,7 @@ msgstr ""
 "No es pot afegir una capa de màscara a\n"
 "una capa en una imatge indexada."
 
-#: app/gimpimage.c:3015
+#: app/gimpimage.c:3036
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1636,21 +1671,21 @@ msgstr ""
 "No es pot afegir una capa de màscara\n"
 "a una capa sense canal alfa."
 
-#: app/gimpimage.c:3022
+#: app/gimpimage.c:3043
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una capa de màscara de dimensions diferents de lacapa "
 "especificada"
 
-#: app/gimpimage.c:3129
+#: app/gimpimage.c:3150
 msgid "Channel cannot be raised any further"
 msgstr "El canal no es pot aixecar més"
 
-#: app/gimpimage.c:3180
+#: app/gimpimage.c:3201
 msgid "Channel cannot be lowered any further"
 msgstr "El canal no es pot abaixar més"
 
-#: app/gimpimage.c:3400 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3421 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Sense títol"
@@ -1678,28 +1713,28 @@ msgstr "  a la línia %d columna %d\n"
 msgid "  unexpected token: %s\n"
 msgstr "  testimoni inesperat: %s\n"
 
-#: app/gimprc.c:1423
+#: app/gimprc.c:1428
 msgid "error parsing pluginrc"
 msgstr "error analitzant el pluginrc"
 
-#: app/gimprc.c:2805
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "No es pot obrir %s; %s"
 
-#: app/gimprc.c:2824
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "No es pot canviar el nom %s per %s.old; %s"
 
-#: app/gimprc.c:2830
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr ""
 "No es pot tornar a\n"
 "obrir %s\n"
 
-#: app/gimprc.c:2842
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "No es pot escriure a %s; %s"
@@ -2224,20 +2259,21 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Color / Lluminositat / Ajustaments de saturació"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:454 app/layers_dialog.c:382 app/paint_funcs.c:94
-#: app/tool_options.c:929
-msgid "Hue"
+#: app/hue_saturation.c:454
+#, fuzzy
+msgid "Hue:"
 msgstr "Color"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:488
-msgid "Lightness"
+#, fuzzy
+msgid "Lightness:"
 msgstr "Lluminositat"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:522 app/layers_dialog.c:383 app/paint_funcs.c:95
-#: app/tool_options.c:930
-msgid "Saturation"
+#: app/hue_saturation.c:522
+#, fuzzy
+msgid "Saturation:"
 msgstr "Saturació"
 
 #: app/image_new.c:62 app/info_window.c:65 app/info_window.c:534
@@ -2245,11 +2281,11 @@ msgstr "Saturació"
 msgid "Grayscale"
 msgstr "Escala de grisos"
 
-#: app/image_new.c:68 app/layers_dialog.c:3536
+#: app/image_new.c:68 app/layers_dialog.c:3581
 msgid "Foreground"
 msgstr "Primer terme"
 
-#: app/image_new.c:78 app/layers_dialog.c:3538
+#: app/image_new.c:78 app/layers_dialog.c:3583
 msgid "White"
 msgstr "Blanc"
 
@@ -2441,7 +2477,7 @@ msgstr "Velocitat"
 msgid "Shape"
 msgstr "Ombra"
 
-#: app/interface.c:313
+#: app/interface.c:305
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
@@ -2466,7 +2502,7 @@ msgstr "Canal"
 msgid "Channel Ops"
 msgstr "Opcions de Canal"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:384 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:386 app/paint_funcs.c:96
 #: app/tool_options.c:816 app/tool_options.c:931
 msgid "Color"
 msgstr "Color"
@@ -2583,11 +2619,11 @@ msgstr "La inversió no funciona amb dibuixos indexats."
 msgid "Invert operation failed."
 msgstr "Ha fallat l'operació d'inversió."
 
-#: app/layer.c:250
+#: app/layer.c:258
 msgid "Zero width or height layers not allowed."
 msgstr "No hi pot haver capes d'amplada o alçària zero."
 
-#: app/layer.c:479
+#: app/layer.c:506
 #, c-format
 msgid "%s mask"
 msgstr "màscara %s"
@@ -2596,11 +2632,11 @@ msgstr "màscara %s"
 msgid "Layer Select"
 msgstr "Selecció de capa"
 
-#: app/layers_dialog.c:262 app/layers_dialog.c:3468
+#: app/layers_dialog.c:265 app/layers_dialog.c:3513
 msgid "New Layer"
 msgstr "Capa nova"
 
-#: app/layers_dialog.c:266
+#: app/layers_dialog.c:269
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2608,7 +2644,7 @@ msgstr ""
 "Apropar la capa \n"
 "<Shift> fins al capdavant"
 
-#: app/layers_dialog.c:271
+#: app/layers_dialog.c:274
 #, fuzzy
 msgid ""
 "Lower Layer       \n"
@@ -2617,118 +2653,126 @@ msgstr ""
 "Allunyar la capa  \n"
 "<Shift> fins al capdavall"
 
-#: app/layers_dialog.c:276
+#: app/layers_dialog.c:279
 msgid "Duplicate Layer"
 msgstr "Duplica la capa"
 
-#: app/layers_dialog.c:280
+#: app/layers_dialog.c:283
 msgid "Anchor Layer"
 msgstr "Fixa la capa"
 
-#: app/layers_dialog.c:284
+#: app/layers_dialog.c:287
 msgid "Delete Layer"
 msgstr "Suprimeix la capa"
 
-#: app/layers_dialog.c:371 app/paint_funcs.c:83 app/tool_options.c:917
+#: app/layers_dialog.c:373 app/paint_funcs.c:83 app/tool_options.c:917
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:372 app/paint_funcs.c:84 app/tool_options.c:918
+#: app/layers_dialog.c:374 app/paint_funcs.c:84 app/tool_options.c:918
 msgid "Dissolve"
 msgstr "Fondre"
 
-#: app/layers_dialog.c:373 app/paint_funcs.c:86 app/tool_options.c:920
+#: app/layers_dialog.c:375 app/paint_funcs.c:86 app/tool_options.c:920
 msgid "Multiply (Burn)"
 msgstr "Multiplicar (Cremar)"
 
-#: app/layers_dialog.c:374 app/paint_funcs.c:98 app/tool_options.c:921
+#: app/layers_dialog.c:376 app/paint_funcs.c:98 app/tool_options.c:921
 msgid "Divide (Dodge)"
 msgstr "Dividir (Evitar)"
 
-#: app/layers_dialog.c:375 app/paint_funcs.c:87 app/tool_options.c:922
+#: app/layers_dialog.c:377 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
 msgstr "Pantalla"
 
-#: app/layers_dialog.c:376 app/paint_funcs.c:88 app/tool_options.c:923
+#: app/layers_dialog.c:378 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
 msgstr "Sobreposar"
 
-#: app/layers_dialog.c:377 app/paint_funcs.c:89 app/tool_options.c:924
+#: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:924
 msgid "Difference"
 msgstr "Diferència"
 
-#: app/layers_dialog.c:378 app/paint_funcs.c:90 app/tool_options.c:925
+#: app/layers_dialog.c:380 app/paint_funcs.c:90 app/tool_options.c:925
 msgid "Addition"
 msgstr "Addició"
 
-#: app/layers_dialog.c:380 app/paint_funcs.c:92 app/tool_options.c:927
+#: app/layers_dialog.c:382 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Darken Only"
 msgstr "Només enfosquir"
 
-#: app/layers_dialog.c:381 app/paint_funcs.c:93 app/tool_options.c:928
+#: app/layers_dialog.c:383 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Només aclarir"
 
-#: app/layers_dialog.c:395
+#: app/layers_dialog.c:384 app/paint_funcs.c:94 app/tool_options.c:929
+msgid "Hue"
+msgstr "Color"
+
+#: app/layers_dialog.c:385 app/paint_funcs.c:95 app/tool_options.c:930
+msgid "Saturation"
+msgstr "Saturació"
+
+#: app/layers_dialog.c:397
 msgid "Keep Trans."
 msgstr "Deixa Trans."
 
-#: app/layers_dialog.c:1884
+#: app/layers_dialog.c:1910
 msgid "Empty Layer Copy"
 msgstr "Buida la còpia de la capa"
 
-#: app/layers_dialog.c:2145 app/layers_dialog.c:3279 app/layers_dialog.c:3646
+#: app/layers_dialog.c:2172 app/layers_dialog.c:3324 app/layers_dialog.c:3691
 msgid "Floating Selection"
 msgstr "Selecció movible"
 
-#: app/layers_dialog.c:3429
+#: app/layers_dialog.c:3474
 msgid "New Layer Options"
 msgstr "Opcions per a una nova capa"
 
 #. The name label and entry
-#: app/layers_dialog.c:3458
+#: app/layers_dialog.c:3503
 msgid "Layer Name:"
 msgstr "Nom de la capa:"
 
 #. The size labels
-#: app/layers_dialog.c:3472
+#: app/layers_dialog.c:3517
 msgid "Layer Width:"
 msgstr "Amplada de la capa:"
 
-#: app/layers_dialog.c:3532
+#: app/layers_dialog.c:3577
 msgid "Layer Fill Type"
 msgstr "Tipus de pintat"
 
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3656
 msgid "Edit Layer Attributes"
 msgstr "Edició dels atributs de la capa"
 
-#: app/layers_dialog.c:3638
+#: app/layers_dialog.c:3683
 msgid "Layer name:"
 msgstr "Nom de la capa:"
 
-#: app/layers_dialog.c:3703
+#: app/layers_dialog.c:3748
 msgid "Add Mask Options"
 msgstr "Afegeix opcions de màscara"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3721
+#: app/layers_dialog.c:3766
 msgid "Initialize Layer Mask to:"
 msgstr "Inicialitza la màscara de capa a:"
 
-#: app/layers_dialog.c:3726
+#: app/layers_dialog.c:3771
 msgid "White (Full Opacity)"
 msgstr "Blanc (opac del tot)"
 
-#: app/layers_dialog.c:3728
+#: app/layers_dialog.c:3773
 msgid "Black (Full Transparency)"
 msgstr "Negre (transparent del tot)"
 
-#: app/layers_dialog.c:3730
+#: app/layers_dialog.c:3775
 msgid "Layer's Alpha Channel"
 msgstr "Canal alfa de la capa"
 
-#: app/layers_dialog.c:3788 app/layers_dialog.c:3870
+#: app/layers_dialog.c:3833 app/layers_dialog.c:3915
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2736,27 +2780,27 @@ msgstr ""
 "L'amplada o l'alçària no són vàlides. \n"
 "Ambdues han de ser positives."
 
-#: app/layers_dialog.c:3955
+#: app/layers_dialog.c:4000
 msgid "Layer Merge Options"
 msgstr "Opcions de combinació de capes"
 
-#: app/layers_dialog.c:3980
+#: app/layers_dialog.c:4025
 msgid "Final, Merged Layer should be:"
 msgstr "La capa combinada resultant ha de ser:"
 
-#: app/layers_dialog.c:3981
+#: app/layers_dialog.c:4026
 msgid "Final, Anchored Layer should be:"
 msgstr "La capa fixada resultant ha de ser:"
 
-#: app/layers_dialog.c:3986
+#: app/layers_dialog.c:4031
 msgid "Expanded as necessary"
 msgstr "Ampliat tant com calgui"
 
-#: app/layers_dialog.c:3988
+#: app/layers_dialog.c:4033
 msgid "Clipped to image"
 msgstr "Tallat a mida de la imatge"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:4035
 msgid "Clipped to bottom layer"
 msgstr "Tallat a la mida de la capa de darrere"
 
@@ -2833,44 +2877,44 @@ msgstr "Amplia i redueix el zoom"
 msgid "Zoom out"
 msgstr "Amplia i redueix el zoom"
 
-#: app/main.c:279
+#: app/main.c:280
 msgid "GIMP version"
 msgstr "Versió de GIMP"
 
-#: app/main.c:283
+#: app/main.c:284
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Utilització: %s [opció...] [fitxers...]\n"
 
-#: app/main.c:284
+#: app/main.c:285
 msgid "Valid options are:\n"
 msgstr "Les opcions vàlides són:\n"
 
-#: app/main.c:285
+#: app/main.c:286
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Escriu aquesta ajuda. \n"
 
-#: app/main.c:286
+#: app/main.c:287
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Escriu la informació de la versió. \n"
 
-#: app/main.c:287
+#: app/main.c:288
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <instruccions> Execució en mode desatès. (batch) \n"
 
-#: app/main.c:288
+#: app/main.c:289
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Utilitza un fitxer gimprc alternatiu. \n"
 
-#: app/main.c:289
+#: app/main.c:290
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Execució sense interfície d'usuari. \n"
 
-#: app/main.c:290
+#: app/main.c:291
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Intenta recuperar una sessió desada.\n"
 
-#: app/main.c:291
+#: app/main.c:292
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2878,20 +2922,20 @@ msgstr ""
 "  --no-data                No carreguis trames, gradacions, paletes,  ni "
 "pinzells.\n"
 
-#: app/main.c:292
+#: app/main.c:293
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostra els missatges inicials.\n"
 
-#: app/main.c:293
+#: app/main.c:294
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              No mostris la finestra inicial.\n"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr ""
 "  --no-splash-image        No posis una imatge a la finestra inicial.\n"
 
-#: app/main.c:295
+#: app/main.c:296
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2899,12 +2943,12 @@ msgstr ""
 "  --no-shm                 No usis memòria compartida entre GIMP i les seves "
 "extensions.\n"
 
-#: app/main.c:296
+#: app/main.c:297
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                No usis l'extensió de memòria compartida X.\n"
 
-#: app/main.c:297
+#: app/main.c:298
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2912,24 +2956,24 @@ msgstr ""
 "  --console-messages       Mostra els avisos a la consola per comptes d'usar "
 "un quadre de diàleg\n"
 
-#: app/main.c:298
+#: app/main.c:299
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activa la depuració de gestors de senyals.\n"
 
-#: app/main.c:299
+#: app/main.c:300
 #, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr ""
 "  --display <monitor>      Utilitza el monitor X especificat.\n"
 "\n"
 
-#: app/main.c:300
+#: app/main.c:301
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Utilitza un fitxer gimprc de sistema alternatiu.\n"
 
-#: app/main.c:317
+#: app/main.c:318
 msgid "(This console window will close in ten seconds)\n"
 msgstr ""
 
@@ -2951,822 +2995,822 @@ msgstr "graus"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:88
+#: app/menus.c:87
 #, fuzzy
 msgid "/_File"
 msgstr "/Filtres"
 
 #. <Image>/File
-#: app/menus.c:90 app/menus.c:196
+#: app/menus.c:89 app/menus.c:195
 #, fuzzy
 msgid "/File/New..."
 msgstr "/Fitxer/Nou"
 
-#: app/menus.c:92 app/menus.c:198
+#: app/menus.c:91 app/menus.c:197
 #, fuzzy
 msgid "/File/Open..."
 msgstr "/Fitxer/Obrir"
 
-#: app/menus.c:99
+#: app/menus.c:98
 #, fuzzy
 msgid "/File/Acquire"
 msgstr "/Fitxer/Adquireix/tearoff1"
 
-#: app/menus.c:104
+#: app/menus.c:103
 msgid "/File/Preferences..."
 msgstr "/Fitxer/Preferències..."
 
-#: app/menus.c:111
+#: app/menus.c:110
 #, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fitxer/Diàlegs/Capes i canals..."
 
-#: app/menus.c:113
+#: app/menus.c:112
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Fitxer/Diàlegs/Opcions d'eina..."
 
-#: app/menus.c:118
+#: app/menus.c:117
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Fitxer/Diàlegs/Pinzells..."
 
-#: app/menus.c:120
+#: app/menus.c:119
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Fitxer/Diàlegs/Patrons..."
 
-#: app/menus.c:122
+#: app/menus.c:121
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Fitxer/Diàlegs/Gradients..."
 
-#: app/menus.c:124
+#: app/menus.c:123
 msgid "/File/Dialogs/Palette..."
 msgstr "/Fitxer/Diàlegs/Paleta..."
 
-#: app/menus.c:126
+#: app/menus.c:125
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Fitxer/Diàlegs/Paleta indexada..."
 
-#: app/menus.c:131
+#: app/menus.c:130
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Fitxer/Diàlegs/Dispositius d'entrada..."
 
-#: app/menus.c:133
+#: app/menus.c:132
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Fitxer/Diàlegs/Estat del dispositiu..."
 
-#: app/menus.c:138
+#: app/menus.c:137
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Fitxer/Diàlegs/Índex del document..."
 
-#: app/menus.c:140
+#: app/menus.c:139
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Fitxer/Diàlegs/Consola d'error..."
 
-#: app/menus.c:142
+#: app/menus.c:141
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Fitxer/Diàlegs/Visualitza els filtres..."
 
-#: app/menus.c:152 app/menus.c:211
+#: app/menus.c:151 app/menus.c:210
 msgid "/File/Quit"
 msgstr "/Fitxer/Surt"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:158
+#: app/menus.c:157
 msgid "/_Xtns"
 msgstr ""
 
-#: app/menus.c:160
+#: app/menus.c:159
 #, fuzzy
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/Explorador del mòdul"
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:169
+#: app/menus.c:168
 msgid "/_Help"
 msgstr ""
 
-#: app/menus.c:171
+#: app/menus.c:170
 #, fuzzy
 msgid "/Help/Help..."
 msgstr "/Fitxer/Ajuda..."
 
-#: app/menus.c:173
+#: app/menus.c:172
 msgid "/Help/Context Help..."
 msgstr ""
 
-#: app/menus.c:175
+#: app/menus.c:174
 #, fuzzy
 msgid "/Help/Tip of the Day..."
 msgstr "/Fitxer/Consell del dia"
 
-#: app/menus.c:177
+#: app/menus.c:176
 #, fuzzy
 msgid "/Help/About..."
 msgstr "/Fitxer/Quant a..."
 
-#: app/menus.c:179
+#: app/menus.c:178
 msgid "/Help/Dump Items (Debug)"
 msgstr ""
 
-#: app/menus.c:200
+#: app/menus.c:199
 msgid "/File/Save"
 msgstr "/Fitxer/Desar"
 
-#: app/menus.c:202
+#: app/menus.c:201
 #, fuzzy
 msgid "/File/Save As..."
 msgstr "/Fitxer/Anomena i desa"
 
-#: app/menus.c:204
+#: app/menus.c:203
 msgid "/File/Revert"
 msgstr "/Fitxer/Anar enrere"
 
-#: app/menus.c:209
+#: app/menus.c:208
 msgid "/File/Close"
 msgstr "/Fitxer/Tanca"
 
 #. <Image>/Edit
-#: app/menus.c:219
+#: app/menus.c:218
 msgid "/Edit/Undo"
 msgstr "/Edita/Desfés"
 
-#: app/menus.c:221
+#: app/menus.c:220
 msgid "/Edit/Redo"
 msgstr "/Edita/Refés"
 
-#: app/menus.c:226
+#: app/menus.c:225
 msgid "/Edit/Cut"
 msgstr "/Edita/Retalla"
 
-#: app/menus.c:228
+#: app/menus.c:227
 msgid "/Edit/Copy"
 msgstr "/Edita/Copia"
 
-#: app/menus.c:230
+#: app/menus.c:229
 msgid "/Edit/Paste"
 msgstr "/Edita/Enganxa"
 
-#: app/menus.c:232
+#: app/menus.c:231
 msgid "/Edit/Paste Into"
 msgstr "/Edita/Enganxa dins"
 
-#: app/menus.c:234
+#: app/menus.c:233
 #, fuzzy
 msgid "/Edit/Paste as New"
 msgstr "/Edita/Enganxa com a nou"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:239
+#: app/menus.c:238
 #, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Edita/Retalla l'objecte designat"
 
-#: app/menus.c:241
+#: app/menus.c:240
 #, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Edita/Copia l'objecte designat"
 
-#: app/menus.c:243
+#: app/menus.c:242
 #, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Edita/Enganxa l'objecte designat"
 
-#: app/menus.c:248
+#: app/menus.c:247
 msgid "/Edit/Clear"
 msgstr "/Edita/Buida"
 
-#: app/menus.c:250
+#: app/menus.c:249
 #, fuzzy
 msgid "/Edit/Fill with FG Color"
 msgstr "Omple amb un gradient de color"
 
-#: app/menus.c:252
+#: app/menus.c:251
 #, fuzzy
 msgid "/Edit/Fill with BG Color"
 msgstr "Omple amb un gradient de color"
 
-#: app/menus.c:254
+#: app/menus.c:253
 msgid "/Edit/Stroke"
 msgstr "/Edita/Traça"
 
 #. <Image>/Select
-#: app/menus.c:262
+#: app/menus.c:261
 msgid "/Select/Invert"
 msgstr "/Selecciona/Inverteix"
 
-#: app/menus.c:264
+#: app/menus.c:263
 msgid "/Select/All"
 msgstr "/Selecciona/Tot"
 
-#: app/menus.c:266
+#: app/menus.c:265
 msgid "/Select/None"
 msgstr "/Selecciona/Res"
 
-#: app/menus.c:268
+#: app/menus.c:267
 msgid "/Select/Float"
 msgstr "/Selecciona/Flota"
 
-#: app/menus.c:273
+#: app/menus.c:272
 #, fuzzy
 msgid "/Select/Feather..."
 msgstr "/Selecciona/Ploma"
 
-#: app/menus.c:275
+#: app/menus.c:274
 msgid "/Select/Sharpen"
 msgstr "/Selecciona/Afila"
 
-#: app/menus.c:277
+#: app/menus.c:276
 #, fuzzy
 msgid "/Select/Shrink..."
 msgstr "/Selecciona/Redueix"
 
-#: app/menus.c:279
+#: app/menus.c:278
 #, fuzzy
 msgid "/Select/Grow..."
 msgstr "/Selecciona/Augmenta"
 
-#: app/menus.c:281
+#: app/menus.c:280
 #, fuzzy
 msgid "/Select/Border..."
 msgstr "/Selecciona/Vora"
 
-#: app/menus.c:286
+#: app/menus.c:285
 #, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "/Selecciona/Desa al canal"
 
 #. <Image>/View
-#: app/menus.c:291
+#: app/menus.c:290
 msgid "/View/Zoom In"
 msgstr "/Visualitza/Amplia el zoom"
 
-#: app/menus.c:293
+#: app/menus.c:292
 msgid "/View/Zoom Out"
 msgstr "/Visualitza/Disminueix el zoom"
 
 #. <Image>/View/Zoom
-#: app/menus.c:298
+#: app/menus.c:297
 msgid "/View/Zoom/16:1"
 msgstr "/Visualitza/Zoom/16:1"
 
-#: app/menus.c:300
+#: app/menus.c:299
 msgid "/View/Zoom/8:1"
 msgstr "/Visualitza/Zoom/8:1"
 
-#: app/menus.c:302
+#: app/menus.c:301
 msgid "/View/Zoom/4:1"
 msgstr "/Visualitza/Zoom/4:1"
 
-#: app/menus.c:304
+#: app/menus.c:303
 msgid "/View/Zoom/2:1"
 msgstr "/Visualitza/Zoom/2:1"
 
-#: app/menus.c:306
+#: app/menus.c:305
 msgid "/View/Zoom/1:1"
 msgstr "/Visualitza/Zoom/1:1"
 
-#: app/menus.c:308
+#: app/menus.c:307
 msgid "/View/Zoom/1:2"
 msgstr "/Visualitza/Zoom/1:2"
 
-#: app/menus.c:310
+#: app/menus.c:309
 msgid "/View/Zoom/1:4"
 msgstr "/Visualitza/Zoom/1:4"
 
-#: app/menus.c:312
+#: app/menus.c:311
 msgid "/View/Zoom/1:8"
 msgstr "/Visualitza/Zoom/1:8"
 
-#: app/menus.c:314
+#: app/menus.c:313
 msgid "/View/Zoom/1:16"
 msgstr "/Visualitza/Zoom/1:16"
 
-#: app/menus.c:317
+#: app/menus.c:316
 #, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "/Visualitza/Punt per punt"
 
-#: app/menus.c:322
+#: app/menus.c:321
 msgid "/View/Info Window..."
 msgstr "/Visualitza/Finestra d'informació..."
 
-#: app/menus.c:324
+#: app/menus.c:323
 msgid "/View/Nav. Window..."
 msgstr "/Visualitza/Finestra de navegació..."
 
-#: app/menus.c:329
+#: app/menus.c:328
 msgid "/View/Toggle Selection"
 msgstr "/Visualitza/Commuta selecció"
 
-#: app/menus.c:331
+#: app/menus.c:330
 msgid "/View/Toggle Rulers"
 msgstr "/Visualitza/Commuta les regles"
 
-#: app/menus.c:333
+#: app/menus.c:332
 msgid "/View/Toggle Statusbar"
 msgstr "/Visualitza/Commuta la barra d'estat"
 
-#: app/menus.c:335
+#: app/menus.c:334
 msgid "/View/Toggle Guides"
 msgstr "/Visualitza/Commutar les guies"
 
-#: app/menus.c:337
+#: app/menus.c:336
 #, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "/Visualitza/Desplaça a les guies"
 
-#: app/menus.c:342
+#: app/menus.c:341
 msgid "/View/New View"
 msgstr "/Visualitza/Vista nova"
 
-#: app/menus.c:344
+#: app/menus.c:343
 msgid "/View/Shrink Wrap"
 msgstr "/Visualitza/Redueix entorn"
 
 #. <Image>/Image/Mode
-#: app/menus.c:349
+#: app/menus.c:348
 #, fuzzy
 msgid "/Image/Mode/RGB"
 msgstr "/Imatge/RGB"
 
-#: app/menus.c:351
+#: app/menus.c:350
 #, fuzzy
 msgid "/Image/Mode/Grayscale"
 msgstr "/Imatge/Escala de grisos"
 
-#: app/menus.c:353
+#: app/menus.c:352
 #, fuzzy
 msgid "/Image/Mode/Indexed..."
 msgstr "/Imatge/Indexat"
 
 #. <Image>/Image/Colors
-#: app/menus.c:361
+#: app/menus.c:360
 msgid "/Image/Colors/Desaturate"
 msgstr "/Imatge/Colors/Desaturar"
 
-#: app/menus.c:363
+#: app/menus.c:362
 msgid "/Image/Colors/Invert"
 msgstr "/Imatge/Colors/Invertir"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:371
+#: app/menus.c:370
 #, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Imatge/Colors/Iguala"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:379
+#: app/menus.c:378
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Imatge/Alfa/Afegir canal alfa"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:384
+#: app/menus.c:383
 #, fuzzy
 msgid "/Image/Transforms/Offset..."
 msgstr "/Imatge/Transforma/Offset"
 
-#: app/menus.c:386
+#: app/menus.c:385
 #, fuzzy
 msgid "/Image/Transforms/Rotate"
 msgstr "/Imatge/Transformar"
 
-#: app/menus.c:393
+#: app/menus.c:392
 #, fuzzy
 msgid "/Image/Canvas Size..."
 msgstr "/Imatge/Varia la mida"
 
-#: app/menus.c:395
+#: app/menus.c:394
 #, fuzzy
 msgid "/Image/Scale Image..."
 msgstr "/Imatge/Escala"
 
-#: app/menus.c:397
+#: app/menus.c:396
 msgid "/Image/Duplicate"
 msgstr "/Imatge/Duplica"
 
 #. <Image>/Layers
-#: app/menus.c:405
+#: app/menus.c:404
 #, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Capes/Capes i canals..."
 
-#: app/menus.c:409
+#: app/menus.c:408
 #, fuzzy
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Capes/Aplanar la imatge"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:414
+#: app/menus.c:413
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Capes/Piles/Capa anterior"
 
-#: app/menus.c:416
+#: app/menus.c:415
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Capes/Piles/Capa següent"
 
-#: app/menus.c:418
+#: app/menus.c:417
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Capes/Piles/Aixeca capa"
 
-#: app/menus.c:420
+#: app/menus.c:419
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Capes/Piles/Baixa capa"
 
-#: app/menus.c:422
+#: app/menus.c:421
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Capes/Piles/Capa al capdamunt"
 
-#: app/menus.c:424
+#: app/menus.c:423
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Capes/Piles/Capa al capdavall"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:431
+#: app/menus.c:430
 #, fuzzy
 msgid "/Layers/Rotate"
 msgstr "/Capes/Piles"
 
-#: app/menus.c:436
+#: app/menus.c:435
 msgid "/Layers/Anchor Layer"
 msgstr "/Capes/Ancorar la capa"
 
-#: app/menus.c:438
+#: app/menus.c:437
 #, fuzzy
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Capes/Combinar les capes visibles"
 
-#: app/menus.c:440
+#: app/menus.c:439
 msgid "/Layers/Flatten Image"
 msgstr "/Capes/Aplanar la imatge"
 
-#: app/menus.c:445
+#: app/menus.c:444
 #, fuzzy
 msgid "/Layers/Mask to Selection"
 msgstr "/Capes/Màscara a selecció"
 
-#: app/menus.c:450
+#: app/menus.c:449
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Capes/Afegeix canal alfa"
 
-#: app/menus.c:452
+#: app/menus.c:451
 #, fuzzy
 msgid "/Layers/Alpha to Selection"
 msgstr "/Capes/Alfa a selecció"
 
 #. <Image>/Tools
-#: app/menus.c:460
+#: app/menus.c:459
 msgid "/Tools/Toolbox"
 msgstr "/Eines/Caixa d'eines"
 
-#: app/menus.c:462
+#: app/menus.c:461
 msgid "/Tools/Default Colors"
 msgstr "/Eines/Colors per defecte"
 
-#: app/menus.c:464
+#: app/menus.c:463
 msgid "/Tools/Swap Colors"
 msgstr "/Eines/Intercanvia els colors"
 
 #. <Image>/Dialogs
-#: app/menus.c:471
+#: app/menus.c:470
 #, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Diàlegs/Capes i canals..."
 
-#: app/menus.c:473
+#: app/menus.c:472
 msgid "/Dialogs/Tool Options..."
 msgstr "/Diàlegs/Opcions d'eina..."
 
-#: app/menus.c:478
+#: app/menus.c:477
 msgid "/Dialogs/Brushes..."
 msgstr "/Diàlegs/Pinzells..."
 
-#: app/menus.c:480
+#: app/menus.c:479
 msgid "/Dialogs/Patterns..."
 msgstr "/Diàlegs/Patrons..."
 
-#: app/menus.c:482
+#: app/menus.c:481
 msgid "/Dialogs/Gradients..."
 msgstr "/Diàlegs/Gradients..."
 
-#: app/menus.c:484
+#: app/menus.c:483
 msgid "/Dialogs/Palette..."
 msgstr "/Diàlegs/Paleta..."
 
-#: app/menus.c:486
+#: app/menus.c:485
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Diàlegs/Paleta indexada..."
 
-#: app/menus.c:491
+#: app/menus.c:490
 msgid "/Dialogs/Input Devices..."
 msgstr "/Diàlegs/Dispositius d'entrada..."
 
-#: app/menus.c:493
+#: app/menus.c:492
 msgid "/Dialogs/Device Status..."
 msgstr "/Diàlegs/Estat del dispositiu..."
 
-#: app/menus.c:498
+#: app/menus.c:497
 msgid "/Dialogs/Document Index..."
 msgstr "/Diàlegs/Índex del document..."
 
-#: app/menus.c:500
+#: app/menus.c:499
 msgid "/Dialogs/Error Console..."
 msgstr "/Diàlegs/Consola d'error..."
 
-#: app/menus.c:502
+#: app/menus.c:501
 msgid "/Dialogs/Display Filters..."
 msgstr "/Diàlegs/Visualitza els filtres..."
 
-#: app/menus.c:504
+#: app/menus.c:503
 #, fuzzy
 msgid "/Dialogs/Undo History..."
 msgstr "/Edició/Desfés l'historial..."
 
 #. <Image>/Filters
-#: app/menus.c:513
+#: app/menus.c:512
 #, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "/Filtres/Repeteix l'últim"
 
-#: app/menus.c:515
+#: app/menus.c:514
 #, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "/Filtres/Torna a ensenyar l'últim"
 
-#: app/menus.c:520
+#: app/menus.c:519
 #, fuzzy
 msgid "/Filters/Blur"
 msgstr "/Filtres"
 
-#: app/menus.c:522
+#: app/menus.c:521
 #, fuzzy
 msgid "/Filters/Colors"
 msgstr "/Fitxer/Tanca"
 
-#: app/menus.c:524
+#: app/menus.c:523
 #, fuzzy
 msgid "/Filters/Noise"
 msgstr "/Filtres"
 
-#: app/menus.c:526
+#: app/menus.c:525
 #, fuzzy
 msgid "/Filters/Edge-Detect"
 msgstr "/Filtres/Repeteix l'últim"
 
-#: app/menus.c:528
+#: app/menus.c:527
 #, fuzzy
 msgid "/Filters/Enhance"
 msgstr "/Filtres"
 
-#: app/menus.c:530
+#: app/menus.c:529
 #, fuzzy
 msgid "/Filters/Generic"
 msgstr "/Filtres"
 
-#: app/menus.c:535
+#: app/menus.c:534
 #, fuzzy
 msgid "/Filters/Glass Effects"
 msgstr "/Filtres/Repeteix l'últim"
 
-#: app/menus.c:537
+#: app/menus.c:536
 #, fuzzy
 msgid "/Filters/Light Effects"
 msgstr "/Filtres/tearoff1"
 
-#: app/menus.c:539
+#: app/menus.c:538
 #, fuzzy
 msgid "/Filters/Distorts"
 msgstr "/Fitxer/Diàlegs"
 
-#: app/menus.c:541
+#: app/menus.c:540
 #, fuzzy
 msgid "/Filters/Artistic"
 msgstr "/Filtres/Repeteix l'últim"
 
-#: app/menus.c:543
+#: app/menus.c:542
 #, fuzzy
 msgid "/Filters/Map"
 msgstr "/Filtres"
 
-#: app/menus.c:545
+#: app/menus.c:544
 #, fuzzy
 msgid "/Filters/Render"
 msgstr "/Fitxer/Anar enrere"
 
-#: app/menus.c:547
+#: app/menus.c:546
 #, fuzzy
 msgid "/Filters/Web"
 msgstr "/Filtres"
 
-#: app/menus.c:552
+#: app/menus.c:551
 #, fuzzy
 msgid "/Filters/Animation"
 msgstr "/Filtres/tearoff1"
 
-#: app/menus.c:554
+#: app/menus.c:553
 #, fuzzy
 msgid "/Filters/Combine"
 msgstr "/Fitxer/Tanca"
 
-#: app/menus.c:559
+#: app/menus.c:558
 #, fuzzy
 msgid "/Filters/Toys"
 msgstr "/Filtres"
 
-#: app/menus.c:572
+#: app/menus.c:569
 msgid "/Automatic"
 msgstr "/Automàtic"
 
-#: app/menus.c:586
+#: app/menus.c:583
 #, fuzzy
 msgid "/By Extension"
 msgstr "/Per extensió"
 
-#: app/menus.c:600
+#: app/menus.c:597
 #, fuzzy
 msgid "/New Layer..."
 msgstr "/Capa Nova"
 
 #. <Layers>/Stack
-#: app/menus.c:605
+#: app/menus.c:602
 msgid "/Stack/Raise Layer"
 msgstr "/Pila/Apropa la capa"
 
-#: app/menus.c:607
+#: app/menus.c:604
 msgid "/Stack/Lower Layer"
 msgstr "/Pila/Allunya la capa"
 
-#: app/menus.c:609
+#: app/menus.c:606
 msgid "/Stack/Layer to Top"
 msgstr "/Pila/Capa al capdamunt"
 
-#: app/menus.c:611
+#: app/menus.c:608
 msgid "/Stack/Layer to Bottom"
 msgstr "/Pila/Capa cap al capdavall"
 
-#: app/menus.c:614
+#: app/menus.c:611
 msgid "/Duplicate Layer"
 msgstr "/Duplica la capa"
 
-#: app/menus.c:616
+#: app/menus.c:613
 msgid "/Anchor Layer"
 msgstr "/Fixa la capa"
 
-#: app/menus.c:618
+#: app/menus.c:615
 msgid "/Delete Layer"
 msgstr "/Suprimeix la capa"
 
-#: app/menus.c:623
+#: app/menus.c:620
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/menus.c:625
+#: app/menus.c:622
 #, fuzzy
 msgid "/Layer to Imagesize"
 msgstr "/Capes/Aplanar la imatge"
 
-#: app/menus.c:627
+#: app/menus.c:624
 #, fuzzy
 msgid "/Scale Layer..."
 msgstr "/Canvia l'escala de la capa"
 
-#: app/menus.c:632
+#: app/menus.c:629
 #, fuzzy
 msgid "/Merge Visible Layers..."
 msgstr "/Combina les dues capes visibles"
 
-#: app/menus.c:634
+#: app/menus.c:631
 msgid "/Merge Down"
 msgstr "Combina al capdavall "
 
-#: app/menus.c:636
+#: app/menus.c:633
 msgid "/Flatten Image"
 msgstr "/Aplana la imatge"
 
-#: app/menus.c:641
+#: app/menus.c:638
 #, fuzzy
 msgid "/Add Layer Mask..."
 msgstr "/Afegeix una màscara de capa"
 
-#: app/menus.c:643
+#: app/menus.c:640
 msgid "/Apply Layer Mask"
 msgstr "/Aplica una màscara de capa"
 
-#: app/menus.c:645
+#: app/menus.c:642
 #, fuzzy
 msgid "/Delete Layer Mask"
 msgstr "/Suprimeix la capa"
 
-#: app/menus.c:647
+#: app/menus.c:644
 msgid "/Mask to Selection"
 msgstr "/Màscara cap a la selecció"
 
-#: app/menus.c:652
+#: app/menus.c:649
 msgid "/Add Alpha Channel"
 msgstr "/Afegir un canal alfa"
 
-#: app/menus.c:654
+#: app/menus.c:651
 msgid "/Alpha to Selection"
 msgstr "/Alfa cap a la selecció"
 
-#: app/menus.c:659
+#: app/menus.c:656
 #, fuzzy
 msgid "/Edit Layer Attributes..."
 msgstr "Edició dels atributs de la capa"
 
-#: app/menus.c:670
+#: app/menus.c:667
 #, fuzzy
 msgid "/New Channel..."
 msgstr "/Nou canal"
 
-#: app/menus.c:672
+#: app/menus.c:669
 msgid "/Raise Channel"
 msgstr "/Puja el canal"
 
-#: app/menus.c:674
+#: app/menus.c:671
 msgid "/Lower Channel"
 msgstr "/Baixa el canal"
 
-#: app/menus.c:676
+#: app/menus.c:673
 msgid "/Duplicate Channel"
 msgstr "/Duplica el Canal"
 
-#: app/menus.c:681
+#: app/menus.c:678
 msgid "/Channel to Selection"
 msgstr "/Canal per a la selecció"
 
-#: app/menus.c:683
+#: app/menus.c:680
 msgid "/Add to Selection"
 msgstr "/Afegir a la selecció"
 
-#: app/menus.c:685
+#: app/menus.c:682
 #, fuzzy
 msgid "/Subtract from Selection"
 msgstr "/sostreure de la selecció"
 
-#: app/menus.c:687
+#: app/menus.c:684
 #, fuzzy
 msgid "/Intersect with Selection"
 msgstr "/Creuar amb la selecció"
 
-#: app/menus.c:692
+#: app/menus.c:689
 msgid "/Delete Channel"
 msgstr "/Suprimeix el canal"
 
-#: app/menus.c:697
+#: app/menus.c:694
 #, fuzzy
 msgid "/Edit Channel Attributes..."
 msgstr "Edita els atributs del canal"
 
-#: app/menus.c:708
+#: app/menus.c:705
 msgid "/New Path"
 msgstr "/Nou camí"
 
-#: app/menus.c:710
+#: app/menus.c:707
 msgid "/Duplicate Path"
 msgstr "/Duplica el camí"
 
-#: app/menus.c:712
+#: app/menus.c:709
 msgid "/Path to Selection"
 msgstr "/Camí de la selecció"
 
-#: app/menus.c:714
+#: app/menus.c:711
 #, fuzzy
 msgid "/Selection to Path"
 msgstr "Selecció cap al camí"
 
-#: app/menus.c:716
+#: app/menus.c:713
 msgid "/Stroke Path"
 msgstr "/Talla el camí"
 
-#: app/menus.c:718
+#: app/menus.c:715
 msgid "/Delete Path"
 msgstr "/Suprimeix el camí"
 
-#: app/menus.c:723
+#: app/menus.c:720
 msgid "/Copy Path"
 msgstr "/Copia el camí"
 
-#: app/menus.c:725
+#: app/menus.c:722
 msgid "/Paste Path"
 msgstr "/Enganxa el camí"
 
-#: app/menus.c:727
+#: app/menus.c:724
 #, fuzzy
 msgid "/Import Path..."
 msgstr "/Importa el camí"
 
-#: app/menus.c:729
+#: app/menus.c:726
 #, fuzzy
 msgid "/Export Path..."
 msgstr "/Exporta el camí"
 
-#: app/menus.c:734
+#: app/menus.c:731
 #, fuzzy
 msgid "/Edit Path Attributes..."
 msgstr "Edició dels atributs de la capa"
 
-#: app/menus.c:1265
+#: app/menus.c:1284
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Error en obrir el fitxer: %s\n"
@@ -4229,36 +4273,43 @@ msgstr "Màster"
 msgid "Perspective..."
 msgstr "Perspectiva..."
 
-#: app/plug_in.c:302
+#: app/plug_in.c:314
 msgid "Resource configuration"
 msgstr "Configuració de recursos"
 
-#: app/plug_in.c:309
+#: app/plug_in.c:321
 msgid "Plug-ins"
 msgstr "Extensions"
 
-#: app/plug_in.c:321
+#: app/plug_in.c:333
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "consulta d'extensions: \"%s\"\n"
 
-#: app/plug_in.c:359
+#: app/plug_in.c:369
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "escrivint \"%s\"\n"
 
-#: app/plug_in.c:374
+#: app/plug_in.c:384
 msgid "Starting extensions: "
 msgstr "S'estan iniciant les extensions: "
 
-#: app/plug_in.c:375
+#: app/plug_in.c:385
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/plug_in.c:773
+#: app/plug_in.c:781
 #, fuzzy, c-format
 msgid "Unable to locate plug-in: \"%s\""
 msgstr "impossible de localitzar l'extensió: \"%s\""
+
+#: app/plug_in.c:1439
+#, c-format
+msgid ""
+"Plug-In crashed: %s\n"
+"(%s)"
+msgstr ""
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -5071,19 +5122,20 @@ msgstr "gimp_tips.txt"
 msgid "GIMP Tip of the Day"
 msgstr "GIMP Consell del dia"
 
-#: app/tips_dialog.c:144
-msgid "Show tip next time"
+#: app/tips_dialog.c:145
+#, fuzzy
+msgid "Show tip next time GIMP starts"
 msgstr "Mostra un consell la propera vegada"
 
-#: app/tips_dialog.c:174
+#: app/tips_dialog.c:175
 msgid "Previous Tip"
 msgstr "Consell anterior"
 
-#: app/tips_dialog.c:182
+#: app/tips_dialog.c:183
 msgid "Next Tip"
 msgstr "Consell següent "
 
-#: app/tips_dialog.c:284
+#: app/tips_dialog.c:285
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in the\n"
@@ -6470,18 +6522,33 @@ msgstr ""
 "no s'han desat correctament els mapes de color indexats.\n"
 "S'està substituint el mapa d'escala de grisos."
 
-#: modules/cdisplay_gamma.c:91
+#: modules/cdisplay_gamma.c:96
 #, fuzzy
 msgid "Gamma color display filter"
 msgstr "Filtres de visualització de colors"
 
-#: modules/cdisplay_gamma.c:326
+#: modules/cdisplay_gamma.c:324
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:336
+#: modules/cdisplay_gamma.c:343
 msgid "Gamma:"
 msgstr ""
+
+#: modules/cdisplay_highcontrast.c:96
+#, fuzzy
+msgid "High Contrast color display filter"
+msgstr "Filtres de visualització de colors"
+
+#: modules/cdisplay_highcontrast.c:318
+#, fuzzy
+msgid "High Contrast"
+msgstr "Contrast"
+
+#: modules/cdisplay_highcontrast.c:337
+#, fuzzy
+msgid "Contrast Cycles:"
+msgstr "Contrast"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
@@ -6509,6 +6576,30 @@ msgstr "Color estàtic"
 #, fuzzy
 msgid "Color History"
 msgstr "Capturador de color"
+
+#~ msgid "This file cannot be moved up."
+#~ msgstr "Aquest fitxer no es pot pujar."
+
+#~ msgid "There's no selection to move up."
+#~ msgstr "No hi ha res seleccionat per pujar."
+
+#~ msgid "This file cannot be moved down."
+#~ msgstr "Aquest fitxer no es pot baixar."
+
+#~ msgid "There's no selection to move down."
+#~ msgstr "No hi ha res seleccionat per baixar."
+
+#~ msgid "There's no selection to remove."
+#~ msgstr "No hi ha res seleccionat per eliminar."
+
+#~ msgid "Open a file"
+#~ msgstr "Obre un fitxer"
+
+#~ msgid "Close the Document Index"
+#~ msgstr "Tanca l'índex del document"
+
+#~ msgid "GTK successfully started"
+#~ msgstr "El GTK s'ha iniciat amb èxit"
 
 #~ msgid "Version "
 #~ msgstr "Versió "

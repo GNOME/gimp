@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.21\n"
-"POT-Creation-Date: 2000-05-12 21:36+0000\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
 "PO-Revision-Date: 2000-05-12 22:25+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -120,8 +120,8 @@ msgstr "Выход"
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1027
-#: app/layers_dialog.c:3441 app/layers_dialog.c:3623 app/layers_dialog.c:3715
-#: app/layers_dialog.c:3967 app/levels.c:340 app/palette.c:1826
+#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3756
+#: app/layers_dialog.c:4008 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
 #: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:331
@@ -278,8 +278,8 @@ msgstr "Яркость-Контрастность не действует на индексированные изображения."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3439 app/layers_dialog.c:3621 app/layers_dialog.c:3713
-#: app/layers_dialog.c:3965 app/levels.c:336 app/module_db.c:281
+#: app/layers_dialog.c:3480 app/layers_dialog.c:3662 app/layers_dialog.c:3754
+#: app/layers_dialog.c:4006 app/levels.c:336 app/module_db.c:281
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:329
@@ -360,11 +360,11 @@ msgstr "Обновить"
 msgid "No Brushes available"
 msgstr "Нет доступных кистей"
 
-#: app/brush_select.c:448 app/layers_dialog.c:411 app/tool_options.c:526
+#: app/brush_select.c:448 app/layers_dialog.c:413 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Непрозрачность:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:550
+#: app/brush_select.c:456 app/layers_dialog.c:366 app/tool_options.c:550
 msgid "Mode:"
 msgstr "Режим:"
 
@@ -449,7 +449,7 @@ msgstr "Заменить"
 msgid "Add"
 msgstr "Добавить"
 
-#: app/by_color_select.c:761 app/layers_dialog.c:379 app/tool_options.c:926
+#: app/by_color_select.c:761 app/layers_dialog.c:381 app/tool_options.c:926
 msgid "Subtract"
 msgstr "Вычесть"
 
@@ -473,17 +473,17 @@ msgstr "Инвертировать"
 msgid "All"
 msgstr "Все"
 
-#: app/channel.c:188 app/channel.c:190 app/layer.c:312 app/layer.c:314
+#: app/channel.c:188 app/channel.c:190 app/layer.c:320 app/layer.c:322
 msgid "copy"
 msgstr "копия"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:320 app/layer.c:1674
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:328 app/layer.c:1744
 #, c-format
 msgid "%s copy"
 msgstr "%s скопировать"
 
-#: app/channel.c:614
+#: app/channel.c:615
 msgid "Selection Mask"
 msgstr "Быстрая маска"
 
@@ -508,11 +508,11 @@ msgid "Wrap Around"
 msgstr "Заворачивание"
 
 #: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
-#: app/layers_dialog.c:3541
+#: app/layers_dialog.c:3582
 msgid "Background"
 msgstr "Фон"
 
-#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3543
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3584
 msgid "Transparent"
 msgstr "Прозрачное"
 
@@ -932,7 +932,7 @@ msgid "Width:"
 msgstr "Ширина:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3482 app/resize.c:254 app/resize.c:279 app/resize.c:524
+#: app/layers_dialog.c:3523 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Высота:"
@@ -958,7 +958,7 @@ msgstr "Кривые для индексированных изображений не могут быть подстроены."
 msgid "Modify Curves for Channel:"
 msgstr "Изменить кривые для канала:"
 
-#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:385
+#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:387
 #: app/levels.c:368 app/paint_funcs.c:97 app/tool_options.c:932
 msgid "Value"
 msgstr "Яркость"
@@ -1555,19 +1555,19 @@ msgstr ""
 msgid "Can't fill unknown image type."
 msgstr "Невозможно заполнить изображение неизвестного типа."
 
-#: app/gimpdrawable.c:498
+#: app/gimpdrawable.c:496
 msgid "parasite attach to drawable"
 msgstr "паразит прицепился к изображению"
 
-#: app/gimpdrawable.c:533
+#: app/gimpdrawable.c:531
 msgid "detach parasite from drawable"
 msgstr "отцепить паразита от изображения"
 
-#: app/gimpdrawable.c:740
+#: app/gimpdrawable.c:738
 msgid "unnamed"
 msgstr "безымянное"
 
-#: app/gimpdrawable.c:757
+#: app/gimpdrawable.c:755
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Слои типа %d не поддерживаются."
@@ -1695,22 +1695,22 @@ msgstr " неожиданный символ: %s\n"
 msgid "error parsing pluginrc"
 msgstr "ошибка при синтаксическом анализе pluginrc"
 
-#: app/gimprc.c:2810
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Невозможно открыть %s; %s"
 
-#: app/gimprc.c:2829
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Невозможно переименовать %s в %s.old; %s"
 
-#: app/gimprc.c:2835
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Невозможно переоткрыть %s\n"
 
-#: app/gimprc.c:2847
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Невозможно записать в %s; %s"
@@ -2258,11 +2258,11 @@ msgstr "Насыщенность:"
 msgid "Grayscale"
 msgstr "Градации серого"
 
-#: app/image_new.c:68 app/layers_dialog.c:3540
+#: app/image_new.c:68 app/layers_dialog.c:3581
 msgid "Foreground"
 msgstr "Переднего плана"
 
-#: app/image_new.c:78 app/layers_dialog.c:3542
+#: app/image_new.c:78 app/layers_dialog.c:3583
 msgid "White"
 msgstr "Белое"
 
@@ -2470,7 +2470,7 @@ msgstr "Канал"
 msgid "Channel Ops"
 msgstr "Опции канала"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:384 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:386 app/paint_funcs.c:96
 #: app/tool_options.c:816 app/tool_options.c:931
 msgid "Color"
 msgstr "Цвет"
@@ -2586,11 +2586,11 @@ msgstr "Инвертирование не действует на индексированные изображения."
 msgid "Invert operation failed."
 msgstr "Инвертирование не удалось."
 
-#: app/layer.c:250
+#: app/layer.c:258
 msgid "Zero width or height layers not allowed."
 msgstr "Нулевая ширина или высота слоя недопустимы."
 
-#: app/layer.c:479
+#: app/layer.c:506
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
@@ -2599,11 +2599,11 @@ msgstr "%s маска"
 msgid "Layer Select"
 msgstr "Выделить слой"
 
-#: app/layers_dialog.c:262 app/layers_dialog.c:3472
+#: app/layers_dialog.c:265 app/layers_dialog.c:3513
 msgid "New Layer"
 msgstr "Новый слой"
 
-#: app/layers_dialog.c:266
+#: app/layers_dialog.c:269
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2611,7 +2611,7 @@ msgstr ""
 "Поднять слой    \n"
 "<Shift> до верху"
 
-#: app/layers_dialog.c:271
+#: app/layers_dialog.c:274
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -2619,126 +2619,126 @@ msgstr ""
 "Опустить слой       \n"
 "<Shift> до низу"
 
-#: app/layers_dialog.c:276
+#: app/layers_dialog.c:279
 msgid "Duplicate Layer"
 msgstr "Создать копию слоя"
 
-#: app/layers_dialog.c:280
+#: app/layers_dialog.c:283
 msgid "Anchor Layer"
 msgstr "Прицепить слой"
 
-#: app/layers_dialog.c:284
+#: app/layers_dialog.c:287
 msgid "Delete Layer"
 msgstr "Удалить слой"
 
-#: app/layers_dialog.c:371 app/paint_funcs.c:83 app/tool_options.c:917
+#: app/layers_dialog.c:373 app/paint_funcs.c:83 app/tool_options.c:917
 msgid "Normal"
 msgstr "Нормальная"
 
-#: app/layers_dialog.c:372 app/paint_funcs.c:84 app/tool_options.c:918
+#: app/layers_dialog.c:374 app/paint_funcs.c:84 app/tool_options.c:918
 msgid "Dissolve"
 msgstr "Растворение"
 
-#: app/layers_dialog.c:373 app/paint_funcs.c:86 app/tool_options.c:920
+#: app/layers_dialog.c:375 app/paint_funcs.c:86 app/tool_options.c:920
 msgid "Multiply (Burn)"
 msgstr "Умножение (Затемнитель)"
 
-#: app/layers_dialog.c:374 app/paint_funcs.c:98 app/tool_options.c:921
+#: app/layers_dialog.c:376 app/paint_funcs.c:98 app/tool_options.c:921
 msgid "Divide (Dodge)"
 msgstr "Деление (Осветлитель)"
 
-#: app/layers_dialog.c:375 app/paint_funcs.c:87 app/tool_options.c:922
+#: app/layers_dialog.c:377 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
 msgstr "Осветление"
 
-#: app/layers_dialog.c:376 app/paint_funcs.c:88 app/tool_options.c:923
+#: app/layers_dialog.c:378 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
 msgstr "Перекрытие"
 
-#: app/layers_dialog.c:377 app/paint_funcs.c:89 app/tool_options.c:924
+#: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:924
 msgid "Difference"
 msgstr "Разница"
 
-#: app/layers_dialog.c:378 app/paint_funcs.c:90 app/tool_options.c:925
+#: app/layers_dialog.c:380 app/paint_funcs.c:90 app/tool_options.c:925
 msgid "Addition"
 msgstr "Добавление"
 
-#: app/layers_dialog.c:380 app/paint_funcs.c:92 app/tool_options.c:927
+#: app/layers_dialog.c:382 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Darken Only"
 msgstr "Замена темным"
 
-#: app/layers_dialog.c:381 app/paint_funcs.c:93 app/tool_options.c:928
+#: app/layers_dialog.c:383 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Замена светлым"
 
-#: app/layers_dialog.c:382 app/paint_funcs.c:94 app/tool_options.c:929
+#: app/layers_dialog.c:384 app/paint_funcs.c:94 app/tool_options.c:929
 msgid "Hue"
 msgstr "Тон"
 
-#: app/layers_dialog.c:383 app/paint_funcs.c:95 app/tool_options.c:930
+#: app/layers_dialog.c:385 app/paint_funcs.c:95 app/tool_options.c:930
 msgid "Saturation"
 msgstr "Насыщенность"
 
-#: app/layers_dialog.c:395
+#: app/layers_dialog.c:397
 msgid "Keep Trans."
 msgstr "Сохр. прозр."
 
-#: app/layers_dialog.c:1888
+#: app/layers_dialog.c:1910
 msgid "Empty Layer Copy"
 msgstr "Пустая копия слоя"
 
-#: app/layers_dialog.c:2149 app/layers_dialog.c:3283 app/layers_dialog.c:3650
+#: app/layers_dialog.c:2172 app/layers_dialog.c:3324 app/layers_dialog.c:3691
 msgid "Floating Selection"
 msgstr "Плавающее выделение"
 
-#: app/layers_dialog.c:3433
+#: app/layers_dialog.c:3474
 msgid "New Layer Options"
 msgstr "Параметры нового слоя"
 
 #. The name label and entry
-#: app/layers_dialog.c:3462
+#: app/layers_dialog.c:3503
 msgid "Layer Name:"
 msgstr "Название слоя:"
 
 #. The size labels
-#: app/layers_dialog.c:3476
+#: app/layers_dialog.c:3517
 msgid "Layer Width:"
 msgstr "Ширина слоя:"
 
-#: app/layers_dialog.c:3536
+#: app/layers_dialog.c:3577
 msgid "Layer Fill Type"
 msgstr "Тип заливки слоя"
 
-#: app/layers_dialog.c:3615
+#: app/layers_dialog.c:3656
 msgid "Edit Layer Attributes"
 msgstr "Правка атрибутов слоя"
 
-#: app/layers_dialog.c:3642
+#: app/layers_dialog.c:3683
 msgid "Layer name:"
 msgstr "Название слоя:"
 
-#: app/layers_dialog.c:3707
+#: app/layers_dialog.c:3748
 msgid "Add Mask Options"
 msgstr "Добавить параметры маски"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3725
+#: app/layers_dialog.c:3766
 msgid "Initialize Layer Mask to:"
 msgstr "Инициализовать маску слоя с:"
 
-#: app/layers_dialog.c:3730
+#: app/layers_dialog.c:3771
 msgid "White (Full Opacity)"
 msgstr "Белый (Абсолютно непрозрачный)"
 
-#: app/layers_dialog.c:3732
+#: app/layers_dialog.c:3773
 msgid "Black (Full Transparency)"
 msgstr "Черный (Абсолютно прозрачный)"
 
-#: app/layers_dialog.c:3734
+#: app/layers_dialog.c:3775
 msgid "Layer's Alpha Channel"
 msgstr "Альфа-канал слоя"
 
-#: app/layers_dialog.c:3792 app/layers_dialog.c:3874
+#: app/layers_dialog.c:3833 app/layers_dialog.c:3915
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2746,27 +2746,27 @@ msgstr ""
 "Неправильная ширина или высота.\n"
 "Обе должны быть положительными."
 
-#: app/layers_dialog.c:3959
+#: app/layers_dialog.c:4000
 msgid "Layer Merge Options"
 msgstr "Параметры объединения слоев"
 
-#: app/layers_dialog.c:3984
+#: app/layers_dialog.c:4025
 msgid "Final, Merged Layer should be:"
 msgstr "В итоге, объединенный слой должен быть:"
 
-#: app/layers_dialog.c:3985
+#: app/layers_dialog.c:4026
 msgid "Final, Anchored Layer should be:"
 msgstr "В итоге, прицепленный слой должен быть:"
 
-#: app/layers_dialog.c:3990
+#: app/layers_dialog.c:4031
 msgid "Expanded as necessary"
 msgstr "Расширять при необходимости"
 
-#: app/layers_dialog.c:3992
+#: app/layers_dialog.c:4033
 msgid "Clipped to image"
 msgstr "Отсекать по изображению"
 
-#: app/layers_dialog.c:3994
+#: app/layers_dialog.c:4035
 msgid "Clipped to bottom layer"
 msgstr "Отсекать по нижнему слою"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2000-04-30 11:43-0700\n"
+"POT-Creation-Date: 2000-05-09 20:27-0700\n"
 "PO-Revision-Date: 2000-05-13 03:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -24,7 +24,7 @@ msgstr "Script-Fu konsol"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:200
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Close"
 msgstr "Luk"
 
@@ -54,80 +54,81 @@ msgstr "Kan ikke åbne en strøm på SIOD uddata-røret"
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Skript-Fu evaluerings-modus tillader kun ikke-interaktive kald"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1075
+#: plug-ins/script-fu/script-fu-scripts.c:1124
 #, c-format
 msgid ""
 "Script-Fu Error\n"
 "%s"
-msgstr "Script-Fu fejl\n"
+msgstr ""
+"Script-Fu fejl\n"
 "%s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1125
-#: plug-ins/script-fu/script-fu-scripts.c:1127
+#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1175
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1127
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1154
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 msgid "Script Arguments"
 msgstr "Skriptargumenter"
 
 #. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1219
+#: plug-ins/script-fu/script-fu-scripts.c:1267
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu farvevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu filvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1321
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu mønstervælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu overgangsvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1336
+#: plug-ins/script-fu/script-fu-scripts.c:1384
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu penselvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1379
+#: plug-ins/script-fu/script-fu-scripts.c:1427
 msgid "Reset to Defaults"
 msgstr "Gendan standarder"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1405
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1419
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "Ok"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-scripts.c:1476
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Annullér"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1533
+#: plug-ins/script-fu/script-fu-scripts.c:1590
 msgid "NOT SET"
 msgstr "IKKE VALGT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1602
+#: plug-ins/script-fu/script-fu-scripts.c:1659
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -135,23 +136,23 @@ msgstr ""
 "Mindst en skrifttype, som du har valgt, er ugyldig.\n"
 "Tjek venligst dine indstillinger.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1881
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 msgid "Author:"
 msgstr "Udvikler:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1887
+#: plug-ins/script-fu/script-fu-scripts.c:1950
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1893
+#: plug-ins/script-fu/script-fu-scripts.c:1956
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1901
+#: plug-ins/script-fu/script-fu-scripts.c:1964
 msgid "Image Types:"
 msgstr "Billedtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2054
+#: plug-ins/script-fu/script-fu-scripts.c:2117
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu skrifttypevælger"
 
@@ -175,11 +176,11 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Konsol..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:1008 plug-ins/script-fu/script-fu.c:1009
+#: plug-ins/script-fu/script-fu.c:1009 plug-ins/script-fu/script-fu.c:1010
 msgid "Re-read all available scripts"
 msgstr "Genindlæs alle skrifttyper"
 
-#: plug-ins/script-fu/script-fu.c:1013
+#: plug-ins/script-fu/script-fu.c:1014
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Genopfrisk"
 
@@ -315,8 +316,8 @@ msgstr "<Image>/Skript-Fu/Skabelon/Skåret..."
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
 msgstr "<Image>/Skript-Fu/Skabelon/Forkrom..."
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0 
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..." 
+#: plug-ins/script-fu/scripts/asc2img.scm:0
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr "<Image>/Skript-Fu/Værktøj/ASCII til billedlag..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
@@ -545,18 +546,15 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Kugle..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Knap..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Knap..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Overskrift..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Overskrift..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Vandret linie..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/web-sider/Skråkantet mønster/Vandret linie..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
@@ -579,16 +577,14 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/web-grafik/gimp.org/Tube knap-etiket"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/web-grafik/gimp.org/Tube sub-knap etiket"
+msgstr "<Toolbox>/Xtns/Skript-Fu/web-grafik/gimp.org/Tube sub-knap etiket"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/web-grafik/gimp.org/Tube sub-sub-knap "
-"etiket..."
+"<Toolbox>/Xtns/Skript-Fu/web-grafik/gimp.org/Tube sub-sub-knap etiket..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -810,8 +806,9 @@ msgid "Blur Radius"
 msgstr "Sløringsradius"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Type: TRUE=RLE, FALSE=IIR"
-msgstr "Sløringstype: TRUE=RLE, FALSE=IIR"
+#, fuzzy
+msgid "Blur Type"
+msgstr "Sløring X"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
@@ -1258,7 +1255,7 @@ msgstr "Kornethed (0 - 15)"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr "Kornethed (1 er lav)" 
+msgstr "Kornethed (1 er lav)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
@@ -1295,6 +1292,11 @@ msgid "Highlight Color"
 msgstr "Glanslys Farve"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
+msgid "Highlight Opacity"
+msgstr "Glanslys-balance"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
 msgstr "Glanslys X-afsæt"
 
@@ -1309,6 +1311,10 @@ msgstr "Hitrate"
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
 msgstr "Glød rate"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "IIR"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1507,7 +1513,6 @@ msgstr "Oliemalet maske-størrelse"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Opacity"
 msgstr "Dækkekraft"
 
@@ -1522,7 +1527,7 @@ msgstr "Ydre kant"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr "Radius for sløring på omrids" 
+msgstr "Radius for sløring på omrids"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
@@ -1605,6 +1610,10 @@ msgstr "Trykket"
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
 msgstr "Størrelse på fjerdedel"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "RLE"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"
@@ -2001,3 +2010,6 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Arbejd på kopi"
+
+#~ msgid "Blur Type: TRUE=RLE, FALSE=IIR"
+#~ msgstr "Sløringstype: TRUE=RLE, FALSE=IIR"

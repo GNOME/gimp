@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2000-05-01 10:46-0700\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
 "PO-Revision-Date: 2000-05-13 04:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -1035,15 +1035,13 @@ msgstr ""
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Flyt det markerede punkt op i indekset"
-"<Skift> til top"
+msgstr "Flyt det markerede punkt op i indekset<Skift> til top"
 
 #: app/docindex.c:122
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Flyt det markerede punkt ned i indekset"
-"<Skift> Til bunden"
+msgstr "Flyt det markerede punkt ned i indekset<Skift> Til bunden"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1209,7 +1207,8 @@ msgstr "Ingen markering."
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Gemning fejlede.\n"
+msgstr ""
+"Gemning fejlede.\n"
 "%s"
 
 #: app/fileops.c:475 app/fileops.c:507
@@ -1336,7 +1335,8 @@ msgstr "(kunne ikke lave miniature)"
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Fejl under åbning\n"
+msgstr ""
+"Fejl under åbning\n"
 "%s"
 
 #: app/fileops.c:1820
@@ -1697,22 +1697,22 @@ msgstr "  uventet tegn: %s\n"
 msgid "error parsing pluginrc"
 msgstr "fejl ved tolkning af pluginrc"
 
-#: app/gimprc.c:2810
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kan ikke åbne %s; %s"
 
-#: app/gimprc.c:2829
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kan ikke omdøbe %s til %s.old; %s"
 
-#: app/gimprc.c:2835
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Kunne ikke genåbne %s\n"
 
-#: app/gimprc.c:2847
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kan ikke skrive til %s; %s"

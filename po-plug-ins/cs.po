@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.21\n"
-"POT-Creation-Date: 2000-05-08 23:51+0200\n"
+"POT-Creation-Date: 2000-05-14 13:42-0700\n"
 "PO-Revision-Date: 2000-05-09 09:27+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -62,7 +62,7 @@ msgstr "O programu"
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
 #: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
-#: plug-ins/common/gpb.c:270 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
 #: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
@@ -73,7 +73,7 @@ msgstr "O programu"
 #: plug-ins/common/noisify.c:325 plug-ins/common/nova.c:339
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1012
+#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1021
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -84,7 +84,7 @@ msgstr "O programu"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1480 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1485 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
@@ -143,7 +143,7 @@ msgstr "OK"
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:272
+#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
@@ -155,7 +155,7 @@ msgstr "OK"
 #: plug-ins/common/nova.c:341 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:289
-#: plug-ins/common/png.c:1014 plug-ins/common/pnm.c:935
+#: plug-ins/common/png.c:1023 plug-ins/common/pnm.c:935
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
 #: plug-ins/common/ps.c:2716 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -166,7 +166,7 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1482 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
@@ -271,7 +271,7 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:802 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1501
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1506
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:284
 msgid "None"
 msgstr "Nic"
@@ -1473,20 +1473,22 @@ msgstr "%s: nelze otevøít \"%s\""
 msgid "%s: %s is not a valid BMP file"
 msgstr "%s: %s není platný BMP soubor"
 
-#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:104
-#: plug-ins/bmp/bmpread.c:124 plug-ins/bmp/bmpread.c:142
+#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:108
+#: plug-ins/bmp/bmpread.c:128 plug-ins/bmp/bmpread.c:146
+#: plug-ins/bmp/bmpread.c:164 plug-ins/bmp/bmpread.c:169
+#: plug-ins/bmp/bmpread.c:174
 #, c-format
 msgid "%s: error reading BMP file header"
 msgstr "%s: chyba pøi ètení hlavièky souboru BMP"
 
-#: plug-ins/bmp/bmpread.c:230
+#: plug-ins/bmp/bmpread.c:247
 #, c-format
 msgid "%s: bad colormap"
 msgstr "%s: ¹patná barevná mapa"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:274 plug-ins/bmp/bmpread.c:281
-#: plug-ins/bmp/bmpread.c:288 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:289 plug-ins/bmp/bmpread.c:296
+#: plug-ins/bmp/bmpread.c:303 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:445 plug-ins/common/film.c:1006
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:850
@@ -1494,7 +1496,7 @@ msgstr "%s: ¹patná barevná mapa"
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
-#: plug-ins/common/png.c:567 plug-ins/common/pnm.c:502
+#: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:653 plug-ins/common/tile.c:269
@@ -1518,14 +1520,14 @@ msgstr "Nelze otevøít %s"
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
-#: plug-ins/common/gpb.c:769 plug-ins/common/gpb.c:809
+#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
-#: plug-ins/common/png.c:747 plug-ins/common/png.c:749
+#: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1254 plug-ins/common/xbm.c:958
+#: plug-ins/common/tiff.c:1259 plug-ins/common/xbm.c:958
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2094,7 +2096,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/max_rgb.c:269 plug-ins/common/nlfilt.c:389
 #: plug-ins/common/noisify.c:337 plug-ins/common/nova.c:351
 #: plug-ins/common/oilify.c:470 plug-ins/common/pixelize.c:292
-#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1023
+#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1032
 #: plug-ins/common/polar.c:955 plug-ins/common/randomize.c:720
 #: plug-ins/common/ripple.c:676 plug-ins/common/scatter_hsv.c:426
 #: plug-ins/common/sel_gauss.c:254 plug-ins/common/sharpen.c:610
@@ -2751,7 +2753,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s pøedponou:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1178
+#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1178
 msgid "Comment:"
 msgstr "Komentáø:"
 
@@ -3594,7 +3596,7 @@ msgstr "Zapsat jako stopu"
 msgid "Spacing:"
 msgstr "Rozestup:"
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:296
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
@@ -3757,63 +3759,63 @@ msgstr "©íøka dla¾dice:"
 msgid "Tile Height:"
 msgstr "Vý¹ka dla¾dice:"
 
-#: plug-ins/common/gpb.c:283
+#: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
 msgstr "Rozestup (procenta):"
 
-#: plug-ins/common/gpb.c:309
+#: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
 msgstr "Zapsat jako pixelovì mapovanou stopu"
 
-#: plug-ins/common/gpb.c:366
+#: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
 msgstr "Zapsat jako pixelovì mapovanou kolonu stop"
 
-#: plug-ins/common/gpb.c:429
+#: plug-ins/common/gpb.c:428
 msgid "Pixels"
 msgstr "pixelù"
 
-#: plug-ins/common/gpb.c:434 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr "Velikost buòky:"
 
-#: plug-ins/common/gpb.c:446
+#: plug-ins/common/gpb.c:445
 msgid "Number of Cells:"
 msgstr "Poèet bunìk:"
 
-#: plug-ins/common/gpb.c:470
+#: plug-ins/common/gpb.c:469
 msgid " Rows of "
 msgstr "Øady z "
 
-#: plug-ins/common/gpb.c:482
+#: plug-ins/common/gpb.c:481
 msgid " Columns on each Layer"
 msgstr "Sloupce na ka¾dé vrstvì"
 
-#: plug-ins/common/gpb.c:486
+#: plug-ins/common/gpb.c:485
 msgid " (Width Mismatch!) "
 msgstr " (Zmatek v ¹íøce!) "
 
-#: plug-ins/common/gpb.c:490
+#: plug-ins/common/gpb.c:489
 msgid " (Height Mismatch!) "
 msgstr " (Zmatek ve vý¹ce!) "
 
-#: plug-ins/common/gpb.c:495
+#: plug-ins/common/gpb.c:494
 msgid "Display as:"
 msgstr "Zobrazit jako:"
 
-#: plug-ins/common/gpb.c:504
+#: plug-ins/common/gpb.c:503
 msgid "Dimension:"
 msgstr "Rozmìr:"
 
-#: plug-ins/common/gpb.c:539
+#: plug-ins/common/gpb.c:538
 msgid "Ranks:"
 msgstr "Zaøazení:"
 
-#: plug-ins/common/gpb.c:572
+#: plug-ins/common/gpb.c:571
 msgid "Selection:"
 msgstr "Výbìr:"
 
-#: plug-ins/common/gpb.c:1024
+#: plug-ins/common/gpb.c:1023
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Vrstva %s nemá alfa kanál, vynechána"
@@ -4986,7 +4988,7 @@ msgstr ""
 "Chyba PNG. Soubor po¹kozen?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:512
+#: plug-ins/common/png.c:521
 #, c-format
 msgid ""
 "%s\n"
@@ -4995,7 +4997,7 @@ msgstr ""
 "%s\n"
 "neznámý barevný model PNG"
 
-#: plug-ins/common/png.c:730
+#: plug-ins/common/png.c:739
 #, c-format
 msgid ""
 "%s\n"
@@ -5004,7 +5006,7 @@ msgstr ""
 "%s\n"
 "Chyba PNG. Nelze zapsat obrázek"
 
-#: plug-ins/common/png.c:740
+#: plug-ins/common/png.c:749
 #, c-format
 msgid ""
 "%s\n"
@@ -5013,19 +5015,19 @@ msgstr ""
 "%s\n"
 "Nelze vytvoøit soubor"
 
-#: plug-ins/common/png.c:1007
+#: plug-ins/common/png.c:1016
 msgid "Save as PNG"
 msgstr "Zapsat jako PNG"
 
-#: plug-ins/common/png.c:1036
+#: plug-ins/common/png.c:1045
 msgid "Interlacing (Adam7)"
 msgstr "Prokládání (Adam7)"
 
-#: plug-ins/common/png.c:1045
+#: plug-ins/common/png.c:1054
 msgid "Skip Ancillary Chunks"
 msgstr "Pøeskoèit podru¾né èásti"
 
-#: plug-ins/common/png.c:1062
+#: plug-ins/common/png.c:1071
 msgid "Compression Level:"
 msgstr "Úroveò komprese:"
 
@@ -6063,27 +6065,27 @@ msgstr "Práh alfy"
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: plug-ins/common/tiff.c:1475
+#: plug-ins/common/tiff.c:1480
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
-#: plug-ins/common/tiff.c:1497
+#: plug-ins/common/tiff.c:1502
 msgid "Compression"
 msgstr "Komprese"
 
-#: plug-ins/common/tiff.c:1502
+#: plug-ins/common/tiff.c:1507
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1503
+#: plug-ins/common/tiff.c:1508
 msgid "Pack Bits"
 msgstr "Pakování bitù"
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1509
 msgid "Deflate"
 msgstr "Deflaèní"
 
-#: plug-ins/common/tiff.c:1505
+#: plug-ins/common/tiff.c:1510
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -8770,7 +8772,10 @@ msgstr "Zápis øídících bodù do souboru"
 msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr "\nChyba: Klíèové políèko %d v bodu [%d] vìt¹í nebo rovno poslednímu obslou¾enému políèku"
+msgstr ""
+"\n"
+"Chyba: Klíèové políèko %d v bodu [%d] vìt¹í nebo rovno poslednímu "
+"obslou¾enému políèku"
 
 #: plug-ins/gap/gap_mov_dialog.c:2676
 #, c-format
@@ -8780,7 +8785,8 @@ msgid ""
 "for the previous controlpoints"
 msgstr ""
 "\n"
-"Chyba: Klíèové políèko %d v bodu [%d] nenechává dostateèný prostor (políèka)\n"
+"Chyba: Klíèové políèko %d v bodu [%d] nenechává dostateèný prostor "
+"(políèka)\n"
 "pro pøedchozí øídící body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2686
@@ -8788,14 +8794,18 @@ msgstr ""
 msgid ""
 "\n"
 "Error: Keyframe %d is not in sequence at point [%d]"
-msgstr "\nChyba: Klíèové políèko %d není v sekvenci v bodu [%d]"
+msgstr ""
+"\n"
+"Chyba: Klíèové políèko %d není v sekvenci v bodu [%d]"
 
 #: plug-ins/gap/gap_mov_dialog.c:2704
 #, c-format
 msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
-msgstr "\nChyba: Øídící bod [%d] jej mimo obslou¾ený rozsah políèek"
+msgstr ""
+"\n"
+"Chyba: Øídící bod [%d] jej mimo obslou¾ený rozsah políèek"
 
 #: plug-ins/gap/gap_mov_dialog.c:2718
 #, c-format

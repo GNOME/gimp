@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-05-03 14:03-0700\n"
+"POT-Creation-Date: 2000-05-14 13:42-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/FractalExplorer.c:850
 #: plug-ins/FractalExplorer/FractalExplorer.c:1476
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1383
-#: plug-ins/bmp/bmpwrite.c:562 plug-ins/common/CML_explorer.c:1174
+#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1174
 #: plug-ins/common/CML_explorer.c:1932 plug-ins/common/CML_explorer.c:2252
 #: plug-ins/common/aa.c:346 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
@@ -63,7 +63,7 @@ msgstr ""
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
 #: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
-#: plug-ins/common/gpb.c:270 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
 #: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
@@ -74,7 +74,7 @@ msgstr ""
 #: plug-ins/common/noisify.c:325 plug-ins/common/nova.c:339
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1012
+#: plug-ins/common/plasma.c:287 plug-ins/common/png.c:1021
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -85,7 +85,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1480 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1485 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
@@ -124,7 +124,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/FractalExplorer.c:859
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 #: plug-ins/Lighting/lighting_ui.c:1078 plug-ins/MapObject/mapobject_ui.c:1385
-#: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1176
+#: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/CML_explorer.c:1176
 #: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:348
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
@@ -144,7 +144,7 @@ msgstr ""
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:272
+#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
@@ -156,7 +156,7 @@ msgstr ""
 #: plug-ins/common/nova.c:341 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:289
-#: plug-ins/common/png.c:1014 plug-ins/common/pnm.c:935
+#: plug-ins/common/png.c:1023 plug-ins/common/pnm.c:935
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
 #: plug-ins/common/ps.c:2716 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -167,7 +167,7 @@ msgstr ""
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1482 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
@@ -272,7 +272,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:802 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1501
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1506
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:284
 msgid "None"
 msgstr ""
@@ -1424,7 +1424,7 @@ msgstr ""
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:54 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:281 plug-ins/common/gifload.c:306
 #: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:745
 #: plug-ins/common/pat.c:261 plug-ins/common/pcx.c:301
@@ -1440,35 +1440,32 @@ msgstr ""
 msgid "Loading %s:"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:66
+#: plug-ins/bmp/bmpread.c:64
 #, c-format
-msgid "%s: can't open \"%s\"\n"
+msgid "%s: can't open \"%s\""
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:74
+#: plug-ins/bmp/bmpread.c:72
 #, c-format
-msgid "%s: not a valid BMP file %s\n"
+msgid "%s: %s is not a valid BMP file"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:82 plug-ins/bmp/bmpread.c:99
-#: plug-ins/bmp/bmpread.c:109 plug-ins/bmp/bmpread.c:132
+#: plug-ins/bmp/bmpread.c:90 plug-ins/bmp/bmpread.c:108
+#: plug-ins/bmp/bmpread.c:128 plug-ins/bmp/bmpread.c:146
+#: plug-ins/bmp/bmpread.c:164 plug-ins/bmp/bmpread.c:169
+#: plug-ins/bmp/bmpread.c:174
 #, c-format
-msgid "%s: error reading BMP file header\n"
+msgid "%s: error reading BMP file header"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:155
+#: plug-ins/bmp/bmpread.c:247
 #, c-format
-msgid "%s: too many colors: %u\n"
-msgstr ""
-
-#: plug-ins/bmp/bmpread.c:245
-#, c-format
-msgid "%s: bad colormap\n"
+msgid "%s: bad colormap"
 msgstr ""
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:307
-#: plug-ins/bmp/bmpread.c:314 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:289 plug-ins/bmp/bmpread.c:296
+#: plug-ins/bmp/bmpread.c:303 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:445 plug-ins/common/film.c:1006
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:850
@@ -1476,7 +1473,7 @@ msgstr ""
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
-#: plug-ins/common/png.c:567 plug-ins/common/pnm.c:502
+#: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:653 plug-ins/common/tile.c:269
@@ -1489,25 +1486,25 @@ msgid "Background"
 msgstr ""
 
 #: plug-ins/bmp/bmpwrite.c:104
-msgid "bmp: cannot operate on unknown image types or alpha images"
+msgid "BMP: cannot operate on unknown image types or alpha images"
 msgstr ""
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
-msgid "can't open %s\n"
+msgid "Can't open %s"
 msgstr ""
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
-#: plug-ins/common/gpb.c:769 plug-ins/common/gpb.c:809
+#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
-#: plug-ins/common/png.c:747 plug-ins/common/png.c:749
+#: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1254 plug-ins/common/xbm.c:958
+#: plug-ins/common/tiff.c:1259 plug-ins/common/xbm.c:958
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -1515,16 +1512,16 @@ msgstr ""
 msgid "Saving %s:"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:557
+#: plug-ins/bmp/bmpwrite.c:559
 msgid "Save as BMP"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:574
+#: plug-ins/bmp/bmpwrite.c:576
 msgid "Save Options"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:582
+#: plug-ins/bmp/bmpwrite.c:584
 msgid "RLE encoded"
 msgstr ""
 
@@ -2063,7 +2060,7 @@ msgstr ""
 #: plug-ins/common/max_rgb.c:269 plug-ins/common/nlfilt.c:389
 #: plug-ins/common/noisify.c:337 plug-ins/common/nova.c:351
 #: plug-ins/common/oilify.c:470 plug-ins/common/pixelize.c:292
-#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1023
+#: plug-ins/common/plasma.c:301 plug-ins/common/png.c:1032
 #: plug-ins/common/polar.c:955 plug-ins/common/randomize.c:720
 #: plug-ins/common/ripple.c:676 plug-ins/common/scatter_hsv.c:426
 #: plug-ins/common/sel_gauss.c:254 plug-ins/common/sharpen.c:610
@@ -2720,7 +2717,7 @@ msgid "Prefixed Name:"
 msgstr ""
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1178
+#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1178
 msgid "Comment:"
 msgstr ""
 
@@ -3562,7 +3559,7 @@ msgstr ""
 msgid "Spacing:"
 msgstr ""
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:296
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
@@ -3715,63 +3712,63 @@ msgstr ""
 msgid "Tile Height:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:283
+#: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
 msgstr ""
 
-#: plug-ins/common/gpb.c:309
+#: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
 msgstr ""
 
-#: plug-ins/common/gpb.c:366
+#: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
 msgstr ""
 
-#: plug-ins/common/gpb.c:429
+#: plug-ins/common/gpb.c:428
 msgid "Pixels"
 msgstr ""
 
-#: plug-ins/common/gpb.c:434 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:446
+#: plug-ins/common/gpb.c:445
 msgid "Number of Cells:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:470
+#: plug-ins/common/gpb.c:469
 msgid " Rows of "
 msgstr ""
 
-#: plug-ins/common/gpb.c:482
+#: plug-ins/common/gpb.c:481
 msgid " Columns on each Layer"
 msgstr ""
 
-#: plug-ins/common/gpb.c:486
+#: plug-ins/common/gpb.c:485
 msgid " (Width Mismatch!) "
 msgstr ""
 
-#: plug-ins/common/gpb.c:490
+#: plug-ins/common/gpb.c:489
 msgid " (Height Mismatch!) "
 msgstr ""
 
-#: plug-ins/common/gpb.c:495
+#: plug-ins/common/gpb.c:494
 msgid "Display as:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:504
+#: plug-ins/common/gpb.c:503
 msgid "Dimension:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:539
+#: plug-ins/common/gpb.c:538
 msgid "Ranks:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:572
+#: plug-ins/common/gpb.c:571
 msgid "Selection:"
 msgstr ""
 
-#: plug-ins/common/gpb.c:1024
+#: plug-ins/common/gpb.c:1023
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr ""
@@ -4924,40 +4921,40 @@ msgid ""
 msgstr ""
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:512
+#: plug-ins/common/png.c:521
 #, c-format
 msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
 
-#: plug-ins/common/png.c:730
+#: plug-ins/common/png.c:739
 #, c-format
 msgid ""
 "%s\n"
 "PNG error. Couldn't save image"
 msgstr ""
 
-#: plug-ins/common/png.c:740
+#: plug-ins/common/png.c:749
 #, c-format
 msgid ""
 "%s\n"
 "Couldn't create file"
 msgstr ""
 
-#: plug-ins/common/png.c:1007
+#: plug-ins/common/png.c:1016
 msgid "Save as PNG"
 msgstr ""
 
-#: plug-ins/common/png.c:1036
+#: plug-ins/common/png.c:1045
 msgid "Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1045
+#: plug-ins/common/png.c:1054
 msgid "Skip Ancillary Chunks"
 msgstr ""
 
-#: plug-ins/common/png.c:1062
+#: plug-ins/common/png.c:1071
 msgid "Compression Level:"
 msgstr ""
 
@@ -5989,27 +5986,27 @@ msgstr ""
 msgid "TIFF Channel"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1475
+#: plug-ins/common/tiff.c:1480
 msgid "Save as TIFF"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1497
+#: plug-ins/common/tiff.c:1502
 msgid "Compression"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1502
+#: plug-ins/common/tiff.c:1507
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1503
+#: plug-ins/common/tiff.c:1508
 msgid "Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1509
 msgid "Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1505
+#: plug-ins/common/tiff.c:1510
 msgid "JPEG"
 msgstr ""
 
@@ -8269,8 +8266,7 @@ msgid "Scale Preview"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:811
-#, c-format
-msgid "Scale down size of the generated animated preview in %"
+msgid "Scale down size of the generated animated preview (in %)"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:819
@@ -12662,7 +12658,7 @@ msgstr ""
 
 #: plug-ins/xjt/xjt.c:1647
 #, c-format
-msgid "Can't open : %s"
+msgid "Can't open: %s"
 msgstr ""
 
 #. stat error (file does not exist)
@@ -12678,5 +12674,5 @@ msgstr ""
 
 #: plug-ins/xjt/xjt.c:3124
 #, c-format
-msgid "Error, XJT propertyfile %s is empty"
+msgid "Error: XJT propertyfile %s is empty"
 msgstr ""

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-04-30 11:43-0700\n"
+"POT-Creation-Date: 2000-05-09 20:27-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Script-Fu 콘솔"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:200
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Close"
 msgstr "닫기"
 
@@ -54,7 +54,7 @@ msgstr "SIOD 출력 파이프에서 스트림을 열수 없습니다."
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1075
+#: plug-ins/script-fu/script-fu-scripts.c:1124
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error\n"
@@ -62,74 +62,74 @@ msgid ""
 msgstr "Script-Fu 콘솔"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1125
-#: plug-ins/script-fu/script-fu-scripts.c:1127
+#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1175
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1127
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1175
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu 콘솔"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1154
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
 #. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1219
+#: plug-ins/script-fu/script-fu-scripts.c:1267
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1321
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 패턴 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 색감변화도 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1336
+#: plug-ins/script-fu/script-fu-scripts.c:1384
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1379
+#: plug-ins/script-fu/script-fu-scripts.c:1427
 #, fuzzy
 msgid "Reset to Defaults"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1405
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "About"
 msgstr "대하여"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1419
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "확인"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1428
+#: plug-ins/script-fu/script-fu-scripts.c:1476
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "취소"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1533
+#: plug-ins/script-fu/script-fu-scripts.c:1590
 msgid "NOT SET"
 msgstr "결정않됨"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1602
+#: plug-ins/script-fu/script-fu-scripts.c:1659
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -137,27 +137,27 @@ msgstr ""
 "적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
 "설정을 검사해보세요\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1881
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1887
+#: plug-ins/script-fu/script-fu-scripts.c:1950
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1893
+#: plug-ins/script-fu/script-fu-scripts.c:1956
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1901
+#: plug-ins/script-fu/script-fu-scripts.c:1964
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2054
+#: plug-ins/script-fu/script-fu-scripts.c:2117
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 폰트 셀렉션"
 
@@ -184,11 +184,11 @@ msgstr "Script-Fu 콘솔"
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1008 plug-ins/script-fu/script-fu.c:1009
+#: plug-ins/script-fu/script-fu.c:1009 plug-ins/script-fu/script-fu.c:1010
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:1013
+#: plug-ins/script-fu/script-fu.c:1014
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
@@ -876,7 +876,7 @@ msgid "Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Type: TRUE=RLE, FALSE=IIR"
+msgid "Blur Type"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
@@ -1371,6 +1371,10 @@ msgid "Highlight Color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+msgid "Highlight Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
 msgstr ""
 
@@ -1384,6 +1388,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "IIR"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
@@ -1587,7 +1595,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Opacity"
 msgstr ""
 
@@ -1687,6 +1694,10 @@ msgstr ""
 #, fuzzy
 msgid "Quarter Size"
 msgstr "이미지 유형: "
+
+#: plug-ins/script-fu/scripts/tileblur.scm:0
+msgid "RLE"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-05-12 22:31+0000\n"
+"POT-Creation-Date: 2000-05-14 13:42-0700\n"
 "PO-Revision-Date: 2000-05-12 23:01+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "О программе"
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1140
 #: plug-ins/common/gif.c:1211 plug-ins/common/glasstile.c:228
-#: plug-ins/common/gpb.c:270 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:564 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:305
 #: plug-ins/common/iwarp.c:1141 plug-ins/common/jigsaw.c:2304
@@ -142,7 +142,7 @@ msgstr "Да"
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1142 plug-ins/common/gif.c:1213
-#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:272
+#: plug-ins/common/glasstile.c:230 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:566
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:307 plug-ins/common/iwarp.c:1145
@@ -1517,7 +1517,9 @@ msgstr "Фон"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr "BMP: невозможно действовать на изображения неизвестного типа или с альфа-каналами"
+msgstr ""
+"BMP: невозможно действовать на изображения неизвестного типа или с "
+"альфа-каналами"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
@@ -1527,7 +1529,7 @@ msgstr "Невозможно открыть %s"
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:936
-#: plug-ins/common/gpb.c:769 plug-ins/common/gpb.c:809
+#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1193 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
@@ -3604,7 +3606,7 @@ msgstr "Сохранить как кисть"
 msgid "Spacing:"
 msgstr "Интервал: "
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:296
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
@@ -3768,63 +3770,63 @@ msgstr "Ширина блока:"
 msgid "Tile Height:"
 msgstr "Высота блока:"
 
-#: plug-ins/common/gpb.c:283
+#: plug-ins/common/gpb.c:282
 msgid "Spacing (Percent):"
 msgstr "Интервал (проценты):"
 
-#: plug-ins/common/gpb.c:309
+#: plug-ins/common/gpb.c:308
 msgid "Save as Pixmap Brush"
 msgstr "Сохранить как Pixmap-кисть"
 
-#: plug-ins/common/gpb.c:366
+#: plug-ins/common/gpb.c:365
 msgid "Save as Pixmap Brush Pipe"
 msgstr "Сохранить как Pixmap Brush pipe"
 
-#: plug-ins/common/gpb.c:429
+#: plug-ins/common/gpb.c:428
 msgid "Pixels"
 msgstr "Точки растра"
 
-#: plug-ins/common/gpb.c:434 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr "Размер ячейки:"
 
-#: plug-ins/common/gpb.c:446
+#: plug-ins/common/gpb.c:445
 msgid "Number of Cells:"
 msgstr "Число ячеек:"
 
-#: plug-ins/common/gpb.c:470
+#: plug-ins/common/gpb.c:469
 msgid " Rows of "
 msgstr " строк "
 
-#: plug-ins/common/gpb.c:482
+#: plug-ins/common/gpb.c:481
 msgid " Columns on each Layer"
 msgstr " столбцов на каждом слое"
 
-#: plug-ins/common/gpb.c:486
+#: plug-ins/common/gpb.c:485
 msgid " (Width Mismatch!) "
 msgstr " (ошибочная ширина!) "
 
-#: plug-ins/common/gpb.c:490
+#: plug-ins/common/gpb.c:489
 msgid " (Height Mismatch!) "
 msgstr " (ошибочная высота!) "
 
-#: plug-ins/common/gpb.c:495
+#: plug-ins/common/gpb.c:494
 msgid "Display as:"
 msgstr "Показать как:"
 
-#: plug-ins/common/gpb.c:504
+#: plug-ins/common/gpb.c:503
 msgid "Dimension:"
 msgstr "Размер:"
 
-#: plug-ins/common/gpb.c:539
+#: plug-ins/common/gpb.c:538
 msgid "Ranks:"
 msgstr "Ранги:"
 
-#: plug-ins/common/gpb.c:572
+#: plug-ins/common/gpb.c:571
 msgid "Selection:"
 msgstr "Выделение"
 
-#: plug-ins/common/gpb.c:1024
+#: plug-ins/common/gpb.c:1023
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Слой %s не имеет альфа-канала, пропущен."
@@ -8766,7 +8768,10 @@ msgstr "Сохранить контрольные точки в файле"
 msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
-msgstr "\nОшибка: Ключевой кадр %d в точке [%d] больше или равен последнему обработанному кадру"
+msgstr ""
+"\n"
+"Ошибка: Ключевой кадр %d в точке [%d] больше или равен последнему "
+"обработанному кадру"
 
 #: plug-ins/gap/gap_mov_dialog.c:2676
 #, c-format
@@ -8784,14 +8789,18 @@ msgstr ""
 msgid ""
 "\n"
 "Error: Keyframe %d is not in sequence at point [%d]"
-msgstr "\nОшибка: Ключевой кадр %d не в последовательности в точке [%d]"
+msgstr ""
+"\n"
+"Ошибка: Ключевой кадр %d не в последовательности в точке [%d]"
 
 #: plug-ins/gap/gap_mov_dialog.c:2704
 #, c-format
 msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
-msgstr "\nОшибка: управляющая точка [%d] вне обрабатываемого диапазона кадров"
+msgstr ""
+"\n"
+"Ошибка: управляющая точка [%d] вне обрабатываемого диапазона кадров"
 
 #: plug-ins/gap/gap_mov_dialog.c:2718
 #, c-format
@@ -9128,7 +9137,9 @@ msgstr ""
 msgid ""
 "\n"
 "ERROR: invoked from a single image, animframe required"
-msgstr "\nОШИБКА: вызвано с одиночным изображением, требуются анимированные кадры"
+msgstr ""
+"\n"
+"ОШИБКА: вызвано с одиночным изображением, требуются анимированные кадры"
 
 #: plug-ins/gap/gap_navigator_dialog.c:367
 msgid ""
