@@ -1,3 +1,8 @@
+2002-02-19  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/vinvert.c: applied a patch with some optimizations
+	from Maurits Rijk <lpeek.mrijk@consunet.nl> (#71955).
+
 2002-02-19  Michael Natterer  <mitch@gimp.org>
 
 	Fixed #10466 (disappearing pixels when rotating by 90 deg):

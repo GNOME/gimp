@@ -46,10 +46,10 @@ static void      run    (gchar      *name,
 
 static void      vinvert            (GimpDrawable *drawable);
 static void      indexed_vinvert    (gint32        image_ID);
-static void      vinvert_render_row (const guchar *src_row,
-				     guchar       *dest_row,
-				     gint          row_width,
-				     const gint    bytes);
+static void      vinvert_render_row (guchar     *src,
+				     guchar     *dest,
+				     gint        row_width,
+				     const gint  bytes);
 
 
 static GimpRunMode run_mode;
@@ -114,7 +114,6 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_ID = param[1].data.d_image;
@@ -152,7 +151,6 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-
 static void
 indexed_vinvert (gint32 image_ID)
 {
@@ -167,67 +165,55 @@ indexed_vinvert (gint32 image_ID)
       gimp_quit ();
     }
 
-  vinvert_render_row (cmap,
-		      cmap,
-		      ncols,
-		      3);
+  vinvert_render_row (cmap, cmap, ncols, 3);
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
 static void
-vinvert_render_row (const guchar *src_data,
-		    guchar       *dest_data,
-		    gint          col,       /* row width in pixels */
-		    const gint    bytes)
+vinvert_render_row (guchar     *src,
+		    guchar     *dest,
+		    gint       col,       /* row width in pixels */
+		    const gint bytes)
 {
   while (col--)
     {
       gint v1, v2, v3;
+      gint bytenum;
 
-      v1 = src_data[col*bytes   ];
-      v2 = src_data[col*bytes +1];
-      v3 = src_data[col*bytes +2];
+      v1 = *src++;
+      v2 = *src++;
+      v3 = *src++;
 
       gimp_rgb_to_hsv_int (&v1, &v2, &v3);
-      v3 = 255-v3;
+      v3 = 255 - v3;
       gimp_hsv_to_rgb_int (&v1, &v2, &v3);
 
-      dest_data[col*bytes   ] = v1;
-      dest_data[col*bytes +1] = v2;
-      dest_data[col*bytes +2] = v3;
+      *dest++ = v1;
+      *dest++ = v2;
+      *dest++ = v3;
 
-      if (bytes>3)
+      for (bytenum = 3; bytenum < bytes; bytenum++)
 	{
-	  gint bytenum;
-
-	  for (bytenum = 3; bytenum<bytes; bytenum++)
-	    {
-	      dest_data[col*bytes+bytenum] =
-		src_data[col*bytes+bytenum];
-	    }
+	   *dest++ = *src++;
 	}
     }
 }
 
-
-
 static void
-vinvert_render_region (const GimpPixelRgn srcPR,
-		       const GimpPixelRgn destPR)
+vinvert_render_region (const GimpPixelRgn *srcPR,
+		       const GimpPixelRgn *destPR)
 {
   gint row;
-  guchar* src_ptr  = srcPR.data;
-  guchar* dest_ptr = destPR.data;
+  guchar* src_ptr  = srcPR->data;
+  guchar* dest_ptr = destPR->data;
   
-  for (row = 0; row < srcPR.h ; row++)
+  for (row = 0; row < srcPR->h; row++)
     {
-      vinvert_render_row (src_ptr, dest_ptr,
-			  srcPR.w,
-			  srcPR.bpp);
+      vinvert_render_row (src_ptr, dest_ptr, srcPR->w, srcPR->bpp);
 
-      src_ptr  += srcPR.rowstride;
-      dest_ptr += destPR.rowstride;
+      src_ptr  += srcPR->rowstride;
+      dest_ptr += destPR->rowstride;
     }
 }
 
@@ -240,7 +226,6 @@ vinvert (GimpDrawable *drawable)
   gint      total_area, area_so_far;
   gint      progress_skip;
 
-
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
    *  operating on the input area is simply an optimization. It doesn't
@@ -250,7 +235,11 @@ vinvert (GimpDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   total_area = (x2 - x1) * (y2 - y1);
-  area_so_far = 0;
+
+  if (!total_area)
+    return;
+
+  area_so_far   = 0;
   progress_skip = 0;
 
   /* Initialize the pixel regions. */
@@ -263,9 +252,9 @@ vinvert (GimpDrawable *drawable)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      vinvert_render_region (srcPR, destPR);
+      vinvert_render_region (&srcPR, &destPR);
 
-      if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (((progress_skip++)%10) == 0)
