@@ -120,10 +120,7 @@ static void   gimp_colormap_preview_drop_color     (GtkWidget          *widget,
 
 static void   gimp_colormap_adjustment_changed     (GtkAdjustment      *adjustment,
                                                     GimpColormapEditor *editor);
-static void   gimp_colormap_hex_entry_activate     (GtkEntry           *entry,
-                                                    GimpColormapEditor *editor);
-static gboolean gimp_colormap_hex_entry_focus_out  (GtkEntry           *entry,
-                                                    GdkEvent           *event,
+static void   gimp_colormap_hex_entry_changed      (GimpColorHexEntry  *entry,
                                                     GimpColormapEditor *editor);
 
 static void   gimp_colormap_image_mode_changed     (GimpImage          *gimage,
@@ -253,18 +250,14 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                     G_CALLBACK (gimp_colormap_adjustment_changed),
                     editor);
 
-  editor->color_entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
-  gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
+  editor->color_entry = gimp_color_hex_entry_new ();
+  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 12);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("HTML notation:"), 0.0, 0.5,
                              editor->color_entry, 1, TRUE);
 
-  g_signal_connect (editor->color_entry, "activate",
-                    G_CALLBACK (gimp_colormap_hex_entry_activate),
-                    editor);
-  g_signal_connect (editor->color_entry, "focus_out_event",
-                    G_CALLBACK (gimp_colormap_hex_entry_focus_out),
+  g_signal_connect (editor->color_entry, "color_changed",
+                    G_CALLBACK (gimp_colormap_hex_entry_changed),
                     editor);
 }
 
@@ -797,44 +790,20 @@ gimp_colormap_adjustment_changed (GtkAdjustment      *adjustment,
 }
 
 static void
-gimp_colormap_hex_entry_activate (GtkEntry           *entry,
-                                  GimpColormapEditor *editor)
+gimp_colormap_hex_entry_changed (GimpColorHexEntry  *entry,
+                                 GimpColormapEditor *editor)
 {
   GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage)
     {
-      const gchar *s;
-      gulong       i;
+      GimpRGB color;
 
-      s = gtk_entry_get_text (entry);
+      gimp_color_hex_entry_get_color (entry, &color);
 
-      if (sscanf (s, "%lx", &i))
-        {
-          GimpRGB color;
-          guchar  r, g, b;
-
-          r = (i & 0xFF0000) >> 16;
-          g = (i & 0x00FF00) >> 8;
-          b = (i & 0x0000FF);
-
-          gimp_rgb_set_uchar (&color, r, g, b);
-
-          gimp_image_set_colormap_entry (gimage, editor->col_index, &color,
-                                         TRUE);
-          gimp_image_flush (gimage);
-        }
+      gimp_image_set_colormap_entry (gimage, editor->col_index, &color, TRUE);
+      gimp_image_flush (gimage);
     }
-}
-
-static gboolean
-gimp_colormap_hex_entry_focus_out (GtkEntry           *entry,
-                                   GdkEvent           *event,
-                                   GimpColormapEditor *editor)
-{
-  gimp_colormap_hex_entry_activate (entry, editor);
-
-  return FALSE;
 }
 
 static void
