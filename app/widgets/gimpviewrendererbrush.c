@@ -36,9 +36,9 @@
 static void   gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass);
 static void   gimp_preview_renderer_brush_init       (GimpPreviewRendererBrush      *renderer);
 
-static void     gimp_preview_renderer_brush_finalize       (GObject     *object);
-static void     gimp_preview_renderer_brush_render         (GimpPreviewRenderer *renderer,
-                                                            GtkWidget           *widget);
+static void   gimp_preview_renderer_brush_finalize (GObject             *object);
+static void   gimp_preview_renderer_brush_render   (GimpPreviewRenderer *renderer,
+                                                    GtkWidget           *widget);
 
 static gboolean gimp_preview_renderer_brush_render_timeout (gpointer     data);
 
@@ -70,7 +70,7 @@ gimp_preview_renderer_brush_get_type (void)
                                               "GimpPreviewRendererBrush",
                                               &renderer_info, 0);
     }
-  
+
   return renderer_type;
 }
 
@@ -100,9 +100,7 @@ gimp_preview_renderer_brush_init (GimpPreviewRendererBrush *renderer)
 static void
 gimp_preview_renderer_brush_finalize (GObject *object)
 {
-  GimpPreviewRendererBrush *renderer;
-
-  renderer = GIMP_PREVIEW_RENDERER_BRUSH (object);
+  GimpPreviewRendererBrush *renderer = GIMP_PREVIEW_RENDERER_BRUSH (object);
 
   if (renderer->pipe_timeout_id)
     {
@@ -155,16 +153,6 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 
       if (GIMP_IS_BRUSH_PIPE (brush))
 	{
-#if 0
-	  if (renderer->width  != brush_width ||
-              renderer->height != brush_height)
-	    {
-	      g_warning ("%s(): non-fullsize pipe popups are not supported yet.",
-			 G_GNUC_FUNCTION);
-	      return;
-	    }
-#endif
-
 	  renderbrush->pipe_animation_index = 0;
 	  renderbrush->pipe_timeout_id =
             g_timeout_add (300, gimp_preview_renderer_brush_render_timeout,
@@ -193,7 +181,7 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 #define BLK {   0,   0,   0 }
 #define RED { 255, 127, 127 }
 
-      static const guchar scale_indicator_bits[7][7][3] = 
+      static const guchar scale_indicator_bits[7][7][3] =
       {
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
         { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
@@ -204,7 +192,7 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
       };
 
-      static const guchar scale_pipe_indicator_bits[7][7][3] = 
+      static const guchar scale_pipe_indicator_bits[7][7][3] =
       {
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
         { WHT, WHT, WHT, BLK, WHT, WHT, RED },
@@ -215,7 +203,7 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
         { WHT, RED, RED, RED, RED, RED, RED }
       };
 
-      static const guchar pipe_indicator_bits[7][7][3] = 
+      static const guchar pipe_indicator_bits[7][7][3] =
       {
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
         { WHT, WHT, WHT, WHT, WHT, WHT, RED },

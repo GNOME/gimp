@@ -1,5 +1,10 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppreviewrendererbrush.c: removed trailing
+	whitespace and #if 0'ed cruft. Cosmetics.
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): doc fixes.
 
 2003-12-21  Michael Natterer  <mitch@gimp.org>
