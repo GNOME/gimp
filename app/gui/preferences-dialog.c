@@ -818,20 +818,66 @@ prefs_display_options_frame_add (Gimp         *gimp,
                                  const gchar  *label,
                                  GtkContainer *parent)
 {
+  /* General sketch: 
+  +      Frame VBox                     +
+    +    Checkbox HBox                +
+     + Checks VBox  + + Checks VBox  +
+      Menubar          Selection
+      Rulers           Active layer
+      Scrollbars       Guides
+      Statusbar        Grid
+     +              + +              + 
+    +                                 +
+    Canvas padding
+    Custom color
+  +                                     +
+  */
+
   GtkBox    *box;
+  GtkWidget *checks_hbox;
+  GtkWidget *checks_vbox;
   GtkWidget *table;
   GtkWidget *button;
 
   box = GTK_BOX (prefs_frame_new (label, parent, FALSE));
+  
+  checks_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (box, checks_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (checks_hbox);
+
+  checks_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (checks_hbox), checks_vbox, TRUE, FALSE, 0);
+  gtk_widget_show (checks_vbox);
 
   prefs_check_button_add (object,
-                          "show-menubar",    _("Show Menubar"),    box);
+                          "show-menubar",    _("Show _Menubar"),
+                          GTK_BOX (checks_vbox));
   prefs_check_button_add (object,
-                          "show-rulers",     _("Show _Rulers"),    box);
+                          "show-rulers",     _("Show _Rulers"),
+                          GTK_BOX (checks_vbox));
   prefs_check_button_add (object,
-                          "show-scrollbars", _("Show Scrollbars"), box);
+                          "show-scrollbars", _("Show Scroll_bars"),
+                          GTK_BOX (checks_vbox));
   prefs_check_button_add (object,
-                          "show-statusbar",  _("Show S_tatusbar"), box);
+                          "show-statusbar",  _("Show S_tatusbar"),
+                          GTK_BOX (checks_vbox));
+
+  checks_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (checks_hbox), checks_vbox, TRUE, FALSE, 0);
+  gtk_widget_show (checks_vbox);
+
+  prefs_check_button_add (object,
+                          "show-selection",    _("Show S_election"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object,
+                          "show-active_layer", _("Show _Active Layer"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object,
+                          "show-guides",       _("Show _Guides"),
+                          GTK_BOX (checks_vbox));
+  prefs_check_button_add (object,
+                          "show-grid",         _("Show Gri_d"),
+                          GTK_BOX (checks_vbox));
 
   table = prefs_table_new (2, GTK_CONTAINER (box), FALSE);
 
