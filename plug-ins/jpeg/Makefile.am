@@ -37,7 +37,9 @@ jpeg_SOURCES = \
 	jpeg.h		\
 	jpeg-save.h	\
 	jpeg-load.h	\
-	jpeg-exif.c 
+	jpeg-exif.c     \
+	gimpexif.c      \
+	gimpexif.h
 
 jpeg_LDADD = \
 	$(libgimpui)		\

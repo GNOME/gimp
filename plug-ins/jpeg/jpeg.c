@@ -37,7 +37,7 @@
 #include "jpeg.h"
 #include "jpeg-load.h"
 #include "jpeg-save.h"
-
+#include "gimpexif.h"
 
 /* Declare local functions.
  */
@@ -309,16 +309,9 @@ run (const gchar      *name,
 
 #ifdef HAVE_EXIF
 
-      parasite = gimp_image_parasite_find (orig_image_ID, "exif-data");
-      if (parasite)
-        {
-          exif_data = exif_data_new_from_data (gimp_parasite_data (parasite),
-                                               gimp_parasite_data_size (parasite));
-
-          jpeg_setup_exif_for_save (exif_data, orig_image_ID);
-
-          gimp_parasite_free (parasite);
-        }
+      exif_data = gimp_metadata_generate_exif (orig_image_ID);
+      if (exif_data)
+        jpeg_setup_exif_for_save (exif_data, orig_image_ID);
 
 #endif /* HAVE_EXIF */
 
