@@ -1,5 +1,19 @@
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimp-tools.c (gimp_tools_restore): reset the tool
+	options before deserializing so they have the correct default
+	values. Fixes bug #120832.
+
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptransformoptions.c: removed all set_defaults()
+	utility functions and moved their code to reset(). The change
+	above calls them automatically so there is no need to call them
+	from the GUI constructors any more.
+
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/selection-round.scm: use a
 	scale_entry instead of a spinbutton, changed mnemonic from "R" to
 	"E", indentation.

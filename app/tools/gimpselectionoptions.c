@@ -74,7 +74,7 @@ static void   gimp_selection_options_get_property (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);static void   gimp_selection_options_set_defaults (GimpToolOptions *tool_options);
+static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);
 
 static void   selection_options_fixed_mode_notify (GimpSelectionOptions *options,
                                                    GParamSpec           *pspec,
@@ -325,14 +325,6 @@ gimp_selection_options_get_property (GObject    *object,
 static void
 gimp_selection_options_reset (GimpToolOptions *tool_options)
 {
-  gimp_selection_options_set_defaults (tool_options);
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
-}
-
-static void
-gimp_selection_options_set_defaults (GimpToolOptions *tool_options)
-{
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
@@ -348,6 +340,8 @@ gimp_selection_options_set_defaults (GimpToolOptions *tool_options)
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
       GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 GtkWidget *
@@ -553,8 +547,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
       gtk_widget_show (table);
     }
-
-  gimp_selection_options_set_defaults (tool_options);
 
   return vbox;
 }

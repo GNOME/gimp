@@ -71,7 +71,6 @@ static void   gimp_transform_options_get_property   (GObject         *object,
                                                      GParamSpec      *pspec);
 
 static void   gimp_transform_options_reset          (GimpToolOptions *tool_options);
-static void   gimp_transform_options_set_defaults   (GimpToolOptions *tool_options);
 
 static void   gimp_transform_options_preview_notify (GimpTransformOptions *options,
                                                      GParamSpec           *pspec,
@@ -290,14 +289,6 @@ gimp_transform_options_get_property (GObject    *object,
 static void
 gimp_transform_options_reset (GimpToolOptions *tool_options)
 {
-  gimp_transform_options_set_defaults (tool_options);
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
-}
-
-static void
-gimp_transform_options_set_defaults (GimpToolOptions *tool_options)
-{
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
@@ -306,6 +297,8 @@ gimp_transform_options_set_defaults (GimpToolOptions *tool_options)
   if (pspec)
     G_PARAM_SPEC_ENUM (pspec)->default_value =
       tool_options->tool_info->gimp->config->interpolation_type;
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 GtkWidget *
@@ -485,8 +478,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
           g_free (str3);
         }
     }
-
-  gimp_transform_options_set_defaults (tool_options);
 
   return vbox;
 }

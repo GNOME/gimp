@@ -262,6 +262,9 @@ gimp_tools_restore (Gimp *gimp)
 
       tool_info = GIMP_TOOL_INFO (list->data);
 
+      /*  get default values from prefs (see bug #120832)  */
+      gimp_tool_options_reset (tool_info->tool_options);
+
       gimp_tool_options_deserialize (tool_info->tool_options, NULL, NULL);
 
       options_gui_func = g_object_get_data (G_OBJECT (tool_info),
