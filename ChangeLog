@@ -1,3 +1,7 @@
+2001-12-03  Daniel Egger  <degger@fhm.edu>
+
+	* app/core/gimp.c: Simplified logic thanks to bitfields.
+
 2001-12-02  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in.c: use g_tree_foreach() instead of deprecated
