@@ -25,11 +25,13 @@
 #include <time.h>
 #include <glib.h>
 
-#define INCLUDE_TEMP_DIR 0x1
-#define MODE_EXECUTABLE  0x2
-
-
 /***** Types *****/
+
+typedef enum
+{
+  INCLUDE_TEMP_DIR = 1 << 0,
+  MODE_EXECUTABLE  = 1 << 1
+} GimpDataFileFlags;
 
 typedef void (* GimpDataFileLoaderFunc) (gchar *filename);
 
@@ -38,7 +40,7 @@ typedef void (* GimpDataFileLoaderFunc) (gchar *filename);
 
 void datafiles_read_directories (gchar                  *path_str,
 				 GimpDataFileLoaderFunc  loader_func,
-				 gint                    flags);
+				 GimpDataFileFlags       flags);
 
 /* Return the current datafiles access, modification
  *  or change time. The current datafile is the one for

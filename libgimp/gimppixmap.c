@@ -111,7 +111,7 @@ gimp_pixmap_new (gchar **xpm_data)
 
   pixmap = gtk_type_new (gimp_pixmap_get_type ());
 
-  GTK_PIXMAP (pixmap)->build_insensitive = TRUE;
+  gtk_pixmap_set_build_insensitive (GTK_PIXMAP (pixmap), TRUE);
   gimp_pixmap_set (pixmap, xpm_data);
 
   return GTK_WIDGET (pixmap);

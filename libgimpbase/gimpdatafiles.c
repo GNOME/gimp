@@ -51,18 +51,18 @@
 
 /***** Functions *****/
 
-static gint        filestat_valid = 0;
+static gboolean    filestat_valid = FALSE;
 static struct stat filestat;
 
 #ifdef G_OS_WIN32
 /*
- * On Windows there is no concept like the Unix executable flag. There
+ * On Windows there is no concept like the Unix executable flag.
  * There is a weak emulation provided by the MS C Runtime using file
  * extensions (com, exe, cmd, bat). This needs to be extended to treat
  * scripts (Python, Perl, ...) as executables, too. We use the PATHEXT
  * variable, which is also used by cmd.exe.
  */
-gboolean
+static gboolean
 is_script (const gchar *filename)
 {
   const gchar *ext = strrchr (filename, '.');
@@ -102,7 +102,7 @@ is_script (const gchar *filename)
 void
 datafiles_read_directories (gchar                  *path_str,
 			    GimpDataFileLoaderFunc  loader_func,
-			    gint                    flags)
+			    GimpDataFileFlags       flags)
 {
   gchar *local_path;
   GList *path;
@@ -141,7 +141,7 @@ datafiles_read_directories (gchar                  *path_str,
 	}
       else
 	{
-	  while ((dir_ent = readdir(dir)))
+	  while ((dir_ent = readdir (dir)))
 	    {
 	      filename = g_strdup_printf ("%s%s",
 					  (gchar *) list->data,
@@ -155,9 +155,9 @@ datafiles_read_directories (gchar                  *path_str,
 		   (filestat.st_mode & S_IXUSR) ||
 		   is_script (filename)))
 		{
-		  filestat_valid = 1;
+		  filestat_valid = TRUE;
 		  (*loader_func) (filename);
-		  filestat_valid = 0;
+		  filestat_valid = FALSE;
 		}
 
 	      g_free (filename);

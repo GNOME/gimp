@@ -37,7 +37,9 @@ extern GDisplay *color_area_gdisp; /* hack for color displays */
 GtkWidget * color_area_create    (gint       width,
 			          gint       height,
 			          GdkPixmap *default_pixmap,
-				  GdkPixmap *swap_pixmap);
+				  GdkBitmap *default_mask,
+				  GdkPixmap *swap_pixmap,
+				  GdkBitmap *swap_mask);
 
 /* Exported for use by color_select */
 void        color_area_draw_rect (GdkDrawable *drawable,

@@ -280,13 +280,15 @@ create_color_area (GtkWidget *parent)
   GtkWidget *alignment;
   GtkWidget *col_area;
   GdkPixmap *default_pixmap;
+  GdkBitmap *default_mask;
   GdkPixmap *swap_pixmap;
+  GdkBitmap *swap_mask;
 
   gtk_widget_realize (parent);
 
-  default_pixmap = create_pixmap (parent->window, NULL, default_bits,
+  default_pixmap = create_pixmap (parent->window, &default_mask, default_bits,
 				  default_width, default_height);
-  swap_pixmap    = create_pixmap (parent->window, NULL, swap_bits,
+  swap_pixmap    = create_pixmap (parent->window, &swap_mask, swap_bits,
 				  swap_width, swap_height);
 
   frame = gtk_frame_new (NULL);
@@ -301,7 +303,9 @@ create_color_area (GtkWidget *parent)
 
   gimp_help_set_help_data (alignment, NULL, "#color_area");
 
-  col_area = color_area_create (54, 42, default_pixmap, swap_pixmap);
+  col_area = color_area_create (54, 42,
+				default_pixmap, default_mask,
+				swap_pixmap, swap_mask);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
   gimp_help_set_help_data
     (col_area,
