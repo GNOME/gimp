@@ -135,18 +135,24 @@ typedef enum
   NEAREST_NEIGHBOR_INTERPOLATION
 } InterpolationType;
 
-typedef struct _GimpChannel      GimpChannel;
-typedef struct _GimpChannelClass GimpChannelClass;
+typedef struct _GimpChannel        GimpChannel;
+typedef struct _GimpChannelClass   GimpChannelClass;
 
 typedef GimpChannel Channel;		/* convenience */
 
-typedef struct _GimpLayer      GimpLayer;
-typedef struct _GimpLayerClass GimpLayerClass;
+typedef struct _GimpLayer          GimpLayer;
+typedef struct _GimpLayerClass     GimpLayerClass;
 typedef struct _GimpLayerMask      GimpLayerMask;
 typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
 
 typedef GimpLayer Layer;		/* convenience */
 typedef GimpLayerMask LayerMask;	/* convenience */
+
+typedef struct _paint_core	   PaintCore;
+
+typedef struct _GimpBrush	   GimpBrush;
+typedef struct _GimpBrush	  *GimpBrushP;
+typedef struct _GimpBrushClass	   GimpBrushClass;
 
 typedef struct _layer_undo LayerUndo;
 

@@ -20,15 +20,13 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "gimpbrushpixmap.h"
+#include "gimpbrushpipe.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "palette.h"
 #include "pencil.h"
-/* for color_area_with_pixmap */
-#include "pixmapbrush.h"
 #include "selection.h"
 #include "tools.h"
 
@@ -120,25 +118,21 @@ pencil_motion (PaintCore    *paint_core,
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  gimage_get_foreground (gimage, drawable, col);
-
   /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
-  /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
-
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       /* if its a pixmap, do pixmap stuff */
-      color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
+      color_area_with_pixmap (paint_core, gimage, drawable, area);
       paint_appl_mode = INCREMENTAL;
     }
   else
     {
       /*  color the pixels  */
+      gimage_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }

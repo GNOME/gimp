@@ -20,7 +20,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "brush_scale.h"
-#include "gimpbrushpixmap.h"
+#include "gimpbrushpipe.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
@@ -736,7 +736,7 @@ brush_popup_timeout (gpointer data)
   if (GIMP_IS_BRUSH_PIXMAP (brush)) 
     {
       GimpBrushPixmap *pixmapbrush = GIMP_BRUSH_PIXMAP(brush);
-      src = (gchar *) temp_buf_data (pixmapbrush->pixmap_mask);
+      src = (gchar *) temp_buf_data (gimp_brush_pixmap_pixmap (pixmapbrush));
       for (y = 0; y < brush->mask->height; y++)
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)src,
@@ -817,8 +817,9 @@ display_brush (BrushSelectP bsp,
   int ystart;
   int i, j;
 
-  brush_buf = GIMP_IS_BRUSH_PIXMAP (brush) ? GIMP_BRUSH_PIXMAP(brush)->pixmap_mask 
-                                           : brush->mask;
+  brush_buf = GIMP_IS_BRUSH_PIXMAP (brush) ?
+    gimp_brush_pixmap_pixmap (GIMP_BRUSH_PIXMAP(brush)) 
+    : brush->mask;
 
   if (brush_buf->width > bsp->cell_width || brush_buf->height > bsp->cell_height)
     {

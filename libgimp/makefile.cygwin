@@ -129,9 +129,12 @@ parasite.o : parasite.c
 gimpui_OBJECTS = \
 	gimpmenu.o	\
 	gimpbrushmenu.o	\
-	gimpfileselection.o\
-	gimpgradientmenu.o\
-	gimppatternmenu.o
+	gimpchainbutton.o \
+	gimpfileselection.o \
+	gimpgradientmenu.o \
+	gimppatternmenu.o \
+	gimpsizeentry.o \
+	gimpunitmenu.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)

@@ -143,7 +143,6 @@ gimp_OBJECTS = \
 	gimpbrushgenerated.obj	\
 	gimpbrushlist.obj	\
 	gimpbrushpipe.obj	\
-	gimpbrushpixmap.obj	\
 	gimpcontext.obj		\
 	gimpdnd.obj		\
 	gimphistogram.obj	\
@@ -210,7 +209,6 @@ gimp_OBJECTS = \
 	perspective_tool.obj	\
 	pixel_processor.obj	\
 	pixel_region.obj	\
-	pixmapbrush.obj		\
 	plug_in.obj		\
 	plug_in_cmds.obj	\
 	posterize.obj		\

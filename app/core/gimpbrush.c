@@ -33,6 +33,8 @@ enum{
   LAST_SIGNAL
 };
 
+static GimpBrush *gimp_brush_select_brush (PaintCore *paint_core);
+
 static guint gimp_brush_signals[LAST_SIGNAL];
 static GimpObjectClass* parent_class;
 
@@ -63,6 +65,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
   type=object_class->type;
 
   object_class->destroy =  gimp_brush_destroy;
+
+  klass->select_brush = gimp_brush_select_brush;
 
   gimp_brush_signals[DIRTY] =
     gimp_signal_new ("dirty",  GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
@@ -114,6 +118,12 @@ gimp_brush_new (char *filename)
   GimpBrush *brush=GIMP_BRUSH(gtk_type_new(gimp_brush_get_type ()));
   gimp_brush_load(brush, filename);
   return brush;
+}
+
+static GimpBrush *
+gimp_brush_select_brush (PaintCore *paint_core)
+{
+  return paint_core->brush;
 }
 
 TempBuf *

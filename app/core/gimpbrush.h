@@ -20,11 +20,12 @@
 #define __GIMPBRUSH_H__
 
 #include <stdio.h>
+
+#include "apptypes.h"
 #include "gimpobjectP.h"
+#include "paint_core.h"
 #include "temp_buf.h"
 #include "vector2d.h"
-
-typedef struct _GimpBrush  GimpBrush, * GimpBrushP;
 
 struct _GimpBrush
 {
@@ -40,10 +41,10 @@ struct _GimpBrush
 struct _GimpBrushClass
 {
   GimpObjectClass parent_class;
+  GimpBrush *(* select_brush) (PaintCore *);
 };
-typedef struct _GimpBrushClass GimpBrushClass;
 
-#define BRUSH_CLASS(klass) \
+#define GIMP_BRUSH_CLASS(klass) \
   GTK_CHECK_CLASS_CAST (klass, gimp_brush_get_type(), GimpBrushClass)
 
 #define GIMP_TYPE_BRUSH  (gimp_brush_get_type ())

@@ -272,7 +272,12 @@ paint_core_button_press (Tool           *tool,
       paint_core->lastytilt = paint_core->curytilt;
     }
   else
-    (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+    {
+      paint_core->brush =
+	(* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+			     ->klass)->select_brush) (paint_core);
+      (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+    }
 
   gdisplay_flush_now (gdisp);
 }
@@ -750,6 +755,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
 	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
 	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
+	  paint_core->brush =
+	    (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+				 ->klass)->select_brush) (paint_core);
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
 	}
     }

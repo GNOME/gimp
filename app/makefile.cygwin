@@ -136,7 +136,6 @@ gimp_OBJECTS = \
 	gimpbrushgenerated.o	\
 	gimpbrushlist.o		\
 	gimpbrushpipe.o		\
-	gimpbrushpixmap.o	\
 	gimpcontext.o		\
 	gimpdnd.o		\
 	gimphistogram.o		\
@@ -203,7 +202,6 @@ gimp_OBJECTS = \
 	perspective_tool.o	\
 	pixel_processor.o	\
 	pixel_region.o		\
-	pixmapbrush.o		\
 	plug_in.o		\
 	plug_in_cmds.o		\
 	posterize.o		\

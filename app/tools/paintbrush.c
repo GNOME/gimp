@@ -23,15 +23,14 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "gimpbrushpipe.h"
 #include "gimpbrushlist.h"
+#include "gimpbrushpipe.h"
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "palette.h"
 #include "paint_options.h"
 #include "paintbrush.h"
-#include "pixmapbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
@@ -441,7 +440,7 @@ paintbrush_motion (PaintCore            *paint_core,
 	 pixmap image into the are instead of the color */
       if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
 	{
-	  color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
+	  color_area_with_pixmap (paint_core, gimage, drawable, area);
 	  paint_appl_mode = INCREMENTAL;
 	}
       else

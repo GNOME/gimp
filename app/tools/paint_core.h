@@ -32,8 +32,6 @@
 #define FINISH_PAINT    4
 
 
-
-typedef struct _paint_core PaintCore;
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
 struct _paint_core
 {

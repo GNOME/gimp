@@ -1,6 +1,6 @@
 /* Plug-in to save .gpb (GIMP Pixmap Brush) files.
- * This is probably only of temporary interest, the format for
- * pixmap brushes is likely to change.
+ * The format for pixmap brushes might well change, and this will have to
+ * be updated.
  *
  * Copyright (C) 1999 Tor Lillqvist
  *

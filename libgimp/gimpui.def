@@ -2,6 +2,10 @@ EXPORTS
 	gimp_brush_select_widget
 	gimp_brush_select_widget_close_popup
 	gimp_brush_select_widget_set_popup
+	gimp_chain_button_get_active
+	gimp_chain_button_get_type
+	gimp_chain_button_new
+	gimp_chain_button_set_active
 	gimp_channel_menu_new
 	gimp_drawable_menu_new
 	gimp_file_selection_get_filename
@@ -12,12 +16,28 @@ EXPORTS
 	gimp_gradient_select_widget_close_popup
 	gimp_gradient_select_widget_set_popup
 	gimp_image_menu_new
-	gimp_layer_menu_new
 	gimp_interactive_selection_brush
 	gimp_interactive_selection_pattern
+	gimp_layer_menu_new
 	gimp_pattern_close_popup
 	gimp_pattern_get_pattern_data
 	gimp_pattern_select_widget
 	gimp_pattern_select_widget_close_popup
 	gimp_pattern_select_widget_set_popup
 	gimp_pattern_set_popup
+	gimp_size_entry_add_field
+	gimp_size_entry_attach_label
+	gimp_size_entry_get_refval
+	gimp_size_entry_get_type
+	gimp_size_entry_get_unit
+	gimp_size_entry_get_value
+	gimp_size_entry_grab_focus
+	gimp_size_entry_new
+	gimp_size_entry_set_refval
+	gimp_size_entry_set_refval_boundaries
+	gimp_size_entry_set_refval_digits
+	gimp_size_entry_set_resolution
+	gimp_size_entry_set_size
+	gimp_size_entry_set_unit
+	gimp_size_entry_set_value
+	gimp_size_entry_set_value_boundaries

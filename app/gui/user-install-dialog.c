@@ -344,7 +344,7 @@ help_quit_callback (GtkWidget *widget,
 
 #ifdef NATIVE_WIN32
 
-static char *
+char *
 quote_spaces (char *string)
 {
   int nspaces = 0;

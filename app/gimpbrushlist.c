@@ -32,7 +32,6 @@
 #include <math.h>
 
 #include "appenv.h"
-#include "gimpbrushpixmap.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "brush_header.h"
@@ -173,12 +172,12 @@ brush_load(char *filename)
     }
   else if (strcmp(&filename[strlen(filename) - 4], ".gpb") == 0)
     {
-      GimpBrushPixmap *brush;
+      GimpBrushPipe *brush;
       brush = gimp_brush_pixmap_load(filename);
       if (brush != NULL)
 	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
       else
-	g_message("Warning: failed to load brush \"%s\"", filename);
+	g_message("Warning: failed to load pixmap brush \"%s\"", filename);
     }
   else if (strcmp(&filename[strlen(filename) - 4], ".gih") == 0)
     {
@@ -187,7 +186,7 @@ brush_load(char *filename)
       if (brush != NULL)
 	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
       else
-	g_message("Warning: failed to load pipe \"%s\"", filename);
+	g_message("Warning: failed to load pixmap pipe \"%s\"", filename);
     }
 }
 

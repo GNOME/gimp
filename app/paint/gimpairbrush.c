@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include "appenv.h"
 #include "gimpbrushlist.h"
-#include "gimpbrushpixmap.h"
+#include "gimpbrushpipe.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -26,8 +26,6 @@
 #include "paint_core.h"
 #include "paint_options.h"
 #include "palette.h"
-/* for color_area_with_pixmap */
-#include "pixmapbrush.h"
 #include "airbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
@@ -293,23 +291,19 @@ airbrush_motion (PaintCore	     *paint_core,
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  gimage_get_foreground (gimage, drawable, col);
-
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
-  /*  color the pixels  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
-
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
-      color_area_with_pixmap (gimage, drawable, area, paint_core->brush);
+      color_area_with_pixmap (paint_core, gimage, drawable, area);
       mode = INCREMENTAL;
     }
   else
     {
       /*  color the pixels  */
+      gimage_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
