@@ -263,14 +263,14 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
            Save your Image as XCF file.  (File->Save as)
            use a Name that ends up in _0001.xcf (or _0001.xcfgz)
            
-           Then duplicate your image (AnimFrames->Duplicate)
+           Then duplicate your image (Video->Duplicate)
            You'll be asked how much Copies you need.
            (Note: all copies are stored on disk immediate
                   without explicite save)
  
        - from an existing (layeranimated) multilayer image
            use
-               AnimFrames->Split Img to frames
+               Video->Split Img to frames
                
            This will create Frames, a series of Images on disk,
            with a Name that ends up in _0001.xcf).
@@ -294,18 +294,18 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       walk through the frames.
       Here are my settings (excerpt from my $HOME/.gimp/menurc )
 
-      (menu-path "<Image>/AnimFrames/Goto First" "<control><alt>1")
-      (menu-path "<Image>/AnimFrames/Goto Prev" "<alt>1")
-      (menu-path "<Image>/AnimFrames/Goto Next" "<alt>2")
-      (menu-path "<Image>/AnimFrames/Goto Any" "<alt>3")
-      (menu-path "<Image>/AnimFrames/Goto Last" "<control><alt>2")
+      (menu-path "<Image>/Video/Goto First" "<control><alt>1")
+      (menu-path "<Image>/Video/Goto Prev" "<alt>1")
+      (menu-path "<Image>/Video/Goto Next" "<alt>2")
+      (menu-path "<Image>/Video/Goto Any" "<alt>3")
+      (menu-path "<Image>/Video/Goto Last" "<control><alt>2")
      
 
 - Playback
       playbak of multilayered image is not available.
       (it would be very slow)
       But you can convert your frames to one Multilayer Image
-         (AnimFrames->Frames to Image)
+         (Video->Frames to Image)
       And then playback the newly created Image
          (Filters->Animation->Playback)          
 
@@ -326,7 +326,7 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       
       
       Invoke this Plugin from one of the frames:
-      (Menu: AnimFrames->Move Path)
+      (Menu: Video->Move Path)
       
       The selected Layer(s) of the Source Image
          is (are) copied into the selected range of frames.
@@ -407,7 +407,7 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
 - Convert frames to one multilayered Image.
     This can be done with
     
-          (AnimFrames->Frames to Image)
+          (Video->Frames to Image)
           
     The selected Source Range of Frames is copied into one
     new created multilayered destination Image.
@@ -598,21 +598,21 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
 
      To Prepare for MPEG encoding:
      
-     - Use 'Frames Convert' from the AnimFrames Menu 
+     - Use 'Frames Convert' from the Video Menu 
        to convert your AnimFrames to .ppm 
        (or another Fileformat that can be read directly by
         your encoder)
       
      - If you have a Layerstack-Animated Multilayer Image
-       You can use 'Split Img to Frames' from the AnimFrames Menu.
+       You can use 'Split Img to Frames' from the Video Menu.
      
      - If you are using mpeg_encode and
        height or width are not multiples of 16:
-          Use 'Frames Scale' or 'Frames Crop' from the AnimFrames Menu
+          Use 'Frames Scale' or 'Frames Crop' from the Video Menu
           on the newly converted/created AnimFrames.
      
-     - Then use 'Frames MPEG2_encode' or 'Frames MPEG_encode'
-       from the AnimFrames Menu.
+     - Then use 'Encode/MPEG2 (mpeg2encode)' or 'Encode/MPEG1 (mpeg_encode)'
+       from the Video Menu.
        (Invoked from one of the prepared AnimFrames)
 	   
        Both encoders offer a lot of Parameter Settings for the experienced
@@ -635,20 +635,20 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
      This can be done if you create a series of empty frames.
      The Number of frames should be equal to the number of layers
      in your multilayered image.
-     (File->New, AnimFrames->Duplicate)
+     (File->New, Video->Duplicate)
      
-     Then use the "Move Path" Plugin (AnimFrames->Move Path)
+     Then use the "Move Path" Plugin (Video->Move Path)
      to copy the layers to all your frames.
      Use 2 Points with both X=0, Y=0, Opacity=100%, Width=100%, Height=100%,
      select the 1.st Layer of your multilayer Image as Source,
      Handle=LeftTop, Mode=Normal, Stepmode=Loop
     
      Finally you can delete the (empty) backround Layers
-     (AnimFrames->Frames LayerDel)  with Layerstack Parameter >= 1
+     (Video->Frames LayerDel)  with Layerstack Parameter >= 1
 
   - Reverse the order of Layers within one multilayer Image
       Convert one multilayer Image to a series of frames (see above)
-      then select AnimFrames->FramesToImage and use an invers Range
+      then select Video->FramesToImage and use an invers Range
       from N to 1. 
 
   - Convert multiple frames from one Fileformat to another:
@@ -656,7 +656,7 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       (Example: img_0001.tif, img_0003.tif img_0004.tif)
       
       then load the 1.st image into the gimp (File->Load)
-      and select (AnimFrames->Frames Convert)
+      and select (Video->Frames Convert)
       In the following dialog window you can select
       the desired destination filtype by its typical extension
       (.jpg, .bmp or so on)
@@ -680,14 +680,14 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       
 - NO UNDO
       There is no Undo for the AnimFrame Plugins.
-      Note: If you step to the next frame (AnimFrames->Goto Next)
+      Note: If you step to the next frame (Video->Goto Next)
             the current frame is saved to disk and the next frame
             is loaded into the image. 
             All Undo steps were cleared at this time.
       
       Tip: "undo" for Move Path
          You can Delete the Layers at desired Layerstackposition
-         (0 == on top) by (AnimFrames->Frames LayerDel)
+         (0 == on top) by (Video->Frames LayerDel)
          So you can remove all the Layers inserted by "Move Path" plugin.
 
 - About Locks
@@ -710,12 +710,12 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
   In this constellation both gap plugins may concurrent 
   in save/load to/from the same file.
   Example:
-     call from "img_0001.xcf" AnimFrames->Delete Frames (range 0001 to 0003)
+     call from "img_0001.xcf" Video->Delete Frames (range 0001 to 0003)
            now img_0004.xcf is renamed to img_0001.xcf
                img_0005.xcf is renamed to img_0002.xcf
  
      then  
-     call from "img_0002.xcf" AnimFrames->Goto First
+     call from "img_0002.xcf" Video->Goto First
             the img_0002.xcf (its old content) is saved,
                              overwiting wht was img_0004.xcf before.
   If you make the 2nd call while the 1st one is in progress,
@@ -725,7 +725,7 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
 - Animated calls of Plug-In Filters:
 
   First of all, you need a multilayered Image.
-  You can use "<Image>->AnimFrames->Frames to Image"
+  You can use "<Image>->Video->Frames to Image"
   to create one from a series of Frames,
   or Duplicate the backround Layer of a single Layered Image
   (Press Ctrl-C within the layers_dialog Window N-times)
@@ -848,62 +848,62 @@ plugin's included in release gap 0.99.00:
 
   plug_in_gap_next
 	"This plugin exchanges current image with (next nubered) image from disk.",
-	 "<Image>/AnimFrames/Goto Next",
+	 "<Image>/Video/Goto Next",
 
   plug_in_gap_prev
 	 "This plugin exchanges current image with (previous nubered) image from disk.",
-	 "<Image>/AnimFrames/Goto Prev",
+	 "<Image>/Video/Goto Prev",
 
   plug_in_gap_first
 	 "This plugin exchanges current image with (lowest nubered) image from disk.",
-	 "<Image>/AnimFrames/Goto First",
+	 "<Image>/Video/Goto First",
 
   plug_in_gap_last
 	 "This plugin exchanges current image with (highest nubered) image from disk.",
-	 "<Image>/AnimFrames/Goto Last",
+	 "<Image>/Video/Goto Last",
 
   plug_in_gap_goto
 	 "This plugin exchanges current image with requested image (nr) from disk.",
-	 "<Image>/AnimFrames/Goto Any",
+	 "<Image>/Video/Goto Any",
 
   plug_in_gap_del
 	 "This plugin deltes the given number of frames from disk
 	  including the current frame.",
-	 "<Image>/AnimFrames/Delete Frames",
+	 "<Image>/Video/Delete Frames",
 
   plug_in_gap_dup
 	 "This plugin duplicates the current frames on disk n-times.",
-	 "<Image>/AnimFrames/Duplicate Frames",
+	 "<Image>/Video/Duplicate Frames",
 
   plug_in_gap_exchg
 	 "This plugin exchanges content of the current with destination frame.",
-	 "<Image>/AnimFrames/Exchange Frame",
+	 "<Image>/Video/Exchange Frame",
 
 
   plug_in_gap_move
 	 "This plugin copies layer(s) from one sourceimage to multiple frames on disk,
 	  varying position, size and opacity.",
-	 "<Image>/AnimFrames/Move Path",
+	 "<Image>/Video/Move Path",
 
   plug_in_gap_range_to_multilayer
          "This plugin creates a new image from the given range of frame-images.
           Each frame is converted to one layer in the new image, according to flatten_mode.
           (the frames on disk are not changed).",
-	 "<Image>/AnimFrames/Frames to Image",
+	 "<Image>/Video/Frames to Image",
 
   plug_in_gap_range_flatten
 	 "This plugin flattens the given range of frame-images (on disk)",
-	 "<Image>/AnimFrames/Frames Flatten",
+	 "<Image>/Video/Frames Flatten",
 
   plug_in_gap_range_layer_del
 	 "This plugin deletes one layer in the given range of frame-images (on disk).
 	  exception: the last remaining layer of a frame is not deleted",
-	 "<Image>/AnimFrames/Frames LayerDel",
+	 "<Image>/Video/Frames LayerDel",
 
   plug_in_gap_range_convert
 	 "This plugin converts the given range of frame-images to other fileformats
 	  (on disk) depending on extension",
-	 "<Image>/AnimFrames/Frames Convert",
+	 "<Image>/Video/Frames Convert",
 
   plug_in_gap_layers_run_animfilter
 	 "This plugin calls another plugin for each layer of an image,
@@ -915,12 +915,12 @@ plugin's included in release gap 0.99.00:
   plug_in_gap_anim_resize
 	 "This plugin resizes all anim_frames (images on disk)
 	  to the given new_width/new_height",
-	 "<Image>/AnimFrames/Frames Resize",
+	 "<Image>/Video/Frames Resize",
 
   plug_in_gap_anim_crop
 	 "This plugin crops all anim_frames (images on disk)
 	  to the given new_width/new_height",
-	 "<Image>/AnimFrames/Frames Crop",
+	 "<Image>/Video/Frames Crop",
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
@@ -929,35 +929,35 @@ plugin's included in release gap 0.99.00:
   plug_in_gap_anim_scale
 	"This plugin scales all anim_frames (images on disk)
 	 to the given new_width/new_height",
-	 "<Image>/AnimFrames/Frames Scale",
+	 "<Image>/Video/Frames Scale",
 
   plug_in_gap_split
 	"This plugin splits the current image to anim frames (images on disk).
 	 Each layer is saved as one frame",
-	 "<Image>/AnimFrames/Split Img to Frames",
+	 "<Image>/Video/Split Img to Frames",
 
   plug_in_gap_mpeg_encode
 	"This plugin calls mpeg_encode to convert anim frames to MPEG1,
 	 or just generates a param file for mpeg_encode.
 	 (mpeg_encode must be installed on your system)",
-	 "<Image>/AnimFrames/Frames MPEG_encode",
+	 "<Image>/Video/Encode/MPEG1 (mpeg_encode)",
 
   plug_in_gap_mpeg2encode
          "This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2,
           or just generates a param file for mpeg2encode.
           (mpeg2encode must be installed on your system)",
-         "<Image>/AnimFrames/Frames MPEG2_encode",
+         "<Image>/Video/Encode/MPEG2 (mpeg2encode)",
 
   plug_in_gap_shift
 	 "This plugin Exchanges frames numbers in the given range.
 	 (discfile frame_0001.xcf is renamed to frame_0002.xcf,
 	  2->3, 3->4 ... n->1)",
-	  "<Image>/AnimFrames/Framesequence Shift",
+	  "<Image>/Video/Framesequence Shift",
 
   plug_in_gap_modify
 	 "This plugin performs a modifying action on each selected layer
 	  in each selected framerange"
-	 <Image>/AnimFrames/Frames Modify
+	 <Image>/Video/Frames Modify
   
   script-fu-selection-to-anim-image
 	 "Create a multilayer image from current selection and

@@ -64,6 +64,7 @@
  */
 
 /* Change Log:
+ * 1999.11.16 hof: added p_delta_gintdrawable
  * 1999.06.21 hof: removed Colorify iterator
  * 1999.03.14 hof: added iterators for gimp 1.1.3 prerelease
  *                 iterator code reorganized in _iter_ALT.inc Files
@@ -278,6 +279,16 @@ static void p_delta_drawable(gint32 *val, gint32 val_from, gint32 val_to, gint32
        }
        g_free (l_layers_list);
     }
+}
+static void
+p_delta_gintdrawable(gint *val, gint val_from, gint val_to, gint32 total_steps, gdouble current_step)
+{
+  gint32 l_val, l_from, l_to;
+  l_val = *val;
+  l_from = val_from;
+  l_to   = val_to;
+  p_delta_drawable(&l_val, l_from, l_to, total_steps, current_step);
+  *val = l_val;
 }
 
 

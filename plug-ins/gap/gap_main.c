@@ -5,7 +5,7 @@
  *
  * This Module contains:
  * - MAIN of all GAP_Plugins
- * - query   registration of GAP Procedures (AnimFrames Menu) in the PDB
+ * - query   registration of GAP Procedures (Video Menu) in the PDB
  * - run     invoke the selected GAP procedure by its PDB name
  * 
  *
@@ -38,9 +38,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.10a; 1999/10/23";
+static char *gap_main_version =  "1.1.11a; 1999/11/16";
 
 /* revision history:
+ * gimp    1.1.11a; 1999/11/15  hof: changed Menunames (AnimFrames to Video, Submenu Encode)
  * gimp    1.1.10a; 1999/10/22  hof: extended dither options for gap_range_convert
  * gimp    1.1.8a;  1999/08/31  hof: updated main version
  * version 0.99.00; 1999/03/17  hof: updated main version
@@ -346,7 +347,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Goto Next"),
+			 _("<Image>/Video/Goto Next"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
@@ -358,7 +359,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Goto Prev"),
+			 _("<Image>/Video/Goto Prev"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
@@ -370,7 +371,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Goto First"),
+			 _("<Image>/Video/Goto First"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
@@ -382,7 +383,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Goto Last"),
+			 _("<Image>/Video/Goto Last"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_std, nreturn_vals,
@@ -394,7 +395,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Goto Any"),
+			 _("<Image>/Video/Goto Any"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_goto, nreturn_vals,
@@ -406,7 +407,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Delete Frames"),
+			 _("<Image>/Video/Delete Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_del, nreturn_vals,
@@ -418,7 +419,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Duplicate Frames"),
+			 _("<Image>/Video/Duplicate Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_dup, nreturn_vals,
@@ -430,7 +431,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Exchange Frame"),
+			 _("<Image>/Video/Exchange Frame"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_exchg, nreturn_vals,
@@ -442,7 +443,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Move Path"),
+			 _("<Image>/Video/Move Path"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mov, nreturn_vals,
@@ -454,7 +455,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames to Image"),
+			 _("<Image>/Video/Frames to Image"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_f2multi, nreturn_f2multi,
@@ -466,7 +467,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Flatten"),
+			 _("<Image>/Video/Frames Flatten"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rflatt, nreturn_vals,
@@ -478,7 +479,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames LayerDel"),
+			 _("<Image>/Video/Frames LayerDel"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rlayerdel, nreturn_vals,
@@ -502,7 +503,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Convert"),
+			 _("<Image>/Video/Frames Convert"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_rconv2, nreturn_vals,
@@ -514,7 +515,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Resize"),
+			 _("<Image>/Video/Frames Resize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
@@ -526,7 +527,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Crop"),
+			 _("<Image>/Video/Frames Crop"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
@@ -538,7 +539,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Scale"),
+			 _("<Image>/Video/Frames Scale"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_scale, nreturn_vals,
@@ -550,7 +551,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Split Img to Frames"),
+			 _("<Image>/Video/Split Img to Frames"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_split, nreturn_split,
@@ -562,7 +563,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames MPEG1 encode"),
+			 _("<Image>/Video/Encode/MPEG1"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
@@ -575,7 +576,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames MPEG2 encode"),
+			 _("<Image>/Video/Encode/MPEG2 mpeg2encode)"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_mpege, nreturn_vals,
@@ -588,7 +589,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Framesequence Shift"),
+			 _("<Image>/Video/Framesequence Shift"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_shift, nreturn_vals,
@@ -600,7 +601,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 _("<Image>/AnimFrames/Frames Modify"),
+			 _("<Image>/Video/Frames Modify"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_modify, nreturn_vals,

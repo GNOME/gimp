@@ -1,3 +1,12 @@
+Tue Nov 16 11:16:41 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* plug-ins/gap/README
+	* plug-ins/gap/gap_filter_iterators.c
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/iter_ALT/mod/plug_in_nova_iter_ALT.inc
+	* plug-ins/gap/iter_ALT/old/plug_in_warp_iter_ALT.inc: applied a patch
+	from Wolfgang Hofer <hof@hotbot.com> with updates to the GAP
+
 1999-11-15  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimpcontext.c (gimp_context_copy_background): Fix copy&paste
