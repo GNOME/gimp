@@ -1,5 +1,12 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimptile.c (gimp_tile_cache_insert): partly rewritten.
+	Instead of removing the list element from the hash table, freeing
+	it, allocating a new one and inserting it again, simply move it to
+	the end of the list without touching the hash table at all.
+
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
 	set the GIOChannel encoding to NULL here instead of doing it in
 	gimp_xml_parser_parse_file().

@@ -163,13 +163,14 @@ gimp_tile_get (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
 
-  GPTileReq tile_req;
-  GPTileData *tile_data;
-  WireMessage msg;
+  GPTileReq    tile_req;
+  GPTileData  *tile_data;
+  WireMessage  msg;
 
   tile_req.drawable_ID = tile->drawable->drawable_id;
-  tile_req.tile_num = tile->tile_num;
-  tile_req.shadow = tile->shadow;
+  tile_req.tile_num    = tile->tile_num;
+  tile_req.shadow      = tile->shadow;
+
   if (! gp_tile_req_write (_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -209,14 +210,15 @@ gimp_tile_put (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
 
-  GPTileReq tile_req;
-  GPTileData tile_data;
-  GPTileData *tile_info;
-  WireMessage msg;
+  GPTileReq    tile_req;
+  GPTileData   tile_data;
+  GPTileData  *tile_info;
+  WireMessage  msg;
 
   tile_req.drawable_ID = -1;
-  tile_req.tile_num = 0;
-  tile_req.shadow = 0;
+  tile_req.tile_num    = 0;
+  tile_req.shadow      = 0;
+
   if (! gp_tile_req_write (_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -254,7 +256,7 @@ gimp_tile_put (GimpTile *tile)
 static void
 gimp_tile_cache_insert (GimpTile *tile)
 {
-  GList *tmp;
+  GList *list;
 
   if (!tile_hash_table)
     {
@@ -267,35 +269,26 @@ gimp_tile_cache_insert (GimpTile *tile)
    *  it at the end of the tile list to indicate that
    *  it was the most recently accessed tile.
    */
-  tmp = g_hash_table_lookup (tile_hash_table, tile);
+  list = g_hash_table_lookup (tile_hash_table, tile);
 
-  if (tmp)
+  if (list)
     {
       /* The tile was already in the cache. Place it at
        *  the end of the tile list.
        */
-      if (tmp == tile_list_tail)
-	tile_list_tail = tile_list_tail->prev;
-      tile_list_head = g_list_remove_link (tile_list_head, tmp);
-      if (!tile_list_head)
-	tile_list_tail = NULL;
-      g_list_free (tmp);
 
-      /* Remove the old reference to the tiles list node
-       *  in the tile hash table.
-       */
-      g_hash_table_remove (tile_hash_table, tile);
+      /* If the tile is already at the end of the list, we are done */
+      if (list == tile_list_tail)
+        return;
 
-      tile_list_tail = g_list_append (tile_list_tail, tile);
-      if (!tile_list_head)
-	tile_list_head = tile_list_tail;
-      tile_list_tail = g_list_last (tile_list_tail);
+      /* At this point we have at least two elements in our list */
+      g_assert (tile_list_head != tile_list_tail);
 
-      /* Add the tiles list node to the tile hash table. The
-       *  list node is indexed by the tile itself. This makes
-       *  for a quick lookup of which list node the tile is in.
-       */
-      g_hash_table_insert (tile_hash_table, tile, tile_list_tail);
+      tile_list_head = g_list_remove_link (tile_list_head, list);
+
+      g_list_concat (tile_list_tail, list);
+
+      tile_list_tail = list;
     }
   else
     {
@@ -305,6 +298,7 @@ gimp_tile_cache_insert (GimpTile *tile)
        *  cache is smaller than the size of a tile in which case
        *  it won't be possible to put it in the cache.
        */
+
       if ((cur_cache_size + max_tile_size) > max_cache_size)
 	{
 	  while (tile_list_head &&
@@ -321,8 +315,10 @@ gimp_tile_cache_insert (GimpTile *tile)
       /* Place the tile at the end of the tile list.
        */
       tile_list_tail = g_list_append (tile_list_tail, tile);
-      if (!tile_list_head)
+
+      if (! tile_list_head)
 	tile_list_head = tile_list_tail;
+
       tile_list_tail = g_list_last (tile_list_tail);
 
       /* Add the tiles list node to the tile hash table.
@@ -338,41 +334,38 @@ gimp_tile_cache_insert (GimpTile *tile)
        *  the main gimp application immediately.
        */
       tile->ref_count++;
-      if (tile->ref_count == 1)
-	{
-	  gimp_tile_get (tile);
-	  tile->dirty = FALSE;
-	}
     }
 }
 
 static void
 gimp_tile_cache_flush (GimpTile *tile)
 {
-  GList *tmp;
+  GList *list;
 
-  if (!tile_hash_table)
+  if (! tile_hash_table)
     return;
 
   /* Find where the tile is in the cache.
    */
-  tmp = g_hash_table_lookup (tile_hash_table, tile);
+  list = g_hash_table_lookup (tile_hash_table, tile);
 
-  if (tmp)
+  if (list)
     {
       /* If the tile is in the cache, then remove it from the
        *  tile list.
        */
-      if (tmp == tile_list_tail)
+      if (list == tile_list_tail)
         tile_list_tail = tile_list_tail->prev;
-      tile_list_head = g_list_remove_link (tile_list_head, tmp);
-      if (!tile_list_head)
+
+      tile_list_head = g_list_remove_link (tile_list_head, list);
+
+      if (! tile_list_head)
         tile_list_tail = NULL;
-      g_list_free (tmp);
 
       /* Remove the tile from the tile hash table.
        */
       g_hash_table_remove (tile_hash_table, tile);
+      g_list_free (list);
 
       /* Note the decrease in the number of bytes the cache
        *  is referencing.
