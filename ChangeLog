@@ -1,3 +1,27 @@
+2001-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/pixel_surround.[ch]: lowlevel stuff taken out of the transform
+	tool.
+
+	* app/tools/gimpscaletool.[ch]: minor cleanups, declare
+	gimp_scale_tool_register() publically.
+
+	* app/tools/gimptransformtool.[ch]: removed the PixelSurround stuff,
+	hardcode tr_tool->interactive to TRUE, removed the no_draw() function,
+	register the tool options, misc. other fixes and bad hacks that need
+	to go away.
+
+	(All this non-interactive stuff needs to be done outside the tool
+	system. A "non-interactive tool" is just pure nonsense)
+
+	* app/tools/gimptool.h: spacing.
+
+	* app/tools/tool_manager.c: tool_manager_register_tool_options():
+	return after warning, don't simply continue and crash.
+
+	* app/tools/tools.c: register the bezier select tool.
+
 2001-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/devices.c

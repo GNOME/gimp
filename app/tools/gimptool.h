@@ -108,6 +108,8 @@ struct _GimpToolClass
 			   GdkEventMotion *mevent,
 			   GDisplay       *gdisp);
 };
+
+
 GtkType       gimp_tool_get_type        (void);
 
 void          gimp_tool_initialize      (GimpTool       *tool,

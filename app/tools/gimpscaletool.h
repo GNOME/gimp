@@ -19,34 +19,40 @@
 #ifndef __GIMP_SCALE_TOOL_H__
 #define __GIMP_SCALE_TOOL_H__
 
+
 #include "tools/gimptransformtool.h"
+
 
 #define GIMP_TYPE_SCALE_TOOL            (gimp_scale_tool_get_type ())
 #define GIMP_SCALE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SCALE_TOOL, GimpScaleTool))
 #define GIMP_IS_SCALE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_SCALE_TOOL))
 #define GIMP_SCALE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_TOOL, GimpScaleToolClass))
 
-struct _GimpScaleTool {
-  GimpTransformTool parent_instance;
-};
-
-struct _GimpScaleToolClass {
-  GimpTransformToolClass parent_class;
-};
 
 typedef struct _GimpScaleTool      GimpScaleTool;
 typedef struct _GimpScaleToolClass GimpScaleToolClass;
 
+struct _GimpScaleTool
+{
+  GimpTransformTool parent_instance;
+};
 
-TileManager *    gimp_scale_tool_scale  (GimpImage      *gimage,
-		   		         GimpDrawable   *drawable,
-		   		         GDisplay       *gdisp,
-		   		         gdouble        *trans_info,
-		   		         TileManager    *float_tiles,
-		  		         gboolean        interpolation,
-		 		         GimpMatrix3     matrix);
+struct _GimpScaleToolClass
+{
+  GimpTransformToolClass parent_class;
+};
 
-GtkType        gimp_scale_tool_get_type (void);
-GimpTool     * gimp_scale_tool_new      (void);
+
+TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,
+					GimpDrawable *drawable,
+					GDisplay     *gdisp,
+					gdouble      *trans_info,
+					TileManager  *float_tiles,
+					gboolean      interpolation,
+					GimpMatrix3   matrix);
+
+void          gimp_scale_tool_register (void);
+GtkType       gimp_scale_tool_get_type (void);
+
 
 #endif  /*  __GIMP_SCALE_TOOL_H__  */

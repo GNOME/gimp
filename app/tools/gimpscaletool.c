@@ -35,8 +35,6 @@
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "pixmaps2.h"
-
 #include "tools/tool_options.h"
 #include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
@@ -47,6 +45,8 @@
 #include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 /*  forward function declarations  */
@@ -65,7 +65,7 @@ static void          gimp_scale_tool_unit_changed   (GtkWidget          *widget,
 					             gpointer            data);
 static void          gimp_scale_tool_class_init     (GimpScaleToolClass *klass);
 
-static void          gimp_scale_tool_init           (GimpScaleTool *sc_tool);
+static void          gimp_scale_tool_init           (GimpScaleTool      *sc_tool);
 
 
 /*  storage for information dialog fields  */
@@ -79,6 +79,7 @@ static gchar      y_ratio_buf[MAX_INFO_BUF];
 static GtkWidget *sizeentry = NULL;
 static GimpTransformToolClass *parent_class = NULL;
 
+
 void
 gimp_scale_tool_register (void)
 {
@@ -90,7 +91,7 @@ gimp_scale_tool_register (void)
                               N_("/Tools/Color Picker"), "<shift>T",
                               NULL, "tools/transform.html",
                               (const gchar **) scale_bits);
-}                                                                                                                                                                                                                    
+}
 
 GtkType
 gimp_scale_tool_get_type (void)
@@ -136,14 +137,13 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 static void
 gimp_scale_tool_init (GimpScaleTool *sc_tool)
 {
-  /*GimpTool          *tool;*/
+  GimpTool          *tool;
   GimpTransformTool *tr_tool;
 
-  /* tool = GIMP_TOOL (sc_tool); */
+  tool    = GIMP_TOOL (sc_tool);
   tr_tool = GIMP_TRANSFORM_TOOL (sc_tool); 
 
-  /* FIXME! tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR; */
-
+  tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;
 
   /*  set the scale specific transformation attributes  */
   tr_tool->trans_info[X0] = 0.0;
@@ -291,9 +291,9 @@ gimp_scale_tool_info_update (GimpScaleTool *sc_tool)
 
   static GimpUnit  label_unit = GIMP_UNIT_PIXEL;
 
-  tool     = GIMP_TOOL (sc_tool);
-  tr_tool  = GIMP_TRANSFORM_TOOL (sc_tool);
-  unit     = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));;
+  tool    = GIMP_TOOL (sc_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (sc_tool);
+  unit    = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));;
 
   /*  Find original sizes  */
   x1 = tr_tool->x1;
@@ -362,7 +362,7 @@ gimp_scale_tool_size_changed (GtkWidget *widget,
       tr_tool = GIMP_TRANSFORM_TOOL(tool);
       dr_tool = GIMP_DRAW_TOOL(tool);
 
-      width = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+      width  = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
       height = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
       if ((width != (tr_tool->trans_info[X1] -
@@ -385,12 +385,12 @@ static void
 gimp_scale_tool_unit_changed (GtkWidget *widget,
 	         	      gpointer   data)
 {
-  gimp_scale_tool_info_update (GIMP_SCALE_TOOL(data));
+  gimp_scale_tool_info_update (GIMP_SCALE_TOOL (data));
 }
 
 static void
-gimp_scale_tool_motion (GimpScaleTool     *sc_tool,
-		        GDisplay          *gdisp)
+gimp_scale_tool_motion (GimpScaleTool *sc_tool,
+		        GDisplay      *gdisp)
 {
   GimpTransformTool *tr_tool;
   gdouble            ratio;
@@ -439,7 +439,9 @@ gimp_scale_tool_motion (GimpScaleTool     *sc_tool,
       y2 = &tr_tool->trans_info [Y0];
       dir_x = dir_y = -1;
       break;
-    default :
+    case TRANSFORM_HANDLE_CENTER:
+      return;
+    default:
       return;
     }
 
@@ -496,8 +498,8 @@ gimp_scale_tool_motion (GimpScaleTool     *sc_tool,
 }
 
 static void
-gimp_scale_tool_recalc (GimpScaleTool     *sc_tool,
-		        GDisplay          *gdisp)
+gimp_scale_tool_recalc (GimpScaleTool *sc_tool,
+		        GDisplay      *gdisp)
 {
   GimpTransformTool *tr_tool;
   gint               x1, y1, x2, y2;
@@ -505,7 +507,7 @@ gimp_scale_tool_recalc (GimpScaleTool     *sc_tool,
   gint               cx, cy;
   gdouble            scalex, scaley;
 
-  tr_tool = GIMP_TRANSFORM_TOOL(sc_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (sc_tool);
 
   x1 = (int) tr_tool->trans_info [X0];
   y1 = (int) tr_tool->trans_info [Y0];
@@ -540,7 +542,11 @@ gimp_scale_tool_recalc (GimpScaleTool     *sc_tool,
       diffx = x1 - tr_tool->x1;
       diffy = y1 - tr_tool->y1;
       break;
-    default :
+    case TRANSFORM_HANDLE_CENTER:
+      cx = x1; cy = y1;
+      diffx = diffy = 0;
+      break;
+    default:
       cx = x1; cy = y1;
       diffx = diffy = 0;
       break;

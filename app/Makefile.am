@@ -86,9 +86,6 @@ gimp_SOURCES = \
 	errors.h		\
 	equalize.c		\
 	equalize.h		\
-##	fileops.c		\
-##	fileops.h		\
-##	fileopsP.h		\
 	file-open.c		\
 	file-open.h		\
 	file-save.c		\
@@ -288,6 +285,8 @@ gimp_SOURCES = \
 	pixel_processor.h	\
 	pixel_region.c		\
 	pixel_region.h		\
+	pixel_surround.c	\
+	pixel_surround.h	\
 	temp_buf.c		\
 	temp_buf.h		\
 	tile.c			\

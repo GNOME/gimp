@@ -301,6 +301,7 @@ tool_manager_register_tool_options (GtkType      tool_type,
     {
       g_warning ("%s(): no tool info registered for %s",
 		 G_GNUC_FUNCTION, gtk_type_name (tool_type));
+      return;
     }
 
   tool_info->tool_options = tool_options;

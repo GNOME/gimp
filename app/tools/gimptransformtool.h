@@ -94,7 +94,8 @@ struct _GimpTransformTool
   gdouble	 *tgrid_coords; /*  transformed grid_coords     */
 };
 
-struct _GimpTransformToolClass {
+struct _GimpTransformToolClass
+{
   GimpDrawToolClass parent_class;
 
   TileManager * (* transform) (GimpTransformTool    *tool,
@@ -130,9 +131,9 @@ extern InfoDialog * transform_info;
 Tool        * gimp_transform_tool_new                    (GimpTransformToolType        tool_type,
 						     gboolean        interactive);
 */
-void          gimp_transform_tool_destroy                (GtkObject            *tool);
-void          gimp_transform_tool_draw                   (GimpDrawTool         *tool);
-void          gimp_transform_tool_no_draw                (GimpDrawTool         *tool);
+
+GtkType       gimp_transform_tool_get_type               (void);
+
 void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
 void          gimp_transform_tool_reset                  (GimpTransformTool    *tool,
                                                           GDisplay             *gdisp);
@@ -143,27 +144,27 @@ TileManager * gimp_transform_tool_transform              (GimpTransformTool    *
 		                                          TransformState        state);
 /*  transform functions  */
 /* FIXME this function needs to be renamed */
-TileManager * gimp_transform_tool_do                    (GimpImage        *gimage,
-				                         GimpDrawable     *drawable,
-				                         TileManager      *float_tiles,
-				                         gboolean          interpolation,
-				                         GimpMatrix3       matrix,
-                                                         GimpProgressFunc  progress_callback,
-				                         gpointer          progress_data);
-TileManager * gimp_transform_tool_cut                   (GimpImage        *gimage,
-				                         GimpDrawable     *drawable,
-				                         gboolean         *new_layer);
-gboolean      gimp_transform_tool_paste                 (GimpImage        *gimage,
-				                         GimpDrawable     *drawable,
-				                         TileManager      *tiles,
-				                         gboolean          new_layer);
-GtkType       gimp_transform_tool_get_type              (void);
-gboolean      gimp_transform_tool_smoothing             (void);
-gboolean      gimp_transform_tool_showpath              (void);
-gboolean      gimp_transform_tool_clip	                (void);
-gint	      gimp_transform_tool_direction             (void);
-gint	      gimp_transform_tool_grid_size             (void);
-gboolean      gimp_transform_tool_show_grid             (void);
+TileManager * gimp_transform_tool_do                     (GimpImage        *gimage,
+							  GimpDrawable     *drawable,
+							  TileManager      *float_tiles,
+							  gboolean          interpolation,
+							  GimpMatrix3       matrix,
+							  GimpProgressFunc  progress_callback,
+							  gpointer          progress_data);
+TileManager * gimp_transform_tool_cut                    (GimpImage        *gimage,
+							  GimpDrawable     *drawable,
+							  gboolean         *new_layer);
+gboolean      gimp_transform_tool_paste                  (GimpImage        *gimage,
+							  GimpDrawable     *drawable,
+							  TileManager      *tiles,
+							  gboolean          new_layer);
+
+gboolean      gimp_transform_tool_smoothing              (void);
+gboolean      gimp_transform_tool_showpath               (void);
+gboolean      gimp_transform_tool_clip	                 (void);
+gint	      gimp_transform_tool_direction              (void);
+gint	      gimp_transform_tool_grid_size              (void);
+gboolean      gimp_transform_tool_show_grid              (void);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */
