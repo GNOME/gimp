@@ -1,3 +1,12 @@
+2003-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: added GimpColorDisplayEditor, updates.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml: updated.
+
 2003-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets-docs.sgml

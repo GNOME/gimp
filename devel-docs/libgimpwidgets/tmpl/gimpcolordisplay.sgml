@@ -45,6 +45,24 @@ display color correction modules.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_color_display_set_enabled ##### -->
+<para>
+
+</para>
+
+@display: 
+@enabled: 
+
+
+<!-- ##### FUNCTION gimp_color_display_get_enabled ##### -->
+<para>
+
+</para>
+
+@display: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_color_display_convert ##### -->
 <para>
 

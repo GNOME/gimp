@@ -1581,13 +1581,7 @@ gimp_display_shell_filter_dialog_new
 <SECTION>
 <FILE>gimpdisplayshell-filter</FILE>
 <TITLE>GimpDisplayShell-filter</TITLE>
-gimp_display_shell_filter_attach
-gimp_display_shell_filter_attach_clone
-gimp_display_shell_filter_detach
-gimp_display_shell_filter_detach_destroy
-gimp_display_shell_filter_detach_all
-gimp_display_shell_filter_reorder_up
-gimp_display_shell_filter_reorder_down
+gimp_display_shell_filter_set
 </SECTION>
 
 <SECTION>
@@ -3469,6 +3463,22 @@ gimp_colormap_editor_get_type
 GIMP_COLORMAP_EDITOR_CLASS
 GIMP_IS_COLORMAP_EDITOR_CLASS
 GIMP_COLORMAP_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcolordisplayeditor</FILE>
+<TITLE>GimpColorDisplayEditor</TITLE>
+GimpColorDisplayEditor
+gimp_color_display_editor_new
+<SUBSECTION Standard>
+GimpColorDisplayEditorClass
+GIMP_COLOR_DISPLAY_EDITOR
+GIMP_IS_COLOR_DISPLAY_EDITOR
+GIMP_TYPE_COLOR_DISPLAY_EDITOR
+gimp_color_display_editor_get_type
+GIMP_COLOR_DISPLAY_EDITOR_CLASS
+GIMP_IS_COLOR_DISPLAY_EDITOR_CLASS
+GIMP_COLOR_DISPLAY_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5941,7 +5951,6 @@ dialogs_show_toolbox
 dialogs_file_new_new
 dialogs_preferences_get
 dialogs_module_browser_get
-dialogs_display_filters_get
 dialogs_tips_get
 dialogs_about_get
 dialogs_toolbox_get

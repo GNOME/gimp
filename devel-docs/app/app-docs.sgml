@@ -660,6 +660,7 @@
 
     <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
+      <xi:include href="xml/gimpcolordisplayeditor.xml"/>
       <xi:include href="xml/gimpcolorframe.xml"/>
       <xi:include href="xml/gimpcolorpanel.xml"/>
       <xi:include href="xml/gimpcontainerpopup.xml"/>
