@@ -41,7 +41,7 @@
 	* app/gimprc.c
 	* app/libgimp_glue.c
 	* app/gui/preferences-dialog.c
-	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/help.pdb: changed accordingly.
 
 	* app/pdb/help_cmds.c: regenerated.
 
@@ -52,7 +52,7 @@
 	in terms of GimpDisplayShell, not GimpDisplay. Lots of internal
 	cleanup.
 
-	* app/gui/gui-types.h: removed NadiagtionDialog here...
+	* app/gui/gui-types.h: removed NaviagtionDialog here...
 
 	* app/display/display-types.h: ...and added it here.
 
