@@ -1,5 +1,10 @@
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/paint_options.c (pressure_options_gui): the "color"
+	option's label was saying "Size". Changed it to "Color".
+
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/documents-menu.c: use "", not NULL for "no accelerator",
 	since NULL will show the stock_item's accelerator.
 
