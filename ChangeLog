@@ -1,3 +1,9 @@
+2003-10-13  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-generic.c:
+	* app/composite/gimp-composite.[ch]: Updated/improved/organised
+	  documentation comments.
+
 2003-10-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimptile.c: code cleanup and some documentation.

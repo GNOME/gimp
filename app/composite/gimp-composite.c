@@ -253,7 +253,7 @@ gimp_composite_context_print (GimpCompositeContext *ctx)
  * Given a GimpCompositeOperatin, return a string representation of the name
  * of that operation.
  *
- * Return value:
+ * Returns: gchar *, the name
  **/
 const gchar *
 gimp_composite_mode_astext (GimpCompositeOperation op)
@@ -306,7 +306,7 @@ gimp_composite_mode_astext (GimpCompositeOperation op)
  * Given a GimpPixelFormat, return a string representation of the name
  * of that format.
  *
- * Return value:
+ * Returns: gchar *, the name
  **/
 const gchar *
 gimp_composite_pixelformat_astext (GimpPixelFormat format)
@@ -345,7 +345,7 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
  * compositing operation handlers, followed by overloading those which
  * are supported by the current cpu/hardware.
  *
- * Return value: void
+ * Return: void
  **/
 void
 gimp_composite_init (void)

@@ -118,7 +118,7 @@ struct GimpCompositeOperationEffects
 
 extern struct GimpCompositeOperationEffects gimp_composite_operation_effects[];
 
-/*
+/**
  * This is structure for communicating all that is necessary to a
  * compositing operation.
  */
