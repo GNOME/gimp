@@ -547,7 +547,6 @@ save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *vbox;
   gboolean   run;
 
@@ -560,14 +559,10 @@ save_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Save Options"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_RLE encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -578,8 +573,6 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &encoded);
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

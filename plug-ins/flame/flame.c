@@ -51,24 +51,24 @@
 #define HELP_ID "plug-in-flame"
 
 /* Declare local functions. */
-static void query             (void);
-static void run               (const gchar      *name,
-		               gint              nparams,
-		               const GimpParam  *param,
-		               gint             *nreturn_vals,
-			       GimpParam       **return_vals);
-static void doit              (GimpDrawable     *drawable);
+static void      query             (void);
+static void      run               (const gchar      *name,
+                                    gint              nparams,
+                                    const GimpParam  *param,
+                                    gint             *nreturn_vals,
+                                    GimpParam       **return_vals);
+static void      doit              (GimpDrawable     *drawable);
 
-static gint dialog            (void);
-static void set_flame_preview (void);
-static void load_callback     (GtkWidget        *widget,
-			       gpointer          data);
-static void save_callback     (GtkWidget        *widget,
-			       gpointer          data);
-static void set_edit_preview  (void);
-static void combo_callback    (GtkWidget        *widget,
-			       gpointer          data);
-static void init_mutants      (void);
+static gboolean  dialog            (void);
+static void      set_flame_preview (void);
+static void      load_callback     (GtkWidget        *widget,
+                                    gpointer          data);
+static void      save_callback     (GtkWidget        *widget,
+                                    gpointer          data);
+static void      set_edit_preview  (void);
+static void      combo_callback    (GtkWidget        *widget,
+                                    gpointer          data);
+static void      init_mutants      (void);
 
 #define BUFFER_SIZE 10000
 
@@ -639,19 +639,18 @@ edit_callback (GtkWidget *widget,
                         G_CALLBACK (edit_response),
                         edit_dlg);
 
-      main_vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+      main_vbox = gtk_vbox_new (FALSE, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (edit_dlg)->vbox), main_vbox,
 			  FALSE, FALSE, 0);
 
-      frame = gtk_frame_new (_("Directions"));
+      frame = gimp_frame_new (_("Directions"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       table = gtk_table_new (3, 3, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -675,17 +674,16 @@ edit_callback (GtkWidget *widget,
                               GINT_TO_POINTER (mut));
 	  }
 
-      frame = gtk_frame_new( _("Controls"));
+      frame = gimp_frame_new( _("Controls"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      vbox = gtk_vbox_new (FALSE, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
       table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
       gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
       gtk_widget_show(table);
 
@@ -703,7 +701,7 @@ edit_callback (GtkWidget *widget,
                         G_CALLBACK (set_edit_preview),
                         NULL);
 
-      hbox = gtk_hbox_new (FALSE, 4);
+      hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -734,7 +732,7 @@ edit_callback (GtkWidget *widget,
                         G_CALLBACK (combo_callback),
                         &config.variation);
 
-      gtk_box_pack_end (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
       label = gtk_label_new_with_mnemonic (_("_Variation:"));
@@ -882,7 +880,7 @@ cmap_constrain (gint32   image_id,
 }
 
 
-static gint
+static gboolean
 dialog (void)
 {
   GtkWidget *main_vbox;
@@ -890,7 +888,6 @@ dialog (void)
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *abox;
-  GtkWidget *pframe;
   GtkWidget *button;
   GtkWidget *table;
   GtkWidget *box;
@@ -908,46 +905,57 @@ dialog (void)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  box = gtk_hbox_new (FALSE, 6);
+  box = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (box), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (box), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
-
-  frame = gtk_frame_new (_("Flame"));
-  gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
+  flame_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   {
+    gdouble aspect = config.cp.width / (double) config.cp.height;
+
+    if (aspect > 1.0)
+      {
+	preview_width = PREVIEW_SIZE;
+	preview_height = PREVIEW_SIZE / aspect;
+      }
+    else
+      {
+	preview_width = PREVIEW_SIZE * aspect;
+	preview_height = PREVIEW_SIZE;
+      }
+  }
+  gtk_preview_size (GTK_PREVIEW (flame_preview),
+                    preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), flame_preview);
+  gtk_widget_show (flame_preview);
+
+  {
+    GtkWidget *vbox;
     GtkWidget *vbbox;
 
-    box = gtk_vbox_new (FALSE, 0);
-    gtk_container_set_border_width (GTK_CONTAINER (box), 4);
-    gtk_container_add (GTK_CONTAINER (frame), box);
-    gtk_widget_show (box);
+    vbox = gtk_vbox_new (FALSE, 6);
+    gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
+    gtk_widget_show (vbox);
 
     vbbox= gtk_vbutton_box_new ();
     gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
-    gtk_box_set_spacing (GTK_BOX (vbbox), 4);
-    gtk_box_pack_start (GTK_BOX (box), vbbox, FALSE, FALSE, 0);
+    gtk_box_set_spacing (GTK_BOX (vbbox), 6);
+    gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
 
     button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
@@ -979,16 +987,16 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
-  box = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 4);
+  box = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   label = gtk_label_new_with_mnemonic(_("_Rendering"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
   gtk_widget_show (box);
 
   table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1068,16 +1076,11 @@ dialog (void)
                     &config.cp.spatial_filter_radius);
 
   {
-    GtkWidget *sep;
     GtkWidget *hbox;
     GtkWidget *label;
     GtkWidget *combo;
 
-    sep = gtk_hseparator_new ();
-    gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 0);
-    gtk_widget_show (sep);
-
-    hbox = gtk_hbox_new (FALSE, 4);
+    hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
@@ -1132,7 +1135,7 @@ dialog (void)
                                 G_CALLBACK (cmap_callback),
                                 NULL);
 
-    gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
     cmap_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -1145,9 +1148,10 @@ dialog (void)
   }
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+
   label = gtk_label_new_with_mnemonic(_("C_amera"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
   gtk_widget_show (table);
@@ -1194,24 +1198,6 @@ dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  flame_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  {
-    gdouble aspect = config.cp.width / (double) config.cp.height;
-
-    if (aspect > 1.0)
-      {
-	preview_width = PREVIEW_SIZE;
-	preview_height = PREVIEW_SIZE / aspect;
-      }
-    else
-      {
-	preview_width = PREVIEW_SIZE * aspect;
-	preview_height = PREVIEW_SIZE;
-      }
-  }
-  gtk_preview_size (GTK_PREVIEW (flame_preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), flame_preview);
-  gtk_widget_show (flame_preview);
   set_flame_preview ();
 
   gtk_widget_show (dlg);

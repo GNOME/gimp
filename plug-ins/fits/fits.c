@@ -93,16 +93,16 @@ static gint32 create_new_image (const gchar        *filename,
 				GimpDrawable      **drawable,
 				GimpPixelRgn       *pixel_rgn);
 
-static void   check_load_vals (void);
+static void     check_load_vals  (void);
 
-static gint32 load_fits (const gchar *filename,
-			 FITS_FILE   *ifp,
-                         guint        picnum,
-			 guint        ncompose);
+static gint32   load_fits        (const gchar *filename,
+                                  FITS_FILE   *ifp,
+                                  guint        picnum,
+                                  guint        ncompose);
 
 
-static gint   load_dialog              (void);
-static void   show_fits_errors         (void);
+static gboolean load_dialog      (void);
+static void     show_fits_errors (void);
 
 
 static FITSLoadVals plvals =
@@ -961,7 +961,7 @@ save_index (FITS_FILE *ofp,
 
 /*  Load interface functions  */
 
-static gint
+static gboolean
 load_dialog (void)
 {
   GtkWidget *dialog;
@@ -980,8 +980,8 @@ load_dialog (void)
 
 			    NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (vbox);
