@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdialogfactory.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,16 +73,18 @@ typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;
 
 struct _GimpDialogFactory
 {
-  GimpObject      parent_instance;
+  GimpObject         parent_instance;
 
-  GimpContext    *context;
-  GtkItemFactory *item_factory;
+  GimpContext       *context;
+  GtkItemFactory    *item_factory;
 
   /*< private >*/
-  GList          *registered_dialogs;
-  GList          *session_infos;
+  GimpDialogNewFunc  new_dock_func;
 
-  GList          *open_dialogs;
+  GList             *registered_dialogs;
+  GList             *session_infos;
+
+  GList             *open_dialogs;
 };
 
 struct _GimpDialogFactoryClass
@@ -96,7 +98,8 @@ struct _GimpDialogFactoryClass
 GtkType             gimp_dialog_factory_get_type  (void);
 GimpDialogFactory * gimp_dialog_factory_new       (const gchar      *name,
 						   GimpContext      *context,
-						   GtkItemFactory   *item_factory);
+						   GtkItemFactory   *item_factory,
+						   GimpDialogNewFunc  new_dock_func);
 
 GimpDialogFactory * gimp_dialog_factory_from_name       (const gchar       *name);
 
@@ -110,8 +113,10 @@ void        gimp_dialog_factory_register         (GimpDialogFactory *factory,
 						  GimpDialogNewFunc  new_func,
 						  gboolean           singleton,
 						  gboolean           session_managed);
+
 GtkWidget * gimp_dialog_factory_dialog_new       (GimpDialogFactory *factory,
 						  const gchar       *identifier);
+GtkWidget * gimp_dialog_factory_dock_new         (GimpDialogFactory *factory);
 
 void        gimp_dialog_factory_add_toplevel     (GimpDialogFactory *factory,
 						  GtkWidget         *toplevel);

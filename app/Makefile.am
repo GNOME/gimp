@@ -106,8 +106,6 @@ gimp_SOURCES = \
 	gimplist.h		\
 	gimpobject.c		\
 	gimpobject.h		\
-	gimpviewable.c		\
-	gimpviewable.h		\
 ##
 ## the core object system
 ##
@@ -161,6 +159,8 @@ gimp_SOURCES = \
 	gimpundo.h			\
 	gimpundostack.c			\
 	gimpundostack.h			\
+	gimpviewable.c			\
+	gimpviewable.h			\
 ##
 ## stuff that needs to be sorted into yet undecided subsystems, split up,
 ## removed or otherwise tortured

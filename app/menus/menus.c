@@ -165,6 +165,8 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL, NULL },
   { { N_("/File/Test Dialogs/Grid Dock..."), NULL, test_grid_dock_cmd_callback, 1 },
     NULL, NULL },
+  { { N_("/File/Test Dialogs/Image Dock..."), NULL, test_image_dock_cmd_callback, 1 },
+    NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },

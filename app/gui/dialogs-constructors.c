@@ -32,7 +32,7 @@
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
+#include "widgets/gimpimagedock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdrawablelistview.h"
@@ -252,6 +252,13 @@ GtkWidget *
 dialogs_about_get (GimpDialogFactory *factory)
 {
   return about_dialog_create ();
+}
+
+
+GtkWidget *
+dialogs_dock_new (GimpDialogFactory *factory)
+{
+  return gimp_image_dock_new (factory, image_context);
 }
 
 

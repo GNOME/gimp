@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ struct _GimpDock
 
   GimpDialogFactory *factory;
 
+  GtkWidget         *main_vbox;
   GtkWidget         *vbox;
 
   GList             *dockbooks;
@@ -54,7 +55,6 @@ struct _GimpDockClass
 
 
 GtkType     gimp_dock_get_type    (void);
-GtkWidget * gimp_dock_new         (GimpDialogFactory *factory);
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

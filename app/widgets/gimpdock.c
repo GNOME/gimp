@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,8 +124,12 @@ gimp_dock_init (GimpDock *dock)
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
   gtk_widget_set_usize (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  
+  dock->main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (dock), dock->main_vbox);
+  gtk_widget_show (dock->main_vbox);
+
   dock->vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (dock), dock->vbox);
+  gtk_container_add (GTK_CONTAINER (dock->main_vbox), dock->vbox);
   gtk_widget_show (dock->vbox);
 
   separator = gimp_dock_separator_new (dock);
@@ -144,23 +148,6 @@ gimp_dock_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-GtkWidget *
-gimp_dock_new (GimpDialogFactory *factory)
-{
-  GimpDock *dock;
-
-  g_return_val_if_fail (factory != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-
-  dock = gtk_type_new (GIMP_TYPE_DOCK);
-
-  dock->factory = factory;
-
-  gimp_dialog_factory_add_toplevel (dock->factory, GTK_WIDGET (dock));
-
-  return GTK_WIDGET (dock);
 }
 
 static GtkWidget *
@@ -377,7 +364,7 @@ gimp_dock_tab_drag_begin (GtkWidget      *widget,
 
   gtk_widget_show (window);
 
-  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp_dock_drag_widget",
+  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp-dock-drag-widget",
 			    window,
 			    (GtkDestroyNotify) gtk_widget_destroy);
 
@@ -396,13 +383,13 @@ gimp_dock_tab_drag_end (GtkWidget      *widget,
   dockable = GIMP_DOCKABLE (data);
 
   drag_widget = gtk_object_get_data (GTK_OBJECT (dockable),
-				     "gimp_dock_drag_widget");
+				     "gimp-dock-drag-widget");
 
   if (drag_widget)
     {
       GtkWidget *dock;
 
-      gtk_object_set_data (GTK_OBJECT (dockable), "gimp_dock_drag_widget", NULL);
+      gtk_object_set_data (GTK_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
 
       dock = gimp_dock_new ();
 
@@ -449,7 +436,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 	  gint       index;
 
 	  gtk_object_set_data (GTK_OBJECT (src_dockable),
-			       "gimp_dock_drag_widget", NULL);
+			       "gimp-dock-drag-widget", NULL);
 
 	  children = gtk_container_children (GTK_CONTAINER (widget->parent));
 	  index    = g_list_index (children, widget) / 2;

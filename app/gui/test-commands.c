@@ -29,9 +29,11 @@
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
+#include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpimagedock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdrawablelistview.h"
@@ -605,7 +607,7 @@ test_dock_new (GimpViewType  view_type)
   GtkWidget *dockbook;
   GtkWidget *dockable;
 
-  dock = gimp_dock_new (global_dock_factory);
+  dock = gimp_dialog_factory_dock_new (global_dock_factory);
 
   dockbook = gimp_dockbook_new ();
 
@@ -656,4 +658,29 @@ test_grid_dock_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
   test_dock_new (GIMP_VIEW_TYPE_GRID);
+}
+
+void
+test_image_dock_cmd_callback (GtkWidget *widget,
+			      gpointer   client_data)
+{
+  GtkWidget *dock;
+  GtkWidget *dockbook;
+  GtkWidget *dockable;
+
+  dock = gimp_dialog_factory_dock_new (global_dock_factory);
+
+  dockbook = gimp_dockbook_new ();
+
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+
+  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+					     "gimp:layer-list");
+  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+					     "gimp:channel-list");
+  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  gtk_widget_show (dock);
 }

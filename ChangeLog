@@ -1,3 +1,60 @@
+2001-04-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: cleanup.
+
+	* app/interface.c: #include "gimpui.h"
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c
+	* app/gui/test-commands.[ch]: changes for the image menu below.
+
+	* app/apptypes.h
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcontainermenu.[ch]
+	* app/widgets/gimpcontainermenuimpl.[ch]: new widgets. The actual
+	implemtation lives in a separate file because
+	gimpcontainermenu.c's code is identical to gimpcontainerview.c's
+	except for the base class. This will become an interface with Gtk 2.0.
+
+	* app/widgets/gimpimagedock.[ch]: a dock with an image menu. The
+	pages still don't follow the context correctly.
+
+	* app/widgets/gimpmenuitem.[ch]: a menu item with a preview.
+
+	* app/widgets/gimpdialogfactory.[ch]: pass a dock constructor to
+	the constructor and provide a method to create a new dock within
+	this factory's context.
+
+	* app/widgets/gimpdock.[ch]: removed the constructor because we
+	create only image docks now. Put the vbox into a main_vbox (which
+	also contains the image menu).
+
+	* app/widgets/gimpdockbook.[ch]: create new docks with the dialog
+	factory.
+
+	* app/gimpcontainer.[ch]
+	* app/gimpdata.[ch]
+	* app/gimpdatafactory.[ch]
+	* app/gimpdatalist.[ch]
+	* app/gimplist.[ch]
+	* app/gimpviewable.[ch]
+	* app/widgets/gimpbrushpreview.[ch]
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainerlistview.[ch]
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdrawablelistitem.[ch]
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimpdrawablepreview.[ch]
+	* app/widgets/gimplayerlistitem.[ch]
+	* app/widgets/gimplayerlistview.[ch]
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimppalettepreview.[ch]
+	* app/widgets/gimppatternpreview.[ch]
+	* app/widgets/gimppreview.[ch]: ass-sign some copyrights.
+
 2001-04-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

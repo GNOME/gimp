@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdockbook.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -167,7 +167,7 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
       if (dockable)
 	{
 	  gtk_object_set_data (GTK_OBJECT (dockable),
-			       "gimp_dock_drag_widget", NULL);
+			       "gimp-dock-drag-widget", NULL);
 
 	  if (dockable->dockbook != GIMP_DOCKBOOK (widget))
 	    {
@@ -509,7 +509,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gtk_widget_show (window);
 
-  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp_dock_drag_widget",
+  gtk_object_set_data_full (GTK_OBJECT (dockable), "gimp-dock-drag-widget",
 			    window,
 			    (GtkDestroyNotify) gtk_widget_destroy);
 
@@ -528,16 +528,16 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
   dockable = GIMP_DOCKABLE (data);
 
   drag_widget = gtk_object_get_data (GTK_OBJECT (dockable),
-				     "gimp_dock_drag_widget");
+				     "gimp-dock-drag-widget");
 
   if (drag_widget)
     {
       GtkWidget *dock;
       GtkWidget *dockbook;
 
-      gtk_object_set_data (GTK_OBJECT (dockable), "gimp_dock_drag_widget", NULL);
+      gtk_object_set_data (GTK_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
 
-      dock = gimp_dock_new (dockable->dockbook->dock->factory);
+      dock = gimp_dialog_factory_dock_new (dockable->dockbook->dock->factory);
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 
@@ -588,7 +588,7 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 				   GTK_WIDGET (dest_dockable));
 
 	  gtk_object_set_data (GTK_OBJECT (src_dockable),
-			       "gimp_dock_drag_widget", NULL);
+			       "gimp-dock-drag-widget", NULL);
 
 	  if (src_dockable->dockbook != dest_dockable->dockbook)
 	    {

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpPreview Widget
+ * gimppreview.c
  * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify

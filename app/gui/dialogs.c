@@ -31,9 +31,8 @@
 #include "gimpcontext.h"
 
 
-GimpDialogFactory *global_dialog_factory     = NULL;
-GimpDialogFactory *global_dock_factory       = NULL;
-GimpDialogFactory *global_image_dock_factory = NULL;
+GimpDialogFactory *global_dialog_factory = NULL;
+GimpDialogFactory *global_dock_factory   = NULL;
 
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
@@ -75,20 +74,11 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE },
   { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE },
 
-  /* these will go to image_dock_entries */
   { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE },
   { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));
-
-/*
-static const GimpDialogFactoryEntry image_dock_entries[] =
-{
-};
-static const gint n_image_dock_entries = (sizeof (image_dock_entries) /
-					  sizeof (image_dock_entries[0]));
-*/
 
 
 /*  public functions  */
@@ -101,17 +91,14 @@ dialogs_init (void)
   global_dialog_factory =
     gimp_dialog_factory_new ("toplevel",
 			     gimp_context_get_user (),
+			     NULL,
 			     NULL);
 
   global_dock_factory =
     gimp_dialog_factory_new ("dock",
 			     gimp_context_get_user (),
-			     menus_get_dialogs_factory ());
-
-  global_image_dock_factory =
-    gimp_dialog_factory_new ("image-dock",
-			     gimp_context_get_user (),
-			     NULL);
+			     menus_get_dialogs_factory (),
+			     dialogs_dock_new);
 
   for (i = 0; i < n_toplevel_entries; i++)
     gimp_dialog_factory_register (global_dialog_factory,
@@ -126,15 +113,6 @@ dialogs_init (void)
 				  dock_entries[i].new_func,
 				  dock_entries[i].singleton,
 				  dock_entries[i].session_managed);
-
-  /*
-  for (i = 0; i < n_image_dock_entries; i++)
-    gimp_dialog_factory_register (global_image_dock_factory,
-				  image_dock_entries[i].identifier,
-				  image_dock_entries[i].new_func,
-				  image_dock_entries[i].singleton,
-				  image_dock_entries[i].session_managed);
-  */
 }
 
 void
@@ -142,9 +120,7 @@ dialogs_exit (void)
 {
   gtk_object_unref (GTK_OBJECT (global_dialog_factory));
   gtk_object_unref (GTK_OBJECT (global_dock_factory));
-  gtk_object_unref (GTK_OBJECT (global_image_dock_factory));
 
   global_dialog_factory     = NULL;
   global_dock_factory       = NULL;
-  global_image_dock_factory = NULL;
 }

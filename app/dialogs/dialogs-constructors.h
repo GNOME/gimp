@@ -39,6 +39,8 @@ GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory);
 GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory);
 GtkWidget * dialogs_about_get              (GimpDialogFactory *factory);
 
+GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory);
+
 GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory);
 GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory);
 GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory);

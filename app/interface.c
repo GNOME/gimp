@@ -27,6 +27,7 @@
 #include "disp_callbacks.h"
 #include "gdisplay_ops.h"
 #include "gimpdnd.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "gui/menus.h"
 #include "nav_window.h"
@@ -79,7 +80,7 @@ gdisplay_delete (GtkWidget *widget,
   return TRUE;
 }
 
-static gboolean
+static gpointer
 gdisplay_get_accel_context (gpointer data)
 {
   GDisplay *gdisp;

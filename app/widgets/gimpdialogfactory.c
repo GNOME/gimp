@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpdialogfactory.c
+ * Copyright (C) 2001 Michael Natterer
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -90,7 +93,9 @@ static void
 gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
   factory->item_factory       = NULL;
+  factory->new_dock_func      = NULL;
   factory->registered_dialogs = NULL;
+  factory->session_infos      = NULL;
   factory->open_dialogs       = NULL;
 }
 
@@ -123,9 +128,10 @@ gimp_dialog_factory_destroy (GtkObject *object)
 }
 
 GimpDialogFactory *
-gimp_dialog_factory_new (const gchar    *name,
-			 GimpContext    *context,
-			 GtkItemFactory *item_factory)
+gimp_dialog_factory_new (const gchar       *name,
+			 GimpContext       *context,
+			 GtkItemFactory    *item_factory,
+			 GimpDialogNewFunc  new_dock_func)
 {
   GimpDialogFactoryClass *factory_class;
   GimpDialogFactory      *factory;
@@ -155,8 +161,9 @@ gimp_dialog_factory_new (const gchar    *name,
   g_hash_table_insert (factory_class->factories,
 		       GIMP_OBJECT (factory)->name, factory);
 
-  factory->context      = context;
-  factory->item_factory = item_factory;
+  factory->context       = context;
+  factory->item_factory  = item_factory;
+  factory->new_dock_func = new_dock_func;
 
   return factory;
 }
@@ -319,6 +326,23 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
     }
 
   return dialog;
+}
+
+GtkWidget *
+gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
+{
+  GtkWidget *dock;
+
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
+
+  dock = factory->new_dock_func (factory);
+
+  if (dock)
+    gimp_dialog_factory_add_toplevel (factory, dock);
+
+  return dock;
 }
 
 void
@@ -600,7 +624,7 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
 	  GimpDock *dock;
 	  GList    *books;
 
-	  dock = GIMP_DOCK (gimp_dock_new (factory));
+	  dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory));
 
 	  for (books = info->sub_dialogs; books; books = g_list_next (books))
 	    {
@@ -655,7 +679,7 @@ gimp_dialog_factories_session_restore (void)
 /*  private functions  */
 
 static void
-gimp_dialog_factory_get_window_info (GtkWidget       *window, 
+gimp_dialog_factory_get_window_info (GtkWidget       *window,
 				     GimpSessionInfo *info)
 {
   g_return_if_fail (window != NULL);

@@ -7,14 +7,18 @@ libappwidgets_la_SOURCES = \
 	gimpbrushpreview.h		\
 	gimpcolorpanel.c		\
 	gimpcolorpanel.h		\
-	gimpcontainergridview.h		\
 	gimpcontainergridview.c		\
-	gimpcontainerlistview.h		\
+	gimpcontainergridview.h		\
 	gimpcontainerlistview.c		\
-	gimpcontainerview.h		\
+	gimpcontainerlistview.h		\
+	gimpcontainermenu.c		\
+	gimpcontainermenu.h		\
+	gimpcontainermenuimpl.c		\
+	gimpcontainermenuimpl.h		\
 	gimpcontainerview.c		\
-	gimpdatafactoryview.h		\
+	gimpcontainerview.h		\
 	gimpdatafactoryview.c		\
+	gimpdatafactoryview.h		\
 	gimpdialogfactory.c		\
 	gimpdialogfactory.h		\
 	gimpdock.c			\
@@ -29,26 +33,30 @@ libappwidgets_la_SOURCES = \
 	gimpdrawablelistview.h		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
-	gimpgradientpreview.h		\
 	gimpgradientpreview.c		\
+	gimpgradientpreview.h		\
 	gimphistogramview.c		\
 	gimphistogramview.h		\
-	gimpimagepreview.h		\
+	gimpimagedock.c			\
+	gimpimagedock.h			\
 	gimpimagepreview.c		\
-	gimplayerlistitem.h		\
+	gimpimagepreview.h		\
 	gimplayerlistitem.c		\
-	gimplayerlistview.h		\
+	gimplayerlistitem.h		\
 	gimplayerlistview.c		\
-	gimplistitem.h			\
+	gimplayerlistview.h		\
 	gimplistitem.c			\
-	gimppalettepreview.h		\
+	gimplistitem.h			\
+	gimpmenuitem.c			\
+	gimpmenuitem.h			\
 	gimppalettepreview.c		\
-	gimppatternpreview.h		\
+	gimppalettepreview.h		\
 	gimppatternpreview.c		\
-	gimppreview.h			\
+	gimppatternpreview.h		\
 	gimppreview.c			\
-	gimptoolinfopreview.h		\
+	gimppreview.h			\
 	gimptoolinfopreview.c		\
+	gimptoolinfopreview.h		\
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\
