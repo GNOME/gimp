@@ -2,13 +2,12 @@
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000
 # Marco Ciampa <ciampix@libero.it>, 2003
-
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
-"PO-Revision-Date: 2003-09-19 16:33+0200\n"
+"POT-Creation-Date: 2003-09-19 17:13+0200\n"
+"PO-Revision-Date: 2003-09-19 17:23+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -166,6 +165,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Si è in procinto di salvare un canale (selezione salvata) con nome %s.\n"
+"Non verranno salvati i livelli visibili."
 
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
@@ -191,6 +192,14 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Non c'è %s in gimprc:\n"
+"E' necessario aggiungere una voce simile a\n"
+"(%s \"%s\")\n"
+"al file %s."
+
+#: libgimp/gimpmiscui.c:556
+msgid "Parameter Settings"
+msgstr "Impostazione parametri"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -243,27 +252,29 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
+"Modulo '%s' errore di caricamento:\n"
+"%s"
 
 #: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "Ignorato modulo: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
-msgstr ""
+msgstr "Errore modulo"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
-msgstr ""
+msgstr "Caricato"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
-msgstr ""
+msgstr "Caricamento fallito"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
-msgstr ""
+msgstr "Non caricato"
 
 #: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
@@ -343,11 +354,11 @@ msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Notazione colore esadecimale come si usa in HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Tripletta h_ex:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -419,23 +430,23 @@ msgstr "Spaziatura r_ighe"
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:259
 msgid "_Scale"
 msgstr "_Scala"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:237
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:260
 msgid "_Shear"
 msgstr ""
 
@@ -460,7 +471,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Usa questo valore per la generazione del seme di casualità - questo permette \n"
+"Usa questo valore per la generazione del seme di casualità - questo "
+"permette \n"
 "di ripetere una data operazione \"casuale\""
 
 #: libgimpwidgets/gimpwidgets.c:947
@@ -586,4 +598,3 @@ msgstr "Acquerelli"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressione"
-
