@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-libdir = $(libdir)
-
 lib_LIBRARIES = libmegawidget.a
 
 libmegawidget_a_SOURCES = \
