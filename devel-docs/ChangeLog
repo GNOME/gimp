@@ -1,3 +1,9 @@
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/tmpl/gimpmodule.sgml: added missing macro
+	GIMP_MODULE_PARAM_SERIALIZE.
+
 2004-10-05  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

@@ -109,6 +109,13 @@ are compiled against.
 
 
 
+<!-- ##### MACRO GIMP_MODULE_PARAM_SERIALIZE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### FUNCTION gimp_module_new ##### -->
 <para>
 
