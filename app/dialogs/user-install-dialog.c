@@ -78,12 +78,12 @@ enum
 };
 
 
-static void     user_install_response   (GtkWidget   *widget,
-                                         gint         response_id,
-                                         GimpRc      *gimprc);
+static void      user_install_response (GtkWidget   *widget,
+                                        gint         response_id,
+                                        GimpRc      *gimprc);
 
-static gboolean user_install_run        (const gchar *oldgimp);
-static void     user_install_tuning     (GimpRc      *gimprc);
+static gboolean  user_install_run      (const gchar *oldgimp);
+static void      user_install_tuning   (GimpRc      *gimprc);
 
 
 /*  private stuff  */
@@ -413,7 +413,8 @@ user_install_response (GtkWidget *widget,
       /* else fallthrough */
 
     case TUNING_PAGE:
-      gimp_rc_save (gimprc);
+      if (! migrate)
+        gimp_rc_save (gimprc);
 
       g_object_unref (title_style);
       g_object_unref (page_style);
@@ -1301,7 +1302,6 @@ user_install_run (const gchar *oldgimp)
   GtkWidget     *scrolled_window;
   GtkTextBuffer *log_buffer;
   GtkWidget     *log_view;
-  gchar         *msg;
   GError        *error = NULL;
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
