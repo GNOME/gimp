@@ -99,7 +99,7 @@ static void       colorsel_xy_to_triangle_buf       (gint              x,
 static GtkWidget *colorsel_triangle_create_preview  (ColorselTriangle *triangle);
 static void       colorsel_triangle_update_previews (ColorselTriangle *triangle,
                                                      gboolean          hue_changed);
-static gboolean   colorsel_triangle_event           (GtkWidget        *widget, 
+static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
                                                      GdkEvent         *event,
                                                      ColorselTriangle *triangle);
 
@@ -201,7 +201,7 @@ colorsel_triangle_init (ColorselTriangle *triangle)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
   gtk_widget_show (frame);
 
   triangle->preview = colorsel_triangle_create_preview (triangle);
@@ -257,15 +257,15 @@ colorsel_triangle_create_preview (ColorselTriangle *triangle)
 
   for (i=0; i < 3 * PREVIEWSIZE; i += 3)
     buf[i] = buf[i+1] = buf[i+2] = BGCOLOR;
-  for (i=0; i < PREVIEWSIZE; i++) 
+  for (i=0; i < PREVIEWSIZE; i++)
     gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, PREVIEWSIZE);
 
   return preview;
 }
 
-static void 
+static void
 colorsel_triangle_update_previews (ColorselTriangle *triangle,
-                                   gboolean          hue_changed) 
+                                   gboolean          hue_changed)
 {
   GimpColorSelector *selector;
   guchar             buf[3 * PREVIEWSIZE];
@@ -304,8 +304,8 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
 
 	      if (r2 <= COLORWHEELRADIUS * COLORWHEELRADIUS)
 		{
-		  if (r2 > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) 
-		    { 
+		  if (r2 > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS)
+		    {
 		      atn = atan2 (x, y);
 		      if (atn < 0)
 			atn = atn + 2 * G_PI;
@@ -324,9 +324,9 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
 				COLORWHEELRADIUS - dx,
 				COLORWHEELRADIUS - y, 2 * dx + 1);
 	}
-  
+
       /* marker in outer ring */
-  
+
       x0 = RINT (sin (hue * G_PI / 180) *
 		 ((gdouble) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1) / 2 +
 		  COLORTRIANGLERADIUS));
@@ -339,8 +339,8 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
 	atn = atn + 2 * G_PI;
       gimp_hsv_to_rgb4 (buf, atn / (2 * G_PI), 1, 1);
 
-      col = INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
-  
+      col = GIMP_RGB_INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
+
       for (y = y0 - 4 ; y <= y0 + 4 ; y++)
 	{
 	  for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
@@ -370,7 +370,7 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
   else
     {
       /* delete marker in triangle */
-  
+
       sat = triangle->oldsat;
       val = triangle->oldval;
       x0 = RINT (sx + (vx - sx) * val + (hx - vx) * sat * val);
@@ -486,13 +486,13 @@ colorsel_xy_to_triangle_buf (gint     x,
 	}
 
       /* Yes, this ugly 1.00*01 fixes some subtle rounding errors... */
-      if (sat >= 0 && sat <= 1.000000000000001) 
+      if (sat >= 0 && sat <= 1.000000000000001)
 	gimp_hsv_to_rgb4 (buf, hue / 360, sat, val);
-    } 
+    }
 }
 
 static gboolean
-colorsel_triangle_event (GtkWidget        *widget, 
+colorsel_triangle_event (GtkWidget        *widget,
                          GdkEvent         *event,
                          ColorselTriangle *triangle)
 {
@@ -512,7 +512,7 @@ colorsel_triangle_event (GtkWidget        *widget,
       y = - event->button.y + COLORWHEELRADIUS + 1;
       r = sqrt ((gdouble) (x * x + y * y));
       angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
-      if ( /* r <= COLORWHEELRADIUS  && */ r > COLORTRIANGLERADIUS) 
+      if ( /* r <= COLORWHEELRADIUS  && */ r > COLORTRIANGLERADIUS)
         triangle->mode = 1;  /* Dragging in the Ring */
       else
         triangle->mode = 2;  /* Dragging in the Triangle */
@@ -531,7 +531,7 @@ colorsel_triangle_event (GtkWidget        *widget,
 
       /* callback the user */
       gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle));
-      
+
       return FALSE;
       break;
 

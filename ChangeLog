@@ -1,3 +1,8 @@
+2003-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* modules/colorsel_triangle.c (colorsel_triangle_update_previews): 
+	s/INTENSITY/GIMP_RGB_INTENSITY/, removed trailing whitespace.
+
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb.[ch]: added a GIMP_RGB prefix to the
