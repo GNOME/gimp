@@ -21,7 +21,6 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "gimage_cmds.h"
-#include "gimage_mask_cmds.h"
 #include "internal_procs.h"
 #include "procedural_db.h"
 
@@ -52,6 +51,7 @@ void register_parasite_procs        (void);
 void register_drawable_procs        (void);
 void register_procedural_db_procs   (void);
 void register_layer_procs           (void);
+void register_gimage_mask_procs     (void);
 
 void
 internal_procs_init (void)
@@ -156,23 +156,8 @@ internal_procs_init (void)
 			 pcount/total_pcount);
 
   /*  GImage mask procedures  */
-  procedural_db_register (&gimage_mask_bounds_proc); pcount++;
-  procedural_db_register (&gimage_mask_value_proc); pcount++;
-  procedural_db_register (&gimage_mask_is_empty_proc); pcount++;
-  procedural_db_register (&gimage_mask_translate_proc); pcount++;
-  procedural_db_register (&gimage_mask_float_proc); pcount++;
-  procedural_db_register (&gimage_mask_clear_proc); pcount++;
-  procedural_db_register (&gimage_mask_invert_proc); pcount++;
-  procedural_db_register (&gimage_mask_sharpen_proc); pcount++;
-  procedural_db_register (&gimage_mask_all_proc); pcount++;
-  procedural_db_register (&gimage_mask_none_proc); pcount++;
-  procedural_db_register (&gimage_mask_feather_proc); pcount++;
-  procedural_db_register (&gimage_mask_border_proc); pcount++;
-  procedural_db_register (&gimage_mask_grow_proc); pcount++;
-  procedural_db_register (&gimage_mask_shrink_proc); pcount++;
-  procedural_db_register (&gimage_mask_layer_alpha_proc); pcount++;
-  procedural_db_register (&gimage_mask_load_proc); pcount++;
-  procedural_db_register (&gimage_mask_save_proc); pcount++;
+  register_gimage_mask_procs ();
+  pcount += 19;
 
   app_init_update_status(NULL, _("Layer procedures"),
 			 pcount/total_pcount);

@@ -173,7 +173,6 @@ gimp_SOURCES = \
 	gimage_mask.c		\
 	gimage_mask.h		\
 	gimage_mask_cmds.c	\
-	gimage_mask_cmds.h	\
 	gimpbrush.c		\
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\

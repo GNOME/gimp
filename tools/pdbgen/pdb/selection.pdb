@@ -1,0 +1,371 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub coord_args {
+    my ($name, $desc, $args) = @_;
+    foreach (qw(x y)) {
+	push @$args, { name => eval qq/"$name"/, type => 'int32',
+		       desc => eval qq/"$desc"/ }
+    }
+}
+
+sub selection_simple_proc {
+    my $op = shift;
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    %invoke = ( code => "gimage_mask_$op (gimage);" );
+}
+
+sub selection_change_proc {
+    my ($op, $arg, $type) = @_;
+
+    $blurb = ucfirst($op) . " the image's selection";
+
+    $help = "This procedure ${op}s the selection. ";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => $arg, type => "0 < $type",
+	  desc => ucfirst($arg) . " of $op (in pixels)" }
+    );
+
+    %invoke = ( code => "gimage_mask_$op (gimage, $arg);" );
+}
+
+# The defs
+
+sub selection_bounds {
+    $blurb = 'Find the bounding box of the current selection.';
+
+    $help = <<'HELP';
+This procedure returns whether there is a selection for the specified image. If
+there is one, the upper left and lower right corners of the bounding box are
+returned. These coordinates are relative to the image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean',
+	  desc => 'True if there is a selection', init => 1 }
+    );
+
+    my $count = 1;
+    foreach ('upper left', 'lower right') {
+	&coord_args("\${_}$count",
+		    "\$_ coordinate of $_ corner of selection bounds",
+		    \@outargs);
+	$count++;
+    }
+
+    %invoke = (
+	code => 'non_empty = gimage_mask_bounds (gimage, &x1, &y1, &x2, &y2);'
+    );
+}
+
+sub selection_value {
+    $blurb = 'Find the value of the selection at the specified coordinates.';
+
+    $help = <<'HELP';
+This procedure returns the value of the selection at the specified coordinates.
+If the coordinates lie out of bounds, 0 is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    &coord_args('$_', '$_ coordinate of value', \@inargs);
+
+    @outargs = (
+	{ name => 'value', type => '0 <= int32 <= 255',
+	  desc => 'Value of the selection: (%%desc%%)',
+	  alias => 'gimage_mask_value (gimage, x, y)', no_declare => 1 }
+    );
+}
+
+sub selection_is_empty {
+    $blurb = 'Determine whether the selection in empty.';
+
+    $help = <<'HELP';
+This procedure returns non-zero if the selection for the specified image is not
+empty.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg);
+
+    @outargs = (
+	{ name => 'is_empty', type => 'boolean',
+	  desc => 'Is the selection empty?',
+	  alias => 'gimage_mask_is_empty (gimage)', no_declare => 1 }
+    );
+}
+
+sub selection_translate {
+    $blurb = 'Translate the selection by the specified offsets.';
+
+    $help = <<'HELP';
+This procedure actually translates the selection for the specified image by the
+specified offsets. Regions that are translated from beyond the bounds of the
+image are set to empty. Valid regions of the selection which are translated
+beyond the bounds of the image because of this call are lost.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    &coord_args('off$_', '$_ offset for translation', \@inargs);
+
+    %invoke = ( code => 'gimage_mask_translate (gimage, offx, offy);' );
+}
+
+sub selection_float {
+    $blurb = <<'BLURB';
+Float the selection from the specified drawable with initial offsets as
+specified.
+BLURB
+
+    $help = <<'HELP';
+This procedure determines the region of the specified drawable that lies
+beneath the current selection. The region is then cut from the drawable and the
+resulting data is made into a new layer which is instantiated as a floating
+selection. The offsets allow initial positioning of the new floating selection.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable from which to float selection' }
+    );
+    &coord_args('off$_', '$_ offset for translation', \@inargs);
+
+    @outargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The floated layer', init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpImage *gimage' ],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (drawable);
+  layer = gimage_mask_float (gimage, drawable, offx, offy);
+  success = layer != NULL;
+}
+CODE
+    );
+}
+
+sub selection_clear {
+    &selection_simple_proc('clear');
+
+    $blurb = 'Set the selection to none, clearing all previous content.';
+
+    $help = <<'HELP';
+This procedure sets the selection mask to empty, assigning the value 0 to every
+pixel in the selection channel.
+HELP
+}
+
+sub selection_invert {
+    &selection_simple_proc('invert');
+
+    $blurb = 'Invert the selection mask.';
+
+    $help = <<'HELP';
+This procedure inverts the selection mask. For every pixel in the selection
+channel, its new value is calculated as (255 - old_value).
+HELP
+}
+
+sub selection_sharpen {
+    &selection_simple_proc('sharpen');
+
+    $blurb = 'Sharpen the selection mask.';
+
+    $help = <<'HELP';
+This procedure sharpens the selection mask. For every pixel in the selection
+channel, if the value is > 0, the new pixel is assigned a value of 255. This
+removes any "anti-aliasing" that might exist in the selection mask's boundary.
+HELP
+}
+
+sub selection_all {
+    &selection_simple_proc('all');
+
+    $blurb = 'Select all of the image.';
+
+    $help = <<'HELP';
+This procedure sets the selection mask to completely encompass the image. Every
+pixel in the selection channel is set to 255.
+HELP
+}
+
+sub selection_none {
+    &selection_simple_proc('none');
+
+    $blurb = 'Deselect the entire image.';
+
+    $help = <<'HELP';
+This procedure deselects the entire image. Every pixel in the selection channel
+is set to 0.
+HELP
+}
+
+sub selection_feather {
+    &selection_change_proc('feather', 'radius', 'float');
+
+    $help .= 'Feathering is implemented using a gaussian blur.';
+}
+
+sub selection_border {
+    &selection_change_proc('border', 'radius', 'int32');
+
+    $help .= <<'HELP';
+Bordering creates a new selection which is defined along the boundary of the
+previous selection at every point within the specified radius.
+HELP
+}
+
+sub selection_grow {
+    &selection_change_proc('grow', 'steps', 'int32');
+
+    $help .= <<'HELP';
+Growing involves expanding the boundary in all directions by the specified
+pixel amount.
+HELP
+}
+
+sub selection_shrink {
+    &selection_change_proc('shrink', 'radius', 'int32');
+
+    $help .= <<'HELP';
+Shrinking invovles trimming the existing selection boundary on all sides by the
+specified number of pixels.
+HELP
+}
+
+sub selection_layer_alpha {
+    $blurb = <<'BLURB';
+Transfer the specified layer's alpha channel to the selection mask.
+BLURB
+
+    $help = <<'HELP';
+This procedure requires a layer with an alpha channel. The alpha channel
+information is used to create a selection mask such that for any pixel in the
+image defined in the specified layer, that layer pixel's alpha value is
+transferred to the selection mask. If the layer is undefined at a particular
+image pixel, the associated selection mask value is set to 0.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'Layer with alpha' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpImage *gimage' ],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage_mask_layer_alpha (gimage, layer);
+}
+CODE
+    );
+}
+
+sub selection_load {
+    $blurb = 'Transfer the specified channel to the selection mask.';
+
+    $help = <<'HELP';
+This procedure loads the specified channel into the selection mask. This
+essentially involves a copy of the channel's content in to the selection mask.
+Therefore, the channel must have the same width and height of the image, or an
+error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    %invoke = (
+	vars => [ 'GimpImage *gimage' ],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (channel));
+   
+  if (drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
+      drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+    gimage_mask_load (gimage, channel);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub selection_save {
+    $blurb = 'Copy the selection mask to a new channel.';
+
+    $help = <<'HELP';
+This procedure copies the selection mask and stores the content in a new
+channel. The new channel is automatically inserted into the image's list of
+channels.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The new channel', init => 1 }
+    );
+
+    %invoke = (
+	code => 'success = (channel = gimage_mask_save (gimage)) != NULL;'
+    );
+}
+
+@headers = qw("gimage_mask.h");
+
+@procs = qw(selection_bounds selection_value selection_is_empty
+	    selection_translate selection_float selection_clear
+	    selection_invert selection_sharpen selection_all selection_none
+	    selection_feather selection_border selection_grow selection_shrink
+	    selection_layer_alpha selection_load selection_save);
+%exports = (app => [@procs]);
+
+$desc = 'Image mask';
+
+1;

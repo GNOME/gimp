@@ -28,7 +28,7 @@ sub channel_get_prop_proc {
 
     $blurb = "Get the $desc of the specified channel.";
 
-    $help = "This procedure returns the specified channel's $desc.";
+    $help = "This procedure returns the specified channel's $desc. ";
 
     &std_pdb_misc;
 
@@ -62,7 +62,7 @@ sub channel_set_prop_proc {
 
     $blurb = "Set the $desc of the specified channel.";
 
-    $help = "This procedure sets the specified channel's $desc.";
+    $help = "This procedure sets the specified channel's $desc. ";
 
     &std_pdb_misc;
 
@@ -205,8 +205,8 @@ HELP
 &channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');
     $help .= <<'HELP'
- If it is non-zero, then the channel is composited with the image so that
-masked regions are shown. Otherwise, selected regions are shown.
+If it is non-zero, then the channel is composited with the image so that masked
+regions are shown. Otherwise, selected regions are shown.
 HELP
 CODE
 

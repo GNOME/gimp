@@ -1,3 +1,11 @@
+Sat Apr 24 18:36:04 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimage_mask_cmds.[ch]: pdbgenned, use header file
+
+	* app/internal_procs.c: use pdbgen register for gimage mask funcs
+
+	* app/Makefile.am: remove gimage_mask_cmds.h
+
 Sat Apr 24 21:50:58 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/edit_selection.c: Finished the opaque-move stuff...
