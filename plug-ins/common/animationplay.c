@@ -1,7 +1,7 @@
 /*
- * Animation Playback plug-in version 0.98.5
+ * Animation Playback plug-in version 0.98.6
  *
- * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
+ * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
  *
  *
  * This is part of the GIMP package and is released under the GNU
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-01-13 : version 0.98.6
+ *              Looser parsing of (XXXXX) layer-name tags
  *
  * 98.07.27 : version 0.98.5
  *            UI tweaks, fix for pseudocolor displays w/gdkrgb.
@@ -152,8 +155,6 @@ static void run   (gchar   *name,
 		   GParam **return_vals);
 
 static        void do_playback        (void);
-static         int parse_ms_tag       (char *str);
-static DisposeType parse_disposal_tag (char *str);
 
 static gint window_delete_callback    (GtkWidget *widget,
 				       GdkEvent  *event,
@@ -173,11 +174,25 @@ static void repaint_da                (GtkWidget *darea,
 				       gpointer data);
 #endif
 
-static DisposeType  get_frame_disposal  (guint whichframe);
 static void         render_frame        (gint32 whichframe);
 static void         show_frame          (void);
 static void         total_alpha_preview (guchar* ptr);
 static void         init_preview_misc   (void);
+
+
+/* tag util functions*/
+static         int parse_ms_tag        (const char *str);
+static DisposeType parse_disposal_tag  (const char *str);
+static DisposeType get_frame_disposal  (const guint whichframe);
+static     guint32 get_frame_duration  (const guint whichframe);
+static int is_disposal_tag (const char *str,
+			    DisposeType *disposal,
+			    int *taglength);
+static int is_ms_tag (const char *str,
+		      int *duration,
+		      int *taglength);
+
+
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -310,6 +325,7 @@ run (gchar   *name,
 
 
 
+/*
 static int
 parse_ms_tag (char *str)
 {
@@ -365,8 +381,8 @@ parse_disposal_tag (char *str)
       offset++;
     }
 
-  return (DISPOSE_UNDEFINED); /* FIXME */
-}
+  return (DISPOSE_UNDEFINED);
+}*/
 
 
 static void
@@ -1737,41 +1753,6 @@ do_step (void)
   render_frame(frame_number);
 }
 
-static guint32
-get_frame_duration (guint whichframe)
-{
-  gchar* layer_name;
-  gint   duration = 0;
-
-  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
-  if (layer_name != NULL)
-    {
-      duration = parse_ms_tag(layer_name);
-      g_free(layer_name);
-    }
-  
-  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
-  if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
-
-  return ((guint32) duration);
-}
-
-static DisposeType
-get_frame_disposal (guint whichframe)
-{
-  gchar* layer_name;
-  DisposeType disposal = DISPOSE_UNDEFINED;
-  
-  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
-  if (layer_name != NULL)
-    {
-      disposal = parse_disposal_tag (layer_name);
-      g_free (layer_name);
-    }
-
-  return (disposal);
-}
-
 
 /*  Callbacks  */
 
@@ -1866,4 +1847,167 @@ step_callback (GtkWidget *widget,
   do_step();
   show_frame();
 }
+
+
+
+
+
+/* tag util. */
+
+static DisposeType
+get_frame_disposal (const guint whichframe)
+{
+  gchar* layer_name;
+  DisposeType disposal;
+  
+  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
+  disposal = parse_disposal_tag(layer_name);
+  g_free(layer_name);
+
+  return(disposal);
+}
+
+
+
+static guint32
+get_frame_duration (const guint whichframe)
+{
+  gchar* layer_name;
+  gint   duration = 0;
+
+  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
+  if (layer_name != NULL)
+    {
+      duration = parse_ms_tag(layer_name);
+      g_free(layer_name);
+    }
+  
+  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
+  if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
+
+  return ((guint32) duration);
+}
+
+
+static int
+is_ms_tag (const char *str, int *duration, int *taglength)
+{
+  gint sum = 0;
+  gint offset;
+  gint length;
+
+  length = strlen(str);
+
+  if (str[0] != '(')
+    return 0;
+
+  offset = 1;
+
+  /* eat any spaces between open-parenthesis and number */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+  
+  if ((offset>=length) || (!isdigit(str[offset])))
+    return 0;
+
+  do
+    {
+      sum *= 10;
+      sum += str[offset] - '0';
+      offset++;
+    }
+  while ((offset<length) && (isdigit(str[offset])));  
+
+  if (length-offset <= 2)
+    return 0;
+
+  /* eat any spaces between number and 'ms' */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+
+  if ((length-offset <= 2) ||
+      (toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
+    return 0;
+
+  offset += 2;
+
+  /* eat any spaces between 'ms' and close-parenthesis */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+
+  if ((length-offset < 1) || (str[offset] != ')'))
+    return 0;
+
+  offset++;
+  
+  *duration = sum;
+  *taglength = offset;
+
+  return 1;
+}
+
+
+static int
+parse_ms_tag (const char *str)
+{
+  int i;
+  int rtn;
+  int dummy;
+  int length;
+
+  length = strlen(str);
+
+  for (i=0; i<length; i++)
+    {
+      if (is_ms_tag(&str[i], &rtn, &dummy))
+	return rtn;
+    }
+  
+  return -1;
+}
+
+
+static int
+is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
+{
+  if (strlen(str) != 9)
+    return 0;
+  
+  if (strncmp(str, "(combine)", 9) == 0)
+    {
+      *taglength = 9;
+      *disposal = DISPOSE_COMBINE;
+      return 1;
+    }
+  else if (strncmp(str, "(replace)", 9) == 0)
+    {
+      *taglength = 9;
+      *disposal = DISPOSE_REPLACE;
+      return 1;
+    }
+
+  return 0;
+}
+
+
+static DisposeType
+parse_disposal_tag (const char *str)
+{
+  DisposeType rtn;
+  int i, dummy;
+  gint length;
+
+  length = strlen(str);
+
+  for (i=0; i<length; i++)
+    {
+      if (is_disposal_tag(&str[i], &rtn, &dummy))
+	{
+	  return rtn;
+	}
+    }
+
+  return (DISPOSE_UNDEFINED); /* FIXME */
+}
+
 

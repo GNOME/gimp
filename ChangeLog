@@ -1,3 +1,12 @@
+Thu Jan 13 20:41:37 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/animoptimize.c: Collapse timing of completely
+          optimized-away frames onto previous surviving frame.  Also be
+          looser with (XXXXX) tag parsing.
+
+	* plug-ins/common/animationplay.c: Be looser with (XXXXX) tag
+	  parsing.
+
 2000-01-13  Yuri Syrota  <rasta@renome.rovno.ua>
 
 	* configure.in: Added "uk" to ALL_LINGUAS

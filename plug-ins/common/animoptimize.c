@@ -1,7 +1,7 @@
 /*
- * Animation Optimizer plug-in version 1.0.0
+ * Animation Optimizer plug-in version 1.0.2
  *
- * by Adam D. Moss, 1997-98
+ * (c) Adam D. Moss, 1997-2000
  *     adam@gimp.org
  *     adam@foxbox.org
  *
@@ -10,6 +10,15 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-01-13 : version 1.0.2
+ *              Collapse timing of completely optimized-away frames
+ *              onto previous surviving frame.  Also be looser with
+ *              (XXXXX) tag parsing.
+ *
+ * 2000-01-07 : version 1.0.1
+ *              PDB interface submitted by Andreas Jaekel
+ *              <jaekel@cablecats.de>
  *
  * 98.05.17 : version 1.0.0
  *            Finally preserves frame timings / layer names.  Has
@@ -44,7 +53,6 @@
 /*
  * TODO:
  *   User interface
- *   PDB interface
  */
 
 #include <stdlib.h>
@@ -75,10 +83,21 @@ static void run(char *name,
 		GParam ** return_vals);
 
 static      gint32 do_optimizations   (GRunModeType run_mode);
-/*static         int parse_ms_tag       (char *str);*/
-static DisposeType parse_disposal_tag (char *str);
 
-static DisposeType  get_frame_disposal  (guint whichframe);
+
+/* tag util functions*/
+static         int parse_ms_tag        (const char *str);
+static DisposeType parse_disposal_tag  (const char *str);
+static DisposeType get_frame_disposal  (const guint whichframe);
+static     guint32 get_frame_duration  (const guint whichframe);
+static        void remove_disposal_tag (char* dest, char *src);
+static        void remove_ms_tag       (char* dest, char *src);
+static int is_disposal_tag (const char *str,
+			    DisposeType *disposal,
+			    int *taglength);
+static int is_ms_tag (const char *str,
+		      int *duration,
+		      int *taglength);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -206,62 +225,6 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 
 
 
-static DisposeType
-parse_disposal_tag (gchar *str)
-{
-  gint offset = 0;
-  gint length;
-
-  length = strlen(str);
-
-  while ((offset+9)<=length)
-    {
-      if (strncmp(&str[offset],"(combine)",9)==0) 
-	return(DISPOSE_COMBINE);
-      if (strncmp(&str[offset],"(replace)",9)==0) 
-	return(DISPOSE_REPLACE);
-      offset++;
-    }
-
-  return (DISPOSE_UNDEFINED); /* FIXME */
-}
-
-
-
-static gchar*
-remove_disposal_tag (gchar* str)
-{
-  gchar* dest;
-  gint offset = 0;
-  gint destoffset = 0;
-  gint length;
-
-  length = strlen(str);
-  dest = g_malloc(length+11);
-  memset(dest, 0, length+11);
-
-  strcpy(dest, str);
-
-  while ((offset+9)<=length)
-    {
-      if (strncmp(&str[offset],"(combine)",9)==0) 
-	{
-	  offset+=9;
-	}
-      if (strncmp(&str[offset],"(replace)",9)==0) 
-	{
-	  offset+=9;
-	}
-      dest[destoffset] = str[offset];
-      destoffset++;
-      offset++;
-    }
-
-  return dest;
-}
-
-
-
 /* Rendering Functions */
 
 static void
@@ -289,6 +252,11 @@ do_optimizations(GRunModeType run_mode)
   guchar* this_frame = NULL;
   guchar* last_frame = NULL;
   guchar* opti_frame = NULL;
+
+  int this_delay;
+  int cumulated_delay = 0;
+  int last_true_frame = -1;
+  int buflen;
 
   gchar* oldlayer_name;
   gchar* newlayer_name;
@@ -354,7 +322,8 @@ do_optimizations(GRunModeType run_mode)
 	  gimp_quit();
 	}
 
-      dispose = get_frame_disposal(this_frame_num);
+      this_delay = get_frame_duration (this_frame_num);
+      dispose    = get_frame_disposal (this_frame_num);
 
       if (dispose==DISPOSE_REPLACE)
 	{
@@ -621,7 +590,6 @@ do_optimizations(GRunModeType run_mode)
       gimp_drawable_detach(drawable);
 
 
-
       can_combine = FALSE;
       bbox_left = 0;
       bbox_top = 0;
@@ -804,35 +772,85 @@ do_optimizations(GRunModeType run_mode)
 
       oldlayer_name =
 	gimp_layer_get_name(layers[total_frames-(this_frame_num+1)]);
-      newlayer_name = remove_disposal_tag(oldlayer_name);
+
+      buflen = strlen(oldlayer_name) + 40;
+
+      newlayer_name = g_malloc(buflen);
+
+      remove_disposal_tag(newlayer_name, oldlayer_name);
       g_free(oldlayer_name);
 
-      if (this_frame_num > 0)
-	strcat(newlayer_name, can_combine?"(combine)":"(replace)");
-  
-      new_layer_id = gimp_layer_new(new_image_id,
-				    newlayer_name,
-				    bbox_right-bbox_left,
-				    bbox_bottom-bbox_top,
-				    drawabletype_alpha,
-				    100.0,
-				    NORMAL_MODE);
-      g_free(newlayer_name);
+      oldlayer_name = g_malloc(buflen);
 
-      gimp_image_add_layer (new_image_id, new_layer_id, 0);
+      remove_ms_tag(oldlayer_name, newlayer_name);
 
-      drawable = gimp_drawable_get (new_layer_id);
+      g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
+		 oldlayer_name, this_delay,
+		 (this_frame_num ==  0) ? "" :
+		 can_combine ? "(combine)" : "(replace)");
 
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-			   bbox_right-bbox_left,
-			   bbox_bottom-bbox_top,
-			   TRUE, FALSE);
-      gimp_pixel_rgn_set_rect (&pixel_rgn, opti_frame, 0, 0,
+      g_free(oldlayer_name);
+
+      /* Empty frame! */
+      if (bbox_right <= bbox_left ||
+	  bbox_bottom <= bbox_top)
+	{
+	  cumulated_delay += this_delay;
+
+	  g_free (newlayer_name);
+
+	  oldlayer_name =
+	    gimp_layer_get_name(last_true_frame);
+	  
+	  buflen = strlen(oldlayer_name) + 40;
+	  
+	  newlayer_name = g_malloc(buflen);
+	  
+	  remove_disposal_tag(newlayer_name, oldlayer_name);
+	  g_free(oldlayer_name);
+	  
+	  oldlayer_name = g_malloc(buflen);
+	  
+	  remove_ms_tag(oldlayer_name, newlayer_name);
+	  
+	  g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
+		     oldlayer_name, cumulated_delay,
+		     (this_frame_num ==  0) ? "" :
+		     can_combine ? "(combine)" : "(replace)");
+
+	  gimp_layer_set_name(last_true_frame, newlayer_name);
+
+	  g_free (newlayer_name);
+	}
+      else
+	{
+	  cumulated_delay = this_delay;
+
+	  last_true_frame =
+	    new_layer_id = gimp_layer_new(new_image_id,
+					  newlayer_name,
+					  bbox_right-bbox_left,
+					  bbox_bottom-bbox_top,
+					  drawabletype_alpha,
+					  100.0,
+					  NORMAL_MODE);
+	  g_free(newlayer_name);
+	  
+	  gimp_image_add_layer (new_image_id, new_layer_id, 0);
+	  
+	  drawable = gimp_drawable_get (new_layer_id);
+	  
+	  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			       bbox_right-bbox_left,
-			       bbox_bottom-bbox_top);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);     
-      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+			       bbox_bottom-bbox_top,
+			       TRUE, FALSE);
+	  gimp_pixel_rgn_set_rect (&pixel_rgn, opti_frame, 0, 0,
+				   bbox_right-bbox_left,
+				   bbox_bottom-bbox_top);
+	  gimp_drawable_flush (drawable);
+	  gimp_drawable_detach (drawable);     
+	  gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+	}
 
       gimp_progress_update (((double)this_frame_num+1.0) /
 			    ((double)total_frames));
@@ -859,7 +877,7 @@ do_optimizations(GRunModeType run_mode)
 /* Util. */
 
 static DisposeType
-get_frame_disposal (guint whichframe)
+get_frame_disposal (const guint whichframe)
 {
   gchar* layer_name;
   DisposeType disposal;
@@ -871,4 +889,204 @@ get_frame_disposal (guint whichframe)
   return(disposal);
 }
 
+
+
+static guint32
+get_frame_duration (const guint whichframe)
+{
+  gchar* layer_name;
+  gint   duration = 0;
+
+  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
+  if (layer_name != NULL)
+    {
+      duration = parse_ms_tag(layer_name);
+      g_free(layer_name);
+    }
+  
+  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
+  if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
+
+  return ((guint32) duration);
+}
+
+
+static int
+is_ms_tag (const char *str, int *duration, int *taglength)
+{
+  gint sum = 0;
+  gint offset;
+  gint length;
+
+  length = strlen(str);
+
+  if (str[0] != '(')
+    return 0;
+
+  offset = 1;
+
+  /* eat any spaces between open-parenthesis and number */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+  
+  if ((offset>=length) || (!isdigit(str[offset])))
+    return 0;
+
+  do
+    {
+      sum *= 10;
+      sum += str[offset] - '0';
+      offset++;
+    }
+  while ((offset<length) && (isdigit(str[offset])));  
+
+  if (length-offset <= 2)
+    return 0;
+
+  /* eat any spaces between number and 'ms' */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+
+  if ((length-offset <= 2) ||
+      (toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
+    return 0;
+
+  offset += 2;
+
+  /* eat any spaces between 'ms' and close-parenthesis */
+  while ((offset<length) && (str[offset] == ' '))
+    offset++;
+
+  if ((length-offset < 1) || (str[offset] != ')'))
+    return 0;
+
+  offset++;
+  
+  *duration = sum;
+  *taglength = offset;
+
+  return 1;
+}
+
+
+static int
+parse_ms_tag (const char *str)
+{
+  int i;
+  int rtn;
+  int dummy;
+  int length;
+
+  length = strlen(str);
+
+  for (i=0; i<length; i++)
+    {
+      if (is_ms_tag(&str[i], &rtn, &dummy))
+	return rtn;
+    }
+  
+  return -1;
+}
+
+
+static int
+is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
+{
+  if (strlen(str) != 9)
+    return 0;
+  
+  if (strncmp(str, "(combine)", 9) == 0)
+    {
+      *taglength = 9;
+      *disposal = DISPOSE_COMBINE;
+      return 1;
+    }
+  else if (strncmp(str, "(replace)", 9) == 0)
+    {
+      *taglength = 9;
+      *disposal = DISPOSE_REPLACE;
+      return 1;
+    }
+
+  return 0;
+}
+
+
+static DisposeType
+parse_disposal_tag (const char *str)
+{
+  DisposeType rtn;
+  int i, dummy;
+  gint length;
+
+  length = strlen(str);
+
+  for (i=0; i<length; i++)
+    {
+      if (is_disposal_tag(&str[i], &rtn, &dummy))
+	{
+	  return rtn;
+	}
+    }
+
+  return (DISPOSE_UNDEFINED); /* FIXME */
+}
+
+
+
+static void
+remove_disposal_tag (char *dest, char *src)
+{
+  gint offset = 0;
+  gint destoffset = 0;
+  gint length;
+  int taglength;
+  DisposeType dummy;
+
+  length = strlen(src);
+
+  strcpy(dest, src);
+
+  while (offset<=length)
+    {
+      if (is_disposal_tag(&src[offset], &dummy, &taglength))
+	{
+	  offset += taglength;
+	}
+      dest[destoffset] = src[offset];
+      destoffset++;
+      offset++;
+    }
+
+  dest[offset] = '\0';
+}
+
+
+
+static void
+remove_ms_tag (char *dest, char *src)
+{
+  gint offset = 0;
+  gint destoffset = 0;
+  gint length;
+  int taglength;
+  int dummy;
+
+  length = strlen(src);
+
+  strcpy(dest, src);
+
+  while (offset<=length)
+    {
+      if (is_ms_tag(&src[offset], &dummy, &taglength))
+	{
+	  offset += taglength;
+	}
+      dest[destoffset] = src[offset];
+      destoffset++;
+      offset++;
+    }
+
+  dest[offset] = '\0';
+}
 
