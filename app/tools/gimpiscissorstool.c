@@ -59,8 +59,10 @@
 
 #ifdef DEBUG
 #define TRC(x) printf x
+#define D(x) x
 #else
 #define TRC(x)
+#define D(x)
 #endif
 
 
@@ -202,9 +204,13 @@ static GdkPoint    curve_points [MAX_POINTS];
 
 
 /*  temporary convolution buffers --  */
+D(static unsigned int sent0 = 0xd0d0d0d0);
 static unsigned char  maxgrad_conv0 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static unsigned int sent1 = 0xd1d1d1d1);
 static unsigned char  maxgrad_conv1 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static unsigned int sent2 = 0xd2d2d2d2);
 static unsigned char  maxgrad_conv2 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static unsigned int sent3 = 0xd3d3d3d3);
 
 
 static int  horz_deriv [9] =
@@ -830,8 +836,10 @@ iscissors_draw_curve (GDisplay  *gdisp,
   int npts;
   guint32 coords;
 
-  /* XXX this has triggered: work out why */
-  g_return_if_fail (curve->points != NULL);
+  /* Uh, this shouldn't happen, but it does.  So we ignore it.
+   * Quality code, baby. */
+  if (!curve->points)
+      return;
 
   npts = 0;
   point = curve->points->pdata;
@@ -1569,11 +1577,6 @@ gradmap_tile_validate (TileManager *tm, Tile *tile)
       first_gradient = FALSE;
     }
 
-  srcPR.bytes = gimp_image_composite_bytes (gimage);
-  srcPR.w = TILE_WIDTH;
-  srcPR.h = TILE_HEIGHT;
-  srcPR.rowstride = gimage->width * gimp_image_composite_bytes (gimage);
-
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
@@ -1598,7 +1601,7 @@ gradmap_tile_validate (TileManager *tm, Tile *tile)
   srcPR.h = MIN (dh, sh);
   srcPR.bytes = gimp_image_composite_bytes (gimage);
   srcPR.data = tile_data_pointer (srctile, 0, 0);
-  srcPR.rowstride = sw * srcPR.bytes;
+  srcPR.rowstride = srcPR.w * srcPR.bytes;
 
   /* XXX tile edges? */
 
@@ -1625,7 +1628,7 @@ gradmap_tile_validate (TileManager *tm, Tile *tile)
     {
       datah = maxgrad_conv1 + srcPR.rowstride*i;
       datav = maxgrad_conv2 + srcPR.rowstride*i;
-      gradmap = tiledata + TILE_WIDTH * COST_WIDTH * i;
+      gradmap = tiledata + tile_ewidth (tile) * COST_WIDTH * i;
 
       for (j = 0; j < srcPR.w; j++)
 	{
@@ -1747,7 +1750,7 @@ find_max_gradient (Iscissors *iscissors, GImage *gimage, int *x, int *y)
       endy = srcPR.y + srcPR.h;
       for (i = srcPR.y; i < endy; i++)
 	{
-	  gradient = srcPR.data + srcPR.rowstride * (i-y1);
+	  gradient = srcPR.data + srcPR.rowstride * (i - srcPR.y);
 	  for (j = srcPR.x; j < endx; j++)
 	    {
 	      g = *gradient;

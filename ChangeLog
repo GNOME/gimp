@@ -1,3 +1,13 @@
+Sun Oct 17 21:28:58 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/iscissors.c: long overdue fix for problem with overrunning
+	    buffers in a couple of places.  Should now work with image
+	    that are not an exact multiple of the tile size, and cope with
+	    moving and adding control point before the curve is closed.
+	    This may well fix a number of the bugs people have reported
+	    on iscissors.  As of now, I know of no bugs in iscissors - if
+	    you find one, I'm interested.
+
 1999-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpsignal.[ch]: new GimpSignalType gimp_sigtype_int_int_int.
