@@ -2599,6 +2599,9 @@ gimp_image_remove_layer (GimpImage *gimage,
 
   g_object_ref (layer);
 
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
+
   gimp_container_remove (gimage->layers, GIMP_OBJECT (layer));
   gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);  
 

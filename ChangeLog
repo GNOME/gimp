@@ -1,3 +1,12 @@
+2003-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (gimp_image_remove_layer)
+	* app/core/gimpimage.c (undo_pop_layer)
+	* app/text/gimptextlayer.c (gimp_text_layer_render):
+	gimp_layer_invalidate_boundary() must be called whenever a layer
+	gets translated, resized or removed. Fixes stale layer outlines in
+	the canvas padding area.
+
 2003-07-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolornotebook.c (gimp_color_notebook_class_init):
@@ -29,7 +38,7 @@
 	GIMP_EXTENSION starting this keeps us from showing multiple help
 	browsers.
 
-	Pass the help_locale around instead oh hardcoding it to "C" at the
+	Pass the help_locale around instead of hardcoding it to "C" at the
 	bottom (now it's hardcoded a few functions above ;)
 
 2003-07-24  Michael Natterer  <mitch@gimp.org>

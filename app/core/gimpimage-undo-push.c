@@ -1244,7 +1244,7 @@ undo_pop_item_displace (GimpUndo            *undo,
   gimp_item_translate (item,
                        idu->old_offset_x - offset_x,
                        idu->old_offset_y - offset_y,
-                        FALSE);
+                       FALSE);
 
   idu->old_offset_x = offset_x;
   idu->old_offset_y = offset_y;
@@ -1519,6 +1519,9 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  remove layer  */
 
+      /*  Make sure we're not caching any old selection info  */
+      gimp_layer_invalidate_boundary (layer);
+              
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
@@ -1571,8 +1574,8 @@ undo_pop_layer (GimpUndo            *undo,
       lu->prev_layer = gimp_image_get_active_layer (undo->gimage);
 
       /*  hide the current selection--for all views  */
-      if (gimp_image_get_active_layer (undo->gimage))
-	gimp_layer_invalidate_boundary (gimp_image_get_active_layer (undo->gimage));
+      if (lu->prev_layer)
+	gimp_layer_invalidate_boundary (lu->prev_layer);
 
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (layer))
