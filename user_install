@@ -13,8 +13,8 @@
 echo "mkdir $2"
 mkdir $2
 
-echo "cp $1/gimprc $2/gimprc"
-cp $1/gimprc $2/gimprc
+echo "cp $1/gimprc_user $2/gimprc"
+cp $1/gimprc_user $2/gimprc
 
 echo "cp $1/gtkrc $2/gtkrc"
 cp $1/gtkrc $2/gtkrc

@@ -269,6 +269,7 @@ dnl Output the Makefiles
 AC_OUTPUT(
 Makefile
 gimprc
+gimprc_user
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build

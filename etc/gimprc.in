@@ -1,3 +1,7 @@
+# This is the system-wide gimprc file.  Any change made in this file
+# will affect all users of this system, provided that they are not
+# overriding the default values in their personal gimprc file.
+#
 # Lines that start with a '#' are comments.
 # Blank lines are ignored.
 
@@ -202,3 +206,5 @@
 
 # path for gflare flares directory
 (gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
+
+# [end of file]

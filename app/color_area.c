@@ -188,7 +188,7 @@ color_area_edit (void)
 
   if (! color_select)
     {
-      color_select = color_select_new (r, g, b, color_area_select_callback, NULL);
+      color_select = color_select_new (r, g, b, color_area_select_callback, NULL, TRUE);
       color_select_active = 1;
     }
   else

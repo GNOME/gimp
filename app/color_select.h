@@ -43,10 +43,11 @@ struct _ColorSelect {
   int orig_values[3];
   ColorSelectCallback callback;
   void *client_data;
+  int wants_updates;
   GdkGC *gc;
 };
 
-ColorSelectP color_select_new (int, int, int, ColorSelectCallback, void *);
+ColorSelectP color_select_new (int, int, int, ColorSelectCallback, void *, int);
 void color_select_show (ColorSelectP);
 void color_select_hide (ColorSelectP);
 void color_select_free (ColorSelectP);

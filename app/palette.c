@@ -839,7 +839,8 @@ palette_edit_callback (GtkWidget *w,
       if (!palette->color_select)
 	{
 	  palette->color_select = color_select_new (color[0], color[1], color[2],
-						    palette_select_callback, NULL);
+						    palette_select_callback, NULL,
+						    FALSE);
 	  palette->color_select_active = 1;
 	}
       else

@@ -416,7 +416,7 @@ indexed_palette_area_events (GtkWidget *widget,
 
 	  if (! color_select)
 	    {
-	      color_select = color_select_new (r, g, b, indexed_palette_select_callback, NULL);
+	      color_select = color_select_new (r, g, b, indexed_palette_select_callback, NULL, FALSE);
 	      color_select_active = 1;
 	    }
 	  else

@@ -1,3 +1,23 @@
+Sun Jan 25 18:41:17 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/about_dialog.c: Added a couple names here
+
+	* app/color_area.c
+	* app/color_panel.c
+	* app/color_select.c
+	* app/color_select.h
+	* app/indexed_palette.c
+	* app/palette.c: Changed COLOR_UPDATE functionality, along with
+	cosmetic changes (gimp-quinet-980120-0)
+
+	* .cvsignore
+	* Makefile.am
+	* configure.in
+	* gimprc.in
+	* gimprc_user.in
+	* user_install: makes gimprc_user, splitting user and system-wide
+	settings. (gimp-quinet-980121-1)
+
 Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage.c (gimage_merge_layers): Added a missing call to

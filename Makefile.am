@@ -4,7 +4,7 @@ SUBDIRS = libgimp plug-ins app docs
 
 EXTRA_DIST = TODO TODO-DIST NOTES gtkrc gimp_logo.ppm rmshm user_install gimp_tips.txt ps-menurc
 
-gimpdata_DATA = gimprc gtkrc gimp_logo.ppm gimp_tips.txt ps-menurc
+gimpdata_DATA = gimprc gimprc_user gtkrc gimp_logo.ppm gimp_tips.txt ps-menurc
 
 gimpdata_SCRIPTS = user_install
 

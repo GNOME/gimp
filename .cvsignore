@@ -9,3 +9,4 @@ gimprc
 config.status
 libtool
 aclocal.m4
+gimprc_user

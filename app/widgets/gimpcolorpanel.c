@@ -150,7 +150,8 @@ color_panel_events (GtkWidget *widget,
 							color_panel->color[1],
 							color_panel->color[2],
 							color_panel_select_callback,
-							color_panel);
+							color_panel,
+							FALSE);
 	      private->color_select_active = 1;
 	    }
 	  else
