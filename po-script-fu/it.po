@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 14:09+0200\n"
+"POT-Creation-Date: 2004-06-20 16:31+0200\n"
 "PO-Revision-Date: 2004-06-01 13:11+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:140
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -104,26 +104,26 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1927
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-scripts.c:1937
 msgid "Author:"
 msgstr "Autore:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-scripts.c:1949
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/script-fu/script-fu-scripts.c:1957
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1142,7 +1142,7 @@ msgstr "Dimensione contorno"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-msgstr "<Image>/Script-Fu/Alfa a logo/Metallo freddo..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/Metallo freddo..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
@@ -1452,7 +1452,7 @@ msgid ""
 "Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-"
-"pulsante a t_ubo..."
+"pulsante t_ubolare..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
@@ -1496,7 +1496,7 @@ msgstr "Sfuma gradiente (testo)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline Gradient Reverse"
-msgstr "Inverti gradiente profilo"
+msgstr "Inverti gradiente del profilo"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
@@ -1517,7 +1517,7 @@ msgstr "Ombra"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr "Inverti gradiente testo"
+msgstr "Inverti gradiente del testo"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
@@ -1545,7 +1545,7 @@ msgstr "Dimensione effetto (pixel * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-msgstr "<Image>/Script-Fu/Alfa a logo/S_mussatura gradiente..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/S_mussatura gradiente..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
@@ -1639,7 +1639,7 @@ msgstr "Crea nuova immagine"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert Layer Names"
-msgstr "Inserire nome livello"
+msgstr "Inserisci nome livello"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
 msgid "Make New Background"
@@ -1917,7 +1917,7 @@ msgstr "Dettagli in mezzo"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
-msgstr "Tile"
+msgstr "Piastrella"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
@@ -2050,7 +2050,7 @@ msgstr "Colore sfera"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-msgstr "<Image>/Script-Fu/Animatori/_Globo ruotante..."
+msgstr "<Image>/Script-Fu/Animatori/_Globo rotante..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2062,7 +2062,7 @@ msgstr "Scala di colore a n colori (0 = RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
-msgstr "Gira da sinistra a destra"
+msgstr "Ruota da sinistra a destra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
@@ -2167,7 +2167,7 @@ msgstr "Colore pieno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
-msgstr "Spirografi"
+msgstr "Spirografo"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2192,7 +2192,7 @@ msgstr "Tipo"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Esplosione di stella..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/Esplosione di stella..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
@@ -2208,7 +2208,7 @@ msgstr "Dimensione effetto (punti * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Cielo stellato..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/Cielo stellato..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
@@ -2228,7 +2228,7 @@ msgstr "Ammontare della rotazione"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/_Storte..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Motivi/_Vortice..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2268,7 +2268,7 @@ msgstr "Valore scelte"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Testo in circolo..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Testo circolare..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
@@ -2280,7 +2280,7 @@ msgstr "Angolo di riempimento"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-msgstr "<Image>/Script-Fu/Alfa a logotipo/Appica _texture..."
+msgstr "<Image>/Script-Fu/Alfa a logotipo/Applica _texture..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
@@ -2288,7 +2288,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Applica _textured..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
-msgstr "Terminazione sfumatura"
+msgstr "Fine sfumatura"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2296,7 +2296,7 @@ msgstr "Esagoni"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
-msgstr "Tipo di mosaico"
+msgstr "Tipo di mosaico piastrelle"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
@@ -2328,7 +2328,7 @@ msgstr "Tipo sfocatura"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur Vertically"
-msgstr "Sfocatura verticali"
+msgstr "Sfocatura verticale"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
@@ -2340,7 +2340,7 @@ msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Web Title Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Intestazione web..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
@@ -2356,7 +2356,7 @@ msgstr "<Image>/Script-Fu/Alchimia/Maschera di _focalizzazione..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
-msgstr "Maschera opacità"
+msgstr "Opacità maschera"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask Size"
@@ -2392,7 +2392,7 @@ msgstr "Larghezza nastro"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow Darkness"
-msgstr "Oscurità ombra"
+msgstr "Intensità ombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow Depth"
@@ -2412,7 +2412,7 @@ msgstr "Lunghezza filo"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Xtns/Navigatore Web/Registro Plug-In"
+msgstr "<Toolbox>/Aiuto/GIMP Online/Registro Plug-In"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
