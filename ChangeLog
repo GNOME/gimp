@@ -1,3 +1,10 @@
+Tue Apr  7 22:36:22 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* added regex.[ch] to app/ and plug-ins/script-fu/ so we REALLY
+	have proper regex functions on all platforms
+
+	* updated gfig plugin
+
 Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: fix for $srcdir != $builddir for data. Tightened
@@ -25,7 +32,7 @@ Mon Apr  6 20:38:49 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/sgi/sgi.c
 	* plug-ins/sgi/sgi.h: fold in portability fixes with the new source
 
-	* plug-ins/threshold_alpha/threshold_alpha: properly get params
+	* plug-ins/threshold_alpha/threshold_alpha.c: properly get params
 	in non-interactive mode
 
 	* updated bmp plugin, folded in portability fixes

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <regex.h>
+#include "regex.h"
 #include "siod.h"
 
 /* OSF/1 doc says that POSIX and XPG4 include regcomp in libc.

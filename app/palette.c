@@ -109,8 +109,8 @@ static unsigned char    foreground[3] = { 0, 0, 0 };
 static unsigned char    background[3] = { 255, 255, 255 };
 
 /*  Color select dialog  */
-static ColorSelectP color_select = NULL;
-static int color_select_active = 0;
+/* static ColorSelectP color_select = NULL;
+static int color_select_active = 0; */
 
 static ActionAreaItem action_items[] =
 {
@@ -1010,11 +1010,11 @@ palette_add_entries_callback (GtkWidget *w,
     }
 }
 
-static void
+/* static void
 palette_merge_entries_callback (GtkWidget *w,
 				gpointer   client_data)
 {
-}
+} */
 
 static void
 palette_delete_entries_callback (GtkWidget *w,

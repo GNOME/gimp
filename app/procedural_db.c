@@ -20,7 +20,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
-#include <regex.h>
+#include "regex.h"
 #include "appenv.h"
 #include "app_procs.h"
 #include "general.h"

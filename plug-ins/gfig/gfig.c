@@ -41,6 +41,9 @@
  * 1.1  Fixed crashes when objects not fully defined
  * 
  * 1.2  More bug fixes and prevent gtk warning when creating new figs
+ * 
+ * 1.3  Portability fixes and fixed bug reports 257 and 258 from and 81 & 101 & 133
+ *      http://www.wilberworks.com/bugs.cgi
  */
 
 #include <stdio.h>
@@ -89,17 +92,19 @@
 #define BRUSH_PREVIEW_SZ 32
 #define GFIG_HEADER "GFIG Version 0.1\n"
 
-#ifndef FALSE
-#define FALSE 0
-#endif
- 
+
 #ifndef TRUE
 #define TRUE 1
-#endif
- 
+#endif /* TRUE */
+
+#ifndef FALSE
+#define FALSE 0
+#endif /* FALSE */
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
                        GDK_MOTION_NOTIFY | \
@@ -180,6 +185,8 @@ static void      find_grid_pos(GdkPoint *p,GdkPoint *gp, guint state);
 static gint      brush_list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
 static gint      calculate_point_to_line_distance(GdkPoint *p, GdkPoint *A, GdkPoint *B, GdkPoint *I);
 
+/* gtk private function forward declaration */
+gchar * gdk_pixmap_extract_color (gchar *buffer);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -404,20 +411,26 @@ typedef struct DobjPoints {
   gint found_me;
 } DOBJPOINTS;
 
-typedef (*DOBJFUNC)(void *Dobj);
-typedef (*DOBJSAVEFUNC)(void *Dobj,FILE *);
+
+struct Dobject; /* fwd declaration for DOBJFUNC */
+
+typedef void            (*DOBJFUNC)(struct Dobject *);
+typedef struct Dobject *(*DOBJGENFUNC)(struct Dobject *);
+typedef struct Dobject *(*DOBJLOADFUNC)(FILE *);
+typedef void            (*DOBJSAVEFUNC)(struct Dobject *, FILE *);
 
 /* The object itself */
 typedef struct Dobject {
   DOBJTYPE type; /* What is the type? */
-  gpointer * type_data; /* Extra data needed by the object */
+  gpointer     type_data; /* Extra data needed by the object */
   DOBJPOINTS * points; /* List of points */
   DOBJFUNC  drawfunc; /* How do I draw myself */
-  DOBJFUNC  loadfunc; /* Load this type of object */
-  DOBJSAVEFUNC  savefunc; /* Save me out */
   DOBJFUNC  paintfunc; /* Draw me on canvas */
-  DOBJFUNC  copyfunc; /* copy */
+  DOBJGENFUNC  copyfunc;  /* copy */
+  DOBJLOADFUNC loadfunc;  /* Load this type of object */
+  DOBJSAVEFUNC savefunc;  /* Save me out */
 } DOBJECT;
+
 
 static DOBJECT *obj_creating; /* Object we are creating */
 static DOBJECT *tmp_line; /* Needed when drawing lines */
@@ -899,7 +912,7 @@ gfig_name_encode (gchar *dest, guchar *src)
   Translate "\\040" to SPACE, etc.
  */
 void
-gfig_name_decode (gchar *dest, gchar *src)
+gfig_name_decode (gchar *dest, guchar *src)
 {
   int	cnt = MAX_LOAD_LINE - 1;
   int	tmp;
@@ -2452,7 +2465,7 @@ gfig_brush_preview_events ( GtkWidget *widget,
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
   static GdkPoint point;
-  static have_start = 0;
+  static int have_start = 0;
 
   switch (event->type)
     {
@@ -2781,7 +2794,7 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
   /* Given the name of a brush then paint it and return the ID of the image 
    * the preview can be got from
    */
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   int nreturn_vals;
   static gint32 layer_ID = -1;
   guchar fR,fG,fB;
@@ -3220,7 +3233,7 @@ static void
 gfig_get_brushes(GtkWidget *list)
 {
   GtkWidget *list_item;
-  gint list_item2sel;
+  gint list_item2sel = 0;
   gint nreturn_vals;
   GParam *return_vals;
   gint num_brs;
@@ -4822,6 +4835,7 @@ static void
 gfig_close_callback (GtkWidget *widget,
 			 gpointer   data)
 {
+  gfig_brush_img_del(); /* Delete the brush image in the gimp */
   gtk_main_quit ();
 }
 
@@ -4981,7 +4995,7 @@ gfig_preview_events ( GtkWidget *widget,
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
   GdkPoint point;
-  static tmp_show_single = 0;
+  static gint tmp_show_single = 0;
 
   switch (event->type)
     {
@@ -5609,12 +5623,22 @@ paint_layer_new(gchar *new_name)
 {
   gint32 layer_id;
   gint32 fill_type;
+  int isgrey = 0;
+
+  switch ( gimp_drawable_type (gfig_select_drawable->id) )
+  {
+  case GRAYA_IMAGE:
+  case GRAY_IMAGE:
+    isgrey = 2;
+  default:
+    break;
+  }
 
   if((layer_id = gimp_layer_new(gfig_image,
 				new_name,
 				img_width,
 				img_height,
-				1, /* RGBA type */
+				1 + isgrey, /* RGBA or GRAYA type */
 				100.0, /* opacity */
 				0 /* mode */)) < 0)
     printf("Error in creating\n");
@@ -5815,7 +5839,7 @@ about_button_press(GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new("Release 1.2");
+  label = gtk_label_new("Release 1.3");
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -7894,7 +7918,7 @@ d_paint_line(DOBJECT *obj)
 {
   DOBJPOINTS * spnt;
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -8027,11 +8051,11 @@ d_new_line(gint x, gint y)
 
   nobj->type = LINE;
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_line;
-  nobj->loadfunc = (DOBJFUNC)d_load_line;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_line;
-  nobj->paintfunc = (DOBJFUNC)d_paint_line;
-  nobj->copyfunc = (DOBJFUNC)d_copy_line;
+  nobj->drawfunc  = d_draw_line;
+  nobj->loadfunc  = d_load_line;
+  nobj->savefunc  = d_save_line;
+  nobj->paintfunc = d_paint_line;
+  nobj->copyfunc  = d_copy_line;
 
   return(nobj);
 }
@@ -8476,11 +8500,11 @@ d_new_circle(gint x, gint y)
 
   nobj->type = CIRCLE;
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_circle;
-  nobj->loadfunc = (DOBJFUNC)d_load_circle;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_circle;
-  nobj->paintfunc = (DOBJFUNC)d_paint_circle;
-  nobj->copyfunc = (DOBJFUNC)d_copy_circle;
+  nobj->drawfunc  = d_draw_circle;
+  nobj->loadfunc  = d_load_circle;
+  nobj->savefunc  = d_save_circle;
+  nobj->paintfunc = d_paint_circle;
+  nobj->copyfunc  = d_copy_circle;
 
   return(nobj);
 }
@@ -8711,7 +8735,7 @@ d_paint_approx_ellipse(DOBJECT *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -9013,11 +9037,11 @@ d_new_ellipse(gint x, gint y)
 
   nobj->type = ELLIPSE;
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_ellipse;
-  nobj->loadfunc = (DOBJFUNC)d_load_ellipse;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_ellipse;
-  nobj->paintfunc = (DOBJFUNC)d_paint_ellipse;
-  nobj->copyfunc = (DOBJFUNC)d_copy_ellipse;
+  nobj->drawfunc  = d_draw_ellipse;
+  nobj->loadfunc  = d_load_ellipse;
+  nobj->savefunc  = d_save_ellipse;
+  nobj->paintfunc = d_paint_ellipse;
+  nobj->copyfunc  = d_copy_ellipse;
 
   return(nobj);
 }
@@ -9347,7 +9371,7 @@ d_paint_poly(DOBJECT *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -9592,13 +9616,13 @@ d_poly2lines(DOBJECT *obj)
   /* Free old pnts */
   d_delete_dobjpoints(center_pnt);
 
-  /* hey were a line now */
+  /* hey we're a line now */
   obj->type = LINE;
-  obj->drawfunc = (DOBJFUNC)d_draw_line;
-  obj->loadfunc = (DOBJFUNC)d_load_line;
-  obj->savefunc = (DOBJSAVEFUNC)d_save_line;
-  obj->paintfunc = (DOBJFUNC)d_paint_line;
-  obj->copyfunc = (DOBJFUNC)d_copy_line;
+  obj->drawfunc  = d_draw_line;
+  obj->loadfunc  = d_load_line;
+  obj->savefunc  = d_save_line;
+  obj->paintfunc = d_paint_line;
+  obj->copyfunc  = d_copy_line;
 
   /* draw it + control pnts */
   obj->drawfunc(obj);
@@ -9726,13 +9750,13 @@ d_star2lines(DOBJECT *obj)
   /* Free old pnts */
   d_delete_dobjpoints(center_pnt);
 
-  /* hey were a line now */
+  /* hey we're a line now */
   obj->type = LINE;
-  obj->drawfunc = (DOBJFUNC)d_draw_line;
-  obj->loadfunc = (DOBJFUNC)d_load_line;
-  obj->savefunc = (DOBJSAVEFUNC)d_save_line;
-  obj->paintfunc = (DOBJFUNC)d_paint_line;
-  obj->copyfunc = (DOBJFUNC)d_copy_line;
+  obj->drawfunc  = d_draw_line;
+  obj->loadfunc  = d_load_line;
+  obj->savefunc  = d_save_line;
+  obj->paintfunc = d_paint_line;
+  obj->copyfunc  = d_copy_line;
 
   /* draw it + control pnts */
   obj->drawfunc(obj);
@@ -9785,11 +9809,11 @@ d_new_poly(gint x, gint y)
   nobj->type = POLY;
   nobj->type_data = (gpointer)3; /* Default to three sides */
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_poly;
-  nobj->loadfunc = (DOBJFUNC)d_load_poly;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_poly;
-  nobj->paintfunc = (DOBJFUNC)d_paint_poly;
-  nobj->copyfunc = (DOBJFUNC)d_copy_poly;
+  nobj->drawfunc  = d_draw_poly;
+  nobj->loadfunc  = d_load_poly;
+  nobj->savefunc  = d_save_poly;
+  nobj->paintfunc = d_paint_poly;
+  nobj->copyfunc  = d_copy_poly;
 
   return(nobj);
 }
@@ -9952,7 +9976,7 @@ arc_details(GdkPoint *vert_a,GdkPoint *vert_b, GdkPoint *vert_c,GdkPoint *center
   double circumcircle_R;
   double line1_grad,line1_const;
   double line2_grad,line2_const;
-  double inter_x,inter_y;
+  double inter_x=0.0,inter_y=0.0;
   int got_x=0,got_y=0;
 
   ax = (double)(vert_a->x);
@@ -10329,7 +10353,7 @@ d_paint_arc(DOBJECT *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -10530,11 +10554,11 @@ d_new_arc(gint x, gint y)
 
   nobj->type = ARC;
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_arc;
-  nobj->loadfunc = (DOBJFUNC)d_load_arc;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_arc;
-  nobj->paintfunc = (DOBJFUNC)d_paint_arc;
-  nobj->copyfunc = (DOBJFUNC)d_copy_arc;
+  nobj->drawfunc  = d_draw_arc;
+  nobj->loadfunc  = d_load_arc;
+  nobj->savefunc  = d_save_arc;
+  nobj->paintfunc = d_paint_arc;
+  nobj->copyfunc  = d_copy_arc;
 
   return(nobj);
 }
@@ -10593,11 +10617,11 @@ d_arc_end(GdkPoint *pnt, gint shift_down)
       /* Complete arc */
       /* Convert to an arc ... */
       tmp_line->type = ARC;
-      tmp_line->drawfunc = (DOBJFUNC)d_draw_arc;
-      tmp_line->loadfunc = (DOBJFUNC)d_load_arc;
-      tmp_line->savefunc = (DOBJSAVEFUNC)d_save_arc;
-      tmp_line->paintfunc = (DOBJFUNC)d_paint_arc;
-      tmp_line->copyfunc = (DOBJFUNC)d_copy_arc;
+      tmp_line->drawfunc  = d_draw_arc;
+      tmp_line->loadfunc  = d_load_arc;
+      tmp_line->savefunc  = d_save_arc;
+      tmp_line->paintfunc = d_paint_arc;
+      tmp_line->copyfunc  = d_copy_arc;
       d_line_end(pnt,FALSE);
       /*d_draw_line(newarc);  Should undraw line */
       if(need_to_scale)
@@ -10862,7 +10886,7 @@ d_paint_star(DOBJECT *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -11099,11 +11123,11 @@ d_new_star(gint x, gint y)
   nobj->type = STAR;
   nobj->type_data = (gpointer)3; /* Default to three sides 6 points*/
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_star;
-  nobj->loadfunc = (DOBJFUNC)d_load_star;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_star;
-  nobj->paintfunc = (DOBJFUNC)d_paint_star;
-  nobj->copyfunc = (DOBJFUNC)d_copy_star;
+  nobj->drawfunc  = d_draw_star;
+  nobj->loadfunc  = d_load_star;
+  nobj->savefunc  = d_save_star;
+  nobj->paintfunc = d_paint_star;
+  nobj->copyfunc  = d_copy_star;
 
   return(nobj);
 }
@@ -11403,7 +11427,7 @@ d_paint_spiral(DOBJECT *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
@@ -11606,11 +11630,11 @@ d_new_spiral(gint x, gint y)
   nobj->type = SPIRAL;
   nobj->type_data = (gpointer)4; /* Default to four turns */
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_spiral;
-  nobj->loadfunc = (DOBJFUNC)d_load_spiral;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_spiral;
-  nobj->paintfunc = (DOBJFUNC)d_paint_spiral;
-  nobj->copyfunc = (DOBJFUNC)d_copy_spiral;
+  nobj->drawfunc  = d_draw_spiral;
+  nobj->loadfunc  = d_load_spiral;
+  nobj->savefunc  = d_save_spiral;
+  nobj->paintfunc = d_paint_spiral;
+  nobj->copyfunc  = d_copy_spiral;
 
   return(nobj);
 }
@@ -11781,9 +11805,9 @@ d_load_bezier(FILE *from)
 
 #define FP_PNT_MAX  10
 
-static fp_pnt_cnt = 0;
-static fp_pnt_chunk = 0;
-gdouble *fp_pnt_pnts = NULL;
+static int fp_pnt_cnt = 0;
+static int fp_pnt_chunk = 0;
+static gdouble *fp_pnt_pnts = NULL;
 
 
 static void
@@ -11981,7 +12005,7 @@ d_paint_bezier(DOBJECT *obj)
   DOBJPOINTS * spnt;
   gint seg_count = 0;
 
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
   gint i=0;
 
@@ -12140,11 +12164,11 @@ d_new_bezier(gint x, gint y)
   nobj->type = BEZIER;
   nobj->type_data = (gpointer)4; /* Default to four turns */
   nobj->points = npnt;
-  nobj->drawfunc = (DOBJFUNC)d_draw_bezier;
-  nobj->loadfunc = (DOBJFUNC)d_load_bezier;
-  nobj->savefunc = (DOBJSAVEFUNC)d_save_bezier;
-  nobj->paintfunc = (DOBJFUNC)d_paint_bezier;
-  nobj->copyfunc = (DOBJFUNC)d_copy_bezier;
+  nobj->drawfunc  = d_draw_bezier;
+  nobj->loadfunc  = d_load_bezier;
+  nobj->savefunc  = d_save_bezier;
+  nobj->paintfunc = d_paint_bezier;
+  nobj->copyfunc  = d_copy_bezier;
 
   return(nobj);
 }
@@ -12224,6 +12248,9 @@ d_bezier_end(GdkPoint *pnt, gint shift_down)
     }
   
   l_pnt = tmp_bezier->points->next;
+
+  if(!l_pnt) 
+    return;
 
   if(shift_down)
     {

@@ -25,7 +25,9 @@ script_fu_SOURCES = \
 	script-fu-server.h	\
 	script-fu-enums.h	\
 	siod.h			\
-	siodp.h
+	siodp.h			\
+	regex.h			\
+	regex.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
