@@ -157,11 +157,11 @@ run (const gchar      *name,
         {
           gint i;
 
-          domain_register (GIMP_HELP_DEFAULT_DOMAIN, default_domain_uri);
+          domain_register (GIMP_HELP_DEFAULT_DOMAIN, default_domain_uri, NULL);
 
           for (i = 0; i < num_domain_names; i++)
             {
-              domain_register (domain_names[i], domain_uris[i]);
+              domain_register (domain_names[i], domain_uris[i], NULL);
             }
         }
       else

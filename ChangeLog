@@ -1,5 +1,15 @@
 2004-08-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/domain.[ch]: allow to specify the location of the
+	index files independently from the base URL.
+
+	* plug-ins/help/help.c: changed accordingly.
+
+	* plug-ins/help/gimp-help-lookup.c: added command-line options to
+	specify base URI and root directory for index files.
+
+2004-08-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/locales.c (locales_parse): don't mess up the order
 	of languages.
 

@@ -40,12 +40,14 @@ static gchar * lookup (const gchar *help_domain,
 static void
 usage (const gchar *name)
 {
-  g_print ("gimp-help-lookup version %s\n\n", GIMP_VERSION);
-  g_print ("Looks up a help-id in the GIMP user manual.\n"
+  g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
+  g_print ("Looks up a help-id in the GIMP user manual.\n\n"
 	   "Usage: %s [options] [help-id]\n\n", name);
   g_print ("Valid options are:\n"
 	   "  -h, --help                  Output this help.\n"
 	   "  -v, --version               Output version info.\n"
+           "  -b, --base <uri>            Speficies base URI.\n"
+           "  -r, --root <directory>      Speficies root directory for index files.\n"
            "  -l, --lang <language-code>  Specifies help language.\n"
            "\n");
 }
@@ -55,9 +57,10 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  const gchar *help_root    = g_getenv (GIMP_HELP_ENV_URI);
+  const gchar *help_base    = g_getenv (GIMP_HELP_ENV_URI);
   const gchar *help_locales = GIMP_HELP_DEFAULT_LOCALE;
   const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
+  const gchar *help_root    = NULL;
   gchar       *uri;
   gint         i;
 
@@ -73,25 +76,44 @@ main (gint   argc,
           if (*opt == '-')
             opt++;
 
-          switch (*opt)
+          switch (g_ascii_tolower (*opt))
             {
-            case 'l':
-              if (i + i < argc)
-                {
-                  help_locales = argv[++i];
-                  break;
-                }
-              /* else fallthrough */
-
             case 'v':
               g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
               exit (EXIT_SUCCESS);
 
+            case 'b':
+              if (i + 1 < argc)
+                {
+                  help_base = argv[++i];
+                  continue;
+                }
+              break;
+
+            case 'r':
+              if (i + 1 < argc)
+                {
+                  help_root = argv[++i];
+                  continue;
+                }
+              break;
+
+            case 'l':
+              if (i + 1 < argc)
+                {
+                  help_locales = argv[++i];
+                  continue;
+                }
+              break;
+
             case 'h':
-            default:
+            case '?':
               usage (argv[0]);
               exit (EXIT_SUCCESS);
             }
+
+          g_printerr ("Error parsing the command-line options, try --help\n");
+          exit (EXIT_FAILURE);
         }
       else
         {
@@ -99,13 +121,13 @@ main (gint   argc,
         }
     }
 
-  if (help_root)
-    uri = g_strdup (help_root);
+  if (help_base)
+    uri = g_strdup (help_base);
   else
     uri = g_filename_to_uri (DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX,
                              NULL, NULL);
 
-  domain_register (GIMP_HELP_DEFAULT_DOMAIN, uri);
+  domain_register (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
   g_free (uri);
 
   uri = lookup (GIMP_HELP_DEFAULT_DOMAIN, help_locales, help_id);

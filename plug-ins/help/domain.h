@@ -29,7 +29,8 @@ typedef struct _HelpDomain HelpDomain;
 
 
 void         domain_register (const gchar  *domain_name,
-                              const gchar  *domain_uri);
+                              const gchar  *domain_uri,
+                              const gchar  *domain_root);
 HelpDomain * domain_lookup   (const gchar  *domain_name);
 
 gchar      * domain_map      (HelpDomain   *domain,

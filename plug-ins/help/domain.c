@@ -45,6 +45,7 @@ struct _HelpDomain
 {
   gchar      *help_domain;
   gchar      *help_uri;
+  gchar      *help_root;
   GHashTable *help_locales;
 };
 
@@ -60,7 +61,8 @@ struct _HelpLocale
 /*  local function prototypes  */
 
 static HelpDomain  * domain_new               (const gchar  *domain_name,
-                                               const gchar  *domain_uri);
+                                               const gchar  *domain_uri,
+                                               const gchar  *domain_root);
 static void          domain_free              (HelpDomain   *domain);
 
 static HelpLocale  * domain_locale_new        (const gchar  *locale_id);
@@ -89,7 +91,8 @@ static GHashTable  *domain_hash = NULL;
 
 void
 domain_register (const gchar *domain_name,
-                 const gchar *domain_uri)
+                 const gchar *domain_uri,
+                 const gchar *domain_root)
 {
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (domain_uri != NULL);
@@ -105,7 +108,7 @@ domain_register (const gchar *domain_name,
 
   g_hash_table_insert (domain_hash,
                        g_strdup (domain_name),
-                       domain_new (domain_name, domain_uri));
+                       domain_new (domain_name, domain_uri, domain_root));
 }
 
 HelpDomain *
@@ -204,12 +207,24 @@ domain_exit (void)
 
 static HelpDomain *
 domain_new (const gchar *domain_name,
-            const gchar *domain_uri)
+            const gchar *domain_uri,
+            const gchar *domain_root)
 {
   HelpDomain *domain = g_new0 (HelpDomain, 1);
 
   domain->help_domain = g_strdup (domain_name);
   domain->help_uri    = g_strdup (domain_uri);
+  domain->help_root   = g_strdup (domain_root);
+
+  if (domain_uri)
+    {
+      /*  strip trailing slash  */
+      gint len = strlen (domain_uri);
+
+      if (len &&
+          domain_uri[len - 1] == '/')
+        domain->help_uri[len - 1] = '\0';
+    }
 
   return domain;
 }
@@ -224,6 +239,7 @@ domain_free (HelpDomain *domain)
 
   g_free (domain->help_domain);
   g_free (domain->help_uri);
+  g_free (domain->help_root);
   g_free (domain);
 }
 
@@ -354,10 +370,9 @@ domain_locale_parse (HelpDomain  *domain,
 {
   GMarkupParseContext *context;
   DomainParser        *parser;
-  gchar               *basedir;
+  GIOChannel          *io;
   gchar               *filename;
   gboolean             success;
-  GIOChannel          *io;
 
   g_return_val_if_fail (domain != NULL, FALSE);
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -374,8 +389,10 @@ domain_locale_parse (HelpDomain  *domain,
       locale->help_missing = NULL;
     }
 
-  basedir = g_filename_from_uri (domain->help_uri, NULL, NULL);
-  if (! basedir)
+  if (! domain->help_root)
+    domain->help_root = g_filename_from_uri (domain->help_uri, NULL, NULL);
+
+  if (! domain->help_root)
     {
       g_set_error (error, 0, 0,
                    "Cannot determine location of gimp-help.xml from '%s'",
@@ -383,17 +400,16 @@ domain_locale_parse (HelpDomain  *domain,
       return FALSE;
     }
 
-  filename = g_build_filename (basedir,
+  filename = g_build_filename (domain->help_root,
                                locale->locale_id,
                                "gimp-help.xml",
                                NULL);
-  g_free (basedir);
 
 #ifdef GIMP_HELP_DEBUG
-          g_printerr ("help (%s): parsing '%s' for domain \"%s\"\n",
-                      locale->locale_id,
-                      filename,
-                      domain->help_domain);
+  g_printerr ("help (%s): parsing '%s' for domain \"%s\"\n",
+              locale->locale_id,
+              filename,
+              domain->help_domain);
 #endif
 
   io = g_io_channel_new_file (filename, "r", error);
