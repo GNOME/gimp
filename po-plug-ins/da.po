@@ -30,8 +30,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
-"PO-Revision-Date: 2002-08-13 22:21+0200\n"
+"POT-Creation-Date: 2002-08-26 16:17+0200\n"
+"PO-Revision-Date: 2002-08-26 16:18+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1386 plug-ins/common/AlienMap.c:1388
 #: plug-ins/common/AlienMap2.c:1367 plug-ins/gfig/gfig.c:3374
-#: plug-ins/imagemap/imap_about.c:43 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:361
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Om"
@@ -1230,8 +1230,8 @@ msgstr "Vis/skjul en gitterramme i eksemplet"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -2088,7 +2088,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:365
 #: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
-#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:390
 #: plug-ins/common/smooth_palette.c:424 plug-ins/common/snoise.c:528
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
@@ -3198,7 +3198,7 @@ msgid "Create _Histogram"
 msgstr "Opret _histogram"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
 msgstr "_Bredde:"
@@ -4595,7 +4595,7 @@ msgid "Subject:"
 msgstr "Emne:"
 
 #: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:98
 msgid "Filename:"
 msgstr "Filnavn:"
 
@@ -5825,19 +5825,19 @@ msgstr "sekunders forsinkelse"
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
 msgstr "<Image>/Filtre/Slør/Selektiv gaussisk sløring..."
 
-#: plug-ins/common/sel_gauss.c:200 plug-ins/common/sel_gauss.c:236
+#: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
 msgstr "Selektiv gaussisk sløring"
 
-#: plug-ins/common/sel_gauss.c:217
+#: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
 msgstr "sel_gauss: Kan ikke arbejde med indekserede farvebilleder"
 
-#: plug-ins/common/sel_gauss.c:270
+#: plug-ins/common/sel_gauss.c:271
 msgid "_Blur Radius:"
 msgstr "_Sløringsradius:"
 
-#: plug-ins/common/sel_gauss.c:277
+#: plug-ins/common/sel_gauss.c:278
 msgid "_Max. Delta:"
 msgstr "_Maks. delta:"
 
@@ -6021,7 +6021,7 @@ msgid "Smooth Palette"
 msgstr "Jævn palet"
 
 #: plug-ins/common/smooth_palette.c:449 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Højde:"
@@ -9373,7 +9373,7 @@ msgstr ""
 "din installation ikke er komplet. Sikr dig at din installation er komplet "
 "før du rapporterer dette som en fejl.</small></div></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:609
 msgid "<Untitled>"
 msgstr "<unavngiven>"
 
@@ -9536,19 +9536,19 @@ msgstr "Genererer geometrisk fraktal (%d/%d)..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopierer geometrisk fraktal til billede (%d/%d)..."
 
-#: plug-ins/imagemap/imap_about.c:47
+#: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
 msgstr "Billedkortmodul 2.0"
 
-#: plug-ins/imagemap/imap_about.c:49
-msgid "Copyright(c) 1999 by Maurits Rijk"
-msgstr "Copyright © 1999 by Maurits Rijk"
+#: plug-ins/imagemap/imap_about.c:44
+msgid "Copyright(c) 1999-2002 by Maurits Rijk"
+msgstr "Copyright © 1999-2002 Maurits Rijk"
 
-#: plug-ins/imagemap/imap_about.c:50
+#: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
 msgstr "lpeek.mrijk@consunet.nl"
 
-#: plug-ins/imagemap/imap_about.c:52
+#: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
 msgstr "  Frigivet under GNU General Public License  "
 
@@ -9561,8 +9561,8 @@ msgid "Center _x:"
 msgstr "Centrum-_x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:260
-#: plug-ins/imagemap/imap_grid.c:266 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
@@ -9621,44 +9621,44 @@ msgstr ""
 "hjælper dig med hurtigt at oprette den mest almindelige billedkorttype\n"
 "- en samling af miniaturer til en navigationslinje. "
 
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "_Left Start at:"
 msgstr "V_enstre start ved:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "_Top Start at:"
 msgstr "Begynd _foroven ved:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:188
+#: plug-ins/imagemap/imap_cmd_guides.c:183
 msgid "_Horz. Spacing"
 msgstr "_Vandret mellemrum"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "_No. Across:"
 msgstr "_Antal vandret"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:200
+#: plug-ins/imagemap/imap_cmd_guides.c:195
 msgid "_Vert. Spacing:"
 msgstr "_Lodret mellemrum"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:206
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. _Down"
 msgstr "Antal l_odret"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:214
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 msgid "Base _URL:"
 msgstr "Basis-_URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Billedstørrelse: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:236
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Resulterende rektangelgrænser: (0,0) til (0,0) (0 områder)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:271
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Rektangler"
 
@@ -9834,67 +9834,67 @@ msgstr "Gem billedkort"
 msgid "Error"
 msgstr "Fejl"
 
-#: plug-ins/imagemap/imap_grid.c:199
+#: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
 msgstr "Gitterindstillinger"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:205
 msgid "_Snap-To Grid Enabled"
 msgstr "_Fæstn til gitter"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
 msgstr "Gittersynlighed og -type"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
 msgstr "_Skjult"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:226
 msgid "_Lines"
 msgstr "_Linjer"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:235
 msgid "C_rosses"
 msgstr "K_rydser"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
 msgstr "Gitterkornethed"
 
-#: plug-ins/imagemap/imap_grid.c:256
+#: plug-ins/imagemap/imap_grid.c:251
 msgid "_Width"
 msgstr "_Bredde"
 
-#: plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
 msgstr "_Højde"
 
-#: plug-ins/imagemap/imap_grid.c:276
+#: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
 msgstr "Gitterafsæt"
 
-#: plug-ins/imagemap/imap_grid.c:284
+#: plug-ins/imagemap/imap_grid.c:279
 msgid "pixels from l_eft"
 msgstr "punkter fra v_enstre"
 
-#: plug-ins/imagemap/imap_grid.c:289
+#: plug-ins/imagemap/imap_grid.c:284
 msgid "pixels from _top"
 msgstr "punkter fra _top"
 
-#: plug-ins/imagemap/imap_grid.c:300
+#: plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "E_ksempel"
 
-#: plug-ins/imagemap/imap_main.c:152
+#: plug-ins/imagemap/imap_main.c:153
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtre/Internet/Billedkort..."
 
-#: plug-ins/imagemap/imap_main.c:759
+#: plug-ins/imagemap/imap_main.c:760
 msgid "Data changed"
 msgstr "Data ændret"
 
-#: plug-ins/imagemap/imap_main.c:763
+#: plug-ins/imagemap/imap_main.c:764
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
@@ -9902,20 +9902,20 @@ msgstr ""
 "Nogle data er blevet ændret.\n"
 "Ønsker du virkelig at droppe dine ændringer?"
 
-#: plug-ins/imagemap/imap_main.c:972
+#: plug-ins/imagemap/imap_main.c:973
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Filen \"%s\" gemt."
 
-#: plug-ins/imagemap/imap_main.c:976
+#: plug-ins/imagemap/imap_main.c:977
 msgid "Couldn't save file:"
 msgstr "Kunne ikke gemme fil:"
 
-#: plug-ins/imagemap/imap_main.c:1001
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Image size changed"
 msgstr "Billedstørrelse ændret"
 
-#: plug-ins/imagemap/imap_main.c:1005
+#: plug-ins/imagemap/imap_main.c:1006
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -9923,11 +9923,11 @@ msgstr ""
 "Billedstørrelsen er ændret.\n"
 "Tilpas områder?"
 
-#: plug-ins/imagemap/imap_main.c:1036
+#: plug-ins/imagemap/imap_main.c:1037
 msgid "Couldn't read file:"
 msgstr "Kunne ikke læse fil:"
 
-#: plug-ins/imagemap/imap_main.c:1082
+#: plug-ins/imagemap/imap_main.c:1083
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -9995,15 +9995,19 @@ msgstr "_Hjælpemidler"
 msgid "Grid Settings..."
 msgstr "Gitterindstillinger..."
 
-#: plug-ins/imagemap/imap_menu.c:383
+#: plug-ins/imagemap/imap_menu.c:384
+msgid "Use GIMP Guides..."
+msgstr "Benyt Gimp-rektangler..."
+
+#: plug-ins/imagemap/imap_menu.c:386
 msgid "Create Guides..."
 msgstr "Opret rektangler..."
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:393
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: plug-ins/imagemap/imap_menu.c:393
+#: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "Om billedkort..."
 
@@ -10148,31 +10152,31 @@ msgstr "Kommentar"
 msgid "Settings for this Mapfile"
 msgstr "Indstillinger for denne kortfil"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:101
 msgid "Image name:"
 msgstr "Billednavn:"
 
-#: plug-ins/imagemap/imap_settings.c:109
+#: plug-ins/imagemap/imap_settings.c:102
 msgid "Select Image File"
 msgstr "Vælg billedfil"
 
-#: plug-ins/imagemap/imap_settings.c:113
+#: plug-ins/imagemap/imap_settings.c:106
 msgid "_Title:"
 msgstr "_Titel:"
 
-#: plug-ins/imagemap/imap_settings.c:115
+#: plug-ins/imagemap/imap_settings.c:108
 msgid "Aut_hor:"
 msgstr "_Forfatter:"
 
-#: plug-ins/imagemap/imap_settings.c:117
+#: plug-ins/imagemap/imap_settings.c:110
 msgid "Default _URL:"
 msgstr "Standard-_URL:"
 
-#: plug-ins/imagemap/imap_settings.c:119
+#: plug-ins/imagemap/imap_settings.c:112
 msgid "_Description:"
 msgstr "_Beskrivelse:"
 
-#: plug-ins/imagemap/imap_settings.c:134
+#: plug-ins/imagemap/imap_settings.c:127
 msgid "Map file format"
 msgstr "Kortfilformat"
 
