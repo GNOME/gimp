@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-16 01:29+0200\n"
-"PO-Revision-Date: 2003-09-16 01:30+0200\n"
+"POT-Creation-Date: 2003-09-17 05:41+0200\n"
+"PO-Revision-Date: 2003-09-17 05:40+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -299,7 +299,7 @@ msgstr "приликом обраде израза %s: %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредност за израз %s није исправна UTF-8 реч"
 
-#: app/config/gimpconfig-path.c:126
+#: app/config/gimpconfig-path.c:128
 #, c-format
 msgid "can not expand ${%s}"
 msgstr "не могу да повећам ${%s}"
@@ -1092,7 +1092,7 @@ msgid "Guide"
 msgstr "Вођице"
 
 #: app/core/core-enums.c:502 app/core/core-enums.c:532
-#: app/core/gimpchannel.c:1497 app/core/gimpselection.c:593
+#: app/core/gimpchannel.c:1498 app/core/gimpselection.c:593
 msgid "Selection Mask"
 msgstr "Изабрана Маска"
 
@@ -1444,7 +1444,7 @@ msgstr "Неисправна UTF-8 реч у датотеци са четкам�
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:312
+#: app/tools/gimpvectortool.c:306
 msgid "Unnamed"
 msgstr "Неименовано"
 
@@ -1493,7 +1493,7 @@ msgstr "Канал"
 msgid "Rename Channel"
 msgstr "Промени назив канала"
 
-#: app/core/gimpchannel.c:233
+#: app/core/gimpchannel.c:233 app/tools/gimpeditselectiontool.c:1122
 msgid "Move Channel"
 msgstr "Помери канал"
 
@@ -1529,39 +1529,39 @@ msgstr "Прошири канал"
 msgid "Shrink Channel"
 msgstr "Сузи канал"
 
-#: app/core/gimpchannel.c:448
+#: app/core/gimpchannel.c:449
 msgid "Scale Channel"
 msgstr "Повећај или Смањи канал"
 
-#: app/core/gimpchannel.c:477
+#: app/core/gimpchannel.c:478
 msgid "Resize Channel"
 msgstr "Промени величину канала"
 
-#: app/core/gimpchannel.c:506
+#: app/core/gimpchannel.c:507
 msgid "Flip Channel"
 msgstr "Окрени канал"
 
-#: app/core/gimpchannel.c:533
+#: app/core/gimpchannel.c:534
 msgid "Rotate Channel"
 msgstr "Ротирај канал"
 
-#: app/core/gimpchannel.c:563 app/core/gimpdrawable-transform.c:1105
+#: app/core/gimpchannel.c:564 app/core/gimpdrawable-transform.c:1105
 msgid "Transform Channel"
 msgstr "Трансформиши канал"
 
-#: app/core/gimpchannel.c:602
+#: app/core/gimpchannel.c:603
 msgid "Cannot stroke empty channel."
 msgstr "Не може да исцрта празан канал."
 
-#: app/core/gimpchannel.c:607
+#: app/core/gimpchannel.c:608
 msgid "Stroke Channel"
 msgstr "Исцртај канал"
 
-#: app/core/gimpchannel.c:1376
+#: app/core/gimpchannel.c:1377
 msgid "Set Channel Color"
 msgstr "Подеси боју канала"
 
-#: app/core/gimpchannel.c:1425
+#: app/core/gimpchannel.c:1426
 msgid "Set Channel Opacity"
 msgstr "Подеси непровидност канала"
 
@@ -1820,7 +1820,7 @@ msgid "Can't undo %s"
 msgstr "Не могу да поништим %s"
 
 #: app/core/gimpimage.c:1069 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:590
+#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Без наслова"
@@ -2035,8 +2035,8 @@ msgid "Rename Layer"
 msgstr "Промени назив слоја"
 
 #: app/core/gimplayer.c:510 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
-#: app/tools/gimpeditselectiontool.c:245
-#: app/tools/gimpeditselectiontool.c:1015
+#: app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1124
 msgid "Move Layer"
 msgstr "Помери слој"
 
@@ -2194,8 +2194,8 @@ msgstr "Неисправна UTF-8 реч у  датотеци са одсечк
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
 msgstr "Озбиљна грешка у обради: Датотека са одсечком „%s“ изгледа исечена."
 
-#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:243
-#: app/tools/gimpeditselectiontool.c:1011
+#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
+#: app/tools/gimpeditselectiontool.c:1031
 msgid "Move Selection"
 msgstr "Помери селекцију"
 
@@ -2887,7 +2887,7 @@ msgid "Channel List"
 msgstr "Листа канала"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:128
+#: app/tools/gimpvectortool.c:132
 msgid "Paths"
 msgstr "Путање"
 
@@ -6051,7 +6051,8 @@ msgstr "<b>Чини се да недостаје ваша датотека са 
 #: app/gui/tips-dialog.c:96
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr "Требало би да постоји датотека „%s“. Молим, проверите вашу инсталацију."
+msgstr ""
+"Требало би да постоји датотека „%s“. Молим, проверите вашу инсталацију."
 
 #: app/gui/tips-dialog.c:102
 msgid "<b>The GIMP tips file could not be parsed!</b>"
@@ -7074,7 +7075,7 @@ msgstr "Процедуре алатке за трансформацију"
 msgid "Units"
 msgstr "Јединице"
 
-#: app/pdb/procedural_db.c:177
+#: app/pdb/procedural_db.c:174
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7083,7 +7084,7 @@ msgstr ""
 "PDB позвна грешка:\n"
 "процедура „%s“ није пронађена"
 
-#: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
+#: app/pdb/procedural_db.c:212 app/pdb/procedural_db.c:311
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7613,7 +7614,7 @@ msgstr "Тип замотавања %s"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:191 app/tools/gimpmagnifyoptions.c:230
-#: app/tools/gimpmoveoptions.c:180
+#: app/tools/gimpmoveoptions.c:192
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Укључи/искљуши алатку %s"
@@ -7740,12 +7741,17 @@ msgstr "Режим"
 msgid "Exposure:"
 msgstr "Изложеност:"
 
-#: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1013
+#: app/tools/gimpeditselectiontool.c:249
+#: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:345
+msgid "Move Path"
+msgstr "Помери путању"
+
+#: app/tools/gimpeditselectiontool.c:253
+#: app/tools/gimpeditselectiontool.c:1115
 msgid "Move Floating Layer"
 msgstr "Помери плутајући слој"
 
-#: app/tools/gimpeditselectiontool.c:376 app/tools/gimpeditselectiontool.c:656
+#: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
 msgid "Move: "
 msgstr "Помери:"
 
@@ -7771,7 +7777,8 @@ msgstr "/Алати/Алатке за сликање/Брисач"
 msgid "Anti Erase  %s"
 msgstr "Антибрисач %s"
 
-#: app/tools/gimpflipoptions.c:175 app/tools/gimptransformoptions.c:295
+#: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:186
+#: app/tools/gimptransformoptions.c:295
 msgid "Affect:"
 msgstr "Утицај:"
 
@@ -8100,27 +8107,13 @@ msgstr "Растојање:"
 msgid "degrees"
 msgstr "степени"
 
-#: app/tools/gimpmoveoptions.c:184
-msgid "Move Current Layer"
-msgstr "Помери текући слој"
-
-#: app/tools/gimpmoveoptions.c:185
-msgid "Pick a Layer to Move"
-msgstr "Изабери слој за померање"
-
-#. move mask
-#: app/tools/gimpmoveoptions.c:192
-#, c-format
-msgid "Move Mode  %s"
-msgstr "Помери режим %s"
-
 #: app/tools/gimpmoveoptions.c:196
-msgid "Move Selection Outline"
-msgstr "Помери спољну селекцију"
+msgid "Move Current Layer / Path"
+msgstr "Помери текући слој / путању"
 
 #: app/tools/gimpmoveoptions.c:197
-msgid "Move Pixels"
-msgstr "Помери тачке"
+msgid "Pick a Layer / Path to Move"
+msgstr "Изабери слој / путању за померање"
 
 #: app/tools/gimpmovetool.c:105
 msgid "Move"
@@ -8541,13 +8534,53 @@ msgstr "Режим уређивања"
 msgid "Polygonal"
 msgstr "Полигонски"
 
-#: app/tools/gimpvectortool.c:129
+#: app/tools/gimpvectortool.c:133
 msgid "Create and edit paths"
 msgstr "Направи и уреди путање"
 
-#: app/tools/gimpvectortool.c:130
+#: app/tools/gimpvectortool.c:134
 msgid "/Tools/_Paths"
 msgstr "/Алати/Путање"
+
+#: app/tools/gimpvectortool.c:328
+msgid "Add Stroke"
+msgstr "Додај потеѕ"
+
+#: app/tools/gimpvectortool.c:344
+msgid "Add Anchor"
+msgstr "Додај везу"
+
+#: app/tools/gimpvectortool.c:365
+msgid "Insert Anchor"
+msgstr "Убаци везу"
+
+#: app/tools/gimpvectortool.c:392
+msgid "Drag Handle"
+msgstr "Превуци ручку"
+
+#: app/tools/gimpvectortool.c:413
+msgid "Drag Anchor"
+msgstr "Превуци везу"
+
+#: app/tools/gimpvectortool.c:425
+msgid "Connect Strokes"
+msgstr "Повежи потезе"
+
+#: app/tools/gimpvectortool.c:452
+msgid "Drag Curve"
+msgstr "Превуци криву"
+
+#: app/tools/gimpvectortool.c:475
+msgid "Convert Edge"
+msgstr "Претвори ивицу"
+
+#: app/tools/gimpvectortool.c:504
+msgid "Delete Anchor"
+msgstr "Обриши везу"
+
+#: app/tools/gimpvectortool.c:525
+msgid "Delete Segment"
+msgstr "Обриши сегмент"
 
 #: app/tools/tool_manager.c:189
 msgid "This tool has no options."
@@ -8560,10 +8593,6 @@ msgstr "Путања"
 #: app/vectors/gimpvectors.c:218
 msgid "Rename Path"
 msgstr "Промени назив путањи"
-
-#: app/vectors/gimpvectors.c:345
-msgid "Move Path"
-msgstr "Помери путању"
 
 #: app/vectors/gimpvectors.c:374
 msgid "Scale Path"
@@ -9437,6 +9466,15 @@ msgstr "Направи и уреди слике или фотографије"
 msgid "The GIMP (unstable)"
 msgstr "ГИМП (нестабилна верзија)"
 
+#~ msgid "Move Mode  %s"
+#~ msgstr "Помери режим %s"
+
+#~ msgid "Move Selection Outline"
+#~ msgstr "Помери спољну селекцију"
+
+#~ msgid "Move Pixels"
+#~ msgstr "Помери тачке"
+
 #~ msgid "Selection from Channel"
 #~ msgstr "Селекција према каналу"
 
@@ -9492,9 +9530,6 @@ msgstr "ГИМП (нестабилна верзија)"
 
 #~ msgid "S_nap to Grid"
 #~ msgstr "/Преглед/Према вођицама"
-
-#~ msgid "/Edit/_Stroke"
-#~ msgstr "/Измени/Отисак"
 
 #~ msgid "Once Forward"
 #~ msgstr "Корак напред"
