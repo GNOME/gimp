@@ -19,11 +19,11 @@ files:
 	done
 
 install-data-local:
-	rm -f $(helpdatadir)/dialogs
-	$(LN_S) ../dialogs $(helpdatadir)/dialogs
-	rm -f $(helpdatadir)/filters
-	$(LN_S) ../filters $(helpdatadir)/filters
-	rm -f $(helpdatadir)/open
-	$(LN_S) ../open $(helpdatadir)/open
-	rm -f $(helpdatadir)/save
-	$(LN_S) ../save $(helpdatadir)/save
+	rm -f $(DESTDIR)$(helpdatadir)/dialogs
+	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
+	rm -f $(DESTDIR)$(helpdatadir)/filters
+	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+	rm -f $(DESTDIR)$(helpdatadir)/open
+	$(LN_S) ../open $(DESTDIR)$(helpdatadir)/open
+	rm -f $(DESTDIR)$(helpdatadir)/save
+	$(LN_S) ../save $(DESTDIR)$(helpdatadir)/save

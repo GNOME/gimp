@@ -32,5 +32,5 @@ files:
 	done
 
 install-data-local:
-	rm -f $(helpdatadir)/dialogs
-	$(LN_S) ../dialogs/layers $(helpdatadir)/dialogs
+	rm -f $(DESTDIR)$(helpdatadir)/dialogs
+	$(LN_S) ../dialogs/layers $(DESTDIR)$(helpdatadir)/dialogs

@@ -15,5 +15,5 @@ files:
 	done
 
 install-data-local:
-	rm -f $(helpdatadir)/dialogs
-	$(LN_S) ../../../dialogs $(helpdatadir)/dialogs
+	rm -f $(DESTDIR)$(helpdatadir)/dialogs
+	$(LN_S) ../../../dialogs $(DESTDIR)$(helpdatadir)/dialogs

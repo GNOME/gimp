@@ -123,7 +123,7 @@ install-data-yes: all
 	    *)     destdir=$(localedir);; \
 	  esac; \
 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  dir=$$destdir/$$lang/LC_MESSAGES; \
+	  dir=$(DESTDIR)$$destdir/$$lang/LC_MESSAGES; \
 	  if test -r "$(MKINSTALLDIRS)"; then \
 	    $(MKINSTALLDIRS) $$dir; \
 	  else \
