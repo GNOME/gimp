@@ -12,8 +12,17 @@
  *
  */
 
+/* ******** READ THE FOLLOWING BEFORE MODIFYING THIS FILE! ******** */
+/* This copy of TinyScheme has been modified to support UTF-8 coded */
+/* character strings. As a result, the length of a string in bytes  */
+/* may not be the same as the length of a string in characters. You */
+/* must keep this in mind at all times while making any changes to  */
+/* the routines in this file, or when adding new features.          */
+/*                                                                  */
+/* UTF-8 modifications made by Kevin Cozens (kcozens@interlog.com)  */
+/* **************************************************************** */
+
 #define _SCHEME_SOURCE
-#include "scheme-private.h"
 #ifndef WIN32
 # include <unistd.h>
 #endif
@@ -27,15 +36,9 @@
 #include <float.h>
 #include <ctype.h>
 
-#include <glib.h>
 #include <libintl.h>
 
-#if USE_STRCASECMP
-#include <strings.h>
-#define stricmp strcasecmp
-#else
-#define stricmp strcmp
-#endif
+#include "scheme-private.h"
 
 /* Used for documentation purposes, to signal functions in 'interface' */
 #define INTERFACE
@@ -61,40 +64,40 @@
  *  Basic memory allocation units
  */
 
-#define banner "TinyScheme 1.35"
+#define banner "TinyScheme 1.35 (with UTF-8 support)"
 
 #include <string.h>
 #include <stdlib.h>
 #ifndef macintosh
 # include <malloc.h>
-#else
-# if USE_STRCASECMP
-static int stricmp(const char *s1, const char *s2)
-{
-  unsigned char c1, c2;
-  do {
-    c1 = tolower(*s1);
-    c2 = tolower(*s2);
-    if (c1 < c2)
-      return -1;
-    else if (c1 > c2)
-      return 1;
-    s1++, s2++;
-  } while (c1 != 0);
-  return 0;
-}
-# endif
 #endif /* macintosh */
 
-#if USE_STRLWR
-static const char *strlwr(char *s) {
-  const char *p=s;
-  while(*s) {
-    *s=tolower(*s);
-    s++;
-  }
-  return p;
+#ifndef USE_STRCASECMP
+#define stricmp g_utf8_collate
+#else
+static int stricmp(const char *s1, const char *s2)
+{
+  unsigned char *s1a, *s2a;
+  int result;
+
+  s1a = g_utf8_strdown(s1, -1);
+  s2a = g_utf8_strdown(s2, -1);
+
+  result = g_utf8_collate(s1a, s2a);
+
+  g_free(s1a);
+  g_free(s2a);
+  return result;
 }
+#endif
+
+#define min(a, b)  ((a <= b) ? a : b)
+
+#if USE_STRLWR
+/*
+#error FIXME: Can't just use g_utf8_strdown since it allocates a new string
+#define strlwr(s)  g_utf8_strdown(s, -1)
+*/
 #else
 #define strlwr(s)  s
 #endif
@@ -166,7 +169,7 @@ INTERFACE double rvalue(pointer p)    { return (!is_integer(p)?(p)->_object._num
 #define rvalue_unchecked(p)       ((p)->_object._number.value.rvalue)
 #define set_integer(p)   (p)->_object._number.is_fixnum=1;
 #define set_real(p)      (p)->_object._number.is_fixnum=0;
-INTERFACE  long charvalue(pointer p)  { return ivalue_unchecked(p); }
+INTERFACE  gunichar charvalue(pointer p)  { return (gunichar)ivalue_unchecked(p); }
 
 INTERFACE INLINE int is_port(pointer p)     { return (type(p)==T_PORT); }
 #define is_inport(p) (type(p)==T_PORT && p->_object._port->kind&port_input)
@@ -231,11 +234,11 @@ INTERFACE INLINE void setimmutable(pointer p) { typeflag(p) |= T_IMMUTABLE; }
 #define cddddr(p)        cdr(cdr(cdr(cdr(p))))
 
 #if USE_CHAR_CLASSIFIERS
-static INLINE int Cisalpha(int c) { return isascii(c) && isalpha(c); }
-static INLINE int Cisdigit(int c) { return isascii(c) && isdigit(c); }
-static INLINE int Cisspace(int c) { return isascii(c) && isspace(c); }
-static INLINE int Cisupper(int c) { return isascii(c) && isupper(c); }
-static INLINE int Cislower(int c) { return isascii(c) && islower(c); }
+static INLINE int Cisalpha(gunichar c) { return g_unichar_isalpha(c); }
+static INLINE int Cisdigit(gunichar c) { return g_unichar_isdigit(c); }
+static INLINE int Cisspace(gunichar c) { return g_unichar_isspace(c); }
+static INLINE int Cisupper(gunichar c) { return g_unichar_isupper(c); }
+static INLINE int Cislower(gunichar c) { return g_unichar_islower(c); }
 #endif
 
 #if USE_ASCII_NAMES
@@ -291,10 +294,22 @@ static int is_ascii_name(const char *name, int *pc) {
 
 #endif
 
+static const char utf8_length[128] =
+{
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0x80-0x8f */
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0x90-0x9f */
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0xa0-0xaf */
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0xb0-0xbf */
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, /* 0xc0-0xcf */
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, /* 0xd0-0xdf */
+    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, /* 0xe0-0xef */
+    3,3,3,3,3,3,3,3,4,4,4,4,5,5,0,0  /* 0xf0-0xff */
+};
+
 static int file_push(scheme *sc, const char *fname);
 static void file_pop(scheme *sc);
 static int file_interactive(scheme *sc);
-static INLINE int is_one_of(char *s, int c);
+static INLINE int is_one_of(char *s, gunichar c);
 static int alloc_cellseg(scheme *sc, int n);
 static long binary_decode(const char *s);
 static INLINE pointer get_cell(scheme *sc, pointer a, pointer b);
@@ -305,8 +320,8 @@ static void finalize_cell(scheme *sc, pointer a);
 static int count_consecutive_cells(pointer x, int needed);
 static pointer find_slot_in_env(scheme *sc, pointer env, pointer sym, int all);
 static pointer mk_number(scheme *sc, num n);
-static pointer mk_empty_string(scheme *sc, int len, char fill);
-static char *store_string(scheme *sc, int len, const char *str, char fill);
+static pointer mk_empty_string(scheme *sc, int len, gunichar fill);
+static char *store_string(scheme *sc, int len, const char *str, gunichar fill);
 static pointer mk_vector(scheme *sc, int len);
 static pointer mk_array(scheme *sc, int len, int type);
 static pointer mk_atom(scheme *sc, char *q);
@@ -321,10 +336,9 @@ static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, i
 static void port_close(scheme *sc, pointer p, int flag);
 static void mark(pointer a);
 static void gc(scheme *sc, pointer a, pointer b);
-static int basic_inchar(port *pt);
-static int inchar(scheme *sc);
-static void backchar(scheme *sc, int c);
-static char   *readstr_upto(scheme *sc, char *delim);
+static gunichar inchar(scheme *sc);
+static void backchar(scheme *sc, gunichar c);
+static char *readstr_upto(scheme *sc, char *delim);
 static pointer readstrexp(scheme *sc);
 static INLINE void skipspace(scheme *sc);
 static int token(scheme *sc);
@@ -807,7 +821,7 @@ pointer mk_foreign_func(scheme *sc, foreign_func f) {
   return (x);
 }
 
-INTERFACE pointer mk_character(scheme *sc, int c) {
+INTERFACE pointer mk_character(scheme *sc, gunichar c) {
   pointer x = get_cell(sc,sc->NIL, sc->NIL);
 
   typeflag(x) = (T_CHARACTER | T_ATOM);
@@ -843,29 +857,55 @@ static pointer mk_number(scheme *sc, num n) {
  }
 }
 
-/* allocate name to string area */
-static char *store_string(scheme *sc, int len_str, const char *str, char fill) {
-     char *q;
-     
-     q=(char*)sc->malloc(len_str+1);
+/* char_cnt is length of string in chars. */
+/* str points to a NUL terminated string. */
+/* Only uses fill_char if str is NULL.    */
+static char *store_string(scheme *sc, int char_cnt,
+                          const char *str, gunichar fill) {
+     int  len;
+     char utf8[7];
+     gchar *q;
+     gchar *q2;
+     int  i;
+
+     if(str!=0) {
+       q2 = g_utf8_offset_to_pointer(str, (long)char_cnt);
+       (void)g_utf8_validate(str, -1, (const gchar **)&q);
+       if (q <= q2)
+          len = q - str;
+       else
+          len = q2 - str;
+       q=(gchar*)sc->malloc(len+1);
+     }
+     else {
+       len = g_unichar_to_utf8(fill, utf8);
+       q=(gchar*)sc->malloc(char_cnt*len+1);
+     }
      if(q==0) {
-          sc->no_memory=1;
-          return sc->strbuff;
+       sc->no_memory=1;
+       return sc->strbuff;
      }
      if(str!=0) {
-          memcpy(q, str, len_str);
+       memcpy(q, str, len);
+       q[len]=0;
      } else {
-          memset(q, fill, len_str);
+       q2 = q;
+       for (i = 0; i < char_cnt; ++i)
+       {
+         memcpy(q2, utf8, len);
+         q2 += len;
+       }
+       *q2=0;
      }
-     q[len_str]=0;
      return (q);
 }
 
 /* get new string */
 INTERFACE pointer mk_string(scheme *sc, const char *str) {
-     return mk_counted_string(sc,str,strlen(str));
+     return mk_counted_string(sc,str,g_utf8_strlen(str, -1));
 }
 
+/* len is the length of str in characters */
 INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
@@ -875,7 +915,7 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      return (x);
 }
 
-static pointer mk_empty_string(scheme *sc, int len, char fill) {
+static pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
      strvalue(x) = store_string(sc,len,0,fill);
@@ -1008,7 +1048,7 @@ INTERFACE static pointer set_array_elem(scheme *sc, pointer a,
       break;
     case array_string:
       if ( ((gchar **)elem)[ielem] != NULL )
-          free ( ((gchar **)elem)[ielem] );
+          sc->free ( ((gchar **)elem)[ielem] );
       ((gchar **)elem)[ielem] = strdup (sc->vptr->string_value(v));
       break;
     }
@@ -1141,7 +1181,7 @@ static pointer mk_sharp_const(scheme *sc, char *name) {
           x = binary_decode(name+1);
           return (mk_integer(sc, x));
      } else if (*name == '\\') { /* #\w (character) */
-          int c=0;
+          gunichar c=0;
           if(stricmp(name+1,"space")==0) {
                c=' ';
           } else if(stricmp(name+1,"newline")==0) {
@@ -1441,13 +1481,58 @@ static void port_close(scheme *sc, pointer p, int flag) {
   }
 }
 
+static gunichar basic_inchar(port *pt) {
+  int  len;
+
+  if(pt->kind&port_file) {
+    char utf8[7];
+    char *s;
+    int  i;
+
+    utf8[0] = fgetc(pt->rep.stdio.file);
+    if (utf8[0] & 0x80)
+    {
+       len = utf8_length[ utf8[0]&0x7F ];
+       s = &utf8[1];
+       for (i = 0; i < len; ++i)
+         *s++ = fgetc(pt->rep.stdio.file);
+       return g_utf8_get_char_validated(utf8, len+1);
+    }
+    return (gunichar)utf8[0];
+  } else {
+    if(*pt->rep.string.curr==0
+       || pt->rep.string.curr==pt->rep.string.past_the_end) {
+      return EOF;
+    } else {
+      gunichar c;
+
+      len = pt->rep.string.past_the_end - pt->rep.string.curr;
+      c = g_utf8_get_char_validated(pt->rep.string.curr, len);
+      len = g_unichar_to_utf8(c, NULL);
+      pt->rep.string.curr += len;
+      return c;
+    }
+  }
+}
+
 /* get new character from input file */
-static int inchar(scheme *sc) {
-  int c;
+static gunichar inchar(scheme *sc) {
+  gunichar c;
   port *pt;
  again:
   pt=sc->inport->_object._port;
-  c=basic_inchar(pt);
+  if(pt->kind&port_file && pt->rep.stdio.file == stdin)
+  {
+    if (sc->bc_flag)
+    {
+      sc->bc_flag = 0;
+      c = sc->backchar;
+    }
+    else
+      c=basic_inchar(pt);
+  }
+  else
+    c=basic_inchar(pt);
   if(c==EOF && sc->inport==sc->loadport && sc->file_i!=0) {
     file_pop(sc);
     if(sc->nesting!=0) {
@@ -1458,93 +1543,121 @@ static int inchar(scheme *sc) {
   return c;
 }
 
-static int basic_inchar(port *pt) {
-  if(pt->kind&port_file) {
-    return fgetc(pt->rep.stdio.file);
-  } else {
-    if(*pt->rep.string.curr==0
-       || pt->rep.string.curr==pt->rep.string.past_the_end) {
-      return EOF;
-    } else {
-      return *pt->rep.string.curr++;
-    }
-  }
-}
-
 /* back character to input buffer */
-static void backchar(scheme *sc, int c) {
+static void backchar(scheme *sc, gunichar c) {
   port *pt;
+  gint  charlen;
+
   if(c==EOF) return;
+  charlen = g_unichar_to_utf8(c, NULL);
   pt=sc->inport->_object._port;
   if(pt->kind&port_file) {
-    ungetc(c,pt->rep.stdio.file);
+    if (pt->rep.stdio.file == stdin)
+    {
+      sc->backchar = c;
+      sc->bc_flag = 1;
+    }
+    else {
+      if (ftell(pt->rep.stdio.file) >= (long)charlen)
+         fseek(pt->rep.stdio.file, 0L-(long)charlen, SEEK_CUR);
+    }
   } else {
     if(pt->rep.string.curr!=pt->rep.string.start) {
-      --pt->rep.string.curr;
+      if(pt->rep.string.curr-pt->rep.string.start >= charlen)
+        pt->rep.string.curr -= charlen;
+      else
+        pt->rep.string.curr = pt->rep.string.start;
     }
   }
 }
 
-static void putchars(scheme *sc, const char *chars, int len) {
-  int l;
+/* len is number of UTF-8 characters in string pointed to by chars */
+static void putchars(scheme *sc, const char *chars, int char_cnt) {
+  int   l;
   char *s;
   port *pt=sc->outport->_object._port;
 
+  if (char_cnt <= 0)
+      return;
+
+#if !STANDALONE
   /* Output characters to console mode (if enabled) */
-  (*ts_output_routine) (pt->rep.stdio.file, (char *)chars, len);
+  if (ts_output_routine != NULL)	/* Should this be left in?? ~~~~~ */
+     (*ts_output_routine) (pt->rep.stdio.file, (char *)chars, char_cnt);
+#endif
+
+  char_cnt = g_utf8_offset_to_pointer(chars, (long)char_cnt) - chars;
 
   if (sc->print_error) {
       l = strlen(sc->linebuff);
       s = &sc->linebuff[l];
-      while (len-- > 0)
-      {
-        *s++ = *chars++;
-        if (++l > LINESIZE-1)
-           break;
-      }
+      memcpy(s, chars, min(char_cnt, LINESIZE-l-1));
       return;
   }
 
   if(pt->kind&port_file) {
-    fwrite(chars,1,len,pt->rep.stdio.file);
+    fwrite(chars,1,char_cnt,pt->rep.stdio.file);
     fflush(pt->rep.stdio.file);
   } else {
-    for(;len;len--) {
-      if(pt->rep.string.curr!=pt->rep.string.past_the_end) {
-        *pt->rep.string.curr++=*chars++;
-      }
-    }
+    l = pt->rep.string.past_the_end - pt->rep.string.curr;
+    if (l > 0)
+       memcpy(pt->rep.string.curr, chars, min(char_cnt, l));
   }
 }
 
-INTERFACE void putcharacter(scheme *sc, int c) {
-  putchars(sc, (char *)&c, 1);
+INTERFACE void putcharacter(scheme *sc, gunichar c) {
+  char utf8[7];
+
+  (void)g_unichar_to_utf8(c, utf8);
+  putchars(sc, utf8, 1);
 }
 
 INTERFACE void putstr(scheme *sc, const char *s) {
-  putchars(sc, s, strlen(s));
+  putchars(sc, s, g_utf8_strlen(s, -1));
 }
 
 /* read characters up to delimiter, but cater to character constants */
-static char   *readstr_upto(scheme *sc, char *delim) {
-  char   *p = sc->strbuff;
+static char *readstr_upto(scheme *sc, char *delim) {
+  char *p = sc->strbuff;
+  gunichar c = 0;
+  gunichar c_prev = 0;
+  int  len = 0;
 
-  while (!is_one_of(delim, (*p++ = inchar(sc))));
-  if(p==sc->strbuff+2 && p[-2]=='\\') {                /* ?? ~~~~~ */
+#if	0
+  while (!is_one_of(delim, (*p++ = inchar(sc))))
+      ;
+  if(p==sc->strbuff+2 && p[-2]=='\\') {
     *p=0;
   } else {
     backchar(sc,p[-1]);
     *--p = '\0';
   }
+#else
+  do {
+    c_prev = c;
+    c = inchar(sc);
+    len = g_unichar_to_utf8(c, p);
+    p += len;
+  } while (!is_one_of(delim, c));
+
+  if(p==sc->strbuff+2 && c_prev=='\\')
+    *p = '\0';
+  else
+  {
+    backchar(sc,c);    /* put back the delimiter */
+    p[-len] = '\0';
+  }
+#endif
   return sc->strbuff;
 }
 
 /* read string expression "xxx...xxx" */
 static pointer readstrexp(scheme *sc) {
   char *p = sc->strbuff;
-  int c;
+  gunichar c;
   int c1=0;
-  enum { st_ok, st_bsl, st_x1, st_x2} state=st_ok;
+  int len;
+  enum { st_ok, st_bsl, st_x1, st_x2, st_oct1, st_oct2, st_oct3 } state=st_ok;
   
   for (;;) {
     c=inchar(sc);
@@ -1561,12 +1674,24 @@ static pointer readstrexp(scheme *sc) {
         *p=0;
         return mk_counted_string(sc,sc->strbuff,p-sc->strbuff);
       default:
-        *p++=c;
+        len = g_unichar_to_utf8(c, p);
+		p += len;
         break;
       }
       break;
     case st_bsl:
       switch(c) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+        state=st_oct1;
+        c1=g_unichar_digit_value(c);
+        break;
       case 'x':
       case 'X':
         state=st_x1;
@@ -1589,25 +1714,52 @@ static pointer readstrexp(scheme *sc) {
         state=st_ok;
         break;
       default:
-        *p++=c;
+        len = g_unichar_to_utf8(c, p);
+		p += len;
         state=st_ok;
         break;
       }
       break;
     case st_x1:
     case st_x2:
-          if (!isxdigit(c))
-                 return sc->F;
-      c=toupper(c);
-        if(c<='9')
-          c1=(c1<<4)+c-'0';
-        else
-          c1=(c1<<4)+c-'A'+10;
-        if(state==st_x1)
-          state=st_x2;
-        else {
+      if (!g_unichar_isxdigit(c))
+         return sc->F;
+      c1=(c1<<4)+g_unichar_xdigit_value(c);
+      if(state==st_x1)
+        state=st_x2;
+      else {
+        *p++=c1;
+        state=st_ok;
+      }
+      break;
+    case st_oct1:
+    case st_oct2:
+    case st_oct3:
+      if (!g_unichar_isdigit(c) || g_unichar_digit_value(c) > 7)
+      {
+        if (state==st_oct1)
+           return sc->F;
+
+        *p++=c1;
+        backchar(sc, c);
+        state=st_ok;
+      }
+      else
+      {
+        c1=(c1<<3)+g_unichar_digit_value(c);
+        switch (state)
+        {
+        case st_oct1:
+          state=st_oct2;
+          break;
+        case st_oct2:
+          state=st_oct3;
+          break;
+        default:
           *p++=c1;
           state=st_ok;
+          break;
+        }
       }
       break;
     }
@@ -1615,18 +1767,32 @@ static pointer readstrexp(scheme *sc) {
 }
 
 /* check c is in chars */
-static INLINE int is_one_of(char *s, int c) {
+static INLINE int is_one_of(char *s, gunichar c) {
+#if	0
      if(c==EOF) return 1;
      while (*s)
           if (*s++ == c)
                return (1);
-     return (0);
+#else
+#if	1
+  if (g_utf8_strchr(s, -1, c) != NULL)
+     return (1);
+#else
+gchar *p;
+
+  p = NULL;
+  p = g_utf8_strchr(s, -1, c);
+  if (p != NULL)
+     return (1);
+#endif
+#endif
+  return (0);
 }
 
 /* skip white characters */
 static INLINE void skipspace(scheme *sc) {
-     int c;
-     while (isspace(c=inchar(sc)))
+     gunichar c;
+     while (g_unichar_isspace(c=inchar(sc)))
           ;
      if(c!=EOF) {
           backchar(sc,c);
@@ -1635,7 +1801,7 @@ static INLINE void skipspace(scheme *sc) {
 
 /* get token */
 static int token(scheme *sc) {
-     int c;
+     gunichar c;
      skipspace(sc);
      switch (c=inchar(sc)) {
      case EOF:
@@ -1698,12 +1864,16 @@ static int token(scheme *sc) {
 
 static void printslashstring(scheme *sc, char *p, int len) {
   int i;
+  gunichar c;
   unsigned char *s=(unsigned char*)p;
+
   putcharacter(sc,'"');
-  for ( i=0; i<len; i++) {
-    if(*s==0xff || *s=='"' || *s<' ' || *s=='\\') {
+  for (i=0; i<len; i++) {
+    c = g_utf8_get_char(s);
+    /* Is a check for a value of 0xff still valid in UTF8?? ~~~~~ */
+    if(c==0xff || c=='"' || c<' ' || c=='\\') {
       putcharacter(sc,'\\');
-      switch(*s) {
+      switch(c) {
       case '"':
         putcharacter(sc,'"');
         break;
@@ -1720,14 +1890,15 @@ static void printslashstring(scheme *sc, char *p, int len) {
         putcharacter(sc,'\\');
         break;
       default: { 
-          int d=*s/16;
+          /* This still needs work ~~~~~ */
+          int d=c/16;
           putcharacter(sc,'x');
           if(d<10) {
             putcharacter(sc,d+'0');
           } else {
             putcharacter(sc,d-10+'A');
           }
-          d=*s%16;
+          d=c%16;
           if(d<10) {
             putcharacter(sc,d+'0');
           } else {
@@ -1736,9 +1907,9 @@ static void printslashstring(scheme *sc, char *p, int len) {
         }
       }
     } else {
-      putcharacter(sc,*s);
+      putcharacter(sc,c);
     }
-    s++; 
+    s = g_utf8_next_char(s);
   }
   putcharacter(sc,'"');
 }
@@ -1781,18 +1952,19 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           } else { /* Hack, uses the fact that printing is needed */
                *pp=sc->strbuff;
                *plen=0;
-               printslashstring(sc, strvalue(l), strlength(l));
+               printslashstring(sc, strvalue(l),
+                                g_utf8_strlen(strvalue(l), -1));
                return;
           }
      } else if (is_array(l)) {
           p = sc->strbuff;
           sprintf(p, "#<ARRAY%d>", arraytype(l));
      } else if (is_character(l)) {
-          int c=charvalue(l);
+          gunichar c=charvalue(l);
           p = sc->strbuff;
           if (!f) {
-               p[0]=c;
-               p[1]=0;
+               int len = g_unichar_to_utf8(c, p);
+               p[len]=0;
           } else {
                switch(c) {
                case ' ':
@@ -1838,7 +2010,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           p = "#<ERROR>";
      }
      *pp=p;
-     *plen=strlen(p);
+     *plen=g_utf8_strlen(p, -1);
 }
 /* ========== Routines for Evaluation Cycle ========== */
 
@@ -1958,6 +2130,7 @@ static int eqv(pointer a, pointer b) {
 /* ========== Environment implementation  ========== */ 
 
 #if !defined(USE_ALIST_ENV) || !defined(USE_OBJECT_LIST) 
+//#warning FIXME: Update hash_fn() to handle UTF-8 coded keys
 
 static int hash_fn(const char *key, int table_size) 
 { 
@@ -3028,29 +3201,29 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
        }
 
      case OP_CHAR2INT: { /* char->integer */
-          char c;
-          c=(char)ivalue(car(sc->args));
-          s_return(sc,mk_integer(sc,(unsigned char)c));
+          gunichar c;
+          c=ivalue(car(sc->args));
+          s_return(sc,mk_integer(sc,c));
      }
 
      case OP_INT2CHAR: { /* integer->char */
-          unsigned char c;
-          c=(unsigned char)ivalue(car(sc->args));
-          s_return(sc,mk_character(sc,(char)c));
+          gunichar c;
+          c=(gunichar)ivalue(car(sc->args));
+          s_return(sc,mk_character(sc,c));
      }
 
      case OP_CHARUPCASE: {
-          unsigned char c;
-          c=(unsigned char)ivalue(car(sc->args));
-          c=toupper(c);
-          s_return(sc,mk_character(sc,(char)c));
+          gunichar c;
+          c=(gunichar)ivalue(car(sc->args));
+          c=g_unichar_toupper(c);
+          s_return(sc,mk_character(sc,c));
      }
 
      case OP_CHARDNCASE: {
-          unsigned char c;
-          c=(unsigned char)ivalue(car(sc->args));
-          c=tolower(c);
-          s_return(sc,mk_character(sc,(char)c));
+          gunichar c;
+          c=(gunichar)ivalue(car(sc->args));
+          c=g_unichar_tolower(c);
+          s_return(sc,mk_character(sc,c));
      }
 
      case OP_STR2SYM:  /* string->symbol */
@@ -3081,7 +3254,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
        }
 
      case OP_MKSTRING: { /* make-string */
-          int fill=' ';
+          gunichar fill=' ';
           int len;
 
           len=ivalue(car(sc->args));
@@ -3089,11 +3262,11 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           if(cdr(sc->args)!=sc->NIL) {
                fill=charvalue(cadr(sc->args));
           }
-          s_return(sc,mk_empty_string(sc,len,(char)fill));
+          s_return(sc,mk_empty_string(sc,len,fill));
      }
 
      case OP_STRLEN:  /* string-length */
-          s_return(sc,mk_integer(sc,strlength(car(sc->args))));
+          s_return(sc,mk_integer(sc,g_utf8_strlen(strvalue(car(sc->args)), -1)));
 
      case OP_STRREF: { /* string-ref */
           char *str;
@@ -3103,38 +3276,72 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
           index=ivalue(cadr(sc->args));
 
-          if(index>=strlength(car(sc->args))) {
+          if(index>=g_utf8_strlen(strvalue(car(sc->args)), -1)) {
                Error_1(sc,"string-ref: out of bounds:",cadr(sc->args));
           }
 
-          s_return(sc,mk_character(sc,((unsigned char*)str)[index]));
+          str = g_utf8_offset_to_pointer(str, (long)index);
+          s_return(sc,mk_character(sc, g_utf8_get_char(str)));
      }
 
      case OP_STRSET: { /* string-set! */
+          pointer a;
           char *str;
-          int index;
-          int c;
+          int   index;
+          gunichar c;
+          char  utf8[7];
+          int   utf8_len;
+          int   newlen;
+          char *p1, *p2;
+          int   p1_len;
+          int   p2_len;
+          char *newstr;
 
-          if(is_immutable(car(sc->args))) {
-               Error_1(sc,"string-set!: unable to alter immutable string:",car(sc->args));
+          a=car(sc->args);
+          if(is_immutable(a)) {
+               Error_1(sc,"string-set!: unable to alter immutable string:",a);
           }
-          str=strvalue(car(sc->args));
 
+          str=strvalue(a);
           index=ivalue(cadr(sc->args));
-          if(index>=strlength(car(sc->args))) {
-               Error_1(sc,"string-set!: out of bounds:",cadr(sc->args));
+          if(index>=g_utf8_strlen(str, -1)) {
+              Error_1(sc,"string-set!: out of bounds:",cadr(sc->args));
           }
 
           c=charvalue(caddr(sc->args));
+          utf8_len = g_unichar_to_utf8(c, utf8);
 
-          str[index]=(char)c;
-          s_return(sc,car(sc->args));
+          p1 = g_utf8_offset_to_pointer(str, (long)index);
+          p2 = g_utf8_offset_to_pointer(str, (long)index+1);
+          p1_len = p1-str;
+          p2_len = strlen(p2);
+
+          newlen = p1_len+utf8_len+p2_len;
+          newstr = (char *)sc->malloc(newlen+1);
+          if (newstr == NULL) {
+             sc->no_memory=1;
+             Error_1(sc,"string-set!: No memory to alter string:",car(sc->args));
+          }
+
+          if (p1_len > 0)
+             memcpy(newstr, str, p1_len);
+          memcpy(newstr+p1_len, utf8, utf8_len);
+          if (p2_len > 0)
+             memcpy(newstr+p1_len+utf8_len, p2, p2_len);
+          newstr[newlen] = '\0';
+
+          free(strvalue(a));
+          strvalue(a)=newstr;
+          strlength(a)=newlen;
+
+          s_return(sc,a);
      }
 
      case OP_STRAPPEND: { /* string-append */
        /* in 1.29 string-append was in Scheme in init.scm but was too slow */
        int len = 0;
        pointer newstr;
+       pointer car_x;
        char *pos;
 
        /* compute needed length for new string */
@@ -3143,40 +3350,48 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
        }
        newstr = mk_empty_string(sc, len, ' ');
        /* store the contents of the argument strings into the new string */
-       for (pos = strvalue(newstr), x = sc->args; x != sc->NIL;
-           pos += strlength(car(x)), x = cdr(x)) {
-           memcpy(pos, strvalue(car(x)), strlength(car(x)));
+       pos = strvalue(newstr);
+       for (x = sc->args; x != sc->NIL; x = cdr(x)) {
+           car_x = car(x);
+           memcpy(pos, strvalue(car_x), strlength(car_x));
+           pos += strlength(car_x);
        }
+       *pos = '\0';
        s_return(sc, newstr);
      }
 
      case OP_SUBSTR: { /* substring */
           char *str;
+          char *beg;
+          char *end;
           int index0;
           int index1;
           int len;
+          pointer x;
 
           str=strvalue(car(sc->args));
 
           index0=ivalue(cadr(sc->args));
 
-          if(index0>strlength(car(sc->args))) {
+          if(index0>g_utf8_strlen(str, -1)) {
                Error_1(sc,"substring: start out of bounds:",cadr(sc->args));
           }
 
           if(cddr(sc->args)!=sc->NIL) {
                index1=ivalue(caddr(sc->args));
-               if(index1>strlength(car(sc->args)) || index1<index0) {
+               if(index1>g_utf8_strlen(str, -1) || index1<index0) {
                     Error_1(sc,"substring: end out of bounds:",caddr(sc->args));
                }
           } else {
-               index1=strlength(car(sc->args));
+               index1=g_utf8_strlen(str, -1);
           }
 
-          len=index1-index0;
+          beg = g_utf8_offset_to_pointer(str, (long)index0);
+          end = g_utf8_offset_to_pointer(str, (long)index1);
+          len=end-beg;
           x=mk_empty_string(sc,len,' ');
-          memcpy(strvalue(x),str+index0,len);
-          strvalue(x)[len]=0;
+          memcpy(strvalue(x),beg,len);
+          strvalue(x)[len] = '\0';
 
           s_return(sc,x);
      }
@@ -3722,7 +3937,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
 
      case OP_READ_CHAR: /* read-char */
      case OP_PEEK_CHAR: /* peek-char */ {
-          int c;
+          gunichar c;
           if(is_pair(sc->args)) {
                if(car(sc->args)!=sc->inport) {
                     x=sc->inport;
@@ -3769,7 +3984,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                     s_return(sc,sc->EOF_OBJ);
                }
           case TOK_COMMENT: {
-               int c;
+               gunichar c;
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                     ;
                sc->tok = token(sc);
@@ -3836,8 +4051,8 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                     s_return(sc,x);
                }
           default:
-               sprintf(sc->strbuff, "syntax error: illegal token %d", sc->tok);
-               Error_0(sc,sc->strbuff);
+               sprintf(sc->linebuff, "syntax error: illegal token %d", sc->tok);
+               Error_0(sc,sc->linebuff);
           }
           break;
 
@@ -3845,13 +4060,13 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           sc->args = cons(sc, sc->value, sc->args);
           sc->tok = token(sc);
           while (sc->tok == TOK_COMMENT) {
-               int c;
+               gunichar c;
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                     ;
                sc->tok = token(sc);
           }
           if (sc->tok == TOK_RPAREN) {
-               int c = inchar(sc);
+               gunichar c = inchar(sc);
                if (c != '\n') backchar(sc,c);
                sc->nesting_stack[sc->file_i]--;
                s_return(sc,reverse_in_place(sc, sc->NIL, sc->args));
@@ -4391,6 +4606,7 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->nesting=0;
   sc->interactive_repl=0;
   sc->print_output=0;
+  sc->print_error=0;
   
   if (alloc_cellseg(sc,FIRST_CELLSEGS) != FIRST_CELLSEGS) {
     sc->no_memory=1;
@@ -4400,7 +4616,8 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   dump_stack_initialize(sc); 
   sc->code = sc->NIL;
   sc->tracing=0;
-  
+  sc->bc_flag = 0;
+
   /* init sc->NIL */
   typeflag(sc->NIL) = (T_ATOM | MARK);
   car(sc->NIL) = cdr(sc->NIL) = sc->NIL;

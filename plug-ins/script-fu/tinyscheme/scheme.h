@@ -4,6 +4,7 @@
 #define _SCHEME_H
 
 #include <stdio.h>
+#include <glib.h>
 
 /*
  * Default values for #define'd symbols
@@ -140,7 +141,7 @@ pointer mk_symbol(scheme *sc, const char *name);
 pointer gensym(scheme *sc);
 pointer mk_string(scheme *sc, const char *str);
 pointer mk_counted_string(scheme *sc, const char *str, int len);
-pointer mk_character(scheme *sc, int c);
+pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
 void putstr(scheme *sc, const char *s);
 
@@ -156,13 +157,13 @@ struct scheme_interface {
   pointer (*gensym)(scheme *sc);
   pointer (*mk_string)(scheme *sc, const char *str);
   pointer (*mk_counted_string)(scheme *sc, const char *str, int len);
-  pointer (*mk_character)(scheme *sc, int c);
+  pointer (*mk_character)(scheme *sc, gunichar c);
   pointer (*mk_vector)(scheme *sc, int len);
   pointer (*mk_array)(scheme *sc, int len, int type);
   pointer (*mk_foreign_func)(scheme *sc, foreign_func f);
   pointer (*mk_closure)(scheme *sc, pointer c, pointer e);
   void (*putstr)(scheme *sc, const char *s);
-  void (*putcharacter)(scheme *sc, int c);
+  void (*putcharacter)(scheme *sc, gunichar c);
   
   int (*is_string)(pointer p);
   int (*string_length)(pointer p);
@@ -174,7 +175,7 @@ struct scheme_interface {
   int (*is_integer)(pointer p);
   int (*is_real)(pointer p);
   int (*is_character)(pointer p);
-  long (*charvalue)(pointer p);
+  gunichar (*charvalue)(pointer p);
   int (*is_list)(scheme *sc, pointer p);
   int (*is_vector)(pointer p);
   int (*list_length)(scheme *sc, pointer a);
