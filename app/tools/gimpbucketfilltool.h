@@ -20,7 +20,7 @@
 #define  __GIMP_BUCKET_FILL_TOOL_H__
 
 
-#include "tool.h"
+#include "gimptool.h"
 
 
 typedef enum

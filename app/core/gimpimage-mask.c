@@ -22,9 +22,9 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptool.h"
 #include "tools/gimppainttool.h"
 #include "tools/paint_options.h"
-#include "tools/tool.h"
 #include "tools/tool_manager.h"
 
 #include "boundary.h"

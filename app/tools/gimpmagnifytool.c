@@ -33,7 +33,7 @@
 #include "info_window.h"
 #include "scale.h"
 
-#include "magnify.h"
+#include "gimpmagnifytool.h"
 #include "tool_options.h"
 #include "tool_manager.h"
 

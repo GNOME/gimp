@@ -36,12 +36,11 @@
 #include "selection.h"
 #include "temp_buf.h"
 
-#include "tools/gimppainttool.h"
+#include "gimppaintbrushtool.h"
+#include "gimppainttool.h"
 #include "paint_options.h"
-#include "tools/gimppaintbrushtool.h"
 #include "tool_options.h"
-#include "tools/tool.h"
-#include "tools/tool_manager.h"
+#include "tool_manager.h"
 
 #include "pixmaps2.h"
 

@@ -20,7 +20,7 @@
 #define __GIMP_TEXT_TOOL_H__
 
 
-#include "tool.h"
+#include "gimptool.h"
 
 
 #define SUPERSAMPLE  3

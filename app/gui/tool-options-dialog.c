@@ -32,10 +32,10 @@
 #include "gimpui.h"
 #include "session.h"
 
+#include "gimptool.h"
 #include "gimptoolinfo.h"
 #include "tool_options.h"
 #include "tool_options_dialog.h"
-#include "tool.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

@@ -20,8 +20,8 @@
 #define  __GIMP_INK_TOOL_H__
 
 
-#include "tool.h"
-#include "blob.h"  /* only used by ink */
+#include "gimptool.h"
+#include "gimpinktool-blob.h"  /* only used by ink */
 
 
 #define DIST_SMOOTHER_BUFFER 10

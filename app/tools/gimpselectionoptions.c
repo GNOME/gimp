@@ -26,9 +26,9 @@
 
 #include "gimprc.h"
 
+#include "gimptool.h"
 #include "gimptoolinfo.h"
 #include "selection_options.h"
-#include "tool.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

@@ -36,8 +36,7 @@
 #include "info_dialog.h"
 #include "undo.h"
 
-#include "measure.h"
-#include "tool.h"
+#include "gimpmeasuretool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 

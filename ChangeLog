@@ -1,3 +1,29 @@
+2001-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/[almost *]: lots of files renamed to gimp*tool.[ch]
+
+	* app/commands.c
+	* app/context_manager.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpdnd.c
+	* app/gimprc.c
+	* app/global_edit.c
+	* app/info_window.c
+	* app/scale.c
+	* app/scroll.c
+	* app/undo.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c
+	* po/POTFILES.in
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
+
 2001-03-06  Simon Budig  <simon@gimp.org>
 	
 	* app/mit.[ch]: Increased Mitch's age by one. Hopefully

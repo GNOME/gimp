@@ -31,7 +31,7 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "gimplayer.h"
-#include "tools/text_tool.h"
+#include "tools/gimptexttool.h"
 
 #include "libgimp/gimplimits.h"
 

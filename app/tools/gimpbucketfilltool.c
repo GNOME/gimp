@@ -42,10 +42,10 @@
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "bucket_fill.h"
-#include "fuzzy_select.h"
+#include "gimpbucketfilltool.h"
+#include "gimpfuzzyselecttool.h"
+#include "gimptool.h"
 #include "paint_options.h"
-#include "tool.h"
 #include "tool_manager.h"
 
 #include "pdb/procedural_db.h"

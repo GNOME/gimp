@@ -27,8 +27,8 @@
 
 #include "apptypes.h"
 
-#include "tools/bucket_fill.h"
-#include "tools/move.h"
+#include "tools/gimpbucketfilltool.h"
+#include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
 #include "appenv.h"

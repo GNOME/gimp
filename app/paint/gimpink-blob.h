@@ -22,8 +22,8 @@
  *
 */
 
-#ifndef __BLOB_H__
-#define __BLOB_H__
+#ifndef __GIMP_INK_TOOL_BLOB_H__
+#define __GIMP_INK_TOOL_BLOB_H__
 
 
 typedef struct _BlobPoint BlobPoint;
@@ -79,4 +79,4 @@ void   blob_bounds       (Blob      *b,
 			  gint      *height);
 
 
-#endif /* __BLOB_H__ */
+#endif /* __GIMP_INK_TOOL_BLOB_H__ */

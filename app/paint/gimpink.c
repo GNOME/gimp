@@ -42,10 +42,10 @@
 #include "tile.h"
 #include "tile_manager.h"
 
-#include "blob.h"
-#include "ink.h"
+#include "gimpinktool.h"
+#include "gimpinktool-blob.h"
+#include "gimptool.h"
 #include "paint_options.h"
-#include "tool.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

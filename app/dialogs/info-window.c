@@ -24,8 +24,8 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptool.h"
 #include "tools/gimpcolorpickertool.h"
-#include "tools/tool.h"
 #include "tools/tool_manager.h"
 
 #include "context_manager.h"

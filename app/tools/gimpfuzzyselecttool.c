@@ -32,7 +32,6 @@
 #include "boundary.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "edit_selection.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
@@ -42,11 +41,12 @@
 #include "tile_manager.h"
 #include "tile.h"
 
-#include "fuzzy_select.h"
-#include "rect_select.h"
+#include "gimpeditselectiontool.h"
+#include "gimpfuzzyselecttool.h"
+#include "gimprectselecttool.h"
+#include "gimptool.h"
 #include "selection_options.h"
 #include "tool_options.h"
-#include "tool.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

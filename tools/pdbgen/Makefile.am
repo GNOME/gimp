@@ -59,15 +59,15 @@ enum_headers = \
 	../../app/lut_funcs.h			\
 	../../app/paint_funcs.h			\
 	../../app/plug_in.h			\
-	../../app/tools/blend.h			\
-	../../app/tools/bucket_fill.h		\
-	../../app/tools/clone.h			\
+	../../app/tools/gimpblendtool.h		\
+	../../app/tools/gimpbucketfilltool.h	\
+	../../app/tools/gimpclonetool.h		\
 	../../app/tools/color_balance.h		\
-	../../app/tools/convolve.h		\
-	../../app/tools/dodgeburn.h		\
+	../../app/tools/gimpconvolvetool.h	\
+	../../app/tools/gimpdodgeburntool.h	\
 	../../app/tools/hue_saturation.h	\
 	../../app/tools/gimppainttool.h		\
-	../../app/tools/text_tool.h
+	../../app/tools/gimptexttool.h
 
 pdb_scripts = \
 	pdbgen.pl	\

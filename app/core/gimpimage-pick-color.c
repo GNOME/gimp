@@ -24,13 +24,9 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
+
 #include "appenv.h"
-
-#include "tools/gimpdrawtool.h"
-#include "tools/gimpcolorpickertool.h"
-
 #include "cursorutil.h"
-
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
@@ -38,7 +34,9 @@
 #include "gimprc.h"
 #include "info_dialog.h"
 #include "palette.h"
-#include "tool.h"
+
+#include "gimpdrawtool.h"
+#include "gimpcolorpickertool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 

@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MOVE_H__
-#define __MOVE_H__
+#ifndef __GIMP_MOVE_TOOL_H__
+#define __GIMP_MOVE_TOOL_H__
 
 
-#include "tool.h"
+#include "gimptool.h"
 
 
 #define GIMP_TYPE_MOVE_TOOL            (gimp_move_tool_get_type ())
@@ -58,4 +58,4 @@ void       gimp_move_tool_start_vguide (GimpTool *tool,
 					GDisplay *gdisp);
 
 
-#endif  /*  __MOVE_H__  */
+#endif  /*  __GIMP_MOVE_TOOL_H__  */

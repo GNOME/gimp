@@ -41,12 +41,13 @@
 #include "pixel_region.h"
 #include "undo.h"
 
-#include "tools/crop.h"
-#include "tools/gimpdrawtool.h"
+#include "gimpcroptool.h"
+#include "gimpdrawtool.h"
+#include "gimptool.h"
 #include "tool_options.h"
 #include "tool_manager.h"
-#include "tool.h"
-#include "../pixmaps2.h"
+
+#include "pixmaps2.h"
 
 #include "libgimp/gimpintl.h"
 

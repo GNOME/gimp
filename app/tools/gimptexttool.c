@@ -53,9 +53,9 @@
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "edit_selection.h"
-#include "text_tool.h"
-#include "tool.h"
+#include "gimpeditselectiontool.h"
+#include "gimptexttool.h"
+#include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 

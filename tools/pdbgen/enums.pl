@@ -330,7 +330,7 @@ package Gimp::CodeGen::enums;
 	},
     GradientType =>
 	{ contig => 1,
-	  header => 'tools/blend.h',
+	  header => 'tools/gimpblendtool.h',
 	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
 			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
 			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
@@ -349,7 +349,7 @@ package Gimp::CodeGen::enums;
 	},
     BlendMode =>
 	{ contig => 1,
-	  header => 'tools/blend.h',
+	  header => 'tools/gimpblendtool.h',
 	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
 			  CUSTOM_MODE) ],
 	  mapping => { FG_BG_RGB_MODE => '0',
@@ -363,7 +363,7 @@ package Gimp::CodeGen::enums;
 	},
     RepeatMode =>
 	{ contig => 1,
-	  header => 'tools/blend.h',
+	  header => 'tools/gimpblendtool.h',
 	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
 	  mapping => { REPEAT_NONE => '0',
 		       REPEAT_SAWTOOTH => '1',
@@ -371,7 +371,7 @@ package Gimp::CodeGen::enums;
 	},
     BucketFillMode =>
 	{ contig => 1,
-	  header => 'tools/bucket_fill.h',
+	  header => 'tools/gimpbucketfilltool.h',
 	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
 	  mapping => { FG_BUCKET_FILL => '0',
 		       BG_BUCKET_FILL => '1',
@@ -379,7 +379,7 @@ package Gimp::CodeGen::enums;
 	},
     CloneType =>
 	{ contig => 1,
-	  header => 'tools/clone.h',
+	  header => 'tools/gimpclonetool.h',
 	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
 	  mapping => { IMAGE_CLONE => '0',
 		       PATTERN_CLONE => '1' }
@@ -394,7 +394,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvolveType =>
 	{ contig => 1,
-	  header => 'tools/convolve.h',
+	  header => 'tools/gimpconvolvetool.h',
 	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
 	  mapping => { BLUR_CONVOLVE => '0',
 		       SHARPEN_CONVOLVE => '1',
@@ -402,14 +402,14 @@ package Gimp::CodeGen::enums;
 	},
     DodgeBurnType =>
 	{ contig => 1,
-	  header => 'tools/dodgeburn.h',
+	  header => 'tools/gimpdodgeburntool.h',
 	  symbols => [ qw(DODGE BURN) ],
 	  mapping => { DODGE => '0',
 		       BURN => '1' }
 	},
     DodgeBurnMode =>
 	{ contig => 1,
-	  header => 'tools/dodgeburn.h',
+	  header => 'tools/gimpdodgeburntool.h',
 	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES
 			  DODGEBURN_SHADOWS) ],
 	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
@@ -431,7 +431,7 @@ package Gimp::CodeGen::enums;
 	},
     SizeType =>
 	{ contig => 1,
-	  header => 'tools/text_tool.h',
+	  header => 'tools/gimptexttool.h',
 	  symbols => [ qw(PIXELS POINTS) ],
 	  mapping => { PIXELS => '0',
 		       POINTS => '1' }

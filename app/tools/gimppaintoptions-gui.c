@@ -28,14 +28,14 @@
 #include "gimprc.h"
 #include "gtkhwrapbox.h"
 
+#include "gimptool.h"
 #include "gimptoolinfo.h"
 #include "paint_options.h"
-#include "tool.h"
 #include "tool_manager.h"
 
-#include "bucket_fill.h"
+#include "gimpbucketfilltool.h"
+#include "gimpinktool.h"
 #include "gimppaintbrushtool.h"
-#include "ink.h"
 
 #include "libgimp/gimpintl.h"
 

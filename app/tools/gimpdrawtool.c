@@ -22,9 +22,7 @@
 
 #include "apptypes.h"
  
-#include "appenv.h"
-#include "tool.h"
-#include "tools/gimpdrawtool.h"
+#include "gimpdrawtool.h"
 
 
 enum

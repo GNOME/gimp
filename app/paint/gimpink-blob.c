@@ -33,8 +33,7 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "blob.h"
+#include "gimpinktool-blob.h"
 
 
 static Blob *

@@ -22,7 +22,7 @@
 
 #include "apptypes.h"
 
-#include "tools/tool.h"
+#include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "context_manager.h"

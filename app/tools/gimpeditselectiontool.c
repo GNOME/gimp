@@ -42,7 +42,7 @@
 #include "selection.h"
 #include "undo.h"
 
-#include "edit_selection.h"
+#include "gimpeditselectiontool.h"
 #include "gimpdrawtool.h"
 #include "tool_manager.h"
 

@@ -31,7 +31,6 @@
 #include "brush_scale.h"
 #include "cursorutil.h"
 #include "devices.h"
-#include "gimpdrawtool.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -41,14 +40,15 @@
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
-#include "gimppainttool.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
 #include "tile.h"
 #include "tile_manager.h"
-#include "tool.h"
 #include "undo.h"
+
+#include "gimpdrawtool.h"
+#include "gimppainttool.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -29,9 +29,9 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_options_dialog.h"
-#include "tools/tool.h"
 #include "tools/tool_manager.h"
 
 #include "about_dialog.h"

@@ -37,8 +37,8 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
-#include "tools/tool.h"
 
 #include "app_procs.h"
 #include "appenv.h"

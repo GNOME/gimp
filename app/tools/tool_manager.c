@@ -26,19 +26,20 @@
 
 #include "appenv.h"
 #include "context_manager.h"
+#include "dialog_handler.h"
 #include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimplist.h"
-#include "gimptoolinfo.h"
 #include "gimpui.h"
-#include "tool.h"
+
+#include "gimptool.h"
+#include "gimptoolinfo.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "tool_options_dialog.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 

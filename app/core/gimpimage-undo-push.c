@@ -45,10 +45,10 @@
 #include "tile.h"
 #include "undo.h"
 
-#include "tools/by_color_select.h"
+#include "tools/gimpbycolorselecttool.h"
+#include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
 #include "tools/gimppainttool.h"
-#include "tools/tool.h"
 #include "tools/transform_core.h"
 
 #include "libgimp/gimpparasite.h"

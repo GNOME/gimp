@@ -24,7 +24,7 @@
 
 #include "apptypes.h"
 
-#include "tools/tool.h"
+#include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "gdisplay.h"
@@ -57,7 +57,7 @@ resize_display (GDisplay *gdisp,
 		gboolean  redisplay)
 {
   /* freeze the active tool */
-  tool_manager_control_active (PAUSE, (void *) gdisp);
+  tool_manager_control_active (PAUSE, gdisp);
 
   if (resize_window)
     gdisplay_shrink_wrap (gdisp);
@@ -74,7 +74,7 @@ resize_display (GDisplay *gdisp,
     }
 
   /* re-enable the active tool */
-  tool_manager_control_active (RESUME, (void *) gdisp);
+  tool_manager_control_active (RESUME, gdisp);
 }
 
 
@@ -82,7 +82,7 @@ void
 shrink_wrap_display (GDisplay *gdisp)
 {
   /* freeze the active tool */
-  tool_manager_control_active (PAUSE, (void *) gdisp);
+  tool_manager_control_active (PAUSE, gdisp);
 
   gdisplay_shrink_wrap (gdisp);
 
@@ -93,7 +93,7 @@ shrink_wrap_display (GDisplay *gdisp)
   gdisplays_flush ();
 
   /* re-enable the active tool */
-  tool_manager_control_active (RESUME, (void *) gdisp);
+  tool_manager_control_active (RESUME, gdisp);
 }
 
 

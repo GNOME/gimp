@@ -20,7 +20,7 @@
 #define __GIMP_DRAW_TOOL_H__
 
 
-#include "tools/tool.h"
+#include "gimptool.h"
 
 
 /*  draw states  */

@@ -34,9 +34,8 @@
 #include "selection.h"
 #include "undo.h"
 
-#include "edit_selection.h"
-#include "move.h"
-#include "tool.h"
+#include "gimpeditselectiontool.h"
+#include "gimpmovetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
