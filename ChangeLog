@@ -1,3 +1,12 @@
+Sat Feb 12 17:49:02 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/fits/Makefile.am
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/print/Makefile.am
+	* plug-ins/sgi/Makefile.am: reorder linking for libgimpui comes
+	before libgimp; seemed to be causing problems despite libtool
+
 Sun Feb 13 01:19:30 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 
 	* plug-ins/script-fu/scripts/*: Tidying up, typos, better help
@@ -5,7 +14,6 @@ Sun Feb 13 01:19:30 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 Sun Feb 13 01:09:42 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * po/gimp.pot, plug-ins/perl/po/gimp-perl.pot: Removed from CVS.
-
 
 Thu Feb 10 17:40:13 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 

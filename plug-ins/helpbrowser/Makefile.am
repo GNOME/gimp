@@ -17,8 +17,8 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTKXMHTML_LIBS)			\
 	$(INTLLIBS)
 

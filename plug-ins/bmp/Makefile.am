@@ -19,8 +19,8 @@ AM_CPPFLAGS = \
         -DLOCALEDIR=\""$(localedir)"\"
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
