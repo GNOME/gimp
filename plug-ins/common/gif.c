@@ -513,7 +513,8 @@ run (const gchar      *name,
 			      orig_image_ID))
 		{
 		  /*  Store psvals data  */
-		  gimp_set_data ("file_gif_save", &gsvals, sizeof (GIFSaveVals));
+		  gimp_set_data ("file_gif_save",
+                                 &gsvals, sizeof (GIFSaveVals));
 		}
 	      else
 		{
@@ -592,15 +593,15 @@ typedef long int count_int;
 
 
 
-static int find_unused_ia_colour (guchar *pixels,
-				  int numpixels,
-				  int num_indices,
-				  int* colors);
+static gint find_unused_ia_colour         (guchar *pixels,
+                                           gint    numpixels,
+                                           gint    num_indices,
+                                           gint   *colors);
 
-void special_flatten_indexed_alpha (guchar *pixels,
-				    int *transparent,
-				    int *colors,
-				    int numpixels);
+static void special_flatten_indexed_alpha (guchar *pixels,
+                                           gint   *transparent,
+                                           gint   *colors,
+                                           gint    numpixels);
 static int colorstobpp (int);
 static int bpptocolors (int);
 static int GetPixel (int, int);
@@ -615,7 +616,7 @@ static void GIFEncodeImageData (FILE *, int, int, int, int,
 				ifunptr, gint, gint);
 static void GIFEncodeClose (FILE *);
 static void GIFEncodeLoopExt (FILE *, guint);
-static void GIFEncodeCommentExt (FILE *, char *);
+static void GIFEncodeCommentExt (FILE *, const gchar *comment);
 
 int rowstride;
 guchar *pixels;
@@ -634,10 +635,11 @@ static void flush_char (void);
 
 
 
-static int find_unused_ia_colour (guchar *pixels,
-				  int numpixels,
-				  int num_indices,
-				  int* colors)
+static gint
+find_unused_ia_colour (guchar *pixels,
+                       gint    numpixels,
+                       gint    num_indices,
+                       gint   *colors)
 {
   int i;
   gboolean ix_used[256];
@@ -685,7 +687,7 @@ static int find_unused_ia_colour (guchar *pixels,
 }
 
 
-void
+static void
 special_flatten_indexed_alpha (guchar *pixels,
 			       int *transparent,
 			       int *colors,
@@ -723,7 +725,7 @@ special_flatten_indexed_alpha (guchar *pixels,
 }
 
 
-int
+static int
 parse_ms_tag (char *str)
 {
   gint sum = 0;
@@ -761,7 +763,7 @@ find_another_bra:
 }
 
 
-int
+static int
 parse_disposal_tag (char *str)
 {
   gint offset = 0;
@@ -891,6 +893,26 @@ save_image (const gchar *filename,
     }
 #endif
 
+  /* The GIF spec says 7bit ASCII for the comment block. */
+  if (gsvals.save_comment && globalcomment)
+    {
+      const gchar *c   = globalcomment;
+      gint         len;
+
+      for (len = strlen (c); len; c++, len--)
+        {
+          if (*c < 0)
+            {
+              g_message (_("The GIF format only supports comments in\n"
+                           "7bit ASCII encoding. No comment is saved."));
+
+              g_free (globalcomment);
+              globalcomment = NULL;
+
+              break;
+            }
+        }
+    }
 
   /* get a list of layers for this image_ID */
   layers = gimp_image_get_layers (image_ID, &nlayers);  
@@ -1962,23 +1984,25 @@ GIFEncodeLoopExt (FILE    *fp,
 }
 
 
-static void GIFEncodeCommentExt (FILE *fp, char *comment)
+static void
+GIFEncodeCommentExt (FILE        *fp,
+                     const gchar *comment)
 {
   if (!comment || !*comment)
     return;
 
-  if (strlen(comment)>240)
+  if (strlen (comment) > 240)
     {
       g_printerr ("GIF: warning:"
                   "comment too large - comment block not written.\n");
       return;
     }
 
-  fputc(0x21,fp);
-  fputc(0xfe,fp);
-  fputc(strlen(comment),fp);
-  fputs((const char *)comment,fp);
-  fputc(0x00,fp);
+  fputc (0x21, fp);
+  fputc (0xfe, fp);
+  fputc (strlen (comment), fp);
+  fputs (comment, fp);
+  fputc (0x00, fp);
 }
 
 
