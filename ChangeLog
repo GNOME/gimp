@@ -1,5 +1,12 @@
+2002-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):
+	set the spinbutton which is attached right of the label as
+	mnemonic_widget for the label.
+
 2002-05-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): 
 	* plug-ins/common/randomize.c (randomize_dialog)
 	* plug-ins/Lighting/lighting_ui.c
 	* plug-ins/common/nova.c (nova_dialog)
