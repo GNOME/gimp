@@ -1,5 +1,11 @@
 2004-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/edge.c: indentation and whitespace cleanup.
+
+	* plug-ins/common/struc.c: minor coding style issues.
+
+2004-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/xwd.c (query): applied patch from Alan Horkan
 	which improves the blurb and help texts. Fixes bug #151912.
 

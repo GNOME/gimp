@@ -1283,8 +1283,10 @@ struc_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable, &svals.update_preview);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (strucpi), drawable);
+                            G_CALLBACK (strucpi),
+                            drawable);
 
   frame = gimp_int_radio_group_new (TRUE, _("Direction"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -1296,17 +1298,21 @@ struc_dialog (GimpDrawable *drawable)
                                     _("Bottom-_right"), BOTTOM_RIGHT, &radio4,
 
                                     NULL);
-  g_signal_connect_swapped (radio1, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
-  g_signal_connect_swapped (radio2, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
-  g_signal_connect_swapped (radio3, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
-  g_signal_connect_swapped (radio4, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
-
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (radio1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio3, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (radio4, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -1322,7 +1328,8 @@ struc_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &svals.depth);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dlg);
 

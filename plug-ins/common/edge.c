@@ -24,9 +24,9 @@
  */
 
 /* pgmedge.c - edge-detect a portable graymap
-**
-** Copyright (C) 1989 by Jef Poskanzer.
-*/
+ *
+ * Copyright (C) 1989 by Jef Poskanzer.
+ */
 
 /*
  *  Ported to GIMP Plug-in API 1.0
@@ -50,7 +50,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -280,7 +279,9 @@ edge (GimpDrawable *drawable)
   guchar            pix10[4], pix11[4], pix12[4];
   guchar            pix20[4], pix21[4], pix22[4];
   glong             width, height;
-  gint              alpha, has_alpha, chan;
+  gint              alpha;
+  gboolean          has_alpha;
+  gint              chan;
   gint              x, y;
   gint              x1, y1, x2, y2;
   gint              maxval;
@@ -295,9 +296,9 @@ edge (GimpDrawable *drawable)
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width = gimp_drawable_width (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
-  alpha = gimp_drawable_bpp (drawable->drawable_id);
+  width     = gimp_drawable_width (drawable->drawable_id);
+  height    = gimp_drawable_height (drawable->drawable_id);
+  alpha     = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (has_alpha)
     alpha--;
@@ -332,9 +333,9 @@ edge (GimpDrawable *drawable)
                   dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 2)
                 {
                   /*
-                  ** 3x3 kernel is inside of the tile -- do fast
-                  ** version
-                  */
+                   * 3x3 kernel is inside of the tile -- do fast
+                   * version
+                   */
                   for (chan = 0; chan < alpha; chan++)
                     {
                       /* get the 3x3 kernel into a guchar array,
@@ -350,15 +351,15 @@ edge (GimpDrawable *drawable)
 
 #undef  PIX
 
-                      dest[chan] = edge_detect(kernel);
+                      dest[chan] = edge_detect (kernel);
                     }
                 }
               else
                 {
                   /*
-                  ** The kernel is not inside of the tile -- do slow
-                  ** version
-                  */
+                   * The kernel is not inside of the tile -- do slow
+                   * version
+                   */
 
                   gimp_pixel_fetcher_get_pixel (pft, x-1, y-1, pix00);
                   gimp_pixel_fetcher_get_pixel (pft, x  , y-1, pix10);
@@ -413,30 +414,32 @@ static gint
 edge_detect (const guchar *data)
 {
   gint ret;
+
   switch (evals.edgemode)
     {
-       case SOBEL:
-         ret = sobel (data);
-         break;
-       case PREWITT:
-         ret = prewitt (data);
-         break;
-       case GRADIENT:
-         ret = gradient (data);
-         break;
-       case ROBERTS:
-         ret = roberts (data);
-         break;
-       case DIFFERENTIAL:
-         ret = differential (data);
-         break;
-       case LAPLACE:
-         ret = laplace (data);
-         break;
-       default:
-         ret = -1;
-         break;
+    case SOBEL:
+      ret = sobel (data);
+      break;
+    case PREWITT:
+      ret = prewitt (data);
+      break;
+    case GRADIENT:
+      ret = gradient (data);
+      break;
+    case ROBERTS:
+      ret = roberts (data);
+      break;
+    case DIFFERENTIAL:
+      ret = differential (data);
+      break;
+    case LAPLACE:
+      ret = laplace (data);
+      break;
+    default:
+      ret = -1;
+      break;
     }
+
   return CLAMP0255 (ret);
 }
 
@@ -699,7 +702,7 @@ edge_dialog (GimpDrawable *drawable)
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                      _("A_mount:"), 100, 0,
                                      evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
-                                     TRUE, 0, 0,
+                                     FALSE, 1.0, G_MAXFLOAT,
                                      NULL, NULL);
 
   g_signal_connect (scale_data, "value_changed",
@@ -921,7 +924,7 @@ edge_preview_update (GimpDrawable *drawable)
             kernel[7] = SRC(x+1, y  );
             kernel[8] = SRC(x+1, y+1);
 #undef SRC
-            dest[chan] = edge_detect(kernel);
+            dest[chan] = edge_detect (kernel);
           }
         if (has_alpha)
           dest[alpha] = src[bytes * (x + preview_width * y) + alpha];
@@ -939,4 +942,3 @@ edge_preview_update (GimpDrawable *drawable)
   g_free (render_buffer);
   g_free (src);
 }
-
