@@ -512,6 +512,8 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
   if (iter)
     {
       GtkTreePath *path;
+
+#if 0
       GtkTreeIter  selected_iter;
 
       if (gtk_tree_selection_get_selected (tree_view->selection, NULL,
@@ -531,6 +533,7 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
           if (equal)
             return TRUE;
         }
+#endif
 
       path = gtk_tree_model_get_path (tree_view->model, iter);
 
@@ -539,13 +542,17 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 				       tree_view);
 
 #ifdef __GNUC__
-#warning FIXME: remove this hack as soon as #108956 is fixed.
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
 #endif
-      if (tree_view->main_column->editable_widget)
+      if (! GTK_CHECK_VERSION (2, 2, 2) &&
+          tree_view->main_column->editable_widget)
         gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
 
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
+
+#if 0
       gtk_tree_selection_select_iter (tree_view->selection, iter);
+#endif
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
@@ -767,9 +774,10 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
               gboolean success = TRUE;
 
 #ifdef __GNUC__
-#warning FIXME: remove this hack as soon as #108956 is fixed.
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
 #endif
-              if (tree_view->main_column->editable_widget)
+              if (! GTK_CHECK_VERSION (2, 2, 2) &&
+                  tree_view->main_column->editable_widget)
                 gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
 
               /*  don't select item if a toggle was clicked */
@@ -782,8 +790,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                */
               if (container_view->container)
                 {
-                  gchar *path_str = NULL;
-
                   /*  another row may have been set by selecting  */
                   gtk_tree_view_column_cell_set_cell_data (column,
                                                            tree_view->model,
@@ -791,23 +797,26 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                            FALSE, FALSE);
 
                   if (toggled_cell || clicked_cell)
-                    path_str = gtk_tree_path_to_string (path);
- 
-                  if (toggled_cell)
                     {
-                      gimp_cell_renderer_toggle_clicked (toggled_cell,
-                                                         path_str,
-                                                         bevent->state);
-                    }
-                  else if (clicked_cell)
-                    {
-                      gimp_cell_renderer_viewable_clicked (clicked_cell,
-                                                           path_str,
-                                                           bevent->state);
-                    }
+                      gchar *path_str;
 
-                  if (path_str)
-                    g_free (path_str);
+                      path_str = gtk_tree_path_to_string (path);
+ 
+                      if (toggled_cell)
+                        {
+                          gimp_cell_renderer_toggle_clicked (toggled_cell,
+                                                             path_str,
+                                                             bevent->state);
+                        }
+                      else if (clicked_cell)
+                        {
+                          gimp_cell_renderer_viewable_clicked (clicked_cell,
+                                                               path_str,
+                                                               bevent->state);
+                        }
+
+                      g_free (path_str);
+                    }
                 }
             }
           else if (bevent->type == GDK_2BUTTON_PRESS)
@@ -824,9 +833,10 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   if (edit_cell)
                     {
 #ifdef __GNUC__
-#warning FIXME: remove this hack as soon as #108956 is fixed.
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.2.2
 #endif
-                      if (column->editable_widget)
+                      if (! GTK_CHECK_VERSION (2, 2, 2) &&
+                          column->editable_widget)
                         gtk_cell_editable_remove_widget (column->editable_widget);
 
 #ifdef __GNUC__

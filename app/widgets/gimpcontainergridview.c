@@ -215,14 +215,14 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
                     G_CALLBACK (gimp_container_grid_view_vieport_resized),
                     grid_view);
-  g_signal_connect (grid_view->wrap_box->parent, "realize",
-                    G_CALLBACK (gimp_container_grid_view_vieport_realize),
-                    grid_view);
 
-  gtk_container_set_focus_vadjustment
-    (GTK_CONTAINER (grid_view->wrap_box->parent),
-     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
-                                          (view->scrolled_win)));
+#ifdef __GNUC__
+#warning FIXME: remove realize callback once we depend on GTK+ 2.2.2
+#endif
+  if (! GTK_CHECK_VERSION (2, 2, 2))
+    g_signal_connect (grid_view->wrap_box->parent, "realize",
+                      G_CALLBACK (gimp_container_grid_view_vieport_realize),
+                      grid_view);
 
   GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
 }
@@ -642,9 +642,6 @@ gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
     }
 }
 
-#ifdef __GNUC__
-#warning FIXME: remove realize callback once #110737 is fixed
-#endif
 static void
 gimp_container_grid_view_vieport_realize (GtkWidget             *widget,
                                           GimpContainerGridView *grid_view)

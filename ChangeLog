@@ -1,3 +1,15 @@
+2003-06-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c: disable workarounds for
+	bugs #110737 and #108956 for GTK+ >= 2.2.2. Will remove them as
+	soon as we depend on 2.2.2.
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_select_item): disabled optimization
+	which didn't select an already selected iter because it broke the
+	fix for #108956. Cleanup.
+
 2003-06-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c (gimp_hsv_to_rgb_int): removed
