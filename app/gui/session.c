@@ -55,6 +55,9 @@ enum
 };
 
 
+static gchar * session_filename (Gimp *gimp);
+
+
 /*  public functions  */
 
 void
@@ -67,7 +70,8 @@ session_init (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("sessionrc");
+  filename = session_filename (gimp);
+
   scanner = gimp_scanner_new_file (filename, &error);
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -187,7 +191,7 @@ session_save (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("sessionrc");
+  filename = session_filename (gimp);
 
   writer =
     gimp_config_writer_new_file (filename,
@@ -228,4 +232,21 @@ session_clear (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_print ("TODO: implement session_clear()\n");
+}
+
+
+static gchar *
+session_filename (Gimp *gimp)
+{
+  gchar *filename = gimp_personal_rc_file ("sessionrc");
+
+  if (gimp->session_name)
+    {
+      gchar *tmp = g_strconcat (filename, ".", gimp->session_name, NULL);
+
+      g_free (filename);
+      filename = tmp;
+    }
+
+  return filename;
 }

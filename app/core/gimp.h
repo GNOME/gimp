@@ -81,6 +81,7 @@ struct _Gimp
   GimpCoreConfig         *edit_config; /* don't use this one, it's just
                                         * for the preferences dialog
                                         */
+  gchar                  *session_name;
 
   gboolean                be_verbose;
   gboolean                no_data;
@@ -199,8 +200,7 @@ struct _GimpClass
   void     (* initialize) (Gimp               *gimp,
                            GimpInitStatusFunc  status_callback);
   void     (* restore)    (Gimp               *gimp,
-                           GimpInitStatusFunc  status_callback,
-                           gboolean            restore_session);
+                           GimpInitStatusFunc  status_callback);
   gboolean (* exit)       (Gimp               *gimp,
                            gboolean            kill_it);
 };
@@ -209,6 +209,7 @@ struct _GimpClass
 GType         gimp_get_type             (void) G_GNUC_CONST;
 
 Gimp        * gimp_new                  (const gchar        *name,
+                                         const gchar        *session_name,
                                          gboolean            be_verbose,
                                          gboolean            no_data,
                                          gboolean            no_fonts,
@@ -224,8 +225,7 @@ void          gimp_load_config          (Gimp               *gimp,
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
 void          gimp_restore              (Gimp               *gimp,
-                                         GimpInitStatusFunc  status_callback,
-                                         gboolean            restore_session);
+                                         GimpInitStatusFunc  status_callback);
 
 void          gimp_exit                 (Gimp               *gimp,
                                          gboolean            kill_it);

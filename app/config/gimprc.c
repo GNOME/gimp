@@ -392,9 +392,9 @@ gimp_rc_notify (GimpRc     *rc,
  * gimp_rc_new:
  * @system_gimprc: the name of the system-wide gimprc file or %NULL to
  *                 use the standard location
- * @user_gimprc: the name of the user gimprc file or %NULL to use the
- *               standard location
- * @verbose:
+ * @user_gimprc:   the name of the user gimprc file or %NULL to use the
+ *                 standard location
+ * @verbose:       enable console messages about loading and saving
  *
  * Creates a new GimpRc object and loads the system-wide and the user
  * configuration files.
@@ -445,7 +445,7 @@ gimp_rc_set_autosave (GimpRc   *rc,
 
 /**
  * gimp_rc_query:
- * @rc: a #GimpRc object.
+ * @rc:  a #GimpRc object.
  * @key: a string used as a key for the lookup.
  *
  * This function looks up @key in the object properties of @rc. If

@@ -84,6 +84,7 @@ app_init (const gchar         *full_prog_name,
           gchar              **gimp_argv,
           const gchar         *alternate_system_gimprc,
           const gchar         *alternate_gimprc,
+          const gchar         *session_name,
           const gchar        **batch_cmds,
           gboolean             no_interface,
           gboolean             no_data,
@@ -94,8 +95,7 @@ app_init (const gchar         *full_prog_name,
           gboolean             use_shm,
           gboolean             use_mmx,
           gboolean             console_messages,
-          GimpStackTraceMode   stack_trace_mode,
-          gboolean             restore_session)
+          GimpStackTraceMode   stack_trace_mode)
 {
   GimpInitStatusFunc update_status_func = NULL;
 
@@ -103,6 +103,7 @@ app_init (const gchar         *full_prog_name,
    *  core object system
    */
   the_gimp = gimp_new (full_prog_name,
+                       session_name,
                        be_verbose,
                        no_data,
                        no_fonts,
@@ -222,7 +223,7 @@ app_init (const gchar         *full_prog_name,
 
   /*  Load all data files
    */
-  gimp_restore (the_gimp, update_status_func, restore_session);
+  gimp_restore (the_gimp, update_status_func);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()

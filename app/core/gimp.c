@@ -94,8 +94,7 @@ static gsize      gimp_get_memsize          (GimpObject        *object,
 static void       gimp_real_initialize      (Gimp              *gimp,
                                              GimpInitStatusFunc status_callback);
 static void       gimp_real_restore         (Gimp              *gimp,
-                                             GimpInitStatusFunc status_callback,
-                                             gboolean           restore_session);
+                                             GimpInitStatusFunc status_callback);
 static gboolean   gimp_real_exit            (Gimp              *gimp,
                                              gboolean           kill_it);
 
@@ -183,10 +182,9 @@ gimp_class_init (GimpClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, restore),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER_BOOLEAN,
-                  G_TYPE_NONE, 2,
-                  G_TYPE_POINTER,
-                  G_TYPE_BOOLEAN);
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
 
   gimp_signals[EXIT] =
     g_signal_new ("exit",
@@ -211,7 +209,8 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
-  gimp->config = NULL;
+  gimp->config           = NULL;
+  gimp->session_name     = NULL;
 
   gimp->be_verbose       = FALSE;
   gimp->no_data          = FALSE;
@@ -328,9 +327,7 @@ gimp_dispose (GObject *object)
 static void
 gimp_finalize (GObject *object)
 {
-  Gimp *gimp;
-
-  gimp = GIMP (object);
+  Gimp *gimp = GIMP (object);
 
   gimp_set_current_context (gimp, NULL);
   gimp_set_user_context (gimp, NULL);
@@ -471,6 +468,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->edit_config);
       gimp->edit_config = NULL;
+    }
+
+  if (gimp->session_name)
+    {
+      g_free (gimp->session_name);
+      gimp->session_name = NULL;
     }
 
   if (gimp->user_units)
@@ -673,8 +676,7 @@ gimp_real_initialize (Gimp               *gimp,
 
 static void
 gimp_real_restore (Gimp               *gimp,
-                   GimpInitStatusFunc  status_callback,
-                   gboolean            restore_session)
+                   GimpInitStatusFunc  status_callback)
 {
   if (gimp->be_verbose)
     g_print ("INIT: gimp_real_restore\n");
@@ -708,6 +710,7 @@ gimp_real_exit (Gimp     *gimp,
 
 Gimp *
 gimp_new (const gchar       *name,
+          const gchar       *session_name,
           gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_fonts,
@@ -720,8 +723,11 @@ gimp_new (const gchar       *name,
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  gimp = g_object_new (GIMP_TYPE_GIMP, "name", name, NULL);
+  gimp = g_object_new (GIMP_TYPE_GIMP,
+                       "name",    name,
+                       NULL);
 
+  gimp->session_name     = g_strdup (session_name);
   gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
   gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
@@ -865,8 +871,7 @@ gimp_initialize (Gimp               *gimp,
 
 void
 gimp_restore (Gimp               *gimp,
-              GimpInitStatusFunc  status_callback,
-              gboolean            restore_session)
+              GimpInitStatusFunc  status_callback)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
@@ -910,8 +915,7 @@ gimp_restore (Gimp               *gimp,
   (* status_callback) (NULL, _("Modules"), 0.8);
   gimp_modules_load (gimp);
 
-  g_signal_emit (gimp, gimp_signals[RESTORE], 0,
-                 status_callback, restore_session);
+  g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }
 
 void

@@ -78,11 +78,9 @@ static void       gui_initialize_after_callback (Gimp               *gimp,
                                                  GimpInitStatusFunc  callback);
 
 static void       gui_restore_callback          (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback,
-                                                 gboolean            restore_session);
+                                                 GimpInitStatusFunc  callback);
 static void       gui_restore_after_callback    (Gimp               *gimp,
-                                                 GimpInitStatusFunc  callback,
-                                                 gboolean            restore_session);
+                                                 GimpInitStatusFunc  callback);
 
 static gboolean   gui_exit_callback             (Gimp               *gimp,
                                                  gboolean            kill_it);
@@ -311,8 +309,7 @@ gui_initialize_after_callback (Gimp               *gimp,
 
 static void
 gui_restore_callback (Gimp               *gimp,
-                      GimpInitStatusFunc  status_callback,
-                      gboolean            restore_session)
+                      GimpInitStatusFunc  status_callback)
 {
   GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (gimp->config);
   GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
@@ -368,8 +365,7 @@ gui_restore_callback (Gimp               *gimp,
 
 static void
 gui_restore_after_callback (Gimp               *gimp,
-                            GimpInitStatusFunc  status_callback,
-                            gboolean            restore_session)
+                            GimpInitStatusFunc  status_callback)
 {
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -398,7 +394,7 @@ gui_restore_after_callback (Gimp               *gimp,
   if (status_callback == splash_update)
     splash_destroy ();
 
-  if (gui_config->restore_session || restore_session)
+  if (gui_config->restore_session)
     session_restore (gimp);
 
   dialogs_show_toolbox ();

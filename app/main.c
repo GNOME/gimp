@@ -93,6 +93,7 @@ main (int    argc,
   gchar              *full_prog_name          = NULL;
   gchar              *alternate_system_gimprc = NULL;
   gchar              *alternate_gimprc        = NULL;
+  gchar              *session_name            = NULL;
   gchar             **batch_cmds              = NULL;
   gboolean            show_help               = FALSE;
   gboolean            no_interface            = FALSE;
@@ -106,8 +107,7 @@ main (int    argc,
   gboolean            console_messages        = FALSE;
   gboolean            use_debug_handler       = FALSE;
   GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
-  gboolean            restore_session         = FALSE;
-  gint       i, j;
+  gint                i, j;
 
 #if 0
   g_mem_set_vtable (glib_mem_profiler_table);
@@ -322,11 +322,18 @@ main (int    argc,
 	  console_messages = TRUE;
  	  argv[i] = NULL;
 	}
-      else if ((strcmp (argv[i], "--restore-session") == 0) ||
-	       (strcmp (argv[i], "-r") == 0))
+      else if (strcmp (argv[i], "--session") == 0)
 	{
-	  restore_session = TRUE;
- 	  argv[i] = NULL;
+	  argv[i] = NULL;
+	  if (argc <= ++i)
+            {
+	      show_help = TRUE;
+	    }
+          else
+            {
+	      session_name = argv[i];
+	      argv[i] = NULL;
+            }
 	}
       else if (strcmp (argv[i], "--enable-stack-trace") == 0)
 	{
@@ -428,6 +435,7 @@ main (int    argc,
 	    argv + 1,
             alternate_system_gimprc,
             alternate_gimprc,
+            session_name,
             (const gchar **) batch_cmds,
             no_interface,
             no_data,
@@ -438,8 +446,7 @@ main (int    argc,
             use_shm,
             use_mmx,
             console_messages,
-            stack_trace_mode,
-            restore_session);
+            stack_trace_mode);
 
   g_free (batch_cmds);
 
@@ -471,7 +478,7 @@ gimp_show_help (const gchar *progname)
   g_print (_("  --display <display>      Use the designated X display.\n"));
   g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
   g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
-  g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
+  g_print (_("  --session <name>         Use an alternate sessionrc file.\n"));
   g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
   g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
   g_print (_("  --dump-gimprc            Output a gimprc file with default settings.\n"));

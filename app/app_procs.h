@@ -38,6 +38,7 @@ void      app_init          (const gchar         *full_prog_name,
                              gchar              **gimp_argv,
                              const gchar         *alternate_system_gimprc,
                              const gchar         *alternate_gimprc,
+                             const gchar         *session_name,
                              const gchar        **batch_cmds,
                              gboolean             no_interface,
                              gboolean             no_data,
@@ -48,8 +49,7 @@ void      app_init          (const gchar         *full_prog_name,
                              gboolean             use_shm,
                              gboolean             use_mmx,
                              gboolean             console_messages,
-                             GimpStackTraceMode   stack_trace_mode,
-                             gboolean             restore_session);
+                             GimpStackTraceMode   stack_trace_mode);
 
 
 #endif /* __APP_PROCS_H__ */

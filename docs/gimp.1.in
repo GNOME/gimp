@@ -1,4 +1,4 @@
-.TH GIMP 1 "5 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "13 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp - an image manipulation and paint program.
 .SH SYNOPSIS
@@ -6,7 +6,7 @@ gimp - an image manipulation and paint program.
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
 [\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
 [\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
-[\-S] [\-\-no\-splash\-image] [\-r] [\-\-restore\-session]
+[\-S] [\-\-no\-splash\-image] [\-\-session \fI<name>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
 [\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
 [\-b] [\-\-batch \fI<commands>\fP]
@@ -73,8 +73,9 @@ Do not show the splash screen.
 .B \-S, \-\-no\-splash\-image
 Do not show the splash screen image as part of the splash screen.
 .TP 8
-.B \-r, \-\-restore\-session
-Try to restore saved session.
+.B \-\-session \fI<name>\fP
+Use a different sessionrc for this GIMP session. The given session
+name is appended to the default sessionrc filename.
 .TP 8
 .B \-g, \-\-gimprc \fI<gimprc>\fP
 Use an alternative gimprc instead of the default one. Useful in
