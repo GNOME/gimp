@@ -5,11 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -83,6 +78,11 @@ static void create_save_file_chooser   (GtkWidget      *widget,
                                         GtkWidget      *dialog);
 
 static void explorer_logo_dialog       (GtkWidget      *parent);
+
+static void cmap_preview_size_allocate (GtkWidget      *widget,
+                                        GtkAllocation  *allocation);
+
+static void logo_preview_size_allocate (GtkWidget      *preview);
 
 /**********************************************************************
  CALLBACKS
@@ -332,17 +332,10 @@ preview_draw_crosshair (gint px, gint py)
 static void
 preview_redraw (void)
 {
-  gint     y;
-  guchar  *p;
-
-  p = wint.wimage;
-
-  for (y = 0; y < preview_height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p,
-                            0, y, preview_width);
-      p += preview_width * 3;
-    }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (wint.preview),
+                          0, 0, preview_width, preview_height,
+                          GIMP_RGB_IMAGE,
+                          wint.wimage, preview_width * 3);
 
   gtk_widget_queue_draw (wint.preview);
 }
@@ -587,8 +580,8 @@ explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  wint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (wint.preview), preview_width, preview_height);
+  wint.preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (wint.preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), wint.preview);
 
   g_signal_connect (wint.preview, "button_press_event",
@@ -1165,9 +1158,11 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  cmap_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (cmap_preview), 32, 32);
+  cmap_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (cmap_preview, 32, 32);
   gtk_container_add (GTK_CONTAINER (abox), cmap_preview);
+  g_signal_connect (cmap_preview, "size_allocate",
+                    G_CALLBACK (cmap_preview_size_allocate), NULL);
   gtk_widget_show (cmap_preview);
 
   frame = add_objects_list ();
@@ -1419,18 +1414,55 @@ dialog_update_preview (void)
 }
 
 /**********************************************************************
+ FUNCTION: cmap_preview_size_allocate()
+ *********************************************************************/
+
+static void
+cmap_preview_size_allocate (GtkWidget     *widget,
+                            GtkAllocation *allocation)
+{
+  gint             i;
+  gint             x;
+  gint             y;
+  gint             j;
+  guchar          *b;
+  GimpPreviewArea *preview = GIMP_PREVIEW_AREA (widget);
+
+  b = g_new (guchar, allocation->width * allocation->height * 3);
+
+  for (y = 0; y < allocation->height; y++)
+    {
+      for (x = 0; x < allocation->width; x++)
+        {
+          i = x + (y / 4) * allocation->width;
+          if (i > wvals.ncolors)
+            {
+              for (j = 0; j < 3; j++)
+                b[(y*allocation->width + x) * 3 + j] = 0;
+            }
+          else
+            {
+              for (j = 0; j < 3; j++)
+                b[(y*allocation->width + x) * 3 + j] = colormap[i][j];
+            }
+        }
+    }
+  gimp_preview_area_draw (preview,
+                          0, 0, allocation->width, allocation->height,
+                          GIMP_RGB_IMAGE, b, allocation->width*3);
+  gtk_widget_queue_draw (cmap_preview);
+
+  g_free (b);
+
+}
+
+/**********************************************************************
  FUNCTION: set_cmap_preview()
  *********************************************************************/
 
 void
 set_cmap_preview (void)
 {
-  gint    i;
-  gint    x;
-  gint    y;
-  gint    j;
-  guchar *b;
-  guchar  c[GR_WIDTH * 3];
   gint    xsize, ysize;
 
   if (NULL == cmap_preview)
@@ -1438,46 +1470,13 @@ set_cmap_preview (void)
 
   make_color_map ();
 
-  for (ysize = 1; ysize * ysize * ysize < wvals.ncolors; ysize++) /**/;
+  for (ysize = 1; ysize * ysize * ysize < wvals.ncolors; ysize++)
+    /**/;
   xsize = wvals.ncolors / ysize;
-  while (xsize * ysize < wvals.ncolors) xsize++;
-  b = g_new (guchar, xsize * 3);
+  while (xsize * ysize < wvals.ncolors)
+    xsize++;
 
-  gtk_preview_size (GTK_PREVIEW (cmap_preview), xsize, ysize * 4);
-  gtk_widget_set_size_request (GTK_WIDGET (cmap_preview), xsize, ysize * 4);
-
-  for (y = 0; y < ysize*4; y += 4)
-    {
-      for (x = 0; x < xsize; x++)
-        {
-          i = x + (y / 4) * xsize;
-          if (i > wvals.ncolors)
-            {
-              for (j = 0; j < 3; j++)
-                b[x * 3 + j] = 0;
-            }
-          else
-            {
-              for (j = 0; j < 3; j++)
-                b[x * 3 + j] = colormap[i][j];
-            }
-        }
-
-      gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y, xsize);
-      gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y + 1, xsize);
-      gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y + 2, xsize);
-      gtk_preview_draw_row (GTK_PREVIEW (cmap_preview), b, 0, y + 3, xsize);
-    }
-
-  for (x = 0; x < GR_WIDTH; x++)
-    {
-      for (j = 0; j < 3; j++)
-        c[x * 3 + j] = colormap[(int)((float)x/(float)GR_WIDTH*256.0)][j];
-    }
-
-  gtk_widget_queue_draw (cmap_preview);
-
-  g_free (b);
+  gtk_widget_set_size_request (cmap_preview, xsize, ysize * 4);
 }
 
 /**********************************************************************
@@ -1588,6 +1587,35 @@ make_color_map (void)
  *********************************************************************/
 
 static void
+logo_preview_size_allocate (GtkWidget *preview)
+{
+  guchar *temp;
+  guchar *temp2;
+  guchar *datapointer;
+  gint    x, y;
+
+  temp2 = temp = g_new (guchar, logo_height*(logo_width + 10) * 3);
+  datapointer = header_data + logo_width * logo_height - 1;
+
+  for (y = 0; y < logo_height; y++)
+  {
+    for (x = 0; x < logo_width; x++)
+    {
+      HEADER_PIXEL (datapointer, temp2);
+      temp2 += 3;
+    }
+  }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview), 0, 0, 
+      logo_width, logo_height, GIMP_RGB_IMAGE,
+      temp, logo_width * 3);
+  g_free (temp);
+}
+
+/**********************************************************************
+ FUNCTION: explorer_logo_dialog
+ *********************************************************************/
+
+static void
 explorer_logo_dialog (GtkWidget *parent)
 {
   static GtkWidget *dialog = NULL;
@@ -1637,34 +1665,13 @@ explorer_logo_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, logo_width, logo_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
+  g_signal_connect (preview, "size_allocate",
+                    G_CALLBACK (logo_preview_size_allocate), NULL);
 
-  {
-    guchar *temp;
-    guchar *datapointer;
-    gint    x, y;
-
-    temp = g_malloc ((logo_width + 10) * 3);
-    datapointer = header_data + logo_width * logo_height - 1;
-
-    for (y = 0; y < logo_height; y++)
-      {
-        guchar *temp2 = temp;
-
-        for (x = 0; x < logo_width; x++)
-          {
-            HEADER_PIXEL (datapointer, temp2);
-            temp2 += 3;
-          }
-
-        gtk_preview_draw_row (GTK_PREVIEW (preview), temp, 0, y, logo_width);
-      }
-
-    g_free (temp);
-  }
 
   label = gtk_label_new ("Fractal Chaos Explorer\n"
                          "Plug-In for the GIMP\n"
