@@ -150,7 +150,6 @@
  *
  *      Read in the paths.
  *
- *      File saving (someone has an alpha plugin for this)
  */
 
 /*
@@ -422,6 +421,7 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
+
   gimp_install_procedure ("file_psd_load",
                           "loads files of the Photoshop(tm) PSD file format",
                           "This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
@@ -440,6 +440,7 @@ query (void)
 				    "psd",
 				    "",
 				    "0,string,8BPS");
+
 }
 
 
@@ -478,6 +479,11 @@ run (const gchar      *name,
 	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
+  else
+    {
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+    }
+
 }
 
 
@@ -799,8 +805,10 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	      magic6 = getgshort(fd, "guide"); (*offset) += 2;
 	      remaining -= 12;
 
+	      IFDBG printf("\t\t\tSize: %d\n", Size);
 	      IFDBG printf("\t\t\tMagic: %d %d %d %d %d %d\n",
 			   magic1, magic2, magic3, magic4, magic5, magic6);
+
 	      IFDBG printf("\t\t\tMagic: 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x\n",
 			   magic1, magic2, magic3, magic4, magic5, magic6);
 
@@ -822,7 +830,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	      for (i = 0; i < num_guides; i++, guide++)
 		{
 		  guide->position = getglong(fd, "guide");
-
+		  IFDBG printf ("Position: %d     %x\n", guide->position,
+				guide->position);
 		  guide->horizontal = (1 == getguchar(fd, "guide"));
 		  (*offset) += 5; remaining -= 5;
 
@@ -1048,25 +1057,40 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
 
   if (layermaskdatasize)
     {
+      guchar color;
+      guchar flags;
+      int o = 0;
       top    = getglong(fd, "lmask top");
-      (*offset) += 4;
+      o += 4;
       left   = getglong(fd, "lmask left");
-      (*offset) += 4;
+      o += 4;
       bottom = getglong(fd, "lmask bottom");
-      (*offset) += 4;
+      o += 4;
       right  = getglong(fd, "lmask right");
-      (*offset) += 4;
+      o += 4;
 
       layer->lm_x = left;
       layer->lm_y = top;
       layer->lm_width = right - left;
       layer->lm_height = bottom - top;
 
-      getglong(fd, "lmask data throw");
-      (*offset) += 4;
+      color = getguchar(fd, "lmask color");
+      flags = getguchar(fd, "lmask flags");
 
-      /*      throwchunk(layermaskdatasize, fd, "layer mask data throw");
-      (*offset) += layermaskdatasize;*/
+      o += 2;
+
+      IFDBG printf("\t\t\t\t\t\ttop:    %d\n", top);
+      IFDBG printf("\t\t\t\t\t\tleft:   %d\n", left);
+      IFDBG printf("\t\t\t\t\t\tbottom: %d\n", bottom);
+      IFDBG printf("\t\t\t\t\t\tright:  %d\n", right);
+      IFDBG printf("\t\t\t\t\t\tcolor:  %d\n", color);
+      IFDBG printf("\t\t\t\t\t\tflags:  %X\n", flags);
+      IFDBG printf("\t\t\t\t\t\t\trelative: %d\n", flags & 0x1);
+      IFDBG printf("\t\t\t\t\t\t\tvisible:  %d\n", ((flags & 0x2) >> 1));
+      IFDBG printf("\t\t\t\t\t\t\tinvert:   %d\n", ((flags & 0x4) >> 2));
+
+      throwchunk(layermaskdatasize - o, fd, "extra layer mask data");
+      (*offset) += layermaskdatasize;
     }
 
   layerrangesdatasize = getglong(fd, "layer ranges data size");
@@ -1959,8 +1983,7 @@ load_image (const gchar *name)
 		  gint32 mask_id;
 		  guchar* lm_data;
 
-		  IFDBG
-		    fprintf(stderr, "YAH3m\n");
+		  IFDBG  fprintf(stderr, "Unpacking a layer mask!\n");
 
 		  lm_data = g_malloc(layer->width * layer->height);
 		  {
@@ -1996,8 +2019,10 @@ load_image (const gchar *name)
  		    gimp_layer_add_alpha (layer_ID);
 
  		    /* Add layer mask */
-		    gimp_layer_add_mask (layer_ID, mask_id);
 #endif /* PANOTOOLS_FIX */
+		    IFDBG printf("Adding layer mask %d to layer %d\n", mask_id, layer_ID);
+		    gimp_layer_add_mask (layer_ID, mask_id);
+
 		    drawable = gimp_drawable_get (mask_id);
 
 		    gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,

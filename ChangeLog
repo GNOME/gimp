@@ -1,3 +1,8 @@
+2005-02-20  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd.c: Fix layer mask support.  Addresses bugs
+	#166976 and #109841.
+
 2005-02-21  Sven Neumann  <sven@gimp.org>
 
 	Another step towards color management:
@@ -337,7 +342,7 @@
 2005-02-13  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd_save.c: Rewrote all the code that deals with
-	pixels to be stingy with memory and opperate on tile-size chunks.
+	pixels to be stingy with memory and operate on tile-size chunks.
 	Create a flattened copy of the image when necessary. Fixes file
 	corruption bug #167139 and memory bug #121871.
 
