@@ -1,15 +1,18 @@
 Revision history for Gimp-Perl extension.
 
+1.18
+        - used N_ to mark all the menu paths, since gimp now tries to
+          do the translation.
+        - patch by Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE> to fix
+          many missing :auto tags.
+        - Gimp.xs now defines fallback functions for gettext & friends.
+
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.
         - intllibs linking bugfix.
         - half-hearted attempt to i18nize logulator.
         - preliminary support for N_ (this function should
           not be necessary in perl).
-        - used N_ to mark all the menu paths, since gimp now tries to
-          do the translation.
-        - patch by Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE> to fix
-          many missing :auto tags.
 
 1.16  Sun Nov 21 02:37:16 CET 1999
 	- removed sethspin.pl & billboard, they are no longer maintained :(
