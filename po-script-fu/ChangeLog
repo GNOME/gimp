@@ -1,3 +1,9 @@
+2003-04-12  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed plug-ins/gap/sel-to-anim-img.scm.
+
+	* de.po: updated.
+
 2003-03-27  Christian Rose  <menthos@menthos.com>
 
 	* yi.po: Added Yiddish translation by
