@@ -404,15 +404,18 @@ gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
   dnl Test for Xmu
     if test -z "$LIBXMU"; then
+      gimp_save_LDFLAGS="$LDFLAGS"
+      LDFLAGS="$LDFLAGS $X_LIBS"
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	  WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
+	  WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt -lSM -lICE",
 	  [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	      WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
+	      WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt",
 	      [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
 	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
+      LDFLAGS="$gimp_save_LDFLAGS"
     fi
   else
      AC_MSG_WARN([ 
