@@ -81,6 +81,7 @@ static void color_select_update_rgb_values (ColorSelectP);
 static void color_select_update_hsv_values (ColorSelectP);
 static void color_select_update_pos (ColorSelectP);
 static void color_select_update_sliders (ColorSelectP, int);
+static void color_select_format_entry (ColorSelectP, int, char *);
 static void color_select_update_entries (ColorSelectP, int);
 static void color_select_update_colors (ColorSelectP, int);
 
@@ -144,8 +145,12 @@ color_select_new (PixelRow           * col,
 {
   /*  static char *toggle_titles[6] = { "Hue", "Saturation", "Value", "Red", "Green", "Blue" }; */
   static char *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
-  static gfloat slider_max_vals[6] = { 360, 100, 100, 1.0, 1.0, 1.0 };
-  static gfloat slider_incs[6] = { 0.1, 0.1, 0.1, 0.001, 0.001, 0.001 };
+  static gfloat slider_max_vals[6] = { 360, 100, 100,
+                                       1, 1, 1 };
+  static gfloat slider_pincs[6]    = { 3.6, 1, 1,
+                                       0.01, 0.01, 0.01};
+  static gfloat slider_incs[6]     = { 0.36, 0.1, 0.1,
+                                       0.001, 0.001, 0.001 };
 
   ColorSelectP csp;
   GtkWidget *main_vbox;
@@ -293,10 +298,13 @@ color_select_new (PixelRow           * col,
 			  csp);
       gtk_widget_show (csp->toggles[i]);
 
-      csp->slider_data[i] = GTK_ADJUSTMENT (gtk_adjustment_new (csp->values[i], 0.0,
-								slider_max_vals[i],
-								slider_incs[i],
-								0.001, 0.0));
+      csp->slider_data[i] =
+        GTK_ADJUSTMENT (gtk_adjustment_new (csp->values[i],
+                                            0.0,
+                                            slider_max_vals[i],
+                                            slider_incs[i],
+                                            slider_pincs[i],
+                                            0.0));
 
       slider = gtk_hscale_new (csp->slider_data[i]);
       gtk_table_attach (GTK_TABLE (table), slider, 1, 2, i, i+1,
@@ -309,7 +317,7 @@ color_select_new (PixelRow           * col,
       gtk_widget_show (slider);
 
       csp->entries[i] = gtk_entry_new ();
-      sprintf (buffer, "%7.5f", csp->values[i]);
+      color_select_format_entry (csp, i, buffer);
       gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
       gtk_widget_set_usize (GTK_WIDGET (csp->entries[i]), 70, 0);
       gtk_table_attach (GTK_TABLE (table), csp->entries[i],
@@ -711,6 +719,54 @@ color_select_update_sliders (ColorSelectP csp,
     }
 }
 
+static void 
+color_select_format_entry  (
+                            ColorSelectP csp,
+                            int i,
+                            char * buffer
+                            )
+{
+  switch (i)
+    {
+    case 0:
+    case 1:
+    case 2:
+      /* HSV get printed as floats always */
+      sprintf (buffer, "%7.5f", csp->values[i]);
+      break;
+      
+    case 3:
+    case 4:
+    case 5:
+      /* RGB get formatted according to current default precision */
+      switch (default_precision)
+        {
+        case PRECISION_U8:
+          sprintf (buffer, "%-7d", (guint8) (csp->values[i] * 255));
+          break;
+
+        case PRECISION_U16:
+          sprintf (buffer, "%-7d", (guint16) (csp->values[i] * 65535));
+          break;
+
+        case PRECISION_FLOAT:
+          sprintf (buffer, "%7.5f", csp->values[i]);
+          break;
+
+        case PRECISION_NONE:
+        default:
+          sprintf (buffer, "---");
+          break;          
+        }
+      break;
+
+    default:
+      sprintf (buffer, "---");
+      break;          
+    }
+}
+
+
 static void
 color_select_update_entries (ColorSelectP csp,
 			     int          skip)
@@ -723,11 +779,10 @@ color_select_update_entries (ColorSelectP csp,
       for (i = 0; i < 6; i++)
 	if (i != skip)
 	  {
-	    sprintf (buffer, "%7.5f", csp->values[i]);
-
-	    gtk_signal_handler_block_by_data (GTK_OBJECT (csp->entries[i]), csp);
-	    gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
-	    gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->entries[i]), csp);
+            color_select_format_entry (csp, i, buffer);
+            gtk_signal_handler_block_by_data (GTK_OBJECT (csp->entries[i]), csp);
+            gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
+            gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->entries[i]), csp);
 	  }
     }
 }
@@ -1140,7 +1195,47 @@ color_select_entry_update (GtkWidget *w,
       for (j = 0; j < 6; j++)
 	old_values[j] = csp->values[j];
 
-      csp->values[i] = atoi (gtk_entry_get_text (GTK_ENTRY (csp->entries[i])));
+      {
+        gfloat val;
+
+        val = atof (gtk_entry_get_text (GTK_ENTRY (csp->entries[i])));
+
+        switch (i)
+          {
+          case 0:
+          case 1:
+          case 2:
+            /* HSV get read as floats always */
+            break;
+      
+          case 3:
+          case 4:
+          case 5:
+            /* RGB get read according to current default precision */
+            switch (default_precision)
+              {
+              case PRECISION_U8:
+                val = val / 255.0;
+                break;
+
+              case PRECISION_U16:
+                val = val / 65535.0;
+                break;
+
+              case PRECISION_FLOAT:
+                break;
+                
+              case PRECISION_NONE:
+              default:
+                val = 0;
+                break;          
+              }
+            break;
+          }
+
+        csp->values[i] = val;
+      }
+      
       if (csp->values[i] == old_values[i])
 	return;
 
