@@ -334,6 +334,6 @@ gimp_help_get_locales (GimpGuiConfig *config)
   if (config->help_locales && strlen (config->help_locales))
     return g_strdup (config->help_locales);
 
-  return g_strjoinv (":", g_get_language_names ());
+  return g_strjoinv (":", (gchar **) g_get_language_names ());
 }
 
