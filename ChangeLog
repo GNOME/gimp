@@ -1,3 +1,11 @@
+2000-06-07  Michael Natterer  <mitch@gimp.org>
+            Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/gifload.c: test for GIMP_HAVE_PARASITES
+
+	* plug-ins/common/url.c: open a pipe to the wget child and
+	parse it's output so we can display a progressbar.
+
 2000-06-07  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: sorry, there's no build directory
