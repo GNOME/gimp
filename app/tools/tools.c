@@ -636,7 +636,7 @@ tools_select (ToolType type)
 
   if (tool_info[(int) active_tool->type].tool_options->title)
     gtk_label_set_text (GTK_LABEL (options_label),
-			tool_info[(int) active_tool->type].tool_options->title);
+			_(tool_info[(int) active_tool->type].tool_options->title));
 
   if (tool_info[(int) active_tool->type].tool_options->reset_func)
     gtk_widget_set_sensitive (options_reset_button, TRUE);
@@ -685,7 +685,7 @@ tools_initialize (ToolType type, GDisplay *gdisp)
 
   if (tool_info[(int) active_tool->type].tool_options->title)
     gtk_label_set_text (GTK_LABEL (options_label),
-			tool_info[(int) active_tool->type].tool_options->title);
+			_(tool_info[(int) active_tool->type].tool_options->title));
 
   if (tool_info[(int) active_tool->type].tool_options->reset_func)
     gtk_widget_set_sensitive (options_reset_button, TRUE);
@@ -822,7 +822,7 @@ tools_register (ToolType     tool_type,
       gtk_widget_show (tool_options->main_vbox);
     }
 
-  gtk_label_set_text (GTK_LABEL (options_label), tool_options->title);
+  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
 }
 
 

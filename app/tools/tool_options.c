@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
 #include "brush_select.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
@@ -159,7 +160,7 @@ tool_options_radio_buttons_new (gchar*      label,
   GSList *group = NULL;
   gint i;
 
-  frame = gtk_frame_new (label);
+  frame = gtk_frame_new (_(label));
 
   g_return_val_if_fail (toggle_val != NULL, frame);
 
@@ -194,7 +195,7 @@ tool_options_init (ToolOptions          *options,
 		   ToolOptionsResetFunc  reset_func)
 {
   options->main_vbox  = gtk_vbox_new (FALSE, 2);
-  options->title = title;
+  options->title = _(title);
   options->reset_func = reset_func;
 }
 
@@ -232,20 +233,20 @@ selection_options_init (SelectionOptions     *options,
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == RECT_SELECT) ?
-		      _("Rectangular Select Options") :
+		      N_("Rectangular Select Options") :
 		      ((tool_type == ELLIPSE_SELECT) ?
-		       _("Elliptical Selection Options") :
+		       N_("Elliptical Selection Options") :
 		       ((tool_type == FREE_SELECT) ?
-			_("Free-hand Selection Options") :
+			N_("Free-hand Selection Options") :
 			((tool_type == FUZZY_SELECT) ?
-			 _("Fuzzy Selection Options") :
+			 N_("Fuzzy Selection Options") :
 			 ((tool_type == BEZIER_SELECT) ?
-			  _("Bezier Selection Options") :
+			  N_("Bezier Selection Options") :
 			  ((tool_type == ISCISSORS) ?
-			   _("Intelligent Scissors Options") :
+			   N_("Intelligent Scissors Options") :
 			   ((tool_type == BY_COLOR_SELECT) ?
-			    _("By-Color Select Options") :
-			    _("ERROR: Unknown Selection Type")))))))),
+			    N_("By-Color Select Options") :
+			    N_("ERROR: Unknown Selection Type")))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -552,24 +553,24 @@ paint_options_init (PaintOptions         *options,
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
 		     ((tool_type == BUCKET_FILL) ?
-		      _("Bucket Fill Options") :
+		      N_("Bucket Fill Options") :
 		      ((tool_type == BLEND) ?
-		       _("Blend Options") :
+		       N_("Blend Options") :
 		       ((tool_type == PENCIL) ?
-			_("Pencil Options") :
+			N_("Pencil Options") :
 			((tool_type == PAINTBRUSH) ?
-			 _("Paintbrush Options") :
+			 N_("Paintbrush Options") :
 			 ((tool_type == ERASER) ?
-			  _("Erazer Options") :
+			  N_("Erazer Options") :
 			  ((tool_type == AIRBRUSH) ?
-			   _("Airbrush Options") :
+			   N_("Airbrush Options") :
 			   ((tool_type == CLONE) ?
-			    _("Clone Tool Options") :
+			    N_("Clone Tool Options") :
 			    ((tool_type == CONVOLVE) ?
-			     _("Convolver Options") :
+			     N_("Convolver Options") :
 			     ((tool_type == INK) ?
-			      _("Ink Options") :
-			      _("ERROR: Unknown Paint Type")))))))))),
+			      N_("Ink Options") :
+			      N_("ERROR: Unknown Paint Type")))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */

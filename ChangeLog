@@ -1,3 +1,8 @@
+1999-06-06  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/{color_notebook.c,color_select.c,lc_dialog.c,temp_buf.c,tool_options.c,tools.c}:
+	  Misc l10n fixes
+
 Sun Jun  6 11:16:12 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am

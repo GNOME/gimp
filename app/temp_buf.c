@@ -43,6 +43,7 @@
 #include "paint_funcs.h"
 #include "temp_buf.h"
 
+#include "libgimp/gimpintl.h"
 
 static unsigned char *   temp_buf_allocate (unsigned int);
 static void              temp_buf_to_color (TempBuf *, TempBuf *);
@@ -218,7 +219,7 @@ temp_buf_copy (src, dest)
           else if (src->bytes == 2) /* grayscale */
 	    temp_buf_to_color (src, new);
           else
-	    g_message ("Cannot convert from indexed color.");
+	    g_message (_("Cannot convert from indexed color."));
 	  return new;
         }
     }
@@ -471,7 +472,7 @@ temp_buf_swap (buf)
     {
       if (stat_buf.st_mode & S_IFDIR)
 	{
-	  g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)",
+	  g_message (_("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"),
 		   filename);
 	  g_free (filename);
 	  return;
@@ -488,7 +489,7 @@ temp_buf_swap (buf)
         {
           (void) unlink (filename);
           perror ("Write error on temp buf");
-          g_message ("Cannot write \"%s\"", filename);
+          g_message (_("Cannot write \"%s\""), filename);
           g_free (filename);
           return;
         }
@@ -497,7 +498,7 @@ temp_buf_swap (buf)
     {
       (void) unlink (filename);
       perror ("Error in temp buf caching");
-      g_message ("Cannot write \"%s\"", filename);
+      g_message (_("Cannot write \"%s\""), filename);
       g_free (filename);
       return;
     }
@@ -554,7 +555,7 @@ temp_buf_unswap (buf)
       unlink (buf->filename);
     }
   if (!succ)
-    g_message ("Error in temp buf caching: information swapped to disk was lost!");
+    g_message (_("Error in temp buf caching: information swapped to disk was lost!"));
 
   g_free (buf->filename);   /*  free filename  */
   buf->filename = NULL;
