@@ -163,7 +163,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 
   object_class->finalize         = cdisplay_colorblind_finalize;
 
-  display_class->name            = _("Colorblind");
+  display_class->name            = _("Color Deficient Vision");
   display_class->help_page       = "modules/colorblind.html";
   display_class->clone           = cdisplay_colorblind_clone;
   display_class->convert         = cdisplay_colorblind_convert;

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2002-12-16 17:35+0100\n"
-"PO-Revision-Date: 2002-12-16 17:41+0100\n"
+"POT-Creation-Date: 2002-12-16 17:54+0100\n"
+"PO-Revision-Date: 2002-12-16 17:58+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -379,7 +379,9 @@ msgstr "Faktor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es \"zufällige\" Funktionen zu wiederholen"
+msgstr ""
+"Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
+"\"zufällige\" Funktionen zu wiederholen"
 
 #: libgimpwidgets/gimpwidgets.c:964
 msgid "_Randomize"
@@ -410,7 +412,7 @@ msgid "Colorblind display filter"
 msgstr "Farbenblindheit Anzeigenfarbfilter"
 
 #: modules/cdisplay_colorblind.c:166
-msgid "Colorblind"
+msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
 #: modules/cdisplay_colorblind.c:326
