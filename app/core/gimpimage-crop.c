@@ -101,7 +101,6 @@ gimp_image_crop (GimpImage *gimage,
   gint         width, height;
   gint         lx1, ly1, lx2, ly2;
   gint         off_x, off_y;
-  gint         doff_x, doff_y;
 
   g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -116,17 +115,19 @@ gimp_image_crop (GimpImage *gimage,
 
       if (active_layer_only)
 	{
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+	  gint doff_x, doff_y;
 
 	  layer = gimp_image_get_active_layer (gimage);
-
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_relax (layer, TRUE);
 
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &doff_x, &doff_y);
 
 	  off_x = (doff_x - x1);
 	  off_y = (doff_y - y1);
+
+          undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+
+	  if (gimp_layer_is_floating_sel (layer))
+	    floating_sel_relax (layer, TRUE);
 
 	  gimp_layer_resize (layer, width, height, off_x, off_y);
 

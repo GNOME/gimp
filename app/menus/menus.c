@@ -738,6 +738,11 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GIMP_STOCK_SCALE },
     NULL,
     "layers/dialogs/scale_layer.html", NULL },
+  { { N_("/Layer/Crop Layer"), NULL,
+      layers_crop_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_CROP },
+    NULL,
+    "layers/dialogs/scale_layer.html", NULL },
 
   /*  <Image>/Layer/Transform  */
 

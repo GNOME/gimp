@@ -241,17 +241,6 @@ layers_delete_cmd_callback (GtkWidget *widget,
 }
 
 void
-layers_scale_cmd_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer);
-
-  layers_scale_layer_query (gimage, active_layer);
-}
-
-void
 layers_resize_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
@@ -271,6 +260,53 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
   
   gimp_layer_resize_to_image (active_layer);
+  gdisplays_flush ();
+}
+
+void
+layers_scale_cmd_callback (GtkWidget *widget,
+			   gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
+
+  layers_scale_layer_query (gimage, active_layer);
+}
+
+void
+layers_crop_cmd_callback (GtkWidget *widget,
+                          gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  gint       x1, y1, x2, y2;
+  gint       off_x, off_y;
+  return_if_no_layer (gimage, active_layer);
+
+  if (! gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2))
+    {
+      g_message (_("Cannot crop because the current selection is empty."));
+      return;
+    }
+
+  gimp_drawable_offsets (GIMP_DRAWABLE (active_layer), &off_x, &off_y);
+
+  off_x -= x1;
+  off_y -= y1;
+
+  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
+
+  if (gimp_layer_is_floating_sel (active_layer))
+    floating_sel_relax (active_layer, TRUE);
+
+  gimp_layer_resize (active_layer, x2 - x1, y2 - y1, off_x, off_y);
+
+  if (gimp_layer_is_floating_sel (active_layer))
+    floating_sel_rigor (active_layer, TRUE);
+
+  undo_push_group_end (gimage);
+
   gdisplays_flush ();
 }
 

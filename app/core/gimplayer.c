@@ -1391,7 +1391,7 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
     floating_sel_invalidate (layer);
 }
 
-gint
+gboolean
 gimp_layer_pick_correlate (GimpLayer *layer,
 			   gint       x,
 			   gint       y)

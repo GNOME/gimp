@@ -1,3 +1,17 @@
+2002-04-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-crop.c: reordered some lines, no logic
+	changed.
+
+	* app/core/gimplayer.[ch]: made gimp_layer_pick_correlate()
+	return a gboolean, not gint.
+
+	* app/display/gimpdisplayshell.c
+	* app/gui/layers-commands.[ch]
+	* app/gui/menus.c: added "<Image>/Layers/Crop Layer" which resizes
+	the active layer to the current selection's bounds, just as
+	"<Image>/Image/Crop Image"
+
 2002-04-12  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* app/gui/dialogs-constructors.c: Marked some strings for translation.

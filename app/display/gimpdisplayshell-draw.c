@@ -1048,6 +1048,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   SET_SENSITIVE ("/Layer/Layer Boundary Size...", lp && !aux);
   SET_SENSITIVE ("/Layer/Layer to Imagesize",     lp && !aux);
   SET_SENSITIVE ("/Layer/Scale Layer...",         lp && !aux);
+  SET_SENSITIVE ("/Layer/Crop Layer",             lp && !aux && sel);
 
   SET_SENSITIVE ("/Layer/Transform/Offset...", lp);
 
