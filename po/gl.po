@@ -5,29 +5,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.24\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-07-07 16:21+0200\n"
+"POT-Creation-Date: 2000-08-26 02:06+0200\n"
+"PO-Revision-Date: 2000-09-06 20:30+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "Sobre o GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Versión %s distribuida por"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Por favor, visite http://www.gimp.org/ para máis información"
 
@@ -118,13 +118,13 @@ msgstr "Sair"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -327,7 +327,7 @@ msgstr "Editor de pinceis"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Pechar"
 
@@ -529,31 +529,31 @@ msgstr "Novo canal"
 
 #: app/channels_dialog.c:229
 msgid "Raise Channel"
-msgstr "Elevar canal"
+msgstr "Elevar canle"
 
 #: app/channels_dialog.c:233
 msgid "Lower Channel"
-msgstr "Baixar canal"
+msgstr "Baixar canle"
 
 #: app/channels_dialog.c:237
 msgid "Duplicate Channel"
-msgstr "Duplicar canal"
+msgstr "Duplicar canle"
 
 #: app/channels_dialog.c:242
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
-"Canal a selección \n"
+"Canle a selección \n"
 "<Shift>Engadir       <Ctrl> Sustraer      <Shift><Ctrl> intersecar"
 
 #: app/channels_dialog.c:249
 msgid "Delete Channel"
-msgstr "Borrar Canal"
+msgstr "Borrar Canle"
 
 #: app/channels_dialog.c:1204
 msgid "Empty Channel Copy"
-msgstr "Copia de canal valeiro"
+msgstr "Copia de canle valeira"
 
 #: app/channels_dialog.c:1433 app/color_balance.c:343 app/color_select.c:250
 #: app/curves.c:583 app/histogram_tool.c:303 app/levels.c:370
@@ -580,12 +580,12 @@ msgstr "Indexado"
 
 #: app/channels_dialog.c:2494
 msgid "New Channel Options"
-msgstr "Novas opcións de canal"
+msgstr "Novas opcións de canle"
 
 #. The name entry hbox, label and entry
 #: app/channels_dialog.c:2527 app/channels_dialog.c:2690
 msgid "Channel name:"
-msgstr "Nome do canal:"
+msgstr "Nome da canle:"
 
 #. The opacity scale
 #: app/channels_dialog.c:2542 app/channels_dialog.c:2705
@@ -594,7 +594,7 @@ msgstr "Opacidade do recheo:"
 
 #: app/channels_dialog.c:2657
 msgid "Edit Channel Attributes"
-msgstr "Edita-los atributos do canal"
+msgstr "Edita-los atributos da canle"
 
 #: app/clone.c:133
 msgid "Source"
@@ -996,7 +996,7 @@ msgstr "As curvas para debuxos indexados non poden ser axustadas."
 
 #: app/curves.c:575
 msgid "Modify Curves for Channel:"
-msgstr "Modificar curvas do canal:"
+msgstr "Modificar curvas da canle:"
 
 #: app/curves.c:586 app/levels.c:373
 msgid "Alpha"
@@ -1374,20 +1374,20 @@ msgstr ""
 "Fallo ó abrir.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s xa existe, ¿sobreescribilo?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "¡O ficheiro xa existe!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Si"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Non"
 
@@ -1421,7 +1421,7 @@ msgid ""
 msgstr ""
 "Non se pode crear unha nova capa da selección\n"
 "flotante porque pertence a\n"
-"unha capa de mascara ou canal"
+"unha capa de mascara ou canle"
 
 #: app/gdisplay.c:227
 msgid "RGB-empty"
@@ -1505,7 +1505,7 @@ msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
-"A capa activa non ten canal alfa\n"
+"A capa activa non ten canle alfa\n"
 "que convertir a selección"
 
 #: app/gimage_mask.c:513
@@ -1601,7 +1601,11 @@ msgstr "sen nome"
 msgid "Layer type %d not supported."
 msgstr "Tipo de capa %d non soportada."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:190
+msgid "Could not find GIMP Help Browser"
+msgstr "Non se atopou o visor de axuda do GIMP"
+
+#: app/gimphelp.c:192
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1611,39 +1615,35 @@ msgstr ""
 "Probablemente non foi compilado debido a\n"
 "non ter instalado GtkXmHTML."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "vincular parasito á imaxe"
+#: app/gimphelp.c:195
+msgid "Use Netscape instead"
+msgstr "Usar Netscape no seu defecto"
 
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "desvincular parasito da imaxe"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
 msgstr "A capa non pode ser elevada máis"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
 msgstr "A capa non pode ser baixada máis"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "A capa xa esta no tope"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
 msgstr "Imposible elevar capa sen alfa"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "A capa xa esta no fondo"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "O fondo non ten alfa, a capa foi colocada enriba"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1651,11 +1651,11 @@ msgstr ""
 "Non hai capas visibles abondo para unha fusión.\n"
 "Debe haber polo menos duas."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr "Non hai capas visibles abondo para unha fusión."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1663,7 +1663,7 @@ msgstr ""
 "Incapaz de engadir unha mascara de capa porque\n"
 "a capa xa ten unha."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1671,29 +1671,29 @@ msgstr ""
 "Incapaz de engadir unha mascara de capa a unha\n"
 "capa nunha imaxe indexada."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
 "Non se pode engadir mascara de capa a unha capa\n"
-"sen canal alfa."
+"sen canle alfa."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Non se pode engadir mascara de capa de diferentes dimensións que a capa "
 "especificada."
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
-msgstr "O canal non pode ser elevado máis"
+msgstr "A canle non se pode elevar máis"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
-msgstr "O canal non pode ser baixado máis"
+msgstr "A canle non se pode baixar máis"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Sen titulo"
@@ -2224,7 +2224,7 @@ msgstr "Percentil:"
 
 #: app/histogram_tool.c:294
 msgid "Information on Channel:"
-msgstr "Información en Canal"
+msgstr "Información en canle"
 
 #. The shell and main vbox
 #: app/hue_saturation.c:245 app/hue_saturation.c:365 app/tools.c:1077
@@ -2490,11 +2490,11 @@ msgstr "UI de pinceis"
 
 #: app/internal_procs.c:74
 msgid "Channel"
-msgstr "Canal"
+msgstr "Canle"
 
 #: app/internal_procs.c:77
 msgid "Channel Ops"
-msgstr "Opc. de Canal"
+msgstr "Opc. de Canle"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:385 app/paint_funcs.c:97
 #: app/tool_options.c:816 app/tool_options.c:931
@@ -2570,7 +2570,7 @@ msgstr "Procedementos de parásitos"
 
 #: app/internal_procs.c:134 app/lc_dialog.c:179
 msgid "Paths"
-msgstr "Camiños"
+msgstr "Curvas"
 
 #: app/internal_procs.c:137
 msgid "Pattern UI"
@@ -2596,7 +2596,7 @@ msgstr "Procedementos de texto"
 msgid "Tool procedures"
 msgstr "Procedementos de ferramentas"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "Desfacer"
 
@@ -2758,7 +2758,7 @@ msgstr "Negro (Transparencia total)"
 
 #: app/layers_dialog.c:3780
 msgid "Layer's Alpha Channel"
-msgstr "Canal alfa da capa"
+msgstr "Canle alfa da capa"
 
 #: app/layers_dialog.c:3841 app/layers_dialog.c:3927
 msgid ""
@@ -2794,7 +2794,7 @@ msgstr "Suxeita á capa de fondo"
 
 #: app/lc_dialog.c:99
 msgid "Layers, Channels & Paths"
-msgstr "Capas, Canais e camiños"
+msgstr "Capas, Canles e Curvas"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -2807,7 +2807,7 @@ msgstr "Capas"
 
 #: app/lc_dialog.c:174
 msgid "Channels"
-msgstr "Canais"
+msgstr "Canles"
 
 #. The shell and main vbox
 #: app/levels.c:197 app/levels.c:332 app/tools.c:1189
@@ -2820,7 +2820,7 @@ msgstr "Os niveis de debuxos indexados non poden ser axustados."
 
 #: app/levels.c:361
 msgid "Modify Levels for Channel:"
-msgstr "Modificar niveis para o canal:"
+msgstr "Modificar niveis para a canle:"
 
 #: app/levels.c:385
 msgid "Input Levels:"
@@ -2858,107 +2858,122 @@ msgstr "Zoom dentro"
 msgid "Zoom out"
 msgstr "Zoom fora"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr 
+"\n"
+"Opción inválida.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "Versión do GIMP"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Uso: %s [opción ...] [ficheiros ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Opcións válidas son:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Sae esta axuda.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Sae información da versión.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <commandos>   Execútase en modo por lotes.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Usar un ficheiro gimprc alternativo.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr ""
+"\n"
+"Uso: %s [opción ...] [ficheiro ...]\n"
+"\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Executar sen entorno de usuario.\n"
+msgid "Options:\n"
+msgstr "Opcións:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Tenta restaurar sesión gardada.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b --batch <comandos>   Execútar en modo por lotes.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
 msgstr ""
-"  --no-data                Non cargar patróns, degradados, paletas, "
-"pinceis.\n"
+"  -c, --console-messages   Amosa advertencias en consola en vez de nunha "
+"caixa de dialogo.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr ""
+"  -d --no-data              Non cargar pinceis, degradados, paletas, "
+"patróns.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i --no-interface        Executar sen entorno de usuario.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>     Usar un ficheiro gimprc alternativo.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help                Sae esta axuda.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session     Tenta restaurar sesión gardada.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash            Non amosar a fiestra de arranque.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Non engadir unha imaxe á fiestra de arranque.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version             Sae información da versión.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Amosar mensaxes de arranque.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Non amosar a fiestra de arranque.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr ""
-"  --no-splash-image        Non engadir unha imaxe á fiestra de arranque.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 Non usar memoria compartida entre GIMP e os seus "
+"  --no-shm                 Non usar memoria compartida entre GIMP e "
 "conectores.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Non usar a extensión de memoria compartida X.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --console-messages       Amosa advertencias en consola en vez de nunha "
-"caixa de dialogo.\n"
+"  --debug-handlers         Abilita manexadores de señais de depurado non-fatais.\n"
 
-#: app/main.c:315
-#, fuzzy
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
-msgstr ""
-"  --debug-handlers         Abilita manexadores de señais de depurado.\n"
-
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr ""
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Usa a pantalla X designada.\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Usa un ficheiro gimprc de sistema alternativo.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr ""
+"                           Modo de depurado para sinais fatais.\n"
+"\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Esta fiestra de consola será pechada en dez segundos)\n"
 
@@ -3003,7 +3018,7 @@ msgstr "/Ficheiro/Preferencias..."
 
 #: app/menus.c:116
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/Ficheiro/Formularios/Capas, canais e camiños..."
+msgstr "/Ficheiro/Formularios/Capas, Canles e Curvas..."
 
 #: app/menus.c:118
 msgid "/File/Dialogs/Tool Options..."
@@ -3202,7 +3217,7 @@ msgstr "/Seleccionar/Beira..."
 
 #: app/menus.c:291
 msgid "/Select/Save to Channel"
-msgstr "/Seleccionar/Gardar a canal"
+msgstr "/Seleccionar/Gardar a canle"
 
 #. <Image>/View
 #: app/menus.c:296
@@ -3320,7 +3335,7 @@ msgstr "/Imaxe/Cores/Auto/Ecualizar"
 #. <Image>/Image/Alpha
 #: app/menus.c:384
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Imaxe/Alfa/Engadir canal alfa"
+msgstr "/Imaxe/Alfa/Engadir canle alfa"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:389
@@ -3346,7 +3361,7 @@ msgstr "/Imaxe/Duplicar"
 #. <Image>/Layers
 #: app/menus.c:410
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Capas/Capas, canais e camiños..."
+msgstr "/Capas/Capas, Canles e Curvas..."
 
 #: app/menus.c:414
 msgid "/Layers/Layer to Imagesize"
@@ -3400,7 +3415,7 @@ msgstr "/Capas/Mascara a selección"
 
 #: app/menus.c:455
 msgid "/Layers/Add Alpha Channel"
-msgstr "/Capas/Engadir canal alfa"
+msgstr "/Capas/Engadir canle alfa"
 
 #: app/menus.c:457
 msgid "/Layers/Alpha to Selection"
@@ -3422,7 +3437,7 @@ msgstr "/Ferramentas/Intercambiar cores"
 #. <Image>/Dialogs
 #: app/menus.c:476
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Formularios/Capas, canais e camiños..."
+msgstr "/Formularios/Capas, Canles e Curvas..."
 
 #: app/menus.c:478
 msgid "/Dialogs/Tool Options..."
@@ -3628,7 +3643,7 @@ msgstr "/Máscara a selección"
 
 #: app/menus.c:655
 msgid "/Add Alpha Channel"
-msgstr "/Engadir canal alfa"
+msgstr "/Engadir canle alfa"
 
 #: app/menus.c:657
 msgid "/Alpha to Selection"
@@ -3640,23 +3655,23 @@ msgstr "/Editar atributos de capa..."
 
 #: app/menus.c:673
 msgid "/New Channel..."
-msgstr "/Novo canal..."
+msgstr "/Nova canle..."
 
 #: app/menus.c:675
 msgid "/Raise Channel"
-msgstr "/Elevar canal"
+msgstr "/Elevar canle"
 
 #: app/menus.c:677
 msgid "/Lower Channel"
-msgstr "/Baixar canal"
+msgstr "/Baixar canle"
 
 #: app/menus.c:679
 msgid "/Duplicate Channel"
-msgstr "/Duplicar canal"
+msgstr "/Duplicar canle"
 
 #: app/menus.c:684
 msgid "/Channel to Selection"
-msgstr "/Canal a selección"
+msgstr "/Canle a selección"
 
 #: app/menus.c:686
 msgid "/Add to Selection"
@@ -3672,55 +3687,55 @@ msgstr "/Intersecar coa selección"
 
 #: app/menus.c:695
 msgid "/Delete Channel"
-msgstr "/Borrar Canal"
+msgstr "/Borrar Canle"
 
 #: app/menus.c:700
 msgid "/Edit Channel Attributes..."
-msgstr "/Editar atributos de canal..."
+msgstr "/Editar atributos da canle..."
 
 #: app/menus.c:711
 msgid "/New Path"
-msgstr "/Novo camiño"
+msgstr "/Nova Curva"
 
 #: app/menus.c:713
 msgid "/Duplicate Path"
-msgstr "/Duplicar camiño"
+msgstr "/Duplicar curva"
 
 #: app/menus.c:715
 msgid "/Path to Selection"
-msgstr "/Camiño a selección"
+msgstr "/Curva a selección"
 
 #: app/menus.c:717
 msgid "/Selection to Path"
-msgstr "/Selección a camiño"
+msgstr "/Selección a curva"
 
 #: app/menus.c:719
 msgid "/Stroke Path"
-msgstr "/Trazar camiño"
+msgstr "/Trazar curva"
 
 #: app/menus.c:721
 msgid "/Delete Path"
-msgstr "/Borrar camiño"
+msgstr "/Borrar curva"
 
 #: app/menus.c:726
 msgid "/Copy Path"
-msgstr "/Copiar camiño"
+msgstr "/Copiar curva"
 
 #: app/menus.c:728
 msgid "/Paste Path"
-msgstr "/Pegar camiño"
+msgstr "/Pegar curva"
 
 #: app/menus.c:730
 msgid "/Import Path..."
-msgstr "/Importar camiño..."
+msgstr "/Importar curva..."
 
 #: app/menus.c:732
 msgid "/Export Path..."
-msgstr "/Exportar camiño..."
+msgstr "/Exportar curva..."
 
 #: app/menus.c:737
 msgid "/Edit Path Attributes..."
-msgstr "/Editar atributos do camiño..."
+msgstr "/Editar atributos da curva..."
 
 #: app/menus.c:1290
 #, c-format
@@ -3942,7 +3957,7 @@ msgstr ""
 "Valor RGB fora de rango"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#,  c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "Imposible gardar paleta \"%s\"\n"
 
@@ -4042,27 +4057,27 @@ msgstr "Selección de paleta"
 
 #: app/paths_dialog.c:163
 msgid "New Path"
-msgstr "Novo camiño"
+msgstr "Nova curva"
 
 #: app/paths_dialog.c:167
 msgid "Duplicate Path"
-msgstr "Duplicar camiño"
+msgstr "Duplicar curva"
 
 #: app/paths_dialog.c:171
 msgid "Path to Selection"
-msgstr "Camiño a selección"
+msgstr "Curva a selección"
 
 #: app/paths_dialog.c:175
 msgid "Selection to Path"
-msgstr "Selección a camiño"
+msgstr "Selección a curva"
 
 #: app/paths_dialog.c:179
 msgid "Stroke Path"
-msgstr "Trazar camiño"
+msgstr "Trazar curva"
 
 #: app/paths_dialog.c:183
 msgid "Delete Path"
-msgstr "Borrar camiño"
+msgstr "Borrar curva"
 
 #: app/paths_dialog.c:192
 msgid "New Point"
@@ -4083,15 +4098,15 @@ msgstr "Editar punto"
 #: app/paths_dialog.c:432
 #, c-format
 msgid "Path %d"
-msgstr "Camiño %d"
+msgstr "Curva %d"
 
 #: app/paths_dialog.c:985
 msgid "Edit Path Attributes"
-msgstr "Editar atributos do camiño"
+msgstr "Editar atributos da curva"
 
 #: app/paths_dialog.c:988
 msgid "Enter a new name for the path"
-msgstr "Introduza un novo nome para o camiño"
+msgstr "Introduza un novo nome para a curva"
 
 #: app/paths_dialog.c:1919
 #, c-format
@@ -4101,17 +4116,17 @@ msgstr "Fallo ó ler dende %s"
 #: app/paths_dialog.c:1934
 #, c-format
 msgid "Failed to read path from %s"
-msgstr "Fallo ó ler camiño dende %s"
+msgstr "Fallo ó ler curva dende %s"
 
 #: app/paths_dialog.c:1941
 #, c-format
 msgid "No points specified in path file %s"
-msgstr "Non hai puntos especificados no ficheiro de camiño %s"
+msgstr "Non hai puntos especificados no ficheiro de curva %s"
 
 #: app/paths_dialog.c:1952
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr "Fallo ó ler puntos do camiño dende %s"
+msgstr "Fallo ó ler puntos da curva dende %s"
 
 #: app/paths_dialog.c:2025 app/xcf.c:436
 #, c-format
@@ -4124,11 +4139,11 @@ msgstr "Cargar/Almacenar curvas Bezier"
 
 #: app/paths_dialog.c:2087
 msgid "Load Path"
-msgstr "Cargar Camiño"
+msgstr "Cargar Curva"
 
 #: app/paths_dialog.c:2109
 msgid "Store Path"
-msgstr "Almacenar Camiño"
+msgstr "Almacenar Curva"
 
 #. The shell
 #: app/pattern_select.c:163
@@ -5045,7 +5060,6 @@ msgid "Next Tip"
 msgstr "Seguinte Consello"
 
 #: app/tips_dialog.c:285
-#, fuzzy
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
@@ -5054,7 +5068,8 @@ msgid ""
 msgstr ""
 "¡O seu ficheiro de consellos do GIMP parece estar desaparecido!\n"
 "Deberia haber un ficheiro chamado gimp_tips.txt no\n"
-"directorio de datos do GIMP. Por favor, revise a sua instalación."
+"subdirectorio tips no directorio de datos do GIMP. \n"
+"Por favor, revise a sua instalación."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -5568,7 +5583,7 @@ msgstr "Suavizando"
 #. the showpath toggle button
 #: app/transform_tool.c:304
 msgid "Show Path"
-msgstr "Amosar camiño"
+msgstr "Amosar curva"
 
 #. the clip resulting image toggle button
 #: app/transform_tool.c:315
@@ -5642,15 +5657,15 @@ msgstr "reposicionar capa"
 #. ok
 #: app/undo.c:2916
 msgid "new channel"
-msgstr "novo canal"
+msgstr "nova canle"
 
 #: app/undo.c:2917
 msgid "delete channel"
-msgstr "borrar canal"
+msgstr "borrar canle"
 
 #: app/undo.c:2918
 msgid "channel mod"
-msgstr "mod. de canal"
+msgstr "mod. de canle"
 
 #: app/undo.c:2919
 msgid "FS to layer"
@@ -5763,7 +5778,7 @@ msgstr "redimensionar imaxe"
 msgid "misc"
 msgstr "misc"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "Historial de desfacer: %s"
@@ -5772,7 +5787,7 @@ msgstr "Historial de desfacer: %s"
 msgid "[ base image ]"
 msgstr "[ imaxe base ]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Refacer"
 
@@ -5996,7 +6011,7 @@ msgid ""
 msgstr ""
 "Este subdirectorio é usado polo GIMP para almacenar temporalmente\n"
 "buffers de desfacer para reduci-lo uso de memoria. Se O GIMP é\n"
-"sen ceremonias, os ficheiros poden persistir neste directorio\n"
+"matado sen ceremonias, os ficheiros poden persistir neste directorio\n"
 "da forma: gimp<#>.<#>. Estes ficheiros son inutis entre\n"
 "sesións do GIMP e poden ser destruidos con impunidade."
 
@@ -6125,7 +6140,7 @@ msgstr ""
 "Este programa é software libre; pode redistribuilo e/ou modificalo\n"
 "baixo os termos da GNU General Public License publicada pola\n"
 "Free Software Foundation; tanto na versión 2 da licencia, ou\n"
-"(ó teu criterio) nalgunha versión posterior."
+"(ó seu criterio) nalgunha versión posterior."
 
 #: app/user_install.c:704
 msgid ""
@@ -6184,7 +6199,7 @@ msgstr "Caderno de instalación de usuario"
 
 #: app/user_install.c:851
 msgid "GIMP Performance Tuning"
-msgstr "Posta a punto do funcionamento do GIMP"
+msgstr "Posta a punto do GIMP"
 
 #: app/user_install.c:852
 msgid "Click \"Continue\" to accept the settings above."
@@ -6300,18 +6315,17 @@ msgid "Vertical:"
 msgstr "Vertical:"
 
 #: app/user_install.c:1352
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"O GIMP pode obter esta información do seu servidor X.\n"
-"Ainda asi, moitos servidores X non devolven valores útiles."
+"O GIMP pode obter esta información do seu sistema de fiestras.\n"
+"Ainda asi, a miudo non devolve valores útiles."
 
 #: app/user_install.c:1359
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Obter resolución do servidor X (Actualmente %d x %d ppp)"
+msgstr "Obter resolución do sistema de fiestras (Actualmente %d x %d ppp)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6386,7 +6400,7 @@ msgstr "Triángulo"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Selector de Cor Augado coma módulo conectable"
+msgstr "Selector de Cor Augada coma módulo conectable"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
@@ -6395,6 +6409,12 @@ msgstr "Cor Augada"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historia de Cor"
+
+#~ msgid "attach parasite to image"
+#~ msgstr "vincular parásito á imaxe"
+
+#~ msgid "detach parasite from image"
+#~ msgstr "desvincular parásito da imaxe"
 
 #~ msgid "From X Server"
 #~ msgstr "Dende o servidor X"
@@ -6414,9 +6434,6 @@ msgstr "Historia de Cor"
 
 #~ msgid "Fill Options"
 #~ msgstr "Opcións de Recheo"
-
-#~ msgid "Operations"
-#~ msgstr "Operacións"
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Este ficheiro non pode ser ascendido."
