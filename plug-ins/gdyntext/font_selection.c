@@ -279,7 +279,10 @@ void on_font_selection_value_changed(GtkWidget *widget, gpointer data)
 	}
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry), 0);
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry), 0);
+	/* If we do this for the font_size then it's difficult/ annoying to
+	   erase characters from that entry widget, which IMHO is a bug
 	gtk_entry_set_position(GTK_ENTRY(&GTK_SPIN_BUTTON(fs->font_size)->entry), 0);
+	*/
 	gtk_entry_set_position(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry), 0);
 
 	gdk_error_warnings = 0;
