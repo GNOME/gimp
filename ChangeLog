@@ -1,5 +1,9 @@
 1999-09-02  Tor Lillqvist  <tml@iki.fi>
 
+	* app/paintbrush.c (paintbrush_non_gui_default,
+	paintbrush_non_gui): Make also the non-gui paintbrush (called when
+	stroking a path) handle changing brushes, i.e. pixmap brush pipes.
+
 	* libgimp/parasiteio.[ch]: New files. Types and functions related
 	to "standard" parasite types. Used for the
 	gimp-brush-pipe-parameters parasite that the gpb and psp plug-ins
