@@ -1,0 +1,17 @@
+This is an unstable release of the GIMP, intended for developers only.
+
+For more information about the port or GLib, GTk+ and the GIMP to
+native Windows, and pre-built binary packages, see
+http://www.iki.fi/tml/gimp/win32/ or
+http://www.gimp.org/~tml/gimp/win32/
+
+To build the GIMP on Win32, you will need (for now) the Microsoft
+compiler. Eventually gcc (egcs) from cygwin will also be supported.
+
+First, build in the libgimp directory, then in tools/gcg, then in app,
+plug-ins, and finally in modules. Check the makefile.msc files in said
+directories.
+
+The current build setup for Windows is a mess, I know that.
+   
+--Tor Lillqvist <tml@iki.fi>

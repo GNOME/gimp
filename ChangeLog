@@ -5,6 +5,8 @@
 	communication now uses GIOChannels, not plain file descriptors
 	(this change only affects a few files).
 	
+	* README.win32,config.h.win32,gimprc.win32,user_install.bat: New files.
+	
 	* libgimp/gimpenv.[ch]: New files. gimpenv contains functions that
 	handle directory and file names specific to the GIMP installation
 	and runtime environment.

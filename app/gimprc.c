@@ -2153,14 +2153,8 @@ open_backup_file (char *filename,
     {
       if ((*fp_old = fopen (secondary_filename, "r")) == NULL)
 	{
-	  if (errno == EACCES)
-	    return g_strdup_printf (_("Can't open %s; permission problems"),
-				    secondary_filename);
-	  if (errno == ENOENT)
-	    return g_strdup_printf (_("Can't open %s; file does not exist"),
-				    secondary_filename);
-	  return g_strdup_printf (_("Can't open %s; reason unknown"),
-				  secondary_filename);
+	  return g_strdup_printf (_("Can't open %s; %s"),
+				  secondary_filename, g_strerror (errno));
 	}
       else
 	*name_used = secondary_filename;

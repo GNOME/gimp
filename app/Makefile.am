@@ -374,8 +374,6 @@ EXTRA_DIST = \
 
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
-	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DREGEX_MALLOC			\
 	@GIMP_THREAD_FLAGS@
