@@ -293,6 +293,8 @@ static gint
 flare_dialog (GimpDrawable *drawable)
 {
   GtkWidget   *dlg;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
   GtkWidget   *frame;
   FlareCenter *center;
   gboolean     run;
@@ -308,10 +310,45 @@ flare_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  /* PREVIEW */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_widget_add_events (GTK_WIDGET (preview), PREVIEW_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
   frame = flare_center_create (drawable);
   center = g_object_get_data (G_OBJECT (frame), "center");
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
+  g_object_set_data (G_OBJECT (preview), "center", center);
+
+  g_signal_connect_after (preview, "expose_event",
+                          G_CALLBACK (flare_center_preview_expose),
+                          center);
+  g_signal_connect (preview, "event",
+                    G_CALLBACK (flare_center_preview_events),
+                    center);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
@@ -723,7 +760,7 @@ flare_center_create (GimpDrawable *drawable)
                     G_CALLBACK (flare_center_destroy),
                     center);
 
-  table = gtk_table_new (3, 4, FALSE);
+  table = gtk_table_new (2, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -770,34 +807,13 @@ flare_center_create (GimpDrawable *drawable)
                     G_CALLBACK (flare_center_adjustment_update),
                     &fvals.posy);
 
-  /* PREVIEW */
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_widget_add_events (GTK_WIDGET (preview), PREVIEW_MASK);
-  gtk_table_attach (GTK_TABLE (table), preview, 0, 4, 1, 2, 0, 0, 0, 0);
-  gtk_widget_show (preview);
-
-  g_object_set_data (G_OBJECT (preview), "center", center);
-
-  g_signal_connect_after (preview, "expose_event",
-                          G_CALLBACK (flare_center_preview_expose),
-                          center);
-  g_signal_connect (preview, "event",
-                    G_CALLBACK (flare_center_preview_events),
-                    center);
-
   gtk_widget_show (table);
   g_object_set_data (G_OBJECT (frame), "center", center);
   gtk_widget_show (frame);
 
   /* show / hide cursor */
   check = gtk_check_button_new_with_mnemonic (_("_Show cursor"));
-  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
   gtk_widget_show (check);

@@ -310,12 +310,15 @@ run (const gchar       *name,
 static gboolean
 nova_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *table;
-  GtkWidget *button;
-  GtkWidget *center_frame;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget  *dlg;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  GtkWidget  *table;
+  GtkWidget  *button;
+  GtkWidget  *frame;
+  NovaCenter *center;
+  GtkObject  *adj;
+  gboolean    run;
 
   gimp_ui_init ("nova", TRUE);
 
@@ -328,16 +331,50 @@ nova_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  table = gtk_table_new (5, 3, FALSE);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  /* PREVIEW */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_widget_add_events (preview, PREVIEW_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  frame = nova_center_create (drawable);
+  center = g_object_get_data (G_OBJECT (frame), "center");
+
+  g_signal_connect_after (preview, "expose_event",
+                          G_CALLBACK (nova_center_preview_expose),
+                          center);
+  g_signal_connect (preview, "event",
+                    G_CALLBACK (nova_center_preview_events),
+                    center);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
-
-  center_frame = nova_center_create (drawable);
-  gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
   /* Color */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
@@ -345,7 +382,7 @@ nova_dialog (GimpDrawable *drawable)
       button = gimp_color_button_new (_("SuperNova Color Picker"),
                                       SCALE_WIDTH - 8, 16,
                                       &pvals.color, GIMP_COLOR_AREA_FLAT);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                  _("Co_lor:"), 0.0, 0.5,
                                  button, 1, TRUE);
 
@@ -358,7 +395,7 @@ nova_dialog (GimpDrawable *drawable)
     }
 
   /* Radius */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Radius:"), SCALE_WIDTH, 8,
                               pvals.radius, 1, 100, 1, 10, 0,
                               FALSE, 1, GIMP_MAX_IMAGE_SIZE,
@@ -370,7 +407,7 @@ nova_dialog (GimpDrawable *drawable)
                             G_CALLBACK (nova),
                             drawable);
   /* Number of spokes */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Spokes:"), SCALE_WIDTH, 8,
                               pvals.nspoke, 1, 1024, 1, 16, 0,
                               TRUE, 0, 0,
@@ -385,7 +422,7 @@ nova_dialog (GimpDrawable *drawable)
   /* Randomness of hue */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                                   _("R_andom hue:"), SCALE_WIDTH, 8,
                                   pvals.randomhue, 0, 360, 1, 15, 0,
                                   TRUE, 0, 0,
@@ -451,7 +488,7 @@ nova_center_create (GimpDrawable *drawable)
                     G_CALLBACK (nova_center_destroy),
                     center);
 
-  table = gtk_table_new (3, 4, FALSE);
+  table = gtk_table_new (2, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -499,33 +536,12 @@ nova_center_create (GimpDrawable *drawable)
                     G_CALLBACK (nova_center_adjustment_update),
                     &pvals.ycenter);
 
-  /* PREVIEW */
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache =
-    gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                      &preview_width,
-                                      &preview_height,
-                                      &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_widget_add_events (preview, PREVIEW_MASK);
-  gtk_table_attach (GTK_TABLE (table), preview, 0, 4, 1, 2,
-                    0, 0, 0, 0);
-  gtk_widget_show (preview);
-
-  g_signal_connect_after (preview, "expose_event",
-                          G_CALLBACK (nova_center_preview_expose),
-                          center);
-  g_signal_connect (preview, "event",
-                    G_CALLBACK (nova_center_preview_events),
-                    center);
-
   g_object_set_data (G_OBJECT (frame), "center", center);
 
   gtk_widget_show (frame);
 
   check = gtk_check_button_new_with_mnemonic (_("S_how cursor"));
-  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
   gtk_widget_show (check);
@@ -818,9 +834,9 @@ nova (GimpDrawable *drawable,
 
            for (col = 0, x = 0; col < x2; col++, x++)
              {
-               u = (gdouble) (x - xc) / 
+               u = (gdouble) (x - xc) /
                           (pvals.radius * preview_width / drawable->width);
-               v = (gdouble) (y - yc) / 
+               v = (gdouble) (y - yc) /
                           (pvals.radius * preview_height / drawable->height);
                l = sqrt (u * u + v * v);
 
@@ -849,7 +865,7 @@ nova (GimpDrawable *drawable,
                  ratio = nova_alpha;
 
                compl_ratio = 1.0 - ratio;
-               
+
                /* red or gray */
                spokecol = (gdouble)spokecolor[i                   ].r * (1.0-t) +
                           (gdouble)spokecolor[(i+1) % pvals.nspoke].r * t;

@@ -1,5 +1,11 @@
 2004-09-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/nova.c: embed the preview into a sunken frame
+	and put it into the upper left corner of the dialog.
+
+2004-09-14  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/dialogs-constructors.[ch]
 	* app/dialogs/dialogs.c
 	* app/gui/gui.c: let the dialog factory handle the quit dialog
