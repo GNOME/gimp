@@ -12,13 +12,15 @@ helpbrowser_SOURCES = \
 	queue.h
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GTKXMHTML_CFLAGS)		\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	$(GTKXMHTML_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	$(GTKXMHTML_LIBS)			\
 	$(INTLLIBS)
 

@@ -1,3 +1,8 @@
+2000-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/helpbrowser/Makefile.am: added $GTK_CFLAGS and $GTK_LIBS.
+	Closes #28491.
+
 2000-10-18  Sven Neumann  <sven@gimp.org>
 
 	* gimp.m4: as Garrick James correctly pointed out, GPlugInInfo was
