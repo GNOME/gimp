@@ -10,9 +10,8 @@ msgstr ""
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=ISO 8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.7.1\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
