@@ -22,13 +22,7 @@
 #ifndef __GIMP_LAYER_LIST_ITEM_H__
 #define __GIMP_LAYER_LIST_ITEM_H__
 
-
 #include "gimpdrawablelistitem.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_LAYER_LIST_ITEM            (gimp_layer_list_item_get_type ())
@@ -55,12 +49,7 @@ struct _GimpLayerListItemClass
 };
 
 
-GType   gimp_layer_list_item_get_type (void);
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+GType   gimp_layer_list_item_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_LAYER_LIST_ITEM_H__ */

@@ -53,7 +53,7 @@ struct _GimpMagnifyToolClass
 void    gimp_magnify_tool_register (Gimp                     *gimp,
                                     GimpToolRegisterCallback  callback);
 
-GType   gimp_magnify_tool_get_type (void);
+GType   gimp_magnify_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_MAGNIFY_TOOL_H__  */

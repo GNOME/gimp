@@ -67,7 +67,7 @@ struct _GimpDrawableClass
 
 /*  drawable access functions  */
 
-GType           gimp_drawable_get_type           (void);
+GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  GimpImage          *gimage,

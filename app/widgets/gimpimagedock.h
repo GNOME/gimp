@@ -56,7 +56,7 @@ struct _GimpImageDockClass
 };
 
 
-GType       gimp_image_dock_get_type (void);
+GType       gimp_image_dock_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_dock_new      (GimpDialogFactory *factory,
 				      GimpContainer     *image_container);

@@ -95,7 +95,7 @@ struct _GimpDrawableListViewClass
 };
 
 
-GType       gimp_drawable_list_view_get_type (void);
+GType       gimp_drawable_list_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_drawable_list_view_new      (gint                     preview_size,
 					      GimpImage               *gimage,

@@ -63,7 +63,7 @@ struct _GimpColormapDialogClass
 };
 
 
-GType       gimp_colormap_dialog_get_type  (void);
+GType       gimp_colormap_dialog_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_colormap_dialog_new       (GimpImage          *gimage);
 

@@ -31,6 +31,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimpfontselection.h"
 #include "gimpfontselection-dialog.h"
 
@@ -110,7 +112,7 @@ gimp_font_selection_class_init (GimpFontSelectionClass *klass)
 		  G_STRUCT_OFFSET (GimpFontSelectionClass,
 				   font_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_font_selection_finalize;

@@ -282,7 +282,7 @@ gdt_load (GdtVals *data)
   strncpy (data->text, params[TEXT], sizeof(data->text));
 
   {
-    gchar *text = gimp_strcompress (data->text);
+    gchar *text = g_strcompress (data->text);
     g_snprintf (data->text, sizeof(data->text), "%s", text);
     g_free (text);
   }
@@ -300,7 +300,7 @@ gdt_save (GdtVals *data)
   gint32        color;
   GimpParasite *parasite;
   
-  text = gimp_strescape (data->text, NULL);
+  text = g_strescape (data->text, NULL);
   gimp_rgb_get_uchar (&data->color, &r, &g, &b);
   color = (r << 16) | (g << 8) | b;
   lname = g_strdup_printf (GDYNTEXT_MAGIC

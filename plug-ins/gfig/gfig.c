@@ -812,7 +812,7 @@ plug_in_parse_gfig_path (void)
   if (!gfig_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path = gimp_strescape
+      gchar *path = g_strescape
 	("${gimp_dir}" G_DIR_SEPARATOR_S "gfig"
 	 G_SEARCHPATH_SEPARATOR_S
 	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gfig",

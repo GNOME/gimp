@@ -70,7 +70,7 @@ struct _GimpDockableClass
 };
 
 
-GType       gimp_dockable_get_type (void);
+GType       gimp_dockable_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dockable_new      (const gchar                *name,
 				    const gchar                *short_name,

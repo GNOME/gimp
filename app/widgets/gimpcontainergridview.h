@@ -52,7 +52,7 @@ struct _GimpContainerGridViewClass
 };
 
 
-GType       gimp_container_grid_view_get_type (void);
+GType       gimp_container_grid_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_grid_view_new      (GimpContainer *container,
 					       GimpContext   *context,

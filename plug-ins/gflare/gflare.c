@@ -1027,10 +1027,10 @@ plug_in_parse_gflare_path (void)
   if (!gflare_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path   = gimp_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare"
-				      G_SEARCHPATH_SEPARATOR_S
-				      "${gimp_data_dir}" G_DIR_SEPARATOR_S "gflare",
-				      NULL);
+      gchar *path   = g_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare"
+                                   G_SEARCHPATH_SEPARATOR_S
+                                   "${gimp_data_dir}" G_DIR_SEPARATOR_S "gflare",
+                                   NULL);
       g_message (_("No gflare-path in gimprc:\n"
 		   "You need to add an entry like\n"
 		   "(gflare-path \"%s\")\n"
@@ -1592,7 +1592,7 @@ gflare_save (GFlare *gflare)
 	  if (!message_ok)
 	    {
 	      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-	      gchar *gflare_path = gimp_strescape
+	      gchar *gflare_path = g_strescape
 		("${gimp_dir}" G_DIR_SEPARATOR_S "gflare",
 		 NULL);
 	      gchar *dir = gimp_personal_rc_file ("gflare");

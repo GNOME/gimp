@@ -53,9 +53,7 @@
 #  define GIMPVAR extern
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 #define gimp_get_data         gimp_procedural_db_get_data
@@ -153,13 +151,7 @@ struct _GimpParam
 
 #ifdef G_OS_WIN32
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-#ifdef __cplusplus
-}
-#endif
 
 /* Define WinMain() because plug-ins are built as GUI applications. Also
  * define a main() in case some plug-in still is built as a console
@@ -310,8 +302,6 @@ void        gimp_attach_new_parasite (const gchar    *name,
 				      const gpointer  data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_H__ */

@@ -22,9 +22,7 @@
 #ifndef __GIMP_UI_TYPES_H__
 #define __GIMP_UI_TYPES_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
@@ -34,9 +32,6 @@ extern "C" {
  * left here because it will contain stuff again  --Mitch
  */
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_UI_TYPES_H__ */

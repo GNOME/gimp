@@ -22,9 +22,7 @@
 #ifndef __GIMP_MENU_H__
 #define __GIMP_MENU_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 typedef gint (* GimpConstraintFunc)   (gint32    image_id,
@@ -133,8 +131,6 @@ void      gimp_gradient_select_widget_set_popup   (GtkWidget  *widget,
 						   gchar      *gname);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_MENU_H__ */

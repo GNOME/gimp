@@ -647,7 +647,7 @@ save_gimprc_strings (const gchar *token,
 		  fprintf (fp_new, "#- Next line modified %s\n",
 			   timestamp);
 		}
-	      str = gimp_strescape (value, NULL);
+	      str = g_strescape (value, NULL);
               if (!found)
                 {
 		  fprintf (fp_new, "(%s \"%s\")\n", token, str);
@@ -681,7 +681,7 @@ save_gimprc_strings (const gchar *token,
     {
       fprintf (fp_new, "#- Next line added %s\n",
 	       timestamp);
-      str = gimp_strescape (value, NULL);
+      str = g_strescape (value, NULL);
       fprintf (fp_new, "(%s \"%s\")\n\n", token, str);
       g_free (str);
     }
@@ -2905,7 +2905,7 @@ static inline gchar *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  gchar *str = gimp_strescape (*((char **)val1p), NULL);
+  gchar *str = g_strescape (*((char **)val1p), NULL);
   gchar *retval;
 
   retval = g_strdup_printf ("%c%s%c", '"', str, '"');
@@ -3093,7 +3093,7 @@ comment_to_str (gpointer val1p,
 {
   gchar **str_array;
   gchar  *retval;
-  gchar  *str = gimp_strescape (*((gchar **) val1p), NULL);
+  gchar  *str = g_strescape (*((gchar **) val1p), NULL);
 
   str_array = g_strsplit (str, "\n", 0);
   g_free (str);

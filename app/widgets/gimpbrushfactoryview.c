@@ -33,7 +33,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpmarshal.h"
 
 #include "gimpcontainerview.h"
 #include "gimpbrushfactoryview.h"

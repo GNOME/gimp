@@ -158,7 +158,7 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpDrawableListViewClass, set_image),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_OBJECT);
 

@@ -24,9 +24,7 @@
 #ifndef __GIMP_MESSAGE_PDB_H__
 #define __GIMP_MESSAGE_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -36,8 +34,6 @@ GimpMessageHandlerType gimp_message_get_handler (void);
 gboolean               gimp_message_set_handler (GimpMessageHandlerType  handler);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_MESSAGE_PDB_H__ */

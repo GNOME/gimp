@@ -22,9 +22,7 @@
 #ifndef __GIMP_PIXEL_RGN_H__
 #define __GIMP_PIXEL_RGN_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -103,8 +101,6 @@ gpointer  gimp_pixel_rgns_register2 (gint           nrgns,
 gpointer  gimp_pixel_rgns_process   (gpointer       pri_ptr);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PIXEL_RGN_H__ */

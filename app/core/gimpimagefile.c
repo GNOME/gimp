@@ -142,6 +142,12 @@ gimp_imagefile_new (const gchar *filename)
   return imagefile;
 }
 
+void
+gimp_imagefile_update_thumbnail (GimpImagefile *imagefile)
+{
+  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+}
+
 static void
 gimp_imagefile_set_info (GimpImagefile *imagefile,
                          gint           width,

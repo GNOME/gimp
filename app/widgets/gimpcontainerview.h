@@ -89,7 +89,7 @@ struct _GimpContainerViewClass
 };
 
 
-GType     gimp_container_view_get_type         (void);
+GType     gimp_container_view_get_type         (void) G_GNUC_CONST;
 
 void      gimp_container_view_set_container    (GimpContainerView   *view,
 						GimpContainer       *container);

@@ -57,7 +57,7 @@ struct _GimpBrushGeneratedClass
 };
 
 
-GType       gimp_brush_generated_get_type     (void);
+GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
 
 GimpData  * gimp_brush_generated_new          (gfloat       radius,
 					       gfloat       hardness,

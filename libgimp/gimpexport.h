@@ -23,9 +23,7 @@
 #ifndef __GIMP_EXPORT_H__
 #define __GIMP_EXPORT_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -54,8 +52,6 @@ GimpExportReturnType gimp_export_image (gint32                 *image_ID,
 					GimpExportCapabilities  capabilities);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_EXPORT_H__ */

@@ -87,7 +87,7 @@ struct _GimpContainerMenuClass
 };
 
 
-GType     gimp_container_menu_get_type         (void);
+GType     gimp_container_menu_get_type         (void) G_GNUC_CONST;
 
 void      gimp_container_menu_set_container    (GimpContainerMenu   *menu,
 						GimpContainer       *container);

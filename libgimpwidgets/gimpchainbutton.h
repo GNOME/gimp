@@ -31,9 +31,7 @@
 #ifndef __GIMP_CHAIN_BUTTON_H__
 #define __GIMP_CHAIN_BUTTON_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
@@ -79,7 +77,7 @@ struct _GimpChainButtonClass
 };
 
 
-GType       gimp_chain_button_get_type   (void);
+GType       gimp_chain_button_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 
@@ -88,8 +86,6 @@ void        gimp_chain_button_set_active (GimpChainButton   *gcb,
 gboolean    gimp_chain_button_get_active (GimpChainButton   *gcb);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __CHAIN_BUTTON_H__ */

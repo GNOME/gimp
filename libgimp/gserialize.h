@@ -20,12 +20,11 @@
 #ifndef __GSERIALIZE_H__
 #define __GSERIALIZE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
 #include <glib.h>
 #include <stdarg.h>
+
+G_BEGIN_DECLS
+
 
 typedef enum {
   GSERIAL_END          = 0,           /* for internal use only */
@@ -73,9 +72,7 @@ long g_deserialize(GSerialDescription *d,  void *output, void *serial);
       deserialized struct. */
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GSERIALIZE_H__*/
 

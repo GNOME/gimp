@@ -23,46 +23,19 @@
 
 #include <gtk/gtk.h>
  
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "gui-types.h"
 
 #include "splash.h"
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "libgimp/gimpintl.h"
 
 
-enum
-{
-  SPLASH_SHOW_LOGO_NEVER,
-  SPLASH_SHOW_LOGO_LATER,
-  SPLASH_SHOW_LOGO_NOW
-};
-
-
-#define LOGO_WIDTH_MIN  300
-#define LOGO_HEIGHT_MIN 110
-
-
-static gboolean  splash_logo_load_size (GtkWidget *window);
-static void      splash_logo_draw      (GtkWidget *widget);
-static void      splash_text_draw      (GtkWidget *widget);
-static void      splash_logo_expose    (GtkWidget *widget);
-
-
-static gint         splash_show_logo  = SPLASH_SHOW_LOGO_NEVER;
-
-static GtkWidget   *logo_area         = NULL;
-static GdkPixmap   *logo_pixmap       = NULL;
-static gint         logo_width        = 0;
-static gint         logo_height       = 0;
-static gint         logo_area_width   = 0;
-static gint         logo_area_height  = 0;
-static PangoLayout *logo_layout       = NULL;
+#define DEFAULT_WIDTH 300
 
 static gint         max_label_length  = 1024;
-
 static GtkWidget   *win_initstatus    = NULL;
 static GtkWidget   *label1            = NULL;
 static GtkWidget   *label2            = NULL;
@@ -75,9 +48,10 @@ void
 splash_create (gboolean show_image)
 {
   GtkWidget        *vbox;
-  GtkWidget        *logo_hbox;
+  GdkPixbuf        *pixbuf = NULL;
   PangoFontMetrics *metrics;
   PangoContext     *context;
+  gint              width;
   gint              char_width;
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -91,43 +65,63 @@ splash_create (gboolean show_image)
 
   gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
 
-  if (show_image && splash_logo_load_size (win_initstatus))
-    {
-      splash_show_logo = SPLASH_SHOW_LOGO_LATER;
-    }
-
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);
+  gtk_widget_show (vbox);
 
-  logo_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), logo_hbox, FALSE, TRUE, 0);
+  if (show_image)
+    {
+      gchar *filename;
 
-  logo_area = gtk_drawing_area_new ();
+      filename = g_build_filename (gimp_data_directory (), 
+                                   "images", "gimp_splash.png", NULL);
+      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      g_free (filename);
+      
+      if (pixbuf)
+        {
+          GtkWidget *align;
+          GtkWidget *image;
 
-  g_signal_connect (G_OBJECT (logo_area), "expose_event",
-		    G_CALLBACK (splash_logo_expose),
-		    NULL);
+          image = gtk_image_new_from_pixbuf (pixbuf);
+          g_object_unref (pixbuf);
 
-  logo_area_width  = MAX (logo_width, LOGO_WIDTH_MIN);
-  logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);
+          align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+          gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, TRUE, 0);
+          gtk_widget_show (align);
+ 
+          gtk_container_add (GTK_CONTAINER (align), image);
+          gtk_widget_show (image);
+        }
+    }
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
-			 logo_area_width, logo_area_height);
-  gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
+  if (!pixbuf)
+    {
+      GtkWidget *line;
+
+      label1 = gtk_label_new (_("The GIMP"));
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
+      gtk_widget_show (label1);
+      
+      label2 = gtk_label_new (GIMP_VERSION);
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
+      gtk_widget_show (label2);
+
+      line = gtk_hseparator_new ();
+      gtk_box_pack_start_defaults (GTK_BOX (vbox), line);
+      gtk_widget_show (line);      
+    }
 
   label1 = gtk_label_new ("");
   gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
+  gtk_widget_show (label1);
+
   label2 = gtk_label_new ("");
   gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
+  gtk_widget_show (label2);
 
   progress = gtk_progress_bar_new ();
   gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (logo_hbox);
-  gtk_widget_show (logo_area);
-  gtk_widget_show (label1);
-  gtk_widget_show (label2);
   gtk_widget_show (progress);
 
   /*  This is a hack: we try to compute a good guess for the maximum 
@@ -141,12 +135,18 @@ splash_create (gboolean show_image)
   char_width = pango_font_metrics_get_approximate_char_width (metrics);
   pango_font_metrics_unref (metrics);
 
-  max_label_length = (0.9 * (gdouble) logo_area_width /
-                      (gdouble) PANGO_PIXELS (char_width));
+  if (pixbuf)
+    {
+      width = gdk_pixbuf_get_width (pixbuf);
+    }
+  else
+    {
+      width = DEFAULT_WIDTH;
+      gtk_widget_set_size_request (win_initstatus, width, -1);
+    }
 
-  logo_layout = gtk_widget_create_pango_layout (logo_area, NULL);
-  g_object_weak_ref (G_OBJECT (win_initstatus), 
-                     (GWeakNotify) g_object_unref, logo_layout);
+  max_label_length = 
+    0.9 * (gdouble) width / (gdouble) PANGO_PIXELS (char_width);
 
   gtk_widget_show (win_initstatus);
 }
@@ -157,11 +157,7 @@ splash_destroy (void)
   if (win_initstatus)
     {
       gtk_widget_destroy (win_initstatus);
-      if (logo_pixmap != NULL)
-	gdk_drawable_unref (logo_pixmap);
-
-      win_initstatus = label1 = label2 = progress = logo_area = NULL;
-      logo_pixmap = NULL;
+      win_initstatus = NULL;
     }
 }
 
@@ -197,181 +193,5 @@ splash_update (const gchar *text1,
 
       while (gtk_events_pending ())
 	gtk_main_iteration ();
-
-      /* We sync here to make sure things get drawn before continuing,
-       * is the improved look worth the time? I'm not sure...
-       */
-      gdk_flush ();
-    }
-}
-
-
-/*  private functions  */
-
-static gboolean
-splash_logo_load_size (GtkWidget *window)
-{
-  gchar  buf[1024];
-  gchar *filename;
-  FILE  *fp;
-
-  if (logo_pixmap)
-    return TRUE;
-
-  filename = g_build_filename (gimp_data_directory (), "images",
-                               "gimp_splash.ppm", NULL);
-
-  fp = fopen (filename, "rb");
-
-  g_free (filename);
-
-  if (! fp)
-    return FALSE;
-
-  fgets (buf, sizeof (buf), fp);
-  if (strcmp (buf, "P6\n") != 0)
-    {
-      fclose (fp);
-      return FALSE;
-    }
-
-  fgets (buf, sizeof (buf), fp);
-  fgets (buf, sizeof (buf), fp);
-  sscanf (buf, "%d %d", &logo_width, &logo_height);
-
-  fclose (fp);
-
-  return TRUE;
-}
-
-void
-splash_logo_load (void)
-{
-  GtkWidget *preview;
-  GdkGC     *gc;
-  gchar      buf[1024];
-  gchar     *filename;
-  guchar    *pixelrow;
-  FILE      *fp;
-  gint       count;
-  gint       i;
-
-  if (! win_initstatus || logo_pixmap || ! splash_show_logo)
-    return;
-
-  filename = g_build_filename (gimp_data_directory (), "images",
-                               "gimp_splash.ppm", NULL);
-
-  fp = fopen (filename, "rb");
-
-  g_free (filename);
-
-  if (! fp)
-    return;
-
-  fgets (buf, sizeof (buf), fp);
-  if (strcmp (buf, "P6\n") != 0)
-    {
-      fclose (fp);
-      return;
-    }
-
-  fgets (buf, sizeof (buf), fp);
-  fgets (buf, sizeof (buf), fp);
-  sscanf (buf, "%d %d", &logo_width, &logo_height);
-
-  fgets (buf, sizeof (buf), fp);
-  if (strcmp (buf, "255\n") != 0)
-    {
-      fclose (fp);
-      return;
-    }
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
-  pixelrow = g_new (guchar, logo_width * 3);
-
-  for (i = 0; i < logo_height; i++)
-    {
-      count = fread (pixelrow, sizeof (guchar), logo_width * 3, fp);
-      if (count != (logo_width * 3))
-	{
-	  gtk_object_sink (GTK_OBJECT (preview));
-	  g_free (pixelrow);
-	  fclose (fp);
-	  return;
-	}
-      gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
-    }
-
-  gtk_widget_realize (win_initstatus);
-  logo_pixmap = gdk_pixmap_new (win_initstatus->window, 
-                                logo_width, logo_height,
-				gtk_preview_get_visual ()->depth);
-  gc = gdk_gc_new (logo_pixmap);
-  gtk_preview_put (GTK_PREVIEW (preview),
-		   logo_pixmap, gc,
-		   0, 0, 0, 0, logo_width, logo_height);
-  gdk_gc_unref (gc);
-
-  gtk_object_sink (GTK_OBJECT (preview));
-
-  g_free (pixelrow);
-
-  fclose (fp);
-
-  splash_show_logo = SPLASH_SHOW_LOGO_NOW;
-
-  splash_logo_draw (logo_area);
-}
-
-static void
-splash_text_draw (GtkWidget *widget)
-{
-  gint width;
-
-  pango_layout_set_text (logo_layout, _("The GIMP"), -1);
-  pango_layout_get_pixel_size (logo_layout, &width, NULL);
-
-  gdk_draw_layout (widget->window,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   (logo_area_width - width) / 2,
-		   0.25 * logo_area_height,
-                   logo_layout);
-
-  pango_layout_set_text (logo_layout, GIMP_VERSION, -1);
-  pango_layout_get_pixel_size (logo_layout, &width, NULL);
-
-  gdk_draw_layout (widget->window,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   (logo_area_width - width) / 2,
-		   0.45 * logo_area_height,
-		   logo_layout);
-}
-
-static void
-splash_logo_draw (GtkWidget *widget)
-{
-  gdk_draw_drawable (widget->window,
-		     widget->style->black_gc,
-		     logo_pixmap,
-		     0, 0,
-		     ((logo_area_width - logo_width) / 2),
-		     ((logo_area_height - logo_height) / 2),
-		     logo_width, logo_height);
-}
-
-static void
-splash_logo_expose (GtkWidget *widget)
-{
-  switch (splash_show_logo)
-    {
-    case SPLASH_SHOW_LOGO_NEVER:
-    case SPLASH_SHOW_LOGO_LATER:
-      splash_text_draw (widget);
-      break;
-    case SPLASH_SHOW_LOGO_NOW:
-      splash_logo_draw (widget);
-      break;
     }
 }

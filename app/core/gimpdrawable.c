@@ -45,6 +45,7 @@
 #include "gimpimage-mask.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpmarshal.h"
 #include "gimpparasite.h"
 #include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
@@ -127,7 +128,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpDrawableClass, visibility_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_drawable_signals[REMOVED] =
@@ -136,7 +137,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpDrawableClass, removed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize             = gimp_drawable_finalize;

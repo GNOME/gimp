@@ -23,9 +23,7 @@
 #ifndef __GIMP_HELP_UI_H__
 #define __GIMP_HELP_UI_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -55,8 +53,6 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 void  gimp_context_help            (void);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_HELP_UI_H__ */

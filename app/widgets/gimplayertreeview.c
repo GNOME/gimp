@@ -31,7 +31,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
-#include "core/gimpmarshal.h"
 
 #include "display/gimpdisplay-foreach.h"
 

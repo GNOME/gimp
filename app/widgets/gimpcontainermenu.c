@@ -119,7 +119,7 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerMenuClass, select_item),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__OBJECT_POINTER,
+		  gimp_marshal_VOID__OBJECT_POINTER,
 		  G_TYPE_NONE, 2,
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_POINTER);
@@ -130,7 +130,7 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerMenuClass, activate_item),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__OBJECT_POINTER,
+		  gimp_marshal_VOID__OBJECT_POINTER,
 		  G_TYPE_NONE, 2,
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_POINTER);
@@ -141,7 +141,7 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerMenuClass, context_item),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__OBJECT_POINTER,
+		  gimp_marshal_VOID__OBJECT_POINTER,
 		  G_TYPE_NONE, 2,
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_POINTER);

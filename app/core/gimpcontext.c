@@ -375,7 +375,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, image_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_IMAGE);
 
@@ -385,7 +385,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, display_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -395,7 +395,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, tool_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_TOOL_INFO);
 
@@ -405,7 +405,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -415,7 +415,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, background_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -425,7 +425,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, opacity_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__DOUBLE,
+		  gimp_marshal_VOID__DOUBLE,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_DOUBLE);
 
@@ -435,7 +435,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, paint_mode_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
@@ -445,7 +445,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, brush_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_BRUSH);
 
@@ -455,7 +455,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, pattern_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_PATTERN);
 
@@ -465,7 +465,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, gradient_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_GRADIENT);
 
@@ -475,7 +475,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, palette_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_PALETTE);
 
@@ -485,7 +485,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, buffer_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_BUFFER);
 
@@ -495,7 +495,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, imagefile_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_IMAGEFILE);
 

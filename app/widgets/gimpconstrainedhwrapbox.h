@@ -23,13 +23,7 @@
 #ifndef __GIMP_CONSTRAINED_HWRAP_BOX_H__
 #define __GIMP_CONSTRAINED_HWRAP_BOX_H__
 
-
 #include "gtkhwrapbox.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_CONSTRAINED_HWRAP_BOX	           (gimp_constrained_hwrap_box_get_type ())
@@ -57,12 +51,8 @@ struct _GimpConstrainedHWrapBoxClass
 };
 
 
-GtkType	    gimp_constrained_hwrap_box_get_type (void);
+GtkType	    gimp_constrained_hwrap_box_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_constrained_hwrap_box_new      (gboolean homogeneous);
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GTK_CONSTRAINED_HWRAP_BOX_H__ */

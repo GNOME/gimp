@@ -19,16 +19,14 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GTK_WRAP_BOX_H__
 #define __GTK_WRAP_BOX_H__
 
 
 #include <gtk/gtkcontainer.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 /* --- type macros --- */
@@ -86,7 +84,7 @@ struct _GtkWrapBoxChild
 
 
 /* --- prototypes --- */
-GtkType	   gtk_wrap_box_get_type            (void);
+GtkType	   gtk_wrap_box_get_type            (void) G_GNUC_CONST;
 void	   gtk_wrap_box_set_homogeneous     (GtkWrapBox      *wbox,
 					     gboolean         homogeneous);
 void	   gtk_wrap_box_set_hspacing        (GtkWrapBox      *wbox,
@@ -133,10 +131,6 @@ guint*	   gtk_wrap_box_query_line_lengths  (GtkWrapBox	     *wbox,
 					     guint           *n_lines);
 
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
+G_END_DECLS
 
 #endif /* __GTK_WRAP_BOX_H__ */

@@ -34,8 +34,9 @@
 
 static void     gimp_imagefile_preview_class_init  (GimpImagefilePreviewClass *klass);
 
-static void     gimp_imagefile_preview_render      (GimpPreview *preview);
-static gboolean gimp_imagefile_preview_needs_popup (GimpPreview *preview);
+static void     gimp_imagefile_preview_render         (GimpPreview *preview);
+static gboolean gimp_imagefile_preview_needs_popup    (GimpPreview *preview);
+static void     gimp_imagefile_preview_double_clicked (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -78,18 +79,16 @@ gimp_imagefile_preview_class_init (GimpImagefilePreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->render      = gimp_imagefile_preview_render;
-  preview_class->needs_popup = gimp_imagefile_preview_needs_popup;
+  preview_class->double_clicked = gimp_imagefile_preview_double_clicked;
+  preview_class->needs_popup    = gimp_imagefile_preview_needs_popup;
+  preview_class->render         = gimp_imagefile_preview_render;
 }
 
 static void
 gimp_imagefile_preview_render (GimpPreview *preview)
 {
-  GimpImagefile *imagefile;
-  TempBuf       *render_buf;
-  TempBuf       *temp_buf;
-
-  imagefile = GIMP_IMAGEFILE (preview->viewable);
+  TempBuf *render_buf;
+  TempBuf *temp_buf;
 
   g_return_if_fail (preview->width > 0 && preview->height > 0);
 
@@ -154,4 +153,10 @@ static gboolean
 gimp_imagefile_preview_needs_popup (GimpPreview *preview)
 {
   return FALSE;
+}
+
+static void
+gimp_imagefile_preview_double_clicked (GimpPreview *preview)
+{
+  gimp_imagefile_update_thumbnail (GIMP_IMAGEFILE (preview->viewable));
 }

@@ -23,9 +23,7 @@
 #ifndef __GIMP_FILE_SELECTION_H__
 #define __GIMP_FILE_SELECTION_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -63,7 +61,7 @@ struct _GimpFileSelectionClass
 };
 
 
-GType       gimp_file_selection_get_type    (void);
+GType       gimp_file_selection_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_selection_new         (const gchar        *title,
 					     const gchar        *filename,
@@ -76,8 +74,6 @@ void        gimp_file_selection_set_filename (GimpFileSelection *gfs,
 					      const gchar       *filename);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_FILE_SELECTION_H__ */

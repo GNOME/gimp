@@ -117,9 +117,7 @@ print ENUMFILE <<HEADER;
 #ifndef $guard
 #define $guard
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 HEADER
 
@@ -144,9 +142,8 @@ foreach (sort keys %enums) {
 }
 
 print ENUMFILE <<HEADER;
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
 
 #endif /* $guard */
 HEADER

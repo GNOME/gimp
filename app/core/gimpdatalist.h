@@ -47,7 +47,7 @@ struct _GimpDataListClass
 };
 
 
-GType           gimp_data_list_get_type (void);
+GType           gimp_data_list_get_type (void) G_GNUC_CONST;
 
 GimpContainer * gimp_data_list_new      (GType children_type);
 

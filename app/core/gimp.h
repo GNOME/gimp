@@ -124,7 +124,7 @@ struct _GimpClass
 };
 
 
-GType         gimp_get_type             (void);
+GType         gimp_get_type             (void) G_GNUC_CONST;
 
 Gimp        * gimp_new                  (gboolean            be_verbose,
                                          gboolean            no_data,

@@ -41,6 +41,7 @@
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
 #include "floating_sel.h"
@@ -124,7 +125,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, opacity_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_signals[MODE_CHANGED] =
@@ -133,7 +134,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, mode_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_signals[PRESERVE_TRANS_CHANGED] =
@@ -142,7 +143,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, preserve_trans_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_signals[LINKED_CHANGED] =
@@ -151,7 +152,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, linked_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_signals[MASK_CHANGED] =
@@ -160,7 +161,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, mask_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize             = gimp_layer_finalize;

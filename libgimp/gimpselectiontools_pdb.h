@@ -24,9 +24,7 @@
 #ifndef __GIMP_SELECTION_TOOLS_PDB_H__
 #define __GIMP_SELECTION_TOOLS_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -74,8 +72,6 @@ gboolean gimp_rect_select     (gint32          image_ID,
 			       gdouble         feather_radius);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_SELECTION_TOOLS_PDB_H__ */

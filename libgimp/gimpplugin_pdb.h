@@ -24,9 +24,7 @@
 #ifndef __GIMP_PLUG_IN_PDB_H__
 #define __GIMP_PLUG_IN_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -39,8 +37,6 @@ gboolean gimp_plugin_domain_register (gchar   *domain_name,
 gboolean gimp_plugin_help_register   (gchar   *help_path);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PLUG_IN_PDB_H__ */

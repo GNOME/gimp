@@ -24,9 +24,7 @@
 #ifndef __GIMP_BRUSH_SELECT_PDB_H__
 #define __GIMP_BRUSH_SELECT_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -45,8 +43,6 @@ gboolean gimp_brushes_set_popup   (gchar                *brush_callback,
 				   GimpLayerModeEffects  paint_mode);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_BRUSH_SELECT_PDB_H__ */

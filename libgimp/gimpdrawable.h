@@ -22,9 +22,7 @@
 #ifndef __GIMP_DRAWABLE_H__
 #define __GIMP_DRAWABLE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -75,8 +73,6 @@ void           gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 						  gint            size, 
 						  const gpointer  data);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_DRAWABLE_H__ */

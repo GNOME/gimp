@@ -20,9 +20,7 @@
 #ifndef __GIMP_ADAPTIVE_SUPERSAMPLE_H__
 #define __GIMP_ADAPTIVE_SUPERSAMPLE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -44,8 +42,6 @@ gulong   gimp_adaptive_supersample_area (gint              x1,
                                          gpointer          progress_data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_ADAPTIVE_SUPERSAMPLE_H__ */

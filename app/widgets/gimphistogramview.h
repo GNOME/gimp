@@ -55,7 +55,7 @@ struct _GimpHistogramViewClass
 
 /*  Histogram functions  */
 
-GType               gimp_histogram_view_get_type  (void);
+GType               gimp_histogram_view_get_type  (void) G_GNUC_CONST;
 
 GimpHistogramView * gimp_histogram_view_new       (gint               width,
                                                    gint               height);

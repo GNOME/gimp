@@ -54,6 +54,8 @@
 #include "floating_sel.h"
 #include "undo.h"
 
+#include "gimprc.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -197,7 +199,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   tool = GIMP_TOOL (text_tool);
  
-  text_tool->pango_context = pango_ft2_get_context ();
+  text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
+                                                    gimprc.monitor_yres);
 
   tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
   tool->scroll_lock = TRUE;  /* Disallow scrolling */
@@ -389,6 +392,8 @@ text_render (GimpImage    *gimage,
   PangoRectangle        logical;
   GimpImageType         layer_type;
   GimpLayer            *layer = NULL;
+  gdouble               xres;
+  gdouble               yres;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
@@ -407,7 +412,9 @@ text_render (GimpImage    *gimage,
   if (!font_desc)
     return NULL;
   
-  context = pango_ft2_get_context ();
+  gimp_image_get_resolution (gimage, &xres, &yres);
+  context = pango_ft2_get_context (xres, yres);
+
   layout = pango_layout_new (context);
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
@@ -540,8 +547,10 @@ text_get_extents (const gchar *fontname,
   font_desc = pango_font_description_from_string (fontname);
   if (!font_desc)
     return FALSE;
-  
-  context = pango_ft2_get_context ();
+
+  /* FIXME: resolution */
+  context = pango_ft2_get_context (72.0, 72.0);
+
   layout = pango_layout_new (context);
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
@@ -592,7 +601,8 @@ text_tool_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  pango_context = pango_ft2_get_context ();
+  pango_context = pango_ft2_get_context (gimprc.monitor_xres,
+                                         gimprc.monitor_yres);
 
   options->font_selection = gimp_font_selection_new (pango_context);
 

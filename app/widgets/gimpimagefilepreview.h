@@ -23,11 +23,8 @@
 #ifndef __GIMP_IMAGEFILE_PREVIEW_H__
 #define __GIMP_IMAGEFILE_PREVIEW_H__
 
-
 #include "gimppreview.h"
 
-
-G_BEGIN_DECLS
 
 #define GIMP_TYPE_IMAGEFILE_PREVIEW            (gimp_imagefile_preview_get_type ())
 #define GIMP_IMAGEFILE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGEFILE_PREVIEW, GimpImagefilePreview))
@@ -52,7 +49,5 @@ struct _GimpImagefilePreviewClass
 
 GType   gimp_imagefile_preview_get_type (void) G_GNUC_CONST;
 
-
-G_END_DECLS
 
 #endif /* __GIMP_IMAGEFILE_PREVIEW_H__ */

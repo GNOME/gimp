@@ -111,7 +111,7 @@ struct _PaintUndo
 };
 
 
-GType   gimp_paint_tool_get_type        (void);
+GType   gimp_paint_tool_get_type        (void) G_GNUC_CONST;
 
 void    gimp_paint_tool_paint           (GimpPaintTool       *tool,
 					 GimpDrawable        *drawable,

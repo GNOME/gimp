@@ -23,10 +23,7 @@
 #ifndef __GIMP_QUERY_BOX_H__
 #define __GIMP_QUERY_BOX_H__
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -118,8 +115,6 @@ GtkWidget * gimp_query_boolean_box (const gchar              *title,
 				    gpointer                  data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_QUERY_BOX_H__ */

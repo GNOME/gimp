@@ -24,9 +24,8 @@
 #ifndef __GIMPENV_H__
 #define __GIMPENV_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -47,8 +46,6 @@ void          gimp_path_free                  (GList        *path);
 gchar       * gimp_path_get_user_writable_dir (GList        *path);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /*  __GIMPENV_H__  */

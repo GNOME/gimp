@@ -24,9 +24,7 @@
 #ifndef __GIMP_PALETTE_PDB_H__
 #define __GIMP_PALETTE_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -45,8 +43,6 @@ gboolean gimp_palette_get_entry          (gint     entry_num,
 					  GimpRGB *color);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PALETTE_PDB_H__ */

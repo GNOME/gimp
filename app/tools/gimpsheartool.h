@@ -48,7 +48,7 @@ struct _GimpShearToolClass
 void    gimp_shear_tool_register (Gimp                     *gimp,
                                   GimpToolRegisterCallback  callback);
 
-GType   gimp_shear_tool_get_type (void);
+GType   gimp_shear_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_SHEAR_TOOL_H__  */

@@ -1356,7 +1356,7 @@ ps_open (gchar            *filename,
 
   /* Escape special characters. Escaping " does not work with call of shell. */
   /* fnbuf points to memory that should be freed. */
-  filename = fnbuf = gimp_strescape (filename, "\"");
+  filename = fnbuf = g_strescape (filename, "\"");
   blank = (strchr (filename, ' ') != NULL);
   apo = (strchr (filename, '\'') != NULL);
   anf = (strchr (filename, '"') != NULL);

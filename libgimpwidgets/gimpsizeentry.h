@@ -24,9 +24,7 @@
 #ifndef __GIMP_SIZE_ENTRY_H__
 #define __GIMP_SIZE_ENTRY_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -71,7 +69,7 @@ struct _GimpSizeEntryClass
 
 /* For information look into the C source or the html documentation */
 
-GType       gimp_size_entry_get_type (void);
+GType       gimp_size_entry_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
 				 GimpUnit                   unit,
@@ -134,8 +132,6 @@ void        gimp_size_entry_set_unit              (GimpSizeEntry *gse,
 void        gimp_size_entry_grab_focus            (GimpSizeEntry *gse);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_SIZE_ENTRY_H__ */

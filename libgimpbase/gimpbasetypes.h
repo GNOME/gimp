@@ -24,9 +24,7 @@
 #include <libgimpcolor/gimpcolortypes.h>
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -93,8 +91,6 @@ typedef enum /*< chop=GIMP_ >*/
 } GimpPDBStatusType;
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_BASE_TYPES_H__ */

@@ -24,9 +24,7 @@
 #ifndef __GIMP_SELECTION_PDB_H__
 #define __GIMP_SELECTION_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -67,8 +65,6 @@ gboolean gimp_selection_combine     (gint32          channel_ID,
 				     GimpChannelOps  operation);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_SELECTION_PDB_H__ */

@@ -23,9 +23,7 @@
 #ifndef __GIMP_PATH_EDITOR_H__
 #define __GIMP_PATH_EDITOR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -69,7 +67,7 @@ struct _GimpPathEditorClass
 
 /* For information look into the C source or the html documentation */
 
-GType       gimp_path_editor_get_type (void);
+GType       gimp_path_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
 				       const gchar    *path);
@@ -77,8 +75,6 @@ GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
 gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PATH_EDITOR_H__ */

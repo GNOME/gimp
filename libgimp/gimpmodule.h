@@ -23,9 +23,7 @@
 
 #include <gmodule.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look at the html documentation */
 
@@ -85,8 +83,6 @@ GimpModuleUnloadFunc module_unload;
 #endif /* ! MODULE_COMPILATION */
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMPMODULE_H__ */

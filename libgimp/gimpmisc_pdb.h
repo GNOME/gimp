@@ -24,9 +24,7 @@
 #ifndef __GIMP_MISC_PDB_H__
 #define __GIMP_MISC_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -34,8 +32,6 @@ extern "C" {
 gchar* gimp_version (void);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_MISC_PDB_H__ */

@@ -22,11 +22,10 @@
 #ifndef __GIMP_CHANNEL_H__
 #define __GIMP_CHANNEL_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
+
 
 #define gimp_channel_get_image_id  gimp_drawable_image
 
@@ -39,9 +38,7 @@ gint32  gimp_channel_new (gint32    image_ID,
 			  GimpRGB  *color);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_CHANNEL_H__ */
 

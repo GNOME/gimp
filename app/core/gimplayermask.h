@@ -66,7 +66,7 @@ struct _LayerMaskUndo
 
 /*  function declarations  */
 
-GType           gimp_layer_mask_get_type    (void);
+GType           gimp_layer_mask_get_type    (void) G_GNUC_CONST;
 
 GimpLayerMask * gimp_layer_mask_new	    (GimpImage       *gimage,
 					     gint             width,

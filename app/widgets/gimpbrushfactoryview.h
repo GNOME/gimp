@@ -22,7 +22,6 @@
 #ifndef __GIMP_BRUSH_FACTORY_VIEW_H__
 #define __GIMP_BRUSH_FACTORY_VIEW_H__
 
-
 #include "gimpdatafactoryview.h"
 
 
@@ -53,7 +52,7 @@ struct _GimpBrushFactoryViewClass
 };
 
 
-GType       gimp_brush_factory_view_get_type (void);
+GType       gimp_brush_factory_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_brush_factory_view_new      (GimpViewType              view_type,
 					      GimpDataFactory          *factory,
@@ -64,6 +63,7 @@ GtkWidget * gimp_brush_factory_view_new      (GimpViewType              view_typ
 					      gint                      min_items_x,
 					      gint                      min_items_y,
 					      GimpContainerContextFunc  context_func);
+
 
 
 #endif  /*  __GIMP_BRUSH_FACTORY_VIEW_H__  */

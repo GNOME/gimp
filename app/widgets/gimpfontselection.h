@@ -23,9 +23,7 @@
 #ifndef __GIMP_FONT_SELECTION_H__
 #define __GIMP_FONT_SELECTION_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+#include <gtk/gtkhbox.h>
 
 
 #define GIMP_TYPE_FONT_SELECTION            (gimp_font_selection_get_type ())
@@ -58,7 +56,7 @@ struct _GimpFontSelectionClass
 };
 
 
-GType         gimp_font_selection_get_type      (void);
+GType         gimp_font_selection_get_type      (void) G_GNUC_CONST;
 GtkWidget   * gimp_font_selection_new           (PangoContext      *context);
 gboolean      gimp_font_selection_set_fontname  (GimpFontSelection *fontsel,
                                                  const gchar       *fontname);
@@ -70,8 +68,5 @@ PangoFontDescription *
 void          gimp_font_selection_font_changed  (GimpFontSelection *fontsel);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_FONT_SELECTION_H__ */

@@ -83,7 +83,7 @@ struct _GimpModuleInfoObjClass
 };
 
 
-GType               gimp_module_info_get_type         (void);
+GType               gimp_module_info_get_type         (void) G_GNUC_CONST;
 
 GimpModuleInfoObj * gimp_module_info_new              (const gchar       *filename);
 

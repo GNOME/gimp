@@ -108,7 +108,7 @@ gimp_data_class_init (GimpDataClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpDataClass, dirty),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   data_signals[SAVE] = 
@@ -117,7 +117,7 @@ gimp_data_class_init (GimpDataClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpDataClass, save),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_BOOLEAN__VOID,
+		  gimp_marshal_BOOLEAN__VOID,
 		  G_TYPE_BOOLEAN, 0);
 
   data_signals[GET_EXTENSION] = 
@@ -126,7 +126,7 @@ gimp_data_class_init (GimpDataClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpDataClass, get_extension),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__VOID,
+		  gimp_marshal_POINTER__VOID,
 		  G_TYPE_POINTER, 0);
 
   data_signals[DUPLICATE] = 
@@ -135,7 +135,7 @@ gimp_data_class_init (GimpDataClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpDataClass, duplicate),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__VOID,
+		  gimp_marshal_POINTER__VOID,
 		  G_TYPE_POINTER, 0);
 
   object_class->finalize          = gimp_data_finalize;

@@ -30,7 +30,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimplayer.h"
-#include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
 #include "gimpchannellistitem.h"

@@ -37,30 +37,13 @@
 #include <libgimpmath/gimpmatrix.h>
 #include <libgimpmath/gimpvector.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+G_BEGIN_DECLS
 
 /* Some portability enhancing stuff. For use both by the gimp app
  * as well as plug-ins and modules.
  *
  * Include this instead of just <math.h>.
  */
-
-#ifndef G_PI			/* G_PI will be in GLib eventually */
-#define G_PI    3.14159265358979323846
-#endif
-#ifndef G_PI_2			/* As will G_PI_2 */
-#define G_PI_2  1.57079632679489661923
-#endif
-#ifndef G_PI_4			/* As will G_PI_4 */
-#define G_PI_4  0.78539816339744830962
-#endif
-#ifndef G_SQRT2			/* As will G_SQRT2 */
-#define G_SQRT2 1.4142135623730951
-#endif
 
 #ifndef RAND_MAX
 #define G_MAXRAND G_MAXINT
@@ -106,8 +89,7 @@ extern "C" {
 #endif /* HAVE_ISFINITE */
 #endif /* HAVE_FINITE */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
 
 #endif /* __GIMP_MATH_H__ */

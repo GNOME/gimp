@@ -33,6 +33,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
 
 #include "display/gimpdisplayshell-render.h"
 
@@ -168,7 +169,7 @@ gimp_colormap_dialog_class_init (GimpColormapDialogClass* klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpColormapDialogClass, selected),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   klass->selected = NULL;

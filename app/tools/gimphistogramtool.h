@@ -52,7 +52,7 @@ struct _GimpHistogramToolClass
 void    gimp_histogram_tool_register (Gimp                     *gimp,
                                       GimpToolRegisterCallback  callback);
 
-GType   gimp_histogram_tool_get_type (void);
+GType   gimp_histogram_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_HISTOGRAM_TOOL_H__ */

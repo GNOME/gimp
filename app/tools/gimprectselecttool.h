@@ -67,7 +67,7 @@ struct _GimpRectSelectToolClass
 void    gimp_rect_select_tool_register    (Gimp                     *gimp,
                                            GimpToolRegisterCallback  callback);
 
-GType   gimp_rect_select_tool_get_type    (void);
+GType   gimp_rect_select_tool_get_type    (void) G_GNUC_CONST;
 
 void    gimp_rect_select_tool_rect_select (GimpRectSelectTool       *rect_tool,
 					   gint                      x,

@@ -22,13 +22,7 @@
 #ifndef __GIMP_PREVIEW_H__
 #define __GIMP_PREVIEW_H__
 
-
 #include <gtk/gtkpreview.h>
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
@@ -90,7 +84,7 @@ struct _GimpPreviewClass
 };
 
 
-GType        gimp_preview_get_type         (void);
+GType        gimp_preview_get_type         (void) G_GNUC_CONST;
 
 GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
 					    gint           size,
@@ -140,9 +134,5 @@ void         gimp_preview_render_and_flush (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
 					    gint           channel);
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_PREVIEW_H__ */

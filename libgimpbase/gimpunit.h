@@ -30,9 +30,7 @@
 #ifndef __GIMP_UNIT_H__
 #define __GIMP_UNIT_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -64,8 +62,6 @@ gchar    * gimp_unit_get_singular        (GimpUnit  unit);
 gchar    * gimp_unit_get_plural          (GimpUnit  unit);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_UNIT_H__ */

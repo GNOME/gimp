@@ -24,9 +24,7 @@
 
 #include <libgimpbase/gimpparasite.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look at the html documentation */
 
@@ -80,8 +78,6 @@ G_MODULE_EXPORT
 gboolean   gimp_color_display_unregister (const gchar             *name);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_COLOR_DISPLAY_H__ */

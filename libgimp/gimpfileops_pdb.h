@@ -24,9 +24,7 @@
 #ifndef __GIMP_FILEOPS_PDB_H__
 #define __GIMP_FILEOPS_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -52,8 +50,6 @@ gboolean gimp_register_save_handler       (gchar           *procedure_name,
 					   gchar           *prefixes);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_FILEOPS_PDB_H__ */

@@ -32,6 +32,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimplayermask.h"
+#include "gimpmarshal.h"
 
 #include "undo.h"
 
@@ -95,7 +96,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_mask_signals[EDIT_CHANGED] =
@@ -104,7 +105,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   layer_mask_signals[SHOW_CHANGED] =
@@ -113,7 +114,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 }
 

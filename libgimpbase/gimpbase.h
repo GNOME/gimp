@@ -27,7 +27,6 @@
 #include <libgimpbase/gimplimits.h>
 #include <libgimpbase/gimpparasite.h>
 #include <libgimpbase/gimpunit.h>
-#include <libgimpbase/gimputils.h>
 #include <libgimpbase/gimpversion.h>
 
 #ifndef G_OS_WIN32

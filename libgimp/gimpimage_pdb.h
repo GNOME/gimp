@@ -24,9 +24,7 @@
 #ifndef __GIMP_IMAGE_PDB_H__
 #define __GIMP_IMAGE_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -156,8 +154,6 @@ gint32            gimp_image_get_channel_by_tattoo    (gint32              image
 						       gint                tattoo);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_IMAGE_PDB_H__ */

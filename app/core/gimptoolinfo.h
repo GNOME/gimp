@@ -67,7 +67,7 @@ struct _GimpToolInfoClass
 };
 
 
-GType          gimp_tool_info_get_type     (void);
+GType          gimp_tool_info_get_type     (void) G_GNUC_CONST;
 
 GimpToolInfo * gimp_tool_info_new          (Gimp         *gimp,
                                             GimpContext  *context,

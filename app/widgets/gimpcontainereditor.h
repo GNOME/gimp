@@ -68,7 +68,7 @@ struct _GimpContainerEditorClass
 };
 
 
-GType       gimp_container_editor_get_type   (void);
+GType       gimp_container_editor_get_type   (void) G_GNUC_CONST;
 
 
 /*  protected  */

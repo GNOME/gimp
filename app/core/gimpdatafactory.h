@@ -71,7 +71,7 @@ struct _GimpDataFactoryClass
 };
 
 
-GType             gimp_data_factory_get_type (void);
+GType             gimp_data_factory_get_type (void) G_GNUC_CONST;
 
 GimpDataFactory * gimp_data_factory_new      (GType                              data_type,
 					      const gchar                      **data_path,

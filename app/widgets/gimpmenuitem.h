@@ -22,13 +22,7 @@
 #ifndef __GIMP_MENU_ITEM_H__
 #define __GIMP_MENU_ITEM_H__
 
-
 #include <gtk/gtkmenuitem.h>
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_MENU_ITEM              (gimp_menu_item_get_type ())
@@ -67,18 +61,13 @@ struct _GimpMenuItemClass
 };
 
 
-GType       gimp_menu_item_get_type      (void);
+GType       gimp_menu_item_get_type      (void) G_GNUC_CONST;
 
 GtkWidget * gimp_menu_item_new           (GimpViewable        *viewable,
 					  gint                 preview_size);
 
 void        gimp_menu_item_set_name_func (GimpMenuItem        *menu_item,
 					  GimpItemGetNameFunc  get_name_func);
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 
 #endif /* __GIMP_MENU_ITEM_H__ */

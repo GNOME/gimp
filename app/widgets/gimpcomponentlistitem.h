@@ -22,13 +22,7 @@
 #ifndef __GIMP_COMPONENT_LIST_ITEM_H__
 #define __GIMP_COMPONENT_LIST_ITEM_H__
 
-
 #include "gimplistitem.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_COMPONENT_LIST_ITEM            (gimp_component_list_item_get_type ())
@@ -56,16 +50,12 @@ struct _GimpComponentListItemClass
 };
 
 
-GType       gimp_component_list_item_get_type (void);
+GType       gimp_component_list_item_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_component_list_item_new      (GimpImage   *gimage,
 					       gint         preview_size,
 					       ChannelType  channel);
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 
 #endif /* __GIMP_COMPONENT_LIST_ITEM_H__ */

@@ -109,7 +109,7 @@ struct _GimpDisplayClass
 };
 
 
-GType         gimp_display_get_type             (void);
+GType         gimp_display_get_type             (void) G_GNUC_CONST;
 
 GimpDisplay * gimp_display_new                  (GimpImage   *gimage,
                                                  guint        scale);

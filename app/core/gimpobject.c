@@ -24,6 +24,7 @@
 
 #include "core-types.h"
 
+#include "gimpmarshal.h"
 #include "gimpobject.h"
 
 
@@ -105,7 +106,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpObjectClass, disconnect),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_signals[NAME_CHANGED] =
@@ -114,7 +115,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpObjectClass, name_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->dispose      = gimp_object_dispose;

@@ -71,7 +71,7 @@ struct _GimpMeasureToolClass
 void    gimp_measure_tool_register (Gimp                     *gimp,
                                     GimpToolRegisterCallback  callback);
 
-GType   gimp_measure_tool_get_type (void);
+GType   gimp_measure_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_MEASURE_TOOL_H__  */

@@ -30,7 +30,6 @@
 #include "gimpdatafactory.h"
 #include "gimpdatafiles.h"
 #include "gimpdatalist.h"
-#include "gimpmarshal.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -240,7 +240,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, mode_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ALPHA_CHANGED] =
@@ -249,7 +249,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[FLOATING_SELECTION_CHANGED] =
@@ -258,7 +258,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_LAYER_CHANGED] =
@@ -267,7 +267,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_CHANNEL_CHANGED] =
@@ -276,7 +276,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
@@ -285,7 +285,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
@@ -295,7 +295,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
@@ -305,7 +305,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[RESOLUTION_CHANGED] =
@@ -314,7 +314,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[UNIT_CHANGED] =
@@ -323,7 +323,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[QMASK_CHANGED] =
@@ -332,7 +332,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[SELECTION_CONTROL] =
@@ -341,7 +341,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, selection_control),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
                   G_TYPE_INT);
 
@@ -351,7 +351,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, clean),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[DIRTY] =
@@ -360,7 +360,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, dirty),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   gimp_image_signals[UPDATE] =
@@ -369,7 +369,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, update),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_INT_INT_INT,
+		  gimp_marshal_VOID__INT_INT_INT_INT,
 		  G_TYPE_NONE, 4,
 		  G_TYPE_INT,
 		  G_TYPE_INT,
@@ -382,7 +382,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, update_guide),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -392,7 +392,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
@@ -402,7 +402,7 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, undo_event),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 

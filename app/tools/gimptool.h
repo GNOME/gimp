@@ -116,7 +116,7 @@ struct _GimpToolClass
 };
 
 
-GType         gimp_tool_get_type        (void);
+GType         gimp_tool_get_type        (void) G_GNUC_CONST;
 
 void          gimp_tool_initialize      (GimpTool        *tool,
 					 GimpDisplay     *gdisp);

@@ -22,9 +22,7 @@
 #ifndef __GIMP_PROCEDURAL_DB_H__
 #define __GIMP_PROCEDURAL_DB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -47,8 +45,6 @@ gboolean gimp_procedural_db_set_data     (gchar            *identifier,
 					  guint32           bytes);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PROCEDURAL_DB_H__ */

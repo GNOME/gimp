@@ -1143,7 +1143,7 @@ plug_in_parse_fractalexplorer_path (void)
   if (!fractalexplorer_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path = gimp_strescape
+      gchar *path = g_strescape
 	("${gimp_dir}" G_DIR_SEPARATOR_S "fractalexplorer"
 	 G_SEARCHPATH_SEPARATOR_S
 	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "fractalexplorer",

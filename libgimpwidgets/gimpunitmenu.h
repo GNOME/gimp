@@ -23,9 +23,7 @@
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -64,7 +62,7 @@ struct _GimpUnitMenuClass
 };
 
 
-GType       gimp_unit_menu_get_type (void);
+GType       gimp_unit_menu_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_unit_menu_new      (const gchar *format,
 				     GimpUnit     unit,
@@ -78,8 +76,6 @@ void        gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *gum);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_UNIT_MENU_H__ */

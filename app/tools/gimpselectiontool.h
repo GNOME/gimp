@@ -48,7 +48,7 @@ struct _GimpSelectionToolClass
 };
 
 
-GType   gimp_selection_tool_get_type (void);
+GType   gimp_selection_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /* __GIMP_SELECTION_TOOL_H__ */

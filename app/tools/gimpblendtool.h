@@ -55,7 +55,7 @@ struct _GimpBlendToolClass
 void    gimp_blend_tool_register (Gimp                     *gimp,
                                   GimpToolRegisterCallback  callback);
 
-GType   gimp_blend_tool_get_type (void);
+GType   gimp_blend_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_BLEND_TOOL_H__  */

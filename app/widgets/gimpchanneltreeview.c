@@ -32,7 +32,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimpmarshal.h"
 
 #include "display/gimpdisplay-foreach.h"
 

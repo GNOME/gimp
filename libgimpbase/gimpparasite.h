@@ -23,9 +23,7 @@
 #ifndef __GIMP_PARASITE_H__
 #define __GIMP_PARASITE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -75,8 +73,6 @@ gpointer       gimp_parasite_data                (const GimpParasite *parasite);
 glong          gimp_parasite_data_size           (const GimpParasite *parasite);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PARASITE_H__ */

@@ -25,6 +25,7 @@
 
 #include "core-types.h"
 
+#include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
 
@@ -94,7 +95,7 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpParasiteListClass, add),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -104,7 +105,7 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpParasiteListClass, remove),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 

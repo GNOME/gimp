@@ -48,7 +48,7 @@ struct _GimpPerspectiveToolClass
 void    gimp_perspective_tool_register (Gimp                     *gimp,
                                         GimpToolRegisterCallback  callback);
 
-GType   gimp_perspective_tool_get_type (void);
+GType   gimp_perspective_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_PERSPECTIVE_TOOL_H__  */

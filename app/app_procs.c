@@ -128,6 +128,9 @@ app_init (gint    gimp_argc,
       gimprc_parse (the_gimp);
     }
 
+  /*  initialize lowlevel stuff  */
+  base_init ();
+
   if (! no_interface)
     {
       gui_themes_init (the_gimp);
@@ -138,9 +141,6 @@ app_init (gint    gimp_argc,
 	splash_create (! no_splash_image);
     }
 
-  /*  initialize lowlevel stuff  */
-  base_init ();
-
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
@@ -149,14 +149,6 @@ app_init (gint    gimp_argc,
   if (! no_interface)
     {
       tool_manager_init (the_gimp);
-
-      /*  Now we are ready to draw the splash-screen-image
-       *  to the start-up window
-       */
-      if (! no_splash && ! no_splash_image)
-        {
-          splash_logo_load ();
-        }
     }
 
   /*  Load all data files

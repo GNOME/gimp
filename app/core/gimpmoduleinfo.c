@@ -29,6 +29,7 @@
 
 #include "core-types.h"
 
+#include "gimpmarshal.h"
 #include "gimpmoduleinfo.h"
 
 #include "libgimp/gimpintl.h"
@@ -95,7 +96,7 @@ gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpModuleInfoObjClass, modified),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_module_info_finalize;

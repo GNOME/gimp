@@ -25,6 +25,7 @@
 #include "base/temp-buf.h"
 
 #include "gimpimage.h"
+#include "gimpmarshal.h"
 #include "gimpundo.h"
 
 
@@ -100,7 +101,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUndoClass, push),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
@@ -110,7 +111,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUndoClass, pop),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  gimp_marshal_VOID__POINTER,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 

@@ -54,7 +54,7 @@ extern gint col_value[5];
 void    gimp_color_picker_tool_register (Gimp                     *gimp,
                                          GimpToolRegisterCallback  callback);
 
-GType   gimp_color_picker_tool_get_type (void);
+GType   gimp_color_picker_tool_get_type (void) G_GNUC_CONST;
 
 
 gboolean   pick_color (GimpImage    *gimage,

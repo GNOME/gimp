@@ -22,13 +22,7 @@
 #ifndef __GIMP_GRADIENT_PREVIEW_H__
 #define __GIMP_GRADIENT_PREVIEW_H__
 
-
 #include "gimppreview.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_GRADIENT_PREVIEW            (gimp_gradient_preview_get_type ())
@@ -52,11 +46,7 @@ struct _GimpGradientPreviewClass
 };
 
 
-GType   gimp_gradient_preview_get_type (void);
+GType   gimp_gradient_preview_get_type (void) G_GNUC_CONST;
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_GRADIENT_PREVIEW_H__ */

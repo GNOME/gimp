@@ -89,7 +89,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpViewableClass, invalidate_preview),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   viewable_signals[SIZE_CHANGED] =
@@ -98,7 +98,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpViewableClass, size_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   klass->invalidate_preview = gimp_viewable_real_invalidate_preview;

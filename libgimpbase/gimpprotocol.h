@@ -20,9 +20,7 @@
 #ifndef __GIMP_PROTOCOL_H__
 #define __GIMP_PROTOCOL_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -205,8 +203,6 @@ gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
 gboolean  gp_extension_ack_write    (GIOChannel      *channel);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PROTOCOL_H__ */

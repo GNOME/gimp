@@ -50,6 +50,7 @@
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"
+#include "gimpmarshal.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -129,7 +130,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_brush_finalize;

@@ -29,13 +29,9 @@
 #ifndef __GIMP_COLOR_BUTTON_H__
 #define __GIMP_COLOR_BUTTON_H__
 
-
 #include <libgimpwidgets/gimpbutton.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_BUTTON            (gimp_color_button_get_type ())
@@ -67,7 +63,7 @@ struct _GimpColorButtonClass
 };
 
 
-GType       gimp_color_button_get_type   (void);
+GType       gimp_color_button_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_button_new        (const gchar       *title,
 					  gint               width,
@@ -84,8 +80,6 @@ void        gimp_color_button_set_type   (GimpColorButton   *gcb,
 					  GimpColorAreaType  type);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_GNUC_CONST
 
 #endif /* __GIMP_COLOR_BUTTON_H__ */

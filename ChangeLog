@@ -1,3 +1,65 @@
+2001-11-23  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 1.3.1. 
+	Require Glib/GTK+-1.3.11 and Pango-0.22. Removed GDK_DISABLE_COMPAT_H
+	and GTK_DISABLE_COMPAT_H from our default CFLAGS since they don't
+	exist any longer.
+	
+	* RELEASE-TO-CVS.patch: removed since the glib/gtk+ API is supposed to
+	be frozen now.
+
+	* HACKING: removed reference to RELEASE-TO-CVS.patch
+
+	* app/gui/menus.c
+	* app/tools/gimptexttool.c: applied RELEASE-TO-CVS.patch to conform
+	to the new GTK+/Pango API.
+
+	* app/core/Makefile.am: generate marshallers with gimp_marshal prefix.
+	
+	* app/core/gimpmarshal.list: added all marshallers we use.
+
+	* app/core/gimpmarshal.[ch]: regenerated.
+
+	* app/[lots of .c files]: use gimp_marshal_* for all marshallers.
+	
+	* data/images/
+	* app/app_procs.c
+	* app/gui/splash.c:
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimputils.[ch]: removed since they are no longer needed.
+
+	* app/gimprc.c
+	* plug-ins/common/ps.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gdyntext/gdyntextcompat.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/script-fu/script-fu-scripts.c: use glib functions instead
+	of gimp_strescape() and gimpstrcompress().
+
+	* cleaned up all header files: use G_BEGIN_DECLS/G_END_DECLS, declared
+	all _get_type function as G_GNUC_CONST.
+	
+	* tools/pdbgen/enumcode.pl
+	* tools/pdbgen/lib.pl: make them generate header files using 
+	G_BEGIN_DECLS/G_END_DECLS.
+
+	* pixmaps/Makefile.am
+	* pixmaps/wilber3.xpm: removed ...
+	* data/images/tips_wilber.png: ... and added here as PNG
+	
+	* app/gui/tips-dialog.c: load the Wilber on demand using GdkPixbuf.
+
+	* data/images/gimp_splash.ppm: removed ...
+	* data/images/gimp_splash.png: ... and added as PNG
+
+	* app/app_procs.c
+	* app/gui/splash.[ch]: load the splash image using GdkPixbuf.
+
+	* app/gui/about-dialog.c: sink the GtkPreview.
+	
 2001-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/devices.c: made device_status_update() static as declared.

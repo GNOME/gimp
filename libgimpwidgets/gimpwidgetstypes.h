@@ -22,13 +22,9 @@
 #ifndef __GIMP_WIDGETS_TYPES_H__
 #define __GIMP_WIDGETS_TYPES_H__
 
-
 #include <libgimpbase/gimpbasetypes.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
@@ -64,8 +60,6 @@ typedef struct _GimpUnitMenu      GimpUnitMenu;
 typedef void (* GimpHelpFunc) (const gchar *help_data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_WIDGETS_TYPES_H__ */

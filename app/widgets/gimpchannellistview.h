@@ -52,7 +52,7 @@ struct _GimpChannelListViewClass
 };
 
 
-GType   gimp_channel_list_view_get_type (void);
+GType   gimp_channel_list_view_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_CHANNEL_LIST_VIEW_H__  */

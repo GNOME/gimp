@@ -20,9 +20,7 @@
 #ifndef __GIMP_COLOR_TYPES_H__
 #define __GIMP_COLOR_TYPES_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -61,8 +59,6 @@ typedef void (* GimpProgressFunc) (gint      min,
                                    gpointer  data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_COLOR_TYPES_H__ */

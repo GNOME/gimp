@@ -51,9 +51,10 @@ struct _GimpImagefileClass
 };
 
 
-GType           gimp_imagefile_get_type (void);
+GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new      (const gchar *filename);
+GimpImagefile * gimp_imagefile_new              (const gchar   *filename);
+void            gimp_imagefile_update_thumbnail (GimpImagefile *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

@@ -48,7 +48,7 @@ struct _GimpEraserToolClass
 void    gimp_eraser_tool_register (Gimp                     *gimp,
                                    GimpToolRegisterCallback  callback);
 
-GType   gimp_eraser_tool_get_type (void);
+GType   gimp_eraser_tool_get_type (void) G_GNUC_CONST;
 
 
 gboolean   eraser_non_gui            (GimpDrawable *drawable,

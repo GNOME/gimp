@@ -28,13 +28,9 @@
 #ifndef __GIMP_COLOR_AREA_H__
 #define __GIMP_COLOR_AREA_H__
 
-
 #include <gtk/gtkpreview.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_AREA            (gimp_color_area_get_type ())
@@ -65,7 +61,7 @@ struct _GimpColorAreaClass
 };
 
 
-GType       gimp_color_area_get_type   (void);
+GType       gimp_color_area_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_area_new        (const GimpRGB     *color,
 					GimpColorAreaType  type,
@@ -80,8 +76,6 @@ void        gimp_color_area_set_type   (GimpColorArea     *gca,
 					GimpColorAreaType  type);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_COLOR_AREA_H__ */

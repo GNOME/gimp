@@ -22,9 +22,7 @@
 #ifndef __GIMP_IMAGE_H__
 #define __GIMP_IMAGE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -51,8 +49,6 @@ void       gimp_image_attach_new_parasite (gint32          image_ID,
 					   const gpointer  data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_IMAGE_H__ */

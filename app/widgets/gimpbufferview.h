@@ -52,7 +52,7 @@ struct _GimpBufferViewClass
 };
 
 
-GType       gimp_buffer_view_get_type (void);
+GType       gimp_buffer_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_buffer_view_new      (GimpViewType              view_type,
 				       GimpContainer            *container,

@@ -38,8 +38,6 @@ libgimpbase_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimplimits.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
-	gimputils.c		\
-	gimputils.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpparasiteio.c	\

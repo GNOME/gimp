@@ -22,13 +22,7 @@
 #ifndef __GIMP_LIST_ITEM_H__
 #define __GIMP_LIST_ITEM_H__
 
-
 #include <gtk/gtklistitem.h>
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_LIST_ITEM              (gimp_list_item_get_type ())
@@ -71,7 +65,7 @@ struct _GimpListItemClass
 };
 
 
-GType       gimp_list_item_get_type         (void);
+GType       gimp_list_item_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_list_item_new              (GimpViewable        *viewable,
 					     gint                 preview_size);
@@ -103,11 +97,6 @@ void        gimp_list_item_button_realize       (GtkWidget      *widget,
 void        gimp_list_item_button_state_changed (GtkWidget      *widget,
 						 GtkStateType    previous_state,
 						 gpointer        data);
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 
 #endif /* __GIMP_LIST_ITEM_H__ */

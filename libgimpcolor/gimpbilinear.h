@@ -20,9 +20,7 @@
 #ifndef __GIMP_BILINEAR_H__
 #define __GIMP_BILINEAR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -50,8 +48,6 @@ GimpRGB   gimp_bilinear_rgba (gdouble  x,
 			      GimpRGB *values);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_BILINEAR_H__ */

@@ -1820,7 +1820,7 @@ menus_init (Gimp *gimp)
   }
 
   filename = gimp_personal_rc_file ("menurc");
-  gtk_item_factory_parse_rc (filename);
+  gtk_accel_map_load (filename);
   g_free (filename);
 
   g_signal_connect (G_OBJECT (gimp->documents), "add",
@@ -1848,7 +1848,7 @@ menus_exit (Gimp *gimp)
                                         gimp);
 
   filename = gimp_personal_rc_file ("menurc");
-  gtk_item_factory_dump_rc (filename, NULL, TRUE);
+  gtk_accel_map_save (filename);
   g_free (filename);
 
   if (toolbox_factory)

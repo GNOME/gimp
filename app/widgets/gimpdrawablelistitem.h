@@ -22,13 +22,7 @@
 #ifndef __GIMP_DRAWABLE_LIST_ITEM_H__
 #define __GIMP_DRAWABLE_LIST_ITEM_H__
 
-
 #include "gimplistitem.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_DRAWABLE_LIST_ITEM            (gimp_drawable_list_item_get_type ())
@@ -54,12 +48,7 @@ struct _GimpDrawableListItemClass
 };
 
 
-GType   gimp_drawable_list_item_get_type (void);
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+GType   gimp_drawable_list_item_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_DRAWABLE_LIST_ITEM_H__ */

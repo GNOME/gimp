@@ -24,9 +24,7 @@
 #ifndef __GIMP_DISPLAY_PDB_H__
 #define __GIMP_DISPLAY_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -36,8 +34,6 @@ gboolean gimp_display_delete (gint32 display_ID);
 gboolean gimp_displays_flush (void);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_DISPLAY_PDB_H__ */

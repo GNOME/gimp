@@ -34,6 +34,5 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	update.xpm      	\
 	wilber.xpm		\
 	wilber2.xpm		\
-	wilber3.xpm		\
 	yes.xpm			\
 @STRIP_END@

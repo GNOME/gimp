@@ -23,9 +23,7 @@
 #ifndef __GIMP_MATRIX_H__
 #define __GIMP_MATRIX_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -67,8 +65,6 @@ void          gimp_matrix4_to_deg          (GimpMatrix4  matrix,
 					    gdouble     *c);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_MATRIX_H__ */

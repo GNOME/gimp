@@ -146,7 +146,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerClass, add),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_OBJECT);
 
@@ -156,7 +156,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerClass, remove),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
+		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_OBJECT);
 
@@ -166,7 +166,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContainerClass, reorder),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__OBJECT_INT,
+		  gimp_marshal_VOID__OBJECT_INT,
 		  G_TYPE_NONE, 2,
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_INT);
@@ -177,7 +177,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpContainerClass, freeze),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   container_signals[THAW] =
@@ -186,7 +186,7 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpContainerClass, thaw),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->dispose      = gimp_container_dispose;

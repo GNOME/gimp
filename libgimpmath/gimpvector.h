@@ -26,9 +26,7 @@
 #ifndef __GIMP_VECTOR_H__
 #define __GIMP_VECTOR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -152,8 +150,6 @@ void        gimp_vector_3d_to_2d       (gint         sx,
 					GimpVector3 *p);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_VECTOR_H__ */

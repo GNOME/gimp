@@ -23,9 +23,8 @@
 #ifndef __GIMP_OFFSET_AREA_H__
 #define __GIMP_OFFSET_AREA_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
+
 
 /* For information look into the C source or the html documentation */
 
@@ -63,7 +62,7 @@ struct _GimpOffsetAreaClass
 };
 
 
-GType       gimp_offset_area_get_type    (void);
+GType       gimp_offset_area_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_offset_area_new         (gint            orig_width,
                                           gint            orig_height);
@@ -76,8 +75,6 @@ void        gimp_offset_area_set_offsets (GimpOffsetArea *offset_area,
                                           gint            offset_y);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_OFFSET_AREA_H__ */

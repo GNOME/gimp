@@ -55,7 +55,7 @@ struct _GimpDockClass
 };
 
 
-GType       gimp_dock_get_type    (void);
+GType       gimp_dock_get_type    (void) G_GNUC_CONST;
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

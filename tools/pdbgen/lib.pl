@@ -577,9 +577,7 @@ LGPL
 #ifndef $guard
 #define $guard
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -587,9 +585,7 @@ extern "C" {
 $body
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* $guard */
 HEADER

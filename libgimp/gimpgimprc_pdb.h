@@ -24,9 +24,7 @@
 #ifndef __GIMP_GIMPRC_PDB_H__
 #define __GIMP_GIMPRC_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -39,8 +37,6 @@ gboolean gimp_get_monitor_resolution (gdouble *xres,
 				      gdouble *yres);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_GIMPRC_PDB_H__ */

@@ -48,7 +48,7 @@ struct _GimpEllipseSelectToolClass
 void    gimp_ellipse_select_tool_register (Gimp                     *gimp,
                                            GimpToolRegisterCallback  callback);
 
-GType   gimp_ellipse_select_tool_get_type (void);
+GType   gimp_ellipse_select_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_ELLIPSE_SELECT_TOOL_H__  */

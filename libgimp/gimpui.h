@@ -29,10 +29,7 @@
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -41,8 +38,6 @@ void gimp_ui_init (const gchar *prog_name,
 		   gboolean     preview);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_UI_H__ */

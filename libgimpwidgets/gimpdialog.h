@@ -23,13 +23,9 @@
 #ifndef __GIMP_DIALOG_H__
 #define __GIMP_DIALOG_H__
 
-
 #include <gtk/gtkdialog.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -55,7 +51,7 @@ struct _GimpDialogClass
 };
 
 
-GType       gimp_dialog_get_type            (void);
+GType       gimp_dialog_get_type            (void) G_GNUC_CONST;
 
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
@@ -110,8 +106,6 @@ void        gimp_dialog_create_action_areav (GimpDialog         *dialog,
 void        gimp_dialog_set_icon            (GtkWindow          *dialog);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_DIALOG_H__ */

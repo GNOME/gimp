@@ -21,9 +21,7 @@
 #ifndef __COLOR_SELECTOR_H__
 #define __COLOR_SELECTOR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look at the html documentation */
 
@@ -96,8 +94,6 @@ gimp_color_selector_unregister (GimpColorSelectorID          selector_id,
 				GimpColorSelectorFinishedCB  finished_cb,
 				gpointer                     finished_data);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __COLOR_SELECTOR_H__ */

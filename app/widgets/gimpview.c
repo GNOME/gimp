@@ -168,7 +168,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, clicked),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   preview_signals[DOUBLE_CLICKED] = 
@@ -177,7 +177,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, double_clicked),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   preview_signals[EXTENDED_CLICKED] = 
@@ -186,7 +186,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, extended_clicked),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__UINT,
+		  gimp_marshal_VOID__UINT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_UINT);
 
@@ -196,7 +196,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, context),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->destroy              = gimp_preview_destroy;

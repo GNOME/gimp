@@ -22,9 +22,7 @@
 #ifndef __GIMP_MATH_TYPES_H__
 #define __GIMP_MATH_TYPES_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 
 typedef gdouble GimpMatrix3[3][3];
@@ -50,8 +48,6 @@ struct _GimpVector4
 };
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_MATH_TYPES_H__ */

@@ -55,7 +55,7 @@ struct _GimpDataClass
 };
 
 
-GType         gimp_data_get_type         (void);
+GType         gimp_data_get_type         (void) G_GNUC_CONST;
 
 gboolean      gimp_data_save             (GimpData    *data);
 

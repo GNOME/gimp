@@ -20,9 +20,7 @@
 #ifndef __GIMP_WIRE_H__
 #define __GIMP_WIRE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -106,8 +104,6 @@ gboolean  wire_write_string (GIOChannel      *channel,
 			     gint             count);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_WIRE_H__ */

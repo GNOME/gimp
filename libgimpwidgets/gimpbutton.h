@@ -23,13 +23,9 @@
 #ifndef __GIMP_BUTTON_H__
 #define __GIMP_BUTTON_H__
 
-
 #include <gtk/gtkbutton.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -61,7 +57,7 @@ struct _GimpButtonClass
 };
 
 
-GType       gimp_button_get_type         (void);
+GType       gimp_button_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_button_new              (void);
 
@@ -69,8 +65,6 @@ void        gimp_button_extended_clicked (GimpButton *button,
                                           guint       state);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_BUTTON_H__ */

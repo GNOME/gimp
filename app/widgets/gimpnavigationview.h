@@ -22,13 +22,7 @@
 #ifndef __GIMP_NAVIGATION_PREVIEW_H__
 #define __GIMP_NAVIGATION_PREVIEW_H__
 
-
 #include "gimpimagepreview.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_NAVIGATION_PREVIEW            (gimp_navigation_preview_get_type ())
@@ -78,7 +72,7 @@ struct _GimpNavigationPreviewClass
 };
 
 
-GType       gimp_navigation_preview_get_type   (void);
+GType       gimp_navigation_preview_get_type   (void) G_GNUC_CONST;
 
 GtkWidget * gimp_navigation_preview_new        (GimpImage             *gimage,
 						gint                   size);
@@ -88,9 +82,5 @@ void        gimp_navigation_preview_set_marker (GimpNavigationPreview *preview,
 						gint                   width,
 						gint                   height);
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_NAVIGATION_PREVIEW_H__ */

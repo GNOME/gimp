@@ -21,7 +21,6 @@
 
 
 void   splash_create    (gboolean show_image);
-void   splash_logo_load (void);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,

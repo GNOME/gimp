@@ -158,10 +158,7 @@ gen_sources = xgen-gmh xgen-gmc
 CLEANFILES += $(gen_sources)
 
 $(srcdir)/stamp-gimpmarshal.h: $(srcdir)/gimpmarshal.list gimpmarshal.h
-	echo "#ifndef __GIMP_MARSHAL_H__" > xgen-gmh \
-	&& echo "#define __GIMP_MARSHAL_H__" >> xgen-gmh \
-	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
-	&& echo "#endif /* __GIMP_MARSHAL_H__ */" >> xgen-gmh \
+	glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
 	&& (cmp -s xgen-gmh $(srcdir)/gimpmarshal.h || cp xgen-gmh $(srcdir)/gimpmarshal.h) \
 	&& rm -f xgen-gmh xgen-gmh~ \
 	&& echo timestamp > $@
@@ -169,6 +166,6 @@ $(srcdir)/gimpmarshal.c: $(srcdir)/stamp-gimpmarshal.h
 	echo "#include <glib.h>" > xgen-gmc \
 	&& echo "#include <glib-object.h>" >> xgen-gmc \
 	&& echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
-	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
+	&& glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc $(srcdir)/gimpmarshal.c \
 	&& rm -f xgen-gmc xgen-gmc~

@@ -23,10 +23,6 @@
 #ifndef __GIMP_FONT_SELECTION_DIALOG_H__
 #define __GIMP_FONT_SELECTION_DIALOG_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
 
 GimpFontSelectionDialog * gimp_font_selection_dialog_new (GimpFontSelection *fontsel);
 void gimp_font_selection_dialog_destroy       (GimpFontSelectionDialog *dialog);
@@ -34,9 +30,5 @@ void gimp_font_selection_dialog_show          (GimpFontSelectionDialog *dialog);
 void gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
                                                PangoFontDescription    *new_desc);
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_FONT_SELECTION_DIALOG_H__ */

@@ -22,9 +22,7 @@
 
 #include <signal.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -59,8 +57,6 @@ GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
 #define gimp_signal_syscallrestart(signum,handler) gimp_signal_private ((signum), (handler), SA_RESTART)
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_SIGNAL_H__ */

@@ -24,9 +24,7 @@
 #ifndef __GIMP_GRADIENTS_PDB_H__
 #define __GIMP_GRADIENTS_PDB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -43,8 +41,6 @@ gchar*   gimp_gradients_get_gradient_data (gchar    *name,
 					   gdouble **grad_data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_GRADIENTS_PDB_H__ */

@@ -22,13 +22,7 @@
 #ifndef __GIMP_BRUSH_PREVIEW_H__
 #define __GIMP_BRUSH_PREVIEW_H__
 
-
 #include "gimppreview.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_BRUSH_PREVIEW            (gimp_brush_preview_get_type ())
@@ -55,11 +49,7 @@ struct _GimpBrushPreviewClass
 };
 
 
-GType   gimp_brush_preview_get_type (void);
+GType   gimp_brush_preview_get_type (void) G_GNUC_CONST;
 
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GIMP_BRUSH_PREVIEW_H__ */

@@ -22,9 +22,7 @@
 #ifndef __GIMP_LAYER_H__
 #define __GIMP_LAYER_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -45,8 +43,6 @@ gint32   gimp_layer_new  (gint32                image_ID,
 gint32   gimp_layer_copy (gint32                layer_ID);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_LAYER_H__ */

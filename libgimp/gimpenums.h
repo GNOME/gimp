@@ -22,9 +22,7 @@
 #ifndef __GIMP_ENUMS_H__
 #define __GIMP_ENUMS_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 typedef enum
 {
@@ -293,8 +291,7 @@ typedef enum
   GIMP_STACK_TRACE_ALWAYS
 } GimpStackTraceMode;
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+G_END_DECLS
 
 #endif /* __GIMP_ENUMS_H__ */

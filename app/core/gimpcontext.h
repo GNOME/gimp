@@ -161,7 +161,7 @@ struct _GimpContextClass
 };
 
 
-GType         gimp_context_get_type          (void);
+GType         gimp_context_get_type          (void) G_GNUC_CONST;
 
 GimpContext * gimp_context_new               (Gimp              *gimp,
 					      const gchar       *name,

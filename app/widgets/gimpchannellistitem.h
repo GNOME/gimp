@@ -22,13 +22,7 @@
 #ifndef __GIMP_CHANNEL_LIST_ITEM_H__
 #define __GIMP_CHANNEL_LIST_ITEM_H__
 
-
 #include "gimpdrawablelistitem.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 
 #define GIMP_TYPE_CHANNEL_LIST_ITEM            (gimp_channel_list_item_get_type ())
@@ -52,12 +46,7 @@ struct _GimpChannelListItemClass
 };
 
 
-GType   gimp_channel_list_item_get_type (void);
-
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+GType   gimp_channel_list_item_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_CHANNEL_LIST_ITEM_H__ */

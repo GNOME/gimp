@@ -36,8 +36,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/wilber3.xpm"
-
 
 #define TIPS_DIR_NAME "tips"
 
@@ -67,9 +65,9 @@ tips_dialog_create (void)
   GtkWidget *vbox2;
   GtkWidget *hbox;
   GtkWidget *bbox;
-  GtkWidget *frame;
-  GtkWidget *pixmap;
   GtkWidget *button;
+  GdkPixbuf *wilber;
+  gchar     *filename;
 
   if (tips_count == 0)
     {
@@ -125,14 +123,21 @@ tips_dialog_create (void)
   gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0);
-  gtk_widget_show (frame);
+  filename = g_build_filename (gimp_data_directory(), 
+                               "images", "tips_wilber.png", NULL);
+  wilber = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
 
-  pixmap = gimp_pixmap_new (wilber3_xpm);
-  gtk_container_add (GTK_CONTAINER (frame), pixmap);
-  gtk_widget_show (pixmap);
+  if (wilber)
+    {
+      GtkWidget *image;
+
+      image = gtk_image_new_from_pixbuf (wilber);
+      g_object_unref (wilber);
+
+      gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
+      gtk_widget_show (image);
+    }
 
   hbox = gtk_hbox_new (FALSE, 15);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);

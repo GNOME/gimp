@@ -20,9 +20,7 @@
 #ifndef __GIMP_COLOR_SPACE_H__
 #define __GIMP_COLOR_SPACE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -97,8 +95,6 @@ void    gimp_hsv_to_rgb4        (guchar  *rgb,
 				 gdouble  value);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_COLOR_SPACE_H__ */

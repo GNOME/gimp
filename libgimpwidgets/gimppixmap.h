@@ -23,9 +23,7 @@
 #ifndef __GIMP_PIXMAP_H__
 #define __GIMP_PIXMAP_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
@@ -53,7 +51,7 @@ struct _GimpPixmapClass
 };
 
 
-GType       gimp_pixmap_get_type (void);
+GType       gimp_pixmap_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
 
@@ -61,8 +59,6 @@ void        gimp_pixmap_set      (GimpPixmap  *pixmap,
 				  gchar      **xpm_data);
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif /* __GIMP_PIXMAP_H__ */

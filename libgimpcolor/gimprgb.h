@@ -20,15 +20,12 @@
 #ifndef __GIMP_RGB_H__
 #define __GIMP_RGB_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
 /*  RGB and RGBA color types and operations taken from LibGCK  */
-
 
 typedef enum
 {
@@ -109,8 +106,6 @@ gdouble   gimp_rgba_distance  (const GimpRGB *rgba1,
 			  (b) * INTENSITY_BLUE  + 0.001)
 
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif  /* __GIMP_RGB_H__ */

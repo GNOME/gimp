@@ -122,7 +122,7 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, marker_changed),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_INT,
+		  gimp_marshal_VOID__INT_INT,
 		  G_TYPE_NONE, 2,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
@@ -133,7 +133,7 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, zoom),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
+		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
 
@@ -143,7 +143,7 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, scroll),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__ENUM,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
 		  GDK_TYPE_SCROLL_DIRECTION);
 

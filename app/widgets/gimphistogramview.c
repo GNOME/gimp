@@ -101,7 +101,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpHistogramViewClass, range_changed),
 		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_INT,
+		  gimp_marshal_VOID__INT_INT,
 		  G_TYPE_NONE, 2,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
