@@ -227,7 +227,7 @@ shear_x_mag_changed (GtkWidget *widget,
 {
   GimpTool          *tool;
   GimpTransformTool *transform_tool;
-  gint               value;
+  gdouble            value;
 
   tool           = GIMP_TOOL (data);
   transform_tool = GIMP_TRANSFORM_TOOL (data);
@@ -252,7 +252,7 @@ shear_y_mag_changed (GtkWidget *widget,
 {
   GimpTool          *tool;
   GimpTransformTool *transform_tool;
-  gint               value;
+  gdouble            value;
 
   tool           = GIMP_TOOL (data);
   transform_tool = GIMP_TRANSFORM_TOOL (data);
@@ -275,8 +275,8 @@ static void
 shear_tool_motion (GimpTransformTool *transform_tool,
 		   GimpDisplay       *gdisp)
 {
-  gint diffx, diffy;
-  gint dir;
+  gdouble diffx, diffy;
+  gint    dir;
 
   diffx = transform_tool->curx - transform_tool->lastx;
   diffy = transform_tool->cury - transform_tool->lasty;

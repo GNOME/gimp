@@ -399,7 +399,7 @@ gimp_scale_tool_motion (GimpTransformTool *transform_tool,
   gdouble          *y2;
   gint              w, h;
   gint              dir_x, dir_y;
-  gint              diff_x, diff_y;
+  gdouble           diff_x, diff_y;
 
   options = (TransformOptions *) GIMP_TOOL (transform_tool)->tool_info->tool_options;
 

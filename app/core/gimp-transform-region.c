@@ -263,9 +263,22 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 	(* progress_callback) (ty1, ty2, y, progress_data);
 
       /* set up inverse transform steps */
-      tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
-      ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
-      tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+      if (interpolation_type == GIMP_INTERPOLATION_NONE)
+        {
+          /*  need to transform the pixel's center for INTERPOLATION_NONE,
+           *  as we end up at discrete pixel positions and are not aware of
+           *  errors in the algorithm below
+           */
+          tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
+          ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
+          tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+        }
+      else
+        {
+          tx = xinc * tx1 + m[0][1] * y + m[0][2];
+          ty = yinc * tx1 + m[1][1] * y + m[1][2];
+          tw = winc * tx1 + m[2][1] * y + m[2][2];
+        }
 
       d = dest;
 
@@ -303,7 +316,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
               /* check if any part of our region overlaps the buffer */
 
               if ((itx + 2) >= x1 && (itx - 1) < x2 &&
-                  (ity + 2) >= y1 && (ity - 1) < y2 )
+                  (ity + 2) >= y1 && (ity - 1) < y2)
                 {
                   guchar  *data;
                   gint     row;
@@ -396,7 +409,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                *  (which runs from itx to itx + 1, same in y)
                */
               if ((itx + 1) >= x1 && itx < x2 &&
-                  (ity + 1) >= y1 && ity < y2 )
+                  (ity + 1) >= y1 && ity < y2)
                 {
                   guchar  *data;
                   gint     row;

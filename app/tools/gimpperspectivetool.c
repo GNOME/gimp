@@ -213,7 +213,7 @@ static void
 perspective_tool_motion (GimpTransformTool *transform_tool,
 			 GimpDisplay       *gdisp)
 {
-  gint diff_x, diff_y;
+  gdouble diff_x, diff_y;
 
   diff_x = transform_tool->curx - transform_tool->lastx;
   diff_y = transform_tool->cury - transform_tool->lasty;

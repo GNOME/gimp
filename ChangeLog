@@ -1,3 +1,16 @@
+2002-02-20  Michael Natterer  <mitch@gimp.org>
+
+	Oops, yesterday's "fix" for #10466 made it even worse :)
+
+	* app/core/gimpdrawable-transform.c: need the 0.5 offset to
+	the pixel's center only for INTERPOLATION_NONE, as the LINEAR
+	and CUBIC algorithms already know about their errors.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: some more s/gint/gdouble/ so the
+	tools can detect pointer motions again...
+
 2002-02-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/vinvert.c: applied a patch with some optimizations
