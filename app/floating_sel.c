@@ -169,7 +169,7 @@ floating_sel_to_layer (Layer *layer)
     {
       g_message ("Cannot create a new layer from the floating\n"
 		 "selection because it belongs to a\n"
-		 "layer mask or channel.", NULL, NULL);
+		 "layer mask or channel.");
       return;
     }
 
