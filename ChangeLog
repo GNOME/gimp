@@ -1,3 +1,15 @@
+1999-07-27  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c
+	* app/desaturate.[ch]
+	* app/equalize.[ch]: no need to pass the image as a void pointer
+	to desaturate and equalize.
+
+	* app/gimage.h
+	* app/gimpimage.[ch]: new function gimp_image_position_layer().
+
+	* app/layers_dialog.c: drag'n'drop movement of layers.
+
 1999-07-27  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/transform_tool.c: Fixed a typo

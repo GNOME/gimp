@@ -15,10 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "drawable.h"
 #include "equalize.h"
 #include "gimage.h"
@@ -28,14 +24,11 @@
 
 #include "libgimp/gimpintl.h"
 
-
 void
-image_equalize (void *gimage_ptr)
+image_equalize (GimpImage *gimage)
 {
-  GimpImage *gimage;
   GimpDrawable *drawable;
 
-  gimage = (GimpImage *) gimage_ptr;
   drawable = gimage_active_drawable (gimage);
 
   if (gimp_drawable_indexed (drawable))
@@ -43,6 +36,7 @@ image_equalize (void *gimage_ptr)
       g_message (_("Equalize does not operate on indexed drawables."));
       return;
     }
+
   equalize (gimage, drawable, TRUE);
 }
 

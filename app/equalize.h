@@ -22,7 +22,9 @@
 #include "gimpdrawableF.h"
 
 /*  equalize functions  */
-void  image_equalize (void *);
-void  equalize (GimpImage *, GimpDrawable *, gboolean);
+void  image_equalize (GimpImage    *gimage);
+void  equalize       (GimpImage    *gimage,
+		      GimpDrawable *drawable,
+		      gboolean      mask_only);
 
 #endif  /*  __INVERT_H__  */

@@ -15,22 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-#include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "about_dialog.h"
 #include "app_procs.h"
-#include "brightness_contrast.h"
 #include "gimpbrushlist.h"
-#include "by_color_select.h"
 #include "colormaps.h"
 #include "colormap_dialog.i.h"
 #include "color_area.h"
-#include "color_balance.h"
 #include "commands.h"
 #include "convert.h"
-#include "curves.h"
 #include "desaturate.h"
 #include "devices.h"
 #include "channel_ops.h"
@@ -44,23 +37,18 @@
 #include "gimprc.h"
 #include "global_edit.h"
 #include "gradient.h"
-#include "histogram_tool.h"
-#include "hue_saturation.h"
 #include "image_render.h"
 #include "info_window.h"
 #include "interface.h"
 #include "invert.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
-#include "levels.h"
 #include "module_db.h"
 #include "palette.h"
 #include "patterns.h"
 #include "plug_in.h"
-#include "posterize.h"
 #include "resize.h"
 #include "scale.h"
-#include "threshold.h"
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
@@ -78,7 +66,7 @@ typedef struct
 } ImageResize;
 
 /*  external functions  */
-extern void   layers_dialog_layer_merge_query (GImage *, int);
+extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 
 /*  local functions  */
 static void   image_resize_callback        (GtkWidget *, gpointer);
@@ -686,7 +674,7 @@ image_equalize_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  image_equalize ((void *) gdisp->gimage);
+  image_equalize (gdisp->gimage);
   gdisplays_flush ();
 }
 
@@ -697,74 +685,74 @@ image_invert_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  image_invert ((void *) gdisp->gimage);
+  image_invert (gdisp->gimage);
   gdisplays_flush ();
 }
 
 void
 image_desaturate_cmd_callback (GtkWidget *widget,
-			       gpointer client_data)
+			       gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  image_desaturate ((void *) gdisp->gimage);
+  image_desaturate (gdisp->gimage);
   gdisplays_flush ();
 }
 
 void
 channel_ops_duplicate_cmd_callback (GtkWidget *widget,
-				    gpointer client_data)
+				    gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  channel_ops_duplicate ((void *) gdisp->gimage);
+  channel_ops_duplicate (gdisp->gimage);
 }
 
 void
 channel_ops_offset_cmd_callback (GtkWidget *widget,
-				 gpointer client_data)
+				 gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  channel_ops_offset ((void *) gdisp->gimage);
+  channel_ops_offset (gdisp->gimage);
 }
 
 void
 image_convert_rgb_cmd_callback (GtkWidget *widget,
-				gpointer client_data)
+				gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  convert_to_rgb ((void *) gdisp->gimage);
+  convert_to_rgb (gdisp->gimage);
 }
 
 void
 image_convert_grayscale_cmd_callback (GtkWidget *widget,
-				      gpointer client_data)
+				      gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  convert_to_grayscale ((void *) gdisp->gimage);
+  convert_to_grayscale (gdisp->gimage);
 }
 
 void
 image_convert_indexed_cmd_callback (GtkWidget *widget,
-				    gpointer client_data)
+				    gpointer   client_data)
 {
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  convert_to_indexed ((void *) gdisp->gimage);
+  convert_to_indexed (gdisp->gimage);
 }
 
 void
 image_resize_cmd_callback (GtkWidget *widget,
-			   gpointer client_data)
+			   gpointer   client_data)
 {
   GDisplay    * gdisp;
   GimpImage   * gimage;
@@ -775,7 +763,7 @@ image_resize_cmd_callback (GtkWidget *widget,
   gimage = gdisp->gimage;
 
   /*  the ImageResize structure  */
-  image_resize = (ImageResize *) g_malloc (sizeof (ImageResize));
+  image_resize = g_new (ImageResize, 1);
   image_resize->gimage = gimage;
   image_resize->resize = resize_widget_new (ResizeWidget,
 					    ResizeImage,
@@ -796,7 +784,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 
 void
 image_scale_cmd_callback (GtkWidget *widget,
-			  gpointer client_data)
+			  gpointer   client_data)
 {
   GDisplay    * gdisp;
   GimpImage   * gimage;
@@ -807,7 +795,7 @@ image_scale_cmd_callback (GtkWidget *widget,
   gimage = gdisp->gimage;
 
   /*  the ImageResize structure  */
-  image_scale = (ImageResize *) g_malloc (sizeof (ImageResize));
+  image_scale = g_new (ImageResize, 1);
   image_scale->gimage = gimage;
   image_scale->resize = resize_widget_new (ScaleWidget,
 					   ResizeImage,
@@ -1102,7 +1090,7 @@ dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 {
   static ColormapDialog * cmap_dlg;
 
-  if(!cmap_dlg)
+  if (!cmap_dlg)
     {
       cmap_dlg = colormap_dialog_create (image_context);
       colormap_dialog_connect_selected (cmap_dlg_sel_cb, NULL, cmap_dlg);
@@ -1169,7 +1157,7 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
 /*********************/
 
 static void
-image_resize_callback (GtkWidget *w,
+image_resize_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
   ImageResize * image_resize;
@@ -1191,7 +1179,8 @@ image_resize_callback (GtkWidget *w,
 	}
       else 
 	{
-	  g_message (_("Resize Error: Both width and height must be greater than zero."));
+	  g_message (_("Resize Error: Both width and height must be "
+		       "greater than zero."));
 	  return;
 	}
     }
@@ -1201,7 +1190,7 @@ image_resize_callback (GtkWidget *w,
 }
 
 static void
-image_scale_callback (GtkWidget *w,
+image_scale_callback (GtkWidget *widget,
 		      gpointer   client_data)
 {
   ImageResize * image_scale;
@@ -1238,7 +1227,7 @@ image_scale_callback (GtkWidget *w,
 			    image_scale->resize->height);
 	      flush = TRUE;
 	    }
-	  else 
+	  else
 	    {
 	      g_message (_("Scale Error: Both width and height must be "
 			   "greater than zero."));
@@ -1255,18 +1244,18 @@ image_scale_callback (GtkWidget *w,
 }
 
 static gint
-image_delete_callback (GtkWidget *w,
-		       GdkEvent  *e,
+image_delete_callback (GtkWidget *widget,
+		       GdkEvent  *event,
 		       gpointer   client_data)
 {
-  image_cancel_callback (w, client_data);
+  image_cancel_callback (widget, client_data);
 
   return TRUE;
 }
 
 
 static void
-image_cancel_callback (GtkWidget *w,
+image_cancel_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
   ImageResize *image_resize;

@@ -2191,7 +2191,8 @@ gimp_image_lower_layer (GimpImage *gimage,
 
   return NULL;
 }
- 
+
+
 Layer *
 gimp_image_raise_layer_to_top (GimpImage *gimage, 
 			       Layer     *layer_arg)
@@ -2358,6 +2359,85 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
   return layer_arg;
 }
 
+
+Layer *
+gimp_image_position_layer (GimpImage *gimage, 
+			   Layer     *layer_arg,
+			   gint       new_index)
+{
+  Layer *layer;
+  GSList *list;
+  GSList *next;
+  gint x_min, y_min, x_max, y_max;
+  gint off_x, off_y;
+  gint index;
+  gint list_length;
+
+  list = gimage->layers;
+  list_length = g_slist_length (list);
+
+  next = NULL;
+  layer = NULL;
+  index = 0;
+
+  /* find layer_arg */
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      if (layer == layer_arg)
+	{
+	  break;
+	}
+      list = g_slist_next (list);
+      index++;
+    }
+
+  if (layer != layer_arg)
+    {
+      /* The requested layer was not found in the layerstack
+       * Return without changing anything
+       */
+      return NULL;
+    }
+
+  if (new_index < 0)
+    new_index = 0;
+
+  if (new_index >= list_length)
+    new_index = list_length - 1;
+
+  if (new_index == index)
+    return NULL;
+
+  /* check if we want to move it below a bottom layer without alpha */
+  layer = (Layer *) g_slist_last (list)->data;
+  if (new_index == list_length - 1 &&
+      !layer_has_alpha (layer))
+    {
+      g_message (_("BG has no alpha, layer was placed above"));
+      new_index--;
+    }
+
+  list = g_slist_remove (gimage->layers, layer_arg);
+  gimage->layers = g_slist_insert (list, layer_arg, new_index);
+
+  /* update the affected area (== area of layer_arg) */
+  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
+  x_min = off_x;
+  y_min = off_y;
+  x_max = off_x + drawable_width (GIMP_DRAWABLE (layer_arg));
+  y_max = off_y + drawable_height (GIMP_DRAWABLE (layer_arg));
+  gtk_signal_emit (GTK_OBJECT (gimage),
+		   gimp_image_signals[REPAINT],
+		   x_min, y_min, x_max, y_max);
+
+  /*  invalidate the composite preview  */
+  gimp_image_invalidate_preview (gimage);
+
+  gimp_image_dirty (gimage);
+
+  return layer_arg;
+}
 
 Layer *
 gimp_image_merge_visible_layers (GimpImage *gimage, 

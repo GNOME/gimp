@@ -15,27 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "appenv.h"
 #include "drawable.h"
 #include "desaturate.h"
-#include "interface.h"
 #include "paint_funcs.h"
 #include "gimage.h"
 
 #include "libgimp/gimpintl.h"
 
-
 void
-image_desaturate (gimage_ptr)
-     void *gimage_ptr;
+image_desaturate (GimpImage *gimage)
 {
-  GImage *gimage;
   GimpDrawable *drawable;
 
-  gimage = (GImage *) gimage_ptr;
   drawable = gimage_active_drawable (gimage);
 
   if (! drawable_color (drawable))

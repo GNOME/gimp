@@ -18,10 +18,11 @@
 #ifndef __DESATURATE_H__
 #define __DESATURATE_H__
 
+#include "gimpimageF.h"
 #include "gimpdrawableF.h"
 
 /*  desaturate functions  */
-void  image_desaturate (void *);
-void  desaturate (GimpDrawable *);
+void  image_desaturate (GimpImage    *gimage);
+void  desaturate       (GimpDrawable *drawable);
 
 #endif  /*  __DESATURATE_H__  */
