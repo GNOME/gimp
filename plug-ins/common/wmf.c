@@ -2299,16 +2299,8 @@ load_image (char *filename)
 	default:
 	  if (!warned_unhandled)
 	    {
-	      g_message ("WMF: Unhandled operation %#x. Check the web page\n"
-			 "http://www.iki.fi/tml/gimp/wmf/ for a possible new\n"
-			 "version of the wmf plug-in. (This is version %s).\n"
-			 "If you already have the latest version, please send\n"
-			 "the WMF file you tried to load to the wmf plug-in\n"
-			 "author, Tor Lillqvist <tml@iki.fi>, and he might\n"
-			 "try to add the missing feature. No promise that\n"
-			 "he has any interest any longer, of course.",
-			 GUINT16_FROM_LE (record.Function),
-			 VERSION);
+	      g_message ("WMF: Unhandled operation %#x.",
+			 GUINT16_FROM_LE (record.Function));
 	      warned_unhandled = TRUE;
 	    }
 	  sync_record (record.Size, 0, fp);
