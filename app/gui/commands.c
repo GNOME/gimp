@@ -1305,6 +1305,8 @@ image_resize_callback (GtkWidget *widget,
 
   image_resize = (ImageResize *) client_data;
 
+  gtk_widget_set_sensitive (image_resize->resize->resize_shell, FALSE);
+
   if ((gimage = image_resize->gimage) != NULL)
     {
       if (image_resize->resize->width > 0 &&
@@ -1337,7 +1339,9 @@ image_scale_callback (GtkWidget *widget,
   g_assert ((image_scale = (ImageResize *) client_data) != NULL);
   g_assert (image_scale->gimage != NULL);
 
-  if (TRUE == resize_check_layer_scaling (image_scale))
+  gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
+
+  if (resize_check_layer_scaling (image_scale))
     {
       resize_scale_implement (image_scale);
       gtk_widget_destroy (image_scale->resize->resize_shell);

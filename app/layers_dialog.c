@@ -3810,6 +3810,8 @@ scale_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer =  (options->layer)))
     {
+      gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
+
       if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
 	  undo_push_group_start (gimage, LAYER_SCALE_UNDO);
@@ -3830,8 +3832,10 @@ scale_layer_query_ok_callback (GtkWidget *widget,
       gtk_widget_destroy (options->resize->resize_shell);
     }
   else
-    g_message (_("Invalid width or height.\n"
-		 "Both must be positive."));
+    {
+      g_message (_("Invalid width or height.\n"
+		   "Both must be positive."));
+    }
 }
 
 static void
@@ -3890,6 +3894,8 @@ resize_layer_query_ok_callback (GtkWidget *widget,
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer = (options->layer)))
     {
+      gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
+
       if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
 	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
@@ -3912,8 +3918,10 @@ resize_layer_query_ok_callback (GtkWidget *widget,
       gtk_widget_destroy (options->resize->resize_shell);
     }
   else
-    g_message (_("Invalid width or height.\n"
-		 "Both must be positive."));
+    {
+      g_message (_("Invalid width or height.\n"
+		   "Both must be positive."));
+    }
 }
 
 static void

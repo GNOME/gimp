@@ -1288,7 +1288,9 @@ resize_scale_warn_callback (GtkWidget *widget,
       gtk_widget_destroy (image_scale->resize->resize_shell);
     }
   else
-    gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
+    {
+      gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
+    }
 }
 
 gboolean 
@@ -1328,8 +1330,6 @@ resize_check_layer_scaling (ImageResize *image_scale)
       /* Warn user on failure */
       if (success == FALSE)
 	{
-	  gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
-
 	  dialog =
 	    gimp_query_boolean_box (_("Layer Too Small"),
 				    gimp_standard_help_func,

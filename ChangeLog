@@ -1,3 +1,11 @@
+2000-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.c
+	* app/layers_dialog.c
+	* app/resize.c: set the scale/resize dialog insensitive before
+	scaling/resizing to keep users from pressing "OK" again.
+	Fixes #10656.
+
 Mon May 15 22:48:17 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.22 release (1.2pre)
