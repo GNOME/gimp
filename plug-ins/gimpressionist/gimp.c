@@ -97,8 +97,8 @@ query(void)
   INIT_I18N();
 
   gimp_install_procedure(PLUG_IN_NAME,
-			 _("Performs various artistic operations on an image"),
-			 _("Performs various artistic operations on an image"),
+			 "Performs various artistic operations on an image",
+			 "Performs various artistic operations on an image",
 			 "Vidar Madsen <vidar@prosalg.no>",
 			 "Vidar Madsen",
 			 PLUG_IN_VERSION,

@@ -207,8 +207,9 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Converts and image to and from polar coords"),
-			  _("Remaps and image from rectangular coordinates to polar coordinats or vice versa"),
+			  "Converts and image to and from polar coords",
+			  "Remaps and image from rectangular coordinates to polar coordinates "
+			  "or vice versa",
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  PLUG_IN_VERSION,

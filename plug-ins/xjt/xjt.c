@@ -8,7 +8,7 @@
  *  gzip and bzip2 compression Programs.
  *
  * IMPORTANT NOTE:
- *   This plugin needs GIMP 1.1.16 or newer versions of the GIMP-core to run.
+ *   This plugin needs GIMP 1.1.18 or newer versions of the GIMP-core to run.
  */
  
 /* The GIMP -- an image manipulation program
@@ -35,6 +35,7 @@
  */
 
 /* revision history:
+ * version 1.1.18a; 2000/03/07  hof: tattoo_state
  * version 1.1.16a; 2000/02/04  hof: load paths continued, load tattos, load/save unit
  * version 1.1.15b; 2000/01/28  hof: save/load paths  (load is not activated PDB-bug)
  *                                   continued save/load parasites,
@@ -121,6 +122,7 @@ typedef enum
   PROP_PATHS = 23,
   PROP_USER_UNIT = 24,
 
+  PROP_TATTOO_STATE = 85,
   PROP_PATH_LOCKED = 86,
   PROP_PATH_CURRENT = 87,
   PROP_PATH_TYPE = 88,
@@ -312,6 +314,7 @@ typedef struct
   gfloat            yresolution;
   GimpUnit          unit;
   gint32            tattoo;
+  gint32            tattoo_state;
   gint              n_layers;
   gint              n_channels;
   t_layer_props    *layer_props;
@@ -323,7 +326,7 @@ typedef struct
 } t_image_props;
 
 
-#define PROP_TABLE_ENTRIES 34
+#define PROP_TABLE_ENTRIES 35
 t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {             
   /* t_proptype              mnemonic   t_paramtyp             default values */
   { PROP_END,                   "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
@@ -348,6 +351,7 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   { PROP_RESOLUTION,            "res",    PTYP_2xFLT,              72.0, 72.0,  0.0 } ,
   { PROP_UNIT,                  "unt",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
   { PROP_TATTOO,                "tto",    PTYP_INT,                -1.0,  0.0,  0.0 } ,
+  { PROP_TATTOO_STATE,          "tts",    PTYP_INT,                -1.0,  0.0,  0.0 } ,
   { PROP_PARASITES,             "pte",	  PTYP_INT,		    0.0,  0.0,  0.0 } ,
  
   { PROP_PATH_POINTS,           "php",    PTYP_FLIST,               0.0,  0.0,  0.0 } ,
@@ -468,7 +472,7 @@ query (void)
 			  "loads files of the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Feb-04",
+                          "2000-Mar-07",
 			  "<Load>/xjt",
 			  NULL,
                           PROC_PLUG_IN,
@@ -480,7 +484,7 @@ query (void)
 			  "saves files in the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Feb-04",
+                          "2000-Mar-07",
                           "<Save>/xjt",
 			  "RGB*, GRAY*",
                           PROC_PLUG_IN,
@@ -744,7 +748,7 @@ p_to_GimpUnit(XJTUnitType intype)
   {
     return((GimpUnit)intype);
   }
-  return (GIMP_UNIT_PIXEL);
+  return(GIMP_UNIT_PIXEL);
 }
 
 XJTUnitType
@@ -1502,7 +1506,7 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
  
    fprintf(fp, "%s", GIMP_XJ_IMAGE);
     
-   l_param.string_val = "1.1.16a";
+   l_param.string_val = "1.1.18a";
    p_write_prop (fp, PROP_VERSION, &l_param, wr_all_prp);
 
    l_param.int_val1 = GIMP_MAJOR_VERSION;
@@ -1522,6 +1526,13 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
    /* write unit */
    l_param.int_val1 = p_to_XJTUnitType(gimp_image_get_unit(image_id));
    p_write_prop (fp, PROP_UNIT, &l_param, wr_all_prp);
+
+   /* write tattoo_state */
+   l_param.int_val1 = p_gimp_image_get_tattoo_state(image_id);
+   if(l_param.int_val1 > 0)
+   {
+     p_write_prop (fp, PROP_TATTOO_STATE, &l_param, wr_all_prp);
+   }
 
    /* write guides */
    l_guide_id = p_gimp_image_findnext_guide(image_id, 0);  /* get 1.st guide */
@@ -1986,6 +1997,7 @@ t_image_props * p_new_image_prop()
     l_new_prop->yresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val2;
     l_new_prop->unit             = p_to_GimpUnit(g_prop_table[p_get_property_index(PROP_UNIT)].default_val1);
     l_new_prop->tattoo           = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
+    l_new_prop->tattoo_state     = g_prop_table[p_get_property_index(PROP_TATTOO_STATE)].default_val1;
     l_new_prop->n_layers = 0;
     l_new_prop->n_channels = 0;
     l_new_prop->layer_props = NULL;
@@ -2849,6 +2861,9 @@ gint p_scann_image_prop(gchar* scan_ptr, t_image_props *image_prop)
        case PROP_TATTOO:
             image_prop->tattoo = l_param.int_val1;
             break;
+       case PROP_TATTOO_STATE:
+            image_prop->tattoo_state = l_param.int_val1;
+            break;
        default :
             /* fprintf(stderr, "XJT: Warning PRP unexpected token in line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
@@ -3572,6 +3587,12 @@ load_xjt_image (gchar *filename)
    if(l_image_prp_ptr->path_props)
    {
       p_add_paths(l_image_id,  l_image_prp_ptr->path_props);
+   }
+
+   /* set tattoo_state */
+   if(l_image_prp_ptr->tattoo_state > 0)
+   {
+     p_gimp_image_set_tattoo_state(l_image_id, l_image_prp_ptr->tattoo_state);
    }
 
 cleanup:

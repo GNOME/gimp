@@ -136,8 +136,8 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Scattering pixel values in HSV space"),
-			  _("Scattering pixel values in HSV space"),
+			  "Scattering pixel values in HSV space",
+			  "Scattering pixel values in HSV space",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",

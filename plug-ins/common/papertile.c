@@ -863,8 +863,8 @@ plugin_query (void)
   INIT_I18N ();
 
   gimp_install_procedure (PLUGIN_PROCEDURE_NAME,
-			  _("Cuts an image into paper tiles, and slides each paper tile."),
-			  _("This plug-in cuts an image into paper tiles and slides each paper tile."),
+			  "Cuts an image into paper tiles, and slides each paper tile.",
+			  "This plug-in cuts an image into paper tiles and slides each paper tile.",
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Copyright (c)1997-1999 Hirotsuna Mizuno",
 			  _("September 31, 1999"),

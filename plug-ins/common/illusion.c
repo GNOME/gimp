@@ -107,8 +107,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("produce illusion"),
-			  _("produce illusion"),
+			  "produce illusion",
+			  "produce illusion",
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Hirotsuna Mizuno",
 			  PLUG_IN_VERSION,

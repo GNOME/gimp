@@ -2351,11 +2351,7 @@ load_image (char *filename)
 	  gimp_progress_update (1.0);
 	  
 	  if (canvas->height >= 100)
-	    {
-	      name_buf = g_strdup_printf (_("Transferring image"));
-	      gimp_progress_init (name_buf);
-	      g_free (name_buf);
-	    }
+	    gimp_progress_init (_("Transferring image"));
 	  
 	  image_ID = gimp_image_new (canvas->width, canvas->height, RGB);
 	  gimp_image_set_filename (image_ID, filename);

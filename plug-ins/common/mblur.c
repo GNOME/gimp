@@ -162,10 +162,11 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Motion blur of image"),
-			  _("This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies."),
+			  "Motion blur of image",
+			  "This plug-in simulates the effect seen when photographing a moving object "
+			  "at a slow shutter speed. Done by adding multiple displaced copies.",
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
-			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",			       
+			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",       
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Blur/Motion Blur..."),
 			  "RGB*, GRAY*",

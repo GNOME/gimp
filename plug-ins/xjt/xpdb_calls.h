@@ -20,6 +20,7 @@
  */
 
 /* revision history:
+ * version 1.1.18a; 2000/03/07  hof: tattoo_state
  * version 1.1.16a; 2000/02/04  hof: path lockedstaus, tattoo set procedures
  * version 1.1.15b; 2000/01/28  hof: parasites part2
  * version 1.1.15;  2000/01/20  hof: parasites
@@ -72,6 +73,7 @@ gint32   p_gimp_path_get_tattoo(gint32 image_id, gchar *name);
 gint     p_gimp_path_set_tattoo(gint32 image_id, gchar *name, gint32 tattoovalue);
 gint     p_gimp_layer_set_tattoo(gint32 layer_id, gint32 tattoovalue);
 gint     p_gimp_channel_set_tattoo(gint32 channel_id, gint32 tattoovalue);
-
+gint     p_gimp_image_set_tattoo_state(gint32 image_id, gint32 tattoo_state);
+gint32   p_gimp_image_get_tattoo_state(gint32 image_id);
 
 #endif

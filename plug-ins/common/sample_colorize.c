@@ -299,7 +299,7 @@ query (void)
 
   INIT_I18N();
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Colorize the contents of the specified drawable similar to sample drawable"),
+			  "Colorize the contents of the specified drawable similar to sample drawable",
 			  help_string,
 			  "Wolfgang Hofer",
 			  "hof@hotbot.com",

@@ -84,8 +84,7 @@ static gint render_blast_row (guchar *buffer, gint bytes, gint lpi,
 static void render_wind_row  (guchar *sb, gint bytes, gint lpi, gint threshold,
 			      gint strength, edge_t edge);
 
-static void msg_ok_callback                 (GtkWidget *widget, gpointer data);
-static void ok_callback                     (GtkWidget *widget, gpointer data);
+static void ok_callback      (GtkWidget *widget, gpointer data);
 
 static void get_derivative     (guchar *pixel_R1, guchar *pixel_R2,
 				edge_t edge, gint *derivative_R,
@@ -93,8 +92,6 @@ static void get_derivative     (guchar *pixel_R1, guchar *pixel_R2,
 static gint threshold_exceeded (guchar *pixel_R1, guchar *pixel_R2,
 				edge_t edge, gint threshold);
 static void reverse_buffer     (guchar *buffer, gint length, gint bytes);
-
-static void modal_message_box (gchar *text);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -680,50 +677,14 @@ reverse_buffer (guchar *buffer,
  ***************************************************/
 
 static void
-msg_ok_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  gtk_grab_remove (GTK_WIDGET (data));
-  gtk_widget_destroy (GTK_WIDGET (data));
-
-  return;
-}
-
-static void
-modal_message_box (gchar *text)
-{
-  GtkWidget *message_box;
-  GtkWidget *label;
-
-  message_box = gimp_dialog_new ( _("Wind"), "wind",
-				 gimp_plugin_help_func, "filters/wind.html",
-				 GTK_WIN_POS_MOUSE,
-				 FALSE, TRUE, FALSE,
-
-				 _("OK"), msg_ok_callback,
-				 NULL, NULL, NULL, TRUE, TRUE,
-
-				 NULL);
-
-  label = gtk_label_new (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (message_box)->vbox), label,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (label);
-
-  gtk_grab_add (message_box);
-  gtk_widget_show (message_box);
-}
-
-static void
 ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
   /* we have to stop the dialog from being closed with strength < 1 */
-
+  /* since we use spinbuttons this should never happen ...          */
   if (config.strength < 1)
     {
-      modal_message_box ( _("\n   Wind Strength must be greater than 0.   \n"));
+      g_message (_("Wind Strength must be greater than 0."));
     }
   else
     {

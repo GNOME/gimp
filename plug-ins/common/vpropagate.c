@@ -210,8 +210,8 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Propagate values of the layer"),
-			  _("Propagate values of the layer"),
+			  "Propagate values of the layer",
+			  "Propagate values of the layer",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
@@ -362,7 +362,7 @@ value_propagate_body (gint drawable_id)
 
   best = (guchar *) malloc (bytes);
 
-  gimp_progress_init ( _("value propagating..."));
+  gimp_progress_init ( _("Value propagating..."));
   gimp_palette_get_foreground (fore+0, fore+1, fore+2);
 
   /* start real job */

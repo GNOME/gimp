@@ -132,14 +132,14 @@ static void query (void)
 
   /* the actual installation of the plugin */
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Creates a screenshot of a single window or the whole screen"),
-			  _("This extension serves as a simple frontend to the X-window "
-			    "utility xwd and the xwd-file-plug-in. After specifying some " 
-			    "options, xwd is called, the user selects a window, and the "
-			    "resulting image is loaded into the gimp. Alternatively the "
-			    "whole screen can be grabbed. When called non-interactively "
-			    "it may grab the root window or use the window-id passed as "
-			    "a parameter."),
+			  "Creates a screenshot of a single window or the whole screen",
+			  "This extension serves as a simple frontend to the X-window "
+			  "utility xwd and the xwd-file-plug-in. After specifying some " 
+			  "options, xwd is called, the user selects a window, and the "
+			  "resulting image is loaded into the gimp. Alternatively the "
+			  "whole screen can be grabbed. When called non-interactively "
+			  "it may grab the root window or use the window-id passed as "
+			  "a parameter.",
 			  "Sven Neumann <sven@gimp.org>",
 			  "1998, 1999",
 			  "v0.9.4 (99/12/28)",

@@ -440,7 +440,7 @@ query ()
 
 
   gimp_install_procedure(PLUGIN_NAME,
-			 _("GAP video navigator dialog"),
+			 "GAP video navigator dialog",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",

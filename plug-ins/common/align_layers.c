@@ -146,8 +146,8 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Align visible layers"),
-			  _("Align visible layers"),
+			  "Align visible layers",
+			  "Align visible layers",
 			  "Shuji Narazaki <narazaki@InetQ.or.jp>",
 			  "Shuji Narazaki",
 			  "1997",

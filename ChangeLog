@@ -1,3 +1,26 @@
+Wed Mar  8 14:50:57 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/wmf.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gimpressionist/gimp.c: dont mark PDB help strings for
+	translation, various other small fixes
+
+	* plug-ins/xjt/xjt.c
+	* plug-ins/xjt/xpdb_calls.c
+	* plug-ins/xjt/xpdb_calls.h: 
+	applied patch provided by Wolfgang Hofer <hof@hotbot.com> 
+
 Wed Mar  8 12:40:53 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/xbm.c: Type of written array should

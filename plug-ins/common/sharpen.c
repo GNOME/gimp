@@ -160,8 +160,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Sharpen filter, typically used to \'sharpen\' a photographic image."),
-			  _("This plug-in selectively performs a convolution filter on an image."),
+			  "Sharpen filter, typically used to \'sharpen\' a photographic image.",
+			  "This plug-in selectively performs a convolution filter on an image.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
