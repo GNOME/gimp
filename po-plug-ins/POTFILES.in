@@ -241,8 +241,8 @@ plug-ins/imagemap/imap_stock.c
 plug-ins/imagemap/imap_toolbar.c
 plug-ins/imagemap/imap_tools.c
 plug-ins/jpeg/jpeg.c
-plug-ins/jpeg/jpeg_load.c
-plug-ins/jpeg/jpeg_save.c
+plug-ins/jpeg/jpeg-load.c
+plug-ins/jpeg/jpeg-save.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h

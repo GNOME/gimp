@@ -32,11 +32,11 @@ EXTRA_PROGRAMS = jpeg
 
 jpeg_SOURCES = \
 	jpeg.c      \
-	jpeg_load.c \
-	jpeg_save.c \
+	jpeg-load.c \
+	jpeg-save.c \
 	jpeg.h      \
-	jpeg_save.h \
-	jpeg_load.h 
+	jpeg-save.h \
+	jpeg-load.h 
 
 jpeg_LDADD = \
 	$(libgimpui)		\

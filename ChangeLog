@@ -1,3 +1,19 @@
+2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/jpeg/jpeg_load.c
+	* plug-ins/jpeg/jpeg_load.h
+	* plug-ins/jpeg/jpeg_save.c
+	* plug-ins/jpeg/jpeg_save.h: removed
+	
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-load.h
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg-save.h: added (changing _ to -)
+
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/jpeg/jpeg.c
+	* po-plug-ins/POTFILES.in: changed accordingly
+
 2005-01-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sparkle.c: applied patch from Shlomi Fish that
