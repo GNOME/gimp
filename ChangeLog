@@ -1,3 +1,17 @@
+Thu Apr  8 07:12:10 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/crop.[ch]: Ok, this is a little bit more than what we 
+	discussed on the list: Basically, it allows to use the crop 
+	tool as usual or as a resize-tool for layers and the image.
+	
+	The defaults are the new behaviour. Holding the <Alt>-Key
+	when creating the selection toggles the "Allow-expand" mode,
+	holding the <Shift>-key when cropping, gives you the opposite
+	of your default setting for "Crop layers".
+
+	The button for "Selection" is gone, but will reappear somewhere
+	else soon. But first, I need some sleep...
+	
 Wed Apr  7 23:53:22 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

@@ -63,6 +63,7 @@ struct _crop
 #define RESIZING_LEFT   2
 #define RESIZING_RIGHT  3
 #define CROPPING        4
+#define REFRAMING       5
 
 /* speed of key movement */
 #define ARROW_VELOCITY 25
@@ -84,7 +85,7 @@ static void crop_arrow_keys_func    (Tool *, GdkEventKey *, gpointer);
 
 
 /*  Crop helper functions   */
-static void crop_image              (GImage *gimage, int, int, int, int);
+static void crop_image              (GImage *gimage, int, int, int, int, int, int);
 static void crop_recalc             (Tool *, Crop *);
 static void crop_start              (Tool *, Crop *);
 static void crop_adjust_guides      (GImage *, int, int, int, int);
@@ -93,6 +94,7 @@ static void crop_adjust_guides      (GImage *, int, int, int, int);
 static void crop_info_update        (Tool *);
 static void crop_info_create        (Tool *);
 static void crop_ok_callback        (GtkWidget *, gpointer);
+static void crop_resize_callback    (GtkWidget *, gpointer);
 static void crop_selection_callback (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
@@ -117,6 +119,12 @@ init_crop_options()
   GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *checkbutton;
+  GtkWidget *defaults_frame;
+  GtkWidget *defaults_box;
+
+  options.layer_only         = FALSE;
+  options.default_to_enlarge = TRUE;
+  options.default_to_crop    = FALSE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -137,6 +145,38 @@ init_crop_options()
 			       options.layer_only);
   gtk_widget_show(checkbutton);
 
+  /* defaults */
+  defaults_frame = gtk_frame_new (_("Defaults"));
+  gtk_box_pack_start (GTK_BOX (vbox), defaults_frame, FALSE, FALSE, 0);
+
+  defaults_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (defaults_frame), defaults_box);
+  
+  /* enlarge toggle */
+  checkbutton = gtk_check_button_new_with_label(_("Allow Enlarging"));
+  gtk_box_pack_start(GTK_BOX(defaults_box), checkbutton,
+		     FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(checkbutton), "toggled",
+		     (GtkSignalFunc) crop_checkbutton_update,
+		     &options.default_to_enlarge);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbutton),
+			       options.default_to_enlarge);
+  gtk_widget_show(checkbutton);
+
+  /* crop toggle */
+  checkbutton = gtk_check_button_new_with_label(_("Crop Layers"));
+  gtk_box_pack_start(GTK_BOX(defaults_box), checkbutton,
+		     FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(checkbutton), "toggled",
+		     (GtkSignalFunc) crop_checkbutton_update,
+		     &options.default_to_crop);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbutton),
+			       options.default_to_crop);
+  gtk_widget_show(checkbutton);
+
+   gtk_widget_show (defaults_box);
+   gtk_widget_show (defaults_frame);
+
   /* Register this selection options widget with the main tools
    * options dialog */
 
@@ -156,7 +196,6 @@ crop_checkbutton_update (GtkWidget *w,
   else
     *toggle_val = FALSE;
 }
-
 
 static void
 crop_button_press (Tool           *tool,
@@ -192,11 +231,25 @@ crop_button_press (Tool           *tool,
 		 bevent->y == BOUNDS (bevent->y, crop->y1, crop->y1 + crop->srh)))
 	crop->function = MOVING;
 
-      /*  If the pointer is in the rectangular region, crop it!  */
+      /*  If the pointer is in the rectangular region, crop or resize it!  */
       else if (bevent->x > crop->x1 && bevent->x < crop->x2 &&
 	       bevent->y > crop->y1 && bevent->y < crop->y2)
-	crop->function = CROPPING;
-
+	{
+	    if ( options.default_to_crop )
+	      {
+		if ( bevent->state & GDK_SHIFT_MASK )
+		  crop->function = REFRAMING;
+		else
+		  crop->function = CROPPING;
+	      }
+	    else
+	      {
+		if ( bevent->state & GDK_SHIFT_MASK )
+		  crop->function = CROPPING;
+		else
+		  crop->function = REFRAMING;
+	      }
+	  }
       /*  otherwise, the new function will be creating, since we want to start anew  */
       else
 	crop->function = CREATING;
@@ -247,10 +300,17 @@ crop_button_release (Tool           *tool,
 
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      if (crop->function == CROPPING) 
-	crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2);
-      else
+      switch (crop->function)
 	{
+	case CROPPING:
+	  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
+		      options.layer_only, TRUE);
+	  break;
+	case REFRAMING:
+	  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
+		      options.layer_only, FALSE);
+	  break;
+	default: 
 	  crop_info_update (tool);
 	  return;
 	}
@@ -316,17 +376,19 @@ crop_motion (Tool           *tool,
 {
   Crop * crop;
   GDisplay * gdisp;
+  Layer * layer;
   int x1, y1, x2, y2;
   int curx, cury;
   int inc_x, inc_y;
   gchar size[STATUSBAR_SIZE];
-
+  int clamp;
+  int min_x, min_y, max_x, max_y; 
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
 
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
-  if (crop->function == CROPPING)
+  if (crop->function == CROPPING || crop->function == REFRAMING)
     return;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &curx, &cury, TRUE, FALSE);
@@ -344,18 +406,56 @@ crop_motion (Tool           *tool,
 
   draw_core_pause (crop->core, tool);
 
+  /* shall we clamp the coordinates to the image dimensions? */
+  if (options.default_to_enlarge)
+    {
+      if (mevent->state & GDK_MOD1_MASK)
+	clamp = TRUE;
+      else
+	clamp = FALSE;
+    }
+  else
+    {
+      if (mevent->state & GDK_MOD1_MASK)
+	clamp = FALSE;
+      else
+	clamp = TRUE;
+    }
+  
+  if (options.layer_only)
+    {
+      layer = (gdisp->gimage)->active_layer;
+      drawable_offsets (GIMP_DRAWABLE(layer), &min_x, &min_y);
+      max_x  = drawable_width (GIMP_DRAWABLE(layer)) + min_x;
+      max_y = drawable_height (GIMP_DRAWABLE(layer)) + min_y;
+    }
+  else
+    {
+      min_x = min_y = 0;
+      max_x = gdisp->gimage->width;
+      max_y = gdisp->gimage->height;
+    }
+
   switch (crop->function)
     {
     case CREATING :
-      x1 = BOUNDS (x1, 0, gdisp->gimage->width);
-      y1 = BOUNDS (y1, 0, gdisp->gimage->height);
-      x2 = BOUNDS (x2, 0, gdisp->gimage->width);
-      y2 = BOUNDS (y2, 0, gdisp->gimage->height);
+      if (clamp)
+	{
+	  x1 = BOUNDS (x1, min_x, max_x);
+	  y1 = BOUNDS (y1, min_y, max_y);
+	  x2 = BOUNDS (x2, min_x, max_x);
+	  y2 = BOUNDS (y2, min_y, max_y);
+	}
       break;
 
     case RESIZING_LEFT :
-      x1 = BOUNDS (crop->tx1 + inc_x, 0, gdisp->gimage->width);
-      y1 = BOUNDS (crop->ty1 + inc_y, 0, gdisp->gimage->height);
+      x1 = crop->tx1 + inc_x;
+      y1 = crop->ty1 + inc_y;
+      if (clamp)
+	{
+	  x1 = BOUNDS (x1, min_x, max_x);
+	  y1 = BOUNDS (y1, min_y, max_y);
+	}
       x2 = MAXIMUM (x1, crop->tx2);
       y2 = MAXIMUM (y1, crop->ty2);
       crop->startx = curx;
@@ -363,8 +463,13 @@ crop_motion (Tool           *tool,
       break;
 
     case RESIZING_RIGHT :
-      x2 = BOUNDS (crop->tx2 + inc_x, 0, gdisp->gimage->width);
-      y2 = BOUNDS (crop->ty2 + inc_y, 0, gdisp->gimage->height);
+      x2 = crop->tx2 + inc_x;
+      y2 = crop->ty2 + inc_y;
+      if (clamp)
+	{
+	  x2 = BOUNDS (x2, min_x, max_x);
+	  y2 = BOUNDS (y2, min_y, max_y);
+	}
       x1 = MINIMUM (crop->tx1, x2);
       y1 = MINIMUM (crop->ty1, y2);
       crop->startx = curx;
@@ -372,8 +477,11 @@ crop_motion (Tool           *tool,
       break;
 
     case MOVING :
-      inc_x = BOUNDS (inc_x, -crop->tx1, gdisp->gimage->width - crop->tx2);
-      inc_y = BOUNDS (inc_y, -crop->ty1, gdisp->gimage->height - crop->ty2);
+      if (clamp)
+	{
+	  inc_x = BOUNDS (inc_x, min_x - crop->tx1, max_x - crop->tx2);
+	  inc_y = BOUNDS (inc_y, min_y - crop->ty1, max_y - crop->ty2);
+	}
       x1 = crop->tx1 + inc_x;
       x2 = crop->tx2 + inc_x;
       y1 = crop->ty1 + inc_y;
@@ -456,7 +564,22 @@ crop_cursor_update (Tool           *tool,
     ctype = GDK_FLEUR;
   else if (mevent->x > crop->x1 && mevent->x < crop->x2 &&
 	   mevent->y > crop->y1 && mevent->y < crop->y2)
-    ctype = GDK_ICON;
+    {
+      if ( options.default_to_crop )
+	{
+	  if ( mevent->state & GDK_SHIFT_MASK )
+	    ctype = GDK_SIZING;
+	  else
+	    ctype = GDK_ICON;
+	} 
+      else 
+	{
+	  if ( mevent->state & GDK_SHIFT_MASK )
+	    ctype = GDK_ICON;
+	  else
+	    ctype = GDK_SIZING;
+	} 
+    }
   else
     ctype = GDK_CROSS;
 
@@ -470,7 +593,10 @@ crop_arrow_keys_func (Tool        *tool,
 {
   int inc_x, inc_y;
   GDisplay * gdisp;
+  Layer * layer;
   Crop * crop;
+  int clamp;
+  int min_x, min_y, max_x, max_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -496,17 +622,55 @@ crop_arrow_keys_func (Tool        *tool,
 
       draw_core_pause (crop->core, tool);
 
+      /* shall we clamp the coordinates to the image dimensions? */
+      if (options.default_to_enlarge)
+	{
+	  if (kevent->state & GDK_MOD1_MASK)
+	    clamp = TRUE;
+	  else
+	    clamp = FALSE;
+	}
+      else
+	{
+	  if (kevent->state & GDK_MOD1_MASK)
+	    clamp = FALSE;
+	  else
+	    clamp = TRUE;
+	}
+
+      if (options.layer_only)
+	{
+	  layer = (gdisp->gimage)->active_layer;
+	  drawable_offsets (GIMP_DRAWABLE(layer), &min_x, &min_y);
+	  max_x  = drawable_width (GIMP_DRAWABLE(layer)) + min_x;
+	  max_y = drawable_height (GIMP_DRAWABLE(layer)) + min_y;
+	}
+      else
+	{
+	  min_x = min_y = 0;
+	  max_x = gdisp->gimage->width;
+	  max_y = gdisp->gimage->height;
+	}
+
       if (kevent->state & GDK_CONTROL_MASK)  /* RESIZING */
 	{
-	  crop->tx2 = BOUNDS (crop->tx2 + inc_x, 0, gdisp->gimage->width);
-	  crop->ty2 = BOUNDS (crop->ty2 + inc_y, 0, gdisp->gimage->height);
+	  crop->tx2 = crop->tx2 + inc_x;
+	  crop->ty2 = crop->ty2 + inc_y;
+	  if (clamp)
+	    {
+	      crop->tx2 = BOUNDS (crop->tx2, min_x, max_x);
+	      crop->ty2 = BOUNDS (crop->ty2, min_y, max_y);
+	    }
 	  crop->tx1 = MINIMUM (crop->tx1, crop->tx2);
 	  crop->ty1 = MINIMUM (crop->ty1, crop->ty2);
 	}
       else
 	{
-	  inc_x = BOUNDS (inc_x, -crop->tx1, gdisp->gimage->width - crop->tx2);
-	  inc_y = BOUNDS (inc_y, -crop->ty1, gdisp->gimage->height - crop->ty2);
+	  if (clamp)
+	    {	  
+	      inc_x = BOUNDS (inc_x, -crop->tx1, gdisp->gimage->width - crop->tx2);
+	      inc_y = BOUNDS (inc_y, -crop->ty1, gdisp->gimage->height - crop->ty2);
+	    }
 	  crop->tx1 += inc_x;
 	  crop->tx2 += inc_x;
 	  crop->ty1 += inc_y;
@@ -638,7 +802,9 @@ crop_image (GImage *gimage,
 	    int     x1,
 	    int     y1,
 	    int     x2,
-	    int     y2)
+	    int     y2,
+	    int     layer_only,
+	    int     crop_layers)
 {
   Layer *layer;
   Layer *floating_layer;
@@ -659,7 +825,7 @@ crop_image (GImage *gimage,
   {
     gimp_add_busy_cursors();
 
-    if (options.layer_only)
+    if (layer_only)
     {
       undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
@@ -718,23 +884,26 @@ crop_image (GImage *gimage,
 
 	layer_translate (layer, -x1, -y1);
 
-	drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	if (crop_layers)
+	  {
+	    drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-	lx1 = BOUNDS (off_x, 0, gimage->width);
-	ly1 = BOUNDS (off_y, 0, gimage->height);
-	lx2 = BOUNDS ((drawable_width (GIMP_DRAWABLE (layer)) + off_x), 0, gimage->width);
-	ly2 = BOUNDS ((drawable_height (GIMP_DRAWABLE (layer)) + off_y), 0, gimage->height);
-	width = lx2 - lx1;
-	height = ly2 - ly1;
+	    lx1 = BOUNDS (off_x, 0, gimage->width);
+	    ly1 = BOUNDS (off_y, 0, gimage->height);
+	    lx2 = BOUNDS ((drawable_width (GIMP_DRAWABLE (layer)) + off_x), 0, gimage->width);
+	    ly2 = BOUNDS ((drawable_height (GIMP_DRAWABLE (layer)) + off_y), 0, gimage->height);
+	    width = lx2 - lx1;
+	    height = ly2 - ly1;
+	    
+	    if (width && height)
+	      layer_resize (layer, width, height,
+			    -(lx1 - off_x),
+			    -(ly1 - off_y));
+	    else
+	      gimage_remove_layer (gimage, layer);
+	  }
 
 	list = g_slist_next (list);
-
-	if (width && height)
-	  layer_resize (layer, width, height,
-			-(lx1 - off_x),
-			-(ly1 - off_y));
-	else
-	  gimage_remove_layer (gimage, layer);
       }
 
       /*  Make sure the projection matches the gimage size  */
@@ -839,10 +1008,11 @@ crop_start (Tool *tool,
 /*  Crop dialog functions                              */
 /*******************************************************/
 
-static ActionAreaItem action_items[3] =
+static ActionAreaItem action_items[4] =
 {
   { N_("Crop"), crop_ok_callback, NULL, NULL },
-  { N_("Selection"), crop_selection_callback, NULL, NULL },
+  { N_("Resize"), crop_resize_callback, NULL, NULL },
+  /*  { N_("Selection"), crop_selection_callback, NULL, NULL },  */
   { N_("Close"), crop_close_callback, NULL, NULL },
 };
 
@@ -949,7 +1119,28 @@ crop_ok_callback (GtkWidget *w,
   tool = active_tool;
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
-  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2);
+  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2,
+	      options.layer_only, TRUE);
+
+  /*  Finish the tool  */
+  draw_core_stop (crop->core, tool);
+  info_dialog_popdown (crop_info);
+  tool->state = INACTIVE;
+}
+
+static void
+crop_resize_callback (GtkWidget *w,
+		      gpointer   client_data)
+{
+  Tool * tool;
+  Crop * crop;
+  GDisplay * gdisp;
+
+  tool = active_tool;
+  crop = (Crop *) tool->private;
+  gdisp = (GDisplay *) tool->gdisp_ptr;
+  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
+	      options.layer_only, FALSE);
 
   /*  Finish the tool  */
   draw_core_stop (crop->core, tool);
@@ -1113,12 +1304,15 @@ crop_invoker (Argument *args)
   int int_value;
   int new_width, new_height;
   int offx, offy;
+  int layer_only, crop_layers ;
 
-  new_width  = 1;
-  new_height = 1;
-  offx       = 0;
-  offy       = 0;
-
+  new_width    = 1;
+  new_height   = 1;
+  offx         = 0;
+  offy         = 0;
+  layer_only   = FALSE;
+  crop_layers  = TRUE;
+  
   success = TRUE;
   if (success)
     {
@@ -1147,7 +1341,8 @@ crop_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    crop_image (gimage, offx, offy, offx + new_width, offy + new_height);
+    crop_image (gimage, offx, offy, offx + new_width, offy + new_height, 
+		layer_only, crop_layers);
 
   return procedural_db_return_args (&crop_proc, success);
 }

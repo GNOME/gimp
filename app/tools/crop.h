@@ -29,6 +29,8 @@ void          tools_free_crop   (Tool *);
 /*   tool options  */
 typedef struct {
   int layer_only;
+  int default_to_enlarge;
+  int default_to_crop;
 } CropToolOptions;
 
 
@@ -36,3 +38,5 @@ typedef struct {
 extern ProcRecord crop_proc;
 
 #endif  /*  __CROP_H__  */
+
+
