@@ -389,9 +389,6 @@ gimp_module_set_load_inhibit (GimpModule *module,
     }
 }
 
-
-/*  private functions  */
-
 /**
  * gimp_module_state_name:
  * @state: A #GimpModuleState.
@@ -417,6 +414,9 @@ gimp_module_state_name (GimpModuleState state)
 
   return gettext (statenames[state]);
 }
+
+
+/*  private functions  */
 
 static gboolean
 gimp_module_open (GimpModule *module)
