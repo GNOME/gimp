@@ -929,21 +929,18 @@ iwarp_animate_dialog (GtkWidget *dlg,
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   button = gtk_check_button_new_with_mnemonic (_("A_nimate"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_animate);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &do_animate);
-
-  frame = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_object_set_data (G_OBJECT (button), "set_sensitive", frame);
-  gtk_widget_set_sensitive (frame, do_animate);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -951,6 +948,9 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
+
+  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
+  gtk_widget_set_sensitive (table, do_animate);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("Number of _Frames:"), SCALE_WIDTH, 0,
@@ -1097,15 +1097,10 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
-
   button = gtk_check_button_new_with_mnemonic (_("Adaptive S_upersample"));
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				iwarp_vals.do_supersample);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "toggled",
@@ -1113,9 +1108,10 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.do_supersample);
 
   table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   g_object_set_data (G_OBJECT (button), "set_sensitive", table);
