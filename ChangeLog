@@ -1,5 +1,12 @@
 2001-01-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpbrushlist.c
+	* app/gimpdrawable.c: forgot to remove #include "gimpsignal.h"
+
+	* app/gimpobject.[ch]: added a "name" argument (not used yet).
+
+2001-01-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimpsignal.[ch]: removed.
 	* app/gimpmarshal.[ch]: added.

@@ -23,10 +23,11 @@
 #include <gtk/gtkobject.h>
 
 
-#define GIMP_TYPE_OBJECT         (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_IS_OBJECT(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
+#define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
+#define GIMP_OBJECT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
+#define GIMP_OBJECT_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
+#define GIMP_IS_OBJECT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OBJECT))
+#define GIMP_IS_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
 
 
 typedef struct _GimpObjectClass GimpObjectClass;
@@ -34,15 +35,24 @@ typedef struct _GimpObjectClass GimpObjectClass;
 struct _GimpObject
 {
   GtkObject object;
+
+  gchar *name;
 };
 
 struct _GimpObjectClass
 {
   GtkObjectClass parent_class;
+
+  void (* name_changed) (GimpObject *object);
 };
 
 
-GtkType   gimp_object_get_type (void);
+GtkType       gimp_object_get_type     (void);
+
+void          gimp_object_set_name     (GimpObject       *object,
+					const gchar      *name);
+const gchar * gimp_object_get_name     (const GimpObject *object);
+void          gimp_object_name_changed (GimpObject       *object);
 
 
 #endif  /* __GIMP_OBJECT_H__ */

@@ -30,7 +30,6 @@
 #include "gimpdrawable.h"
 #include "layer.h"
 #include "gimppreviewcache.h"
-#include "gimpsignal.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimpparasite.h"

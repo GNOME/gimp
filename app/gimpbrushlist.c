@@ -43,7 +43,6 @@
 #include "datafiles.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "gimpsignal.h"
 #include "gimplist.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
