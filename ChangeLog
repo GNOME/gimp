@@ -1,3 +1,8 @@
+2002-05-14  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/plasma.c: Added fixes for bugs #81730 and 
+	#81732 from the 1.2 branch.
+
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am
