@@ -972,6 +972,12 @@ render_frame (gint32 whichframe)
     }
 
   drawable = gimp_drawable_get (layers[total_frames-(whichframe+1)]);
+  /* Lame attempt to catch the case that a user has closed the image. */
+  if (! (drawable->width > 0 && drawable->height > 0))
+    {
+      gtk_main_quit ();
+      return;
+    }
 
   dispose = get_frame_disposal(frame_number);
 

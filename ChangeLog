@@ -1,5 +1,12 @@
 2000-08-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: check if drawable returned
+	by gimp_drawable_get() is valid. In a lot of cases this prevents
+	the plug-in from crashing if the user closes the associated 
+	image (as described in bug report #20979).
+
+2000-08-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gdyntext/README
 	* plug-ins/gdyntext/gdyntext.[ch]: updated to version 1.5.2
 
