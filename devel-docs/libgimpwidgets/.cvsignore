@@ -2,6 +2,8 @@ Makefile
 Makefile.in
 libgimpwidgets.args
 libgimpwidgets.hierarchy
+libgimpwidgets.interfaces
+libgimpwidgets.prerequisites
 libgimpwidgets.signals
 libgimpwidgets-decl.txt
 libgimpwidgets-decl-list.txt

@@ -82,6 +82,7 @@ GIMP_FILE_SELECTION_GET_CLASS
 GimpPathEditor
 gimp_path_editor_new
 gimp_path_editor_get_path
+gimp_path_editor_set_path
 <SUBSECTION Standard>
 GIMP_PATH_EDITOR
 GIMP_IS_PATH_EDITOR
