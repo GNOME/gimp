@@ -1,4 +1,5 @@
 # translation of es.po to 
+# translation of es.po to
 # traducción de es.po al Spanish
 # translation of es.po to Spanish
 # Spanish translation file for Gimp 2.x.
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-07 00:49+0100\n"
-"PO-Revision-Date: 2004-11-07 01:03+0100\n"
+"PO-Revision-Date: 2004-11-07 01:09+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,10 +38,10 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"El GIMP no se encuentra instalado correctamente para el usuario actual.\n"
+"El Gimp no se encuentra instalado correctamente para el usuario actual.\n"
 "La instalación del usuario fue saltada debido a que se utilizó el \n"
 "modificador «-- no interface».\n"
-"Para realizar la instalación de usuario ejecute El GIMP sin el modificador\n"
+"Para realizar la instalación de usuario ejecute El Gimp sin el modificador\n"
 "«--no-interface»."
 
 #: app/app_procs.c:289
@@ -71,13 +72,13 @@ msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"El GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
+"El Gimp no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
 #: app/main.c:222 app/widgets/gimptoolbox.c:553
 #: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
-msgstr "El GIMP"
+msgstr "El Gimp"
 
 #.
 #. *  anything else starting with a '-' is an error.
@@ -93,7 +94,7 @@ msgstr ""
 
 #: app/main.c:501
 msgid "GIMP version"
-msgstr "Versión de El GIMP"
+msgstr "Versión de El Gimp"
 
 #: app/main.c:509
 #, c-format
@@ -127,7 +128,7 @@ msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 No compartir la memoria entre El GIMP y las "
+"  --no-shm                 No compartir la memoria entre El Gimp y las "
 "complementos.\n"
 
 #: app/main.c:516
@@ -3426,11 +3427,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:33
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Establece el formato de píxel de los cursores que El GIMP usará."
+msgstr "Establece el formato de píxel de los cursores que El Gimp usará."
 
 #: app/config/gimprc-blurbs.h:36
 msgid "Sets the mode of cursor the GIMP will use."
-msgstr "Definir el modo del cursor que utilizará El GIMP."
+msgstr "Definir el modo del cursor que utilizará El Gimp."
 
 #: app/config/gimprc-blurbs.h:39
 msgid ""
@@ -3513,7 +3514,7 @@ msgstr "Establece el texto que aparecerá en los títulos de las ventanas de im�
 #: app/config/gimprc-blurbs.h:160
 msgid "When enabled, the GIMP will use a different info window per image view."
 msgstr ""
-"Cuando se encuentre activado El GIMP utilizará una ventana de información "
+"Cuando se encuentre activado El Gimp utilizará una ventana de información "
 "diferente por cada vista de imagen."
 
 #: app/config/gimprc-blurbs.h:163
@@ -3555,12 +3556,12 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"El GIMP advertirá al usuario si realiza un intento de crear una imagen que "
+"El Gimp advertirá al usuario si realiza un intento de crear una imagen que "
 "podría requerir más memoria que el tamaño especificado aquí."
 
 #: app/config/gimprc-blurbs.h:185
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "Cuando se encuentre activado El GIMP mostrará mnemónicos en los menús."
+msgstr "Cuando se encuentre activado El Gimp mostrará mnemónicos en los menús."
 
 #: app/config/gimprc-blurbs.h:188
 msgid ""
@@ -3568,7 +3569,7 @@ msgid ""
 "system colors allocated for the GIMP."
 msgstr ""
 "Generalmente sólo es importante para pantallas de 8 bits, esto define la "
-"cantidad mínima de colores del sistema reservados para El GIMP."
+"cantidad mínima de colores del sistema reservados para El Gimp."
 
 #: app/config/gimprc-blurbs.h:199
 msgid ""
@@ -3610,8 +3611,8 @@ msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
-"En las máquinas con múltiples procesadores, si El GIMP ha sido compilado con "
-"«--enable-mp» esto define cuántos procesadores debería utilizar El GIMP "
+"En las máquinas con múltiples procesadores, si El Gimp ha sido compilado con "
+"«--enable-mp» esto define cuántos procesadores debería utilizar El Gimp "
 "simultáneamente."
 
 #: app/config/gimprc-blurbs.h:232
@@ -3634,7 +3635,7 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
-"Establece si El GIMP debería crear vistas previas de las capas y los "
+"Establece si El Gimp debería crear vistas previas de las capas y los "
 "canales. Es estupendo disponer de las vistas previas en el diálogo de capas "
 "y canales, pero pueden ralentizar el trabajo con imágenes grandes."
 
@@ -3667,14 +3668,14 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
-"Permitir a El GIMP intentar restaurar la última sesión guardada durante cada "
+"Permitir a El Gimp intentar restaurar la última sesión guardada durante cada "
 "inicio."
 
 #: app/config/gimprc-blurbs.h:265
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y las brochas actuales entre "
-"distintas sesiones de El GIMP."
+"distintas sesiones de El Gimp."
 
 #: app/config/gimprc-blurbs.h:269
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -3778,7 +3779,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:320
 msgid "Enable to display a handy GIMP tip on startup."
-msgstr "Activa la visualización de un útil consejo de El GIMP al iniciar."
+msgstr "Activa la visualización de un útil consejo de El Gimp al iniciar."
 
 #: app/config/gimprc-blurbs.h:323
 msgid "Enable to display tooltips."
@@ -3791,7 +3792,7 @@ msgid ""
 "to enable this setting."
 msgstr ""
 "Siempre hay un balance entre uso de memoria y velocidad. En la mayoría de "
-"los casos, El GIMP opta por la velocidad por encima de la memoria. Sin "
+"los casos, El Gimp opta por la velocidad por encima de la memoria. Sin "
 "embargo, si la memoria es un gran problema intente activar esta opción."
 
 #: app/config/gimprc-blurbs.h:331
@@ -3803,11 +3804,11 @@ msgid ""
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Establece la localización del archivo de intercambio. El GIMP utiliza un "
+"Establece la localización del archivo de intercambio. El Gimp utiliza un "
 "esquema de reserva de memoria basado en mosaicos. El archivo de intercambio "
 "se utiliza para intercambiar mosaicos rápida y fácilmente hacia y desde el "
 "disco. Tenga en cuenta que el archivo de intercambio puede volverse muy "
-"grande fácilmente si El GIMP es utilizado con imágenes grandes. También, las "
+"grande fácilmente si El Gimp es utilizado con imágenes grandes. También, las "
 "cosas puede ponerse horriblemente lentas si el archivo de intercambio es "
 "creado en un directorio que está montado sobre NFS. Por estas razones quizá "
 "sea conveniente colocar su archivo de intercambio en «/tmp»."
@@ -3827,11 +3828,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:347
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr "Guardar las combinaciones de teclas modificadas al salir de El GIMP."
+msgstr "Guardar las combinaciones de teclas modificadas al salir de El Gimp."
 
 #: app/config/gimprc-blurbs.h:350
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
+msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de El Gimp."
 
 # "si es", no "si sea". FVD
 #: app/config/gimprc-blurbs.h:353
@@ -3842,8 +3843,8 @@ msgid ""
 "one that is shared by other users."
 msgstr ""
 "Establece el directorio de almacenamiento temporal. Los archivos aparecerán "
-"aquí durante el curso de ejecución de El GIMP. La mayoría de los archivos "
-"desaparecerán cuando se salga de El GIMP, pero algunos archivos podrían "
+"aquí durante el curso de ejecución de El Gimp. La mayoría de los archivos "
+"desaparecerán cuando se salga de El Gimp, pero algunos archivos podrían "
 "quedar, por lo tanto es mejor si este directorio no es uno que se comparte "
 "con otros usuarios."
 
@@ -3853,7 +3854,7 @@ msgid ""
 "not create thumbnails if layer previews are disabled."
 msgstr ""
 "Establece el tamaño de las miniaturas que se muestran en el diálogo Abrir. "
-"Tenga en cuenta que El GIMP no puede crear miniaturas si las vistas previas "
+"Tenga en cuenta que El Gimp no puede crear miniaturas si las vistas previas "
 "de capa están desactivadas."
 
 #: app/config/gimprc-blurbs.h:369
@@ -3873,11 +3874,11 @@ msgid ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
-"El cache de mosaico es utilizado para asegurarse de que El GIMP no "
+"El cache de mosaico es utilizado para asegurarse de que El Gimp no "
 "desperdicie mosaicos entre la memoria y el disco. Establecer este valor como "
-"alto hará que El GIMP utilice menos espacio de intercambio, pero también "
-"causa que El GIMP utilice más memoria. Normalmente, un tamaño de caché mas "
-"pequeño causa que El GIMP utilice más espacio de intercambio y menos memoria."
+"alto hará que El Gimp utilice menos espacio de intercambio, pero también "
+"causa que El Gimp utilice más memoria. Normalmente, un tamaño de caché mas "
+"pequeño causa que El Gimp utilice más espacio de intercambio y menos memoria."
 
 #: app/config/gimprc-blurbs.h:384
 msgid ""
@@ -3901,7 +3902,7 @@ msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr ""
-"Cuando se encuentre activado El GIMP no guardará la imagen si no fue "
+"Cuando se encuentre activado El Gimp no guardará la imagen si no fue "
 "modificada desde que se la abrió."
 
 #: app/config/gimprc-blurbs.h:398
@@ -3943,7 +3944,7 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Define el navegador externo a utilizar. Esto puede ser una ruta absoluta o "
+"Define el navegador externo que se usará. Esto puede ser una ruta absoluta o "
 "el nombre de un ejecutable que se encuentre en la ruta del usuario. Si el "
 "comando contiene «%s» será reemplazado con la URL, sino la URL será añadida "
 "al comando con un espacio separando a ambos."
@@ -4598,7 +4599,7 @@ msgstr "Frente a transparente"
 
 #: app/core/gimp-gui.c:148
 msgid "GIMP"
-msgstr "El GIMP"
+msgstr "El Gimp"
 
 #. register all internal procedures
 #: app/core/gimp.c:638
@@ -4672,21 +4673,21 @@ msgid ""
 msgstr ""
 "Error fatal de análisis en el archivo de broca «%s»: Profundidad de brocha "
 "no soportada %d\n"
-"Las brochas de El GIMP deben ser GRAY (GRISES) o RGBA."
+"Las brochas de El Gimp deben ser GRAY (GRISES) o RGBA."
 
 #: app/core/gimpbrushgenerated.c:614
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Error fatal de análisis: en el archivo de brocha «%s»: No es un archivo de "
-"brocha de de El GIMP."
+"brocha de de El Gimp."
 
 #: app/core/gimpbrushgenerated.c:630
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "Error fatal de análisis en el archivo de brocha «%s»: Versión de brocha de "
-"El GIMP desconocida."
+"El Gimp desconocida."
 
 #: app/core/gimpbrushgenerated.c:669
 #, c-format
@@ -4927,7 +4928,7 @@ msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
 "Error fatal de análisis: en el archivo de degradados «%s»: No es un archivo "
-"de degradados de El GIMP."
+"de degradados de El Gimp."
 
 #: app/core/gimpgradient-load.c:87
 #, c-format
@@ -5496,7 +5497,7 @@ msgid ""
 msgstr ""
 "Error de análisis fatal en el archivo de patrón «%s»: Profundidad del patrón "
 "no soportada %d.\n"
-"Los patrones de El GIMP deben ser GRAY o RGB."
+"Los patrones de El Gimp deben ser GRAY o RGB."
 
 #: app/core/gimppattern.c:393
 #, c-format
@@ -5647,7 +5648,7 @@ msgstr "Contribuciones"
 
 #: app/dialogs/about-dialog.c:153
 msgid "About The GIMP"
-msgstr "Acerca de El GIMP"
+msgstr "Acerca de El Gimp"
 
 #: app/dialogs/channel-options-dialog.c:138
 msgid "Channel Name:"
@@ -5696,7 +5697,7 @@ msgstr "No se puede convertir a una paleta con más de 256 colores."
 
 #: app/dialogs/dialogs-constructors.c:164 app/gui/gui.c:160
 msgid "GIMP Message"
-msgstr "Mensaje de El GIMP"
+msgstr "Mensaje de El Gimp"
 
 #: app/dialogs/dialogs.c:127
 msgid "Devices"
@@ -6232,7 +6233,7 @@ msgstr "Vista previa"
 
 #: app/dialogs/preferences-dialog.c:294
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Necesitará reiniciar El GIMP para que los siguientes cambios tengan efecto:"
+msgstr "Necesitará reiniciar El Gimp para que los siguientes cambios tengan efecto:"
 
 #: app/dialogs/preferences-dialog.c:497
 msgid "Configure Keyboard Shortcuts"
@@ -6413,7 +6414,7 @@ msgstr "Visor de ayuda"
 # feo, para mí. FVD
 #: app/dialogs/preferences-dialog.c:1517
 msgid "H_elp browser to use:"
-msgstr "_Visor de ayuda a usar:"
+msgstr "_Visor de ayuda:"
 
 #: app/dialogs/preferences-dialog.c:1522
 msgid "Web Browser"
@@ -6426,7 +6427,7 @@ msgstr "Seleccione el navegador"
 # feo, para mí. FVD
 #: app/dialogs/preferences-dialog.c:1529
 msgid "_Web browser to use:"
-msgstr "Navegador _web a utilizar:"
+msgstr "Navegador _web:"
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1554
@@ -6724,7 +6725,7 @@ msgstr "Tamaño máximo de la imagen _nueva:"
 
 #: app/dialogs/preferences-dialog.c:2170
 msgid "Number of _processors to use:"
-msgstr "Número de _procesadores a usar:"
+msgstr "Número de _procesadores:"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2175
@@ -6859,7 +6860,7 @@ msgstr "Seleccionar las carpetas de temas"
 
 #: app/dialogs/quit-dialog.c:84
 msgid "Quit The GIMP"
-msgstr "Salir de El GIMP"
+msgstr "Salir de El Gimp"
 
 #: app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
@@ -6943,15 +6944,15 @@ msgstr "Debería haber un archivo llamado «%s». Por favor compruebe su instala
 
 #: app/dialogs/tips-dialog.c:96
 msgid "<b>The GIMP tips file could not be parsed!</b>"
-msgstr "<b>¡El archivo de consejos de El GIMP no ha podido ser analizado!</b>"
+msgstr "<b>¡El archivo de consejos de El Gimp no ha podido ser analizado!</b>"
 
 #: app/dialogs/tips-dialog.c:129
 msgid "GIMP Tip of the Day"
-msgstr "Consejo del día de El GIMP"
+msgstr "Consejo del día de El Gimp"
 
 #: app/dialogs/tips-dialog.c:193
 msgid "Show tip next time GIMP starts"
-msgstr "Mostrar un consejo la próxima vez que inicie El GIMP"
+msgstr "Mostrar un consejo la próxima vez que inicie El Gimp"
 
 #: app/dialogs/tips-dialog.c:217
 msgid "_Previous tip"
@@ -6977,7 +6978,7 @@ msgid ""
 "ins and modules can also configured here."
 msgstr ""
 "«gimprc» se utiliza para almacenar las preferencias personales que afectan "
-"al comportamiento predeterminado de El GIMP. Las rutas de búsqueda para las "
+"al comportamiento predeterminado de El Gimp. Las rutas de búsqueda para las "
 "brochas, paletas, degradados, patrones, complementos y módulos también "
 "pueden configurarse aquí."
 
@@ -6986,7 +6987,7 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"El GIMP usa un archivo «gtkrc» adicional de modo que pueda ponerle un "
+"El Gimp usa un archivo «gtkrc» adicional de modo que pueda ponerle un "
 "aspecto diferente al resto de programas GTK."
 
 #: app/dialogs/user-install-dialog.c:147
@@ -6999,8 +7000,8 @@ msgstr ""
 "Los complementos y los añadidos son programas externos ejecutados por El "
 "GIMP que proporcionan funcionalidades adicionales. Estos programas se buscan "
 "en tiempo de ejecución, y se almacena la información acerca de su función y "
-"fechas de modificación en este archivo para conseguir un inicio de El GIMP "
-"más rápido. Este archivo sólo debe ser leído por El GIMP, y no debe ser "
+"fechas de modificación en este archivo para conseguir un inicio de El Gimp "
+"más rápido. Este archivo sólo debe ser leído por El Gimp, y no debe ser "
 "editado."
 
 #: app/dialogs/user-install-dialog.c:157
@@ -7013,7 +7014,7 @@ msgstr ""
 "Las combinaciones de teclas pueden ser redefinidas de forma dinámica en El "
 "GIMP. «menurc» es un volcado de su configuración para que pueda ser "
 "recordada en la próxima sesión. Puede editar este archivo si lo desea, pero "
-"es mucho más fácil definir las teclas desde El GIMP. Si borra este archivo "
+"es mucho más fácil definir las teclas desde El Gimp. Si borra este archivo "
 "se restaurarán las combinaciones de teclas predefinidas."
 
 #: app/dialogs/user-install-dialog.c:167
@@ -7023,7 +7024,7 @@ msgid ""
 "the saved position."
 msgstr ""
 "«sessionrc» se utiliza para almacenar qué ventanas de diálogo estaban "
-"abiertas la última vez que salió de El GIMP. Puede configurar El GIMP para "
+"abiertas la última vez que salió de El Gimp. Puede configurar El Gimp para "
 "reabrir esos diálogos en la posición guardada."
 
 #: app/dialogs/user-install-dialog.c:174
@@ -7044,7 +7045,7 @@ msgstr ""
 "«unitrc» se utiliza para almacenar su base de datos de unidades. Puede "
 "definir unidades adicionales y usarlas tal como usa las unidades "
 "predefinidas: pulgadas, milímetros, puntos y picas. Este archivo se "
-"sobreescribe cada vez que sale de El GIMP."
+"sobreescribe cada vez que sale de El Gimp."
 
 #: app/dialogs/user-install-dialog.c:189
 msgid ""
@@ -7053,7 +7054,7 @@ msgid ""
 "searching for brushes."
 msgstr ""
 "Esta carpeta se utiliza para almacenar las brochas definidas por el usuario. "
-"El GIMP revisa esta carpeta además de la instalación global de brochas de El "
+"El Gimp revisa esta carpeta además de la instalación global de brochas de El "
 "GIMP cuando está buscando brochas."
 
 #: app/dialogs/user-install-dialog.c:197
@@ -7064,10 +7065,10 @@ msgid ""
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
 "Esta carpeta se utiliza para almacenar las tipografías que desea que sean "
-"visibles sólo en El GIMP. El GIMP revisa esta carpeta además de la carpeta "
+"visibles sólo en El Gimp. El Gimp revisa esta carpeta además de la carpeta "
 "global del sistema de la instalación de tipografías cuando está buscando "
 "tipografías. Sólo utilice esta carpeta si realmente quiere tener tipografías "
-"exclusivas para El GIMP, de otro modo póngalas en su directorio de "
+"exclusivas para El Gimp, de otro modo póngalas en su directorio de "
 "tipografías global."
 
 #: app/dialogs/user-install-dialog.c:207
@@ -7077,8 +7078,8 @@ msgid ""
 "searching for gradients."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los degradados definidos por el "
-"usuario. El GIMP revisa esta carpeta junto con la instalación global de "
-"degradados de El GIMP cuando está buscando degradados."
+"usuario. El Gimp revisa esta carpeta junto con la instalación global de "
+"degradados de El Gimp cuando está buscando degradados."
 
 #: app/dialogs/user-install-dialog.c:214
 msgid ""
@@ -7087,7 +7088,7 @@ msgid ""
 "searching for palettes."
 msgstr ""
 "Esta carpeta se utiliza para almacenar las paletas definidas por el usuario. "
-"El GIMP revisa esta carpeta junto con la instalación global de paletas de El "
+"El Gimp revisa esta carpeta junto con la instalación global de paletas de El "
 "GIMP cuando está buscando paletas."
 
 #: app/dialogs/user-install-dialog.c:221
@@ -7097,8 +7098,8 @@ msgid ""
 "searching for patterns."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los patrones definidos por el "
-"usuario. El GIMP revisa esta carpeta junto con la instalación global de "
-"patrones de El GIMP cuando está buscando patrones."
+"usuario. El Gimp revisa esta carpeta junto con la instalación global de "
+"patrones de El Gimp cuando está buscando patrones."
 
 #: app/dialogs/user-install-dialog.c:228
 msgid ""
@@ -7107,8 +7108,8 @@ msgid ""
 "system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los complementos temporales o no "
-"soportadas por el sistema, creadas por el usuario. El GIMP revisa esta "
-"carpeta junto con la carpeta global de complementos de El GIMP cuando está "
+"soportadas por el sistema, creadas por el usuario. El Gimp revisa esta "
+"carpeta junto con la carpeta global de complementos de El Gimp cuando está "
 "buscando complementos."
 
 #: app/dialogs/user-install-dialog.c:236
@@ -7119,8 +7120,8 @@ msgid ""
 "initialization."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los módulos DLL temporales o no "
-"soportados por el sistema creados por el usuario. El GIMP revisa esta "
-"carpeta junto con la carpeta global de módulos de El GIMP cuando está "
+"soportados por el sistema creados por el usuario. El Gimp revisa esta "
+"carpeta junto con la carpeta global de módulos de El Gimp cuando está "
 "buscando los módulos que se cargan durante el inicio."
 
 #: app/dialogs/user-install-dialog.c:245
@@ -7132,7 +7133,7 @@ msgid ""
 msgstr ""
 "Esta carpeta se utiliza para almacenar las adiciones al entorno de "
 "complementos, creadas por el usuario, temporales o no soportadas por el "
-"sistema. El GIMP revisa esta carpeta además de la carpeta global de entorno "
+"sistema. El Gimp revisa esta carpeta además de la carpeta global de entorno "
 "del sistema cuando está buscando archivos de modificación del entorno de "
 "complementos."
 
@@ -7143,8 +7144,8 @@ msgid ""
 "searching for scripts."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los guiones creados e instalados por "
-"el usuario. El GIMP revisa esta carpeta junto con la carpeta global de "
-"guiones de El GIMP cuando está buscando guiones."
+"el usuario. El Gimp revisa esta carpeta junto con la carpeta global de "
+"guiones de El Gimp cuando está buscando guiones."
 
 #: app/dialogs/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
@@ -7164,9 +7165,9 @@ msgid ""
 "sessions and can be destroyed with impunity."
 msgstr ""
 "Esta carpeta se utiliza para almacenar temporalmente los búferes de deshacer "
-"para reducir el uso de memoria.  Si El GIMP  se cierra de forma anormal los "
+"para reducir el uso de memoria.  Si El Gimp  se cierra de forma anormal los "
 "archivos del tipo gimp<#>.<#> pueden quedar guardados en esta carpeta.  "
-"Estos archivos son inútiles en distintas sesiones de El GIMP y pueden ser "
+"Estos archivos son inútiles en distintas sesiones de El Gimp y pueden ser "
 "destruidos sin problemas."
 
 #: app/dialogs/user-install-dialog.c:282
@@ -7197,7 +7198,7 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:609
 msgid "GIMP User Installation"
-msgstr "Instalación de usuario de El GIMP"
+msgstr "Instalación de usuario de El Gimp"
 
 #: app/dialogs/user-install-dialog.c:614
 msgid "Continue"
@@ -7216,7 +7217,7 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:771
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Pulse en «Continuar» para iniciar la instalación de usuario de El GIMP."
+msgstr "Pulse en «Continuar» para iniciar la instalación de usuario de El Gimp."
 
 #: app/dialogs/user-install-dialog.c:778
 msgid ""
@@ -7224,9 +7225,9 @@ msgid ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"<b>El GIMP - Programa de manipulación de imágenes GNU</b>\n"
+"<b>El Gimp - Programa de manipulación de imágenes GNU</b>\n"
 "Copyright © 1995-2004\n"
-"Spencer Kimball, Peter Mattis y el equipo de desarrollo de El GIMP."
+"Spencer Kimball, Peter Mattis y el equipo de desarrollo de El Gimp."
 
 #: app/dialogs/user-install-dialog.c:788
 msgid ""
@@ -7284,11 +7285,11 @@ msgstr "Hacer una instalación de usuario _fresca"
 
 #: app/dialogs/user-install-dialog.c:851
 msgid "Personal GIMP Folder"
-msgstr "Carpeta personal de El GIMP"
+msgstr "Carpeta personal de El Gimp"
 
 #: app/dialogs/user-install-dialog.c:852
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "Pulse en «Continuar» para crear su carpeta personal de El GIMP."
+msgstr "Pulse en «Continuar» para crear su carpeta personal de El Gimp."
 
 #: app/dialogs/user-install-dialog.c:896
 #, c-format
@@ -7296,7 +7297,7 @@ msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
 msgstr ""
-"Para una instalación correcta de El GIMP es necesario crear una carpeta "
+"Para una instalación correcta de El Gimp es necesario crear una carpeta "
 "llamada «<b>%s</b>»."
 
 #: app/dialogs/user-install-dialog.c:903
@@ -7314,11 +7315,11 @@ msgstr "Informe de la instalación de usuario"
 
 #: app/dialogs/user-install-dialog.c:992
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr "Aguarde mientras se crea su carpeta personal de El GIMP..."
+msgstr "Aguarde mientras se crea su carpeta personal de El Gimp..."
 
 #: app/dialogs/user-install-dialog.c:999
 msgid "GIMP Performance Tuning"
-msgstr "Ajustes del rendimiento de El GIMP"
+msgstr "Ajustes del rendimiento de El Gimp"
 
 #: app/dialogs/user-install-dialog.c:1000
 msgid "Click \"Continue\" to accept the settings above."
@@ -7327,7 +7328,7 @@ msgstr "Presione «Continuar» para aceptar los ajustes de arriba."
 #: app/dialogs/user-install-dialog.c:1005
 msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Para obtener un rendimiento óptimo de El GIMP podrían tener que ajustarse "
+"<b>Para obtener un rendimiento óptimo de El Gimp podrían tener que ajustarse "
 "algunas opciones.</b>"
 
 #: app/dialogs/user-install-dialog.c:1065
@@ -7351,7 +7352,7 @@ msgid ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"El GIMP usa una cantidad limitada de memoria para almacenar datos sobre las "
+"El Gimp usa una cantidad limitada de memoria para almacenar datos sobre las "
 "imágenes llamada «Cache de mosaico». Debería ajustar su tamaño para que "
 "quepa en memoria. Considere la cantidad de memoria que usan otros procesos "
 "en ejecución."
@@ -7612,7 +7613,7 @@ msgstr "El borrado de «%s» ha fallado: %s"
 
 #: app/gui/splash.c:96
 msgid "GIMP Startup"
-msgstr "Inicio de El GIMP"
+msgstr "Inicio de El Gimp"
 
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:254
 #, c-format
@@ -7919,15 +7920,15 @@ msgstr ""
 
 #: app/pdb/procedural_db_cmds.c:80
 msgid "Internal GIMP procedure"
-msgstr "Procedimiento interno de El GIMP"
+msgstr "Procedimiento interno de El Gimp"
 
 #: app/pdb/procedural_db_cmds.c:81
 msgid "GIMP Plug-In"
-msgstr "Extensión de El GIMP"
+msgstr "Extensión de El Gimp"
 
 #: app/pdb/procedural_db_cmds.c:82
 msgid "GIMP Extension"
-msgstr "Añadido de El GIMP"
+msgstr "Añadido de El Gimp"
 
 #: app/pdb/procedural_db_cmds.c:83
 msgid "Temporary Procedure"
@@ -7955,13 +7956,13 @@ msgstr ""
 "(%s)\n"
 "\n"
 "El complemento que ha fallado puede haber estropeado el estado interno de El "
-"GIMP. Sería conveniente que guardase todas sus imágenes y reinicie El GIMP, "
+"GIMP. Sería conveniente que guardase todas sus imágenes y reinicie El Gimp, "
 "para no arriesgarse."
 
 #: app/plug-in/plug-in-rc.c:173
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Ignorando «%s»: Versión de protocolo de El GIMP incorrecta."
+msgstr "Ignorando «%s»: Versión de protocolo de El Gimp incorrecta."
 
 #: app/plug-in/plug-in-rc.c:432
 #, c-format
@@ -9293,7 +9294,7 @@ msgstr "Te_xto"
 
 #: app/tools/gimptexttool.c:728
 msgid "GIMP Text Editor"
-msgstr "Editor de textos de El GIMP"
+msgstr "Editor de textos de El Gimp"
 
 #: app/tools/gimptexttool.c:838 app/tools/gimptexttool.c:841
 msgid "Confirm Text Editing"
@@ -10285,11 +10286,11 @@ msgstr "Altura"
 # feo, para mí. FVD
 #: app/widgets/gimphelp.c:187
 msgid "Help browser not found"
-msgstr "Navegador de ayuda no encontrado"
+msgstr "Visor de ayuda no encontrado"
 
 #: app/widgets/gimphelp.c:188
 msgid "Could not find GIMP help browser."
-msgstr "No se ha podido encontrar el navegador de ayuda de El GIMP."
+msgstr "No se ha podido encontrar el navegador de ayuda de El Gimp."
 
 #: app/widgets/gimphelp.c:189
 msgid "The GIMP help browser plug-in appears to be missing from your installation."
@@ -10304,7 +10305,7 @@ msgstr "El navegador de ayuda no inicia:"
 
 #: app/widgets/gimphelp.c:214
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "No se ha podido iniciar el complemento del navegador de ayuda de El GIMP."
+msgstr "No se ha podido iniciar el complemento del navegador de ayuda de El Gimp."
 
 #: app/widgets/gimphelp.c:240
 msgid "Use _web browser instead"
