@@ -1,3 +1,12 @@
+2003-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.c (gimp_display_paint_area): when
+	exposing the display, transform the update area using sub-pixel
+	accuracy and floor()/ceil() the resulting area to make sure we
+	always expose a *super*set of the dirtied area. Makes the code
+	robust against sub-pixel differences between coordinate
+	transformation and display scaling. Fixes bug #126942.
+
 2003-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpdisplayconfig.[ch]
