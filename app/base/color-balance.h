@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLOR_BALANCE_H__
-#define __COLOR_BALANCE_H__
+#ifndef __GIMP_COLOR_BALANCE_DIALOG_H__
+#define __GIMP_COLOR_BALANCE_DIALOG_H__
+
+
+#include "gimpimagemaptool.h"
 
 
 typedef enum
@@ -26,6 +29,28 @@ typedef enum
   MIDTONES,
   HIGHLIGHTS
 } TransferMode;
+
+
+#define GIMP_TYPE_COLOR_BALANCE_TOOL            (gimp_color_balance_tool_get_type ())
+#define GIMP_COLOR_BALANCE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceTool))
+#define GIMP_IS_COLOR_BALANCE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL))
+#define GIMP_COLOR_BALANCE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceToolClass))
+#define GIMP_IS_COLOR_BALANCE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BALANCE_TOOL))
+
+
+typedef struct _GimpColorBalanceTool      GimpColorBalanceTool;
+typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
+
+struct _GimpColorBalanceTool
+{
+  GimpImageMapTool  parent_instance;
+};
+
+struct _GimpColorBalanceToolClass
+{
+  GimpImageMapToolClass  parent_class;
+};
+
 
 typedef struct _ColorBalanceDialog ColorBalanceDialog;
 
@@ -53,10 +78,12 @@ struct _ColorBalanceDialog
   TransferMode   application_mode;
 };
 
-Tool * tools_new_color_balance            (void);
-void   tools_free_color_balance           (Tool              *tool);
 
-void   color_balance_initialize           (GDisplay          *gdisp);
+void       gimp_color_balance_tool_register (void);
+
+GtkType    gimp_color_balance_tool_get_type (void);
+
+
 void   color_balance_dialog_hide	  (void);
 void   color_balance                      (PixelRegion       *srcPR,
 					   PixelRegion       *destPR,
@@ -65,4 +92,4 @@ void   color_balance                      (PixelRegion       *srcPR,
 void   color_balance_create_lookup_tables (ColorBalanceDialog *cbd);
 
 
-#endif  /*  __COLOR_BALANCE_H__  */
+#endif  /*  __GIMP_COLOR_BALANCE_GIMP_H__  */

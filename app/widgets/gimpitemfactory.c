@@ -33,6 +33,13 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "tools/gimpbrightnesscontrasttool.h"
+#include "tools/gimpcolorbalancetool.h"
+#include "tools/gimpcurvestool.h"
+#include "tools/gimphuesaturationtool.h"
+#include "tools/gimplevelstool.h"
+#include "tools/gimpposterizetool.h"
+#include "tools/gimpthresholdtool.h"
 #include "tools/tool_manager.h"
 
 #include "channels-commands.h"
@@ -1808,11 +1815,10 @@ menus_create_items (GtkItemFactory       *item_factory,
 static void
 menus_init (void)
 {
-  /*GtkWidget    *menu_item;*/
+  GtkWidget    *menu_item;
   gchar        *filename;
-  /*  gint          i;*/
   GList        *list;
-  /*  GimpToolInfo *tool_info;*/
+  GimpToolInfo *tool_info;
 
   if (menus_initialized)
     return;
@@ -1916,35 +1922,35 @@ menus_init (void)
     {
       menus_tools_create (GIMP_TOOL_INFO (list->data));
     }
+
   /*  reorder <Image>/Image/Colors  */
-#ifdef __GNUC__
-#warning FIXME (reorder <Image>/Image/Colors)
-#endif
-#if 0 
-   menu_item = gtk_item_factory_get_widget (image_factory,
-					   tool_info[POSTERIZE].menu_path);
+  tool_info = tool_manager_get_info_by_type (GIMP_TYPE_POSTERIZE_TOOL);
+
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   tool_info->menu_path);
   if (menu_item && menu_item->parent)
     gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
 
   {
-    static ToolType color_tools[] = { COLOR_BALANCE,
-				      HUE_SATURATION,
-				      BRIGHTNESS_CONTRAST,
-				      THRESHOLD,
-				      LEVELS,
-				      CURVES };
+    GtkType color_tools[] = { GIMP_TYPE_COLOR_BALANCE_TOOL,
+			      GIMP_TYPE_HUE_SATURATION_TOOL,
+			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+			      GIMP_TYPE_THRESHOLD_TOOL,
+			      GIMP_TYPE_LEVELS_TOOL,
+			      GIMP_TYPE_CURVES_TOOL };
     static gint n_color_tools = (sizeof (color_tools) /
 				 sizeof (color_tools[0]));
     GtkWidget *separator;
-    gint i, pos;
+    gint       i, pos;
 
     pos = 1;
 
     for (i = 0; i < n_color_tools; i++)
       {
-	menu_item =
-	  gtk_item_factory_get_widget (image_factory,
-				       tool_info[color_tools[i]].menu_path);
+	tool_info = tool_manager_get_info_by_type (color_tools[i]);
+
+	menu_item = gtk_item_factory_get_widget (image_factory,
+						 tool_info->menu_path);
 	if (menu_item && menu_item->parent)
 	  {
 	    gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
@@ -1960,7 +1966,6 @@ menus_init (void)
       }
   }
 
-#endif
   filename = gimp_personal_rc_file ("menurc");
   gtk_item_factory_parse_rc (filename);
   g_free (filename);

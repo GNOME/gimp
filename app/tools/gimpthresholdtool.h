@@ -16,8 +16,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __THRESHOLD_H__
-#define __THRESHOLD_H__
+#ifndef __GIMP_THRESHOLD_TOOL_H__
+#define __GIMP_THRESHOLD_TOOL_H__
+
+
+#include "gimpimagemaptool.h"
+
+
+#define GIMP_TYPE_THRESHOLD_TOOL            (gimp_threshold_tool_get_type ())
+#define GIMP_THRESHOLD_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_THRESHOLD_TOOL, GimpThresholdTool))
+#define GIMP_IS_THRESHOLD_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_THRESHOLD_TOOL))
+#define GIMP_THRESHOLD_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_THRESHOLD_TOOL, GimpThresholdToolClass))
+#define GIMP_IS_THRESHOLD_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_THRESHOLD_TOOL))
+
+
+typedef struct _GimpThresholdTool      GimpThresholdTool;
+typedef struct _GimpThresholdToolClass GimpThresholdToolClass;
+
+struct _GimpThresholdTool
+{
+  GimpImageMapTool  parent_instance;
+};
+
+struct _GimpThresholdToolClass
+{
+  GimpImageMapToolClass  parent_class;
+};
 
 
 typedef struct _ThresholdDialog ThresholdDialog;
@@ -43,14 +67,15 @@ struct _ThresholdDialog
 };
 
 
-Tool * tools_new_threshold   (void);
-void   tools_free_threshold  (Tool        *tool);
+void       gimp_threshold_tool_register (void);
+
+GtkType    gimp_threshold_tool_get_type (void);
+
 
 void   threshold_dialog_hide (void);
-void   threshold_initialize  (GDisplay    *gdisp);
 void   threshold_2           (gpointer     data,
 			      PixelRegion *srcPR,
 			      PixelRegion *destPR);
 
 
-#endif  /*  __THRESHOLD_H__  */
+#endif  /*  __GIMP_THRESHOLD_TOOL_H__  */

@@ -28,20 +28,26 @@
 #include "gimpairbrushtool.h"
 #include "gimpbezierselecttool.h"
 #include "gimpblendtool.h"
+#include "gimpbrightnesscontrasttool.h"
 #include "gimpbucketfilltool.h"
 #include "gimpbycolorselecttool.h"
 #include "gimpclonetool.h"
+#include "gimpcolorbalancetool.h"
 #include "gimpcolorpickertool.h"
 #include "gimpconvolvetool.h"
 #include "gimpcroptool.h"
+#include "gimpcurvestool.h"
 #include "gimpdodgeburntool.h"
 #include "gimpellipseselecttool.h"
 #include "gimperasertool.h"
 #include "gimpfliptool.h"
 #include "gimpfreeselecttool.h"
 #include "gimpfuzzyselecttool.h"
+#include "gimphistogramtool.h"
+#include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
 #include "gimpiscissorstool.h"
+#include "gimplevelstool.h"
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
@@ -49,8 +55,9 @@
 #include "gimppathtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectivetool.h"
+#include "gimpposterizetool.h"
 #include "gimprectselecttool.h"
-#include "gimpbezierselecttool.h"
+#include "gimpthresholdtool.h"
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimpsheartool.h"
@@ -62,6 +69,16 @@ void
 register_tools (void)
 {
   /*  register tools in reverse order  */
+
+  /*  color tools  */
+
+  gimp_threshold_tool_register ();
+  gimp_posterize_tool_register ();
+  gimp_levels_tool_register ();
+  gimp_hue_saturation_tool_register ();
+  gimp_curves_tool_register ();
+  gimp_color_balance_tool_register ();
+  gimp_brightness_contrast_tool_register ();
 
   /*  paint tools  */
 
@@ -93,6 +110,7 @@ register_tools (void)
   gimp_path_tool_register ();
   gimp_measure_tool_register ();
   gimp_magnify_tool_register ();
+  gimp_histogram_tool_register ();
   gimp_color_picker_tool_register ();
 
   /*  selection tools */

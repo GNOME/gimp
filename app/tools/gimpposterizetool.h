@@ -16,15 +16,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __POSTERIZE_H__
-#define __POSTERIZE_H__
+#ifndef __GIMP_POSTERIZE_TOOL_H__
+#define __GIMP_POSTERIZE_TOOL_H__
 
 
-Tool * tools_new_posterize  (void);
-void   tools_free_posterize (Tool     *tool);
+#include "gimpimagemaptool.h"
+
+
+#define GIMP_TYPE_POSTERIZE_TOOL            (gimp_posterize_tool_get_type ())
+#define GIMP_POSTERIZE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeTool))
+#define GIMP_IS_POSTERIZE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_POSTERIZE_TOOL))
+#define GIMP_POSTERIZE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeToolClass))
+#define GIMP_IS_POSTERIZE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POSTERIZE_TOOL))
+
+
+typedef struct _GimpPosterizeTool      GimpPosterizeTool;
+typedef struct _GimpPosterizeToolClass GimpPosterizeToolClass;
+
+struct _GimpPosterizeTool
+{
+  GimpImageMapTool  parent_instance;
+};
+
+struct _GimpPosterizeToolClass
+{
+  GimpImageMapToolClass  parent_class;
+};
+
+
+void       gimp_posterize_tool_register (void);
+
+GtkType    gimp_posterize_tool_get_type (void);
+
 
 void   posterize_dialog_hide (void);
-void   posterize_initialize (GDisplay *gdisp);
 
 
-#endif  /*  __POSTERIZE_H__  */
+#endif  /*  __GIMP_POSTERIZE_TOOL_H__  */

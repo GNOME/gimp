@@ -23,40 +23,46 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
+
+#include "base/gimphistogram.h"
+#include "base/pixel-region.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
+#include "widgets/gimphistogramview.h"
+
+#include "gimphistogramtool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimphistogram.h"
 #include "gimpui.h"
-#include "histogramwidget.h"
-#include "pixel_region.h"
-
-#include "histogram_tool.h"
-#include "tool_options.h"
-#include "tools.h"
 
 #include "libgimp/gimpintl.h"
+
+#define WANT_HISTOGRAM_BITS
+#include "icons.h"
 
 
 #define TEXT_WIDTH       45
 #define GRADIENT_HEIGHT  15
 
-/*  the histogram structures  */
 
-typedef struct _HistogramTool HistogramTool;
+/*  local function prototypes  */
 
-struct _HistogramTool
-{
-  gint x, y;   /*  coords for last mouse click  */
-};
+static void   gimp_histogram_tool_class_init (GimpHistogramToolClass *klass);
+static void   gimp_histogram_tool_init       (GimpHistogramTool      *bc_tool);
 
+static void   gimp_histogram_tool_destroy    (GtkObject  *object);
 
-/*  histogram_tool action functions  */
-static void   histogram_tool_control          (Tool                *tool,
-					       ToolAction           tool_action,
-					       GDisplay            *gdisp);
+static void   gimp_histogram_tool_initialize (GimpTool   *tool,
+					      GDisplay   *gdisp);
+static void   gimp_histogram_tool_control    (GimpTool   *tool,
+					      ToolAction  action,
+					      GDisplay   *gdisp);
 
 static HistogramToolDialog *  histogram_tool_dialog_new (void);
 
@@ -73,10 +79,170 @@ static void   histogram_tool_dialog_update    (HistogramToolDialog *htd,
 
 
 /*  the histogram tool options  */
-static ToolOptions * histogram_tool_options = NULL;
+static ToolOptions * histogram_options = NULL;
 
 /*  the histogram tool dialog  */
-static HistogramToolDialog * histogram_tool_dialog = NULL;
+static HistogramToolDialog * histogram_dialog = NULL;
+
+static GimpToolClass *parent_class = NULL;
+
+
+/*  functions  */
+
+void
+gimp_histogram_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_HISTOGRAM_TOOL,
+                              FALSE,
+			      "gimp:histogram_tool",
+			      _("Histogram"),
+			      _("View image histogram"),
+			      N_("/Image/Histogram..."), NULL,
+			      NULL, "tools/histogram.html",
+			      (const gchar **) histogram_bits);
+}
+
+GtkType
+gimp_histogram_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpHistogramTool",
+        sizeof (GimpHistogramTool),
+        sizeof (GimpHistogramToolClass),
+        (GtkClassInitFunc) gimp_histogram_tool_class_init,
+        (GtkObjectInitFunc) gimp_histogram_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_histogram_tool_class_init (GimpHistogramToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy  = gimp_histogram_tool_destroy;
+
+  tool_class->initialize = gimp_histogram_tool_initialize;
+  tool_class->control    = gimp_histogram_tool_control;
+}
+
+static void
+gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bc_tool);
+
+  if (! histogram_options)
+    {
+      histogram_options = tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_HISTOGRAM_TOOL,
+					  (ToolOptions *) histogram_options);
+    }
+
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+}
+
+static void
+gimp_histogram_tool_destroy (GtkObject *object)
+{
+  histogram_dialog_hide ();
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_histogram_tool_initialize (GimpTool *tool,
+				GDisplay *gdisp)
+{
+  PixelRegion PR;
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+    {
+      g_message (_("Histogram does not operate on indexed drawables."));
+      return;
+    }
+
+  /*  The histogram_tool dialog  */
+  if (! histogram_dialog)
+    histogram_dialog = histogram_tool_dialog_new ();
+  else if (!GTK_WIDGET_VISIBLE (histogram_dialog->shell))
+    gtk_widget_show (histogram_dialog->shell);
+
+  histogram_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
+  histogram_dialog->color = gimp_drawable_is_rgb (histogram_dialog->drawable);
+
+  /*  hide or show the channel menu based on image type  */
+  if (histogram_dialog->color)
+    gtk_widget_show (histogram_dialog->channel_menu);
+  else
+    gtk_widget_hide (histogram_dialog->channel_menu);
+
+  /* calculate the histogram */
+  pixel_region_init (&PR, gimp_drawable_data (histogram_dialog->drawable),
+		     0, 0,
+		     gimp_drawable_width (histogram_dialog->drawable),
+		     gimp_drawable_height (histogram_dialog->drawable),
+		     FALSE);
+  gimp_histogram_calculate (histogram_dialog->hist, &PR, NULL);
+
+  histogram_widget_update (histogram_dialog->histogram,
+			   histogram_dialog->hist);
+  histogram_widget_range (histogram_dialog->histogram, 0, 255);
+}
+
+static void
+gimp_histogram_tool_control (GimpTool   *tool,
+			     ToolAction  action,
+			     GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      histogram_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+void
+histogram_dialog_hide (void)
+{
+  if (histogram_dialog)
+    histogram_tool_close_callback (NULL, (gpointer) histogram_dialog);
+}
 
 
 /*  histogram_tool machinery  */
@@ -153,110 +319,6 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
   gtk_label_set_text (GTK_LABEL (htd->info_labels[6]), text);
 }
 
-/*  histogram_tool action functions  */
-
-static void
-histogram_tool_control (Tool       *tool,
-			ToolAction  action,
-			GDisplay   *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      if (histogram_tool_dialog)
-	histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
-      break;
-
-    default:
-      break;
-    }
-}
-
-Tool *
-tools_new_histogram_tool (void)
-{
-  Tool          *tool;
-  HistogramTool *private;
-
-  /*  The tool options  */
-  if (! histogram_tool_options)
-    {
-      histogram_tool_options = tool_options_new (_("Histogram"));
-      tools_register (HISTOGRAM, histogram_tool_options);
-    }
-
-  tool    = tools_new_tool (HISTOGRAM);
-  private = g_new0 (HistogramTool, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->control_func = histogram_tool_control;
-
-  return tool;
-}
-
-void
-tools_free_histogram_tool (Tool *tool)
-{
-  HistogramTool * hist;
-
-  hist = (HistogramTool *) tool->private;
-
-  /*  Close the histogram dialog  */
-  if (histogram_tool_dialog)
-    histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
-
-  g_free (hist);
-}
-
-void
-histogram_tool_initialize (GDisplay *gdisp)
-{
-  PixelRegion PR;
-
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
-    {
-      g_message (_("Histogram does not operate on indexed drawables."));
-      return;
-    }
-
-  /*  The histogram_tool dialog  */
-  if (!histogram_tool_dialog)
-    histogram_tool_dialog = histogram_tool_dialog_new ();
-  else if (!GTK_WIDGET_VISIBLE (histogram_tool_dialog->shell))
-    gtk_widget_show (histogram_tool_dialog->shell);
-
-  histogram_tool_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  histogram_tool_dialog->color = gimp_drawable_is_rgb (histogram_tool_dialog->drawable);
-
-  /*  hide or show the channel menu based on image type  */
-  if (histogram_tool_dialog->color)
-    gtk_widget_show (histogram_tool_dialog->channel_menu);
-  else
-    gtk_widget_hide (histogram_tool_dialog->channel_menu);
-
-  /* calculate the histogram */
-  pixel_region_init (&PR, gimp_drawable_data (histogram_tool_dialog->drawable),
-		     0, 0,
-		     gimp_drawable_width (histogram_tool_dialog->drawable),
-		     gimp_drawable_height (histogram_tool_dialog->drawable),
-		     FALSE);
-  gimp_histogram_calculate (histogram_tool_dialog->hist, &PR, NULL);
-
-  histogram_widget_update (histogram_tool_dialog->histogram,
-			   histogram_tool_dialog->hist);
-  histogram_widget_range (histogram_tool_dialog->histogram, 0, 255);
-}
-
 /***************************/
 /*  Histogram Tool dialog  */
 /***************************/
@@ -293,8 +355,7 @@ histogram_tool_dialog_new (void)
 
   /*  The shell and main vbox  */
   htd->shell = gimp_dialog_new (_("Histogram"), "histogram",
-				tools_help_func,
-				tool_info[HISTOGRAM].private_tip,
+				tool_manager_help_func, NULL,
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 

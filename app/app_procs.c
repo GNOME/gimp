@@ -37,9 +37,9 @@
 
 #include "pdb/internal_procs.h"
 
-#include "tools/curves.h"
-#include "tools/hue_saturation.h"
-#include "tools/levels.h"
+#include "tools/gimpcurvestool.h"
+#include "tools/gimphuesaturationtool.h"
+#include "tools/gimplevelstool.h"
 
 #include "gui/color-notebook.h"
 #include "gui/file-open-dialog.h"

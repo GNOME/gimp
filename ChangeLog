@@ -1,3 +1,47 @@
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
+	All tools are back :)
+
+	* app/tools/Makefile.am
+	* app/tools/brightness_contrast.[ch]
+	* app/tools/color_balance.[ch]
+	* app/tools/curves.[ch]
+	* app/tools/histogram_tool.[ch]
+	* app/tools/hue_saturation.[ch]
+	* app/tools/levels.[ch]
+	* app/tools/posterize.[ch]
+	* app/tools/threshold.[ch]: removed...
+
+	* app/tools/gimpbrightnesscontrasttool.[ch]
+	* app/tools/gimpcolorbalancetool.[ch]
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimphistogramtool.[ch]
+	* app/tools/gimphuesaturationtool.[ch]
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpposterizetool.[ch]
+	* app/tools/gimpthresholdtool.[ch]: ...and ported to the new tool
+	system. Yes, the toolbox looks strange right now.
+
+	* app/tools/gimpimagemaptool.[ch]: base class for all image_map
+	tools. Does nothing at all right now.
+
+	* app/tools/gimpbucketfilltool.h: removed _new() function
+	declaration.
+
+	* app/tools/gimptool.c: removed obsolete stuff and STUB()s.
+
+	* app/tools/tools.c: register the new tools.
+
+	* app/menus.c: removed the #if 0 around the code which reorders
+	the color tool menu entries.
+
+	* app/app_procs.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/color.pdb
+	* app/pdb/color_cmds.c
+	* po/POTFILES.in: changed accordingly.
+
 2001-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* config.guess

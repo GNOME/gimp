@@ -41,11 +41,11 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "drawable.h"
-#include "tools/color_balance.h"
-#include "tools/curves.h"
-#include "tools/histogram_tool.h"
-#include "tools/hue_saturation.h"
-#include "tools/threshold.h"
+#include "tools/gimpcolorbalancetool.h"
+#include "tools/gimpcurvestool.h"
+#include "tools/gimphistogramtool.h"
+#include "tools/gimphuesaturationtool.h"
+#include "tools/gimpthresholdtool.h"
 #include "widgets/gimphistogramview.h"
 
 static ProcRecord brightness_contrast_proc;

@@ -22,31 +22,28 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
  
+#include "base/gimplut.h"
+#include "base/lut-funcs.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
+#include "gimpposterizetool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimplut.h"
 #include "gimpui.h"
 #include "image_map.h"
-#include "lut_funcs.h"
-
-#include "posterize.h"
-#include "tool_options.h"
-#include "tools.h"
 
 #include "libgimp/gimpintl.h"
 
+#define WANT_ADJUSTMENT_BITS
+#include "icons.h"
 
-/*  the posterize structures  */
-
-typedef struct _Posterize Posterize;
-
-struct _Posterize
-{
-  gint x, y;    /*  coords for last mouse click  */
-};
 
 typedef struct _PosterizeDialog PosterizeDialog;
 
@@ -57,7 +54,7 @@ struct _PosterizeDialog
   GtkAdjustment *levels_data;
 
   GimpDrawable  *drawable;
-  ImageMap       image_map;
+  ImageMap      *image_map;
 
   gint           levels;
 
@@ -67,10 +64,18 @@ struct _PosterizeDialog
 };
 
 
-/*  posterize action functions  */
-static void   posterize_control                  (Tool            *tool,
-						  ToolAction       tool_action,
-						  GDisplay        *gdisp);
+/*  local function prototypes  */
+
+static void   gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass);
+static void   gimp_posterize_tool_init       (GimpPosterizeTool      *bc_tool);
+
+static void   gimp_posterize_tool_destroy    (GtkObject  *object);
+
+static void   gimp_posterize_tool_initialize (GimpTool   *tool,
+					      GDisplay   *gdisp);
+static void   gimp_posterize_tool_control    (GimpTool   *tool,
+					      ToolAction  action,
+					      GDisplay   *gdisp);
 
 static PosterizeDialog * posterize_dialog_new    (void);
 
@@ -93,80 +98,101 @@ static ToolOptions *posterize_options = NULL;
 /* the posterize tool dialog  */
 static PosterizeDialog *posterize_dialog = NULL;
 
+static GimpImageMapToolClass *parent_class = NULL;
 
-/*  posterize select action functions  */
+
+/*  functions  */
+
+void
+gimp_posterize_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_POSTERIZE_TOOL,
+                              FALSE,
+			      "gimp:posterize_tool",
+			      _("Posterize"),
+			      _("Reduce image to a fixed numer of colors"),
+			      N_("/Image/Colors/Posterize..."), NULL,
+			      NULL, "tools/posterize.html",
+			      (const gchar **) adjustment_bits);
+}
+
+GtkType
+gimp_posterize_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpPosterizeTool",
+        sizeof (GimpPosterizeTool),
+        sizeof (GimpPosterizeToolClass),
+        (GtkClassInitFunc) gimp_posterize_tool_class_init,
+        (GtkObjectInitFunc) gimp_posterize_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
 
 static void
-posterize_control (Tool       *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
+gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 {
-  switch (action)
-    {
-    case PAUSE:
-      break;
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
 
-    case RESUME:
-      break;
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
 
-    case HALT:
-      posterize_dialog_hide ();
-      break;
+  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
 
-    default:
-      break;
-    }
+  object_class->destroy  = gimp_posterize_tool_destroy;
+
+  tool_class->initialize = gimp_posterize_tool_initialize;
+  tool_class->control    = gimp_posterize_tool_control;
 }
 
-Tool *
-tools_new_posterize (void)
+static void
+gimp_posterize_tool_init (GimpPosterizeTool *bc_tool)
 {
-  Tool * tool;
-  Posterize * private;
+  GimpTool *tool;
 
-  /*  The tool options  */
+  tool = GIMP_TOOL (bc_tool);
+
   if (! posterize_options)
     {
-      posterize_options = tool_options_new (_("Posterize"));
-      tools_register (POSTERIZE, posterize_options);
+      posterize_options = tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_POSTERIZE_TOOL,
+					  (ToolOptions *) posterize_options);
     }
-
-  tool = tools_new_tool (POSTERIZE);
-  private = g_new0 (Posterize, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->control_func = posterize_control;
-
-  return tool;
 }
 
-void
-posterize_dialog_hide (void)
+static void
+gimp_posterize_tool_destroy (GtkObject *object)
 {
-  if (posterize_dialog)
-    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
-}
-
-void
-tools_free_posterize (Tool *tool)
-{
-  Posterize * post;
-
-  post = (Posterize *) tool->private;
-
-  /*  Close the posterize dialog  */
   posterize_dialog_hide ();
 
-  g_free (post);
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-void
-posterize_initialize (GDisplay *gdisp)
+static void
+gimp_posterize_tool_initialize (GimpTool *tool,
+				GDisplay *gdisp)
 {
+  if (! gdisp)
+    {
+      posterize_dialog_hide ();
+      return;
+    }
+
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Posterize does not operate on indexed drawables."));
@@ -192,6 +218,38 @@ posterize_initialize (GDisplay *gdisp)
     posterize_preview (posterize_dialog);
 }
 
+static void
+gimp_posterize_tool_control (GimpTool   *tool,
+			     ToolAction  action,
+			     GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      posterize_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+void
+posterize_dialog_hide (void)
+{
+  if (posterize_dialog)
+    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
+}
+
 /**********************/
 /*  Posterize dialog  */
 /**********************/
@@ -215,7 +273,7 @@ posterize_dialog_new (void)
   /*  The shell and main vbox  */
   pd->shell =
     gimp_dialog_new (_("Posterize"), "posterize",
-		     tools_help_func, NULL,
+		     tool_manager_help_func, NULL,
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 

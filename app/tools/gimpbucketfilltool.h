@@ -58,7 +58,6 @@ struct _GimpBucketFillToolClass
 void       gimp_bucket_fill_tool_register (void);
 
 GtkType    gimp_bucket_fill_tool_get_type (void);
-GimpTool * gimp_bucket_fill_tool_new      (void);
 
 
 void       bucket_fill                    (GimpImage      *gimage,

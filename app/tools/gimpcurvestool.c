@@ -28,22 +28,29 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
-#include "cursorutil.h"
+#include "base/gimphistogram.h"
+#include "base/gimplut.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
+#include "widgets/gimpcursor.h"
+
+#include "gimpcurvestool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimphistogram.h"
-#include "gimpimage.h"
 #include "gimpui.h"
-#include "gimplut.h"
 #include "image_map.h"
 
-#include "curves.h"
-#include "tool_options.h"
-#include "tools.h"
-
 #include "libgimp/gimpintl.h"
+
+#define WANT_CURVES_BITS
+#include "icons.h"
 
 
 #define GRAPH          0x1
@@ -76,52 +83,41 @@
 		    GDK_BUTTON_RELEASE_MASK | \
 		    GDK_BUTTON1_MOTION_MASK
 
-/*  the curves structures  */
-
-typedef struct _Curves Curves;
-
-struct _Curves
-{
-  gint x, y;    /*  coords for last mouse click  */
-};
 
 typedef gdouble CRMatrix[4][4];
 
-/*  the curves tool options  */
-static ToolOptions  * curves_options = NULL;
 
-/*  the curves dialog  */
-static CurvesDialog * curves_dialog = NULL;
+/*  local function prototypes  */
 
-/*  the curves file dialog  */
-static GtkWidget *file_dlg = NULL;
-static gboolean   load_save;
+static void   gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
+static void   gimp_curves_tool_init           (GimpCurvesTool      *bc_tool);
 
-static GtkWidget *channel_items[5];
+static void   gimp_curves_tool_destroy        (GtkObject      *object);
 
-static CRMatrix CR_basis =
-{
-  { -0.5,  1.5, -1.5,  0.5 },
-  {  1.0, -2.5,  2.0, -0.5 },
-  { -0.5,  0.0,  0.5,  0.0 },
-  {  0.0,  1.0,  0.0,  0.0 },
-};
+static void   gimp_curves_tool_initialize     (GimpTool       *tool,
+					       GDisplay       *gdisp);
+static void   gimp_curves_tool_control        (GimpTool       *tool,
+					       ToolAction      action,
+					       GDisplay       *gdisp);
+static void   gimp_curves_tool_button_press   (GimpTool       *tool,
+					       GdkEventButton *bevent,
+					       GDisplay       *gdisp);
+static void   gimp_curves_tool_button_release (GimpTool       *tool,
+					       GdkEventButton *bevent,
+					       GDisplay       *gdisp);
+static void   gimp_curves_tool_motion         (GimpTool       *tool,
+					       GdkEventMotion *mevent,
+					       GDisplay       *gdisp);
 
-
-/*  curves action functions  */
-
-static void   curves_button_press         (Tool           *tool,
-					   GdkEventButton *bevent,
-					   GDisplay       *gdisp);
-static void   curves_button_release       (Tool           *tool,
-					   GdkEventButton *bevent,
-					   GDisplay       *gdisp);
-static void   curves_motion               (Tool           *tool,
-					   GdkEventMotion *mevent,
-					   GDisplay       *gdisp);
-static void   curves_control              (Tool           *tool,
-					   ToolAction      action,
-					   GDisplay       *gdisp);
+static void   curves_colour_update            (GimpTool       *tool,
+					       GDisplay       *gdisp,
+					       GimpDrawable   *drawable,
+					       gint            x,
+					       gint            y);
+static void   curves_add_point                (GimpDrawable   *drawable,
+					       gint            x,
+					       gint            y,
+					       gint            cchan);
 
 static CurvesDialog * curves_dialog_new   (void);
 
@@ -178,6 +174,295 @@ static gboolean  curves_read_from_file    (FILE           *f);
 static void      curves_write_to_file     (FILE           *f);
 
 
+/*  the curves tool options  */
+static ToolOptions  * curves_options = NULL;
+
+/*  the curves dialog  */
+static CurvesDialog * curves_dialog = NULL;
+
+static GimpImageMapToolClass *parent_class = NULL;
+
+/*  the curves file dialog  */
+static GtkWidget *file_dlg = NULL;
+static gboolean   load_save;
+
+static GtkWidget *channel_items[5];
+
+static CRMatrix CR_basis =
+{
+  { -0.5,  1.5, -1.5,  0.5 },
+  {  1.0, -2.5,  2.0, -0.5 },
+  { -0.5,  0.0,  0.5,  0.0 },
+  {  0.0,  1.0,  0.0,  0.0 },
+};
+
+
+/*  functions  */
+
+void
+gimp_curves_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_CURVES_TOOL,
+                              FALSE,
+			      "gimp:curves_tool",
+			      _("Curves"),
+			      _("Adjust color curves"),
+			      N_("/Image/Colors/Curves..."), NULL,
+			      NULL, "tools/curves.html",
+			      (const gchar **) curves_bits);
+}
+
+GtkType
+gimp_curves_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpCurvesTool",
+        sizeof (GimpCurvesTool),
+        sizeof (GimpCurvesToolClass),
+        (GtkClassInitFunc) gimp_curves_tool_class_init,
+        (GtkObjectInitFunc) gimp_curves_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
+
+  object_class->destroy  = gimp_curves_tool_destroy;
+
+  tool_class->initialize     = gimp_curves_tool_initialize;
+  tool_class->control        = gimp_curves_tool_control;
+  tool_class->button_press   = gimp_curves_tool_button_press;
+  tool_class->button_release = gimp_curves_tool_button_release;
+  tool_class->motion         = gimp_curves_tool_motion;
+}
+
+static void
+gimp_curves_tool_init (GimpCurvesTool *bc_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bc_tool);
+
+  if (! curves_options)
+    {
+      curves_options = tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_CURVES_TOOL,
+					  (ToolOptions *) curves_options);
+    }
+}
+
+static void
+gimp_curves_tool_destroy (GtkObject *object)
+{
+  curves_dialog_hide ();
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_curves_tool_initialize (GimpTool *tool,
+			     GDisplay *gdisp)
+{
+  gint i, j;
+
+  if (! gdisp)
+    {
+      curves_dialog_hide ();
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+    {
+      g_message (_("Curves for indexed drawables cannot be adjusted."));
+      return;
+    }
+
+  /*  The curves dialog  */
+  if (!curves_dialog)
+    {
+      curves_dialog = curves_dialog_new ();
+    }
+     
+  /*  Initialize the values  */
+  curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
+  for (i = 0; i < 5; i++)
+    for (j = 0; j < 256; j++)
+      curves_dialog->curve[i][j] = j;
+  
+  for (i = 0; i < 5; i++)
+    {
+      curves_channel_reset (i);
+    }
+
+  curves_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
+  curves_dialog->color     = gimp_drawable_is_rgb (curves_dialog->drawable);
+  curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
+
+  /* check for alpha channel */
+  if (gimp_drawable_has_alpha (curves_dialog->drawable))
+    gtk_widget_set_sensitive (channel_items[4], TRUE);
+  else 
+    gtk_widget_set_sensitive (channel_items[4], FALSE);
+  
+  /*  hide or show the channel menu based on image type  */
+  if (curves_dialog->color)
+    for (i = 0; i < 4; i++) 
+       gtk_widget_set_sensitive (channel_items[i], TRUE);
+  else 
+    for (i = 1; i < 4; i++) 
+      gtk_widget_set_sensitive (channel_items[i], FALSE);
+
+  /* set the current selection */
+  gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
+			       curves_dialog->channel);
+
+  gimp_lut_setup (curves_dialog->lut, 
+		  (GimpLutFunc) curves_lut_func,
+                  (gpointer) curves_dialog, 
+		  gimp_drawable_bytes (curves_dialog->drawable));
+
+  if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
+    gtk_widget_show (curves_dialog->shell);
+
+  curves_update (curves_dialog, GRAPH | DRAW);
+}
+
+static void
+gimp_curves_tool_control (GimpTool   *tool,
+			  ToolAction  action,
+			  GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      curves_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+static void
+gimp_curves_tool_button_press (GimpTool       *tool,
+			       GdkEventButton *bevent,
+			       GDisplay       *gdisp)
+{
+  gint          x, y;
+  GimpDrawable *drawable;
+
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  tool->gdisp = gdisp;
+
+  if (drawable != tool->drawable)
+    {
+      active_tool->preserve = TRUE;
+      image_map_abort (curves_dialog->image_map);
+      active_tool->preserve = FALSE;
+
+      tool->drawable = drawable;
+
+      curves_dialog->drawable = drawable;
+      curves_dialog->color = gimp_drawable_is_rgb (drawable);
+      curves_dialog->image_map = image_map_create (gdisp, drawable);
+    }
+
+  tool->state = ACTIVE;
+
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
+  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_update (curves_dialog, GRAPH | DRAW);
+}
+
+static void
+gimp_curves_tool_button_release (GimpTool       *tool,
+				 GdkEventButton *bevent,
+				 GDisplay       *gdisp)
+{
+  gint          x, y;
+  GimpDrawable *drawable;
+
+  if (! curves_dialog || 
+      ! gdisp || 
+      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
+     return;
+
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
+  curves_colour_update (tool, gdisp, drawable, x, y);
+
+  if (bevent->state & GDK_SHIFT_MASK)
+    {
+      curves_add_point (drawable, x, y, curves_dialog->channel);
+      curves_calculate_curve (curves_dialog);
+    }
+  else if (bevent->state & GDK_CONTROL_MASK)
+    {
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_VALUE);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_RED);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_GREEN);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_BLUE);
+      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_ALPHA);
+      curves_calculate_curve (curves_dialog);
+    }
+
+  curves_update (curves_dialog, GRAPH | DRAW);
+}
+
+static void
+gimp_curves_tool_motion (GimpTool       *tool,
+			 GdkEventMotion *mevent,
+			 GDisplay       *gdisp)
+{
+  gint          x, y;
+  GimpDrawable *drawable;
+
+  if (! curves_dialog ||
+      ! gdisp || 
+      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
+     return;
+
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
+  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_update (curves_dialog, GRAPH | DRAW);
+}
+
+
 /*  curves machinery  */
 
 gfloat
@@ -225,7 +510,7 @@ curves_lut_func (CurvesDialog *cd,
 }
 
 static void
-curves_colour_update (Tool           *tool,
+curves_colour_update (GimpTool       *tool,
 		      GDisplay       *gdisp,
 		      GimpDrawable   *drawable,
 		      gint            x,
@@ -312,224 +597,11 @@ curves_add_point (GimpDrawable *drawable,
     }
 }
 
-/*  curves action functions  */
-
-static void
-curves_button_press (Tool           *tool,
-		     GdkEventButton *bevent,
-		     GDisplay       *gdisp)
-{
-  gint          x, y;
-  GimpDrawable *drawable;
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  tool->gdisp = gdisp;
-
-  if (drawable != tool->drawable)
-    {
-      active_tool->preserve = TRUE;
-      image_map_abort (curves_dialog->image_map);
-      active_tool->preserve = FALSE;
-
-      tool->drawable = drawable;
-
-      curves_dialog->drawable = drawable;
-      curves_dialog->color = gimp_drawable_is_rgb (drawable);
-      curves_dialog->image_map = image_map_create (gdisp, drawable);
-    }
-
-  tool->state = ACTIVE;
-
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
-  curves_update (curves_dialog, GRAPH | DRAW);
-}
-
-static void
-curves_button_release (Tool           *tool,
-		       GdkEventButton *bevent,
-		       GDisplay       *gdisp)
-{
-  gint          x, y;
-  GimpDrawable *drawable;
-
-  if (! curves_dialog || 
-      ! gdisp || 
-      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
-     return;
-
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
-
-  if (bevent->state & GDK_SHIFT_MASK)
-    {
-      curves_add_point (drawable, x, y, curves_dialog->channel);
-      curves_calculate_curve (curves_dialog);
-    }
-  else if (bevent->state & GDK_CONTROL_MASK)
-    {
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_VALUE);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_RED);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_GREEN);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_BLUE);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_ALPHA);
-      curves_calculate_curve (curves_dialog);
-    }
-
-  curves_update (curves_dialog, GRAPH | DRAW);
-}
-
-static void
-curves_motion (Tool           *tool,
-	       GdkEventMotion *mevent,
-	       GDisplay       *gdisp)
-{
-  gint          x, y;
-  GimpDrawable *drawable;
-
-  if (! curves_dialog ||
-      ! gdisp || 
-      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
-     return;
-
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
-  curves_update (curves_dialog, GRAPH | DRAW);
-}
-
-static void
-curves_control (Tool       *tool,
-		ToolAction  action,
-		GDisplay   *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      curves_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-}
-
-Tool *
-tools_new_curves (void)
-{
-  Tool   *tool;
-  Curves *private;
-
-  /*  The tool options  */
-  if (!curves_options)
-    {
-      curves_options = tool_options_new (_("Curves"));
-      tools_register (CURVES, curves_options);
-    }
-
-  tool = tools_new_tool (CURVES);
-  private = g_new0 (Curves, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->button_press_func   = curves_button_press;
-  tool->button_release_func = curves_button_release;
-  tool->motion_func         = curves_motion;
-  tool->control_func        = curves_control;
-
-  return tool;
-}
-
 void
 curves_dialog_hide (void)
 {
   if (curves_dialog)
     curves_cancel_callback (NULL, (gpointer) curves_dialog);
-}
-
-void
-tools_free_curves (Tool *tool)
-{
-  Curves *private;
-
-  private = (Curves *) tool->private;
-
-  /*  Close the color select dialog  */
-  curves_dialog_hide ();
-
-  g_free (private);
-}
-
-void
-curves_initialize (GDisplay *gdisp)
-{
-  gint i, j;
-
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
-    {
-      g_message (_("Curves for indexed drawables cannot be adjusted."));
-      return;
-    }
-
-  /*  The curves dialog  */
-  if (!curves_dialog)
-    {
-      curves_dialog = curves_dialog_new ();
-    }
-     
-  /*  Initialize the values  */
-  curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
-  for (i = 0; i < 5; i++)
-    for (j = 0; j < 256; j++)
-      curves_dialog->curve[i][j] = j;
-  
-  for (i = 0; i < 5; i++)
-    {
-      curves_channel_reset (i);
-    }
-
-  curves_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
-  curves_dialog->color     = gimp_drawable_is_rgb (curves_dialog->drawable);
-  curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
-
-  /* check for alpha channel */
-  if (gimp_drawable_has_alpha (curves_dialog->drawable))
-    gtk_widget_set_sensitive (channel_items[4], TRUE);
-  else 
-    gtk_widget_set_sensitive (channel_items[4], FALSE);
-  
-  /*  hide or show the channel menu based on image type  */
-  if (curves_dialog->color)
-    for (i = 0; i < 4; i++) 
-       gtk_widget_set_sensitive (channel_items[i], TRUE);
-  else 
-    for (i = 1; i < 4; i++) 
-      gtk_widget_set_sensitive (channel_items[i], FALSE);
-
-  /* set the current selection */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
-			       curves_dialog->channel);
-
-  gimp_lut_setup (curves_dialog->lut, 
-		  (GimpLutFunc) curves_lut_func,
-                  (void *) curves_dialog, 
-		  gimp_drawable_bytes (curves_dialog->drawable));
-
-  if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
-    gtk_widget_show (curves_dialog->shell);
-
-  curves_update (curves_dialog, GRAPH | DRAW);
 }
 
 void
@@ -593,7 +665,7 @@ curves_dialog_new (void)
 
   /*  The shell and main vbox  */
   cd->shell = gimp_dialog_new (_("Curves"), "curves",
-			       tools_help_func, tool_info[CURVES].private_tip,
+			       tool_manager_help_func, NULL,
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
@@ -1571,9 +1643,15 @@ curves_graph_events (GtkWidget    *widget,
 
       if (new_type != cursor_type)
 	{
+	  GdkCursor *cursor;
+
 	  cursor_type = new_type;
-	  change_win_cursor (cd->graph->window, cursor_type,
-			     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
+
+	  cursor = gimp_cursor_new (cursor_type,
+				    GIMP_TOOL_CURSOR_NONE,
+				    GIMP_CURSOR_MODIFIER_NONE);
+	  gdk_window_set_cursor (cd->graph->window, cursor);
+	  gdk_cursor_destroy (cursor);
 	}
 
       curve_print_loc (cd, x, 255 - y);
@@ -1677,8 +1755,7 @@ file_dialog_create (GtkWidget *parent)
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
   g_free (temp);
 
-  gimp_help_connect_help_accel (file_dlg, tools_help_func,
-				tool_info[CURVES].private_tip);
+  gimp_help_connect_help_accel (file_dlg, tool_manager_help_func, NULL);
 }
 
 static void

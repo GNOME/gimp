@@ -22,23 +22,28 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
-#include "appenv.h"
+#include "base/gimplut.h"
+#include "base/lut-funcs.h"
+
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
+#include "gimpbrightnesscontrasttool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+
 #include "drawable.h"
-#include "gimpcontext.h"
-#include "gimplut.h"
 #include "gimpui.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 #include "image_map.h"
-#include "lut_funcs.h"
-
-#include "brightness_contrast.h"
-#include "tool_options.h"
-#include "tools.h"
 
 #include "libgimp/gimpintl.h"
+
+#define WANT_ADJUSTMENT_BITS
+#include "icons.h"
 
 
 #define SLIDER_WIDTH 200
@@ -47,14 +52,8 @@
 #define CONTRAST    0x2
 #define ALL        (BRIGHTNESS | CONTRAST)
 
+
 /*  the brightness-contrast structures  */
-
-typedef struct _BrightnessContrast BrightnessContrast;
-
-struct _BrightnessContrast
-{
-  gint x, y;    /*  coords for last mouse click  */
-};
 
 typedef struct _BrightnessContrastDialog BrightnessContrastDialog;
 
@@ -67,7 +66,7 @@ struct _BrightnessContrastDialog
   GtkAdjustment *contrast_data;
 
   GimpDrawable  *drawable;
-  ImageMap       image_map;
+  ImageMap      *image_map;
 
   gdouble        brightness;
   gdouble        contrast;
@@ -78,108 +77,139 @@ struct _BrightnessContrastDialog
 };
 
 
+/*  local function prototypes  */
+
+static void   gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass);
+static void   gimp_brightness_contrast_tool_init       (GimpBrightnessContrastTool      *bc_tool);
+
+static void   gimp_brightness_contrast_tool_destroy    (GtkObject  *object);
+
+static void   gimp_brightness_contrast_tool_initialize (GimpTool   *tool,
+							GDisplay   *gdisp);
+static void   gimp_brightness_contrast_tool_control    (GimpTool   *tool,
+							ToolAction  action,
+							GDisplay   *gdisp);
+
+static BrightnessContrastDialog * brightness_contrast_dialog_new (void);
+
+static void   brightness_contrast_update          (BrightnessContrastDialog *bcd,
+						   gint                      update);
+static void   brightness_contrast_preview         (BrightnessContrastDialog *bcd);
+static void   brightness_contrast_reset_callback  (GtkWidget *widget,
+						   gpointer   data);
+static void   brightness_contrast_ok_callback     (GtkWidget *widget,
+						   gpointer   data);
+static void   brightness_contrast_cancel_callback (GtkWidget *widget,
+						   gpointer   data);
+static void   brightness_contrast_preview_update  (GtkWidget *widget,
+						   gpointer   data);
+static void   brightness_contrast_brightness_adjustment_update (GtkAdjustment *adj,
+								gpointer       data);
+static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *adj,
+								gpointer      data);
+
+
 /*  the brightness-contrast tool options  */
 static ToolOptions *brightness_contrast_options = NULL;
 
 /*  the brightness-contrast dialog  */
 static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
+static GimpImageMapToolClass *parent_class = NULL;
 
-/*  brightness contrast action functions  */
 
-static void   brightness_contrast_control (Tool       *tool,
-					   ToolAction  action,
-					   GDisplay   *gdisp);
+/*  functions  */
 
-static BrightnessContrastDialog * brightness_contrast_dialog_new (void);
+void
+gimp_brightness_contrast_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+                              FALSE,
+			      "gimp:brightness_contrast_tool",
+			      _("Brightness-Contrast"),
+			      _("Adjust brightness and contrast"),
+			      N_("/Image/Colors/Brightness-Contrast..."), NULL,
+			      NULL, "tools/brightness_contrast.html",
+			      (const gchar **) adjustment_bits);
+}
 
-static void   brightness_contrast_update          (BrightnessContrastDialog *,
-						   gint);
-static void   brightness_contrast_preview         (BrightnessContrastDialog *);
-static void   brightness_contrast_reset_callback  (GtkWidget *, gpointer);
-static void   brightness_contrast_ok_callback     (GtkWidget *, gpointer);
-static void   brightness_contrast_cancel_callback (GtkWidget *, gpointer);
-static void   brightness_contrast_preview_update  (GtkWidget *, gpointer);
-static void   brightness_contrast_brightness_adjustment_update (GtkAdjustment *,
-								gpointer);
-static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *,
-								gpointer);
+GtkType
+gimp_brightness_contrast_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
 
-/*  brightness-contrast select action functions  */
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpBrightnessContrastTool",
+        sizeof (GimpBrightnessContrastTool),
+        sizeof (GimpBrightnessContrastToolClass),
+        (GtkClassInitFunc) gimp_brightness_contrast_tool_class_init,
+        (GtkObjectInitFunc) gimp_brightness_contrast_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
 
 static void
-brightness_contrast_control (Tool       *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass)
 {
-  switch (action)
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
+
+  object_class->destroy      = gimp_brightness_contrast_tool_destroy;
+
+  tool_class->initialize = gimp_brightness_contrast_tool_initialize;
+  tool_class->control    = gimp_brightness_contrast_tool_control;
+}
+
+static void
+gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bc_tool);
+
+  if (! brightness_contrast_options)
     {
-    case PAUSE:
-      break;
+      brightness_contrast_options = tool_options_new ();
 
-    case RESUME:
-      break;
-
-    case HALT:
-      brightness_contrast_dialog_hide ();
-      break;
-
-    default:
-      break;
+      tool_manager_register_tool_options (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+					  (ToolOptions *) brightness_contrast_options);
     }
 }
 
-Tool *
-tools_new_brightness_contrast (void)
+static void
+gimp_brightness_contrast_tool_destroy (GtkObject *object)
 {
-  Tool * tool;
-  BrightnessContrast * private;
-
-  /*  The tool options  */
-  if (!brightness_contrast_options)
-    {
-      brightness_contrast_options =
-	tool_options_new (_("Brightness-Contrast"));
-      tools_register (BRIGHTNESS_CONTRAST, brightness_contrast_options);
-   }
-
-  tool = tools_new_tool (BRIGHTNESS_CONTRAST);
-  private = g_new0 (BrightnessContrast, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->control_func = brightness_contrast_control;
-
-  return tool;
-}
-
-void
-brightness_contrast_dialog_hide (void)
-{
-  if (brightness_contrast_dialog)
-    brightness_contrast_cancel_callback (NULL,
-	                                 (gpointer) brightness_contrast_dialog);
-} 
-  
-void
-tools_free_brightness_contrast (Tool *tool)
-{
-  BrightnessContrast * bc;
-
-  bc = (BrightnessContrast *) tool->private;
-
-  /*  Close the brightness-contrast dialog  */
   brightness_contrast_dialog_hide ();
 
-  g_free (bc);
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-void
-brightness_contrast_initialize (GDisplay *gdisp)
+static void
+gimp_brightness_contrast_tool_initialize (GimpTool *tool,
+					  GDisplay *gdisp)
 {
+  if (! gdisp)
+    {
+      brightness_contrast_dialog_hide ();
+      return;
+    }
+
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Brightness-Contrast does not operate on indexed drawables."));
@@ -202,6 +232,39 @@ brightness_contrast_initialize (GDisplay *gdisp)
     image_map_create (gdisp, brightness_contrast_dialog->drawable);
 
   brightness_contrast_update (brightness_contrast_dialog, ALL);
+}
+
+static void
+gimp_brightness_contrast_tool_control (GimpTool   *tool,
+				       ToolAction  action,
+				       GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      brightness_contrast_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+void
+brightness_contrast_dialog_hide (void)
+{
+  if (brightness_contrast_dialog)
+    brightness_contrast_cancel_callback (NULL,
+	                                 (gpointer) brightness_contrast_dialog);
 }
 
 /********************************/
@@ -230,7 +293,7 @@ brightness_contrast_dialog_new (void)
   /*  The shell and main vbox  */
   bcd->shell =
     gimp_dialog_new (_("Brightness-Contrast"), "brightness_contrast",
-		     tools_help_func, NULL,
+		     tool_manager_help_func, NULL,
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 

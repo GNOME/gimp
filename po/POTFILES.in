@@ -86,9 +86,9 @@ app/pdb/internal_procs.c
 app/pdb/procedural_db.c
 app/pdb/procedural_db_cmds.c
 
-app/tools/brightness_contrast.c
-app/tools/color_balance.c
-app/tools/curves.c
+app/tools/gimpbrightnesscontrasttool.c
+app/tools/gimpcolorbalancetool.c
+app/tools/gimpcurvestool.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
 app/tools/gimpblendtool.c
@@ -123,13 +123,13 @@ app/tools/gimpsmudgetool.c
 app/tools/gimptexttool.c
 app/tools/gimptool.c
 app/tools/gimptransformtool.c
-app/tools/histogram_tool.c
-app/tools/hue_saturation.c
-app/tools/levels.c
+app/tools/gimphistogramtool.c
+app/tools/gimphuesaturationtool.c
+app/tools/gimplevelstool.c
+app/tools/gimpthresholdtool.c
 app/tools/paint_options.c
 app/tools/posterize.c
 app/tools/selection_options.c
-app/tools/threshold.c
 app/tools/tool_options.c
 app/tools/tool_options_dialog.c
 app/tools/tools.c

@@ -22,23 +22,32 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
+
+#include "base/gimphistogram.h"
+#include "base/pixel-region.h"
+
+#include "paint-funcs/paint-funcs.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-histogram.h"
+#include "core/gimpimage.h"
+
+#include "widgets/gimphistogramview.h"
+
+#include "gimpthresholdtool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimphistogram.h"
-#include "gimpimage.h"
 #include "gimpui.h"
-#include "histogramwidget.h"
 #include "image_map.h"
-#include "paint_funcs.h"
-#include "pixel_region.h"
-
-#include "threshold.h"
-#include "tool_options.h"
-#include "tools.h"
 
 #include "libgimp/gimpintl.h"
+
+#define WANT_LEVELS_BITS
+#include "icons.h"
 
 
 #define HISTOGRAM_WIDTH  256
@@ -46,23 +55,22 @@
 
 #define LOW        0x1
 #define HIGH       0x2
-#define HISTORGAM  0x4
+#define HISTOGRAM  0x4
 #define ALL       (LOW | HIGH | HISTOGRAM)
 
-/*  the threshold structures  */
 
-typedef struct _Threshold Threshold;
+/*  local function prototypes  */
 
-struct _Threshold
-{
-  gint x, y;    /*  coords for last mouse click  */
-};
+static void   gimp_threshold_tool_class_init (GimpThresholdToolClass *klass);
+static void   gimp_threshold_tool_init       (GimpThresholdTool      *threshold_tool);
 
+static void   gimp_threshold_tool_destroy    (GtkObject  *object);
 
-/*  threshold action functions  */
-static void   threshold_control               (Tool            *tool,
-					       ToolAction       tool_action,
-					       GDisplay        *gdisp);
+static void   gimp_threshold_tool_initialize (GimpTool   *tool,
+					      GDisplay   *gdisp);
+static void   gimp_threshold_tool_control    (GimpTool   *tool,
+					      ToolAction  action,
+					      GDisplay   *gdisp);
 
 static ThresholdDialog * threshold_dialog_new (void);
 
@@ -96,6 +104,163 @@ static ToolOptions *threshold_options = NULL;
 
 /*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
+
+static GimpImageMapToolClass *parent_class = NULL;
+
+
+/*  functions  */
+
+void
+gimp_threshold_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_THRESHOLD_TOOL,
+                              FALSE,
+			      "gimp:threshold_tool",
+			      _("Threshold"),
+			      _("Reduce image to two colors using a threshold"),
+			      N_("/Image/Colors/Threshold..."), NULL,
+			      NULL, "tools/threshold.html",
+			      (const gchar **) levels_bits);
+}
+
+GtkType
+gimp_threshold_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpThresholdTool",
+        sizeof (GimpThresholdTool),
+        sizeof (GimpThresholdToolClass),
+        (GtkClassInitFunc) gimp_threshold_tool_class_init,
+        (GtkObjectInitFunc) gimp_threshold_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
+
+  object_class->destroy  = gimp_threshold_tool_destroy;
+
+  tool_class->initialize = gimp_threshold_tool_initialize;
+  tool_class->control    = gimp_threshold_tool_control;
+}
+
+static void
+gimp_threshold_tool_init (GimpThresholdTool *bc_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bc_tool);
+
+  if (! threshold_options)
+    {
+      threshold_options = tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_THRESHOLD_TOOL,
+					  (ToolOptions *) threshold_options);
+    }
+}
+
+static void
+gimp_threshold_tool_destroy (GtkObject *object)
+{
+  threshold_dialog_hide ();
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_threshold_tool_initialize (GimpTool *tool,
+				GDisplay *gdisp)
+{
+  if (! gdisp)
+    {
+      threshold_dialog_hide ();
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+    {
+      g_message (_("Threshold does not operate on indexed drawables."));
+      return;
+    }
+
+  /*  The threshold dialog  */
+  if (!threshold_dialog)
+    threshold_dialog = threshold_dialog_new ();
+  else
+    if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
+      gtk_widget_show (threshold_dialog->shell);
+
+  threshold_dialog->low_threshold  = 127;
+  threshold_dialog->high_threshold = 255;
+
+  threshold_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
+  threshold_dialog->color = gimp_drawable_is_rgb (threshold_dialog->drawable);
+  threshold_dialog->image_map =
+    image_map_create (gdisp, threshold_dialog->drawable);
+
+  gimp_drawable_calculate_histogram (threshold_dialog->drawable,
+				     threshold_dialog->hist);
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (threshold_dialog->histogram),
+				    threshold_dialog);
+  histogram_widget_update (threshold_dialog->histogram,
+			   threshold_dialog->hist);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (threshold_dialog->histogram),
+				      threshold_dialog);
+
+  threshold_update (threshold_dialog, ALL);
+
+  if (threshold_dialog->preview)
+    threshold_preview (threshold_dialog);
+}
+
+static void
+gimp_threshold_tool_control (GimpTool   *tool,
+			     ToolAction  action,
+			     GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      threshold_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
 
 
 /*  threshold machinery  */
@@ -163,56 +328,6 @@ threshold (PixelRegion *srcPR,
     }
 }
 
-/*  threshold action functions  */
-
-static void
-threshold_control (Tool       *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      threshold_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-}
-
-Tool *
-tools_new_threshold (void)
-{
-  Tool * tool;
-  Threshold * private;
-
-  /*  The tool options  */
-  if (! threshold_options)
-    {
-      threshold_options = tool_options_new (_("Threshold"));
-      tools_register (THRESHOLD, threshold_options);
-    }
-
-  tool = tools_new_tool (THRESHOLD);
-  private = g_new0 (Threshold, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->control_func = threshold_control;
-
-  return tool;
-}
-
 void
 threshold_dialog_hide (void)
 {
@@ -220,59 +335,6 @@ threshold_dialog_hide (void)
     threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 }
   
-void
-tools_free_threshold (Tool *tool)
-{
-  Threshold * thresh;
-
-  thresh = (Threshold *) tool->private;
-
-  /*  Close the threshold dialog  */
-  threshold_dialog_hide ();
-
-  g_free (thresh);
-}
-
-void
-threshold_initialize (GDisplay *gdisp)
-{
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
-    {
-      g_message (_("Threshold does not operate on indexed drawables."));
-      return;
-    }
-
-  /*  The threshold dialog  */
-  if (!threshold_dialog)
-    threshold_dialog = threshold_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
-      gtk_widget_show (threshold_dialog->shell);
-
-  threshold_dialog->low_threshold  = 127;
-  threshold_dialog->high_threshold = 255;
-
-  threshold_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  threshold_dialog->color = gimp_drawable_is_rgb (threshold_dialog->drawable);
-  threshold_dialog->image_map =
-    image_map_create (gdisp, threshold_dialog->drawable);
-
-  gimp_histogram_calculate_drawable (threshold_dialog->hist,
-				     threshold_dialog->drawable);
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (threshold_dialog->histogram),
-				    threshold_dialog);
-  histogram_widget_update (threshold_dialog->histogram,
-			   threshold_dialog->hist);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (threshold_dialog->histogram),
-				      threshold_dialog);
-
-  threshold_update (threshold_dialog, ALL);
-
-  if (threshold_dialog->preview)
-    threshold_preview (threshold_dialog);
-}
-
 /**********************/
 /*  Threshold dialog  */
 /**********************/
@@ -298,7 +360,7 @@ threshold_dialog_new (void)
   /*  The shell and main vbox  */
   td->shell =
     gimp_dialog_new (_("Threshold"), "threshold",
-		     tools_help_func, NULL,
+		     tool_manager_help_func, NULL,
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 

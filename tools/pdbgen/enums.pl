@@ -433,7 +433,7 @@ package Gimp::CodeGen::enums;
 	},
     TransferMode =>
 	{ contig => 1,
-	  header => 'tools/color_balance.h',
+	  header => 'tools/gimpcolorbalancetool.h',
 	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
 	  mapping => { SHADOWS => '0',
 		       MIDTONES => '1',
@@ -465,7 +465,7 @@ package Gimp::CodeGen::enums;
 	},
     HueRange =>
 	{ contig => 1,
-	  header => 'tools/hue_saturation.h',
+	  header => 'tools/gimphuesaturationtool.h',
 	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
 			  BLUE_HUES MAGENTA_HUES) ],
 	  mapping => { ALL_HUES => '0',

@@ -16,16 +16,40 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BRIGHTNESS_CONTRAST_H__
-#define __BRIGHTNESS_CONTRAST_H__
+#ifndef __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
+#define __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
 
 
-Tool * tools_new_brightness_contrast   (void);
-void   tools_free_brightness_contrast  (Tool     *tool);
+#include "gimpimagemaptool.h"
+
+
+#define GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL            (gimp_brightness_contrast_tool_get_type ())
+#define GIMP_BRIGHTNESS_CONTRAST_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastTool))
+#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
+#define GIMP_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastToolClass))
+#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
+
+
+typedef struct _GimpBrightnessContrastTool      GimpBrightnessContrastTool;
+typedef struct _GimpBrightnessContrastToolClass GimpBrightnessContrastToolClass;
+
+struct _GimpBrightnessContrastTool
+{
+  GimpImageMapTool  parent_instance;
+};
+
+struct _GimpBrightnessContrastToolClass
+{
+  GimpImageMapToolClass  parent_class;
+};
+
+
+void       gimp_brightness_contrast_tool_register (void);
+
+GtkType    gimp_brightness_contrast_tool_get_type (void);
+
 
 void   brightness_contrast_dialog_hide (void);
 
-void   brightness_contrast_initialize  (GDisplay *gdisp);
 
-
-#endif  /*  __BRIGHTNESS_CONTRAST_H__  */
+#endif  /*  __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__  */

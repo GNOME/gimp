@@ -20,12 +20,37 @@
 #define __HISTOGRAM_TOOL_H__
 
 
+#include "gimptool.h"
+
+
 /* FIXME: remove the dependency from pdb/color_cmds.c */
 #include "widgets/widgets-types.h"
 
 
 #define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
+
+
+#define GIMP_TYPE_HISTOGRAM_TOOL            (gimp_histogram_tool_get_type ())
+#define GIMP_HISTOGRAM_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramTool))
+#define GIMP_IS_HISTOGRAM_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_HISTOGRAM_TOOL))
+#define GIMP_HISTOGRAM_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_TOOL, GimpHistogramToolClass))
+#define GIMP_IS_HISTOGRAM_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HISTOGRAM_TOOL))
+
+
+typedef struct _GimpHistogramTool      GimpHistogramTool;
+typedef struct _GimpHistogramToolClass GimpHistogramToolClass;
+
+struct _GimpHistogramTool
+{
+  GimpTool  parent_instance;
+};
+
+struct _GimpHistogramToolClass
+{
+  GimpToolClass  parent_class;
+};
+
 
 typedef struct _HistogramToolDialog HistogramToolDialog;
 
@@ -53,11 +78,12 @@ struct _HistogramToolDialog
 };
 
 
-/*  histogram_tool functions  */
-Tool * tools_new_histogram_tool       (void);
-void   tools_free_histogram_tool      (Tool            *tool);
+void       gimp_histogram_tool_register (void);
 
-void   histogram_tool_initialize      (GDisplay        *gdisp);
+GtkType    gimp_histogram_tool_get_type (void);
+
+
+void   histogram_dialog_hide          (void);
 void   histogram_tool_free            (void);
 void   histogram_tool_histogram_range (HistogramWidget *hw,
 				       gint             start,

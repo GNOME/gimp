@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __HUE_SATURATION_H__
-#define __HUE_SATURATION_H__
+#ifndef __GIMP_HUE_SATURATION_TOOL_H__
+#define __GIMP_HUE_SATURATION_TOOL_H__
+
+
+#include "gimpimagemaptool.h"
 
 
 typedef enum
@@ -30,6 +33,28 @@ typedef enum
   BLUE_HUES,
   MAGENTA_HUES
 } HueRange;
+
+
+#define GIMP_TYPE_HUE_SATURATION_TOOL            (gimp_hue_saturation_tool_get_type ())
+#define GIMP_HUE_SATURATION_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationTool))
+#define GIMP_IS_HUE_SATURATION_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_HUE_SATURATION_TOOL))
+#define GIMP_HUE_SATURATION_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
+#define GIMP_IS_HUE_SATURATION_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HUE_SATURATION_TOOL))
+
+
+typedef struct _GimpHueSaturationTool      GimpHueSaturationTool;
+typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
+
+struct _GimpHueSaturationTool
+{
+  GimpImageMapTool  parent_instance;
+};
+
+struct _GimpHueSaturationToolClass
+{
+  GimpImageMapToolClass  parent_class;
+};
+
 
 typedef struct _HueSaturationDialog HueSaturationDialog;
 
@@ -55,10 +80,10 @@ struct _HueSaturationDialog
 };
 
 
-Tool * tools_new_hue_saturation           (void);
-void   tools_free_hue_saturation          (Tool                 *tool);
+void       gimp_hue_saturation_tool_register (void);
 
-void   hue_saturation_initialize          (GDisplay             *gdisp);
+GtkType    gimp_hue_saturation_tool_get_type (void);
+
 void   hue_saturation_free                (void);
 void   hue_saturation_dialog_hide	  (void);
 void   hue_saturation                     (PixelRegion          *srcPR,

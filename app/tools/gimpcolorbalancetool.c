@@ -24,21 +24,27 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
+
+#include "base/pixel-region.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
+#include "gimpcolorbalancetool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
 
 #include "color_transfer.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 #include "gimpui.h"
 #include "image_map.h"
-#include "pixel_region.h"
-
-#include "color_balance.h"
-#include "tool_options.h"
-#include "tools.h"
 
 #include "libgimp/gimpintl.h"
+
+#define WANT_ADJUSTMENT_BITS
+#include "icons.h"
 
 
 #define CYAN_RED       0x1
@@ -46,27 +52,19 @@
 #define YELLOW_BLUE    0x4
 #define ALL           (CYAN_RED | MAGENTA_GREEN | YELLOW_BLUE)
 
-/*  the color balance structures  */
 
-typedef struct _ColorBalance ColorBalance;
+/*  local function prototypes  */
 
-struct _ColorBalance
-{
-  gint x, y;    /*  coords for last mouse click  */
-};
+static void   gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass);
+static void   gimp_color_balance_tool_init       (GimpColorBalanceTool      *bc_tool);
 
-/*  the color balance tool options  */
-static ToolOptions *color_balance_options = NULL;
+static void   gimp_color_balance_tool_destroy    (GtkObject  *object);
 
-/*  the color balance dialog  */
-static ColorBalanceDialog *color_balance_dialog = NULL;
-
-
-/*  color balance action functions  */
-
-static void   color_balance_control (Tool       *tool,
-				     ToolAction  action,
-				     GDisplay   *gdisp);
+static void   gimp_color_balance_tool_initialize (GimpTool   *tool,
+						  GDisplay   *gdisp);
+static void   gimp_color_balance_tool_control    (GimpTool   *tool,
+						  ToolAction  action,
+						  GDisplay   *gdisp);
 
 static ColorBalanceDialog * color_balance_dialog_new (void);
 
@@ -91,6 +89,163 @@ static void   color_balance_mg_adjustment_update (GtkAdjustment      *adj,
 						  gpointer            data);
 static void   color_balance_yb_adjustment_update (GtkAdjustment      *adj,
 						  gpointer            data);
+
+
+/*  the color balance tool options  */
+static ToolOptions *color_balance_options = NULL;
+
+/*  the color balance dialog  */
+static ColorBalanceDialog *color_balance_dialog = NULL;
+
+static GimpImageMapToolClass *parent_class = NULL;
+
+
+/*  functions  */
+
+void
+gimp_color_balance_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_COLOR_BALANCE_TOOL,
+                              FALSE,
+			      "gimp:color_balance_tool",
+			      _("Color Balance"),
+			      _("Adjust color balance"),
+			      N_("/Image/Colors/Color Balance..."), NULL,
+			      NULL, "tools/color_balance.html",
+			      (const gchar **) adjustment_bits);
+}
+
+GtkType
+gimp_color_balance_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpColorBalanceTool",
+        sizeof (GimpColorBalanceTool),
+        sizeof (GimpColorBalanceToolClass),
+        (GtkClassInitFunc) gimp_color_balance_tool_class_init,
+        (GtkObjectInitFunc) gimp_color_balance_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_IMAGE_MAP_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_MAP_TOOL);
+
+  object_class->destroy  = gimp_color_balance_tool_destroy;
+
+  tool_class->initialize = gimp_color_balance_tool_initialize;
+  tool_class->control    = gimp_color_balance_tool_control;
+}
+
+static void
+gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bc_tool);
+
+  if (! color_balance_options)
+    {
+      color_balance_options = tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_COLOR_BALANCE_TOOL,
+					  (ToolOptions *) color_balance_options);
+    }
+}
+
+static void
+gimp_color_balance_tool_destroy (GtkObject *object)
+{
+  color_balance_dialog_hide ();
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_color_balance_tool_initialize (GimpTool *tool,
+				    GDisplay *gdisp)
+{
+  gint i;
+
+  if (! gdisp)
+    {
+      color_balance_dialog_hide ();
+      return;
+    }
+
+  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+    {
+      g_message (_("Color balance operates only on RGB color drawables."));
+      return;
+    }
+
+  /*  The color balance dialog  */
+  if (!color_balance_dialog)
+    color_balance_dialog = color_balance_dialog_new ();
+  else
+    if (!GTK_WIDGET_VISIBLE (color_balance_dialog->shell))
+      gtk_widget_show (color_balance_dialog->shell);
+
+  for (i = 0; i < 3; i++)
+    {
+      color_balance_dialog->cyan_red[i]      = 0.0;
+      color_balance_dialog->magenta_green[i] = 0.0;
+      color_balance_dialog->yellow_blue[i]   = 0.0;
+    }
+
+  color_balance_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
+  color_balance_dialog->image_map =
+    image_map_create (gdisp, color_balance_dialog->drawable);
+
+  color_balance_update (color_balance_dialog, ALL);
+}
+
+static void
+gimp_color_balance_tool_control (GimpTool   *tool,
+				 ToolAction  action,
+				 GDisplay   *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      color_balance_dialog_hide ();
+      break;
+
+    default:
+      break;
+    }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
 
 /*  color balance machinery  */
 
@@ -152,111 +307,12 @@ color_balance (PixelRegion *srcPR,
     }
 }
 
-/*  color balance action functions  */
-
-static void
-color_balance_control (Tool       *tool,
-		       ToolAction  action,
-		       GDisplay   *gdisp)
-{
-  ColorBalance * color_bal;
-
-  color_bal = (ColorBalance *) tool->private;
-
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      color_balance_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-}
-
-Tool *
-tools_new_color_balance (void)
-{
-  Tool * tool;
-  ColorBalance * private;
-
-  /*  The tool options  */
-  if (!color_balance_options)
-    {
-      color_balance_options = tool_options_new (_("Color Balance"));
-      tools_register (COLOR_BALANCE, color_balance_options);
-    }
-
-  tool = tools_new_tool (COLOR_BALANCE);
-  private = g_new0 (ColorBalance, 1);
-
-  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
-
-  tool->private = (void *) private;
-
-  tool->control_func = color_balance_control;
-
-  return tool;
-}
-
 void
 color_balance_dialog_hide (void)
 {
   if (color_balance_dialog)
     color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 } 
-
-void
-tools_free_color_balance (Tool *tool)
-{
-  ColorBalance * color_bal;
-
-  color_bal = (ColorBalance *) tool->private;
-
-  /*  Close the color select dialog  */
-  color_balance_dialog_hide ();
-
-  g_free (color_bal);
-}
-
-void
-color_balance_initialize (GDisplay *gdisp)
-{
-  gint i;
-
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
-    {
-      g_message (_("Color balance operates only on RGB color drawables."));
-      return;
-    }
-
-  /*  The color balance dialog  */
-  if (!color_balance_dialog)
-    color_balance_dialog = color_balance_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (color_balance_dialog->shell))
-      gtk_widget_show (color_balance_dialog->shell);
-
-  for (i = 0; i < 3; i++)
-    {
-      color_balance_dialog->cyan_red[i]      = 0.0;
-      color_balance_dialog->magenta_green[i] = 0.0;
-      color_balance_dialog->yellow_blue[i]   = 0.0;
-    }
-
-  color_balance_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map =
-    image_map_create (gdisp, color_balance_dialog->drawable);
-
-  color_balance_update (color_balance_dialog, ALL);
-}
 
 /**************************/
 /*  Color Balance dialog  */
@@ -294,7 +350,7 @@ color_balance_dialog_new (void)
 
   /*  The shell and main vbox  */
   cbd->shell = gimp_dialog_new (_("Color Balance"), "color_balance",
-				tools_help_func, NULL,
+				tool_manager_help_func, NULL,
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
