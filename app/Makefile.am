@@ -109,7 +109,7 @@ install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp$(EXEEXT) \
-	&& $(LN_S) gimp-1.3$(EXEEXT) gimp$(EXEEXT)
+	&& $(LN_S) gimp-$(LT_RELEASE)$(EXEEXT) gimp$(EXEEXT)
 endif
 
 uninstall-local:

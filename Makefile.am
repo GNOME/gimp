@@ -25,12 +25,12 @@ SUBDIRS = \
 	docs			\
 	devel-docs
 
-bin_SCRIPTS = gimptool-1.3 @GIMPINSTALL@
+bin_SCRIPTS = gimptool-$(LT_RELEASE) @GIMPINSTALL@
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = gimp-1.3.pc gimpui-1.3.pc
+pkgconfig_DATA = gimp-$(LT_RELEASE).pc gimpui-$(LT_RELEASE).pc
 
-EXTRA_SCRIPTS = gimpinstall-1.3
+EXTRA_SCRIPTS = gimpinstall-$(LT_RELEASE)
 
 EXTRA_DIST = \
 	AUTHORS			\
@@ -61,14 +61,14 @@ DISTCLEANFILES = \
 	intltool-update
 
 
-gimpinstall-1.3:
-	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-1.3
+gimpinstall-@LT_RELEASE@:
+	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-$(LT_RELEASE)
 
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimptool \
-	&& $(LN_S) gimptool-1.3 gimptool
+	&& $(LN_S) gimptool-$(LT_RELEASE) gimptool
 endif
 
 uninstall-local:

@@ -1,9 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-1.3.la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-1.3.la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-1.3.la
-libgimp = ./libgimp-1.3.la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la
+libgimp = ./libgimp-$(LT_RELEASE).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -16,33 +16,33 @@ libgimp_export_symbols = -export-symbols gimp.def
 libgimpui_export_symbols = -export-symbols gimpui.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimp-1.3.dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) .libs/libgimpui-1.3.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimp-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpui-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimp-1.3.dll.a
-	-rm $(DESTDIR)$(libdir)/libgimpui-1.3.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimp-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpui-$(LT_RELEASE).dll.a
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimp-1.3.lib gimpui-1.3.lib 
+noinst_DATA = gimp-$(LT_RELEASE).lib gimpui-$(LT_RELEASE).lib 
 
 install-ms-lib:
-	$(INSTALL) gimp-1.3.lib $(DESTDIR)$(libdir)
-	$(INSTALL) gimpui-1.3.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimp-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpui-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimp-1.3.lib
-	-rm $(DESTDIR)$(libdir)/gimpui-1.3.lib
+	-rm $(DESTDIR)$(libdir)/gimp-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpui-$(LT_RELEASE).lib
 
-gimp-1.3.lib: gimp.def
-	lib -name:libgimp-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
+gimp-@LT_RELEASE@.lib: gimp.def
+	lib -name:libgimp-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
 
-gimpui-1.3.lib: gimpui.def
-	lib -name:libgimpui-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
+gimpui-@LT_RELEASE@.lib: gimpui.def
+	lib -name:libgimpui-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
 
 else
 install-ms-lib:

@@ -14,26 +14,26 @@ gimpcolor_def = gimpcolor.def
 libgimpcolor_export_symbols = -export-symbols gimpcolor.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpcolor-1.3.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpcolor-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpcolor-1.3.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(LT_RELEASE).dll.a
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpcolor-1.3.lib
+noinst_DATA = gimpcolor-$(LT_RELEASE).lib
 
 install-ms-lib:
-	$(INSTALL) gimpcolor-1.3.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpcolor-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpcolor-1.3.lib
+	-rm $(DESTDIR)$(libdir)/gimpcolor-$(LT_RELEASE).lib
 
-gimpcolor-1.3.lib: gimpcolor.def
-	lib -name:libgimpcolor-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
+gimpcolor-@LT_RELEASE@.lib: gimpcolor.def
+	lib -name:libgimpcolor-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
 
 else
 install-ms-lib:

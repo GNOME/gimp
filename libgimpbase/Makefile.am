@@ -9,26 +9,26 @@ gimpbase_def = gimpbase.def
 libgimpbase_export_symbols = -export-symbols gimpbase.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpbase-1.3.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpbase-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpbase-1.3.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpbase-$(LT_RELEASE).dll.a
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpbase-1.3.lib
+noinst_DATA = gimpbase-$(LT_RELEASE).lib
 
 install-ms-lib:
-	$(INSTALL) gimpbase-1.3.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpbase-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpbase-1.3.lib
+	-rm $(DESTDIR)$(libdir)/gimpbase-$(LT_RELEASE).lib
 
-gimpbase-1.3.lib: gimpbase.def
-	lib -name:libgimpbase-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpbase.def -out:$@
+gimpbase-@LT_RELEASE@.lib: gimpbase.def
+	lib -name:libgimpbase-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpbase.def -out:$@
 
 else
 install-ms-lib:

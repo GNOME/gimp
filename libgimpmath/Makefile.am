@@ -14,26 +14,26 @@ gimpmath_def = gimpmath.def
 libgimpmath_export_symbols = -export-symbols gimpmath.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpmath-1.3.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpmath-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpmath-1.3.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpmath-$(LT_RELEASE).dll.a
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpmath-1.3.lib
+noinst_DATA = gimpmath-$(LT_RELEASE).lib
 
 install-ms-lib:
-	$(INSTALL) gimpmath-1.3.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpmath-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpmath-1.3.lib
+	-rm $(DESTDIR)$(libdir)/gimpmath-$(LT_RELEASE).lib
 
-gimpmath-1.3.lib: gimpmath.def
-	lib -name:libgimpmath-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmath.def -out:$@
+gimpmath-@LT_RELEASE@.lib: gimpmath.def
+	lib -name:libgimpmath-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmath.def -out:$@
 
 else
 install-ms-lib:

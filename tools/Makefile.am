@@ -40,13 +40,13 @@ EXTRA_DIST = \
 
 install-exec-hook:
 if DEFAULT_BINARY
-	if test -f "$(DESTDIR)$(bindir)/gimp-remote-1.3"; then \
+	if test -f "$(DESTDIR)$(bindir)/gimp-remote-$(LT_RELEASE)"; then \
 	  echo "cd $(DESTDIR)$(bindir)"; \
 	  cd $(DESTDIR)$(bindir); \
 	  echo "rm -f gimp-remote"; \
 	  rm -f gimp-remote; \
-	  echo "$(LN_S) gimp-remote-1.3 gimp-remote"; \
-	  $(LN_S) gimp-remote-1.3 gimp-remote; \
+	  echo "$(LN_S) gimp-remote-$(LT_RELEASE) gimp-remote"; \
+	  $(LN_S) gimp-remote-$(LT_RELEASE) gimp-remote; \
 	fi
 endif
 

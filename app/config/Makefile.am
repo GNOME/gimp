@@ -78,7 +78,7 @@ gimprc: gimpconfig-dump
 	./$< --system-gimprc > gimprc
 
 man: gimpconfig-dump
-	./$< --man-page > gimprc-1.3.5.in
+	./$< --man-page > gimprc-$(LT_RELEASE).5.in
 
 
 #
@@ -92,7 +92,7 @@ test_config_DEPENDENCIES = $(gimpconfig_dependencies)
 test_config_LDADD =  $(GLIB_LIBS) $(gimpconfig_libs)
 
 
-CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc-1.3.5.in
+CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc-$(LT_RELEASE).5.in
 
 
 #
@@ -101,5 +101,5 @@ CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc-1.3.5.in
 #
 
 dist-hook: gimpconfig-dump
-	./$< --man-page      > $(top_srcdir)/docs/gimprc-1.3.5.in
+	./$< --man-page      > $(top_srcdir)/docs/gimprc-$(LT_RELEASE).5.in
 	./$< --system-gimprc > $(top_srcdir)/etc/gimprc
