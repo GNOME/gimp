@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKAGE="gimp14-script-fu"
+PACKAGE="gimp20-script-fu"
 PATH="$PATH:.."
 
 echo "Calling intltool-update for you ..."

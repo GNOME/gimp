@@ -1,3 +1,7 @@
+2003-08-17  Manish Singh  <yosh@gimp.org>
+                                                                                
+	* update.sh: s/gimp14/gimp20/
+
 2003-08-13  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation by 
