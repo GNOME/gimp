@@ -598,7 +598,7 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
  * srclast, srcthis, and srcnext from [-bpp] to [width*bpp-1].
  * Beware if you use this code anywhere else!
  */
-static void
+static inline void
 nlfiltRow(guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
           gint width, gint bpp, gint filtno) {
 

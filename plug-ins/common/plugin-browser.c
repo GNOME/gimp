@@ -228,7 +228,6 @@ details_callback (GtkWidget *widget,
     }
   else
     {
-      GtkWidget *p = GTK_WIDGET (pdesc->paned)->parent;
       GTK_PANED (pdesc->paned)->child1_resize = TRUE;
       GTK_PANED (pdesc->paned)->child2_resize = TRUE;
 
@@ -516,7 +515,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
     {
       gtk_tree_model_get (model, &iter, 
                           TREE_PINFO_COLUMN, &pinfo,
-                          TREE_MPATH_COLUMN,  &mpath,
+                          TREE_MPATH_COLUMN, &mpath,
                           -1);
     }
 
