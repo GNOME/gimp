@@ -31,6 +31,11 @@
 
 /* Change log:-
  * 0.9 First public release. 
+ * 0.95 Second release.
+ * 
+ * 0.96 Added patch from  Rob Saunders (rob@arch.usyd.EDU.AU) 
+ *      that introduces a isometric type grid
+ *      Removed use of gtk_idle* stuff on position update. Not required.
  */
 
 #include <stdio.h>
@@ -160,7 +165,7 @@ static void      draw_grid(GtkWidget *widget,gpointer   data);
 static void      gfig_new_gc(void);
 static void      find_grid_pos(GdkPoint *p,GdkPoint *gp, guint state);
 static gint      brush_list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
-
+static gint      calculate_point_to_line_distance(GdkPoint *p, GdkPoint *A, GdkPoint *B, GdkPoint *I);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -194,6 +199,7 @@ typedef enum DobjType {
 typedef enum Gridtype {
   RECT_GRID = 0,
   POLAR_GRID,
+  ISO_GRID,
 } GRIDTYPE;
 
 typedef enum DrawonLayers {
@@ -601,7 +607,7 @@ run    (gchar    *name,
 	gint     *nreturn_vals,
 	GParam  **return_vals)
 {
-  static GParam values[1];
+  GParam * values = g_new(GParam, 1);
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
@@ -1238,7 +1244,13 @@ save_options(FILE *fp)
   /* Save options */
   fprintf(fp,"<OPTIONS>\n");
   fprintf(fp,"GridSpacing: %d\n",selvals.opts.gridspacing);
-  fprintf(fp,"GridType: %s\n",(selvals.opts.gridtype == RECT_GRID)?"RECT_GRID":"POLAR_GRID");
+  if(selvals.opts.gridtype == RECT_GRID)
+     fprintf(fp,"GridType: RECT_GRID\n");
+  else if(selvals.opts.gridtype == POLAR_GRID)
+     fprintf(fp,"GridType: POLAR_GRID\n");
+  else if(selvals.opts.gridtype == ISO_GRID)
+     fprintf(fp,"GridType: ISO_GRID\n");
+  else fprintf(fp,"GridType: RECT_GRID\n"); /* If in doubt, default to RECT_GRID */
   fprintf(fp,"DrawGrid: %s\n",(selvals.opts.drawgrid)?"TRUE":"FALSE");
   fprintf(fp,"Snap2Grid: %s\n",(selvals.opts.snap2grid)?"TRUE":"FALSE");
   fprintf(fp,"LockOnGrid: %s\n",(selvals.opts.lockongrid)?"TRUE":"FALSE");
@@ -1322,8 +1334,14 @@ update_options(GFIGOBJ *old_obj)
 						 GTK_MENU(gtk_option_menu_get_menu(
 										   GTK_OPTION_MENU(gfig_opt_widget.gridtypemenu)))),(gpointer)GRID_TYPE_MENU);
 #ifdef DEBUG
-      printf("Gridtype set in options to %s\n",
-	     (current_obj->opts.gridtype == RECT_GRID)?"RECT_GRID":"POLAR_GRID");
+      printf("Gridtype set in options to ");
+      if (current_obj->opts.gridtype == RECT_GRID)
+	 printf("RECT_GRID\n");
+      else if (current_obj->opts.gridtype == POLAR_GRID)
+	 printf("POLAR_GRID\n");
+      else if (current_obj->opts.gridtype == ISO_GRID)
+	 printf("ISO_GRID\n");
+      else printf("NONE\n");
 #endif /* DEBUG */
     }
 }
@@ -1401,6 +1419,8 @@ load_options(GFIGOBJ *gfig,FILE *fp)
 	    gfig->opts.gridtype = RECT_GRID;
 	  else if(!strcmp(opt_buf,"POLAR_GRID"))
 	    gfig->opts.gridtype = POLAR_GRID;
+	  else if(!strcmp(opt_buf,"ISO_GRID"))
+	    gfig->opts.gridtype = ISO_GRID;
 	  else
 	    return(-1);
 	}
@@ -3728,8 +3748,14 @@ gridtype_menu_callback (GtkWidget *widget, gpointer data)
   if(mtype == GRID_TYPE_MENU)
     {
 #ifdef DEBUG
-      printf("Gridtype set to %s\n",
-	     ((GRIDTYPE)gtk_object_get_user_data (GTK_OBJECT (widget)) == RECT_GRID)?"RECT_GRID":"POLAR_GRID");
+       printf("Gridtype set to ");
+      if (current_obj->opts.gridtype == RECT_GRID)
+	 printf("RECT_GRID\n");
+      else if (current_obj->opts.gridtype == POLAR_GRID)
+	 printf("POLAR_GRID\n");
+      else if (current_obj->opts.gridtype == ISO_GRID)
+	 printf("ISO_GRID\n");
+      else printf("NONE\n");
 #endif /* DEBUG */
       selvals.opts.gridtype = (GRIDTYPE)gtk_object_get_user_data (GTK_OBJECT (widget));
     }
@@ -3768,6 +3794,14 @@ option_page_menu_gridtype(void)
   gtk_widget_show (menuitem);
   gtk_menu_append (GTK_MENU (menu), menuitem);
 
+  menuitem = gtk_menu_item_new_with_label("Isometric");
+  gtk_object_set_user_data (GTK_OBJECT (menuitem), (gpointer) ISO_GRID);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+		          (GtkSignalFunc) gridtype_menu_callback,
+		      (gpointer)GRID_TYPE_MENU);
+  gtk_widget_show (menuitem);
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+   
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gtk_widget_show (option_menu);
 
@@ -4240,7 +4274,7 @@ gfig_pos_update_labels(gpointer data)
 {
   static gchar buf[256];
 
-  gtk_idle_remove(pos_tag);
+  /*gtk_idle_remove(pos_tag);*/
   pos_tag = -1;  
 
   if(x_pos_val < 0)
@@ -4273,7 +4307,8 @@ gfig_pos_update(gint x , gint y)
 
   if(update && pos_tag == -1 && selvals.showpos)
     {
-      pos_tag = gtk_idle_add((GtkFunction)gfig_pos_update_labels,NULL);
+      /*pos_tag = gtk_idle_add((GtkFunction)gfig_pos_update_labels,NULL);*/
+      gfig_pos_update_labels(NULL);
     }
 }
 
@@ -5767,7 +5802,7 @@ about_button_press(GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new("Release 0.95");
+  label = gtk_label_new("Release 0.96");
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -5783,6 +5818,16 @@ about_button_press(GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   label = gtk_label_new("http://www.picnic.demon.co.uk/");
+  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
+  label = gtk_label_new("Isometric grid By Rob Saunders");
+  gtk_misc_set_padding (GTK_MISC (label), 2, 2);
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
+  label = gtk_label_new("rob@arch.usyd.EDU.AU");
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -6558,7 +6603,7 @@ dialog_update_preview(void)
   }
 }
 
-void
+static void
 gfig_new_gc()
 {
  GdkColor fg, bg;
@@ -6612,6 +6657,7 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
   static GdkPoint cons_pnt;
   static gdouble cons_radius;
   static gdouble cons_ang;
+  static gboolean cons_center;
   
   if(selvals.opts.gridtype == RECT_GRID)
     {
@@ -6637,7 +6683,7 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 	  cons_pnt = *gp; /* Structure copy */
 	}
     }
-  else
+  else if(selvals.opts.gridtype == POLAR_GRID)
     { 
       gdouble ang_grid;
       gdouble ang_radius;
@@ -6657,6 +6703,7 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 	  /* DEAD CENTER */
 	  gp->x = preview_width/2;
 	  gp->y = preview_height/2;
+	  if (!is_butt3) cons_center = TRUE;
 #ifdef DEBUG
 	  printf("Dead center\n");
 #endif /* DEBUG */
@@ -6681,23 +6728,147 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 
       if(is_butt3)
 	{
-	  if(fabs(rounded_angle - cons_ang) > ang_grid/2)
+	  if(!cons_center)
 	    {
-	      gp->x = (gint)rint((cons_radius*cos(rounded_angle))) + preview_width/2;
-	      gp->y = -(gint)rint((cons_radius*sin(rounded_angle))) + preview_height/2;
-	    }
-	  else
-	    {
-	      gp->x = (gint)rint((rounded_radius*cos(cons_ang))) + preview_width/2;
-	      gp->y = -(gint)rint((rounded_radius*sin(cons_ang))) + preview_height/2;
+	      if(fabs(rounded_angle - cons_ang) > ang_grid/2)
+		{
+		  gp->x = (gint)rint((cons_radius*cos(rounded_angle))) + preview_width/2;
+		  gp->y = -(gint)rint((cons_radius*sin(rounded_angle))) + preview_height/2;
+		}
+	      else
+		{
+		  gp->x = (gint)rint((rounded_radius*cos(cons_ang))) + preview_width/2;
+		  gp->y = -(gint)rint((rounded_radius*sin(cons_ang))) + preview_height/2;
+		}
 	    }
 	}
       else
 	{
 	  cons_radius = rounded_radius;
 	  cons_ang = rounded_angle;
+	  cons_center = FALSE;
 	}
     }
+   else if(selvals.opts.gridtype == ISO_GRID)
+     {
+	if(is_butt3)
+	  {
+	     static GdkPoint b_pnt;
+	     static GdkPoint i_pnt;
+	     static GdkPoint ii_pnt;
+	     gint d;
+	     gint dd;
+
+	     b_pnt.x = cons_pnt.x;
+	     b_pnt.y = cons_pnt.y + preview_width;
+	     d = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &i_pnt);
+
+	     b_pnt.x = cons_pnt.x;
+	     b_pnt.y = cons_pnt.y - preview_width;
+	     dd = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &ii_pnt);
+	     if (dd < d)
+	     {
+		i_pnt.x = ii_pnt.x;
+		i_pnt.y = ii_pnt.y;
+		d = dd;
+	     }
+
+	     b_pnt.x = cons_pnt.x + preview_width;
+	     b_pnt.y = cons_pnt.y + preview_width/2;
+	     dd = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &ii_pnt);
+	     if (dd < d)
+	     {
+		i_pnt.x = ii_pnt.x;
+		i_pnt.y = ii_pnt.y;
+		d = dd;
+	     }
+
+	     b_pnt.x = cons_pnt.x + preview_width;
+	     b_pnt.y = cons_pnt.y - preview_width/2;
+	     dd = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &ii_pnt);
+	     if (dd < d)
+	     {
+		i_pnt.x = ii_pnt.x;
+		i_pnt.y = ii_pnt.y;
+		d = dd;
+	     }
+
+	     b_pnt.x = cons_pnt.x - preview_width;
+	     b_pnt.y = cons_pnt.y + preview_width/2;
+	     dd = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &ii_pnt);
+	     if (dd < d)
+	     {
+		i_pnt.x = ii_pnt.x;
+		i_pnt.y = ii_pnt.y;
+		d = dd;
+	     }
+
+	     b_pnt.x = cons_pnt.x - preview_width;
+	     b_pnt.y = cons_pnt.y - preview_width/2;
+	     dd = calculate_point_to_line_distance(p, &cons_pnt, &b_pnt, &ii_pnt);
+	     if (dd < d)
+	     {
+		i_pnt.x = ii_pnt.x;
+		i_pnt.y = ii_pnt.y;
+		d = dd;
+	     }
+
+	     x = i_pnt.x;
+	     y = i_pnt.y;
+	  }
+
+	if(x % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
+	  x += selvals.opts.gridspacing;
+
+	gp->x = (x/selvals.opts.gridspacing)*selvals.opts.gridspacing;
+
+	if (((gp->x/selvals.opts.gridspacing) % 2) != 0)
+	  {
+	     y -= selvals.opts.gridspacing/2;
+
+	     if(y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
+	       y += selvals.opts.gridspacing;
+	
+	     gp->y = (selvals.opts.gridspacing/2) + ((y/selvals.opts.gridspacing)*selvals.opts.gridspacing);
+	  }
+	else
+	  {
+	     if(y % selvals.opts.gridspacing > selvals.opts.gridspacing/2)
+	       y += selvals.opts.gridspacing;
+	
+	     gp->y = (y/selvals.opts.gridspacing)*selvals.opts.gridspacing;
+	  }
+
+	if (!is_butt3)
+	  {
+	     /* Store the point since it might be used later */
+	     cons_pnt = *gp; /* Structure copy */
+	  }
+     }
+}
+
+/* Calculate distance from a point to a line
+ * Taken from the newsgroup comp.graphics.algorithms FAQ. */
+static int
+calculate_point_to_line_distance(GdkPoint *p, GdkPoint *A, GdkPoint *B, GdkPoint *I)
+{
+   gint L2;
+   gint L;
+
+   L2 = ((B->x - A->x)*(B->x - A->x)) + ((B->y - A->y)*(B->y - A->y));
+   L = (gint) sqrt(L2);
+
+   /* gint r; */
+   /* gint s; */
+   /* r = ((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))/L2; */
+   /* s = ((A->y - p->y)*(B->x - A->x) - (A->x - p->x)*(B->y - A->y))/L2; */
+
+   /* Let I be the point of perpendicular projection of C onto AB. */
+
+   I->x = A->x + (((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))*(B->x - A->x))/L2;
+   I->y = A->y + (((A->y - p->y)*(A->y - B->y) - (A->x - p->x)*(B->x - A->x))*(B->y - A->y))/L2;
+
+   return abs((((A->y - p->y)*(B->x - A->x)) - ((A->x - p->x)*(B->y - A->y)))*L);
 }
 
 /* Given a point x,y draw a circle */
@@ -6916,6 +7087,59 @@ draw_grid_sq(GdkGC *drawgc)
     }
 }
 
+static void
+draw_grid_iso(GdkGC *drawgc)
+{
+   gint step;
+   gint loop;
+
+   gint diagonal_start;
+   gint diagonal_end;
+   gint diagonal_width;
+   gint diagonal_height;
+   
+   step = selvals.opts.gridspacing;
+   
+   /* Draw the vertical lines */
+   for (loop = 0 ; loop < preview_width ; loop += step)
+     {
+	gdk_draw_line(gfig_preview->window,
+		      drawgc,
+		      (gint)loop,
+		      (gint)0,
+		      (gint)loop,
+		      (gint)preview_height);
+     }
+
+   diagonal_start = preview_width/2;
+   diagonal_start = diagonal_start - (diagonal_start % step);
+   diagonal_start = -diagonal_start;
+   
+   diagonal_end = preview_height + (preview_width/2);
+   diagonal_end = diagonal_end - (diagonal_end % step);
+   
+   diagonal_width = preview_width;
+   diagonal_height = diagonal_width/2;
+   
+   /* Draw diagonal lines */
+   for (loop = diagonal_start ; loop < diagonal_end ; loop += step)
+     {
+	gdk_draw_line(gfig_preview->window,
+		      drawgc,
+		      (gint)0,
+		      (gint)loop,
+		      (gint)diagonal_width,
+		      (gint)loop + diagonal_height);
+
+	gdk_draw_line(gfig_preview->window,
+		      drawgc,
+		      (gint)0,
+		      (gint)loop,
+		      (gint)diagonal_width,
+		      (gint)loop - diagonal_height);
+     }
+}
+
 static GdkGC *
 gfig_get_grid_gc(GtkWidget *w, gint gctype)
 {
@@ -6968,8 +7192,10 @@ draw_grid(GtkWidget *widget,
 
   if(selvals.opts.gridtype == RECT_GRID)
     draw_grid_sq(drawgc);
-  else
+  else if(selvals.opts.gridtype == POLAR_GRID)
     draw_grid_polar(drawgc);
+  else if(selvals.opts.gridtype == ISO_GRID)
+    draw_grid_iso(drawgc);
 }
 
 static void
@@ -11530,7 +11756,7 @@ d_load_bezier(FILE *from)
 
 static fp_pnt_cnt = 0;
 static fp_pnt_chunk = 0;
-gdouble *fp_pnt_pnts = NULL;;
+gdouble *fp_pnt_pnts = NULL;
 
 
 static void
@@ -12065,7 +12291,7 @@ draw_one_obj(DOBJECT * obj)
   obj->drawfunc(obj);
 }
 
-void
+static void
 draw_objects(DALLOBJS * objs,gint show_single)
 {
   /* Show_single - only one object to draw Unless shift 

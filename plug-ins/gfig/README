@@ -4,7 +4,19 @@ GFig
 Andy Thomas (alt@picnic.demon.co.uk).
 http://www.picnic.demon.co.uk. 
 
-(This README could still do with expanding).
+Release 0.96 3.2.98
+~~~~~~~~~~~~~~~~~~~
+
+Change summary from 0.95
+~~~~~~~~~~~~~~~~~~~~~~~~
+Only a few changes.
+
+1) Updated to work with version gtk+0.99.3
+2) New grid type (isometric). Thanks to Rob Saunders (rob@arch.usyd.EDU.AU) 
+   for this patch.
+3) Cleaned up code to work on HP-UX system. 
+   (Thanks to "Rafael E. Herrera" <raffo@neuronet.pitt.edu> for those patches).
+
 
 Release 0.95 14.11.97
 ~~~~~~~~~~~~~~~~~~~~~
@@ -55,7 +67,9 @@ already present in the GIMP itself.
 
 Patch file
 ++++++++++
+*************************************************
 ONLY required for GIMP <= 0.99.14
+*************************************************
 
 All released up to and including 0.99.14 contain a bug in the paintbrush.c code.
 I have submitted a patch to correct this fault. If you have NOT applied 

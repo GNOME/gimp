@@ -1,3 +1,10 @@
+Fri Feb 13 02:00:01 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.c
+	* app/menus.c: fixes for the g_string -> g_str change in glib
+
+        * updated gfig
+
 Thu Feb 12 13:10:50 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*libgimp/gimp.h
