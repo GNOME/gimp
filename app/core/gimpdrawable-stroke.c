@@ -125,7 +125,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
       /* Get the interpolated version of this stroke, and add it to our
        * scanconvert.
        */
-      coords = gimp_stroke_interpolate (stroke, 1, &closed);
+      coords = gimp_stroke_interpolate (stroke, 0.2, &closed);
 
       if (coords && coords->len)
         {
@@ -150,11 +150,6 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
       gimp_scan_convert_free (scan_convert);
       return;
     }
-
-  /*
-  dash_array = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), dashes_len);
-  dash_array = g_array_prepend_vals (dash_array, &dashes, dashes_len);
-  */
 
   gimp_scan_convert_stroke (scan_convert, width, join, cap, 10.0,
                             0.0, dash_array);

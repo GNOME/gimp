@@ -203,41 +203,42 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize          = gimp_vectors_finalize;
+  object_class->finalize           = gimp_vectors_finalize;
+                                  
+  gimp_object_class->get_memsize   = gimp_vectors_get_memsize;
+                                  
+  viewable_class->get_new_preview  = gimp_vectors_get_new_preview;
+  viewable_class->default_stock_id = "gimp-path";
 
-  gimp_object_class->get_memsize  = gimp_vectors_get_memsize;
-
-  viewable_class->get_new_preview = gimp_vectors_get_new_preview;
-
-  item_class->duplicate           = gimp_vectors_duplicate;
-  item_class->convert             = gimp_vectors_convert;
-  item_class->translate           = gimp_vectors_translate;
-  item_class->scale               = gimp_vectors_scale;
-  item_class->resize              = gimp_vectors_resize;
-  item_class->flip                = gimp_vectors_flip;
-  item_class->rotate              = gimp_vectors_rotate;
-  item_class->transform           = gimp_vectors_transform;
-  item_class->stroke              = gimp_vectors_stroke;
-  item_class->default_name        = _("Path");
-  item_class->rename_desc         = _("Rename Path");
-
-  klass->freeze                   = NULL;
-  klass->thaw                     = gimp_vectors_real_thaw;
-
-  klass->stroke_add               = gimp_vectors_real_stroke_add;
-  klass->stroke_remove            = gimp_vectors_real_stroke_remove;
-  klass->stroke_get               = gimp_vectors_real_stroke_get;
-  klass->stroke_get_next          = gimp_vectors_real_stroke_get_next;
-  klass->stroke_get_length        = gimp_vectors_real_stroke_get_length;
-
-  klass->anchor_get               = gimp_vectors_real_anchor_get;
-  klass->anchor_delete            = gimp_vectors_real_anchor_delete;
-
-  klass->get_length               = gimp_vectors_real_get_length;
-  klass->get_distance             = gimp_vectors_real_get_distance;
-  klass->interpolate              = gimp_vectors_real_interpolate;
-
-  klass->make_bezier              = gimp_vectors_real_make_bezier;
+  item_class->duplicate            = gimp_vectors_duplicate;
+  item_class->convert              = gimp_vectors_convert;
+  item_class->translate            = gimp_vectors_translate;
+  item_class->scale                = gimp_vectors_scale;
+  item_class->resize               = gimp_vectors_resize;
+  item_class->flip                 = gimp_vectors_flip;
+  item_class->rotate               = gimp_vectors_rotate;
+  item_class->transform            = gimp_vectors_transform;
+  item_class->stroke               = gimp_vectors_stroke;
+  item_class->default_name         = _("Path");
+  item_class->rename_desc          = _("Rename Path");
+                                  
+  klass->freeze                    = NULL;
+  klass->thaw                      = gimp_vectors_real_thaw;
+                                  
+  klass->stroke_add                = gimp_vectors_real_stroke_add;
+  klass->stroke_remove             = gimp_vectors_real_stroke_remove;
+  klass->stroke_get                = gimp_vectors_real_stroke_get;
+  klass->stroke_get_next           = gimp_vectors_real_stroke_get_next;
+  klass->stroke_get_length         = gimp_vectors_real_stroke_get_length;
+                                  
+  klass->anchor_get                = gimp_vectors_real_anchor_get;
+  klass->anchor_delete             = gimp_vectors_real_anchor_delete;
+                                  
+  klass->get_length                = gimp_vectors_real_get_length;
+  klass->get_distance              = gimp_vectors_real_get_distance;
+  klass->interpolate               = gimp_vectors_real_interpolate;
+                                  
+  klass->make_bezier               = gimp_vectors_real_make_bezier;
 }
 
 static void

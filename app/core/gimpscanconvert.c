@@ -313,7 +313,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
     }
 
   stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
-                                 width, miter, 1.0);
+                                 width, miter, 0.2);
 
   sc->svp = stroke;
 }

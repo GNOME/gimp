@@ -182,7 +182,7 @@ static ProcArg path_get_current_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "image",
-    "The ID of the image to get the current paths from"
+    "The ID of the image to get the current path from"
   }
 };
 
@@ -258,7 +258,7 @@ static ProcArg path_set_current_inargs[] =
 static ProcRecord path_set_current_proc =
 {
   "gimp_path_set_current",
-  "List the paths associated with the passed image.",
+  "Sets the current path associated with the passed image.",
   "List the paths associated with the passed image.",
   "Andy Thomas",
   "Andy Thomas",
@@ -318,7 +318,7 @@ static ProcArg path_delete_inargs[] =
 static ProcRecord path_delete_proc =
 {
   "gimp_path_delete",
-  "Delete the named paths associated with the passed image.",
+  "Delete the named path associated with the passed image.",
   "Delete the named path.",
   "Andy Thomas",
   "Andy Thomas",
@@ -857,7 +857,7 @@ static ProcArg path_set_tattoo_inargs[] =
 static ProcRecord path_set_tattoo_proc =
 {
   "gimp_path_set_tattoo",
-  "Sets the tattoo associated with the name path.",
+  "Sets the tattoo associated with the named path.",
   "This procedure sets the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.",
   "Andy Thomas",
   "Andy Thomas",
@@ -1007,7 +1007,7 @@ static ProcArg path_get_locked_outargs[] =
 static ProcRecord path_get_locked_proc =
 {
   "gimp_path_get_locked",
-  "Returns the locked status associated with the name path.",
+  "Returns the locked status associated with the named path.",
   "This procedure returns the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
   "Andy Thomas",
   "Andy Thomas",
@@ -1075,7 +1075,7 @@ static ProcArg path_set_locked_inargs[] =
 static ProcRecord path_set_locked_proc =
 {
   "gimp_path_set_locked",
-  "Set the locked status associated with the name path.",
+  "Set the locked status associated with the named path.",
   "This procedure sets the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
   "Andy Thomas",
   "Andy Thomas",

@@ -1,3 +1,29 @@
+2003-09-28  Simon Budig  <simon@gimp.org>
+
+	"The last of the Oldenburg commits"
+
+	Thanks to the team of the Oldenburg Linux Developers Meeting 2003
+	for providing a nice hacking environment.
+
+	* app/vectors/gimpvectors.c: Add a default stock_id.
+
+	* app/widgets/gimppreviewrenderervectors.[ch]: New Widget
+	to render the preview of vectors. Just renders a stock item
+	now, since I was unable to figure out how to properly draw
+	in the GtkWidget.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: Changed accordingly.
+
+	* app/widgets/gimppreviewrenderer-utils.c: Use the new widget.
+
+	* app/core/gimpscanconvert.c
+	* app/core/gimpdrawable-stroke.c: Use higher prescision for
+	libart-stroking vectors. Reduces artefacts.
+
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.c: Regenerated after Tors changes.
+
 2003-09-28  Tor Lillqvist  <tml@iki.fi>
 
 	* tools/pdbgen/pdb/paths.pdb: Fix some documentation strings.

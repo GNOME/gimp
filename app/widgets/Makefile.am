@@ -140,6 +140,8 @@ libappwidgets_a_sources = \
 	gimppreviewrendererimage.h	\
 	gimppreviewrendererlayer.c	\
 	gimppreviewrendererlayer.h	\
+	gimppreviewrenderervectors.c	\
+	gimppreviewrenderervectors.h	\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpselectioneditor.c		\
