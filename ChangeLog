@@ -1,3 +1,9 @@
+2000-12-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/README
+	* plug-ins/print/RELNOTES
+	* plug-ins/print/print-util.c: Updated to bugfix release 4.0.4
+
 2000-11-30  Andy Thomas <alt@gimp.org>
 
 	* app/curves.c

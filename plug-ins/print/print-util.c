@@ -293,7 +293,7 @@ update_cmyk(unsigned short *rgb)
   int y = 65535 - rgb[2];
   int nc, nm, ny;
   int k;
-  if (c == m && c == y)
+  if (c == 0 && m == 0 && y == 0)
     return;
   k = FMIN(FMIN(c, m), y);
 

@@ -7,6 +7,19 @@ the Print plugin -- they use the identical code base.  Please read
 Ghost/README and CUPS/README.txt for more information on this.
 
 
+Gimp-Print 4.0.4 contains the following fixes over Gimp-Print 4.0.3:
+
+1) The gimp-print configure script failed on version of the Gimp older
+   than 1.1.20 or thereabouts, give or take a few versions.  That
+   should now work correctly.  This bug was present in 4.0b2 and was
+   fixed in 4.0b3; it reappeared due to a system upgrade on the build
+   system.
+
+2) A bug in the color conversion routine caused very serious
+   posterization effects in certain images (specifically, in regions
+   of very low saturation) in Photograph mode.
+
+
 Gimp-Print 4.0.3 contains the following fixes over Gimp-Print 4.0.2:
 
 1) The fix to the GhostScript driver in 4.0.2 broke the handling of
