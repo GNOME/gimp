@@ -22,6 +22,7 @@
 #include <glib.h>
 
 #include "gimpcolor.h"
+#include "gimpcolorspace.h"
 #include "gimpmath.h"
 
 
@@ -43,6 +44,32 @@ gimp_rgb_set (GimpRGB *rgb,
   rgb->r = r;
   rgb->g = g;
   rgb->b = b;
+}
+
+void
+gimp_rgb_set_uchar (GimpRGB *rgb,
+		    guchar   r,
+		    guchar   g,
+		    guchar   b)
+{
+  g_return_if_fail (rgb != NULL);
+
+  rgb->r = (gdouble) r / 255.0;
+  rgb->g = (gdouble) g / 255.0;
+  rgb->b = (gdouble) b / 255.0;
+}
+
+void
+gimp_rgb_get_uchar (const GimpRGB *rgb,
+		    guchar        *r,
+		    guchar        *g,
+		    guchar        *b)
+{
+  g_return_if_fail (rgb != NULL);
+
+  if (r) *r = rgb->r * 255.999;
+  if (g) *g = rgb->g * 255.999;
+  if (b) *b = rgb->b * 255.999;
 }
 
 void
@@ -136,6 +163,15 @@ gimp_rgb_gamma (GimpRGB *rgb,
   rgb->b = pow (rgb->b, ig);
 }
 
+gdouble
+gimp_rgb_intensity (const GimpRGB *rgb)
+{
+  g_return_val_if_fail (rgb != NULL, 0.0);
+
+  return (INTENSITY_RED   * rgb->r + 
+	  INTENSITY_GREEN * rgb->g + 
+	  INTENSITY_BLUE  * rgb->b);
+}
 
 /*  RGBA functions  */
 
@@ -152,6 +188,36 @@ gimp_rgba_set (GimpRGB *rgba,
   rgba->g = g;
   rgba->b = b;
   rgba->a = a;
+}
+
+void
+gimp_rgba_set_uchar (GimpRGB *rgba,
+		     guchar   r,
+		     guchar   g,
+		     guchar   b,
+		     guchar   a)
+{
+  g_return_if_fail (rgba != NULL);
+
+  rgba->r = (gdouble) r / 255.0;
+  rgba->g = (gdouble) g / 255.0;
+  rgba->b = (gdouble) b / 255.0;
+  rgba->a = (gdouble) a / 255.0;
+}
+
+void
+gimp_rgba_get_uchar (const GimpRGB *rgba,
+		     guchar        *r,
+		     guchar        *g,
+		     guchar        *b,
+		     guchar        *a)
+{
+  g_return_if_fail (rgba != NULL);
+
+  if (r) *r = rgba->r * 255.999;
+  if (g) *g = rgba->g * 255.999;
+  if (b) *b = rgba->b * 255.999;
+  if (a) *a = rgba->a * 255.999;
 }
 
 void
@@ -250,3 +316,35 @@ gimp_rgba_gamma (GimpRGB *rgba,
   rgba->b = pow (rgba->b, ig);
   rgba->a = pow (rgba->a, ig);
 }
+
+
+/*  These functions will become the default one day  */
+
+gboolean
+gimp_palette_set_foreground_rgb (const GimpRGB *rgb)
+{
+  guchar r, g, b;
+
+  g_return_val_if_fail (rgb != NULL, FALSE);
+
+  gimp_rgb_get_uchar (rgb, &r, &g, &b);
+
+  return gimp_palette_set_foreground (r, g, b);
+}
+
+gboolean
+gimp_palette_get_foreground_rgb (GimpRGB *rgb)
+{
+  guchar r, g, b;
+  
+  g_return_val_if_fail (rgb != NULL, FALSE);
+
+  if (gimp_palette_get_foreground (&r, &g, &b))
+    {
+      gimp_rgb_set_uchar (rgb, r, g, b);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+

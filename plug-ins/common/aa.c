@@ -94,7 +94,7 @@ query (void)
 			  save_args, NULL);
 
   gimp_register_save_handler ("file_aa_save",
-			      "ansi,txt,text,html",
+			      "ansi,txt,text",
 			      "");
 }
 

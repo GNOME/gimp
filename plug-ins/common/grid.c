@@ -65,7 +65,7 @@ static void   run    (gchar      *name,
 
 static guchar      best_cmap_match (guchar       *cmap, 
 				    gint          ncolors,
-				    guchar       *color);
+				    GimpRGB      *color);
 static void        doit            (gint32        image_ID, 
 				    GimpDrawable *drawable, 
 				    gboolean      preview_mode);
@@ -94,26 +94,26 @@ static GtkWidget *preview;
 
 typedef struct
 {
-  gint   hwidth;
-  gint   hspace;
-  gint   hoffset;
-  guint8 hcolor[4];
-  gint   vwidth;
-  gint   vspace;
-  gint   voffset;
-  guint8 vcolor[4];
-  gint   iwidth;
-  gint   ispace;
-  gint   ioffset;
-  guint8 icolor[4];
+  gint    hwidth;
+  gint    hspace;
+  gint    hoffset;
+  GimpRGB hcolor;
+  gint    vwidth;
+  gint    vspace;
+  gint    voffset;
+  GimpRGB vcolor;
+  gint    iwidth;
+  gint    ispace;
+  gint    ioffset;
+  GimpRGB icolor;
 }
 Config;
 
 Config grid_cfg =
 {
-  1, 16, 8, { 0, 0, 128, 255 },    /* horizontal   */
-  1, 16, 8, { 0, 0, 128, 255 },    /* vertical     */
-  0,  2, 6, { 0, 0, 255, 255 },    /* intersection */
+  1, 16, 8, { 0.0, 0.0, 0.5, 1.0 },    /* horizontal   */
+  1, 16, 8, { 0.0, 0.0, 0.5, 1.0 },    /* vertical     */
+  0,  2, 6, { 0.0, 0.0, 1.0, 1.0 },    /* intersection */
 };
 
 
@@ -194,26 +194,29 @@ run (gchar      *name,
 	  grid_cfg.hwidth    = MAX (0, param[3].data.d_int32);
 	  grid_cfg.hspace    = MAX (1, param[4].data.d_int32);
 	  grid_cfg.hoffset   = MAX (0, param[5].data.d_int32);
-	  grid_cfg.hcolor[0] = param[6].data.d_color.red;
-	  grid_cfg.hcolor[1] = param[6].data.d_color.green;
-	  grid_cfg.hcolor[2] = param[6].data.d_color.blue;
-	  grid_cfg.hcolor[3] = param[7].data.d_int8;
+	  gimp_rgba_set_uchar (&grid_cfg.hcolor,
+			       param[6].data.d_color.red,
+			       param[6].data.d_color.green,
+			       param[6].data.d_color.blue,
+			       param[7].data.d_int8);
 
 	  grid_cfg.vwidth    = MAX (0, param[8].data.d_int32);
 	  grid_cfg.vspace    = MAX (1, param[9].data.d_int32);
 	  grid_cfg.voffset   = MAX (0, param[10].data.d_int32);
-	  grid_cfg.vcolor[0] = param[11].data.d_color.red;
-	  grid_cfg.vcolor[1] = param[11].data.d_color.green;
-	  grid_cfg.vcolor[2] = param[11].data.d_color.blue;
-	  grid_cfg.vcolor[3] = param[12].data.d_int8;
+	  gimp_rgba_set_uchar (&grid_cfg.vcolor,
+			       param[11].data.d_color.red,
+			       param[11].data.d_color.green,
+			       param[11].data.d_color.blue,
+			       param[12].data.d_int8);
 
 	  grid_cfg.iwidth    = MAX (0, param[13].data.d_int32);
 	  grid_cfg.ispace    = MAX (0, param[14].data.d_int32);
 	  grid_cfg.ioffset   = MAX (0, param[15].data.d_int32);
-	  grid_cfg.icolor[0] = param[16].data.d_color.red;
-	  grid_cfg.icolor[1] = param[16].data.d_color.green;
-	  grid_cfg.icolor[2] = param[16].data.d_color.blue;
-	  grid_cfg.icolor[3] = param[17].data.d_int8;
+	  gimp_rgba_set_uchar (&grid_cfg.icolor,
+			       param[16].data.d_color.red,
+			       param[16].data.d_color.green,
+			       param[16].data.d_color.blue,
+			       param[17].data.d_int8);
 	}
     }
   else
@@ -261,21 +264,24 @@ run (gchar      *name,
 #define MAXDIFF 195076
 
 static guchar
-best_cmap_match (guchar *cmap,
-		 gint    ncolors,
-		 guchar *color)
+best_cmap_match (guchar  *cmap,
+		 gint     ncolors,
+		 GimpRGB *color)
 {
   guchar cmap_index = 0;
-  gint max = MAXDIFF;
-  gint i, diff, sum;
+  gint   max = MAXDIFF;
+  gint   i, diff, sum;
+  guchar r, g, b;
+
+  gimp_rgb_get_uchar (color, &r, &g, &b);
 
   for (i = 0; i < ncolors; i++)
     {
-      diff = color[0] - *cmap++;
+      diff = r - *cmap++;
       sum = SQR (diff);
-      diff = color[1] - *cmap++;
+      diff = g - *cmap++;
       sum += SQR (diff);
-      diff = color[2] - *cmap++;
+      diff = b - *cmap++;
       sum += SQR (diff);
       
       if (sum < max)
@@ -343,11 +349,12 @@ doit (gint32        image_ID,
   guchar *cmap;
   gint ncolors;
   
+  gimp_rgba_get_uchar (&grid_cfg.hcolor, hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
+  gimp_rgba_get_uchar (&grid_cfg.vcolor, vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
+  gimp_rgba_get_uchar (&grid_cfg.icolor, icolor, icolor + 1, icolor + 2, icolor + 3);
+
   if (preview_mode) 
     {
-      memcpy (hcolor, grid_cfg.hcolor, 4);
-      memcpy (vcolor, grid_cfg.vcolor, 4);
-      memcpy (icolor, grid_cfg.icolor, 4);
       blend = TRUE;
     } 
   else 
@@ -355,30 +362,21 @@ doit (gint32        image_ID,
       switch (gimp_image_base_type (image_ID))
 	{
 	case GIMP_RGB:
-	  memcpy (hcolor, grid_cfg.hcolor, 4);
-	  memcpy (vcolor, grid_cfg.vcolor, 4);
-	  memcpy (icolor, grid_cfg.icolor, 4);
 	  blend = TRUE;
 	  break;
 
 	case GIMP_GRAY:
-	  hcolor[0] = INTENSITY (grid_cfg.hcolor[0], grid_cfg.hcolor[1], grid_cfg.hcolor[2]);
-	  hcolor[3] = grid_cfg.hcolor[3];
-	  vcolor[0] = INTENSITY (grid_cfg.vcolor[0], grid_cfg.vcolor[1], grid_cfg.vcolor[2]);
-	  vcolor[3] = grid_cfg.vcolor[3];
-	  icolor[0] = INTENSITY (grid_cfg.icolor[0], grid_cfg.icolor[1], grid_cfg.icolor[2]);
-	  icolor[3] = grid_cfg.icolor[3];
+	  hcolor[0] = gimp_rgb_intensity (&grid_cfg.hcolor) * 255.999;
+	  vcolor[0] = gimp_rgb_intensity (&grid_cfg.vcolor) * 255.999;
+	  vcolor[0] = gimp_rgb_intensity (&grid_cfg.vcolor) * 255.999;
 	  blend = TRUE;
 	  break;
 
 	case GIMP_INDEXED:
 	  cmap = gimp_image_get_cmap (image_ID, &ncolors);
-	  hcolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.hcolor);
-	  hcolor[3] = grid_cfg.hcolor[3];
-	  vcolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.vcolor);
-	  vcolor[3] = grid_cfg.vcolor[3];
-	  icolor[0] = best_cmap_match (cmap, ncolors, grid_cfg.icolor);
-	  icolor[3] = grid_cfg.icolor[3];
+	  hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
+	  vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
+	  icolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.icolor);
 	  g_free (cmap);
 	  blend = FALSE;
 	  break;
@@ -637,7 +635,6 @@ dialog (gint32        image_ID,
   GtkWidget *chain_button;
   GtkWidget *table;
   GtkWidget *align;
-  GimpRGB    color;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -905,25 +902,20 @@ dialog (gint32        image_ID,
 
   /*  put a chain_button under the color_buttons  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if ((guint32)(*grid_cfg.hcolor) == (guint32)(*grid_cfg.vcolor))
+  if (gimp_rgb_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) > 0.0001)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 2, 3);
   gtk_widget_show (chain_button);
 
   /*  attach color selectors  */
-  gimp_rgba_set (&color,
-		 (gdouble) grid_cfg.hcolor[0] / 255.0,
-		 (gdouble) grid_cfg.hcolor[1] / 255.0,
-		 (gdouble) grid_cfg.hcolor[2] / 255.0,
-		 (gdouble) grid_cfg.hcolor[3] / 255.0);
   hcolor_button = gimp_color_button_new (_("Horizontal Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
-					 &color, TRUE);
+					 &grid_cfg.hcolor, TRUE);
   gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
-		      (GtkSignalFunc) gimp_color_update_uchar, 
-		      grid_cfg.hcolor);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &grid_cfg.hcolor);
   gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
-		      (GtkSignalFunc) color_callback, 
+		      GTK_SIGNAL_FUNC (color_callback), 
 		      chain_button);
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align),  hcolor_button);
@@ -931,36 +923,27 @@ dialog (gint32        image_ID,
   gtk_widget_show (hcolor_button);
   gtk_widget_show (align);
 
-  gimp_rgba_set (&color,
-		 (gdouble) grid_cfg.vcolor[0] / 255.0,
-		 (gdouble) grid_cfg.vcolor[1] / 255.0,
-		 (gdouble) grid_cfg.vcolor[2] / 255.0,
-		 (gdouble) grid_cfg.vcolor[3] / 255.0);
   vcolor_button = gimp_color_button_new (_("Vertical Color"), 
 					 COLOR_BUTTON_WIDTH, 16, 
-					 &color, TRUE);
+					 &grid_cfg.vcolor, TRUE);
   gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
-		      (GtkSignalFunc) gimp_color_update_uchar, 
-		      grid_cfg.vcolor);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &grid_cfg.vcolor);
   gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
-		      (GtkSignalFunc) color_callback, chain_button);  
+		      GTK_SIGNAL_FUNC (color_callback), 
+		      chain_button);  
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align), vcolor_button);
   gtk_table_attach_defaults (GTK_TABLE (table), align, 1, 2, 1, 2);
   gtk_widget_show (vcolor_button);
   gtk_widget_show (align);
 
-  gimp_rgba_set (&color,
-		 (gdouble) grid_cfg.icolor[0] / 255.0,
-		 (gdouble) grid_cfg.icolor[1] / 255.0,
-		 (gdouble) grid_cfg.icolor[2] / 255.0,
-		 (gdouble) grid_cfg.icolor[3] / 255.0);
   button = gimp_color_button_new (_("Intersection Color"), 
 				  COLOR_BUTTON_WIDTH, 16, 
-				  &color, TRUE);
+				  &grid_cfg.icolor, TRUE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
-		      (GtkSignalFunc) gimp_color_update_uchar, 
-		      grid_cfg.icolor);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &grid_cfg.icolor);
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align), button);
   gtk_table_attach_defaults (GTK_TABLE (table), align, 2, 3, 1, 2);

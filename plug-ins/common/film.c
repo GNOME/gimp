@@ -58,7 +58,7 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 typedef struct
 {
   gint     film_height;           /* height of the film */
-  guchar   film_color[3];         /* color of film */
+  GimpRGB  film_color;            /* color of film */
   gdouble  picture_height;        /* height of picture (r) */
   gdouble  picture_space;         /* space between pictures (r) */
   gdouble  hole_offset;           /* distance from hole to edge of film (r) */
@@ -67,7 +67,7 @@ typedef struct
   gdouble  hole_space;            /* distance of holes (r) */
   gdouble  number_height;         /* height of picture numbering (r) */
   gint     number_start;          /* number for first picture */
-  guchar   number_color[3];       /* color of number */
+  GimpRGB  number_color;          /* color of number */
   gchar    number_fontf[256];     /* font family to use for numbering */
   gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
   gint     keep_height;           /* flag if to keep max. image height */
@@ -117,7 +117,7 @@ static void      convert_to_rgb     (GimpDrawable      *srcdrawable,
 
 static void      set_pixels         (gint            numpix,
 				     guchar         *dst,
-				     guchar         *rgb);
+				     GimpRGB        *color);
 
 static gint      scale_layer        (gint32          src_layer,
 				     gint            src_x0,
@@ -186,7 +186,7 @@ static gdouble advanced_defaults[] =
 static FilmVals filmvals =
 {
   256,             /* Height of film */
-  { 0, 0, 0 },     /* Color of film */
+  { 0.0, 0.0, 0.0, 1.0 }, /* Color of film */
   0.695,           /* Picture height */
   0.040,           /* Picture spacing */
   0.058,           /* Hole offset to edge of film */
@@ -195,7 +195,7 @@ static FilmVals filmvals =
   0.081,           /* Hole distance */
   0.052,           /* Image number height */
   1,               /* Start index of numbering */
-  { 239, 159, 0 }, /* Color of number */
+  { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
   "courier",       /* Font family for numbering */
   { TRUE, TRUE },  /* Numbering on top and bottom */
   0,               /* Dont keep max. image height */
@@ -304,16 +304,18 @@ run (gchar   *name,
           filmvals.keep_height       = (param[3].data.d_int32 <= 0);
           filmvals.film_height       = (filmvals.keep_height ?
 					128 : param[3].data.d_int32);
-          filmvals.film_color[0]     = param[4].data.d_color.red;
-          filmvals.film_color[1]     = param[4].data.d_color.green;
-          filmvals.film_color[2]     = param[4].data.d_color.blue;
+	  gimp_rgb_set_uchar (&filmvals.film_color, 
+			      param[4].data.d_color.red,
+			      param[4].data.d_color.green,
+			      param[4].data.d_color.blue);
           filmvals.number_start      = param[5].data.d_int32;
           k = sizeof (filmvals.number_fontf);
           strncpy (filmvals.number_fontf, param[6].data.d_string, k);
           filmvals.number_fontf[k-1] = '\0';
-          filmvals.number_color[0]   = param[7].data.d_color.red;
-          filmvals.number_color[1]   = param[7].data.d_color.green;
-          filmvals.number_color[2]   = param[7].data.d_color.blue;
+	  gimp_rgb_set_uchar (&filmvals.number_color,
+			      param[7].data.d_color.red,
+			      param[7].data.d_color.green,
+			      param[7].data.d_color.blue);
           filmvals.number_pos[0]     = param[8].data.d_int32;
           filmvals.number_pos[1]     = param[9].data.d_int32;
           filmvals.num_images        = param[10].data.d_int32;
@@ -377,7 +379,7 @@ film (void)
   gint number_height, num_images, num_pictures;
   gint i, j, k, picture_count;
   gdouble f;
-  guchar f_red, f_green, f_blue;
+  GimpRGB foreground;
   gint num_layers;
   gint32 *image_ID_src, image_ID_dst, layer_ID_src, layer_ID_dst;
   gint32 *layers;
@@ -396,7 +398,7 @@ film (void)
 
   tile_height = gimp_tile_height ();
   /* Save foreground colour */
-  gimp_palette_get_foreground (&f_red, &f_green, &f_blue);
+  gimp_palette_get_foreground_rgb (&foreground);
 
   if (filmvals.keep_height) /* Search maximum picture height */
     {
@@ -466,7 +468,7 @@ film (void)
       scan_lines =
 	(i + tile_height - 1 < film_height) ? tile_height : (film_height - i);
 
-      set_pixels (film_width * scan_lines, dst, filmvals.film_color);
+      set_pixels (film_width * scan_lines, dst, &filmvals.film_color);
 
       gimp_pixel_rgn_set_rect (&pixel_rgn_dst, dst, 0, i,
 			       film_width, scan_lines);
@@ -537,9 +539,7 @@ film (void)
 	  if ((number_height > 0) &&
 	      (filmvals.number_pos[0] || filmvals.number_pos[1]))
 	    {
-	      gimp_palette_set_foreground (filmvals.number_color[0],
-					   filmvals.number_color[1],
-					   filmvals.number_color[2]);
+	      gimp_palette_set_foreground_rgb (&filmvals.number_color);
 
 	      if (filmvals.number_pos[0])
 		draw_number (layer_ID_dst, filmvals.number_start + picture_count,
@@ -551,7 +551,7 @@ film (void)
 			     film_height - (hole_offset + number_height)/2,
 			     number_height);
 
-	      gimp_palette_set_foreground (f_red, f_green, f_blue);
+	      gimp_palette_set_foreground_rgb (&foreground);
 	    }
 
 	  picture_x0 += picture_width + (picture_space/2);
@@ -571,7 +571,7 @@ film (void)
   gimp_floating_sel_anchor (gimp_image_floating_selection (image_ID_dst));
 
   /* Restore foreground */
-  gimp_palette_set_foreground (f_red, f_green, f_blue);
+  gimp_palette_set_foreground_rgb (&foreground);
 
   return image_ID_dst;
 }
@@ -680,24 +680,19 @@ convert_to_rgb (GimpDrawable *srcdrawable,
 
 /* Assigns numpix pixels starting at dst with color r,g,b */
 static void
-set_pixels (gint    numpix,
-            guchar *dst,
-            guchar *rgb)
+set_pixels (gint     numpix,
+            guchar  *dst,
+            GimpRGB *color)
 {
   register gint k;
   register guchar ur, ug, ub, *udest;
 
-  if ((rgb[0] == rgb[1]) && (rgb[1] == rgb[2]))
-    {
-      memset (dst, (int)rgb[0], numpix*3);
-      return;
-    }
-
-  ur = rgb[0];
-  ug = rgb[1];
-  ub = rgb[2];
+  ur = color->r * 255.999;
+  ug = color->g * 255.999;
+  ub = color->b * 255.999;
   k = numpix;
   udest = dst;
+
   while (k-- > 0)
     {
       *(udest++) = ur;
@@ -835,10 +830,10 @@ create_hole_rgb (gint width,
       length = (int)(radius - sqrt ((gdouble) (radius * radius - k * k)) - 0.5);
       if (length > 0)
 	{
-	  set_pixels (length, top, filmvals.film_color);
-	  set_pixels (length, top+(width-length)*3, filmvals.film_color);
-	  set_pixels (length, bottom, filmvals.film_color);
-	  set_pixels (length, bottom+(width-length)*3, filmvals.film_color);
+	  set_pixels (length, top, &filmvals.film_color);
+	  set_pixels (length, top + (width-length)*3, &filmvals.film_color);
+	  set_pixels (length, bottom, &filmvals.film_color);
+	  set_pixels (length, bottom + (width-length)*3, &filmvals.film_color);
 	}
       top += width*3;
       bottom -= width*3;
@@ -1169,7 +1164,6 @@ film_dialog (gint32 image_ID)
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *sep;
-  GimpRGB    color;
   gint32    *image_id_list;
   gint       nimages, j, row;
 
@@ -1249,16 +1243,12 @@ film_dialog (gint32 image_ID)
 				filmvals.keep_height);
 
   /* Film color */
-  gimp_rgb_set (&color,
-		(gdouble) filmvals.film_color[0] / 255.0,
-		(gdouble) filmvals.film_color[1] / 255.0,
-		(gdouble) filmvals.film_color[2] / 255.0);
   button = gimp_color_button_new (_("Select Film Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &color, FALSE);
+				  &filmvals.film_color, FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
-		      filmvals.film_color);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      &filmvals.film_color);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Color:"), 1.0, 0.5,
@@ -1301,16 +1291,12 @@ film_dialog (gint32 image_ID)
 			     entry, 1, FALSE);
 
   /* Numbering color */
-  gimp_rgb_set (&color,
-		(gdouble) filmvals.number_color[0] / 255.0,
-		(gdouble) filmvals.number_color[1] / 255.0,
-		(gdouble) filmvals.number_color[2] / 255.0);
   button = gimp_color_button_new (_("Select Number Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &color, FALSE);
+				  &filmvals.number_color, FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
-		      filmvals.number_color);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      &filmvals.number_color);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Color:"), 1.0, 0.5,
 			     button, 1, TRUE);

@@ -54,19 +54,19 @@
 /* datastructure to store parameters in */
 typedef struct
 {
-  guchar  fromred, fromgreen, fromblue;
-  guchar  tored, togreen, toblue;
-  guchar  red_threshold, green_threshold, blue_threshold;
+  GimpRGB from;
+  GimpRGB to;
+  GimpRGB threshold;
   gint32  image;
   gint32  drawable;
 } myParams;
 
 /* lets prototype */
 static void	query (void);
-static void	run   (gchar   *name,
-		       gint     nparams,
+static void	run   (gchar      *name,
+		       gint        nparams,
 		       GimpParam  *param,
-		       gint    *nreturn_vals,
+		       gint       *nreturn_vals,
 		       GimpParam **return_vals);
 
 static void	exchange              (void);
@@ -81,15 +81,17 @@ static void	scale_callback        (GtkAdjustment *, gpointer);
 /* some global variables */
 static GimpDrawable *drw;
 static gboolean   has_alpha;
-static myParams   xargs = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-static gint       running = 0;
+static myParams   xargs = { { 0.0, 0.0, 0.0, 1.0 }, 
+			    { 0.0, 0.0, 0.0, 1.0 },
+			    { 0.0, 0.0, 0.0, 1.0 },
+			    0, 0 };
+static gint          running = 0;
 static GimpPixelRgn  origregion;
-static GtkWidget *preview;
-static GtkWidget *from_colorbutton;
-static GtkWidget *to_colorbutton;
-static gint       sel_x1, sel_y1, sel_x2, sel_y2;
-static gint       prev_width, prev_height, sel_width, sel_height;
-static gboolean   lock_threshold = FALSE;
+static GtkWidget    *preview;
+static GtkWidget    *from_colorbutton;
+static gint          sel_x1, sel_y1, sel_x2, sel_y2;
+static gint          prev_width, prev_height, sel_width, sel_height;
+static gboolean      lock_threshold = FALSE;
 
 /* lets declare what we want to do */
 GimpPlugInInfo PLUG_IN_INFO =
@@ -185,9 +187,8 @@ run (gchar   *name,
       /* retrieve stored arguments (if any) */
       gimp_get_data ("plug_in_exchange", &xargs);
       /* initialize using foreground color */
-      gimp_palette_get_foreground (&xargs.fromred,
-				   &xargs.fromgreen,
-				   &xargs.fromblue);
+      gimp_palette_get_foreground_rgb (&xargs.from);
+
       if (! exchange_dialog ())
 	return;
       break;
@@ -200,9 +201,7 @@ run (gchar   *name,
        * run with the current foreground as 'from'
        * color, making ALT-F somewhat more useful.
        */
-      gimp_palette_get_foreground (&xargs.fromred,
-				   &xargs.fromgreen,
-				   &xargs.fromblue);
+      gimp_palette_get_foreground_rgb (&xargs.from);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -213,15 +212,18 @@ run (gchar   *name,
 	}
       else
 	{
-	  xargs.fromred         = param[3].data.d_int8;
-	  xargs.fromgreen       = param[4].data.d_int8;
-	  xargs.fromblue        = param[5].data.d_int8;
-	  xargs.tored           = param[6].data.d_int8;
-	  xargs.togreen         = param[7].data.d_int8;
-	  xargs.toblue          = param[8].data.d_int8;
-	  xargs.red_threshold   = param[9].data.d_int32;
-	  xargs.green_threshold = param[10].data.d_int32;
-	  xargs.blue_threshold  = param[11].data.d_int32;
+	  gimp_rgb_set_uchar (&xargs.from,
+			      param[3].data.d_int8,
+			      param[4].data.d_int8,
+			      param[5].data.d_int8);
+	  gimp_rgb_set_uchar (&xargs.to,
+			      param[6].data.d_int8,
+			      param[7].data.d_int8,
+			      param[8].data.d_int8);
+	  gimp_rgb_set_uchar (&xargs.threshold,
+			      param[9].data.d_int8,
+			      param[10].data.d_int8,
+			      param[11].data.d_int8);
 	}
       break;
 
@@ -264,59 +266,21 @@ static gboolean
 preview_event_handler (GtkWidget *widget, 
 		       GdkEvent  *event)
 {
-  gint    x;
-  gint    y;
-  gint    pos;
-  guchar *buf;
-  guint   red_handler   = 0;
-  guint   green_handler = 0;
-  guint   blue_handler  = 0;
-  GimpRGB        color;   
-  GtkAdjustment *r, *g, *b;
+  gint     pos;
+  guchar  *buf;
+  GimpRGB  color;   
 
   buf = GTK_PREVIEW (widget)->buffer;
 
   switch(event->type) 
     {
     case GDK_BUTTON_PRESS:
-      x = event->button.x;
-      y = event->button.y;
-      pos = x * GTK_PREVIEW(widget)->bpp + y * GTK_PREVIEW(widget)->rowstride;
-      xargs.fromred   = buf[pos];
-      xargs.fromgreen = buf[pos + 1];
-      xargs.fromblue  = buf[pos + 2];
-      
-      r = gtk_object_get_data (GTK_OBJECT (from_colorbutton), "red");
-      g = gtk_object_get_data (GTK_OBJECT (from_colorbutton), "green");
-      b = gtk_object_get_data (GTK_OBJECT (from_colorbutton), "blue");
-   
-      red_handler   = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (r), 
-							     "handler"));
-      green_handler = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (g), 
-							     "handler"));
-      blue_handler  = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (b), 
-							     "handler"));
+      pos = event->button.x * GTK_PREVIEW(widget)->bpp + 
+	    event->button.y * GTK_PREVIEW(widget)->rowstride;
 
-      gtk_signal_handler_block (GTK_OBJECT (r), red_handler);
-      gtk_signal_handler_block (GTK_OBJECT (g), green_handler);
-      gtk_signal_handler_block (GTK_OBJECT (b), blue_handler);
-      
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (r), xargs.fromred);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (g), xargs.fromgreen);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (b), xargs.fromblue);
-      
-      gtk_signal_handler_unblock (GTK_OBJECT (r), red_handler);
-      gtk_signal_handler_unblock (GTK_OBJECT (g), green_handler);
-      gtk_signal_handler_unblock (GTK_OBJECT (b), blue_handler);
+      gimp_rgb_set_uchar (&color, buf[pos], buf[pos + 1], buf[pos + 2]);
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (from_colorbutton), &color);
 
-      gimp_rgb_set (&color, 
-		    (gdouble) xargs.fromred   / 255.0,
-		    (gdouble) xargs.fromgreen / 255.0,
-		    (gdouble) xargs.fromblue  / 255.0);
-		    
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (from_colorbutton),
-				   &color);
-      update_preview();
       break;
  
    default:
@@ -336,13 +300,10 @@ exchange_dialog (void)
   GtkWidget *abox;
   GtkWidget *pframe;
   GtkWidget *table;
+  GtkWidget *threshold;
   GtkWidget *colorbutton;
-  GtkObject *adj;
   GtkWidget *scale;
-  GtkObject *red_threshold   = NULL;
-  GtkObject *green_threshold = NULL;
-  GtkObject *blue_threshold  = NULL;
-  GimpRGB    color;
+  GtkObject *adj;
   gint       framenumber;
 
   gimp_ui_init ("exchange", TRUE);
@@ -400,11 +361,18 @@ exchange_dialog (void)
   update_preview ();
   gtk_widget_show (preview);
 
+  /*  a hidden color_button to handle the threshold more easily  */
+  threshold = gimp_color_button_new (NULL, 1, 1, &xargs.threshold, FALSE);
+  gtk_signal_connect (GTK_OBJECT (threshold), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      &xargs.threshold);
+  gtk_signal_connect (GTK_OBJECT (threshold), "color_changed",
+		      GTK_SIGNAL_FUNC (color_button_callback),
+		      &xargs.threshold);
+
   /* and our scales */
   for (framenumber = 0; framenumber < 2; framenumber++)
     {
-      guint id;
-
       frame = gtk_frame_new (framenumber ? _("To Color") : _("From Color"));
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
       gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
@@ -417,156 +385,154 @@ exchange_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      if (framenumber)
-	gimp_rgb_set (&color,
-		      (gdouble) xargs.tored   / 255.0,
-		      (gdouble) xargs.togreen / 255.0,
-		      (gdouble) xargs.toblue  / 255.0);
-      else
-	gimp_rgb_set (&color,
-		      (gdouble) xargs.fromred   / 255.0,
-		      (gdouble) xargs.fromgreen / 255.0,
-		      (gdouble) xargs.fromblue  / 255.0);
-	
-		      
       colorbutton = gimp_color_button_new (framenumber ?
 					   _("Color Exchange: To Color") :
 					   _("Color Exchange: From Color"),
 					   SCALE_WIDTH / 2, 16,
-					   &color, FALSE);
+					   framenumber ? &xargs.to : &xargs.from, 
+					   FALSE);
+      gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
+			  GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+			  framenumber ? &xargs.to : &xargs.from);
+      gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
+			  GTK_SIGNAL_FUNC (color_button_callback),
+			  framenumber ? &xargs.to : &xargs.from);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 NULL, 0.0, 0.0,
 				 colorbutton, 1, TRUE);
-      gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
-			  GTK_SIGNAL_FUNC (color_button_callback),
-			  GINT_TO_POINTER (framenumber));
-
-      if (framenumber)
-	to_colorbutton = colorbutton;
-      else
+      
+      if (!framenumber)
 	from_colorbutton = colorbutton;
-
+	
+      /*  Red  */
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Red:"), SCALE_WIDTH, 0,
-				  framenumber ? xargs.tored : xargs.fromred,
-				  0, 255, 1, 8, 0,
+				  framenumber ? xargs.to.r : xargs.from.r,
+				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "red", adj);
 
-      id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (scale_callback),
-			       framenumber ? &xargs.tored : &xargs.fromred);
-      gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			   GUINT_TO_POINTER (id));
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			       framenumber ? &xargs.to.r : &xargs.from.r);
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			  GTK_SIGNAL_FUNC (scale_callback),
+			  framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
       if (! framenumber)
 	{
-	  red_threshold = 
-	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-					_("Red Threshold:"), SCALE_WIDTH, 0,
-					xargs.red_threshold,
-					0, 255, 1, 8, 0,
-					TRUE, 0, 0,
-					NULL, NULL);
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+				      _("Red Threshold:"), SCALE_WIDTH, 0,
+				      xargs.threshold.r,
+				      0.0, 1.0, 0.01, 0.1, 3,
+				      TRUE, 0, 0,
+				      NULL, NULL);
 
-	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-				   GTK_SIGNAL_FUNC (scale_callback),
-				   &xargs.red_threshold);
-	  gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			       GUINT_TO_POINTER (id));
+	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
+	  gtk_object_set_data (GTK_OBJECT (threshold), "red", adj);
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			      &xargs.threshold.r);
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (scale_callback),
+			      &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 	}
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 2 : 3,
+      /*  Green  */
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 				  _("Green:"), SCALE_WIDTH, 0,
-				  framenumber ? xargs.togreen : xargs.fromgreen,
-				  0, 255, 1, 8, 0,
+				  framenumber ? xargs.to.g : xargs.from.g,
+				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "green", adj);
 
-      id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (scale_callback),
-			       framenumber ? &xargs.togreen : &xargs.fromgreen);
-      gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			   GUINT_TO_POINTER (id));
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			       framenumber ? &xargs.to.g : &xargs.from.g);
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			  GTK_SIGNAL_FUNC (scale_callback),
+			  framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
       if (! framenumber)
 	{
-	  green_threshold =
-	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-					_("Green Threshold:"), SCALE_WIDTH, 0,
-					xargs.green_threshold,
-					0, 255, 1, 8, 0,
-					TRUE, 0, 0,
-					NULL, NULL);
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+				      _("Green Threshold:"), SCALE_WIDTH, 0,
+				      xargs.threshold.g,
+				      0.0, 1.0, 0.01, 0.1, 3,
+				      TRUE, 0, 0,
+				      NULL, NULL);
+	  
+	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
+	  gtk_object_set_data (GTK_OBJECT (threshold), "green", adj);
 
-	  gtk_object_set_user_data (GTK_OBJECT (adj), red_threshold);
-
-	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-				   GTK_SIGNAL_FUNC (scale_callback),
-				   &xargs.green_threshold);
-	  gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			       GUINT_TO_POINTER (id));
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			      &xargs.threshold.g);
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (scale_callback),
+			      &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 	}
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 3 : 5,
+      /*  Blue  */
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
 				  _("Blue:"), SCALE_WIDTH, 0,
-				  framenumber ? xargs.toblue : xargs.fromblue,
-				  0, 255, 1, 8, 0,
+				  framenumber ? xargs.to.b : xargs.from.b,
+				  0.0, 1.0, 0.01, 0.1, 3,
 				  TRUE, 0, 0,
 				  NULL, NULL);
 
       gtk_object_set_user_data (GTK_OBJECT (adj), colorbutton);
       gtk_object_set_data (GTK_OBJECT (colorbutton), "blue", adj);
 
-      id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			       GTK_SIGNAL_FUNC (scale_callback),
-			       framenumber ? &xargs.toblue : &xargs.fromblue);
-      gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			   GUINT_TO_POINTER (id));
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			       GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			       framenumber ? &xargs.to.b : &xargs.from.b);
+      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			  GTK_SIGNAL_FUNC (scale_callback),
+			  framenumber ? &xargs.to : &xargs.from);
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
       if (! framenumber)
 	{
-	  blue_threshold = 
-	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-					_("Blue Threshold:"), SCALE_WIDTH, 0,
-					xargs.blue_threshold,
-					0, 255, 1, 8, 0,
-					TRUE, 0, 0,
-					NULL, NULL);
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+				      _("Blue Threshold:"), SCALE_WIDTH, 0,
+				      xargs.threshold.b,
+				      0.0, 1.0, 0.01, 0.1, 3,
+				      TRUE, 0, 0,
+				      NULL, NULL);
 
-	  gtk_object_set_user_data (GTK_OBJECT (adj), green_threshold);
+	  gtk_object_set_user_data (GTK_OBJECT (adj), threshold);
+	  gtk_object_set_data (GTK_OBJECT (threshold), "blue", adj);
 
-	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-				   GTK_SIGNAL_FUNC (scale_callback),
-				   &xargs.blue_threshold);
-	  gtk_object_set_data (GTK_OBJECT (adj), "handler", 
-			       GUINT_TO_POINTER (id));
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			      &xargs.threshold.b);
+	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+			      GTK_SIGNAL_FUNC (scale_callback),
+			      &xargs.threshold);
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-	  gtk_object_set_user_data (GTK_OBJECT (red_threshold), 
-				    blue_threshold);
 	}
 
       if (! framenumber)
@@ -611,57 +577,20 @@ color_button_callback (GtkWidget *widget,
   GtkObject *red_adj;
   GtkObject *green_adj;
   GtkObject *blue_adj;
-  guint      red_handler;
-  guint      green_handler;
-  guint      blue_handler;
-  GimpRGB    color; 
+  GimpRGB   *color;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
-
-  if (data)
-    {
-      xargs.tored   = color.r * 255.0;
-      xargs.togreen = color.g * 255.0;
-      xargs.toblue  = color.b * 255.0;
-    }
-  else
-     {
-      xargs.fromred   = color.r * 255.0;
-      xargs.fromgreen = color.g * 255.0;
-      xargs.fromblue  = color.b * 255.0;
-    }
+  color = (GimpRGB *) data;
 
   red_adj   = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "red");
   green_adj = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "green");
   blue_adj  = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "blue");
 
-  red_handler   = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (red_adj),
-							 "handler"));
-  green_handler = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (green_adj),
-							 "handler"));
-  blue_handler  = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (blue_adj),
-							 "handler"));
-
-  gtk_signal_handler_block (GTK_OBJECT (red_adj),   red_handler);
-  gtk_signal_handler_block (GTK_OBJECT (green_adj), green_handler);
-  gtk_signal_handler_block (GTK_OBJECT (blue_adj),  blue_handler);
-
-  if (widget == from_colorbutton)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (red_adj),   xargs.fromred);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (green_adj), xargs.fromgreen);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (blue_adj),  xargs.fromblue);
-    }
-  else
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (red_adj),   xargs.tored);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (green_adj), xargs.togreen);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (blue_adj),  xargs.toblue);
-    }
-
-  gtk_signal_handler_unblock (GTK_OBJECT (red_adj),   red_handler);
-  gtk_signal_handler_unblock (GTK_OBJECT (green_adj), green_handler);
-  gtk_signal_handler_unblock (GTK_OBJECT (blue_adj),  blue_handler);
+  if (red_adj)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (red_adj),   color->r);
+  if (green_adj)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (green_adj), color->g);
+  if (blue_adj)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (blue_adj),  color->b);
 
   update_preview ();
 }
@@ -671,35 +600,21 @@ scale_callback (GtkAdjustment *adj,
 		gpointer       data)
 {
   GtkObject *object;
-  guchar    *val = data;
-  guint      handler;
-  gint       i;
+  GimpRGB   *color;
 
-  *val = (guchar) adj->value;
+  color = (GimpRGB *) data;
 
   object = gtk_object_get_user_data (GTK_OBJECT (adj));
 
-  if (GIMP_IS_COLOR_BUTTON (object))
+  if (object && GIMP_IS_COLOR_BUTTON (object))
     {
-      /*  FIXME  */
-/*        gimp_color_button_update (GIMP_COLOR_BUTTON (object)); */
-    }
-  else if (GTK_IS_ADJUSTMENT (object) && lock_threshold == TRUE)
-    {
-      for (i = 0; i < 2; i++)
-	{
-	  handler = GPOINTER_TO_UINT (gtk_object_get_data (GTK_OBJECT (object),
-							   "handler"));
-	  gtk_signal_handler_block (GTK_OBJECT (object), handler);
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (object), adj->value);
-	  gtk_signal_handler_unblock (GTK_OBJECT (object), handler);
+      if (color == &xargs.threshold && lock_threshold == TRUE)
+	gimp_rgb_set (color, adj->value, adj->value, adj->value);
+	
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (object), color);
 
-	  object = gtk_object_get_user_data (GTK_OBJECT (object));
-	}
-      xargs.red_threshold = xargs.green_threshold = xargs.blue_threshold = *val;
+      update_preview ();
     }
-
-  update_preview ();
 }
 
 static void
@@ -721,9 +636,15 @@ real_exchange (gint     x1,
 	       gboolean do_preview)
 {
   GimpPixelRgn  srcPR, destPR;
-  guchar    *src_row, *dest_row;
-  gint       x, y, bpp = drw->bpp;
-  gint       width, height;
+  guchar        min_red,  min_green,  min_blue;
+  guchar        max_red,  max_green,  max_blue;
+  guchar        from_red, from_green, from_blue;
+  guchar        to_red,   to_green,   to_blue;
+  guchar       *src_row, *dest_row;
+  guint         x, y, bpp = drw->bpp;
+  guint         width, height;
+  GimpRGB       min;
+  GimpRGB       max;
 
   /* fill if necessary */
   if (x1 == -1 || y1 == -1 || x2 == -1 || y2 == -1)
@@ -739,36 +660,40 @@ real_exchange (gint     x1,
   height = y2 - y1;
 
   /* allocate memory */
-  src_row  = g_new (guchar, drw->width * bpp);
+  src_row = g_new (guchar, drw->width * bpp);
+
+  gimp_rgb_get_uchar (&xargs.from, &from_red, &from_green, &from_blue);
+  gimp_rgb_get_uchar (&xargs.to,   &to_red,   &to_green,   &to_blue);
+
+  /* get boundary values */
+  min = xargs.from;
+  gimp_rgb_subtract (&min, &xargs.threshold);
+  gimp_rgb_clamp (&min);
+  gimp_rgb_get_uchar (&min, &min_red, &min_green, &min_blue);
+  
+  max = xargs.from;
+  gimp_rgb_add (&max, &xargs.threshold);
+  gimp_rgb_clamp (&max);
+  gimp_rgb_get_uchar (&max, &max_red, &max_green, &max_blue);
 
   if (do_preview && has_alpha)
     dest_row = g_new (guchar, drw->width * (bpp - 1));
   else
     dest_row = g_new (guchar, drw->width * bpp);
 
-  gimp_pixel_rgn_init (&srcPR, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR, drw, x1, y1, width, height, FALSE, FALSE);
 
   if (! do_preview)
-    gimp_pixel_rgn_init (&destPR, drw, 0, 0, width, height, TRUE, TRUE);
+    gimp_pixel_rgn_init (&destPR, drw, x1, y1, width, height, TRUE, TRUE);
 
   for (y = y1; y < y2; y++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, 0, y, drw->width);
-      for (x = x1; x < x2; x++)
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y, width);
+      for (x = 0; x < width; x++)
 	{
-	  gint pixel_red, pixel_green, pixel_blue;
-	  gint min_red, max_red, min_green, max_green, min_blue, max_blue;
-	  gint new_red, new_green, new_blue;
-	  gint idx, rest;
-
-	  /* get boundary values */
-	  min_red   = MAX (xargs.fromred - xargs.red_threshold, 0);
-	  min_green = MAX (xargs.fromgreen - xargs.green_threshold, 0);
-	  min_blue  = MAX (xargs.fromblue - xargs.blue_threshold, 0);
-
-	  max_red   = MIN (xargs.fromred + xargs.red_threshold, 255);
-	  max_green = MIN (xargs.fromgreen + xargs.green_threshold, 255);
-	  max_blue  = MIN (xargs.fromblue + xargs.blue_threshold, 255);
+	  guchar pixel_red, pixel_green, pixel_blue;
+	  guchar new_red, new_green, new_blue;
+	  guint  idx;
 
 	  /* get current pixel-values */
 	  pixel_red   = src_row[x * bpp];
@@ -776,13 +701,8 @@ real_exchange (gint     x1,
 	  pixel_blue  = src_row[x * bpp + 2];
 
 	  /* shift down for preview */
-	  if (do_preview)
-	    {
-	      if (has_alpha)
-		idx = (x - x1) * (bpp - 1);
-	      else
-		idx = (x - x1) * bpp;
-	    }
+	  if (do_preview && has_alpha)
+	    idx = x * (bpp - 1);
 	  else
 	    idx = x * bpp;
 
@@ -794,14 +714,17 @@ real_exchange (gint     x1,
 	      pixel_blue >= min_blue &&
 	      pixel_blue <= max_blue)
 	    {
-	      gint red_delta, green_delta, blue_delta;
+	      guchar red_delta, green_delta, blue_delta;
 
-	      red_delta   = pixel_red - xargs.fromred;
-	      green_delta = pixel_green - xargs.fromgreen;
-	      blue_delta  = pixel_blue - xargs.fromblue;
-	      new_red   = (guchar) CLAMP (xargs.tored + red_delta, 0, 255);
-	      new_green = (guchar) CLAMP (xargs.togreen + green_delta, 0, 255);
-	      new_blue  = (guchar) CLAMP (xargs.toblue + blue_delta, 0, 255);
+	      red_delta   = pixel_red > from_red ? 
+		pixel_red - from_red : from_red - pixel_red;
+	      green_delta = pixel_green > from_green ? 
+		pixel_green - from_green : from_green - pixel_green;
+	      blue_delta  = pixel_blue > from_blue ? 
+		pixel_blue - from_blue : from_blue - pixel_blue;
+	      new_red   = CLAMP (to_red   + red_delta,   0, 255);
+	      new_green = CLAMP (to_green + green_delta, 0, 255);
+	      new_blue  = CLAMP (to_blue  + blue_delta,  0, 255);
 	    }
 	  else
 	    {
@@ -810,30 +733,24 @@ real_exchange (gint     x1,
 	      new_blue  = pixel_blue;
 	    }
 
-	  /* fill buffer (cast it too) */
-	  dest_row[idx + 0] = (guchar) new_red;
-	  dest_row[idx + 1] = (guchar) new_green;
-	  dest_row[idx + 2] = (guchar) new_blue;
+	  /* fill buffer */
+	  dest_row[idx + 0] = new_red;
+	  dest_row[idx + 1] = new_green;
+	  dest_row[idx + 2] = new_blue;
 
-	  /* copy rest (ie the alpha-channel).  But, only if we're not
-	   * previewing, otherwise we don't have room for the alpha
-	   * and overrun the buffer, causing a segfault on the
-	   * g_free() at the bottom of this function.  Maybe we should
-	   * convert the alpha and blend in the chequerboard pattern,
-	   * but I'll leave that as an excercise for the reader... */
-	  if (!do_preview)
-	    for (rest = 3; rest < bpp; rest++)
-	      dest_row[idx + rest] = src_row[x * bpp + rest];
+	  /* copy alpha-channel */
+	  if (!do_preview && has_alpha)
+	    dest_row[idx + 3] = src_row[x * bpp + 3];
 	}
       /* store the dest */
-      if (do_preview) {
+      if (do_preview) 
 	gtk_preview_draw_row (GTK_PREVIEW (preview), dest_row, 0, y - y1, width);
-      }
       else
-	gimp_pixel_rgn_set_row (&destPR, dest_row, 0, y, drw->width);
+	gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y, width);
+
       /* and tell the user what we're doing */
       if (! do_preview && (y % 10) == 0)
-	gimp_progress_update ((double) y / (double) height);
+	gimp_progress_update ((gdouble) y / (gdouble) height);
     }
   g_free(src_row);
   g_free(dest_row);

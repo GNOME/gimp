@@ -1077,14 +1077,6 @@ gimp_context_get_foreground (GimpContext *context,
 }
 
 void
-gimp_palette_get_foreground (guchar *r,
-			     guchar *g,
-			     guchar *b)
-{
-  gimp_context_get_foreground (NULL, r, g, b);
-}
-
-void
 gimp_context_set_foreground (GimpContext *context,
 			     gint         r,
 			     gint         g,
@@ -1153,14 +1145,6 @@ gimp_context_get_background (GimpContext *context,
   *r = context->background[0];
   *g = context->background[1];
   *b = context->background[2];
-}
-
-void
-gimp_palette_get_background (guchar *r,
-			     guchar *g,
-			     guchar *b)
-{
-  gimp_context_get_background (NULL, r, g, b);
 }
 
 void
@@ -1777,8 +1761,42 @@ gimp_context_update_gradient (GimpContext *context,
     }
 }
 
+
+/*  Temporary functions  */
 void
 gimp_context_update_gradients (gradient_t *gradient)
 {
   g_slist_foreach (context_list, (GFunc) gimp_context_update_gradient, gradient);
 }
+void
+gimp_palette_get_foreground (guchar *r,
+			     guchar *g,
+			     guchar *b)
+{
+  gimp_context_get_foreground (NULL, r, g, b);
+}
+
+void
+gimp_palette_set_foreground (guchar r,
+			     guchar g,
+			     guchar b)
+{
+  gimp_context_set_foreground (NULL, r, g, b);
+}
+
+void
+gimp_palette_get_background (guchar *r,
+			     guchar *g,
+			     guchar *b)
+{
+  gimp_context_get_background (NULL, r, g, b);
+}
+
+void
+gimp_palette_set_background (guchar r,
+			     guchar g,
+			     guchar b)
+{
+  gimp_context_set_background (NULL, r, g, b);
+}
+

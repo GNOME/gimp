@@ -39,6 +39,10 @@
 #include "pixel_region.h"
 #include "gimprc.h"
 
+#ifdef ENABLE_MP
+#include "tile.h"
+#endif
+
 
 typedef void (* p1_func) (gpointer     ,
 			  PixelRegion *);

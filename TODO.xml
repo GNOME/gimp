@@ -64,7 +64,7 @@
     </entry>    
 
     <entry size="medium" difficulty="medium" status="20%" target="1.4">
-      <title>Unify Color data types</title>
+      <title>Unify color data types</title>
       <description>
 	<p>
 	  LibGimp already has a new type GimpRGB. This should be used
@@ -83,7 +83,7 @@
   <section>
     <title>Objectification</title>
     
-    <entry size="small" difficulty="easy" status="0%" target="1.4">
+    <entry size="small" difficulty="easy" status="80%" target="1.4">
       <title>Generic GimpObject</title>
       <description>
 	<p>
@@ -96,7 +96,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="10%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>

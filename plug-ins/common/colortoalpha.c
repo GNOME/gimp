@@ -39,12 +39,12 @@
 
 typedef struct
 {
-  guchar color[3];
+  GimpRGB  color;
 } C2AValues;
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } C2AInterface;
 
 typedef struct
@@ -55,22 +55,24 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar       *name,
+			 gint         nparams,
+			 GimpParam   *param,
+			 gint        *nreturn_vals,
+			 GimpParam  **return_vals);
 
-static void      toalpha            (GimpDrawable  *drawable);
-
-static void      toalpha_render_row (const guchar *src_row,
-				     guchar       *dest_row,
-				     gint          row_width,
-				     const gint    bytes);
+static void      colortoalpha             (GimpRGB      *src,
+					   GimpRGB      *color);
+static void      toalpha                  (GimpDrawable *drawable);
+static void      toalpha_render_row       (const guchar *src_row,
+					   guchar       *dest_row,
+					   gint          row_width,
+					   const gint    bytes);
 /* UI stuff */
-static gint 	colortoalpha_dialog      (GimpDrawable *drawable);
-static void 	colortoalpha_ok_callback (GtkWidget *widget,
-					  gpointer   data);
+static gboolean  colortoalpha_dialog      (GimpDrawable *drawable);
+static void      colortoalpha_ok_callback (GtkWidget    *widget,
+					   gpointer      data);
+
 
 static GimpRunModeType run_mode;
 
@@ -84,7 +86,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static C2AValues pvals = 
 { 
-  { 255, 255, 255 } /* white default */
+  { 1.0, 1.0, 1.0, 1.0 } /* white default */
 };
 
 static C2AInterface pint = 
@@ -127,17 +129,16 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  gint32 image_ID;
-
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  gint32             image_ID;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -156,6 +157,7 @@ run (gchar   *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
+      gimp_palette_get_foreground_rgb (&pvals.color);
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       if (! colortoalpha_dialog (drawable ))
 	{ 
@@ -169,15 +171,17 @@ run (gchar   *name,
 	status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  pvals.color[0] = param[3].data.d_color.red;
-	  pvals.color[1] = param[3].data.d_color.green;
-	  pvals.color[2] = param[3].data.d_color.blue;
+	  gimp_rgb_set_uchar (&pvals.color,
+			      param[3].data.d_color.red,
+			      param[3].data.d_color.green,
+			      param[3].data.d_color.blue);
 	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       break;
+
     default:
       break;
     }  
@@ -193,7 +197,7 @@ run (gchar   *name,
 	  gimp_drawable_is_layer (drawable->id))  
 	{
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_init ("Removing color...");
+	    gimp_progress_init (_("Removing color..."));
              
 	  toalpha (drawable);
 	  gimp_displays_flush ();
@@ -206,66 +210,68 @@ run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-void
-colortoalpha (float *a1,
-	      float *a2,
-	      float *a3,
-	      float *a4,
-	      float c1,
-	      float c2,
-	      float c3)
+static void
+colortoalpha (GimpRGB *src,
+	      GimpRGB *color)
 {
-  float alpha1, alpha2, alpha3, alpha4;
+  GimpRGB alpha;
   
-  alpha4 = *a4;
-	  
-  if ( *a1 > c1 )
-    alpha1 = (*a1 - c1)/(255.0-c1);
-  else if ( *a1 < c1 )
-    alpha1 = (c1 - *a1)/(c1);
-  else alpha1 = 0.0;
+  alpha.a = src->a;
 
-  if ( *a2 > c2 )
-    alpha2 = (*a2 - c2)/(255.0-c2);
-  else if ( *a2 < c2 )
-    alpha2 = (c2 - *a2)/(c2);
-  else alpha2 = 0.0;
+  if (color->r < 0.0001)
+    alpha.r = src->r;
+  else if ( src->r > color->r )
+    alpha.r = (src->r - color->r) / (1.0 - color->r);
+  else if (src->r < color->r)
+    alpha.r = (color->r - src->r) / color->r;
+  else alpha.r = 0.0;
 
-  if ( *a3 > c3 )
-    alpha3 = (*a3 - c3)/(255.0-c3);
-  else if ( *a3 < c3 )
-    alpha3 = (c3 - *a3)/(c3);
-  else alpha3 = 0.0;
+  if (color->g < 0.0001)
+    alpha.g = src->g;
+  else if ( src->g > color->g )
+    alpha.g = (src->g - color->g) / (1.0 - color->g);
+  else if ( src->g < color->g )
+    alpha.g = (color->g - src->g) / (color->g);
+  else alpha.g = 0.0;
 
-  if ( alpha1 > alpha2 )
-    if ( alpha1 > alpha3 )
-      {
-	*a4 = alpha1;
-      }
-    else
-      {
-	*a4 = alpha3;
-      }
+  if (color->b < 0.0001)
+    alpha.b = src->b;
+  else if ( src->b > color->b )
+    alpha.b = (src->b - color->b) / (1.0 - color->b);
+  else if ( src->b < color->b )
+    alpha.b = (color->b - src->b) / (color->b);
+  else alpha.b = 0.0;
+
+  if ( alpha.r > alpha.g )
+    {
+      if ( alpha.r > alpha.b )
+	{
+	  src->a = alpha.r;
+	}
+      else
+	{
+	  src->a = alpha.b;
+	}
+    }
+  else if ( alpha.g > alpha.b )
+    {
+      src->a = alpha.g;
+    }
   else
-    if ( alpha2 > alpha3 )
-      {
-	*a4 = alpha2;
-      }
-    else
-      {
-	*a4 = alpha3;
-      }
-  
-  *a4 *= 255.0;
-  
-  if ( *a4 < 1.0 )
+    {
+      src->a = alpha.b;
+    }
+      
+  if (src->a < 0.0001)
     return;
-  *a1 = 255.0 * (*a1-c1)/ *a4 + c1;
-  *a2 = 255.0 * (*a2-c2)/ *a4 + c2;
-  *a3 = 255.0 * (*a3-c3)/ *a4 + c3;
 
-  *a4 *= alpha4/255.0;
+  src->r = (src->r - color->r) / src->a + color->r;
+  src->g = (src->g - color->g) / src->a + color->g;
+  src->b = (src->b - color->b) / src->a + color->b;
+
+  src->a *= alpha.a;
 }
+
 /*
 <clahey> so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3, then a1 = b1 * alpha + c1 * (1-alpha) So, maximizing alpha without taking b1 above 1 gives a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1)/(1-c1).
 <AmJur2d> eek!  math!
@@ -292,28 +298,28 @@ toalpha_render_row (const guchar *src_data,
 		    gint          col,               /* row width in pixels */
 		    const gint    bytes)
 {
+  GimpRGB  src;
+
   while (col--)
     {
-      float v1, v2, v3, v4;
+      gimp_rgba_set (&src, 
+		     (gdouble) src_data[col * bytes    ] / 255.0,
+		     (gdouble) src_data[col * bytes + 1] / 255.0,
+		     (gdouble) src_data[col * bytes + 2] / 255.0,
+		     (gdouble) src_data[col * bytes + 3] / 255.0);
 
-      v1 = (float)src_data[col*bytes   ];
-      v2 = (float)src_data[col*bytes +1];
-      v3 = (float)src_data[col*bytes +2];
-      v4 = (float)src_data[col*bytes +3];
-      /* For brighter than the background the rule is to send the
+     /* For brighter than the background the rule is to send the
 	 farthest above the background as the first address.
 	 However, since v1 < COLOR_RED, for example, all of these
 	 are negative so we have to invert the operator to reduce
 	 the amount of typing to fix the problem.  :) */
-      colortoalpha (&v1, &v2, &v3, &v4, 
-		    (float)pvals.color[0],
-		    (float)pvals.color[1],
-		    (float)pvals.color[2]);
 
-      dest_data[col * bytes    ] = (int) v1;
-      dest_data[col * bytes + 1] = (int) v2;
-      dest_data[col * bytes + 2] = (int) v3;
-      dest_data[col * bytes + 3] = (int) v4;
+      colortoalpha (&src, &pvals.color);
+
+      dest_data[col * bytes    ] = src.r * 255.999;
+      dest_data[col * bytes + 1] = src.g * 255.999;
+      dest_data[col * bytes + 2] = src.b * 255.999;
+      dest_data[col * bytes + 3] = src.a * 255.999;
     }
 }
 
@@ -321,9 +327,9 @@ static void
 toalpha_render_region (const GimpPixelRgn srcPR,
 		       const GimpPixelRgn destPR)
 {
-  gint row;
-  guchar* src_ptr  = srcPR.data;
-  guchar* dest_ptr = destPR.data;
+  gint    row;
+  guchar *src_ptr  = srcPR.data;
+  guchar *dest_ptr = destPR.data;
   
   for (row = 0; row < srcPR.h ; row++)
     {
@@ -345,10 +351,10 @@ static void
 toalpha (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
-  gint x1, y1, x2, y2;
-  gpointer pr;
-  gint total_area, area_so_far;
-  gint progress_skip;
+  gint         x1, y1, x2, y2;
+  gpointer     pr;
+  gint         total_area, area_so_far;
+  gint         progress_skip;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -377,8 +383,9 @@ toalpha (GimpDrawable *drawable)
       if ((run_mode != GIMP_RUN_NONINTERACTIVE))
 	{
 	  area_so_far += srcPR.w * srcPR.h;
-	  if (((progress_skip++)%10) == 0)
-	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	  if (++progress_skip % 10 == 0)
+	    gimp_progress_update ((gdouble) area_so_far / 
+				  (gdouble) total_area);
 	}
     }
 
@@ -388,7 +395,7 @@ toalpha (GimpDrawable *drawable)
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static gint 
+static gboolean
 colortoalpha_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -396,7 +403,6 @@ colortoalpha_dialog (GimpDrawable *drawable)
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *label;
-  GimpRGB    color;
 
   gimp_ui_init ("colortoalpha", TRUE);
 
@@ -432,16 +438,12 @@ colortoalpha_dialog (GimpDrawable *drawable)
   gtk_table_attach_defaults (GTK_TABLE(table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
 
-  gimp_rgb_set (&color,
-		(gdouble) pvals.color[0] / 255.0,
-		(gdouble) pvals.color[1] / 255.0,
-		(gdouble) pvals.color[2] / 255.0);		
   button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
 				  PRV_WIDTH, PRV_HEIGHT,
-				  &color, FALSE);
+				  &pvals.color, FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
-		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
-		      pvals.color);
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      &pvals.color);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
 		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);

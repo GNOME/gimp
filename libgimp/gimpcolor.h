@@ -37,45 +37,70 @@ struct _GimpRGB
 };
 
 
-void      gimp_rgb_set       (GimpRGB       *rgb,
-			      gdouble        r,
-			      gdouble        g,
-			      gdouble        b);
+void      gimp_rgb_set        (GimpRGB       *rgb,
+			       gdouble        r,
+			       gdouble        g,
+			       gdouble        b);
+void      gimp_rgb_set_uchar  (GimpRGB       *rgb,
+			       guchar         r,
+			       guchar         g,
+			       guchar         b);
+void      gimp_rgb_get_uchar  (const GimpRGB *rgb,
+			       guchar        *r,
+			       guchar        *g,
+			       guchar        *b);
 
-void      gimp_rgb_add       (GimpRGB       *rgb1,
-			      const GimpRGB *rgb2);
-void      gimp_rgb_subtract  (GimpRGB       *rgb1,
-			      const GimpRGB *rgb2);
-void      gimp_rgb_multiply  (GimpRGB       *rgb1,
-			      gdouble        factor);
-gdouble   gimp_rgb_distance  (const GimpRGB *rgb1,
-			      const GimpRGB *rgb2);
-gdouble   gimp_rgb_max       (const GimpRGB *rgb);
-gdouble   gimp_rgb_min       (const GimpRGB *rgb);
-void      gimp_rgb_clamp     (GimpRGB       *rgb);
-void      gimp_rgb_gamma     (GimpRGB       *rgb,
-			      gdouble        gamma);
+void      gimp_rgb_add        (GimpRGB       *rgb1,
+			       const GimpRGB *rgb2);
+void      gimp_rgb_subtract   (GimpRGB       *rgb1,
+			       const GimpRGB *rgb2);
+void      gimp_rgb_multiply   (GimpRGB       *rgb1,
+			       gdouble        factor);
+gdouble   gimp_rgb_distance   (const GimpRGB *rgb1,
+			       const GimpRGB *rgb2);
+gdouble   gimp_rgb_max        (const GimpRGB *rgb);
+gdouble   gimp_rgb_min        (const GimpRGB *rgb);
+void      gimp_rgb_clamp      (GimpRGB       *rgb);
+void      gimp_rgb_gamma      (GimpRGB       *rgb,
+ 			       gdouble        gamma);
+gdouble   gimp_rgb_intensity  (const GimpRGB *rgb);
 
 
-void      gimp_rgba_set      (GimpRGB       *rgba,
-			      gdouble        r,
-			      gdouble        g,
-			      gdouble        b,
-			      gdouble        a);
+void      gimp_rgba_set       (GimpRGB       *rgba,
+			       gdouble        r,
+			       gdouble        g,
+			       gdouble        b,
+			       gdouble        a);
+void      gimp_rgba_set_uchar (GimpRGB       *rgba,
+			       guchar         r,
+			       guchar         g,
+			       guchar         b,
+			       guchar         a);
+void      gimp_rgba_get_uchar (const GimpRGB *rgba,
+			       guchar        *r,
+			       guchar        *g,
+			       guchar        *b,
+			       guchar        *a);
 
-void      gimp_rgba_add      (GimpRGB       *rgba1,
-			      const GimpRGB *rgba2);
-void      gimp_rgba_subtract (GimpRGB       *rgba1,
-			      const GimpRGB *rgba2);
-void      gimp_rgba_multiply (GimpRGB       *rgba,
-			      gdouble        factor);
-gdouble   gimp_rgba_distance (const GimpRGB *rgba1, 
-			      const GimpRGB *rgba2);
-gdouble   gimp_rgba_max      (const GimpRGB *rgba);
-gdouble   gimp_rgba_min      (const GimpRGB *rgba);
-void      gimp_rgba_clamp    (GimpRGB       *rgba);
-void      gimp_rgba_gamma    (GimpRGB       *rgba,
-			      gdouble        gamma);
+void      gimp_rgba_add       (GimpRGB       *rgba1,
+			       const GimpRGB *rgba2);
+void      gimp_rgba_subtract  (GimpRGB       *rgba1,
+			       const GimpRGB *rgba2);
+void      gimp_rgba_multiply  (GimpRGB       *rgba,
+			       gdouble        factor);
+gdouble   gimp_rgba_distance  (const GimpRGB *rgba1, 
+			       const GimpRGB *rgba2);
+gdouble   gimp_rgba_max       (const GimpRGB *rgba);
+gdouble   gimp_rgba_min       (const GimpRGB *rgba);
+void      gimp_rgba_clamp     (GimpRGB       *rgba);
+void      gimp_rgba_gamma     (GimpRGB       *rgba,
+			       gdouble        gamma);
+
+
+  /*  These will become the default one day  */
+
+gboolean  gimp_palette_set_foreground_rgb (const GimpRGB *rgb);
+gboolean  gimp_palette_get_foreground_rgb (GimpRGB       *rgb);
 
 
 #ifdef __cplusplus
