@@ -1,5 +1,14 @@
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Adam D. Moss (bug #161113):
+	
+	* app/core/gimpimage-convert.c: Use a slower but much nicer
+	technique for finding the two best colours to dither between when
+	using fixed/positional dither methods.  Makes positional dither
+	much less lame.
+
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/film.c (film): push a context around code that
 	changes the foreground color.
 

@@ -1,6 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * Copyright (C) 1997-2002 Adam D. Moss <adam@gimp.org>
+ * Copyright (C) 1997-2004 Adam D. Moss <adam@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,10 @@
  */
 
 /*
+ * 2004-12-12 - Use a slower but much nicer technique for finding the
+ *  two best colours to dither between when using fixed/positional
+ *  dither methods.  Makes positional dither much less lame.  [adam@gimp.org]
+ *
  * 2002-02-10 - Quantizer version 3.0 (the rest of the commit started
  *  a year ago -- whoops).  Divide colours within CIE L*a*b* space using
  *  CPercep module (cpercep.[ch]), colour-match and dither likewise,
@@ -2969,11 +2973,14 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   PixelRegion  srcPR, destPR;
   CFHistogram  histogram = quantobj->histogram;
   ColorFreq   *cachep;
-  Color       *color;
+  int          pixval1=0, pixval2=0;
+  int          err1,err2;
+  Color*       color1;
+  Color*       color2;
   guchar      *src, *dest;
   gint         row, col;
   gint         pixel;
-  gint         re, R;
+  gint         R;
   gulong      *index_used_count = quantobj->index_used_count;
   gboolean     has_alpha;
   gboolean     alpha_dither     = quantobj->want_alpha_dither;
@@ -3006,7 +3013,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 	{
 	  for (col = 0; col < srcPR.w; col++)
 	    {
-	      int dmval =
+	      const int dmval =
 		DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
 		[(row+offsety+srcPR.y)&DM_HEIGHTMASK];
 
@@ -3018,16 +3025,42 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 	      if (*cachep == 0)
 		fill_inverse_cmap_gray (quantobj, histogram, pixel);
 
-	      color = &quantobj->cmap[*cachep - 1];
-	      re = src[GRAY_PIX] - color->red;
-	      re = (re * dmval * 2) / 63;
-	      R = (CLAMP0255(color->red + re));
+              pixval1 = *cachep - 1;
+	      color1 = &quantobj->cmap[pixval1];
 
-	      cachep = &histogram[R];
-	      /* If we have not seen this color before, find nearest
-		 colormap entry and update the cache */
-	      if (*cachep == 0)
-		fill_inverse_cmap_gray (quantobj, histogram, R);
+              if (quantobj->actual_number_of_colors > 2) {
+                const int re = src[GRAY_PIX] - color1->red;
+                int RV = src[GRAY_PIX] + re;
+                do {
+                  R = CLAMP0255(RV);
+                  cachep = &histogram[R];
+                  /* If we have not seen this color before, find nearest
+                     colormap entry and update the cache */
+                  if (*cachep == 0) {
+                    fill_inverse_cmap_gray (quantobj, histogram, R);
+                  }
+                  pixval2 = *cachep - 1;
+                  RV += re;
+                } while((pixval1 == pixval2) &&
+                        (!( (RV>255 || RV<0) )) &&
+                        re);
+              } else {
+                /* not enough colours to bother looking for an 'alternative'
+                   colour (we may fail to do so anyway), so decide that
+                   the alternative colour is simply the other cmap entry. */
+                pixval2 = (pixval1 + 1) %
+                  (quantobj->actual_number_of_colors);
+              }
+              color2 = &quantobj->cmap[pixval2];
+              
+              err1 = ABS(color1->red - src[GRAY_PIX]);
+              err2 = ABS(color2->red - src[GRAY_PIX]);
+              if (err1 || err2) {
+                const int proportion2 = (16 * 63 * err2) / (err1 + err2);
+                if ((dmval * 16) > proportion2) {
+                  pixval1 = pixval2; /* use color2 instead of color1*/
+                }
+              }
 
 	      if (has_alpha)
 		{
@@ -3036,12 +3069,12 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 			((src[ALPHA_G_PIX] << 6) > (255 * dmval)) :
 			(src[ALPHA_G_PIX] > 127)
 			) ? 255 : 0)))
-		    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+		    index_used_count[dest[INDEXED_PIX] = pixval1]++;
 		}
 	      else
 		{
 		  /* Now emit the colormap index for this cell, barfbarf */
-		  index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+		  index_used_count[dest[INDEXED_PIX] = pixval1]++;
 		}
 
 	      src += srcPR.bytes;
@@ -3162,12 +3195,14 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   PixelRegion  srcPR, destPR;
   CFHistogram  histogram = quantobj->histogram;
   ColorFreq   *cachep;
-  Color       *color;
+  int          pixval1=0, pixval2=0;
+  Color*       color1;
+  Color*       color2;
   guchar      *src, *dest;
   gint         R, G, B;
+  int          err1,err2;
   gint         row, col;
   gboolean     has_alpha;
-  gint         re, ge, be;
   gpointer     pr;
   gint         red_pix          = RED_PIX;
   gint         green_pix        = GREEN_PIX;
@@ -3220,7 +3255,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	{
 	  for (col = 0; col < srcPR.w; col++)
 	    {
-	      int dmval =
+	      const int dmval =
 		DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK]
 		[(row+offsety+srcPR.y)&DM_HEIGHTMASK];
 
@@ -3246,33 +3281,81 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      if (*cachep == 0)
 		fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
 
-	      /* Get the error and modulate it between 0x and 2x according
-		 to the fixed dither matrix, then add it back to the 0x colour
-		 and look up the new histogram entry.  To do better fixed
-		 dithering, I believe that we need to be able to find the
-		 closest colour match on the 'other side' of the desired colour,
-		 which is not information which we have cheap access to. */
-	      color = &quantobj->cmap[*cachep - 1];
-	      re = src[red_pix] - color->red;
-	      ge = src[green_pix] - color->green;
-	      be = src[blue_pix] - color->blue;
+	      /* We now try to find a colour which, when mixed in some fashion
+                 with the closest match, yields something closer to the
+                 desired colour.  We do this by repeatedly extrapolating the
+                 colour vector from one to the other until we find another
+                 colour cell.  Then we assess the distance of both mixer
+                 colours from the intended colour to determine their relative
+                 probabilities of being chosen. */
+              pixval1 = *cachep - 1;
+	      color1 = &quantobj->cmap[pixval1];
 
-	      re = (re * dmval * 2) / 63;
-	      ge = (ge * dmval * 2) / 63;
-	      be = (be * dmval * 2) / 63;
+              if (quantobj->actual_number_of_colors > 2) {
+                const int re = src[red_pix] - (int)color1->red;
+                const int ge = src[green_pix] - (int)color1->green;
+                const int be = src[blue_pix] - (int)color1->blue;
+                int RV = src[red_pix] + re;
+                int GV = src[green_pix] + ge;
+                int BV = src[blue_pix] + be;
+                do {
+                   rgb_to_lin((CLAMP0255(RV)),
+                              (CLAMP0255(GV)),
+                              (CLAMP0255(BV)),
+                              &R, &G, &B);
+                  cachep = HIST_LIN(histogram,R,G,B);
+                  /* If we have not seen this color before, find nearest
+                     colormap entry and update the cache */
+                  if (*cachep == 0) {
+                    fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+                  }
+                  pixval2 = *cachep - 1;
+                  RV += re;  GV += ge;  BV += be;
+                } while((pixval1 == pixval2) &&
+                        (!( (RV>255 || RV<0) || (GV>255 || GV<0) || (BV>255 || BV<0) )) &&
+                        (re || ge || be));
+              }
+              if (quantobj->actual_number_of_colors <= 2 /*||
+                           pixval1 == pixval2*/) {
+                /* not enough colours to bother looking for an 'alternative'
+                   colour (we may fail to do so anyway), so decide that
+                   the alternative colour is simply the other cmap entry. */
+                pixval2 = (pixval1 + 1) %
+                  (quantobj->actual_number_of_colors);
+              }
+              color2 = &quantobj->cmap[pixval2];
 
-	      rgb_to_lin((CLAMP0255(color->red + re)),
-			 (CLAMP0255(color->green + ge)),
-			 (CLAMP0255(color->blue + be)),
-			 &R, &G, &B);
-	      cachep = HIST_LIN(histogram,R,G,B);
-	      /* If we have not seen this color before, find nearest
-		 colormap entry and update the cache */
-	      if (*cachep == 0)
-		fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+              /* now figure out the relative probabilites of choosing
+                 either of our candidates. */
+#define DISTP(R1,G1,B1,R2,G2,B2,D) do {D = sqrt( 30*SQR((R1)-(R2)) + \
+                                                 59*SQR((G1)-(G2)) + \
+                                                 11*SQR((B1)-(B2)) ); }while(0)
+#define LIN_DISTP(R1,G1,B1,R2,G2,B2,D) do { \
+                int spacer1, spaceg1, spaceb1; \
+                int spacer2, spaceg2, spaceb2; \
+                rgb_to_unshifted_lin(R1,G1,B1, &spacer1, &spaceg1, &spaceb1); \
+                rgb_to_unshifted_lin(R2,G2,B2, &spacer2, &spaceg2, &spaceb2); \
+                D = sqrt(R_SCALE * SQR((spacer1)-(spacer2)) + \
+                         G_SCALE * SQR((spaceg1)-(spaceg2)) + \
+                         B_SCALE * SQR((spaceb1)-(spaceb2))); \
+              } while(0)
+              /* although LIN_DISTP is more correct, DISTP is much faster and
+                 barely distinguishable. */
+              DISTP(color1->red, color1->green, color1->blue,
+                    src[red_pix], src[green_pix], src[blue_pix],
+                    err1);
+              DISTP(color2->red, color2->green, color2->blue,
+                    src[red_pix], src[green_pix], src[blue_pix],
+                    err2);
+              if (err1 || err2) {
+                const int proportion2 = (63 * err2) / (err1 + err2);
+                if (dmval > proportion2) {
+                  pixval1 = pixval2; /* use color2 instead of color1*/
+                }
+              }
 
 	      /* Now emit the colormap index for this cell, barfbarf */
-	      index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
+	      index_used_count[dest[INDEXED_PIX] = pixval1]++;
 
 	    next_pixel:
 
