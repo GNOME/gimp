@@ -199,8 +199,10 @@ plug_in_make_menu_entry (gpointer         foo,
                                    TRUE, FALSE);
   }
 
+  g_free (lowercase_page);
+
   g_free (menu_entry);
-  
+
   return FALSE;
 }
 

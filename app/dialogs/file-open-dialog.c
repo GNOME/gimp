@@ -131,6 +131,7 @@ file_open_dialog_menu_init (Gimp            *gimp,
 
       g_free (basename);
 
+      /*  NOT g_build_filename() because this is a relative URI */
       help_page = g_strconcat ("filters/",
 			       lowercase_basename,
 			       ".html",
@@ -151,6 +152,8 @@ file_open_dialog_menu_init (Gimp            *gimp,
                                      &entry,
                                      file_proc, 2,
                                      TRUE, FALSE);
+
+      g_free (help_page);
     }
 }
 

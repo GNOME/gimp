@@ -101,25 +101,24 @@ file_save_dialog_menu_init (Gimp            *gimp,
   for (list = gimp->save_procs; list; list = g_slist_next (list))
     {
       gchar *basename;
-      gchar *filename;
-      gchar *page;
-      gchar *lowercase_page;
+      gchar *lowercase_basename;
+      gchar *help_page;
 
       file_proc = (PlugInProcDef *) list->data;
 
       basename = g_path_get_basename (file_proc->prog);
 
-      filename = g_strconcat (basename, ".html", NULL);
+      lowercase_basename = g_ascii_strdown (basename, -1);
 
       g_free (basename);
 
-      page = g_build_filename ("filters", filename, NULL);
+      /*  NOT g_build_filename() because this is a relative URI */
+      help_page = g_strconcat ("filters/",
+			       lowercase_basename,
+			       ".html",
+			       NULL);
 
-      g_free (filename);
-
-      lowercase_page = g_ascii_strdown (page, -1);
-
-      g_free (page);
+      g_free (lowercase_basename);
 
       entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
@@ -127,13 +126,15 @@ file_save_dialog_menu_init (Gimp            *gimp,
       entry.entry.callback_action = 0;
       entry.entry.item_type       = NULL;
       entry.quark_string          = NULL;
-      entry.help_page             = lowercase_page;
+      entry.help_page             = help_page;
       entry.description           = NULL;
 
       gimp_item_factory_create_item (item_factory,
                                      &entry,
                                      file_proc, 2,
                                      TRUE, FALSE);
+
+      g_free (help_page);
     }
 }
 

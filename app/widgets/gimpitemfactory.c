@@ -286,8 +286,16 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 			      G_CALLBACK (gimp_item_factory_item_realize),
 			      item_factory);
 
-      g_object_set_data (G_OBJECT (menu_item), "help_page",
-			 (gpointer) entry->help_page);
+      if (entry->help_page)
+        {
+          if (static_entry)
+            g_object_set_data (G_OBJECT (menu_item), "help_page",
+                               (gpointer) entry->help_page);
+          else
+            g_object_set_data_full (G_OBJECT (menu_item), "help_page",
+                                    g_strdup (entry->help_page),
+                                    g_free);
+        }
     }
 }
 
@@ -701,12 +709,11 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	{
 	  GimpItemFactoryEntry branch_entry =
 	  {
-	    { NULL, NULL, NULL, 0, "<Branch>" },
+	    { tearoff_path->str, NULL, NULL, 0, "<Branch>" },
 	    NULL,
 	    NULL
 	  };
 
-	  branch_entry.entry.path = tearoff_path->str;
 	  g_object_set_data (G_OBJECT (factory), "complete", entry->entry.path);
 
 	  gimp_item_factory_create_item (factory,
@@ -723,12 +730,11 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	{
 	  GimpItemFactoryEntry tearoff_entry =
 	  {
-	    { NULL, NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
+	    { tearoff_path->str, NULL,
+              gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
 	    NULL,
 	    NULL, NULL
 	  };
-
-	  tearoff_entry.entry.path = tearoff_path->str;
 
 	  gimp_item_factory_create_item (factory,
                                          &tearoff_entry,
