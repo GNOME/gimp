@@ -158,9 +158,9 @@ static alienmap2_vals_t wvals = {
         1.0,
         0.0,
         RGB,
-        FALSE,
-        FALSE,
-        FALSE,
+        TRUE,
+        TRUE,
+        TRUE,
 }; /* wvals */
 
 static GDrawable *drawable;
