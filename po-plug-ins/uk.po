@@ -4,8 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
+"Project-Id-Version: GIMP 1.2.0\n"
+"POT-Creation-Date: 2000-12-26 13:45+0200\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -724,11 +724,16 @@ msgid ""
 "(fractalexplorer-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Нема╓ запису fractalexplorer-path у gimprc:\n"
+"Вам необх╕дно додати запис типу\n"
+"(fractalexplorer-path \"%s\")\n"
+"у ваш файл %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1166
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
+"fractalexplorer-path не зконф╕╜уровано - таких каталог╕в не знайдено:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1342
 msgid "My first fractal"
@@ -736,16 +741,16 @@ msgstr "М╕й перший фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1359
 msgid "Choose Fractal by double-clicking on it"
-msgstr ""
+msgstr "Вибер╕ть фрактал подв╕йним клацанням на ньому"
 
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
-msgstr ""
+msgstr "Актуал╕зувати"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 msgid "Select directory and rescan collection"
-msgstr ""
+msgstr "Вибрати каталог та актуал╕зувати наб╕р фрактал╕в"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1408
 msgid "Delete currently selected fractal"
@@ -754,11 +759,11 @@ msgstr "Стерти вибраний фрактал"
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1460
 msgid "Rescan for Fractals"
-msgstr ""
+msgstr "Актуал╕зувати фрактали"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 msgid "Add FractalExplorer Path"
-msgstr ""
+msgstr "Додати шлях досл╕дника фрактал╕в"
 
 #: plug-ins/Lighting/lighting_main.c:169
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
@@ -1335,11 +1340,11 @@ msgstr "Зб╕льшити"
 
 #: plug-ins/MapObject/mapobject_ui.c:1462
 msgid "Show Preview Wireframe"
-msgstr ""
+msgstr "С╕тка перегляду"
 
 #: plug-ins/MapObject/mapobject_ui.c:1470
 msgid "Show/hide preview wireframe"
-msgstr ""
+msgstr "Показати/прибрати с╕тку перегляду"
 
 #. memory mapped file data
 #. must check file size
@@ -1380,7 +1385,7 @@ msgstr "%s: помилка зчитування заголовку BMP-файлу"
 #: plug-ins/bmp/bmpread.c:246
 #, c-format
 msgid "%s: bad colormap"
-msgstr ""
+msgstr "%s: погана мапа кольор╕в"
 
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
@@ -1622,7 +1627,7 @@ msgstr "Про Чужу Мапу 2"
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
 msgid "Load KISS Palette"
-msgstr ""
+msgstr "Завантаження пал╕три KISS"
 
 #: plug-ins/common/CEL.c:262
 #, c-format
@@ -1630,6 +1635,8 @@ msgid ""
 "%s\n"
 "is not present or is unreadable"
 msgstr ""
+"%s\n"
+"вмдсутн╕й чи не може бути зчитаний"
 
 #: plug-ins/common/CEL.c:296
 msgid "CEL Can't create a new image"
@@ -1642,7 +1649,7 @@ msgstr "Неп╕дтримувана к╕льк╕сть кольор╕в (%d)"
 
 #: plug-ins/common/CEL.c:492
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr ""
+msgstr "Лише ╕ндексован╕ изображения альфа можуть бути збережен╕ у формат╕ CEL"
 
 #: plug-ins/common/CEL.c:506
 #, c-format
@@ -1650,14 +1657,16 @@ msgid ""
 "CEL Couldn't write image to\n"
 "%s"
 msgstr ""
+"CEL не вдалось записати зображення у\n"
+"%s"
 
 #: plug-ins/common/CML_explorer.c:131
 msgid "Keep image's values"
-msgstr ""
+msgstr "Зберегти значення зображення"
 
 #: plug-ins/common/CML_explorer.c:132
 msgid "Keep the first value"
-msgstr ""
+msgstr "Зберегти перше значення"
 
 #: plug-ins/common/CML_explorer.c:133
 msgid "Fill with parameter k"
@@ -1830,7 +1839,7 @@ msgstr "Випадковий, незалежний в╕д каналу"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
-msgstr ""
+msgstr "Випадковий сп╕льний"
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
@@ -1838,7 +1847,7 @@ msgstr "Випадков╕ з бази"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Випадков╕ з бази (сп╕льн╕)"
 
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
@@ -1873,7 +1882,7 @@ msgstr "Досл╕дник CML: виконання..."
 
 #: plug-ins/common/CML_explorer.c:1171
 msgid "Coupled-Map-Lattice Explorer"
-msgstr ""
+msgstr "Досл╕дник CML"
 
 #: plug-ins/common/CML_explorer.c:1240
 msgid "Random Seed"
@@ -1997,7 +2006,7 @@ msgstr "Тип функц╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1696
 msgid "Composition:"
-msgstr ""
+msgstr "Складання:"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Misc Arrange:"
@@ -2013,19 +2022,19 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1761
 msgid "Env. Sensitivity:"
-msgstr ""
+msgstr "Чутлив╕сть середовища:"
 
 #: plug-ins/common/CML_explorer.c:1770
 msgid "Diffusion Dist.:"
-msgstr ""
+msgstr "Дистанц╕я дифуз╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1779
 msgid "# of Subranges:"
-msgstr ""
+msgstr "К╕льк╕сть п╕дд╕апазон╕в:"
 
 #: plug-ins/common/CML_explorer.c:1788
 msgid "P(ower Factor):"
-msgstr ""
+msgstr "Показник степен╕:"
 
 #: plug-ins/common/CML_explorer.c:1797
 msgid "Parameter k:"
@@ -2045,7 +2054,7 @@ msgstr "Накреслити краф╕к установок"
 
 #: plug-ins/common/CML_explorer.c:1880
 msgid "Ch. Sensitivity:"
-msgstr ""
+msgstr "Чутлив╕сть каналу:"
 
 #: plug-ins/common/CML_explorer.c:1890
 msgid "Mutation Rate:"
@@ -2053,7 +2062,7 @@ msgstr "Показник мутац╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1900
 msgid "Mutation Dist.:"
-msgstr ""
+msgstr "Дистанц╕я мутац╕й:"
 
 #: plug-ins/common/CML_explorer.c:1929
 msgid "Graph of the current settings"
@@ -2065,11 +2074,11 @@ msgstr "Граф╕к"
 
 #: plug-ins/common/CML_explorer.c:2049
 msgid "Warning: the source and the destination are the same channel."
-msgstr ""
+msgstr "Увага: джерело ╕ призначення в одному канал╕."
 
 #: plug-ins/common/CML_explorer.c:2117
 msgid "Save Parameters to"
-msgstr ""
+msgstr "Зберегти параметри у"
 
 #: plug-ins/common/CML_explorer.c:2189 plug-ins/common/CML_explorer.c:2391
 #, c-format
@@ -4788,7 +4797,7 @@ msgstr ""
 
 #: plug-ins/common/nlfilt.c:399
 msgid "Optimal Estimation"
-msgstr ""
+msgstr "Оптимальна оц╕нка"
 
 #: plug-ins/common/nlfilt.c:401
 msgid "Edge Enhancement"
@@ -5100,7 +5109,7 @@ msgid ""
 "PNG error. File corrupted?"
 msgstr ""
 "%s\n"
-"помилка PNG. Файл з╕псовано?"
+"Помилка PNG. Файл з╕псовано?"
 
 #. Aie! Unknown type
 #: plug-ins/common/png.c:532
@@ -5319,16 +5328,16 @@ msgstr ""
 #. Colouring
 #: plug-ins/common/ps.c:2699
 msgid "Coloring"
-msgstr ""
+msgstr "Замальовування"
 
 #: plug-ins/common/ps.c:2703
 msgid "B/W"
-msgstr ""
+msgstr "Ч/Б"
 
 #. * Gray *
 #: plug-ins/common/ps.c:2704 plug-ins/rcm/rcm_dialog.c:398
 msgid "Gray"
-msgstr ""
+msgstr "С╕рий"
 
 #: plug-ins/common/ps.c:2716
 msgid "Text Antialiasing"
@@ -5344,7 +5353,7 @@ msgstr "Сильне"
 
 #: plug-ins/common/ps.c:2728
 msgid "Graphic Antialiasing"
-msgstr "Згляджування граф╕ки"
+msgstr "Згладжування граф╕ки"
 
 #: plug-ins/common/ps.c:2790
 msgid "Save as PostScript"
@@ -5357,21 +5366,23 @@ msgstr "Розм╕р зображення"
 
 #: plug-ins/common/ps.c:2856
 msgid "X-Offset:"
-msgstr ""
+msgstr "Зм╕щення по X:"
 
 #: plug-ins/common/ps.c:2865
 msgid "Y-Offset:"
-msgstr ""
+msgstr "Зм╕щення по Y:"
 
 #: plug-ins/common/ps.c:2871
 msgid "Keep Aspect Ratio"
-msgstr ""
+msgstr "Утримувати пропорц╕╖"
 
 #: plug-ins/common/ps.c:2872
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
+"Якщо вибрано, вих╕дне зображення буде масштабуватись до заповнення вказаного "
+"розм╕ру без зм╕ни пропорц╕й."
 
 #. Unit
 #: plug-ins/common/ps.c:2883
@@ -5426,15 +5437,15 @@ msgstr "LZ77"
 
 #: plug-ins/common/randomize.c:107
 msgid "Random Hurl 1.7"
-msgstr ""
+msgstr "Випадковий кидок 1.7"
 
 #: plug-ins/common/randomize.c:108
 msgid "Random Pick 1.7"
-msgstr ""
+msgstr "Випадковий виб╕р 1.7"
 
 #: plug-ins/common/randomize.c:109
 msgid "Random Slur 1.7"
-msgstr ""
+msgstr "Випадкова пляма 1.7"
 
 #: plug-ins/common/randomize.c:240
 msgid "<Image>/Filters/Noise/Hurl..."
@@ -5450,7 +5461,7 @@ msgstr "<Image>/Ф╕льтри/Шум/Пляма..."
 
 #: plug-ins/common/randomize.c:744
 msgid "Randomization (%):"
-msgstr ""
+msgstr "Випадков╕сть (%):"
 
 #: plug-ins/common/ripple.c:156
 msgid "<Image>/Filters/Distorts/Ripple..."
@@ -5466,7 +5477,7 @@ msgstr "Бриж╕"
 
 #: plug-ins/common/ripple.c:621
 msgid "Retain Tilability"
-msgstr ""
+msgstr "Зберегти безшовн╕сть"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:647
@@ -5480,7 +5491,7 @@ msgstr "Тип хвил╕"
 
 #: plug-ins/common/ripple.c:665
 msgid "Sawtooth"
-msgstr ""
+msgstr "Пилка"
 
 #: plug-ins/common/ripple.c:688
 msgid "Period:"
@@ -5516,11 +5527,11 @@ msgstr "<Image>/Зображення/Перетворення/Обернути/270 ╜радус╕в"
 
 #: plug-ins/common/rotate.c:526
 msgid "You can not rotate the whole image if there's a selection."
-msgstr ""
+msgstr "Не можна повертати все зображення, якщо в ньому ╓ вибрана д╕лянка."
 
 #: plug-ins/common/rotate.c:532
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr ""
+msgstr "Не можна повертати все зображення, якщо в ньому ╓ плаваючий виб╕р."
 
 #: plug-ins/common/rotate.c:542
 msgid "Sorry, channels and masks can not be rotated."
@@ -5564,60 +5575,60 @@ msgstr "Зразок:"
 #. Add extra menu items for Gradient
 #: plug-ins/common/sample_colorize.c:1442
 msgid "** From GRADIENT **"
-msgstr ""
+msgstr "З град╕╓нта"
 
 #. Add extra menu items for Inverted Gradient
 #: plug-ins/common/sample_colorize.c:1450
 msgid "** From INVERSE GRADIENT **"
-msgstr ""
+msgstr "╤з зворотнього град╕╓нта"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1465
 #: plug-ins/common/sample_colorize.c:1490
 msgid "Show Selection"
-msgstr ""
+msgstr "Показати вибране"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1475
 #: plug-ins/common/sample_colorize.c:1500
 msgid "Show Color"
-msgstr ""
+msgstr "Показати кол╕р"
 
 #: plug-ins/common/sample_colorize.c:1606
 msgid "In Level:"
-msgstr ""
+msgstr "Вх╕дний р╕вень:"
 
 #: plug-ins/common/sample_colorize.c:1659
 msgid "Out Level:"
-msgstr ""
+msgstr "Вих╕дний р╕вень:"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1700
 msgid "Hold Intensity"
-msgstr ""
+msgstr "Зберегти ╕нтенсивн╕сть"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1710
 msgid "Original Intensity"
-msgstr ""
+msgstr "Початкова ╕нтенсивн╕сть"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1727
 msgid "Use Subcolors"
-msgstr ""
+msgstr "Використовувати п╕дкольори"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1737
 msgid "Smooth Samplecolors"
-msgstr ""
+msgstr "Згладжувати кольори зразка"
 
 #: plug-ins/common/sample_colorize.c:2736
 msgid "Sample Analyze..."
-msgstr ""
+msgstr "Анал╕з зразка..."
 
 #: plug-ins/common/sample_colorize.c:3101
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Перев╕дображення замальованого..."
 
 #: plug-ins/common/scatter_hsv.c:143
 msgid "<Image>/Filters/Noise/Scatter HSV..."
@@ -5629,15 +5640,15 @@ msgstr "Розс╕ювання HSV: Розс╕ювання..."
 
 #: plug-ins/common/scatter_hsv.c:370
 msgid "Scatter HSV"
-msgstr ""
+msgstr "Розс╕ювання HSV"
 
 #: plug-ins/common/scatter_hsv.c:390
 msgid "Preview (1:4) - Right Click to Jump"
-msgstr ""
+msgstr "Перегляд (1:4) - для переходу клацн╕ть правою кнопкою"
 
 #: plug-ins/common/scatter_hsv.c:441
 msgid "Holdness:"
-msgstr ""
+msgstr "Ф╕ксац╕я"
 
 #: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1076
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5863,26 +5874,26 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Хмари/Суц╕льний шум..."
 
 #: plug-ins/common/snoise.c:312
 msgid "Solid Noise..."
-msgstr ""
+msgstr "Додавання суц╕льного шуму..."
 
 #. Dialog initialization
 #: plug-ins/common/snoise.c:507
 msgid "Solid Noise"
-msgstr ""
+msgstr "Суц╕льний шум"
 
 #: plug-ins/common/snoise.c:549
 msgid "Detail:"
-msgstr ""
+msgstr "Детал╕:"
 
 #. Turbulent
 #: plug-ins/common/snoise.c:556
 msgid "Turbulent"
-msgstr ""
+msgstr "Турбулентне"
 
 #. Tilable
 #: plug-ins/common/snoise.c:566
 msgid "Tilable"
-msgstr ""
+msgstr "Розбити"
 
 #: plug-ins/common/snoise.c:577
 msgid "X Size:"
@@ -6090,15 +6101,15 @@ msgstr "Неможливо в╕дкрити файл для зчитування"
 
 #: plug-ins/common/sunras.c:398
 msgid "Can't open file as SUN-raster-file"
-msgstr ""
+msgstr "Неможливо в╕дкрити файл як SUN-raster"
 
 #: plug-ins/common/sunras.c:405
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr ""
+msgstr "Такий тип файл╕в SUN-raster не п╕дтриму╓ться"
 
 #: plug-ins/common/sunras.c:428
 msgid "Can't read color entries"
-msgstr ""
+msgstr "Неможливо зчитати записи кольор╕в"
 
 #: plug-ins/common/sunras.c:435
 msgid "Type of colormap not supported"
@@ -6106,15 +6117,15 @@ msgstr "Не п╕дтриму╓ться тип мапи кольор╕в"
 
 #: plug-ins/common/sunras.c:476
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "Глибина цього зображення не п╕дтриму╓ться"
 
 #: plug-ins/common/sunras.c:499
 msgid "SUNRAS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Збереженя SUNRAS не може обробити зображення з альфа-каналами"
 
 #: plug-ins/common/sunras.c:510
 msgid "Can't operate on unknown image types"
-msgstr ""
+msgstr "Неможливо обробляти зображення нев╕домого типу"
 
 #: plug-ins/common/sunras.c:519 plug-ins/fits/fits.c:466
 msgid "Can't open file for writing"
@@ -6252,32 +6263,32 @@ msgstr "В╕дзеркалення"
 
 #: plug-ins/common/tileit.c:474
 msgid "Applied to Tile"
-msgstr ""
+msgstr "Застосувати до шматка"
 
 #: plug-ins/common/tileit.c:487
 msgid "All Tiles"
-msgstr ""
+msgstr "Вс╕ шматки"
 
 #: plug-ins/common/tileit.c:498
 msgid "Alternate Tiles"
-msgstr ""
+msgstr "Р╕зн╕ шматки"
 
 #: plug-ins/common/tileit.c:509
 msgid "Explicit Tile"
-msgstr ""
+msgstr "Однаков╕ шматки"
 
 #: plug-ins/common/tileit.c:515
 msgid "Row:"
-msgstr ""
+msgstr "Рядок:"
 
 #: plug-ins/common/tileit.c:537
 msgid "Column:"
-msgstr ""
+msgstr "Стовпчик:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:598
 msgid "Segment Setting"
-msgstr ""
+msgstr "Установки се╜мента"
 
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
@@ -6344,11 +6355,15 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
+"Визначення довжини буде збережено лише перед виходом з GIMP якщо "
+"стовпчик в╕дм╕чено."
 
 #: plug-ins/common/uniteditor.c:539
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
+"Рядок, який буде використовуватись для ╕дентиф╕кац╕╖ одиниц╕ в "
+"конф╕╜урац╕йному файл╕ GIMP."
 
 #: plug-ins/common/uniteditor.c:541
 msgid "How many units make up an inch."
@@ -6360,12 +6375,17 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
+"Це поле - п╕дказка для поля числового воду. Воно вказу╓ к╕льк╕сть десяткових "
+"знак╕в у пол╕ вводу, як╕ будуть давати приблизно таку ж точн╕сть як поле"
+"вводу дюйм╕в з двома десятковими знаками."
 
 #: plug-ins/common/uniteditor.c:548
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
+"Символ одиниц╕, якщо в╕н ╓ (наприклад \"'\" для дюйм╕в). Використовуйте "
+"абрев╕атури, для одиниць у яких нема╓ символа."
 
 #: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
@@ -6855,7 +6875,7 @@ msgstr "Зб╕й PrintDlg: %d"
 
 #: plug-ins/common/winprint.c:339
 msgid "Printer doesn't support bitmaps"
-msgstr "Принтер не п╕дтриму╓ б╕тов╕ мапи"
+msgstr "Принтер не п╕дтриму╓ растров╕ зображення"
 
 #: plug-ins/common/winprint.c:382
 msgid "StartPage failed"
@@ -6973,20 +6993,20 @@ msgstr "Параметри XBM"
 #. X10 format
 #: plug-ins/common/xbm.c:1173
 msgid "X10 Format Bitmap"
-msgstr ""
+msgstr "Раст формату X10"
 
 #: plug-ins/common/xbm.c:1191
 msgid "Identifier Prefix:"
-msgstr ""
+msgstr "Преф╕кс ╕дентиф╕катора:"
 
 #. hotspot toggle
 #: plug-ins/common/xbm.c:1209
 msgid "Write Hot Spot Values"
-msgstr ""
+msgstr "Записати значення гарячих плям"
 
 #: plug-ins/common/xbm.c:1233
 msgid "Hot Spot X:"
-msgstr ""
+msgstr "Гаряча пляма X:"
 
 #. mask file
 #: plug-ins/common/xbm.c:1247
@@ -6995,7 +7015,7 @@ msgstr "Файл маски"
 
 #: plug-ins/common/xbm.c:1258
 msgid "Write Extra Mask File"
-msgstr ""
+msgstr "Записати додатковий файл маски"
 
 #: plug-ins/common/xbm.c:1269
 msgid "Mask File Extension:"
@@ -7035,7 +7055,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:508
 msgid "XWD save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Збереження XWD не може обробити зображення з альфа-каналами"
 
 #: plug-ins/common/xwd.c:519
 msgid "cannot operate on unknown image types"
@@ -7136,7 +7156,7 @@ msgstr "Файл FITS не м╕стить зображень, як╕ можна в╕добразити"
 
 #: plug-ins/fits/fits.c:446
 msgid "FITS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Збереження FITS не може обробити зображення з альфа-каналами"
 
 #: plug-ins/fits/fits.c:457
 msgid "Cannot operate on unknown image types"
@@ -7356,31 +7376,31 @@ msgstr "Зм╕на насиченост╕"
 
 #: plug-ins/fp/fp_gtk.c:406
 msgid "Select Pixels by"
-msgstr ""
+msgstr "Вибрати точки за"
 
 #: plug-ins/fp/fp_gtk.c:436
 msgid "Show"
-msgstr ""
+msgstr "Показати"
 
 #: plug-ins/fp/fp_gtk.c:444 plug-ins/rcm/rcm_dialog.c:661
 msgid "Entire Image"
-msgstr ""
+msgstr "Все зображення"
 
 #: plug-ins/fp/fp_gtk.c:449
 msgid "Selection Only"
-msgstr ""
+msgstr "Лише вибране"
 
 #: plug-ins/fp/fp_gtk.c:454
 msgid "Selection In Context"
-msgstr ""
+msgstr "Вибране в контекст╕"
 
 #: plug-ins/fp/fp_gtk.c:468
 msgid "Display"
-msgstr ""
+msgstr "Дисплей"
 
 #: plug-ins/fp/fp_gtk.c:477
 msgid "CirclePalette"
-msgstr ""
+msgstr "Кругова пал╕тра"
 
 #: plug-ins/fp/fp_gtk.c:480
 msgid "Lighter And Darker"
@@ -7390,7 +7410,7 @@ msgstr "Св╕тл╕ше ╕ темн╕ше"
 #. ************************ All the Standard Stuff ******************
 #: plug-ins/fp/fp_gtk.c:899
 msgid "Filter Pack Simulation"
-msgstr ""
+msgstr "Моделювання набору ф╕льтр╕в"
 
 #: plug-ins/fp/fp_gtk.c:1020
 msgid "Shadows:"
@@ -7406,7 +7426,7 @@ msgstr "Виблиски:"
 
 #: plug-ins/fp/fp_gtk.c:1034
 msgid "Advanced Filter Pack Options"
-msgstr ""
+msgstr "Додатков╕ параметри набору ф╕льтр╕в"
 
 #: plug-ins/fp/fp_gtk.c:1044
 msgid "Smoothness of Aliasing"
@@ -10318,23 +10338,23 @@ msgstr ""
 #. Position labels
 #: plug-ins/gfig/gfig.c:3686
 msgid "XY Position:"
-msgstr ""
+msgstr "Позиц╕я XY:"
 
 #: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
-msgstr "Подробиц╕ об'╓кту"
+msgstr "Подробиц╕ об'╓кта"
 
 #: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
-msgstr ""
+msgstr "Подробиц╕ набору"
 
 #: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
-msgstr ""
+msgstr "Назва малюнка:"
 
 #: plug-ins/gfig/gfig.c:3755 plug-ins/gfig/gfig.c:3761
 msgid "(none)"
-msgstr ""
+msgstr "(Нема╓)"
 
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3918
@@ -10343,11 +10363,11 @@ msgstr "GFig"
 
 #: plug-ins/gfig/gfig.c:3923
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: plug-ins/gfig/gfig.c:3925 plug-ins/gfig/gfig.c:3992
 msgid "Paint"
-msgstr ""
+msgstr "Намалювати"
 
 #: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
 #: plug-ins/imagemap/imap_menu.c:298
@@ -10511,29 +10531,29 @@ msgstr "не вдалося в╕дкрити \"%s\""
 #: plug-ins/gflare/gflare.c:1758
 #, c-format
 msgid "error reading GFlare directory \"%s\""
-msgstr ""
+msgstr "помилка п╕д час зчитування каталогу град╕╓нтного спалаху \"%s\""
 
 #: plug-ins/gflare/gflare.c:2458
 msgid "GFlare"
-msgstr ""
+msgstr "Град╕╓нтний спалах"
 
 #: plug-ins/gflare/gflare.c:2573
 msgid "`Default' is created."
-msgstr ""
+msgstr "Типовий створено."
 
 #: plug-ins/gflare/gflare.c:2574
 msgid "Default"
-msgstr ""
+msgstr "Типовий"
 
 #: plug-ins/gflare/gflare.c:2924 plug-ins/gflare/gflare.c:3763
 #: plug-ins/gflare/gflare.c:3873 plug-ins/gflare/gflare.c:4015
 msgid "Rotation:"
-msgstr ""
+msgstr "Обертання:"
 
 #: plug-ins/gflare/gflare.c:2936 plug-ins/gflare/gflare.c:3775
 #: plug-ins/gflare/gflare.c:3886 plug-ins/gflare/gflare.c:4028
 msgid "Hue Rotation:"
-msgstr ""
+msgstr "Обертання в╕дт╕нку:"
 
 #: plug-ins/gflare/gflare.c:2948
 msgid "Vector Angle:"
@@ -10549,11 +10569,11 @@ msgstr "Адаптивна ╕нтерполяц╕я"
 
 #: plug-ins/gflare/gflare.c:3029
 msgid "Auto Update Preview"
-msgstr ""
+msgstr "Автооновлення перегляду"
 
 #: plug-ins/gflare/gflare.c:3153
 msgid "Selector"
-msgstr ""
+msgstr "Перемикач"
 
 #: plug-ins/gflare/gflare.c:3242
 msgid "New GFlare"
@@ -10587,7 +10607,7 @@ msgstr "Назва \"%s\" вже використову╓ться!"
 
 #: plug-ins/gflare/gflare.c:3363
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
+msgstr "Неможливо стерти! Ма╓ лишитись хоча б один град╕╓нтний спалах."
 
 #: plug-ins/gflare/gflare.c:3373
 msgid "Delete GFlare"
@@ -10596,35 +10616,35 @@ msgstr "Стерти град╕╓нтний спалах"
 #: plug-ins/gflare/gflare.c:3430
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr ""
+msgstr "не знайдено %s в списку град╕╓нтних спалах╕в"
 
 #: plug-ins/gflare/gflare.c:3470
 msgid "GFlare Editor"
-msgstr ""
+msgstr "Редактор град╕╓нтних спалах╕в"
 
 #: plug-ins/gflare/gflare.c:3475
 msgid "Rescan Gradients"
-msgstr ""
+msgstr "Актуал╕зувати град╕╓нти"
 
 #. Glow
 #: plug-ins/gflare/gflare.c:3592
 msgid "Glow Paint Options"
-msgstr ""
+msgstr "Параметри малювання сяйва"
 
 #: plug-ins/gflare/gflare.c:3617 plug-ins/gflare/gflare.c:3647
 #: plug-ins/gflare/gflare.c:3677
 msgid "Paint Mode:"
-msgstr ""
+msgstr "Режим малювання:"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3622
 msgid "Rays Paint Options"
-msgstr ""
+msgstr "Параметри малювання промен╕в"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3652
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "Параметри малювання другого спалаху"
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
@@ -10651,7 +10671,7 @@ msgstr "Кутовий град╕╓нт:"
 
 #: plug-ins/gflare/gflare.c:3730 plug-ins/gflare/gflare.c:3840
 msgid "Angular Size Gradient:"
-msgstr ""
+msgstr "Кутовий розм╕р град╕╓нта:"
 
 #: plug-ins/gflare/gflare.c:3751 plug-ins/gflare/gflare.c:3861
 #: plug-ins/gflare/gflare.c:4003
@@ -10660,23 +10680,23 @@ msgstr "Розм╕р (%):"
 
 #: plug-ins/gflare/gflare.c:3792
 msgid "Glow"
-msgstr ""
+msgstr "Сяйво"
 
 #: plug-ins/gflare/gflare.c:3898
 msgid "# of Spikes:"
-msgstr ""
+msgstr "К╕льк╕сть плям:"
 
 #: plug-ins/gflare/gflare.c:3910
 msgid "Spike Thickness:"
-msgstr ""
+msgstr "Товщина плям:"
 
 #: plug-ins/gflare/gflare.c:3927
 msgid "Rays"
-msgstr ""
+msgstr "Промен╕"
 
 #: plug-ins/gflare/gflare.c:3978
 msgid "Size Factor Gradient:"
-msgstr ""
+msgstr "Показник величини град╕╜нта:"
 
 #: plug-ins/gflare/gflare.c:3982
 msgid "Probability Gradient:"
@@ -10687,7 +10707,7 @@ msgstr "Град╕╓нт в╕рог╕дност╕:"
 #.
 #: plug-ins/gflare/gflare.c:4045
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "Форма другого спалаху"
 
 #: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:60
 #: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
@@ -10701,12 +10721,12 @@ msgstr "Многокутник"
 
 #: plug-ins/gflare/gflare.c:4129
 msgid "Second Flares"
-msgstr ""
+msgstr "Другий спалах"
 
 #: plug-ins/gflare/gflare.c:4750
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
-msgstr ""
+msgstr "Не знайдено \"%s\": використову╓ться \"%s\""
 
 #: plug-ins/gflare/gflare.c:4821
 msgid "More..."
@@ -10724,19 +10744,19 @@ msgstr "Кадр (%i)"
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
+msgstr "FLI: Можна збер╕гати лише ╕ндексован╕ та с╕р╕ зображення."
 
 #: plug-ins/gfli/gfli.c:816
 msgid "GFLI 1.3 - Load framestack"
-msgstr ""
+msgstr "GFLI 1.3 - Завантаження стосу кадр╕в"
 
 #: plug-ins/gfli/gfli.c:885
 msgid "GFLI 1.3 - Save framestack"
-msgstr ""
+msgstr "GFLI 1.3 - Збереження стосу кадр╕в"
 
 #: plug-ins/gimpressionist/brush.c:184
 msgid "GIMPressionist: Can only save drawables!\n"
-msgstr ""
+msgstr "╫╕мпрес╕он╕ст: можливе лише збереження малюнк╕в!\n"
 
 #: plug-ins/gimpressionist/brush.c:190
 msgid "Save brush"
@@ -10744,27 +10764,27 @@ msgstr "Зберегти пензель"
 
 #: plug-ins/gimpressionist/brush.c:394
 msgid "Brush Preview:"
-msgstr ""
+msgstr "Перегляд пензля:"
 
 #: plug-ins/gimpressionist/brush.c:416
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr ""
+msgstr "Зм╕нити гаму (яскрав╕сть) вибраного пензля"
 
 #: plug-ins/gimpressionist/brush.c:428
 msgid "Select:"
-msgstr ""
+msgstr "Виб╕р:"
 
 #: plug-ins/gimpressionist/brush.c:433
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Пропорц╕╖:"
 
 #: plug-ins/gimpressionist/brush.c:437 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
-msgstr ""
+msgstr "Рель╓ф:"
 
 #: plug-ins/gimpressionist/brush.c:452
 msgid "(None)"
-msgstr ""
+msgstr "(Нема╓)"
 
 #: plug-ins/gimpressionist/brush.c:465
 msgid "Save..."
@@ -10772,35 +10792,35 @@ msgstr "Зберегти..."
 
 #: plug-ins/gimpressionist/brush.c:479
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "Пропорц╕╖ для пензля"
 
 #: plug-ins/gimpressionist/brush.c:490
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "Cтеп╕нь рель╓фност╕, що застосову╓ться до кожного мазка"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
-msgstr ""
+msgstr "Середн╓ п╕д пензлем"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
+msgstr "Кол╕р обчислю╓ться як середн╓ в╕х точок п╕д пензлем"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr ""
+msgstr "Центр пензля"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr ""
+msgstr "Зразок кольору з точки в центр╕ пензля"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
-msgstr ""
+msgstr "Кольоровий шум:"
 
 #: plug-ins/gimpressionist/color.c:122
 msgid "Adds random noise to the color"
-msgstr ""
+msgstr "Додати випадковий шум до кольору"
 
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
@@ -10808,11 +10828,11 @@ msgstr "Д╕алог вибору кольору"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
-msgstr ""
+msgstr "Темн╕ кра╖:"
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr ""
+msgstr "Як сильно \"затемнен╕\" кра╖ в кожного мазка пензлем"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
@@ -10820,19 +10840,19 @@ msgstr "Тло:"
 
 #: plug-ins/gimpressionist/general.c:188
 msgid "Keep original"
-msgstr ""
+msgstr "Зберегти початкове"
 
 #: plug-ins/gimpressionist/general.c:194
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "Зберегти початкове зображення як тло"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "From paper"
-msgstr ""
+msgstr "З паперу"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr ""
+msgstr "Скоп╕ювати текстуру з вибраного паперу як тло"
 
 #: plug-ins/gimpressionist/general.c:217
 msgid "Solid"
@@ -10840,24 +10860,24 @@ msgstr "Суц╕льне"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "Суц╕льно замальоване тло"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
+msgstr "Використовувати прозоре тло; лише нанесен╕ мазки будуть видим╕"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Малювати кра╖"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr ""
+msgstr "Без шв╕в"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "Вибер╕ть якщо готову зображення ма╓ здаватись безшовним"
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
@@ -10865,11 +10885,11 @@ msgstr "В╕дкинути т╕нь"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "Додавати ефект т╕н╕ до кожного мазка пензлем"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "Наск╕льки \"темною\" буде т╕нь"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
@@ -10878,7 +10898,7 @@ msgstr "Глибина т╕н╕:"
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "Глибина т╕ни, визнача╓, як далеко в╕д об'╓кта вона ма╓ бути"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
