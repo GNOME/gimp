@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-09-03 16:28+0200\n"
-"PO-Revision-Date: 2000-09-03 17:51+0200\n"
+"POT-Creation-Date: 2000-09-04 20:50+0200\n"
+"PO-Revision-Date: 2000-09-04 21:13+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -450,7 +450,7 @@ msgstr "Byt ut"
 #: app/by_color_select.c:787 app/colormap_dialog.i.c:130
 #: app/gdisplay_color_ui.c:120
 msgid "Add"
-msgstr "Addera"
+msgstr "Lägg till"
 
 #: app/by_color_select.c:788 app/layers_dialog.c:380 app/tool_options.c:926
 msgid "Subtract"
@@ -1470,7 +1470,7 @@ msgstr "Inställningar"
 
 #: app/gdisplay_color_ui.c:127
 msgid "Color Display Filters"
-msgstr "Färgvisnings-filter"
+msgstr "Färgvisningsfilter"
 
 #: app/gdisplay_color_ui.c:153
 msgid "Available Filters"
@@ -1510,7 +1510,7 @@ msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
-"Det aktiva lagret har ingen alfa-kanal\n"
+"Det aktiva lagret har ingen alfakanal\n"
 "att konvertera till markering."
 
 #: app/gimage_mask.c:513
@@ -1638,7 +1638,7 @@ msgstr "Lagret är redan längst upp"
 
 #: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
-msgstr "Kan inte höja lager utan alfa-kanal"
+msgstr "Kan inte höja lager utan alfakanal"
 
 #: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
@@ -1683,7 +1683,7 @@ msgid ""
 "with no alpha channel."
 msgstr ""
 "Kan inte lägga till lagermask till ett\n"
-"lager utan alfa-kanal."
+"lager utan alfakanal."
 
 #: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -2762,7 +2762,7 @@ msgstr "Svart (Full transparenthet)"
 
 #: app/layers_dialog.c:3780
 msgid "Layer's Alpha Channel"
-msgstr "Lagrets alfa-kanal"
+msgstr "Lagrets alfakanal"
 
 #: app/layers_dialog.c:3841 app/layers_dialog.c:3927
 msgid ""
@@ -2898,8 +2898,8 @@ msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte "
-"ett separat dialogfönster.\n"
+"  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte ett "
+"separat dialogfönster.\n"
 
 #: app/main.c:309
 msgid ""
@@ -2950,13 +2950,15 @@ msgstr ""
 
 #: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
-msgstr "  --no-xshm                Använd inte \"X Shared Memory\"-tillägget.\n"
+msgstr ""
+"  --no-xshm                Använd inte \"X Shared Memory\"-tillägget.\n"
 
 #: app/main.c:320
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Aktivera ickefatal signalhanterare för felsökning.\n"
+"  --debug-handlers         Aktivera ickefatal signalhanterare för "
+"felsökning.\n"
 
 #: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
@@ -3063,7 +3065,7 @@ msgstr "/Arkiv/Fönster/Felmeddelanden..."
 
 #: app/menus.c:147
 msgid "/File/Dialogs/Display Filters..."
-msgstr "/Arkiv/Fönster/Visa-filter..."
+msgstr "/Arkiv/Fönster/Visningsfilter..."
 
 #: app/menus.c:157 app/menus.c:216
 msgid "/File/Quit"
@@ -3336,20 +3338,20 @@ msgstr "/Bild/Färger/Auto/Jämna ut"
 #. <Image>/Image/Alpha
 #: app/menus.c:384
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Bild/Alfa/Lägg till alfa-kanal"
+msgstr "/Bild/Alfa/Lägg till alfakanal"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:389
 msgid "/Image/Transforms/Offset..."
-msgstr "/Bild/Transformera/Offset..."
+msgstr "/Bild/Transformeringar/Offset..."
 
 #: app/menus.c:391
 msgid "/Image/Transforms/Rotate"
-msgstr "/Bild/Transformera/Rotera"
+msgstr "/Bild/Transformeringar/Rotera"
 
 #: app/menus.c:398
 msgid "/Image/Canvas Size..."
-msgstr "/Bild/Kanvas-storlek..."
+msgstr "/Bild/Kanvasstorlek..."
 
 #: app/menus.c:400
 msgid "/Image/Scale Image..."
@@ -3416,11 +3418,11 @@ msgstr "/Lager/Mask till markering"
 
 #: app/menus.c:455
 msgid "/Layers/Add Alpha Channel"
-msgstr "/Lager/Lägg till alfa-kanal"
+msgstr "/Lager/Lägg till alfakanal"
 
 #: app/menus.c:457
 msgid "/Layers/Alpha to Selection"
-msgstr "/Lager/Alfa-kanal till markering"
+msgstr "/Lager/Alfakanal till markering"
 
 #. <Image>/Tools
 #: app/menus.c:465
@@ -3482,11 +3484,11 @@ msgstr "/Fönster/Felmeddelanden..."
 
 #: app/menus.c:507
 msgid "/Dialogs/Display Filters..."
-msgstr "/Fönster/Visa-filter..."
+msgstr "/Fönster/Visningsfilter..."
 
 #: app/menus.c:509
 msgid "/Dialogs/Undo History..."
-msgstr "/Fönster/Ångra-historia..."
+msgstr "/Fönster/Ångringshistorik..."
 
 #. <Image>/Filters
 #: app/menus.c:518
@@ -3543,11 +3545,11 @@ msgstr "/Filter/Mappa"
 
 #: app/menus.c:550
 msgid "/Filters/Render"
-msgstr "/Filter/Rendrera"
+msgstr "/Filter/Rendera"
 
 #: app/menus.c:552
 msgid "/Filters/Web"
-msgstr "/Filter/Web"
+msgstr "/Filter/Webb"
 
 #: app/menus.c:557
 msgid "/Filters/Animation"
@@ -3567,7 +3569,7 @@ msgstr "/Automatiskt"
 
 #: app/menus.c:589
 msgid "/By Extension"
-msgstr "/Av ändelse"
+msgstr "/Via ändelse"
 
 #: app/menus.c:603
 msgid "/New Layer..."
@@ -3644,11 +3646,11 @@ msgstr "/Mask till markering"
 
 #: app/menus.c:655
 msgid "/Add Alpha Channel"
-msgstr "/Lägg till alfa-kanal"
+msgstr "/Lägg till alfakanal"
 
 #: app/menus.c:657
 msgid "/Alpha to Selection"
-msgstr "/Alfa-kanal till markering"
+msgstr "/Alfakanal till markering"
 
 #: app/menus.c:662
 msgid "/Edit Layer Attributes..."
@@ -3765,7 +3767,7 @@ msgstr "Laddades ur OK"
 
 #: app/module_db.c:308
 msgid "Module DB"
-msgstr "Modul DB"
+msgstr "Moduldatabas"
 
 #: app/module_db.c:601
 #, c-format
@@ -5185,7 +5187,7 @@ msgstr "Rekt markering"
 
 #: app/tools.c:149
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/Verktyg/Markera Verktyg/Rekt markering"
+msgstr "/Verktyg/Markeringsverktyg/Rekt markering"
 
 #: app/tools.c:154
 msgid "Select rectangular regions"
@@ -5197,7 +5199,7 @@ msgstr "Ellipsmarkering"
 
 #: app/tools.c:177
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/Verktyg/Markera Verktyg/Ellips markering"
+msgstr "/Verktyg/Markeringsverktyg/Ellipsmarkering"
 
 #: app/tools.c:182
 msgid "Select elliptical regions"
@@ -5209,7 +5211,7 @@ msgstr "Fri markering"
 
 #: app/tools.c:205
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/Verktyg/Markera Verktyg/Fri markering"
+msgstr "/Verktyg/Markeringsverktyg/Fri markering"
 
 #: app/tools.c:210
 msgid "Select hand-drawn regions"
@@ -5221,7 +5223,7 @@ msgstr "Luddig markering"
 
 #: app/tools.c:233
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/Verktyg/Markera Verktyg/Luddig markering"
+msgstr "/Verktyg/Markeringsverktyg/Luddig markering"
 
 #: app/tools.c:238
 msgid "Select contiguous regions"
@@ -5233,7 +5235,7 @@ msgstr "Bezier-markering"
 
 #: app/tools.c:261
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Verktyg/Markera Verktyg/Bezier markering"
+msgstr "/Verktyg/Markeringsverktyg/Bezier-markering"
 
 #: app/tools.c:266
 msgid "Select regions using Bezier curves"
@@ -5241,7 +5243,7 @@ msgstr "Markera med Bezier-kurvor"
 
 #: app/tools.c:289
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Verktyg/Markera Verktyg/Intelligent sax"
+msgstr "/Verktyg/Markeringsverktyg/Intelligent sax"
 
 #: app/tools.c:294
 msgid "Select shapes from image"
@@ -5728,7 +5730,7 @@ msgstr "applicera lagermask"
 #. ok
 #: app/undo.c:2933
 msgid "layer merge"
-msgstr "sammanslagning lager"
+msgstr "sammanslagning av lager"
 
 #: app/undo.c:2934
 msgid "FS anchor"
