@@ -1195,7 +1195,3 @@ tool_active_PDB_string (void)
 
   return toolStr;
 }
-
-
-
-

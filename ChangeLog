@@ -1,3 +1,12 @@
+Tue Dec 14 11:56:15 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdbgen.pl
+	* tools/pdbgen/pdb/fileops.pdb: allow for array size params to
+	be optional
+
+	* app/nav_window.c
+	* app/tools.c: a bit of cleanup
+
 Tue Dec 14 20:37:44 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am

@@ -490,12 +490,12 @@ nav_window_update_preview (NavWinData *iwd)
 
       pwidth = iwd->pwidth;
       pheight = iwd->pheight;
-      src = (guchar *) temp_buf_data (preview_buf_notdot);
+      src = temp_buf_data (preview_buf_notdot);
       preview_buf_ptr = preview_buf_notdot;
     }
   else
     {
-      src = (guchar *) temp_buf_data (preview_buf);
+      src = temp_buf_data (preview_buf);
       preview_buf_ptr = preview_buf;
     }
   

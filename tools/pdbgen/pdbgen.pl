@@ -127,8 +127,10 @@ sub trimspace { for (${$_[0]}) { s/\s+/ /gs; s/^ //; s/ $//; } }
 # Trim spaces and escape quotes C-style
 sub nicetext {
     my $val = shift;
-    &trimspace($val);
-    $$val =~ s/"/\\"/g;
+    if (defined $$val) {
+	&trimspace($val);
+	$$val =~ s/"/\\"/g;
+    }
 }
 
 # Do the same for all the strings in the args, plus expand constraint text
@@ -154,7 +156,7 @@ sub arrayexpand {
     my $newargs;
 
     foreach (@$$args) {
-	if (exists $_->{array}) {
+	if (exists $_->{array} && defined $_->{array}) {
 	    my $arg = $_->{array};
 
 	    $arg->{name} = 'num_' . $_->{name} unless exists $arg->{name};

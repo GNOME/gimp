@@ -180,7 +180,7 @@ HELP
 	{ name => 'height', type => 'int32', init => 1, 
 	  desc => 'The height of the thumbnail' },
 	{ name => 'thumb_data', type => 'int8array', init => 1,
-	  desc => 'The thumbnail data'},
+	  desc => 'The thumbnail data', array => undef },
     );
 
     %invoke = (
