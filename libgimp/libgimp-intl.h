@@ -22,6 +22,9 @@
 #ifndef __LIBGIMP_INTL_H__
 #define __LIBGIMP_INTL_H__
 
+#ifndef GETTEXT_PACKAGE
+#error "config.h must be included prior to libgimp-intl.h"
+#endif
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>

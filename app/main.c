@@ -116,11 +116,16 @@ main (int    argc,
   prog_name = argv[0];
 
   /* Initialize i18n support */
-  INIT_LOCALE (GETTEXT_PACKAGE);
 
-#ifdef ENABLE_NLS
-  bindtextdomain ("gimp-libgimp", LOCALEDIR);
-#endif
+  setlocale (LC_ALL, "");
+
+  bindtextdomain (GETTEXT_PACKAGE"-libgimp", LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
+  textdomain (GETTEXT_PACKAGE);
 
   /*  check argv[] for "--no-interface" before trying to initialize gtk+  */
   for (i = 1; i < argc; i++)

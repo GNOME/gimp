@@ -22,12 +22,14 @@
 #ifndef __GIMPINTL_H__
 #define __GIMPINTL_H__
 
-#include <glib.h>
+#ifndef GETTEXT_PACKAGE
+#error "config.h must be included prior to gimpintl.h"
+#endif
+
 #include <locale.h>
 
 /* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com>
- * Heavily modified by Daniel Egger <Daniel.Egger@t-online.de>
- * So be sure to hit me instead of him if something is wrong here
+ * Modified by Daniel Egger <Daniel.Egger@t-online.de> and others.
  */ 
 
 #ifndef LOCALEDIR
@@ -59,12 +61,5 @@
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET
 #    define bind_textdomain_codeset(Domain, Codeset) (Domain)
 #endif
-
-#define INIT_LOCALE( domain )	G_STMT_START{	\
-     setlocale (LC_ALL, "");                    \
-     bindtextdomain (domain, LOCALEDIR);	\
-     bind_textdomain_codeset (domain, "UTF-8"); \
-     textdomain (domain);			\
-}G_STMT_END
 
 #endif /* __GIMPINTL_H__ */

@@ -1,3 +1,14 @@
+2002-02-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpintl.h: removed INIT_LOCALE() macro. Error out if
+	config.h wasn't included before.
+
+	* app/main.c: directly call the appropriate functions to set up I18N.
+	
+	* libgimp/libgimp-intl.h: error out if config.h wasn't included.
+
+	* plug-ins/script-fu/script-fu-intl.h: set codeset to UTF-8.
+
 2002-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tools-types.h
