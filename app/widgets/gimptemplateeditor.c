@@ -316,6 +316,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (vbox), editor->more_label, FALSE, FALSE, 0);
   gtk_widget_show (editor->more_label);
 
+#ifdef ENABLE_MEMSIZE_LABEL
   editor->memsize_label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (editor->memsize_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
@@ -324,6 +325,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), editor->memsize_label, FALSE, FALSE, 0);
   gtk_widget_show (editor->memsize_label);
+#endif
 
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
   editor->expander = g_object_new (GTK_TYPE_EXPANDER,
@@ -663,9 +665,11 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
         }
     }
 
+#ifdef ENABLE_MEMSIZE_LABEL
   text = gimp_memsize_to_string (template->initial_size);
   gtk_label_set_text (GTK_LABEL (editor->memsize_label), text);
   g_free (text);
+#endif
 
   text = g_strdup_printf (_("%d x %d pixels"),
                           template->width, template->height);

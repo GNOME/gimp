@@ -59,6 +59,7 @@ struct _GimpSizeBoxPrivate
 {
   GimpSizeEntry   *entry;
   GimpChainButton *chain;
+  GtkWidget       *label;
   gdouble          aspect;
 };
 
@@ -79,6 +80,9 @@ static void      gimp_size_box_get_property  (GObject         *object,
                                               guint            property_id,
                                               GValue          *value,
                                               GParamSpec      *pspec);
+
+static void      gimp_size_box_update_label  (GimpSizeBox     *box,
+                                              GtkWidget       *label);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -183,11 +187,11 @@ gimp_size_box_constructor (GType                  type,
   GimpSizeBox        *box;
   GtkWidget          *entry;
   GtkWidget          *table;
-  GtkWidget          *label;
   GtkWidget          *hbox;
   GtkWidget          *width;
   GtkWidget          *height;
   GtkWidget          *chain;
+  GtkWidget          *label;
   GtkObject          *adjustment;
   GimpSizeBoxPrivate *priv;
 
@@ -195,7 +199,7 @@ gimp_size_box_constructor (GType                  type,
 
   box = GIMP_SIZE_BOX (object);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
@@ -267,10 +271,21 @@ gimp_size_box_constructor (GType                  type,
   gimp_help_set_help_data (GIMP_CHAIN_BUTTON (chain)->button,
                            _("Keep aspect ratio"), NULL);
 
+  label = gtk_label_new (NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, 2, 3);
+  gtk_widget_show (label);
+
+  gimp_size_box_update_label (box, label);
+
   priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
   priv->entry  = GIMP_SIZE_ENTRY (entry);
   priv->chain  = GIMP_CHAIN_BUTTON (chain);
+  priv->label  = label;
   priv->aspect = (gdouble) box->width / (gdouble) box->height;
 
   return object;
@@ -296,6 +311,7 @@ gimp_size_box_set_property (GObject      *object,
           if (box->height != height)
             gimp_size_entry_set_refval (priv->entry, 1, height);
         }
+      gimp_size_box_update_label (box, priv->label);
       break;
 
     case PROP_HEIGHT:
@@ -307,6 +323,7 @@ gimp_size_box_set_property (GObject      *object,
           if (box->width != width)
             gimp_size_entry_set_refval (priv->entry, 0, width);
         }
+      gimp_size_box_update_label (box, priv->label);
       break;
 
     case PROP_UNIT:
@@ -376,5 +393,19 @@ gimp_size_box_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_size_box_update_label (GimpSizeBox *box,
+                            GtkWidget   *label)
+{
+  if (label)
+    {
+      gchar *text;
+
+      text = g_strdup_printf (_("%d x %d pixels"), box->width, box->height);
+      gtk_label_set_text (GTK_LABEL (label), text);
+      g_free (text);
     }
 }

@@ -1,5 +1,14 @@
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptemplateeditor.c: commented out the memory size
+	label. The visual clutter of it's bold appearance was IMO not
+	appropriate. I think the dialog is better without it.
+
+	* app/widgets/gimpsizebox.c: added a pixel size label as in the
+	Image New dialog.
+
+2004-10-26  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: added gtk-doc comment for
 	gimp_enums_get_type_names().
 
