@@ -1,3 +1,25 @@
+2004-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-preview.[ch]: added new function
+	gimp_drawable_get_sub_preview() which returns a scaled preview of
+	a part of a drawable.
+
+	(gimp_drawable_preview_scale): made it work with srcPR.x and
+	srcPR.y being != 0.
+
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview)
+	* app/widgets/gimpviewrendererdrawable.c
+	(gimp_view_renderer_drawable_render): if the area of the drawable
+	preview is more than 4 times larger than the drawable itself (evil
+	heuristic, but seems to work fine), use above function to get a
+	sub-preview of the drawable instead of getting an insanely large
+	preview of the whole drawable just to use a small part of it.
+	Fixes bug #142074.
+
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview):
+	optimized by skipping layers which do not intersect with the
+	canvas.
+
 2004-12-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/bumpmap.c (dialog_bumpmap_callback): do actually
@@ -49,7 +71,6 @@
 	* app/widgets/gimpitemtreeview.c
 	(gimp_item_tree_view_name_edited)
 	* app/widgets/gimptemplateview.c
-
 	(gimp_template_view_tree_name_edited): call gimp_object_set_name()
 	or gimp_item_rename() only if the item's name has actually changed
 	and restore the old text otherwise. Fixes one instance of "name is

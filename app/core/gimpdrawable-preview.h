@@ -21,12 +21,19 @@
 
 
 /*
- *  virtual functions of GimpDrawable -- dont't call directly
+ *  virtual function of GimpDrawable -- dont't call directly
  */
+TempBuf * gimp_drawable_get_preview     (GimpViewable *viewable,
+                                         gint          width,
+                                         gint          height);
 
-TempBuf * gimp_drawable_get_preview      (GimpViewable *viewable,
-                                          gint          width,
-                                          gint          height);
+TempBuf * gimp_drawable_get_sub_preview (GimpDrawable *drawable,
+                                         gint          src_x,
+                                         gint          src_y,
+                                         gint          src_width,
+                                         gint          src_height,
+                                         gint          dest_width,
+                                         gint          dest_height);
 
 
 #endif /* __GIMP_DRAWABLE__PREVIEW_H__ */

@@ -95,6 +95,90 @@ gimp_drawable_get_preview (GimpViewable *viewable,
   return gimp_drawable_preview_private (drawable, width, height);
 }
 
+TempBuf *
+gimp_drawable_get_sub_preview (GimpDrawable *drawable,
+                               gint          src_x,
+                               gint          src_y,
+                               gint          src_width,
+                               gint          src_height,
+                               gint          dest_width,
+                               gint          dest_height)
+{
+  GimpItem          *item;
+  GimpImage         *gimage;
+  TempBuf           *preview_buf;
+  PixelRegion        srcPR;
+  PixelRegion        destPR;
+  GimpImageBaseType  base_type;
+  gint               bytes = 0;
+  gint               subsample;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  item   = GIMP_ITEM (drawable);
+  gimage = gimp_item_get_image (item);
+
+  if (! gimage->gimp->config->layer_previews)
+    return NULL;
+
+  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+  switch (base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      bytes = gimp_drawable_bytes (drawable);
+      break;
+
+    case GIMP_INDEXED:
+      bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
+      break;
+    }
+
+  /*  calculate 'acceptable' subsample  */
+  subsample = 1;
+
+  /* handle some truncation errors */
+  if (src_width   < 1) src_width   = 1;
+  if (src_height  < 1) src_height  = 1;
+  if (dest_width  < 1) dest_width  = 1;
+  if (dest_height < 1) dest_height = 1;
+
+  while ((dest_width  * (subsample + 1) * 2 < src_width) &&
+         (dest_height * (subsample + 1) * 2 < src_width))
+    subsample += 1;
+
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                     src_x, src_y, src_width, src_height,
+                     FALSE);
+
+  preview_buf = temp_buf_new (dest_width, dest_height, bytes, 0, 0, NULL);
+
+  destPR.bytes     = preview_buf->bytes;
+  destPR.x         = 0;
+  destPR.y         = 0;
+  destPR.w         = dest_width;
+  destPR.h         = dest_height;
+  destPR.rowstride = dest_width * destPR.bytes;
+  destPR.data      = temp_buf_data (preview_buf);
+
+  if (GIMP_IS_LAYER (drawable))
+    {
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      gimp_drawable_preview_scale (base_type,
+                                   gimp_image_get_colormap (gimage),
+                                   &srcPR, &destPR,
+                                   subsample);
+    }
+  else if (GIMP_IS_CHANNEL (drawable))
+    {
+      subsample_region (&srcPR, &destPR, subsample);
+    }
+
+  return preview_buf;
+}
+
 
 /*  private functions  */
 
@@ -267,8 +351,8 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   y_last = y_cum;
 
   pixel_region_get_row (srcPR,
-			0,
-			src_row * subsample,
+			srcPR->x,
+			srcPR->y + src_row * subsample,
 			orig_width * subsample,
 			src,
 			subsample);
@@ -366,8 +450,8 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
       else
 	{
 	  pixel_region_get_row (srcPR,
-				0,
-				src_row * subsample,
+				srcPR->x,
+				srcPR->y + src_row * subsample,
 				orig_width * subsample,
 				src,
 				subsample);

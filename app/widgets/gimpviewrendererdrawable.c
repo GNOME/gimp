@@ -29,7 +29,9 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
 
 #include "gimpviewrendererdrawable.h"
@@ -135,19 +137,51 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        &scaling_up);
     }
 
+  if ((view_width * view_height) < (item->width * item->height * 4))
+    scaling_up = FALSE;
+
   if (scaling_up)
     {
-      TempBuf *temp_buf;
-
-      temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                item->width,
-                                                item->height);
-
-      if (temp_buf)
+      if (gimage && ! renderer->is_popup)
         {
-          render_buf = temp_buf_scale (temp_buf, view_width, view_height);
+          gint src_x, src_y;
+          gint src_width, src_height;
+          gint dest_width;
+          gint dest_height;
 
-          temp_buf_free (temp_buf);
+          gimp_rectangle_intersect (0, 0,
+                                    item->width, item->height,
+                                    -item->offset_x, -item->offset_y,
+                                    gimage->width, gimage->height,
+                                    &src_x, &src_y,
+                                    &src_width, &src_height);
+
+          dest_width  = ROUND (((gdouble) renderer->width /
+                                (gdouble) gimage->width) *
+                               (gdouble) src_width);
+          dest_height = ROUND (((gdouble) renderer->height /
+                                (gdouble) gimage->height) *
+                               (gdouble) src_height);
+
+          render_buf = gimp_drawable_get_sub_preview (drawable,
+                                                      src_x, src_y,
+                                                      src_width, src_height,
+                                                      dest_width, dest_height);
+        }
+      else
+        {
+          TempBuf *temp_buf;
+
+          temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                    item->width,
+                                                    item->height);
+
+          if (temp_buf)
+            {
+              render_buf = temp_buf_scale (temp_buf, view_width, view_height);
+
+              temp_buf_free (temp_buf);
+            }
         }
     }
   else
@@ -170,6 +204,12 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             render_buf->y =
               ROUND ((((gdouble) renderer->height / (gdouble) gimage->height) *
                       (gdouble) item->offset_y));
+
+          if (scaling_up)
+            {
+              if (render_buf->x < 0) render_buf->x = 0;
+              if (render_buf->y < 0) render_buf->y = 0;
+            }
         }
       else
         {

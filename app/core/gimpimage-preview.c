@@ -30,6 +30,8 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
+#include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimplayer.h"
@@ -224,9 +226,24 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   for (; reverse_list; reverse_list = g_slist_next (reverse_list))
     {
+      gint     src_x, src_y;
+      gint     src_width, src_height;
+      gboolean use_sub_preview = FALSE;
+
       layer = (GimpLayer *) reverse_list->data;
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
+      if (! gimp_rectangle_intersect (0, 0,
+                                      gimp_item_width  (GIMP_ITEM (layer)),
+                                      gimp_item_height (GIMP_ITEM (layer)),
+                                      -off_x, -off_y,
+                                      gimage->width, gimage->height,
+                                      &src_x, &src_y,
+                                      &src_width, &src_height))
+        {
+          continue;
+        }
 
       x = (gint) RINT (ratio * off_x);
       y = (gint) RINT (ratio * off_y);
@@ -235,6 +252,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
       if (w < 1 || h < 1)
 	continue;
+
+      if ((w * h) > (width * height * 4))
+        use_sub_preview = TRUE;
 
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);
@@ -250,39 +270,84 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       src1PR.data      = (temp_buf_data (comp) +
                           y1 * src1PR.rowstride + x1 * src1PR.bytes);
 
-      layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
+      if (use_sub_preview)
+        {
+          layer_buf = gimp_drawable_get_sub_preview (GIMP_DRAWABLE (layer),
+                                                     src_x, src_y,
+                                                     src_width, src_height,
+                                                     (x2 - x1),
+                                                     (y2 - y1));
 
-      g_assert (layer_buf);
-      g_assert (layer_buf->bytes <= comp->bytes);
+          g_assert (layer_buf);
+          g_assert (layer_buf->bytes <= comp->bytes);
 
-      src2PR.bytes     = layer_buf->bytes;
-      src2PR.x         = src1PR.x;
-      src2PR.y         = src1PR.y;
-      src2PR.w         = src1PR.w;
-      src2PR.h         = src1PR.h;
-      src2PR.rowstride = layer_buf->width * src2PR.bytes;
-      src2PR.data      = (temp_buf_data (layer_buf) +
-                          (y1 - y) * src2PR.rowstride +
-                          (x1 - x) * src2PR.bytes);
+          src2PR.bytes     = layer_buf->bytes;
+          src2PR.x         = 0;
+          src2PR.y         = 0;
+          src2PR.w         = src1PR.w;
+          src2PR.h         = src1PR.h;
+          src2PR.rowstride = layer_buf->width * src2PR.bytes;
+          src2PR.data      = temp_buf_data (layer_buf);
+        }
+      else
+        {
+          layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
+
+          g_assert (layer_buf);
+          g_assert (layer_buf->bytes <= comp->bytes);
+
+          src2PR.bytes     = layer_buf->bytes;
+          src2PR.x         = src1PR.x;
+          src2PR.y         = src1PR.y;
+          src2PR.w         = src1PR.w;
+          src2PR.h         = src1PR.h;
+          src2PR.rowstride = layer_buf->width * src2PR.bytes;
+          src2PR.data      = (temp_buf_data (layer_buf) +
+                              (y1 - y) * src2PR.rowstride +
+                              (x1 - x) * src2PR.bytes);
+        }
 
       if (layer->mask && layer->mask->apply_mask)
 	{
-	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
-						w, h);
-	  maskPR.bytes     = mask_buf->bytes;
-          maskPR.x         = src1PR.x;
-          maskPR.y         = src1PR.y;
-          maskPR.w         = src1PR.w;
-          maskPR.h         = src1PR.h;
-	  maskPR.rowstride = mask_buf->width * mask_buf->bytes;
-	  maskPR.data      = (mask_buf_data (mask_buf) +
-                              (y1 - y) * maskPR.rowstride +
-                              (x1 - x) * maskPR.bytes);
-	  mask = &maskPR;
+          if (use_sub_preview)
+            {
+              mask_buf =
+                gimp_drawable_get_sub_preview (GIMP_DRAWABLE (layer->mask),
+                                               src_x, src_y,
+                                               src_width, src_height,
+                                               x2 - x1,
+                                               y2 - y1);
+
+              maskPR.bytes     = mask_buf->bytes;
+              maskPR.x         = 0;
+              maskPR.y         = 0;
+              maskPR.w         = src1PR.w;
+              maskPR.h         = src1PR.h;
+              maskPR.rowstride = mask_buf->width * mask_buf->bytes;
+              maskPR.data      = mask_buf_data (mask_buf);
+            }
+          else
+            {
+              mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
+                                                    w, h);
+
+              maskPR.bytes     = mask_buf->bytes;
+              maskPR.x         = src1PR.x;
+              maskPR.y         = src1PR.y;
+              maskPR.w         = src1PR.w;
+              maskPR.h         = src1PR.h;
+              maskPR.rowstride = mask_buf->width * mask_buf->bytes;
+              maskPR.data      = (mask_buf_data (mask_buf) +
+                                  (y1 - y) * maskPR.rowstride +
+                                  (x1 - x) * maskPR.bytes);
+            }
+
+          mask = &maskPR;
 	}
       else
 	{
-	  mask = NULL;
+          mask_buf = NULL;
+	  mask     = NULL;
 	}
 
       /*  Based on the type of the layer, project the layer onto the
@@ -325,6 +390,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 			     layer->mode,
                              visible_components,
                              COMBINE_INTEN_A_INTEN);
+        }
+
+      if (use_sub_preview)
+        {
+          temp_buf_free (layer_buf);
+
+          if (mask_buf)
+            temp_buf_free (mask_buf);
         }
 
       construct_flag = TRUE;
