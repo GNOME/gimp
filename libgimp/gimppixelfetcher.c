@@ -218,10 +218,8 @@ gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
         if (x < 0 || x >= pf->img_width ||
             y < 0 || y >= pf->img_height)
           {
-            i = pf->img_bpp;
-            do
+            for (i = 0; i < pf->img_bpp; i++)
               pixel[i] = 0;
-            while (--i);
 
             return;
           }
