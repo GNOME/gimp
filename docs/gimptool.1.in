@@ -200,7 +200,7 @@ to get the preferred flags to pass to the C compiler for plug-in building.
 to add a prefix to the install/uninstall path.
 .TP 8
 .B LDFLAGS
-to get the prefered flags for passing to the linker.
+to get the preferred flags for passing to the linker.
 .TP 8
 .B LIBS
 for passing extra libs that may be needed in the build process. For example,
