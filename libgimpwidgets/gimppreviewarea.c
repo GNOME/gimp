@@ -345,7 +345,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s++, d += 3)
             {
-              d[0] = d[1] = d[3] = s[0];
+              d[0] = d[1] = d[2] = s[0];
             }
 
           src  += rowstride;
