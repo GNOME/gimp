@@ -1,5 +1,19 @@
 2000-06-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/convolve.c
+	* app/dodgeburn.c
+	* app/eraser.c
+	* app/paint_core.c
+	* app/tools.[ch]: fixed my tool toggle braino: the paint_core
+	cannot decide which cursor to show from the state of the modifier
+	keys.
+
+	Added a boolean "toggled" variable to the Tool structure,
+	set it in the toggleable paint tools and evaluate it in the
+	paint_core.
+
+2000-06-14  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* cursors/gimp-tool-cursors.xcf
 	* cursors/anchor.xbm
