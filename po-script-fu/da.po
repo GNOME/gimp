@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2001-08-27 17:08+0200\n"
+"POT-Creation-Date: 2001-10-13 00:08+0200\n"
 "PO-Revision-Date: 2001-08-27 17:11+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -117,12 +117,12 @@ msgid "About"
 msgstr "Om"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:545
 msgid "OK"
 msgstr "O.k."
 
 #: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -169,15 +169,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:540
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-tjenesteindstillinger"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:567
 msgid "Server Port:"
 msgstr "Tjenesteport: "
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:573
 msgid "Server Logfile:"
 msgstr "Tjenestelogfil:"
 
@@ -650,7 +650,8 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Knap..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Vandret linje..."
+msgstr ""
+"<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Vandret linje..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
@@ -892,7 +893,7 @@ msgid "Base Color"
 msgstr "Grundfarve"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+msgid "Base Radius (pixels)"
 msgstr "Grundradius (skærmpunkter)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
