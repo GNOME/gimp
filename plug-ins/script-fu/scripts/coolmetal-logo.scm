@@ -74,11 +74,12 @@
     (gimp-selection-layer-alpha logo-layer)
     (set! fs (car (gimp-selection-float shadow-layer 0 0)))
     (gimp-edit-clear shadow-layer)
-    (gimp-perspective fs FALSE
-		      (+ 5 (* 0.15 height)) (- height (* 0.15 height))
-		      (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
-		      5 height
-		      (+ 5 width) height)
+    (gimp-drawable-transform-perspective-defaults fs
+						  (+ 5 (* 0.15 height)) (- height (* 0.15 height))
+						  (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
+						  5 height
+						  (+ 5 width) height
+						  FALSE FALSE)
     (gimp-floating-sel-anchor fs)
     (plug-in-gauss-rle 1 img shadow-layer smear TRUE TRUE)
 
@@ -86,8 +87,11 @@
     (gimp-edit-copy logo-layer)
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
-    (gimp-scale reflect-layer FALSE 0 0 width (* 0.85 height))
-    (gimp-flip reflect-layer 1)
+    (gimp-drawable-transform-scale-defaults reflect-layer
+					    0 0 width (* 0.85 height)
+					    FALSE FALSE)
+    (gimp-drawable-transform-flip-simple reflect-layer ORIENTATION-VERTICAL
+					 TRUE 0 TRUE)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))

@@ -95,8 +95,11 @@
 	    (set! width (car (gimp-drawable-width new-layer)))
 	    (if (not script-fu-text-circle-debug?)
 		(begin
-		  (gimp-rotate new-layer 1
-			       ((if (< 0 fill-angle-rad) + -) angle rad-90))
+		  (gimp-drawable-transform-rotate-defaults new-layer
+							   ((if (< 0 fill-angle-rad)
+								+ -) angle rad-90)
+							   TRUE 0 0
+							   TRUE FALSE)
 		  (gimp-layer-translate new-layer
 					(+ center-x
 					   (* radius (cos angle))

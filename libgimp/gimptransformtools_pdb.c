@@ -30,18 +30,8 @@
  * @drawable_ID: The affected drawable.
  * @flip_type: Type of flip.
  *
- * Flip the specified drawable about its center either vertically or
- * horizontally.
- *
- * This tool flips the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
- * selection which is then flipd by the specified amount. The return
- * value is the ID of the flipped drawable. If there was no selection,
- * this will be equal to the drawable ID supplied as input. Otherwise,
- * this will be the newly created and flipped drawable. The flip type
- * parameter indicates whether the flip will be applied horizontally or
- * vertically.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_flip_simple() instead.
  *
  * Returns: The flipped drawable.
  */
@@ -80,27 +70,8 @@ gimp_flip (gint32              drawable_ID,
  * @x3: The new x coordinate of lower-right corner of original bounding box.
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  *
- * Perform a possibly non-affine transformation on the specified
- * drawable.
- *
- * This tool performs a possibly non-affine transformation on the
- * specified drawable by allowing the corners of the original bounding
- * box to be arbitrarily remapped to any values. The specified drawable
- * is remapped if no selection exists. However, if a selection exists,
- * the portion of the drawable which lies under the selection is cut
- * from the drawable and made into a floating selection which is then
- * remapped as specified. The interpolation parameter can be set to
- * TRUE to indicate that either linear or cubic interpolation should be
- * used to smooth the resulting remapped drawable. The return value is
- * the ID of the remapped drawable. If there was no selection, this
- * will be equal to the drawable ID supplied as input. Otherwise, this
- * will be the newly created and remapped drawable. The 4 coordinates
- * specify the new locations of each corner of the original bounding
- * box. By specifying these values, any affine transformation
- * (rotation, scaling, translation) can be affected. Additionally,
- * these values can be specified such that the resulting transformed
- * drawable will appear to have been projected via a perspective
- * transform.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_perspective_defaults() instead.
  *
  * Returns: The newly mapped drawable.
  */
@@ -148,19 +119,8 @@ gimp_perspective (gint32   drawable_ID,
  * @interpolation: Whether to use interpolation.
  * @angle: The angle of rotation (radians).
  *
- * Rotate the specified drawable about its center through the specified
- * angle.
- *
- * This tool rotates the specified drawable if no selection exists. If
- * a selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
- * selection which is then rotated by the specified amount. The
- * interpolation parameter can be set to TRUE to indicate that either
- * linear or cubic interpolation should be used to smooth the resulting
- * rotated drawable. The return value is the ID of the rotated
- * drawable. If there was no selection, this will be equal to the
- * drawable ID supplied as input. Otherwise, this will be the newly
- * created and rotated drawable.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_rotate_defaults() instead.
  *
  * Returns: The rotated drawable.
  */
@@ -197,18 +157,8 @@ gimp_rotate (gint32   drawable_ID,
  * @x1: The new x coordinate of lower-right corner of newly scaled region.
  * @y1: The new y coordinate of lower-right corner of newly scaled region.
  *
- * Scale the specified drawable.
- *
- * This tool scales the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
- * selection which is then scaled by the specified amount. The
- * interpolation parameter can be set to TRUE to indicate that either
- * linear or cubic interpolation should be used to smooth the resulting
- * scaled drawable. The return value is the ID of the scaled drawable.
- * If there was no selection, this will be equal to the drawable ID
- * supplied as input. Otherwise, this will be the newly created and
- * scaled drawable.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_scale_defaults() instead.
  *
  * Returns: The scaled drawable.
  */
@@ -249,22 +199,8 @@ gimp_scale (gint32   drawable_ID,
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
  *
- * Shear the specified drawable about its center by the specified
- * magnitude.
- *
- * This tool shears the specified drawable if no selection exists. If a
- * selection exists, the portion of the drawable which lies under the
- * selection is cut from the drawable and made into a floating
- * selection which is then sheard by the specified amount. The
- * interpolation parameter can be set to TRUE to indicate that either
- * linear or cubic interpolation should be used to smooth the resulting
- * sheared drawable. The return value is the ID of the sheard drawable.
- * If there was no selection, this will be equal to the drawable ID
- * supplied as input. Otherwise, this will be the newly created and
- * sheard drawable. The shear type parameter indicates whether the
- * shear will be applied horizontally or vertically. The magnitude can
- * be either positive or negative and indicates the extent (in pixels)
- * to shear by.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_shear_defaults() instead.
  *
  * Returns: The sheared drawable.
  */
@@ -306,20 +242,8 @@ gimp_shear (gint32              drawable_ID,
  * @dest_x: X coordinate of where the centre goes.
  * @dest_y: Y coordinate of where the centre goes.
  *
- * Transform the specified drawable in 2d.
- *
- * This tool transforms the specified drawable if no selection exists.
- * If a selection exists, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then transformed. The interpolation parameter can
- * be set to TRUE to indicate that either linear or cubic interpolation
- * should be used to smooth the resulting drawable. The transformation
- * is done by scaling the image by the x and y scale factors about the
- * point (source_x, source_y), then rotating around the same point,
- * then translating that point to the new position (dest_x, dest_y).
- * The return value is the ID of the rotated drawable. If there was no
- * selection, this will be equal to the drawable ID supplied as input.
- * Otherwise, this will be the newly created and transformed drawable.
+ * This procedure is deprecated! Use
+ * gimp_drawable_transform_2d_defaults() instead.
  *
  * Returns: The transformed drawable.
  */

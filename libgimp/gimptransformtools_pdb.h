@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gint32 gimp_flip         (gint32              drawable_ID,
 			  GimpOrientationType flip_type);
 gint32 gimp_perspective  (gint32              drawable_ID,
@@ -63,6 +64,7 @@ gint32 gimp_transform_2d (gint32              drawable_ID,
 			  gdouble             angle,
 			  gdouble             dest_x,
 			  gdouble             dest_y);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

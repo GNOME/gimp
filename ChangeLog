@@ -1,5 +1,20 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/transform_tools.pdb: deprecated all functions.
+
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimptransformtools_pdb.[ch]: regenerated.
+
+	* plug-ins/common/tiff.c
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/text-circle.scm
+	* plug-ins/script-fu/scripts/truchet.scm: use the new transform API.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable_transform.pdb: added _defaults()
 	variants (flip_defaults, rotate_defaults, ...) for all transform
 	functions which finally call gimp_drawable_transform_affine().

@@ -138,7 +138,9 @@
       (let ((floating-sel (car (gimp-edit-paste drawable1 FALSE))))
 	(gimp-floating-sel-anchor floating-sel))
 
-      ;(let ((drawble (car (gimp-flip img drawable1 0)))))
+      ;(let ((drawble (car (gimp-drawable-transform-flip-simple img drawable1
+      ;						ORIENTATION-HORIZONTAL
+      ;						TRUE 0 TRUE)))))
 	
 
       ;(gimp-display-new temp-img)

@@ -864,7 +864,7 @@ load_image (const gchar *filename)
         {
           load_rgba (tif, channel);
         }
-      else if (TIFFIsTiled(tif))
+      else if (TIFFIsTiled (tif))
         {
           load_tiles (tif, channel, bps, photomet, alpha, extra);
         }
@@ -901,10 +901,14 @@ load_image (const gchar *filename)
             }
 
           if (flip_horizontal)
-            gimp_flip (layer, GIMP_ORIENTATION_HORIZONTAL);
+            gimp_drawable_transform_flip_simple (layer,
+                                                 GIMP_ORIENTATION_HORIZONTAL,
+                                                 TRUE, 0.0, TRUE);
 
           if (flip_vertical)
-            gimp_flip (layer, GIMP_ORIENTATION_VERTICAL);
+            gimp_drawable_transform_flip_simple (layer,
+                                                 GIMP_ORIENTATION_VERTICAL,
+                                                 TRUE, 0.0, TRUE);
         }
 
       gimp_drawable_flush (channel[0].drawable);
@@ -1880,11 +1884,13 @@ save_image (const gchar *filename,
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
   TIFFSetField (tif, TIFFTAG_COMPRESSION, compression);
+
   if ((compression == COMPRESSION_LZW || compression == COMPRESSION_DEFLATE)
-     && (predictor != 0))
+      && (predictor != 0))
     {
       TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
     }
+
   if (alpha)
     {
       if (tsvals.save_transp_pixels)
@@ -1894,6 +1900,7 @@ save_image (const gchar *filename,
 
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
     }
+
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
   TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
