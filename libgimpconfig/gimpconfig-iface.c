@@ -23,6 +23,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <string.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -31,10 +32,6 @@
 #include <sys/types.h>
 
 #include <glib-object.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
@@ -181,6 +178,7 @@ gimp_config_serialize (GObject      *object,
                        GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
+  gchar               *tmpname;
   gint                 fd;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
@@ -191,26 +189,37 @@ gimp_config_serialize (GObject      *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 
-#ifndef G_OS_WIN32
-             S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-#else
-             _S_IREAD | _S_IWRITE
-#endif
-             );
+  tmpname = g_strconcat (filename, "XXXXXX", NULL);
+  
+  fd = g_mkstemp (tmpname);
 
   if (fd == -1)
     {
       g_set_error (error, 
                    GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
-                   _("Failed to open file: '%s': %s"),
+                   _("Failed to generate temporary file for '%s': %s"),
                    filename, g_strerror (errno));
+      g_free (tmpname);
       return FALSE;
     }
 
   gimp_config_iface->serialize (object, fd);
 
   close (fd);
+
+  if (rename (tmpname, filename) == -1)
+    {
+      g_set_error (error, 
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
+                   _("Failed to open file '%s' to '%s': %s"),
+                   tmpname, filename, g_strerror (errno));
+      
+      unlink (tmpname);
+      g_free (tmpname);
+      return FALSE;
+    }
+
+  g_free (tmpname);
 
   return TRUE;
 }
