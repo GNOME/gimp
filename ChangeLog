@@ -1,3 +1,10 @@
+2000-05-11  Tor Lillqvist  <tml@iki.fi>
+
+	* PLUGIN_MAINTAINERS
+	* plug-ins/twain/*
+	* plug-ins/winsnap/*: Changed Craig Setera'a email address on his
+	request.
+
 2000-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: unified messages

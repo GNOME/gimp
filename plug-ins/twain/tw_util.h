@@ -1,7 +1,7 @@
 /*  
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
- * Craig Setera, setera@infonet.isl.net
+ * Craig Setera <setera@home.com>
  * 03/31/1999
  *
  * This program is free software; you can redistribute it and/or modify

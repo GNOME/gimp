@@ -1,7 +1,7 @@
 /*
  * WinSnap Win32 Window Capture Plug-in
  * Copyright (C) 1999 Craig Setera
- * Craig Setera, setera@infonet.isl.net
+ * Craig Setera <setera@home.com>
  * 07/14/1999
  *
  * This program is free software; you can redistribute it and/or modify
@@ -59,7 +59,7 @@
 #define PLUG_IN_PRINT_NAME  "WinSnap"
 #define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
-#define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
+#define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
 

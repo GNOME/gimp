@@ -1,7 +1,7 @@
 /*  
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
- * Craig Setera, setera@infonet.isl.net
+ * Craig Setera <setera@home.com>
  * 03/31/1999
  *
  * This program is free software; you can redistribute it and/or modify
@@ -84,7 +84,7 @@
 #define PLUG_IN_NAME        "twain-acquire"
 #define PLUG_IN_DESCRIPTION "Capture an image from a TWAIN datasource"
 #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
-#define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
+#define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.5 (03/31/1999)"
 

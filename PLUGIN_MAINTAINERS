@@ -873,8 +873,8 @@ SIZE       :   5.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : twain
-AUTHOR     : Craig Setera
-MAINTAINER : 
+AUTHOR     : Craig Setera <setera@home.com>
+MAINTAINER : Craig Setera <setera@home.com> and Tor Lillqvist <tml@iki.fi> 
 SIZE       :  70.4 kB  in  5 files (only C files counted)
 COMMENT    : 
 -----------
@@ -957,8 +957,8 @@ SIZE       :  18.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : winsnap
-AUTHOR     : Craig Setera
-MAINTAINER : Tor Lillqvist <tml@iki.fi>
+AUTHOR     : Craig Setera <setera@home.com>
+MAINTAINER : Craig Setera <setera@home.com> and Tor Lillqvist <tml@iki.fi> 
 SIZE       :  31.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
