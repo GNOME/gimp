@@ -2820,22 +2820,21 @@ gimp_image_merge_layers (GimpImage *gimage,
       position = 
 	g_slist_length (gimage->layers) - 
 	gimp_image_get_layer_index (gimage, layer);
-      
-      /* set the mode of the bottom layer to normal so that the contents
-       *  aren't lost when merging with the all-alpha merge_layer
-       *  Keep a pointer to it so that we can set the mode right after it's
-       *  been merged so that undo works correctly.
-       */
-      bottom = layer;
-      bottom_mode = bottom->mode;
-
-      /* DISSOLVE_MODE is special since it is the only mode that does not
-       *  work on the projection with the lower layer, but only locally on
-       *  the layers alpha channel. 
-       */
-      if (bottom->mode != DISSOLVE_MODE)
-	bottom->mode = NORMAL_MODE;
     }
+  /* set the mode of the bottom layer to normal so that the contents
+   *  aren't lost when merging with the all-alpha merge_layer
+   *  Keep a pointer to it so that we can set the mode right after it's
+   *  been merged so that undo works correctly.
+   */
+  bottom = layer;
+  bottom_mode = bottom->mode;
+
+  /* DISSOLVE_MODE is special since it is the only mode that does not
+   *  work on the projection with the lower layer, but only locally on
+   *  the layers alpha channel. 
+   */
+  if (bottom->mode != DISSOLVE_MODE)
+    bottom->mode = NORMAL_MODE;
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   layer_set_tattoo(merge_layer, layer_get_tattoo(layer));

@@ -1,3 +1,11 @@
+2002-12-31  Garry R. Osgood <grosgood@rcn.com>
+
+	* app/gimpimage.c: Unless DISSOLVE_MODE, temporarily set bottom
+	mode of composite to "Normal" in all merge types; including image
+	flatten. Prevents unintended compositional arithmetic on receiving
+	layer internally employed by gimp_image_merge_layers ().  Closes
+	bug #101036 on gimp-1-2 branch only.
+	
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_csim.l
