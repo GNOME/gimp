@@ -1,3 +1,7 @@
+2004-09-23  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2004-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILE.in: dialog sources were moved to app/dialogs/.

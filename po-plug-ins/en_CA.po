@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-20 00:35+0200\n"
-"PO-Revision-Date: 2004-09-06 14:31-0400\n"
+"POT-Creation-Date: 2004-09-23 12:49-0400\n"
+"PO-Revision-Date: 2004-09-23 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,6 @@ msgid "Sierpinski"
 msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:881 plug-ins/common/sinus.c:880
-#: plug-ins/imagemap/imap_preferences.c:516
 msgid "Co_lors"
 msgstr "Co_lours"
 
@@ -420,7 +419,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:336 plug-ins/common/png.c:676
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:936
-#: plug-ins/common/psd.c:1770 plug-ins/common/psp.c:1461
+#: plug-ins/common/psd.c:1758 plug-ins/common/psp.c:1461
 #: plug-ins/common/spheredesigner.c:1990 plug-ins/common/sunras.c:385
 #: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 #: plug-ins/common/tga.c:417 plug-ins/common/tiff.c:513
@@ -771,7 +770,7 @@ msgid "Bumpm_ap image:"
 msgstr "Bumpm_ap image:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:878
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:897
 #: plug-ins/flame/flame.c:730
 msgid "Linear"
 msgstr "Linear"
@@ -780,12 +779,12 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarithmic"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:880
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:731
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:879
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:732
 msgid "Spherical"
 msgstr "Spherical"
@@ -887,7 +886,7 @@ msgstr "Map to Cylinder..."
 msgid "Map _Object..."
 msgstr "Map _Object..."
 
-#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:355
+#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:348
 #: plug-ins/common/displace.c:158 plug-ins/common/fractaltrace.c:133
 #: plug-ins/common/illusion.c:113 plug-ins/common/lic.c:791
 #: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
@@ -963,7 +962,7 @@ msgstr "Enable _antialiasing"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Enable/disable jagged edges removal (antialiasing)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:950
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:981
 #: plug-ins/common/emboss.c:546 plug-ins/common/fractaltrace.c:792
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1197,7 +1196,7 @@ msgstr "Bad colourmap"
 #: plug-ins/common/jpeg.c:819 plug-ins/common/pat.c:309
 #: plug-ins/common/pcx.c:311 plug-ins/common/pix.c:342
 #: plug-ins/common/png.c:683 plug-ins/common/pnm.c:404
-#: plug-ins/common/postscript.c:942 plug-ins/common/psd.c:1775
+#: plug-ins/common/postscript.c:942 plug-ins/common/psd.c:1763
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:422
 #: plug-ins/common/tiff.c:518 plug-ins/common/wmf.c:400
 #: plug-ins/common/xbm.c:728 plug-ins/common/xpm.c:346
@@ -1237,7 +1236,7 @@ msgstr "Unrecognized or invalid BMP compression format."
 #: plug-ins/common/gifload.c:867 plug-ins/common/jpeg.c:979
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
-#: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2184
+#: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2172
 #: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:928
 #: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
 #: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
@@ -1878,9 +1877,8 @@ msgid "Save as Text"
 msgstr "Save as Text"
 
 #: plug-ins/common/aa.c:363
-#, fuzzy
 msgid "_Format:"
-msgstr "_Font:"
+msgstr "_Format:"
 
 #: plug-ins/common/align_layers.c:135
 msgid "Align _Visible Layers..."
@@ -2125,7 +2123,7 @@ msgstr "_Blinds..."
 #: plug-ins/common/emboss.c:156 plug-ins/common/engrave.c:105
 #: plug-ins/common/iwarp.c:259 plug-ins/common/mosaic.c:316
 #: plug-ins/common/newsprint.c:542 plug-ins/common/polar.c:183
-#: plug-ins/common/ripple.c:143 plug-ins/common/shift.c:116
+#: plug-ins/common/ripple.c:143 plug-ins/common/shift.c:120
 #: plug-ins/common/video.c:1824 plug-ins/common/vpropagate.c:274
 #: plug-ins/common/waves.c:135 plug-ins/common/whirlpinch.c:184
 #: plug-ins/common/wind.c:190 plug-ins/pagecurl/pagecurl.c:244
@@ -2216,63 +2214,70 @@ msgstr "_Thickness:"
 msgid "_Bucket size:"
 msgstr "_Bucket size:"
 
-#: plug-ins/common/bumpmap.c:348
+#: plug-ins/common/bumpmap.c:341
 msgid "_Bump Map..."
 msgstr "_Bump Map..."
 
-#: plug-ins/common/bumpmap.c:498
+#: plug-ins/common/bumpmap.c:491
 msgid "Bump-mapping..."
 msgstr "Bump-mapping..."
 
-#: plug-ins/common/bumpmap.c:838
+#: plug-ins/common/bumpmap.c:835
 msgid "Bump Map"
 msgstr "Bump Map"
 
-#: plug-ins/common/bumpmap.c:875
+#: plug-ins/common/bumpmap.c:894
 msgid "_Bump map:"
 msgstr "_Bump map:"
 
-#: plug-ins/common/bumpmap.c:890
-#, fuzzy
+#: plug-ins/common/bumpmap.c:909
 msgid "_Map type:"
-msgstr "Map Type"
+msgstr "_Map type:"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:914
 msgid "Co_mpensate for darkening"
 msgstr "Co_mpensate for darkening"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:904
+#: plug-ins/common/bumpmap.c:928
 msgid "I_nvert bumpmap"
 msgstr "I_nvert bumpmap"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:915
+#: plug-ins/common/bumpmap.c:942
 msgid "_Tile bumpmap"
 msgstr "_Tile bumpmap"
 
-#: plug-ins/common/bumpmap.c:926 plug-ins/common/emboss.c:528
+#: plug-ins/common/bumpmap.c:957 plug-ins/common/emboss.c:528
 msgid "_Azimuth:"
 msgstr "_Azimuth:"
 
-#: plug-ins/common/bumpmap.c:938
+#: plug-ins/common/bumpmap.c:969
 msgid "_Elevation:"
 msgstr "_Elevation:"
 
-#: plug-ins/common/bumpmap.c:964 plug-ins/common/postscript.c:3026
+#: plug-ins/common/bumpmap.c:995 plug-ins/common/postscript.c:3026
 msgid "_X offset:"
 msgstr "_X offset:"
 
-#: plug-ins/common/bumpmap.c:977 plug-ins/common/postscript.c:3035
+#: plug-ins/common/bumpmap.c:998 plug-ins/common/bumpmap.c:1012
+msgid ""
+"The offset can be adjusted by dragging the preview using the middle mouse "
+"button."
+msgstr ""
+"The offset can be adjusted by dragging the preview using the middle mouse "
+"button."
+
+#: plug-ins/common/bumpmap.c:1009 plug-ins/common/postscript.c:3035
 msgid "_Y offset:"
 msgstr "_Y offset:"
 
-#: plug-ins/common/bumpmap.c:990
+#: plug-ins/common/bumpmap.c:1023
 msgid "_Waterlevel:"
 msgstr "_Waterlevel:"
 
-#: plug-ins/common/bumpmap.c:1002
+#: plug-ins/common/bumpmap.c:1035
 msgid "A_mbient:"
 msgstr "A_mbient:"
 
@@ -3145,29 +3150,29 @@ msgstr "Extract Channels"
 msgid "Decompose to _layers"
 msgstr "Decompose to _layers"
 
-#: plug-ins/common/deinterlace.c:87
+#: plug-ins/common/deinterlace.c:99
 msgid "_Deinterlace..."
 msgstr "_Deinterlace..."
 
-#: plug-ins/common/deinterlace.c:94 plug-ins/common/despeckle.c:152
+#: plug-ins/common/deinterlace.c:106 plug-ins/common/despeckle.c:152
 #: plug-ins/common/destripe.c:141 plug-ins/common/nlfilt.c:133
 #: plug-ins/common/sharpen.c:131 plug-ins/common/unsharp.c:154
 msgid "<Image>/Filters/Enhance"
 msgstr "<Image>/Filters/Enhance"
 
-#: plug-ins/common/deinterlace.c:145
+#: plug-ins/common/deinterlace.c:157
 msgid "Deinterlace..."
 msgstr "Deinterlace..."
 
-#: plug-ins/common/deinterlace.c:275
+#: plug-ins/common/deinterlace.c:315
 msgid "Deinterlace"
 msgstr "Deinterlace"
 
-#: plug-ins/common/deinterlace.c:288
+#: plug-ins/common/deinterlace.c:340
 msgid "Keep o_dd fields"
 msgstr "Keep o_dd fields"
 
-#: plug-ins/common/deinterlace.c:289
+#: plug-ins/common/deinterlace.c:341
 msgid "Keep _even fields"
 msgstr "Keep _even fields"
 
@@ -4155,7 +4160,7 @@ msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
 #: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1350
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_menu.c:384 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr "Grid"
@@ -4585,7 +4590,7 @@ msgstr "JPEG preview"
 msgid "File size: %02.01f kB"
 msgstr "File size: %02.01f kB"
 
-#: plug-ins/common/jpeg.c:1667 plug-ins/common/jpeg.c:1765
+#: plug-ins/common/jpeg.c:1667 plug-ins/common/jpeg.c:1766
 msgid "File size: unknown"
 msgstr "File size: unknown"
 
@@ -4593,73 +4598,73 @@ msgstr "File size: unknown"
 msgid "Save as JPEG"
 msgstr "Save as JPEG"
 
-#: plug-ins/common/jpeg.c:1751
+#: plug-ins/common/jpeg.c:1752
 msgid "_Quality:"
 msgstr "_Quality:"
 
-#: plug-ins/common/jpeg.c:1755
+#: plug-ins/common/jpeg.c:1756
 msgid "JPEG quality parameter"
 msgstr "JPEG quality parameter"
 
-#: plug-ins/common/jpeg.c:1774
+#: plug-ins/common/jpeg.c:1775
 msgid "Show _Preview in image window"
 msgstr "Show _Preview in image window"
 
-#: plug-ins/common/jpeg.c:1787
+#: plug-ins/common/jpeg.c:1788
 msgid "_Advanced Options"
 msgstr "_Advanced Options"
 
-#: plug-ins/common/jpeg.c:1815
+#: plug-ins/common/jpeg.c:1816
 msgid "_Smoothing:"
 msgstr "_Smoothing:"
 
-#: plug-ins/common/jpeg.c:1828
+#: plug-ins/common/jpeg.c:1829
 msgid "Frequency (rows):"
 msgstr "Frequency (rows):"
 
-#: plug-ins/common/jpeg.c:1842
+#: plug-ins/common/jpeg.c:1843
 msgid "Use restart markers"
 msgstr "Use restart markers"
 
-#: plug-ins/common/jpeg.c:1857 plug-ins/xjt/xjt.c:864
+#: plug-ins/common/jpeg.c:1858 plug-ins/xjt/xjt.c:864
 msgid "Optimize"
 msgstr "Optimize"
 
-#: plug-ins/common/jpeg.c:1871
+#: plug-ins/common/jpeg.c:1872
 msgid "Progressive"
 msgstr "Progressive"
 
-#: plug-ins/common/jpeg.c:1890
+#: plug-ins/common/jpeg.c:1891
 msgid "Force baseline JPEG"
 msgstr "Force baseline JPEG"
 
-#: plug-ins/common/jpeg.c:1906
+#: plug-ins/common/jpeg.c:1907
 msgid "Save EXIF data"
 msgstr "Save EXIF data"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:1922
+#: plug-ins/common/jpeg.c:1923
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:1949
+#: plug-ins/common/jpeg.c:1950
 msgid "DCT method:"
 msgstr "DCT method:"
 
-#: plug-ins/common/jpeg.c:1955
+#: plug-ins/common/jpeg.c:1956
 msgid "Fast Integer"
 msgstr "Fast Integer"
 
-#: plug-ins/common/jpeg.c:1956
+#: plug-ins/common/jpeg.c:1957
 msgid "Integer"
 msgstr "Integer"
 
-#: plug-ins/common/jpeg.c:1957
+#: plug-ins/common/jpeg.c:1958
 msgid "Floating-Point"
 msgstr "Floating-Point"
 
-#: plug-ins/common/jpeg.c:1971
+#: plug-ins/common/jpeg.c:1972
 msgid "Comment"
 msgstr "Comment"
 
@@ -4911,9 +4916,8 @@ msgid "_Angle:"
 msgstr "_Angle:"
 
 #: plug-ins/common/mblur.c:970
-#, fuzzy
 msgid "Blur Center"
-msgstr "Centre"
+msgstr "Blur Centre"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -6332,27 +6336,27 @@ msgstr "Sharpening..."
 msgid "Sharpen"
 msgstr "Sharpen"
 
-#: plug-ins/common/shift.c:109
+#: plug-ins/common/shift.c:113
 msgid "_Shift..."
 msgstr "_Shift..."
 
-#: plug-ins/common/shift.c:188
+#: plug-ins/common/shift.c:192
 msgid "Shifting..."
 msgstr "Shifting..."
 
-#: plug-ins/common/shift.c:323
+#: plug-ins/common/shift.c:349
 msgid "Shift"
 msgstr "Shift"
 
-#: plug-ins/common/shift.c:341
+#: plug-ins/common/shift.c:373
 msgid "Shift _horizontally"
 msgstr "Shift _horizontally"
 
-#: plug-ins/common/shift.c:342
+#: plug-ins/common/shift.c:374
 msgid "Shift _vertically"
 msgstr "Shift _vertically"
 
-#: plug-ins/common/shift.c:365
+#: plug-ins/common/shift.c:404
 msgid "Shift _amount:"
 msgstr "Shift _amount:"
 
@@ -6407,6 +6411,7 @@ msgid "_Distorted"
 msgstr "_Distorted"
 
 #: plug-ins/common/sinus.c:776 plug-ins/common/sinus.c:792
+#: plug-ins/imagemap/imap_preferences.c:516
 msgid "Colors"
 msgstr "Colours"
 
@@ -8044,29 +8049,27 @@ msgid "Could not read XWD header from '%s'"
 msgstr "Could not read XWD header from '%s'"
 
 #: plug-ins/common/xwd.c:472
-#, fuzzy
 msgid "Can't read color entries"
-msgstr "can't read colour entries"
+msgstr "Cannot read colour entries"
 
 #: plug-ins/common/xwd.c:531
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
 "Currently this is not supported."
 msgstr ""
-"load_image (xwd): XWD-file %s has format %d, depth %d\n"
+"XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
-"Currently this is not supported.\n"
+"Currently this is not supported."
 
 #: plug-ins/common/xwd.c:561
 msgid "Cannot save images with alpha channels."
 msgstr "Cannot save images with alpha channels."
 
 #: plug-ins/common/xwd.c:2164
-#, fuzzy
 msgid "Error during writing indexed/gray image"
-msgstr "Error during writing indexed/grey image"
+msgstr "Error during writing indexed/gray image"
 
 #: plug-ins/common/xwd.c:2262
 msgid "Error during writing rgb image"
@@ -8663,8 +8666,8 @@ msgstr "Radius:"
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig-dialog.c:1384 plug-ins/imagemap/imap_menu.c:366
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
+#: plug-ins/gfig/gfig-dialog.c:1384 plug-ins/imagemap/imap_menu.c:368
+#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:156
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -8954,7 +8957,6 @@ msgid "Second Flares Paint Options"
 msgstr "Second Flares Paint Options"
 
 #: plug-ins/gflare/gflare.c:3409 plug-ins/gimpressionist/general.c:115
-#: plug-ins/imagemap/imap_preferences.c:443
 msgid "_General"
 msgstr "_General"
 
@@ -9025,13 +9027,13 @@ msgstr "Probability Gradient:"
 msgid "Shape of Second Flares"
 msgstr "Shape of Second Flares"
 
-#: plug-ins/gflare/gflare.c:3766 plug-ins/imagemap/imap_menu.c:369
-#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
+#: plug-ins/gflare/gflare.c:3766 plug-ins/imagemap/imap_menu.c:371
+#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:160
 msgid "Circle"
 msgstr "Circle"
 
-#: plug-ins/gflare/gflare.c:3783 plug-ins/imagemap/imap_menu.c:371
-#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
+#: plug-ins/gflare/gflare.c:3783 plug-ins/imagemap/imap_menu.c:373
+#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:164
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -9987,7 +9989,7 @@ msgid "Cut"
 msgstr "Cut"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:172
+#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:174
 msgid "Delete"
 msgstr "Delete"
 
@@ -10419,31 +10421,31 @@ msgstr "_Mapping"
 msgid "Arrow"
 msgstr "Arrow"
 
-#: plug-ins/imagemap/imap_menu.c:363
+#: plug-ins/imagemap/imap_menu.c:364
 msgid "Select contiguous region"
 msgstr "Select contiguous region"
 
-#: plug-ins/imagemap/imap_menu.c:381
+#: plug-ins/imagemap/imap_menu.c:383
 msgid "_Tools"
 msgstr "_Tools"
 
-#: plug-ins/imagemap/imap_menu.c:383
+#: plug-ins/imagemap/imap_menu.c:385
 msgid "Grid settings..."
 msgstr "Grid settings..."
 
-#: plug-ins/imagemap/imap_menu.c:386
+#: plug-ins/imagemap/imap_menu.c:388
 msgid "Use GIMP guides..."
 msgstr "Use GIMP guides..."
 
-#: plug-ins/imagemap/imap_menu.c:388
+#: plug-ins/imagemap/imap_menu.c:390
 msgid "Create guides..."
 msgstr "Create guides..."
 
-#: plug-ins/imagemap/imap_menu.c:395
+#: plug-ins/imagemap/imap_menu.c:397
 msgid "_Help"
 msgstr "_Help"
 
-#: plug-ins/imagemap/imap_menu.c:396
+#: plug-ins/imagemap/imap_menu.c:398
 msgid "About ImageMap..."
 msgstr "About ImageMap..."
 
@@ -10499,6 +10501,10 @@ msgstr "Couldn't save resource file:"
 msgid "Select Color"
 msgstr "Select Colour"
 
+#: plug-ins/imagemap/imap_preferences.c:443
+msgid "General"
+msgstr "General"
+
 #: plug-ins/imagemap/imap_preferences.c:447
 msgid "Default Map Type"
 msgstr "Default Map Type"
@@ -10528,8 +10534,8 @@ msgid "_Use double-sized grab handles"
 msgstr "_Use double-sized grab handles"
 
 #: plug-ins/imagemap/imap_preferences.c:484
-msgid "_Menu"
-msgstr "_Menu"
+msgid "Menu"
+msgstr "Menu"
 
 #: plug-ins/imagemap/imap_preferences.c:488
 msgid "Number of _Undo levels (1 - 99):"
@@ -10571,7 +10577,7 @@ msgstr "Upper left _x:"
 msgid "Upper left _y:"
 msgstr "Upper left _y:"
 
-#: plug-ins/imagemap/imap_selection.c:175 plug-ins/imagemap/imap_tools.c:167
+#: plug-ins/imagemap/imap_selection.c:175 plug-ins/imagemap/imap_tools.c:169
 msgid "Edit"
 msgstr "Edit"
 
@@ -10667,31 +10673,31 @@ msgstr "Edit map info"
 msgid "Select existing area"
 msgstr "Select existing area"
 
-#: plug-ins/imagemap/imap_tools.c:149
+#: plug-ins/imagemap/imap_tools.c:150
 msgid "Fuzzy Select"
 msgstr "Fuzzy Select"
 
-#: plug-ins/imagemap/imap_tools.c:150
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Select contiguous regions"
 msgstr "Select contiguous regions"
 
-#: plug-ins/imagemap/imap_tools.c:155
+#: plug-ins/imagemap/imap_tools.c:157
 msgid "Define Rectangle area"
 msgstr "Define Rectangle area"
 
-#: plug-ins/imagemap/imap_tools.c:159
+#: plug-ins/imagemap/imap_tools.c:161
 msgid "Define Circle/Oval area"
 msgstr "Define Circle/Oval area"
 
-#: plug-ins/imagemap/imap_tools.c:163
+#: plug-ins/imagemap/imap_tools.c:165
 msgid "Define Polygon area"
 msgstr "Define Polygon area"
 
-#: plug-ins/imagemap/imap_tools.c:168
+#: plug-ins/imagemap/imap_tools.c:170
 msgid "Edit selected area info"
 msgstr "Edit selected area info"
 
-#: plug-ins/imagemap/imap_tools.c:173
+#: plug-ins/imagemap/imap_tools.c:175
 msgid "Delete selected area"
 msgstr "Delete selected area"
 
@@ -11733,15 +11739,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "_Spherical"
-#~ msgstr "_Spherical"
-
-#~ msgid "S_inusoidal"
-#~ msgstr "S_inusoidal"
-
-#~ msgid "EOF encountered on "
-#~ msgstr "EOF encountered on "
-
-#~ msgid "No memory for mapping colors"
-#~ msgstr "No memory for mapping colours"
