@@ -1,3 +1,9 @@
+2001-12-18  Sven Neumann  <sven@gimp.org>
+
+	* gimptool.1.in
+	* gimptool.in: applied patch from Roger Leigh <rl117@york.ac.uk>
+	that makes gimptool respect the DESTDIR environment variable.
+
 2001-12-18  Tor Lillqvist  <tml@iki.fi>
 
 	* gimptool-win32.c.in (find_out_env_flags): Accept empty CFLAGS
