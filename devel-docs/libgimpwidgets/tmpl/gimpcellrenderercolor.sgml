@@ -9,12 +9,10 @@ GimpCellRendererColor
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### STRUCT GimpCellRendererColor ##### -->
 <para>
@@ -27,12 +25,12 @@ GimpCellRendererColor
 
 </para>
 
-<!-- ##### ARG GimpCellRendererColor:icon-size ##### -->
+<!-- ##### ARG GimpCellRendererColor:opaque ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG GimpCellRendererColor:opaque ##### -->
+<!-- ##### ARG GimpCellRendererColor:stock-size ##### -->
 <para>
 
 </para>

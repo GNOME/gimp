@@ -32,6 +32,9 @@
 #include "gimpcellrenderercolor.h"
 
 
+#define DEFAULT_ICON_SIZE  GTK_ICON_SIZE_MENU
+
+
 enum
 {
   PROP_0,
@@ -126,9 +129,9 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
 				   PROP_SIZE,
-				   g_param_spec_int ("icon_size", NULL, NULL,
+                                   g_param_spec_int ("icon_size", NULL, NULL,
                                                      0, G_MAXINT,
-                                                     GTK_ICON_SIZE_MENU,
+                                                     DEFAULT_ICON_SIZE,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 }

@@ -30,7 +30,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 
-#include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcomponenteditor.h"
 #include "gimpmenufactory.h"

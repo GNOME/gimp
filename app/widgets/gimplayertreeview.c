@@ -45,7 +45,6 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"

@@ -57,6 +57,7 @@ typedef enum
 
 typedef struct _GimpButton             GimpButton;
 typedef struct _GimpCellRendererColor  GimpCellRendererColor;
+typedef struct _GimpCellRendererToggle GimpCellRendererToggle;
 typedef struct _GimpChainButton        GimpChainButton;
 typedef struct _GimpColorArea          GimpColorArea;
 typedef struct _GimpColorButton        GimpColorButton;

@@ -1,3 +1,26 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcellrenderertoggle.[ch]: moved to libgimpwidgets.
+
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolview.c
+	* app/widgets/widgets-types.h
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpcellrenderertoggle.[ch]: custom toggle cell
+	renderer moved here from app/widgets.
+
+	* libgimpwidgets/gimpcellrenderercolor.[ch]: unified code with the
+	new toggle cell renderer.
+
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.[ch] (procedural_db_free_data): new

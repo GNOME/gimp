@@ -4,6 +4,9 @@ EXPORTS
 	gimp_button_new
 	gimp_cell_renderer_color_get_type
 	gimp_cell_renderer_color_new
+	gimp_cell_renderer_toggle_clicked
+	gimp_cell_renderer_toggle_get_type
+	gimp_cell_renderer_toggle_new
 	gimp_chain_button_get_active
 	gimp_chain_button_get_type
 	gimp_chain_button_new

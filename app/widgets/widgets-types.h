@@ -178,7 +178,6 @@ typedef struct _GimpPreviewRendererVectors   GimpPreviewRendererVectors;
 /*  cell renderers  */
 
 typedef struct _GimpCellRendererAccel        GimpCellRendererAccel;
-typedef struct _GimpCellRendererToggle       GimpCellRendererToggle;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
 

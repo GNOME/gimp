@@ -1,32 +1,32 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcellrenderertoggle.c
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include <config.h>
 
 #include <gtk/gtk.h>
 
-#include "widgets-types.h"
+#include "gimpwidgetstypes.h"
 
-#include "core/gimpmarshal.h"
-
+#include "gimpwidgetsmarshal.h"
 #include "gimpcellrenderertoggle.h"
 
 
@@ -48,7 +48,6 @@ enum
 
 
 static void gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass);
-static void gimp_cell_renderer_toggle_init       (GimpCellRendererToggle      *toggle);
 
 static void gimp_cell_renderer_toggle_finalize     (GObject         *object);
 static void gimp_cell_renderer_toggle_get_property (GObject         *object,
@@ -99,14 +98,14 @@ gimp_cell_renderer_toggle_get_type (void)
       static const GTypeInfo cell_info =
       {
         sizeof (GimpCellRendererToggleClass),
-        NULL,		/* base_init */
-        NULL,		/* base_finalize */
+        NULL,		/* base_init      */
+        NULL,		/* base_finalize  */
         (GClassInitFunc) gimp_cell_renderer_toggle_class_init,
         NULL,		/* class_finalize */
-        NULL,		/* class_data */
+        NULL,		/* class_data     */
         sizeof (GimpCellRendererToggle),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_cell_renderer_toggle_init,
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       cell_type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TOGGLE,
@@ -120,11 +119,8 @@ gimp_cell_renderer_toggle_get_type (void)
 static void
 gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 {
-  GObjectClass         *object_class;
-  GtkCellRendererClass *cell_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  cell_class   = GTK_CELL_RENDERER_CLASS (klass);
+  GObjectClass         *object_class = G_OBJECT_CLASS (klass);
+  GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -134,7 +130,7 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
 		  NULL, NULL,
-		  gimp_marshal_VOID__STRING_FLAGS,
+		  _gimp_widgets_marshal_VOID__STRING_FLAGS,
 		  G_TYPE_NONE, 2,
 		  G_TYPE_STRING,
                   GDK_TYPE_MODIFIER_TYPE);
@@ -152,24 +148,16 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                    g_param_spec_string ("stock_id",
                                                         NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE));
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
                                    PROP_STOCK_SIZE,
-                                   g_param_spec_enum ("stock_size",
-                                                      NULL, NULL,
-                                                      GTK_TYPE_ICON_SIZE,
-                                                      DEFAULT_ICON_SIZE,
-                                                      G_PARAM_READWRITE));
-}
-
-static void
-gimp_cell_renderer_toggle_init (GimpCellRendererToggle *cell)
-{
-  GTK_CELL_RENDERER (cell)->xpad = 0;
-  GTK_CELL_RENDERER (cell)->ypad = 0;
-
-  cell->stock_id   = NULL;
-  cell->stock_size = DEFAULT_ICON_SIZE;
+                                   g_param_spec_int ("stock_size",
+                                                     NULL, NULL,
+                                                     0, G_MAXINT,
+                                                     DEFAULT_ICON_SIZE,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -199,9 +187,7 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpCellRendererToggle *toggle;
-
-  toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
 
   switch (param_id)
     {
@@ -209,7 +195,7 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
       g_value_set_string (value, toggle->stock_id);
       break;
     case PROP_STOCK_SIZE:
-      g_value_set_enum (value, toggle->stock_size);
+      g_value_set_int (value, toggle->stock_size);
       break;
 
     default:
@@ -224,9 +210,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpCellRendererToggle *toggle;
-  
-  toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
 
   switch (param_id)
     {
@@ -236,7 +220,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       toggle->stock_id = g_value_dup_string (value);
       break;
     case PROP_STOCK_SIZE:
-      toggle->stock_size = g_value_get_enum (value);
+      toggle->stock_size = g_value_get_int (value);
       break;
 
     default:
@@ -260,13 +244,11 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
                                     gint            *width,
                                     gint            *height)
 {
-  GimpCellRendererToggle *toggle;
+  GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
   gint                    calc_width;
   gint                    calc_height;
   gint                    pixbuf_width;
   gint                    pixbuf_height;
-
-  toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
 
   if (!toggle->stock_id)
     {
@@ -321,13 +303,11 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                   GdkRectangle         *expose_area,
                                   GtkCellRendererState  flags)
 {
-  GimpCellRendererToggle *toggle;
+  GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
   GdkRectangle            toggle_rect;
   GdkRectangle            draw_rect;
   GtkStateType            state;
   gboolean                active;
-
-  toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
 
   if (!toggle->stock_id)
     {
@@ -386,8 +366,8 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
       toggle_rect.x      += widget->style->xthickness;
       toggle_rect.y      += widget->style->ythickness;
       toggle_rect.width  -= widget->style->xthickness * 2;
-      toggle_rect.height -= widget->style->ythickness * 2;  
-      
+      toggle_rect.height -= widget->style->ythickness * 2;
+
       if (gdk_rectangle_intersect (&draw_rect, &toggle_rect, &draw_rect))
         gdk_draw_pixbuf (window,
                          widget->style->black_gc,
@@ -413,11 +393,9 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
                                     GdkRectangle         *cell_area,
                                     GtkCellRendererState  flags)
 {
-  GtkCellRendererToggle *celltoggle;
+  GtkCellRendererToggle *toggle = GTK_CELL_RENDERER_TOGGLE (cell);
 
-  celltoggle = GTK_CELL_RENDERER_TOGGLE (cell);
-
-  if (celltoggle->activatable)
+  if (toggle->activatable)
     {
       GdkModifierType state = 0;
 
@@ -445,6 +423,21 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
                                            toggle->stock_size, NULL);
 }
 
+
+/**
+ * gimp_cell_renderer_toggle_new:
+ * @stock_id: the stock_id of the icon to use for the active state
+ *
+ * Creates a custom version of the #GtkCellRendererToggle. Instead of
+ * showing the standard toggle button, it shows a stock icon if the
+ * cell is active and no icon otherwise. This cell renderer is for
+ * example used in the Layers treeview to indicate and control the
+ * layer's visibility by showing %GIMP_STOCK_VISIBLE.
+ *
+ * Return value: a new #GimpCellRendererToggle
+ *
+ * Since: GIMP 2.2
+ **/
 GtkCellRenderer *
 gimp_cell_renderer_toggle_new (const gchar *stock_id)
 {
@@ -453,6 +446,16 @@ gimp_cell_renderer_toggle_new (const gchar *stock_id)
                        NULL);
 }
 
+/**
+ * gimp_cell_renderer_toggle_clicked:
+ * @cell: a #GimpCellRendererToggle
+ * @path:
+ * @state:
+ *
+ * Emits the "clicked" signal from a #GimpCellRendererToggle.
+ *
+ * Since: GIMP 2.2
+ **/
 void
 gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,
                                    const gchar            *path,

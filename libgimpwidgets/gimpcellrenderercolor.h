@@ -42,7 +42,7 @@ struct _GimpCellRendererColor
 
   GimpRGB               color;
   gboolean              opaque;
-  gint                  size;
+  GtkIconSize           size;
   gint                  border;
 };
 

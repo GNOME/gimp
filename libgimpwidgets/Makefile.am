@@ -66,6 +66,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpbutton.h		\
 	gimpcellrenderercolor.c	\
 	gimpcellrenderercolor.h	\
+	gimpcellrenderertoggle.c\
+	gimpcellrenderertoggle.h\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpcolorarea.c		\

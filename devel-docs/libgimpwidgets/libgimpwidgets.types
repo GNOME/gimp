@@ -6,6 +6,7 @@
 
 gimp_button_get_type
 gimp_cell_renderer_color_get_type
+gimp_cell_renderer_toggle_get_type
 gimp_chain_button_get_type
 gimp_color_area_get_type
 gimp_color_button_get_type

@@ -42,7 +42,6 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimpchanneltreeview.h"
-#include "gimpcellrenderertoggle.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"

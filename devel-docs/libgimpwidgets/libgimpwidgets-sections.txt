@@ -32,6 +32,23 @@ GIMP_CELL_RENDERER_COLOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcellrenderertoggle</FILE>
+<TITLE>GimpCellRendererToggle</TITLE>
+GimpCellRendererToggle
+gimp_cell_renderer_toggle_new
+gimp_cell_renderer_toggle_clicked
+<SUBSECTION Standard>
+GimpCellRendererToggleClass
+GIMP_CELL_RENDERER_TOGGLE
+GIMP_IS_CELL_RENDERER_TOGGLE
+GIMP_TYPE_CELL_RENDERER_TOGGLE
+gimp_cell_renderer_toggle_get_type
+GIMP_CELL_RENDERER_TOGGLE_CLASS
+GIMP_IS_CELL_RENDERER_TOGGLE_CLASS
+GIMP_CELL_RENDERER_TOGGLE_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpchainbutton</FILE>
 <TITLE>GimpChainButton</TITLE>
 GimpChainButton

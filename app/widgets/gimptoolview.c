@@ -32,7 +32,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpcellrenderertoggle.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimppreviewrenderer.h"

@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
@@ -33,7 +35,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
-#include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
