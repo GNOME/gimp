@@ -240,6 +240,7 @@ run (gchar   *name,
 	{
 	  pvals.seed = (gint) param[3].data.d_int32;
 	  pvals.turbulence = (gdouble) param[4].data.d_float;
+          pvals.timeseed = FALSE;
 
 	  if (pvals.turbulence <= 0)
 	    status = STATUS_CALLING_ERROR;

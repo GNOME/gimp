@@ -1,3 +1,8 @@
+Sat Jul 15 18:32:04 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * plug-ins/common/plasma.c: applied noninteractive fix by David
+        Hodson <hodsond@ozemail.com.au>.
+
 2000-07-15  Sven Neumann  <neo@wintermute.ochsenblut.de>
 
 	* configure.in: added pt_BR to ALL_LINGUAS
