@@ -1,6 +1,7 @@
 <SECTION>
 <FILE>gimpcolorspace</FILE>
 <TITLE>GimpColorSpace</TITLE>
+GimpHSL
 gimp_rgb_to_hsv
 gimp_rgb_to_hsl
 gimp_hsv_to_rgb
@@ -12,8 +13,6 @@ gimp_hsv_to_rgb_int
 gimp_rgb_to_hls_int
 gimp_rgb_to_l_int
 gimp_hls_to_rgb_int
-gimp_rgb_to_hsv_double
-gimp_hsv_to_rgb_double
 gimp_rgb_to_hsv4
 gimp_hsv_to_rgb4
 </SECTION>

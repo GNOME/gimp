@@ -1,3 +1,12 @@
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpimage.sgml: added gimp_image_flip().
+
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimpcolorspace.sgml: added GimpHSL and removed
+	gimp_rgb_to_hsv_double and gimp_hsv_to_rgb_double.
+
 2003-05-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

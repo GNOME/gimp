@@ -17,6 +17,16 @@ different color spaces.
 
 </para>
 
+<!-- ##### STRUCT GimpHSL ##### -->
+<para>
+
+</para>
+
+@h: 
+@s: 
+@l: 
+@a: 
+
 <!-- ##### FUNCTION gimp_rgb_to_hsv ##### -->
 <para>
 
@@ -32,6 +42,8 @@ different color spaces.
 </para>
 
 @rgb: 
+@hsl: 
+<!-- # Unused Parameters # -->
 @hue: 
 @saturation: 
 @lightness: 
@@ -51,10 +63,12 @@ different color spaces.
 
 </para>
 
+@hsl: 
+@rgb: 
+<!-- # Unused Parameters # -->
 @hue: 
 @saturation: 
 @lightness: 
-@rgb: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hwb ##### -->
@@ -128,26 +142,6 @@ different color spaces.
 @hue: 
 @lightness: 
 @saturation: 
-
-
-<!-- ##### FUNCTION gimp_rgb_to_hsv_double ##### -->
-<para>
-
-</para>
-
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_hsv_to_rgb_double ##### -->
-<para>
-
-</para>
-
-@hue: 
-@saturation: 
-@value: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hsv4 ##### -->

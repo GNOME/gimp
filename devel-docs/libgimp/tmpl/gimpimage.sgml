@@ -36,6 +36,16 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_flip ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@flip_type: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_resize ##### -->
 <para>
 
