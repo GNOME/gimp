@@ -35,6 +35,8 @@ struct _TileManager
   TileValidateProc   validate_proc; /*  this proc is called when an attempt
 				     *  to get an invalid tile is made.
 				     */
+  gint               cached_num;    /*  number of cached tile */
+  Tile              *cached_tile;   /*  the actual cached tile */
 
   gpointer           user_data;     /*  hook for hanging data off of         */
 };

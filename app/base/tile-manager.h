@@ -85,7 +85,7 @@ void          tile_manager_map_tile          (TileManager *tm,
 					      Tile        *srctile);
 
 void          tile_manager_map               (TileManager *tm,
-					      gint         time_num,
+					      gint         tile_num,
 					      Tile        *srctile);
 
 /* Validate a tiles memory.
@@ -159,6 +159,9 @@ void              write_pixel_data (TileManager *tm,
 				    guchar      *buffer,
 				    guint        stride);
 
+/*   Fill buffer with the pixeldata for the pixel at coordinates x,y
+ *   if x,y is outside the area of the tilemanger, nothing is done.
+ */
 void		  read_pixel_data_1 (TileManager *tm,
 				     gint	  x,
 				     gint	  y,

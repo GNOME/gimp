@@ -1,3 +1,16 @@
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	Applied a patch from Øyvind Kolås that adds supersampling to the
+	transform operations (bug #109817):
+
+	* app/base/tile-manager-private.h
+	* app/base/tile-manager.[ch]: cache the last accessed tile and use
+	it to optimize read_pixel_data_1().
+
+	* app/core/gimpdrawable-transform-utils.c	
+	* app/core/gimpdrawable-transform.c: changed the resampling
+	behavior when scaling down.
+
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/paint_options.c (pressure_options_gui): the "color"

@@ -155,7 +155,6 @@ gimp_drawable_transform_matrix_perspective (gint        x1,
    */
   {
     gdouble dx1, dx2, dx3, dy1, dy2, dy3;
-    gdouble det1, det2;
 
     dx1 = tx2 - tx4;
     dx2 = tx3 - tx4;
@@ -179,11 +178,12 @@ gimp_drawable_transform_matrix_perspective (gint        x1,
       }
     else
       {
+        gdouble det1, det2;
+
         det1 = dx3 * dy2 - dy3 * dx2;
         det2 = dx1 * dy2 - dy1 * dx2;
         matrix[2][0] = det1 / det2;
         det1 = dx1 * dy3 - dy1 * dx3;
-        det2 = dx1 * dy2 - dy1 * dx2;
         matrix[2][1] = det1 / det2;
 
         matrix[0][0] = tx2 - tx1 + matrix[2][0] * tx2;

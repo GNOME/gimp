@@ -54,14 +54,17 @@ tile_manager_new (gint toplevel_width,
   width  = toplevel_width;
   height = toplevel_height;
 
-  tm->x          = 0;
-  tm->y          = 0;
-  tm->width      = width;
-  tm->height     = height;
-  tm->bpp        = bpp;
-  tm->ntile_rows = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-  tm->ntile_cols = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
-  tm->tiles      = NULL;
+  tm->x           = 0;
+  tm->y           = 0;
+  tm->width       = width;
+  tm->height      = height;
+  tm->bpp         = bpp;
+  tm->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
+  tm->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
+  tm->tiles       = NULL;
+  
+  tm->cached_num  = -1;
+  tm->cached_tile = NULL;
   
   return tm;
 }
@@ -74,6 +77,9 @@ tile_manager_destroy (TileManager *tm)
 
   g_return_if_fail (tm != NULL);
   
+  if (tm->cached_tile)
+    tile_release (tm->cached_tile, FALSE);
+
   if (tm->tiles)
     {
       ntiles = tm->ntile_rows * tm->ntile_cols;
@@ -809,14 +815,39 @@ read_pixel_data_1 (TileManager *tm,
 		   gint	         x,
 		   gint          y,
 		   guchar       *buffer)
-{
-  Tile *t;
-  guchar *s;
+{  
+  if (x >= 0 && y >= 0 && x < tm->width && y < tm->height)
+    {
+      gint num = tile_manager_get_tile_num (tm, x, y);
 
-  t = tile_manager_get_tile (tm, x, y, TRUE, FALSE);
-  s = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
-  memcpy (buffer, s, tm->bpp);
-  tile_release (t, FALSE);
+      if (num != tm->cached_num)    /* must fetch a new tile */
+        {    
+           if (tm->cached_tile)
+             tile_release (tm->cached_tile, FALSE);
+             
+           tm->cached_num = num;
+           tm->cached_tile = tile_manager_get (tm, num, TRUE, FALSE);
+        }
+        
+      if (tm->cached_tile)
+        {
+           guchar *data = tile_data_pointer (tm->cached_tile,
+                                             x % TILE_WIDTH, y % TILE_HEIGHT);
+           switch (tm->bpp)
+             {
+             case 4:
+               *(guint32*)buffer = *(guint32*)data;
+               break;
+             default:
+               {
+                 gint i;
+                 for (i = 0; i < tm->bpp; i++)
+                   buffer[i] = data[i];
+               }
+               break;
+             }       
+        }
+    }
 }
 
 void
