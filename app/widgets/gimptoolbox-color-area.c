@@ -276,7 +276,7 @@ color_area_create (int        width,
 {
   color_area = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (color_area), width, height);
-  gtk_widget_set_events (color_area, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
+  gtk_widget_set_events (color_area, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
   gtk_signal_connect (GTK_OBJECT (color_area), "event",
 		      (GtkSignalFunc) color_area_events,
 		      NULL);

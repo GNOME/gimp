@@ -1,3 +1,13 @@
+Thu Aug 13 20:48:48 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/color_area.c: Add event-masks so the tooltip is shown.
+	
+	* app/gdisplay.c
+	* app/plug_in.c: Check range of progress-percentage to avoid 
+	warnings.
+
+	* app/gimplist.c: Include stdio.h to fix compiler warning.  
+
 Thu Aug 13 11:32:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c

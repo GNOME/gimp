@@ -3086,15 +3086,17 @@ plug_in_progress_update (PlugIn *plug_in,
   if (plug_in->progress_gdisp_ID > 0)
     {
       gdisp = gdisplay_get_ID(plug_in->progress_gdisp_ID);
-      gtk_progress_bar_update( GTK_PROGRESS_BAR (gdisp->progressbar), percentage);
+      if (percentage >= 0.0 && percentage <= 1.0)
+	gtk_progress_bar_update( GTK_PROGRESS_BAR (gdisp->progressbar), percentage);
     }
   else
     {
 #ifdef SEPARATE_PROGRESS_BAR
       if (!plug_in->progress)
 	plug_in_progress_init (plug_in, NULL, -1);
-      
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (plug_in->progress_bar), percentage);
+
+      if (percentage >= 0.0 && percentage <= 1.0)
+	gtk_progress_bar_update (GTK_PROGRESS_BAR (plug_in->progress_bar), percentage);
 #else
       progress_update (percentage);
 #endif

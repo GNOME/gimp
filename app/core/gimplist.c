@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <stdio.h>
 #include "gimpsignal.h"
 #include "gimplistP.h"
 
@@ -144,7 +145,7 @@ gimp_list_remove (GimpList* list, gpointer val)
 
 	if(!g_slist_find(list->list, val))
 	{
-	  printf("can't find val\n");
+	  fprintf (stderr, "gimp_list_remove: can't find val\n");
 	  return FALSE;
 	}
 	GIMP_LIST_CLASS(GTK_OBJECT(list)->klass)->remove(list, val);
