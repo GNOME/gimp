@@ -443,9 +443,9 @@ iscissors_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
-  message_box ("Intelligent Scissors is currently not enabled\nfor use with
-  the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);
-  return;
+  /*message_box ("Intelligent Scissors is currently not enabled\nfor use with
+  the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);*/
+  /*  return;*/
   
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &iscissors->x, &iscissors->y, FALSE, TRUE);
@@ -1898,6 +1898,9 @@ construct_edge_map (Tool    *tool,
   int row, col;
   int offx, offy;
   int x2, y2;
+  long sboffset;
+  long dboffset;
+   
   PixelRegion srcPR, destPR;
   FILE *dump;
 
@@ -1907,7 +1910,7 @@ construct_edge_map (Tool    *tool,
   destPR.x = edge_buf->x;
   destPR.y = edge_buf->y;
   destPR.h = edge_buf->height;
-  destPR.w = edge_buf -> width;
+  destPR.w = edge_buf->width;
   destPR.bytes = edge_buf->bytes;
   srcPR.tiles = destPR.tiles = NULL;
 
@@ -1924,6 +1927,7 @@ construct_edge_map (Tool    *tool,
 
       /*  calculate y offset into this row of blocks  */
       offy = (y - row * BLOCK_HEIGHT);
+		      
       y2 = (row + 1) * BLOCK_HEIGHT;
       if (y2 > endy) y2 = endy;
       srcPR.h = y2 - y;
@@ -1935,33 +1939,48 @@ construct_edge_map (Tool    *tool,
 	/*  If the block exists, patch it into buf  */
 	if (block)
 	  {
- 	    /* calculate x offset into the block  */ 
+	    srcPR.x = block->x;
+	    srcPR.y = block->y;
+	    
+	    /* calculate x offset into the block  */
 	    offx = (x - col * BLOCK_WIDTH);
 	    x2 = (col + 1) * BLOCK_WIDTH;
 	    if (x2 > endx) x2 = endx;
 	    srcPR.w = x2 - x;
 
-	    /*  Calculate the offsets into each buffer  */
-	    srcPR.x=x;
-	    srcPR.y=y;
+	   /* i Am going to special case this thing */
+
+	    /*  Calculate the offsets into source buffer  */
 	    srcPR.rowstride = srcPR.bytes * block->width;
-	    srcPR.data = temp_buf_data (block) + /*off*/y * srcPR.rowstride +
-	    /*off*/x * srcPR.bytes;
-	    destPR.data = temp_buf_data (edge_buf) +
-	      y * destPR.rowstride + x * edge_buf->bytes;
+
+	    sboffset = offy;
+ 	    sboffset *= srcPR.rowstride;
+	    sboffset += offx*srcPR.bytes;
+	    srcPR.data = temp_buf_data (block) + sboffset;
+
+	    /*  Calculate offset into destination buffer */
+	    dboffset = ((edge_buf->y > srcPR.y)?(0):(srcPR.y - edge_buf->y));
+	    dboffset *= destPR.rowstride;
+	    dboffset += ((edge_buf->x < srcPR.x)?(0):((edge_buf->x - srcPR.x)*destPR.bytes));
+
+	    destPR.data = temp_buf_data (edge_buf) + dboffset;
 
 	   /* look at this debuggin info.*/
-	   printf("Pixel region dump %d %d\n", x, endx);
-	   printf("rowstride:%d bytes:%d index:%d\n",srcPR.rowstride,srcPR.bytes, index);
-	   printf("x:%d y:%d w:%d h:%d\n",srcPR.x, srcPR.y, srcPR.w, srcPR.h);
+	   printf("Pixel region dump (Y %d %d) X %d %d\n", y, endy, x, endx);
+	   printf("index(%d) X: %d Y: %d ox: %d oy: %d \n", index, x, y, offx, offy);
+	   printf("soff: %d  doff: %d\n",sboffset,dboffset);
+	   printf("s.x:%d s.y:%d s.w:%d s.h:%d s.rs:%d s.b%d\n",srcPR.x, srcPR.y, srcPR.w, srcPR.h,srcPR.rowstride, srcPR.bytes);
+	   printf("d.x:%d d.y:%d d.w:%d d.h:%d d.rs:%d d.b%d\n",destPR.x,destPR.y,destPR.w,destPR.h,destPR.rowstride, destPR.bytes);
+	   printf("e.x:%d e.y:%d e.w:%d e.h:%d\n",edge_buf->x,edge_buf->y,edge_buf->width,edge_buf->height);
 	   printf("sdata:%d ddata:%d\n",srcPR.data, destPR.data);
 	   printf("bdata:%d edata:%d\n", block->data, edge_buf->data);
-
-	    copy_region (&srcPR, &destPR);
+	   if((dboffset + (srcPR.h*destPR.rowstride)) > (edge_buf->height * edge_buf -> width)) printf ("ERROR\n");
+	  copy_region (&srcPR, &destPR);
 	  }
 
 	col ++;
 	x = col * BLOCK_WIDTH;
+
       }
 
       row ++;
@@ -1970,10 +1989,11 @@ construct_edge_map (Tool    *tool,
 
   /*  dump the edge buffer for debugging*/
 
-   /* dump=fopen("/ugrad/summersn/dump", "w"); 
+   dump=fopen("dump", "w"); 
    fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
-   fclose (dump); */
+   fclose (dump);
+
 }
 
 
@@ -2070,11 +2090,19 @@ free_edge_map_blocks ()
     return;
 
   num_blocks = vert_blocks * horz_blocks;
-
+  printf("\n");
+  
   for (i = 0; i < num_blocks; i++)
-    if (edge_map_blocks [i])
+    if (edge_map_blocks [i]) {
+	printf("tbf: index %d %d   ",i, num_blocks);
+	printf("X:%d ",edge_map_blocks[i]->x);
+	printf("Y:%d ",edge_map_blocks[i]->y);
+	printf("W:%d ",edge_map_blocks[i]->width);
+	printf("H:%d ",edge_map_blocks[i]->height);
+	printf("data:%d ",edge_map_blocks[i]->data);
+	printf("\n");
       temp_buf_free (edge_map_blocks [i]);
-
+   }
   g_free (edge_map_blocks);
 
   edge_map_blocks = NULL;
@@ -2370,7 +2398,7 @@ make_curve_d (int    *curve,
 /*   Functions for Catmull-Rom area conversion */
 /***********************************************/
 
-static GSList **CR_scanlines;
+static GSList ** CR_scanlines;
 static int start_convert;
 static int width, height;
 static int lastx;
