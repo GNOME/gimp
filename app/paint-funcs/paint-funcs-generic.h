@@ -74,22 +74,6 @@ color_pixels (guchar       *dest,
               guint         w,
               guint         bytes)
 {
-  /* dest % bytes and color % bytes must be 0 or we will crash
-     when bytes = 2 or 4.
-     Is this safe to assume?  Lets find out.
-     This is 4-7X as fast as the simple version.
-     */
-
-#if defined(sparc) || defined(__sparc__)
-  guchar   c0, c1, c2, c3;
-#else
-  guchar   c0, c1, c2;
-  guint32 *longd;
-  guint32  longc;
-  guint16 *shortd;
-  guint16  shortc;
-#endif
-
   switch (bytes)
     {
     case 1:
@@ -98,60 +82,75 @@ color_pixels (guchar       *dest,
 
     case 2:
 #if defined(sparc) || defined(__sparc__)
-      c0 = color[0];
-      c1 = color[1];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = c1;
-          dest += 2;
-        }
+      {
+        const guchar c0 = color[0];
+        const guchar c1 = color[1];
+
+        while (w--)
+          {
+            dest[0] = c0;
+            dest[1] = c1;
+            dest += 2;
+          }
+      }
 #else
-      shortc = ((const guint16 *) color)[0];
-      shortd = (guint16 *) dest;
-      while (w--)
-        {
-          *shortd = shortc;
-          shortd++;
-        }
+      {
+        const guint16   shortc = ((const guint16 *) color)[0];
+        guint16        *shortd = (guint16 *) dest;
+
+        while (w--)
+          {
+            *shortd = shortc;
+            shortd++;
+          }
+      }
 #endif /* sparc || __sparc__ */
       break;
 
     case 3:
-      c0 = color[0];
-      c1 = color[1];
-      c2 = color[2];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = c1;
-          dest[2] = c2;
-          dest += 3;
-        }
+      {
+        const guchar c0 = color[0];
+        const guchar c1 = color[1];
+        const guchar c2 = color[2];
+
+        while (w--)
+          {
+            dest[0] = c0;
+            dest[1] = c1;
+            dest[2] = c2;
+            dest += 3;
+          }
+      }
       break;
 
     case 4:
 #if defined(sparc) || defined(__sparc__)
-      c0 = color[0];
-      c1 = color[1];
-      c2 = color[2];
-      c3 = color[3];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = c1;
-          dest[2] = c2;
-          dest[3] = c3;
-          dest += 4;
-        }
+      {
+        const guchar c0 = color[0];
+        const guchar c1 = color[1];
+        const guchar c2 = color[2];
+        const guchar c3 = color[3];
+
+        while (w--)
+          {
+            dest[0] = c0;
+            dest[1] = c1;
+            dest[2] = c2;
+            dest[3] = c3;
+            dest += 4;
+          }
+      }
 #else
-      longc = ((const guint32 *) color)[0];
-      longd = (guint32 *) dest;
-      while (w--)
-        {
-          *longd = longc;
-          longd++;
-        }
+      {
+        const guint32   longc = ((const guint32 *) color)[0];
+        guint32        *longd = (guint32 *) dest;
+
+        while (w--)
+          {
+            *longd = longc;
+            longd++;
+          }
+      }
 #endif /* sparc || __sparc__ */
       break;
 
@@ -1570,91 +1569,87 @@ initial_inten_pixels (const guchar   *src,
   const gint    dest_bytes = bytes + 1;
 
   if (mask)
-  {
-    m = mask;
-
-    /*  This function assumes the source has no alpha channel and
-     *  the destination has an alpha channel.  So dest_bytes = bytes + 1
-     */
-
-    if (bytes == 3 && affect[0] && affect[1] && affect[2])
-      {
-        if (!affect[bytes])
-          opacity = 0;
-
-        destp = dest + bytes;
-
-        if (opacity != 0)
-          while(length--)
-            {
-              dest[0] = src[0];
-              dest[1] = src[1];
-              dest[2] = src[2];
-              dest[3] = INT_MULT(opacity, *m, tmp);
-              src  += bytes;
-              dest += dest_bytes;
-              m++;
-            }
-        else
-          while(length--)
-            {
-              dest[0] = src[0];
-              dest[1] = src[1];
-              dest[2] = src[2];
-              dest[3] = opacity;
-              src  += bytes;
-              dest += dest_bytes;
-            }
-        return;
-      }
-
-    for (b =0; b < bytes; b++)
-      {
-        destp = dest + b;
-        srcp = src + b;
-        l = length;
-
-        if (affect[b])
-          while(l--)
-            {
-              *destp = *srcp;
-              srcp  += bytes;
-              destp += dest_bytes;
-            }
-        else
-          while(l--)
-            {
-              *destp = 0;
-              destp += dest_bytes;
-            }
-      }
-
-    /* fill the alpha channel */
-    if (!affect[bytes])
-      opacity = 0;
-
-    destp = dest + bytes;
-
-    if (opacity != 0)
-      while (length--)
-        {
-          *destp = INT_MULT(opacity , *m, tmp);
-          destp += dest_bytes;
-          m++;
-        }
-    else
-      while (length--)
-        {
-          *destp = opacity;
-          destp += dest_bytes;
-        }
-  }
-
-  /* If no mask */
-  else
     {
-      m = no_mask;
+      m = mask;
 
+      /*  This function assumes the source has no alpha channel and
+       *  the destination has an alpha channel.  So dest_bytes = bytes + 1
+       */
+
+      if (bytes == 3 && affect[0] && affect[1] && affect[2])
+        {
+          if (!affect[bytes])
+            opacity = 0;
+
+          destp = dest + bytes;
+
+          if (opacity != 0)
+            while(length--)
+              {
+                dest[0] = src[0];
+                dest[1] = src[1];
+                dest[2] = src[2];
+                dest[3] = INT_MULT(opacity, *m, tmp);
+                src  += bytes;
+                dest += dest_bytes;
+                m++;
+              }
+          else
+            while(length--)
+              {
+                dest[0] = src[0];
+                dest[1] = src[1];
+                dest[2] = src[2];
+                dest[3] = opacity;
+                src  += bytes;
+                dest += dest_bytes;
+              }
+          return;
+        }
+
+      for (b =0; b < bytes; b++)
+        {
+          destp = dest + b;
+          srcp = src + b;
+          l = length;
+
+          if (affect[b])
+            while(l--)
+              {
+                *destp = *srcp;
+                srcp  += bytes;
+                destp += dest_bytes;
+              }
+          else
+            while(l--)
+              {
+                *destp = 0;
+                destp += dest_bytes;
+              }
+        }
+
+      /* fill the alpha channel */
+      if (!affect[bytes])
+        opacity = 0;
+
+      destp = dest + bytes;
+
+      if (opacity != 0)
+        while (length--)
+          {
+            *destp = INT_MULT(opacity , *m, tmp);
+            destp += dest_bytes;
+            m++;
+          }
+      else
+        while (length--)
+          {
+            *destp = opacity;
+            destp += dest_bytes;
+          }
+    }
+  else  /* If no mask */
+    {
       /*  This function assumes the source has no alpha channel and
        *  the destination has an alpha channel.  So dest_bytes = bytes + 1
        */
@@ -1678,7 +1673,7 @@ initial_inten_pixels (const guchar   *src,
           return;
         }
 
-      for (b =0; b < bytes; b++)
+      for (b = 0; b < bytes; b++)
         {
           destp = dest + b;
           srcp = src + b;
