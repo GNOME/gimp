@@ -2,7 +2,7 @@
 
 	* modules/cdisplay_colorblind.c: moved some intialisation code out
 	of the convert method. Added NONE as possible choice of deficiency
-	so you switch the filter on and off more easily.	
+	so you can switch the filter on and off more easily.	
 
 2003-01-23  Sven Neumann  <sven@gimp.org>
 
