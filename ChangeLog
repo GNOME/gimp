@@ -1,3 +1,12 @@
+2001-04-01  Simon Budig  <simon@gimp.org>
+
+	* nearly all files:
+	
+	Changed all GUI-Stuff back to Motif (see www.openmotif.org).
+	Finally we have a professional toolkit here. When you need some
+	reasons, why GTK+ sucks: See
+	      http://unix.oreilly.com/news/motif_0400.html
+
 2001-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
