@@ -392,11 +392,7 @@ dialogs_show_toolbox (void)
         {
           if (GTK_WIDGET_TOPLEVEL (list->data))
             {
-              if (GTK_WIDGET_VISIBLE (list->data))
-                gtk_widget_show (GTK_WIDGET (list->data));
-              else
-                gdk_window_raise (GTK_WIDGET (list->data)->window);
-
+              gtk_window_present (GTK_WINDOW (list->data));
               break;
             }
         }

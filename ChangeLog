@@ -1,5 +1,30 @@
 2002-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c
+	* app/gui/about-dialog.c
+	* app/gui/convert-dialog.c
+	* app/gui/dialogs-commands.c
+	* app/gui/file-commands.c
+	* app/gui/palette-import-dialog.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpwidgets-utils.c
+	* libgimpwidgets/gimpfileselection.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/gimpressionist.c: replaced all sorts of
+	gtk_widget_show()/gdk_window_rise() combinations by
+	gtk_window_present().
+
+2002-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/color-history.[ch]: new files implementing the color
 	history which used to live in color-notebook.*

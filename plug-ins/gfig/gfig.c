@@ -1994,7 +1994,7 @@ bezier_dialog (void)
 
   if (window)
     {
-      gdk_window_raise (window->window);
+      gtk_window_present (GTK_WINDOW (window));
       return;
     }
 
@@ -4501,7 +4501,7 @@ gfig_rescan_list (void)
 
   if (dlg)
     {
-      gdk_window_raise (dlg->window);
+      gtk_window_present (GTK_WINDOW (dlg));
       return;
     }
 

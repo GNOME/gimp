@@ -254,7 +254,7 @@ gimp_document_view_raise_display (gpointer data,
   if (uri && ! strcmp (closure->name, uri))
     {
       closure->found = TRUE;
-      gdk_window_raise (gdisp->shell->window);
+      gtk_window_present (GTK_WINDOW (gdisp->shell));
     }
 }
 

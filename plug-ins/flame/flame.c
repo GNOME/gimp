@@ -747,17 +747,14 @@ edit_callback (GtkWidget *widget,
 
   set_edit_preview ();
 
-  if (!GTK_WIDGET_VISIBLE (edit_dlg))
-    gtk_widget_show (edit_dlg);
-  else
-    gdk_window_raise (edit_dlg->window);
+  gtk_window_present (GTK_WINDOW (edit_dlg));
 }
 
 static void 
 load_callback (GtkWidget *widget, 
 	       gpointer   data) 
 {
-  if (!file_dlg)
+  if (! file_dlg)
     {
       make_file_dlg ();
     }
@@ -765,7 +762,7 @@ load_callback (GtkWidget *widget,
     {
       if (GTK_WIDGET_VISIBLE (file_dlg))
 	{
-	  gdk_window_raise (file_dlg->window);
+	  gtk_window_present (GTK_WINDOW (file_dlg));
 	  return;
 	}
     }
@@ -787,7 +784,7 @@ save_callback (GtkWidget *widget,
     {
       if (GTK_WIDGET_VISIBLE (file_dlg))
 	{
-	  gdk_window_raise (file_dlg->window);
+	  gtk_window_present (GTK_WINDOW (file_dlg));
 	  return;
 	}
     }

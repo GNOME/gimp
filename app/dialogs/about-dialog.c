@@ -255,8 +255,6 @@ about_dialog_create (void)
 
   if (! GTK_WIDGET_VISIBLE (about_dialog))
     {
-      gtk_widget_show (about_dialog);
-
       do_animation    = TRUE;
       do_scrolling    = FALSE;
       scroll_state    = 0;
@@ -291,10 +289,8 @@ about_dialog_create (void)
 
 	}
     }
-  else 
-    {
-      gdk_window_raise (about_dialog->window);
-    }
+
+  gtk_window_present (GTK_WINDOW (about_dialog));
 
   return about_dialog;
 }

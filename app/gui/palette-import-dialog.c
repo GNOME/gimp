@@ -126,14 +126,7 @@ palette_import_dialog_show (Gimp *gimp)
   if (! the_import_dialog)
     the_import_dialog = palette_import_dialog_new (gimp);
 
-  if (! GTK_WIDGET_VISIBLE (the_import_dialog->dialog))
-    {
-      gtk_widget_show (the_import_dialog->dialog);
-    }
-  else if (the_import_dialog->dialog->window)
-    {
-      gdk_window_raise (the_import_dialog->dialog->window);
-    }
+  gtk_window_present (GTK_WINDOW (the_import_dialog->dialog));
 }
 
 void

@@ -217,7 +217,7 @@ file_revert_cmd_callback (GtkWidget *widget,
     }
   else if (query_box)
     {
-      gdk_window_raise (query_box->window);
+      gtk_window_present (GTK_WINDOW (query_box->window));
     }
   else
     {

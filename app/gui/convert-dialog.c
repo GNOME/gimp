@@ -541,6 +541,6 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
     } 
   else
     {
-      gdk_window_raise (dialog->palette_select->shell->window);
+      gtk_window_present (GTK_WINDOW (dialog->palette_select));
     }
 }

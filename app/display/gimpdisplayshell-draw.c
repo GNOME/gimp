@@ -2498,7 +2498,7 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 
   if (shell->warning_dialog)
     {
-      gdk_window_raise (shell->warning_dialog->window);
+      gtk_window_present (GTK_WINDOW (shell->warning_dialog));
       return;
     }
 

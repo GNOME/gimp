@@ -556,9 +556,7 @@ text_tool_editor (GimpTextTool *text_tool)
 
   if (text_tool->editor)
     {
-      if (text_tool->editor->window)
-        gdk_window_raise (text_tool->editor->window);
-
+      gtk_window_present (GTK_WINDOW (text_tool->editor));
       return;
     }
 
@@ -627,9 +625,7 @@ text_tool_editor_load (GtkWidget    *widget,
 
   if (text_tool->filesel)
     {
-      if (text_tool->filesel->window)
-        gdk_window_raise (text_tool->filesel->window);
-
+      gtk_window_present (GTK_WINDOW (text_tool->filesel));
       return;
     }
 

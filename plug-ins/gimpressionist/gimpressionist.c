@@ -337,11 +337,12 @@ void showabout(void)
   GtkWidget *logobox, *tmpframe;
   int y;
 
-  if(window) {
-    gtk_widget_show(window);
-    gdk_window_raise(window->window);
-    return;
-  }
+  if (window)
+    {
+      gtk_window_present (GTK_WINDOW (window));
+      return;
+    }
+
   window = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);

@@ -2081,11 +2081,11 @@ void selectcolor1(vector *col)
 
   if(!t) return;
 
-  if(window) {
-    gtk_widget_show(window);
-    gdk_window_raise(window->window);
-    return;
-  }
+  if (window)
+    {
+      gtk_window_present (GTK_WINDOW (window));
+      return;
+    }
 
   window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
   
@@ -2119,11 +2119,11 @@ void selectcolor2(vector *col)
 
   if(!t) return;
 
-  if(window) {
-    gtk_widget_show(window);
-    gdk_window_raise(window->window);
-    return;
-  }
+  if (window)
+    {
+      gtk_window_present (GTK_WINDOW (window));
+      return;
+    }
 
   window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
 

@@ -1727,7 +1727,6 @@ alienmap_logo_dialog (void)
     }
   else
     {
-      gtk_widget_show (logodlg);
-      gdk_window_raise (logodlg->window);
+      gtk_window_present (GTK_WINDOW (logodlg));
     }
 }

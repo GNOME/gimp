@@ -402,10 +402,7 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (gfs->file_selection),
 				   filename);
 
-  if (! GTK_WIDGET_VISIBLE (gfs->file_selection))
-    gtk_widget_show (gfs->file_selection);
-  else
-    gdk_window_raise (gfs->file_selection->window);
+  gtk_window_present (GTK_WINDOW (gfs->file_selection));
 }
 
 static void

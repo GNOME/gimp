@@ -499,10 +499,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       if (GTK_WIDGET_TOPLEVEL (dialog))
 	{
-	  if (! GTK_WIDGET_VISIBLE (dialog))
-	    gtk_widget_show (dialog);
-	  else if (dialog->window)
-	    gdk_window_raise (dialog->window);
+          gtk_window_present (GTK_WINDOW (dialog));
 	}
       else if (GIMP_IS_DOCKABLE (dialog))
 	{
@@ -526,10 +523,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
 		  toplevel = gtk_widget_get_toplevel (dialog);
 
-		  if (! GTK_WIDGET_VISIBLE (toplevel))
-		    gtk_widget_show (toplevel);
-		  else if (toplevel->window)
-		    gdk_window_raise (toplevel->window);
+                  gtk_window_present (GTK_WINDOW (toplevel));
 		}
 	    }
 	}

@@ -92,11 +92,11 @@ void selectcolor(void)
   static GtkWidget *window = NULL;
   gdouble tmpcol[3];
 
-  if(window) {
-    gtk_widget_show(window);
-    gdk_window_raise(window->window);
-    return;
-  }
+  if (window)
+    {
+      gtk_window_present (GTK_WINDOW (window));
+      return;
+    }
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(generalbgradio[0]), TRUE);
 
