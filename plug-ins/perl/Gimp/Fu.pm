@@ -5,11 +5,8 @@ use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK @EXPORT_FAIL %EXPORT_TAGS
             @scripts @_params $run_mode %pf_type2string @image_params);
 use Gimp qw(:param);
-use Gimp::UI;
 use Gimp::Data;
 use File::Basename;
-use Gtk;
-use Gtk::ColorSelectButton;
 use Data::Dumper;
 use base qw(Exporter);
 
@@ -116,7 +113,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
             PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
             PF_BRUSH PF_PATTERN PF_GRADIENT);
 
-@EXPORT = (qw(register main gimp_main xlfd_size),@_params);
+@EXPORT = (qw(register main gimp_main),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
 %EXPORT_TAGS = (params => [@_params]);
 
@@ -140,13 +137,6 @@ sub _default {
    @a;
 }
 
-sub xlfd_size {
-  local $^W=0;
-  my ($px,$pt)=(split(/-/,$_[0]))[7,8];
-  $px>0 ? ($px    ,&Gimp::PIXELS)
-        : ($pt*0.1,&Gimp::POINTS);
-}
-
 sub wrap_text {
    my $x=$_[0];
    $x=~s/(\G.{$_[1]}\S*)\s+/$1\n/g;
@@ -162,10 +152,16 @@ sub interact($$$@) {
    my($button,$box,$bot,$g);
    my $res=0;
 
-   my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
-   
-   init Gtk;
+   # only pull these in if _really_ required
+   # gets us some speed we really need
+   require Gtk; import Gtk;
+   init Gtk; # gross hack...
    parse Gtk::Rc Gimp->gtkrc;
+
+   require Gtk::ColorSelectButton; import Gtk::ColorSelectButton;
+   require Gimp::UI; import Gimp::UI;
+
+   my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
    
    for(;;) {
      my $t = new Gtk::Tooltips;
@@ -176,8 +172,8 @@ sub interact($$$@) {
      my $h = new Gtk::HBox 0,2;
      $h->add(new Gtk::Label wrap_text($blurb,40));
      $w->vbox->pack_start($h,1,1,0);
-     realize $h;
-     my $l = logo($h);
+     realize $w;
+     my $l = logo($w);
      $h->add($l);
      
      $g = new Gtk::Table scalar@types,2,0;
@@ -216,7 +212,7 @@ sub interact($$$@) {
            
         } elsif($type == PF_FONT) {
            my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-           my $def = "-*-courier-helvetica-o-normal--34-*-*-*-*-*-*-*";
+           my $def = "-*-helvetica-o-normal--34-*-*-*-*-*-*-*";
            my $val;
            
            my $l=new Gtk::Label "!error!";
@@ -739,6 +735,10 @@ sub register($$$$$$$$$;@) {
       $menupath,$imagetypes,$params,$results,$code)=@_;
    
    $code or ($results,$code)=([],$results);
+
+   for my $p (@$params,@$results) {
+      int($p->[0]) eq $p->[0] or croak "Argument/return value '$p->[1]' has illegal type '$p->[0]'";
+   }
    
    $function="perl_fu_".$function unless $function=~/^perl_fu/ || $function=~s/^\+//;
    
@@ -829,15 +829,6 @@ sub register($$$$$$$$$;@) {
 =head2 MISC. FUNCTIONS
 
 =over
-
-=item C<xlfd_size> fontname
-
-This auxillary functions parses the XLFD (usually obtained from a C<PF_FONT>
-parameter) and returns its size and unit (e.g. C<(20,POINTS)>). This can
-conviniently used in the gimp_text_..._fontname functions, which ignore the
-size (no joke ;). Example:
-
- $drawable->text_fontname (50, 50, "The quick", 5, 1, xlfd_size $font, $font;
 
 =item C<save_image(img,options_and_path)>
 
@@ -958,7 +949,8 @@ sub logo {
 }
 
 sub logo_xpm {
-   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($_[0]->window,$_[0]->style->black,
+   my $window=shift;
+   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($window->window,$window->style->black,
       #%XPM:logo%
       '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',
       '# c #C3C3C4', '$ c #252524', '% c #A5A5A4', '& c #646464', '* c #E4E4E4',

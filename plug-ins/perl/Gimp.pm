@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.05;
+$VERSION = 1.052;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -155,7 +155,7 @@ sub import($;@) {
    
    # make a quick but dirty guess ;)
    
-   @_=qw(gimp_main main :auto) unless @_;
+   @_=qw(gimp_main main xlfd_size :auto) unless @_;
    
    for(@_) {
       if ($_ eq ":auto") {
@@ -183,6 +183,13 @@ sub import($;@) {
    for(@export) {
       *{"${up}::$_"} = \&$_;
    }
+}
+
+sub xlfd_size($) {
+  local $^W=0;
+  my ($px,$pt)=(split(/-/,$_[0]))[7,8];
+  $px>0 ? ($px    ,&Gimp::PIXELS)
+        : ($pt*0.1,&Gimp::POINTS);
 }
 
 my %rgb_db;
@@ -318,14 +325,24 @@ sub AUTOLOAD {
       } elsif (_gimp_procedure_available ($sub)) {
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-#               goto gimp_call_procedure
+#               goto gimp_call_procedure # does not always work, PERLBUG! #FIXME
             my @r=eval { gimp_call_procedure ($sub,@_) };
             _croak $@ if $@;
             wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       } elsif (defined(*{"${interface_pkg}::$sub"}{CODE})) {
-         die "safety net $interface_pkg :: $sub";#d#
+         die "safety net $interface_pkg :: $sub (REPORT THIS!!)";#d#
+      } elsif (UNIVERSAL::can(Gimp::Util,$sub)) {
+         my $ref = \&{"Gimp::Util::$sub"};
+         *{$AUTOLOAD} = sub {
+            shift unless ref $_[0];
+#               goto &$ref # does not always work, PERLBUG! #FIXME
+            my @r = eval { &$ref };
+            _croak $@ if $@;
+            wantarray ? @r : $r[0];
+         };
+         goto &$AUTOLOAD;
       }
    }
    croak "function/macro \"$name\" not found in $class";
@@ -629,6 +646,15 @@ speak for you), or just plain interesting functions.
 
 Should be called immediately when perl is initialized. Arguments are not yet
 supported. Initializations can later be done in the init function.
+
+=item xlfd_size(fontname)
+
+This auxillary functions parses the XLFD (usually obtained from a C<PF_FONT>
+parameter) and returns its size and unit (e.g. C<(20,POINTS)>). This can
+conviniently used in the gimp_text_..._fontname functions, which ignore the
+size (no joke ;). Example:
+
+ $drawable->text_fontname (50, 50, "The quick", 5, 1, xlfd_size $font, $font;
 
 =item Gimp::init([connection-argument]), Gimp::end()
 

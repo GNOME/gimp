@@ -1,30 +1,33 @@
-##############################################################################
-# [12/23/98] Tels v0.0.1 http://bloodgate.com/art/gimp/
-
 =head1 NAME
 
- Gimp::Utils - some handy routines for Gimp.Perl users
+ Gimp::Util - some handy routines for Gimp.Perl users
 
-=head1
+=head1 SYNOPSIS
 
  use Gimp;
  use Gimp::Util;
 
 =head1 DESCRIPTION
 
-gimp.perl is nice, but when you have to write everytime 10 lines just to get
-some simple functions done, it very quickly becomes tedious :-/
+Gimp-Perl is nice, but when you have to write everytime 10 lines just to
+get some simple functions done, it very quickly becomes tedious :-/
 
 This module tries to define some functions that aim to automate frequently
-used tasks. If you want to add a function just mail the author of the
+used tasks, i.e. its a sort of catch-all-bag for (possibly) useful macro
+functions.  If you want to add a function just mail the author of the
 Gimp-Perl extension (see below).
 
-In Gimp-Perl (but not in Gimp as seen by the enduser) it is possible to have
-layers that are NOT attached to an image. This is, IMHO a bad idea, you end up
-with them and the user cannot see them or delete them. So we always attach our
-created layers to an image here, too avoid memory leaks and debugging times.
+In Gimp-Perl (but not in Gimp as seen by the enduser) it is possible to
+have layers that are NOT attached to an image. This is, IMHO a bad idea,
+you end up with them and the user cannot see them or delete them. So we
+always attach our created layers to an image here, too avoid memory leaks
+and debugging times.
 
 These functions preserve the current settings like colors.
+
+Also: these functions are handled in exactly the same way as
+PDB-Functions, i.e. the (hypothetical) function C<gimp_image_xyzzy> can be
+called as $image->xyzzy, if the module is available.
 
 =head1 FUNCTIONS
 
@@ -43,7 +46,7 @@ require      Exporter;
                );
 #@EXPORT_OK = qw();
 
-$VERSION=1.000;
+$VERSION=1.001;
 
 use Gimp;
 
@@ -203,10 +206,10 @@ sub layer_add_layer_as_mask {
   my $mask;
 
   gimp_selection_all ($image);  
-  gimp_edit_copy ($image,$layer_mask);  
+  $layer_mask->edit_copy ();  
   gimp_layer_add_alpha ($layer); 
   $mask = gimp_layer_create_mask ($layer,0);
-  gimp_edit_paste ($image,$mask,0);
+  $mask->edit_paste (0);
   gimp_floating_sel_anchor(gimp_image_floating_selection($image));
   gimp_image_add_layer_mask ($image,$layer,$mask);
   $mask;
@@ -217,6 +220,19 @@ sub layer_add_layer_as_mask {
 # Sure, consider a package just another kind of function, and
 # require/use etc. check for a true return value
 1;
+
+##############################################################################
+# all functions below are originally for the chart module
+=pod
+
+=item C<gimp_text_wh $text,$fontname>
+
+returns the width and height of the "$text" of the given font (XLFD format)
+
+=cut
+sub gimp_text_wh {
+   (Gimp->text_get_extents_fontname($_[0],xlfd_size $_[1],$_[1]))[0,1];
+}
 
 =pod
 

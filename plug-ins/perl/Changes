@@ -1,11 +1,19 @@
 Revision history for Gimp-Perl extension.
 
+	- moved the xlfd_size function from Gimp::Fu into Gimp
+          (and maybe later into Gimp::Util?)
+	- Functions in Gimp::Util are now treated in the same way
+          as PDB functions (when the module is loaded)
+
+1.051 Tue Jan 19 21:10:20 CET 1999
 	- corrected a minor typoe found by Stefan Traby <stefan@sime.com>
         - added SPIRAL* constants for gimp_blend
         - moved constants from Gimp.xs and extradefs.h to Gimp.pm, where
           they belong (either there or into Gimp.xs)
 	- added view3d.pl to examples (untested)
 	- Gimp::Util is reborn (give it a try and contribute!)
+	- more Gtk changes (tested with Gtk-0.5 and gtk-1.1.x, uh-oh)
+   	- faster startup by not loading Gtk by default ;)
 
 1.05  Fri Dec 18 22:05:25 CET 1998
 	- some 5.006 compatibility fixes

@@ -91,10 +91,10 @@ use base 'Gtk::Button';
 sub register_types {
    unless ($once) {
       $once=1;
-      register_type Gimp::UI::PreviewSelect;
-      register_type Gimp::UI::PatternSelect;
-      register_type Gimp::UI::BrushSelect;
-      register_type Gimp::UI::GradientSelect;
+      Gtk::Button->register_subtype(Gimp::UI::PreviewSelect);
+      Gtk::Button->register_subtype(Gimp::UI::PatternSelect);
+      Gtk::Button->register_subtype(Gimp::UI::BrushSelect);
+      Gtk::Button->register_subtype(Gimp::UI::GradientSelect);
    }
 }
 
