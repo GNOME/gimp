@@ -276,11 +276,11 @@ msgstr "Нема╓"
 
 #: plug-ins/AlienMap/AlienMap.c:713
 msgid "Use sine-function for red component."
-msgstr ""
+msgstr "Використовувати синусо╖дальну функц╕ю для червоно╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:715
 msgid "Use cosine-function for red component."
-msgstr ""
+msgstr "Використовувати косинусо╖дальну функц╕ю для червоно╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:717
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
@@ -295,11 +295,11 @@ msgstr "Зелений"
 
 #: plug-ins/AlienMap/AlienMap.c:736
 msgid "Use sine-function for green component."
-msgstr ""
+msgstr "Використовувати синусо╖дальну функц╕ю для зелено╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:738
 msgid "Use cosine-function for green component."
-msgstr ""
+msgstr "Використовувати косинусо╖дальну функц╕ю для червоно╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:740
 msgid ""
@@ -315,11 +315,11 @@ msgstr "Син╕й"
 
 #: plug-ins/AlienMap/AlienMap.c:759
 msgid "Use sine-function for blue component."
-msgstr ""
+msgstr "Використовувати синусо╖дальну функц╕ю для синьо╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:761
 msgid "Use cosine-function for blue component."
-msgstr ""
+msgstr "Використовувати косинусо╖дальну функц╕ю для синьо╖ складово╖."
 
 #: plug-ins/AlienMap/AlienMap.c:763
 msgid ""
@@ -332,7 +332,7 @@ msgstr "Про Чужу Мапу"
 
 #: plug-ins/AlienMap2/AlienMap2.c:205
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Ф╕льтри/Кольори/Карта/Чужа мапа 2..."
+msgstr "<Image>/Ф╕льтри/Кольори/Мапа/Чужа мапа 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
 msgid "AlienMap2: Transforming ..."
@@ -608,7 +608,7 @@ msgstr "Зберегти"
 
 #: plug-ins/FractalExplorer/Dialogs.c:559
 msgid "Save active fractal to file"
-msgstr ""
+msgstr "Зберегти активний фрактал у файл"
 
 #. Fractal type toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:562
@@ -617,11 +617,11 @@ msgstr "Тип фракталу"
 
 #: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Mandelbrot"
-msgstr ""
+msgstr "Мандельброт"
 
 #: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Julia"
-msgstr ""
+msgstr "Джул╕я"
 
 #: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 1"
@@ -705,13 +705,13 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:783
 #: plug-ins/FractalExplorer/Dialogs.c:824
 msgid "Use sine-function for this color component"
-msgstr ""
+msgstr "Використовувати синусо╖дальну функц╕ю для ц╕╓╖ складово╖ кольору."
 
 #: plug-ins/FractalExplorer/Dialogs.c:745
 #: plug-ins/FractalExplorer/Dialogs.c:786
 #: plug-ins/FractalExplorer/Dialogs.c:827
 msgid "Use cosine-function for this color component"
-msgstr ""
+msgstr "Використовувати косинусо╖дальну функц╕ю для ц╕╓╖ складово╖ кольору."
 
 #: plug-ins/FractalExplorer/Dialogs.c:748
 #: plug-ins/FractalExplorer/Dialogs.c:789
@@ -764,7 +764,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:932
 msgid "Fractals"
-msgstr ""
+msgstr "Фрактали"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1581
 #, c-format
@@ -840,7 +840,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:739
 msgid "Delete Fractal"
-msgstr ""
+msgstr "Стерти фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:1403 plug-ins/gfig/gfig.c:3556
@@ -953,7 +953,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:441 plug-ins/MapObject/mapobject_ui.c:590
 #: plug-ins/common/tile.c:435
 msgid "Create New Image"
-msgstr ""
+msgstr "Створити нове зображення"
 
 #: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
@@ -1213,7 +1213,7 @@ msgstr ""
 #: plug-ins/common/lic.c:1036 plug-ins/common/ripple.c:620
 #: plug-ins/gfig/gfig.c:4015 plug-ins/maze/maze_face.c:338
 msgid "Options"
-msgstr ""
+msgstr "Параметри"
 
 #: plug-ins/Lighting/lighting_ui.c:1018 plug-ins/MapObject/mapobject_ui.c:1318
 #: plug-ins/common/spheredesigner.c:1574 plug-ins/common/spheredesigner.c:2618
@@ -1247,7 +1247,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Ф╕льтри/Карта/Карта об'╓кта..."
+msgstr "<Image>/Ф╕льтри/Мапа/Мапа об'╓кта..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
@@ -6353,19 +6353,19 @@ msgstr ""
 
 #: plug-ins/common/warp.c:277
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Ф╕льтри/Карта/Деформац╕я..."
+msgstr "<Image>/Ф╕льтри/Мапа/Деформац╕я..."
 
 #: plug-ins/common/warp.c:461
 msgid "Main Options"
-msgstr ""
+msgstr "Основн╕ параметри"
 
 #: plug-ins/common/warp.c:476
 msgid "Step Size:"
-msgstr ""
+msgstr "Розм╕р кроку:"
 
 #: plug-ins/common/warp.c:485 plug-ins/ifscompose/ifscompose.c:1277
 msgid "Iterations:"
-msgstr ""
+msgstr "╤терац╕й:"
 
 #. Displacement map menu
 #: plug-ins/common/warp.c:492
@@ -6380,7 +6380,7 @@ msgstr ""
 #. ---------    The secondary table         --------------------------
 #: plug-ins/common/warp.c:570
 msgid "Secondary Options"
-msgstr ""
+msgstr "Вторинн╕ параметри"
 
 #: plug-ins/common/warp.c:583
 msgid "Dither Size:"
@@ -6407,7 +6407,7 @@ msgstr ""
 #. ---------    The "other" table         --------------------------
 #: plug-ins/common/warp.c:643
 msgid "Other Options"
-msgstr ""
+msgstr "╤нш╕ параметри"
 
 #: plug-ins/common/warp.c:657
 msgid "Gradient Scale:"
@@ -6455,7 +6455,7 @@ msgstr "<Image>/Ф╕льтри/Спотворення/Хвил╕..."
 
 #: plug-ins/common/waves.c:351
 msgid "Waves"
-msgstr ""
+msgstr "Хвил╕"
 
 #: plug-ins/common/waves.c:398
 msgid "Reflective"
@@ -6507,17 +6507,17 @@ msgstr "<Toolbox>/Файл/Acquire/From Clipboard"
 
 #: plug-ins/common/winclipboard.c:307
 msgid "Copying ..."
-msgstr ""
+msgstr "Коп╕ювання..."
 
 #. ??? gimp_convert_rgb(image_ID);
 #.
 #: plug-ins/common/winclipboard.c:521
 msgid "Pasted"
-msgstr ""
+msgstr "Вставлено"
 
 #: plug-ins/common/winclipboard.c:534
 msgid "Pasting ..."
-msgstr ""
+msgstr "Вставляння..."
 
 #: plug-ins/common/wind.c:160
 msgid "<Image>/Filters/Distorts/Wind..."
@@ -6537,14 +6537,14 @@ msgstr ""
 
 #: plug-ins/common/wind.c:714 plug-ins/common/wind.c:759
 msgid "Wind"
-msgstr ""
+msgstr "В╕тер"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
 #: plug-ins/common/wind.c:755
 msgid "Style"
-msgstr ""
+msgstr "Стиль"
 
 #: plug-ins/common/wind.c:760
 msgid "Blast"
@@ -6555,15 +6555,15 @@ msgstr ""
 #. *************************************************
 #: plug-ins/common/wind.c:772 plug-ins/struc/struc.c:284
 msgid "Direction"
-msgstr ""
+msgstr "Напрямок"
 
 #: plug-ins/common/wind.c:776
 msgid "Left"
-msgstr ""
+msgstr "Л╕воруч"
 
 #: plug-ins/common/wind.c:777
 msgid "Right"
-msgstr ""
+msgstr "Праворуч"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -6620,7 +6620,7 @@ msgstr ""
 
 #: plug-ins/common/winprint.c:397 plug-ins/print/print.c:2895
 msgid "Printing..."
-msgstr ""
+msgstr "Друкування..."
 
 #: plug-ins/common/winprint.c:429
 msgid "CreateDIBSection failed"
@@ -6676,7 +6676,7 @@ msgstr "Створено в GIMP"
 #: plug-ins/common/xbm.c:671
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
-msgstr ""
+msgstr "XBM: неможливо в╕дкрити \"%s\"\n"
 
 #: plug-ins/common/xbm.c:754
 #, c-format
@@ -6697,7 +6697,7 @@ msgstr ""
 
 #: plug-ins/common/xbm.c:889
 msgid "XBM Warning"
-msgstr ""
+msgstr "Попередження XBM"
 
 #: plug-ins/common/xbm.c:910
 msgid ""
@@ -6711,11 +6711,11 @@ msgstr ""
 #: plug-ins/common/xbm.c:981
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr ""
+msgstr "XBM: неможливо створити \"%s\"\n"
 
 #: plug-ins/common/xbm.c:1139
 msgid "Save as XBM"
-msgstr ""
+msgstr "Зберегти як XBM"
 
 #. parameter settings
 #: plug-ins/common/xbm.c:1156
@@ -6782,7 +6782,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:546
 msgid "can't open file for writing"
-msgstr ""
+msgstr "неможливо в╕дкрити файл на запис"
 
 #: plug-ins/common/xwd.c:1185
 msgid "EOF encountered on "
@@ -6863,7 +6863,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:740
 msgid "DB Browser"
-msgstr ""
+msgstr "Перегляд БД"
 
 #: plug-ins/fits/fits.c:363
 msgid "Error during open of FITS file"
@@ -6927,7 +6927,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:645
 msgid "Speed"
-msgstr ""
+msgstr "Швидк╕сть"
 
 #: plug-ins/flame/flame.c:652
 msgid "Randomize"
@@ -6980,7 +6980,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:937
 msgid "Gamma"
-msgstr ""
+msgstr "Гама"
 
 #: plug-ins/flame/flame.c:939
 msgid "Sample Density"
@@ -7004,15 +7004,15 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:1018
 msgid "Camera"
-msgstr ""
+msgstr "Камера"
 
 #: plug-ins/flame/flame.c:1036
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/flame/flame.c:1038
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
@@ -7066,7 +7066,7 @@ msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:252
 msgid "Windows"
-msgstr ""
+msgstr "Викна"
 
 #: plug-ins/fp/fp_gtk.c:296
 msgid "Lighter:"
@@ -7175,7 +7175,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_arr_dialog.c:879
 msgid "Value: "
-msgstr ""
+msgstr "Значення: "
 
 #: plug-ins/gap/gap_arr_dialog.c:1041
 msgid "Press Button"
@@ -7247,13 +7247,12 @@ msgid "GAP Question"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#, fuzzy
 msgid "File already exists"
-msgstr "Файл вже ╕сну╓:"
+msgstr "Файл вже ╕сну╓"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:437
 msgid "Decoding MPEG Movie..."
-msgstr ""
+msgstr "Декодування MPEG-в╕део..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:643
 msgid ""
@@ -7593,22 +7592,20 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_lib.c:1014
-#, fuzzy
 msgid "Save Flattened"
-msgstr "П╕взведення..."
+msgstr ""
 
 #: plug-ins/gap/gap_lib.c:1016
-#, fuzzy
 msgid "Save As Is"
-msgstr "Зберегти як SGI"
+msgstr "Зберегти як ╓"
 
 #: plug-ins/gap/gap_lib.c:1486 plug-ins/gap/gap_lib.c:1603
 #: plug-ins/gap/gap_lib.c:1682 plug-ins/gap/gap_lib.c:1689
 #: plug-ins/gap/gap_lib.c:1696 plug-ins/gap/gap_lib.c:1779
 #: plug-ins/gap/gap_lib.c:1801
-#, fuzzy, c-format
+#, c-format
 msgid "Error: could not rename frame %ld to %ld"
-msgstr "Помилка: не вдалося в╕дкрити \"%s\""
+msgstr ""
 
 #: plug-ins/gap/gap_lib.c:1591
 msgid "Duplicating frames..."
@@ -7630,9 +7627,8 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:1960 plug-ins/gap/gap_lib.c:2037
 #: plug-ins/gap/gap_lib.c:2225
-#, fuzzy
 msgid "Number:"
-msgstr "Назва:"
+msgstr "Номер:"
 
 #: plug-ins/gap/gap_lib.c:2021
 #, c-format
@@ -7658,9 +7654,8 @@ msgid "Source Range ends at this framenumber"
 msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2108
-#, fuzzy
 msgid "N times:"
-msgstr "Назва:"
+msgstr "Раз╕в:"
 
 #: plug-ins/gap/gap_lib.c:2115
 msgid ""
@@ -7773,9 +7768,8 @@ msgid "<Image>/Video/Frames Scale..."
 msgstr ""
 
 #: plug-ins/gap/gap_main.c:547
-#, fuzzy
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/Файл/В╕д╕слати зображення..."
+msgstr ""
 
 #: plug-ins/gap/gap_main.c:560
 msgid "<Image>/Video/Framesequence Shift..."
@@ -7845,9 +7839,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:96
-#, fuzzy
 msgid "Select all visible Layers"
-msgstr "Вир╕вняти видим╕ шари"
+msgstr "Вибрати вс╕ видим╕ шари"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:100
@@ -7963,7 +7956,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:665
 msgid "Case sensitive"
-msgstr ""
+msgstr "Рег╕строва чутлив╕сть"
 
 #: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:666
 msgid "Lowercase and UPPERCASE letters are considered as different"
@@ -7978,9 +7971,8 @@ msgid "Perform actions on all unselected Layers"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:201
-#, fuzzy
 msgid "Function:"
-msgstr "Насичен╕сть:"
+msgstr "Функц╕я:"
 
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:205
@@ -8107,9 +8099,8 @@ msgid "Move Path"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:461
-#, fuzzy
 msgid "Update Preview"
-msgstr "Перегляд"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:468
 msgid ""
@@ -8780,14 +8771,12 @@ msgid "Video Navigator"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:118
-#, fuzzy
 msgid "New Width:"
-msgstr "Ширина:"
+msgstr "Нова ширина:"
 
 #: plug-ins/gap/gap_range_ops.c:127
-#, fuzzy
 msgid "New Height:"
-msgstr "Висота:"
+msgstr "Нова висота:"
 
 #: plug-ins/gap/gap_range_ops.c:136
 msgid "Offset X:"
@@ -8951,9 +8940,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:472
-#, fuzzy
 msgid "Imagetype:"
-msgstr "Типи зображень:"
+msgstr "Тип зображення:"
 
 #: plug-ins/gap/gap_range_ops.c:473
 msgid ""
@@ -8962,9 +8950,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:479 plug-ins/gap/gap_split.c:245
-#, fuzzy
 msgid "Flatten:"
-msgstr "Шиблон"
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:480
 msgid ""
@@ -8977,9 +8964,8 @@ msgid "Convert Frames to other Formats"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:486
-#, fuzzy
 msgid "Convert Settings"
-msgstr "Установки принтера"
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:563
 msgid "Expand as necessary"
@@ -9158,6 +9144,9 @@ msgid ""
 "%s\n"
 "(%s_0001.%s)\n"
 msgstr ""
+"%s\n"
+"%s\n"
+"(%s_0001.%s)\n"
 
 #: plug-ins/gap/gap_split.c:226
 msgid "Make a frame (diskfile) from each Layer"
@@ -9190,9 +9179,8 @@ msgid "Split Image into Frames"
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:250
-#, fuzzy
 msgid "Split Settings"
-msgstr "Установки с╕тки"
+msgstr ""
 
 #: plug-ins/gap/gap_split.c:297
 msgid ""
@@ -9211,11 +9199,11 @@ msgstr ""
 
 #: plug-ins/gap/resize.c:127
 msgid "New width:"
-msgstr ""
+msgstr "Нова ширина:"
 
 #: plug-ins/gap/resize.c:144
 msgid "New height:"
-msgstr ""
+msgstr "Нова висота:"
 
 #: plug-ins/gap/resize.c:161
 msgid "X ratio:"
@@ -9332,7 +9320,7 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:319
 msgid "Text color"
-msgstr ""
+msgstr "Кол╕р тексту"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:328
 msgid "Toggle anti-aliased text"
@@ -9340,15 +9328,15 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:339
 msgid "Left aligned text"
-msgstr ""
+msgstr "Вир╕вняний л╕воруч текст"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:348
 msgid "Centered text"
-msgstr ""
+msgstr "Центрований текст"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:357
 msgid "Right aligned text"
-msgstr ""
+msgstr "Вир╕вняний праворуч текст"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:366
 msgid "Toggle text font preview"
@@ -9397,7 +9385,7 @@ msgstr ""
 #: plug-ins/gdyntext/gdyntext_ui.c:928
 #, c-format
 msgid "Error opening \"%s\"!\n"
-msgstr ""
+msgstr "Помилка в╕дкривання \"%s\"!\n"
 
 #: plug-ins/gdyntext/message_window.c:110
 msgid "Dismiss"
@@ -9493,15 +9481,15 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2133
 msgid "Create line"
-msgstr ""
+msgstr "Створити пряму"
 
 #: plug-ins/gfig/gfig.c:2138
 msgid "Create circle"
-msgstr ""
+msgstr "Створити коло"
 
 #: plug-ins/gfig/gfig.c:2143
 msgid "Create ellipse"
-msgstr ""
+msgstr "Створити ел╕пс"
 
 #: plug-ins/gfig/gfig.c:2148
 msgid "Create arch"
@@ -9513,7 +9501,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2174
 msgid "Create spiral"
-msgstr ""
+msgstr "творити сп╕раль"
 
 #: plug-ins/gfig/gfig.c:2184
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -9551,7 +9539,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2367 plug-ins/gfig/gfig.c:3173
 msgid "Pattern"
-msgstr "Шиблон"
+msgstr "Шаблон"
 
 #: plug-ins/gfig/gfig.c:2374
 msgid ""
@@ -9791,14 +9779,12 @@ msgstr ""
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3674
-#, fuzzy
 msgid "XY Position:"
-msgstr "Позиц╕я"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3695
-#, fuzzy
 msgid "Object Details"
-msgstr "Об'╓кт"
+msgstr "Подробиц╕ об'╓кту"
 
 #: plug-ins/gfig/gfig.c:3724
 msgid "Collection Details"
@@ -9815,7 +9801,7 @@ msgstr ""
 #. Start buildng the dialog up
 #: plug-ins/gfig/gfig.c:3923
 msgid "GFig"
-msgstr ""
+msgstr "GFig"
 
 #: plug-ins/gfig/gfig.c:3928
 msgid "Done"
@@ -9886,15 +9872,15 @@ msgstr "Про GFig"
 
 #: plug-ins/gfig/gfig.c:4878
 msgid "Gfig - GIMP plug-in"
-msgstr ""
+msgstr "Gfig - доповнення до GIMP"
 
 #: plug-ins/gfig/gfig.c:4883
 msgid "Release 1.3"
-msgstr ""
+msgstr "Випуск 1.3"
 
 #: plug-ins/gfig/gfig.c:4893
 msgid "Email alt@picnic.demon.co.uk"
-msgstr ""
+msgstr "Е-пошта alt@picnic.demon.co.uk"
 
 #: plug-ins/gfig/gfig.c:4903
 msgid "Isometric grid By Rob Saunders"
@@ -9928,7 +9914,7 @@ msgstr "Зберегти як..."
 
 #: plug-ins/gfig/gfig.c:6198
 msgid "Error reading file"
-msgstr ""
+msgstr "Помилка зчитування файлу"
 
 #: plug-ins/gfig/gfig.c:6555
 msgid "Hey where has the object gone ?"
@@ -10119,7 +10105,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3716 plug-ins/gflare/gflare.c:3824
 #: plug-ins/gflare/gflare.c:3968
 msgid "Gradients"
-msgstr ""
+msgstr "Град╕╓нти"
 
 #: plug-ins/gflare/gflare.c:3728 plug-ins/gflare/gflare.c:3838
 #: plug-ins/gflare/gflare.c:3980
@@ -10200,7 +10186,7 @@ msgstr ""
 #: plug-ins/gfli/gfli.c:439 plug-ins/gfli/gfli.c:478 plug-ins/gfli/gfli.c:723
 #, c-format
 msgid "FLI: Can't open \"%s\""
-msgstr ""
+msgstr "FLI: Неможливо в╕дкрити \"%s\""
 
 #: plug-ins/gfli/gfli.c:538
 #, c-format
@@ -10233,7 +10219,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:401 plug-ins/print/print.c:1110
 msgid "Gamma:"
-msgstr ""
+msgstr "Гама:"
 
 #: plug-ins/gimpressionist/brush.c:414
 msgid "Changes the gamma (brightness) of the selected brush"
@@ -10257,7 +10243,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:463
 msgid "Save..."
-msgstr ""
+msgstr "Зберегти..."
 
 #: plug-ins/gimpressionist/brush.c:477
 msgid "Specifies the aspect ratio of the brush"
@@ -10301,7 +10287,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
-msgstr ""
+msgstr "Тло:"
 
 #: plug-ins/gimpressionist/general.c:188
 msgid "Keep original"
@@ -10396,7 +10382,7 @@ msgstr ""
 #: plug-ins/gimpressionist/gimpressionist.c:350
 #: plug-ins/gimpressionist/gimpressionist.c:447
 msgid "The GIMPressionist!"
-msgstr ""
+msgstr "GIMPressionist!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:489
 msgid "Run with the selected settings"
@@ -10404,11 +10390,11 @@ msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:496
 msgid "Quit the program"
-msgstr ""
+msgstr "Завершити програму"
 
 #: plug-ins/gimpressionist/gimpressionist.c:498
 msgid "About..."
-msgstr ""
+msgstr "Про..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:503
 msgid "Show some information about program"
@@ -10447,7 +10433,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
 msgid "Radius"
-msgstr ""
+msgstr "Рад╕ус"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid ""
@@ -10505,7 +10491,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
-msgstr ""
+msgstr "Вектори"
 
 #: plug-ins/gimpressionist/orientmap.c:479
 msgid ""
@@ -10720,7 +10706,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
-msgstr ""
+msgstr "Розм╕ри:"
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "Min size:"
@@ -11021,13 +11007,13 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_create.c:52
 msgid "Create"
-msgstr ""
+msgstr "Створити"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:53
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Cut"
-msgstr ""
+msgstr "Вир╕зати"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
@@ -11060,7 +11046,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
-msgstr ""
+msgstr "Висота"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "Top Start at"
@@ -11246,6 +11232,8 @@ msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
+"Файл вже ╕сну╓.\n"
+"  Ви справд╕ хочете його переписати?  "
 
 #: plug-ins/imagemap/imap_file.c:116
 msgid "Save Imagemap"
@@ -11429,11 +11417,11 @@ msgstr "Про Мапу зображення..."
 
 #: plug-ins/imagemap/imap_polygon.c:391
 msgid "x (pixels)"
-msgstr ""
+msgstr "x (в п╕кселях)"
 
 #: plug-ins/imagemap/imap_polygon.c:391
 msgid "y (pixels)"
-msgstr ""
+msgstr "y (в п╕кселях)"
 
 #: plug-ins/imagemap/imap_polygon.c:458
 msgid "Append"
@@ -11653,7 +11641,7 @@ msgstr ""
 
 #: plug-ins/maze/maze_face.c:307
 msgid "Height (Pixels):"
-msgstr ""
+msgstr "Висота (в п╕кселях):"
 
 #. Set up other page
 #: plug-ins/maze/maze_face.c:341
@@ -11696,7 +11684,7 @@ msgstr ""
 #: plug-ins/maze/maze_face.c:717
 #, c-format
 msgid "Opening %s"
-msgstr ""
+msgstr "В╕дкривання %s"
 
 #: plug-ins/maze/maze_face.c:728
 #, c-format

@@ -1216,8 +1216,8 @@ msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
-"створювати\n"
-"поперн╕й перегляд"
+"створити\n"
+"перегляд"
 
 #: app/fileops.c:375
 msgid "No Selection."
@@ -3460,7 +3460,7 @@ msgstr "/Файл/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:117
 msgid "/File/Dialogs/Patterns..."
-msgstr "/Файл/Д╕алоги/Узори..."
+msgstr "/Файл/Д╕алоги/Шаблони..."
 
 #: app/menus.c:119
 msgid "/File/Dialogs/Gradients..."
@@ -3476,7 +3476,7 @@ msgstr "/Файл/Д╕алоги/╤ндексована пал╕тра..."
 
 #: app/menus.c:128
 msgid "/File/Dialogs/Input Devices..."
-msgstr "/Файл/Д╕алоги/Пристрою вводу..."
+msgstr "/Файл/Д╕алоги/Пристро╖ вводу..."
 
 #: app/menus.c:130
 msgid "/File/Dialogs/Device Status..."
@@ -3879,7 +3879,7 @@ msgstr "/Д╕алоги/Пензл╕..."
 
 #: app/menus.c:477
 msgid "/Dialogs/Patterns..."
-msgstr "/Д╕алоги/Узори..."
+msgstr "/Д╕алоги/Шаблони..."
 
 #: app/menus.c:479
 msgid "/Dialogs/Gradients..."
@@ -4599,7 +4599,7 @@ msgstr "Файл шаблону GIMP напевно об╕рваний."
 
 #: app/patterns.c:283
 msgid "Pattern load failed"
-msgstr "Завантаження узору не вдалось"
+msgstr "Завантаження шаблону не вдалось"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"

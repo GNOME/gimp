@@ -61,10 +61,14 @@ GIMP використову╓ шари дозволяючи орган╕зувати ваше зображення. Уяв╕ть
 Ви можете зм╕нити назву шару подв╕йним клацанням на його
 назв╕ в д╕алоз╕ шар╕в.
 
-The layer named "Background" is special.  You can't add 
-transparency or a layer mask to it.  To add transparency, you 
-must first "add alpha" to the layer by right-clicking in the 
-layers dialog and selecting "Add Alpha Channel". 
+#The layer named "Background" is special.  You can't add 
+#transparency or a layer mask to it.  To add transparency, you 
+#must first "add alpha" to the layer by right-clicking in the 
+#layers dialog and selecting "Add Alpha Channel". 
+Шар з назвою "Тло" - особливий. Ви не можете додати до нього
+маску шару чи прозор╕сть. Щоб додати прозор╕сть, ви мусите
+спочатку додати альфа-канал до шару клацнувши правою клав╕шою
+миш╕ в д╕алоз╕ "Шари" та вибравши "Додати альфа-канал".
 
 When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
 Shift-click will draw a straight line from your last drawing 
