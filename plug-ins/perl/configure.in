@@ -6,8 +6,10 @@ if test -z "$IN_GIMP"; then
    echo Please do NOT call configure directly, rather run
    echo perl Makefile.PL
    echo as you would do with any other perl extension...
+   echo "This time I'll be doing it for you!"
    echo
-   exit 1
+   perl Makefile.PL
+   exit
 fi
 
 AC_PREFIX_DEFAULT($prefix)dnl from Makefile.PL
@@ -50,8 +52,8 @@ CONFIG_H="config.h"
 
 sinclude(configure.frag)
 
-INTLLIBS=
-MSGFMT=:
+INTLLIBS=-lintl
+MSGFMT=msgfmt
 AC_SUBST(INTLLIBS)
 AC_SUBST(MSGFMT)
 

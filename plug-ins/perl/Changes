@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+	- added examples/avi (avi load/save plug-in, uncompressed 24 bit).
 	- possible fix for another installation horror problem.
         - fixed a longstanding bug (?): not every class had a DESTROY, so
           the AUTOLOAD tried to resolve DESTROY after gimp_close had been
@@ -8,6 +9,7 @@ Revision history for Gimp-Perl extension.
         - updated PDB Explorer a bit, still broken.
         - almost full i18n of gimp-perl. A de translation is available.
         - save_image was kinda broken for jpeg and gif at least.
+        - implemented more robust DESTROY and Lib:: connection handling.
         - put help window into a scrolledwindow, as to a suggestion by Jens
           Lauterbach. Karlsruhe rules!
 

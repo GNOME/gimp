@@ -344,7 +344,7 @@ Gimp::on_query {
          my %x = @_; values %x;
       }
       
-      for(@params) {
+      for(@$params) {
          $_->[0]=Gimp::PARAM_INT32	if $_->[0] == PF_TOGGLE;
          $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
          $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;

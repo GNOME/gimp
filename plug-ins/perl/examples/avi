@@ -1,0 +1,268 @@
+#!/usr/bin/perl
+# pcg@goof.com
+# a simpleminded uncompressed avi load/save plug-in
+
+use Gimp 1.14;
+use Gimp::Fu;
+use Fcntl;
+
+# Gimp::set_trace(TRACE_ALL);
+
+# start a hunk
+sub push_hunk($) {
+   print FILE $_[0], "\xff\xff\xff\xff";
+   push @hunks, tell FILE;
+}
+
+# fixup latest hunk
+sub pop_hunk {
+   my $end = tell FILE;
+   my $len = pop @hunks;
+   seek FILE,$len-4,0;
+   print FILE pack "V", $end-$len;
+   seek FILE,$end,0;
+}
+
+register "file_avi_save",
+         "save image as uncompressed avi",
+         "Saves images in the 24 bit uncompressed AVI format used by windows software",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-09-15",
+         "<Save>/AVI",
+         "RGB",
+         [
+          [PF_RADIO,	"depth",	"format (currently always 0)", 24, ["24bpp" => 24, "15bpp" => 15]],
+          [PF_RADIO,	"compression",	"compression (currently always 0)", 0, [none => 0]],
+          [PF_BOOL,	"index",	"write an index hunk (required by some software)", 1],
+         ],
+         sub {
+   my($img,$drawable,$filename,$raw_filename,$depth,$compression,$index) = @_;
+   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
+   my $us_frame = eval { $img->find_parasite("gimp-interframe-delay")->data } || 100000;
+   #Gimp->tile_cache_ntiles($img->width / Gimp->tile_width + 3); coredumps!
+
+   my ($width, $height) = ($img->width, $img->height);
+   my @layers = $img->get_layers;
+   for (@layers) {
+      die "all layers must have the same size as the image\n" if $width != $_->width or $height != $_->height;
+   }
+
+   $depth = 16 if $depth == 15;
+
+   $img->selection_all;
+   my $framesize = ($width*$height*$depth) >> 3;
+
+   my $idx1;
+
+   init Progress "Saving '$filename' as AVI...";
+
+   push_hunk "RIFF"; print FILE "AVI ";
+      push_hunk "LIST"; print FILE "hdrl";
+         push_hunk "avih";
+            print FILE pack "V*",
+                            $us_frame,
+                            $framesize*1_000_000/$us_frame,
+                            0,
+                            0,
+                            scalar@layers,
+                            0,
+                            1,
+                            $framesize,
+                            $width,
+                            $height,
+                            0,
+                            0,
+                            0,
+                            0;
+         pop_hunk;
+         push_hunk "LIST"; print FILE "strl";
+            push_hunk "strh";
+               print FILE pack "A4 V11 V2",
+                               "vids",
+                               0,
+                               0,
+                               0,
+                               0,
+                               $us_frame,
+                               1_000_000,
+                               0,
+                               scalar@layers,
+                               $framesize,
+                               0,
+                               0,
+                                
+                               0,
+                               0;
+            pop_hunk;
+            push_hunk "strf";
+               print FILE pack "V3 v2 V6",
+                               40, # ??
+                               $width,
+                               $height,
+                               1,
+                               $depth,
+                               0,
+                               $framesize,
+                               0,
+                               0,
+                               0,
+                               0;
+            pop_hunk;
+         pop_hunk;
+      pop_hunk;
+      push_hunk "LIST"; print FILE "movi";
+         for (0..$#layers) {
+            my $r = new PixelRgn $layers[-1-$_],0,0,$width,$height,0,0;
+            my $d = $r->get_rect2(0,0,$width,$height);
+            Gimp::RAW::convert_32_24_inplace $d if $r->bpp == 4;
+            Gimp::RAW::reverse_v_inplace $d, $width*3;
+            Gimp::RAW::convert_24_15_inplace $d if $depth == 16;
+
+            $idx1 .= "00db" . pack "V*", 16, tell FILE, $framesize if $index;
+
+
+            print FILE "00db",
+                       (pack "V", $framesize),
+                       $d;
+
+            update Progress $_ / @layers;
+         }
+      pop_hunk;
+      if ($index) {
+         push_hunk "idx1";
+         print FILE $idx1;
+         pop_hunk;
+      }
+   pop_hunk;
+   close FILE;
+   ();
+};
+
+# a generic iff/riff parser. LIST's are simply flattened out,
+# JUNK is just skipped. 
+sub parse_iff {
+   my $size = shift;
+   my $default = pop;
+   my %action = @_;
+   my($hunk,$len);
+   while ($size > 0) {
+      read FILE,$hunk,4; $size -= 4;
+      $size >= 4 or die "AVI hunk $hunk ends unexpectedly\n";
+      read FILE,$len,4; $size -= 4;
+      $len = unpack "V", $len;
+      $size >= $len or die "hunk $hunk too long\n";
+      $size -= $len;
+      if ($hunk eq "LIST") {
+         read FILE,$hunk,4;
+         parse_iff ($len-4, %action, $default);
+      } elsif ($hunk eq "JUNK") {
+         seek FILE,$len,1;
+      } elsif ($action{$hunk}) {
+         $action{$hunk}->($len);
+      } else {
+         $default->($hunk,$len);
+      }
+   }
+}
+
+sub skip_hunk {
+   seek FILE,$_[0],1;
+}
+
+register "file_avi_load",
+         "load uncompressed avi movie",
+         "Loads images that were saved in 24 bit uncompressed RGB AVI format used mainly by windows",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-09-14",
+         "<Load>/AVI",
+         undef,
+         [],
+         sub {
+   my($filename) = @_;
+   sysopen FILE,$filename,O_RDONLY or die "Unable to open '$filename' for reading: $!\n";
+   my $image;
+   my $comment;
+
+   seek FILE, 0, 2; my $filesize = tell FILE; seek FILE, 0, 0;
+   init Progress "Loading AVI image from '$filename'...";
+
+   $filesize > 12 or die "File too small to be an AVI\n";
+   read FILE,$comment,4; $filesize -= 4;
+   die "File is not a RIFF file\n" unless $comment eq "RIFF";
+   read FILE,$comment,4; $filesize -= 4;
+   $comment = unpack "V", $comment;
+   die "RIFF hunk too short\n" unless $comment <= $filesize;
+   $filesize = $comment;
+   read FILE,$comment,4;
+   die "RIFF file is not an AVI\n" unless $comment eq "AVI ";
+
+   my $frame = 0;
+   my ($us_frame,$frames,$width,$height);
+   my $type;
+   my ($size,$planes,$depth,$compression,$image_size);
+
+   parse_iff ($filesize-4,
+      "avih" => sub {
+         read FILE,$comment,$_[0];
+         die "avih header too short\n" unless $_[0] >= 14*4;
+         ($us_frame,undef,undef,undef,$frames,undef,undef,undef,$width,$height)
+            = unpack "V10", $comment;
+      },
+      "strh" => sub {
+         read FILE,$comment,$_[0];
+         die "strh header too short\n" unless $_[0] >= 4;
+         ($type)
+            = unpack "A4", $comment;
+      },
+      "strf" => sub {
+         read FILE,$comment,$_[0];
+         if ($type eq "vids") {
+            die "strh(vids)/strf header too short\n" unless $_[0] >= 7*4;
+            ($size,$width,$height,$planes,$depth,$compression,$image_size)
+               = unpack "V3 v2 V3", $comment;
+            $depth == 24 or $depth == 16 or die "unsupported bit depth $depth (only 16/24 bit supported)\n";
+            $compression == 0 or die "compressed streams not supported\n";
+            $planes == 1 or die "incompatible frameformat ($planes)\n";
+            ($width * $height * $depth) >> 3 == $image_size or die "strh(vids)/strf header format error\n";
+            
+            $image = new Image($width,$height,RGB);
+            $image->disable_undo;
+            $image->set_filename($filename);
+            $image->attach_parasite(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
+         }
+      },
+      "00db" => sub { # 00dw is 15 bit
+         $_[0] == ($width * $height * $depth) >> 3 or die "frame has incorrect size\n";
+         read FILE,$comment,$_[0];
+         my $layer = $image->layer_new($width,$height,RGB_IMAGE,
+                                       sprintf("(%.2fs)",$us_frame*$frame/1_000_000),
+                                       100,NORMAL_MODE);
+
+         Gimp::RAW::convert_15_24_inplace $comment if $depth == 16;
+         Gimp::RAW::reverse_v_inplace $comment,$width*3;
+         (new PixelRgn $layer,0,0,$width,$height,1,0)->set_rect2($comment,0,0);
+         $layer->add_layer(0);
+         $frame++;
+         update Progress $frame/$frames;
+      },
+      "00dc" => sub { die "compressed data not handled\n" },
+      "01wb" => \&skip_hunk,  # audio data
+      "idx1" => \&skip_hunk,  # hunk index
+      sub {
+         warn "skipping hunk (@_), please report!\n";
+      }
+   );
+
+   $image->enable_undo;
+   return $image;
+};
+
+Gimp::on_query {
+   Gimp->register_magic_load_handler("file_avi_load", "avi", "", "0,string,RIFF,&8,string,AVI ");
+   Gimp->register_save_handler("file_avi_save", "avi", "");
+};
+
+exit main;
+

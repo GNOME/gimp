@@ -1349,6 +1349,7 @@ gimp_main(...)
 	            gimp_is_initialized = 1;
 		    RETVAL = gimp_main (argc, argv);
 	            gimp_is_initialized = 0;
+                    /*exit (0);*/ /*D*//* shit, some memory problem here, so just exit */
 		  }
 	OUTPUT:
 	RETVAL
@@ -1399,6 +1400,9 @@ _gimp_procedure_available(proc_name)
 		int nreturn_vals;
 		GParamDef *params;
 		GParamDef *return_vals;
+
+                if (!gimp_is_initialized)
+                  croak ("_gimp_procedure_available called without an active connection");
 		
 		if (gimp_query_procedure (proc_name, &proc_blurb, &proc_help, &proc_author,
 		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
@@ -1438,6 +1442,9 @@ gimp_query_procedure(proc_name)
 		GParamDef *params;
 		GParamDef *return_vals;
 		
+                if (!gimp_is_initialized)
+                  croak ("gimp_query_procedure called without an active connection");
+
 		if (gimp_query_procedure (proc_name, &proc_blurb, &proc_help, &proc_author,
 		    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
 		    &params, &return_vals) == TRUE)
@@ -1475,6 +1482,9 @@ gimp_call_procedure (proc_name, ...)
 		GParamDef *return_vals;
                 int i=0, j=0; /* work around bogus warning.  */
 		
+                if (!gimp_is_initialized)
+                  croak ("gimp_call_procedure(%s,...) called without an active connection", proc_name);
+
 		if (trace)
 		  trace_init ();
 		

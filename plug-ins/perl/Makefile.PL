@@ -13,7 +13,7 @@ $|=1;
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
       logulator miff gimpmagick guide_remove guides_to_selection burst map_to_gradient
-      fire povray
+      fire povray avi
    );
 
 if ($ARGV[0] ne "--writemakefile") {

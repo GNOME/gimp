@@ -9,7 +9,7 @@ use Gtk;
 
 Gtk->init;
 
-$VERSION=0.9;
+$VERSION=0.91;
 
 #Gimp::set_trace(TRACE_ALL);
 
@@ -111,21 +111,14 @@ sub refresh_names {
    $name->set_text ("");
    $flags->set_text ("");
    $data->set_text ("");
-   $clist->clear_items(0,99999);
+   $clist->freeze;
+   $clist->clear;
    my @list = &$list_func($current);
-   for my $para (@list) {
-      my $item = new Gtk::ListItem $para;
-      $item->signal_connect ("select" => sub {
-         my ($par) = &$find_func($current,$para);
-         $name->set_text ($par->[0]);
-         $flags->set_text (sprintf "0x%08x", $par->[1]);
-         $data->set_text (escape $par->[2]);
-         $parasite = $para;
-      });
-      $clist->add($item);
+   for (@list) {
+      $clist->append($_);
    }
-   #$clist->select_item(0);
    $clist->show_all;
+   $clist->thaw;
 }
 
 sub new_Entry {
@@ -177,11 +170,19 @@ sub create_main {
 
    $top->set_usize (-1, $eX+5);
 
-   $clist = new Gtk::List;
+   $clist = new Gtk::CList (1);
+   $clist->set_selection_mode (-single);
+   $clist->signal_connect ("select_row" => sub {
+      $parasite = $_[0]->get_text($_[1],$_[2]);
+      my ($par) = &$find_func($current,$parasite);
+      $name->set_text ($par->[0]);
+      $flags->set_text (sprintf "0x%08x", $par->[1]);
+      $data->set_text (escape $par->[2]);
+   });
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
-   $cs->add_with_viewport ($clist);
+   $cs->add ($clist);
    $bot->add ($cs);
 
    my $parbox = new Gtk::VBox (0,5);

@@ -150,3 +150,117 @@ BOOT:
 #endif
 }
 
+MODULE = Gimp	PACKAGE = Gimp::RAW
+
+# some raw byte/bit-manipulation, use PDL instead
+
+void
+reverse_v_inplace (datasv, bpl)
+	SV *	datasv
+        IV	bpl
+        CODE:
+        char *line, *data, *end;
+        STRLEN h;
+
+        data = SvPV (datasv, h); h /= bpl;
+        end = data + (h-1) * bpl;
+
+        New (0, line, bpl, char);
+
+        while (data < end)
+          {
+            Move (data, line, bpl, char);
+            Move (end, data, bpl, char);
+            Move (line, end, bpl, char);
+
+            data += bpl;
+            end -= bpl;
+          }
+
+        Safefree (line);
+
+	OUTPUT:
+        datasv
+
+void
+convert_32_24_inplace (datasv)
+	SV *	datasv
+        CODE:
+        STRLEN dc;
+        char *data, *src, *dst, *end;
+
+        data = SvPV (datasv, dc); end = data + dc;
+
+        for (src = dst = data; src < end; )
+          {
+            *dst++ = *src++;
+            *dst++ = *src++;
+            *dst++ = *src++;
+                     *src++;
+          }
+
+        SvCUR_set (datasv, dst - data);
+	OUTPUT:
+        datasv
+
+void
+convert_24_15_inplace (datasv)
+	SV *	datasv
+        CODE:
+        STRLEN dc;
+        char *data, *src, *dst, *end;
+
+        U16 m31d255[256];
+
+        for (dc = 256; dc--; )
+          m31d255[dc] = (dc*31+15)/255;
+
+        data = SvPV (datasv, dc); end = data + dc;
+
+        for (src = dst = data; src < end; )
+          {
+            unsigned int r = *(U8 *)src++;
+            unsigned int g = *(U8 *)src++;
+            unsigned int b = *(U8 *)src++;
+
+            U16 rgb = m31d255[r]<<10 | m31d255[g]<<5 | m31d255[b];
+            *dst++ = rgb & 0xff;
+            *dst++ = rgb >> 8;
+          }
+
+        SvCUR_set (datasv, dst - data);
+	OUTPUT:
+        datasv
+
+void
+convert_15_24_inplace (datasv)
+	SV *	datasv
+        CODE:
+        STRLEN dc, de;
+        char *data, *src, *dst;
+
+        U8 m255d31[32];
+
+        for (dc = 32; dc--; )
+          m255d31[dc] = (dc*255+127)/31;
+
+        data = SvPV (datasv, dc); dc &= ~1;
+        de = dc + (dc >> 1);
+        SvGROW (datasv, de);
+        SvCUR_set (datasv, de);
+        data = SvPV (datasv, de); src = data + dc;
+
+        dst = data + de;
+
+        while (src != dst)
+          {
+            U16 rgb = *(U8 *)--src << 8 | *(U8 *)--src;
+
+            *(U8 *)--dst = m255d31[ rgb & 0x001f       ];
+            *(U8 *)--dst = m255d31[(rgb & 0x03e0) >>  5];
+            *(U8 *)--dst = m255d31[(rgb & 0x7c00) >> 10];
+          }
+
+	OUTPUT:
+        datasv
+

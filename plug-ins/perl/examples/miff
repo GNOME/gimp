@@ -28,7 +28,7 @@ register "file_miff_save",
          "Marc Lehmann <pcg\@goof.com>",
          "1999-07-29",
          "<Save>/MIFF",
-         "RGB, RGBA, GRAY, INDEXED-NOT-YET",	# weird, but no matte for !DirectColour
+         "RGB, RGBA, GRAY",	# weird, but no matte for !DirectColour
          [],
          sub {
    my($img,$drawable,$filename) = @_;
@@ -94,7 +94,7 @@ register "file_miff_load",
          "Loads images that were saved in the miff (Magick Interchange File Format) format used by the ImageMagick package",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-07-30",
+         "1999-09-14",
          "<Load>/MIFF",
          undef,
          [],
@@ -149,6 +149,8 @@ register "file_miff_load",
    }
 
    my $img = new Image $w, $h, $d >= 3 ? RGB : GRAY;
+   $img->set_filename($filename);
+   $img->disable_undo;
 
    if ($comment) {
       $comment =~ s/^\s+//s;
@@ -165,6 +167,7 @@ register "file_miff_load",
       update Progress tell()/$filesize*0.8 + 0.2;
    }
 
+   $img->enable_undo;
    $img;
 };
 
