@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.3+\n"
-"POT-Creation-Date: 2001-12-29 21:02+0100\n"
-"PO-Revision-Date: 2001-12-15 20:34+03:00\n"
+"POT-Creation-Date: 2001-12-31 14:21+0300\n"
+"PO-Revision-Date: 2001-12-31 14:22+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1176,9 +1176,8 @@ msgid ""
 msgstr ""
 
 #: app/gui/channels-commands.c:366
-#, fuzzy
 msgid "Empty Channel Copy"
-msgstr "Правка цвета канала"
+msgstr "Копия пустого канала"
 
 #: app/gui/channels-commands.c:384
 msgid "New Channel Color"
@@ -1959,7 +1958,7 @@ msgstr "Выравнивание не действует на индексированные изображения."
 
 #: app/gui/layers-commands.c:605
 msgid "Empty Layer Copy"
-msgstr ""
+msgstr "Копия пустого слоя"
 
 #: app/gui/layers-commands.c:628
 msgid "New Layer Options"
@@ -3235,84 +3234,84 @@ msgstr "/Настроить цвет и непрозрачность..."
 msgid "Module DB"
 msgstr "База данных модулей"
 
-#: app/gui/module-browser.c:164 app/widgets/gimpdatafactoryview.c:227
+#: app/gui/module-browser.c:166 app/widgets/gimpdatafactoryview.c:227
 msgid "Refresh"
 msgstr "Обновить"
 
-#: app/gui/module-browser.c:365
+#: app/gui/module-browser.c:367
 msgid "Module error"
 msgstr "Ошибка модуля"
 
-#: app/gui/module-browser.c:366
+#: app/gui/module-browser.c:368
 msgid "Loaded OK"
 msgstr "Загрузка успешна"
 
-#: app/gui/module-browser.c:367
+#: app/gui/module-browser.c:369
 msgid "Load failed"
 msgstr "Загрузка не удалась"
 
-#: app/gui/module-browser.c:368
+#: app/gui/module-browser.c:370
 msgid "Unload requested"
 msgstr "Запрос выгрузки"
 
-#: app/gui/module-browser.c:369
+#: app/gui/module-browser.c:371
 msgid "Unloaded OK"
 msgstr "Выгрузка успешна"
 
-#: app/gui/module-browser.c:380
+#: app/gui/module-browser.c:382
 msgid "<No modules>"
 msgstr "<Нет модулей>"
 
-#: app/gui/module-browser.c:393 app/gui/module-browser.c:402
+#: app/gui/module-browser.c:395 app/gui/module-browser.c:404
 msgid "On disk"
 msgstr "На диске"
 
-#: app/gui/module-browser.c:393
+#: app/gui/module-browser.c:395
 msgid "Only in memory"
 msgstr "Только в памяти"
 
-#: app/gui/module-browser.c:402
+#: app/gui/module-browser.c:404
 msgid "No longer available"
 msgstr "Больше не доступен"
 
-#: app/gui/module-browser.c:434 app/tools/gimpcurvestool.c:800
+#: app/gui/module-browser.c:436 app/tools/gimpcurvestool.c:800
 #: app/tools/gimplevelstool.c:677
 msgid "Load"
 msgstr "Загрузить"
 
-#: app/gui/module-browser.c:439 app/gui/module-browser.c:444
+#: app/gui/module-browser.c:441 app/gui/module-browser.c:446
 msgid "Unload"
 msgstr "Выгрузить"
 
-#: app/gui/module-browser.c:460
+#: app/gui/module-browser.c:462
 msgid "Purpose:"
 msgstr "Цель:"
 
-#: app/gui/module-browser.c:461
+#: app/gui/module-browser.c:463
 msgid "Author:"
 msgstr "Автор:"
 
-#: app/gui/module-browser.c:462
+#: app/gui/module-browser.c:464
 msgid "Version:"
 msgstr "Версия:"
 
-#: app/gui/module-browser.c:463
+#: app/gui/module-browser.c:465
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: app/gui/module-browser.c:464
+#: app/gui/module-browser.c:466
 msgid "Date:"
 msgstr "Дата:"
 
-#: app/gui/module-browser.c:465
+#: app/gui/module-browser.c:467
 msgid "Location:"
 msgstr "Расположение:"
 
-#: app/gui/module-browser.c:466
+#: app/gui/module-browser.c:468
 msgid "State:"
 msgstr "Состояние:"
 
-#: app/gui/module-browser.c:485
+#: app/gui/module-browser.c:487
 msgid "Autoload during start-up"
 msgstr "Автозагрузка при запуске"
 
@@ -5054,9 +5053,8 @@ msgstr ""
 "GIMP чтобы обезопасить себя."
 
 #: app/plug-in/plug-in-rc.c:391
-#, fuzzy
 msgid "invalid UTF-8 string"
-msgstr "Недопустимая строка UTF-8 в файле кистей \"%s\"."
+msgstr "недопустимая строка UTF-8"
 
 #: app/tools/gimpairbrushtool.c:132
 msgid "Airbrush"
@@ -6591,12 +6589,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:472
 msgid "Pressure"
 msgstr "Нажим"
-
-#~ msgid "error parsing pluginrc"
-#~ msgstr "ошибка при синтаксическом анализе pluginrc"
-
-#~ msgid "Thumbnail file not written."
-#~ msgstr "Файл миниатюр не записан."
-
-#~ msgid "Indexed Palette"
-#~ msgstr "Индексированная цветовая палитра"
