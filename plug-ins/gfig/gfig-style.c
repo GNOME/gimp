@@ -575,6 +575,8 @@ void
 gfig_read_gimp_style (Style *style,
                       const gchar *name)
 {
+  gint dummy;
+
   if (!name)
     g_message ("Error: name is NULL in gfig_read_gimp_style.");
 
@@ -587,7 +589,8 @@ gfig_read_gimp_style (Style *style,
 
   style->brush_name = gimp_context_get_brush ();
   gimp_brush_get_info (style->brush_name,
-                       &style->brush_width, &style->brush_height);
+                       &style->brush_width, &style->brush_height,
+                       &dummy, &dummy);
   gimp_brush_get_spacing (style->brush_name, &style->brush_spacing);
 
   style->gradient = gimp_context_get_gradient ();
@@ -690,8 +693,9 @@ mygimp_brush_info (gint *width,
                    gint *height)
 {
   gchar *name = gimp_context_get_brush ();
+  gint   dummy;
 
-  if (name && gimp_brush_get_info (name, width, height))
+  if (name && gimp_brush_get_info (name, width, height, &dummy, &dummy))
     {
       *width  = MAX (*width, 32);
       *height = MAX (*height, 32);

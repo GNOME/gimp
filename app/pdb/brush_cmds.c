@@ -113,6 +113,7 @@ static ProcRecord brush_new_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_new_inargs,
@@ -188,6 +189,7 @@ static ProcRecord brush_duplicate_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_duplicate_inargs,
@@ -266,6 +268,7 @@ static ProcRecord brush_rename_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   2,
   brush_rename_inargs,
@@ -331,6 +334,7 @@ static ProcRecord brush_delete_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_delete_inargs,
@@ -368,6 +372,8 @@ brush_get_info_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_int = brush->mask->width;
       return_args[2].value.pdb_int = brush->mask->height;
+      return_args[3].value.pdb_int = brush->mask->bytes;
+      return_args[4].value.pdb_int = brush->pixmap ? brush->pixmap->bytes : 0;
     }
 
   return return_args;
@@ -393,6 +399,16 @@ static ProcArg brush_get_info_outargs[] =
     GIMP_PDB_INT32,
     "height",
     "The brush height"
+  },
+  {
+    GIMP_PDB_INT32,
+    "mask_bpp",
+    "The brush mask bpp"
+  },
+  {
+    GIMP_PDB_INT32,
+    "color_bpp",
+    "The brush color bpp"
   }
 };
 
@@ -404,10 +420,11 @@ static ProcRecord brush_get_info_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_get_info_inargs,
-  2,
+  4,
   brush_get_info_outargs,
   { { brush_get_info_invoker } }
 };
@@ -421,8 +438,12 @@ brush_get_pixels_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
+  gint32 mask_bpp = 0;
   gint32 num_mask_bytes = 0;
   guint8 *mask_bytes = NULL;
+  gint32 color_bpp = 0;
+  gint32 num_color_bytes = 0;
+  guint8 *color_bytes = NULL;
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -436,8 +457,17 @@ brush_get_pixels_invoker (Gimp         *gimp,
 
       if (brush)
         {
+          mask_bpp       = brush->mask->bytes;
           num_mask_bytes = brush->mask->height * brush->mask->width;
           mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
+
+          if (brush->pixmap)
+            {
+              color_bpp       = brush->pixmap->bytes;
+              num_color_bytes = brush->pixmap->height * brush->pixmap->width;
+              color_bytes     = g_memdup (temp_buf_data (brush->pixmap),
+                                          num_color_bytes);
+            }
         }
       else
         success = FALSE;
@@ -449,8 +479,12 @@ brush_get_pixels_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_int = brush->mask->width;
       return_args[2].value.pdb_int = brush->mask->height;
-      return_args[3].value.pdb_int = num_mask_bytes;
-      return_args[4].value.pdb_pointer = mask_bytes;
+      return_args[3].value.pdb_int = mask_bpp;
+      return_args[4].value.pdb_int = num_mask_bytes;
+      return_args[5].value.pdb_pointer = mask_bytes;
+      return_args[6].value.pdb_int = color_bpp;
+      return_args[7].value.pdb_int = num_color_bytes;
+      return_args[8].value.pdb_pointer = color_bytes;
     }
 
   return return_args;
@@ -479,6 +513,11 @@ static ProcArg brush_get_pixels_outargs[] =
   },
   {
     GIMP_PDB_INT32,
+    "mask_bpp",
+    "The brush mask bpp"
+  },
+  {
+    GIMP_PDB_INT32,
     "num_mask_bytes",
     "Length of brush mask data"
   },
@@ -486,6 +525,21 @@ static ProcArg brush_get_pixels_outargs[] =
     GIMP_PDB_INT8ARRAY,
     "mask_bytes",
     "The brush mask data"
+  },
+  {
+    GIMP_PDB_INT32,
+    "color_bpp",
+    "The brush color bpp"
+  },
+  {
+    GIMP_PDB_INT32,
+    "num_color_bytes",
+    "Length of brush color data"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "color_bytes",
+    "The brush color data"
   }
 };
 
@@ -497,10 +551,11 @@ static ProcRecord brush_get_pixels_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_get_pixels_inargs,
-  4,
+  8,
   brush_get_pixels_outargs,
   { { brush_get_pixels_invoker } }
 };
@@ -562,6 +617,7 @@ static ProcRecord brush_get_spacing_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   brush_get_spacing_inargs,
@@ -625,6 +681,7 @@ static ProcRecord brush_set_spacing_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   2,
   brush_set_spacing_inargs,

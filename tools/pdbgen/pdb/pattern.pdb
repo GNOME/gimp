@@ -98,10 +98,10 @@ HELP
 	{ name => 'bpp', type => 'int32', no_declare => '1',
           alias => 'pattern->mask->bytes',
           desc => "The pattern bpp" },
-        { name => 'mask_bytes', type => 'int8array', init => 1,
-	  desc => 'The pattern mask data',
+        { name => 'color_bytes', type => 'int8array', init => 1,
+	  desc => 'The pattern data.',
           array => { init => 1,
-		     desc => 'Length of pattern mask data' } }
+		     desc => 'Number of pattern bytes' } }
     );
     
     %invoke = (
@@ -113,10 +113,10 @@ HELP
 
   if (pattern)
     {
-      num_mask_bytes = pattern->mask->height * pattern->mask->width *
-	               pattern->mask->bytes;
-      mask_bytes     = g_memdup (temp_buf_data (pattern->mask),
-                                 num_mask_bytes);
+      num_color_bytes = pattern->mask->height * pattern->mask->width *
+	                pattern->mask->bytes;
+      color_bytes     = g_memdup (temp_buf_data (pattern->mask),
+                                  num_color_bytes);
     }
   else
     success = FALSE;

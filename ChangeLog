@@ -1,3 +1,30 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brush.pdb: return the mask's bpp and the
+	brush's pixmap data if it has one.
+
+	* tools/pdbgen/pdb/pattern.pdb: cleaned up.
+
+	* tools/pdbgen/pdb/image.pdb: added $deprecated = 1 to deprecated
+	functions even if they are not exported to libgimp any more.
+
+	* app/pdb/procedural_db.h (struct ProcRecord): added member
+	"gboolean deprecated".
+
+	* tools/pdbgen/app.pl
+	* app/xcf/xcf.c: fill it accordingly.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): warn
+	not only for deprecated procedured which are in the compat hach
+	table, but also for procedures with deprecated flag set to TRUE.
+
+	* app/pdb/*_cmds.c
+	* libgimp/gimpbrush_pdb.[ch]
+	* libgimp/gimppattern_pdb.[ch]: regenerated.
+
+	* libgimp/gimpbrushmenu.c
+	* plug-ins/gfig/gfig-style.c: changed accordingly.
+
 2004-10-05  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl: Fix array return value generation when there

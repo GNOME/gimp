@@ -37,8 +37,8 @@ gboolean gimp_pattern_get_pixels (const gchar  *name,
 				  gint         *width,
 				  gint         *height,
 				  gint         *bpp,
-				  gint         *num_mask_bytes,
-				  guint8      **mask_bytes);
+				  gint         *num_color_bytes,
+				  guint8      **color_bytes);
 
 
 G_END_DECLS

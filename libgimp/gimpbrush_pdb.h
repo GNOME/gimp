@@ -36,12 +36,18 @@ gchar*   gimp_brush_rename      (const gchar  *name,
 gboolean gimp_brush_delete      (const gchar  *name);
 gboolean gimp_brush_get_info    (const gchar  *name,
 				 gint         *width,
-				 gint         *height);
+				 gint         *height,
+				 gint         *mask_bpp,
+				 gint         *color_bpp);
 gboolean gimp_brush_get_pixels  (const gchar  *name,
 				 gint         *width,
 				 gint         *height,
+				 gint         *mask_bpp,
 				 gint         *num_mask_bytes,
-				 guint8      **mask_bytes);
+				 guint8      **mask_bytes,
+				 gint         *color_bpp,
+				 gint         *num_color_bytes,
+				 guint8      **color_bytes);
 gboolean gimp_brush_get_spacing (const gchar  *name,
 				 gint         *spacing);
 gboolean gimp_brush_set_spacing (const gchar  *name,

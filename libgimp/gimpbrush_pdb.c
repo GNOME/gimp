@@ -162,6 +162,8 @@ gimp_brush_delete (const gchar *name)
  * @name: The brush name.
  * @width: The brush width.
  * @height: The brush height.
+ * @mask_bpp: The brush mask bpp.
+ * @color_bpp: The brush color bpp.
  *
  * Retrieve information about the specified brush.
  *
@@ -175,7 +177,9 @@ gimp_brush_delete (const gchar *name)
 gboolean
 gimp_brush_get_info (const gchar *name,
 		     gint        *width,
-		     gint        *height)
+		     gint        *height,
+		     gint        *mask_bpp,
+		     gint        *color_bpp)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -188,6 +192,8 @@ gimp_brush_get_info (const gchar *name,
 
   *width = 0;
   *height = 0;
+  *mask_bpp = 0;
+  *color_bpp = 0;
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -195,6 +201,8 @@ gimp_brush_get_info (const gchar *name,
     {
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
+      *mask_bpp = return_vals[3].data.d_int32;
+      *color_bpp = return_vals[4].data.d_int32;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -207,8 +215,12 @@ gimp_brush_get_info (const gchar *name,
  * @name: The brush name.
  * @width: The brush width.
  * @height: The brush height.
+ * @mask_bpp: The brush mask bpp.
  * @num_mask_bytes: Length of brush mask data.
  * @mask_bytes: The brush mask data.
+ * @color_bpp: The brush color bpp.
+ * @num_color_bytes: Length of brush color data.
+ * @color_bytes: The brush color data.
  *
  * Retrieve information about the specified brush.
  *
@@ -223,8 +235,12 @@ gboolean
 gimp_brush_get_pixels (const gchar  *name,
 		       gint         *width,
 		       gint         *height,
+		       gint         *mask_bpp,
 		       gint         *num_mask_bytes,
-		       guint8      **mask_bytes)
+		       guint8      **mask_bytes,
+		       gint         *color_bpp,
+		       gint         *num_color_bytes,
+		       guint8      **color_bytes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -237,8 +253,12 @@ gimp_brush_get_pixels (const gchar  *name,
 
   *width = 0;
   *height = 0;
+  *mask_bpp = 0;
   *num_mask_bytes = 0;
   *mask_bytes = NULL;
+  *color_bpp = 0;
+  *num_color_bytes = 0;
+  *color_bytes = NULL;
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -246,10 +266,16 @@ gimp_brush_get_pixels (const gchar  *name,
     {
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
-      *num_mask_bytes = return_vals[3].data.d_int32;
+      *mask_bpp = return_vals[3].data.d_int32;
+      *num_mask_bytes = return_vals[4].data.d_int32;
       *mask_bytes = g_new (guint8, *num_mask_bytes);
-      memcpy (*mask_bytes, return_vals[4].data.d_int8array,
+      memcpy (*mask_bytes, return_vals[5].data.d_int8array,
 	      *num_mask_bytes * sizeof (guint8));
+      *color_bpp = return_vals[6].data.d_int32;
+      *num_color_bytes = return_vals[7].data.d_int32;
+      *color_bytes = g_new (guint8, *num_color_bytes);
+      memcpy (*color_bytes, return_vals[8].data.d_int8array,
+	      *num_color_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

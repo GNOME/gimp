@@ -82,8 +82,8 @@ gimp_pattern_get_info (const gchar *name,
  * @width: The pattern width.
  * @height: The pattern height.
  * @bpp: The pattern bpp.
- * @num_mask_bytes: Length of pattern mask data.
- * @mask_bytes: The pattern mask data.
+ * @num_color_bytes: Number of pattern bytes.
+ * @color_bytes: The pattern data.
  *
  * Retrieve information about the specified pattern (including pixels).
  *
@@ -100,8 +100,8 @@ gimp_pattern_get_pixels (const gchar  *name,
 			 gint         *width,
 			 gint         *height,
 			 gint         *bpp,
-			 gint         *num_mask_bytes,
-			 guint8      **mask_bytes)
+			 gint         *num_color_bytes,
+			 guint8      **color_bytes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -115,8 +115,8 @@ gimp_pattern_get_pixels (const gchar  *name,
   *width = 0;
   *height = 0;
   *bpp = 0;
-  *num_mask_bytes = 0;
-  *mask_bytes = NULL;
+  *num_color_bytes = 0;
+  *color_bytes = NULL;
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
@@ -125,10 +125,10 @@ gimp_pattern_get_pixels (const gchar  *name,
       *width = return_vals[1].data.d_int32;
       *height = return_vals[2].data.d_int32;
       *bpp = return_vals[3].data.d_int32;
-      *num_mask_bytes = return_vals[4].data.d_int32;
-      *mask_bytes = g_new (guint8, *num_mask_bytes);
-      memcpy (*mask_bytes, return_vals[5].data.d_int8array,
-	      *num_mask_bytes * sizeof (guint8));
+      *num_color_bytes = return_vals[4].data.d_int32;
+      *color_bytes = g_new (guint8, *num_color_bytes);
+      memcpy (*color_bytes, return_vals[5].data.d_int8array,
+	      *num_color_bytes * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

@@ -114,10 +114,14 @@ gimp_brush_select_widget_new (const gchar          *title,
                               GimpRunBrushCallback  callback,
                               gpointer              data)
 {
-  BrushSelect          *brush_sel;
-  GtkWidget            *frame;
-  GtkWidget            *hbox;
-  gint                  mask_data_size;
+  BrushSelect *brush_sel;
+  GtkWidget   *frame;
+  GtkWidget   *hbox;
+  gint         mask_bpp;
+  gint         mask_data_size;
+  gint         color_bpp;
+  gint         color_data_size;
+  guint8      *color_data;
 
   g_return_val_if_fail (callback != NULL, NULL);
 
@@ -171,9 +175,16 @@ gimp_brush_select_widget_new (const gchar          *title,
   if (gimp_brush_get_pixels (brush_sel->brush_name,
                              &brush_sel->width,
                              &brush_sel->height,
+                             &mask_bpp,
                              &mask_data_size,
-                             &brush_sel->mask_data))
+                             &brush_sel->mask_data,
+                             &color_bpp,
+                             &color_data_size,
+                             &color_data))
     {
+      if (color_data)
+        g_free (color_data);
+
       if (opacity == -1)
         brush_sel->opacity = gimp_context_get_opacity ();
       else
@@ -249,11 +260,15 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
     }
   else
     {
+      gchar  *name;
       gint    width;
       gint    height;
+      gint    mask_bpp;
       gint    mask_data_size;
       guint8 *mask_data;
-      gchar  *name;
+      gint    color_bpp;
+      gint    color_data_size;
+      guint8 *color_data;
 
       if (! brush_name || ! strlen (brush_name))
         name = gimp_context_get_brush ();
@@ -263,9 +278,16 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
       if (gimp_brush_get_pixels (name,
                                  &width,
                                  &height,
+                                 &mask_bpp,
                                  &mask_data_size,
-                                 &mask_data))
+                                 &mask_data,
+                                 &color_bpp,
+                                 &color_data_size,
+                                 &color_data))
         {
+          if (color_data)
+            g_free (color_data);
+
           if (opacity == -1.0)
             opacity = gimp_context_get_opacity ();
 

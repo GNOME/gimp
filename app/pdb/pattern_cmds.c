@@ -115,6 +115,7 @@ static ProcRecord pattern_get_info_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   pattern_get_info_inargs,
@@ -132,8 +133,8 @@ pattern_get_pixels_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  gint32 num_mask_bytes = 0;
-  guint8 *mask_bytes = NULL;
+  gint32 num_color_bytes = 0;
+  guint8 *color_bytes = NULL;
   GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -147,10 +148,10 @@ pattern_get_pixels_invoker (Gimp         *gimp,
 
       if (pattern)
         {
-          num_mask_bytes = pattern->mask->height * pattern->mask->width *
-                           pattern->mask->bytes;
-          mask_bytes     = g_memdup (temp_buf_data (pattern->mask),
-                                     num_mask_bytes);
+          num_color_bytes = pattern->mask->height * pattern->mask->width *
+                            pattern->mask->bytes;
+          color_bytes     = g_memdup (temp_buf_data (pattern->mask),
+                                      num_color_bytes);
         }
       else
         success = FALSE;
@@ -163,8 +164,8 @@ pattern_get_pixels_invoker (Gimp         *gimp,
       return_args[1].value.pdb_int = pattern->mask->width;
       return_args[2].value.pdb_int = pattern->mask->height;
       return_args[3].value.pdb_int = pattern->mask->bytes;
-      return_args[4].value.pdb_int = num_mask_bytes;
-      return_args[5].value.pdb_pointer = mask_bytes;
+      return_args[4].value.pdb_int = num_color_bytes;
+      return_args[5].value.pdb_pointer = color_bytes;
     }
 
   return return_args;
@@ -198,13 +199,13 @@ static ProcArg pattern_get_pixels_outargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "num_mask_bytes",
-    "Length of pattern mask data"
+    "num_color_bytes",
+    "Number of pattern bytes"
   },
   {
     GIMP_PDB_INT8ARRAY,
-    "mask_bytes",
-    "The pattern mask data"
+    "color_bytes",
+    "The pattern data."
   }
 };
 
@@ -216,6 +217,7 @@ static ProcRecord pattern_get_pixels_proc =
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer",
   "2004",
+  FALSE,
   GIMP_INTERNAL,
   1,
   pattern_get_pixels_inargs,
