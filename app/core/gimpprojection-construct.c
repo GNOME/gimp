@@ -1245,7 +1245,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   operation = valid_combinations[gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNC);
+      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNCTION);
       return;
     }
 
@@ -1354,7 +1354,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   operation = valid_combinations [gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNC);
+      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNCTION);
       return;
     }
 
@@ -1915,7 +1915,7 @@ gimp_image_get_new_tattoo (GimpImage *gimage)
 
   if (gimage->tattoo_state <= 0)
     g_warning ("%s: Tattoo state corrupted "
-	       "(integer overflow).", G_GNUC_PRETTY_FUNC);
+	       "(integer overflow).", G_GNUC_PRETTY_FUNCTION);
 
   return gimage->tattoo_state;
 }
@@ -3596,7 +3596,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       if (!merge_layer)
 	{
 	  g_warning ("%s: could not allocate merge layer.",
-		     G_GNUC_PRETTY_FUNC);
+		     G_GNUC_PRETTY_FUNCTION);
 	  return NULL;
 	}
 
@@ -3635,7 +3635,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       if (!merge_layer)
 	{
 	  g_warning ("%s: could not allocate merge layer",
-		     G_GNUC_PRETTY_FUNC);
+		     G_GNUC_PRETTY_FUNCTION);
 	  return NULL;
 	}
 
@@ -3797,14 +3797,14 @@ gimp_image_add_layer (GimpImage *gimage,
       GIMP_DRAWABLE (layer)->gimage != gimage) 
     {
       g_warning ("%s: attempting to add layer to wrong image.",
-		 G_GNUC_PRETTY_FUNC);
+		 G_GNUC_PRETTY_FUNCTION);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->layers, GIMP_OBJECT (layer)))
     {
       g_warning ("%s: trying to add layer to image twice.",
-		 G_GNUC_PRETTY_FUNC);
+		 G_GNUC_PRETTY_FUNCTION);
       return FALSE;
     }
 

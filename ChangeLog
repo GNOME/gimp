@@ -1,3 +1,7 @@
+2001-11-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c: s/G_GNUC_PRETTY_FUNC/G_GNUC_PRETTY_FUNCTION/
+
 2001-11-16  Rebecca Walter  <rjp@mail.tele.dk>
 
 	* app/core/gimpcontext.c
