@@ -5,24 +5,18 @@ use strict;
 
 use Gimp;
 use Gimp::Fu;
-use Gimp::PDL;
-
-use PDL;
-use PDL::Core;
+BEGIN { eval "use PDL::Graphics::TriD"; $@ and exit main }
 use PDL::Math;
-use PDL::Graphics::TriD;
+use PDL::Core;
+use PDL;
+use Gimp::PDL;
 
 register (
     'view3d',
-
     'View grayscale drawable in 3D',
-
     'This script uses PDL::Graphics:TriD to view a grayscale drawable in 3D. You can choose a Cartesian (default) or Polar projection, toggle the drawing of lines, and toggle normal smoothing.',
-
     'Tom Rathborne', 'GPLv2', 'v0.0:1998-11-28',
-
     '<Image>/View/3D Surface',
-
     'GRAY', [
         [ PF_BOOL, 'Polar', 'Radial view', 0],
         [ PF_BOOL, 'Lines', 'Draw grid lines', 0],

@@ -114,7 +114,7 @@ EOF
 
 sub MY::postamble {
    (my $GIMPTOOL2 = $GIMPTOOL) =~ s/^\.\./..\/../;
-   <<"EOF";
+   my $postamble=<<"EOF";
 
 objclean :: clean
 maintainer-clean :: realclean
@@ -125,19 +125,14 @@ clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 
 install :: install-plugins
+	$GIMPTOOL --install-admin-bin Perl-Server
 
 install-plugins:
-	$GIMPTOOL --install-admin-bin Perl-Server
-	-cd examples && $GIMPTOOL2 --install-admin-bin windy.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin prep4gif.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin webify.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin PDB
-	-cd examples && $GIMPTOOL2 --install-admin-bin alpha2color.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin tex-to-float
-	-cd examples && $GIMPTOOL2 --install-admin-bin ditherize.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin border.pl
-	-cd examples && $GIMPTOOL2 --install-admin-bin view3d.pl
 EOF
+
+   $postamble.join("",map "	-cd examples && $GIMPTOOL2 --install-admin-bin $_\n",
+      qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
+         border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl));
 }
 
 WriteMakefile(

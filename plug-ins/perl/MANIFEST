@@ -51,3 +51,6 @@ examples/windy.pl
 examples/prep4gif.pl
 examples/ditherize.pl
 examples/view3d.pl
+examples/feedback.pl
+examples/xachlego.pl
+examples/xachshadow.pl

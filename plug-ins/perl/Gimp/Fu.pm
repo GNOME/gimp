@@ -924,7 +924,9 @@ sub print_switches {
 
 *main = *gimp_main = sub {
    if (!@scripts) {
-      die "well, there are no scripts registered.. what do you expect?\n";
+      # it is now legal to register no scripts (i.e. when PDL is required but not found
+      #die "well, there are no scripts registered.. what do you expect?\n";
+      Gimp::main;
    } elsif ($Gimp::help) {
       my $this=this_script;
       print <<EOF;

@@ -7,6 +7,8 @@ Revision history for Gimp-Perl extension.
         - improved handling of "make clean" to make it less perl-ish
           and more gnu-ish
         - enabled full testsuite (keep your fingers crossed)
+	- PDL examples no longer cause errors at startup
+        - more compatibility fixes for 5.005_54
 
 1.051 Tue Jan 19 21:10:20 CET 1999
 	- corrected a minor typoe found by Stefan Traby <stefan@sime.com>

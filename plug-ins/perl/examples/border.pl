@@ -4,6 +4,7 @@
 
 use Gimp;
 use Gimp::Fu;
+BEGIN { eval "use PDL"; $@ and exit main }
 use Gimp::PDL;
 use PDL::LiteF;
 

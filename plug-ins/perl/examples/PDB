@@ -9,6 +9,10 @@ use Gimp::Fu;
 use Gtk;
 use Gtk::Gdk;
 
+Gtk->init;
+
+$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
+
 #Gimp::set_trace(TRACE_ALL);
 
 my $window;	# the main window
@@ -106,10 +110,10 @@ sub complete_function {
    my @matches = sort grep /$name/i,@function;
    if(@matches>70) {
       set_clist map(($_,$_),@matches[0..69]);
-      $synopsis->set(1,"showing only the first 70 matches (of ".scalar@matches.")");
+      $synopsis->set("showing only the first 70 matches (of ".(scalar@matches).")");
    } elsif(@matches>1) {
       set_clist map(($_,$_),@matches);
-      $ssynopsis->set(1,scalar@matches." matching functions");
+      $synopsis->set(scalar@matches." matching functions");
    } else {
       set_clist @matches,@matches;
       $synopsis->set($matches[0]." (press F1 to complete)");
@@ -229,7 +233,8 @@ sub inputline {
       do_idle;
       if ($_[1]->{keyval} == 0xFF09) {
 #         do_completion;
-         ();
+print "ztab\n";
+         return 1;
       } elsif ($_[1]->{keyval} == 0xFFBE) {
          do_completion;
          ();
@@ -293,11 +298,11 @@ sub create_main {
    
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
-   $cs->add($clist);
+   $gtk_10 ? $cs->add ($clist) : $cs->add_with_viewport ($clist);
    
    my $rs = new Gtk::ScrolledWindow undef,undef;
    $rs->set_policy(-automatic,-automatic);
-   $rs->add($rlist);
+   $gtk_10 ? $rs->add ($rlist) : $rs->add_with_viewport ($rlist);
    $rs->set_usize(0,200);
    
    $result = new Gtk::Entry;
@@ -306,10 +311,12 @@ sub create_main {
    
 #   $statusbar = new Gtk::Statusbar;
    $statusbar = new Gtk::ProgressBar;
+
+   realize $window;
    
    $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
       $table->attach($synopsis ,1,2,0,1,{},{},0,0);
-#         $table->attach(new Gtk::Pixmap(logo $w),2,3,0,1,{},{},0,0);
+         $table->attach(logo(),2,3,0,1,{},{},0,0);
    $table->attach(new Gtk::Label("Command")  ,0,1,1,2,{},{},0,0);
       $table->attach($inputline,1,2,1,2,['expand','fill'],{},0,0);
          $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
@@ -342,20 +349,51 @@ register "extension_pdb_browser",
    ();
 };
 
-init Gtk;
 exit main;
 
 sub logo {
-   my $pm = new Gtk::Gdk::Pixmap->create_from_data($window,
-      0, #%logo-width%
-      0, #%logo-height%
-      3,
-      #%PM:logo%
-      #%PM%
-   );
-
-   #%BM:logo%
-   #%BM%
+   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($window->window,$window->style->black,
+      #%XPM:logo%
+      '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',
+      '# c #C3C3C4', '$ c #252524', '% c #A5A5A4', '& c #646464', '* c #E4E4E4',
+      '= c #171718', '- c #989898', '; c #585858', '> c #D7D7D7', ', c #383838',
+      '\' c #B8B8B8', ') c #787878', '! c #F7F7F8', '~ c #0B0B0C', '{ c #8C8C8C',
+      '] c #4C4C4C', '^ c #CCCCCC', '/ c #2C2C2C', '( c #ABABAC', '_ c #6C6C6C',
+      ': c #EBEBEC',
+      '                                                                               ',
+      '                  ]&@;%                                                        ',
+      '     ;]_        ]];{_,&(              ^{__{^    #);^                           ',
+      '  ]);;+;)      ,//,@;@@)_           #_......_^  (..;                           ',
+      ' ;-\'\'@];@      /$=$/@_@;&          #]........]\' ^..{                           ',
+      ' @@_+%-,,]    ,/$///_^)&@;         -...{^>+./(  \'*^!  {{  ##(  ##\'   {{  ##(   ',
+      '    ;))@/;  //]);/$]_(\');]        %,..+   ^*!   #/,{ #,/%&..@*&..,^ >,,(;..,^  ',
+      '   /,)];]] ,/],+%;_%-#!#()_       \'...> >)_)_))\'\'.._ (..=~...=.~..; ^..=....=> ',
+      '   ,]]&;;] /@;->>+-+{(\'\'-+]       #...# #.....=\'\'..) \'..]*\'..$>>../-^..$##,..- ',
+      '   @_{@/, @$@_^*>(_;_&;{);\']      \'~..> ^,,/../-\'.._ (..{ ^..; \'=./-^..%  #..& ',
+      '   ,&);,& ,])-^:>#%#%+;)>->]       ;..)   >(..; \'..) \'..- #.._ -=./-^..(  ^..& ',
+      '   ,&&%]-&/]]_::^\'#--(#!:#:]&      ^...)^#-~..# \'.._ (..% #.._ %=./-^..,>*;..+ ',
+      '   ,/&%;{%;//_#^#+%+{%#!:-#%]]      -........{  \'..) \'..% #.._ %=./-^..~....~* ',
+      '   ;$@%+)#)@$/-\')%-+-)+^#@;)@,       #@..../\'   #~~) \'~~% #~=_ -/~,-^..)/..=\'  ',
+      '    ,@+(\'#);,={)]%^);@;&@=]] ,        %#\'#^(     (%(  (%   %%(  (%% ^..{>###   ',
+      '     ,@)^#;,/={)_\'-;///$$=;@ ,,                                     ^..{       ',
+      '     ],&)_=$==/])\'+),],,/$)@ @,                %(\'((\'((\'            ^..{       ',
+      '       @@]/=====@-)-]$$, ]_/ ,                 %=~~=~==&            >%%^       ',
+      '          =$@/@,@]/]$=/  ])$ &       {{{{      %=====~=_      \'-{%             ',
+      '          ,$// /$/@ /$,  $,,       %;@,,,;{>   (\'\'\'\'\'\'\'\'      #~.$-            ',
+      '          //=/ $,/; $,,   @@       ($......,>                 #~.${            ',
+      '          /$,  /,,,  @@   ,,       %$..],...{                 ^~.$-            ',
+      '           ],  ]@]   )&    ,       ($..>({..;  #\'+)\'^  ^#\'*>(-!~.${            ',
+      '           @,  --    (;    @       %$..^({..] *,..../* ^.._,.$!~.$-            ',
+      '           _,  @\'   ;\'     )       %$..@@...)!@.$#(=.; ^..~.~,!~.${            ',
+      '           ]/   ])  -      ]       ($......=>^..;--@.~^>...(^#:~.$-            ',
+      '           ;     ;-__      ;       ($../,])> %........#>..@(  #~.${            ',
+      '           _      )*       ]       %$..>{    \'..->^*>>\'>..;   #~.$-            ',
+      '           )      &&+      _       %$..\'     >=.]>>)&^ ^..;   #~.${            ',
+      '          ;-     @;];]    &-       ($..\'      \'~.....+ ^..;   #~.$-            ',
+      '          \')    ]_& @     __       %{))#       >_@,;\'  >)+(   #+){             ',
+      '         &%               @;                                                   '
+      #%XPM%
+   ));
 }
 
 

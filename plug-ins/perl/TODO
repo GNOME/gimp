@@ -12,16 +12,9 @@ bugs
 
   * auto-edit shebang
   * only install plug-ins that really work
-[DONE]  * gimptool 1.0 doesn't support -n or --noui
   * perl_fu_webify in homepage-logo.pl
-[????]  * save_image should be called for non-null return values
-[DONE]  * drawable is compatible to layer AND VICE VERSA (convert_sv2gimp)
-[DONE]  * enable t/run.t again (but how? different solutions
-    for gimp-1.0 and gimp-1.1???)
   * wait for working gimp_file_load (or do it myself?)
-[DONE]  * block display_new &c when Net and --noui
   * Gimp::import should croak on importing "garbage".
-[DONE]  * memory leak on croak()? de-croakify the code!
   
 important issues
 
@@ -32,27 +25,20 @@ important issues
   * --ui and --noui for Gimp::Fu
   * [PF_CUSTOM]
   * Gimp::ping
-[DONE]  * Gimp::Net::get_connection ();
-[DONE]  * Gimp::Net::set_connection ($conn);
   * clean up PKG_ANY vs. PKG_REAL_DRAWABLE
   * allow plug-ins to register with only a drawable argument(!)
     (fix this in Gimp)
   * provide propper overwriting in Gimp::Net::pixel-_rgn ;(
-[DONE]  * gimp_blend && 15 doesn't work
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-[DONE]  * do not special-case INT32 in convert_sv2gimp
   * substr 4th argument form for Net:: -> require 5.005!!!! DO IT! PLEASE!!!!
   * use Gimp qw(GIMP_HOST=jfjf)???
-[DONE]  * brushes are inverted
   * zero-copy PDL support
-[DONE]  * gimp_init, gimp_deinit
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
   * --function localfunc to select one of the registered scripts
   * brush etc. buttons (maybe use gimp's interface, but
     only when local(?))
-[DONE]  * help button ;)
   * create working progress when Net and $verbose
   * require Storable soon(!)
   * Gimp::Fu::command(?)

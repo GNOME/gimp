@@ -4,6 +4,10 @@
 
 use Gimp;
 
+sub query {
+   print STDERR "$0: this script is not intended to be run from within the gimp!\n";
+}
+
 sub net {
   # simple benchmark ;)
   

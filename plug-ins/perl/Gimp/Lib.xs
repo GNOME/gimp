@@ -33,6 +33,9 @@
 #ifndef dTHR
 #define dTHR
 #endif
+#ifndef PL_sv_undef
+#define PL_sv_undef sv_undef
+#endif
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
 #ifdef dirty
@@ -557,7 +560,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
       case PARAM_STATUS:	sv = newSViv(arg->data.d_status	); break;
       case PARAM_STRING:
         sv = arg->data.d_string ? neuSVpv(arg->data.d_string)
-                                : &sv_undef;
+                                : &PL_sv_undef;
         break;
         
       case PARAM_COLOR:
@@ -1331,7 +1334,7 @@ gimp_get_data(id)
 		      RETVAL = data;
 		    }
 		  else
-		    RETVAL = &sv_undef;
+		    RETVAL = &PL_sv_undef;
 		}
 #endif
 	}
