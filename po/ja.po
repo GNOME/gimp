@@ -5,29 +5,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-07-09 00:19+0900\n"
-"PO-Revision-Date: 2000-07-09 00:22+09:00\n"
+"POT-Creation-Date: 2000-08-13 16:04+0900\n"
+"PO-Revision-Date: 2000-08-13 16:04+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:256
+#: app/about_dialog.c:120
 msgid "About the GIMP"
 msgstr "GIMP について"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:307
+#: app/about_dialog.c:179
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal-*-*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:317
+#: app/about_dialog.c:189
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "バージョン %s の提供は"
 
-#: app/about_dialog.c:357
+#: app/about_dialog.c:234
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "詳しくは http://www.gimp.org/ を見て下さい"
 
@@ -63,45 +63,45 @@ msgstr "の提供は"
 msgid "GIMP Startup"
 msgstr "GIMP 起動中"
 
-#: app/app_procs.c:492 app/gimprc.c:452
+#: app/app_procs.c:489 app/gimprc.c:452
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "読み込み中 \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:554
+#: app/app_procs.c:551
 msgid "Looking for data files"
 msgstr "データファイルを検索中"
 
-#: app/app_procs.c:554
+#: app/app_procs.c:551
 msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2493
+#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2493
 msgid "Brushes"
 msgstr "ブラシ"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:558 app/internal_procs.c:140 app/preferences_dialog.c:2501
+#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2501
 msgid "Patterns"
 msgstr "パターン"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:560 app/preferences_dialog.c:2505
+#: app/app_procs.c:557 app/preferences_dialog.c:2505
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:562 app/internal_procs.c:104 app/preferences_dialog.c:2509
+#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2509
 msgid "Gradients"
 msgstr "グラデーション"
 
-#: app/app_procs.c:752
+#: app/app_procs.c:749
 msgid "Really Quit?"
 msgstr "終了しますか?"
 
-#: app/app_procs.c:756
+#: app/app_procs.c:753
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -111,12 +111,12 @@ msgstr ""
 "\n"
 "GIMP を終了しますか?"
 
-#: app/app_procs.c:757
+#: app/app_procs.c:754
 msgid "Quit"
 msgstr "終了"
 
 #. the cancel button
-#: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:754 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
@@ -124,7 +124,7 @@ msgstr "終了"
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
 #: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1826
+#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
 #: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
@@ -220,7 +220,7 @@ msgstr "螺旋 (反時計回り)"
 msgid "Gradient:"
 msgstr "グラデーション:"
 
-#: app/blend.c:342 app/by_color_select.c:838 app/preferences_dialog.c:1820
+#: app/blend.c:342 app/by_color_select.c:844 app/preferences_dialog.c:1820
 msgid "None"
 msgstr "なし"
 
@@ -291,7 +291,7 @@ msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 msgid "OK"
 msgstr "了解"
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:715
+#: app/brightness_contrast.c:216 app/by_color_select.c:721
 #: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
 #: app/hue_saturation.c:372 app/levels.c:339 app/posterize.c:200
 #: app/threshold.c:273 app/tools.c:1542 app/transform_core.c:406
@@ -312,7 +312,7 @@ msgstr "コントラスト:"
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
 #: app/fileops.c:401 app/hue_saturation.c:562 app/levels.c:570
-#: app/palette.c:3236 app/posterize.c:239 app/threshold.c:348
+#: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -321,13 +321,13 @@ msgid "Brush Editor"
 msgstr "ブラシエディタ"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:717
+#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:723
 #: app/color_notebook.c:123 app/color_picker.c:297 app/colormap_dialog.i.c:173
 #: app/crop.c:1068 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
 #: app/histogram_tool.c:275 app/info_window.c:255 app/lc_dialog.c:195
-#: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2072
-#: app/palette.c:2088 app/palette.c:3118 app/palette_select.c:66
+#: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
+#: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
 #: app/tools.c:1544 app/undo_history.c:752
 msgid "Close"
@@ -356,7 +356,7 @@ msgid "Brush Selection"
 msgstr "ブラシ選択"
 
 #: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
-#: app/palette.c:2070 app/pattern_select.c:170
+#: app/palette.c:2049 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "再読み込み"
 
@@ -372,19 +372,19 @@ msgstr "不透明度:"
 msgid "Mode:"
 msgstr "モード:"
 
-#: app/brush_select.c:467 app/palette.c:1176 app/palette.c:2239
+#: app/brush_select.c:467 app/palette.c:1164 app/palette.c:2219
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "新規"
 
 #: app/brush_select.c:473 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:151 app/palette.c:1183 app/palette.c:2086
+#: app/gradient_select.c:151 app/palette.c:1171 app/palette.c:2065
 #: app/palette_select.c:64
 msgid "Edit"
 msgstr "編集"
 
 #: app/brush_select.c:479 app/global_edit.c:770 app/gradient.c:1768
-#: app/palette.c:1193 app/palette.c:1826 app/palette.c:2250
+#: app/palette.c:1181 app/palette.c:1818 app/palette.c:2230
 msgid "Delete"
 msgstr "削除"
 
@@ -427,53 +427,53 @@ msgstr "パターン塗り"
 msgid "Bucket Fill operation failed."
 msgstr "塗りつぶし操作失敗."
 
-#: app/bucket_fill.c:351
+#: app/bucket_fill.c:368
 msgid "No available patterns for this operation."
 msgstr "使用可能なパターンがありません."
 
 #. The shell and main vbox
-#: app/by_color_select.c:710
+#: app/by_color_select.c:716
 msgid "By Color Selection"
 msgstr "色による選択"
 
-#: app/by_color_select.c:766
+#: app/by_color_select.c:772
 msgid "Inactive"
 msgstr "無効"
 
-#: app/by_color_select.c:774
+#: app/by_color_select.c:780
 msgid "Selection Mode"
 msgstr "選択モード"
 
-#: app/by_color_select.c:779 app/paint_funcs.c:101
+#: app/by_color_select.c:785 app/paint_funcs.c:101
 msgid "Replace"
 msgstr "置換"
 
-#: app/by_color_select.c:781 app/colormap_dialog.i.c:130
+#: app/by_color_select.c:787 app/colormap_dialog.i.c:130
 #: app/gdisplay_color_ui.c:120
 msgid "Add"
 msgstr "追加"
 
-#: app/by_color_select.c:782 app/layers_dialog.c:380 app/tool_options.c:926
+#: app/by_color_select.c:788 app/layers_dialog.c:380 app/tool_options.c:926
 msgid "Subtract"
 msgstr "減算"
 
-#: app/by_color_select.c:783
+#: app/by_color_select.c:789
 msgid "Intersect"
 msgstr "共通部分"
 
-#: app/by_color_select.c:794
+#: app/by_color_select.c:800
 msgid "Fuzziness Threshold"
 msgstr "ファジー度の閾値"
 
-#: app/by_color_select.c:813
+#: app/by_color_select.c:819
 msgid "Selection"
 msgstr "選択"
 
-#: app/by_color_select.c:824
+#: app/by_color_select.c:830
 msgid "Invert"
 msgstr "反転"
 
-#: app/by_color_select.c:831
+#: app/by_color_select.c:837
 msgid "All"
 msgstr "全て"
 
@@ -482,7 +482,7 @@ msgid "copy"
 msgstr "コピー"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1746
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
@@ -1023,7 +1023,7 @@ msgstr "自由曲線"
 msgid "Load"
 msgstr "読み込み"
 
-#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2068
+#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2047
 #: app/preferences_dialog.c:365 app/preferences_dialog.c:1463
 msgid "Save"
 msgstr "保存"
@@ -1696,8 +1696,8 @@ msgstr "これ以上チャンネルを上昇させられません"
 msgid "Channel cannot be lowered any further"
 msgstr "これ以上チャンネルを下降させられません"
 
-#: app/gimpimage.c:3426 app/palette.c:364 app/palette.c:941 app/palette.c:1077
-#: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
+#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "名称未設定"
 
@@ -1883,11 +1883,11 @@ msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
 #: app/gradient.c:823 app/gradient_select.c:207 app/paintbrush.c:266
-#: app/palette.c:3174
+#: app/palette.c:3154
 msgid "Gradient"
 msgstr "グラデーション"
 
-#: app/gradient.c:824 app/gradient_select.c:208 app/palette.c:2211
+#: app/gradient.c:824 app/gradient_select.c:208 app/palette.c:2191
 #: app/palette_select.c:89
 msgid "Name"
 msgstr "名前"
@@ -1959,7 +1959,7 @@ msgstr "グラデーションの名前を変更"
 msgid "Enter a new name for the gradient"
 msgstr "新しいグラデーションの名前を入力"
 
-#: app/gradient.c:1758 app/palette.c:1817
+#: app/gradient.c:1758 app/palette.c:1809
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -2540,7 +2540,7 @@ msgstr "ガイドプロシージャ"
 msgid "Help procedures"
 msgstr "ヘルププロシージャ"
 
-#: app/internal_procs.c:116 app/palette.c:3182
+#: app/internal_procs.c:116 app/palette.c:3162
 msgid "Image"
 msgstr "画像"
 
@@ -2558,7 +2558,7 @@ msgstr "インターフェイス"
 msgid "Miscellaneous"
 msgstr "その他"
 
-#: app/internal_procs.c:128 app/palette.c:2197 app/palette.c:2209
+#: app/internal_procs.c:128 app/palette.c:2177 app/palette.c:2189
 #: app/palette_select.c:87
 msgid "Palette"
 msgstr "パレット"
@@ -2857,44 +2857,44 @@ msgstr "ズームイン"
 msgid "Zoom out"
 msgstr "ズームアウト"
 
-#: app/main.c:284
+#: app/main.c:300
 msgid "GIMP version"
 msgstr "GIMP バージョン"
 
-#: app/main.c:288
+#: app/main.c:304
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "使用法: %s [オプション ...] [ファイル ...]\n"
 
-#: app/main.c:289
+#: app/main.c:305
 msgid "Valid options are:\n"
 msgstr "有効なオプション:\n"
 
-#: app/main.c:290
+#: app/main.c:306
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                このヘルプを表示。\n"
 
-#: app/main.c:291
+#: app/main.c:307
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             バージョン情報の表示。\n"
 
-#: app/main.c:292
+#: app/main.c:308
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <コマンド>   バッチモードで起動。\n"
 
-#: app/main.c:293
+#: app/main.c:309
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     指定した gimprc ファイルを使用する。\n"
 
-#: app/main.c:294
+#: app/main.c:310
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        ユーザーインターフェースなしで起動。\n"
 
-#: app/main.c:295
+#: app/main.c:311
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     保存されたセッションを再現する。\n"
 
-#: app/main.c:296
+#: app/main.c:312
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2902,49 +2902,58 @@ msgstr ""
 "  --no-data                "
 "パターン、グラデーション、パレット、ブラシを読み込まない\n"
 
-#: app/main.c:297
+#: app/main.c:313
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                詳細起動メッセージを表示する。\n"
 
-#: app/main.c:298
+#: app/main.c:314
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              起動画面を表示しない。\n"
 
-#: app/main.c:299
+#: app/main.c:315
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        起動画面に画像を表示しない。\n"
 
-#: app/main.c:300
+#: app/main.c:316
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
 
-#: app/main.c:301
+#: app/main.c:317
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                X 共有メモリ拡張機能を使用しない。\n"
 
-#: app/main.c:302
+#: app/main.c:318
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 "  --console-messages       警告はダイアログでなく、コンソールに出力する。\n"
 
-#: app/main.c:303
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers         デバッグ用シグナルハンドラを有効にする。\n"
+#: app/main.c:319
+msgid ""
+"  --debug-handlers         Enable debugging signal handlers for non-fatal "
+"signals.\n"
+msgstr ""
+"  --debug-handlers         "
+"致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする。\n"
 
-#: app/main.c:304
+#: app/main.c:321
+msgid "                           Debugging mode for fatal signals.\n"
+msgstr ""
+"                           致命的なシグナルに対するデバッグモード指定.\n"
+
+#: app/main.c:322
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      指定した X ディスプレイを使用する。\n"
 
-#: app/main.c:305
+#: app/main.c:323
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> 指定するシステム gimprc を使用する。\n"
 
-#: app/main.c:322
+#: app/main.c:340
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(このコンソールウィンドウは10秒後に閉じます)\n"
 
@@ -3859,7 +3868,7 @@ msgstr "鋸歯繰り返し"
 msgid "Loop Triangle"
 msgstr "三角波繰り返し"
 
-#: app/palette.c:414
+#: app/palette.c:402
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3872,7 +3881,7 @@ msgstr ""
 "マジックヘッダが見付からない\n"
 "このファイルは DOS 形式から変換する必要があるかも知れない"
 
-#: app/palette.c:419
+#: app/palette.c:407
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -3881,7 +3890,7 @@ msgstr ""
 "パレット %s 読み込み中:\n"
 "壊れたパレット: マジックヘッダが無い"
 
-#: app/palette.c:432
+#: app/palette.c:420
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3891,7 +3900,7 @@ msgstr ""
 "読み込みエラー"
 
 #. maybe we should just abort?
-#: app/palette.c:448
+#: app/palette.c:436
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3900,7 +3909,7 @@ msgstr ""
 "パレット %s (%d 行目)読み込み中:\n"
 "赤の要素が無い"
 
-#: app/palette.c:455
+#: app/palette.c:443
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3909,7 +3918,7 @@ msgstr ""
 "パレット %s (%d 行目)読み込み中:\n"
 "緑の要素が無い"
 
-#: app/palette.c:462
+#: app/palette.c:450
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3918,7 +3927,7 @@ msgstr ""
 "パレット %s (%d 行目)読み込み中:\n"
 "青の要素が無い"
 
-#: app/palette.c:471
+#: app/palette.c:459
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -3927,97 +3936,97 @@ msgstr ""
 "パレット %s (%d 行目)読み込み中:\n"
 "RGB 値が範囲外"
 
-#: app/palette.c:519
+#: app/palette.c:507
 #, c-format
-msgid "can't save palette \"%s\"\n"
+msgid "Can't save palette \"%s\"\n"
 msgstr "パレット \"%s\" が保存できません\n"
 
-#: app/palette.c:1162
+#: app/palette.c:1150
 msgid "Black"
 msgstr "黒"
 
-#: app/palette.c:1679 app/palette.c:2167
+#: app/palette.c:1670 app/palette.c:2146
 msgid "Undefined"
 msgstr "名前無し"
 
-#: app/palette.c:1764
+#: app/palette.c:1756
 msgid "New Palette"
 msgstr "新規パレット"
 
-#: app/palette.c:1767
+#: app/palette.c:1759
 msgid "Enter a name for new palette"
 msgstr "新規パレットの名前を入力"
 
-#: app/palette.c:1821
+#: app/palette.c:1813
 msgid "Delete Palette"
 msgstr "パレット削除"
 
-#: app/palette.c:1900
+#: app/palette.c:1892
 msgid "Merge Palette"
 msgstr "パレット結合"
 
-#: app/palette.c:1903
+#: app/palette.c:1895
 msgid "Enter a name for merged palette"
 msgstr "結合後のパレットの名前を入力"
 
-#: app/palette.c:2062
+#: app/palette.c:2041
 msgid "Color Palette Edit"
 msgstr "色パレット編集"
 
-#: app/palette.c:2080
+#: app/palette.c:2059
 msgid "Color Palette"
 msgstr "色パレット"
 
-#: app/palette.c:2199 app/palette.c:3253
+#: app/palette.c:2179 app/palette.c:3233
 msgid "Select"
 msgstr "選択"
 
-#: app/palette.c:2210 app/palette_select.c:88
+#: app/palette.c:2190 app/palette_select.c:88
 msgid "Ncols"
 msgstr "色数"
 
-#: app/palette.c:2230
+#: app/palette.c:2210
 msgid "Palette Ops"
 msgstr "パレット操作"
 
 #. The "Import" frame
-#: app/palette.c:2261 app/palette.c:3116 app/palette.c:3130
+#: app/palette.c:2241 app/palette.c:3096 app/palette.c:3110
 msgid "Import"
 msgstr "インポート"
 
-#: app/palette.c:2272
+#: app/palette.c:2252
 msgid "Merge"
 msgstr "結合"
 
-#: app/palette.c:3110
+#: app/palette.c:3090
 msgid "Import Palette"
 msgstr "インポートパレット"
 
 #. The source's name
-#: app/palette.c:3146
+#: app/palette.c:3126
 msgid "Name:"
 msgstr "名前:"
 
-#: app/palette.c:3159
+#: app/palette.c:3139
 msgid "new_import"
 msgstr "新規インポート"
 
 #. The source type
-#: app/palette.c:3164
+#: app/palette.c:3144
 msgid "Source:"
 msgstr "源:"
 
-#: app/palette.c:3192
+#: app/palette.c:3172
 msgid "Indexed Palette"
 msgstr "インデックスパレット"
 
 #. The sample size
-#: app/palette.c:3205
+#: app/palette.c:3185
 msgid "Sample Size:"
 msgstr "サンプルサイズ:"
 
 #. The interval
-#: app/palette.c:3218
+#: app/palette.c:3198
 msgid "Interval:"
 msgstr "間隔:"
 
@@ -4154,38 +4163,38 @@ msgstr "行列:"
 msgid "Perspective..."
 msgstr "遠近法..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:330
 msgid "Resource configuration"
 msgstr "リソース設定"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:337
 msgid "Plug-ins"
 msgstr "プラグイン"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:349
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "プラグイン問い合わせ: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:385
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "\"%s\" 書き込み中\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:400
 msgid "Starting extensions: "
 msgstr "拡張機能起動中: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:401
 msgid "Extensions"
 msgstr "拡張機能"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:832
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "プラグインが見つかりません: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1459
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4832,23 +4841,23 @@ msgstr "クイックマスク属性を変更"
 msgid "Mask Opacity:"
 msgstr "マスク不透明度:"
 
-#: app/rect_select.c:195
+#: app/rect_select.c:200
 msgid "Selection: ADD"
 msgstr "選択: 追加"
 
-#: app/rect_select.c:198
+#: app/rect_select.c:203
 msgid "Selection: SUBTRACT"
 msgstr "選択: 引き算"
 
-#: app/rect_select.c:201
+#: app/rect_select.c:206
 msgid "Selection: INTERSECT"
 msgstr "選択: 共通部分"
 
-#: app/rect_select.c:204
+#: app/rect_select.c:209
 msgid "Selection: REPLACE"
 msgstr "選択: 置換"
 
-#: app/rect_select.c:432 app/rect_select.c:439
+#: app/rect_select.c:444 app/rect_select.c:451
 msgid "Selection: "
 msgstr "選択: "
 
