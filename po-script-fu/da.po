@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-04-30 11:43-0700\n"
-"PO-Revision-Date: 2000-04-25 18:41+01:00\n"
+"PO-Revision-Date: 2000-05-02 03:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -56,11 +56,12 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1075
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error\n"
 "%s"
-msgstr "Script-Fu: %s"
+msgstr "Script-Fu fejl\n"
+"%s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1125
@@ -235,7 +236,6 @@ msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr "<Image>/Script-Fu/Animation/Drejende Globus..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Waves..."
 msgstr "<Image>/Skript-Fu/Animation/Bølger..."
 
@@ -250,9 +250,8 @@ msgid "<Image>/Script-Fu/Decor/Add Border..."
 msgstr "<Image>/Skript-Fu/Dekoration/Rand hinzufügen..."
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
+msgstr "<Image>/Skript-Fu/Dekoration/Kaffepletter..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
@@ -264,18 +263,16 @@ msgid "<Image>/Script-Fu/Decor/Old Photo..."
 msgstr "<Image>/Skript-Fu/Dekoration/Gamle Foto..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Skript-Fu/Dekoration/Runde Ecken..."
+msgstr "<Image>/Skript-Fu/Dekoration/Runde hjørner..."
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "<Image>/Script-Fu/Decor/Slide..."
 msgstr "<Image>/Skript-Fu/Dekoration/Dias..."
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr "<Image>/Skript-Fu/Render/Platine..."
+msgstr "<Image>/Skript-Fu/Render/Kredsløb..."
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "<Image>/Script-Fu/Render/Lava..."
@@ -290,9 +287,8 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr "<Image>/Skript-Fu/Render/Gittersystem..."
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Image>/Skript-Fu/Udvalg/Unruhige Udvalg..."
+msgstr "<Image>/Skript-Fu/Udvalg/Uroligt Udvalg..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
@@ -300,7 +296,6 @@ msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr "<Image>/Skript-Fu/Udvalg/Umriß ausblenden..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Round..."
 msgstr "<Image>/Skript-Fu/Udvalg/Afrund..."
 
