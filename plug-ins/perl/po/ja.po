@@ -1,12 +1,13 @@
 # Japanese gimp-perl translation table
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
+# Iccii <iccii@hotmail.com>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.14\n"
-"POT-Creation-Date: Sat Nov 25 21:02:10 2000\n"
-"PO-Revision-Date: 2000-11-25 21:45+09:00\n"
+"Project-Id-Version: gimp-perl 1.201\n"
+"POT-Creation-Date: Sun Dec  3 17:57:53 2000\n"
+"PO-Revision-Date: 2000-12-03 22:52+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -84,13 +85,17 @@ msgstr "$function: 引数/返り値 '$p->[1]' は不正な型 '$p->[0]' です"
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
-msgstr "$function: :auto インポートタグを指定せずに $AUTOLOAD を呼出すのは古い方法です!\n"
+msgstr ""
+"$function: :auto インポートタグを指定せずに $AUTOLOAD "
+"を呼出すのは古い方法です!\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr "$function: ファンクション名が異常な文字を含んでいます, 正しい形式は 0-9, a-z と _ だけを使用します"
+msgstr ""
+"$function: ファンクション名が異常な文字を含んでいます, 正しい形式は 0-9, a-z "
+"と _ だけを使用します"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
@@ -160,7 +165,8 @@ msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> プラグインが画像と描画可能な引数の両方を持たずに呼び出されました!\n"
+msgstr ""
+"<Image> プラグインが画像と描画可能な引数の両方を持たずに呼び出されました!\n"
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
@@ -396,11 +402,11 @@ msgstr "<Image>/表示/3D 表面..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> プラフインが 3 つの標準引数無しで呼び出されました!\n"
+msgstr "<Load> プラグインが 3 つの標準引数無しで呼び出されました!\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> プラフインは 5 つの標準引数無しで呼び出されました!\n"
+msgstr "<Save> プラグインは 5 つの標準引数無しで呼び出されました!\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
@@ -503,8 +509,8 @@ msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
-"偶数のフレームがバックの回転に必要です.\n"
-"$flames までフレームを調整して下さい"
+"逆回転のために偶数のフレーム数が必要です.\n"
+"$flames に調整して下さい"
 
 #: examples/PDB:0
 msgid "Author"
@@ -596,17 +602,13 @@ msgstr "編集"
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
-msgstr ""
-"INT32 が期待されますが '%s' を受け取りました. "
-"もし本当に文字列に渡すつもりならば'*1' を追加しなさい"
+msgstr "INT32 が期待されますが '%s' を受け取りました. もし本当に渡すつもりならば '*1' を文字列に追加してください"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
-msgstr ""
-"INT32 が期待されますが '%s' を受け取りました. '%s' の代わりの意味か 'use "
-"strict' を忘れたのかもしれません"
+msgstr "INT32 が期待されますが '%s' を受け取りました. '%s' とするつもりだったか 'use strict' を忘れたのかもしれません"
 
 #: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
@@ -670,7 +672,7 @@ msgstr "メニューパス"
 
 #: examples/PDB:0
 msgid "More..."
-msgstr "詳しく..."
+msgstr "詳細..."
 
 #: examples/PDB:0
 msgid "NAME"
@@ -678,7 +680,7 @@ msgstr "名前"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr "水平か垂直のガイドがありません. 中断しました"
+msgstr "水平か鉛直のガイドがありません. 中断しました"
 
 #: UI/UI.pm:0
 msgid "OK"
@@ -766,7 +768,7 @@ msgstr "'%s' の型のリファレンスとして変換できません"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
-msgstr "'%s' を特定の色として理解できません"
+msgstr "'%s' を特定の色として解釈できません"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
@@ -794,19 +796,19 @@ msgstr "警告: $function は画像ではないものを返しました: \"$img\"\n"
 
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "警告: クライアントはアクティブなロックを持たずに切断しました\n"
+msgstr "警告: クライアントがアクティブロック中に切断しました\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "警告: クライアントはロックせずにロック解除をしようとしました"
+msgstr "警告: クライアントはロックしていないロックを解除をしようとしました"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr "警告: シェアドロッキングが必要ですが実装されていません"
+msgstr "警告: 未実装の共有ロッキングが要求されました"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "インデックス画像でこのスクリプトは実行できません!!"
+msgstr "インデックス画像に対してこのスクリプトは実行できません!!"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
@@ -842,35 +844,35 @@ msgstr "色は三つの成分 (配列要素) である必要があります"
 
 #: Perl-Server:0
 msgid "accepted tcp connection from "
-msgstr "tcp 接続から受け入れられています"
+msgstr "tcp 接続を受け付けました "
 
 #: Perl-Server:0
 msgid "accepted unix connection"
-msgstr "unix 接続は受け入れられています"
+msgstr "unix domain socket 接続を受け付けました"
 
 #: Perl-Server:0
 msgid "accepting connections in $host"
-msgstr "$host の接続は受け入れられています"
+msgstr "$host で接続を受け付けます"
 
 #: Perl-Server:0
 msgid "accepting connections on $unix_path"
-msgstr "$unix_path の接続は受け入れられています"
+msgstr "$unix_path で接続を受け付けます"
 
 #: Perl-Server:0
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "ポート $Gimp::Net::default_tcp_port の接続は受け入れられています"
+msgstr "ポート $Gimp::Net::default_tcp_port で接続を受け付けます"
 
 #: Perl-Server:0
 msgid "accepting connections on port $port"
-msgstr "接続はポート $port に受け入れられています"
+msgstr "ポート $port で接続を受け付けます"
 
 #: Gimp/Lib.xs:0
 msgid "argument incompatible with type IMAGE"
-msgstr "引数は IMAGE 型とは非互換です"
+msgstr "引数が IMAGE 型とは非互換です"
 
 #: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
-msgstr "引数は %s の型ではありません"
+msgstr "引数が %s 型ではありません"
 
 #: Gimp/Lib.xs:0
 msgid "argument type %s expected (not %s)"
@@ -878,23 +880,23 @@ msgstr "引数型 %s が望ましい (%s ではない)"
 
 #: Gimp/Lib.xs:0
 msgid "arguments to main not yet supported!"
-msgstr "メインへの引数はまだサポートされていません!"
+msgstr "main への引数はまだサポートされていません!"
 
 #: Net/Net.pm:0
 msgid "authorization failed: $r[1]\n"
-msgstr "許可は失敗しました: $r[1]\n"
+msgstr "認証失敗: $r[1]\n"
 
 #: Net/Net.pm:0
 msgid "authorization ok, but: $r[1]\n"
-msgstr "許可は成功しましたが, : $r[1]\n"
+msgstr "認証成功, しかし: $r[1]\n"
 
 #: Perl-Server:0
 msgid "authorization required for tcp connections"
-msgstr "tcp 接続には許可が必要です"
+msgstr "tcp 接続には認証が必要です"
 
 #: Perl-Server:0
 msgid "authorization unnecessary"
-msgstr "許可は必要ありません"
+msgstr "認証は不要です"
 
 #: Gimp/Lib.xs:0
 msgid "being called as '%s', but '%s' not registered in the pdb"
@@ -902,7 +904,7 @@ msgstr "'%s' として呼び出されましたが, '%s' は pdb に登録されていません"
 
 #: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "%d の接続を閉じます (%d は %g 秒を必要とします)"
+msgstr "%d の接続を閉じます (%d 回のリクエストが %g 秒間のうちにありました)"
 
 #: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
@@ -910,25 +912,25 @@ msgstr "$pf_type2string{$type} 型への変換はまだ実装されていません\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr "gimp サーバに接続できません (Perl-Server 動いている事を確認して下さい)"
+msgstr "gimp サーバに接続できません (Perl-Server が動いている事を確認して下さい)"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr "次元が合いません, pdl は %d 次元ですが最低 %d 次元が認められています"
+msgstr "次元が違っています, pdl は %d 次元ですが最低 %d 次元が必要です"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr "次元が合いません, pdl は %d 次元ですが最大 %d 次元が認められています"
+msgstr "次元が違っています, pdl は %d 次元ですが最大 %d 次元までしか取り扱えません"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
-msgstr "パス引数型 %d を返す方法を dunno"
+msgstr "引数型 %d はどうやって渡せばいいんだ?"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
-msgstr "パラメータ型 %d を返す方法を dunno"
+msgstr "返値型 %d はどうやって返せばいいんだ?"
 
 #: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
@@ -942,19 +944,19 @@ msgstr ""
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
-msgstr "書き出しが失敗しました"
+msgstr "エクスポート失敗"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "機能 '$exe' はこのスクリプトから見付かりません (一つは必要"
+msgstr "ファンクション '$exe' がこのスクリプト中に見付かりません (以下のいずれかでなければなりません "
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
-msgstr "機能名はダッシュではなくアンダースコアを含んでいます"
+msgstr "ファンクション名がアンダースコアではなくダッシュを含んでいます"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
-msgstr "function/macro \"$name\" は $class には見付かりません"
+msgstr "ファンクション/マクロ \"$name\" が $class 中に見付かりません"
 
 #: UI/UI.pm:0
 msgid "get current background colour from the gimp"
@@ -966,11 +968,11 @@ msgstr "現在の前景色を gimp から取得します"
 
 #: Gimp/Lib.xs:0
 msgid "gimp procedure '%s' not found"
-msgstr "gimp procedure '%s' が見付かりません"
+msgstr "gimp プロシージャ '%s' が見付かりません"
 
 #: Net/Net.xs:0
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel 機能は PDL:Core module が必要です"
+msgstr "gimp-perl-pixel 機能には PDL:Core モジュールが必要です"
 
 #: Gimp/Lib.xs:0
 msgid ""
@@ -982,27 +984,27 @@ msgstr ""
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data はもはや実装されていません\n"
+msgstr "gimp_tile_get_data はまだ実装されていません\n"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data はもはや実装されていません\n"
+msgstr "gimp_tile_set_data はまだ実装されていません\n"
 
 #: Perl-Server:0
 msgid "illegal command received, aborting connection"
-msgstr "不正なコマンドを受け取りました, 接続を切ります"
+msgstr "不正なコマンドを受け取りました, 接続を切断します"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
-msgstr "不正なパラサイト指定です, arrayref が期待されます"
+msgstr "不正なパラサイト指定です, 配列参照が期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
-msgstr "不正なパラサイト指定です, 3 配列のメンバーが期待されます"
+msgstr "不正なパラサイト指定です, 配列に3つのメンバーが期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
-msgstr "不正なパラサイト指定です, リファレンスが期待されます"
+msgstr "不正なパラサイト指定です, 参照が期待されます"
 
 #: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
@@ -1023,22 +1025,18 @@ msgstr "無効な GIMP_HOST: 'spawn' はサーバへの有効な接続方法ではありません"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr ""
-"gimp_pattern_select_widget の最後の引数は scalar ref でなくてはいけません"
+msgstr "gimp_pattern_select_widget の最後の引数は整数参照でなくてはいけません"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
-msgstr ""
-"不適切なパラメータ定義です, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] "
-"またはPARAM_TYPE が期待されます"
+msgstr "不適切なパラメータ定義です, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] または PARAM_TYPE が期待されます"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
-"<Image>, <Toolbox>, <Load>, <Save> または <None> の menupath _must_ start !"
+msgstr "メニューパスは <Image>, <Toolbox>, <Load>, <Save> または <None> のいずれかで始まらなければなりません."
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
@@ -1046,7 +1044,7 @@ msgstr "利用可能な追加情報はありません, --help を使って下さい\n"
 
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
-msgstr "フォントは指定されていません, デフォルトを使用します"
+msgstr "フォントが指定されていません, デフォルトを使用します"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"
@@ -1062,12 +1060,11 @@ msgstr "パラメータ '$entry->[1]' はオプションではありません\n"
 
 #: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr ""
-"パラメータと返り値は (たとえ空であっても) array refs でなければいけません!"
+msgstr "パラメータと返り値は (たとえ空であっても) 配列参照でなければいけません!"
 
 #: Gimp/Lib.xs:0
 msgid "pdl height != region height"
-msgstr "pdl の高さ != region の高さ"
+msgstr "pdl の高さ != 領域の高さ"
 
 #: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
@@ -1076,70 +1073,66 @@ msgstr "perl-arrayref は gimp-array のために datatype として必要です"
 #: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
-"ピクセルサイズが合いません, pdl は %d チャンネルピクセルを持っていますが %d "
-"チャンネルが必要です"
+msgstr "ピクセルサイズが合いません, pdl は %d チャンネルのピクセルを持っていますが %d チャンネルが必要です"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
-msgstr "プラグインは期待されているよりも %d 多くの値を返しました"
+msgstr "プラグインは期待されているよりも %d 個多くの値を返しました"
 
 #: Perl-Server:0
 msgid "received QUIT request"
-msgstr "終了の要求を受け取りました"
+msgstr "QUIT 要求を受け取りました"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
-msgstr "register は多すぎるか間違った引数で呼び出されました\n"
+msgstr "register が多すぎるか間違った引数で呼び出されました\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
-msgstr "'net' のコールバックが必要ですが見付かりません\n"
+msgstr "必要なコールバック 'net' が見付かりません\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
-msgstr "'query' のコールバックが必要ですが見付かりません\n"
+msgstr "必要なコールバック 'query' が見付かりません\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
-msgstr "'run' のコールバックが必要ですが見付かりません\n"
+msgstr "必要なコールバック 'run' が見付かりません\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
-"run_mode はインタラクティブか, "
-"ノンインタラクティブか最終値で実行している必要があります\n"
+msgstr "run_mode は INTERACTIVE, NONINTERACTIVE もしくは RUN_WITH_LAST_VALS のいずれかでなければなりません\n"
 
 #: Perl-Server:0
 msgid "server going down..."
-msgstr "サーバは落ちていきます..."
+msgstr "サーバを終了します..."
 
 #: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
-msgstr "サーバは許可が必要としますが, 利用可能な許可がありません\n"
+msgstr "サーバが認証を要求しましたが, 利用可能な認証がありません\n"
 
 #: Perl-Server:0
 msgid "server version $Gimp::VERSION started"
-msgstr "サーババージョン $Gimp::VERSION スタート"
+msgstr "サーババージョン $Gimp::VERSION 開始"
 
 #: Gimp/Util.pm:0
 msgid "text string is empty"
-msgstr "文字列は空です"
+msgstr "文字列が空です"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
-"gtk perl モジュールは標準の値で実行した, \n"
-"ダイアログウィンドウが必要になります"
+"デフォルト値でダイアログウインドウを開くためには\n"
+"gtk perl モジュールが必要です"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"このインタラクティブモジュールのプラグインを\n"
+"インタラクティブモードでこのプラグインを\n"
 "実行するには gtk perl モジュールが必要です\n"
 
 #: examples/PDB:0
@@ -1152,7 +1145,7 @@ msgstr "多すぎます"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr " \"$opt\" オプションを使用して gimp を起動して下さい\n"
+msgstr " \"$opt\" オプションを付けて gimp を起動して下さい\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
@@ -1160,7 +1153,7 @@ msgstr "tcp 接続は受け入れられませんでした: $!\n"
 
 #: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
-msgstr "unix 接続は受け入れられませんでした: $!\n"
+msgstr "unix domain socket 接続は受け入れられませんでした: $!\n"
 
 #: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
@@ -1180,15 +1173,15 @@ msgstr "受信 unix ソケットを作ることができません: $!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr "gimp 通信ソケットペアを作ることができません: $!"
+msgstr "gimp との通信のためのソケットペアを作ることができません: $!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
-msgstr "分岐できません: $!"
+msgstr "fork できません: $!"
 
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
-msgstr "特定の色を理解できません"
+msgstr "色指定を理解できません"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"
@@ -1200,7 +1193,7 @@ msgstr "Gimp::Net 通信ソケットを開けません: $!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr "読み込めません '$fn': $!"
+msgstr "'$fn' を読み込めません: $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
@@ -1208,16 +1201,16 @@ msgstr "一時的なファイル $tmp を読み込めません: $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr "権限外のコマンドを受け取りました, 接続を切ります"
+msgstr "認証されていないコマンドを受け取りました, 接続を切ります"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr "url サイズが大き過ぎます ($max > 1024)\n"
+msgstr "URL のサイズが大き過ぎます ($max > 1024)\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr "権限がありません, 接続を切ります"
+msgstr "不正な認証です, 接続を切ります"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: XLFD に適合しません　'$fontname'\n"
+msgstr "xlfd_unpack: XLFD に適合しません '$fontname'\n"
