@@ -6,7 +6,7 @@ use File::Basename;
 
 require Exporter;
 
-=cut
+warn "$0\n";
 
 =head1 NAME
 
