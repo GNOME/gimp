@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.21\n"
+"Project-Id-Version: GIMP 1.1.22\n"
 "POT-Creation-Date: 2000-05-14 13:42-0700\n"
-"PO-Revision-Date: 2000-05-11 18:28+02:00\n"
+"PO-Revision-Date: 2000-05-22 19:21+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8888,7 +8888,7 @@ msgstr "Keyframes zurücksetzen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2743
 msgid "Move Path Controlpointcheck"
-msgstr ""
+msgstr "Bewegungs-Pfad Kontrollpunkt-Check"
 
 #: plug-ins/gap/gap_mov_dialog.c:2744
 msgid "Errors:"

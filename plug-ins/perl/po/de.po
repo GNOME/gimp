@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-05-08 15:53+02:00\n"
+"PO-Revision-Date: 2000-05-22 19:19+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -326,9 +326,8 @@ msgstr "Funktion oder Macro \"$name\" existiert nicht in $class"
 msgid "accepted tcp connection from "
 msgstr "TCP-Verbindung angenommen von "
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Render/Pixelgenerator"
+msgstr "<Toolbox>/Xtns/Render/Pixelgenerator..."
 
 msgid "illegal parasite specification, expected three array members"
 msgstr "Ungültige Parasiten-Spezifikation; erwarte drei Feldelemente"
@@ -571,9 +570,8 @@ msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgid "Synopsis"
 msgstr "Synopsis"
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filter/Abbilden/Pixelabbildung"
+msgstr "<Image>/Filter/Abbilden/Pixelabbildung..."
 
 msgid "Color"
 msgstr "Farbe"
@@ -747,7 +745,7 @@ msgid "<Toolbox>/Xtns/Visual Scriptor"
 msgstr "<Toolbox>/Xtns/Visual Scriptor"
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filter/Rauschen/Xachs Sicht..."
+msgstr "<Image>/Filter/Rauschen/Xachs Vision..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "WARNING: Verbindung zum Client wurde getrennt während ein lock aktiv war\n"
@@ -891,9 +889,8 @@ msgid ""
 msgstr ""
 "$function: $AUTOLOAD sollte nicht ohne den :auto import tag aufgerufen werden!\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filter/Abbilden/Xach-Schatten..."
+msgstr "<Image>/Filter/Verbessern/Warp Schärfen..."
 
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr "Konnte den Gimp::Net Kommunikationskanal nicht öffnen: $!\n"

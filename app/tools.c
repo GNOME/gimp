@@ -211,7 +211,7 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Magnify"),
-    N_("/Tools/Magnify"),
+    N_("/Tools/Transform Tools/Magnify"),
     "<shift>M",
     (char **) magnify_bits,
     NULL,
