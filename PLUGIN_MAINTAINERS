@@ -812,12 +812,6 @@ MAINTAINER : Martin Weber matweb@gmx.net
 SIZE       :  27.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
-NAME       : spheredesigner
-AUTHOR     : Vidar Madsen
-MAINTAINER : 
-SIZE       :  74.2 kB  in  1 file  (only C files counted)
-COMMENT    : 
------------
 NAME       : spread
 AUTHOR     : Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero
 MAINTAINER : 
