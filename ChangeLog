@@ -1,3 +1,13 @@
+2001-03-11  Seth Burgess      <sjburges@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimppenciltool.[ch]: no. 16 for your 
+	pixelling pleasure.
+
+	* app/tools/gimptool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/tools.c: changed accordingly.
+	
 2001-03-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
@@ -161,6 +171,7 @@
 	* app/apptypes.h
 	* app/undo.c: changed accordingly
 
+>>>>>>> 1.3415
 2001-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
@@ -226,11 +237,13 @@
 	* tools/pdbgen/pdb/text_tool.pdb
 	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
 
+>>>>>>> 1.3411
 2001-03-06  Simon Budig  <simon@gimp.org>
 	
 	* app/mit.[ch]: Increased Mitch's age by one. Hopefully
 	this won't break everything.
 
+>>>>>>> 1.3409
 2001-03-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimage.[ch]: removed the layer mask functions.
@@ -305,6 +318,7 @@
 
 	* pixmaps/eye.xpm: cropped it to it's minimal size.
 
+>>>>>>> 1.3407
 2001-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am
@@ -318,6 +332,7 @@
 	* app/gimpimage.[ch]: added new GimpUndoStacks but temporarily kept
 	old GSLists around, so I don't break everything now.
 
+>>>>>>> 1.3406
 2001-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpbrushpreview.c
