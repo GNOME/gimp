@@ -1,3 +1,10 @@
+2001-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c: use g_dirname() instead of setting the file selectors
+	filename to "" to get the current directory name. Now we don't have to
+	set the filename back later since we didn't touch it, thus we can't 
+	get it wrong. Fixes bug #63880.
+
 2001-11-06  Daniel Egger  <degger@fhm.edu>
 
 	* plug-ins/common/gauss_rle.c: Unconditionally premultiply
