@@ -84,7 +84,7 @@ void
 gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  
+
   if (gimp_display_shell_get_show_transform (shell))
     {
       GimpTool          *tool;
@@ -101,7 +101,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
       if (! tr_tool->use_grid)
         return;
-      
+
       z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
             (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
       z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
@@ -114,13 +114,13 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
       /* only draw convex polygons */
 
       if ((z1 * z2 > 0) && (z3 * z4 > 0))
-        {      
+        {
           gdouble      dx [4], dy [4];
           gint          x [4],  y [4];
           gfloat        u [4],  v [4];
           GimpChannel *mask;
-          gint         mask_x1, mask_y1,
-                       mask_x2, mask_y2;
+          gint         mask_x1, mask_y1;
+          gint         mask_x2, mask_y2;
           gint         mask_offx, mask_offy;
           gint         i;
 
@@ -187,7 +187,7 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
   gint        *left,   *right;
   gfloat       dul, dvl, dur, dvr; /* left and right texture coord deltas */
   gfloat       u_l, v_l, u_r, v_r; /* left and right texture coord pairs */
- 
+
   if (! GIMP_IS_DRAWABLE (texture) ||
       ! GDK_IS_DRAWABLE (dest))
     return;
@@ -214,7 +214,7 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
       }
     if (! (in_window_x && in_window_y))
       return;
-    
+
     in_window_x = in_window_y = FALSE;
     for (j = 0; j < 4; j++)
       {
@@ -240,16 +240,16 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
         {
           gint tmp;
           gfloat ftmp;
-          
+
           tmp  = y [k];  y [k] = y [j];  y [j] = tmp;
           tmp  = x [k];  x [k] = x [j];  x [j] = tmp;
           ftmp = u [k];  u [k] = u [j];  u [j] = ftmp;
           ftmp = v [k];  v [k] = v [j];  v [j] = ftmp;
         }
-  
+
   if (y [3] == y [0])
     return;
-  
+
   l_edge = g_malloc ((y [3] - y [0]) * sizeof (gint));
   r_edge = g_malloc ((y [3] - y [0]) * sizeof (gint));
 
@@ -319,9 +319,9 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
        *       |__---   v2
        *     v3
        */
-    
+
       QUAD_TRACE_L_EDGE (0, 3);
-      
+
       QUAD_TRACE_R_EDGE (0, 1);
       QUAD_DRAW_SECTION (0, 1);  /* top section */
 
@@ -342,16 +342,16 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
        *           ---_/
        *               v3
        */
-    
+
       QUAD_TRACE_L_EDGE (0, 2);
-  
+
       QUAD_TRACE_R_EDGE (0, 1);
       QUAD_DRAW_SECTION (0, 1);  /* top section */
-  
+
       QUAD_TRACE_R_EDGE (1, 3);
-  
+
       QUAD_DRAW_SECTION (1, 2);  /* middle section */
-  
+
       QUAD_TRACE_L_EDGE (2, 3);
       QUAD_DRAW_SECTION (2, 3);  /* bottom section */
     }
@@ -359,7 +359,7 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 #undef QUAD_TRACE_L_EDGE
 #undef QUAD_TRACE_R_EDGE
 #undef QUAD_DRAW_SECTION
-  
+
   g_object_unref (row);
   g_free (l_edge);
   g_free (r_edge);
@@ -389,7 +389,7 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
 
   if (! (x2 - x1))
     return;
-  
+
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
   g_return_if_fail (GDK_IS_DRAWABLE (dest));
   g_return_if_fail (GDK_IS_PIXBUF (row));
@@ -401,12 +401,12 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
   bytes = gdk_pixbuf_get_n_channels (row);
   pptr  = gdk_pixbuf_get_pixels (row);
   tiles = gimp_drawable_data (texture);
-  
+
   if (x1 > x2)
     {
       gint tmp;
       gfloat ftmp;
-      
+
       tmp  = x2;  x2 = x1;  x1 = tmp;
       ftmp = u2;  u2 = u1;  u1 = ftmp;
       ftmp = v2;  v2 = v1;  v1 = ftmp;
@@ -431,20 +431,20 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
   else if (x2 > gdk_pixbuf_get_width (row))
     x2 = gdk_pixbuf_get_width (row);
 
-  
+
   dx = x2 - x1;
 
   switch (gimp_drawable_type (texture))
     {
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_cmap (texture);
-      
+
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           offset = pixel [0] + pixel [0] + pixel [0];
-          
+
           *pptr++ = cmap [offset];
           *pptr++ = cmap [offset + 1];
           *pptr++ = cmap [offset + 2];
@@ -456,13 +456,13 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
 
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_cmap (texture);
-      
+
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           offset = pixel [0] + pixel [0] + pixel [0];
-          
+
           *pptr++ = cmap [offset];
           *pptr++ = cmap [offset + 1];
           *pptr++ = cmap [offset + 2];
@@ -491,19 +491,19 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          
+
           *pptr++ = pixel [0];
           *pptr++ = pixel [0];
           *pptr++ = pixel [0];
           *pptr++ = pixel [1];
-          
+
           u += du;
           v += dv;
         }
       break;
 
     case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:      
+    case GIMP_RGBA_IMAGE:
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
@@ -550,7 +550,7 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
 
   if (! (x2 - x1))
     return;
-  
+
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GDK_IS_DRAWABLE (dest));
@@ -563,12 +563,12 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
   pptr      = gdk_pixbuf_get_pixels (row);
   tiles     = gimp_drawable_data (texture);
   masktiles = gimp_drawable_data (GIMP_DRAWABLE (mask));
-  
+
   if (x1 > x2)
     {
       gint tmp;
       gfloat ftmp;
-      
+
       tmp  = x2;  x2 = x1;  x1 = tmp;
       ftmp = u2;  u2 = u1;  u1 = ftmp;
       ftmp = v2;  v2 = v1;  v1 = ftmp;
@@ -601,14 +601,14 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
     {
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_cmap (texture);
-      
+
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
 
           offset = pixel [0] + pixel [0] + pixel [0];
-          
+
           *pptr++ = cmap [offset];
           *pptr++ = cmap [offset + 1];
           *pptr++ = cmap [offset + 2];
@@ -623,14 +623,14 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
 
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_cmap (texture);
-      
+
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
           offset = pixel [0] + pixel [0] + pixel [0];
-          
+
           *pptr++ = cmap [offset];
           *pptr++ = cmap [offset + 1];
           *pptr++ = cmap [offset + 2];
@@ -666,12 +666,12 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
-          
+
           *pptr++ = pixel [0];
           *pptr++ = pixel [0];
           *pptr++ = pixel [0];
           *pptr++ = ((gint) maskval * pixel [1]) >> 8;
-          
+
           u += du;
           v += dv;
           mu += du;
@@ -684,7 +684,7 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
-          
+
           pptr += bytes;
           u += du;
           v += dv;
@@ -693,7 +693,7 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:      
+    case GIMP_RGBA_IMAGE:
       while (dx --)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
@@ -731,15 +731,15 @@ gimp_display_shell_trace_quad_edge (gint *dest,
   gint        b;
   gint       *dptr;
 
-  if (dy == 0) 
+  if (dy == 0)
     return;
-  
+
   g_return_if_fail (dest != NULL);
-  
+
   b         = 0;
   errorterm = 0;
   dptr      = dest;
-  
+
   if (x2 < x1)
     {
       dx = x1 - x2;
@@ -758,13 +758,13 @@ gimp_display_shell_trace_quad_edge (gint *dest,
         {
           *dptr = x1;
           errorterm += dx;
-          
+
           while (errorterm > dy)
             {
               x1 += xdir;
               errorterm -= dy;
             }
-          
+
           dptr ++;
         }
     }
@@ -775,13 +775,13 @@ gimp_display_shell_trace_quad_edge (gint *dest,
         {
           *dptr = x1;
           errorterm += dx;
-          
+
           if (errorterm > dy)
             {
               x1 += xdir;
               errorterm -= dy;
             }
-          
+
           dptr ++;
         }
     }
@@ -791,7 +791,7 @@ gimp_display_shell_trace_quad_edge (gint *dest,
       while (b --)
         {
           *dptr = x1;
-          
+
           dptr ++;
         }
     }
@@ -802,7 +802,7 @@ gimp_display_shell_trace_quad_edge (gint *dest,
         {
           *dptr = x1;
           x1 += xdir;
-          
+
           dptr ++;
         }
     }

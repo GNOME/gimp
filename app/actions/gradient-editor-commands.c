@@ -714,7 +714,7 @@ gradient_editor_save_selection (GimpGradientEditor *editor)
 }
 
 static void
-gradient_editor_replace_selection (GimpGradientEditor      *editor,
+gradient_editor_replace_selection (GimpGradientEditor  *editor,
                                    GimpGradientSegment *replace_seg)
 {
   GimpGradient        *gradient;
@@ -766,9 +766,7 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpGradient *gradient;
-
-      gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+      GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
       gimp_gradient_segment_range_split_uniform (gradient,
                                                  editor->control_sel_l,
@@ -789,9 +787,7 @@ gradient_editor_replicate_response (GtkWidget          *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpGradient *gradient;
-
-      gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+      GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
       gimp_gradient_segment_range_replicate (gradient,
                                              editor->control_sel_l,

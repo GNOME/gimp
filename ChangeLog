@@ -1,3 +1,14 @@
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/gradient-editor-commands.c
+	* app/display/gimpdisplayshell-preview.c: irrelevant coding style
+	and spacing cleanups.
+
+	* app/widgets/gimpimageeditor.c: removed utility function
+	gimp_image_editor_context_changed() and connect
+	gimp_image_editor_set_image() directly using
+	g_signal_connect_swapped().
+
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_circle.c
@@ -25,7 +36,7 @@
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/enumcode.pl
-	* libgimp/Makefile.am: register all enums in libgimp/gimenums.h
+	* libgimp/Makefile.am: register all enums in libgimp/gimpenums.h
 	with the type system.
 
 	* libgimp/gimpenums.h: regenerated.
