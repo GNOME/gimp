@@ -194,8 +194,11 @@ gimp_histogram_box_finalize (GObject *object)
 {
   GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (object);
 
-  g_free (box->gradient_buf);
-  box->gradient_buf = NULL;
+  if (box->gradient_buf)
+    {
+      g_free (box->gradient_buf);
+      box->gradient_buf = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -318,9 +321,7 @@ gimp_histogram_box_gradient_expose (GtkWidget      *widget,
 GtkWidget *
 gimp_histogram_box_new (const gchar *label)
 {
-  GimpHistogramBox *box;
-
-  box = g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL);
+  GimpHistogramBox *box = g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL);
 
   gtk_label_set_text (GTK_LABEL (box->label), label);
 

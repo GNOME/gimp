@@ -45,6 +45,7 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimphistogramoptions.h"
 #include "gimphistogramtool.h"
 #include "tool_manager.h"
 
@@ -116,7 +117,8 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HISTOGRAM_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_HISTOGRAM_OPTIONS,
+                gimp_histogram_options_gui,
                 0,
                 "gimp-histogram-tool",
                 _("Histogram"),
@@ -158,9 +160,7 @@ gimp_histogram_tool_get_type (void)
 static void
 gimp_histogram_tool_class_init (GimpHistogramToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -357,6 +357,9 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   htd->histogram_box =
     GIMP_HISTOGRAM_BOX (gimp_histogram_box_new (_("Intensity Range:")));
 
+  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_info->tool_options),
+                                       htd->histogram_box->histogram);
+
   /*  The option menu for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -368,7 +371,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 
   htd->channel_menu =
     gimp_prop_enum_option_menu_new (G_OBJECT (htd->histogram_box->histogram),
-				    "channel", 0, 0);
+				    "histogram-channel", 0, 0);
   gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (htd->channel_menu),
                                           "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, TRUE, TRUE, 0);
@@ -377,7 +380,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   /*  The option menu for selecting the histogram scale  */
   menu =
     gimp_prop_enum_stock_box_new (G_OBJECT (htd->histogram_box->histogram),
-                                  "scale", "gimp-histogram", 0, 0);
+                                  "histogram-scale", "gimp-histogram", 0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

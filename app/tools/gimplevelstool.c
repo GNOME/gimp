@@ -55,7 +55,7 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpcoloroptions.h"
+#include "gimphistogramoptions.h"
 #include "gimplevelstool.h"
 #include "gimptoolcontrol.h"
 
@@ -156,7 +156,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_LEVELS_TOOL,
-                GIMP_TYPE_COLOR_OPTIONS,
+                GIMP_TYPE_HISTOGRAM_OPTIONS,
                 gimp_color_options_gui,
                 0,
                 "gimp-levels-tool",
@@ -385,20 +385,21 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 static void
 gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *l_tool;
-  GtkWidget      *vbox;
-  GtkWidget      *vbox2;
-  GtkWidget      *vbox3;
-  GtkWidget      *hbox;
-  GtkWidget      *hbox2;
-  GtkWidget      *label;
-  GtkWidget      *menu;
-  GtkWidget      *frame;
-  GtkWidget      *channel_hbox;
-  GtkWidget      *hbbox;
-  GtkWidget      *button;
-  GtkWidget      *spinbutton;
-  GtkObject      *data;
+  GimpLevelsTool  *l_tool;
+  GimpToolOptions *tool_options;
+  GtkWidget       *vbox;
+  GtkWidget       *vbox2;
+  GtkWidget       *vbox3;
+  GtkWidget       *hbox;
+  GtkWidget       *hbox2;
+  GtkWidget       *label;
+  GtkWidget       *menu;
+  GtkWidget       *frame;
+  GtkWidget       *channel_hbox;
+  GtkWidget       *hbbox;
+  GtkWidget       *button;
+  GtkWidget       *spinbutton;
+  GtkObject       *data;
 
   l_tool = GIMP_LEVELS_TOOL (image_map_tool);
 
@@ -464,6 +465,10 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                                                FALSE);
   gtk_container_add (GTK_CONTAINER (frame), l_tool->hist_view);
   gtk_widget_show (GTK_WIDGET (l_tool->hist_view));
+
+  tool_options = GIMP_TOOL (l_tool)->tool_info->tool_options;
+  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
+                                       GIMP_HISTOGRAM_VIEW (l_tool->hist_view));
 
   /*  The input levels drawing area  */
   hbox = gtk_hbox_new (TRUE, 2);

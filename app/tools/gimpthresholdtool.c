@@ -42,6 +42,7 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimphistogramoptions.h"
 #include "gimpthresholdtool.h"
 
 #include "gimp-intl.h"
@@ -83,7 +84,8 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_THRESHOLD_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_HISTOGRAM_OPTIONS,
+                gimp_histogram_options_gui,
                 0,
                 "gimp-threshold-tool",
                 _("Threshold"),
@@ -164,9 +166,7 @@ gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 static void
 gimp_threshold_tool_finalize (GObject *object)
 {
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (object);
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
 
   if (t_tool->threshold)
     {
@@ -233,9 +233,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 static void
 gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
                         threshold,
@@ -251,6 +249,7 @@ static void
 gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool;
+  GimpToolOptions   *tool_options;
   GtkWidget         *box;
 
   t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
@@ -264,14 +263,16 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (t_tool->histogram_box->histogram, "range_changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
+
+  tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
+  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
+                                       t_tool->histogram_box->histogram);
 }
 
 static void
 gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool;
-
-  t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
   t_tool->threshold->low_threshold  = 127.0;
   t_tool->threshold->high_threshold = 255.0;

@@ -1,5 +1,28 @@
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimphistogramoptions.[ch]: new tool options class
+	GimpHistogramOptions, derived from GimpColorOptions.
+
+	* app/tools/gimpcoloroptions.c (gimp_color_options_gui): add
+	gimp_histogram_options_gui() when called with GimpHistogramOptions.
+	This a bit weird since the class hierarchy is the other way around
+	but it makes things easier.
+
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c: use GimpHistogramOptions and
+	connect the histogram views to the "histogram-scale" property.
+	Perhaps not perfect GUI-wise but it let's you choose the histogram
+	scale and stores this setting per tool. Fixes bug #125306.
+
+	* app/widgets/gimphistogramview.c: prefixed property names with
+	"histogram-" so they match the GimpHistogramOptions property.
+
+	* app/widgets/gimphistogrambox.c: minor cleanup.
+
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-histogram-linear-16.png
 	* themes/Default/images/stock-histogram-logarithmic-16.png:

@@ -28,6 +28,7 @@
 
 #include "widgets/gimppropwidgets.h"
 
+#include "gimphistogramoptions.h"
 #include "gimpcoloroptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -169,7 +170,10 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *button;
 
-  vbox = gimp_tool_options_gui (tool_options);
+  if (GIMP_IS_HISTOGRAM_OPTIONS (tool_options))
+    vbox = gimp_histogram_options_gui (tool_options);
+  else
+    vbox = gimp_tool_options_gui (tool_options);
 
   /*  the sample average options  */
   frame = gtk_frame_new (NULL);

@@ -125,14 +125,14 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   klass->range_changed = NULL;
 
   g_object_class_install_property (object_class, PROP_CHANNEL,
-				   g_param_spec_enum ("channel", NULL, NULL,
+				   g_param_spec_enum ("histogram-channel", NULL, NULL,
 						      GIMP_TYPE_HISTOGRAM_CHANNEL,
 						      GIMP_HISTOGRAM_VALUE,
 						      G_PARAM_READWRITE |
 						      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SCALE,
-				   g_param_spec_enum ("scale", NULL, NULL,
+				   g_param_spec_enum ("histogram-scale", NULL, NULL,
 						      GIMP_TYPE_HISTOGRAM_SCALE,
 						      GIMP_HISTOGRAM_SCALE_LOGARITHMIC,
 						      G_PARAM_READWRITE |
@@ -207,13 +207,11 @@ static gboolean
 gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
-  GimpHistogramView *view;
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
   gint               x;
   gint               x1, x2;
   gint               width, height;
   gdouble            max;
-
-  view = GIMP_HISTOGRAM_VIEW (widget);
 
   if (!view->histogram)
     return TRUE;
@@ -301,12 +299,10 @@ static gint
 gimp_histogram_view_events (GimpHistogramView *view,
                             GdkEvent          *event)
 {
-  GtkWidget      *widget;
+  GtkWidget      *widget = GTK_WIDGET (view);
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
   gint            width;
-
-  widget = GTK_WIDGET (view);
 
   switch (event->type)
     {
@@ -368,9 +364,7 @@ gimp_histogram_view_new (gint     width,
                          gint     height,
                          gboolean range)
 {
-  GtkWidget *view;
-
-  view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
+  GtkWidget *view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
 
   gtk_widget_set_size_request (view, width + 2, height + 2);
 
@@ -430,7 +424,7 @@ gimp_histogram_view_set_channel (GimpHistogramView    *view,
 
   view->channel = channel;
 
-  g_object_notify (G_OBJECT (view), "channel");
+  g_object_notify (G_OBJECT (view), "histogram-channel");
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 
@@ -455,7 +449,7 @@ gimp_histogram_view_set_scale (GimpHistogramView  *view,
 
   view->scale = scale;
 
-  g_object_notify (G_OBJECT (view), "scale");
+  g_object_notify (G_OBJECT (view), "histogram-scale");
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
