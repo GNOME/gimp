@@ -1,5 +1,20 @@
 2003-05-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/color-notebook.[ch]: added dialog_factory and
+	dialog_identifier parameters to the constructors and register the
+	color_notebook with the passed factory as foreign dialog.
+
+	* app/widgets/gimpcolorpanel.c: changed accordingly.
+
+	* app/gui/dialogs.c
+	* app/gui/colormap-editor-commands.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/palette-editor-commands.c
+	* app/widgets/gimptoolbox-color-area.c: added session management for
+	the color notebooks created here.
+
+2003-05-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/vectors-commands.c (vectors_sel_to_vectors_cmd_callback): 
 	call vectors_selection_to_vectors() instead of #warning about
 	being unimplemented.

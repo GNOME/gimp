@@ -33,6 +33,7 @@
 #include "widgets/gimpcolormapeditor.h"
 
 #include "color-notebook.h"
+#include "dialogs.h"
 #include "colormap-editor-commands.h"
 
 #include "gimp-intl.h"
@@ -100,6 +101,8 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
                                      _("Edit Indexed Color"),
                                      GIMP_STOCK_CONVERT_INDEXED,
                                      _("Edit Indexed Image Palette Color"),
+                                     global_dialog_factory,
+                                     "gimp-colormap-editor-color-dialog",
                                      (const GimpRGB *) &color,
                                      colormap_editor_color_notebook_callback,
                                      editor,

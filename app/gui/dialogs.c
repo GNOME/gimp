@@ -77,6 +77,16 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp-perspective-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
 
+  { "gimp-toolbox-color-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-gradient-editor-color-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-palette-editor-color-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+
+  { "gimp-colormap-editor-color-dialog",
+    NULL, 0, FALSE, TRUE,  FALSE, FALSE },
+
   /*  ordinary toplevels  */
   { "gimp-file-new-dialog",        dialogs_file_new_new,
     0, FALSE, TRUE,  FALSE, FALSE },

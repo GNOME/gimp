@@ -35,11 +35,13 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 
 #include "gui/color-notebook.h"
+#include "gui/dialogs.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
@@ -371,7 +373,8 @@ color_area_select_callback (ColorNotebook      *color_notebook,
 static void
 color_area_edit (GimpContext *context)
 {
-  GimpRGB color;
+  GimpRGB      color;
+  const gchar *title;
 
   if (! color_notebook_active)
     {
@@ -386,13 +389,16 @@ color_area_edit (GimpContext *context)
 
   edit_color = active_color;
 
-#define FG_TITLE _("Change Foreground Color")
-#define BG_TITLE _("Change Background Color")
+  if (active_color == FOREGROUND)
+    title = _("Change Foreground Color");
+  else
+    title = _("Change Background Color");
 
   if (! color_notebook)
     {
-      color_notebook = color_notebook_new (active_color == FOREGROUND ?
-                                           FG_TITLE : BG_TITLE,
+      color_notebook = color_notebook_new (title,
+                                           global_dialog_factory,
+                                           "gimp-toolbox-color-dialog",
 					   (const GimpRGB *) &color,
 					   color_area_select_callback,
 					   context, TRUE, FALSE);
@@ -400,9 +406,7 @@ color_area_edit (GimpContext *context)
     }
   else
     {
-      color_notebook_set_title (color_notebook,
-                                active_color == FOREGROUND ?
-                                FG_TITLE : BG_TITLE);
+      color_notebook_set_title (color_notebook, title);
       color_notebook_set_color (color_notebook, &color);
 
       if (! color_notebook_active)

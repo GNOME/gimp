@@ -260,6 +260,7 @@ gimp_color_panel_clicked (GtkButton *button)
     {
       panel->color_notebook =
 	color_notebook_new (GIMP_COLOR_BUTTON (button)->title,
+                            NULL, NULL,
 			    (const GimpRGB *) &color,
 			    gimp_color_panel_select_callback,
 			    panel,

@@ -32,6 +32,7 @@
 #include "widgets/gimptoolbox-color-area.h"
 
 #include "color-notebook.h"
+#include "dialogs.h"
 #include "palette-editor-commands.h"
 
 #include "gimp-intl.h"
@@ -96,6 +97,8 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
                                      _("Edit Palette Color"),
                                      GTK_STOCK_SELECT_COLOR,
                                      _("Edit Color Palette Entry"),
+                                     global_dialog_factory,
+                                     "gimp-palette-editor-color-dialog",
                                      (const GimpRGB *) &editor->color->color,
                                      palette_editor_color_notebook_callback,
                                      editor,

@@ -32,6 +32,7 @@
 
 #include "gui-types.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "color-history.h"
@@ -86,6 +87,8 @@ static ColorNotebook *
                                                 const gchar           *wmclass_name,
                                                 const gchar           *stock_id,
                                                 const gchar           *desc,
+                                                GimpDialogFactory     *dialog_factory,
+                                                const gchar           *dialog_identifier,
                                                 const GimpRGB         *color,
                                                 ColorNotebookCallback  callback,
                                                 gpointer               client_data,
@@ -138,6 +141,8 @@ static GList *color_notebooks = NULL;
 
 ColorNotebook *
 color_notebook_new (const gchar           *title,
+                    GimpDialogFactory     *dialog_factory,
+                    const gchar           *dialog_identifier,
                     const GimpRGB         *color,
                     ColorNotebookCallback  callback,
                     gpointer               client_data,
@@ -149,6 +154,8 @@ color_notebook_new (const gchar           *title,
                                       "color_selection",
                                       NULL,
                                       NULL,
+                                      dialog_factory,
+                                      dialog_identifier,
                                       color,
                                       callback, client_data,
                                       wants_updates, show_alpha);
@@ -159,6 +166,8 @@ color_notebook_viewable_new (GimpViewable          *viewable,
                              const gchar           *title,
                              const gchar           *stock_id,
                              const gchar           *desc,
+                             GimpDialogFactory     *dialog_factory,
+                             const gchar           *dialog_identifier,
                              const GimpRGB         *color,
                              ColorNotebookCallback  callback,
                              gpointer               client_data,
@@ -170,6 +179,8 @@ color_notebook_viewable_new (GimpViewable          *viewable,
                                       "color_selection",
                                       stock_id,
                                       desc,
+                                      dialog_factory,
+                                      dialog_identifier,
                                       color,
                                       callback, client_data,
                                       wants_updates, show_alpha);
@@ -182,7 +193,13 @@ color_notebook_free (ColorNotebook *cnp)
 
   color_notebooks = g_list_remove (color_notebooks, cnp);
 
-  gtk_widget_destroy (cnp->shell);
+  /*  may be already destroyed by dialog factory  */
+  if (cnp->shell)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (cnp->shell),
+                                    (gpointer *) &cnp->shell);
+      gtk_widget_destroy (cnp->shell);
+    }
 
   g_free (cnp);
 }
@@ -262,6 +279,8 @@ color_notebook_new_internal (GimpViewable          *viewable,
                              const gchar           *wmclass_name,
                              const gchar           *stock_id,
                              const gchar           *desc,
+                             GimpDialogFactory     *dialog_factory,
+                             const gchar           *dialog_identifier,
                              const GimpRGB         *color,
                              ColorNotebookCallback  callback,
                              gpointer               client_data,
@@ -280,6 +299,10 @@ color_notebook_new_internal (GimpViewable          *viewable,
   GtkWidget     *arrow;
   gint           i;
 
+  g_return_val_if_fail (dialog_factory == NULL ||
+                        GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (dialog_factory == NULL || dialog_identifier != NULL,
+                        NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   cnp = g_new0 (ColorNotebook, 1);
@@ -326,6 +349,11 @@ color_notebook_new_internal (GimpViewable          *viewable,
                                   cnp, NULL, NULL, TRUE, FALSE,
 
                                   NULL);
+
+  g_object_add_weak_pointer (G_OBJECT (cnp->shell), (gpointer *) &cnp->shell);
+
+  gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
+                                   cnp->shell);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

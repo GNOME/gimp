@@ -32,6 +32,7 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "color-notebook.h"
+#include "dialogs.h"
 #include "gradient-editor-commands.h"
 
 #include "gimp-intl.h"
@@ -83,6 +84,8 @@ gradient_editor_left_color_cmd_callback (GtkWidget *widget,
                                  _("Left Endpoint Color"),
                                  GIMP_STOCK_TOOL_BLEND,
                                  _("Gradient Segment's Left Endpoint Color"),
+                                 global_dialog_factory,
+                                 "gimp-gradient-editor-color-dialog",
                                  &editor->control_sel_l->left_color,
                                  gradient_editor_left_color_changed,
                                  editor,
@@ -199,6 +202,8 @@ gradient_editor_right_color_cmd_callback (GtkWidget *widget,
                                  _("Right Endpoint Color"),
                                  GIMP_STOCK_TOOL_BLEND,
                                  _("Gradient Segment's Right Endpoint Color"),
+                                 global_dialog_factory,
+                                 "gimp-gradient-editor-color-dialog",
                                  &editor->control_sel_l->right_color,
                                  gradient_editor_right_color_changed,
                                  editor,
