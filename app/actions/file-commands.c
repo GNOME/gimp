@@ -39,15 +39,12 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpdialogfactory.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
 #include "menus/menus.h"
 
-#include "gui/dialogs.h"
-#include "gui/file-new-dialog.h"
 #include "gui/file-open-dialog.h"
 #include "gui/file-save-dialog.h"
 
@@ -73,47 +70,28 @@ static void   file_revert_confirm_callback (GtkWidget   *widget,
 /*  public functions  */
 
 void
-file_new_cmd_callback (GtkAction *action,
-		       gpointer   data)
-{
-  Gimp      *gimp;
-  GimpImage *gimage;
-  GtkWidget *widget;
-  GtkWidget *dialog;
-  return_if_no_gimp (gimp, data);
-  return_if_no_widget (widget, data);
-
-  /*  if called from the image menu  */
-  if (GIMP_IS_DISPLAY (data))
-    gimage = gimp_context_get_image (gimp_get_user_context (gimp));
-  else
-    gimage = NULL;
-
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                           gtk_widget_get_screen (widget),
-                                           "gimp-file-new-dialog", -1);
-
-  if (dialog)
-    file_new_dialog_set (dialog, gimage, NULL);
-}
-
-void
 file_open_cmd_callback (GtkAction *action,
 			gpointer   data)
 {
   Gimp      *gimp;
-  GimpImage *gimage;
   GtkWidget *widget;
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  /*  if called from the image menu  */
-  if (GIMP_IS_DISPLAY (data))
-    gimage = gimp_context_get_image (gimp_get_user_context (gimp));
-  else
-    gimage = NULL;
+  file_open_dialog_show (gimp, NULL, NULL, global_menu_factory, widget);
+}
 
-  file_open_dialog_show (gimp, gimage, NULL, global_menu_factory, widget);
+void
+file_open_from_image_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  Gimp      *gimp;
+  GtkWidget *widget;
+  return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
+
+  file_open_dialog_show (gimp, action_data_get_image (data),
+                         NULL, global_menu_factory, widget);
 }
 
 void

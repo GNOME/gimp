@@ -6,10 +6,10 @@
 
     <menu action="file-menu" name="File">
       <placeholder name="New">
-        <menuitem action="file-new" />
+        <menuitem action="image-new-from-image" />
       </placeholder>
       <placeholder name="Open">
-        <menuitem action="file-open" />
+        <menuitem action="file-open-from-image" />
       </placeholder>
       <menu action="file-open-recent-menu" name="Open Recent">
         <placeholder name="Files" />

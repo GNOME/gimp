@@ -20,6 +20,11 @@
 #define __IMAGE_COMMANDS_H__
 
 
+void   image_new_cmd_callback               (GtkAction *action,
+                                             gpointer   data);
+void   image_new_from_image_cmd_callback    (GtkAction *action,
+                                             gpointer   data);
+
 void   image_convert_rgb_cmd_callback       (GtkAction *action,
 					     gpointer   data);
 void   image_convert_grayscale_cmd_callback (GtkAction *action,

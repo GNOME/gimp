@@ -42,6 +42,7 @@
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
@@ -51,6 +52,8 @@
 #include "display/gimpprogress.h"
 
 #include "gui/convert-dialog.h"
+#include "gui/dialogs.h"
+#include "gui/file-new-dialog.h"
 #include "gui/grid-dialog.h"
 #include "gui/resize-dialog.h"
 
@@ -84,6 +87,40 @@ static void     image_scale_implement     (ImageResize *image_scale);
 
 
 /*  public functions  */
+
+void
+image_new_cmd_callback (GtkAction *action,
+                        gpointer   data)
+{
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_widget (widget, data);
+
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (widget),
+                                           "gimp-file-new-dialog", -1);
+}
+
+void
+image_new_from_image_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_widget (widget, data);
+
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (widget),
+                                           "gimp-file-new-dialog", -1);
+
+  if (dialog)
+    {
+      GimpImage *gimage = action_data_get_image (data);
+
+      if (gimage)
+        file_new_dialog_set (dialog, gimage, NULL);
+    }
+}
 
 void
 image_convert_rgb_cmd_callback (GtkAction *action,

@@ -1,3 +1,19 @@
+2004-05-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]: removed action "file-new", added
+	action "file-open-from-image".
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]: added actions "image-new" and
+	"image-new-from-image".
+
+	* menus/image-menu.xml.in: use the "-from-image" variants of
+	the "new" and "open" actions so the dialogs are preconfigured
+	from the image they were invoked from (regression fix).
+
+	* menus/toolbox-menu.xml.in: s/file-new/image-new/.
+
 2004-05-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/rcm/rcm.h

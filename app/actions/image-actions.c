@@ -57,6 +57,16 @@ static GimpActionEntry image_actions[] =
   { "image-mode-menu",      NULL, N_("_Mode")      },
   { "image-transform-menu", NULL, N_("_Transform") },
 
+  { "image-new", GTK_STOCK_NEW,
+    N_("_New..."), "<control>N", NULL,
+    G_CALLBACK (image_new_cmd_callback),
+    GIMP_HELP_FILE_NEW },
+
+  { "image-new-from-image", GTK_STOCK_NEW,
+    N_("_New..."), "<control>N", NULL,
+    G_CALLBACK (image_new_from_image_cmd_callback),
+    GIMP_HELP_FILE_NEW },
+
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     N_("_RGB"), NULL, NULL,
     G_CALLBACK (image_convert_rgb_cmd_callback),

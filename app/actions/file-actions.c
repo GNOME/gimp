@@ -66,14 +66,14 @@ static GimpActionEntry file_actions[] =
   { "file-acquire-menu", NULL,
     N_("_Acquire"), NULL, NULL },
 
-  { "file-new", GTK_STOCK_NEW,
-    N_("_New..."), "<control>N", NULL,
-    G_CALLBACK (file_new_cmd_callback),
-    GIMP_HELP_FILE_NEW },
-
   { "file-open", GTK_STOCK_OPEN,
     N_("_Open..."), "<control>O", NULL,
     G_CALLBACK (file_open_cmd_callback),
+    GIMP_HELP_FILE_OPEN },
+
+  { "file-open-from-image", GTK_STOCK_OPEN,
+    N_("_Open..."), "<control>O", NULL,
+    G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
   { "file-save", GTK_STOCK_SAVE,
