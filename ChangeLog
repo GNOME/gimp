@@ -1,3 +1,8 @@
+2002-12-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: fixed typo, use "gimp->no_interface" instead of
+	simply "no_interface" in the "exit" handler.
+
 2002-12-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gimpressionist/brush.c

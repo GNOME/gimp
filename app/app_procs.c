@@ -105,7 +105,7 @@ app_init (gint    gimp_argc,
    */
   gimp_dir = gimp_directory ();
 
-  if (!g_file_test (gimp_dir, G_FILE_TEST_IS_DIR))
+  if (! g_file_test (gimp_dir, G_FILE_TEST_IS_DIR))
     {
       /*  not properly installed  */
 
@@ -188,7 +188,7 @@ app_init (gint    gimp_argc,
       gui_restore (the_gimp, restore_session);
     }
 
-  /*  connext our "exit" callbacks after gui_restore() so they are
+  /*  connect our "exit" callbacks after gui_restore() so they are
    *  invoked after the GUI's "exit" callbacks
    */
   g_signal_connect (G_OBJECT (the_gimp), "exit",
@@ -265,7 +265,7 @@ app_exit_callback (Gimp     *gimp,
 
   plug_ins_exit (gimp);
 
-  if (! no_interface)
+  if (! gimp->no_interface)
     tool_manager_exit (gimp);
 
   return FALSE; /* continue exiting */
