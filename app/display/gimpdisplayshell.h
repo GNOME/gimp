@@ -80,6 +80,7 @@ struct _GimpDisplayShell
   GtkWidget        *hrule;             /*  rulers              */
   GtkWidget        *vrule;
   GtkWidget        *origin;            /*  origin button       */
+
   GtkWidget        *statusarea;        /*  status area hbox    */
   GtkWidget        *statusbar;         /*  statusbar           */
   GtkWidget        *progressbar;       /*  progressbar         */
@@ -90,11 +91,7 @@ struct _GimpDisplayShell
 
   GdkGC            *scroll_gc;         /*  GC for scrolling    */
 
-  GdkPixmap        *icon;              /*  Pixmap for the icon                */
-  GdkBitmap        *iconmask;          /*  Bitmap for the icon mask           */
-  guint             iconsize;          /*  size of the icon pixmap            */
-  gboolean          icon_needs_update; /*  Do we need to render a new icon?   */
-  guint             icon_timeout_id;   /*  ID of the timeout-function         */
+  gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */
 
   GdkCursorType       current_cursor;  /*  Currently installed main cursor    */

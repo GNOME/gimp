@@ -38,6 +38,7 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"

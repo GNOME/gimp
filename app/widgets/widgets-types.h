@@ -22,6 +22,8 @@
 
 #include "libgimpwidgets/gimpwidgetstypes.h"
 
+#include "core/core-types.h"
+
 #include "display/display-types.h"
 
 

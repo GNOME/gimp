@@ -34,6 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -46,6 +47,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
+
+#include "tools/tools-types.h"
 
 #include "tools/tool_manager.h"
 
@@ -99,7 +102,6 @@ static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
                                                         gint              title_len);
 
 static void       gimp_display_shell_update_icon       (GimpDisplayShell *gdisp);
-static gboolean   gimp_display_shell_update_icon_timer (gpointer          data);
 static gboolean gimp_display_shell_update_icon_invoker (gpointer          data);
 static void   gimp_display_shell_update_icon_scheduler (GimpImage        *gimage,
                                                         gpointer          data);
@@ -210,11 +212,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->scroll_gc             = NULL;
 
-  shell->icon                  = NULL;
-  shell->iconmask              = NULL;
-  shell->iconsize              = 32;
-  shell->icon_needs_update     = FALSE;
-  shell->icon_timeout_id       = 0;
+  shell->icon_size             = 32;
   shell->icon_idle_id          = 0;
 
   shell->current_cursor        = (GdkCursorType) -1;
@@ -275,28 +273,10 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->scroll_gc = NULL;
     }
 
-  if (shell->icon_timeout_id)
-    {
-      g_source_remove (shell->icon_timeout_id);
-      shell->icon_timeout_id = 0;
-    }
-
   if (shell->icon_idle_id)
     {
       g_source_remove (shell->icon_idle_id);
       shell->icon_idle_id = 0;
-    }
-
-  if (shell->icon)
-    {
-      gdk_drawable_unref (shell->icon);
-      shell->icon = NULL;
-    }
-
-  if (shell->iconmask)
-    {
-      gdk_drawable_unref (shell->iconmask);
-      shell->iconmask = NULL;
     }
 
   if (shell->padding_gc)
@@ -830,7 +810,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     {
       gchar *basename;
 
-      basename = g_path_get_basename (gimp_image_filename (gimage));
+      basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
       gimp_display_shell_close_warning_dialog (shell, basename);
 
@@ -960,6 +940,8 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 
 #define SET_ACTIVE(menu,condition) \
         gimp_menu_item_set_active ("<Image>/" menu, (condition) != 0)
+#define SET_LABEL(menu,label) \
+        gimp_menu_item_set_label ("<Image>/" menu, (label))
 #define SET_SENSITIVE(menu,condition) \
         gimp_menu_item_set_sensitive ("<Image>/" menu, (condition) != 0)
 
@@ -973,21 +955,30 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Edit/Buffer", gdisp);
   if (gdisp)
     {
-      /* Interactive tools such as CURVES, COLOR_BALANCE, LEVELS disable */
-      /* undo to fake some kind of atomic behaviour. G. R. Osgood #14072  */
+      gchar *undo_name = NULL;
+      gchar *redo_name = NULL;
 
       if (gimp_image_undo_is_enabled (gimage))
-	{
-	  /* If undo/redo stacks are empty, disable respective menu */
+        {
+          undo_name = (gchar *) undo_get_undo_name (gimage);
+          redo_name = (gchar *) undo_get_redo_name (gimage);
+        }
 
-	  SET_SENSITIVE ("Edit/Undo", undo_get_undo_name (gimage));
-	  SET_SENSITIVE ("Edit/Redo", undo_get_redo_name (gimage));
-	}
-      else
-	{
-	  SET_SENSITIVE ("Edit/Undo", FALSE);
-	  SET_SENSITIVE ("Edit/Redo", FALSE);
-	}
+      if (undo_name)
+        undo_name = g_strdup_printf (_("Undo %s"), gettext (undo_name));
+
+      if (redo_name)
+        redo_name = g_strdup_printf (_("Redo %s"), gettext (redo_name));
+
+      SET_LABEL ("Edit/Undo", undo_name ? undo_name : _("Undo"));
+      SET_LABEL ("Edit/Redo", redo_name ? redo_name : _("Redo"));
+
+      SET_SENSITIVE ("Edit/Undo", undo_name);
+      SET_SENSITIVE ("Edit/Redo", redo_name);
+
+      g_free (undo_name);
+      g_free (redo_name);
+
       SET_SENSITIVE ("Edit/Cut", lp);
       SET_SENSITIVE ("Edit/Copy", lp);
       SET_SENSITIVE ("Edit/Buffer/Cut Named...", lp);
@@ -1081,6 +1072,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Script-Fu", gdisp && lp);
 
 #undef SET_ACTIVE
+#undef SET_LABEL
 #undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (type);
@@ -2123,161 +2115,32 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 static void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
 {
-  GtkStyle    *style;
-  GdkGC	      *icongc, *iconmaskgc;
-  GdkColormap *colormap;
-  GdkColor     black, white;
-  gboolean     success;
-
-  TempBuf *icondata;
-  guchar  *data;
-  gint     width, height;
-  gdouble factor;
+  GdkPixbuf *pixbuf;
+  gint       width, height;
+  gdouble    factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->icon)
-    {
-      shell->icon = gdk_pixmap_new (GTK_WIDGET (shell)->window,
-				    shell->iconsize,
-				    shell->iconsize,
-				    -1);
-      shell->iconmask = gdk_pixmap_new (NULL,
-					shell->iconsize,
-					shell->iconsize,
-					1);
-    }
-
-  icongc     = gdk_gc_new (shell->icon);
-  iconmaskgc = gdk_gc_new (shell->iconmask);
-  colormap   = gdk_colormap_get_system ();   /* or gdk_rgb_get_colormap ()  */
-
-  white.red   = 255;
-  white.green = 255;
-  white.blue  = 255;
-  gdk_colormap_alloc_colors (colormap, &white, 1, FALSE, TRUE, &success);
-
-  black.red   = 0;
-  black.green = 0;
-  black.blue  = 0;
-  gdk_colormap_alloc_colors (colormap, &black, 1, FALSE, TRUE, &success);
-
-  if (! shell->icon_needs_update)
-    return;
-
-  style = gtk_widget_get_style (GTK_WIDGET (shell));
-
-  factor = ((gfloat) gimp_image_get_height (shell->gdisp->gimage)) /
-                     gimp_image_get_width  (shell->gdisp->gimage);
+  factor = ((gdouble) gimp_image_get_height (shell->gdisp->gimage) /
+            (gdouble) gimp_image_get_width (shell->gdisp->gimage));
 
   if (factor >= 1)
     {
-      height = MAX (shell->iconsize, 1);
-      width  = MAX (((gfloat) shell->iconsize) / factor, 1);
+      height = MAX (shell->icon_size, 1);
+      width  = MAX (((gdouble) shell->icon_size) / factor, 1);
     }
   else
     {
-      height = MAX (((gfloat) shell->iconsize) * factor, 1);
-      width  = MAX (shell->iconsize, 1);
+      height = MAX (((gdouble) shell->icon_size) * factor, 1);
+      width  = MAX (shell->icon_size, 1);
     }
 
-  icondata = gimp_viewable_get_new_preview (GIMP_VIEWABLE (shell->gdisp->gimage),
-      					    width, height);
-  data = temp_buf_data (icondata);
+  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                                 width, height);
 
-  /* Set up an icon mask */
-  gdk_gc_set_foreground (iconmaskgc, &black);
-  gdk_draw_rectangle (shell->iconmask, iconmaskgc, TRUE, 0, 0,
-		      shell->iconsize,
-                      shell->iconsize);
-	  
-  gdk_gc_set_foreground (iconmaskgc, &white);
-  gdk_draw_rectangle (shell->iconmask, iconmaskgc, TRUE,
-		      (shell->iconsize - icondata->width) / 2,
-		      (shell->iconsize - icondata->height) / 2,
-		      icondata->width,
-                      icondata->height);
+  gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 
-  /* This is an ugly bad hack. There should be a clean way to get
-   * a preview in a specified depth with a nicely rendered
-   * checkerboard if no alpha channel is requested.
-   * We ignore the alpha channel for now. Also the aspect ratio is
-   * incorrect.
-   *
-   * Currently the icons are updated when you press the "menu" button in
-   * the top left corner of the window. Of course this should go in an
-   * idle routine.
-   */
-  if (icondata->bytes == 1)
-    {
-      gdk_draw_gray_image (shell->icon,
-			   icongc,
-	  		   (shell->iconsize - icondata->width) / 2,
-	  		   (shell->iconsize - icondata->height) / 2,
-			   icondata->width,
-			   icondata->height,
-			   GDK_RGB_DITHER_MAX,
-			   data,
-			   icondata->width * icondata->bytes);
-      gdk_window_set_icon (GTK_WIDGET (shell)->window,
-	  		   NULL, shell->icon, shell->iconmask);
-    }
-  else if (icondata->bytes == 3)
-    {
-      gdk_draw_rgb_image  (shell->icon,
-	  		   icongc,
-	  		   (shell->iconsize - icondata->width) / 2,
-	  		   (shell->iconsize - icondata->height) / 2,
-			   icondata->width,
-			   icondata->height,
-			   GDK_RGB_DITHER_MAX,
-			   data,
-			   icondata->width * icondata->bytes);
-      gdk_window_set_icon (GTK_WIDGET (shell)->window,
-	  		   NULL, shell->icon, shell->iconmask);
-    }
-  else if (icondata->bytes == 4)
-    {
-      gdk_draw_rgb_32_image  (shell->icon,
-			      icongc,
-			      (shell->iconsize - icondata->width) / 2,
-			      (shell->iconsize - icondata->height) / 2,
-			      icondata->width,
-			      icondata->height,
-			      GDK_RGB_DITHER_MAX,
-			      data,
-			      icondata->width * icondata->bytes);
-      gdk_window_set_icon (GTK_WIDGET (shell)->window,
-	  		   NULL, shell->icon, shell->iconmask);
-    }
-  else
-    {
-      g_printerr ("%s: falling back to default", G_STRLOC);
-    }
-
-  shell->icon_needs_update = FALSE;
-
-  gdk_gc_unref (icongc);
-  gdk_gc_unref (iconmaskgc);
-
-  temp_buf_free (icondata);
-}
-
-/* this timer is necessary to check if the icon is invalid and if yes
- * adds the update function to the idle loop
- */
-static gboolean
-gimp_display_shell_update_icon_timer (gpointer data)
-{
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
-
-  if (shell->icon_needs_update && ! shell->icon_idle_id)
-    shell->icon_idle_id = g_idle_add (gimp_display_shell_update_icon_invoker,
-                                      shell);
-
-  return TRUE;
+  g_object_unref (G_OBJECT (pixbuf));
 }
 
 /* Just a dumb invoker for gdisplay_update_icon ()
@@ -2289,9 +2152,9 @@ gimp_display_shell_update_icon_invoker (gpointer data)
 
   shell = GIMP_DISPLAY_SHELL (data);
 
-  gimp_display_shell_update_icon (shell);
-
   shell->icon_idle_id = 0;
+
+  gimp_display_shell_update_icon (shell);
 
   return FALSE;
 }
@@ -2307,20 +2170,15 @@ gimp_display_shell_update_icon_scheduler (GimpImage *gimage,
 
   shell = GIMP_DISPLAY_SHELL (data);
 
-  shell->icon_needs_update = TRUE;
-
-  if (! shell->icon_timeout_id)
+  if (shell->icon_idle_id)
     {
-      shell->icon_timeout_id = g_timeout_add (7500,
-                                              gimp_display_shell_update_icon_timer,
-                                              shell);
-
-      if (! shell->icon_idle_id)
-        {
-          shell->icon_idle_id = g_idle_add (gimp_display_shell_update_icon_invoker,
-                                            shell);
-        }
+      g_source_remove (shell->icon_idle_id);
     }
+
+  shell->icon_idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                         gimp_display_shell_update_icon_invoker,
+                                         shell,
+                                         NULL);
 }
 
 static int print (char *, int, int, const char *, ...) G_GNUC_PRINTF (4, 5);
@@ -2398,7 +2256,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      {
 		gchar *basename;
 
-		basename = g_path_get_basename (gimp_image_filename (gimage));
+		basename =
+                  g_path_get_basename (gimp_image_get_filename (gimage));
 
 		i += print (title, title_len, i, "%s", basename);
 
@@ -2407,7 +2266,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'F': /* full filename */
-	      i += print (title, title_len, i, "%s", gimp_image_filename (gimage));
+	      i += print (title, title_len, i, "%s", gimp_image_get_filename (gimage));
 	      break;
 
 	    case 'p': /* PDB id */

@@ -10,6 +10,7 @@ mmx_sources =
 endif
 
 libapppaint_funcs_a_SOURCES = @STRIP_BEGIN@ \
+	paint-funcs-types.h	\
 	paint-funcs.c		\
 	paint-funcs.h		\
 	paint-funcs-generic.h	\

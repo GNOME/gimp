@@ -37,6 +37,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-merge.h"
+#include "core/gimpimage-resize.h"
+#include "core/gimpimage-scale.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -49,13 +52,15 @@
 
 static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
+static ProcRecord image_delete_proc;
+static ProcRecord image_base_type_proc;
 static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
 static ProcRecord image_crop_proc;
-static ProcRecord image_delete_proc;
 static ProcRecord image_free_shadow_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
+static ProcRecord image_active_drawable_proc;
 static ProcRecord image_unset_active_channel_proc;
 static ProcRecord image_pick_correlate_layer_proc;
 static ProcRecord image_raise_layer_proc;
@@ -73,8 +78,6 @@ static ProcRecord image_raise_channel_proc;
 static ProcRecord image_lower_channel_proc;
 static ProcRecord image_add_channel_proc;
 static ProcRecord image_remove_channel_proc;
-static ProcRecord image_active_drawable_proc;
-static ProcRecord image_base_type_proc;
 static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
 static ProcRecord image_undo_is_enabled_proc;
@@ -114,13 +117,15 @@ register_image_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &image_list_proc);
   procedural_db_register (gimp, &image_new_proc);
+  procedural_db_register (gimp, &image_delete_proc);
+  procedural_db_register (gimp, &image_base_type_proc);
   procedural_db_register (gimp, &image_resize_proc);
   procedural_db_register (gimp, &image_scale_proc);
   procedural_db_register (gimp, &image_crop_proc);
-  procedural_db_register (gimp, &image_delete_proc);
   procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
+  procedural_db_register (gimp, &image_active_drawable_proc);
   procedural_db_register (gimp, &image_unset_active_channel_proc);
   procedural_db_register (gimp, &image_pick_correlate_layer_proc);
   procedural_db_register (gimp, &image_raise_layer_proc);
@@ -138,8 +143,6 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_lower_channel_proc);
   procedural_db_register (gimp, &image_add_channel_proc);
   procedural_db_register (gimp, &image_remove_channel_proc);
-  procedural_db_register (gimp, &image_active_drawable_proc);
-  procedural_db_register (gimp, &image_base_type_proc);
   procedural_db_register (gimp, &image_get_cmap_proc);
   procedural_db_register (gimp, &image_set_cmap_proc);
   procedural_db_register (gimp, &image_undo_is_enabled_proc);
@@ -319,6 +322,112 @@ static ProcRecord image_new_proc =
   1,
   image_new_outargs,
   { { image_new_invoker } }
+};
+
+static Argument *
+image_delete_invoker (Gimp     *gimp,
+                      Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimage->disp_count == 0)
+	{
+	  g_object_unref (G_OBJECT (gimage));
+	  success = TRUE;
+	}
+    }
+
+  return procedural_db_return_args (&image_delete_proc, success);
+}
+
+static ProcArg image_delete_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcRecord image_delete_proc =
+{
+  "gimp_image_delete",
+  "Delete the specified image.",
+  "If there are no displays associated with this image it will be deleted. This means that you can not delete an image through the PDB that was created by the user. If the associated display was however created through the PDB and you know the display ID, you may delete the display. Removal of the last associated display will then delete the image.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_delete_inargs,
+  0,
+  NULL,
+  { { image_delete_invoker } }
+};
+
+static Argument *
+image_base_type_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 base_type = 0;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    base_type = gimp_image_base_type (gimage);
+
+  return_args = procedural_db_return_args (&image_base_type_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = base_type;
+
+  return return_args;
+}
+
+static ProcArg image_base_type_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_base_type_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "base_type",
+    "The image's base type: { RGB (0), GRAY (1), INDEXED (2) }"
+  }
+};
+
+static ProcRecord image_base_type_proc =
+{
+  "gimp_image_base_type",
+  "Get the base type of the image.",
+  "This procedure returns the image's base type. Layers in the image must be of this subtype, but can have an optional alpha channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_base_type_inargs,
+  1,
+  image_base_type_outargs,
+  { { image_base_type_invoker } }
 };
 
 static Argument *
@@ -556,54 +665,6 @@ static ProcRecord image_crop_proc =
 };
 
 static Argument *
-image_delete_invoker (Gimp     *gimp,
-                      Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
-    success = FALSE;
-
-  if (success)
-    {
-      if (gimage->disp_count == 0)
-	{
-	  g_object_unref (G_OBJECT (gimage));
-	  success = TRUE;
-	}
-    }
-
-  return procedural_db_return_args (&image_delete_proc, success);
-}
-
-static ProcArg image_delete_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcRecord image_delete_proc =
-{
-  "gimp_image_delete",
-  "Delete the specified image.",
-  "If there are no displays associated with this image it will be deleted. This means that you can not delete an image through the PDB that was created by the user. If the associated display was however created through the PDB and you know the display ID, you may delete the display. Removal of the last associated display will then delete the image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_delete_inargs,
-  0,
-  NULL,
-  { { image_delete_invoker } }
-};
-
-static Argument *
 image_free_shadow_invoker (Gimp     *gimp,
                            Argument *args)
 {
@@ -801,6 +862,64 @@ static ProcRecord image_get_channels_proc =
   2,
   image_get_channels_outargs,
   { { image_get_channels_invoker } }
+};
+
+static Argument *
+image_active_drawable_invoker (Gimp     *gimp,
+                               Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpDrawable *drawable = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    success = (drawable = gimp_image_active_drawable (gimage)) != NULL;
+
+  return_args = procedural_db_return_args (&image_active_drawable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
+
+  return return_args;
+}
+
+static ProcArg image_active_drawable_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_active_drawable_outargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The active drawable"
+  }
+};
+
+static ProcRecord image_active_drawable_proc =
+{
+  "gimp_image_active_drawable",
+  "Get the image's active drawable",
+  "This procedure returns the ID of the image's active drawable. This can be either a layer, a channel, or a layer mask. The active drawable is specified by the active image channel. If that is -1, then by the active image layer. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_active_drawable_inargs,
+  1,
+  image_active_drawable_outargs,
+  { { image_active_drawable_invoker } }
 };
 
 static Argument *
@@ -1797,122 +1916,6 @@ static ProcRecord image_remove_channel_proc =
 };
 
 static Argument *
-image_active_drawable_invoker (Gimp     *gimp,
-                               Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  GimpDrawable *drawable = NULL;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
-    success = FALSE;
-
-  if (success)
-    success = (drawable = gimp_image_active_drawable (gimage)) != NULL;
-
-  return_args = procedural_db_return_args (&image_active_drawable_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
-
-  return return_args;
-}
-
-static ProcArg image_active_drawable_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_active_drawable_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The active drawable"
-  }
-};
-
-static ProcRecord image_active_drawable_proc =
-{
-  "gimp_image_active_drawable",
-  "Get the image's active drawable",
-  "This procedure returns the ID of the image's active drawable. This can be either a layer, a channel, or a layer mask. The active drawable is specified by the active image channel. If that is -1, then by the active image layer. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_active_drawable_inargs,
-  1,
-  image_active_drawable_outargs,
-  { { image_active_drawable_invoker } }
-};
-
-static Argument *
-image_base_type_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  gint32 base_type = 0;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
-    success = FALSE;
-
-  if (success)
-    base_type = gimp_image_base_type (gimage);
-
-  return_args = procedural_db_return_args (&image_base_type_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = base_type;
-
-  return return_args;
-}
-
-static ProcArg image_base_type_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_base_type_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "base_type",
-    "The image's base type: { RGB (0), GRAY (1), INDEXED (2) }"
-  }
-};
-
-static ProcRecord image_base_type_proc =
-{
-  "gimp_image_base_type",
-  "Get the base type of the image.",
-  "This procedure returns the image's base type. Layers in the image must be of this subtype, but can have an optional alpha channel.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_base_type_inargs,
-  1,
-  image_base_type_outargs,
-  { { image_base_type_invoker } }
-};
-
-static Argument *
 image_get_cmap_invoker (Gimp     *gimp,
                         Argument *args)
 {
@@ -1930,7 +1933,7 @@ image_get_cmap_invoker (Gimp     *gimp,
     {
       num_bytes = gimage->num_cols * 3;
       cmap = g_new (guint8, num_bytes);
-      memcpy (cmap, gimp_image_cmap (gimage), num_bytes);
+      memcpy (cmap, gimp_image_get_colormap (gimage), num_bytes);
     }
 
   return_args = procedural_db_return_args (&image_get_cmap_proc, success);
@@ -2012,8 +2015,7 @@ image_set_cmap_invoker (Gimp     *gimp,
     
       gimage->num_cols = num_bytes / 3;
     
-      /* A colormap alteration affects the whole image */
-      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+      gimp_image_colormap_changed (gimage, -1);
     }
 
   return procedural_db_return_args (&image_set_cmap_proc, success);
@@ -3499,7 +3501,7 @@ image_get_filename_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_filename_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_image_filename (gimage));
+    return_args[1].value.pdb_pointer = g_strdup (gimp_image_get_filename (gimage));
 
   return return_args;
 }

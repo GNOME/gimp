@@ -137,9 +137,8 @@ gimp_brush_factory_view_destroy (GtkObject *object)
 
   if (view->spacing_changed_handler_id)
     {
-      gimp_container_remove_handler
-	(GIMP_CONTAINER_EDITOR (view)->view->container,
-	 view->spacing_changed_handler_id);
+      gimp_container_remove_handler (GIMP_CONTAINER_EDITOR (view)->view->container,
+                                     view->spacing_changed_handler_id);
 
       view->spacing_changed_handler_id = 0;
     }
@@ -187,10 +186,10 @@ gimp_brush_factory_view_new (GimpViewType              view_type,
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
-  gimp_container_add_handler
-    (editor->view->container, "spacing_changed",
-     G_CALLBACK (gimp_brush_factory_view_spacing_changed),
-     factory_view);
+  factory_view->spacing_changed_handler_id =
+    gimp_container_add_handler (editor->view->container, "spacing_changed",
+                                G_CALLBACK (gimp_brush_factory_view_spacing_changed),
+                                factory_view);
 
   return GTK_WIDGET (factory_view);
 }

@@ -20,7 +20,7 @@
 #define __DISPLAY_TYPES_H__
 
 
-#include "tools/tools-types.h"
+#include "widgets/widgets-types.h"
 
 
 typedef enum /*< skip >*/

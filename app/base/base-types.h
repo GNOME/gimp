@@ -20,6 +20,9 @@
 #define __BASE_TYPES_H__
 
 
+#include "paint-funcs/paint-funcs-types.h"
+
+
 /*  magic constants  */
 
 #define MAX_CHANNELS     4

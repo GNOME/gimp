@@ -33,6 +33,8 @@ gint*             gimp_image_list                     (gint               *num_i
 gint32            gimp_image_new                      (gint                width,
 						       gint                height,
 						       GimpImageBaseType   type);
+gboolean          gimp_image_delete                   (gint32              image_ID);
+GimpImageBaseType gimp_image_base_type                (gint32              image_ID);
 gboolean          gimp_image_resize                   (gint32              image_ID,
 						       gint                new_width,
 						       gint                new_height,
@@ -46,12 +48,12 @@ gboolean          gimp_image_crop                     (gint32              image
 						       gint                new_height,
 						       gint                offx,
 						       gint                offy);
-gboolean          gimp_image_delete                   (gint32              image_ID);
 gboolean          gimp_image_free_shadow              (gint32              image_ID);
 gint*             gimp_image_get_layers               (gint32              image_ID,
 						       gint               *num_layers);
 gint*             gimp_image_get_channels             (gint32              image_ID,
 						       gint               *num_channels);
+gint32            gimp_image_active_drawable          (gint32              image_ID);
 gboolean          gimp_image_unset_active_channel     (gint32              image_ID);
 gint32            gimp_image_pick_correlate_layer     (gint32              image_ID,
 						       gint                x,
@@ -90,8 +92,6 @@ gboolean          gimp_image_add_channel              (gint32              image
 						       gint                position);
 gboolean          gimp_image_remove_channel           (gint32              image_ID,
 						       gint32              channel_ID);
-gint32            gimp_image_active_drawable          (gint32              image_ID);
-GimpImageBaseType gimp_image_base_type                (gint32              image_ID);
 guint8*           _gimp_image_get_cmap                (gint32              image_ID,
 						       gint               *num_bytes);
 gboolean          _gimp_image_set_cmap                (gint32              image_ID,

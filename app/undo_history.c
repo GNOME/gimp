@@ -455,7 +455,7 @@ undo_history_gimage_rename_callback (GimpImage *gimage,
   gchar           *basename;
   gchar           *title;
 
-  basename = g_path_get_basename (gimp_image_filename (gimage));
+  basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
   title = g_strdup_printf (_("Undo History: %s"), basename);
 
@@ -806,7 +806,7 @@ undo_history_new (GimpImage *gimage)
     gchar *basename;
     gchar *title;
 
-    basename = g_path_get_basename (gimp_image_filename (gimage));
+    basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
     title = g_strdup_printf (_("Undo History: %s"), basename);
 

@@ -34,6 +34,8 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
+#include "tools/tools-types.h"
+
 #include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"

@@ -258,7 +258,8 @@ palette_import_image_sel_callback (GtkWidget *widget,
   gimage = GIMP_IMAGE (data);
   palette_import_update_image_preview (gimage);
 
-  basename = g_path_get_basename (gimp_image_filename (import_dialog->gimage));
+  basename =
+    g_path_get_basename (gimp_image_get_filename (import_dialog->gimage));
 
   lab = g_strdup_printf ("%s-%d",
 			 basename,
@@ -278,7 +279,7 @@ palette_import_image_menu_add (GimpImage *gimage)
   gchar     *basename;
   gchar     *lab;
 
-  basename = g_path_get_basename (gimp_image_filename (gimage));
+  basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
   lab = g_strdup_printf ("%s-%d",
 			 basename,
@@ -389,7 +390,7 @@ palette_import_image_menu_activate (ImportDialog *import_dialog,
 	  gchar *lab;
 
 	  basename =
-	    g_path_get_basename (gimp_image_filename (import_dialog->gimage));
+	    g_path_get_basename (gimp_image_get_filename (import_dialog->gimage));
 
 	  lab = g_strdup_printf ("%s-%d",
 				 basename,
@@ -405,7 +406,7 @@ palette_import_image_menu_activate (ImportDialog *import_dialog,
     }
   g_slist_free (list);
 
-  basename = g_path_get_basename (gimp_image_filename (import_dialog->gimage));
+  basename = g_path_get_basename (gimp_image_get_filename (import_dialog->gimage));
 
   lab = g_strdup_printf ("%s-%d",
 			 basename,

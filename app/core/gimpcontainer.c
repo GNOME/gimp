@@ -623,6 +623,8 @@ gimp_container_add_handler (GimpContainer *container,
   GimpContainerHandler *handler;
   gchar                *key;
 
+  static gint           handler_id = 0;
+
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
 
   g_return_val_if_fail (signame != NULL, 0);
@@ -632,12 +634,14 @@ gimp_container_add_handler (GimpContainer *container,
   handler = g_new0 (GimpContainerHandler, 1);
 
   /*  create a unique key for this handler  */
-  key = g_strdup_printf ("%s-%p", signame, handler);
+  key = g_strdup_printf ("%s-%d", signame, handler_id++);
 
   handler->signame       = g_strdup (signame);
   handler->callback      = callback;
   handler->callback_data = callback_data;
   handler->quark         = g_quark_from_string (key);
+
+  g_print ("%s: key = %s, id = %d\n", G_GNUC_FUNCTION, key, handler->quark);
 
   g_free (key);
 
@@ -688,9 +692,12 @@ gimp_container_remove_handler (GimpContainer *container,
 
   if (! list)
     {
-      g_warning ("tried to disconnect handler which is not connected");
+      g_warning ("%s: tried to unhandler which id %d",
+                 G_STRLOC, id);
       return;
     }
+
+  g_print ("%s: id = %d\n", G_GNUC_FUNCTION, handler->quark);
 
   gimp_container_foreach (container,
 			  (GFunc) gimp_container_remove_handler_foreach_func,

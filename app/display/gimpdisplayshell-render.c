@@ -281,7 +281,7 @@ render_image_indexed (RenderInfo *info)
   gfloat  error;
   gfloat  step;
 
-  cmap = gimp_image_cmap (info->gdisp->gimage);
+  cmap = gimp_image_get_colormap (info->gdisp->gimage);
 
   y  = info->y;
   ye = info->y + info->h;
@@ -355,7 +355,7 @@ render_image_indexed_a (RenderInfo *info)
   gfloat  error;
   gfloat  step;
 
-  cmap = gimp_image_cmap (info->gdisp->gimage);
+  cmap = gimp_image_get_colormap (info->gdisp->gimage);
   alpha = info->alpha;
 
   y  = info->y;

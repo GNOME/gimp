@@ -31,6 +31,8 @@
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-resize.h"
+#include "core/gimpimage-scale.h"
 
 #include "pdb/procedural_db.h"
 

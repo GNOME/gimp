@@ -29,6 +29,7 @@
 #include "procedural_db.h"
 
 #include "core/core-types.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage.h"
 #include "undo.h"
 

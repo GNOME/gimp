@@ -85,14 +85,22 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-crop.h		\
 	gimpimage-duplicate.c		\
 	gimpimage-duplicate.h		\
+	gimpimage-guides.c		\
+	gimpimage-guides.h		\
 	gimpimage-mask.c		\
 	gimpimage-mask.h		\
 	gimpimage-mask-select.c		\
 	gimpimage-mask-select.h		\
+	gimpimage-merge.c		\
+	gimpimage-merge.h		\
 	gimpimage-new.c			\
 	gimpimage-new.h			\
 	gimpimage-projection.c		\
 	gimpimage-projection.h		\
+	gimpimage-resize.c		\
+	gimpimage-resize.h		\
+	gimpimage-scale.c		\
+	gimpimage-scale.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimpimagefile.c			\

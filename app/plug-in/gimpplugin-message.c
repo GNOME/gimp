@@ -1485,6 +1485,23 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
+              gchar *basename;
+              gchar *repeat;
+              gchar *reshow;
+
+              basename = g_path_get_basename (proc_def->menu_path);
+
+              repeat = g_strdup_printf (_("Repeat \"%s\""), basename);
+              reshow = g_strdup_printf (_("Re-show \"%s\""), basename);
+
+              g_free (basename);
+
+              gimp_menu_item_set_label ("<Image>/Filters/Repeat Last", repeat);
+              gimp_menu_item_set_label ("<Image>/Filters/Re-Show Last", reshow);
+
+              g_free (repeat);
+              g_free (reshow);
+
 	      gimp_menu_item_set_sensitive ("<Image>/Filters/Repeat Last",
                                             sensitive);
 	      gimp_menu_item_set_sensitive ("<Image>/Filters/Re-Show Last",
@@ -1493,8 +1510,13 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	}
     }
 
-  if (!last_plug_in)
+  if (! last_plug_in)
     {
+      gimp_menu_item_set_label ("<Image>/Filters/Repeat Last",
+                                _("Repeat Last"));
+      gimp_menu_item_set_label ("<Image>/Filters/Re-Show Last",
+                                _("Re-Show Last"));
+
       gimp_menu_item_set_sensitive ("<Image>/Filters/Repeat Last", FALSE);
       gimp_menu_item_set_sensitive ("<Image>/Filters/Re-Show Last", FALSE);
     }

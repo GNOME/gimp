@@ -39,6 +39,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimplayer.h"

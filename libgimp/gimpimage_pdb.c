@@ -104,6 +104,71 @@ gimp_image_new (gint              width,
 }
 
 /**
+ * gimp_image_delete:
+ * @image_ID: The image.
+ *
+ * Delete the specified image.
+ *
+ * If there are no displays associated with this image it will be
+ * deleted. This means that you can not delete an image through the PDB
+ * that was created by the user. If the associated display was however
+ * created through the PDB and you know the display ID, you may delete
+ * the display. Removal of the last associated display will then delete
+ * the image.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_delete (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_delete",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_base_type:
+ * @image_ID: The image.
+ *
+ * Get the base type of the image.
+ *
+ * This procedure returns the image's base type. Layers in the image
+ * must be of this subtype, but can have an optional alpha channel.
+ *
+ * Returns: The image's base type.
+ */
+GimpImageBaseType
+gimp_image_base_type (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpImageBaseType base_type = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_base_type",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    base_type = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return base_type;
+}
+
+/**
  * gimp_image_resize:
  * @image_ID: The image.
  * @new_width: New image width.
@@ -240,40 +305,6 @@ gimp_image_crop (gint32 image_ID,
 }
 
 /**
- * gimp_image_delete:
- * @image_ID: The image.
- *
- * Delete the specified image.
- *
- * If there are no displays associated with this image it will be
- * deleted. This means that you can not delete an image through the PDB
- * that was created by the user. If the associated display was however
- * created through the PDB and you know the display ID, you may delete
- * the display. Removal of the last associated display will then delete
- * the image.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_delete (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_delete",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_free_shadow:
  * @image_ID: The image.
  *
@@ -383,6 +414,41 @@ gimp_image_get_channels (gint32  image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return channel_ids;
+}
+
+/**
+ * gimp_image_active_drawable:
+ * @image_ID: The image.
+ *
+ * Get the image's active drawable
+ *
+ * This procedure returns the ID of the image's active drawable. This
+ * can be either a layer, a channel, or a layer mask. The active
+ * drawable is specified by the active image channel. If that is -1,
+ * then by the active image layer. If the active image layer has a
+ * layer mask and the layer mask is in edit mode, then the layer mask
+ * is the active drawable.
+ *
+ * Returns: The active drawable.
+ */
+gint32
+gimp_image_active_drawable (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 drawable_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_active_drawable",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    drawable_ID = return_vals[1].data.d_drawable;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return drawable_ID;
 }
 
 /**
@@ -994,72 +1060,6 @@ gimp_image_remove_channel (gint32 image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
-}
-
-/**
- * gimp_image_active_drawable:
- * @image_ID: The image.
- *
- * Get the image's active drawable
- *
- * This procedure returns the ID of the image's active drawable. This
- * can be either a layer, a channel, or a layer mask. The active
- * drawable is specified by the active image channel. If that is -1,
- * then by the active image layer. If the active image layer has a
- * layer mask and the layer mask is in edit mode, then the layer mask
- * is the active drawable.
- *
- * Returns: The active drawable.
- */
-gint32
-gimp_image_active_drawable (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 drawable_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_image_active_drawable",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    drawable_ID = return_vals[1].data.d_drawable;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return drawable_ID;
-}
-
-/**
- * gimp_image_base_type:
- * @image_ID: The image.
- *
- * Get the base type of the image.
- *
- * This procedure returns the image's base type. Layers in the image
- * must be of this subtype, but can have an optional alpha channel.
- *
- * Returns: The image's base type.
- */
-GimpImageBaseType
-gimp_image_base_type (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  GimpImageBaseType base_type = 0;
-
-  return_vals = gimp_run_procedure ("gimp_image_base_type",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    base_type = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return base_type;
 }
 
 /**

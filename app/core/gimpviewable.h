@@ -25,6 +25,8 @@
 
 #include "gimpobject.h"
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 
 #define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())
 #define GIMP_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))
@@ -59,17 +61,24 @@ struct _GimpViewableClass
 };
 
 
-GType     gimp_viewable_get_type           (void) G_GNUC_CONST;
+GType       gimp_viewable_get_type               (void) G_GNUC_CONST;
 
-void      gimp_viewable_invalidate_preview (GimpViewable *viewable);
-void      gimp_viewable_size_changed       (GimpViewable *viewable);
+void        gimp_viewable_invalidate_preview     (GimpViewable *viewable);
+void        gimp_viewable_size_changed           (GimpViewable *viewable);
 
-TempBuf * gimp_viewable_get_preview        (GimpViewable *viewable,
-					    gint          width,
-					    gint          height);
-TempBuf * gimp_viewable_get_new_preview    (GimpViewable *viewable,
-					    gint          width,
-					    gint          height);
+TempBuf   * gimp_viewable_get_preview            (GimpViewable *viewable,
+                                                  gint          width,
+                                                  gint          height);
+TempBuf   * gimp_viewable_get_new_preview        (GimpViewable *viewable,
+                                                  gint          width,
+                                                  gint          height);
+
+GdkPixbuf * gimp_viewable_get_preview_pixbuf     (GimpViewable *viewable,
+                                                  gint          width,
+                                                  gint          height);
+GdkPixbuf * gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
+                                                  gint          width,
+                                                  gint          height);
 
 
 #endif  /* __GIMP_VIEWABLE_H__ */

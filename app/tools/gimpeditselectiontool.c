@@ -33,6 +33,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"

@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-merge.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"

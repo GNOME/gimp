@@ -27,7 +27,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "base/base-types.h"
+#include "paint-funcs-types.h"
 
 #include "base/base-config.h"
 #include "base/pixel-processor.h"

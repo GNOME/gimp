@@ -731,7 +731,7 @@ by_color_select_draw (ByColorDialog *bcd,
   gtk_widget_draw (bcd->preview, NULL);
 
   /*  Update the gimage label to reflect the displayed gimage name  */
-  basename = g_path_get_basename (gimp_image_filename (gimage));
+  basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
   gtk_label_set_text (GTK_LABEL (bcd->gimage_name), basename);
 

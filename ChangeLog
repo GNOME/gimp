@@ -1,3 +1,86 @@
+2001-11-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base-types.h: include the new
+	"paint-funcs/paint-funcs-types.h".
+
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/paint-funcs-types.h: new file. Includes
+	"base/base-types.h".
+
+	* app/paint-funcs/paint-funcs.[ch]: removed the enums here,
+	include "paint-funcs-types.h".
+
+	* app/widgets/widgets-types.h: include "display/display-types.h"
+
+	* app/display/display-types.h: include "widgets/widgets-types.h".
+
+	* app/tools/tools-types.h: include "display/display-types.h"
+
+	* app/gui/gui-types.h: include "tools/tools-types.h".
+
+	The order of namespaces/dependencies should be (but is not):
+
+	(base, paint-funcs) -> (core, file, xcf, pdb) ->
+	(widgets, display) -> tools -> gui
+
+	* app/path.c: include "tools/tools-types.h".
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-guides.[ch]
+	* app/core/gimpimage-merge.[ch]
+	* app/core/gimpimage-resize.[ch]
+	* app/core/gimpimage-scale.[ch]: new files.
+
+	* app/core/gimpimage.[ch]: removed the stuff which is in the new
+	files. Reordered all functions in both the .h and .c files,
+	commented the groups of functions.
+
+	* app/core/gimpcontainer.c: create the handler_id using a counter,
+	not the address of a pointer, because the address *may* be the
+	same twice, added debugging output.
+
+	* app/core/gimpviewable.[ch]: added primitive support for getting
+	a preview GdkPixbuf.
+
+	* app/nav_window.c
+	* app/undo.c
+	* app/undo_history.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.[ch]
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/palette-import-dialog.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/xcf/xcf-load.c: changed accordingly, some cleanup.
+
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly, reordered functions.
+
+	* app/plug_in.c: set the labels of the "Repeat" and "Re-Show" menu
+	items to the name of the last plug-in (Fixes #50986).
+
+	* app/display/gimpdisplayshell.[ch]: set the labels of "Undo" and
+	"Redo" to the resp. undo names. Much simplified the WM icon stuff
+	by removing most code and using gimp_viewable_get_new_preview_pixbuf().
+
+	* app/widgets/gimpbrushfactoryview.c: forgot to assign the GQuark
+	returned by gimp_container_add_handler().
+
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
 2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
 
 	* app/undo.c: Fixed evil<tm> double casting of enum to glong to
@@ -17,7 +100,7 @@
 	names to be consistent.
 
 	* app/core/gimpimage.[ch]: removed the projection stuff
-	here. Removed the gimp_image_composite_blah() functions becauee
+	here. Removed the gimp_image_composite_blah() functions because
 	they were just calling the resp. gimp_image_projection ones.
 
 	* app/core/gimpimage-contiguous-region.c

@@ -205,3 +205,70 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
 
   return NULL;
 }
+
+GdkPixbuf *
+gimp_viewable_get_preview_pixbuf (GimpViewable *viewable,
+                                  gint          width,
+                                  gint          height)
+{
+  GdkPixbuf *pixbuf;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (width  > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
+
+  pixbuf = g_object_get_data (G_OBJECT (viewable),
+                              "static-viewable-preview-pixbuf");
+
+  if (pixbuf                                  &&
+      gdk_pixbuf_get_width (pixbuf) ==  width &&
+      gdk_pixbuf_get_height (pixbuf) == height)
+    {
+      return pixbuf;
+    }
+
+  pixbuf = gimp_viewable_get_new_preview_pixbuf (viewable, width, height);
+
+  g_object_set_data_full (G_OBJECT (viewable), "static-viewable-preview-pixbuf",
+			  pixbuf,
+			  (GDestroyNotify) g_object_unref);
+
+  return pixbuf;
+}
+
+GdkPixbuf *
+gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
+                                      gint          width,
+                                      gint          height)
+{
+  TempBuf   *temp_buf;
+  GdkPixbuf *pixbuf = NULL;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (width  > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
+
+  temp_buf = gimp_viewable_get_preview (viewable, width, height);
+
+  if (temp_buf)
+    {
+      gint width;
+      gint height;
+      gint bytes;
+
+      bytes  = temp_buf->bytes;
+      width  = temp_buf->width;
+      height = temp_buf->height;
+
+      pixbuf = gdk_pixbuf_new_from_data (temp_buf_data (temp_buf),
+                                         GDK_COLORSPACE_RGB,
+                                         (bytes == 2) || (bytes == 4),
+                                         8,
+                                         width,
+                                         height,
+                                         width * bytes,
+                                         NULL, NULL);
+    }
+
+  return pixbuf;
+}

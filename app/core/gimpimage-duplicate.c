@@ -36,6 +36,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
+#include "gimpimage-guides.h"
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 #include "gimplist.h"

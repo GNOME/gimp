@@ -292,6 +292,7 @@ HELP
     }
 
     %invoke = (
+	headers => [ qw("core/gimpimage-resize.h") ],
 	code => <<'CODE'
 {
   gimp_image_resize (gimage, new_width, new_height, offx, offy);
@@ -319,6 +320,7 @@ HELP
     &new_dim_args;
 
     %invoke = (
+	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
   gimp_image_scale (gimage, new_width, new_height, NULL, NULL);
@@ -519,6 +521,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
   layer = gimp_image_merge_visible_layers (gimage, merge_type);
@@ -557,6 +560,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
   layer = gimp_image_merge_down (gimage, merge_layer, merge_type);
@@ -587,6 +591,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw("core/gimpimage-merge.h") ],
 	code => 'success = (layer = gimp_image_flatten (gimage)) != NULL;'
     );
 }
@@ -825,7 +830,7 @@ HELP
 {
   num_bytes = gimage->num_cols * 3;
   cmap = g_new (guint8, num_bytes);
-  memcpy (cmap, gimp_image_cmap (gimage), num_bytes);
+  memcpy (cmap, gimp_image_get_colormap (gimage), num_bytes);
 }
 CODE
     );
@@ -862,8 +867,7 @@ HELP
 
   gimage->num_cols = num_bytes / 3;
 
-  /* A colormap alteration affects the whole image */
-  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+  gimp_image_colormap_changed (gimage, -1);
 }
 CODE
     );
@@ -1214,7 +1218,6 @@ CODE2
  -- if it was loaded or has since been saved. Otherwise, returns NULL.
 HELP
 
-    $outargs[0]->{alias} =~ s/get_//;
 CODE
 
 &image_accessors('resolution', 'float', 'resolution', 0,
@@ -1515,18 +1518,22 @@ gimlist_cb (gpointer im,
 }
 CODE
 
-unshift @procs, qw(image_list image_new image_resize image_scale image_crop
-                   image_delete
-		   image_free_shadow image_get_layers image_get_channels
-		   image_unset_active_channel image_pick_correlate_layer
+unshift @procs, qw(image_list image_new image_delete image_base_type
+                   image_resize image_scale image_crop
+		   image_free_shadow
+                   image_get_layers image_get_channels
+		   image_active_drawable image_unset_active_channel
+                   image_pick_correlate_layer
 		   image_raise_layer image_lower_layer image_raise_layer_to_top
-		   image_lower_layer_to_bottom image_merge_visible_layers
-		   image_merge_down image_flatten image_add_layer
-		   image_remove_layer image_add_layer_mask
-		   image_remove_layer_mask image_raise_channel
-		   image_lower_channel image_add_channel image_remove_channel
-		   image_active_drawable image_base_type image_get_cmap
-		   image_set_cmap image_undo_is_enabled image_undo_enable
+		   image_lower_layer_to_bottom
+                   image_merge_visible_layers image_merge_down
+                   image_flatten
+                   image_add_layer image_remove_layer
+                   image_add_layer_mask image_remove_layer_mask
+                   image_raise_channel image_lower_channel
+                   image_add_channel image_remove_channel
+                   image_get_cmap image_set_cmap
+                   image_undo_is_enabled image_undo_enable
 		   image_undo_disable image_undo_freeze image_undo_thaw
 		   image_clean_all image_floating_selection
 		   image_floating_sel_attached_to image_thumbnail

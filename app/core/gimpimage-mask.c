@@ -20,8 +20,6 @@
 
 #include <glib-object.h>
 
-#include <glib-object.h>
-
 #include "core-types.h"
 #include "pdb/pdb-types.h"
 
@@ -30,6 +28,8 @@
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
+
+#include "pdb/procedural_db.h"
 
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -42,16 +42,16 @@
 #include "floating_sel.h"
 #include "undo.h"
 
-#include "pdb/procedural_db.h"
-
 #include "libgimp/gimpintl.h"
 
 
 /*  local variables  */
+
 static gboolean   gimage_mask_stroking = FALSE;
 
 
-/*  functions  */
+/*  public functions  */
+
 gboolean
 gimage_mask_boundary (GimpImage  *gimage,
 		      BoundSeg  **segs_in,

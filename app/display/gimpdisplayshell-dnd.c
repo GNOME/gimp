@@ -27,6 +27,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
@@ -37,9 +38,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint-funcs/paint-funcs.h"
-
-#include "tools/gimpbucketfilltool.h"
-#include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -178,8 +176,9 @@ gimp_display_shell_bucket_fill (GimpImage      *gimage,
     return;
 
   /*  Get the bucket fill context  */
-  tool_info = tool_manager_get_info_by_type (gimage->gimp,
-					     GIMP_TYPE_BUCKET_FILL_TOOL);
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
+                                      "gimp:bucket_fill_tool");
 
   if (tool_info && tool_info->context)
     {

@@ -214,7 +214,7 @@ gimp_container_view_image_name_func (GtkWidget  *widget,
 	  gchar *basename;
 	  gchar *retval;
 
-	  basename = g_path_get_basename (gimp_image_filename (gimage));
+	  basename = g_path_get_basename (gimp_image_get_filename (gimage));
 
 	  retval = g_strdup_printf ("%s-%d",
 				    basename,
@@ -223,7 +223,7 @@ gimp_container_view_image_name_func (GtkWidget  *widget,
 	  g_free (basename);
 
 	  if (tooltip)
-	    *tooltip = g_strdup (gimp_image_filename (gimage));
+	    *tooltip = g_strdup (gimp_image_get_filename (gimage));
 
 	  return retval;
 	}

@@ -20,9 +20,6 @@
 #define __TOOLS_TYPES_H__
 
 
-#include "core/core-types.h"
-
-#include "widgets/widgets-types.h"
 #include "display/display-types.h"
 
 

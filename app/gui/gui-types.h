@@ -20,8 +20,7 @@
 #define __GUI_TYPES_H__
 
 
-#include "widgets/widgets-types.h"
-#include "display/display-types.h"
+#include "tools/tools-types.h"
 
 
 typedef struct _ColorNotebook    ColorNotebook;

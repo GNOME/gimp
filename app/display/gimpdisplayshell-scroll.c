@@ -26,7 +26,8 @@
 
 #include "core/gimpimage.h"
 
-#include "tools/gimptool.h"
+#include "tools/tools-types.h"
+
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
