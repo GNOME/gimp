@@ -1,3 +1,16 @@
+2000-04-23  Sven Neumann  <sven@gimp.org>
+	
+	* configure.in: added es to ALL_LINGUAS
+
+	* libgimp/gimpsignal.[ch]: cleaned up namespace and properly 
+	formatted documentation for gtk-doc
+
+	* app/app_procs.c
+	* app/appenv.h
+	* app/bezier_select.c
+	* app/main.c: fixed compiler warnings and changed some gints 
+	to gbooleans
+	
 Sat Apr 22 16:48:33 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* gimp.m4: $GIMP_DATA_DIR and $GIMP_PLUGIN_DIR support
