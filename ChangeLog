@@ -1,3 +1,8 @@
+2001-06-30  Sven Neumann  <sven@gimp.org>
+
+	* app/global_edit.c: attach default comment to image created by
+	"Paste As New" (addresses bug #51164).
+
 2001-06-30  Adam D. Moss <adam@gimp.org>
 
 	* app/convert.c: More error recovery.  Not perfect.  Adequate.

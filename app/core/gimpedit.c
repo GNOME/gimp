@@ -31,6 +31,7 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "gimpui.h"
 #include "global_edit.h"
 #include "layer.h"
@@ -366,6 +367,7 @@ edit_paste_as_new (GImage      *invoke,
   GImage   *gimage;
   Layer    *layer;
   GDisplay *gdisp;
+  GimpParasite *comment_parasite;
 
   if (!global_buf)
     return FALSE;
@@ -375,6 +377,16 @@ edit_paste_as_new (GImage      *invoke,
   gimage_disable_undo (gimage);
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
+  
+  if (default_comment)
+    {
+      comment_parasite = gimp_parasite_new ("gimp-comment",
+					    GIMP_PARASITE_PERSISTENT,
+					    strlen (default_comment) + 1,
+					    (gpointer) default_comment);
+      gimp_image_parasite_attach (gimage, comment_parasite);
+      gimp_parasite_free (comment_parasite);
+    }
   
   layer = layer_new_from_tiles (gimage,
 				gimp_image_base_type_with_alpha (gimage),
