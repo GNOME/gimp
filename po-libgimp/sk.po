@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD \n"
+"Project-Id-Version: gimp-libgimp.HEAD.sk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
-"PO-Revision-Date: 2003-09-01 11:34+0100\n"
+"POT-Creation-Date: 2003-09-26 04:00+0200\n"
+"PO-Revision-Date: 2003-09-28 21:24+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -140,8 +140,7 @@ msgstr "Export"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
-"Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
+msgstr "Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
@@ -196,9 +195,8 @@ msgstr ""
 "do vášho %s súbora."
 
 #: libgimp/gimpmiscui.c:556
-#, fuzzy
 msgid "Parameter Settings"
-msgstr "Výber vzorky"
+msgstr "Nastavenie parametrov"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -431,39 +429,39 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:271
 msgid "_Scale"
 msgstr "_Mierka"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:249
 msgid "Crop"
 msgstr "Orezanie"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:267
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:270
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:272
 msgid "_Shear"
 msgstr "_Skosenie"
 
-#: libgimpwidgets/gimpunitmenu.c:268
+#: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Viac..."
 
-#: libgimpwidgets/gimpunitmenu.c:576
+#: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
 msgstr "Výber jednotiek"
 
-#: libgimpwidgets/gimpunitmenu.c:622
+#: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
 msgstr "Jednotka"
 
-#: libgimpwidgets/gimpunitmenu.c:626
+#: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
 msgstr "Faktor"
 
@@ -540,9 +538,8 @@ msgid "CMYK color selector"
 msgstr "Výber farieb CMYK"
 
 #: modules/colorsel_cmyk.c:132
-#, fuzzy
 msgid "CMYK"
-msgstr "_CMYK"
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
@@ -578,25 +575,23 @@ msgstr "Čierna"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Použitie čiernej (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Výber farieb t maliarskeho trojuholníka"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
-msgstr "_Trojuholník"
+msgstr "Trojuholník"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Výber farieb v štýle vodových farieb"
 
 #: modules/colorsel_water.c:176
-#, fuzzy
 msgid "Watercolor"
-msgstr "_Vodné farby"
+msgstr "Vodné farby"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
@@ -611,3 +606,4 @@ msgstr "Tlak"
 #, fuzzy
 #~ msgid "_Time"
 #~ msgstr "Čas"
+
