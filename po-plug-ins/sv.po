@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:19+0100\n"
-"PO-Revision-Date: 2004-11-15 10:40+0900\n"
+"POT-Creation-Date: 2004-11-23 14:22+0900\n"
+"PO-Revision-Date: 2004-11-23 14:24+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -265,7 +265,7 @@ msgstr "Färgfunktion"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:966 plug-ins/common/channel_mixer.c:523
-#: plug-ins/common/decompose.c:131
+#: plug-ins/common/decompose.c:133
 msgid "Red"
 msgstr "Röd"
 
@@ -331,13 +331,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:1007 plug-ins/common/channel_mixer.c:528
-#: plug-ins/common/decompose.c:132
+#: plug-ins/common/decompose.c:134
 msgid "Green"
 msgstr "Grön"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:1048 plug-ins/common/channel_mixer.c:533
-#: plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:139
 msgid "Blue"
 msgstr "Blå"
 
@@ -1220,7 +1220,7 @@ msgstr "Oigenkänt eller felaktigt BMP-packningsformat."
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:614 plug-ins/common/decompose.c:582
+#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:949
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1098
 #: plug-ins/common/jpeg.c:2408 plug-ins/common/pcx.c:334
@@ -1231,7 +1231,7 @@ msgstr "Oigenkänt eller felaktigt BMP-packningsformat."
 #: plug-ins/common/tga.c:929 plug-ins/common/tiff.c:832
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
-#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1201
+#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1220
 #: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
@@ -1590,18 +1590,18 @@ msgid "Randoms from seed (shared)"
 msgstr "Slumpmässiga värden från frö (delad)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/CML_explorer.c:310
-#: plug-ins/common/decompose.c:141 plug-ins/gimpressionist/orientation.c:162
+#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:162
 #: plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Nyans"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/CML_explorer.c:311
-#: plug-ins/common/decompose.c:142 plug-ins/rcm/rcm_dialog.c:541
+#: plug-ins/common/decompose.c:144 plug-ins/rcm/rcm_dialog.c:541
 msgid "Saturation"
 msgstr "Mättnad"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:312
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:138
+#: plug-ins/common/decompose.c:145 plug-ins/gimpressionist/orientation.c:138
 #: plug-ins/gimpressionist/size.c:141
 msgid "Value"
 msgstr "Värde"
@@ -2083,12 +2083,12 @@ msgid "Orientation"
 msgstr "Orientering"
 
 #: plug-ins/common/blinds.c:259 plug-ins/common/ripple.c:539
-#: plug-ins/common/tileit.c:418 plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/common/tileit.c:419 plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Horisontell"
 
 #: plug-ins/common/blinds.c:260 plug-ins/common/ripple.c:540
-#: plug-ins/common/tileit.c:428 plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/common/tileit.c:429 plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Vertikal"
 
@@ -2415,12 +2415,12 @@ msgstr "Färg till Alfa färghämtare"
 msgid "to alpha"
 msgstr "till Alfa"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/decompose.c:128
+#: plug-ins/common/compose.c:127 plug-ins/common/decompose.c:130
 #: plug-ins/common/raw.c:953
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:133
+#: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:135
 #: plug-ins/common/raw.c:954
 msgid "RGBA"
 msgstr "RGBA"
@@ -2429,7 +2429,7 @@ msgstr "RGBA"
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: plug-ins/common/compose.c:147 plug-ins/common/decompose.c:138
+#: plug-ins/common/compose.c:147 plug-ins/common/decompose.c:140
 msgid "HSV"
 msgstr "HSV"
 
@@ -2448,7 +2448,7 @@ msgstr "Mättnad:"
 msgid "Value:"
 msgstr "Värde:"
 
-#: plug-ins/common/compose.c:154 plug-ins/common/decompose.c:144
+#: plug-ins/common/compose.c:154 plug-ins/common/decompose.c:146
 msgid "CMY"
 msgstr "CMY"
 
@@ -2467,7 +2467,7 @@ msgstr "Magenta:"
 msgid "Yellow:"
 msgstr "Gul:"
 
-#: plug-ins/common/compose.c:161 plug-ins/common/decompose.c:150
+#: plug-ins/common/compose.c:161 plug-ins/common/decompose.c:152
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2475,7 +2475,7 @@ msgstr "CMYK"
 msgid "Black:"
 msgstr "Svart:"
 
-#: plug-ins/common/compose.c:168 plug-ins/common/decompose.c:159
+#: plug-ins/common/compose.c:168 plug-ins/common/decompose.c:161
 msgid "LAB"
 msgstr "LAB"
 
@@ -2557,12 +2557,12 @@ msgstr "Fel vid hämtande av lager-IDn"
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Bilden är inte en gråskalebild (bpp=%d)"
 
-#: plug-ins/common/compose.c:1092
+#: plug-ins/common/compose.c:1103
 msgid "Compose"
 msgstr "Komponera"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1108
+#: plug-ins/common/compose.c:1119
 msgid "Compose Channels"
 msgstr "Komponera kanaler"
 
@@ -2570,7 +2570,7 @@ msgstr "Komponera kanaler"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1119
+#: plug-ins/common/compose.c:1130
 msgid "Channel Representations"
 msgstr "Kanalrepresentationer"
 
@@ -2788,7 +2788,7 @@ msgstr "Automatisk _förhandsgranskning"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
-#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1138
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1156
 msgid "Options"
 msgstr "Alternativ"
 
@@ -2893,159 +2893,159 @@ msgstr "Spara kurvälgen till fil"
 msgid "Curve Bend..."
 msgstr "Böj efter kurva..."
 
-#: plug-ins/common/decompose.c:128 plug-ins/common/decompose.c:131
-#: plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:135
 msgid "red"
 msgstr "röd"
 
-#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
-#: plug-ins/common/decompose.c:134
+#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:134
+#: plug-ins/common/decompose.c:136
 msgid "green"
 msgstr "grön"
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:135
-#: plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:139
 msgid "blue"
 msgstr "blå"
 
-#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:157
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:159
 msgid "alpha"
 msgstr "alfa"
 
-#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
+#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:143
 msgid "hue"
 msgstr "nyans"
 
-#: plug-ins/common/decompose.c:139 plug-ins/common/decompose.c:142
+#: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:144
 msgid "saturation"
 msgstr "mättnad"
 
-#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:143
+#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:145
 msgid "value"
 msgstr "värde"
 
-#: plug-ins/common/decompose.c:144 plug-ins/common/decompose.c:147
+#: plug-ins/common/decompose.c:146 plug-ins/common/decompose.c:149
 msgid "cyan"
 msgstr "cyan"
 
-#: plug-ins/common/decompose.c:145 plug-ins/common/decompose.c:148
+#: plug-ins/common/decompose.c:147 plug-ins/common/decompose.c:150
 msgid "magenta"
 msgstr "magenta"
 
-#: plug-ins/common/decompose.c:146 plug-ins/common/decompose.c:149
+#: plug-ins/common/decompose.c:148 plug-ins/common/decompose.c:151
 msgid "yellow"
 msgstr "gul"
 
-#: plug-ins/common/decompose.c:147
+#: plug-ins/common/decompose.c:149
 msgid "Cyan"
 msgstr "Cyan"
 
-#: plug-ins/common/decompose.c:148
+#: plug-ins/common/decompose.c:150
 msgid "Magenta"
 msgstr "Magenta"
 
-#: plug-ins/common/decompose.c:149
+#: plug-ins/common/decompose.c:151
 msgid "Yellow"
 msgstr "Gul"
 
-#: plug-ins/common/decompose.c:150 plug-ins/common/decompose.c:154
+#: plug-ins/common/decompose.c:152 plug-ins/common/decompose.c:156
 msgid "cyan_k"
 msgstr "cyan_k"
 
-#: plug-ins/common/decompose.c:151 plug-ins/common/decompose.c:155
+#: plug-ins/common/decompose.c:153 plug-ins/common/decompose.c:157
 msgid "magenta_k"
 msgstr "magenta_k"
 
-#: plug-ins/common/decompose.c:152 plug-ins/common/decompose.c:156
+#: plug-ins/common/decompose.c:154 plug-ins/common/decompose.c:158
 msgid "yellow_k"
 msgstr "gul_k"
 
-#: plug-ins/common/decompose.c:153
+#: plug-ins/common/decompose.c:155
 msgid "black"
 msgstr "svart"
 
-#: plug-ins/common/decompose.c:154
+#: plug-ins/common/decompose.c:156
 msgid "Cyan_K"
 msgstr "Cyan_K"
 
-#: plug-ins/common/decompose.c:155
+#: plug-ins/common/decompose.c:157
 msgid "Magenta_K"
 msgstr "Magenta_K"
 
-#: plug-ins/common/decompose.c:156
+#: plug-ins/common/decompose.c:158
 msgid "Yellow_K"
 msgstr "Gul_K"
 
-#: plug-ins/common/decompose.c:157
+#: plug-ins/common/decompose.c:159
 msgid "Alpha"
 msgstr "Alfa"
 
-#: plug-ins/common/decompose.c:164
+#: plug-ins/common/decompose.c:166
 msgid "luma_y470"
 msgstr "luma_y470"
 
-#: plug-ins/common/decompose.c:165
+#: plug-ins/common/decompose.c:167
 msgid "blueness_cb470"
 msgstr "blåton_cb470"
 
-#: plug-ins/common/decompose.c:166
+#: plug-ins/common/decompose.c:168
 msgid "redness_cr470"
 msgstr "rödton_cr470"
 
-#: plug-ins/common/decompose.c:168
+#: plug-ins/common/decompose.c:170
 msgid "luma_y709"
 msgstr "luma_y709"
 
-#: plug-ins/common/decompose.c:169
+#: plug-ins/common/decompose.c:171
 msgid "blueness_cb709"
 msgstr "blåton_cb709"
 
-#: plug-ins/common/decompose.c:170
+#: plug-ins/common/decompose.c:172
 msgid "redness_cr709"
 msgstr "rödton_cr709"
 
-#: plug-ins/common/decompose.c:172
+#: plug-ins/common/decompose.c:174
 msgid "luma_y470f"
 msgstr "luma_y470f"
 
-#: plug-ins/common/decompose.c:173
+#: plug-ins/common/decompose.c:175
 msgid "blueness_cb470f"
 msgstr "blåton_cb470f"
 
-#: plug-ins/common/decompose.c:174
+#: plug-ins/common/decompose.c:176
 msgid "redness_cr470f"
 msgstr "rödton_cr470f"
 
-#: plug-ins/common/decompose.c:176
+#: plug-ins/common/decompose.c:178
 msgid "luma_y709f"
 msgstr "luma_y709f"
 
-#: plug-ins/common/decompose.c:177
+#: plug-ins/common/decompose.c:179
 msgid "blueness_cb709f"
 msgstr "blåton_cb709f"
 
-#: plug-ins/common/decompose.c:178
+#: plug-ins/common/decompose.c:180
 msgid "redness_cr709f"
 msgstr "rödton_cr709f"
 
-#: plug-ins/common/decompose.c:243
+#: plug-ins/common/decompose.c:245
 msgid "_Decompose..."
 msgstr "_Separera..."
 
-#: plug-ins/common/decompose.c:328
+#: plug-ins/common/decompose.c:330
 msgid "Decomposing..."
 msgstr "Separerar..."
 
-#: plug-ins/common/decompose.c:1186
+#: plug-ins/common/decompose.c:1198
 msgid "Decompose"
 msgstr "Separera"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1202
+#: plug-ins/common/decompose.c:1214
 msgid "Extract Channels"
 msgstr "Extrahera kanaler"
 
-#: plug-ins/common/decompose.c:1230
+#: plug-ins/common/decompose.c:1242
 msgid "Decompose to _layers"
 msgstr "Separera till _lager"
 
@@ -3443,7 +3443,7 @@ msgid "Composing Images..."
 msgstr "Kombinerar bilder..."
 
 #: plug-ins/common/film.c:436 plug-ins/common/guillotine.c:183
-#: plug-ins/helpbrowser/dialog.c:519
+#: plug-ins/helpbrowser/dialog.c:523
 msgid "Untitled"
 msgstr "Namnlös"
 
@@ -4154,8 +4154,8 @@ msgstr "_Rutnät..."
 msgid "Drawing Grid..."
 msgstr "Ritar rutnät..."
 
-#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:806
-#: plug-ins/gfig/gfig-dialog.c:1265 plug-ins/imagemap/imap_menu.c:385
+#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:824
+#: plug-ins/gfig/gfig-dialog.c:1284 plug-ins/imagemap/imap_menu.c:385
 #: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:168
 msgid "Grid"
 msgstr "Rutnät"
@@ -4630,9 +4630,8 @@ msgid "Save EXIF data"
 msgstr "Spara EXIF-data"
 
 #: plug-ins/common/jpeg.c:2056
-#, fuzzy
 msgid "Save thumbnail"
-msgstr "Sparande misslyckades"
+msgstr "Spara miniatyrbild"
 
 #. Subsampling
 #: plug-ins/common/jpeg.c:2070
@@ -4662,9 +4661,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: plug-ins/common/jpeg.c:2272
-#, fuzzy, c-format
+#, c-format
 msgid "Opening thumbnail for '%s'..."
-msgstr "Öppnar \"%s\"..."
+msgstr "Öppnar miniatyrbild för \"%s\"..."
 
 #: plug-ins/common/laplace.c:95
 msgid "_Laplace"
@@ -5225,7 +5224,7 @@ msgid "_Factory defaults"
 msgstr "Ställ in _standardvärden"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1175
+#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1193
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
@@ -5278,9 +5277,8 @@ msgid "Scatter RGB"
 msgstr "Skingra RGB"
 
 #: plug-ins/common/noisify.c:477
-#, fuzzy
 msgid "Co_rrelated noise"
-msgstr "Skapa ellips"
+msgstr "Ko_rrelerat brus"
 
 #: plug-ins/common/noisify.c:492
 msgid "_Independent RGB"
@@ -5785,7 +5783,7 @@ msgstr "Sidor:"
 
 #: plug-ins/common/postscript.c:2983
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "Sidor att läsa in (exempelvis: 1-4 eller 1,3,5-7)"
 
 #: plug-ins/common/postscript.c:2985
 msgid "Try Bounding Box"
@@ -6884,7 +6882,7 @@ msgstr "Sprid"
 msgid "Spread Amount"
 msgstr "Spridningsmängd"
 
-#: plug-ins/common/struc.c:1145
+#: plug-ins/common/struc.c:1146
 msgid "_Apply Canvas..."
 msgstr "_Applicerar canvas..."
 
@@ -7167,7 +7165,7 @@ msgstr "Kommentar:"
 msgid "_Tile..."
 msgstr "_Plattlägg..."
 
-#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:320
+#: plug-ins/common/tile.c:192 plug-ins/common/tileit.c:321
 msgid "Tiling..."
 msgstr "Plattlägger..."
 
@@ -7184,47 +7182,47 @@ msgstr "Plattlägg till ny storlek"
 msgid "C_reate New Image"
 msgstr "S_kapa ny bild"
 
-#: plug-ins/common/tileit.c:223
+#: plug-ins/common/tileit.c:224
 msgid "_Small Tiles..."
 msgstr "_Små plattor..."
 
 #. Get the preview image
-#: plug-ins/common/tileit.c:363
+#: plug-ins/common/tileit.c:364
 msgid "TileIt"
 msgstr "PlattLägg"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tileit.c:406 plug-ins/ifscompose/ifscompose.c:628
+#: plug-ins/common/tileit.c:407 plug-ins/ifscompose/ifscompose.c:628
 msgid "Flip"
 msgstr "Vänd"
 
-#: plug-ins/common/tileit.c:454
+#: plug-ins/common/tileit.c:455
 msgid "A_ll tiles"
 msgstr "A_lla plattor"
 
-#: plug-ins/common/tileit.c:468
+#: plug-ins/common/tileit.c:469
 msgid "Al_ternate tiles"
 msgstr "Al_ternerande plattor"
 
-#: plug-ins/common/tileit.c:482
+#: plug-ins/common/tileit.c:483
 msgid "_Explicit tile"
 msgstr "_Explicit platta"
 
-#: plug-ins/common/tileit.c:488
+#: plug-ins/common/tileit.c:489
 msgid "Ro_w:"
 msgstr "R_ad:"
 
-#: plug-ins/common/tileit.c:512
+#: plug-ins/common/tileit.c:513
 msgid "Col_umn:"
 msgstr "K_olumn:"
 
-#: plug-ins/common/tileit.c:564
+#: plug-ins/common/tileit.c:565
 msgid "O_pacity:"
 msgstr "O_pacitet:"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:573
+#: plug-ins/common/tileit.c:574
 msgid "Number of Segments"
 msgstr "Antal segment:"
 
@@ -7592,7 +7590,7 @@ msgid "Smear"
 msgstr "Smeta ut"
 
 #: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:988
-#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1319
+#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1338
 msgid "Black"
 msgstr "Svart"
 
@@ -8285,8 +8283,8 @@ msgstr "Läs in FITS-fil"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "Ersätt BLANK/NaN bildpunkter"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1203
-#: plug-ins/gfig/gfig-dialog.c:1320
+#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1222
+#: plug-ins/gfig/gfig-dialog.c:1339
 msgid "White"
 msgstr "Vitt"
 
@@ -8356,7 +8354,7 @@ msgstr "Virvla"
 msgid "Horseshoe"
 msgstr "Hästsko"
 
-#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1303
+#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1322
 msgid "Polar"
 msgstr "Polär"
 
@@ -8447,9 +8445,8 @@ msgid "Tool options"
 msgstr "Verktygsalternativ"
 
 #: plug-ins/gfig/gfig-dialog.c:368
-#, fuzzy
 msgid "_Stroke"
-msgstr "Stryk"
+msgstr "_Stryk"
 
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:414
@@ -8486,127 +8483,127 @@ msgstr "Visa rutnät"
 msgid "Load Gfig object collection"
 msgstr "Läs in Gfig-objektsamling"
 
-#: plug-ins/gfig/gfig-dialog.c:722
+#: plug-ins/gfig/gfig-dialog.c:740
 msgid "First Gfig"
 msgstr "Första Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:744
+#: plug-ins/gfig/gfig-dialog.c:762
 msgid "Save Gfig Drawing"
 msgstr "Spara Gfig-ritning"
 
-#: plug-ins/gfig/gfig-dialog.c:814
+#: plug-ins/gfig/gfig-dialog.c:832
 msgid "Raise selected object"
 msgstr "Höj valt objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:818
+#: plug-ins/gfig/gfig-dialog.c:836
 msgid "Lower selected object"
 msgstr "Sänk valt objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:822
+#: plug-ins/gfig/gfig-dialog.c:840
 msgid "Raise selected object to top"
 msgstr "Sätt valt objekt överst"
 
-#: plug-ins/gfig/gfig-dialog.c:826
+#: plug-ins/gfig/gfig-dialog.c:844
 msgid "Lower selected object to bottom"
 msgstr "Sätt valt objekt underst"
 
-#: plug-ins/gfig/gfig-dialog.c:830
+#: plug-ins/gfig/gfig-dialog.c:848
 msgid "Show previous object"
 msgstr "Visa föregående objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:834
+#: plug-ins/gfig/gfig-dialog.c:852
 msgid "Show next object"
 msgstr "Visa nästa objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:838
+#: plug-ins/gfig/gfig-dialog.c:856
 msgid "Show all objects"
 msgstr "Visa alla objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:844
+#: plug-ins/gfig/gfig-dialog.c:862
 msgid "Create line"
 msgstr "Skapa linje"
 
-#: plug-ins/gfig/gfig-dialog.c:847
+#: plug-ins/gfig/gfig-dialog.c:865
 msgid "Create circle"
 msgstr "Skapa cirkel"
 
-#: plug-ins/gfig/gfig-dialog.c:850
+#: plug-ins/gfig/gfig-dialog.c:868
 msgid "Create ellipse"
 msgstr "Skapa ellips"
 
-#: plug-ins/gfig/gfig-dialog.c:853
+#: plug-ins/gfig/gfig-dialog.c:871
 msgid "Create arc"
 msgstr "Skapa båge"
 
-#: plug-ins/gfig/gfig-dialog.c:856
+#: plug-ins/gfig/gfig-dialog.c:874
 msgid "Create reg polygon"
 msgstr "Skapa liksidig polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:859
+#: plug-ins/gfig/gfig-dialog.c:877
 msgid "Create star"
 msgstr "Skapa stjärna"
 
-#: plug-ins/gfig/gfig-dialog.c:862
+#: plug-ins/gfig/gfig-dialog.c:880
 msgid "Create spiral"
 msgstr "Skapa spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:865
+#: plug-ins/gfig/gfig-dialog.c:883
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Skapa bezierkurva. Shift + musknapp avslutar skapandet."
 
-#: plug-ins/gfig/gfig-dialog.c:869
+#: plug-ins/gfig/gfig-dialog.c:887
 msgid "Move an object"
 msgstr "Flytta ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:872
+#: plug-ins/gfig/gfig-dialog.c:890
 msgid "Move a single point"
 msgstr "Flytta en punkt"
 
-#: plug-ins/gfig/gfig-dialog.c:875
+#: plug-ins/gfig/gfig-dialog.c:893
 msgid "Copy an object"
 msgstr "Kopiera ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:878
+#: plug-ins/gfig/gfig-dialog.c:896
 msgid "Delete an object"
 msgstr "Ta bort ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:881
+#: plug-ins/gfig/gfig-dialog.c:899
 msgid "Select an object"
 msgstr "Välj ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:958
+#: plug-ins/gfig/gfig-dialog.c:976
 msgid "This tool has no options"
 msgstr "Detta verktyg har inga alternativ"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1152
+#: plug-ins/gfig/gfig-dialog.c:1170
 msgid "Show position"
 msgstr "Visa position"
 
-#: plug-ins/gfig/gfig-dialog.c:1163
+#: plug-ins/gfig/gfig-dialog.c:1181
 msgid "Show control points"
 msgstr "Visa kontrollpunkter"
 
-#: plug-ins/gfig/gfig-dialog.c:1192
+#: plug-ins/gfig/gfig-dialog.c:1211
 msgid "Max undo:"
 msgstr "Max ångra:"
 
-#: plug-ins/gfig/gfig-dialog.c:1200 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1219 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Genomskinlig"
 
-#: plug-ins/gfig/gfig-dialog.c:1202
+#: plug-ins/gfig/gfig-dialog.c:1221
 msgid "Foreground"
 msgstr "Förgrund"
 
-#: plug-ins/gfig/gfig-dialog.c:1204 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1223 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Kopiera"
 
-#: plug-ins/gfig/gfig-dialog.c:1213
+#: plug-ins/gfig/gfig-dialog.c:1232
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8614,77 +8611,77 @@ msgstr ""
 "Bakgrundstyp för lager. Kopiera medför att förra lagret blir kopierat innan "
 "ritandet utförs"
 
-#: plug-ins/gfig/gfig-dialog.c:1218
+#: plug-ins/gfig/gfig-dialog.c:1237
 msgid "Background:"
 msgstr "Bakgrund:"
 
-#: plug-ins/gfig/gfig-dialog.c:1222
+#: plug-ins/gfig/gfig-dialog.c:1241
 msgid "Feather"
 msgstr "Fjäder"
 
-#: plug-ins/gfig/gfig-dialog.c:1246
+#: plug-ins/gfig/gfig-dialog.c:1265
 msgid "Radius:"
 msgstr "Radie:"
 
-#: plug-ins/gfig/gfig-dialog.c:1289
+#: plug-ins/gfig/gfig-dialog.c:1308
 msgid "Grid spacing:"
 msgstr "Rutnätsmellanrum:"
 
-#: plug-ins/gfig/gfig-dialog.c:1302 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gfig/gfig-dialog.c:1321 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:161
 msgid "Rectangle"
 msgstr "Rektangel"
 
-#: plug-ins/gfig/gfig-dialog.c:1304
+#: plug-ins/gfig/gfig-dialog.c:1323
 msgid "Isometric"
 msgstr "Isometrisk"
 
-#: plug-ins/gfig/gfig-dialog.c:1313
+#: plug-ins/gfig/gfig-dialog.c:1332
 msgid "Grid type:"
 msgstr "Rutnätstyp:"
 
-#: plug-ins/gfig/gfig-dialog.c:1318 plug-ins/gflare/gflare.c:559
+#: plug-ins/gfig/gfig-dialog.c:1337 plug-ins/gflare/gflare.c:559
 msgid "Normal"
 msgstr "Normalt"
 
-#: plug-ins/gfig/gfig-dialog.c:1321
+#: plug-ins/gfig/gfig-dialog.c:1340
 msgid "Grey"
 msgstr "Grått"
 
-#: plug-ins/gfig/gfig-dialog.c:1322
+#: plug-ins/gfig/gfig-dialog.c:1341
 msgid "Darker"
 msgstr "Mörkare"
 
-#: plug-ins/gfig/gfig-dialog.c:1323
+#: plug-ins/gfig/gfig-dialog.c:1342
 msgid "Lighter"
 msgstr "Ljusare"
 
-#: plug-ins/gfig/gfig-dialog.c:1324
+#: plug-ins/gfig/gfig-dialog.c:1343
 msgid "Very dark"
 msgstr "Mycket mörkt"
 
-#: plug-ins/gfig/gfig-dialog.c:1333
+#: plug-ins/gfig/gfig-dialog.c:1352
 msgid "Grid color:"
 msgstr "Rutnätsfärg:"
 
-#: plug-ins/gfig/gfig-dialog.c:1530
+#: plug-ins/gfig/gfig-dialog.c:1549
 msgid "Sides:"
 msgstr "Sidor:"
 
-#: plug-ins/gfig/gfig-dialog.c:1540
+#: plug-ins/gfig/gfig-dialog.c:1559
 msgid "Right"
 msgstr "Höger"
 
-#: plug-ins/gfig/gfig-dialog.c:1541
+#: plug-ins/gfig/gfig-dialog.c:1560
 msgid "Left"
 msgstr "Vänster"
 
-#: plug-ins/gfig/gfig-dialog.c:1551 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1570 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientering:"
 
-#: plug-ins/gfig/gfig-dialog.c:1776
+#: plug-ins/gfig/gfig-dialog.c:1795
 #, c-format
 msgid "Gfig layer %d"
 msgstr "Gfig lager %d"
@@ -8705,12 +8702,12 @@ msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 msgid "Regular Polygon Number of Sides"
 msgstr "Liksidig polygon antal sidor"
 
-#: plug-ins/gfig/gfig-preview.c:331
+#: plug-ins/gfig/gfig-preview.c:332
 msgid "Object Details"
 msgstr "Objektdetaljer"
 
 #. Position labels
-#: plug-ins/gfig/gfig-preview.c:381
+#: plug-ins/gfig/gfig-preview.c:382
 msgid "XY position:"
 msgstr "XY-position:"
 
@@ -9672,15 +9669,15 @@ msgstr ""
 "Tolkningsfel i \"%s\":\n"
 "%s"
 
-#: plug-ins/helpbrowser/dialog.c:153
+#: plug-ins/helpbrowser/dialog.c:157
 msgid "GIMP Help browser"
 msgstr "GIMP hjälpläsare"
 
-#: plug-ins/helpbrowser/dialog.c:405
+#: plug-ins/helpbrowser/dialog.c:409
 msgid "Document not found"
 msgstr "Dokumentet kunde inte hittas"
 
-#: plug-ins/helpbrowser/dialog.c:407
+#: plug-ins/helpbrowser/dialog.c:411
 msgid "The requested URL could not be loaded:"
 msgstr "Den angivna adressen kunde inte läsas in:"
 
