@@ -1,5 +1,11 @@
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainerview.c (gimp_container_view_get_preview):
+	we have a bad bug somewhere; this function shouldn't be called for
+	a view w/o a container. Added a g_return_if_fail() to avoid a crash.
+
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig.c: reverted most of Maurits changes (not the
 	bug-fix though). The tentative feature freeze we are in also
 	implies a string freeze.  It's too late for such massive string
