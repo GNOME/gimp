@@ -1,3 +1,15 @@
+2001-11-16  Rebecca Walter  <rjp@mail.tele.dk>
+
+	* app/core/gimpcontext.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage.c: Extensive proofreading of messages and 
+	warnings.  Improved standardization of string format and content.
+
 2001-11-15  Michael Natterer  <mitch@gimp.org>
 
 	Gimp's opacity values are a pain... the core actually *should*

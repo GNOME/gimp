@@ -278,9 +278,10 @@ gimp_data_factory_data_load_callback (const gchar *filename,
         }
       else
         {
-          g_warning ("%s(): trying legacy loader on file with unknown "
-                     "extension: %s",
-                     G_GNUC_FUNCTION, filename);
+          g_message (_("Trying legacy loader on\n"
+		       "file '%s'\n" 
+		       "with unknown extension."),
+                     filename);
           goto insert;
         }
     }
@@ -295,7 +296,7 @@ gimp_data_factory_data_load_callback (const gchar *filename,
 
     if (! data)
       {
-	g_message (_("Warning: Failed to load data from\n\"%s\""), filename);
+	g_message (_("Warning: Failed to load data from\n'%s'"), filename);
       }
     else
       {

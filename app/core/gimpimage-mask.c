@@ -231,8 +231,8 @@ gimage_mask_extract (GimpImage    *gimage,
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      g_message (_("Unable to cut/copy because the selected\n"
-		   "region is empty."));
+      g_message (_("Unable to cut or copy because the\n"
+		   "selected region is empty."));
       return NULL;
     }
 
@@ -376,7 +376,7 @@ gimage_mask_float (GimpImage    *gimage,
   non_empty = gimp_drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
-      g_message (_("Float Selection: No selection to float."));
+      g_message (_("Cannot float selection: No selection made."));
       return NULL;
     }
 
@@ -596,7 +596,7 @@ gimage_mask_stroke (GimpImage    *gimage,
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out,
 			      &num_segs_in, &num_segs_out))
     {
-      g_message (_("No selection to stroke!"));
+      g_message (_("No selection to stroke."));
       return FALSE;
     }
 

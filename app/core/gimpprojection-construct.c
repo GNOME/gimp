@@ -1245,7 +1245,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   operation = valid_combinations[gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("%s(): illegal parameters", G_GNUC_FUNCTION);
+      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNC);
       return;
     }
 
@@ -1354,7 +1354,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   operation = valid_combinations [gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("%s(): got illegal parameters", G_GNUC_FUNCTION);
+      g_warning ("%s: illegal parameters.", G_GNUC_PRETTY_FUNC);
       return;
     }
 
@@ -1914,7 +1914,8 @@ gimp_image_get_new_tattoo (GimpImage *gimage)
   gimage->tattoo_state++;
 
   if (gimage->tattoo_state <= 0)
-    g_warning ("gimp_image_get_new_tattoo(): Tattoo state has become corrupt (2.1 billion operation limit exceded)");
+    g_warning ("%s: Tattoo state corrupted "
+	       "(integer overflow).", G_GNUC_PRETTY_FUNC);
 
   return gimage->tattoo_state;
 }
@@ -2172,7 +2173,7 @@ project_indexed (GimpImage   *gimage,
     initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    g_message ("%s(): unable to project indexed image.", G_GNUC_FUNCTION);
+    g_warning ("%s: unable to project indexed image.", G_GNUC_PRETTY_FUNCTION);
 }
 
 static void
@@ -3186,8 +3187,7 @@ gimp_image_raise_layer (GimpImage *gimage,
   /* is this the top layer already? */
   if (curpos == 0)
     {
-      g_message (_("%s(): layer cannot be raised any further"),
-		 G_GNUC_FUNCTION);
+      g_message (_("Layer cannot be raised higher."));
       return FALSE;
     }
   
@@ -3211,8 +3211,7 @@ gimp_image_lower_layer (GimpImage *gimage,
   length = gimp_container_num_children (gimage->layers);
   if (curpos >= length - 1)
     {
-      g_message (_("%s(): layer cannot be lowered any further"),
-		 G_GNUC_FUNCTION);
+      g_message (_("Layer cannot be lowered more."));
       return FALSE;
     }
   
@@ -3233,14 +3232,13 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
   
   if (curpos == 0)
     {
-      g_message (_("%s(): layer is already on top"),
-		 G_GNUC_FUNCTION);
+      g_message (_("Layer is already on top."));
       return FALSE;
     }
   
   if (! gimp_layer_has_alpha (layer))
     {
-      g_message (_("%s(): can't raise Layer without alpha"), G_GNUC_FUNCTION);
+      g_message (_("Cannot raise a layer without alpha."));
       return FALSE;
     }
   
@@ -3264,7 +3262,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
 
   if (curpos >= length - 1)
     {
-      g_message (_("%s(): layer is already on bottom"), G_GNUC_FUNCTION);
+      g_message (_("Layer is already on the bottom."));
       return FALSE;
     }
   
@@ -3311,7 +3309,8 @@ gimp_image_position_layer (GimpImage *gimage,
       if (new_index == num_layers - 1 &&
 	  ! gimp_layer_has_alpha (tmp))
 	{
-	  g_message (_("BG has no alpha, layer was placed above"));
+	  g_message (_("Layer \"%s\" has no alpha.\nLayer was placed above it."),
+		     GIMP_OBJECT (tmp)->name);
 	  new_index--;
 	}
     }
@@ -3381,7 +3380,8 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
       if (had_floating_sel)
 	return layer;
       else
-	g_message (_("There are not enough visible layers for a merge.\nThere must be at least two."));
+	g_message (_("Not enough visible layers for a merge.\n"
+		     "There must be at least two."));
 
       return NULL;
     }
@@ -3595,7 +3595,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 				    OPAQUE_OPACITY, NORMAL_MODE);
       if (!merge_layer)
 	{
-	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
+	  g_warning ("%s: could not allocate merge layer.",
+		     G_GNUC_PRETTY_FUNC);
 	  return NULL;
 	}
 
@@ -3633,7 +3634,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       if (!merge_layer)
 	{
-	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
+	  g_warning ("%s: could not allocate merge layer",
+		     G_GNUC_PRETTY_FUNC);
 	  return NULL;
 	}
 
@@ -3692,7 +3694,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       if (operation == -1)
 	{
-	  g_message ("gimp_image_merge_layers attempting to merge incompatible layers\n");
+	  g_warning ("%s: attempting to merge incompatible layers.",
+		     G_GNUC_PRETTY_FUNCTION);
 	  return NULL;
 	}
 
@@ -3793,13 +3796,15 @@ gimp_image_add_layer (GimpImage *gimage,
   if (GIMP_DRAWABLE (layer)->gimage != NULL && 
       GIMP_DRAWABLE (layer)->gimage != gimage) 
     {
-      g_message ("gimp_image_add_layer: attempt to add layer to wrong image");
+      g_warning ("%s: attempting to add layer to wrong image.",
+		 G_GNUC_PRETTY_FUNC);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->layers, GIMP_OBJECT (layer)))
     {
-      g_message ("gimp_image_add_layer: trying to add layer to image twice");
+      g_warning ("%s: trying to add layer to image twice.",
+		 G_GNUC_PRETTY_FUNC);
       return FALSE;
     }
 
@@ -3943,7 +3948,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
 					  GIMP_OBJECT (channel));
   if (index == 0)
     {
-      g_message (_("Channel cannot be raised any further"));
+      g_message (_("Channel cannot be raised higher."));
       return FALSE;
     }
 
@@ -3963,7 +3968,7 @@ gimp_image_lower_channel (GimpImage   *gimage,
 					  GIMP_OBJECT (channel));
   if (index == gimp_container_num_children (gimage->channels) - 1)
     {
-      g_message (_("Channel cannot be lowered any further"));
+      g_message (_("Channel cannot be lowered more."));
       return FALSE;
     }
 
@@ -4018,15 +4023,15 @@ gimp_image_add_channel (GimpImage   *gimage,
   if (GIMP_DRAWABLE (channel)->gimage != NULL &&
       GIMP_DRAWABLE (channel)->gimage != gimage)
     {
-      g_message ("%s(): attempt to add channel to wrong image",
-		 G_GNUC_FUNCTION);
+      g_warning ("%s: attempting to add channel to wrong image.",
+		 G_GNUC_PRETTY_FUNCTION);
       return FALSE;
     }
 
   if (gimp_container_have (gimage->channels, GIMP_OBJECT (channel)))
     {
-      g_message ("%s(): trying to add channel to image twice",
-		 G_GNUC_FUNCTION);
+      g_warning ("%s: trying to add channel to image twice.",
+		 G_GNUC_PRETTY_FUNCTION);
       return FALSE;
     }
 

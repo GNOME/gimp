@@ -328,7 +328,7 @@ gimp_gradient_load (const gchar *filename)
         }
       else
         {
-          g_message (_("Invalid UTF-8 string in GIMP gradient file \"%s\"."), 
+          g_message (_("Invalid UTF-8 string in gradient file '%s'."), 
                      filename);
           gimp_object_set_name (GIMP_OBJECT (gradient), _("Unnamed"));
         }
@@ -350,8 +350,8 @@ gimp_gradient_load (const gchar *filename)
 
   if (num_segments < 1)
     {
-      g_message ("%s(): invalid number of segments in \"%s\"",
-		 G_GNUC_FUNCTION, filename);
+      g_message ("Fatal parsing error:\nGradient file '%s' is corrupt.",
+		 filename);
       g_object_unref (G_OBJECT (gradient));
       fclose (file);
       return NULL;
@@ -406,9 +406,8 @@ gimp_gradient_load (const gchar *filename)
         }
       else
         {
-	  g_message ("%s(): badly formatted gradient segment %d in \"%s\" --- "
-		     "bad things may happen soon",
-		     G_GNUC_FUNCTION, i, filename);
+	  g_message (_("Corrupt segment %d in gradient file '%s'."),
+		     i, filename);
 	}
 
       prev = seg;
@@ -447,8 +446,7 @@ gimp_gradient_save (GimpData *data)
   file = fopen (data->filename, "wb");
   if (! file)
     {
-      g_message ("%s(): can't open \"%s\"",
-		 G_GNUC_FUNCTION, data->filename);
+      g_message (_("Unable to save '%s':\n%s"), data->filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -577,8 +575,8 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
       break;
 
     default:
-      gimp_fatal_error ("%s(): Unknown gradient type %d",
-			G_GNUC_FUNCTION, (gint) seg->type);
+      g_warning ("%s: Unknown gradient type %d.", 
+		 G_GNUC_PRETTY_FUNCTION, seg->type);
       break;
     }
 
@@ -639,8 +637,8 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 	  break;
 
 	default:
-	  gimp_fatal_error ("%s(): Unknown coloring mode %d",
-			    G_GNUC_FUNCTION, (gint) seg->color);
+	  g_warning ("%s(): Unknown coloring mode %d",
+		     G_GNUC_PRETTY_FUNCTION, (gint) seg->color);
 	  break;
 	}
 
@@ -687,8 +685,8 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
     }
 
   /* Oops: we should have found a segment, but we didn't */
-  gimp_fatal_error ("%s(): no matching segment for position %0.15f",
-		    G_GNUC_FUNCTION, pos);
+  g_warning ("%s(): no matching segment for position %0.15f",
+	     G_GNUC_PRETTY_FUNCTION, pos);
 
   return NULL;
 }

@@ -1279,7 +1279,7 @@ generate_histogram_rgb (CFHistogram  histogram,
 			   *  quantizing at a later stage.
 			   */
 			  needs_quantize = TRUE;
-			  /*			  g_print (_("\nmax colours exceeded - needs quantize.\n"));*/
+			  /*			  g_print ("\nmax colours exceeded - needs quantize.\n");*/
 			  goto already_found;
 			}
 		      else
@@ -2861,8 +2861,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 			    goto got_colour;
 			  }
 			}
-		      g_error ("Non-existant colour was expected to "
-			       "be in non-destructive colourmap.");
+		      g_error ("Nonexistent color was expected to "
+			       "be in nondestructive colormap.");
 		    got_colour:
 		      dest[INDEXED_PIX] = lastindex;
 		      if (has_alpha)

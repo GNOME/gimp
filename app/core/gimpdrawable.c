@@ -343,7 +343,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 		       (gpointer) drawable);
 
   if (!name)
-    name = _("unnamed");
+    name = _("Unnamed");
 
   switch (type)
     {
@@ -360,7 +360,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
     case INDEXEDA_GIMAGE:
       bpp = 2; alpha = TRUE; break;
     default:
-      g_message (_("Layer type %d not supported."), type);
+      g_warning ("%s: Layer type %d not supported.", 
+		 G_GNUC_PRETTY_FUNCTION, type);
       return;
     }
 
@@ -556,7 +557,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
       break;
 
     default:
-      g_message (_("Can't fill unknown image type."));
+      g_warning ("%s: Cannot fill unknown image type.", G_GNUC_PRETTY_FUNCTION);
       break;
     }
 
@@ -607,7 +608,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       return;
 
     default:
-      g_warning ("gimp_drawable_fill_by_type(): unknown fill type");
+      g_warning ("%s: unknown fill type %d", G_GNUC_PRETTY_FUNCTION, fill_type);
       return;
     }
 
@@ -840,7 +841,7 @@ gimp_drawable_parasite_attach (GimpDrawable *drawable,
 				    gimp_drawable_parasite_find
 				    (drawable, gimp_parasite_name (parasite))))
     {
-      undo_push_cantundo (drawable->gimage, _("parasite attach to drawable"));
+      undo_push_cantundo (drawable->gimage, _("parasite attached to drawable"));
     }
 
   gimp_parasite_list_add (drawable->parasites, parasite);
@@ -878,7 +879,7 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
     undo_push_drawable_parasite_remove (drawable->gimage, drawable,
 					gimp_parasite_name (p));
   else if (gimp_parasite_is_persistent (p))
-    undo_push_cantundo (drawable->gimage, _("detach parasite from drawable"));
+    undo_push_cantundo (drawable->gimage, _("parasite detached from drawable"));
 
   gimp_parasite_list_remove (drawable->parasites, parasite);
 }

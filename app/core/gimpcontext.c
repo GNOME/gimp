@@ -45,6 +45,7 @@
 #include "gimppattern.h"
 #include "gimptoolinfo.h"
 
+#include "libgimp/gimpintl.h" 
 
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 					  GimpContext *dest);
@@ -966,7 +967,7 @@ gimp_context_set_name (GimpContext *context,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! name)
-    name = "Unnamed";
+    name = _("Unnamed");
 
   gimp_object_set_name (GIMP_OBJECT (context), name);
 }
