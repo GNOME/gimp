@@ -1,5 +1,23 @@
 2002-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-open.[ch]: all functions return the opened image
+	and the pdb status plus a GError now. Removed all g_message()
+	calls from file_open_image(). Instead, display all error messages
+	in file_open_with_proc_and_display() if it got no error return
+	location passed.
+
+	* app/app_procs.c
+	* app/core/gimpimagefile.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdocumentview.c: changed accordingly.
+
+	* app/gui/file-open-dialog.c: only treat the "entered_filename" as
+	URI if it contains "://".
+
+2002-04-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdocuments.[ch] (gimp_documents_add): speak in terms
 	of "uri", not "filename". Return the created imagefile.
 

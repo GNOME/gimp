@@ -912,7 +912,11 @@ gimp_dnd_open_files (GtkWidget *widget,
       g_print ("%s: ...trying to open resulting uri \"%s\"\n",
                G_GNUC_FUNCTION, uri);
 
-      file_open_with_display (the_gimp, uri);
+      {
+        GimpPDBStatusType dummy;
+
+        file_open_with_display (the_gimp, uri, &dummy, NULL);
+      }
 
       g_free (uri);
     }

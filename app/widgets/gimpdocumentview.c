@@ -211,8 +211,11 @@ gimp_document_view_open_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
+      GimpPDBStatusType dummy;
+
       file_open_with_display (editor->view->context->gimp,
-                              gimp_object_get_name (GIMP_OBJECT (imagefile)));
+                              gimp_object_get_name (GIMP_OBJECT (imagefile)),
+                              &dummy, NULL);
     }
   else
     {
@@ -279,8 +282,11 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
 
           if (! closure.found)
             {
+              GimpPDBStatusType dummy;
+
               file_open_with_display (editor->view->context->gimp,
-                                      closure.name);
+                                      closure.name,
+                                      &dummy, NULL);
             }
         }
     }

@@ -195,7 +195,9 @@ app_init (gint    gimp_argc,
                 }
               else
                 {
-                  file_open_with_display (the_gimp, uri);
+                  GimpPDBStatusType dummy;
+
+                  file_open_with_display (the_gimp, uri, &dummy, NULL);
 
                   g_free (uri);
                 }

@@ -555,33 +555,33 @@ file_open_ok_callback (GtkWidget *widget,
 
   entered_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
 
-  if (g_file_test (selections[0], G_FILE_TEST_EXISTS))
+  if (g_file_test (selections[0], G_FILE_TEST_IS_DIR))
     {
-      if (g_file_test (selections[0], G_FILE_TEST_IS_DIR))
+      if (selections[0][strlen (selections[0]) - 1] != G_DIR_SEPARATOR)
         {
-          if (selections[0][strlen (selections[0]) - 1] != G_DIR_SEPARATOR)
-            {
-              gchar *s = g_strconcat (selections[0], G_DIR_SEPARATOR_S, NULL);
-              gtk_file_selection_set_filename (fs, s);
-              g_free (s);
-            }
-          else
-            {
-              gtk_file_selection_set_filename (fs, selections[0]);
-            }
-
-          g_strfreev (selections);
-
-          return;
+          gchar *s = g_strconcat (selections[0], G_DIR_SEPARATOR_S, NULL);
+          gtk_file_selection_set_filename (fs, s);
+          g_free (s);
+        }
+      else
+        {
+          gtk_file_selection_set_filename (fs, selections[0]);
         }
 
-      uri = g_filename_to_uri (selections[0], NULL, NULL);
+      g_strfreev (selections);
+
+      return;
+    }
+
+  if (strstr (entered_filename, "://"))
+    {
+      /* try with the entered filename if it looks like an URI */
+
+      uri = g_strdup (entered_filename);
     }
   else
     {
-      /* try with the entered filename in case the user typed an URI */
-
-      uri = g_strdup (entered_filename);
+      uri = g_filename_to_uri (selections[0], NULL, NULL);
     }
 
   gtk_widget_set_sensitive (open_dialog, FALSE);
@@ -628,18 +628,15 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 {
   GimpPDBStatusType status;
 
-  status = file_open_with_proc_and_display (gimp,
-                                            uri,
-                                            entered_filename, 
-                                            load_proc);
+  file_open_with_proc_and_display (gimp,
+                                   uri,
+                                   entered_filename, 
+                                   load_proc,
+                                   &status,
+                                   NULL);
 
   if (status == GIMP_PDB_SUCCESS)
     {
       file_dialog_hide (open_dialog);
-    }
-  else if (status != GIMP_PDB_CANCEL)
-    {
-      /* Hackery required. Please add error message. --bex */
-      g_message (_("Opening '%s' failed."), uri);
     }
 }

@@ -354,9 +354,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
                                     uri,
                                     uri,
                                     NULL,
-                                    NULL,
                                     GIMP_RUN_NONINTERACTIVE,
-                                    &dummy);
+                                    &dummy,
+                                    NULL);
         }
 
       g_free (filename);
@@ -390,9 +390,6 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-  g_print ("%s\n%s\n\n",
-           uri, gimp_object_get_name (GIMP_OBJECT (gimage)));
 
   g_return_if_fail (! strcmp (uri, gimp_object_get_name (GIMP_OBJECT (gimage))));
 

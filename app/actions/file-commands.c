@@ -32,6 +32,7 @@
 
 #include "file/file-open.h"
 #include "file/file-save.h"
+#include "file/file-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -106,7 +107,6 @@ file_last_opened_cmd_callback (GtkWidget *widget,
   Gimp          *gimp;
   GimpImagefile *imagefile;
   guint          num_entries;
-  gint           status;
 
   gimp = GIMP (data);
 
@@ -120,19 +120,10 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 
   if (imagefile)
     {
-      status = file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name);
+      GimpPDBStatusType dummy;
 
-      if (status != GIMP_PDB_SUCCESS &&
-          status != GIMP_PDB_CANCEL)
-        {
-	  /* This string needs to be fixed. Mitch is supposed to do
-           * it.  Needs a : added at the end followed by the error.
-           * Also something about the GIMP_OBJECT needs to be
-           * changed. --bex
-           */
-          g_message (_("Error opening file '%s'"),
-                     GIMP_OBJECT (imagefile)->name);
-        }
+      file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name,
+                              &dummy, NULL);
     }
 }
 
@@ -299,18 +290,19 @@ file_revert_confirm_callback (GtkWidget *widget,
       GimpImage         *new_gimage;
       const gchar       *uri;
       GimpPDBStatusType  status;
+      GError            *error = NULL;
 
       uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
       new_gimage = file_open_image (old_gimage->gimp,
 				    uri,
                                     uri,
-				    _("Revert"),
 				    NULL,
 				    GIMP_RUN_INTERACTIVE,
-				    &status);
+				    &status,
+                                    &error);
 
-      if (new_gimage != NULL)
+      if (new_gimage)
 	{
 	  undo_free (new_gimage);
 
@@ -322,8 +314,15 @@ file_revert_confirm_callback (GtkWidget *widget,
 	}
       else if (status != GIMP_PDB_CANCEL)
 	{
-	  /* Needs error information. --bex */
-	  g_message (_("Reverting '%s' failed."), uri);
+          gchar *filename;
+
+          filename = file_utils_uri_to_utf8_filename (uri);
+
+	  g_message (_("Reverting to '%s' failed:\n%s"),
+                     filename, error->message);
+          g_error_free (error);
+
+          g_free (filename);
 	}
     }
 }
