@@ -189,8 +189,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
                                     pattern->mask->height,
 				    3, 0, 0, NULL);
 	  else
-	    pat_buf = temp_buf_new (pattern->mask->width
-                                    , pattern->mask->height,
+	    pat_buf = temp_buf_new (pattern->mask->width,
+                                    pattern->mask->height,
 				    1, 0, 0, NULL);
 
 	  d1 = temp_buf_data (pattern->mask);
@@ -294,7 +294,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
   /*  Apply it to the image  */
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
-			  (opacity * 255) / 100, paint_mode, NULL, x1, y1);
+			  opacity * 255,
+                          paint_mode, NULL, x1, y1);
   tile_manager_destroy (buf_tiles);
 
   /*  update the image  */

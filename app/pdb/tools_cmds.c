@@ -320,8 +320,13 @@ blend_invoker (Gimp     *gimp,
       else
 	{
 	  gimp_drawable_blend (drawable,
-			       blend_mode, paint_mode, gradient_type, opacity,
-			       offset, repeat, supersample, max_depth, threshold,
+			       blend_mode,
+			       paint_mode,
+			       gradient_type,
+			       opacity / 100.0,
+			       offset, repeat,
+			       supersample, max_depth,
+			       threshold,
 			       x1, y1, x2, y2,
 			       NULL, NULL);
 	}
@@ -468,7 +473,8 @@ bucket_fill_invoker (Gimp     *gimp,
 	}
       else
 	{
-	  gimp_drawable_bucket_fill (drawable, fill_mode, paint_mode, opacity,
+	  gimp_drawable_bucket_fill (drawable, fill_mode,
+				     paint_mode, opacity / 100.0,
 				     threshold, sample_merged, x, y);
 	}
     }

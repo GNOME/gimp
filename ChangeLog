@@ -1,5 +1,23 @@
 2001-11-15  Michael Natterer  <mitch@gimp.org>
 
+	Gimp's opacity values are a pain... the core actually *should*
+	only accept and expose values in a [0.0..1.0] range.
+
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c: take 0.0 <= opacity <= 1.0,
+	*not* 0.0 < opacity <= 100.0.
+
+	* app/tools/gimpblendtool.c: don't (opacity * 100.0) before passing.
+
+	* tools/pdbgen/pdb/tools.pdb: (opacity / 100.0) before passing.
+
+	* app/display/gimpdisplayshell-dnd.c: paint_mode and opacity were
+	swapped in the call to gimp_drawable_bucket_fill_full().
+
+	* app/pdb/tools_cmds.c: regenerated.
+
+2001-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/layers-commands.c: fixed the layers dialog's "New Layer"
 	button by checking for a floating selection in
 	layers_new_layer_query() instead of
