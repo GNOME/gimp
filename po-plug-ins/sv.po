@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2003-03-27 12:18+0100\n"
+"POT-Creation-Date: 2003-04-19 10:23+0200\n"
+"PO-Revision-Date: 2003-04-19 10:34+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -580,7 +580,7 @@ msgid "E_nable Antialiasing"
 msgstr "A_nvänd kantutjämning"
 
 #: plug-ins/Lighting/lighting_ui.c:447 plug-ins/MapObject/mapobject_ui.c:635
-#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:572
+#: plug-ins/common/bumpmap.c:1077 plug-ins/common/emboss.c:572
 #: plug-ins/common/fractaltrace.c:861 plug-ins/common/struc.c:1321
 msgid "_Depth:"
 msgstr "_Djup:"
@@ -1062,7 +1062,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder för ändarna"
 
 #: plug-ins/MapObject/mapobject_ui.c:1275
-#: plug-ins/print/gimp_main_window.c:1110
+#: plug-ins/print/gimp_main_window.c:1111
 msgid "Size"
 msgstr "Storlek"
 
@@ -1123,8 +1123,8 @@ msgstr "%s: felaktig färgkarta"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:256
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:623 plug-ins/common/hrz.c:331
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:623
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:331
 #: plug-ins/common/jpeg.c:732 plug-ins/common/pat.c:262
 #: plug-ins/common/pcx.c:297 plug-ins/common/pix.c:327
 #: plug-ins/common/png.c:480 plug-ins/common/png.c:482
@@ -1572,7 +1572,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
 #: plug-ins/common/CML_explorer.c:203 plug-ins/common/sunras.c:1606
-#: plug-ins/print/gimp_main_window.c:1639
+#: plug-ins/print/gimp_main_window.c:1640
 msgid "Standard"
 msgstr "Standard"
 
@@ -1950,7 +1950,7 @@ msgstr "Justera synliga lager"
 #.
 #: plug-ins/common/align_layers.c:428 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:401 plug-ins/common/blur.c:609
-#: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:395
+#: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:441
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
@@ -2271,75 +2271,75 @@ msgstr "1 (nonsens?)"
 msgid "256 (nonsense?)"
 msgstr "256 (nonsens?)"
 
-#: plug-ins/common/bumpmap.c:371
+#: plug-ins/common/bumpmap.c:376
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Filter/Mappa/Bumpmap..."
 
-#: plug-ins/common/bumpmap.c:523
+#: plug-ins/common/bumpmap.c:528
 msgid "Bump-mapping..."
 msgstr "Bumpmappar..."
 
-#: plug-ins/common/bumpmap.c:856
+#: plug-ins/common/bumpmap.c:875
 msgid "Bump Map"
 msgstr "Bumpmap"
 
-#: plug-ins/common/bumpmap.c:948
+#: plug-ins/common/bumpmap.c:967
 msgid "Map Type"
 msgstr "Karttyp"
 
-#: plug-ins/common/bumpmap.c:952
+#: plug-ins/common/bumpmap.c:971
 msgid "_Linear Map"
 msgstr "_Linjärkarta"
 
-#: plug-ins/common/bumpmap.c:953
+#: plug-ins/common/bumpmap.c:972
 msgid "_Spherical Map"
 msgstr "_Sfärisk karta"
 
-#: plug-ins/common/bumpmap.c:954
+#: plug-ins/common/bumpmap.c:973
 msgid "S_inuosidal Map"
 msgstr "S_inusformad karta"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:967
+#: plug-ins/common/bumpmap.c:986
 msgid "Co_mpensate for Darkening"
 msgstr "Ko_mpensera för förmörkandet"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:978
+#: plug-ins/common/bumpmap.c:997
 msgid "I_nvert Bumpmap"
 msgstr "I_nvertera Bumpmap"
 
 # Osäker
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:989
+#: plug-ins/common/bumpmap.c:1008
 msgid "_Tile Bumpmap"
 msgstr "_Upprepa Bumpmap"
 
-#: plug-ins/common/bumpmap.c:1021
+#: plug-ins/common/bumpmap.c:1040
 msgid "_Bump Map:"
 msgstr "_Bumpmap:"
 
-#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:554
+#: plug-ins/common/bumpmap.c:1059 plug-ins/common/emboss.c:554
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
-#: plug-ins/common/bumpmap.c:1049
+#: plug-ins/common/bumpmap.c:1068
 msgid "_Elevation:"
 msgstr "_Höjd:"
 
-#: plug-ins/common/bumpmap.c:1069
+#: plug-ins/common/bumpmap.c:1088
 msgid "_X Offset:"
 msgstr "_X Offset:"
 
-#: plug-ins/common/bumpmap.c:1079
+#: plug-ins/common/bumpmap.c:1098
 msgid "_Y Offset:"
 msgstr "_Y Offset:"
 
-#: plug-ins/common/bumpmap.c:1089
+#: plug-ins/common/bumpmap.c:1108
 msgid "_Waterlevel:"
 msgstr "_Vattennivå:"
 
-#: plug-ins/common/bumpmap.c:1098
+#: plug-ins/common/bumpmap.c:1117
 msgid "A_mbient:"
 msgstr "O_mgivande:"
 
@@ -2399,7 +2399,7 @@ msgstr "Kolorera"
 #: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
 #: plug-ins/common/ps.c:2705 plug-ins/common/xpm.c:433
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:106
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1411
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Färg"
 
@@ -3425,8 +3425,8 @@ msgstr "Film"
 msgid "Fit Height to Images"
 msgstr "Anpassa höjden till bilderna"
 
-#: plug-ins/common/film.c:1238 plug-ins/print/gimp_main_window.c:1016
-#: plug-ins/print/gimp_main_window.c:1228
+#: plug-ins/common/film.c:1238 plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -4684,44 +4684,36 @@ msgid "_Angle:"
 msgstr "_Vinkel:"
 
 #: plug-ins/common/mng.c:1112
-#, fuzzy
 msgid "Save as MNG"
-msgstr "Spara som PNG"
+msgstr "Spara som MNG"
 
 #: plug-ins/common/mng.c:1131
-#, fuzzy
 msgid "MNG Options"
-msgstr "GIF-inställningar"
+msgstr "MNG-inställningar"
 
 #: plug-ins/common/mng.c:1151
-#, fuzzy
 msgid "Save Background Color"
-msgstr "Spara _bakgrundsfärg"
+msgstr "Spara bakgrundsfärg"
 
 #: plug-ins/common/mng.c:1161
-#, fuzzy
 msgid "Save Gamma"
-msgstr "Spara _gamma"
+msgstr "Spara gamma"
 
 #: plug-ins/common/mng.c:1171
-#, fuzzy
 msgid "Save Resolution"
-msgstr "Spara _upplösning"
+msgstr "Spara upplösning"
 
 #: plug-ins/common/mng.c:1181
-#, fuzzy
 msgid "Save Creation Time"
-msgstr "Spara skapad _tid"
+msgstr "Spara skapad tid"
 
 #: plug-ins/common/mng.c:1225
-#, fuzzy
 msgid "Default Chunks Type:"
-msgstr "Standardkarttyp"
+msgstr "Standarddeltyp:"
 
 #: plug-ins/common/mng.c:1232
-#, fuzzy
 msgid "Combine"
-msgstr "Cosinus"
+msgstr "Kombinera"
 
 # src/dialogs.c:575 src/menus.c:362
 #: plug-ins/common/mng.c:1234 plug-ins/gfig/gfig.c:3039
@@ -4730,43 +4722,37 @@ msgstr "Ersätt"
 
 #: plug-ins/common/mng.c:1239
 msgid "Default Frame Disposal:"
-msgstr ""
+msgstr "Standard bildruteplacering"
 
 #: plug-ins/common/mng.c:1251
-#, fuzzy
 msgid "PNG Compression Level:"
-msgstr "Ko_mpressionsnivå"
+msgstr "PNG kompressionsnivå:"
 
 #: plug-ins/common/mng.c:1259 plug-ins/common/png.c:1293
 msgid "Choose a high compression level for small file size"
 msgstr "Välj en hög komprimeringsnivå för liten filstorlek"
 
 #: plug-ins/common/mng.c:1272
-#, fuzzy
 msgid "JPEG Compression Quality:"
-msgstr "RLE-komprimering"
+msgstr "JPEG komprimeringskvalitet:"
 
 #: plug-ins/common/mng.c:1288
-#, fuzzy
 msgid "JPEG Smoothing Factor:"
-msgstr "Utjämnande:"
+msgstr "JPEG utjämningsfaktor:" 
 
 #: plug-ins/common/mng.c:1298
-#, fuzzy
 msgid "Animated MNG Options"
-msgstr "Inställningar för animerad GIF"
+msgstr "Inställningar för animerad MNG"
 
 #: plug-ins/common/mng.c:1307
 msgid "Loop"
 msgstr "Loop"
 
 #: plug-ins/common/mng.c:1321
-#, fuzzy
 msgid "Default Frame Delay:"
-msgstr "Standardkarttyp"
+msgstr "Standard bildrutepaus:"
 
 #: plug-ins/common/mng.c:1337
-#, fuzzy
 msgid "milliseconds"
 msgstr "millisekunder"
 
@@ -5465,7 +5451,7 @@ msgstr "Läs in PostScript"
 msgid "Rendering"
 msgstr "Rendering"
 
-#: plug-ins/common/ps.c:2652 plug-ins/print/gimp_main_window.c:1094
+#: plug-ins/common/ps.c:2652 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr "Upplösning:"
 
@@ -10118,7 +10104,7 @@ msgstr "Områdeslista"
 msgid "Source..."
 msgstr "Källa..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1422
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Gråskala"
 
@@ -10826,7 +10812,7 @@ msgstr "Ställ in skrivare"
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:933
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Model:"
 msgstr "Skrivarmodell:"
 
@@ -10837,30 +10823,30 @@ msgstr "Välj din skrivarmodell"
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:727
+#: plug-ins/print/gimp_main_window.c:728
 msgid "PPD File:"
 msgstr "PPD-fil:"
 
-#: plug-ins/print/gimp_main_window.c:743
+#: plug-ins/print/gimp_main_window.c:744
 msgid "Enter the correct PPD filename for your printer"
 msgstr "Ange det korrekta PPD-filnamnet för din skrivare"
 
-#: plug-ins/print/gimp_main_window.c:746
+#: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
 msgstr "Bläddra"
 
-#: plug-ins/print/gimp_main_window.c:752
+#: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Välj det korrekta PPD-filnamnet för din skrivare"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:762
+#: plug-ins/print/gimp_main_window.c:763
 msgid "Command:"
 msgstr "Kommando:"
 
-#: plug-ins/print/gimp_main_window.c:775
+#: plug-ins/print/gimp_main_window.c:776
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
@@ -10873,38 +10859,38 @@ msgstr ""
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:784
+#: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
 msgstr "Skriv ut till fil?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:797
+#: plug-ins/print/gimp_main_window.c:798
 msgid "PPD File?"
 msgstr "PPD-fil?"
 
-#: plug-ins/print/gimp_main_window.c:815
+#: plug-ins/print/gimp_main_window.c:816
 msgid "Define New Printer"
 msgstr "Skapa ny skrivare"
 
-#: plug-ins/print/gimp_main_window.c:837 plug-ins/print/gimp_main_window.c:928
+#: plug-ins/print/gimp_main_window.c:838 plug-ins/print/gimp_main_window.c:929
 msgid "Printer Name:"
 msgstr "Skrivarnamn:"
 
-#: plug-ins/print/gimp_main_window.c:841
+#: plug-ins/print/gimp_main_window.c:842
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Ange namnet du vill tilldela till den logiska skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:853
+#: plug-ins/print/gimp_main_window.c:854
 msgid "About Gimp-Print "
 msgstr "Om Gimp-Print "
 
-#: plug-ins/print/gimp_main_window.c:863
+#: plug-ins/print/gimp_main_window.c:864
 msgid "Gimp-Print Version "
 msgstr "Gimp-Print version "
 
-#: plug-ins/print/gimp_main_window.c:863
+#: plug-ins/print/gimp_main_window.c:864
 msgid ""
 "\n"
 "\n"
@@ -10946,11 +10932,11 @@ msgstr ""
 "med detta program. Om inte, skriv till Free Software Foundation,\n"
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
-#: plug-ins/print/gimp_main_window.c:911
+#: plug-ins/print/gimp_main_window.c:912
 msgid "Printer Settings"
 msgstr "Skrivarinställningar"
 
-#: plug-ins/print/gimp_main_window.c:924
+#: plug-ins/print/gimp_main_window.c:925
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -10961,11 +10947,11 @@ msgstr ""
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:944
+#: plug-ins/print/gimp_main_window.c:945
 msgid "Setup Printer..."
 msgstr "Ställ in skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:946
+#: plug-ins/print/gimp_main_window.c:947
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -10976,11 +10962,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:961
+#: plug-ins/print/gimp_main_window.c:962
 msgid "New Printer..."
 msgstr "Ny skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:963
+#: plug-ins/print/gimp_main_window.c:964
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -10988,68 +10974,68 @@ msgstr ""
 "Skapa en ny logisk skrivare. Detta kan användas för att namge en uppsättning "
 "inställningar du vill spara för framtida användning."
 
-#: plug-ins/print/gimp_main_window.c:984
+#: plug-ins/print/gimp_main_window.c:985
 msgid "Size of paper that you wish to print to"
 msgstr "Pappersstorlek du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:987
+#: plug-ins/print/gimp_main_window.c:988
 msgid "Media Size:"
 msgstr "Mediastorlek:"
 
-#: plug-ins/print/gimp_main_window.c:996
+#: plug-ins/print/gimp_main_window.c:997
 msgid "Dimensions:"
 msgstr "Storlekar:"
 
-#: plug-ins/print/gimp_main_window.c:999
-#: plug-ins/print/gimp_main_window.c:1215
+#: plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/print/gimp_main_window.c:1216
 msgid "Width:"
 msgstr "Bredd:"
 
-#: plug-ins/print/gimp_main_window.c:1010
+#: plug-ins/print/gimp_main_window.c:1011
 msgid "Width of the paper that you wish to print to"
 msgstr "Bredd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1027
+#: plug-ins/print/gimp_main_window.c:1028
 msgid "Height of the paper that you wish to print to"
 msgstr "Längd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1043
+#: plug-ins/print/gimp_main_window.c:1044
 msgid "Type of media you're printing to"
 msgstr "Mediatyp du skriver till"
 
-#: plug-ins/print/gimp_main_window.c:1046
+#: plug-ins/print/gimp_main_window.c:1047
 msgid "Media Type:"
 msgstr "Mediatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1059
+#: plug-ins/print/gimp_main_window.c:1060
 msgid "Source (input slot) of media you're printing to"
 msgstr "Källa (pappersfack) för media du skriver på"
 
-#: plug-ins/print/gimp_main_window.c:1062
+#: plug-ins/print/gimp_main_window.c:1063
 msgid "Media Source:"
 msgstr "Mediakälla:"
 
-#: plug-ins/print/gimp_main_window.c:1075
+#: plug-ins/print/gimp_main_window.c:1076
 msgid "Type of ink in the printer"
 msgstr "Bläcksort i skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:1078
+#: plug-ins/print/gimp_main_window.c:1079
 msgid "Ink Type:"
 msgstr "Bläcksort:"
 
-#: plug-ins/print/gimp_main_window.c:1091
+#: plug-ins/print/gimp_main_window.c:1092
 msgid "Resolution and quality of the print"
 msgstr "Upplösning och kvalitet på utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1130
+#: plug-ins/print/gimp_main_window.c:1131
 msgid "Scaling:"
 msgstr "Skalning:"
 
-#: plug-ins/print/gimp_main_window.c:1136
+#: plug-ins/print/gimp_main_window.c:1137
 msgid "Set the scale (size) of the image"
 msgstr "Sätt skalan (storleken) på bilden"
 
-#: plug-ins/print/gimp_main_window.c:1169
+#: plug-ins/print/gimp_main_window.c:1170
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11057,58 +11043,58 @@ msgstr ""
 "Välj om skalan mäts i procent av pappersstorleken eller i antal punkter per "
 "tum vid utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1174
+#: plug-ins/print/gimp_main_window.c:1175
 msgid "Percent"
 msgstr "Procent"
 
-#: plug-ins/print/gimp_main_window.c:1181
+#: plug-ins/print/gimp_main_window.c:1182
 msgid "Scale the print to the size of the page"
 msgstr "Skala utskriften till papperets storlek"
 
-#: plug-ins/print/gimp_main_window.c:1187
+#: plug-ins/print/gimp_main_window.c:1188
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1193
+#: plug-ins/print/gimp_main_window.c:1194
 msgid "Scale the print to the number of dots per inch"
 msgstr "Skala utskriften till antal punkter per tum"
 
-#: plug-ins/print/gimp_main_window.c:1219
+#: plug-ins/print/gimp_main_window.c:1220
 msgid "Set the width of the print"
 msgstr "Sätt utskriftens bredd"
 
-#: plug-ins/print/gimp_main_window.c:1232
+#: plug-ins/print/gimp_main_window.c:1233
 msgid "Set the height of the print"
 msgstr "Sätt utskriftens höjd"
 
-#: plug-ins/print/gimp_main_window.c:1252
+#: plug-ins/print/gimp_main_window.c:1253
 msgid "Units:"
 msgstr "Enheter:"
 
-#: plug-ins/print/gimp_main_window.c:1257
+#: plug-ins/print/gimp_main_window.c:1258
 msgid "Select the base unit of measurement for printing"
 msgstr "Sätt måttenheten för utskrifter"
 
-#: plug-ins/print/gimp_main_window.c:1260
+#: plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "tum"
 
-#: plug-ins/print/gimp_main_window.c:1267
+#: plug-ins/print/gimp_main_window.c:1268
 msgid "Set the base unit of measurement to inches"
 msgstr "Sätt måttenheten till tum"
 
-#: plug-ins/print/gimp_main_window.c:1273
+#: plug-ins/print/gimp_main_window.c:1274
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1279
+#: plug-ins/print/gimp_main_window.c:1280
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Sätt måttenheten till centimeter"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1289
+#: plug-ins/print/gimp_main_window.c:1290
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11116,43 +11102,43 @@ msgstr ""
 "Använd ursprunglig\n"
 "bildstorlek"
 
-#: plug-ins/print/gimp_main_window.c:1295
+#: plug-ins/print/gimp_main_window.c:1296
 msgid "Set the print size to the size of the image"
 msgstr "Sätt utskriftsstorleken till bildens storlek"
 
-#: plug-ins/print/gimp_main_window.c:1318
+#: plug-ins/print/gimp_main_window.c:1319
 msgid "Image / Output Settings"
 msgstr "Bild / utmatningsinställningar"
 
-#: plug-ins/print/gimp_main_window.c:1331
+#: plug-ins/print/gimp_main_window.c:1332
 msgid "Image Type:"
 msgstr "Bildtyp:"
 
-#: plug-ins/print/gimp_main_window.c:1336
+#: plug-ins/print/gimp_main_window.c:1337
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimera utskriften för bildtypen"
 
-#: plug-ins/print/gimp_main_window.c:1340
+#: plug-ins/print/gimp_main_window.c:1341
 msgid "Line Art"
 msgstr "Linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1347
+#: plug-ins/print/gimp_main_window.c:1348
 msgid "Fastest and brightest color for text and line art"
 msgstr "Snabbast, och med ljusaste färg för text och linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1354
+#: plug-ins/print/gimp_main_window.c:1355
 msgid "Solid Colors"
 msgstr "Enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1361
+#: plug-ins/print/gimp_main_window.c:1362
 msgid "Best for images dominated by regions of solid color"
 msgstr "Bästa val för bilder med stora områden med enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1369
+#: plug-ins/print/gimp_main_window.c:1370
 msgid "Photograph"
 msgstr "Fotografi"
 
-#: plug-ins/print/gimp_main_window.c:1377
+#: plug-ins/print/gimp_main_window.c:1378
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11160,38 +11146,38 @@ msgstr ""
 "Långsammast, men noggrannast och med mjukaste färg för mjukt graderade "
 "bilder och fotografier"
 
-#: plug-ins/print/gimp_main_window.c:1403
+#: plug-ins/print/gimp_main_window.c:1404
 msgid "Output Type:"
 msgstr "Utdatatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1408
+#: plug-ins/print/gimp_main_window.c:1409
 msgid "Select the desired output type"
 msgstr "Välj den önskade utskriftstypen"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/gimp_main_window.c:1418
 msgid "Color output"
 msgstr "Färgutskrift"
 
-#: plug-ins/print/gimp_main_window.c:1429
+#: plug-ins/print/gimp_main_window.c:1430
 msgid "Print in shades of gray using black ink"
 msgstr "Skriv ut i gråskala med svart bläck"
 
-#: plug-ins/print/gimp_main_window.c:1436
+#: plug-ins/print/gimp_main_window.c:1437
 msgid "Black and White"
 msgstr "Svart och vitt"
 
-#: plug-ins/print/gimp_main_window.c:1443
+#: plug-ins/print/gimp_main_window.c:1444
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Skriv ut i svart och vitt (ingen färg och inga gråskalor)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1454
+#: plug-ins/print/gimp_main_window.c:1455
 msgid "Adjust Output..."
 msgstr "Justera utskrift..."
 
-#: plug-ins/print/gimp_main_window.c:1461
+#: plug-ins/print/gimp_main_window.c:1462
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""

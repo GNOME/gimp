@@ -2,14 +2,15 @@
 # Copyright (C) 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
+# Jan Morén (jan.moren@lucs.lu.se> 2003.
 #
 # $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2003-02-25 18:10+0100\n"
+"POT-Creation-Date: 2003-04-19 10:39+0200\n"
+"PO-Revision-Date: 2003-04-19 10:42+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -176,34 +177,34 @@ msgid "percent"
 msgstr "procent"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "byte"
+msgstr "%d byte"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
