@@ -334,7 +334,7 @@ temp_buf_resize (TempBuf *buf,
           temp_buf_unswap (buf);
 
           /*  Reallocate the data for it  */
-          buf->data = g_realloc (buf->data, size);
+          buf->data = g_renew (guchar, buf->data, size);
         }
 
       /*  Make sure the temp buf fields are valid  */

@@ -229,8 +229,7 @@ make_seg (gint     x1,
     {
       max_segs += MAX_SEGS_INC;
 
-      tmp_segs = (BoundSeg *) g_realloc ((void *) tmp_segs,
-					 sizeof (BoundSeg) * max_segs);
+      tmp_segs = g_renew (BoundSeg, tmp_segs, max_segs);
     }
 
   tmp_segs[num_segs].x1 = x1;
@@ -248,8 +247,7 @@ allocate_vert_segs (PixelRegion *PR)
   gint i;
 
   /*  allocate and initialize the vert_segs array  */
-  vert_segs = (gint *) g_realloc ((void *) vert_segs, 
-				  (PR->w + PR->x + 1) * sizeof (gint));
+  vert_segs = g_renew (gint, vert_segs, PR->w + PR->x + 1);
 
   for (i = 0; i <= (PR->w + PR->x); i++)
     vert_segs[i] = -1;
@@ -268,9 +266,9 @@ allocate_empty_segs (PixelRegion *PR)
     {
       max_empty_segs = need_num_segs;
 
-      empty_segs_n = (gint *) g_realloc (empty_segs_n, sizeof (gint) * max_empty_segs);
-      empty_segs_c = (gint *) g_realloc (empty_segs_c, sizeof (gint) * max_empty_segs);
-      empty_segs_l = (gint *) g_realloc (empty_segs_l, sizeof (gint) * max_empty_segs);
+      empty_segs_n = g_renew (gint, empty_segs_n, max_empty_segs);
+      empty_segs_c = g_renew (gint, empty_segs_c, max_empty_segs);
+      empty_segs_l = g_renew (gint, empty_segs_l, max_empty_segs);
     }
 }
 
@@ -429,7 +427,7 @@ find_mask_boundary (PixelRegion  *maskPR,
   /*  Make a copy of the boundary  */
   if (num_segs)
     {
-      new_segs = (BoundSeg *) g_malloc (sizeof (BoundSeg) * num_segs);
+      new_segs = g_new (BoundSeg, num_segs);
       memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
     }
 
@@ -540,7 +538,7 @@ sort_boundary (BoundSeg *segs,
   /*  Make a copy of the boundary  */
   if (num_segs)
     {
-      new_segs = (BoundSeg *) g_malloc (sizeof (BoundSeg) * num_segs);
+      new_segs = g_new (BoundSeg, num_segs);
       memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
     }
 

@@ -49,7 +49,7 @@ pixel_surround_init (PixelSurround *ps,
   ps->h          = h;
   /* make sure buffer is big enough */
   ps->buff_size  = w * h * ps->bpp;
-  ps->buff       = g_malloc (ps->buff_size);
+  ps->buff       = g_new (guchar, ps->buff_size);
   ps->row_stride = 0;
 }
 

@@ -1,3 +1,11 @@
+2001-12-18  DindinX  <David@dindinx.org>
+
+	* app/base/boundary.c:
+	* app/base/pixel-surround.c:
+	* app/base/temp-buf.c: some more g_malloc -> g_new and 
+          g_realloc -> g_renew changes, foe better readability and type
+          safety.
+
 2001-12-18  Sven Neumann  <sven@gimp.org>
 
 	* app/display/Makefile.am
