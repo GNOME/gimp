@@ -1164,6 +1164,17 @@ gimp_get_display_name (Gimp *gimp,
   return NULL;
 }
 
+const gchar *
+gimp_get_theme_dir (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui_get_theme_dir_func)
+    return gimp->gui_get_theme_dir_func (gimp);
+
+  return NULL;
+}
+
 GimpImage *
 gimp_create_image (Gimp              *gimp,
 		   gint               width,

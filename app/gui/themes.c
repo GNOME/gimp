@@ -86,7 +86,6 @@ themes_init (Gimp *gimp)
   else
     {
       /*  get the hardcoded default theme gtkrc  */
-
       gtkrc = g_strdup (gimp_gtkrc ());
     }
 
@@ -94,7 +93,6 @@ themes_init (Gimp *gimp)
     g_print (_("Parsing '%s'\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
-
   g_free (gtkrc);
 
   /*  parse the user gtkrc  */
@@ -105,7 +103,6 @@ themes_init (Gimp *gimp)
     g_print (_("Parsing '%s'\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
-
   g_free (gtkrc);
 }
 

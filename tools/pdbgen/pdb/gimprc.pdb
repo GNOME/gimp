@@ -144,7 +144,7 @@ sub get_default_comment {
 
     @outargs = (
 	{  name => 'comment', type => 'string',
-	   desc => 'Default Image Comment' },
+	   desc => 'Default Image Comment' }
     );
 
     %invoke = (
@@ -158,10 +158,34 @@ CODE
     );
 }
 
+sub get_theme_dir {
+    $blurb = 'Get the directory of the current GUI theme.';
+
+    $help = 'Returns a copy of the current GUI theme dir.';
+
+    &std_pdb_misc;
+
+    @inargs = ( );
+
+    @outargs = (
+	{  name => 'theme_dir', type => 'string',
+	   desc => 'The GUI theme dir' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  theme_dir = g_strdup (gimp_get_theme_dir (gimp));
+  success = TRUE;
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h");
 
 @procs = qw(gimprc_query gimprc_set 
-	    get_default_comment get_monitor_resolution);
+	    get_default_comment get_monitor_resolution get_theme_dir);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';

@@ -1,5 +1,25 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	Made plug-ins honor the current GIMP theme:
+
+	* app/core/gimp.[ch]: added GimpGetThemeDirFunc to the GUI vtable.
+
+	* app/gui/gui-vtable.c: implement it here.
+
+	* tools/pdbgen/pdb/gimprc.pdb: added new PDB function
+	gimp_get_theme_dir().
+
+	* libgimp/gimpui.c: use the new function and fall back to
+	gimp_gtkrc() if it returns NULL.
+
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgimprc_pdb.[ch]: regenerated.
+
+	* app/gui/themes.c: unrelated cleanup.
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/tools-commands.c (tools_select_cmd_callback): don't
 	call tool_manager_initialize_active() with a NULL GimpDisplay.
 	Fixes bug #126462.

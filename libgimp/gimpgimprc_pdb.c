@@ -168,3 +168,31 @@ gimp_get_monitor_resolution (gdouble *xres,
 
   return success;
 }
+
+/**
+ * gimp_get_theme_dir:
+ *
+ * Get the directory of the current GUI theme.
+ *
+ * Returns a copy of the current GUI theme dir.
+ *
+ * Returns: The GUI theme dir.
+ */
+gchar *
+gimp_get_theme_dir (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *theme_dir = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_get_theme_dir",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    theme_dir = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return theme_dir;
+}

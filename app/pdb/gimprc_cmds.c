@@ -39,6 +39,7 @@ static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
 static ProcRecord get_default_comment_proc;
 static ProcRecord get_monitor_resolution_proc;
+static ProcRecord get_theme_dir_proc;
 
 void
 register_gimprc_procs (Gimp *gimp)
@@ -47,6 +48,7 @@ register_gimprc_procs (Gimp *gimp)
   procedural_db_register (gimp, &gimprc_set_proc);
   procedural_db_register (gimp, &get_default_comment_proc);
   procedural_db_register (gimp, &get_monitor_resolution_proc);
+  procedural_db_register (gimp, &get_theme_dir_proc);
 }
 
 static Argument *
@@ -267,4 +269,48 @@ static ProcRecord get_monitor_resolution_proc =
   2,
   get_monitor_resolution_outargs,
   { { get_monitor_resolution_invoker } }
+};
+
+static Argument *
+get_theme_dir_invoker (Gimp     *gimp,
+                       Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *theme_dir;
+
+  theme_dir = g_strdup (gimp_get_theme_dir (gimp));
+  success = TRUE;
+
+  return_args = procedural_db_return_args (&get_theme_dir_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = theme_dir;
+
+  return return_args;
+}
+
+static ProcArg get_theme_dir_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "theme_dir",
+    "The GUI theme dir"
+  }
+};
+
+static ProcRecord get_theme_dir_proc =
+{
+  "gimp_get_theme_dir",
+  "Get the directory of the current GUI theme.",
+  "Returns a copy of the current GUI theme dir.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  get_theme_dir_outargs,
+  { { get_theme_dir_invoker } }
 };

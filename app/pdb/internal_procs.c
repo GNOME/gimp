@@ -69,7 +69,7 @@ void register_transform_tools_procs (Gimp *gimp);
 void register_undo_procs            (Gimp *gimp);
 void register_unit_procs            (Gimp *gimp);
 
-/* 349 procedures registered total */
+/* 350 procedures registered total */
 
 void
 internal_procs_init (Gimp               *gimp,
@@ -93,7 +93,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Convert"), 0.123);
   register_convert_procs (gimp);
 
-  (* status_callback) (NULL, _("Display procedures"), 0.132);
+  (* status_callback) (NULL, _("Display procedures"), 0.131);
   register_display_procs (gimp);
 
   (* status_callback) (NULL, _("Drawable procedures"), 0.143);
@@ -111,70 +111,70 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Font UI"), 0.266);
   register_font_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Fonts"), 0.275);
+  (* status_callback) (NULL, _("Fonts"), 0.274);
   register_fonts_procs (gimp);
 
-  (* status_callback) (NULL, _("Gimprc procedures"), 0.281);
+  (* status_callback) (NULL, _("Gimprc procedures"), 0.28);
   register_gimprc_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient UI"), 0.292);
+  (* status_callback) (NULL, _("Gradient UI"), 0.294);
   register_gradient_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradients"), 0.301);
+  (* status_callback) (NULL, _("Gradients"), 0.303);
   register_gradients_procs (gimp);
 
-  (* status_callback) (NULL, _("Guide procedures"), 0.321);
+  (* status_callback) (NULL, _("Guide procedures"), 0.323);
   register_guides_procs (gimp);
 
-  (* status_callback) (NULL, _("Help procedures"), 0.338);
+  (* status_callback) (NULL, _("Help procedures"), 0.34);
   register_help_procs (gimp);
 
-  (* status_callback) (NULL, _("Image"), 0.341);
+  (* status_callback) (NULL, _("Image"), 0.343);
   register_image_procs (gimp);
 
-  (* status_callback) (NULL, _("Layer"), 0.524);
+  (* status_callback) (NULL, _("Layer"), 0.526);
   register_layer_procs (gimp);
 
-  (* status_callback) (NULL, _("Message procedures"), 0.619);
+  (* status_callback) (NULL, _("Message procedures"), 0.62);
   register_message_procs (gimp);
 
-  (* status_callback) (NULL, _("Miscellaneous"), 0.628);
+  (* status_callback) (NULL, _("Miscellaneous"), 0.629);
   register_misc_procs (gimp);
 
-  (* status_callback) (NULL, _("Misc Tool procedures"), 0.633);
+  (* status_callback) (NULL, _("Misc Tool procedures"), 0.634);
   register_misc_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Paint Tool procedures"), 0.642);
+  (* status_callback) (NULL, _("Paint Tool procedures"), 0.643);
   register_paint_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Palette"), 0.685);
+  (* status_callback) (NULL, _("Palette"), 0.686);
   register_palette_procs (gimp);
 
-  (* status_callback) (NULL, _("Palette UI"), 0.702);
+  (* status_callback) (NULL, _("Palette UI"), 0.703);
   register_palette_select_procs (gimp);
 
   (* status_callback) (NULL, _("Palettes"), 0.711);
   register_palettes_procs (gimp);
 
-  (* status_callback) (NULL, _("Parasite procedures"), 0.725);
+  (* status_callback) (NULL, _("Parasite procedures"), 0.726);
   register_parasite_procs (gimp);
 
-  (* status_callback) (NULL, _("Paths"), 0.759);
+  (* status_callback) (NULL, _("Paths"), 0.76);
   register_paths_procs (gimp);
 
-  (* status_callback) (NULL, _("Pattern UI"), 0.802);
+  (* status_callback) (NULL, _("Pattern UI"), 0.803);
   register_pattern_select_procs (gimp);
 
   (* status_callback) (NULL, _("Patterns"), 0.811);
   register_patterns_procs (gimp);
 
-  (* status_callback) (NULL, _("Plug-in"), 0.825);
+  (* status_callback) (NULL, _("Plug-in"), 0.826);
   register_plug_in_procs (gimp);
 
-  (* status_callback) (NULL, _("Procedural database"), 0.842);
+  (* status_callback) (NULL, _("Procedural database"), 0.843);
   register_procedural_db_procs (gimp);
 
-  (* status_callback) (NULL, _("Image mask"), 0.865);
+  (* status_callback) (NULL, _("Image mask"), 0.866);
   register_selection_procs (gimp);
 
   (* status_callback) (NULL, _("Selection Tool procedures"), 0.917);

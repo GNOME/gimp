@@ -61,6 +61,7 @@ typedef const gchar  * (* GimpGetProgramClassFunc) (Gimp          *gimp);
 typedef gchar        * (* GimpGetDisplayNameFunc)  (Gimp          *gimp,
                                                     gint           gdisp_ID,
                                                     gint          *monitor_number);
+typedef const gchar  * (* GimpGetThemeDirFunc)     (Gimp          *);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -106,6 +107,7 @@ struct _Gimp
   GimpPDBDialogsCheckFunc gui_pdb_dialogs_check_func;
   GimpGetProgramClassFunc gui_get_program_class_func;
   GimpGetDisplayNameFunc  gui_get_display_name_func;
+  GimpGetThemeDirFunc     gui_get_theme_dir_func;
 
   gint                    busy;
   guint                   busy_idle_id;
@@ -267,6 +269,7 @@ const gchar * gimp_get_program_class    (Gimp               *gimp);
 gchar       * gimp_get_display_name     (Gimp               *gimp,
                                          gint                gdisp_ID,
                                          gint               *monitor_number);
+const gchar * gimp_get_theme_dir        (Gimp               *gimp);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

@@ -35,6 +35,7 @@ gboolean gimp_gimprc_set             (const gchar *token,
 gchar*   gimp_get_default_comment    (void);
 gboolean gimp_get_monitor_resolution (gdouble     *xres,
 				      gdouble     *yres);
+gchar*   gimp_get_theme_dir          (void);
 
 
 G_END_DECLS

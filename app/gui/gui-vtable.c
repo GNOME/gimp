@@ -88,6 +88,7 @@ static const gchar  * gui_get_program_class    (Gimp          *gimp);
 static gchar        * gui_get_display_name     (Gimp          *gimp,
                                                 gint           gdisp_ID,
                                                 gint          *monitor_number);
+static const gchar  * gui_get_theme_dir        (Gimp          *gimp);
 
 
 /*  public functions  */
@@ -113,6 +114,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
   gimp->gui_get_program_class_func = gui_get_program_class;
   gimp->gui_get_display_name_func  = gui_get_display_name;
+  gimp->gui_get_theme_dir_func     = gui_get_theme_dir;
 }
 
 
@@ -309,4 +311,10 @@ gui_get_display_name (Gimp *gimp,
     return gdk_screen_make_display_name (screen);
 
   return NULL;
+}
+
+static const gchar *
+gui_get_theme_dir (Gimp *gimp)
+{
+  return themes_get_theme_dir (gimp);
 }
