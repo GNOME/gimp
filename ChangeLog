@@ -1,3 +1,8 @@
+Mon Dec 14 18:56:42 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* removed intl virtual modules, use them new fangled
+	autogen.sh's
+
 Sun Dec 13 21:11:24 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: added help display

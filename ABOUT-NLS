@@ -137,7 +137,8 @@ Each translation team has its own mailing list, courtesy of Linux
 International.  You may reach your translation team at the address
 `LL@li.org', replacing LL by the two-letter ISO 639 code for your
 language.  Language codes are *not* the same as the country codes given
-in ISO 3166.  The following translation teams exist, as of August 1997:
+in ISO 3166.  The following translation teams exist, as of December
+1997:
 
      Chinese `zh', Czech `cs', Danish `da', Dutch `nl', English `en',
      Esperanto `eo', Finnish `fi', French `fr', German `de', Hungarian
@@ -172,42 +173,42 @@ Available Packages
 ==================
 
    Languages are not equally supported in all packages.  The following
-matrix shows the current state of internationalization, as of August
+matrix shows the current state of internationalization, as of December
 1997.  The matrix shows, in regard of each package, for which languages
 PO files have been submitted to translation coordination.
 
-     Ready PO files    cs da de en es fi fr it ja ko nl no pl pt sl sv
-                     .-------------------------------------------------.
-     bash            |       []          []          []                |  3
-     bison           |       []          []          []                |  3
-     clisp           |       [] [] []    []                            |  4
-     cpio            |       []    []    []          []    []          |  5
-     diffutils       |       []    []    []                []       [] |  5
-     enscript        |       []    [] [] []          []          []    |  6
-     fileutils       | []    []    []    []       [] []    [] [] [] [] | 10
-     findutils       |       []    []    [] []    [] []    []       [] |  8
-     flex            |             []    []       []                [] |  4
-     gcal            |       []          []          []    []       [] |  5
-     gettext         |       []    []    []       [] [] [] [] [] [] [] | 11
-     grep            |       []    []    []       [] [] [] []    [] [] |  9
-     hello           |       []    []    []       [] [] [] [] [] [] [] | 10
-     id-utils        |       []          []                []          |  3
-     indent          |    [] []                   []       []          |  4
-     libc            |       []    []    []       [] []    []       [] |  7
-     m4              |       []          []    []    []             [] |  5
-     make            |       []    []    []       [] []    []          |  6
-     music           |                   []                []          |  2
-     ptx             |       []    []    []          [] [] [] []    [] |  8
-     recode          |    [] []    []    []          []    [] [] [] [] |  9
-     sh-utils        |       []          []          [] [] [] []    [] |  7
-     sharutils       |       []    []    []          []             [] |  5
-     tar             |       []          [] []    [] [] [] [] [] [] [] | 10
-     texinfo         |                   []                            |  1
-     textutils       | []    []    []    []       [] [] [] []       [] |  9
-     wdiff           | []    []    []    []          [] [] []       [] |  8
-                     `-------------------------------------------------'
-       16 languages    cs da de en es fi fr it ja ko nl no pl pt sl sv
-       27 packages      3  2 24  1 17  1 26  2  1 11 20  9 19  7  7 17  167
+     Ready PO files    cs da de en es fi fr it ja ko nl no pl pt ru sl sv
+                     .----------------------------------------------------.
+     bash            |       []          []          []                   |  3
+     bison           |       []          []          []                   |  3
+     clisp           |       [] [] []    []                               |  4
+     cpio            |       []    []    []       [] []    []             |  6
+     diffutils       |       []    []    []                []          [] |  5
+     enscript        |       []    [] [] []          []             []    |  6
+     fileutils       | []    []    []    []       [] []    [] []    [] [] | 10
+     findutils       |       []    []    [] []    [] []    []    []    [] |  9
+     flex            |             []    []       []                   [] |  4
+     gcal            |       []          []          []    []          [] |  5
+     gettext         |    [] []    []    []       [] [] [] [] []    [] [] | 12
+     grep            |       []    []    []       [] [] [] []    [] [] [] | 10
+     hello           |    [] []    []    []       [] [] [] [] []    [] [] | 11
+     id-utils        |       []          []                []             |  3
+     indent          |    [] []                   []       []    []       |  5
+     libc            |       []    []    []       [] []    []          [] |  7
+     m4              |       []          []    []    []          []    [] |  6
+     make            |       []    []    []       [] []    []             |  6
+     music           |                   []                []             |  2
+     ptx             |       []    []    []          [] [] [] []       [] |  8
+     recode          |    [] []    []    []          []    [] []    [] [] |  9
+     sh-utils        |       []    []    []          [] [] [] []       [] |  8
+     sharutils       | []    []    []    []          []                [] |  6
+     tar             | []    []          [] []    [] [] [] [] []    [] [] | 11
+     texinfo         | []    []          []                               |  3
+     textutils       | []    []    []    []       [] [] [] []          [] |  9
+     wdiff           | []    []    []    []          [] [] []          [] |  8
+                     `----------------------------------------------------'
+       17 languages    cs da de en es fi fr it ja ko nl no pl pt ru sl sv
+       27 packages      6  4 25  1 18  1 26  2  1 12 20  9 19  7  4  7 17  179
 
    Some counters in the preceding matrix are higher than the number of
 visible blocks let us expect.  This is because a few extra PO files are
@@ -220,6 +221,6 @@ distributed as such by its maintainer.  There might be an observable
 lag between the mere existence a PO file and its wide availability in a
 distribution.
 
-   If August 1997 seems to be old, you may fetch a more recent copy of
-this `ABOUT-NLS' file on most GNU archive sites.
+   If December 1997 seems to be old, you may fetch a more recent copy
+of this `ABOUT-NLS' file on most GNU archive sites.
 
