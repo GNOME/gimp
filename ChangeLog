@@ -1,3 +1,8 @@
+2004-11-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c: use an idle handler to jump to the
+	anchor.
+
 2004-11-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/bmpread.c: if the file has space in the colormap for

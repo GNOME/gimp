@@ -282,15 +282,25 @@ browser_dialog_open (void)
   gtk_widget_show (window);
 }
 
+static gboolean
+idle_jump_to_anchor (const gchar *anchor)
+{
+  if (html && anchor)
+    html_view_jump_to_anchor (HTML_VIEW (html), anchor);
+
+  return FALSE;
+}
+
 void
 browser_dialog_load (const gchar *ref,
                      gboolean     add_to_queue)
 {
-  HtmlDocument *doc = HTML_VIEW (html)->document;
-  gchar        *abs;
-  gchar        *new_ref;
-  gchar        *anchor;
-  gchar        *tmp;
+  HtmlDocument  *doc = HTML_VIEW (html)->document;
+  GtkAdjustment *adj = gtk_layout_get_vadjustment (GTK_LAYOUT (html));
+  gchar         *abs;
+  gchar         *new_ref;
+  gchar         *anchor;
+  gchar         *tmp;
 
   g_return_if_fail (ref != NULL);
 
@@ -335,8 +345,12 @@ browser_dialog_load (const gchar *ref,
 
       html_document_clear (doc);
       html_document_open_stream (doc, "text/html");
-      gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
-                                0);
+      gtk_adjustment_set_value (adj, 0.0);
+
+      if (anchor)
+        g_idle_add_full (G_PRIORITY_LOW,
+                         (GSourceFunc) idle_jump_to_anchor,
+                         g_strdup (anchor), (GDestroyNotify) g_free);
 
       if (! request_url (doc, abs, doc->current_stream, &error))
         {
@@ -344,13 +358,15 @@ browser_dialog_load (const gchar *ref,
           g_error_free (error);
         }
     }
+  else
+    {
+      if (anchor)
+        html_view_jump_to_anchor (HTML_VIEW (html), anchor);
+      else
+        gtk_adjustment_set_value (adj, 0.0);
+     }
 
   g_free (tmp);
-
-  if (anchor)
-    html_view_jump_to_anchor (HTML_VIEW (html), anchor);
-  else
-    gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)), 0);
 
   g_free (current_ref);
   current_ref = new_ref;
@@ -565,11 +581,9 @@ io_handler (GIOChannel   *io,
             GIOCondition  condition,
             gpointer      data)
 {
-  HtmlStream *stream;
+  HtmlStream *stream = data;
   gchar       buffer[8192];
   gsize       bytes;
-
-  stream = (HtmlStream *) data;
 
   if (condition & G_IO_IN)
     {
