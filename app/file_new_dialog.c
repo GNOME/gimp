@@ -551,7 +551,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* width in units spinbutton */
   temp = (float) vals->width / vals->resolution;
-  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
+  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
                                               1.0, 0.01, 0.0);
   vals->width_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_UPDATE_ALWAYS
@@ -567,7 +567,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* height in units spinbutton */
   temp = (float) vals->height / vals->resolution; 
-  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
+  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
                                               1.0, 0.01, 0.0);
   vals->height_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_UPDATE_ALWAYS |

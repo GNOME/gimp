@@ -1,3 +1,8 @@
+Fri Sep 11 11:15:17 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/file_new_dialog.c: fixed a typo that wouldnt let
+	you create images smaller than 1 unit
+
 1998-09-11  Tristan Tarrant  <ttarrant@etnoteam.it>
 
 	* po/it.po: New file with Italian translations (some).
