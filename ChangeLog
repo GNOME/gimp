@@ -1,3 +1,7 @@
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
+	* app/base/gimphistogram.c: port this code to gthread as well.
+
 2005-02-13  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd_save.c: Rewrote all the code that deals with
