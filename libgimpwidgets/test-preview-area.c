@@ -37,22 +37,30 @@
 
 #define WIDTH      256
 #define HEIGHT     256
-#define NUM_ITERS   50
+#define NUM_ITERS  100
 
 
 static void
-test_run (GtkWidget *area)
+test_run (GtkWidget *area,
+          gboolean   visible)
 {
   guchar       *buf;
   gint          i, j;
   gint          offset;
+  gint          num_iters = NUM_ITERS;
   guchar        val;
   gdouble       start_time, total_time;
   GTimer       *timer;
   GEnumClass   *enum_class;
   GEnumValue   *enum_value;
 
+  if (! visible)
+    num_iters *= 4;
+
   gtk_widget_realize (area);
+
+  g_print ("\nPerformance tests for GimpPreviewArea (%s, %d iterations):\n",
+           visible ? "visible" : "hidden", num_iters);
 
   buf = g_malloc (WIDTH * HEIGHT * 8);
 
@@ -78,6 +86,7 @@ test_run (GtkWidget *area)
     }
 
   gdk_window_process_all_updates ();
+  gdk_flush ();
 
   timer = g_timer_new ();
 
@@ -87,7 +96,7 @@ test_run (GtkWidget *area)
     {
       start_time = g_timer_elapsed (timer, NULL);
 
-      for (i = 0; i < NUM_ITERS; i++)
+      for (i = 0; i < num_iters; i++)
 	{
 	  offset = (rand () % (WIDTH * HEIGHT * 4)) & -4;
           gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
@@ -105,50 +114,30 @@ test_run (GtkWidget *area)
                "time elapsed: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
 	       enum_value->value_name,
 	       total_time,
-	       NUM_ITERS / total_time,
-	       NUM_ITERS * (WIDTH * HEIGHT * 1e-6) / total_time);
+	       num_iters / total_time,
+	       num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
     }
+
+  g_free (buf);
 }
 
 static void
 test_preview_area (void)
 {
   GtkWidget *window;
-  GtkWidget *vbox;
-  GtkWidget *button;
   GtkWidget *area;
 
-  window = gtk_widget_new (GTK_TYPE_WINDOW,
-			   "type",        GTK_WINDOW_TOPLEVEL,
-			   "title",       "test-preview-area",
-			   "allow_shrink", FALSE,
-			   NULL);
-
-  g_signal_connect (window, "destroy",
-		    G_CALLBACK (gtk_main_quit), NULL);
-
-  vbox = gtk_vbox_new (FALSE, 2);
+  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
   area = gimp_preview_area_new ();
-
-  gtk_widget_set_size_request (area, WIDTH, HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), area, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (window), area);
   gtk_widget_show (area);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (gtk_widget_destroy),
-                            window);
-
-  gtk_widget_show (button);
-
-  gtk_container_add (GTK_CONTAINER (window), vbox);
-  gtk_widget_show (vbox);
+  test_run (area, FALSE);
 
   gtk_widget_show (window);
 
-  test_run (area);
+  test_run (area, TRUE);
 }
 
 int
@@ -157,8 +146,6 @@ main (int argc, char **argv)
   gtk_init (&argc, &argv);
 
   test_preview_area ();
-
-  gtk_main ();
 
   return 0;
 }
