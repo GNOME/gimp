@@ -1,3 +1,11 @@
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpink.c: restored old time/speed sensitivity
+	behaviour by doing nothing except figuring if we draw a straight
+	line in INIT_PAINT. Instead, do all the Blob creating in
+	MOTION_PAINT and special case the initial (null) "motion"
+	accordingly.
+
 2004-05-26  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/video.c: code clean-up. Twice as fast now.

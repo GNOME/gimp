@@ -169,8 +169,7 @@ gimp_ink_paint (GimpPaintCore      *paint_core,
                 GimpPaintCoreState  paint_state,
                 guint32             time)
 {
-  GimpInk        *ink     = GIMP_INK (paint_core);
-  GimpInkOptions *options = GIMP_INK_OPTIONS (paint_options);
+  GimpInk *ink = GIMP_INK (paint_core);
 
   switch (paint_state)
     {
@@ -181,34 +180,14 @@ gimp_ink_paint (GimpPaintCore      *paint_core,
       break;
 
     case INIT_PAINT:
-      {
-        if (ink->last_blob                                        &&
-            paint_core->cur_coords.x == paint_core->last_coords.x &&
-            paint_core->cur_coords.y == paint_core->last_coords.y)
-          {
-            /*  start with a new blob if we're not interpolating  */
-            g_free (ink->last_blob);
-            ink->last_blob = NULL;
-          }
-
-        if (! ink->last_blob)
-          ink->last_blob = ink_pen_ellipse (options,
-                                            paint_core->cur_coords.x,
-                                            paint_core->cur_coords.y,
-                                            paint_core->cur_coords.pressure,
-                                            paint_core->cur_coords.xtilt,
-                                            paint_core->cur_coords.ytilt,
-                                            10.0);
-
-        time_smoother_init (ink, time);
-        ink->last_time = time;
-
-        dist_smoother_init (ink, 0.0);
-        ink->init_velocity = TRUE;
-
-        ink->lastx = paint_core->cur_coords.x;
-        ink->lasty = paint_core->cur_coords.y;
-      }
+      if (ink->last_blob                                        &&
+          paint_core->cur_coords.x == paint_core->last_coords.x &&
+          paint_core->cur_coords.y == paint_core->last_coords.y)
+        {
+          /*  start with a new blob if we're not interpolating  */
+          g_free (ink->last_blob);
+          ink->last_blob = NULL;
+        }
       break;
 
     case MOTION_PAINT:
@@ -228,12 +207,12 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                          GimpDrawable     *drawable,
                          GimpPaintOptions *paint_options)
 {
-  GimpInk  *ink  = GIMP_INK (paint_core);
-  gint      x, y;
-  gint      width, height;
-  gint      dwidth, dheight;
-  gint      x1, y1, x2, y2;
-  gint      bytes;
+  GimpInk *ink  = GIMP_INK (paint_core);
+  gint     x, y;
+  gint     width, height;
+  gint     dwidth, dheight;
+  gint     x1, y1, x2, y2;
+  gint     bytes;
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
@@ -268,67 +247,95 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   GimpInkOptions *options = GIMP_INK_OPTIONS (paint_options);
   GimpContext    *context = GIMP_CONTEXT (paint_options);
   GimpImage      *gimage;
-  Blob           *blob;
-  Blob           *blob_union;
-  gdouble         velocity;
-  gdouble         dist;
-  gdouble         lasttime, thistime;
+  Blob           *blob_union = NULL;
+  Blob           *blob_to_render;
   TempBuf        *area;
   guchar          col[MAX_CHANNELS];
   PixelRegion     blob_maskPR;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  lasttime = ink->last_time;
-
-  time_smoother_add (ink, time);
-  thistime = ink->last_time = time_smoother_result (ink);
-
-  /* The time resolution on X-based GDK motion events is
-     bloody awful, hence the use of the smoothing function.
-     Sadly this also means that there is always the chance of
-     having an indeterminite velocity since this event and
-     the previous several may still appear to issue at the same
-     instant. -ADM */
-
-  if (thistime == lasttime)
-    thistime = lasttime + 1;
-
-  dist = sqrt ((ink->lastx - paint_core->cur_coords.x) *
-               (ink->lastx - paint_core->cur_coords.x) +
-               (ink->lasty - paint_core->cur_coords.y) *
-               (ink->lasty - paint_core->cur_coords.y));
-
-  if (ink->init_velocity)
+  if (! ink->last_blob)
     {
-      dist_smoother_init (ink, dist);
-      ink->init_velocity = FALSE;
+      ink->last_blob = ink_pen_ellipse (options,
+                                        paint_core->cur_coords.x,
+                                        paint_core->cur_coords.y,
+                                        paint_core->cur_coords.pressure,
+                                        paint_core->cur_coords.xtilt,
+                                        paint_core->cur_coords.ytilt,
+                                        10.0);
+
+      time_smoother_init (ink, time);
+      ink->last_time = time;
+
+      dist_smoother_init (ink, 0.0);
+      ink->init_velocity = TRUE;
+
+      ink->lastx = paint_core->cur_coords.x;
+      ink->lasty = paint_core->cur_coords.y;
+
+      blob_to_render = ink->last_blob;
     }
   else
     {
-      dist_smoother_add (ink, dist);
-      dist = dist_smoother_result (ink);
+      Blob    *blob;
+      gdouble  lasttime, thistime;
+      gdouble  dist;
+      gdouble  velocity;
+
+      lasttime = ink->last_time;
+
+      time_smoother_add (ink, time);
+      thistime = ink->last_time = time_smoother_result (ink);
+
+      /* The time resolution on X-based GDK motion events is bloody
+       * awful, hence the use of the smoothing function.  Sadly this
+       * also means that there is always the chance of having an
+       * indeterminite velocity since this event and the previous
+       * several may still appear to issue at the same
+       * instant. -ADM
+       */
+      if (thistime == lasttime)
+        thistime = lasttime + 1;
+
+      dist = sqrt ((ink->lastx - paint_core->cur_coords.x) *
+                   (ink->lastx - paint_core->cur_coords.x) +
+                   (ink->lasty - paint_core->cur_coords.y) *
+                   (ink->lasty - paint_core->cur_coords.y));
+
+      if (ink->init_velocity)
+        {
+          dist_smoother_init (ink, dist);
+          ink->init_velocity = FALSE;
+        }
+      else
+        {
+          dist_smoother_add (ink, dist);
+          dist = dist_smoother_result (ink);
+        }
+
+      ink->lastx = paint_core->cur_coords.x;
+      ink->lasty = paint_core->cur_coords.y;
+
+      velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
+
+      blob = ink_pen_ellipse (options,
+                              paint_core->cur_coords.x,
+                              paint_core->cur_coords.y,
+                              paint_core->cur_coords.pressure,
+                              paint_core->cur_coords.xtilt,
+                              paint_core->cur_coords.ytilt,
+                              velocity);
+
+      blob_union = blob_convex_union (ink->last_blob, blob);
+      g_free (ink->last_blob);
+      ink->last_blob = blob;
+
+      blob_to_render = blob_union;
     }
 
-  ink->lastx = paint_core->cur_coords.x;
-  ink->lasty = paint_core->cur_coords.y;
-
-  velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
-
-  blob = ink_pen_ellipse (options,
-                          paint_core->cur_coords.x,
-                          paint_core->cur_coords.y,
-                          paint_core->cur_coords.pressure,
-                          paint_core->cur_coords.xtilt,
-                          paint_core->cur_coords.ytilt,
-                          velocity);
-
-  blob_union = blob_convex_union (ink->last_blob, blob);
-  g_free (ink->last_blob);
-  ink->last_blob = blob;
-
   /* Get the the buffer */
-  ink->blob = blob_union;
+  ink->blob = blob_to_render;
 
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
   if (! area)
@@ -357,7 +364,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                      paint_core->canvas_buf->height,
                      TRUE);
 
-  render_blob (blob_union, &blob_maskPR);
+  render_blob (blob_to_render, &blob_maskPR);
 
   /*  draw the canvas_buf using the just rendered canvas_tiles as mask */
   pixel_region_init (&blob_maskPR, paint_core->canvas_tiles,
@@ -373,7 +380,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                          gimp_context_get_paint_mode (context),
                          GIMP_PAINT_CONSTANT);
 
-  g_free (blob_union);
+  if (blob_union)
+    g_free (blob_union);
 }
 
 static Blob *
