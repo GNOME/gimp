@@ -10,6 +10,8 @@ make test TEST_VERBOSE=1
 
 put under LGPL:
 
+/usr/app/lib/perl5/Gtk.pm:107 (method call -> goto)
+
 gimpenv.c, gimpmodule.h, color_selector.h, color_display.h
 
 API generalization

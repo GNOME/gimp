@@ -5,12 +5,27 @@ use Gimp ('__','N_');
 use Gimp::Fu;
 use Gtk;
 
-$VERSION=0.0;
+$VERSION=0.1;
+
+# possible TODO
+# - improve last/first frame finding
+# - implement autoplay
 
 my $image;
+my $f; # current frame adjustment
+my $s; # slider
 
 sub drawable {
    ($image->get_layers)[0];
+}
+
+sub get_index {
+   (($image->get_filename) =~ /(\d+)\.[^\.]+$/g)[0];
+}
+
+sub upd {
+   $f->set_value(get_index);
+   Gimp->displays_flush;
 }
 
 sub create_main {
@@ -19,28 +34,59 @@ sub create_main {
    $w->set_title("VCR Console -- ". $image->get_filename);
    $w->signal_connect("destroy",sub {main_quit Gtk});
 
-   my $h = new Gtk::HBox (1,5);
-   $w->add ($h);
+   my $v = new Gtk::VBox (0,5);
+   $w->add ($v);
+
+   my $h = new Gtk::HBox (1,0);
+   $v->add($h);
+
+   my $current = get_index;
+   drawable->gap_last;  my $last  = get_index;
+   drawable->gap_first; my $first = get_index;
+   drawable->gap_goto($current);
+
+   $f = new Gtk::Adjustment $current, $first, $last+1, 1, 10, 1;
+   $f->signal_connect(value_changed => sub {
+      my $n = $_[0]->value;
+      if ($n != get_index) {
+         drawable->gap_goto($n);
+         upd;
+      }
+   });
+
+   $s = new Gtk::HScale $f;
+   $s->set_update_policy('delayed');
+   $s->set_digits(0);
+   $s->set_value_pos('left');
+   $s->grab_focus;
+   $v->add($s);
+
+   $w->set_focus($s);
 
    $h->add(Gtk::Object::new Gtk::Button 
            label => '|<<',
+           can_focus => 0,
            signal::clicked => sub {
-              drawable->gap_first;
+              drawable->gap_first; upd;
            });
    $h->add(Gtk::Object::new Gtk::Button 
            label => '<',
+           can_focus => 0,
            signal::clicked => sub {
-              drawable->gap_prev;
+              drawable->gap_prev; upd;
            });
    $h->add(Gtk::Object::new Gtk::Button 
            label => '>',
+           can_focus => 0,
            signal::clicked => sub {
-              drawable->gap_next;
+              drawable->gap_next; upd;
            });
    $h->add(Gtk::Object::new Gtk::Button 
            label => '>>|',
+           can_focus => 0,
            signal::clicked => sub {
-              drawable->gap_last;
+              drawable->gap_last; upd;
+
            });
    show_all $w;
 }
