@@ -1,5 +1,10 @@
 2005-02-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-blend.c: fixed rounding errors in the
+	non-dithered case and optimized the dithering code.
+
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-blend.c: (hopefully) improve the threaded
 	performance by using a dedicated RNG per tile.
 
