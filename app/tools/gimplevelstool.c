@@ -886,56 +886,16 @@ levels_update (GimpLevelsTool *tool,
 
   if (update & OUTPUT_LEVELS)
     {
-      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
-                                  channel);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar), channel);
     }
 
   if (update & INPUT_SLIDERS)
     {
-      Levels  *levels = tool->levels;
-      gint     width  = tool->input_area->allocation.width;
-      gdouble  delta, mid, tmp;
-      gint     border;
-
-      g_object_get (tool->hist_view, "border-width", &border, NULL);
-
-      width -= 2 * border;
-
-      tool->slider_pos[0] = ROUND ((gdouble) width *
-                                   levels->low_input[tool->channel] /
-                                   256.0) + border;
-
-      tool->slider_pos[2] = ROUND ((gdouble) width *
-                                   levels->high_input[tool->channel] /
-                                   256.0) + border;
-
-      delta = (gdouble) (tool->slider_pos[2] - tool->slider_pos[0]) / 2.0;
-      mid   = tool->slider_pos[0] + delta;
-      tmp   = log10 (1.0 / levels->gamma[tool->channel]);
-
-      tool->slider_pos[1] = ROUND (mid + delta * tmp) + border;
-
       gtk_widget_queue_draw (tool->input_area);
     }
 
   if (update & OUTPUT_SLIDERS)
     {
-      Levels  *levels = tool->levels;
-      gint     width  = tool->output_area->allocation.width;
-      gint     border;
-
-      g_object_get (tool->hist_view, "border-width", &border, NULL);
-
-      width -= 2 * border;
-
-      tool->slider_pos[3] = ROUND ((gdouble) width *
-                                   levels->low_output[tool->channel] /
-                                   256.0) + border;
-
-      tool->slider_pos[4] = ROUND ((gdouble) width *
-                                   levels->high_output[tool->channel] /
-                                   256.0) + border;
-
       gtk_widget_queue_draw (tool->output_area);
     }
 }
@@ -1221,6 +1181,29 @@ levels_input_area_expose (GtkWidget      *widget,
                           GdkEventExpose *event,
                           GimpLevelsTool *tool)
 {
+  Levels  *levels = tool->levels;
+  gint     width  = widget->allocation.width;
+  gdouble  delta, mid, tmp;
+  gint     border;
+
+  g_object_get (tool->hist_view, "border-width", &border, NULL);
+
+  width -= 2 * border;
+
+  tool->slider_pos[0] = ROUND ((gdouble) width *
+                               levels->low_input[tool->channel] /
+                               256.0) + border;
+
+  tool->slider_pos[2] = ROUND ((gdouble) width *
+                               levels->high_input[tool->channel] /
+                               256.0) + border;
+
+  delta = (gdouble) (tool->slider_pos[2] - tool->slider_pos[0]) / 2.0;
+  mid   = tool->slider_pos[0] + delta;
+  tmp   = log10 (1.0 / levels->gamma[tool->channel]);
+
+  tool->slider_pos[1] = ROUND (mid + delta * tmp) + border;
+
   levels_draw_slider (widget,
                       widget->style->black_gc,
                       widget->style->black_gc,
@@ -1331,6 +1314,22 @@ levels_output_area_expose (GtkWidget      *widget,
                            GdkEventExpose *event,
                            GimpLevelsTool *tool)
 {
+  Levels  *levels = tool->levels;
+  gint     width  = widget->allocation.width;
+  gint     border;
+
+  g_object_get (tool->hist_view, "border-width", &border, NULL);
+
+  width -= 2 * border;
+
+  tool->slider_pos[3] = ROUND ((gdouble) width *
+                               levels->low_output[tool->channel] /
+                               256.0) + border;
+
+  tool->slider_pos[4] = ROUND ((gdouble) width *
+                               levels->high_output[tool->channel] /
+                               256.0) + border;
+
   levels_draw_slider (widget,
                       widget->style->black_gc,
                       widget->style->black_gc,

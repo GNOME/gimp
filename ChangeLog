@@ -1,5 +1,11 @@
 2004-03-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimplevelstool.c: compute the slider positions in the
+	expose event handler so that the sliders get positioned correctly
+	when the dialog is resized.
+
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): resurrected
 	a mnemonic that was lost lately (1.88 -> 1.89) but still exists in
 	most translations.
