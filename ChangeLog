@@ -1,3 +1,7 @@
+2001-11-30  Abel Cheung  <maddog@linux.org.hk>
+
+	* plug-ins/common/sinus.c(sinus_dialog): Fix another typo.
+
 2001-11-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_preferences.c: use G_DIR_SEPARATOR instead
