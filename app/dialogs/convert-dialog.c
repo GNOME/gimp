@@ -162,7 +162,7 @@ convert_dialog_new (GimpImage    *gimage,
   /*  palette  */
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                     gtk_label_new (_("Palette")),
+                                     gtk_label_new (_("Colormap")),
                                      G_CALLBACK (gimp_radio_button_update),
                                      &dialog->palette_type,
                                      &toggle);
@@ -204,7 +204,7 @@ convert_dialog_new (GimpImage    *gimage,
       gtk_widget_show (palette_box);
 
       toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
-                                                     "from final palette"));
+                                                     "from final palette."));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     dialog->remove_dups);
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

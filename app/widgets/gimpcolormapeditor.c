@@ -890,9 +890,9 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
 
           editor->color_dialog =
             gimp_color_dialog_new (GIMP_VIEWABLE (gimage),
-                                   _("Edit Indexed Color"),
+                                   _("Edit Colormap Entry"),
                                    GIMP_STOCK_CONVERT_INDEXED,
-                                   _("Edit indexed image palette color"),
+                                   _("Edit colormap entry"),
                                    GTK_WIDGET (editor),
                                    toplevel_factory,
                                    "gimp-colormap-editor-color-dialog",

@@ -1,5 +1,15 @@
 2004-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/colormap-editor-actions.c
+	* app/actions/dialogs-actions.c
+	* app/core/gimpimage-colormap.c
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/dialogs.c
+	* app/widgets/gimpcolormapeditor.c: use the term "Colormap"
+	instead of "Indexed Palette". Fixes bug #155829.
+
+2004-10-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wmf.c: applied a patch by Karine Proot that adds
 	a preview to the load dialog and a similar UI as the SVG loader.
 	Fixes bug #133519 and bug #133521.

@@ -87,7 +87,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_PATH_DIALOG },
 
   { "dialogs-indexed-palette", GIMP_STOCK_INDEXED_PALETTE,
-    N_("Inde_xed Palette"), NULL, NULL,
+    N_("Color_map"), NULL, NULL,
     "gimp-indexed-palette",
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 

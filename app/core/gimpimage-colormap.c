@@ -60,7 +60,7 @@ gimp_image_set_colormap (GimpImage    *gimage,
   g_return_if_fail (n_colors >= 0 && n_colors <= 256);
 
   if (push_undo)
-    gimp_image_undo_push_image_colormap (gimage, _("Set Indexed Palette"));
+    gimp_image_undo_push_image_colormap (gimage, _("Set Colormap"));
 
   if (cmap)
     {
@@ -112,7 +112,7 @@ gimp_image_set_colormap_entry (GimpImage     *gimage,
 
   if (push_undo)
     gimp_image_undo_push_image_colormap (gimage,
-                                         _("Change Indexed Palette Entry"));
+                                         _("Change Colormap entry"));
 
   gimp_rgb_get_uchar (color,
                       &gimage->cmap[color_index * 3],
@@ -132,7 +132,7 @@ gimp_image_add_colormap_entry (GimpImage     *gimage,
   g_return_if_fail (color != NULL);
 
   gimp_image_undo_push_image_colormap (gimage,
-                                       _("Add Color to Indexed Palette"));
+                                       _("Add Color to Colormap"));
 
   gimp_rgb_get_uchar (color,
                       &gimage->cmap[gimage->num_cols * 3],
