@@ -360,6 +360,7 @@ plug-ins/smooth_palette/Makefile
 plug-ins/sinus/Makefile
 plug-ins/shift/Makefile
 plug-ins/sgi/Makefile
+plug-ins/semiflatten/Makefile
 plug-ins/scatter_hsv/Makefile
 plug-ins/rotators/Makefile
 plug-ins/rotate/Makefile
@@ -381,6 +382,7 @@ plug-ins/animationplay/Makefile
 plug-ins/align_layers/Makefile
 plug-ins/CEL/Makefile
 plug-ins/glasstile/Makefile
+plug-ins/gtm/Makefile
 plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
