@@ -5,6 +5,7 @@
 ]>
 
 <book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Application Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>

@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY GimpModule SYSTEM "xml/gimpmodule.xml">
-<!ENTITY GimpModuleDB SYSTEM "xml/gimpmoduledb.xml">
-<!ENTITY version SYSTEM "version.xml">
+  <!ENTITY version SYSTEM "version.xml">
 ]>
 
-<book id="index">
+<book id="index"  xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Module Library Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>
@@ -14,7 +13,8 @@
 
   <part id="libgimpmodule">
     <title>GIMP Module Library</title>
-    &GimpModule;
-    &GimpModuleDB;
+    <xi:include href="xml/gimpmodule.xml" />
+    <xi:include href="xml/gimpmoduledb.xml" />
   </part>
+
 </book>

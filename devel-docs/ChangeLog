@@ -9,6 +9,7 @@
 	* libgimpbase/libgimpbase-docs.sgml
 	* libgimpcolor/libgimpcolor-docs.sgml
 	* libgimpmath/libgimpmath-docs.sgml	
+	* libgimpmodule/libgimpmodule-docs.sgml	
 	* libgimpwidgets/libgimpwidgets-docs.sgml: converted to use
 	XInclude instead of entities.
 
