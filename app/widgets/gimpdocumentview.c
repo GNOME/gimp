@@ -152,7 +152,7 @@ gimp_document_view_new (GimpViewType     view_type,
 
   document_view->remove_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
-                                   "documents-remove");
+                                   "documents-remove", NULL);
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (document_view->remove_button),
 				  GIMP_TYPE_IMAGEFILE);

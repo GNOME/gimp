@@ -1,3 +1,9 @@
+2004-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdocumentview.c (gimp_document_view_new):
+	gimp_editor_add_action_button() takes a va_list, terminate
+	it with NULL. Fixes bug #143258.
+
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpink.c: restored old time/speed sensitivity
