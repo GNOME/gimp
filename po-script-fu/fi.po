@@ -19,7 +19,7 @@ msgstr "Script-Fu konsoli moodi sallii ainoastaan interaktiivisen käytön"
 
 #: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
-msgstr "Script-Fu Konsoli"
+msgstr "Script-Fu-konsoli"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
@@ -30,7 +30,7 @@ msgstr "Sulje"
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:207
 msgid "SIOD Output"
-msgstr "SIOD Tuloste"
+msgstr "SIOD-tuloste"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:286
@@ -43,15 +43,15 @@ msgstr "Selaa..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open SIOD output pipe"
-msgstr "Mahdotonta avata SIOD tulostus putkea"
+msgstr "SIODin tulostusputkea ei saatu avatuksi"
 
 #: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Mahdotonta avata streamia SIOD tulostus putkesta"
+msgstr "SIODin tulostusputkea ei saatu avatuksi"
 
 #: plug-ins/script-fu/script-fu-console.c:628
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Script-Fu evalutate moodi sallii ainoastaan epäinteraktiivisen käytön"
+msgstr "Script-Fu:n evaluointitila sallii ainoastaan ei-interaktiivisen käytön"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1206
@@ -68,7 +68,7 @@ msgstr "Script-Fu: %s"
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1234
 msgid "Script Arguments"
-msgstr "Script parametrit"
+msgstr "Scriptin parametrit"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1257
 #, c-format
@@ -77,11 +77,11 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1304
 msgid "Script-Fu Color Selection"
-msgstr "Script-Fu Värien selain"
+msgstr "Script-Fu värien selain"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu File Selection"
-msgstr "Script-Fu Tiedoston selain"
+msgstr "Script-Fu tiedostojen selain"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-fu Pattern Selection"
@@ -122,10 +122,12 @@ msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
+"Ainakin yksi valitsemistasi kirjasinleikkauksista on epäkelpo.\n"
+"Tarkista valintasi uudelleen.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
-msgstr "Tekija:"
+msgstr "Tekijä:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
@@ -133,27 +135,29 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
-msgstr "Päivämäärä"
+msgstr "Päiväys:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Image Types:"
-msgstr "Kuva tyypit:"
+msgstr "Kuvatyypit:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2189
 msgid "Script-Fu Font Selection"
-msgstr "Script-Fu Merkistön valinta"
+msgstr "Script-Fu merkistön valinta"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Script-Fu Tiedoston selain"
+msgstr "Script-Fu Virhe suorittaessa\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
-msgstr "Script-Fu palevelimen valinnat"
+msgstr "Script-Fu palvelimen valinnat"
 
 #: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
@@ -161,27 +165,27 @@ msgstr "Palvelimen portti:"
 
 #: plug-ins/script-fu/script-fu-server.c:572
 msgid "Server Logfile:"
-msgstr "Palvelimen logi-tiedosto:"
+msgstr "Palvelimen lokitiedosto:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
-msgstr "Lue uudestaan kaikki skriptat"
+msgstr "Lue uudestaan kaikki skriptit"
 
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Virkistä"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
-msgstr ""
+msgstr "<Image>/Muokkaa/Kopioi näkyvä osa"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
