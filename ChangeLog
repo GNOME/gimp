@@ -1,3 +1,8 @@
+2003-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptooloptionseditor.c: set the horizontal scrollbar
+	policy to AUTOMATIC; addresses bug #124134.
+
 2003-10-12  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c
