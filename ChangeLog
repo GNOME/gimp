@@ -1,3 +1,8 @@
+2004-12-27  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
+	don't set array outside its bounds.  Should fix bug #161323.
+	
 2004-12-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/colortoalpha.c: if possible, use
@@ -27,7 +32,7 @@
 	* plug-ins/gfig/gfig.h: plugged some memory-leaks, and done some
 	cleanups.
 
-2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+2004-12-26  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpbrush.c: don't ask for preview with
 	zero width or height, fixes bug #162232.
@@ -35,7 +40,7 @@
 	* app/base/brush-scale.c: remove tabs and trailing
 	whitespace.
 
-2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+2004-12-26  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/documents-commands.c
 	* app/actions/file-commands.c
