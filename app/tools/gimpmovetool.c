@@ -163,6 +163,8 @@ move_draw_guide (GDisplay *gdisp, Guide *guide)
 
     gdk_draw_line (gdisp->canvas->window, move_gc, x, y1, x, y2);
     break;
+  default:
+    g_warning ("mdg / BAD FALLTHROUGH");
   }
 }
 

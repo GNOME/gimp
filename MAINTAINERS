@@ -115,10 +115,12 @@ Name: Adam D. Moss
 Email: adam@gimp.org
 url: http://www.foxbox.org
 ircnick: Aspirin
-expertise: convert.c, idlerender, general core and UI, thumbnails,
-          gif.c, animationplay.c and various other subversive plugins.
-current work:  making derisive comments about everyone else's cvs
-          commits 
+expertise: convert.c, idlerender, general core and UI, file thumbnails,
+           opaque layer moves... gif/gifload.c, animationplay.c and various
+           other subversive plugins.
+current work:  l&c dialog rewrite (postponed), a quantizer to end all
+           quantizers, general hackery and bugfixes, and making derisive
+           comments about everyone elses' cvs commits 
 commit access: yes
 
 Name: Andy Thomas

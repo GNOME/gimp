@@ -39,7 +39,8 @@ typedef struct _edit_selection EditSelection;
 
 struct _edit_selection
 {
-  int                 origx, origy;      /*  original x and y coords         */
+  int                 origx, origy;      /*  last x and y coords             */
+  int                 cumlx, cumly;      /*  cumulative changes to x and yed */
   int                 x, y;              /*  current x and y coords          */
 
   int                 x1, y1;            /*  bounding box of selection mask  */
@@ -105,11 +106,16 @@ init_edit_selection (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
+  undo_push_group_start (gdisp->gimage, MISC_UNDO);
+
   /*  Move the (x, y) point from screen to image space  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, TRUE);
 
   edit_select.x = edit_select.origx = x;
   edit_select.y = edit_select.origy = y;
+
+  edit_select.cumlx = 0;
+  edit_select.cumly = 0;
 
   /*  Make a check to see if it should be a floating selection translation  */
   if (edit_type == LayerTranslate)
@@ -128,7 +134,7 @@ init_edit_selection (Tool           *tool,
   edit_select.old_scroll_lock    = tool->scroll_lock;
   edit_select.old_auto_snap_to   = tool->auto_snap_to;
 
-  /*  find the bounding box of the selection mask--
+  /*  find the bounding box of the selection mask -
    *  this is used for the case of a MaskToLayerTranslate,
    *  where the translation will result in floating the selection
    *  mask and translating the resulting layer
@@ -167,6 +173,7 @@ edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       gpointer        gdisp_ptr)
 {
+  /* don't remove these unused vars yet --adam */
   int x, y;
   GDisplay * gdisp;
   Layer *layer;
@@ -196,6 +203,12 @@ edit_selection_button_release (Tool           *tool,
   tool->scroll_lock         = edit_select.old_scroll_lock;
   tool->auto_snap_to        = edit_select.old_auto_snap_to;
 
+#if 0
+  /****************************************************************************/
+  /****************************************************************************/
+  /*  This work is all done in the motion handler now - will be removed soon  */
+  /****************************************************************************/
+  /****************************************************************************/
   /*  If the cancel button is down...Do nothing  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
@@ -221,9 +234,6 @@ edit_selection_button_release (Tool           *tool,
 	      break;
 
 	    case LayerTranslate:
-	      /*  Push a linked undo group  */
-	      undo_push_group_start (gdisp->gimage, LINKED_LAYER_UNDO);
-
 	      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
 		floating_sel_relax (floating_layer, TRUE);
 
@@ -235,12 +245,6 @@ edit_selection_button_release (Tool           *tool,
 		  if (layer == gdisp->gimage->active_layer || 
 		      layer_linked (layer))
 		    {
-		      /* Temporarily shift back to the original
-			 position so that undo information is updated
-			 properly... bit of a hack. DISABLED */
-		      /*layer_temporarily_translate (layer,
-						   edit_select.origx - x,
-						   edit_select.origy - y);*/
 		      layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
 		    }
 		  layer_list = g_slist_next (layer_list);
@@ -249,20 +253,15 @@ edit_selection_button_release (Tool           *tool,
 	      if (floating_layer)
 		floating_sel_rigor (floating_layer, TRUE);
 
-	      /*  End the linked undo group  */
-	      undo_push_group_end (gdisp->gimage);
 	      break;
 
 	    case FloatingSelTranslate:
 	      layer = gimage_get_active_layer (gdisp->gimage);
 
-	      undo_push_group_start (gdisp->gimage, LINKED_LAYER_UNDO);
-
 	      floating_sel_relax (layer, TRUE);
 	      layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
 	      floating_sel_rigor (layer, TRUE);
 
-	      undo_push_group_end (gdisp->gimage);
 	      break;
 	    }
 
@@ -282,6 +281,19 @@ edit_selection_button_release (Tool           *tool,
 	    floating_sel_anchor (layer);
 	}
     }
+  undo_push_group_end (gdisp->gimage);
+
+#else
+
+  undo_push_group_end (gdisp->gimage);
+
+  if (bevent->state & GDK_BUTTON2_MASK) /* OPERATION CANCELLED */
+    {
+      /* Operation cancelled - undo the undo-group! */
+      undo_pop(gdisp->gimage);
+    }
+
+#endif
 
   gdisplays_flush ();
 }
@@ -295,10 +307,11 @@ edit_selection_motion (Tool           *tool,
   GDisplay * gdisp;
   gchar offset[STATUSBAR_SIZE];
 
-  /*  g_warning("motion");*/
-
   if (tool->state != ACTIVE)
-    return;
+    {
+      g_warning ("Tracking motion while !ACTIVE");
+      return;
+    }
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -308,50 +321,94 @@ edit_selection_motion (Tool           *tool,
 
   edit_selection_snap (gdisp, mevent->x, mevent->y);
 
-#if 0
-#warning ADAM MADNESS
-  if (edit_select.edit_type == LayerTranslate)
-    {
-      int x = edit_select.x;
-      int y = edit_select.y;
-      Layer* floating_layer;
-      Layer* layer;
-      GSList* layer_list;
 
-      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
-        floating_sel_relax (floating_layer, TRUE);
-      
-      /*  translate the layer--and any "linked" layers as well  */
-      layer_list = gdisp->gimage->layers;
-      while (layer_list)
-        {
-          layer = (Layer *) layer_list->data;
-          if (layer == gdisp->gimage->active_layer || 
-              layer_linked (layer))
-	    {
-	      layer_temporarily_translate (layer,
-					   (x - edit_select.origx),
-					   (y - edit_select.origy));
-	    }
-          layer_list = g_slist_next (layer_list);
-        }
 
-      if (floating_layer)
-        floating_sel_rigor (floating_layer, TRUE);
+  /**********************************************adam hack*************/
+  /********************************************************************/
+  {
+    gint x,y;
+    Layer *layer;
+    Layer *floating_layer;
+    GSList *layer_list;
+
+    edit_selection_snap (gdisp, mevent->x, mevent->y);
+    x = edit_select.x;
+    y = edit_select.y;
+
+    /* if there has been movement, move the selection  */
+    if (edit_select.origx != x || edit_select.origy != y)
+      {
+	gint xoffset, yoffset;
+	
+	xoffset = x - edit_select.origx;
+	yoffset = y - edit_select.origy;
+
+	edit_select.cumlx += xoffset;
+	edit_select.cumly += yoffset;
+
+	switch (edit_select.edit_type)
+	  {
+	  case MaskTranslate:
+	    /*  translate the selection  */
+	    gimage_mask_translate (gdisp->gimage, xoffset, yoffset);
+	    break;
+	
+	  case MaskToLayerTranslate:
+	    gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+			       xoffset, yoffset);
+	    break;
+	
+	  case LayerTranslate:
+	    if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+	      floating_sel_relax (floating_layer, TRUE);
       
-      gdisplays_flush();
-    }
-#warning END OF ADAM MADNESS
-#endif
+	    /*  translate the layer--and any "linked" layers as well  */
+	    layer_list = gdisp->gimage->layers;
+	    while (layer_list)
+	      {
+		layer = (Layer *) layer_list->data;
+		if (layer == gdisp->gimage->active_layer || 
+		    layer_linked (layer))
+		  {
+		    layer_translate (layer, xoffset, yoffset);
+		  }
+		layer_list = g_slist_next (layer_list);
+	      }
+      
+	    if (floating_layer)
+	      floating_sel_rigor (floating_layer, TRUE);
+	    break;
+      
+	  case FloatingSelTranslate:
+	    layer = gimage_get_active_layer (gdisp->gimage);
+      
+	    floating_sel_relax (layer, TRUE);
+	    layer_translate (layer, xoffset, yoffset);
+	    floating_sel_rigor (layer, TRUE);
+
+	    break;
+
+	  default:
+	    g_warning ("esm / BAD FALLTHROUGH");
+	  }
+      }
+
+    gdisplay_flush(gdisp);
+  }
+  /********************************************************************/
+  /********************************************************************/
+
+
+  
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
   if (gdisp->dot_for_dot)
     {
       g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		  _("Move: "),
-		  (edit_select.x - edit_select.origx),
+		  edit_select.cumlx,
 		  ", ",
-		  (edit_select.y - edit_select.origy));
+		  edit_select.cumly);
     }
   else /* show real world units */
     {
@@ -359,10 +416,10 @@ edit_selection_motion (Tool           *tool,
 
       g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
 		  _("Move: "), 
-		  (edit_select.x - edit_select.origx) * unit_factor /
+		  (edit_select.cumlx) * unit_factor /
 		  gdisp->gimage->xresolution,
 		  ", ",
-		  (edit_select.y - edit_select.origy) * unit_factor /
+		  (edit_select.cumly) * unit_factor /
 		  gdisp->gimage->yresolution);
     }
   gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id,
@@ -387,14 +444,11 @@ edit_selection_draw (Tool *tool)
   int x3, y3, x4, y4;
   int off_x, off_y;
 
-  /*static int ggg = 0;
-    g_warning("draw %d", ggg++);*/
-
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
 
-  diff_x = SCALEX (gdisp, (edit_select.x - edit_select.origx));
-  diff_y = SCALEY (gdisp, (edit_select.y - edit_select.origy));
+  diff_x = 0; /*SCALEX (gdisp, (edit_select.x - edit_select.origx));*/
+  diff_y = 0; /*SCALEY (gdisp, (edit_select.y - edit_select.origy));*/
 
   switch (edit_select.edit_type)
     {
@@ -425,6 +479,7 @@ edit_selection_draw (Tool *tool)
       if (! floating_sel)
 	gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			   select->segs_in, select->num_segs_in);
+
       gdk_draw_segments (edit_select.core->win, edit_select.core->gc,
 			 select->segs_out, select->num_segs_out);
 
@@ -499,41 +554,6 @@ edit_selection_draw (Tool *tool)
 			  edit_select.core->gc, 0,
 			  x1 + diff_x, y1 + diff_y,
 			  (x2 - x1) - 1, (y2 - y1) - 1);
-#if 0
-#warning ADAM MADNESS
-  if (edit_select.edit_type == LayerTranslate)
-    {
-      int x = edit_select.x;
-      int y = edit_select.y;
-      Layer* floating_layer;
-      Layer* layer;
-      GSList* layer_list;
-
-      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
-        floating_sel_relax (floating_layer, TRUE);
-      
-      /*  translate the layer--and any "linked" layers as well  */
-      layer_list = gdisp->gimage->layers;
-      while (layer_list)
-        {
-          layer = (Layer *) layer_list->data;
-          if (layer == gdisp->gimage->active_layer || 
-              layer_linked (layer))
-	    {
-	      layer_temporarily_translate (layer,
-					   (x - edit_select.origx),
-					   (y - edit_select.origy));
-	    }
-          layer_list = g_slist_next (layer_list);
-        }
-
-      if (floating_layer)
-        floating_sel_rigor (floating_layer, TRUE);
-      
-      gdisplays_flush();
-    }
-#warning END OF ADAM MADNESS
-#endif
       break;
 
     case FloatingSelTranslate:

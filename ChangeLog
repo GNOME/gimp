@@ -1,7 +1,18 @@
+Sun Mar 21 15:29:38 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/disp_callbacks.c app/edit_selection.c app/move.c:
+	Happy-fun opaque layer moves.
+
+	* app/edit_selection.c: I doubt that using button3 to abort
+	a layer move has worked for a long time.  I rewrote some
+	stuff and moved the 'abort' button to button2.  Hold it down
+	when you release button1, to abort the current move.  It
+	doesn't actually abort, it just automatically does an undo.
+
 Sat Mar 20 22:51:51 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* fileops.c: The file revert operation clears the undo stack
-	upon a revert to get rid of the actions causedby the open
+	upon a revert to get rid of the actions caused by the open
 	operation.
 
 Sat Mar 20 21:55:53 GMT 1999  Adam D. Moss  <adam@gimp.org>

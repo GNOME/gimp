@@ -269,18 +269,20 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
-	    if (active_tool->state == ACTIVE)
-	      {
-		if (active_tool->auto_snap_to)
-		  {
-		    gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
-		    bevent->x = tx;
-		    bevent->y = ty;
-		    update_cursor = TRUE;
-		  }
-
-		(* active_tool->button_release_func) (active_tool, bevent, gdisp);
-	      }
+	    {
+	      if (active_tool->state == ACTIVE)
+		{
+		  if (active_tool->auto_snap_to)
+		    {
+		      gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
+		      bevent->x = tx;
+		      bevent->y = ty;
+		      update_cursor = TRUE;
+		    }
+		  
+		  (* active_tool->button_release_func) (active_tool, bevent, gdisp);
+		}
+	    }
 	  break;
 
 	case 2:
