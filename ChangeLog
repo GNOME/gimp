@@ -1,3 +1,8 @@
+2001-04-30  Dave Neary  <dneary@eircom.net>
+
+	* app/tools/tool_options.c: Ensure that option widgets are set to
+	defaults on first call to the _init() function. 
+	
 2001-04-29  Garry R. Osgood  <grosgood@rcn.com>
 	* plug-ins/plugin-helper/plugin-helper.c
 	extensions don't have parameters,
