@@ -70,9 +70,9 @@ images_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Raise Viewss", image);
-  SET_SENSITIVE ("/New View",    image);
-  SET_SENSITIVE ("/Delete Image",   image && image->disp_count == 0);
+  SET_SENSITIVE ("/Raise Views",  image);
+  SET_SENSITIVE ("/New View",     image);
+  SET_SENSITIVE ("/Delete Image", image && image->disp_count == 0);
 
 #undef SET_SENSITIVE
 }

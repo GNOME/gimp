@@ -1,3 +1,7 @@
+2003-09-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/images-menu.c (images_menu_update): fixed typo.
+
 2003-09-21  Simon Budig  <simon@gimp.org>
 
 	* app/xcf/xcf-save.c: Enable the new save code by default.
