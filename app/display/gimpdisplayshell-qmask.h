@@ -17,10 +17,8 @@
  */
 #ifndef __QMASK_H__
 #define __QMASK_H__
-#ifdef icky
-GtkWidget *
-qmask_area_create (GDisplay *display);
-#endif /* icky */
+
+void qmask_click_handler(GtkWidget *widget, GdkEventButton *event, gpointer data);
 void qmask_activate(GtkWidget *w, GDisplay *gdisp);
 void qmask_deactivate(GtkWidget *w, GDisplay *gdisp);
 void qmask_buttons_update (GDisplay *gdisp);

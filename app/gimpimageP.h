@@ -70,7 +70,9 @@ struct _GimpImage
   int by_color_select;                /*  TRUE if there's an active    */
                                       /*  "by color" selection dialog  */
 
-  int qmask_state;                    /* TRUE if qmask is on           */
+  int qmask_state;                    /*  TRUE if qmask is on          */
+  double qmask_opacity;               /*  opacity of the qmask channel */
+  unsigned char qmask_color[3];       /*  rgb triplet of the color     */
 
                                       /*  Undo apparatus  */
   GSList *undo_stack;                 /*  stack for undo operations    */

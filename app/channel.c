@@ -245,6 +245,18 @@ int i;
     }
 } 
 
+char *
+channel_get_color (Channel *channel)
+{
+  return (GIMP_CHANNEL(channel)->col); 
+}
+ 
+int
+channel_get_opacity (Channel *channel)
+{ 
+  return channel->opacity;
+}
+
 void 
 channel_set_opacity (Channel *channel, gint opacity)
 {
@@ -414,6 +426,15 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
   /*  update the new channel area  */
   drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+}
+
+void            
+channel_update (Channel *channel)
+{
+drawable_update (GIMP_DRAWABLE(channel), 0, 0,
+                 GIMP_DRAWABLE(channel)->width,
+                 GIMP_DRAWABLE(channel)->height);
+gdisplays_flush ();
 }
 
 

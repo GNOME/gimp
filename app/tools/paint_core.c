@@ -660,7 +660,7 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
 	}
       if(mode == ONCE_FORWARD || mode == ONCE_BACKWARDS)
 	{
-	  printf("got here \n");
+	 /*  printf("got here \n"); */
 	  /* for the once modes, set alpha to 0.0 */
 	  temp_opacity = 0.0;
 	}

@@ -290,6 +290,12 @@ gimp_image_new (int width,
   /* create the selection mask */
   gimage->selection_mask = channel_new_mask (gimage, gimage->width, gimage->height);
 
+  /* set the qmask properties */
+  gimage->qmask_state = FALSE;
+  gimage->qmask_opacity = 50;
+  gimage->qmask_color[0] = 255; 
+  gimage->qmask_color[1] = 0; 
+  gimage->qmask_color[2] = 0; 
 
   return gimage;
 }

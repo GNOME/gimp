@@ -143,6 +143,9 @@ tools_button_press (GtkWidget      *widget,
 		    GdkEventButton *event,
 		    gpointer        data)
 {
+  GDisplay * gdisp;
+  gdisp = data;
+ 
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
     tools_options_dialog_show ();
@@ -226,39 +229,6 @@ allocate_colors (GtkWidget *parent)
   colors[11].blue = 35979;
   gdk_color_alloc (colormap, &colors[11]);
 }
-
-#ifdef icky
-static void
-create_qmask_area (GtkWidget *parent)
-{
-  GtkWidget *frame;
-  GtkWidget *alignment;
-  GdkPixmap *default_pixmap;
-  GdkPixmap *swap_pixmap;
-
-  gtk_widget_realize (parent);
-
-  default_pixmap = create_pixmap (parent->window, NULL, default_bits,
-				  default_width, default_height);
-  swap_pixmap    = create_pixmap (parent->window, NULL, swap_bits,
-				  swap_width, swap_height);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_realize (frame);
-
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-
-  gtk_container_add (GTK_CONTAINER (alignment), qmask_area);
-  gtk_widget_show (qmask_off);
-  gtk_widget_show (qmask_on);
-  gtk_widget_show (alignment);
-  gtk_widget_show (frame);
-}
-#endif /* icky */
 
 static void
 create_indicator_area (GtkWidget *parent)
@@ -612,9 +582,6 @@ create_toolbox ()
   create_color_area (vbox);
   if (show_indicators && (!no_data) )
       create_indicator_area (vbox);
-#ifdef icky
-  create_qmask_area (vbox);
-#endif /*icky */
   gtk_widget_show (window);
   gimp_set_drop_open (window);
 
@@ -796,6 +763,9 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "toggled",
                      (GtkSignalFunc) qmask_deactivate,
                      gdisp);
+  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "button_press_event",
+                     (GtkSignalFunc) qmask_click_handler,
+                     gdisp);
 
   gdisp->qmaskon = gtk_radio_button_new(group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskon));
@@ -803,7 +773,9 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "toggled",
                      (GtkSignalFunc) qmask_activate,
                      gdisp);
-
+  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "button_press_event",
+                     (GtkSignalFunc) qmask_click_handler,
+                     gdisp);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), TRUE);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);

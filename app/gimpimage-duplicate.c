@@ -574,6 +574,7 @@ duplicate (GimpImage *gimage)
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
+
   gint count;
 
   gimp_add_busy_cursors_until_idle ();
@@ -721,6 +722,11 @@ duplicate (GimpImage *gimage)
 	  g_error("Unknown guide orientation.\n");
 	}
     }
+  /* Copy the qmask info */
+  new_gimage->qmask_state = gimage->qmask_state;
+  for (count=0;count<3;count++)
+    new_gimage->qmask_color[count] = gimage->qmask_color[count];
+  new_gimage->qmask_opacity = gimage->qmask_opacity;
 
   gimage_enable_undo (new_gimage);
 

@@ -1,3 +1,18 @@
+Sat Aug  7 15:30 1999 Seth Burgess <sjburges@gimp.org> 
+	* channel.c
+	* channel.h : more public accessors; eventually things should be 
+	              rewritten to use them so we aren't #include'ing 
+                      channel_pvt.h all over (uck)
+	* channel_ops.c
+	* gimpimage.c
+	* gimpimageP.h
+	* interface.c
+	* paint_core.c
+	* paths_dialog.c
+	* qmask.c
+	* qmask.h : Added a dialog to let you choose your qmask properties
+                    when you double click either button.
+
 Fri Aug  6 13:07:58 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* libgimp/gimpenv.c (gimp_directory): set gimp_directory
