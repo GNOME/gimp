@@ -84,7 +84,7 @@ struct _CdisplayColorblind
   guint32               cache[2 * COLOR_CACHE_SIZE];
 
   GtkWidget            *hbox;
-  GtkWidget            *optionmenu;
+  GtkWidget            *combo;
 };
 
 struct _CdisplayColorblindClass
@@ -465,27 +465,27 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  colorblind->optionmenu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (colorblind_deficiency_callback),
-                              colorblind, colorblind->deficiency,
+  colorblind->combo =
+    gimp_int_combo_box_new (_("Protanopia (insensitivity to red)"),
+                            COLORBLIND_DEFICIENCY_PROTANOPIA,
+                            _("Deuteranopia (insensitivity to green)"),
+                            COLORBLIND_DEFICIENCY_DEUTERANOPIA,
+                            _("Tritanopia (insensitivity to blue)"),
+                            COLORBLIND_DEFICIENCY_TRITANOPIA,
+                            NULL);
 
-                              _("Protanopia (insensitivity to red)"),
-                              COLORBLIND_DEFICIENCY_PROTANOPIA, NULL,
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (colorblind->combo),
+                                 colorblind->deficiency);
 
-                              _("Deuteranopia (insensitivity to green)"),
-                              COLORBLIND_DEFICIENCY_DEUTERANOPIA, NULL,
+  g_signal_connect (colorblind->combo, "changed",
+                    G_CALLBACK (colorblind_deficiency_callback),
+                    colorblind);
 
-                              _("Tritanopia (insensitivity to blue)"),
-                              COLORBLIND_DEFICIENCY_TRITANOPIA, NULL,
-
-                              NULL);
-
-  gtk_box_pack_start (GTK_BOX (colorblind->hbox), colorblind->optionmenu,
+  gtk_box_pack_start (GTK_BOX (colorblind->hbox), colorblind->combo,
                       FALSE, FALSE, 0);
-  gtk_widget_show (colorblind->optionmenu);
+  gtk_widget_show (colorblind->combo);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorblind->optionmenu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorblind->combo);
 
   return colorblind->hbox;
 }
@@ -495,10 +495,10 @@ cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
 
-  if (colorblind->optionmenu)
+  if (colorblind->combo)
     {
-      gimp_int_option_menu_set_history (GTK_OPTION_MENU (colorblind->optionmenu),
-                                        DEFAULT_DEFICIENCY);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (colorblind->combo),
+                                     DEFAULT_DEFICIENCY);
       colorblind->deficiency = DEFAULT_DEFICIENCY;
 
       gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
@@ -584,7 +584,8 @@ static void
 colorblind_deficiency_callback (GtkWidget          *widget,
                                 CdisplayColorblind *colorblind)
 {
-  gimp_menu_item_update (widget, &colorblind->deficiency);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &colorblind->deficiency);
 
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
 }

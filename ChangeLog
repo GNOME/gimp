@@ -1,6 +1,7 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpmemsizeentry.c
+	* modules/cdisplay_colorblind.c
 	* modules/cdisplay_proof.c: ported to GimpIntComboBox.
 
 	* libgimpwidgets/gimpwidgets.[ch]: declared the gimp option_menu
