@@ -1356,9 +1356,6 @@ convert_image (GImage		 *gimage,
   /* colourmap stuff */
   if (new_type == INDEXED)
     {
-      fputc ('I', stderr);
-      fprintf (stderr, "(rd%d, d%d, ad%d)", remdups, dither, alpha_dither);
-
       if (gimage->cmap)
 	g_free (gimage->cmap);
       gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
@@ -1373,21 +1370,6 @@ convert_image (GImage		 *gimage,
 	  unsigned char remap_table [256];
 	  int num_entries;
       
-	  fputc('\n',stderr);
-
-	  for (y=0; y<4; y++)
-	    {
-	      for (x=0; x<64; x++)
-		{
-		  if (quantobj->index_used_count[y*64+x])
-		    fputc('*',stderr);
-		  else
-		    fputc('.',stderr);
-		}
-	      fputc('\n',stderr);
-	    }
-	  fputc('\n',stderr);
-
 	  for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
 	    {
 	      old_palette[j++] = quantobj->cmap[i].red;
@@ -3707,8 +3689,6 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   int offsetx, offsety;
   int alpha_dither = quantobj->want_alpha_dither;
   unsigned long *index_used_count = quantobj->index_used_count;
-
-  fputc('X',stderr);
 
   drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
