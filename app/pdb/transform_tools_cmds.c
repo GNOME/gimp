@@ -34,6 +34,8 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
+#include "gimp-intl.h"
 
 static ProcRecord flip_proc;
 static ProcRecord perspective_proc;
@@ -186,11 +188,17 @@ perspective_invoker (Gimp         *gimp,
           else
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
+          if (progress)
+            gimp_progress_start (progress, _("Perspective..."), FALSE);
+
           /* Perspective the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
-                                                    FALSE);
+                                                    FALSE, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -322,11 +330,17 @@ rotate_invoker (Gimp         *gimp,
           else
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
+          if (progress)
+            gimp_progress_start (progress, _("Rotating..."), FALSE);
+
           /* Rotate the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, FALSE, 3,
-                                                    FALSE);
+                                                    FALSE, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -433,11 +447,17 @@ scale_invoker (Gimp         *gimp,
           else
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
+          if (progress)
+            gimp_progress_start (progress, _("Scaling..."), FALSE);
+
           /* Scale the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
-                                                    FALSE);
+                                                    FALSE, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -555,11 +575,17 @@ shear_invoker (Gimp         *gimp,
           else
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
+          if (progress)
+            gimp_progress_start (progress, _("Shearing..."), FALSE);
+
           /* Shear the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, FALSE, 3,
-                                                    FALSE);
+                                                    FALSE, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 
@@ -679,11 +705,17 @@ transform_2d_invoker (Gimp         *gimp,
           else
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
+          if (progress)
+            gimp_progress_start (progress, _("2D Transform..."), FALSE);
+
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
-                                                    FALSE);
+                                                    FALSE, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 

@@ -35,7 +35,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
+#include "gimp-intl.h"
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
@@ -582,6 +584,9 @@ edit_blend_invoker (Gimp         *gimp,
         }
       else
         {
+          if (progress)
+            gimp_progress_start (progress, _("Blending..."), FALSE);
+
           gimp_drawable_blend (drawable,
                                context,
                                blend_mode,
@@ -592,7 +597,10 @@ edit_blend_invoker (Gimp         *gimp,
                                supersample, max_depth,
                                threshold, dither,
                                x1, y1, x2, y2,
-                               NULL);
+                               progress);
+
+          if (progress)
+            gimp_progress_end (progress);
         }
     }
 

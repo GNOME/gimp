@@ -1,3 +1,15 @@
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.[ch]: added GimpProgress
+	parameter to gimp_drawable_transform_affine().
+
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: show progress for "blend"
+	and all transform functions.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2004-08-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c: don't use GDK_TOP_LEFT_ARROW

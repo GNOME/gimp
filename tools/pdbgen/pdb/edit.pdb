@@ -318,6 +318,9 @@ HELP
     }
   else
     {
+      if (progress)
+        gimp_progress_start (progress, _("Blending..."), FALSE);
+
       gimp_drawable_blend (drawable,
                            context,
                            blend_mode,
@@ -328,7 +331,10 @@ HELP
                            supersample, max_depth,
                            threshold, dither,
                            x1, y1, x2, y2,
-	                   NULL);
+	                   progress);
+
+      if (progress)
+        gimp_progress_end (progress);
     }
 }
 CODE
@@ -367,7 +373,9 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpimage.h" "core/gimp-edit.h");
+@headers = qw("core/gimp.h" "core/gimp-edit.h" "core/gimpimage.h"
+              "core/gimpprogress.h"
+              "gimp-intl.h");
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear
             edit_fill edit_bucket_fill edit_blend edit_stroke);

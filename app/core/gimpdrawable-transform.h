@@ -65,7 +65,8 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable           *draw
                                                     GimpInterpolationType   interpolation_type,
                                                     gboolean                supersample,
                                                     gint                    recursion_level,
-                                                    gboolean                clip_result);
+                                                    gboolean                clip_result,
+                                                    GimpProgress           *progress);
 gboolean      gimp_drawable_transform_flip         (GimpDrawable           *drawable,
                                                     GimpContext            *context,
                                                     GimpOrientationType     flip_type);

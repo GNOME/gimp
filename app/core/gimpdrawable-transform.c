@@ -852,7 +852,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 GimpInterpolationType   interpolation_type,
                                 gboolean                supersample,
                                 gint                    recursion_level,
-                                gboolean                clip_result)
+                                gboolean                clip_result,
+                                GimpProgress           *progress)
 {
   GimpImage   *gimage;
   TileManager *orig_tiles;
@@ -863,6 +864,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (matrix != NULL, FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -890,7 +892,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         supersample,
                                                         recursion_level,
                                                         FALSE,
-                                                        NULL);
+                                                        progress);
 
       /* Free the cut/copied buffer */
       tile_manager_unref (orig_tiles);
