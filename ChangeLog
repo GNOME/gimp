@@ -1,3 +1,8 @@
+2004-01-26  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: prefer automake-1.7 over 1.8 since there are issues
+	with the latter.
+
 2004-01-26  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpdrawable-blend.c (gradient_fill_region): use memcpy
