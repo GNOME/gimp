@@ -1,5 +1,13 @@
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/mng.c: added MNG save plug-in written by
+	S. Mukund <muks@mukund.org>.
+
+2003-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpbrusheditor.c: increased the upper limit for the
 	brush radius to 1000. Fixes bug #109434.
 

@@ -88,6 +88,7 @@ libexec_PROGRAMS = \
 	mapcolor \
 	max_rgb \
 	mblur \
+	$(MNG) \
 	newsprint \
 	nlfilt \
 	noisify \
@@ -156,6 +157,7 @@ EXTRA_PROGRAMS = \
 	bz2 \
 	jpeg \
 	mail \
+	mng \
 	png \
 	psp \
 	screenshot \
@@ -986,6 +988,19 @@ mblur_LDADD = \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)
+
+mng_SOURCES = \
+	mng.c
+
+mng_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(LIBMNG)							\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 

@@ -752,6 +752,27 @@ AC_SUBST(PNG)
 AC_SUBST(LIBPNG)
 
 
+##################
+# Check for libmng
+##################
+
+AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
+  if test x$with_libmng != xno && test -z "$LIBMNG" &&
+     test -n "$LIBPNG" && test -n "$LIBJPEG" && test -n "$LIBZ"; then
+    AC_CHECK_LIB(mng, mng_create,
+      [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
+      [AC_MSG_WARN(*** MNG plug-in will not be built (MNG library not found) ***)], -lz -lm)
+    if test "$mng_ok" = yes; then
+      MNG='mng'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
+    else
+      AC_MSG_WARN(*** MNG plug-in will not be built (MNG header file not found) ***)
+    fi
+  fi
+
+AC_SUBST(MNG)
+AC_SUBST(LIBMNG)
+
+
 #################
 # Check for libaa
 #################
@@ -1031,7 +1052,7 @@ AC_SUBST(GIMPINSTALL)
 
 dnl FIXME: Do we need to do this?
 if test -n "$DISTMAKE"; then
-  TIFF=tiff JPEG=jpeg PNG=png AA=aa PRINT=print
+  TIFF=tiff JPEG=jpeg PNG=png MNG=mng AA=aa PRINT=print
   WEBBROWSER=webbrowser HELPBROWSER=helpbrowser 
   XJT=xjt XPM=xpm
 fi
