@@ -97,6 +97,13 @@ static struct
 
 static gint num_useable_layers;
 
+static gchar *selection_modes[] = {"incremental",
+                                   "angular",
+                                   "random",
+                                   "velocity",
+                                   "pressure",
+                                   "xtilt",
+                                   "ytilt"};
 
 static GimpPixPipeParams gihparams;
 
@@ -114,6 +121,8 @@ typedef struct
   GtkObject *ncells;
   GtkObject *rank0;
   GtkWidget *warning_label;
+  GtkWidget *rank_entry[GIMP_PIXPIPE_MAXDIM];
+  GtkWidget *mode_entry[GIMP_PIXPIPE_MAXDIM];
 } SizeAdjustmentData;
 
 /* static gint32 *vguides, *hguides;       */
@@ -743,9 +752,6 @@ static void
 size_adjustment_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  /* Unfortunately this doesn't work, sigh. The guides don't show up unless
-   * you manually force a redraw of the image.
-   */
   gint  i;
   gint  size;
   gint  newn;
@@ -816,7 +822,26 @@ static void
 cb_callback (GtkWidget *widget,
 	     gpointer   data)
 {
-  *((const gchar **) data) = gtk_entry_get_text (GTK_ENTRY (widget));
+  gint index;
+
+  index = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+
+  *((const gchar **) data) = selection_modes [index];
+}
+
+static void
+dim_callback (GtkAdjustment *adjustment,
+              SizeAdjustmentData *data)
+{
+  gint i;
+
+  gihparams.dim = RINT (adjustment->value);
+
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
+    {
+      gtk_widget_set_sensitive (data->rank_entry[i], i < gihparams.dim);
+      gtk_widget_set_sensitive (data->mode_entry[i], i < gihparams.dim);
+    }
 }
 
 static gboolean
@@ -831,7 +856,6 @@ gih_save_dialog (gint32 image_ID)
   GtkWidget *entry;
   GtkWidget *box;
   GtkWidget *cb;
-  GList     *cbitems = NULL;
   gint       i;
   gchar      buffer[100];
   SizeAdjustmentData cellw_adjust;
@@ -1004,36 +1028,41 @@ gih_save_dialog (gint32 image_ID)
    * Dimension: ___
    */
   spinbutton = gimp_spin_button_new (&adjustment, gihparams.dim,
-				     1, 5, 1, 1, 1, 1, 0);
+				     1, GIMP_PIXPIPE_MAXDIM, 1, 1, 1, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Dimension:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &gihparams.dim);
+                    G_CALLBACK (dim_callback),
+                    &cellw_adjust);
 
   /*
-   * Ranks: __ __ __ __ __
+   * Ranks / Selection: ______ ______ ______ ______ ______
    */
-  dimtable = gtk_table_new (1, GIMP_PIXPIPE_MAXDIM, FALSE);
+
+  dimtable = gtk_table_new (2, GIMP_PIXPIPE_MAXDIM, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (dimtable), 4);
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
-      box = gtk_hbox_new (FALSE, 0);
-      gtk_table_attach (GTK_TABLE (dimtable), box, i, i + 1, 0, 1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_widget_show (box);
+      gint j;
 
       spinbutton = gimp_spin_button_new (&adjustment,
-					 gihparams.rank[i], 0, 100, 1, 1, 1,
+					 gihparams.rank[i], 1, 100, 1, 1, 1,
 					 1, 0);
-      gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, TRUE, 0);
+      gtk_table_attach (GTK_TABLE (dimtable), spinbutton, 0, 1, i, i + 1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
       gtk_widget_show (spinbutton);
+
+      if (i >= gihparams.dim)
+        gtk_widget_set_sensitive (spinbutton, FALSE);
 
       g_signal_connect (adjustment, "value_changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &gihparams.rank[i]);
+
+      cellw_adjust.rank_entry[i] = cellh_adjust.rank_entry[i] = spinbutton;
 
       if (i == 0)
 	{
@@ -1042,47 +1071,44 @@ gih_save_dialog (gint32 image_ID)
 	  else
 	    cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
 	}
-    }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-			     _("Ranks:"), 0.0, 0.5,
-			     dimtable, 1, FALSE);
+      
 
-  /*
-   * Selection: ______ ______ ______ ______ ______
-   */
-  cbitems = g_list_append (cbitems, "incremental");
-  cbitems = g_list_append (cbitems, "angular");
-  cbitems = g_list_append (cbitems, "random");
-  cbitems = g_list_append (cbitems, "velocity");
-  cbitems = g_list_append (cbitems, "pressure");
-  cbitems = g_list_append (cbitems, "xtilt");
-  cbitems = g_list_append (cbitems, "ytilt");
+      cb = gtk_combo_box_new_text ();
 
-  box = gtk_hbox_new (TRUE, 6);
+      for (j = 0; j < G_N_ELEMENTS (selection_modes); j++)
+        gtk_combo_box_append_text (GTK_COMBO_BOX (cb), selection_modes[j]);
 
-  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
-    {
-      cb = gtk_combo_new ();
-      gtk_editable_set_editable (GTK_EDITABLE (GTK_COMBO (cb)->entry), FALSE);
+      gtk_combo_box_set_active (GTK_COMBO_BOX (cb), 2);  /* random */
 
-      gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
       if (gihparams.selection[i])
-	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry),
-			    gihparams.selection[i]);
-      else
-	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (cb)->entry), "random");
+        for (j = 0; j < G_N_ELEMENTS (selection_modes); j++)
+          if (!strcmp (gihparams.selection[i], selection_modes[j]))
+            {
+              gtk_combo_box_set_active (GTK_COMBO_BOX (cb), j);
+              break;
+            }
+        
 
-      gtk_box_pack_start (GTK_BOX (box), cb, FALSE, TRUE, 0);
+      gtk_table_attach (GTK_TABLE (dimtable), cb, 1, 2, i, i + 1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
       gtk_widget_show (cb);
 
-      g_signal_connect (GTK_COMBO (cb)->entry, "changed",
+      if (i >= gihparams.dim)
+        gtk_widget_set_sensitive (cb, FALSE);
+
+      g_signal_connect (GTK_COMBO_BOX (cb), "changed",
                         G_CALLBACK (cb_callback),
                         &gihparams.selection[i]);
+
+      cellw_adjust.mode_entry[i] = cellh_adjust.mode_entry[i] = cb;
+
+
     }
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
-			     _("Selection:"), 0.0, 0.5,
-			     box, 1, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
+			     _("Ranks:"), 0.0, 0.0,
+			     dimtable, 1, FALSE);
 
   gtk_widget_show (dlg);
 

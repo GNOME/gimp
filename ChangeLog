@@ -1,3 +1,9 @@
+2004-08-21  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/gih.c: Fix some GUI issues. Make the relation
+	between the dimension parameter and the rank thingies more clear
+	also changed to a nicer layout.
+
 2004-08-21  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c: added support for the basic
