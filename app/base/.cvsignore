@@ -4,3 +4,4 @@ Makefile.in
 .libs
 *.lo
 libappbase.la
+base-enums.c

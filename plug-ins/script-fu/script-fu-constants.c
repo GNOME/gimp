@@ -103,6 +103,10 @@ init_generated_constants (void)
   setvar (cintern ("INDEXED-IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA-IMAGE"), flocons (5), NIL);
 
+  setvar (cintern ("LINEAR-INTERPOLATION"), flocons (0), NIL);
+  setvar (cintern ("CUBIC-INTERPOLATION"), flocons (1), NIL);
+  setvar (cintern ("NEAREST-NEIGHBOR-INTERPOLATION"), flocons (2), NIL);
+
   setvar (cintern ("MESSAGE-BOX"), flocons (0), NIL);
   setvar (cintern ("CONSOLE"), flocons (1), NIL);
   setvar (cintern ("ERROR-CONSOLE"), flocons (2), NIL);
@@ -185,10 +189,6 @@ init_generated_constants (void)
   setvar (cintern ("CYAN-HUES"), flocons (4), NIL);
   setvar (cintern ("BLUE-HUES"), flocons (5), NIL);
   setvar (cintern ("MAGENTA-HUES"), flocons (6), NIL);
-
-  setvar (cintern ("LINEAR-INTERPOLATION"), flocons (0), NIL);
-  setvar (cintern ("CUBIC-INTERPOLATION"), flocons (1), NIL);
-  setvar (cintern ("NEAREST-NEIGHBOR-INTERPOLATION"), flocons (2), NIL);
 
   setvar (cintern ("NORMAL-MODE"), flocons (0), NIL);
   setvar (cintern ("DISSOLVE-MODE"), flocons (1), NIL);

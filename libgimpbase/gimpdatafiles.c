@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <glib.h>
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +32,8 @@
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
+
+#include <glib-object.h>
 
 #ifdef G_OS_WIN32
 #ifndef S_ISDIR

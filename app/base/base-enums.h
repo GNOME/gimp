@@ -1,9 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Object peoperties deserialization routines
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,12 +16,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DESERIALIZE_H__
-#define __DESERIALIZE_H__
+#ifndef __BASE_ENUMS_H__
+#define __BASE_ENUMS_H__
+
+#define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
+
+GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_LINEAR_INTERPOLATION,
+  GIMP_CUBIC_INTERPOLATION,
+  GIMP_NEAREST_NEIGHBOR_INTERPOLATION
+} GimpInterpolationType;
 
 
-gboolean gimp_config_deserialize_properties (GObject  *object,
-                                             GScanner *scanner);
-
-
-#endif /* __DESERIALIZE_H__ */
+#endif /* __BASE_TYPES_H__ */

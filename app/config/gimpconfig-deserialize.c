@@ -23,47 +23,47 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include <glib-object.h>
 
-#include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 
 
-static void  gimp_config_deserialize_property (GimpConfig *config,
+static void  gimp_config_deserialize_property (GObject    *object,
                                                GScanner   *scanner,
                                                GTokenType *token);
 
 
 gboolean
-gimp_config_deserialize_properties (GimpConfig *config,
-                                    GScanner   *scanner)
+gimp_config_deserialize_properties (GObject  *object,
+                                    GScanner *scanner)
 {
-  GimpConfigClass  *klass;
-  GParamSpec      **property_specs;
-  guint             n_property_specs;
-  guint             i;
-  guint             scope_id;
-  guint             old_scope_id;
-  GTokenType	    token;
-      
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+  guint          scope_id;
+  guint          old_scope_id;
+  GTokenType	 token;
 
-  klass = GIMP_CONFIG_GET_CLASS (config);
-  property_specs = g_object_class_list_properties (G_OBJECT_CLASS (klass),
-                                                   &n_property_specs);
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+
+  klass = G_OBJECT_GET_CLASS (object);
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   g_return_val_if_fail (property_specs != NULL && n_property_specs > 0, FALSE);
 
-  scope_id = GPOINTER_TO_UINT (config);
+  scope_id = g_quark_from_static_string ("gimp_config_deserialize_properties");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & G_PARAM_READWRITE &&
-          g_type_is_a (prop_spec->owner_type, GIMP_TYPE_CONFIG))
+      if (prop_spec->flags & G_PARAM_READWRITE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id, 
                                       prop_spec->name, prop_spec);
@@ -86,7 +86,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
           break;
           
         case G_TOKEN_SYMBOL:
-          gimp_config_deserialize_property (config, scanner, &token);
+          gimp_config_deserialize_property (object, scanner, &token);
           break;
 
         case G_TOKEN_RIGHT_PAREN:
@@ -106,25 +106,29 @@ gimp_config_deserialize_properties (GimpConfig *config,
                              "parse error", TRUE);
     }
 
-  g_scanner_set_scope (scanner, old_scope_id);
   if (property_specs)
     g_free (property_specs);
+
+  g_scanner_set_scope (scanner, old_scope_id);
 
   return (token == G_TOKEN_EOF);
 }
 
 static void
-gimp_config_deserialize_property (GimpConfig *config,
+gimp_config_deserialize_property (GObject    *object,
                                   GScanner   *scanner,
                                   GTokenType *token)
 {
   GParamSpec *prop_spec;
+  GType       fundamental_type;
   GValue      value = { 0, };
 
   prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);  
   g_value_init (&value, prop_spec->value_type);
 
-  switch (G_TYPE_FUNDAMENTAL (G_VALUE_TYPE (&value)))
+  fundamental_type = G_TYPE_FUNDAMENTAL (G_VALUE_TYPE (&value));
+
+  switch (fundamental_type)
     {
     case G_TYPE_STRING:
       *token = G_TOKEN_STRING;
@@ -157,21 +161,23 @@ gimp_config_deserialize_property (GimpConfig *config,
 
   g_scanner_get_next_token (scanner);
 
-  switch (G_TYPE_FUNDAMENTAL (G_VALUE_TYPE (&value)))
+  switch (fundamental_type)
     {
     case G_TYPE_STRING:
       g_value_set_string (&value, scanner->value.v_string);
       break;
 
     case G_TYPE_BOOLEAN:
-      if (g_ascii_strcasecmp (scanner->value.v_identifier, "true") == 0)
+      if (! g_ascii_strcasecmp (scanner->value.v_identifier, "yes") ||
+          ! g_ascii_strcasecmp (scanner->value.v_identifier, "true"))
         g_value_set_boolean (&value, TRUE);
-      else if (g_ascii_strcasecmp (scanner->value.v_identifier, "false") == 0)
+      else if (! g_ascii_strcasecmp (scanner->value.v_identifier, "no") ||
+               ! g_ascii_strcasecmp (scanner->value.v_identifier, "false"))
         g_value_set_boolean (&value, FALSE);
       else
         g_scanner_warn 
           (scanner, 
-           "expected 'true' or 'false' for boolean property %s, got '%s'", 
+           "expected 'yes' or 'no' for boolean property %s, got '%s'", 
            prop_spec->name, scanner->value.v_identifier);
       break;
 
@@ -181,8 +187,12 @@ gimp_config_deserialize_property (GimpConfig *config,
 	GEnumValue *enum_value;
 
 	enum_class = g_type_class_peek (G_VALUE_TYPE (&value));
-	enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
+	enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
 					       scanner->value.v_identifier);
+        if (!enum_value)
+          enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
+                                                 scanner->value.v_identifier);
+          
         if (enum_value)
           g_value_set_enum (&value, enum_value->value);
         else
@@ -203,8 +213,7 @@ gimp_config_deserialize_property (GimpConfig *config,
       break;
     case G_TYPE_ULONG:
       g_value_set_uint (&value, scanner->value.v_int);
-      break;
-      
+      break;      
     case G_TYPE_FLOAT:
       g_value_set_float (&value, scanner->value.v_float);
       break;
@@ -216,7 +225,7 @@ gimp_config_deserialize_property (GimpConfig *config,
       g_assert_not_reached ();
     }
 
-  g_object_set_property (G_OBJECT (config), prop_spec->name, &value);
+  g_object_set_property (object, prop_spec->name, &value);
   g_value_unset (&value);
   
   *token = G_TOKEN_RIGHT_PAREN;        

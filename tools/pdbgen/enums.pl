@@ -151,6 +151,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_STACK_TRACE_QUERY => 'STACK_TRACE_QUERY',
 		       GIMP_STACK_TRACE_ALWAYS => 'STACK_TRACE_ALWAYS' }
 	},
+    GimpInterpolationType =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_LINEAR_INTERPOLATION GIMP_CUBIC_INTERPOLATION
+			  GIMP_NEAREST_NEIGHBOR_INTERPOLATION) ],
+	  mapping => { GIMP_LINEAR_INTERPOLATION => '0',
+		       GIMP_CUBIC_INTERPOLATION => '1',
+		       GIMP_NEAREST_NEIGHBOR_INTERPOLATION => '2' }
+	},
     LayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-types.h',
@@ -189,15 +198,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { NORMAL_CONVOL => '0',
 		       ABSOLUTE_CONVOL => '1',
 		       NEGATIVE_CONVOL => '2' }
-	},
-    InterpolationType =>
-	{ contig => 1,
-	  header => 'base/base-types.h',
-	  symbols => [ qw(LINEAR_INTERPOLATION CUBIC_INTERPOLATION
-			  NEAREST_NEIGHBOR_INTERPOLATION) ],
-	  mapping => { LINEAR_INTERPOLATION => '0',
-		       CUBIC_INTERPOLATION => '1',
-		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
 	},
     ChannelLutType =>
 	{ contig => 1,
@@ -314,10 +314,7 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
 	  mapping => { GIMP_SHADOWS => '0',
 		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' },
-	  nicks   => { GIMP_SHADOWS => 'SHADOWS',
-		       GIMP_MIDTONES => 'MIDTONES',
-		       GIMP_HIGHLIGHTS => 'HIGHLIGHTS' }
+		       GIMP_HIGHLIGHTS => '2' }
 	},
     GimpOffsetType =>
 	{ contig => 1,

@@ -24,7 +24,7 @@
 #include <pthread.h>
 #endif /* ENABLE_MP */
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 

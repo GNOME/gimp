@@ -4,4 +4,6 @@ Makefile.in
 .libs
 *.lo
 libappcore.la
+gimpmarshal.c
+gimpmarshal.h
 stamp-gimpmarshal.h

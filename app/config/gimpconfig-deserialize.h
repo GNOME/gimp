@@ -23,8 +23,8 @@
 #define __DESERIALIZE_H__
 
 
-gboolean gimp_config_deserialize_properties (GimpConfig *config,
-                                             GScanner   *scanner);
+gboolean gimp_config_deserialize_properties (GObject  *object,
+                                             GScanner *scanner);
 
 
 #endif /* __DESERIALIZE_H__ */

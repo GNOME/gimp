@@ -26,56 +26,74 @@
 
 #include <glib-object.h>
 
-#include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 
 
 void
-gimp_config_serialize_properties (GimpConfig *config,
-                                  FILE       *file)
+gimp_config_serialize_properties (GObject *object,
+                                  FILE    *file)
 {
-  GimpConfigClass  *klass;
-  GParamSpec      **property_specs;
-  guint             n_property_specs;
-  guint             i;
-  GValue            value = { 0, };
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+  GValue         value = { 0, };
   
-  klass = GIMP_CONFIG_GET_CLASS (config);
+  klass = G_OBJECT_GET_CLASS (object);
 
-  property_specs = g_object_class_list_properties (G_OBJECT_CLASS (klass),
-                                                   &n_property_specs);
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec *prop_spec;
-      gchar      *str;
+      GParamSpec  *prop_spec;
+      const gchar *cstr;
+      gchar       *str;
 
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READWRITE &&
-             g_type_is_a (prop_spec->owner_type, GIMP_TYPE_CONFIG)))
+      if (! (prop_spec->flags & G_PARAM_READWRITE))
         continue;
 
-      str = NULL;
+      str  = NULL;
+      cstr = NULL;
       g_value_init (&value, prop_spec->value_type);
 
-      g_object_get_property (G_OBJECT (config), prop_spec->name, &value);
+      g_object_get_property (object, prop_spec->name, &value);
 
-      if (G_VALUE_HOLDS_STRING (&value))
+      if (G_VALUE_HOLDS_BOOLEAN (&value))
         {
-          const gchar *src;
+          gboolean bool;
 
-          src = g_value_get_string (&value);
+          bool = g_value_get_boolean (&value);
+          cstr = bool ? "yes" : "no";
+        }
+      else if (G_VALUE_HOLDS_STRING (&value))
+        {
+          cstr = g_value_get_string (&value);
           
-          if (!src)
-            str = g_strdup ("NULL");
-          else
+          if (cstr)
             {
-              gchar *s = g_strescape (src, NULL);
+              gchar *s = g_strescape (cstr, NULL);
               
               str = g_strdup_printf ("\"%s\"", s);
               g_free (s);
+              cstr = NULL;
             }
+        }
+      else if (G_VALUE_HOLDS_ENUM (&value))
+        {
+          GEnumClass *enum_class;
+          GEnumValue *enum_value;
+
+          enum_class = g_type_class_peek (G_VALUE_TYPE (&value));
+          enum_value = g_enum_get_value (G_ENUM_CLASS (enum_class),
+                                         g_value_get_enum (&value));
+
+          if (enum_value && enum_value->value_nick)
+            cstr = enum_value->value_nick;
+          else
+            g_warning ("Couldn't get nick for enum_value of %s", 
+                       G_ENUM_CLASS_TYPE_NAME (enum_class));
         }
       else if (g_value_type_transformable (G_VALUE_TYPE (&value), 
                                            G_TYPE_STRING))
@@ -88,9 +106,12 @@ gimp_config_serialize_properties (GimpConfig *config,
           g_value_unset (&tmp_value);
         }
 
-      fprintf (file, "(%s %s)\n", prop_spec->name, str);
+      if (cstr || str)
+        {
+          fprintf (file, "(%s %s)\n", prop_spec->name, cstr ? cstr : str);
+          g_free (str);
+        }
 
-      g_free (str);
       g_value_unset (&value);
     }
 }

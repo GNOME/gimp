@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "core/core-types.h"
 

@@ -22,7 +22,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -2784,12 +2784,12 @@ get_premultiplied_double_row (PixelRegion *srcPR,
 
 
 static void
-expand_line (gdouble           *dest,
-	     gdouble           *src,
-	     guint              bytes,
-	     guint              old_width,
-	     gint               width,
-	     InterpolationType  interp)
+expand_line (gdouble               *dest,
+	     gdouble               *src,
+	     guint                  bytes,
+	     guint                  old_width,
+	     gint                   width,
+	     GimpInterpolationType  interp)
 {
   gdouble  ratio;
   gint     x,b;
@@ -2803,7 +2803,7 @@ expand_line (gdouble           *dest,
    each x */
   switch(interp)
   {
-    case CUBIC_INTERPOLATION:
+    case GIMP_CUBIC_INTERPOLATION:
       for (x = 0; x < width; x++)
       {
 	src_col = ((int)((x) * ratio  + 2.0 - 0.5)) - 2;
@@ -2816,7 +2816,8 @@ expand_line (gdouble           *dest,
 	dest += bytes;
       }
       break;
-    case LINEAR_INTERPOLATION:
+
+    case GIMP_LINEAR_INTERPOLATION:
       for (x = 0; x < width; x++)
       {
 	src_col = ((int)((x) * ratio + 2.0 - 0.5)) - 2;
@@ -2829,20 +2830,21 @@ expand_line (gdouble           *dest,
 	dest += bytes;
       }
       break;
-   case NEAREST_NEIGHBOR_INTERPOLATION:
-     g_error("sampling_type can't be "
-	     "NEAREST_NEIGHBOR_INTERPOLATION");
+
+   case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
+     g_error("sampling_type can't be GIMP_NEAREST_NEIGHBOR_INTERPOLATION");
+     break;
   }
 }
 
 
 static void
-shrink_line (gdouble           *dest,
-	     gdouble           *src,
-	     guint              bytes,
-	     gint               old_width,
-	     gint               width,
-	     InterpolationType  interp)
+shrink_line (gdouble               *dest,
+	     gdouble               *src,
+	     guint                  bytes,
+	     gint                   old_width,
+	     gint                   width,
+	     GimpInterpolationType  interp)
 {
   gint x, b;
   gdouble *source, *destp;
@@ -2938,7 +2940,7 @@ scale_region (PixelRegion *srcPR,
   gint     old_y = -4, new_y;
   gint     x, y;
 
-  if (base_config->interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+  if (base_config->interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
   {
     scale_region_no_resample (srcPR, destPR);
     return;
@@ -3023,7 +3025,7 @@ scale_region (PixelRegion *srcPR,
       }
       switch(base_config->interpolation_type)
       {
-       case CUBIC_INTERPOLATION:
+       case GIMP_CUBIC_INTERPOLATION:
        {
 	 double p0, p1, p2, p3;
 	 double dy = ((y) * y_rat - .5) - new_y;
@@ -3035,17 +3037,19 @@ scale_region (PixelRegion *srcPR,
 	   accum[x] = p0 * src[0][x] + p1 * src[1][x] +
 	     p2 * src[2][x] + p3 * src[3][x];
        } break;
-       case LINEAR_INTERPOLATION:
+
+       case GIMP_LINEAR_INTERPOLATION:
        {
 	 double idy = ((y) * y_rat - 0.5) - new_y;
 	 double dy = 1.0 - idy;
 	 for (x = 0; x < width * bytes; x++)
 	   accum[x] = dy * src[1][x] + idy * src[2][x];
        } break;
-       case NEAREST_NEIGHBOR_INTERPOLATION:
-	 g_error("sampling_type can't be "
-		 "NEAREST_NEIGHBOR_INTERPOLATION");
 
+       case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
+	 g_error ("sampling_type can't be "
+                  "GIMP_NEAREST_NEIGHBOR_INTERPOLATION");
+         break;
       }
     }
     else /* height == orig_height */

@@ -22,7 +22,7 @@
 #include <pthread.h>
 #endif
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "base-types.h"
 

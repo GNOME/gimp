@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
+ * Config file serialization and deserialization interface
+ * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,39 +22,31 @@
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
 
-#include "core/core-types.h"
-#include "core/gimpobject.h"
+#include <stdio.h>
 
 
-#define GIMP_TYPE_CONFIG            (gimp_config_get_type ())
-#define GIMP_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONFIG, GimpConfig))
-#define GIMP_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONFIG, GimpConfigClass))
-#define GIMP_IS_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONFIG))
-#define GIMP_IS_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONFIG))
-#define GIMP_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONFIG, GimpConfigClass))
+#define GIMP_TYPE_CONFIG_INTERFACE     (gimp_config_interface_get_type ())
+#define GIMP_GET_CONFIG_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG_INTERFACE, GimpConfigInterface))
 
+typedef struct _GimpConfigInterface GimpConfigInterface;
 
-typedef struct _GimpConfig      GimpConfig;
-typedef struct _GimpConfigClass GimpConfigClass;
-
-struct _GimpConfig
+struct _GimpConfigInterface
 {
-  GimpObject       parent_instance;
+  GTypeInterface base_iface;
 
-  guint            marching_ants_speed;
-  GimpPreviewSize  preview_size;
-};
-
-struct _GimpConfigClass
-{
-  GimpObjectClass  parent_class;
+  void     (* serialize)   (GObject  *object,
+                            FILE     *fd);
+  gboolean (* deserialize) (GObject  *object,
+                            GScanner *scanner);
 };
 
 
-GType     gimp_config_get_type     (void) G_GNUC_CONST;
+GType     gimp_config_interface_get_type (void) G_GNUC_CONST;
 
-void      gimp_config_serialize    (GimpConfig *config);
-gboolean  gimp_config_deserialize  (GimpConfig *config);
+gboolean  gimp_config_serialize          (GObject     *object,
+                                          const gchar *filename);
+gboolean  gimp_config_deserialize        (GObject     *object,
+                                          const gchar *filename);
 
 
 #endif  /* __GIMP_CONFIG_H__ */

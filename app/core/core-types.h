@@ -115,7 +115,7 @@ typedef enum
   NO_FILL		/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
 
-typedef enum  /*< chop=GIMP_ >*/
+typedef enum
 {
   GIMP_SHADOWS,
   GIMP_MIDTONES,

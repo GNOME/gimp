@@ -43,6 +43,7 @@
 #include "core/core-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpbaseconfig.h"
 
 #include "gui/gui.h"
 
@@ -146,22 +147,21 @@ main (int    argc,
 
   /* test code for GimpConfig, will go away */
   {
-    GimpConfig *config;
-    gchar      *filename;
+    GimpBaseConfig *config;
+    gchar          *filename;
 
-    config = g_object_new (GIMP_TYPE_CONFIG, NULL);
-
-    filename = gimp_personal_rc_file ("foorc");
-    gimp_object_set_name (GIMP_OBJECT (config), filename);
-    g_free (filename);
+    config = g_object_new (GIMP_TYPE_BASE_CONFIG, NULL);
 
     g_signal_connect_swapped (G_OBJECT (config), "notify",
                               G_CALLBACK (g_print),
-                              "GimpConfig property changed\n");
+                              "GimpBaseConfig property changed\n");
 
-    gimp_config_serialize (config);
-    gimp_config_deserialize (config);
+    filename = gimp_personal_rc_file ("foorc");
 
+    gimp_config_serialize (G_OBJECT (config), filename);
+    gimp_config_deserialize (G_OBJECT (config), filename);
+
+    g_free (filename);
     g_object_unref (config);
   }
 

@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <glib.h>
-
 #include <stdio.h> /* SEEK_SET */
 #include <errno.h>
 #include <sys/types.h>
@@ -31,6 +29,8 @@
 #ifdef USE_PTHREADS
 #include <pthread.h>
 #endif
+
+#include <glib-object.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>

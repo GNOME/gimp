@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "base-types.h"
 

@@ -1264,11 +1264,11 @@ static gint
 parse_interpolation_type (gpointer val1p,
 			  gpointer val2p)
 {
-  gint               token;
-  InterpolationType *typep;
+  gint                   token;
+  GimpInterpolationType *typep;
   
   g_assert (val1p != NULL);
-  typep = (InterpolationType *) val1p;
+  typep = (GimpInterpolationType *) val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL))
@@ -1276,11 +1276,11 @@ parse_interpolation_type (gpointer val1p,
   token = get_next_token ();
  
   if (strcmp (token_sym, "nearest-neighbor") == 0)
-    *typep = NEAREST_NEIGHBOR_INTERPOLATION;
+    *typep = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
   else if (strcmp (token_sym, "linear") == 0)
-    *typep = LINEAR_INTERPOLATION;
+    *typep = GIMP_LINEAR_INTERPOLATION;
   else if (strcmp (token_sym, "cubic") == 0)
-    *typep = CUBIC_INTERPOLATION;
+    *typep = GIMP_CUBIC_INTERPOLATION;
   else
     return ERROR;
 
@@ -2986,16 +2986,16 @@ static inline gchar *
 interpolation_type_to_str (gpointer val1p,
 			   gpointer val2p)
 {
-  InterpolationType type;
+  GimpInterpolationType type;
 
-  type = *((InterpolationType *)val1p);
+  type = *((GimpInterpolationType *)val1p);
   switch (type)
   {
-   case LINEAR_INTERPOLATION:
+   case GIMP_LINEAR_INTERPOLATION:
      return g_strdup ("linear");
-   case CUBIC_INTERPOLATION:
+   case GIMP_CUBIC_INTERPOLATION:
      return g_strdup ("cubic");
-   case NEAREST_NEIGHBOR_INTERPOLATION:
+   case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
      return g_strdup ("nearest-neighbor");
    default:
      return g_strdup ("bad interpolation type");

@@ -27,7 +27,7 @@
 #define IF_THREAD(statement)
 #endif /* ENABLE_MP */
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "base-types.h"
 

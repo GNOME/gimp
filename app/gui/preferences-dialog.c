@@ -118,7 +118,7 @@ static gboolean           old_no_cursor_updating;
 static gboolean           old_show_tool_tips;
 static gboolean           old_show_rulers;
 static gboolean           old_show_statusbar;
-static InterpolationType  old_interpolation_type;
+static GimpInterpolationType  old_interpolation_type;
 static gboolean           old_confirm_on_close;
 static gboolean           old_save_session_info;
 static gboolean           old_save_device_status;
@@ -2470,11 +2470,11 @@ preferences_dialog_create (Gimp *gimp)
 			   GINT_TO_POINTER (base_config->interpolation_type),
 
 			   _("Nearest Neighbor (Fast)"),
-			   GINT_TO_POINTER (NEAREST_NEIGHBOR_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION), NULL,
 			   _("Linear"),
-			   GINT_TO_POINTER (LINEAR_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION), NULL,
 			   _("Cubic (Slow)"),
-			   GINT_TO_POINTER (CUBIC_INTERPOLATION), NULL,
+			   GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION), NULL,
 
 			   NULL);
 

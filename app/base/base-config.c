@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "base-types.h"
 
@@ -38,7 +38,7 @@ static GimpBaseConfig  static_base_config =
 
   INIT_MEMBER(tile_cache_size    , 33554432),
   INIT_MEMBER(stingy_memory_use  , FALSE),
-  INIT_MEMBER(interpolation_type , LINEAR_INTERPOLATION),
+  INIT_MEMBER(interpolation_type , GIMP_LINEAR_INTERPOLATION),
   INIT_MEMBER(num_processors     , 1)
 };
 

@@ -9,6 +9,8 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpconfig-deserialize.h	\
 	gimpconfig-serialize.c		\
 	gimpconfig-serialize.h		\
+	gimpbaseconfig.c		\
+	gimpbaseconfig.h		\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ 		\

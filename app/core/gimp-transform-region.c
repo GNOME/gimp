@@ -124,7 +124,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix3_is_simple (matrix) ||
-      base_config->interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+      base_config->interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
     interpolation = FALSE;
 
   /*  Get the background color  */
@@ -232,7 +232,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   /* initialise the pixel_surround accessor */
   if (interpolation)
     {
-      if (base_config->interpolation_type == CUBIC_INTERPOLATION)
+      if (base_config->interpolation_type == GIMP_CUBIC_INTERPOLATION)
 	{
 	  pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
 	}
@@ -294,7 +294,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
           if (interpolation)
        	    {
-              if (base_config->interpolation_type == CUBIC_INTERPOLATION)
+              if (base_config->interpolation_type == GIMP_CUBIC_INTERPOLATION)
        	        {
                   /*  ttx & tty are the subpixel coordinates of the point in
 		   *  the original selection's floating buffer.

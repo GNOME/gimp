@@ -52,6 +52,7 @@ EXTRA_DIST = \
 enum_headers = \
 	../../libgimpbase/gimpbasetypes.h		\
 	../../app/paint-funcs/paint-funcs-types.h	\
+	../../app/base/base-enums.h			\
 	../../app/base/base-types.h			\
 	../../app/core/core-types.h			\
 	../../app/plug-in/plug-in-types.h		\

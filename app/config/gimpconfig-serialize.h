@@ -23,8 +23,8 @@
 #define __SERIALIZE_H__
 
 
-void gimp_config_serialize_properties (GimpConfig *config,
-                                       FILE       *file);
+void gimp_config_serialize_properties (GObject *object,
+                                       FILE    *file);
 
 
 #endif /* __SERIALIZE_H__ */

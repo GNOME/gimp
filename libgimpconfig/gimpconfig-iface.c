@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Config file serialization and deserialization interface
+ * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -18,206 +21,114 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 
 #include <glib-object.h>
 
 #include "gimpconfig.h"
-#include "gimpconfig-deserialize.h"
 #include "gimpconfig-serialize.h"
+#include "gimpconfig-deserialize.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_MARCHING_ANTS_SPEED,
-  PROP_PREVIEW_SIZE
-};
+static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
-#define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
-
-GType        gimp_preview_size_get_type (void) G_GNUC_CONST;
-
-static void  gimp_config_class_init   (GimpConfigClass  *klass);
-static void  gimp_config_set_property (GObject          *object,
-                                       guint             property_id,
-                                       const GValue     *value,
-                                       GParamSpec       *pspec);
-static void  gimp_config_get_property (GObject          *object,
-                                       guint             property_id,
-                                       GValue           *value,
-                                       GParamSpec       *pspec);
-
-
-static GimpObjectClass *parent_class = NULL;
-
-static const GEnumValue gimp_preview_size_enum_values[] =
-{
-  { GIMP_PREVIEW_SIZE_NONE,        "none"        }, 
-  { GIMP_PREVIEW_SIZE_TINY,        "tiny"        },
-  { GIMP_PREVIEW_SIZE_EXTRA_SMALL, "extra-small" },
-  { GIMP_PREVIEW_SIZE_SMALL,       "small"       },
-  { GIMP_PREVIEW_SIZE_MEDIUM,      "medium"      },
-  { GIMP_PREVIEW_SIZE_LARGE,       "large"       },
-  { GIMP_PREVIEW_SIZE_EXTRA_LARGE, "extra-large" },
-  { GIMP_PREVIEW_SIZE_HUGE,        "huge"        },
-  { GIMP_PREVIEW_SIZE_ENORMOUS,    "enormous"    },
-  { GIMP_PREVIEW_SIZE_GIGANTIC,    "gigantic"    }
-};
+static void      gimp_config_iface_serialize    (GObject  *object,
+                                                 FILE     *file);
+static gboolean  gimp_config_iface_deserialize  (GObject  *object,
+                                                 GScanner *scanner);
 
 
 GType
-gimp_preview_size_get_type (void)
+gimp_config_interface_get_type (void)
 {
-  static GType size_type = 0;
+  static GType config_iface_type = 0;
 
-  if (! size_type)
+  if (!config_iface_type)
     {
-      size_type = g_enum_register_static ("GimpPreviewSize",
-                                          gimp_preview_size_enum_values);
-    }
-
-  return size_type;
-}
-
-GType 
-gimp_config_get_type (void)
-{
-  static GType config_type = 0;
-
-  if (! config_type)
-    {
-      static const GTypeInfo config_info =
+      static const GTypeInfo config_iface_info =
       {
-        sizeof (GimpConfigClass),
-	(GBaseInitFunc) NULL,
+        sizeof (GimpConfigInterface),
+	(GBaseInitFunc)     gimp_config_iface_init,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_config_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpConfig),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
       };
 
-      config_type = g_type_register_static (GIMP_TYPE_OBJECT, 
-                                            "GimpConfig", 
-                                            &config_info, 0);
-    }
+      config_iface_type = g_type_register_static (G_TYPE_INTERFACE, 
+                                                  "GimpConfigInterface", 
+                                                  &config_iface_info, 
+                                                  0);
 
-  return config_type;
+      g_type_interface_add_prerequisite (config_iface_type, 
+                                         G_TYPE_OBJECT);
+    }
+  
+  return config_iface_type;
 }
 
 static void
-gimp_config_class_init (GimpConfigClass *klass)
+gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 {
-  GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  object_class->set_property = gimp_config_set_property;
-  object_class->get_property = gimp_config_get_property;
-
-  g_object_class_install_property (object_class,
-                                   PROP_MARCHING_ANTS_SPEED,
-                                   g_param_spec_uint ("marching-ants-speed",
-                                                      NULL, NULL,
-                                                      50, G_MAXINT,
-                                                      300,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_PREVIEW_SIZE,
-                                   g_param_spec_enum ("preview-size",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_PREVIEW_SIZE,
-                                                      GIMP_PREVIEW_SIZE_MEDIUM,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+  gimp_config_iface->serialize   = gimp_config_iface_serialize;
+  gimp_config_iface->deserialize = gimp_config_iface_deserialize;
 }
 
 static void
-gimp_config_set_property (GObject      *object,
-                          guint         property_id,
-                          const GValue *value,
-                          GParamSpec   *pspec)
+gimp_config_iface_serialize (GObject *object,
+                             FILE    *file)
 {
-  GimpConfig *gimp_config;
-
-  gimp_config = GIMP_CONFIG (object);
-
-  switch (property_id)
-    {
-    case PROP_MARCHING_ANTS_SPEED:
-      gimp_config->marching_ants_speed = g_value_get_uint (value);
-      break;
-    case PROP_PREVIEW_SIZE:
-      gimp_config->preview_size = g_value_get_enum (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
+  gimp_config_serialize_properties (object, file);
 }
 
-static void
-gimp_config_get_property (GObject    *object,
-                          guint       property_id,
-                          GValue     *value,
-                          GParamSpec *pspec)
+static gboolean
+gimp_config_iface_deserialize (GObject  *object,
+                               GScanner *scanner)
 {
-  GimpConfig *gimp_config;
-
-  gimp_config = GIMP_CONFIG (object);
-
-  switch (property_id)
-    {
-    case PROP_MARCHING_ANTS_SPEED:
-      g_value_set_uint (value, gimp_config->marching_ants_speed);
-      break;
-    case PROP_PREVIEW_SIZE:
-      g_value_set_enum (value, gimp_config->preview_size);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-void
-gimp_config_serialize (GimpConfig *config)
-{
-  FILE *file;
-
-  g_return_if_fail (GIMP_CONFIG (config));
-  g_return_if_fail (GIMP_OBJECT (config)->name != NULL);
-
-  file = fopen (GIMP_OBJECT (config)->name, "w");
-
-  if (file)
-    {
-      gimp_config_serialize_properties (config, file);
-      fclose (file);
-    }
+  return gimp_config_deserialize_properties (object, scanner);
 }
 
 gboolean
-gimp_config_deserialize (GimpConfig *config)
+gimp_config_serialize (GObject     *object,
+                       const gchar *filename)
 {
-  gint      fd;
-  GScanner *scanner;
-  gboolean  success;
+  GimpConfigInterface *gimp_config_iface;
+  FILE                *file;
 
-  g_return_val_if_fail (GIMP_CONFIG (config), FALSE);
-  g_return_val_if_fail (GIMP_OBJECT (config)->name != NULL, FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  file = fopen (filename, "w");
+
+  if (!file)
+    return FALSE;
+
+  gimp_config_iface->serialize (object, file);
+
+  fclose (file);
+
+  return TRUE;
+}
+
+gboolean
+gimp_config_deserialize (GObject     *object,
+                         const gchar *filename)
+{
+  GimpConfigInterface *gimp_config_iface;
+  gint                 fd;
+  GScanner            *scanner;
+  gboolean             success;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
   
-  fd = open (GIMP_OBJECT (config)->name, O_RDONLY);
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  fd = open (filename, O_RDONLY);
 
   if (fd == -1)
     return FALSE;
@@ -228,9 +139,9 @@ gimp_config_deserialize (GimpConfig *config)
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-" G_CSET_A_2_Z );
 
   g_scanner_input_file (scanner, fd);
-  scanner->input_name = GIMP_OBJECT (config)->name;
+  scanner->input_name = filename;
 
-  success = gimp_config_deserialize_properties (config, scanner);
+  success = gimp_config_iface->deserialize (object, scanner);
 
   g_scanner_destroy (scanner);
   close (fd);

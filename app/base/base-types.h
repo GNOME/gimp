@@ -22,6 +22,8 @@
 
 #include "paint-funcs/paint-funcs-types.h"
 
+#include "base/base-enums.h"
+
 
 /*  magic constants  */
 /* FIXME: Remove magic constants! */
@@ -74,13 +76,6 @@ typedef enum
   ABSOLUTE_CONVOL,		/*  Absolute value              */
   NEGATIVE_CONVOL		/*  add 127 to values           */
 } ConvolutionType;
-
-typedef enum
-{
-  LINEAR_INTERPOLATION,
-  CUBIC_INTERPOLATION,
-  NEAREST_NEIGHBOR_INTERPOLATION
-} InterpolationType;
 
 typedef enum
 {

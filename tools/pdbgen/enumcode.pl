@@ -71,6 +71,7 @@ foreach (sort keys %enums) {
     foreach $symbol (@{$enum->{symbols}}) {
 	my $sym = $symbol;
 	$sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
+	$sym =~ s/^GIMP\_//;
 	$sym =~ s/_/-/g;
 
 	print ENUMFILE <<CODE;
@@ -128,14 +129,18 @@ foreach (sort keys %enums) {
 	foreach $symbol (@{$enum->{symbols}}) {
 	    my $sym = $symbol;
 	    $sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
-	    $body .= "  GIMP_$sym";
+	    if ($sym =~ /^GIMP\_/) {
+		$body .= "  $sym";
+	    } else {
+		$body .= "  GIMP_$sym";
+	    }
 	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
 	    $body .= ",\n";
 	}
 
 	$body =~ s/,\n$//s;
 	$body .= "\n} ";
-	$body .= "Gimp" if !/^Gimp/;
+	$body .= "Gimp" unless /^Gimp/;
 	$body .= "$_;\n\n";
 	print ENUMFILE $body
     }

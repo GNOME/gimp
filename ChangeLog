@@ -1,8 +1,53 @@
+2001-12-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpmarshal.[ch]: removed from CVS, they are generated.
+
+	* app/base/Makefile.am
+	* app/base/base-enums.h: new file defining enums that are to be
+	registered. Used to build app/base/base-enums.c.
+
+	* app/base/base-types.h: include base-enums.h.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enumcode.pl
+	* tools/pdbgen/enums.pl: parse the new base-enums.h file and modified
+	the perl voodoo so it doesn't prefix enums with GIMP_ that are already
+	properly namespaced.
+
+	* app/core/core-types.h: don't need to chop GIMP from enum.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/tools_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig.[ch]: made GimpConfig an interface including
+	a reasonable default implementation that works on object properties.
+
+	* app/config/Makefile.am
+	* app/config/gimpbaseconfig.[ch]: new GimpBaseConfig using the
+	GimpConfig interface. Yet only used for testing from app/main.c.
+
+	* app/main.c: test the new GimpBaseConfig object.
+
+	* app/gimprc.c
+	* app/base/base-config.h
+	* app/base/*.c
+	* app/core/gimpdatafiles.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimppreviewcache.c
+	* app/gui/preferences-dialog.c
+	* app/paint-funcs/paint-funcs.c
+	* app/xcf/xcf-seek.c: need to include glib-object.h since base-config
+	contains registered enums now. Follow name change of InterpolationType
+	to GimpInterpolationType.
+	
 2001-12-06  David Neary  <bolsh@gimp.org>
 
-	* plug-ins/common/vpropagate.c: Create Erode and Dilate
-		filter menu entries with reasonable defaults for 
-		this plug-in.
+	* plug-ins/common/vpropagate.c: Create Erode and Dilate filter
+	menu entries with reasonable defaults for this plug-in.
 
 2001-12-06  Sven Neumann  <sven@gimp.org>
 
@@ -16,8 +61,8 @@
 2001-12-06  Dindinx  <David@dindinx.org>
 
 	* plug-ins/*/*.c: use the G_N_ELEMENTS macro where appropriate,
-                          removing a bunch of unuseful static variables.
-                          Changed some g_malloc to g_new while I was on it.
+	removing a bunch of unuseful static variables. Changed some
+	g_malloc to g_new while I was on it.
 
 2001-12-03  Michael Natterer  <mitch@gimp.org>
 

@@ -16,25 +16,41 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BASE_CONFIG_H__
-#define __BASE_CONFIG_H__
+#ifndef __GIMP_BASE_CONFIG_H__
+#define __GIMP_BASE_CONFIG_H__
+
+#include "base/base-enums.h"
 
 
-typedef struct _GimpBaseConfig GimpBaseConfig;
+#define GIMP_TYPE_BASE_CONFIG            (gimp_base_config_get_type ())
+#define GIMP_BASE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BASE_CONFIG, GimpBaseConfig))
+#define GIMP_BASE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BASE_CONFIG, GimpBaseConfigClass))
+#define GIMP_IS_BASE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BASE_CONFIG))
+#define GIMP_IS_BASE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BASE_CONFIG))
+
+
+typedef struct _GimpBaseConfig      GimpBaseConfig;
+typedef struct _GimpBaseConfigClass GimpBaseConfigClass;
 
 struct _GimpBaseConfig
 {
+  GObject                parent_instance;
+
   gchar                 *temp_path;
   gchar                 *swap_path;
-  guint                  tile_cache_size;
   gboolean               stingy_memory_use;
+  guint                  num_processors;
+  guint                  tile_cache_size;
   GimpInterpolationType  interpolation_type;
-  gint                   num_processors;
+};
+
+struct _GimpBaseConfigClass
+{
+  GObjectClass           parent_class;
 };
 
 
-extern GimpBaseConfig *base_config;
-extern gboolean        use_mmx;
+GType  gimp_base_config_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __BASE_CONFIG_H__  */
+#endif /* GIMP_BASE_CONFIG_H__ */

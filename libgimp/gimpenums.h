@@ -154,6 +154,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_LINEAR_INTERPOLATION,
+  GIMP_CUBIC_INTERPOLATION,
+  GIMP_NEAREST_NEIGHBOR_INTERPOLATION
+} GimpInterpolationType;
+
+typedef enum
+{
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
@@ -199,13 +206,6 @@ typedef enum
   GIMP_BLUE_HUES,
   GIMP_MAGENTA_HUES
 } GimpHueRange;
-
-typedef enum
-{
-  GIMP_LINEAR_INTERPOLATION,
-  GIMP_CUBIC_INTERPOLATION,
-  GIMP_NEAREST_NEIGHBOR_INTERPOLATION
-} GimpInterpolationType;
 
 typedef enum
 {
