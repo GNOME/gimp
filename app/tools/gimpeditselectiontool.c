@@ -375,25 +375,10 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
 
-  if (edit_select->cumlx == 0 && edit_select->cumly == 0)
+  if (edit_select->cumlx != 0 && edit_select->cumly != 0)
     {
-      /* The user either didn't actually move the selection,
-	 or moved it around and eventually just put it back in
-	 exactly the same spot. */
-
-     /*  If no movement occured and the type is EDIT_FLOATING_SEL_TRANSLATE,
-	  check if the layer is a floating selection.  If so, anchor. */
-      if (edit_select->edit_type == EDIT_FLOATING_SEL_TRANSLATE)
-	{
-	  layer = gimp_image_get_active_layer (gdisp->gimage);
-
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_anchor (layer);
-	}
-    }
-  else
-    {
-      path_transform_xy (gdisp->gimage, edit_select->cumlx, edit_select->cumly);
+      path_transform_xy (gdisp->gimage,
+                         edit_select->cumlx, edit_select->cumly);
 
       layer = gimp_image_get_active_layer (gdisp->gimage);
 
