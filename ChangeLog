@@ -1,3 +1,13 @@
+2000-12-03  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/gflare/gflare.c
+	* libgimp/gimpunitmenu.c
+	* libgimp/gimpwidgets.c: set separators of option menus insensitive.
+	(see Sven's fix below below).
+
+	* app/layers_dialog.c: set "Merge Down" insensitive for
+	the bottom layer.
+
 2000-12-03  Sven Neumann  <sven@gimp.org>
 
 	* app/layer.c

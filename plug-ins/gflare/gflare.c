@@ -792,20 +792,20 @@ plugin_query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "gflare_name", "The name of GFlare" },
-    { GIMP_PDB_INT32, "xcenter", "X coordinate of center of GFlare" },
-    { GIMP_PDB_INT32, "ycenter", "Y coordinate of center of GFlare" },
-    { GIMP_PDB_FLOAT, "radius",	"Radius of GFlare (pixel)" },
-    { GIMP_PDB_FLOAT, "rotation", "Rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT, "hue", "Hue rotation of GFlare (degree)" },
-    { GIMP_PDB_FLOAT, "vangle", "Vector angle for second flares (degree)" },
-    { GIMP_PDB_FLOAT, "vlength", "Vector length for second flares (percentage to Radius)" },
-    { GIMP_PDB_INT32, "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
-    { GIMP_PDB_INT32, "asupsample_max_depth", "Max depth for adaptive supersampling"},
-    { GIMP_PDB_FLOAT, "asupsample_threshold", "Threshold for adaptive supersampling"}
+    { GIMP_PDB_STRING,   "gflare_name", "The name of GFlare" },
+    { GIMP_PDB_INT32,    "xcenter", "X coordinate of center of GFlare" },
+    { GIMP_PDB_INT32,    "ycenter", "Y coordinate of center of GFlare" },
+    { GIMP_PDB_FLOAT,    "radius",	"Radius of GFlare (pixel)" },
+    { GIMP_PDB_FLOAT,    "rotation", "Rotation of GFlare (degree)" },
+    { GIMP_PDB_FLOAT,    "hue", "Hue rotation of GFlare (degree)" },
+    { GIMP_PDB_FLOAT,    "vangle", "Vector angle for second flares (degree)" },
+    { GIMP_PDB_FLOAT,    "vlength", "Vector length for second flares (percentage to Radius)" },
+    { GIMP_PDB_INT32,    "use_asupsample", "Whether it uses or not adaptive supersampling while rendering (boolean)" },
+    { GIMP_PDB_INT32,    "asupsample_max_depth", "Max depth for adaptive supersampling"},
+    { GIMP_PDB_FLOAT,   "asupsample_threshold", "Threshold for adaptive supersampling"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -4147,11 +4147,12 @@ ed_mode_menu_new (GFlareMode *mode_var)
 
   for (i = 0; i < GF_NUM_MODES; i++)
     {
-      menuitem = gtk_menu_item_new_with_label (gettext(gflare_menu_modes[i]));
+      menuitem = gtk_menu_item_new_with_label (gettext (gflare_menu_modes[i]));
 
-      gtk_object_set_user_data (GTK_OBJECT (menuitem), (gpointer) i);
+      gtk_object_set_user_data (GTK_OBJECT (menuitem),
+				GINT_TO_POINTER (i));
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  (GtkSignalFunc) ed_mode_menu_callback,
+			  GTK_SIGNAL_FUNC (ed_mode_menu_callback),
 			  mode_var);
       gtk_widget_show (menuitem);
       gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -4766,17 +4767,17 @@ gm_menu_new (GradientMenu *gm,
 }
 
 static GtkWidget *
-gm_menu_create_sub_menus (GradientMenu *gm,
-			  gint start_n,
-			  gchar **active_name_ptr,
-			  gchar *default_gradient_name)
+gm_menu_create_sub_menus (GradientMenu  *gm,
+			  gint           start_n,
+			  gchar        **active_name_ptr,
+			  gchar         *default_gradient_name)
 {
-  GtkWidget	*menu, *sub_menu;
-  gchar		*sub_active_name;
-  GtkWidget	*menuitem;
-  gchar		*name;
-  gint		active_i = 0;
-  gint		i, n;
+  GtkWidget *menu, *sub_menu;
+  gchar     *sub_active_name;
+  GtkWidget *menuitem;
+  gchar     *name;
+  gint       active_i = 0;
+  gint       i, n;
 
   *active_name_ptr = NULL;
   if (start_n >= num_gradient_names)
@@ -4799,7 +4800,7 @@ gm_menu_create_sub_menus (GradientMenu *gm,
       menuitem = gtk_menu_item_new_with_label (name);
       gtk_object_set_user_data (GTK_OBJECT (menuitem), gm);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  (GtkSignalFunc) gm_menu_item_callback,
+			  GTK_SIGNAL_FUNC (gm_menu_item_callback),
 			  name);
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_widget_show (menuitem);
@@ -4813,6 +4814,7 @@ gm_menu_create_sub_menus (GradientMenu *gm,
 
       /* hline */
       menuitem = gtk_menu_item_new ();
+      gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
       gtk_menu_prepend (GTK_MENU (menu), menuitem);
 
@@ -4833,14 +4835,16 @@ gm_menu_create_sub_menus (GradientMenu *gm,
 }
 
 static void
-gm_menu_item_callback (GtkWidget *w, gpointer data)
+gm_menu_item_callback (GtkWidget *w,
+		       gpointer   data)
 {
-  GradientMenu		*gm;
-  gchar			*gradient_name = (gchar *) data;
+  GradientMenu *gm;
+  gchar        *gradient_name = (gchar *) data;
 
   DEBUG_PRINT(("gm_menu_item_callback\n"));
 
   gm =	(GradientMenu *) gtk_object_get_user_data (GTK_OBJECT (w));
+
   gradient_name_copy (gm->gradient_name, gradient_name);
 
   gm_preview_draw (gm->preview, gradient_name);
@@ -4855,26 +4859,28 @@ gm_menu_item_callback (GtkWidget *w, gpointer data)
 }
 
 static void
-gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
+gm_preview_draw (GtkWidget *preview,
+		 gchar     *gradient_name)
 {
-  guchar	values[GM_PREVIEW_WIDTH][4];
-  gint		nvalues = GM_PREVIEW_WIDTH;
-  int		row, irow, col;
-  guchar	dest_row[GM_PREVIEW_WIDTH][3];
-  guchar	*dest, *src;
-  int		check, b;
-  const int	alpha = 3;
+  guchar      values[GM_PREVIEW_WIDTH][4];
+  gint        nvalues = GM_PREVIEW_WIDTH;
+  gint        row, irow, col;
+  guchar      dest_row[GM_PREVIEW_WIDTH][3];
+  guchar     *dest;
+  guchar     *src;
+  gint        check, b;
+  const gint  alpha = 3;
 
   gradient_get_values (gradient_name, (guchar *)values, nvalues);
 
-  for(row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM)
+  for (row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM)
     {
-      for(col = 0; col < GM_PREVIEW_WIDTH; col++)
+      for (col = 0; col < GM_PREVIEW_WIDTH; col++)
 	{
 	  dest = dest_row[col];
-	  src = values[col];
+	  src  = values[col];
 
-	  if(src[alpha] == OPAQUE)
+	  if (src[alpha] == OPAQUE)
 	    {
 	      /* no alpha channel or opaque -- simple way */
 	      for (b = 0; b < alpha; b++)
@@ -4913,7 +4919,8 @@ gm_preview_draw (GtkWidget *preview, gchar *gradient_name)
 }
 
 static void
-gm_option_menu_destroy_callback (GtkWidget *w, gpointer data)
+gm_option_menu_destroy_callback (GtkWidget *w,
+				 gpointer   data)
 {
   GradientMenu *gm = data;
   gradient_menus = g_list_remove (gradient_menus, gm);
@@ -4934,7 +4941,8 @@ gm_option_menu_destroy_callback (GtkWidget *w, gpointer data)
 
 
 void
-gradient_name_copy (gchar *dest, gchar *src)
+gradient_name_copy (gchar *dest,
+		    gchar *src)
 {
   strncpy (dest, src, GRADIENT_NAME_MAX);
   dest[GRADIENT_NAME_MAX-1] = '\0';
@@ -4944,9 +4952,10 @@ gradient_name_copy (gchar *dest, gchar *src)
   Translate SPACE to "\\040", etc.
  */
 void
-gradient_name_encode (guchar *dest, guchar *src)
+gradient_name_encode (guchar *dest,
+		      guchar *src)
 {
-  int	cnt = GRADIENT_NAME_MAX - 1;
+  gint cnt = GRADIENT_NAME_MAX - 1;
 
   while (*src && cnt--)
     {
@@ -4965,10 +4974,11 @@ gradient_name_encode (guchar *dest, guchar *src)
   Translate "\\040" to SPACE, etc.
  */
 void
-gradient_name_decode (guchar *dest, guchar *src)
+gradient_name_decode (guchar *dest,
+		      guchar *src)
 {
-  int	cnt = GRADIENT_NAME_MAX - 1;
-  int	tmp;
+  gint cnt = GRADIENT_NAME_MAX - 1;
+  gint tmp;
 
   while (*src && cnt--)
     {
@@ -4986,26 +4996,25 @@ gradient_name_decode (guchar *dest, guchar *src)
 
 
 void
-gradient_init ()
+gradient_init (void)
 {
   gradient_cache_head = NULL;
   gradient_cache_count = 0;
 }
 
 void
-gradient_free ()
+gradient_free (void)
 {
   gradient_cache_flush ();
 }
 
-char **
+gchar **
 gradient_get_list (gint *num_gradients)
 {
-  gchar	      **gradients;
-  gchar	      **external_gradients = NULL;
-  gint	      external_ngradients = 0;
-  gint	      i, n;
-
+  gchar **gradients;
+  gchar	**external_gradients = NULL;
+  gint	  external_ngradients = 0;
+  gint	  i, n;
 
   gradient_cache_flush ();
   external_gradients = gimp_gradients_get_list (&external_ngradients);
@@ -5027,7 +5036,9 @@ gradient_get_list (gint *num_gradients)
 }
 
 void
-gradient_get_values (gchar *gradient_name, guchar *values, gint nvalues)
+gradient_get_values (gchar  *gradient_name,
+		     guchar *values,
+		     gint    nvalues)
 {
   /* DEBUG_PRINT (("gradient_get_values: %s %d\n", gradient_name, nvalues)); */
 
@@ -5042,13 +5053,15 @@ gradient_get_values (gchar *gradient_name, guchar *values, gint nvalues)
 }
 
 static void
-gradient_get_values_internal (gchar *gradient_name, guchar *values, gint nvalues)
+gradient_get_values_internal (gchar  *gradient_name,
+			      guchar *values,
+			      gint    nvalues)
 {
-  static guchar white[4] = {255,255,255,255};
-  static guchar white_trans[4] = {255,255,255,0};
-  static guchar red_trans[4] = {255,0,0,0};
-  static guchar blue_trans[4] = {0,0,255,0};
-  static guchar yellow_trans[4] = {255,255,0,0};
+  static guchar white[4]        = { 255, 255, 255, 255 };
+  static guchar white_trans[4]  = { 255, 255, 255, 0   };
+  static guchar red_trans[4]    = { 255, 0,   0,   0   };
+  static guchar blue_trans[4]   = { 0,   0,   255, 0   };
+  static guchar yellow_trans[4] = { 255, 255, 0,   0   };
 
   /*
     The internal gradients here are example --
@@ -5085,11 +5098,15 @@ gradient_get_values_internal (gchar *gradient_name, guchar *values, gint nvalues
 }
 
 static void
-gradient_get_blend (guchar *fg, guchar *bg, guchar *values, gint nvalues)
+gradient_get_blend (guchar *fg,
+		    guchar *bg,
+		    guchar *values,
+		    gint    nvalues)
 {
-  gdouble	x;
-  int		i, j;
-  guchar	*v = values;
+  gdouble  x;
+  gint     i;
+  gint     j;
+  guchar  *v = values;
 
   for (i=0; i<nvalues; i++)
     {
@@ -5100,11 +5117,14 @@ gradient_get_blend (guchar *fg, guchar *bg, guchar *values, gint nvalues)
 }
 
 static void
-gradient_get_random (gint seed, guchar *values, gint nvalues)
+gradient_get_random (gint    seed,
+		     guchar *values,
+		     gint    nvalues)
 {
-  int		i, j;
-  int		inten;
-  guchar	*v = values;
+  gint    i;
+  gint    j;
+  gint    inten;
+  guchar *v = values;
 
   /*
     This is really simple  -- gaussian noise might be better
@@ -5120,12 +5140,15 @@ gradient_get_random (gint seed, guchar *values, gint nvalues)
 }
 
 static void
-gradient_get_default (gchar *name, guchar *values, gint nvalues)
+gradient_get_default (gchar  *name,
+		      guchar *values,
+		      gint    nvalues)
 {
-  double	e[3];
-  double	x;
-  int		i, j;
-  guchar	*v = values;
+  gdouble  e[3];
+  gdouble  x;
+  gint     i;
+  gint     j;
+  guchar  *v = values;
 
   /*
     Create gradient by name
@@ -5153,10 +5176,12 @@ gradient_get_default (gchar *name, guchar *values, gint nvalues)
   cached values are stored in guchar array. No accuracy.
  */
 static void
-gradient_get_values_external (gchar *gradient_name, guchar *values, gint nvalues)
+gradient_get_values_external (gchar  *gradient_name,
+			      guchar *values,
+			      gint    nvalues)
 {
   GradientCacheItem *ci;
-  gint		    found;
+  gint		     found;
 #ifdef DEBUG
   clock_t	clk = clock ();
 #endif
@@ -5202,11 +5227,14 @@ gradient_get_values_external (gchar *gradient_name, guchar *values, gint nvalues
 }
 
 static void
-gradient_get_values_real_external (gchar *gradient_name, guchar *values, gint nvalues)
+gradient_get_values_real_external (gchar  *gradient_name,
+				   guchar *values,
+				   gint    nvalues)
 {
-  gchar		*old_name;
-  gdouble	*tmp_values;
-  int		i, j;
+  gchar   *old_name;
+  gdouble *tmp_values;
+  gint     i;
+  gint     j;
 
   old_name = gimp_gradients_get_active ();
 
@@ -5224,9 +5252,10 @@ gradient_get_values_real_external (gchar *gradient_name, guchar *values, gint nv
 }
 
 void
-gradient_cache_flush ()
+gradient_cache_flush (void)
 {
-  GradientCacheItem	*ci, *tmp;
+  GradientCacheItem *ci;
+  GradientCacheItem *tmp;
 
   ci = gradient_cache_head;
   while (ci)
@@ -5240,9 +5269,10 @@ gradient_cache_flush ()
 }
 
 static GradientCacheItem *
-gradient_cache_lookup (gchar *name, gint *found)
+gradient_cache_lookup (gchar *name,
+		       gint  *found)
 {
-  GradientCacheItem	*ci;
+  GradientCacheItem *ci;
 
   ci = gradient_cache_head;
   while (ci)
@@ -5286,9 +5316,9 @@ gradient_cache_lookup (gchar *name, gint *found)
 }
 
 static void
-gradient_cache_zorch ()
+gradient_cache_zorch (void)
 {
-  GradientCacheItem	*ci = gradient_cache_head;
+  GradientCacheItem *ci = gradient_cache_head;
 
   while (ci && ci->next)
     {
@@ -5308,7 +5338,7 @@ gradient_cache_zorch ()
 
 #ifdef DEBUG
 void
-gradient_report ()
+gradient_report (void)
 {
   double total = (double) get_values_external_clock / CLOCKS_PER_SEC;
 

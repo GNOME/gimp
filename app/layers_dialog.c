@@ -995,14 +995,14 @@ layers_dialog_preview_extents (void)
 static void
 layers_dialog_set_menu_sensitivity (void)
 {
-  gboolean  fs;		/*  floating sel  */
-  gboolean  ac;		/*  active channel  */
-  gboolean  lm;		/*  layer mask  */
-  gboolean  gimage;	/*  is there a gimage  */
-  gboolean  lp;		/*  layers present  */
-  gboolean  alpha;	/*  alpha channel present  */
-  gboolean  indexed;	/*  is indexed  */
-  gint      next_alpha;
+  gboolean  fs;         /*  no floating sel  */
+  gboolean  ac;         /*  no active channel  */
+  gboolean  lm;         /*  layer mask  */
+  gboolean  gimage;     /*  is there a gimage  */
+  gboolean  lp;         /*  layers present  */
+  gboolean  alpha;      /*  alpha channel present  */
+  gboolean  indexed;    /*  is indexed  */
+  gboolean  next_alpha;
   GSList   *list; 
   GSList   *next;
   GSList   *prev;
@@ -1027,7 +1027,7 @@ layers_dialog_set_menu_sensitivity (void)
   if (gimage)
     {
       lp = (layersD->gimage->layers != NULL);
-      indexed = (gimp_image_base_type(layersD->gimage)==INDEXED);
+      indexed = (gimp_image_base_type (layersD->gimage) == INDEXED);
     } 
      
   list = layersD->gimage->layers;
@@ -1047,7 +1047,7 @@ layers_dialog_set_menu_sensitivity (void)
 
   if (next)
     {
-      layer = (Layer *)next->data;
+      layer = (Layer *) next->data;
       next_alpha = layer_has_alpha (layer);
     }
   else
@@ -1089,7 +1089,7 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Scale Layer...", ac && gimage && lp);
 
   SET_SENSITIVE ("Merge Visible Layers...", fs && ac && gimage && lp);
-  SET_SENSITIVE ("Merge Down", fs && ac && gimage && lp);
+  SET_SENSITIVE ("Merge Down", fs && ac && gimage && lp && next);
   SET_SENSITIVE ("Flatten Image", fs && ac && gimage && lp);
 
   SET_SENSITIVE ("Add Layer Mask...", fs && ac && gimage && !lm && lp && alpha && !indexed);

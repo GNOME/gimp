@@ -104,6 +104,8 @@ gimp_option_menu_new (gboolean            menu_only,
       else
 	{
 	  menuitem = gtk_menu_item_new ();
+
+	  gtk_widget_set_sensitive (menuitem, FALSE);
 	}
 
       gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -201,6 +203,8 @@ gimp_option_menu_new2 (gboolean         menu_only,
       else
 	{
 	  menuitem = gtk_menu_item_new ();
+
+	  gtk_widget_set_sensitive (menuitem, FALSE);
 	}
 
       gtk_menu_append (GTK_MENU (menu), menuitem);

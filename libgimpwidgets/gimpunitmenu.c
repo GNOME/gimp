@@ -306,6 +306,7 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 
       menuitem = gtk_menu_item_new ();
       gtk_menu_append (GTK_MENU (GTK_OPTION_MENU (gum)->menu), menuitem);
+      gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
 			      menuitem, user_unit - 1);
       gtk_widget_show (menuitem);
