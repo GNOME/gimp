@@ -83,7 +83,11 @@ file_new_ok_callback (GtkWidget *widget,
 
   vals->width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
   vals->height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
+
+  /* resolution is always in DPI, but the value in the spinner may not
+   * be */
   vals->resolution = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->resolution_spinbutton));
+  vals->resolution *= vals->res_unit;
 
 
   last_new_image = TRUE;
@@ -445,10 +449,9 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->width = gdisp->gimage->width;
       vals->height = gdisp->gimage->height;
       vals->type = gimage_base_type (gdisp->gimage);
-      /* this is wrong, but until resolution and unit is stored in the image... */
-      vals->resolution = last_resolution;
+      vals->resolution = gdisp->gimage->resolution;
       vals->unit = last_unit;
-      vals->res_unit = last_res_unit;
+      vals->res_unit = 1.0;
     }
   else
     {
@@ -470,6 +473,10 @@ file_new_cmd_callback (GtkWidget           *widget,
     {
       vals->width = global_buf->width;
       vals->height = global_buf->height;
+      /* It would be good to set the resolution here, but that would
+       * require TileManagers to know about the resolution of tiles
+       * they're dealing with.  It's not clear we want to go down that
+       * road. -- austin */
     }
 
   vals->dlg = gtk_dialog_new ();
@@ -554,7 +561,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (vals->height_spinbutton);
 
   /* width in units spinbutton */
-  temp = (float) vals->width / vals->resolution;
+  temp = (float) vals->width / vals->resolution * vals->unit;
   adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
                                               1.0, 0.01, 0.0);
   vals->width_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
@@ -570,7 +577,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (vals->width_units_spinbutton);
 
   /* height in units spinbutton */
-  temp = (float) vals->height / vals->resolution; 
+  temp = (float) vals->height / vals->resolution * vals->unit; 
   adj = (GtkAdjustment *) gtk_adjustment_new (temp, 0.0, 32767.0,
                                               1.0, 0.01, 0.0);
   vals->height_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
@@ -607,6 +614,8 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   optionmenu = gtk_option_menu_new();
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  if (vals->unit != 1.0)
+    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 1);
   gtk_table_attach (GTK_TABLE (table), optionmenu , 2, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show(optionmenu);
@@ -623,7 +632,8 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show(hbox);
 
   /* resoltuion spinbutton  */
-  adj = (GtkAdjustment *) gtk_adjustment_new (vals->resolution, 1.0, 32767.0,
+  adj = (GtkAdjustment *) gtk_adjustment_new (vals->resolution/vals->res_unit,
+					      1.0, 32767.0,
                                               1.0, 5.0, 0.0);
   vals->resolution_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->resolution_spinbutton), GTK_SHADOW_NONE);
@@ -660,6 +670,8 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   optionmenu = gtk_option_menu_new();
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  if (vals->res_unit != 1.0)
+    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 1);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
   gtk_widget_show(optionmenu);
 
