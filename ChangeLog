@@ -1,3 +1,8 @@
+2001-07-06  Dave Neary  <dneary@eircom.net>
+
+	* Changed app/image_new.c to app/core/gimpimage-new.c 
+	in po/POTFILES.in to get the build working.
+
 2001-07-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimage.c: don't add the image to the image container,

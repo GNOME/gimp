@@ -16,7 +16,6 @@ app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
 app/gimpunit.c
-app/image_new.c
 app/interface.c
 app/main.c
 app/module_db.c
@@ -36,6 +35,7 @@ app/core/gimpedit.c
 app/core/gimpimage.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c
+app/core/gimpimage-new.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
 app/core/gimppalette-import.c
