@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-08 17:37+0200\n"
-"PO-Revision-Date: 2004-07-08 17:32+0200\n"
+"POT-Creation-Date: 2004-07-17 02:31+0200\n"
+"PO-Revision-Date: 2004-07-17 02:33+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6235,7 +6235,7 @@ msgid "_Vertical:"
 msgstr "_Vertikal:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
@@ -7456,7 +7456,7 @@ msgstr ""
 "Zwei Boxkämpfer jagen\n"
 "Eva quer durch Sylt."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -8564,7 +8564,7 @@ msgstr "Transparente Bereiche auswählen"
 
 #: app/tools/gimpselectionoptions.c:529
 msgid "Auto Shrink Selection"
-msgstr "Auswahl automatisch verkleinern"
+msgstr "Automatisch verkleinern"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
@@ -8677,15 +8677,15 @@ msgstr "Text zum Bild hinzufügen"
 msgid "/Tools/Te_xt"
 msgstr "/Werkzeuge/Te_xt"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "GIMP Text-Editor"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Bearbeitung des Textes bestätigen"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
