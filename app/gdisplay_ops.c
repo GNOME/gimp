@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -33,9 +32,9 @@
 
 #include "libgimp/gimpintl.h"
 
-static void gdisplay_close_warning_callback (GtkWidget *, gpointer);
+static void gdisplay_close_warning_callback  (GtkWidget *, gpointer);
 static void gdisplay_cancel_warning_callback (GtkWidget *, gpointer);
-static void gdisplay_close_warning_dialog   (char *, GDisplay *);
+static void gdisplay_close_warning_dialog    (char *, GDisplay *);
 
 static GtkWidget *warning_dialog = NULL;
 
@@ -121,7 +120,7 @@ gdisplay_close_window (GDisplay *gdisp,
    *  to an image canvas.  (a gimage with ref_count = 1)
    */
   if (!kill_it && (gdisp->gimage->ref_count == 1) &&
-      (gdisp->gimage->dirty > 0) && confirm_on_close )
+      (gdisp->gimage->dirty > 0) && confirm_on_close)
     {
       gdisplay_close_warning_dialog
 	(g_basename (gimage_filename (gdisp->gimage)), gdisp);
@@ -326,9 +325,9 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 				  GdkEvent  *event,
 				  gpointer   client_data)
 {
-  menus_set_sensitive_locale ("<Image>", N_("/File/Close"), TRUE);
+  gdisplay_cancel_warning_callback (widget, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -342,15 +341,16 @@ static void
 gdisplay_close_warning_dialog (char     *image_name,
 			       GDisplay *gdisp)
 {
-  static ActionAreaItem mbox_action_items[2] =
+  GtkWidget *mbox;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  gchar *warning_buf;
+
+  static ActionAreaItem action_items[] =
   {
     { N_("Close"), gdisplay_close_warning_callback, NULL, NULL },
     { N_("Cancel"), gdisplay_cancel_warning_callback, NULL, NULL }
   };
-  GtkWidget *mbox;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  char *warning_buf;
 
   /* FIXUP this will raise any prexsisting close dialogs, which can be a
      a bit confusing if you tried to close a new window because you had
@@ -380,20 +380,21 @@ gdisplay_close_warning_dialog (char     *image_name,
 		      mbox);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mbox)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), vbox);
   gtk_widget_show (vbox);
 
   warning_buf =
-    g_strdup_printf(_("Changes were made to %s. Close anyway?"), image_name);
+    g_strdup_printf (_("Changes were made to %s.\n"
+		       "Close anyway?"), image_name);
   label = gtk_label_new (warning_buf);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
   g_free (warning_buf);
 
-  mbox_action_items[0].user_data = mbox;
-  mbox_action_items[1].user_data = mbox;
-  build_action_area (GTK_DIALOG (mbox), mbox_action_items, 2, 0);
+  action_items[0].user_data = mbox;
+  action_items[1].user_data = mbox;
+  build_action_area (GTK_DIALOG (mbox), action_items, 2, 1);
 
   gtk_widget_show (mbox);
 }

@@ -1,3 +1,14 @@
+1999-07-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gdisplay_ops.c: tweaked one more dialog box: "Changes were
+	made to %s. Close anyway?"
+
+	* app/layers_dialog.c: Eek, layers_dialog_flush() was assuming
+	that layers can be moved by one position only and thus traversed
+	and reordered the same list at the same time. Should work with
+	arbitrarily misplaced layers now.
+	Fixed some strange dnd special cases and cleaned up the dnd code.
+
 Wed Jul 28 03:42:34 1999  Jay Cox  (jay@elan)
 
 	* app/pixel_regionP.h: new file that shold have gone with my last
