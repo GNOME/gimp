@@ -114,7 +114,7 @@ int       no_cursor_updating = 0;
 int       preview_size = 64;
 int       show_rulers = TRUE;
 int       show_statusbar = TRUE;
-int       ruler_units = GTK_PIXELS;
+GUnit     default_units = UNIT_INCH;
 int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
 int       confirm_on_close = TRUE;
@@ -124,10 +124,9 @@ int       always_restore_session = FALSE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
-int       default_resolution = 72;
-int       default_resolution_units = GTK_INCHES;
-int       default_width_units = GTK_INCHES;
-int       default_height_units = GTK_INCHES;
+float     default_xresolution = 72.0;
+float     default_yresolution = 72.0;
+GUnit     default_resolution_units = UNIT_INCH;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
@@ -152,7 +151,7 @@ static int parse_mem_size (gpointer val1p, gpointer val2p);
 static int parse_image_type (gpointer val1p, gpointer val2p);
 static int parse_color_cube (gpointer val1p, gpointer val2p);
 static int parse_preview_size (gpointer val1p, gpointer val2p);
-static int parse_ruler_units (gpointer val1p, gpointer val2p);
+static int parse_units (gpointer val1p, gpointer val2p);
 static int parse_plug_in (gpointer val1p, gpointer val2p);
 static int parse_plug_in_def (gpointer val1p, gpointer val2p);
 static int parse_device (gpointer val1p, gpointer val2p);
@@ -176,7 +175,7 @@ static inline char* mem_size_to_str (gpointer val1p, gpointer val2p);
 static inline char* image_type_to_str (gpointer val1p, gpointer val2p);
 static inline char* color_cube_to_str (gpointer val1p, gpointer val2p);
 static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
-static inline char* ruler_units_to_str (gpointer val1p, gpointer val2p);
+static inline char* units_to_str (gpointer val1p, gpointer val2p);
 
 static char* transform_path (char *path, int destroy);
 static char* gimprc_find_token (char *token);
@@ -231,7 +230,7 @@ static ParseFunc funcs[] =
   { "dont-show-rulers",      TT_BOOLEAN,    NULL, &show_rulers },
   { "show-statusbar",        TT_BOOLEAN,    &show_statusbar, NULL },
   { "dont-show-statusbar",   TT_BOOLEAN,    NULL, &show_statusbar },
-  { "ruler-units",           TT_XRULERUNIT, NULL, NULL },
+  { "default-units",         TT_XRULERUNIT, &default_units, NULL },
   { "auto-save",             TT_BOOLEAN,    &auto_save, NULL },
   { "dont-auto-save",        TT_BOOLEAN,    NULL, &auto_save },
   { "cubic-interpolation",   TT_BOOLEAN,    &cubic_interpolation, NULL },
@@ -249,7 +248,8 @@ static ParseFunc funcs[] =
   { "dont-show-tool-tips",   TT_BOOLEAN,    NULL, &show_tool_tips },
   { "default-image-size",    TT_POSITION,   &default_width, &default_height },
   { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
-  { "default-resolution",    TT_INT,        &default_resolution, NULL },
+  { "default-xresolution",   TT_FLOAT,      &default_xresolution, NULL },
+  { "default-yresolution",   TT_FLOAT,      &default_yresolution, NULL },
   { "default-resolution-units", TT_XRULERUNIT, &default_resolution_units, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
@@ -642,7 +642,7 @@ parse_statement ()
 	case TT_XPREVSIZE:
 	  return parse_preview_size (funcs[i].val1p, funcs[i].val2p);
 	case TT_XRULERUNIT:
-	  return parse_ruler_units (funcs[i].val1p, funcs[i].val2p);
+	  return parse_units (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	  return parse_plug_in (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGINDEF:
@@ -1048,24 +1048,26 @@ parse_preview_size (gpointer val1p,
 }
 
 static int
-parse_ruler_units (gpointer val1p,
-		   gpointer val2p)
+parse_units (gpointer val1p,
+	     gpointer val2p)
 {
   int token;
+  int i;
+
+  g_assert (val1p != NULL);
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL))
     return ERROR;
   token = get_next_token ();
 
-  if (strcmp (token_sym, "pixels") == 0)
-    ruler_units = GTK_PIXELS;
-  else if (strcmp (token_sym, "inches") == 0)
-    ruler_units = GTK_INCHES;
-  else if (strcmp (token_sym, "centimeters") == 0)
-    ruler_units = GTK_CENTIMETERS;
-  else
-    ruler_units = GTK_PIXELS;
+  *((GUnit*)val1p) = UNIT_INCH;
+  for (i=UNIT_INCH; i<gimp_unit_get_number_of_units (); i++)
+    if (strcmp (token_sym, gimp_unit_get_identifier (i)) == 0)
+      {
+	*((GUnit*)val1p) = i;
+	break;
+      }
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2005,7 +2007,7 @@ value_to_str (char *name)
 	case TT_XPREVSIZE:
 	  return preview_size_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XRULERUNIT:
-	  return ruler_units_to_str (funcs[i].val1p, funcs[i].val2p);
+	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
@@ -2126,19 +2128,10 @@ preview_size_to_str (gpointer val1p,
 }
 
 static inline char *
-ruler_units_to_str (gpointer val1p,
-		    gpointer val2p)
+units_to_str (gpointer val1p,
+	      gpointer val2p)
 {
-  switch (ruler_units)
-    {
-    case GTK_INCHES:
-      return g_strdup ("inches");
-    case GTK_CENTIMETERS:
-      return g_strdup ("centimeters");
-    case GTK_PIXELS:
-      return g_strdup ("pixels");
-    }
-  return NULL;
+  return g_strdup (gimp_unit_get_identifier (*((GUnit*)val1p)));
 }
 
 static void

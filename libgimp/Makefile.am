@@ -13,7 +13,9 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
-EXTRA_DIST = gimpfeatures.h.in
+EXTRA_DIST = \
+	chain.xpm		\
+	gimpfeatures.h.in
 
 lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
@@ -21,23 +23,23 @@ noinst_LIBRARIES = libgimpi.a
 libgimpi_a_SOURCES = \
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
-	gimpmatrix.c	\
-	gimpmatrix.h	\
-	gimpprotocol.c	\
-	gimpprotocol.h	\
-	gimpsizeentry.c	\
-	gimpsizeentry.h	\
-	gimpunit.c      \
-	gimpunit.h      \
-	gimpunitmenu.c  \
-	gimpunitmenu.h  \
-	gimpwire.c	\
-	gimpwire.h	\
-	gserialize.c	\
-	gserialize.h	\
-	parasite.c	\
-	parasite.h	\
-	parasiteF.h	\
+	gimpmatrix.c		\
+	gimpmatrix.h		\
+	gimpprotocol.c		\
+	gimpprotocol.h		\
+	gimpsizeentry.c		\
+	gimpsizeentry.h		\
+	gimpunit.c		\
+	gimpunit.h		\
+	gimpunitmenu.c		\
+	gimpunitmenu.h		\
+	gimpwire.c		\
+	gimpwire.h		\
+	gserialize.c		\
+	gserialize.h		\
+	parasite.c		\
+	parasite.h		\
+	parasiteF.h		\
 	parasiteP.h
 
 if STATICLIBS

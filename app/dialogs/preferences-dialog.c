@@ -46,10 +46,11 @@
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
-#include "libgimp/gimpsizeentry.h"
 
 #include "config.h"
+#include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpsizeentry.h"
 
 
 /*  preferences local functions  */
@@ -63,7 +64,7 @@ static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
 static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
-static void file_prefs_resolution_callback (GtkWidget *, gpointer);
+static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_type = RGB;
@@ -88,6 +89,10 @@ static   int          old_save_device_status;
 static   int          old_always_restore_session;
 static   int          old_default_width;
 static   int          old_default_height;
+static   GUnit        old_default_units;
+static   float        old_default_xresolution;
+static   float        old_default_yresolution;
+static   GUnit        old_default_resolution_units;
 static   int          old_default_type;
 static   int          old_stingy_memory_use;
 static   int          old_tile_cache_size;
@@ -124,9 +129,12 @@ static   int          edit_num_processors;
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
 static   int          divided_tile_cache_size;
 static   int          mem_size_unit;
+static   GtkWidget   *default_size_sizeentry = NULL;
+static   GtkWidget   *default_resolution_sizeentry = NULL;
+static   GtkWidget   *default_resolution_force_equal = NULL;
 static   GtkWidget   *resolution_xserver_label = NULL;
-static   GtkWidget   *resolution_sizeentry = NULL;
-static   GtkWidget   *resolution_force_equal = NULL;
+static   GtkWidget   *monitor_resolution_sizeentry = NULL;
+static   GtkWidget   *monitor_resolution_force_equal = NULL;
 static   GtkWidget   *num_processors_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
@@ -161,8 +169,8 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
 
    Still no settings for default-brush, default-gradient,
    default-palette, default-pattern, gamma-correction, color-cube,
-   show-rulers, ruler-units. No widget for confirm-on-close although
-   a lot of stuff is there.
+   show-rulers. No widget for confirm-on-close although a lot of
+   stuff is there.
 
    No UI feedback for the fact that some settings won't take effect
    until the next Gimp restart.
@@ -240,6 +248,27 @@ file_prefs_ok_callback (GtkWidget *widget,
       default_height = old_default_height;
       return;
     }
+  if (default_units < UNIT_INCH ||
+      default_units >= gimp_unit_get_number_of_units ())
+    {
+      g_message (_("Error: Default units must be withing unit range."));
+      default_units = old_default_units;
+      return;
+    }
+  if (default_xresolution < 1e-5 || default_yresolution < 1e-5)
+    {
+      g_message (_("Error: default resolution must not be zero."));
+      default_xresolution = old_default_xresolution;
+      default_yresolution = old_default_yresolution;
+      return;
+    }
+  if (default_resolution_units < UNIT_INCH ||
+      default_resolution_units >= gimp_unit_get_number_of_units ())
+    {
+      g_message (_("Error: Default units must be withing unit range."));
+      default_resolution_units = old_default_resolution_units;
+      return;
+    }
   if (monitor_xres < 1e-5 || monitor_yres < 1e-5)
     {
       g_message (_("Error: monitor resolution must not be zero."));
@@ -256,9 +285,12 @@ file_prefs_ok_callback (GtkWidget *widget,
       
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  default_size_sizeentry = NULL;
+  default_resolution_sizeentry = NULL;
+  default_resolution_force_equal = NULL;
   resolution_xserver_label = NULL;
-  resolution_sizeentry = NULL;
-  resolution_force_equal = NULL;
+  monitor_resolution_sizeentry = NULL;
+  monitor_resolution_force_equal = NULL;
 
   if (show_tool_tips)
     gtk_tooltips_enable (tool_tips);
@@ -364,6 +396,14 @@ file_prefs_save_callback (GtkWidget *widget,
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
+  if (default_units != old_default_units)
+    update = g_list_append (update, "default-units");
+  if (ABS(default_xresolution - old_default_xresolution) > 1e-5)
+    update = g_list_append (update, "default-xresolution");
+  if (ABS(default_yresolution - old_default_yresolution) > 1e-5)
+    update = g_list_append (update, "default-yresolution");
+  if (default_resolution_units != old_default_resolution_units)
+    update = g_list_append (update, "default-resolution-units");
   if (default_type != old_default_type)
     update = g_list_append (update, "default-image-type");
   if (preview_size != old_preview_size)
@@ -507,9 +547,12 @@ file_prefs_cancel_callback (GtkWidget *widget,
 {
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+  default_size_sizeentry = NULL;
+  default_resolution_sizeentry = NULL;
+  default_resolution_force_equal = NULL;
   resolution_xserver_label = NULL;
-  resolution_sizeentry = NULL;
-  resolution_force_equal = NULL;
+  monitor_resolution_sizeentry = NULL;
+  monitor_resolution_force_equal = NULL;
 
   levels_of_undo = old_levels_of_undo;
   marching_speed = old_marching_speed;
@@ -526,6 +569,10 @@ file_prefs_cancel_callback (GtkWidget *widget,
   save_device_status = old_save_device_status;
   default_width = old_default_width;
   default_height = old_default_height;
+  default_units = old_default_units;
+  default_xresolution = old_default_xresolution;
+  default_yresolution = old_default_yresolution;
+  default_resolution_units = old_default_resolution_units;
   default_type = old_default_type;
   monitor_xres = old_monitor_xres;
   monitor_yres = old_monitor_yres;
@@ -704,12 +751,12 @@ file_prefs_res_source_callback (GtkWidget *widget,
     gtk_widget_set_sensitive (resolution_xserver_label,
 			      GTK_TOGGLE_BUTTON (widget)->active);
 
-  if (resolution_sizeentry)
-    gtk_widget_set_sensitive (resolution_sizeentry,
+  if (monitor_resolution_sizeentry)
+    gtk_widget_set_sensitive (monitor_resolution_sizeentry,
 			      ! GTK_TOGGLE_BUTTON (widget)->active);
 
-  if (resolution_force_equal)
-    gtk_widget_set_sensitive (resolution_force_equal,
+  if (monitor_resolution_force_equal)
+    gtk_widget_set_sensitive (monitor_resolution_force_equal,
 			      ! GTK_TOGGLE_BUTTON (widget)->active);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
@@ -719,20 +766,30 @@ file_prefs_res_source_callback (GtkWidget *widget,
   }
   else
   {
-    if (resolution_sizeentry)
+    if (monitor_resolution_sizeentry)
       {
 	monitor_xres =
-	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 0);
+	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
 	monitor_yres =
-	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 1);
+	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
       }
     using_xserver_resolution = FALSE;
   }
 }
 
 static void
-file_prefs_resolution_callback (GtkWidget *widget,
-				gpointer data)
+file_prefs_default_size_callback (GtkWidget *widget,
+				  gpointer data)
+{
+  default_width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  default_height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+  default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+}
+
+
+static void
+file_prefs_default_resolution_callback (GtkWidget *widget,
+					gpointer data)
 {
   static float xres = 0.0;
   static float yres = 0.0;
@@ -742,7 +799,53 @@ file_prefs_resolution_callback (GtkWidget *widget,
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data)))
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
+    {
+      if (new_xres != xres)
+	{
+	  yres = new_yres = xres = new_xres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, yres);
+	}
+
+      if (new_yres != yres)
+	{
+	  xres = new_xres = yres = new_yres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
+	}
+    }
+  else
+    {
+      if (new_xres != xres)
+	xres = new_xres;
+      if (new_yres != yres)
+	yres = new_yres;
+    }
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				  0, xres, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				  1, yres, FALSE);
+
+  default_width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0);
+  default_height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1);
+  default_xresolution = xres;
+  default_yresolution = yres;
+  default_resolution_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+}
+
+static void
+file_prefs_monitor_resolution_callback (GtkWidget *widget,
+					gpointer data)
+{
+  static float xres = 0.0;
+  static float yres = 0.0;
+  float new_xres;
+  float new_yres;
+
+  new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
     {
       if (new_xres != xres)
 	{
@@ -898,6 +1001,10 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_always_restore_session = always_restore_session;
       old_default_width = default_width;
       old_default_height = default_height;
+      old_default_units = default_units;
+      old_default_xresolution = default_xresolution;
+      old_default_yresolution = default_yresolution;
+      old_default_resolution_units = default_resolution_units;
       old_default_type = default_type;
       old_stingy_memory_use = edit_stingy_memory_use;
       old_tile_cache_size = edit_tile_cache_size;
@@ -970,8 +1077,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->vbox),
 			  notebook, TRUE, TRUE, 0);
 
-      /* Display page */
-      out_frame = gtk_frame_new (_("Display settings"));
+      /* New File page */
+      out_frame = gtk_frame_new (_("New file settings"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_show (out_frame);
 
@@ -980,12 +1087,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-      gtk_widget_show (hbox);
-
-      frame = gtk_frame_new (_("Default image size")); 
-      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+      frame = gtk_frame_new (_("Default image size and unit")); 
+      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
       abox = gtk_vbox_new (FALSE, 2);
@@ -993,51 +1096,82 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), abox);
       gtk_widget_show (abox);
 
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_box_pack_start (GTK_BOX (abox), table, TRUE, TRUE, 0);
-      gtk_widget_show (table);
-      
-      label = gtk_label_new (_("Width: "));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-			GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
+      default_size_sizeentry = gimp_size_entry_new (2, default_units, "%p",
+						    FALSE, TRUE, 75,
+						    GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				      0, default_xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				      1, default_yresolution, FALSE);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 0, 1, 32767);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 1, 1, 32767);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0,
+				  default_width);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1,
+				  default_height);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				    _("Width"), 0, 1, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				    _("Height"), 0, 2, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				    _("Pixels"), 1, 4, 0.0);
+      /*      gtk_container_set_border_width (GTK_CONTAINER (default_size_sizeentry), 2); */
+      gtk_box_pack_start (GTK_BOX (abox), default_size_sizeentry, TRUE, TRUE, 0);
+      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "unit_changed",
+			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "value_changed",
+			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "refval_changed",
+			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+      gtk_widget_show (default_size_sizeentry);
 
-      label = gtk_label_new (_("Height: "));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-			GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-      
-      adj = (GtkAdjustment *) gtk_adjustment_new (default_width, 1.0,
-                                                  32767.0, 1.0, 50.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_widget_set_usize (spinbutton, 50, 0);
-      gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
-                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &default_width);
-      gtk_widget_show (spinbutton);
+      frame = gtk_frame_new (_("Default image resolution and resolution unit"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
 
-      adj = (GtkAdjustment *) gtk_adjustment_new (default_height, 1.0,
-                                                  32767.0, 1.0, 50.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 50, 0);
-      gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-			  (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &default_height);
-      gtk_widget_show (spinbutton);
+      abox = gtk_vbox_new (FALSE, 2);
+      gtk_container_border_width (GTK_CONTAINER (abox), 1);
+      gtk_container_add (GTK_CONTAINER (frame), abox);
+      gtk_widget_show (abox);
+
+      default_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+
+      default_resolution_sizeentry =
+	gimp_size_entry_new (2, default_resolution_units, "%s", FALSE, TRUE, 75,
+			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1e-5, 32767);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1e-5, 32767);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, default_xresolution);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, default_yresolution);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("Horizontal"), 0, 1, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("Vertical"), 0, 2, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("dpi"), 1, 3, 0.0);
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("pixels per "), 2, 3, 0.0);
+      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+			  "unit_changed",
+			  (GtkSignalFunc)file_prefs_default_resolution_callback,
+			  default_resolution_force_equal);
+      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+			  "value_changed",
+			  (GtkSignalFunc)file_prefs_default_resolution_callback,
+			  default_resolution_force_equal);
+      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+			  "refval_changed",
+			  (GtkSignalFunc)file_prefs_default_resolution_callback,
+			  default_resolution_force_equal);
+      gtk_box_pack_start (GTK_BOX (abox), default_resolution_sizeentry,
+			  TRUE, TRUE, 0);
+      gtk_widget_show (default_resolution_sizeentry);
+
+      gtk_table_attach_defaults (GTK_TABLE (default_resolution_sizeentry), 
+				 default_resolution_force_equal, 1, 3, 3, 4);
+      if (ABS (default_xresolution - default_yresolution) < 1e-5)
+	gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (default_resolution_force_equal),
+				      TRUE);
+      gtk_widget_show (default_resolution_force_equal);
 
       frame = gtk_frame_new (_("Default image type"));
-      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
       radio_box = gtk_vbox_new (FALSE, 1);
@@ -1047,7 +1181,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
       button = gtk_radio_button_new_with_label (NULL, _("RGB"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
       if (default_type == RGB)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -1057,7 +1191,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
       button = gtk_radio_button_new_with_label (group, _("Grayscale"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
       if (last_type == GRAY) 
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -1069,6 +1203,23 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
       
+      label = gtk_label_new (_("File"));
+      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+
+      /* Display page */
+      out_frame = gtk_frame_new (_("Display settings"));
+      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
+      gtk_widget_show (out_frame);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
+      gtk_widget_show (vbox);
+
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       label = gtk_label_new (_("Preview size: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -1085,7 +1236,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	}
       optionmenu = gtk_option_menu_new ();
       gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-      gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
       gtk_widget_show (optionmenu);
       for (i = 0; i < npreview_sizes; i++)
 	if (preview_size==preview_sizes[i].size)
@@ -1094,14 +1245,14 @@ file_pref_cmd_callback (GtkWidget *widget,
       button = gtk_check_button_new_with_label(_("Cubic interpolation"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				    cubic_interpolation);
-      gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &cubic_interpolation);
       gtk_widget_show (button);
 
       hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       frame = gtk_frame_new (_("Transparency Type"));
@@ -1118,7 +1269,7 @@ file_pref_cmd_callback (GtkWidget *widget,
         {
 	  button = gtk_radio_button_new_with_label (group, gettext(transparencies[i]));
           group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-          gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+          gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
           gtk_object_set_user_data (GTK_OBJECT (button),
 				    (gpointer) ((long) transparency_vals[i]));
           if (transparency_vals[i] == transparency_type)
@@ -1142,7 +1293,7 @@ file_pref_cmd_callback (GtkWidget *widget,
         {
           button = gtk_radio_button_new_with_label (group, gettext(checks[i]));
           group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-          gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+          gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
           gtk_object_set_user_data (GTK_OBJECT (button),
 				    (gpointer) ((long) check_vals[i]));
           if (check_vals[i] == transparency_size)
@@ -1428,8 +1579,9 @@ file_pref_cmd_callback (GtkWidget *widget,
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &num_processors);
       gtk_widget_show (num_processors_spinbutton);
+#else
+      num_processors_spinbutton = NULL;
 #endif /* ENABLE_MP */
-
 
       button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
@@ -1604,43 +1756,48 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (abox), vbox);
       gtk_widget_show (vbox);
 
-      resolution_force_equal = gtk_check_button_new_with_label (_("Force equal horizontal and vertical resolutions"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (resolution_force_equal),
-				    TRUE);
+      monitor_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
 
-      resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
+      monitor_resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
 						  FALSE, TRUE, 75,
 						  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 					     0, 1, 32767);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 					     1, 1, 32767);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 0,
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0,
 				  monitor_xres);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_sizeentry), 1,
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1,
 				  monitor_yres);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 				    _("Horizontal"), 0, 1, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 				    _("Vertical"), 0, 2, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 				    _("dpi"), 1, 3, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (resolution_sizeentry),
+      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
 				    _("pixels per "), 2, 3, 0.0);
-      gtk_signal_connect (GTK_OBJECT (resolution_sizeentry), "value_changed",
-			  (GtkSignalFunc)file_prefs_resolution_callback,
-			  resolution_force_equal);
-      gtk_signal_connect (GTK_OBJECT (resolution_sizeentry), "refval_changed",
-			  (GtkSignalFunc)file_prefs_resolution_callback,
-			  resolution_force_equal);
-      gtk_box_pack_start (GTK_BOX (vbox), resolution_sizeentry, TRUE, TRUE, 0);
-      gtk_widget_show (resolution_sizeentry);
+      gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
+			  "value_changed",
+			  (GtkSignalFunc)file_prefs_monitor_resolution_callback,
+			  monitor_resolution_force_equal);
+      gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
+			  "refval_changed",
+			  (GtkSignalFunc)file_prefs_monitor_resolution_callback,
+			  monitor_resolution_force_equal);
+      gtk_box_pack_start (GTK_BOX (vbox), monitor_resolution_sizeentry,
+			  TRUE, TRUE, 0);
+      gtk_widget_show (monitor_resolution_sizeentry);
       
-      gtk_box_pack_start (GTK_BOX (vbox), resolution_force_equal, TRUE, TRUE, 0);
-      gtk_widget_show (resolution_force_equal);
-      
-      gtk_widget_set_sensitive (resolution_sizeentry, !using_xserver_resolution);
-      gtk_widget_set_sensitive (resolution_force_equal,
+      gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
+				    TRUE);
+      gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
+				 monitor_resolution_force_equal, 1, 3, 3, 4);
+      gtk_widget_show (monitor_resolution_force_equal);
+
+      gtk_widget_set_sensitive (monitor_resolution_sizeentry,
+				!using_xserver_resolution);
+      gtk_widget_set_sensitive (monitor_resolution_force_equal,
 				!using_xserver_resolution);
       
       label = gtk_label_new (_("Monitor"));

@@ -28,7 +28,10 @@
 .\" Sat Feb 13 23:47:36 GMT 1999 Austin Donnelly <austin@gimp.org>
 .\"   * added section on path expansion, and renamed to gimprc.5.in
 .\"
-.TH GIMPRC 5 "13 Jan 1999" "Version 1.1.2"
+.\" Wed Mar  3 13:09:52 MET 1999 Sven Neumann <sven@gimp.org>
+.\"   * reflect the changes that were made to the resolution stuff
+.\"
+.TH GIMPRC 5 "3 Wed 1999" "Version 1.1.2"
 .SH NAME
 gimprc \- gimp configuration file
 .SH DESCRIPTION
@@ -283,10 +286,6 @@ command or shift+control+s.
 .I dont-show-statusbar BOOLEAN
 Negated version of show-statusbar.
 .TP
-.I ruler-units RULERUNIT
-Set the ruler units when not in dot-for-dot mode.  The units of rulers
-can be one of pixels, inches or centimeters.  The default is pixels.
-.TP
 .I auto-save BOOLEAN
 Auto saving is not yet implemented! Nothing will be auto-saved, no
 matter how you set this.
@@ -342,11 +341,14 @@ Set the default image size in the File/New dialog.
 .I default-image-type IMAGETYPE
 Set the default image type in the File/New dialog.
 .TP
-.I default-resolution INT
-Set the default image resolution in the File/New dialog.
+.I default-xresolution FLOAT
+Set the default image width resolution in the File/New dialog.
+.TP
+.I default-yresolution FLOAT
+Set the default image height resolution in the File/New dialog.
 .TP
 .I default-resolution-units RULERUNIT
-Set the units the default-resolution setting is in.
+Set the units the default-resolution settings are in.
 .TP
 .I monitor-xresolution FLOAT
 Set the monitor's horizontal resolution, in dots per inch.  If set to

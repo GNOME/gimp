@@ -154,10 +154,25 @@
 #  or shift+control+r
 # (dont-show-rulers)
 
-# Ruler units
-#  The units of rulers can be one of: (pixels inches centimeters)
-#  The default is pixels
-(ruler-units pixels)
+# Default units
+#  Will be used for ruler & coordinate display
+#  The units can be one of:
+#  (inches centimeters points picas) plus those in your user units database
+#  The default is inches
+(default-units inches)
+
+# Default Resolution units
+#  This is used to specify the resolution of a new image
+#  The units for the resolution can be one of:
+#  (inches centimeters points picas) plus those in your user units database
+#  The default is inches
+(default-resolution-units inches)
+
+# Default Resolution
+#  This is the default resolution of a new image in dpi
+#  The default is 72.0 dpi in both x and y direction
+(default-xresolution 72.0)
+(default-yresolution 72.0)
 
 # Controlling statusbar visibility
 #  The default behavior is to show the statusbar.

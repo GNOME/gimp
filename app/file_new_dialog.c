@@ -57,14 +57,6 @@ static   GUnit        last_unit = UNIT_INCH;
 static   GUnit        last_res_unit = UNIT_INCH;
 static   gboolean     last_new_image = TRUE;
 
-/* these are temps that should be set in gimprc eventually */
-/*  FIXME */
-static   float        default_xresolution = 72;
-static   float        default_yresolution = 72;
-static   GUnit        default_unit = UNIT_INCH;
-
-static   GUnit        default_res_unit = UNIT_INCH;
-
 
 static int new_dialog_run;
 extern TileManager *global_buf;
@@ -242,6 +234,13 @@ file_new_resolution_callback (GtkWidget *widget,
 	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0, xres);
 	    }
 	}
+      else
+	{
+	  if (new_xres != xres)
+	    xres = new_xres;
+	  if (new_yres != yres)
+	    yres = new_yres;
+	}
     }
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
 				  xres,
@@ -268,18 +267,15 @@ file_new_cmd_callback (GtkWidget           *widget,
   GtkWidget *advanced_button;
   GSList *group;
 
-  /* this value is from gimprc.h */
-  default_res_unit = UNIT_INCH; /* ruler_units; */
-
   if(!new_dialog_run)
     {
       last_width = default_width;
       last_height = default_height;
       last_type = default_type;
-      last_xresolution = default_xresolution;  /* this isnt set in gimprc yet */
-      last_yresolution = default_yresolution;  /* this isnt set in gimprc yet */
-      last_unit = default_unit;  /* not in gimprc either, inches for now */
-      last_res_unit = default_res_unit;
+      last_xresolution = default_xresolution;  /* these values are taken */
+      last_yresolution = default_yresolution;  /* from gimprc            */
+      last_unit = default_units;
+      last_res_unit = default_resolution_units;
 
       new_dialog_run = 1;  
     }

@@ -20,6 +20,7 @@
 
 #include <glib.h>
 #include "procedural_db.h"
+#include "libgimp/gimpunit.h"
 
 /*  global gimprc variables  */
 extern char *    plug_in_path;
@@ -52,15 +53,16 @@ extern int       allow_resize_windows;
 extern int       no_cursor_updating;
 extern int       preview_size;
 extern int       show_rulers;
-extern int       ruler_units;
+extern GUnit     default_units;
 extern int       show_statusbar;
 extern int       auto_save;
 extern int       cubic_interpolation;
 extern int       confirm_on_close;
 extern int       default_width, default_height;
 extern int       default_type;
-extern int       default_resolution;
-extern int       default_resolution_units;
+extern GUnit     default_resolution_units;
+extern float     default_xresolution;
+extern float     default_yresolution;
 extern int       save_session_info;
 extern int       save_device_status;
 extern int       always_restore_session;

@@ -1,3 +1,17 @@
+Wed Mar  3 13:24:00 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* gimprc.5.in
+	* gimprc.in
+	* libgimp/gimpunit.c
+	* libgimp/gimpunit.h
+	* app/file_new_dialog.c
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/preferences_dialog.c: Hopefully synced the work on 
+	real-world-units by applying (most of) the patches Michael
+	Natterer has provided. Fixed a few minor and cosmetic bugs 
+	in those patches.
+
 Tue Mar  2 01:24:41 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am
