@@ -1,3 +1,15 @@
+2004-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/flarefx.c: cleaned up and simplified the
+	FlareCenter code even more.
+
+	* plug-ins/common/nova.c: did the same changes for the NovaCenter
+	stuff.
+
+	Also added code which sets an appropriate cursor on "realize" to
+	fix bug #90519, but GimpPreview currently prevents this from
+	working correctly...
+
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/widgets-enums.[ch]: changed the description for

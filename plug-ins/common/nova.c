@@ -71,19 +71,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef RCSID
-static char rcsid[] = "$Id$";
-#endif
 
 #define ENTRY_WIDTH      50
 #define SCALE_WIDTH     125
-#define TILE_CACHE_SIZE  16
-
-#define PREVIEW   0x1
-#define CURSOR    0x2
-#define ALL       0xf
-
-static gboolean   show_cursor = TRUE;
 
 typedef struct
 {
@@ -99,47 +89,43 @@ typedef struct
 typedef struct
 {
   GimpDrawable *drawable;
-  gint          dwidth;
-  gint          dheight;
-  gint          bpp;
-  GtkObject    *xadj;
-  GtkObject    *yadj;
-  gint          cursor;
+  GimpPreview  *preview;
+  GtkWidget    *coords;
+  gint          cursor_drawn;
   gint          curx, cury;              /* x,y of cursor in preview */
   gint          oldx, oldy;
-  gboolean      in_call;
 } NovaCenter;
 
-GtkWidget  *preview;
 
 /* Declare a local function.
  */
-static void        query (void);
-static void        run   (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void        query                         (void);
+static void        run                           (const gchar      *name,
+                                                  gint              nparams,
+                                                  const GimpParam  *param,
+                                                  gint             *nreturn_vals,
+                                                  GimpParam       **return_vals);
 
-static void        nova                    (GimpDrawable *drawable,
-                                            GimpPreview  *preview);
+static void        nova                          (GimpDrawable     *drawable,
+                                                  GimpPreview      *preview);
 
-static gboolean    nova_dialog             (GimpDrawable *drawable);
+static gboolean    nova_dialog                   (GimpDrawable     *drawable);
 
-static GtkWidget * nova_center_create            (GimpDrawable  *drawable);
-static void        nova_center_destroy           (GtkWidget     *widget,
-                                                  gpointer       data);
-static void        nova_center_draw              (NovaCenter    *center,
-                                                  gint           update);
-static void        nova_center_adjustment_update (GtkAdjustment *widget,
-                                                  gpointer       data);
-static void        nova_center_cursor_update     (NovaCenter    *center);
-static gboolean    nova_center_preview_expose    (GtkWidget     *widget,
-                                                  GdkEvent      *event,
-                                                  gpointer       data);
-static gboolean    nova_center_preview_events    (GtkWidget     *widget,
-                                                  GdkEvent      *event,
-                                                  gpointer       data);
+static GtkWidget * nova_center_create            (GimpDrawable     *drawable,
+                                                  GimpPreview      *preview);
+static void        nova_center_cursor_draw       (NovaCenter       *center);
+static void        nova_center_coords_update     (GimpSizeEntry    *coords,
+                                                  NovaCenter       *center);
+static void        nova_center_cursor_update     (NovaCenter       *center);
+static void        nova_center_preview_realize   (GtkWidget        *widget,
+                                                  NovaCenter       *center);
+static gboolean    nova_center_preview_expose    (GtkWidget        *widget,
+                                                  GdkEvent         *event,
+                                                  NovaCenter       *center);
+static gboolean    nova_center_preview_events    (GtkWidget        *widget,
+                                                  GdkEvent         *event,
+                                                  NovaCenter       *center);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -158,6 +144,8 @@ static NovaValues pvals =
   0,                        /* random hue */
   TRUE                      /* preview */
 };
+
+static gboolean show_cursor = TRUE;
 
 
 MAIN ()
@@ -194,17 +182,15 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_nova",
-                             /* don't translate '<Image>' */
-                             N_("<Image>/Filters/Light Effects"));
+  gimp_plugin_menu_register ("plug_in_nova", "<Image>/Filters/Light Effects");
 }
 
 static void
-run (const gchar       *name,
-     gint               nparams,
-     const GimpParam   *param,
-     gint              *nreturn_vals,
-     GimpParam        **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -274,7 +260,8 @@ run (const gchar       *name,
           gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_progress_init (_("Rendering SuperNova..."));
-          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          gimp_tile_cache_ntiles (2 *
+                                  (drawable->width / gimp_tile_width () + 1));
 
           nova (drawable, 0);
 
@@ -306,10 +293,10 @@ nova_dialog (GimpDrawable *drawable)
 {
   GtkWidget  *dialog;
   GtkWidget  *main_vbox;
+  GtkWidget  *preview;
+  GtkWidget  *frame;
   GtkWidget  *table;
   GtkWidget  *button;
-  GtkWidget  *frame;
-  NovaCenter *center;
   GtkObject  *adj;
   gboolean    run;
 
@@ -330,24 +317,16 @@ nova_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   preview = gimp_aspect_preview_new (drawable, &pvals.preview);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_add_events (GIMP_PREVIEW (preview)->area,
                          GDK_POINTER_MOTION_MASK);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (nova),
                             drawable);
 
-  frame = nova_center_create (drawable);
-  center = g_object_get_data (G_OBJECT (frame), "center");
-
-  g_signal_connect_after (GIMP_PREVIEW (preview)->area, "expose_event",
-                          G_CALLBACK (nova_center_preview_expose),
-                          center);
-  g_signal_connect (GIMP_PREVIEW (preview)->area, "event",
-                    G_CALLBACK (nova_center_preview_events),
-                    center);
-
+  frame = nova_center_create (drawable, GIMP_PREVIEW (preview));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -436,91 +415,62 @@ nova_dialog (GimpDrawable *drawable)
  * Create new CenterFrame, and return it (GtkFrame).
  */
 static GtkWidget *
-nova_center_create (GimpDrawable *drawable)
+nova_center_create (GimpDrawable *drawable,
+                    GimpPreview  *preview)
 {
   NovaCenter *center;
   GtkWidget  *frame;
-  GtkWidget  *table;
-  GtkWidget  *label;
-  GtkWidget  *spinbutton;
   GtkWidget  *check;
+  gint32      image_ID;
+  gdouble     res_x;
+  gdouble     res_y;
 
-  center = g_new (NovaCenter, 1);
-  center->drawable = drawable;
-  center->dwidth   = gimp_drawable_width (drawable->drawable_id);
-  center->dheight  = gimp_drawable_height (drawable->drawable_id);
-  center->bpp      = gimp_drawable_bpp (drawable->drawable_id);
+  center = g_new0 (NovaCenter, 1);
 
-  if (gimp_drawable_has_alpha (drawable->drawable_id))
-    center->bpp--;
-
-  center->cursor   = FALSE;
-  center->curx     = 0;
-  center->cury     = 0;
-  center->oldx     = 0;
-  center->oldy     = 0;
-  center->in_call  = TRUE;  /* to avoid side effects while initialization */
+  center->drawable     = drawable;
+  center->preview      = preview;
+  center->cursor_drawn = FALSE;
+  center->curx         = 0;
+  center->cury         = 0;
+  center->oldx         = 0;
+  center->oldy         = 0;
 
   frame = gimp_frame_new (_("Center of SuperNova"));
 
-  g_signal_connect (frame, "destroy",
-                    G_CALLBACK (nova_center_destroy),
+  g_signal_connect_swapped (frame, "destroy",
+                            G_CALLBACK (g_free),
+                            center);
+
+  image_ID = gimp_drawable_get_image (drawable->drawable_id);
+  gimp_image_get_resolution (image_ID, &res_x, &res_y);
+
+  center->coords = gimp_coordinates_new (GIMP_UNIT_PIXEL, "%p", TRUE, TRUE, -1,
+                                         GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         FALSE, FALSE,
+
+                                         _("_X:"), pvals.xcenter, res_x,
+                                         - (gdouble) drawable->width,
+                                         2 * drawable->width,
+                                         0, drawable->width,
+
+                                         _("_Y:"), pvals.ycenter, res_y,
+                                         - (gdouble) drawable->height,
+                                         2 * drawable->height,
+                                         0, drawable->height);
+
+  gtk_table_set_row_spacing (GTK_TABLE (center->coords), 1, 12);
+  gtk_container_add (GTK_CONTAINER (frame), center->coords);
+  gtk_widget_show (center->coords);
+
+  g_signal_connect (center->coords, "value_changed",
+                    G_CALLBACK (nova_center_coords_update),
+                    center);
+  g_signal_connect (center->coords, "refval_changed",
+                    G_CALLBACK (nova_center_coords_update),
                     center);
 
-  table = gtk_table_new (2, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  label = gtk_label_new_with_mnemonic (_("_X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-                   GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  spinbutton =
-    gimp_spin_button_new (&center->xadj,
-                          pvals.xcenter, G_MININT, G_MAXINT,
-                          1, 10, 10, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (spinbutton);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_object_set_data (G_OBJECT (center->xadj), "center", center);
-
-  g_signal_connect (center->xadj, "value_changed",
-                    G_CALLBACK (nova_center_adjustment_update),
-                    &pvals.xcenter);
-
-  label = gtk_label_new_with_mnemonic (_("_Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  spinbutton =
-    gimp_spin_button_new (&center->yadj,
-                          pvals.ycenter, G_MININT, G_MAXINT,
-                          1, 10, 10, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (spinbutton);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_object_set_data (G_OBJECT (center->yadj), "center", center);
-
-  g_signal_connect (center->yadj, "value_changed",
-                    G_CALLBACK (nova_center_adjustment_update),
-                    &pvals.ycenter);
-
-  g_object_set_data (G_OBJECT (frame), "center", center);
-
-  gtk_widget_show (frame);
-
   check = gtk_check_button_new_with_mnemonic (_("S_how cursor"));
-  gtk_table_attach (GTK_TABLE (table), check, 0, 4, 1, 2,
+  gtk_table_attach (GTK_TABLE (center->coords), check, 0, 5, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
   gtk_widget_show (check);
@@ -532,20 +482,19 @@ nova_center_create (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
+  g_signal_connect (preview->area, "realize",
+                    G_CALLBACK (nova_center_preview_realize),
+                    center);
+  g_signal_connect_after (preview->area, "expose_event",
+                          G_CALLBACK (nova_center_preview_expose),
+                          center);
+  g_signal_connect (preview->area, "event",
+                    G_CALLBACK (nova_center_preview_events),
+                    center);
+
   nova_center_cursor_update (center);
 
-  center->cursor  = FALSE;   /* Make sure that the cursor has not been drawn */
-  center->in_call = FALSE;   /* End of initialization */
-
   return frame;
-}
-
-static void
-nova_center_destroy (GtkWidget *widget,
-                     gpointer   data)
-{
-  NovaCenter *center = data;
-  g_free (center);
 }
 
 /*
@@ -555,156 +504,156 @@ nova_center_destroy (GtkWidget *widget,
  */
 
 static void
-nova_center_draw (NovaCenter *center,
-                  gint        update)
+nova_center_cursor_draw (NovaCenter *center)
 {
-  GtkWidget *prvw = GIMP_PREVIEW (preview)->area;
+  GtkWidget *prvw = center->preview->area;
   gint       width, height;
 
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  gimp_preview_get_size (center->preview, &width, &height);
 
-  if (update & PREVIEW)
-    {
-      center->cursor = FALSE;
-    }
+  gdk_gc_set_function (prvw->style->black_gc, GDK_INVERT);
 
-  if (update & CURSOR)
+  if (show_cursor)
     {
-      gdk_gc_set_function (prvw->style->black_gc, GDK_INVERT);
-      if (show_cursor)
+      if (center->cursor_drawn)
         {
-          if (center->cursor)
-            {
-              gdk_draw_line (prvw->window,
-                             prvw->style->black_gc,
-                             center->oldx, 1, center->oldx,
-                             height - 1);
-              gdk_draw_line (prvw->window,
-                             prvw->style->black_gc,
-                             1, center->oldy,
-                             width - 1, center->oldy);
-            }
-
           gdk_draw_line (prvw->window,
                          prvw->style->black_gc,
-                         center->curx, 1, center->curx,
+                         center->oldx, 1, center->oldx,
                          height - 1);
           gdk_draw_line (prvw->window,
                          prvw->style->black_gc,
-                         1, center->cury,
-                         width - 1, center->cury);
+                         1, center->oldy,
+                         width - 1, center->oldy);
         }
 
-      /* current position of cursor is updated */
-      center->oldx = center->curx;
-      center->oldy = center->cury;
-      center->cursor = TRUE;
-      gdk_gc_set_function (prvw->style->black_gc, GDK_COPY);
+      gdk_draw_line (prvw->window,
+                     prvw->style->black_gc,
+                     center->curx, 1, center->curx,
+                     height - 1);
+      gdk_draw_line (prvw->window,
+                     prvw->style->black_gc,
+                     1, center->cury,
+                     width - 1, center->cury);
     }
+
+  /* current position of cursor is updated */
+  center->oldx         = center->curx;
+  center->oldy         = center->cury;
+  center->cursor_drawn = TRUE;
+
+  gdk_gc_set_function (prvw->style->black_gc, GDK_COPY);
 }
 
 /*
  *  CenterFrame entry callback
  */
-
 static void
-nova_center_adjustment_update (GtkAdjustment *adjustment,
-                               gpointer       data)
+nova_center_coords_update (GimpSizeEntry *coords,
+                           NovaCenter    *center)
 {
-  NovaCenter *center;
+  pvals.xcenter = gimp_size_entry_get_refval (coords, 0);
+  pvals.ycenter = gimp_size_entry_get_refval (coords, 1);
 
-  gimp_int_adjustment_update (adjustment, data);
+  nova_center_cursor_update (center);
+  nova_center_cursor_draw (center);
 
-  center = g_object_get_data (G_OBJECT (adjustment), "center");
-
-  if (!center->in_call)
-    {
-      nova_center_cursor_update (center);
-      nova_center_draw (center, CURSOR);
-      nova (center->drawable, GIMP_PREVIEW (preview));
-    }
+  gimp_preview_invalidate (center->preview);
 }
 
 /*
  *  Update the cross cursor's  coordinates accoding to pvals.[xy]center
  *  but not redraw it
  */
-
 static void
 nova_center_cursor_update (NovaCenter *center)
 {
   gint width, height;
 
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
-  center->curx = pvals.xcenter * width / center->dwidth;
-  center->cury = pvals.ycenter * height / center->dheight;
+  gimp_preview_get_size (center->preview, &width, &height);
+
+  center->curx = pvals.xcenter * width  / center->drawable->width;
+  center->cury = pvals.ycenter * height / center->drawable->height;
 
   center->curx = CLAMP (center->curx, 0, width - 1);
   center->cury = CLAMP (center->cury, 0, height - 1);
 }
 
 /*
+ *  Set the preview area'a cursor on realize
+ */
+static void
+nova_center_preview_realize (GtkWidget  *widget,
+                             NovaCenter *center)
+{
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_HAND2);
+
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
+}
+
+/*
  *    Handle the expose event on the preview
  */
 static gboolean
-nova_center_preview_expose (GtkWidget *widget,
-                            GdkEvent  *event,
-                            gpointer   data)
+nova_center_preview_expose (GtkWidget  *widget,
+                            GdkEvent   *event,
+                            NovaCenter *center)
 {
-  nova_center_cursor_update ((NovaCenter *) data);
-  nova_center_draw ((NovaCenter*) data, ALL);
+  center->cursor_drawn = FALSE;
+
+  nova_center_cursor_update (center);
+  nova_center_cursor_draw (center);
+
   return FALSE;
 }
 
 /*
  *    Handle other events on the preview
  */
-
 static gboolean
-nova_center_preview_events (GtkWidget *widget,
-                            GdkEvent  *event,
-                            gpointer   data)
+nova_center_preview_events (GtkWidget  *widget,
+                            GdkEvent   *event,
+                            NovaCenter *center)
 {
-  NovaCenter     *center;
-  GdkEventButton *bevent;
-  GdkEventMotion *mevent;
-  gint            width, height;
+  gint width, height;
 
-  center = (NovaCenter *) data;
-
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  gimp_preview_get_size (center->preview, &width, &height);
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      break;
+    case GDK_MOTION_NOTIFY:
+      if (! (((GdkEventMotion *) event)->state & GDK_BUTTON1_MASK))
+        break;
 
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-      center->curx = bevent->x;
-      center->cury = bevent->y;
-      goto mouse;
+      gtk_widget_get_pointer (widget, &center->curx, &center->cury);
 
-    case GDK_MOTION_NOTIFY:
-      mevent = (GdkEventMotion *) event;
-      if (!(mevent->state & GDK_BUTTON1_MASK))
-        break;
-      center->curx = mevent->x;
-      center->cury = mevent->y;
-    mouse:
-      nova_center_draw (center, CURSOR);
-      center->in_call = TRUE;
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (center->xadj),
-                                center->curx * center->dwidth / width);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (center->yadj),
-                                center->cury * center->dheight / height);
-      center->in_call = FALSE;
-      nova (center->drawable, GIMP_PREVIEW (preview));
+      nova_center_cursor_draw (center);
+
+      g_signal_handlers_block_by_func (center->coords,
+                                       nova_center_coords_update,
+                                       center);
+
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 0,
+                                  center->curx * center->drawable->width /
+                                  width);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 1,
+                                  center->cury * center->drawable->height /
+                                  height);
+
+      g_signal_handlers_unblock_by_func (center->coords,
+                                         nova_center_coords_update,
+                                         center);
+
+      nova_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
       break;
 
     default:
       break;
     }
+
   return FALSE;
 }
 
