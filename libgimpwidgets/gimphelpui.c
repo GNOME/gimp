@@ -145,8 +145,8 @@ gimp_standard_help_func (const gchar *help_id,
  **/
 void
 gimp_help_connect (GtkWidget    *widget,
-		   GimpHelpFunc  help_func,
-		   const gchar  *help_id,
+                   GimpHelpFunc  help_func,
+                   const gchar  *help_id,
                    gpointer      help_data)
 {
   static gboolean initialized = FALSE;
@@ -164,13 +164,13 @@ gimp_help_connect (GtkWidget    *widget,
         gtk_binding_set_by_class (g_type_class_peek (GTK_TYPE_WIDGET));
 
       gtk_binding_entry_add_signal (binding_set, GDK_F1, 0,
-				    "show_help", 1,
-				    GTK_TYPE_WIDGET_HELP_TYPE,
-				    GIMP_WIDGET_HELP_TYPE_HELP);
+                                    "show_help", 1,
+                                    GTK_TYPE_WIDGET_HELP_TYPE,
+                                    GIMP_WIDGET_HELP_TYPE_HELP);
       gtk_binding_entry_add_signal (binding_set, GDK_KP_F1, 0,
-				    "show_help", 1,
-				    GTK_TYPE_WIDGET_HELP_TYPE,
-				    GIMP_WIDGET_HELP_TYPE_HELP);
+                                    "show_help", 1,
+                                    GTK_TYPE_WIDGET_HELP_TYPE,
+                                    GIMP_WIDGET_HELP_TYPE_HELP);
 
       initialized = TRUE;
     }
@@ -202,8 +202,8 @@ gimp_help_connect (GtkWidget    *widget,
  **/
 void
 gimp_help_set_help_data (GtkWidget   *widget,
-			 const gchar *tooltip,
-			 const gchar *help_id)
+                         const gchar *tooltip,
+                         const gchar *help_id)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -303,8 +303,8 @@ gimp_help_get_help_data (GtkWidget  *widget,
 
 static gboolean
 gimp_help_callback (GtkWidget          *widget,
-		    GimpWidgetHelpType  help_type,
-		    GimpHelpFunc        help_func)
+                    GimpWidgetHelpType  help_type,
+                    GimpHelpFunc        help_func)
 {
   switch (help_type)
     {
@@ -320,11 +320,11 @@ gimp_help_callback (GtkWidget          *widget,
           if (tooltips_data && tooltips_data->tip_private)
             help_id = tooltips_data->tip_private;
           else
-            help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
+            help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
 
           help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 
-	  (* help_func) (help_id, help_data);
+          (* help_func) (help_id, help_data);
         }
       return TRUE;
 
@@ -400,7 +400,7 @@ gimp_context_help_button_press (GtkWidget      *widget,
     {
       gtk_grab_remove (widget);
       gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-				  bevent->time);
+                                  bevent->time);
       gtk_widget_destroy (widget);
 
       if (event_widget != widget)
