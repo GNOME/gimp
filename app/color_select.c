@@ -26,6 +26,8 @@
 #include "session.h"
 #include "color_area.h" /* for color_area_draw_rect */
 
+#include "libgimp/gimpintl.h"
+
 #define XY_DEF_WIDTH       240
 #define XY_DEF_HEIGHT      240
 #define Z_DEF_WIDTH        15
@@ -133,8 +135,8 @@ static ColorSelectFillUpdateProc update_procs[] =
 
 static ActionAreaItem action_items[2] =
 {
-  { "OK", color_select_ok_callback, NULL, NULL },
-  { "Cancel", color_select_cancel_callback, NULL, NULL },
+  { N_("OK"), color_select_ok_callback, NULL, NULL },
+  { N_("Cancel"), color_select_cancel_callback, NULL, NULL },
 };
 
 ColorSelectP
@@ -183,7 +185,7 @@ color_select_new (int                  r,
 
   csp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (csp->shell), "color_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (csp->shell), "Color Selection");
+  gtk_window_set_title (GTK_WINDOW (csp->shell), _("Color Selection"));
   gtk_window_set_policy (GTK_WINDOW (csp->shell), FALSE, FALSE, FALSE);
 
 
@@ -335,7 +337,7 @@ color_select_new (int                  r,
 		      csp);
   gtk_widget_show (csp->hex_entry);
 
-  label = gtk_label_new ("Hex Triplet:");
+  label = gtk_label_new (_("Hex Triplet:"));
   gtk_box_pack_end (GTK_BOX (hex_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -344,13 +346,13 @@ color_select_new (int                  r,
   action_items[1].user_data = csp;
   if (csp->wants_updates)
     {
-      action_items[0].label = "Close";
-      action_items[1].label = "Revert to Old Color";
+      action_items[0].label = _("Close");
+      action_items[1].label = _("Revert to Old Color");
     }
   else
     {
-      action_items[0].label = "OK";
-      action_items[1].label = "Cancel";
+      action_items[0].label = _("OK");
+      action_items[1].label = _("Cancel");
     }
   build_action_area (GTK_DIALOG (csp->shell), action_items, 2, 0);
 

@@ -30,6 +30,8 @@
 #include "interface.h"
 #include "actionarea.h"
 
+#include "libgimp/gimpintl.h"
+
 /* Bezier extensions made by Raphael FRANCOIS (fraph@ibm.net)
 
   BEZIER_EXTENDS VER 1.0 
@@ -435,7 +437,7 @@ bezier_select_button_press (Tool           *tool,
       break;
     case BEZIER_EDIT:
       if (!bezier_sel->closed)
-	fatal_error ("tried to edit on open bezier curve in edit selection");
+	fatal_error (_("tried to edit on open bezier curve in edit selection"));
 
       /* erase the handles */
       bezier_sel->draw = BEZIER_DRAW_HANDLES;
@@ -775,7 +777,7 @@ bezier_select_motion (Tool           *tool,
 	    }
 
 	  if (!anchor)
-	    fatal_error ("Encountered orphaned bezier control point");
+	    fatal_error (_("Encountered orphaned bezier control point"));
 
 	  if (opposite_control)
 	    {
@@ -1132,7 +1134,7 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
   for (i = 0; i < 4; i++)
     {
       if (!points)
-	fatal_error ("bad bezier segment");
+	fatal_error (_("bad bezier segment"));
 
       switch (space)
 	{
@@ -1149,7 +1151,7 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 	  geometry[i][1] = points->sy;
 	  break;
 	default:
-	  fatal_error ("unknown coordinate space: %d", space);
+	  fatal_error (_("unknown coordinate space: %d"), space);
 	  break;
 	}
 
@@ -1290,7 +1292,7 @@ bezier_convert (BezierSelect *bezier_sel,
   int i, j;
 
   if (!bezier_sel->closed)
-    fatal_error ("tried to convert an open bezier curve");
+    fatal_error (_("tried to convert an open bezier curve"));
 
   /* destroy previous mask */
   if (bezier_sel->mask)
@@ -1842,7 +1844,7 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
       pn_dlg = (PasteNamedDlg *) client_data;
 
       f = fopen(filename, "rb");
-      printf("reading %s\n", filename);
+      printf(_("reading %s\n"), filename);
       
       while(!feof(f))
 	{
@@ -1856,9 +1858,9 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 	    GString *s;
 	    
 	    fclose(f);
-	    s = g_string_new ("Open failed: ");
+	    s = g_string_new (_("Open failed: "));
 	    
-	    g_string_append (s, "Bezier Load");
+	    g_string_append (s, _("Bezier Load"));
 	    
 	    g_message (s->str);
 	      
@@ -1944,7 +1946,7 @@ static void file_cancel_callback(GtkWidget * widget, gpointer data)
 
 static void make_file_dlg(gpointer data) 
 {
-  file_dlg = gtk_file_selection_new ("Load/Store Bezier Curves");
+  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
   gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
 		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
@@ -1964,7 +1966,7 @@ static void load_callback(GtkWidget * widget, gpointer data)
       if (GTK_WIDGET_VISIBLE(file_dlg))
 	return;
     }
-  gtk_window_set_title(GTK_WINDOW (file_dlg), "Load Bezier Curves");
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Bezier Curves"));
   load_store = 1;
   gtk_widget_show (file_dlg);
 }
@@ -1981,7 +1983,7 @@ static void store_callback(GtkWidget * widget, gpointer data)
 	return;
     }
 
-  gtk_window_set_title(GTK_WINDOW (file_dlg), "Store Bezier Curves");
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Store Bezier Curves"));
   load_store = 0;
   gtk_widget_show (file_dlg);
 }
@@ -2061,8 +2063,8 @@ static void bezier_add_callback (GtkWidget *w,
 
   pn_dlg = (PasteNamedDlg *) client_data;
 
-  query_string_box ("Named Bezier Buffer", 
-		    "Enter a name for this buffer", 
+  query_string_box (_("Named Bezier Buffer"), 
+		    _("Enter a name for this buffer"), 
 		    NULL,
 		    new_bezier_buffer_callback, 
 		    pn_dlg);
@@ -2099,9 +2101,9 @@ void create_choice(GtkWidget *box)
     char *name;
     int value;
   } menu_items[] = {
-    {"Edit Curve", EXTEND_EDIT },
-    {"Add Point", EXTEND_ADD },
-    {"Remove Point", EXTEND_REMOVE},
+    {N_("Edit Curve"), EXTEND_EDIT },
+    {N_("Add Point"), EXTEND_ADD },
+    {N_("Remove Point"), EXTEND_REMOVE},
     { NULL, 0},
   };
 
@@ -2114,7 +2116,7 @@ void create_choice(GtkWidget *box)
   gtk_box_pack_start(GTK_BOX(box), hbox, TRUE, FALSE, 10);
   gtk_widget_show(hbox);
   
-  w = gtk_label_new("Mode :");
+  w = gtk_label_new(_("Mode :"));
   gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
   gtk_widget_show(w);
@@ -2143,13 +2145,13 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
   int i;
   static ActionAreaItem action_items[] =
   {
-    { "New", bezier_new_curve_callback, NULL, NULL },
-    { "Add", bezier_add_callback, NULL, NULL },
-    { "Replace", bezier_replace_callback, NULL, NULL },
-    { "Paste", bezier_buffer_paste_callback, NULL, NULL },
-    { "Delete", bezier_buffer_delete_callback, NULL, NULL },
-    { "Load", load_callback, NULL, NULL },
-    { "Save", store_callback, NULL, NULL }
+    { N_("New"), bezier_new_curve_callback, NULL, NULL },
+    { N_("Add"), bezier_add_callback, NULL, NULL },
+    { N_("Replace"), bezier_replace_callback, NULL, NULL },
+    { N_("Paste"), bezier_buffer_paste_callback, NULL, NULL },
+    { N_("Delete"), bezier_buffer_delete_callback, NULL, NULL },
+    { N_("Load"), load_callback, NULL, NULL },
+    { N_("Save"), store_callback, NULL, NULL }
   };
   PasteNamedDlg *pn_dlg;
   GtkWidget *vbox;
@@ -2168,7 +2170,7 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
 
   curPndlg = pn_dlg;
 
-  gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), "Paste Bezier Named Buffer");
+  gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), _("Paste Bezier Named Buffer"));
   gtk_window_position (GTK_WINDOW (pn_dlg->shell), GTK_WIN_POS_MOUSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
@@ -2176,7 +2178,7 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pn_dlg->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new ("Select a buffer to operate:");
+  label = gtk_label_new (_("Select a buffer to operate:"));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -2242,7 +2244,7 @@ add_point_on_segment (BezierSelect     *bezier_sel,
   for (i = 0; i < 4; i++)
     {
       if (!points)
-	fatal_error ("bad bezier segment");
+	fatal_error (_("bad bezier segment"));
 
       switch (space)
 	{
@@ -2259,7 +2261,7 @@ add_point_on_segment (BezierSelect     *bezier_sel,
 	  geometry[i][1] = points->sy;
 	  break;
 	default:
-	  fatal_error ("unknown coordinate space: %d", space);
+	  fatal_error (_("unknown coordinate space: %d"), space);
 	  break;
 	}
 

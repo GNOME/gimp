@@ -41,6 +41,8 @@
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 #define    SQR(x) ((x) * (x))
 
 #ifndef M_PI
@@ -105,12 +107,12 @@ transform_reset_callback (GtkWidget *w,
 static ActionAreaItem action_items[2] = 
 {
   { NULL, transform_ok_callback, NULL, NULL },
-  { "Reset", transform_reset_callback, NULL, NULL },
+  { N_("Reset"), transform_reset_callback, NULL, NULL },
 };
 
 static char *action_labels[4] =
 {
-  "Rotate", "Scale", "Shear", "Transform"
+  N_("Rotate"), N_("Scale"), N_("Shear"), N_("Transform")
 };
 
 void
@@ -217,7 +219,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	  {
 	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
 	      {
-		g_message ("Transformations do not work on\nlayers that contain layer masks.");
+		g_message (_("Transformations do not work on\nlayers that contain layer masks."));
 		tool->state = INACTIVE;
 		return;
 	      }
@@ -1066,7 +1068,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 	{
 	  /*  normalize homogeneous coords  */
 	  if (tw == 0.0)
-	    g_message ("homogeneous coordinate = 0...\n");
+	    g_message (_("homogeneous coordinate = 0...\n"));
 	  else if (tw != 1.0)
 	    {
 	      ttx = tx / tw;

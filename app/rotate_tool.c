@@ -33,6 +33,8 @@
 
 #include "tile_manager_pvt.h"
 
+#include "libgimp/gimpintl.h"
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
@@ -81,10 +83,10 @@ rotate_tool_transform (tool, gdisp_ptr, state)
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new ("Rotation Information");
-	  info_dialog_add_field (transform_info, "Angle: ", angle_buf, (GtkSignalFunc) rotate_angle_changed, tool);
-	  info_dialog_add_field (transform_info, "Center X: ", center_x_buf, (GtkSignalFunc) rotate_center_x_changed, tool);
-	  info_dialog_add_field (transform_info, "Center Y: ", center_y_buf, (GtkSignalFunc) rotate_center_y_changed, tool);
+	  transform_info = info_dialog_new (_("Rotation Information"));
+	  info_dialog_add_field (transform_info, _("Angle: "), angle_buf, (GtkSignalFunc) rotate_angle_changed, tool);
+	  info_dialog_add_field (transform_info, _("Center X: "), center_x_buf, (GtkSignalFunc) rotate_center_x_changed, tool);
+	  info_dialog_add_field (transform_info, _("Center Y: "), center_y_buf, (GtkSignalFunc) rotate_center_y_changed, tool);
 	}
 
       transform_core->trans_info[ANGLE]      = 0.0;
@@ -376,19 +378,19 @@ ProcArg rotate_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the affected drawable"
+    N_("the affected drawable")
   },
   { PDB_INT32,
     "interpolation",
-    "whether to use interpolation"
+    N_("whether to use interpolation")
   },
   { PDB_FLOAT,
     "angle",
-    "the angle of rotation (radians)",
+    N_("the angle of rotation (radians)"),
   }
 };
 
@@ -396,15 +398,15 @@ ProcArg rotate_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    "the rotated drawable"
+    N_("the rotated drawable")
   }
 };
 
 ProcRecord rotate_proc =
 {
   "gimp_rotate",
-  "Rotate the specified drawable about its center through the specified angle",
-  "This tool rotates the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable.  The return value is the ID of the rotated drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and rotated drawable.",
+  N_("Rotate the specified drawable about its center through the specified angle"),
+  N_("This tool rotates the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable.  The return value is the ID of the rotated drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and rotated drawable."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

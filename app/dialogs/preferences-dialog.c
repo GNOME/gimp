@@ -48,6 +48,7 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
 
 typedef struct
 {
@@ -205,25 +206,25 @@ file_prefs_ok_callback (GtkWidget *widget,
 
   if (levels_of_undo < 0) 
     {
-      g_message ("Error: Levels of undo must be zero or greater.");
+      g_message (_("Error: Levels of undo must be zero or greater."));
       levels_of_undo = old_levels_of_undo;
       return;
     }
   if (marching_speed < 50)
     {
-      g_message ("Error: Marching speed must be 50 or greater.");
+      g_message (_("Error: Marching speed must be 50 or greater."));
       marching_speed = old_marching_speed;
       return;
     }
   if (default_width < 1)
     {
-      g_message ("Error: Default width must be one or greater.");
+      g_message (_("Error: Default width must be one or greater."));
       default_width = old_default_width;
       return;
     }
   if (default_height < 1)
     {
-      g_message ("Error: Default height must be one or greater.");
+      g_message (_("Error: Default height must be one or greater."));
       default_height = old_default_height;
       return;
     }  
@@ -430,7 +431,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gradient_path = save_gradient_path;
 
   if (restart_notification)
-    g_message ("You will need to restart GIMP for these changes to take effect.");
+    g_message (_("You will need to restart GIMP for these changes to take effect."));
   
   g_list_free (update);
   g_list_free (remove);
@@ -644,18 +645,18 @@ file_pref_cmd_callback (GtkWidget *widget,
   GSList *group;
   char *transparencies[] =
   {
-    "Light Checks",
-    "Mid-Tone Checks",
-    "Dark Checks",
-    "White Only",
-    "Gray Only",
-    "Black Only",
+    N_("Light Checks"),
+    N_("Mid-Tone Checks"),
+    N_("Dark Checks"),
+    N_("White Only"),
+    N_("Gray Only"),
+    N_("Black Only"),
   };
   char *checks[] =
   {
-    "Small Checks",
-    "Medium Checks",
-    "Large Checks",
+    N_("Small Checks"),
+    N_("Medium Checks"),
+    N_("Large Checks"),
   };
   int transparency_vals[] =
   {
@@ -677,32 +678,32 @@ file_pref_cmd_callback (GtkWidget *widget,
     int unit;
   } mem_size_units[] =
     {
-      {"Bytes", 1},
-      {"KiloBytes", 1024},
-      {"MegaBytes", (1024*1024)}
+      {N_("Bytes"), 1},
+      {N_("KiloBytes"), 1024},
+      {N_("MegaBytes"), (1024*1024)}
     };
   struct {
     char *label;
     char **mpath;
   } dirs[] =
     {
-      {"Temp dir:", &edit_temp_path},
-      {"Swap dir:", &edit_swap_path},
-      {"Brushes dir:", &edit_brush_path},
-      {"Gradients dir:", &edit_gradient_path},
-      {"Patterns dir:", &edit_pattern_path},
-      {"Palette dir:", &edit_palette_path},
-      {"Plug-in dir:", &edit_plug_in_path}
+      {N_("Temp dir:"), &edit_temp_path},
+      {N_("Swap dir:"), &edit_swap_path},
+      {N_("Brushes dir:"), &edit_brush_path},
+      {N_("Gradients dir:"), &edit_gradient_path},
+      {N_("Patterns dir:"), &edit_pattern_path},
+      {N_("Palette dir:"), &edit_palette_path},
+      {N_("Plug-in dir:"), &edit_plug_in_path}
     };
   struct {
     char *label;
     int size;
   } preview_sizes[] =
     {
-      {"None",0},
-      {"Small",32},
-      {"Medium",64},
-      {"Large",128}
+      {N_("None"),0},
+      {N_("Small"),32},
+      {N_("Medium"),64},
+      {N_("Large"),128}
     }; 
   int ntransparencies = sizeof (transparencies) / sizeof (transparencies[0]);
   int nchecks = sizeof (checks) / sizeof (checks[0]);
@@ -772,7 +773,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
       prefs_dlg = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (prefs_dlg), "Preferences");
+      gtk_window_set_title (GTK_WINDOW (prefs_dlg), _("Preferences"));
 
       /* handle the wm close signal */
       gtk_signal_connect (GTK_OBJECT (prefs_dlg), "delete_event",
@@ -782,7 +783,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (prefs_dlg)->action_area), 2);
       
       /* Action area */
-      button = gtk_button_new_with_label ("OK");
+      button = gtk_button_new_with_label (_("OK"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) file_prefs_ok_callback,
@@ -792,7 +793,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_grab_default (button);
       gtk_widget_show (button);
 
-      button = gtk_button_new_with_label ("Save");
+      button = gtk_button_new_with_label (_("Save"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) file_prefs_save_callback,
@@ -802,7 +803,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_grab_default (button);
       gtk_widget_show (button);
 
-      button = gtk_button_new_with_label ("Cancel");
+      button = gtk_button_new_with_label (_("Cancel"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) file_prefs_cancel_callback,
@@ -816,7 +817,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  notebook, TRUE, TRUE, 0);
 
       /* Display page */
-      out_frame = gtk_frame_new ("Display settings");
+      out_frame = gtk_frame_new (_("Display settings"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_show (out_frame);
 
@@ -829,7 +830,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
 
-      frame = gtk_frame_new ("Default image size"); 
+      frame = gtk_frame_new (_("Default image size")); 
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -844,13 +845,13 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (abox), table, TRUE, TRUE, 0);
       gtk_widget_show (table);
       
-      label = gtk_label_new ("Width:");
+      label = gtk_label_new (_("Width:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new ("Height:");
+      label = gtk_label_new (_("Height:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 			GTK_FILL, GTK_FILL, 0, 0);
@@ -881,7 +882,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &default_height);
       gtk_widget_show (spinbutton);
 
-      frame = gtk_frame_new ("Default image type");
+      frame = gtk_frame_new (_("Default image type"));
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -890,7 +891,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), radio_box);
       gtk_widget_show (radio_box);
 
-      button = gtk_radio_button_new_with_label (NULL, "RGB");
+      button = gtk_radio_button_new_with_label (NULL, _("RGB"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
@@ -900,7 +901,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  (GtkSignalFunc) file_prefs_toggle_callback,
 			  &default_type);
       gtk_widget_show (button);
-      button = gtk_radio_button_new_with_label (group, "Grayscale");
+      button = gtk_radio_button_new_with_label (group, _("Grayscale"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
@@ -914,7 +915,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
       
-      label = gtk_label_new ("Preview size:");
+      label = gtk_label_new (_("Preview size:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
       
@@ -936,7 +937,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	if (preview_size==preview_sizes[i].size)
 	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
 	  
-      button = gtk_check_button_new_with_label("Cubic interpolation");
+      button = gtk_check_button_new_with_label(_("Cubic interpolation"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    cubic_interpolation);
       gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
@@ -949,7 +950,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
 
-      frame = gtk_frame_new ("Transparency Type");
+      frame = gtk_frame_new (_("Transparency Type"));
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -973,7 +974,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                               &transparency_type);
           gtk_widget_show (button);
         }
-      frame = gtk_frame_new ("Check Size");
+      frame = gtk_frame_new (_("Check Size"));
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -998,11 +999,11 @@ file_pref_cmd_callback (GtkWidget *widget,
           gtk_widget_show (button);
         }
       
-      label = gtk_label_new ("Display");
+      label = gtk_label_new (_("Display"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       /* Interface */
-      out_frame = gtk_frame_new ("Interface settings");
+      out_frame = gtk_frame_new (_("Interface settings"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_show (out_frame);
 
@@ -1011,7 +1012,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
 
-      button = gtk_check_button_new_with_label("Resize window on zoom");
+      button = gtk_check_button_new_with_label(_("Resize window on zoom"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    allow_resize_windows);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1020,7 +1021,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &allow_resize_windows);
       gtk_widget_show (button);
       
-      button = gtk_check_button_new_with_label("Perfect-but-slow pointer tracking");
+      button = gtk_check_button_new_with_label(_("Perfect-but-slow pointer tracking"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    perfectmouse);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1032,7 +1033,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       /* Don't show the Auto-save button until we really 
 	 have auto-saving in the gimp.
       
-	 button = gtk_check_button_new_with_label("Auto save");
+	 button = gtk_check_button_new_with_label(_("Auto save"));
 	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    auto_save);
 	 gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1042,7 +1043,7 @@ file_pref_cmd_callback (GtkWidget *widget,
          gtk_widget_show (button);
       */
 
-      button = gtk_check_button_new_with_label("Disable cursor updating");
+      button = gtk_check_button_new_with_label(_("Disable cursor updating"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    no_cursor_updating);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1051,7 +1052,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &no_cursor_updating);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label("Show tool tips");
+      button = gtk_check_button_new_with_label(_("Show tool tips"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    show_tool_tips);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1060,7 +1061,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &show_tool_tips);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label("Show rulers");
+      button = gtk_check_button_new_with_label(_("Show rulers"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    show_rulers);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1069,7 +1070,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &show_rulers);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label("Show statusbar");
+      button = gtk_check_button_new_with_label(_("Show statusbar"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    show_statusbar);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1082,7 +1083,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Levels of undo:");
+      label = gtk_label_new (_("Levels of undo:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
@@ -1102,7 +1103,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Marching ants speed:");
+      label = gtk_label_new (_("Marching ants speed:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
@@ -1122,7 +1123,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Recent Documents list size:");
+      label = gtk_label_new (_("Recent Documents list size:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
@@ -1138,11 +1139,11 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &edit_last_opened_size);
       gtk_widget_show (spinbutton);
 
-      label = gtk_label_new ("Interface");
+      label = gtk_label_new (_("Interface"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       /* Environment */
-      out_frame = gtk_frame_new ("Environment settings");
+      out_frame = gtk_frame_new (_("Environment settings"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_set_usize (out_frame, 320, 200);
       gtk_widget_show (out_frame);
@@ -1152,7 +1153,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
       
-      button = gtk_check_button_new_with_label("Conservative memory usage");
+      button = gtk_check_button_new_with_label(_("Conservative memory usage"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    stingy_memory_use);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1165,7 +1166,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Tile cache size:");
+      label = gtk_label_new (_("Tile cache size:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
@@ -1201,7 +1202,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	if (mem_size_unit == mem_size_units[i].unit)
 	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
       
-      button = gtk_check_button_new_with_label("Install colormap (8-bit only)");
+      button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
 				   install_cmap);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -1212,7 +1213,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label("Colormap cycling (8-bit only)");
+      button = gtk_check_button_new_with_label(_("Colormap cycling (8-bit only)"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    cycled_marching_ants);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -1223,11 +1224,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
       gtk_widget_show (button);
       
-      label = gtk_label_new ("Environment");
+      label = gtk_label_new (_("Environment"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       /* Session Management */
-      out_frame = gtk_frame_new ("Session managment");
+      out_frame = gtk_frame_new (_("Session managment"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_set_usize (out_frame, 320, 200);
       gtk_widget_show (out_frame);
@@ -1237,7 +1238,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
 
-      button = gtk_check_button_new_with_label ("Save window positions on exit");
+      button = gtk_check_button_new_with_label (_("Save window positions on exit"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    save_session_info);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1251,14 +1252,14 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
       
-      button = gtk_button_new_with_label ("Clear saved window positions");
+      button = gtk_button_new_with_label (_("Clear saved window positions"));
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
                           (GtkSignalFunc) file_prefs_clear_session_info_callback,
                           NULL);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label ("Always try to restore session");
+      button = gtk_check_button_new_with_label (_("Always try to restore session"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    always_restore_session);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1267,7 +1268,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &always_restore_session);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label ("Save device status on exit");
+      button = gtk_check_button_new_with_label (_("Save device status on exit"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    save_device_status);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -1276,13 +1277,13 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &save_device_status);
       gtk_widget_show (button);
       
-      label = gtk_label_new ("Session");
+      label = gtk_label_new (_("Session"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       gtk_widget_show (notebook);
 
       /* Directories */
-      out_frame = gtk_frame_new ("Directories settings");
+      out_frame = gtk_frame_new (_("Directories settings"));
       gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
       gtk_widget_set_usize (out_frame, 320, 200);
       gtk_widget_show (out_frame);
@@ -1317,7 +1318,7 @@ file_pref_cmd_callback (GtkWidget *widget,
           gtk_widget_show (entry); 
 	}
 
-      label = gtk_label_new ("Directories");
+      label = gtk_label_new (_("Directories"));
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
       gtk_widget_show (notebook);

@@ -33,6 +33,8 @@
 
 #include "tile_manager_pvt.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  index into trans_info array  */
 #define HORZ_OR_VERT   0
 #define XSHEAR         1
@@ -78,9 +80,9 @@ shear_tool_transform (tool, gdisp_ptr, state)
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new ("Shear Information");
-	  info_dialog_add_field (transform_info, "X Shear Magnitude: ", xshear_buf, shear_x_mag_changed, tool);
-	  info_dialog_add_field (transform_info, "Y Shear Magnitude: ", yshear_buf, shear_y_mag_changed, tool);
+	  transform_info = info_dialog_new (_("Shear Information"));
+	  info_dialog_add_field (transform_info, _("X Shear Magnitude: "), xshear_buf, shear_x_mag_changed, tool);
+	  info_dialog_add_field (transform_info, _("Y Shear Magnitude: "), yshear_buf, shear_y_mag_changed, tool);
 	}
       direction_unknown = 1;
       transform_core->trans_info[HORZ_OR_VERT] = HORZ;
@@ -363,23 +365,23 @@ ProcArg shear_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the affected drawable"
+    N_("the affected drawable")
   },
   { PDB_INT32,
     "interpolation",
-    "whether to use interpolation"
+    N_("whether to use interpolation")
   },
   { PDB_INT32,
     "shear_type",
-    "Type of shear: { HORIZONTAL (0), VERTICAL (1) }"
+    N_("Type of shear: { HORIZONTAL (0), VERTICAL (1) }")
   },
   { PDB_FLOAT,
     "magnitude",
-    "the magnitude of the shear"
+    N_("the magnitude of the shear")
   }
 };
 
@@ -387,15 +389,15 @@ ProcArg shear_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    "the sheard drawable"
+    N_("the sheard drawable")
   }
 };
 
 ProcRecord shear_proc =
 {
   "gimp_shear",
-  "Shear the specified drawable about its center by the specified magnitude",
-  "This tool shears the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting sheard drawable.  The return value is the ID of the sheard drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and sheard drawable.  The shear type parameter indicates whether the shear will be applied horizontally or vertically.  The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.",
+  N_("Shear the specified drawable about its center by the specified magnitude"),
+  N_("This tool shears the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting sheard drawable.  The return value is the ID of the sheard drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and sheard drawable.  The shear type parameter indicates whether the shear will be applied horizontally or vertically.  The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

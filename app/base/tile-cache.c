@@ -10,6 +10,8 @@
 
 #include "tile_pvt.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 #include "stdio.h"
 
 /*  This is the percentage of the maximum cache size that should be cleared
@@ -109,7 +111,7 @@ tile_cache_insert (Tile *tile)
 	{
 	  if (!tile_cache_zorch_next()) 
 	    {
-	      g_warning ("cache: unable to find room for a tile");
+	      g_warning (_("cache: unable to find room for a tile"));
 	      goto out;
 	    }
 	}
@@ -261,7 +263,7 @@ tile_idle_thread (void *data)
   TileList *list;
   int count;
 
-  fprintf (stderr,"starting tile preswapper\n");
+  fprintf (stderr,_("starting tile preswapper\n"));
 
   count = 0;
   while(1) 

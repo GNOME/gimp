@@ -30,6 +30,8 @@
 #include "session.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 #define CELL_SIZE 20 /* The size of the preview cells */
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
                           GDK_BUTTON_PRESS_MASK | \
@@ -113,8 +115,8 @@ int current_device = GDK_CORE_POINTER;
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Close", devices_close_callback, NULL, NULL },
-  { "Save", (ActionCallback)devices_write_rc, NULL, NULL },
+  { N_("Close"), devices_close_callback, NULL, NULL },
+  { N_("Save"), (ActionCallback)devices_write_rc, NULL, NULL },
 };
 
 void 
@@ -351,7 +353,7 @@ devices_rc_update (gchar *name, DeviceValues values,
 	}
       else
 	{
-	  g_warning ("devices_rc_update called multiple times for not present device\n");
+	  g_warning (_("devices_rc_update called multiple times for not present device\n"));
 	  return;
 	}
     }
@@ -650,7 +652,7 @@ create_device_status (void)
       deviceD = g_new (DeviceInfoDialog, 1);
       deviceD->shell = gtk_dialog_new ();
 
-      gtk_window_set_title (GTK_WINDOW(deviceD->shell), "Device Status");
+      gtk_window_set_title (GTK_WINDOW(deviceD->shell), _("Device Status"));
       gtk_window_set_policy (GTK_WINDOW (deviceD->shell), FALSE, FALSE, TRUE);
       session_set_window_geometry (deviceD->shell, &device_status_session_info, TRUE);
 
@@ -1022,7 +1024,7 @@ device_preview_events (GtkWidget    *widget,
 
 	  if(tmp_list == NULL)
 	    {
-	      g_message("Failed to find device_info\n");
+	      g_message(_("Failed to find device_info\n"));
 	      break; /* Error no device info */
 	    }
 	    

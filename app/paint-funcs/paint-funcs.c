@@ -94,7 +94,7 @@ static int color_hash_hits;
 static unsigned char * tmp_buffer;  /* temporary buffer available upon request */
 static int tmp_buffer_size;
 static unsigned char no_mask = OPAQUE_OPACITY;
-
+static int add_lut[256][256];
 
 /*******************************/
 /*  Local function prototypes  */
@@ -320,6 +320,8 @@ void
 paint_funcs_setup ()
 {
   int i;
+  int j,k;
+  int tmp_sum;
 
   /*  allocate the temporary buffer  */
   tmp_buffer = (unsigned char *) g_malloc (STD_BUF_SIZE);
@@ -344,6 +346,30 @@ paint_funcs_setup ()
       random_table[i] = random_table[swap];
       random_table[swap] = tmp;
     }
+
+  for (j = 0; j < 256; j++)
+    {    //rows
+      for (k = 0; k < 256; k++)
+	{   //column
+	  tmp_sum = j + k;
+	  //	  printf("tmp_sum: %d", tmp_sum);
+	  if(tmp_sum > 255)
+	    tmp_sum = 255;
+	  //	  printf("  max: %d  \n", add_lut[j][k]);
+	  add_lut[j][k] = tmp_sum; 
+	}
+    }
+
+/*   for (j = 0; j < 255; j++) */
+/*     {    //rows */
+/*       for (k = 0; k < 255; k++) */
+/* 	{   //column */
+/* 	  printf ("%d",add_lut[j][k]); */
+/* 	  printf(" "); */
+/* 	} */
+/*       printf("\n"); */
+/*     } */
+  
 }
 
 
@@ -829,8 +855,9 @@ add_pixels (const unsigned char *src1,
     {
       for (b = 0; b < alpha; b++)
 	{
-	  sum = src1[b] + src2[b];
-	  dest[b] = MAX255 (sum);
+	  //	  sum = src1[b] + src2[b];
+	  dest[b] = add_lut[ (src1[b])] [(src2[b])];
+	  //	  dest[b] = MAX255 (sum);
 	  /* dest[b] = sum | ((sum&256) - ((sum&256) >> 8)); */
 	  /* dest[b] = (sum > 255) ? 255 : sum; */ /* older, little slower */
 	}

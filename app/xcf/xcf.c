@@ -22,6 +22,8 @@
 #include "xcf.h"
 #include "frac.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "drawable_pvt.h"
 #include "layer_pvt.h"
 #include "channel_pvt.h"
@@ -161,20 +163,20 @@ static ProcArg xcf_load_args[] =
 {
   { PDB_INT32,
     "dummy_param",
-    "dummy parameter" },
+    N_("dummy parameter") },
   { PDB_STRING,
     "filename",
-    "The name of the file to load" },
+    N_("The name of the file to load") },
   { PDB_STRING,
     "raw_filename",
-    "The name of the file to load" },
+    N_("The name of the file to load") },
 };
 
 static ProcArg xcf_load_return_vals[] =
 {
   { PDB_IMAGE,
     "image",
-    "Output image" },
+    N_("Output image") },
 };
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -189,10 +191,10 @@ static PlugInProcDef xcf_plug_in_load_proc =
   0,    /* ignored for load */
   {
     "gimp_xcf_load",
-    "loads file saved in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will load the specified file.",
-    "Spencer Kimball & Peter Mattis",
-    "Spencer Kimball & Peter Mattis",
+    N_("loads file saved in the .xcf file format"),
+    N_("The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will load the specified file."),
+    N_("Spencer Kimball & Peter Mattis"),
+    N_("Spencer Kimball & Peter Mattis"),
     "1995-1996",
     PDB_INTERNAL,
     3,
@@ -209,19 +211,19 @@ static ProcArg xcf_save_args[] =
 {
   { PDB_INT32,
     "dummy_param",
-    "dummy parameter" },
+    N_("dummy parameter") },
   { PDB_IMAGE,
     "image",
-    "Input image" },
+    N_("Input image") },
   { PDB_DRAWABLE,
     "drawable",
-    "Active drawable of input image" },
+    N_("Active drawable of input image") },
   { PDB_STRING,
     "filename",
-    "The name of the file to save the image in" },
+    N_("The name of the file to save the image in") },
   { PDB_STRING,
     "raw_filename",
-    "The name of the file to load" },
+    N_("The name of the file to load") },
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -236,10 +238,10 @@ static PlugInProcDef xcf_plug_in_save_proc =
   0, /* fill me in at runtime */
   {
     "gimp_xcf_save",
-    "saves file in the .xcf file format",
-    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will save the specified image in the xcf file format.",
-    "Spencer Kimball & Peter Mattis",
-    "Spencer Kimball & Peter Mattis",
+    N_("saves file in the .xcf file format"),
+    N_("The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will save the specified image in the xcf file format."),
+    N_("Spencer Kimball & Peter Mattis"),
+    N_("Spencer Kimball & Peter Mattis"),
     "1995-1996",
     PDB_INTERNAL,
     5,
@@ -332,7 +334,7 @@ xcf_load_invoker (Argument *args)
 	    }
 	  else 
 	    {
-	      g_message ("XCF error: unsupported XCF file version %d encountered", info.file_version);
+	      g_message (_("XCF error: unsupported XCF file version %d encountered"), info.file_version);
 	      success = FALSE;
 	    }
 	}
@@ -382,7 +384,7 @@ xcf_save_invoker (Argument *args)
     }
   else
     {
-      g_message ("open failed on %s: %s\n", filename, g_strerror(errno));
+      g_message (_("open failed on %s: %s\n"), filename, g_strerror(errno));
     }
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
@@ -1085,7 +1087,7 @@ xcf_save_level (XcfInfo     *info,
 	      xcf_save_tile_rle (info, level->tiles[i]);
 	      break;
 	    case COMPRESS_ZLIB:
-	      g_error ("xcf: zlib compression unimplemented");
+	      g_error (_("xcf: zlib compression unimplemented"));
 	      break;
 	    case COMPRESS_FRACTAL:
 	      xcf_save_frac_compressed_tile (info, level->tiles[i]);
@@ -1242,7 +1244,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	}
 
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
-	g_print ("xcf: uh oh! xcf rle tile saving error: %d\n", count);
+	g_print (_("xcf: uh oh! xcf rle tile saving error: %d\n"), count);
     }
 
   tile_release (tile, FALSE);
@@ -1384,9 +1386,9 @@ xcf_load_image_props (XcfInfo *info,
 	  if (info->file_version == 0) 
 	    {
 	      int i;
-	      g_message ("XCF warning: version 0 of XCF file format\n"
+	      g_message (_("XCF warning: version 0 of XCF file format\n"
 			 "did not save indexed colormaps correctly.\n"
-			 "Substituting grayscale map.");
+			 "Substituting grayscale map."));
 	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);
@@ -1415,7 +1417,7 @@ xcf_load_image_props (XcfInfo *info,
 		(compression != COMPRESS_ZLIB) &&
 		(compression != COMPRESS_FRACTAL))
 	      {
-		g_message ("unknown compression type: %d", (int) compression);
+		g_message (_("unknown compression type: %d"), (int) compression);
 		return FALSE;
 	      }
 
@@ -1447,7 +1449,7 @@ xcf_load_image_props (XcfInfo *info,
 	  }
 	  break;
 	default:
-	  g_message ("unexpected/unknown image property: %d (skipping)", prop_type);
+	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1520,7 +1522,7 @@ xcf_load_layer_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
 	  break;
 	default:
-	  g_message ("unexpected/unknown layer property: %d (skipping)", prop_type);
+	  g_message (_("unexpected/unknown layer property: %d (skipping)"), prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1579,7 +1581,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->col, 3);
 	  break;
 	default:
-	  g_message ("unexpected/unknown channel property: %d (skipping)", prop_type);
+	  g_message (_("unexpected/unknown channel property: %d (skipping)"), prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1919,7 +1921,7 @@ xcf_load_level (XcfInfo     *info,
 
       if (offset == 0)
 	{
-	  g_message ("not enough tiles found in level");
+	  g_message (_("not enough tiles found in level"));
 	  return FALSE;
 	}
 
@@ -1946,11 +1948,11 @@ xcf_load_level (XcfInfo     *info,
 	    fail = TRUE;
 	  break;
 	case COMPRESS_ZLIB:
-	  g_error ("xcf: zlib compression unimplemented");
+	  g_error (_("xcf: zlib compression unimplemented"));
 	  fail = TRUE;
 	  break;
 	case COMPRESS_FRACTAL:
-	  g_error ("xcf: fractal compression unimplemented");
+	  g_error (_("xcf: fractal compression unimplemented"));
 	  fail = TRUE;
 	  break;
 	}
@@ -1992,7 +1994,7 @@ xcf_load_level (XcfInfo     *info,
 
   if (offset != 0)
     {
-      g_message ("encountered garbage after reading level: %d", offset);
+      g_message (_("encountered garbage after reading level: %d"), offset);
       return FALSE;
     }
 
@@ -2091,7 +2093,7 @@ xcf_load_tile_rle (XcfInfo *info,
 	      size -= length;
 
               if (size < 0)
-                g_message ("xcf: uh oh! xcf rle tile loading error: %d", count);
+                g_message (_("xcf: uh oh! xcf rle tile loading error: %d"), count);
 
 	      info->cp += xcf_read_int8 (info->fp, &val, 1);
 
@@ -2138,7 +2140,7 @@ xcf_swap_func (int       fd,
 
 	  if (err <= 0)
 	    {
-	      g_message ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
+	      g_message (_("unable to read tile data from xcf file: %d ( %d ) bytes read"), err, nleft);
 	      return FALSE;
 	    }
 

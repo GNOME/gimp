@@ -24,6 +24,8 @@
 #include "interface.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 static void       equalize (GImage *, GimpDrawable *, int);
 static void       eq_histogram (double [3][256], unsigned char [3][256], int, double);
 static Argument * equalize_invoker (Argument *);
@@ -234,23 +236,23 @@ ProcArg equalize_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "mask_only",
-    "equalization option"
+    N_("equalization option")
   }
 };
 
 ProcRecord equalize_proc =
 {
   "gimp_equalize",
-  "Equalize the contents of the specified drawable",
-  "This procedure equalizes the contents of the specified drawable.  Each intensity channel is equalizeed independently.  The equalizeed intensity is given as inten' = (255 - inten).  Indexed color drawables are not valid for this operation.  The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area.  If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
+  N_("Equalize the contents of the specified drawable"),
+  N_("This procedure equalizes the contents of the specified drawable.  Each intensity channel is equalizeed independently.  The equalizeed intensity is given as inten' = (255 - inten).  Indexed color drawables are not valid for this operation.  The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area.  If there is no selection, the entire image is adjusted based on the histogram for the entire image."),
   "Federico Mena Quintero & Spencer Kimball & Peter Mattis",
   "Federico Mena Quintero & Spencer Kimball & Peter Mattis",
   "1996",

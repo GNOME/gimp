@@ -186,12 +186,12 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Angle" "45"
-		    SF-VALUE "Relative horizon distance" "5.0"
-		    SF-VALUE "Relative shadow length" "1.0"
-		    SF-VALUE "Blur Radius" "3"
+		    SF-ADJUSTMENT "Angle" '(45 0 180 1 10 1 0)
+		    SF-ADJUSTMENT "Relative horizon distance" '(5 0 24 .1 1 1 1)
+		    SF-ADJUSTMENT "Relative shadow length" '(1 0 24 .1 1 1 1)
+		    SF-ADJUSTMENT "Blur Radius" '(3 0 64 1 10 0 0)
 		    SF-COLOR "Color" '(0 0 0)
-		    SF-VALUE "Opacity" "80"
+		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
 		    SF-TOGGLE "Interpolate" TRUE
 		    SF-TOGGLE "Allow Resizing" FALSE) 
 

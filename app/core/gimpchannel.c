@@ -31,6 +31,8 @@
 #include "temp_buf.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "channel_pvt.h"
 #include "tile.h"
 
@@ -182,13 +184,13 @@ channel_copy (Channel *channel)
   name = channel_get_name(channel);
   ext = strrchr(name, '#');
   channel_name = (char *) g_malloc (strlen (name) + 6);
-  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], "copy") == 0) ||
+  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], _("copy")) == 0) ||
       (ext && (number = atoi(ext+1)) > 0 && 
        ((int)(log10(number) + 1)) == strlen(ext+1)))
     /* don't have rudundant "copy"s */
     sprintf (channel_name, "%s", name);
   else
-    sprintf (channel_name, "%s copy", name);
+    sprintf (channel_name, N_("%s copy"), name);
 
   /*  allocate a new channel object  */
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage, 
@@ -493,7 +495,7 @@ channel_new_mask (GimpImage* gimage, int width, int height)
   Channel *new_channel;
 
   /*  Create the new channel  */
-  new_channel = channel_new (gimage, width, height, "Selection Mask", 127, black);
+  new_channel = channel_new (gimage, width, height, _("Selection Mask"), 127, black);
 
   /*  Set the validate procedure  */
   tile_manager_set_validate_proc (GIMP_DRAWABLE(new_channel)->tiles, channel_validate);

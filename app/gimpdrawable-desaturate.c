@@ -25,6 +25,8 @@
 #include "paint_funcs.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 static void       desaturate (GimpDrawable *);
 static Argument * desaturate_invoker (Argument *);
 
@@ -41,7 +43,7 @@ image_desaturate (gimage_ptr)
 
   if (! drawable_color (drawable))
     {
-      g_message ("Desaturate operates only on RGB color drawables.");
+      g_message (_("Desaturate operates only on RGB color drawables."));
       return;
     }
   desaturate (drawable);
@@ -116,19 +118,19 @@ ProcArg desaturate_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   }
 };
 
 ProcRecord desaturate_proc =
 {
   "gimp_desaturate",
-  "Desaturate the contents of the specified drawable",
-  "This procedure desaturates the contents of the specified drawable.  This procedure only works on drawables of type RGB color.",
+  N_("Desaturate the contents of the specified drawable"),
+  N_("This procedure desaturates the contents of the specified drawable.  This procedure only works on drawables of type RGB color."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

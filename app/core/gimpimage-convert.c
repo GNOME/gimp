@@ -79,6 +79,8 @@
 #include "undo.h"
 #include "palette.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */
 #include "tile_manager_pvt.h"		/* ick ick ick. */
@@ -276,8 +278,8 @@ convert_to_grayscale (GimpImage* gimage)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", indexed_ok_callback, NULL, NULL },
-  { "Cancel", indexed_cancel_callback, NULL, NULL }
+  { N_("OK"), indexed_ok_callback, NULL, NULL },
+  { N_("Cancel"), indexed_cancel_callback, NULL, NULL }
 };
 
 static void
@@ -319,12 +321,12 @@ convert_to_indexed (GimpImage *gimage)
 
   dialog->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog->shell), "indexed_color_conversion", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog->shell), "Indexed Color Conversion");
+  gtk_window_set_title (GTK_WINDOW (dialog->shell), _("Indexed Color Conversion"));
   gtk_signal_connect (GTK_OBJECT (dialog->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (indexed_delete_callback),
 		      dialog);
 
-  frame = gtk_frame_new ("Palette Options");
+  frame = gtk_frame_new (_("Palette Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
@@ -341,7 +343,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_container_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, "Generate optimal palette: ");
+  toggle = gtk_radio_button_new_with_label (group, _("Generate optimal palette: "));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -349,7 +351,7 @@ convert_to_indexed (GimpImage *gimage)
 		      &(dialog->makepal_flag));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->makepal_flag);
   gtk_widget_show (toggle);
-  label = gtk_label_new ("# of colors: ");
+  label = gtk_label_new (_("# of colors: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
@@ -402,7 +404,7 @@ convert_to_indexed (GimpImage *gimage)
           /* 'custom' palette from dialog */
           hbox = gtk_hbox_new (FALSE, 1);
           gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-          toggle = gtk_radio_button_new_with_label (group, "Use custom palette");
+          toggle = gtk_radio_button_new_with_label (group, _("Use custom palette"));
           group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
           gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
           gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -434,7 +436,7 @@ convert_to_indexed (GimpImage *gimage)
       {
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	toggle =
-	  gtk_radio_button_new_with_label (group, "Use WWW-optimised palette");
+	  gtk_radio_button_new_with_label (group, _("Use WWW-optimised palette"));
 	{
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
@@ -452,7 +454,7 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   toggle =
-    gtk_radio_button_new_with_label (group, "Use black/white (1-bit) palette");
+    gtk_radio_button_new_with_label (group, _("Use black/white (1-bit) palette"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -462,7 +464,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new ("Dither Options");
+  frame = gtk_frame_new (_("Dither Options"));
   {
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 2);
@@ -476,7 +478,7 @@ convert_to_indexed (GimpImage *gimage)
     hbox = gtk_hbox_new (FALSE, 1);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     
-    toggle = gtk_check_button_new_with_label ("Enable Floyd-Steinberg dithering");
+    toggle = gtk_check_button_new_with_label (_("Enable Floyd-Steinberg dithering"));
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
     gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -500,7 +502,7 @@ convert_to_indexed (GimpImage *gimage)
        )
       )
     {
-      frame = gtk_frame_new (" [ Warning ] ");
+      frame = gtk_frame_new (_(" [ Warning ] "));
       {
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 2);
@@ -1194,7 +1196,7 @@ generate_histogram_rgb (Histogram  histogram,
 			   *  quantizing at a later stage.
 			   */
 			  needs_quantize = TRUE;
-/*			  g_print ("\nmax colours exceeded - needs quantize.\n");*/
+/*			  g_print (_("\nmax colours exceeded - needs quantize.\n"));*/
 			  goto already_found;
 			}
 		      else
@@ -2354,8 +2356,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 			    goto got_colour;
 			  }
 			}
-		      g_error ("Non-existant colour was expected to "
-			       "be in non-destructive colourmap.");
+		      g_error (_("Non-existant colour was expected to "
+			       "be in non-destructive colourmap."));
 		    got_colour:
 		      dest[INDEXED_PIX] = lastindex;
 		      if (has_alpha)
@@ -2915,15 +2917,15 @@ ProcArg convert_rgb_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   }
 };
 
 ProcRecord convert_rgb_proc =
 {
   "gimp_convert_rgb",
-  "Convert specified image to RGB color",
-  "This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image.",
+  N_("Convert specified image to RGB color"),
+  N_("This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -2973,15 +2975,15 @@ ProcArg convert_grayscale_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   }
 };
 
 ProcRecord convert_grayscale_proc =
 {
   "gimp_convert_grayscale",
-  "Convert specified image to grayscale (256 intensity levels)",
-  "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels).  This process requires an image of type RGB or INDEXED.",
+  N_("Convert specified image to grayscale (256 intensity levels)"),
+  N_("This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels).  This process requires an image of type RGB or INDEXED."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3031,23 +3033,23 @@ ProcArg convert_indexed_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_INT32,
     "dither",
-    "Floyd-Steinberg dithering"
+    N_("Floyd-Steinberg dithering")
   },
   { PDB_INT32,
     "num_cols",
-    "the number of colors to quantize to"
+    N_("the number of colors to quantize to")
   }
 };
 
 ProcRecord convert_indexed_proc =
 {
   "gimp_convert_indexed",
-  "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256).",
+  N_("Convert specified image to indexed color"),
+  N_("This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256)."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3107,31 +3109,31 @@ ProcArg convert_indexed_palette_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_INT32,
     "dither",
-    "Floyd-Steinberg dithering"
+    N_("Floyd-Steinberg dithering")
   },
   { PDB_INT32,
     "palette_type",
-    "The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)"
+    N_("The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)")
   },
   { PDB_INT32,
     "num_cols",
-    "the number of colors to quantize to, ignored unless (palette_type == 0)"
+    N_("the number of colors to quantize to, ignored unless (palette_type == 0)")
   },
   { PDB_STRING,
     "palette",
-    "The name of the custom palette to use, ignored unless (palette_type == 4)"
+    N_("The name of the custom palette to use, ignored unless (palette_type == 4)")
   }
 };
 
 ProcRecord convert_indexed_palette_proc =
 {
   "gimp_convert_indexed_palette",
-  "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories.",
+  N_("Convert specified image to indexed color"),
+  N_("This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3193,7 +3195,7 @@ convert_indexed_palette_invoker (Argument *args)
 		  break;
 		  case CUSTOM_PALETTE:
           palette_name = args[4].value.pdb_pointer;
- /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
+ /*         fprintf(stderr, _("looking for palette `%s'\n"), palette_name); */
           if (!palette_entries_list) palette_init_palettes(FALSE);
 		    for(list = palette_entries_list;
               list;

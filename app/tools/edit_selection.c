@@ -28,6 +28,8 @@
 #include "gdisplay.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #define EDIT_SELECT_SCROLL_LOCK 0
 #define ARROW_VELOCITY          25
 #define STATUSBAR_SIZE          128
@@ -149,7 +151,7 @@ init_edit_selection (Tool           *tool,
 
   /* initialize the statusbar display */
   edit_select.context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "edit_select");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id, "Move: 0, 0");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id, _("Move: 0, 0"));
 
   /*  Create and start the selection core  */
   edit_select.core = draw_core_new (edit_selection_draw);
@@ -294,7 +296,7 @@ edit_selection_motion (Tool           *tool,
   edit_selection_snap (gdisp, mevent->x, mevent->y);
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
-  g_snprintf (offset, STATUSBAR_SIZE, "Move: %d, %d", 
+  g_snprintf (offset, STATUSBAR_SIZE, _("Move: %d, %d"), 
 	   (edit_select.x - edit_select.origx), (edit_select.y - edit_select.origy));
   gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id, offset);
 

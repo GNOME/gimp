@@ -133,6 +133,7 @@ guillotine(gint32 image_ID)
   gint guide_num;
   gint* hguides;
   gint* vguides;
+  gchar filename[1024];
   gint i,x,y;
   GParam *return_vals;
   gint nreturn_vals;
@@ -242,10 +243,11 @@ guillotine(gint32 image_ID)
 			      PARAM_IMAGE, new_image,
 			      PARAM_END);
 
-	  /*	  printf("(%dx%d:%d,%d)\n",
-		 (vguides[x+1]-vguides[x]),
-		 (hguides[y+1]-hguides[y]),
-		 vguides[x], hguides[y]); */
+/* 	  printf("(%dx%d:%d,%d:%d,%d)\n", */
+/* 		 (vguides[x+1]-vguides[x]), */
+/* 		 (hguides[y+1]-hguides[y]), */
+/* 		 vguides[x], hguides[y],x, y);  */
+
 
 	  gimp_run_procedure("gimp_crop", &nreturn_vals,
                        PARAM_IMAGE, new_image,
@@ -260,6 +262,11 @@ guillotine(gint32 image_ID)
 			      PARAM_END);
 
 	  gimp_image_enable_undo (new_image);
+
+	  /* show the rough coordinates of the image in the title */
+  	  sprintf(filename, "%s-(%i,%i)", gimp_image_get_filename (image_ID), 
+		     x, y);
+	  gimp_image_set_filename(new_image, filename);
 
 	  gimp_display_new (new_image);
 	}

@@ -31,6 +31,8 @@
 
 #include "tile_manager_pvt.h"
 
+#include "libgimp/gimpintl.h"
+
 #define X1 0
 #define Y1 1
 #define X2 2
@@ -72,13 +74,13 @@ scale_tool_transform (tool, gdisp_ptr, state)
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new ("Scaling Information");
-	  info_dialog_add_field (transform_info, "Original Width: ", orig_width_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, "Original Height: ", orig_height_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, "Current Width: ", width_buf, scale_width_changed, tool);
-	  info_dialog_add_field (transform_info, "Current Height: ", height_buf, scale_height_changed, tool);
-	  info_dialog_add_field (transform_info, "X Scale Ratio: ", x_ratio_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, "Y Scale Ratio: ", y_ratio_buf, NULL, NULL);
+	  transform_info = info_dialog_new (_("Scaling Information"));
+	  info_dialog_add_field (transform_info, _("Original Width: "), orig_width_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, _("Original Height: "), orig_height_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, _("Current Width: "), width_buf, scale_width_changed, tool);
+	  info_dialog_add_field (transform_info, _("Current Height: "), height_buf, scale_height_changed, tool);
+	  info_dialog_add_field (transform_info, _("X Scale Ratio: "), x_ratio_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, _("Y Scale Ratio: "), y_ratio_buf, NULL, NULL);
 	}
 
       transform_core->trans_info [X1] = (double) transform_core->x1;
@@ -467,31 +469,31 @@ ProcArg scale_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the affected drawable"
+    N_("the affected drawable")
   },
   { PDB_INT32,
     "interpolation",
-    "whether to use interpolation"
+    N_("whether to use interpolation")
   },
   { PDB_FLOAT,
     "x1",
-    "the x coordinate of the upper-left corner of newly scaled region"
+    N_("the x coordinate of the upper-left corner of newly scaled region")
   },
   { PDB_FLOAT,
     "y1",
-    "the y coordinate of the upper-left corner of newly scaled region"
+    N_("the y coordinate of the upper-left corner of newly scaled region")
   },
   { PDB_FLOAT,
     "x2",
-    "the x coordinate of the lower-right corner of newly scaled region"
+    N_("the x coordinate of the lower-right corner of newly scaled region")
   },
   { PDB_FLOAT,
     "y2",
-    "the y coordinate of the lower-right corner of newly scaled region"
+    N_("the y coordinate of the lower-right corner of newly scaled region")
   }
 };
 
@@ -499,15 +501,15 @@ ProcArg scale_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    "the scaled drawable"
+    N_("the scaled drawable")
   }
 };
 
 ProcRecord scale_proc =
 {
   "gimp_scale",
-  "Scale the specified drawable",
-  "This tool scales the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting scaled drawable.  The return value is the ID of the scaled drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and scaled drawable.",
+  N_("Scale the specified drawable"),
+  N_("This tool scales the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting scaled drawable.  The return value is the ID of the scaled drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and scaled drawable."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -28,6 +28,8 @@
 #include "image_map.h"
 #include "interface.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TEXT_WIDTH 45
 #define TEXT_HEIGHT 25
 #define SLIDER_WIDTH 200
@@ -240,7 +242,7 @@ tools_new_brightness_contrast ()
   /*  The tool options  */
   if (!brightness_contrast_options)
     brightness_contrast_options = tools_register_no_options (BRIGHTNESS_CONTRAST,
-							     "Brightness-Contrast Options");
+							     _("Brightness-Contrast Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (BrightnessContrast *) g_malloc (sizeof (BrightnessContrast));
@@ -282,7 +284,7 @@ brightness_contrast_initialize (GDisplay *gdisp)
 {
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Brightness-Contrast does not operate on indexed drawables.");
+      g_message (_("Brightness-Contrast does not operate on indexed drawables."));
       return;
     }
 
@@ -313,8 +315,8 @@ brightness_contrast_initialize (GDisplay *gdisp)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", brightness_contrast_ok_callback, NULL, NULL },
-  { "Cancel", brightness_contrast_cancel_callback, NULL, NULL }
+  { N_("OK"), brightness_contrast_ok_callback, NULL, NULL },
+  { N_("Cancel"), brightness_contrast_cancel_callback, NULL, NULL }
 };
 
 static BrightnessContrastDialog *
@@ -335,7 +337,7 @@ brightness_contrast_new_dialog ()
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bcd->shell), "Brightness-Contrast");
+  gtk_window_set_title (GTK_WINDOW (bcd->shell), N_("Brightness-Contrast"));
   
   /* handle wm close signal */
   gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
@@ -351,7 +353,7 @@ brightness_contrast_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the brightness scale widget  */
-  label = gtk_label_new ("Brightness");
+  label = gtk_label_new (_("Brightness"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -385,7 +387,7 @@ brightness_contrast_new_dialog ()
 
 
   /*  Create the contrast scale widget  */
-  label = gtk_label_new ("Contrast");
+  label = gtk_label_new (_("Contrast"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -423,7 +425,7 @@ brightness_contrast_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), bcd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -479,7 +481,7 @@ static void
 brightness_contrast_preview (BrightnessContrastDialog *bcd)
 {
   if (!bcd->image_map)
-    g_message ("brightness_contrast_preview(): No image map");
+    g_message (_("brightness_contrast_preview(): No image map"));
   active_tool->preserve = TRUE;
   image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
   active_tool->preserve = FALSE;
@@ -643,27 +645,27 @@ ProcArg brightness_contrast_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "brightness",
-    "brightness adjustment: (-127 <= brightness <= 127)"
+    N_("brightness adjustment: (-127 <= brightness <= 127)")
   },
   { PDB_INT32,
     "contrast",
-    "constrast adjustment: (-127 <= contrast <= 127)"
+    N_("constrast adjustment: (-127 <= contrast <= 127)")
   }
 };
 
 ProcRecord brightness_contrast_proc =
 {
   "gimp_brightness_contrast",
-  "Modify brightness/contrast in the specified drawable",
-  "This procedures allows the brightness and contrast of the specified drawable to be modified.  Both 'brightness' and 'contrast' parameters are defined between -127 and 127.",
+  N_("Modify brightness/contrast in the specified drawable"),
+  N_("This procedures allows the brightness and contrast of the specified drawable to be modified.  Both 'brightness' and 'contrast' parameters are defined between -127 and 127."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

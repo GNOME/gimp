@@ -27,6 +27,8 @@
 #include "transform_core.h"
 #include "transform_tool.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct _TransformOptions TransformOptions;
 
 struct _TransformOptions
@@ -111,15 +113,15 @@ create_transform_options (void)
   int i;
   char *transform_button_names[4] =
   {
-    "Rotation",
-    "Scaling",
-    "Shearing",
-    "Perspective"
+    N_("Rotation"),
+    N_("Scaling"),
+    N_("Shearing"),
+    N_("Perspective")
   };
   char *direction_button_names[2] =
   {
-    "Traditional",
-    "Corrective"
+    N_("Traditional"),
+    N_("Corrective")
   };
 
   /*  the new options structure  */
@@ -135,7 +137,7 @@ create_transform_options (void)
   main_box = gtk_vbox_new (FALSE, 1);
  
   /*  the main label  */
-  label = gtk_label_new ("Transform Tool Options");
+  label = gtk_label_new (_("Transform Tool Options"));
   gtk_box_pack_start (GTK_BOX (main_box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -148,7 +150,7 @@ create_transform_options (void)
   gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
 
   /*  the first radio frame and box, for transform type  */
-  radio_frame = gtk_frame_new ("Transform");
+  radio_frame = gtk_frame_new (_("Transform"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -171,7 +173,7 @@ create_transform_options (void)
   gtk_widget_show (radio_frame);
 
   /*  the smoothing toggle button  */
-  toggle = gtk_check_button_new_with_label ("Smoothing");
+  toggle = gtk_check_button_new_with_label (_("Smoothing"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
@@ -187,7 +189,7 @@ create_transform_options (void)
   gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
 
   /*  the second radio frame and box, for transform direction  */
-  radio_frame = gtk_frame_new ("Tool paradigm");
+  radio_frame = gtk_frame_new (_("Tool paradigm"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -210,7 +212,7 @@ create_transform_options (void)
   gtk_widget_show (radio_frame);
 
   /* the show grid toggle button */
-  toggle = gtk_check_button_new_with_label ("Show grid");
+  toggle = gtk_check_button_new_with_label (_("Show grid"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
                       options->show_grid);
@@ -225,7 +227,7 @@ create_transform_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_widget_show (hbox);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Grid density: ");
+  label = gtk_label_new (_("Grid density: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   grid_adj = (GtkAdjustment *) gtk_adjustment_new (2.0, 0.0, 5.0, 1.0, 1.0, 0.0);
@@ -238,7 +240,7 @@ create_transform_options (void)
   gtk_widget_show (grid_density);
 
   /*  the clip resulting image toggle button  */
-  toggle = gtk_check_button_new_with_label ("Clip result");
+  toggle = gtk_check_button_new_with_label (_("Clip result"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,

@@ -28,6 +28,8 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  forward function declarations  */
 static void        eraser_motion   (PaintCore *, GimpDrawable *, gboolean, gboolean);
 static Argument *  eraser_invoker  (Argument *);
@@ -76,12 +78,12 @@ create_eraser_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Eraser Options");
+  label = gtk_label_new (_("Eraser Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /* the hard toggle */
-  hard_toggle = gtk_check_button_new_with_label ("Hard edge");
+  hard_toggle = gtk_check_button_new_with_label (_("Hard edge"));
   gtk_box_pack_start (GTK_BOX (vbox), hard_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (hard_toggle), "toggled",
 		      (GtkSignalFunc) eraser_toggle_update,
@@ -90,7 +92,7 @@ create_eraser_options (void)
   gtk_widget_show (hard_toggle);
   
   /* the incremental toggle */
-  incremental_toggle = gtk_check_button_new_with_label ("Incremental");
+  incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
   gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
 		      (GtkSignalFunc) eraser_toggle_update,
@@ -202,27 +204,27 @@ ProcArg eraser_extended_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
+    N_("number of stroke control points (count each coordinate as 2 points)")
   },
   { PDB_FLOATARRAY,
     "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
   },
   { PDB_INT32,
     "hardness",
-    "SOFT(0) or HARD(1)"
+    N_("SOFT(0) or HARD(1)")
   },
   { PDB_INT32,
     "method",
-    "CONTINUOUS(0) or INCREMENTAL(1)"
+    N_("CONTINUOUS(0) or INCREMENTAL(1)")
   }
 };
 
@@ -230,19 +232,19 @@ ProcArg eraser_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
+    N_("number of stroke control points (count each coordinate as 2 points)")
   },
   { PDB_FLOATARRAY,
     "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
   }
 };
 
@@ -250,8 +252,8 @@ ProcArg eraser_args[] =
 ProcRecord eraser_proc =
 {
   "gimp_eraser",
-  "Erase using the current brush",
-  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
+  N_("Erase using the current brush"),
+  N_("This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -272,8 +274,8 @@ ProcRecord eraser_proc =
 ProcRecord eraser_extended_proc =
 {
   "gimp_eraser_extended",
-  "Erase using the current brush",
-  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
+  N_("Erase using the current brush"),
+  N_("This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -32,6 +32,7 @@
 #include "scale.h"
 #include "gimprc.h"
 
+#include "libgimp/gimpintl.h"
 
 static void gdisplay_close_warning_callback (GtkWidget *, gpointer);
 static void gdisplay_cancel_warning_callback (GtkWidget *, gpointer);
@@ -274,7 +275,7 @@ gdisplay_close_warning_callback (GtkWidget *w,
   GDisplay *gdisp;
   GtkWidget *mbox;
 
-  menus_set_sensitive ("<Image>/File/Close", TRUE);
+  menus_set_sensitive (_("<Image>/File/Close"), TRUE);
   mbox = (GtkWidget *) client_data;
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (mbox));
 
@@ -293,7 +294,7 @@ gdisplay_cancel_warning_callback (GtkWidget *w,
 {
   GtkWidget *mbox;
 
-  menus_set_sensitive ("<Image>/File/Close", TRUE);
+  menus_set_sensitive (_("<Image>/File/Close"), TRUE);
   mbox = (GtkWidget *) client_data;
   gtk_widget_destroy (mbox);
 }
@@ -303,7 +304,7 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 				  GdkEvent  *event,
 				  gpointer  client_data)
 {
-  menus_set_sensitive ("<Image>/File/Close", TRUE);
+  menus_set_sensitive (_("<Image>/File/Close"), TRUE);
 
   return FALSE;
 }
@@ -321,8 +322,8 @@ gdisplay_close_warning_dialog (char     *image_name,
 {
   static ActionAreaItem mbox_action_items[2] =
   {
-    { "Close", gdisplay_close_warning_callback, NULL, NULL },
-    { "Cancel", gdisplay_cancel_warning_callback, NULL, NULL }
+    { N_("Close"), gdisplay_close_warning_callback, NULL, NULL },
+    { N_("Cancel"), gdisplay_cancel_warning_callback, NULL, NULL }
   };
   GtkWidget *mbox;
   GtkWidget *vbox;
@@ -339,7 +340,7 @@ gdisplay_close_warning_dialog (char     *image_name,
       return;
     }
 
-  menus_set_sensitive ("<Image>/File/Close", FALSE);
+  menus_set_sensitive (_("<Image>/File/Close"), FALSE);
 
   warning_dialog = mbox = gtk_dialog_new ();
   /* should this be image_window or the actual image name??? */
@@ -362,7 +363,7 @@ gdisplay_close_warning_dialog (char     *image_name,
   gtk_widget_show (vbox);
 
   warning_buf = (char *) g_malloc (strlen (image_name) + 50);
-  sprintf (warning_buf, "Changes made to %s.  Close anyway?", image_name);
+  sprintf (warning_buf, _("Changes were made to %s.  Close anyway?"), image_name);
   label = gtk_label_new (warning_buf);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);

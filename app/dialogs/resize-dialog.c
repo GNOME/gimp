@@ -21,6 +21,8 @@
 #include "appenv.h"
 #include "resize.h"
 
+#include "libgimp/gimpintl.h"
+
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 #define DRAWING_AREA_SIZE 200
 #define TEXT_WIDTH 35
@@ -101,11 +103,11 @@ resize_widget_new (ResizeType type,
   switch (type)
     {
     case ScaleWidget:
-      resize->resize_widget = gtk_frame_new ("Scale");
+      resize->resize_widget = gtk_frame_new (_("Scale"));
       table = gtk_table_new (4, 2, TRUE);
       break;
     case ResizeWidget:
-      resize->resize_widget = gtk_frame_new ("Resize");
+      resize->resize_widget = gtk_frame_new (_("Resize"));
       table = gtk_table_new (6, 2, TRUE);
       break;
     }
@@ -121,7 +123,7 @@ resize_widget_new (ResizeType type,
 
   /*  the width label and entry  */
   sprintf (size, "%d", width);
-  label = gtk_label_new ("New width:");
+  label = gtk_label_new (_("New width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -138,7 +140,7 @@ resize_widget_new (ResizeType type,
 
   /*  the height label and entry  */
   sprintf (size, "%d", height);
-  label = gtk_label_new ("New height:");
+  label = gtk_label_new (_("New height:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -155,7 +157,7 @@ resize_widget_new (ResizeType type,
 
   /*  the x scale ratio label and entry  */
   sprintf (ratio_text, "%0.4f", resize->ratio_x);
-  label = gtk_label_new ("X ratio:");
+  label = gtk_label_new (_("X ratio:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -172,7 +174,7 @@ resize_widget_new (ResizeType type,
 
   /*  the y scale ratio label and entry  */
   sprintf (ratio_text, "%0.4f", resize->ratio_y);
-  label = gtk_label_new ("Y ratio:");
+  label = gtk_label_new (_("Y ratio:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -191,7 +193,7 @@ resize_widget_new (ResizeType type,
     {
       /*  the off_x label and entry  */
       sprintf (size, "%d", 0);
-      label = gtk_label_new ("X Offset:");
+      label = gtk_label_new (_("Offset X:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -208,7 +210,7 @@ resize_widget_new (ResizeType type,
 
       /*  the off_y label and entry  */
       sprintf (size, "%d", 0);
-      label = gtk_label_new ("Y Offset:");
+      label = gtk_label_new (_("Offset Y:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
@@ -225,7 +227,7 @@ resize_widget_new (ResizeType type,
     }
 
   /*  the constrain toggle button  */
-  constrain = gtk_check_button_new_with_label ("Constrain Ratio");
+  constrain = gtk_check_button_new_with_label (_("Constrain Ratio"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (constrain), private->constrain);
   gtk_box_pack_start (GTK_BOX (vbox), constrain, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (constrain), "toggled",

@@ -31,6 +31,8 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TARGET_HEIGHT  15
 #define TARGET_WIDTH   15
 
@@ -112,8 +114,8 @@ create_clone_options (void)
   int i;
   char *button_names[2] =
   {
-    "Image Source",
-    "Pattern Source"
+    N_("Image Source"),
+    N_("Pattern Source")
   };
 
   /*  the new options structure  */
@@ -125,12 +127,12 @@ create_clone_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Clone Tool Options");
+  label = gtk_label_new (_("Clone Tool Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /*  the radio frame and box  */
-  radio_frame = gtk_frame_new ("Source");
+  radio_frame = gtk_frame_new (_("Source"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -151,7 +153,7 @@ create_clone_options (void)
   gtk_widget_show (radio_frame);
 
   /*  the aligned toggle button  */
-  aligned_toggle = gtk_check_button_new_with_label ("Aligned");
+  aligned_toggle = gtk_check_button_new_with_label (_("Aligned"));
   gtk_box_pack_start (GTK_BOX (vbox), aligned_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (aligned_toggle), "toggled",
 		      (GtkSignalFunc) clone_toggle_update,
@@ -228,7 +230,7 @@ clone_paint_func (PaintCore *paint_core,
 
       if (clone_options->type == PatternClone)
 	if (!get_active_pattern ())
-	  g_message ("No patterns available for this operation.");
+	  g_message (_("No patterns available for this operation."));
       break;
 
     case FINISH_PAINT :
@@ -541,35 +543,35 @@ ProcArg clone_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_DRAWABLE,
     "src_drawable",
-    "the source drawable"
+    N_("the source drawable")
   },
   { PDB_INT32,
     "clone_type",
-    "the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }"
+    N_("the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }")
   },
   { PDB_FLOAT,
     "src_x",
-    "the x coordinate in the source image"
+    N_("the x coordinate in the source image")
   },
   { PDB_FLOAT,
     "src_y",
-    "the y coordinate in the source image"
+    N_("the y coordinate in the source image")
   },
   { PDB_INT32,
     "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
+    N_("number of stroke control points (count each coordinate as 2 points)")
   },
   { PDB_FLOATARRAY,
     "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
   }
 };
 
@@ -577,8 +579,8 @@ ProcArg clone_args[] =
 ProcRecord clone_proc =
 {
   "gimp_clone",
-  "Clone from the source to the dest drawable using the current brush",
-  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
+  N_("Clone from the source to the dest drawable using the current brush"),
+  N_("This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

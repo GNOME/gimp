@@ -39,6 +39,8 @@
 #include "gimprc.h"
 #include "docindex.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct _OverwriteBox OverwriteBox;
 
 struct _OverwriteBox
@@ -112,21 +114,21 @@ static GtkWidget *save_options = NULL;
  */
 static ProcArg file_load_args[] =
 {
-  { PDB_INT32, "run_mode", "Interactive, non-interactive." },
-  { PDB_STRING, "filename", "The name of the file to load." },
-  { PDB_STRING, "raw_filename", "The name entered." },
+  { PDB_INT32, "run_mode", N_("Interactive, non-interactive.") },
+  { PDB_STRING, "filename", N_("The name of the file to load.") },
+  { PDB_STRING, "raw_filename", N_("The name entered.") },
 };
 
 static ProcArg file_load_return_vals[] =
 {
-  { PDB_IMAGE, "image", "Output image." },
+  { PDB_IMAGE, "image", N_("Output image.") },
 };
 
 static ProcRecord file_load_proc =
 {
   "gimp_file_load",
-  "Loads a file by extension",
-  "This procedure invokes the correct file load handler according to the file's extension and/or prefix.  The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
+  N_("Loads a file by extension"),
+  N_("This procedure invokes the correct file load handler according to the file's extension and/or prefix.  The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL."),
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -142,18 +144,18 @@ static ProcRecord file_load_proc =
  */
 static ProcArg file_save_args[] =
 {
-  { PDB_INT32, "run_mode", "Interactive, non-interactive" },
-  { PDB_IMAGE, "image", "Input image" },
-  { PDB_DRAWABLE, "drawable", "Drawable to save" },
-  { PDB_STRING, "filename", "The name of the file to save the image in" },
-  { PDB_STRING, "raw_filename", "The name of the file to save the image in" }
+  { PDB_INT32, "run_mode", N_("Interactive, non-interactive") },
+  { PDB_IMAGE, "image", N_("Input image") },
+  { PDB_DRAWABLE, "drawable", N_("Drawable to save") },
+  { PDB_STRING, "filename", N_("The name of the file to save the image in") },
+  { PDB_STRING, "raw_filename", N_("The name of the file to save the image in") }
 };
 
 static ProcRecord file_save_proc =
 {
   "gimp_file_save",
-  "Saves a file by extension",
-  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
+  N_("Saves a file by extension"),
+  N_("This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL."),
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -170,19 +172,19 @@ static ProcRecord file_save_proc =
 
 static ProcArg file_temp_name_args[] =
 {
-  { PDB_STRING, "extension", "The extension the file will have." }
+  { PDB_STRING, "extension", N_("The extension the file will have.") }
 };
 
 static ProcArg file_temp_name_values[] =
 {
-  { PDB_STRING, "name", "The temp name." }
+  { PDB_STRING, "name", N_("The temp name.") }
 };
 
 static ProcRecord file_temp_name_proc =
 {
   "gimp_temp_name",
-  "Generates a unique filename.",
-  "Generates a unique filename using the temp path supplied in the user's gimprc.",
+  N_("Generates a unique filename."),
+  N_("Generates a unique filename using the temp path supplied in the user's gimprc."),
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -201,24 +203,24 @@ static ProcArg register_magic_load_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    "the name of the procedure to be used for loading" },
+    N_("the name of the procedure to be used for loading") },
   { PDB_STRING,
     "extensions",
-    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
+    N_("comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")") },
   { PDB_STRING,
     "prefixes",
-    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
+    N_("comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")") },
   { PDB_STRING,
     "magics",
-    "comma separated list of magic file information this handler can load (ie. \"0,string,GIF\")" },
+    N_("comma separated list of magic file information this handler can load (ie. \"0,string,GIF\")") },
 };
 
 static ProcRecord register_magic_load_handler_proc =
 {
   "gimp_register_magic_load_handler",
-  "Registers a file load handler procedure",
-  "Registers a procedural database procedure to be called to load files of a \
-particular file format using magic file information.",
+  N_("Registers a file load handler procedure"),
+  N_("Registers a procedural database procedure to be called to load files of a \
+      particular file format using magic file information."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -237,20 +239,20 @@ static ProcArg register_load_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    "the name of the procedure to be used for loading" },
+    N_("the name of the procedure to be used for loading") },
   { PDB_STRING,
     "extensions",
-    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
+    N_("comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")") },
   { PDB_STRING,
     "prefixes",
-    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
+    N_("comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")") },
 };
 
 static ProcRecord register_load_handler_proc =
 {
   "gimp_register_load_handler",
-  "Registers a file load handler procedure",
-  "Registers a procedural database procedure to be called to load files of a particular file format.",
+  N_("Registers a file load handler procedure"),
+  N_("Registers a procedural database procedure to be called to load files of a particular file format."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -269,20 +271,20 @@ static ProcArg register_save_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    "the name of the procedure to be used for saving" },
+    N_("the name of the procedure to be used for saving") },
   { PDB_STRING,
     "extensions",
-    "comma separated list of extensions this handler can save (ie. \"jpeg,jpg\")" },
+    N_("comma separated list of extensions this handler can save (ie. \"jpeg,jpg\")") },
   { PDB_STRING,
     "prefixes",
-    "comma separated list of prefixes this handler can save (ie. \"http:,ftp:\")" },
+    N_("comma separated list of prefixes this handler can save (ie. \"http:,ftp:\")") },
 };
 
 static ProcRecord register_save_handler_proc =
 {
   "gimp_register_save_handler",
-  "Registers a file save handler procedure",
-  "Registers a procedural database procedure to be called to save files in a particular file format.",
+  N_("Registers a file save handler procedure"),
+  N_("Registers a procedural database procedure to be called to save files in a particular file format."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -401,7 +403,7 @@ register_magic_load_handler_invoker (Argument *args)
 	       (proc->args[2].arg_type != PDB_STRING) ||
 	       (proc->values[0].arg_type != PDB_IMAGE)))
     {
-      g_message ("load handler \"%s\" does not take the standard load handler args",
+      g_message (_("load handler \"%s\" does not take the standard load handler args"),
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -413,7 +415,7 @@ register_magic_load_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_message ("attempt to register non-existant load handler \"%s\"",
+      g_message (_("attempt to register non-existant load handler \"%s\""),
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -447,7 +449,7 @@ register_save_handler_invoker (Argument *args)
 	       (proc->args[3].arg_type != PDB_STRING) ||
 	       (proc->args[4].arg_type != PDB_STRING)))
     {
-      g_message ("save handler \"%s\" does not take the standard save handler args",
+      g_message (_("save handler \"%s\" does not take the standard save handler args"),
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -459,7 +461,7 @@ register_save_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_message ("attempt to register non-existant save handler \"%s\"",
+      g_message (_("attempt to register non-existant save handler \"%s\""),
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -486,7 +488,7 @@ file_open_callback (GtkWidget *w,
 
   if (!fileload)
     {
-      fileload = gtk_file_selection_new ("Load Image");
+      fileload = gtk_file_selection_new (_("Load Image"));
       gtk_window_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
@@ -511,14 +513,14 @@ file_open_callback (GtkWidget *w,
 	return;
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), "./");
-      gtk_window_set_title (GTK_WINDOW (fileload), "Load Image");
+      gtk_window_set_title (GTK_WINDOW (fileload), _("Load Image"));
     }
 
   gdisplay = gdisplay_active ();
 
   if (!open_options)
     {
-      open_options = gtk_frame_new ("Open Options");
+      open_options = gtk_frame_new (_("Open Options"));
       gtk_frame_set_shadow_type (GTK_FRAME (open_options), GTK_SHADOW_ETCHED_IN);
 
       hbox = gtk_hbox_new (FALSE, 1);
@@ -526,7 +528,7 @@ file_open_callback (GtkWidget *w,
       gtk_container_add (GTK_CONTAINER (open_options), hbox);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Determine file type:");
+      label = gtk_label_new (_("Determine file type:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
@@ -579,7 +581,7 @@ file_save_as_callback (GtkWidget *w,
 
   if (!filesave)
     {
-      filesave = gtk_file_selection_new ("Save Image");
+      filesave = gtk_file_selection_new (_("Save Image"));
       gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
@@ -600,7 +602,7 @@ file_save_as_callback (GtkWidget *w,
 	return;
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), "./");
-      gtk_window_set_title (GTK_WINDOW (filesave), "Save Image");
+      gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
     }
 
   gdisplay = gdisplay_active ();
@@ -608,7 +610,7 @@ file_save_as_callback (GtkWidget *w,
 
   if (!save_options)
     {
-      save_options = gtk_frame_new ("Save Options");
+      save_options = gtk_frame_new (_("Save Options"));
       gtk_frame_set_shadow_type (GTK_FRAME (save_options), GTK_SHADOW_ETCHED_IN);
 
       hbox = gtk_hbox_new (FALSE, 1);
@@ -616,7 +618,7 @@ file_save_as_callback (GtkWidget *w,
       gtk_container_add (GTK_CONTAINER (save_options), hbox);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Determine file type:");
+      label = gtk_label_new (_("Determine file type:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
@@ -875,7 +877,7 @@ file_open_ok_callback (GtkWidget *w,
     }
   else
     {
-      s = g_string_new ("Open failed: ");
+      s = g_string_new (_("Open failed: "));
       g_string_append (s, raw_filename);
       FILE_ERR_MESSAGE (s->str);
       g_string_free (s, TRUE);
@@ -963,7 +965,7 @@ file_open_ok_callback (GtkWidget *w,
 		      }
 		    else
 		      {
-			s = g_string_new ("Open failed: ");
+			s = g_string_new (_("Open failed: "));
 			g_string_append (s, temp);
 			FILE_ERR_MESSAGE (s->str);
 			g_string_free (s, TRUE);
@@ -1029,7 +1031,7 @@ file_save_ok_callback (GtkWidget *w,
       else
 	{
 	  s = g_string_new (NULL);
-	  g_string_sprintf (s, "%s is an irregular file (%s)", raw_filename, g_strerror(errno));
+	  g_string_sprintf (s, _("%s is an irregular file (%s)"), raw_filename, g_strerror(errno));
 	}
     } else {
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
@@ -1041,7 +1043,7 @@ file_save_ok_callback (GtkWidget *w,
 	}
       else
 	{
-	  s = g_string_new ("Save failed: ");
+	  s = g_string_new (_("Save failed: "));
 	  g_string_append (s, raw_filename);
 	}
     }
@@ -1053,10 +1055,10 @@ file_save_ok_callback (GtkWidget *w,
 static void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive ("<Toolbox>/File/Open", FALSE);
-  menus_set_sensitive ("<Image>/File/Open", FALSE);
-  menus_set_sensitive ("<Image>/File/Save", FALSE);
-  menus_set_sensitive ("<Image>/File/Save as", FALSE);
+  menus_set_sensitive (_("<Toolbox>/File/Open"), FALSE);
+  menus_set_sensitive (_("<Image>/File/Open"), FALSE);
+  menus_set_sensitive (_("<Image>/File/Save"), FALSE);
+  menus_set_sensitive (_("<Image>/File/Save as"), FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1066,10 +1068,10 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
 
-  menus_set_sensitive ("<Toolbox>/File/Open", TRUE);
-  menus_set_sensitive ("<Image>/File/Open", TRUE);
-  menus_set_sensitive ("<Image>/File/Save", TRUE);
-  menus_set_sensitive ("<Image>/File/Save as", TRUE);
+  menus_set_sensitive (_("<Toolbox>/File/Open"), TRUE);
+  menus_set_sensitive (_("<Image>/File/Open"), TRUE);
+  menus_set_sensitive (_("<Image>/File/Save"), TRUE);
+  menus_set_sensitive (_("<Image>/File/Save as"), TRUE);
 
   return TRUE;
 }
@@ -1079,8 +1081,8 @@ file_overwrite (char *filename, char* raw_filename)
 {
   static ActionAreaItem obox_action_items[2] =
   {
-    { "Yes", file_overwrite_yes_callback, NULL, NULL },
-    { "No", file_overwrite_no_callback, NULL, NULL }
+    { N_("Yes"), file_overwrite_yes_callback, NULL, NULL },
+    { N_("No"), file_overwrite_no_callback, NULL, NULL }
   };
 
   OverwriteBox *overwrite_box;
@@ -1089,14 +1091,14 @@ file_overwrite (char *filename, char* raw_filename)
   char *overwrite_text;
 
   overwrite_box = (OverwriteBox *) g_malloc (sizeof (OverwriteBox));
-  overwrite_text = (char *) g_malloc (strlen (" exists, overwrite?") + strlen (filename) + 1);
-  sprintf (overwrite_text, "%s exists, overwrite?", filename);
+  overwrite_text = (char *) g_malloc (strlen (_(" exists, overwrite?")) + strlen (filename) + 1);
+  sprintf (overwrite_text, _("%s exists, overwrite?"), filename);
 
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
   overwrite_box->obox = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "file_exists", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), "File Exists!");
+  gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), _("File Exists!"));
   gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (overwrite_box->obox),
@@ -1145,7 +1147,7 @@ file_overwrite_yes_callback (GtkWidget *w,
       GtkWidget *fs;
 
       fs = filesave;
-      s = g_string_new ("Save failed: ");
+      s = g_string_new (_("Save failed: "));
       g_string_append (s, overwrite_box->raw_filename);
       FILE_ERR_MESSAGE (s->str);
       g_string_free (s, TRUE);

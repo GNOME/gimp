@@ -28,6 +28,8 @@
 #include "interface.h"
 #include "threshold.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TEXT_WIDTH 45
 #define HISTOGRAM_WIDTH 256
 #define HISTOGRAM_HEIGHT 150
@@ -292,7 +294,7 @@ tools_new_threshold ()
 
   /*  The tool options  */
   if (!threshold_options)
-    threshold_options = tools_register_no_options (THRESHOLD, "Threshold Options");
+    threshold_options = tools_register_no_options (THRESHOLD, _("Threshold Options"));
 
   /*  The threshold dialog  */
   if (!threshold_dialog)
@@ -339,7 +341,7 @@ threshold_initialize (GDisplay *gdisp)
 {
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Threshold does not operate on indexed drawables.");
+      g_message (_("Threshold does not operate on indexed drawables."));
       return;
     }
 
@@ -372,8 +374,8 @@ threshold_initialize (GDisplay *gdisp)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", threshold_ok_callback, NULL, NULL },
-  { "Cancel", threshold_cancel_callback, NULL, NULL }
+  { N_("OK"), threshold_ok_callback, NULL, NULL },
+  { N_("Cancel"), threshold_cancel_callback, NULL, NULL }
 };
 
 static ThresholdDialog *
@@ -394,7 +396,7 @@ threshold_new_dialog ()
   /*  The shell and main vbox  */
   td->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (td->shell), "threshold", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (td->shell), "Threshold");
+  gtk_window_set_title (GTK_WINDOW (td->shell), _("Threshold"));
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (td->shell), "delete_event",
@@ -409,7 +411,7 @@ threshold_new_dialog ()
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Threshold Range: ");
+  label = gtk_label_new (_("Threshold Range: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -454,7 +456,7 @@ threshold_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), td->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -484,7 +486,7 @@ static void
 threshold_preview (ThresholdDialog *td)
 {
   if (!td->image_map)
-    g_message ("threshold_preview(): No image map");
+    g_message (_("threshold_preview(): No image map"));
   image_map_apply (td->image_map, threshold, (void *) td);
 }
 
@@ -611,27 +613,27 @@ ProcArg threshold_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "low_threshold",
-    "the low threshold value: (0 <= low_threshold <= 255)"
+    N_("the low threshold value: (0 <= low_threshold <= 255)")
   },
   { PDB_INT32,
     "high_threshold",
-    "the high threshold value: (0 <= high_threshold <= 255)"
+    N_("the high threshold value: (0 <= high_threshold <= 255)")
   }
 };
 
 ProcRecord threshold_proc =
 {
   "gimp_threshold",
-  "Threshold the specified drawable",
-  "This procedures generates a threshold map of the specified drawable.  All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",
+  N_("Threshold the specified drawable"),
+  N_("This procedures generates a threshold map of the specified drawable.  All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

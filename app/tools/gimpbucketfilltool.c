@@ -31,6 +31,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  the Bucket Fill structures  */
 typedef enum
 {
@@ -141,8 +143,8 @@ create_bucket_options (void)
   int i;
   char *button_names[2] =
   {
-    "Color Fill",
-    "Pattern Fill"
+    N_("Color Fill"),
+    N_("Pattern Fill")
   };
 
   /*  the new options structure  */
@@ -157,7 +159,7 @@ create_bucket_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Bucket Fill Options");
+  label = gtk_label_new (_("Bucket Fill Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -165,7 +167,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Fill Opacity");
+  label = gtk_label_new (_("Fill Opacity"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -184,7 +186,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Fill Threshold");
+  label = gtk_label_new (_("Fill Threshold"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -203,7 +205,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Mode:");
+  label = gtk_label_new (_("Mode:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   menu = create_paint_mode_menu (bucket_fill_paint_mode_callback,NULL);
   option_menu = gtk_option_menu_new ();
@@ -214,7 +216,7 @@ create_bucket_options (void)
   gtk_widget_show (hbox);
 
   /*  the radio frame and box  */
-  radio_frame = gtk_frame_new ("Fill Type");
+  radio_frame = gtk_frame_new (_("Fill Type"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -236,7 +238,7 @@ create_bucket_options (void)
   gtk_widget_show (radio_frame);
 
   /*  the sample merged toggle  */
-  sample_merged_toggle = gtk_check_button_new_with_label ("Sample Merged");
+  sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
   gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
 		      (GtkSignalFunc) bucket_fill_toggle_update,
 		      &options->sample_merged);
@@ -328,7 +330,7 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	g_message ("Bucket Fill operation failed.");
+	g_message (_("Bucket Fill operation failed."));
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -425,7 +427,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 
       if (!pattern)
 	{
-	  g_message ("No available patterns for this operation.");
+	  g_message (_("No available patterns for this operation."));
 	  return;
 	}
 
@@ -698,47 +700,47 @@ ProcArg bucket_fill_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "The image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "The affected drawable"
+    N_("the affected drawable")
   },
   { PDB_INT32,
     "fill_mode",
-    "The type of fill: { FG-BUCKET-FILL (0), BG-BUCKET-FILL (1), PATTERN-BUCKET-FILL (2) }"
+    N_("the type of fill: { FG-BUCKET-FILL (0), BG-BUCKET-FILL (1), PATTERN-BUCKET-FILL (2) }")
   },
   { PDB_INT32,
     "paint_mode",
-    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    N_("the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }")
   },
   { PDB_FLOAT,
     "opacity",
-    "The opacity of the final bucket fill (0 <= opacity <= 100)"
+    N_("the opacity of the final bucket fill (0 <= opacity <= 100)")
   },
   { PDB_FLOAT,
     "threshold",
-    "The threshold determines how extensive the seed fill will be.  It's value is specified in terms of intensity levels (0 <= threshold <= 255).  This parameter is only valid when there is no selection in the specified image."
+    N_("the threshold determines how extensive the seed fill will be.  It's value is specified in terms of intensity levels (0 <= threshold <= 255).  This parameter is only valid when there is no selection in the specified image.")
   },
   { PDB_INT32,
     "sample_merged",
-    "use the composite image, not the drawable"
+    N_("use the composite image, not the drawable")
   },
   { PDB_FLOAT,
     "x",
-    "The x coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
+    N_("the x coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image.")
   },
   { PDB_FLOAT,
     "y",
-    "The y coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
+    N_("the y coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image.")
   },
 };
 
 ProcRecord bucket_fill_proc =
 {
   "gimp_bucket_fill",
-  "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
-  "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern.  If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter.  If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of merged sampling, the x,y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
+  N_("Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates."),
+  N_("This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern.  If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter.  If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of merged sampling, the x,y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -23,6 +23,8 @@
 #include "tile_manager_pvt.h"
 #include "tile_pvt.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 static int tile_manager_get_tile_num (TileManager *tm,
 				       int xpixel,
 				       int ypixel);
@@ -306,7 +308,7 @@ tile_manager_map_tile (TileManager *tm,
   if ((xpixel < 0) || (xpixel >= tm->width) ||
       (ypixel < 0) || (ypixel >= tm->height))
     {
-      g_warning ("tile_manager_map_tile: tile co-ord out of range.");
+      g_warning (_("tile_manager_map_tile: tile co-ord out of range."));
       return;
     }
 
@@ -334,7 +336,7 @@ tile_manager_map (TileManager *tm,
 
   if ((tile_num < 0) || (tile_num >= ntiles))
     {
-      g_warning ("tile_manager_map: tile out of range.");
+      g_warning (_("tile_manager_map: tile out of range."));
       return;
     }
 
@@ -380,7 +382,7 @@ tile_manager_map (TileManager *tm,
   if ((*tile_ptr)->ewidth  != srctile->ewidth ||
       (*tile_ptr)->eheight != srctile->eheight ||
       (*tile_ptr)->bpp     != srctile->bpp) {
-    g_warning ("tile_manager_map: nonconformant map (%p -> %p)",
+    g_warning (_("tile_manager_map: nonconformant map (%p -> %p)"),
 	       srctile, *tile_ptr);
   }
   tile_detach (*tile_ptr, tm, tile_num);
@@ -461,7 +463,7 @@ tile_manager_get_tile_coordinates (TileManager *tm, Tile *tile, int *x, int *y)
 
   if (tl == NULL) 
     {
-      g_warning ("tile_manager_get_tile_coordinates: tile not attached to manager");
+      g_warning (_("tile_manager_get_tile_coordinates: tile not attached to manager"));
       return;
     }
 
@@ -482,7 +484,7 @@ tile_manager_map_over_tile (TileManager *tm, Tile *tile, Tile *srctile)
 
   if (tl == NULL) 
     {
-      g_warning ("tile_manager_map_over_tile: tile not attached to manager");
+      g_warning (_("tile_manager_map_over_tile: tile not attached to manager"));
       return;
     }
 

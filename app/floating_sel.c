@@ -31,6 +31,8 @@
 #include "paint_funcs.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"		/* ick. */
 
@@ -103,7 +105,7 @@ floating_sel_anchor (Layer *layer)
     return;
   if (! layer_is_floating_sel (layer))
     {
-      g_message ("Cannot anchor this layer because\nit is not a floating selection.");
+      g_message (_("Cannot anchor this layer because\nit is not a floating selection."));
       return;
     }
 
@@ -169,9 +171,9 @@ floating_sel_to_layer (Layer *layer)
   if (drawable_channel (layer->fs.drawable) ||
       drawable_layer_mask (layer->fs.drawable))
     {
-      g_message ("Cannot create a new layer from the floating\n"
+      g_message (_("Cannot create a new layer from the floating\n"
 		 "selection because it belongs to a\n"
-		 "layer mask or channel.");
+		 "layer mask or channel."));
       return;
     }
 

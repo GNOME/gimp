@@ -51,6 +51,8 @@
 #include "tools/delete.xpm"
 #include "tools/delete_is.xpm"
 
+#include "libgimp/gimpintl.h"
+
 #include "channel_pvt.h"
 
 
@@ -159,17 +161,17 @@ static int button_last_id = 0;
 
 static MenuItem channels_ops[] =
 {
-  { "New Channel", 'N', GDK_CONTROL_MASK,
+  { N_("New Channel"), 'N', GDK_CONTROL_MASK,
     channels_dialog_new_channel_callback, NULL, NULL, NULL },
-  { "Raise Channel", 'F', GDK_CONTROL_MASK,
+  { N_("Raise Channel"), 'F', GDK_CONTROL_MASK,
     channels_dialog_raise_channel_callback, NULL, NULL, NULL },
-  { "Lower Channel", 'B', GDK_CONTROL_MASK,
+  { N_("Lower Channel"), 'B', GDK_CONTROL_MASK,
     channels_dialog_lower_channel_callback, NULL, NULL, NULL },
-  { "Duplicate Channel", 'C', GDK_CONTROL_MASK,
+  { N_("Duplicate Channel"), 'C', GDK_CONTROL_MASK,
     channels_dialog_duplicate_channel_callback, NULL, NULL, NULL },
-  { "Delete Channel", 'X', GDK_CONTROL_MASK,
+  { N_("Delete Channel"), 'X', GDK_CONTROL_MASK,
     channels_dialog_delete_channel_callback, NULL, NULL, NULL },
-  { "Channel To Selection", 'S', GDK_CONTROL_MASK,
+  { N_("Channel To Selection"), 'S', GDK_CONTROL_MASK,
     channels_dialog_channel_to_sel_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -177,11 +179,11 @@ static MenuItem channels_ops[] =
 /* the ops buttons */
 static OpsButton channels_ops_buttons[] =
 {
-  { new_xpm, new_is_xpm, channels_dialog_new_channel_callback, "New Channel", NULL, NULL, NULL, NULL, NULL, NULL },
-  { raise_xpm, raise_is_xpm, channels_dialog_raise_channel_callback, "Raise Channel", NULL, NULL, NULL, NULL, NULL, NULL },
-  { lower_xpm, lower_is_xpm, channels_dialog_lower_channel_callback, "Lower Channel", NULL, NULL, NULL, NULL, NULL, NULL },
-  { duplicate_xpm, duplicate_is_xpm, channels_dialog_duplicate_channel_callback, "Duplicate Channel", NULL, NULL, NULL, NULL, NULL, NULL },
-  { delete_xpm, delete_is_xpm, channels_dialog_delete_channel_callback, "Delete Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { new_xpm, new_is_xpm, channels_dialog_new_channel_callback, N_("New Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
+  { raise_xpm, raise_is_xpm, channels_dialog_raise_channel_callback, N_("Raise Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
+  { lower_xpm, lower_is_xpm, channels_dialog_lower_channel_callback, N_("Lower Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
+  { duplicate_xpm, duplicate_is_xpm, channels_dialog_duplicate_channel_callback, N_("Duplicate Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
+  { delete_xpm, delete_is_xpm, channels_dialog_delete_channel_callback, N_("Delete Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
   { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
 
@@ -608,7 +610,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	      gtk_list_select_item (GTK_LIST (channelsD->channel_list), 2);
 	      break;
 	    case Auxillary:
-	      g_error ("error in %s at %d: this shouldn't happen.",
+	      g_error (_("error in %s at %d: this shouldn't happen."),
 		       __FILE__, __LINE__);
 	      break;
 	    }
@@ -662,7 +664,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
 	      gtk_list_unselect_item (GTK_LIST (channelsD->channel_list), 2);
 	      break;
 	    case Auxillary:
-	      g_error ("error in %s at %d: this shouldn't happen.",
+	      g_error (_("error in %s at %d: this shouldn't happen."),
 		       __FILE__, __LINE__);
 	      break;
 	    }
@@ -1065,11 +1067,11 @@ create_channel_widget (GImage      *gimage,
   /*  the channel name label */
   switch (channel_widget->type)
     {
-    case Red:       channel_widget->label = gtk_label_new ("Red"); break;
-    case Green:     channel_widget->label = gtk_label_new ("Green"); break;
-    case Blue:      channel_widget->label = gtk_label_new ("Blue"); break;
-    case Gray:      channel_widget->label = gtk_label_new ("Gray"); break;
-    case Indexed:   channel_widget->label = gtk_label_new ("Indexed"); break;
+    case Red:       channel_widget->label = gtk_label_new (_("Red")); break;
+    case Green:     channel_widget->label = gtk_label_new (_("Green")); break;
+    case Blue:      channel_widget->label = gtk_label_new (_("Blue")); break;
+    case Gray:      channel_widget->label = gtk_label_new (_("Gray")); break;
+    case Indexed:   channel_widget->label = gtk_label_new (_("Indexed")); break;
     case Auxillary: channel_widget->label = gtk_label_new (channel_get_name(channel)); break;
     }
 
@@ -1772,8 +1774,8 @@ channels_dialog_new_channel_query (GimpImage* gimage)
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", new_channel_query_ok_callback, NULL, NULL },
-    { "Cancel", new_channel_query_cancel_callback, NULL, NULL }
+    { N_("OK"), new_channel_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), new_channel_query_cancel_callback, NULL, NULL }
   };
   NewChannelOptions *options;
   GtkWidget *vbox;
@@ -1791,7 +1793,7 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "new_channel_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "New Channel Options");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Channel Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
@@ -1809,7 +1811,7 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
-  label = gtk_label_new ("Channel name: ");
+  label = gtk_label_new (_("Channel name: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -1819,11 +1821,11 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   gtk_widget_set_usize (options->name_entry, 75, 0);
   gtk_table_attach (GTK_TABLE (table), options->name_entry, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry), (channel_name ? channel_name : "New Channel"));
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry), (channel_name ? channel_name : _("New Channel")));
   gtk_widget_show (options->name_entry);
 
   /*  the opacity scale  */
-  label = gtk_label_new ("Fill Opacity: ");
+  label = gtk_label_new (_("Fill Opacity: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -1945,8 +1947,8 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", edit_channel_query_ok_callback, NULL, NULL },
-    { "Cancel", edit_channel_query_cancel_callback, NULL, NULL }
+    { N_("OK"), edit_channel_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), edit_channel_query_cancel_callback, NULL, NULL }
   };
   EditChannelOptions *options;
   GtkWidget *vbox;
@@ -1970,7 +1972,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_channel_atributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Edit Channel Attributes");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit Channel Attributes"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /* deal with the wm close signal */
@@ -1990,7 +1992,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, 0, 2, 2);
-  label = gtk_label_new ("Channel name:");
+  label = gtk_label_new (_("Channel name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   options->name_entry = gtk_entry_new ();
@@ -2005,7 +2007,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, 0, 2, 2);
 
-  label = gtk_label_new ("Fill Opacity");
+  label = gtk_label_new (_("Fill Opacity"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -43,6 +43,8 @@
 #include "undo.h"
 #include "layer_pvt.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 #define OVERHEAD          25  /*  in units of pixel area  */
 #define EPSILON           5
 
@@ -159,13 +161,13 @@ gdisplay_format_title (GimpImage *gimage,
   switch (gimage_base_type (gimage))
     {
     case RGB:
-      image_type_str = (empty) ? "RGB-empty" : "RGB";
+      image_type_str = (empty) ? _("RGB-empty") : _("RGB");
       break;
     case GRAY:
-      image_type_str = (empty) ? "grayscale-empty" : "grayscale";
+      image_type_str = (empty) ? _("grayscale-empty") : _("grayscale");
       break;
     case INDEXED:
-      image_type_str = (empty) ? "indexed-empty" : "indexed";
+      image_type_str = (empty) ? _("indexed-empty") : _("indexed");
       break;
     default:
       image_type_str = NULL;
@@ -207,11 +209,11 @@ gdisplay_delete (GDisplay *gdisp)
      deactivate the idlerendering thread before deletion! */
   if (gdisp->idle_render.active)
     {
-      printf("Deleted idlerendering gdisp %p...\n", gdisp); fflush(stdout);
-      printf("\tIdlerender stops now!\n"); fflush(stdout);
+      printf(_("Deleted idlerendering gdisp %p...\n"), gdisp); fflush(stdout);
+      printf(_("\tIdlerender stops now!\n")); fflush(stdout);
       gtk_idle_remove (gdisp->idle_render.idleid);
       gdisp->idle_render.active = FALSE;
-      printf("\tDeletion finished.\n"); fflush(stdout);
+      printf(_("\tDeletion finished.\n")); fflush(stdout);
     }
   
   if (gdisp->scroll_gc)
@@ -436,7 +438,7 @@ gdisplay_idlerender_init (GDisplay *gdisp)
     {
       if (gdisp->idle_render.update_areas == NULL)
 	{
-	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
+	  g_warning (_("Wanted to start idlerender thread with no update_areas. (+memleak)"));
 	  return;
 	}
       
@@ -1314,57 +1316,57 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       type = drawable_type (drawable);
     }
 
-  menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp && alpha);
-  menus_set_sensitive ("<Image>/Layers/Lower Layer", !fs && !aux && lp && alpha);
-  menus_set_sensitive ("<Image>/Layers/Anchor Layer", fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Merge Visible Layers", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Flatten Image", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp && alpha);
-  menus_set_sensitive ("<Image>/Layers/Mask To Selection", !aux && lm && lp);
-  menus_set_sensitive ("<Image>/Layers/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
+  menus_set_sensitive (_("<Image>/Layers/Raise Layer"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Lower Layer"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Anchor Layer"), fs && !aux && lp);
+  menus_set_sensitive (_("<Image>/Layers/Merge Visible Layers"), !fs && !aux && lp);
+  menus_set_sensitive (_("<Image>/Layers/Flatten Image"), !fs && !aux && lp);
+  menus_set_sensitive (_("<Image>/Layers/Alpha To Selection"), !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Mask To Selection"), !aux && lm && lp);
+  menus_set_sensitive (_("<Image>/Layers/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_sensitive ("<Image>/Image/RGB", (base_type != RGB));
-  menus_set_sensitive ("<Image>/Image/Grayscale", (base_type != GRAY));
-  menus_set_sensitive ("<Image>/Image/Indexed", (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/RGB"), (base_type != RGB));
+  menus_set_sensitive (_("<Image>/Image/Grayscale"), (base_type != GRAY));
+  menus_set_sensitive (_("<Image>/Image/Indexed"), (base_type != INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Threshold", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Posterize", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Equalize", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Invert", (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Threshold"), (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Posterize") , (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Equalize"), (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Invert"), (base_type != INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Color Balance", (base_type == RGB));
-  menus_set_sensitive ("<Image>/Image/Colors/Brightness-Contrast", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Hue-Saturation", (base_type == RGB));
-  menus_set_sensitive ("<Image>/Image/Colors/Curves", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Levels", (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Color Balance"), (base_type == RGB));
+  menus_set_sensitive (_("<Image>/Image/Colors/Brightness-Contrast"), (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Hue-Saturation"), (base_type == RGB));
+  menus_set_sensitive (_("<Image>/Image/Colors/Curves"), (base_type != INDEXED));
+  menus_set_sensitive (_("<Image>/Image/Colors/Levels"), (base_type != INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
+  menus_set_sensitive (_("<Image>/Image/Colors/Desaturate"), (base_type == RGB));
 
-  menus_set_sensitive ("<Image>/Image/Alpha/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
+  menus_set_sensitive (_("<Image>/Image/Alpha/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_sensitive ("<Image>/Select", lp);
-  menus_set_sensitive ("<Image>/Edit/Cut", lp);
-  menus_set_sensitive ("<Image>/Edit/Copy", lp);
-  menus_set_sensitive ("<Image>/Edit/Paste", lp);
-  menus_set_sensitive ("<Image>/Edit/Paste Into", lp);
-  menus_set_sensitive ("<Image>/Edit/Clear", lp);
-  menus_set_sensitive ("<Image>/Edit/Fill", lp);
-  menus_set_sensitive ("<Image>/Edit/Stroke", lp);
-  menus_set_sensitive ("<Image>/Edit/Cut Named", lp);
-  menus_set_sensitive ("<Image>/Edit/Copy Named", lp);
-  menus_set_sensitive ("<Image>/Edit/Paste Named", lp);
-  menus_set_sensitive ("<Image>/Image/Colors", lp);
-  menus_set_sensitive ("<Image>/Image/Channel Ops/Offset", lp);
-  menus_set_sensitive ("<Image>/Image/Histogram", lp);
-  menus_set_sensitive ("<Image>/Filters", lp);
+  menus_set_sensitive (_("<Image>/Select"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Cut"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Copy"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Paste"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Paste Into"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Clear"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Fill"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Stroke"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Cut Named"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Copy Named"), lp);
+  menus_set_sensitive (_("<Image>/Edit/Paste Named"), lp);
+  menus_set_sensitive (_("<Image>/Image/Colors"), lp);
+  menus_set_sensitive (_("<Image>/Image/Channel Ops/Offset"), lp);
+  menus_set_sensitive (_("<Image>/Image/Histogram"), lp);
+  menus_set_sensitive (_("<Image>/Filters"), lp);
 
   /* save selection to channel */
-  menus_set_sensitive ("<Image>/Select/Save To Channel", !fs);
+  menus_set_sensitive (_("<Image>/Select/Save To Channel"), !fs);
 
-  menus_set_state ("<Image>/View/Toggle Rulers", GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
-  menus_set_state ("<Image>/View/Toggle Guides", gdisp->draw_guides);
-  menus_set_state ("<Image>/View/Snap To Guides", gdisp->snap_to_guides);
-  menus_set_state ("<Image>/View/Toggle Statusbar", GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
+  menus_set_state (_("<Image>/View/Toggle Rulers"), GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
+  menus_set_state (_("<Image>/View/Toggle Guides"), gdisp->draw_guides);
+  menus_set_state (_("<Image>/View/Snap To Guides"), gdisp->snap_to_guides);
+  menus_set_state (_("<Image>/View/Toggle Statusbar"), GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
 
   plug_in_set_menu_sensitivity (type);
 }
@@ -1752,7 +1754,7 @@ gdisplays_flush_whenever (gboolean now)
   /*  this prevents multiple recursive calls to this procedure  */
   if (flushing == TRUE)
     {
-      g_warning ("gdisplays_flush() called recursively.");
+      g_warning (_("gdisplays_flush() called recursively."));
       return;
     }
 

@@ -31,6 +31,8 @@
 #include "interface.h"
 #include "curves.h"
 
+#include "libgimp/gimpintl.h"
+
 #define ROUND(x)  ((int) ((x) + 0.5))
 
 #define GRAPH              0x1
@@ -274,7 +276,7 @@ tools_new_curves ()
 
   /*  The tool options  */
   if (!curves_options)
-    curves_options = tools_register_no_options (CURVES, "Curves Options");
+    curves_options = tools_register_no_options (CURVES, _("Curves Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Curves *) g_malloc (sizeof (Curves));
@@ -314,25 +316,25 @@ tools_free_curves (Tool *tool)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Reset", curves_reset_callback, NULL, NULL },
-  { "OK", curves_ok_callback, NULL, NULL },
-  { "Cancel", curves_cancel_callback, NULL, NULL }
+  { N_("Reset"), curves_reset_callback, NULL, NULL },
+  { N_("OK"), curves_ok_callback, NULL, NULL },
+  { N_("Cancel"), curves_cancel_callback, NULL, NULL }
 };
 
 static MenuItem channel_items[] =
 {
-  { "Value", 0, 0, curves_value_callback, NULL, NULL, NULL },
-  { "Red", 0, 0, curves_red_callback, NULL, NULL, NULL },
-  { "Green", 0, 0, curves_green_callback, NULL, NULL, NULL },
-  { "Blue", 0, 0, curves_blue_callback, NULL, NULL, NULL },
-  { "Alpha", 0, 0, curves_alpha_callback, NULL, NULL, NULL },
+  { N_("Value"), 0, 0, curves_value_callback, NULL, NULL, NULL },
+  { N_("Red"), 0, 0, curves_red_callback, NULL, NULL, NULL },
+  { N_("Green"), 0, 0, curves_green_callback, NULL, NULL, NULL },
+  { N_("Blue"), 0, 0, curves_blue_callback, NULL, NULL, NULL },
+  { N_("Alpha"), 0, 0, curves_alpha_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
 static MenuItem curve_type_items[] =
 {
-  { "Smooth", 0, 0, curves_smooth_callback, NULL, NULL, NULL },
-  { "Free", 0, 0, curves_free_callback, NULL, NULL, NULL },
+  { N_("Smooth"), 0, 0, curves_smooth_callback, NULL, NULL, NULL },
+  { N_("Free"), 0, 0, curves_free_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -343,7 +345,7 @@ curves_initialize (GDisplay *gdisp)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Curves for indexed drawables cannot be adjusted.");
+      g_message (_("Curves for indexed drawables cannot be adjusted."));
       return;
     }
 
@@ -453,7 +455,7 @@ curves_new_dialog ()
   /*  The shell and main vbox  */
   cd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (cd->shell), "curves", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cd->shell), "Curves");
+  gtk_window_set_title (GTK_WINDOW (cd->shell), _("Curves"));
 
   gtk_signal_connect (GTK_OBJECT (cd->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (curves_delete_callback),
@@ -467,7 +469,7 @@ curves_new_dialog ()
   channel_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), channel_hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Modify Curves for Channel: ");
+  label = gtk_label_new (_("Modify Curves for Channel: "));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
 
   menu = build_menu (channel_items, NULL);
@@ -541,7 +543,7 @@ curves_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The option menu for selecting the drawing method  */
-  label = gtk_label_new ("Curve Type: ");
+  label = gtk_label_new (_("Curve Type: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
   menu = build_menu (curve_type_items, NULL);
@@ -554,7 +556,7 @@ curves_new_dialog ()
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), cd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -814,7 +816,7 @@ static void
 curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
-    g_message ("curves_preview(): No image map");
+    g_message (_("curves_preview(): No image map"));
 
   active_tool->preserve = TRUE;  /* Going to dirty the display... */
 
@@ -1298,31 +1300,31 @@ ProcArg curves_spline_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), ALPHA (4), GRAY (0) }"
+    N_("the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), ALPHA (4), GRAY (0) }")
   },
   { PDB_INT32,
     "num_points",
-    "the number of values in the control point array ( 3 < num_points <= 32 )"
+    N_("the number of values in the control point array ( 3 < num_points <= 32 )")
   },
   { PDB_INT8ARRAY,
     "control_pts",
-    "the spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }"
+    N_("the spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }")
   }
 };
 
 ProcRecord curves_spline_proc =
 {
   "gimp_curves_spline",
-  "Modifies the intensity curve(s) for specified drawable",
-  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve.  Use the 'gimp_curves_explicit' function to explicitly modify intensity levels.",
+  N_("Modifies the intensity curve(s) for specified drawable"),
+  N_("Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve.  Use the 'gimp_curves_explicit' function to explicitly modify intensity levels."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1456,31 +1458,31 @@ ProcArg curves_explicit_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }"
+    N_("the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }")
   },
   { PDB_INT32,
     "num_bytes",
-    "the number of bytes in the new curve (always 256)"
+    N_("the number of bytes in the new curve (always 256)")
   },
   { PDB_INT8ARRAY,
     "curve",
-    "the explicit curve"
+    N_("the explicit curve")
   }
 };
 
 ProcRecord curves_explicit_proc =
 {
   "gimp_curves_explicit",
-  "Modifies the intensity curve(s) for specified drawable",
-  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified.  Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines.",
+  N_("Modifies the intensity curve(s) for specified drawable"),
+  N_("Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified.  Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -30,6 +30,8 @@
 #include "config.h"
 #include "regex.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
 
@@ -107,10 +109,10 @@ static char *type_str[] =
 
 static char *proc_type_str[] =
 {
-  "Internal GIMP procedure",
-  "GIMP Plug-In",
-  "GIMP Extension",
-  "Temporary Procedure"
+  N_("Internal GIMP procedure"),
+  N_("GIMP Plug-In"),
+  N_("GIMP Extension"),
+  N_("Temporary Procedure")
 };
 
 /************************/
@@ -120,15 +122,15 @@ static ProcArg procedural_db_dump_args[] =
 {
   { PDB_STRING,
     "filename",
-    "the dump filename"
+    N_("the dump filename")
   }
 };
 
 ProcRecord procedural_db_dump_proc =
 {
   "gimp_procedural_db_dump",
-  "Dumps the current contents of the procedural database",
-  "This procedure dumps the contents of the procedural database to the specified file.  The file will contain all of the information provided for each registered procedure.  This file is in a format appropriate for use with the supplied \"pdb_self_doc.el\" Elisp script, which generates a texinfo document.",
+  N_("Dumps the current contents of the procedural database"),
+  N_("This procedure dumps the contents of the procedural database to the specified file.  The file will contain all of the information provided for each registered procedure.  This file is in a format appropriate for use with the supplied \"pdb_self_doc.el\" Elisp script, which generates a texinfo document."),
   "Spencer Kimball & Josh MacDonald",
   "Spencer Kimball & Josh MacDonald & Peter Mattis",
   "1995-1996",
@@ -154,7 +156,7 @@ static ProcArg procedural_db_proc_info_args[] =
 {
   { PDB_STRING,
     "procedure",
-    "the procedure name"
+    N_("the procedure name")
   }
 };
 
@@ -162,43 +164,43 @@ static ProcArg procedural_db_proc_info_out_args[] =
 {
   { PDB_STRING,
     "blurb",
-    "a short blurb"
+    N_("a short blurb")
   },
   { PDB_STRING,
     "help",
-    "detailed procedure help"
+    N_("detailed procedure help")
   },
   { PDB_STRING,
     "author",
-    "author(s) of the procedure"
+    N_("author(s) of the procedure")
   },
   { PDB_STRING,
     "copyright",
-    "the copyright"
+    N_("the copyright")
   },
   { PDB_STRING,
     "date",
-    "copyright date"
+    N_("copyright date")
   },
   { PDB_INT32,
     "proc_type",
-    "the procedure type: { INTERNAL (0), PLUGIN (1), EXTENSION (2) }",
+    N_("the procedure type: { INTERNAL (0), PLUGIN (1), EXTENSION (2) }"),
   },
   { PDB_INT32,
     "num_args",
-    "the number of input arguments"
+    N_("the number of input arguments")
   },
   { PDB_INT32,
     "num_rvals",
-    "the number of return values"
+    N_("the number of return values")
   }
 };
 
 ProcRecord procedural_db_proc_info_proc =
 {
   "gimp_procedural_db_proc_info",
-  "Queries the procedural database for information on the specified procedure",
-  "This procedure returns information on the specified procedure.  A short blurb, detailed help, author(s), copyright information, procedure type, number of input, and number of return values are returned.  For specific information on each input argument and return value, use the 'gimp_procedural_db_query_proc_arg' and 'gimp_procedural_db_query_proc_val' procedures",
+  N_("Queries the procedural database for information on the specified procedure"),
+  N_("This procedure returns information on the specified procedure.  A short blurb, detailed help, author(s), copyright information, procedure type, number of input, and number of return values are returned.  For specific information on each input argument and return value, use the 'gimp_procedural_db_query_proc_arg' and 'gimp_procedural_db_query_proc_val' procedures"),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -224,11 +226,11 @@ static ProcArg procedural_db_proc_arg_args[] =
 {
   { PDB_STRING,
     "procedure",
-    "the procedure name"
+    N_("the procedure name")
   },
   { PDB_INT32,
     "arg_num",
-    "the argument number"
+    N_("the argument number")
   }
 };
 
@@ -236,23 +238,23 @@ static ProcArg procedural_db_proc_arg_out_args[] =
 {
   { PDB_INT32,
     "arg_type",
-    "the type of argument { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
+    N_("the type of argument { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }")
   },
   { PDB_STRING,
     "arg_name",
-    "the name of the argument"
+    N_("the name of the argument")
   },
   { PDB_STRING,
     "arg_desc",
-    "a description of the argument"
+    N_("a description of the argument")
   }
 };
 
 ProcRecord procedural_db_proc_arg_proc =
 {
   "gimp_procedural_db_proc_arg",
-  "Queries the procedural database for information on the specified procedure's argument",
-  "This procedure returns information on the specified procedure's argument.  The argument type, name, and a description are retrieved.",
+  N_("Queries the procedural database for information on the specified procedure's argument"),
+  N_("This procedure returns information on the specified procedure's argument.  The argument type, name, and a description are retrieved."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -278,11 +280,11 @@ static ProcArg procedural_db_proc_val_args[] =
 {
   { PDB_STRING,
     "procedure",
-    "the procedure name"
+    N_("the procedure name")
   },
   { PDB_INT32,
     "val_num",
-    "the return value number"
+    N_("the return value number")
   }
 };
 
@@ -290,23 +292,23 @@ static ProcArg procedural_db_proc_val_out_args[] =
 {
   { PDB_INT32,
     "val_type",
-    "the type of return value { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
+    N_("the type of return value { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }")
   },
   { PDB_STRING,
     "val_name",
-    "the name of the return value"
+    N_("the name of the return value")
   },
   { PDB_STRING,
     "val_desc",
-    "a description of the return value"
+    N_("a description of the return value")
   }
 };
 
 ProcRecord procedural_db_proc_val_proc =
 {
   "gimp_procedural_db_proc_val",
-  "Queries the procedural database for information on the specified procedure's return value",
-  "This procedure returns information on the specified procedure's return value.  The return value type, name, and a description are retrieved.",
+  N_("Queries the procedural database for information on the specified procedure's return value"),
+  N_("This procedure returns information on the specified procedure's return value.  The return value type, name, and a description are retrieved."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -332,7 +334,7 @@ static ProcArg procedural_db_get_data_size_args[] =
 {
   { PDB_STRING,
     "identifier",
-    "the identifier associated with data"
+    N_("the identifier associated with data")
   },
 };
 
@@ -340,15 +342,15 @@ static ProcArg procedural_db_get_data_size_out_args[] =
 {
   { PDB_INT32,
     "bytes",
-    "the number of bytes in the data"
+    N_("the number of bytes in the data")
   }
 };
 
 ProcRecord procedural_db_get_data_size_proc =
 {
   "gimp_procedural_db_get_data_size",
-  "Returns size of data associated with the specified identifier",
-  "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
+  N_("Returns size of data associated with the specified identifier"),
+  N_("This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned."),
   "Nick Lamb",
   "Nick Lamb",
   "1998",
@@ -373,7 +375,7 @@ static ProcArg procedural_db_get_data_args[] =
 {
   { PDB_STRING,
     "identifier",
-    "the identifier associated with data"
+    N_("the identifier associated with data")
   },
 };
 
@@ -381,19 +383,19 @@ static ProcArg procedural_db_get_data_out_args[] =
 {
   { PDB_INT32,
     "bytes",
-    "the number of bytes in the data"
+    N_("the number of bytes in the data")
   },
   { PDB_INT8ARRAY,
     "data",
-    "a byte array containing data"
+    N_("a byte array containing data")
   }
 };
 
 ProcRecord procedural_db_get_data_proc =
 {
   "gimp_procedural_db_get_data",
-  "Returns data associated with the specified identifier",
-  "This procedure returns any data which may have been associated with the specified identifier.  The data is a variable length array of bytes.  If no data has been associated with the identifier, an error is returned.",
+  N_("Returns data associated with the specified identifier"),
+  N_("This procedure returns any data which may have been associated with the specified identifier.  The data is a variable length array of bytes.  If no data has been associated with the identifier, an error is returned."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -419,23 +421,23 @@ static ProcArg procedural_db_set_data_args[] =
 {
   { PDB_STRING,
     "identifier",
-    "the identifier for association with data"
+    N_("the identifier for association with data")
   },
   { PDB_INT32,
     "bytes",
-    "the number of bytes in data"
+    N_("the number of bytes in data")
   },
   { PDB_INT8ARRAY,
     "data",
-    "the data"
+    N_("the data")
   }
 };
 
 ProcRecord procedural_db_set_data_proc =
 {
   "gimp_procedural_db_set_data",
-  "Associates the specified identifier with the supplied data",
-  "This procedure associates the supplied data with the provided identifier.  The data may be subsequently retrieved by a call to 'procedural_db_get_data'.",
+  N_("Associates the specified identifier with the supplied data"),
+  N_("This procedure associates the supplied data with the provided identifier.  The data may be subsequently retrieved by a call to 'procedural_db_get_data'."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",
@@ -461,31 +463,31 @@ static ProcArg procedural_db_query_args[] =
 {
   { PDB_STRING,
     "name",
-    "the regex for procedure name"
+    N_("the regex for procedure name")
   },
   { PDB_STRING,
     "blurb",
-    "the regex for procedure blurb"
+    N_("the regex for procedure blurb")
   },
   { PDB_STRING,
     "help",
-    "the regex for procedure help"
+    N_("the regex for procedure help")
   },
   { PDB_STRING,
     "author",
-    "the regex for procedure author"
+    N_("the regex for procedure author")
   },
   { PDB_STRING,
     "copyright",
-    "the regex for procedure copyright"
+    N_("the regex for procedure copyright")
   },
   { PDB_STRING,
     "date",
-    "the regex for procedure date"
+    N_("the regex for procedure date")
   },
   { PDB_STRING,
     "proc_type",
-    "the regex for procedure type: {'Internal GIMP procedure', 'GIMP Plug-In', 'GIMP Extension'}"
+    N_("the regex for procedure type: {'Internal GIMP procedure', 'GIMP Plug-In', 'GIMP Extension'}")
   }
 };
 
@@ -493,19 +495,19 @@ static ProcArg procedural_db_query_out_args[] =
 {
   { PDB_INT32,
     "num_matches",
-    "the number of matching procedures"
+    N_("the number of matching procedures")
   },
   { PDB_STRINGARRAY,
     "procedure_names",
-    "the list of procedure names"
+    N_("the list of procedure names")
   }
 };
 
 ProcRecord procedural_db_query_proc =
 {
   "gimp_procedural_db_query",
-  "Queries the procedural database for its contents using regular expression matching",
-  "This procedure queries the contents of the procedural database.  It is supplied with seven arguments matching procedures on {name, blurb, help, author, copyright, date, procedure type}.  This is accomplished using regular expression matching.  For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\".  There are two return arguments for this procedure.  The first is the number of procedures matching the query.  The second is a concatenated list of procedure names corresponding to those matching the query.  If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
+  N_("Queries the procedural database for its contents using regular expression matching"),
+  N_("This procedure queries the contents of the procedural database.  It is supplied with seven arguments matching procedures on {name, blurb, help, author, copyright, date, procedure type}.  This is accomplished using regular expression matching.  For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\".  There are two return arguments for this procedure.  The first is the number of procedures matching the query.  The second is a concatenated list of procedure names corresponding to those matching the query.  If no matching entries are found, then the returned string is NULL and the number of entries is 0."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -527,7 +529,7 @@ ProcRecord procedural_db_query_proc =
 void
 procedural_db_init ()
 {
-  app_init_update_status("Procedural Database", NULL, -1);
+  app_init_update_status(_("Procedural Database"), NULL, -1);
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func,
 				      g_str_equal);
@@ -626,7 +628,7 @@ procedural_db_execute (gchar    *name,
 	      return_args->arg_type = PDB_STATUS;
 	      return_args->value.pdb_int = PDB_CALLING_ERROR;
 
-	      g_message ("PDB calling error %s", procedure->name);
+	      g_message (_("PDB calling error %s"), procedure->name);
 
 	      return return_args;
 	    }
@@ -702,7 +704,7 @@ procedural_db_run_proc (gchar *name,
     {
       if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
 	{
-	  g_message ("Incorrect arguments passed to procedural_db_run_proc");
+	  g_message (_("Incorrect arguments passed to procedural_db_run_proc"));
 	  g_free (params);
 	  return NULL;
 	}

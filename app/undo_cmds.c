@@ -24,6 +24,8 @@
 #include "undo.h"
 #include "undo_cmds.h"
 
+#include "libgimp/gimpintl.h"
+
 static int int_value;
 static int success;
 
@@ -54,17 +56,17 @@ ProcArg undo_push_group_start_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "The ID of the image in which to pop an undo group"
+    N_("The ID of the image in which to pop an undo group")
   }
 };
 
 ProcRecord undo_push_group_start_proc =
 {
   "gimp_undo_push_group_start",
-  "Starts a group undo",
-  "This function is used to start a group undo--necessary for logically combining two or more undo operations into a single operation.  This call must be used in conjunction with a 'gimp_undo_push_group_end' call.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
+  N_("Starts a group undo"),
+  N_("This function is used to start a group undo--necessary for logically combining two or more undo operations into a single operation.  This call must be used in conjunction with a 'gimp_undo_push_group_end' call."),
+  N_("Spencer Kimball & Peter Mattis"),
+  N_("Spencer Kimball & Peter Mattis"),
   "1997",
   PDB_INTERNAL,
 
@@ -108,17 +110,17 @@ ProcArg undo_push_group_end_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "The ID of the image in which to pop an undo group"
+    N_("The ID of the image in which to pop an undo group")
   }
 };
 
 ProcRecord undo_push_group_end_proc =
 {
   "gimp_undo_push_group_end",
-  "Finish a group undo",
-  "This function must be called once for each undo_push_group call that is made.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
+  N_("Finish a group undo"),
+  N_("This function must be called once for each undo_push_group call that is made."),
+  N_("Spencer Kimball & Peter Mattis"),
+  N_("Spencer Kimball & Peter Mattis"),
   "1997",
   PDB_INTERNAL,
 

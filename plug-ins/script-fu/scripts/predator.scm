@@ -108,9 +108,9 @@
 		    "RGB RGBA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "edge-amount" "2"
+		    SF-ADJUSTMENT "edge-amount" '(2 0 24 1 1 0 0)
 		    SF-TOGGLE "pixelize?" TRUE
-		    SF-VALUE "Pixel amount" "3"
+		    SF-ADJUSTMENT "Pixel Amount" '(3 1 16 1 1 0 0)
 		    SF-TOGGLE "Keep Selection?" TRUE
 		    SF-TOGGLE "Seperate Layer?" TRUE)
 

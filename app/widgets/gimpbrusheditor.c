@@ -26,6 +26,7 @@
 #include "actionarea.h"
 #include "math.h"
 
+#include "libgimp/gimpintl.h"
 
 static void brush_edit_close_callback (GtkWidget *w, void *data);
 static gint brush_edit_preview_resize (GtkWidget *widget, GdkEvent *event, 
@@ -34,7 +35,7 @@ static gint brush_edit_preview_resize (GtkWidget *widget, GdkEvent *event,
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Close", brush_edit_close_callback, NULL, NULL }
+  { N_("Close"), brush_edit_close_callback, NULL, NULL }
 };
 
 static void
@@ -196,7 +197,7 @@ brush_edit_generated_new ()
   begw->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (begw->shell), "generatedbrusheditor",
 			  "Gimp");
-  gtk_window_set_title (GTK_WINDOW (begw->shell), "Brush Editor");
+  gtk_window_set_title (GTK_WINDOW (begw->shell), _("Brush Editor"));
   gtk_window_set_policy(GTK_WINDOW(begw->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
@@ -236,7 +237,7 @@ brush_edit_generated_new ()
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /* brush radius scale */
-  label = gtk_label_new ("Radius:");
+  label = gtk_label_new (_("Radius:"));
   gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
 /*  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 0, 0, 0, 0); */
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 3, 0, 0, 0);
@@ -253,7 +254,7 @@ brush_edit_generated_new ()
 
   /* brush hardness scale */
   
-  label = gtk_label_new ("Hardness:");
+  label = gtk_label_new (_("Hardness:"));
   gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2, 0, 0, 0, 0);
   begw->hardness_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.01, 0.0));
@@ -269,7 +270,7 @@ brush_edit_generated_new ()
 
   /* brush aspect ratio scale */
   
-  label = gtk_label_new ("Aspect Ratio:");
+  label = gtk_label_new (_("Aspect Ratio:"));
   gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 2, 3, 0, 0, 0, 0);
   begw->aspect_ratio_data = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, 20.0, 0.1, 1.0, 0.0));
@@ -285,7 +286,7 @@ brush_edit_generated_new ()
 
   /* brush angle scale */
 
-  label = gtk_label_new ("Angle:");
+  label = gtk_label_new (_("Angle:"));
   gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 3, 4, 0, 0, 0, 0);
   begw->angle_data = GTK_ADJUSTMENT (gtk_adjustment_new (00.0, 0.0, 180.0, 0.1, 1.0, 0.0));

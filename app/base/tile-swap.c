@@ -8,6 +8,7 @@
 #include <pthread.h>
 #endif
 
+#include "libgimp/gimpintl.h"
 
 #define MAX_OPEN_SWAP_FILES  16
 
@@ -133,7 +134,7 @@ tile_swap_exit1 (gpointer key,
   DefSwapFile *def_swap_file;
 
   if (tile_ref_count != 0)
-    g_message ("tile ref count balance: %d\n", tile_ref_count);
+    g_message (_("tile ref count balance: %d\n"), tile_ref_count);
 
   swap_file = value;
   if (swap_file->swap_func == tile_swap_default)
@@ -141,7 +142,7 @@ tile_swap_exit1 (gpointer key,
       def_swap_file = swap_file->user_data;
       if (def_swap_file->swap_file_end != 0)
 	{
-	  g_message ("swap file not empty: \"%s\"\n", swap_file->filename);
+	  g_message (_("swap file not empty: \"%s\"\n"), swap_file->filename);
 	  tile_swap_print_gaps (def_swap_file);
 	}
 
@@ -313,7 +314,7 @@ tile_swap_command (Tile *tile,
     swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);
     if (!swap_file)
       {
-	g_message ("could not find swap file for tile");
+	g_message (_("could not find swap file for tile"));
 	goto out;
       }
 
@@ -352,7 +353,7 @@ tile_swap_open (SwapFile *swap_file)
   swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
   if (swap_file->fd == -1)
     {
-      g_message ("unable to open swap file...BAD THINGS WILL HAPPEN SOON");
+      g_message (_("unable to open swap file...BAD THINGS WILL HAPPEN SOON"));
       return;
     }
 
@@ -394,7 +395,7 @@ tile_swap_default (int       fd,
       tile_swap_default_delete (def_swap_file, fd, tile);
       break;
     case SWAP_COMPRESS:
-      g_message ("tile_swap_default: SWAP_COMPRESS: UNFINISHED");
+      g_message (_("tile_swap_default: SWAP_COMPRESS: UNFINISHED"));
       break;
     }
 
@@ -472,7 +473,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       if (offset == -1)
 	{
 	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %d", err);
+	    g_message (_("unable to seek to tile location on disk: %d"), err);
 	  seek_err_msg = FALSE;
 	  return;
 	}
@@ -491,7 +492,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
       if (err <= 0)
 	{
 	  if (read_err_msg)
-	    g_message ("unable to read tile data from disk: %d/%d ( %d ) bytes read", err, errno, nleft);
+	    g_message (_("unable to read tile data from disk: %d/%d ( %d ) bytes read"), err, errno, nleft);
 	  read_err_msg = FALSE;
 	  return;
 	}
@@ -533,7 +534,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (offset == -1)
 	{
 	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %d", errno);
+	    g_message (_("unable to seek to tile location on disk: %d"), errno);
 	  seek_err_msg = FALSE;
 	  return;
 	}
@@ -546,7 +547,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (err <= 0)
 	{
 	  if (write_err_msg)
-	    g_message ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
+	    g_message (_("unable to write tile data to disk: %d ( %d ) bytes written"), err, nleft);
 	  write_err_msg = FALSE;
 	  return;
 	}

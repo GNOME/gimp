@@ -26,6 +26,8 @@
 #include "undo.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile_manager_pvt.h"		/* ick. */
 
 #define FLIP       0
@@ -68,8 +70,8 @@ create_flip_options (void)
   int i;
   char *button_names[2] =
   {
-    "Horizontal",
-    "Vertical",
+    N_("Horizontal"),
+    N_("Vertical"),
   };
 
   /*  the new options structure  */
@@ -80,7 +82,7 @@ create_flip_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Flip Tool Options");
+  label = gtk_label_new (_("Flip Tool Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -332,15 +334,15 @@ ProcArg flip_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the affected drawable"
+    N_("the affected drawable")
   },
   { PDB_INT32,
     "flip_type",
-    "Type of flip: { HORIZONTAL (0), VERTICAL (1) }"
+    N_("Type of flip: { HORIZONTAL (0), VERTICAL (1) }")
   }
 };
 
@@ -348,15 +350,15 @@ ProcArg flip_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    "the flipped drawable"
+    N_("the flipped drawable")
   }
 };
 
 ProcRecord flip_proc =
 {
   "gimp_flip",
-  "Flip the specified drawable about its center either vertically or horizontally",
-  "This tool flips the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipd by the specified amount.  The return value is the ID of the flipped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and flipd drawable.  The flip type parameter indicates whether the flip will be applied horizontally or vertically.",
+  N_("Flip the specified drawable about its center either vertically or horizontally"),
+  N_("This tool flips the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipd by the specified amount.  The return value is the ID of the flipped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and flipd drawable.  The flip type parameter indicates whether the flip will be applied horizontally or vertically."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

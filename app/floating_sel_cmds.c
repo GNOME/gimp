@@ -24,6 +24,8 @@
 #include "floating_sel.h"
 #include "floating_sel_cmds.h"
 
+#include "libgimp/gimpintl.h"
+
 static int int_value;
 static int success;
 
@@ -59,15 +61,15 @@ ProcArg floating_sel_remove_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    "the floating selection"
+    N_("the floating selection")
   }
 };
 
 ProcRecord floating_sel_remove_proc =
 {
   "gimp_floating_sel_remove",
-  "Remove the specified floating selection from its associated drawable",
-  "This procedure removes the floating selection completely, without any side effects.  The associated drawable is then set to active.",
+  N_("Remove the specified floating selection from its associated drawable"),
+  N_("This procedure removes the floating selection completely, without any side effects.  The associated drawable is then set to active."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -117,15 +119,15 @@ ProcArg floating_sel_anchor_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    "the floating selection"
+    N_("the floating selection")
   }
 };
 
 ProcRecord floating_sel_anchor_proc =
 {
   "gimp_floating_sel_anchor",
-  "Anchor the specified floating selection to its associated drawable",
-  "This procedure anchors the floating selection to its associated drawable.  This is similar to merging with a merge type of ClipToBottomLayer.  The floating selection layer is no longer valid after this operation.",
+  N_("Anchor the specified floating selection to its associated drawable"),
+  N_("This procedure anchors the floating selection to its associated drawable.  This is similar to merging with a merge type of ClipToBottomLayer.  The floating selection layer is no longer valid after this operation."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -175,15 +177,15 @@ ProcArg floating_sel_to_layer_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    "the floating selection"
+    N_("the floating selection")
   }
 };
 
 ProcRecord floating_sel_to_layer_proc =
 {
   "gimp_floating_sel_to_layer",
-  "Transforms the specified floating selection into a layer",
-  "This procedure transforms the specified floating selection into a layer with the same offsets and extents.  The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to.  The floating selection will become the active layer.  This procedure will not work if the floating selection has a different base type from the underlying image.  This might be the case if the floating selection is above an auxillary channel or a layer mask.",
+  N_("Transforms the specified floating selection into a layer"),
+  N_("This procedure transforms the specified floating selection into a layer with the same offsets and extents.  The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to.  The floating selection will become the active layer.  This procedure will not work if the floating selection has a different base type from the underlying image.  This might be the case if the floating selection is above an auxillary channel or a layer mask."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -57,6 +57,8 @@
 #include "tools.h"
 #include "transform_tool.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "pixmaps2.h"
 
 /* Global Data */
@@ -76,12 +78,12 @@ ToolInfo tool_info[] =
 {
   {
     NULL,
-    "Rect Select",
+    N_("Rect Select"),
     0,
-    "/Tools/Rect Select",
+    N_("/Tools/Rect Select"),
     "R",
     (char **)rect_bits,
-    "Select rectangular regions",
+    N_("Select rectangular regions"),
     "ContextHelp/rect-select",
     RECT_SELECT,
     tools_new_rect_select,
@@ -91,12 +93,12 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    "Ellipse Select",
+    N_("Ellipse Select"),
     1,
-    "/Tools/Ellipse Select",
+    N_("/Tools/Ellipse Select"),
     "E",
     (char **) circ_bits,
-    "Select elliptical regions",
+    N_("Select elliptical regions"),
     "ContextHelp/ellipse-select",
     ELLIPSE_SELECT,
     tools_new_ellipse_select,
@@ -106,12 +108,12 @@ ToolInfo tool_info[] =
 
   {
     NULL, 
-    "Free Select", 
+    N_("Free Select"), 
     2, 
-    "/Tools/Free Select",
+    N_("/Tools/Free Select"),
     "F",
     (char **) free_bits,
-    "Select hand-drawn regions",
+    N_("Select hand-drawn regions"),
     "ContextHelp/free-select",
     FREE_SELECT,
     tools_new_free_select,
@@ -121,12 +123,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Fuzzy Select",
+    N_("Fuzzy Select"),
     3,
-    "/Tools/Fuzzy Select",
+    N_("/Tools/Fuzzy Select"),
     "Z",
     (char **) fuzzy_bits,
-    "Select contiguous regions",
+    N_("Select contiguous regions"),
     "ContextHelp/fuzzy-select",
     FUZZY_SELECT,
     tools_new_fuzzy_select,
@@ -136,12 +138,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Bezier Select",
+    N_("Bezier Select"),
     4,
-    "/Tools/Bezier Select",
+    N_("/Tools/Bezier Select"),
     "B",
     (char **) bezier_bits,
-    "Select regions using Bezier curves",
+    N_("Select regions using Bezier curves"),
     "ContextHelp/bezier-select",
     BEZIER_SELECT,
     tools_new_bezier_select,
@@ -151,12 +153,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Intelligent Scissors",
+    N_("Intelligent Scissors"),
     5,
-    "/Tools/Intelligent Scissors",
+    N_("/Tools/Intelligent Scissors"),
     "I",
     (char **) iscissors_bits,
-    "Select shapes from image",
+    N_("Select shapes from image"),
     "ContextHelp/iscissors",
     ISCISSORS,
     tools_new_iscissors,
@@ -166,12 +168,12 @@ ToolInfo tool_info[] =
   
   {
     NULL, 
-    "Move",
+    N_("Move"),
     6,
-    "/Tools/Move",
+    N_("/Tools/Move"),
     "M",
     (char **) move_bits,
-    "Move layers & selections",
+    N_("Move layers & selections"),
     "ContextHelp/move",
     MOVE,
     tools_new_move_tool,
@@ -181,12 +183,12 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    "Magnify",
+    N_("Magnify"),
     7,
-    "/Tools/Magnify",
+    N_("/Tools/Magnify"),
     "<shift>M",
     (char **) magnify_bits,
-    "Zoom in & out",
+    N_("Zoom in & out"),
     "ContextHelp/magnify",
     MAGNIFY,
     tools_new_magnify,
@@ -196,12 +198,12 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    "Crop",
+    N_("Crop"),
     8,
-    "/Tools/Crop",
+    N_("/Tools/Crop"),
     "<shift>C",
     (char **) crop_bits,
-    "Crop the image",
+    N_("Crop the image"),
     "ContextHelp/crop",
     CROP,
     tools_new_crop,
@@ -211,12 +213,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Transform",
+    N_("Transform"),
     9,
-    "/Tools/Transform",
+    N_("/Tools/Transform"),
     "<shift>T",
     (char **) scale_bits,
-    "Transform the layer or selection",
+    N_("Transform the layer or selection"),
     "ContextHelp/rotate",
     ROTATE,
     tools_new_transform_tool,
@@ -226,7 +228,7 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Transform",
+    N_("Transform"),
     9,
     NULL,
     NULL,
@@ -241,7 +243,7 @@ ToolInfo tool_info[] =
   
   {
     NULL, 
-    "Transform",
+    N_("Transform"),
     9,
     NULL,
     NULL,
@@ -256,7 +258,7 @@ ToolInfo tool_info[] =
   
   {
     NULL, 
-    "Transform",
+    N_("Transform"),
     9,
     NULL,
     NULL,
@@ -271,12 +273,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Flip",
+    N_("Flip"),
     10,
-    "/Tools/Flip",
+    N_("/Tools/Flip"),
     "<shift>F",
     (char **) horizflip_bits,
-    "Flip the layer or selection",
+    N_("Flip the layer or selection"),
     "ContextHelp/flip",
     FLIP_HORZ,
     tools_new_flip,
@@ -286,7 +288,7 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Flip",
+    N_("Flip"),
     10,
     NULL,
     NULL,
@@ -301,12 +303,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Text",
+    N_("Text"),
     11,
-    "/Tools/Text",
+    N_("/Tools/Text"),
     "T",
     (char **) text_bits,
-    "Add text to the image",
+    N_("Add text to the image"),
     "ContextHelp/text",
     TEXT,
     tools_new_text,
@@ -316,12 +318,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Color Picker",
+    N_("Color Picker"),
     12,
-    "/Tools/Color Picker",
+    N_("/Tools/Color Picker"),
     "O",
     (char **) colorpicker_bits,
-    "Pick colors from the image",
+    N_("Pick colors from the image"),
     "ContextHelp/color-picker",
     COLOR_PICKER,
     tools_new_color_picker,
@@ -331,12 +333,12 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Bucket Fill",
+    N_("Bucket Fill"),
     13,
-    "/Tools/Bucket Fill",
+    N_("/Tools/Bucket Fill"),
     "<shift>B",
     (char **) fill_bits,
-    "Fill with a color or pattern",
+    N_("Fill with a color or pattern"),
     "ContextHelp/bucket-fill",
     BUCKET_FILL,
     tools_new_bucket_fill,
@@ -346,12 +348,12 @@ ToolInfo tool_info[] =
 
   { 
     NULL,
-    "Blend",
+    N_("Blend"),
     14,
-    "/Tools/Blend",
+    N_("/Tools/Blend"),
     "L",
     (char **) gradient_bits,
-    "Fill with a color gradient",
+    N_("Fill with a color gradient"),
     "ContextHelp/gradient",
     BLEND,
     tools_new_blend,
@@ -361,12 +363,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Pencil",
+    N_("Pencil"),
     15,
-    "/Tools/Pencil",
+    N_("/Tools/Pencil"),
     "<shift>P",
     (char **) pencil_bits,
-    "Draw sharp pencil strokes",
+    N_("Draw sharp pencil strokes"),
     "ContextHelp/pencil",
     PENCIL,
     tools_new_pencil,
@@ -376,12 +378,12 @@ ToolInfo tool_info[] =
   
   {
     NULL,
-    "Paintbrush",
+    N_("Paintbrush"),
     16,
-    "/Tools/Paintbrush",
+    N_("/Tools/Paintbrush"),
     "P",
     (char **) paint_bits,
-    "Paint fuzzy brush strokes",
+    N_("Paint fuzzy brush strokes"),
     "ContextHelp/paintbrush",
     PAINTBRUSH,
     tools_new_paintbrush,
@@ -391,12 +393,12 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Eraser",
+    N_("Eraser"),
     17,
-    "/Tools/Eraser",
+    N_("/Tools/Eraser"),
     "<shift>E",
     (char **) erase_bits,
-    "Erase to background or transparency",
+    N_("Erase to background or transparency"),
     "ContextHelp/eraser",
     ERASER,
     tools_new_eraser,
@@ -406,12 +408,12 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Airbrush",
+    N_("Airbrush"),
     18,
-    "/Tools/Airbrush",
+    N_("/Tools/Airbrush"),
     "A",
     (char **) airbrush_bits,
-    "Airbrush with variable pressure",
+    N_("Airbrush with variable pressure"),
     "ContextHelp/airbrush",
     AIRBRUSH,
     tools_new_airbrush,
@@ -421,12 +423,12 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Clone",
+    N_("Clone"),
     19,
-    "/Tools/Clone",
+    N_("/Tools/Clone"),
     "C",
     (char **) clone_bits,
-    "Paint using patterns or image regions",
+    N_("Paint using patterns or image regions"),
     "ContextHelp/clone",
     CLONE,
     tools_new_clone,
@@ -436,12 +438,12 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Convolve",
+    N_("Convolve"),
     20,
-    "/Tools/Convolve",
+    N_("/Tools/Convolve"),
     "V",
     (char **) blur_bits,
-    "Blur or sharpen",
+    N_("Blur or sharpen"),
     "ContextHelp/convolve",
     CONVOLVE,
     tools_new_convolve,
@@ -451,12 +453,12 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    "Ink",
+    N_("Ink"),
     21,
-    "/Tools/Ink",
+    N_("/Tools/Ink"),
     "K",
     (char **) ink_bits,
-    "Draw in ink",
+    N_("Draw in ink"),
     "ContextHelp/ink",
     INK,
     tools_new_ink,
@@ -467,9 +469,9 @@ ToolInfo tool_info[] =
   /*  Non-toolbox tools  */
   { 
     NULL,
-    "By Color Select",
+    N_("By Color Select"),
     22,
-    "/Select/By Color...",
+    N_("/Select/By Color..."),
     NULL,
     NULL,
     NULL,
@@ -482,9 +484,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Color Balance",
+    N_("Color Balance"),
     23,
-    "/Image/Colors/Color Balance",
+    N_("/Image/Colors/Color Balance"),
     NULL,
     NULL,
     NULL,
@@ -497,9 +499,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Brightness-Contrast",
+    N_("Brightness-Contrast"),
     24,
-    "/Image/Colors/Brightness-Contrast",
+    N_("/Image/Colors/Brightness-Contrast"),
     NULL,
     NULL,
     NULL,
@@ -512,9 +514,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Hue-Saturation",
+    N_("Hue-Saturation"),
     25,
-    "/Image/Colors/Hue-Saturation",
+    N_("/Image/Colors/Hue-Saturation"),
     NULL,
     NULL,
     NULL,
@@ -527,9 +529,9 @@ ToolInfo tool_info[] =
 
   { 
     NULL,
-    "Posterize",
+    N_("Posterize"),
     26,
-    "/Image/Colors/Posterize",
+    N_("/Image/Colors/Posterize"),
     NULL,
     NULL,
     NULL,
@@ -542,9 +544,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Threshold", 
+    N_("Threshold"), 
     27,
-    "/Image/Colors/Threshold",
+    N_("/Image/Colors/Threshold"),
     NULL,
     NULL,
     NULL,
@@ -557,9 +559,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Curves",
+    N_("Curves"),
     28,
-    "/Image/Colors/Curves",
+    N_("/Image/Colors/Curves"),
     NULL,
     NULL,
     NULL,
@@ -572,9 +574,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Levels",
+    N_("Levels"),
     29,
-    "/Image/Colors/Levels",
+    N_("/Image/Colors/Levels"),
     NULL,
     NULL,
     NULL,
@@ -587,9 +589,9 @@ ToolInfo tool_info[] =
   
   { 
     NULL,
-    "Histogram",
+    N_("Histogram"),
     30,
-    "/Image/Histogram",
+    N_("/Image/Histogram"),
     NULL,
     NULL,
     NULL,
@@ -694,13 +696,13 @@ tools_options_dialog_new ()
 {
   ActionAreaItem action_items[1] =
   {
-    { "Close", tools_options_dialog_callback, NULL, NULL }
+    { N_("Close"), tools_options_dialog_callback, NULL, NULL }
   };
 
   /*  The shell and main vbox  */
   options_shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options_shell), "Tool Options");
+  gtk_window_set_title (GTK_WINDOW (options_shell), _("Tool Options"));
   gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
   session_set_window_geometry (options_shell, &tool_options_session_info, FALSE );
 
@@ -777,7 +779,7 @@ tools_register_no_options (ToolType  tool_type,
   gtk_widget_show (label);
 
   /*  this tool has no special options  */
-  label = gtk_label_new ("This tool has no options.");
+  label = gtk_label_new (_("This tool has no options."));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -10,6 +10,7 @@
 #include "batch.h"
 #include "procedural_db.h"
 
+#include "libgimp/gimpintl.h"
 
 static void batch_run_cmd  (char              *cmd);
 static void batch_read     (gpointer           data,
@@ -31,7 +32,7 @@ batch_init ()
   eval_proc = procedural_db_lookup ("extension_script_fu_eval");
   if (!eval_proc)
     {
-      g_message ("script-fu not available: batch mode disabled\n");
+      g_message (_("script-fu not available: batch mode disabled\n"));
       return;
     }
 
@@ -42,7 +43,7 @@ batch_init ()
 	{
 	  if (!read_from_stdin)
 	    {
-	      g_print ("reading batch commands from stdin\n");
+	      g_print (_("reading batch commands from stdin\n"));
 	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
 	      read_from_stdin = TRUE;
 	    }
@@ -79,13 +80,13 @@ batch_run_cmd (char *cmd)
   switch (vals[0].value.pdb_int)
     {
     case PDB_EXECUTION_ERROR:
-      g_print ("batch command: experienced an execution error.\n");
+      g_print (_("batch command: experienced an execution error.\n"));
       break;
     case PDB_CALLING_ERROR:
-      g_print ("batch command: experienced a calling error.\n");
+      g_print (_("batch command: experienced a calling error.\n"));
       break;
     case PDB_SUCCESS:
-      g_print ("batch command: executed successfully.\n");
+      g_print (_("batch command: executed successfully.\n"));
       break;
     default:
       break;

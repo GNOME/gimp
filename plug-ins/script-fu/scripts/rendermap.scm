@@ -66,8 +66,8 @@
  "28th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
- SF-VALUE "Image Size:" "256"
- SF-VALUE "Granularity (0 - 15):" "4"
+ SF-ADJUSTMENT "Image Size" '(256 0 2048 1 10 0 0) 
+ SF-ADJUSTMENT "Granularity (0 - 15):" '(4 0 15 1 1 0 1)
  SF-STRING "Gradient:" "Land_and_Sea"
  SF-TOGGLE "TRUE = Detail in middle, FALSE = tile" FALSE
 )

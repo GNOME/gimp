@@ -1,7 +1,7 @@
 #ifndef __GIMPINTL_H__
 #define __GIMPINTL_H__
 
-#define LOCALEDIR LIBDIR "/locale"
+#define LOCALEDIR "/usr/local/share/locale"
 
 /* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com> */
 

@@ -66,6 +66,8 @@
 
 #include "config.h"
 
+#include "libgimp/gimpintl.h"
+
 #define LOGO_WIDTH_MIN 300
 #define LOGO_HEIGHT_MIN 110
 #define NAME "The GIMP"
@@ -95,16 +97,16 @@ static ProcArg quit_args[] =
 {
   { PDB_INT32,
     "kill",
-    "Flag specifying whether to kill the gimp process or exit normally" },
+    N_("Flag specifying whether to kill the gimp process or exit normally") },
 };
 
 static ProcRecord quit_proc =
 {
   "gimp_quit",
-  "Causes the gimp to exit gracefully",
-  "The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
+  N_("Causes the gimp to exit gracefully"),
+  N_("The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images."),
+  N_("Spencer Kimball & Peter Mattis"),
+  N_("Spencer Kimball & Peter Mattis"),
   "1995-1996",
   PDB_INTERNAL,
   1,
@@ -455,7 +457,7 @@ app_init (void)
       sprintf (filename, "%s/gtkrc", gimp_dir);
 
       if ((be_verbose == TRUE) || (no_splash == TRUE))
-	g_print ("parsing \"%s\"\n", filename);
+	g_print (_("parsing %s\n"), filename);
 
       gtk_rc_parse (filename);
     }
@@ -499,13 +501,13 @@ app_init (void)
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
-  app_init_update_status ("Looking for data files", "Brushes", 0.00);
+  app_init_update_status (_("Looking for data files"), _("Brushes"), 0.00);
   brushes_init (no_data);         /*  initialize the list of gimp brushes  */
-  app_init_update_status (NULL, "Patterns", 0.25);
+  app_init_update_status (NULL, _("Patterns"), 0.25);
   patterns_init (no_data);        /*  initialize the list of gimp patterns  */
-  app_init_update_status (NULL, "Palettes", 0.50);
+  app_init_update_status (NULL, _("Palettes"), 0.50);
   palettes_init (no_data);        /*  initialize the list of gimp palettes  */
-  app_init_update_status (NULL, "Gradients", 0.75);
+  app_init_update_status (NULL, _("Gradients"), 0.75);
   gradients_init (no_data);       /*  initialize the list of gimp gradients  */
   app_init_update_status (NULL, NULL, 1.00);
 
@@ -637,8 +639,8 @@ static void
 really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
-  menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
-  menus_set_sensitive ("<Image>/File/Quit", TRUE);
+  menus_set_sensitive (_("<Toolbox>/File/Quit"), TRUE);
+  menus_set_sensitive (_("<Image>/File/Quit"), TRUE);
   gtk_widget_destroy (dialog);
 }
 
@@ -659,12 +661,12 @@ really_quit_dialog ()
   GtkWidget *button;
   GtkWidget *label;
 
-  menus_set_sensitive ("<Toolbox>/File/Quit", FALSE);
-  menus_set_sensitive ("<Image>/File/Quit", FALSE);
+  menus_set_sensitive (_("<Toolbox>/File/Quit"), FALSE);
+  menus_set_sensitive (_("<Image>/File/Quit"), FALSE);
 
   dialog = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog), "Really Quit?");
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Really Quit?"));
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
 
@@ -672,7 +674,7 @@ really_quit_dialog ()
 		      (GtkSignalFunc) really_quit_delete_callback,
 		      dialog);
 
-  button = gtk_button_new_with_label ("Yes");
+  button = gtk_button_new_with_label (_("Yes"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) really_quit_callback,
@@ -681,7 +683,7 @@ really_quit_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("No");
+  button = gtk_button_new_with_label (_("No"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) really_quit_cancel_callback,
@@ -689,7 +691,7 @@ really_quit_dialog ()
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  label = gtk_label_new ("Some files unsaved.  Quit the GIMP?");
+  label = gtk_label_new (_("Some files unsaved.  Quit the GIMP?"));
   gtk_misc_set_padding (GTK_MISC (label), 10, 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);

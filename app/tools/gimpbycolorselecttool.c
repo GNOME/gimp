@@ -30,6 +30,8 @@
 #include "gdisplay.h"
 #include "rect_select.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile.h"			/* ick. */
 
 #define DEFAULT_FUZZINESS 15
@@ -547,10 +549,10 @@ by_color_select_new_dialog ()
   int i;
   char *button_names[4] =
   {
-    "Replace",
-    "Add",
-    "Subtract",
-    "Intersect"
+    N_("Replace"),
+    N_("Add"),
+    N_("Subtract"),
+    N_("Intersect")
   };
   int button_values[4] =
   {
@@ -568,7 +570,7 @@ by_color_select_new_dialog ()
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "by_color_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bcd->shell), "By Color Selection");
+  gtk_window_set_title (GTK_WINDOW (bcd->shell), _("By Color Selection"));
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->action_area), 2);
 
   /*  handle the wm close signal */
@@ -611,14 +613,14 @@ by_color_select_new_dialog ()
   /*  Create the active image label  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
-  bcd->gimage_name = gtk_label_new ("Inactive");
+  bcd->gimage_name = gtk_label_new (_("Inactive"));
   gtk_box_pack_start (GTK_BOX (util_box), bcd->gimage_name, FALSE, FALSE, 2);
 
   gtk_widget_show (bcd->gimage_name);
   gtk_widget_show (util_box);
 
   /*  Create the selection mode radio box  */
-  frame = gtk_frame_new ("Selection Mode");
+  frame = gtk_frame_new (_("Selection Mode"));
   gtk_box_pack_start (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 2);
@@ -641,7 +643,7 @@ by_color_select_new_dialog ()
   /*  Create the opacity scale widget  */
   util_box = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new ("Fuzziness Threshold");
+  label = gtk_label_new (_("Fuzziness Threshold"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   data = gtk_adjustment_new (bcd->threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
@@ -657,7 +659,7 @@ by_color_select_new_dialog ()
   gtk_widget_show (util_box);
 
   /*  The reset push button  */
-  push_button = gtk_button_new_with_label ("Reset");
+  push_button = gtk_button_new_with_label (_("Reset"));
   GTK_WIDGET_SET_FLAGS (push_button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->action_area), push_button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (push_button), "clicked",
@@ -667,7 +669,7 @@ by_color_select_new_dialog ()
   gtk_widget_show (push_button);
 
   /*  The close push button  */
-  push_button = gtk_button_new_with_label ("Close");
+  push_button = gtk_button_new_with_label (_("Close"));
   GTK_WIDGET_SET_FLAGS (push_button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->action_area), push_button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (push_button), "clicked",
@@ -971,47 +973,47 @@ ProcArg by_color_select_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_COLOR,
     "color",
-    "the color to select"
+    N_("the color to select")
   },
   { PDB_INT32,
     "threshold",
-    "threshold in intensity levels: 0 <= threshold <= 255"
+    N_("threshold in intensity levels: 0 <= threshold <= 255")
   },
   { PDB_INT32,
     "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
+    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
   },
   { PDB_INT32,
     "antialias",
-    "antialiasing On/Off"
+    N_("antialiasing On/Off")
   },
   { PDB_INT32,
     "feather",
-    "feather option for selections"
+    N_("feather option for selections")
   },
   { PDB_FLOAT,
     "feather_radius",
-    "radius for feather operation"
+    N_("radius for feather operation")
   },
   { PDB_INT32,
     "sample_merged",
-    "use the composite image, not the drawable"
+    N_("use the composite image, not the drawable")
   }
 };
 
 ProcRecord by_color_select_proc =
 {
   "gimp_by_color_select",
-  "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-  "This tool creates a selection over the specified image.  A by-color selection is determined by the supplied color under the constraints of the specified threshold.  Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
+  N_("Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified."),
+  N_("This tool creates a selection over the specified image.  A by-color selection is determined by the supplied color under the constraints of the specified threshold.  Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

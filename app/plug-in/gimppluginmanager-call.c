@@ -59,6 +59,8 @@
 
 #include "tile.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 #define SEPARATE_PROGRESS_BAR
 
 
@@ -161,17 +163,17 @@ static ProcArg progress_init_args[] =
 {
   { PDB_STRING,
     "message",
-    "Message to use in the progress dialog." },
+    N_("Message to use in the progress dialog.") },
   { PDB_INT32,
     "gdisplay",
-    "GDisplay to update progressbar in, or -1 for a seperate window" }
+    N_("GDisplay to update progressbar in, or -1 for a seperate window") }
 };
 
 static ProcRecord progress_init_proc =
 {
   "gimp_progress_init",
-  "Initializes the progress bar for the current plug-in",
-  "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
+  N_("Initializes the progress bar for the current plug-in"),
+  N_("Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -187,14 +189,14 @@ static ProcArg progress_update_args[] =
 {
   { PDB_FLOAT,
     "percentage",
-    "Percentage of progress completed" }
+    N_("Percentage of progress completed") }
 };
 
 static ProcRecord progress_update_proc =
 {
   "gimp_progress_update",
-  "Updates the progress bar for the current plug-in",
-  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
+  N_("Updates the progress bar for the current plug-in"),
+  N_("Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -211,14 +213,14 @@ static ProcArg message_args[] =
 {
   { PDB_STRING,
     "message",
-    "Message to display in the dialog." }
+    N_("Message to display in the dialog.") }
 };
 
 static ProcRecord message_proc =
 {
   "gimp_message",
-  "Displays a dialog box with a message",
-  "Displays a dialog box with a message. Useful for status or error reporting.",
+  N_("Displays a dialog box with a message"),
+  N_("Displays a dialog box with a message. Useful for status or error reporting."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -235,14 +237,14 @@ static ProcArg message_handler_get_out_args[] =
 {
   { PDB_INT32,
     "handler",
-    "the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
+    N_("the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }") }
 };
 
 static ProcRecord message_handler_get_proc =
 {
   "gimp_message_handler_get",
-  "Returns the current state of where warning messages are displayed.",
-  "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
+  N_("Returns the current state of where warning messages are displayed."),
+  N_("This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started."),
   "Manish Singh",
   "Manish Singh",
   "1998",
@@ -258,14 +260,14 @@ static ProcArg message_handler_set_args[] =
 {
   { PDB_INT32,
     "handler",
-    "the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
+    N_("the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }") }
 };
 
 static ProcRecord message_handler_set_proc =
 {
   "gimp_message_handler_set",
-  "Controls where warning messages are displayed.",
-  "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
+  N_("Controls where warning messages are displayed."),
+  N_("This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started."),
   "Manish Singh",
   "Manish Singh",
   "1998",
@@ -281,15 +283,15 @@ static ProcArg plugin_temp_PDB_name_out_args[] =
 {
   { PDB_STRING,
     "Temp name",
-    "A unique temporary name for a temporary PDB entry name",
+    N_("A unique temporary name for a temporary PDB entry name"),
   },
 };
 
 static ProcRecord plugin_temp_PDB_name_proc =
 {
   "gimp_temp_PDB_name",
-  "Generates a unique temporary PDB name",
-  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
+  N_("Generates a unique temporary PDB name"),
+  N_("This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name."),
   "Andy Thomas",
   "Andy Thomas",
   "1998",
@@ -340,13 +342,13 @@ plug_in_init ()
     {
       shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
       if (shm_ID == -1)
-	g_message ("shmget failed...disabling shared memory tile transport\n");
+	g_message (_("shmget failed...disabling shared memory tile transport\n"));
       else
 	{
 	  shm_addr = (guchar*) shmat (shm_ID, 0, 0);
 	  if (shm_addr == (guchar*) -1)
 	    {
-	      g_message ("shmat failed...disabling shared memory tile transport\n");
+	      g_message (_("shmat failed...disabling shared memory tile transport\n"));
 	      shm_ID = -1;
 	    }
 
@@ -372,14 +374,14 @@ plug_in_init ()
   else
     sprintf (filename, "%s/pluginrc", gimp_directory ());
 
-  app_init_update_status("Resource configuration", filename, -1);
+  app_init_update_status(_("Resource configuration"), filename, -1);
   parse_gimprc_file (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   tmp = plug_in_defs;
-  app_init_update_status("Plug-ins", "", 0);
+  app_init_update_status(_("Plug-ins"), "", 0);
   nplugins = g_slist_length(tmp);
   nth = 0;
   while (tmp)
@@ -391,7 +393,7 @@ plug_in_init ()
 	{
 	  write_pluginrc = TRUE;
 	  if ((be_verbose == TRUE) || (no_splash == TRUE))
-	    g_print ("query plug-in: \"%s\"\n", plug_in_def->prog);
+	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
 	  plug_in_query (plug_in_def->prog, plug_in_def);
 	}
       app_init_update_status(NULL, plug_in_def->prog, nth/nplugins);
@@ -428,7 +430,7 @@ plug_in_init ()
   if (write_pluginrc)
     {
       if ((be_verbose == TRUE) || (no_splash == TRUE))
-	g_print ("writing \"%s\"\n", filename);
+	g_print (_("writing \"%s\"\n"), filename);
       plug_in_write_rc (filename);
     }
 
@@ -441,8 +443,8 @@ plug_in_init ()
   /* run the available extensions */
   tmp = proc_defs;
   if ((be_verbose == TRUE) || (no_splash == TRUE))
-    g_print ("Starting extensions: ");
-  app_init_update_status("Extensions", "", 0);
+    g_print (_("Starting extensions: "));
+  app_init_update_status(_("Extensions"), "", 0);
   nplugins = g_slist_length(tmp); nth = 0;
 
   while (tmp)
@@ -729,7 +731,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
     }
 
   write_pluginrc = TRUE;
-  g_print ("\"%s\" executable not found\n", plug_in_def->prog);
+  g_print (_("\"%s\" executable not found\n"), plug_in_def->prog);
   g_free (plug_in_def->prog);
   g_free (plug_in_def);
 }
@@ -782,7 +784,7 @@ plug_in_new (char *name)
       path = search_in_path (plug_in_path, name);
       if (!path)
 	{
-	  g_message ("unable to locate plug-in: \"%s\"", name);
+	  g_message (_("unable to locate plug-in: \"%s\""), name);
 	  return NULL;
 	}
     }
@@ -879,7 +881,7 @@ plug_in_open (PlugIn *plug_in)
        */
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
-	  g_message ("unable to open pipe");
+	  g_message (_("unable to open pipe"));
 	  return 0;
 	}
 
@@ -927,7 +929,7 @@ plug_in_open (PlugIn *plug_in)
 	}
       else if (plug_in->pid == -1)
 	{
-          g_message ("unable to run plug-in: %s\n", plug_in->args[0]);
+          g_message (_("unable to run plug-in: %s\n"), plug_in->args[0]);
           plug_in_destroy (plug_in);
           return 0;
 	}
@@ -1263,8 +1265,8 @@ plug_in_set_menu_sensitivity (int base_type)
 	  menus_set_sensitive (proc_def->menu_path, sensitive);
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
-	      menus_set_sensitive ("<Image>/Filters/Repeat last", sensitive);
-	      menus_set_sensitive ("<Image>/Filters/Re-show last", sensitive);
+	      menus_set_sensitive (_("<Image>/Filters/Repeat last"), sensitive);
+	      menus_set_sensitive (_("<Image>/Filters/Re-show last"), sensitive);
 	    }
 	}
     }
@@ -1303,18 +1305,18 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_quit ();
       break;
     case GP_CONFIG:
-      g_message ("plug_in_handle_message(): received a config message (should not happen)\n");
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_REQ:
       plug_in_handle_tile_req (msg->data);
       break;
     case GP_TILE_ACK:
-      g_message ("plug_in_handle_message(): received a config message (should not happen)\n");
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_DATA:
-      g_message ("plug_in_handle_message(): received a config message (should not happen)\n");
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_PROC_RUN:
@@ -1325,7 +1327,7 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_close (current_plug_in, FALSE);
       break;
     case GP_TEMP_PROC_RUN:
-      g_message ("plug_in_handle_message(): received a temp proc run message (should not happen)\n");
+      g_message (_("plug_in_handle_message(): received a temp proc run message (should not happen)\n"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TEMP_PROC_RETURN:
@@ -1372,21 +1374,21 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!gp_tile_data_write (current_writefd, &tile_data))
 	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
+	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (!wire_read_msg (current_readfd, &msg))
 	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
+	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (msg.type != GP_TILE_DATA)
 	{
-	  g_message ("expected tile data and received: %d\n", msg.type);
+	  g_message (_("expected tile data and received: %d\n"), msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1400,7 +1402,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message ("plug-in requested invalid drawable (killing)\n");
+	  g_message (_("plug-in requested invalid drawable (killing)\n"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1408,7 +1410,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
       if (!tile)
 	{
-	  g_message ("plug-in requested invalid tile (killing)\n");
+	  g_message (_("plug-in requested invalid tile (killing)\n"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1423,7 +1425,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       wire_destroy (&msg);
       if (!gp_tile_ack_write (current_writefd))
 	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
+	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1437,7 +1439,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message ("plug-in requested invalid drawable (killing)\n");
+	  g_message (_("plug-in requested invalid drawable (killing)\n"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1445,7 +1447,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
       if (!tile)
 	{
-	  g_message ("plug-in requested invalid tile (killing)\n");
+	  g_message (_("plug-in requested invalid tile (killing)\n"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1465,7 +1467,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!gp_tile_data_write (current_writefd, &tile_data))
 	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
+	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1474,14 +1476,14 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!wire_read_msg (current_readfd, &msg))
 	{
-	  g_message ("plug_in_handle_tile_req: ERROR");
+	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
       if (msg.type != GP_TILE_ACK)
 	{
-	  g_message ("expected tile ack and received: %d\n", msg.type);
+	  g_message (_("expected tile ack and received: %d\n"), msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1505,7 +1507,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
   if (!proc_rec)
     {
       /* THIS IS PROBABLY NOT CORRECT -josh */
-      g_message ("PDB lookup failed on %s\n", proc_run->name);
+      g_message (_("PDB lookup failed on %s\n"), proc_run->name);
       plug_in_args_destroy (args, proc_run->nparams, FALSE);
       return;
     }
@@ -1529,7 +1531,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
 
       if (!gp_proc_return_write (current_writefd, &proc_return))
 	{
-	  g_message ("plug_in_handle_proc_run: ERROR");
+	  g_message (_("plug_in_handle_proc_run: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1573,7 +1575,7 @@ plug_in_handle_proc_return (GPProcReturn *proc_return)
 	      plug_in_push (blocked->plug_in);
 	      if (!gp_proc_return_write (current_writefd, proc_return))
 		{
-		  g_message ("plug_in_handle_proc_run: ERROR");
+		  g_message (_("plug_in_handle_proc_run: ERROR"));
 		  plug_in_close (current_plug_in, TRUE);
 		  return;
 		}
@@ -1612,8 +1614,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if ((proc_install->nparams < 1) ||
 	      (proc_install->params[0].type != PDB_INT32))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
+	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args"),
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1625,8 +1627,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_IMAGE) ||
 	      (proc_install->params[2].type != PDB_DRAWABLE))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
+	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args"),
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1638,8 +1640,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_STRING) ||
 	      (proc_install->params[2].type != PDB_STRING))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
+	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args"),
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
@@ -1653,17 +1655,17 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[3].type != PDB_STRING) ||
 	      (proc_install->params[4].type != PDB_STRING))
 	    {
-	      g_message ("plug-in \"%s\" attempted to install procedure \"%s\" which "
-			 "does not take the standard plug-in args",
+	      g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" which "
+			 "does not take the standard plug-in args"),
 			 current_plug_in->args[0], proc_install->name);
 	      return;
 	    }
 	}
       else
 	{
-	  g_message ("plug-in \"%s\" attempted to install procedure \"%s\" in "
+	  g_message (_("plug-in \"%s\" attempted to install procedure \"%s\" in "
 		     "an invalid menu location.  Use either \"<Toolbox>\", \"<Image>\", "
-		     "\"<Load>\", or \"<Save>\".",
+		     "\"<Load>\", or \"<Save>\"."),
 		     current_plug_in->args[0], proc_install->name);
 	  return;
 	}
@@ -1681,9 +1683,9 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	   proc_install->params[i].type == PDB_STRINGARRAY) &&
 	  proc_install->params[i-1].type != PDB_INT32) 
 	{
-	  g_message ("plug_in \"%s\" attempted to install procedure \"%s\" "
+	  g_message (_("plug_in \"%s\" attempted to install procedure \"%s\" "
 		     "which fails to comply with the array parameter "
-		     "passing standard.  Argument %d is noncompliant.", 
+		     "passing standard.  Argument %d is noncompliant."), 
 		     current_plug_in->args[0], proc_install->name, i);
 	  return;
 	}
@@ -2091,7 +2093,7 @@ plug_in_init_file (char *filename)
 
       if (strcmp (name, plug_in_name) == 0)
 	{
-	  g_print ("duplicate plug-in: \"%s\" (skipping)\n", filename);
+	  g_print (_("duplicate plug-in: \"%s\" (skipping)\n"), filename);
 	  return;
 	}
 
@@ -2265,7 +2267,7 @@ plug_in_callback (GtkWidget *widget,
 	}
       else
 	{
-	  g_message ("Uh-oh, no active gdisplay for the plug-in!");
+	  g_message (_("Uh-oh, no active gdisplay for the plug-in!"));
 	  g_free (args);
 	  return;
 	}
@@ -2286,7 +2288,7 @@ plug_in_callback (GtkWidget *widget,
 	    }
 	  else
 	    {
-	      g_message ("Uh-oh, no active gdisplay for the temporary procedure!");
+	      g_message (_("Uh-oh, no active gdisplay for the temporary procedure!"));
 	      g_free (args);
 	      return;
 	    }
@@ -2294,7 +2296,7 @@ plug_in_callback (GtkWidget *widget,
       break;
 
     default:
-      g_error ("Unknown procedure type.");
+      g_error (_("Unknown procedure type."));
       break;
     }
 
@@ -2600,7 +2602,7 @@ plug_in_params_to_args (GPParam *params,
 	  colorarray[2] = params[i].data.d_color.blue;
 	  break;
 	case PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message (_("the \"region\" arg type is not currently supported"));
 	  break;
 	case PDB_DISPLAY:
 	  args[i].value.pdb_int = params[i].data.d_display;
@@ -2765,7 +2767,7 @@ plug_in_args_to_params (Argument *args,
 	    }
 	  break;
 	case PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message (_("the \"region\" arg type is not currently supported"));
 	  break;
 	case PDB_DISPLAY:
 	  params[i].data.d_display = args[i].value.pdb_int;
@@ -2882,7 +2884,7 @@ plug_in_params_destroy (GPParam *params,
 	case PDB_COLOR:
 	  break;
 	case PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message (_("the \"region\" arg type is not currently supported"));
 	  break;
 	case PDB_DISPLAY:
 	case PDB_IMAGE:
@@ -2967,7 +2969,7 @@ plug_in_args_destroy (Argument *args,
 	  g_free (args[i].value.pdb_pointer);
 	  break;
 	case PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
+	  g_message (_("the \"region\" arg type is not currently supported"));
 	  break;
 	case PDB_DISPLAY:
 	case PDB_IMAGE:
@@ -3156,7 +3158,7 @@ plug_in_progress_init (PlugIn *plug_in,
       gtk_box_pack_start (GTK_BOX (vbox), plug_in->progress_bar, TRUE, TRUE, 0);
       gtk_widget_show (plug_in->progress_bar);
 
-      button = gtk_button_new_with_label ("Cancel");
+      button = gtk_button_new_with_label (_("Cancel"));
       gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                                  (GtkSignalFunc) gtk_widget_destroy,
                                  GTK_OBJECT (plug_in->progress));

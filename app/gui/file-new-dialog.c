@@ -14,6 +14,8 @@
 #include "tile_manager_pvt.h"
 #include "gdisplay.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct {
   GtkWidget *dlg;
   GtkWidget *height_spinbutton;
@@ -117,7 +119,7 @@ file_new_ok_callback (GtkWidget *widget,
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage, gimage->width, gimage->height,
-		     type, "Background", OPAQUE_OPACITY, NORMAL);
+		     type, _("Background"), OPAQUE_OPACITY, NORMAL);
 
   if (layer) {
     /*  add the new layer to the gimage  */
@@ -472,7 +474,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   vals->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (vals->dlg), "New Image");
+  gtk_window_set_title (GTK_WINDOW (vals->dlg), _("New Image"));
   gtk_window_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
@@ -482,7 +484,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dlg)->action_area), 2);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) file_new_ok_callback,
@@ -492,7 +494,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) file_new_cancel_callback,
@@ -515,13 +517,13 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (table);
 
   /* label for top of table, Width  */
-  label = gtk_label_new ("Width");
+  label = gtk_label_new (_("Width"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /* Label for top of table, Height */
-  label = gtk_label_new ("Height");
+  label = gtk_label_new (_("Height"));
    gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -584,7 +586,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (vals->height_units_spinbutton);
 
   /* Label for right hand side of pixel size boxes */
-  label = gtk_label_new ("Pixels");
+  label = gtk_label_new (_("Pixels"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label , 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -592,12 +594,12 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* menu and menu items for the units pop-up menu for the units entries */
   menu = gtk_menu_new();
-  menuitem = gtk_menu_item_new_with_label ("inches");
+  menuitem = gtk_menu_item_new_with_label (_("inches"));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_units_inch_menu_callback, vals); 
   gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label ("cm");
+  menuitem = gtk_menu_item_new_with_label (_("cm"));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_units_cm_menu_callback, vals); 
@@ -610,7 +612,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show(optionmenu);
 
   /* resolution frame */
-  frame = gtk_frame_new ("Resolution");
+  frame = gtk_frame_new (_("Resolution"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -633,7 +635,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (vals->resolution_spinbutton);
  
   /* resolution label */
-  label =gtk_label_new (" pixels per  ");
+  label =gtk_label_new (_(" pixels per  "));
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
@@ -645,12 +647,12 @@ file_new_cmd_callback (GtkWidget           *widget,
   */
 
   /* probabaly should be more general here */
-  menuitem = gtk_menu_item_new_with_label ("inch");
+  menuitem = gtk_menu_item_new_with_label (_("inch"));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_res_units_inch_callback, vals); 
   gtk_widget_show(menuitem);
-  menuitem = gtk_menu_item_new_with_label ("cm");
+  menuitem = gtk_menu_item_new_with_label (_("cm"));
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
       (GtkSignalFunc) file_new_res_units_cm_callback, vals); 
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -669,7 +671,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show(hbox);
 
   /* frame for Image Type */
-  frame = gtk_frame_new ("Image Type");
+  frame = gtk_frame_new (_("Image Type"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -679,7 +681,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
-  button = gtk_radio_button_new_with_label (NULL, "RGB");
+  button = gtk_radio_button_new_with_label (NULL, _("RGB"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
@@ -690,7 +692,7 @@ file_new_cmd_callback (GtkWidget           *widget,
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
-  button = gtk_radio_button_new_with_label (group, "Grayscale");
+  button = gtk_radio_button_new_with_label (group, _("Grayscale"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
@@ -703,7 +705,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
 
   /* frame for fill type */
-  frame = gtk_frame_new ("Fill Type");
+  frame = gtk_frame_new (_("Fill Type"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -712,7 +714,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
-  button = gtk_radio_button_new_with_label (NULL, "Foreground");
+  button = gtk_radio_button_new_with_label (NULL, _("Foreground"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FOREGROUND_FILL);
@@ -723,7 +725,7 @@ file_new_cmd_callback (GtkWidget           *widget,
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
-  button = gtk_radio_button_new_with_label (group, "Background");
+  button = gtk_radio_button_new_with_label (group, _("Background"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) BACKGROUND_FILL);
@@ -734,7 +736,7 @@ file_new_cmd_callback (GtkWidget           *widget,
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
-  button = gtk_radio_button_new_with_label (group, "White");
+  button = gtk_radio_button_new_with_label (group, _("White"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) WHITE_FILL);
@@ -745,7 +747,7 @@ file_new_cmd_callback (GtkWidget           *widget,
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
-  button = gtk_radio_button_new_with_label (group, "Transparent");
+  button = gtk_radio_button_new_with_label (group, _("Transparent"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) TRANSPARENT_FILL);

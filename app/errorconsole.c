@@ -32,6 +32,8 @@
 #include "commands.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
+
 #define ERRORS_ALL 0
 #define ERRORS_SELECTION 1
 
@@ -133,7 +135,7 @@ error_console_file_ok_callback (GtkWidget *widget, gpointer data)
       GString	*string;
 
       string = g_string_new ("");
-      g_string_sprintf (string, "Error opening file %s: %s", filename, g_strerror (errno));
+      g_string_sprintf (string, _("Error opening file %s: %s"), filename, g_strerror (errno));
       g_message (string->str);
       g_string_free (string, TRUE);
     }
@@ -148,11 +150,11 @@ error_console_menu_callback (gint textscope)
 
   if (!(GTK_TEXT (text)->editable.has_selection) && (textscope == ERRORS_SELECTION))
     {
-      g_message ("Can't save, nothing selected!");
+      g_message (_("Can't save, nothing selected!"));
       return;
     }
   
-  filesel = gtk_file_selection_new ("Save error log to file...");
+  filesel = gtk_file_selection_new (_("Save error log to file..."));
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_errors", "Gimp");
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
@@ -200,7 +202,7 @@ error_console_create_window (void)
   GtkWidget	*menuitem;
 
   error_console = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (error_console), "GIMP Error console");
+  gtk_window_set_title (GTK_WINDOW (error_console), _("GIMP Error console"));
   session_set_window_geometry (error_console, &error_console_session_info, TRUE); 
   /* The next line should disappear when setting the size works in SM */
   gtk_widget_set_usize (error_console, 250, 300);
@@ -211,7 +213,7 @@ error_console_create_window (void)
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->action_area), 2);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label (_("Close"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) error_console_close_callback, NULL);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->action_area), button, TRUE, TRUE, 0);
@@ -219,14 +221,14 @@ error_console_create_window (void)
 
   menu = gtk_menu_new ();
 
-  menuitem = gtk_menu_item_new_with_label ("Write all errors to file...");
+  menuitem = gtk_menu_item_new_with_label (_("Write all errors to file..."));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
 			     (GtkSignalFunc) error_console_menu_callback,
 			     (gpointer) ERRORS_ALL);
   gtk_widget_show (menuitem);
   
-  menuitem = gtk_menu_item_new_with_label ("Write selection to file...");
+  menuitem = gtk_menu_item_new_with_label (_("Write selection to file..."));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
 			     (GtkSignalFunc) error_console_menu_callback,

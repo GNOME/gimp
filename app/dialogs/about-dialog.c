@@ -203,7 +203,7 @@ about_dialog_create (int timeout)
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Spencer Kimball and Peter Mattis"));
+      label = gtk_label_new (_("Spencer Kimball & Peter Mattis"));
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 

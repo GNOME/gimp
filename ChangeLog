@@ -1,3 +1,20 @@
+Wed Oct 14 17:46:15 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/*, po/de.po, de/POTFILES.in, libgimp/gimpintl.h:
+	Lots of ii8n stuff here and some additions to the de.po.
+	Applied gimp-egger-981005-1 ,gimp-egger-981006-1,
+	gimp-egger-981007-1, gimp-egger-981008-1, 
+ 	gimp-egger-981009-1.patch, gimp-egger-981010-1.patch      
+
+	* plug-in/guillotine/guillotine.c: added the coordinates
+	of the split images from the original image to the title.
+	ie foo.jpg (0,0) for the image in the topleft.
+
+	* plug-in/script-fu/scripts/neon-logo.scm,
+	perspective-shadow.scm, predator.scm,rendermap.scm,
+	ripply-anim.scm, select_to_image.scm,swirltile.scm,
+	xach-effect.scm: updated scripts to use new script-fu stuff     
+
 Wed Oct 14 22:58:04 BST 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/color_select.c: fix silly bug with off-by-one error in

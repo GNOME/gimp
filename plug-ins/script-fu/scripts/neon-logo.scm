@@ -60,7 +60,7 @@
 	 (shadow-feather (/ size 20))
 	 (shadow-offx (/ size 10))
 	 (shadow-offy (/ size 10))
-	 (tube-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (tube-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
 	 (width (car (gimp-drawable-width tube-layer)))
 	 (height (car (gimp-drawable-height tube-layer)))
 	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Neon Glow" 100 NORMAL)))
@@ -159,7 +159,9 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "NEON"
-		    SF-VALUE "Font Size (in pixels)" "150"
+;		    SF-VALUE "Font Size (in pixels)" "150"
+		    SF-ADJUSTMENT "Font Size" '(150 2 256 1 10 0 0)
+		    SF-FONT "Font" "-*-blippo-*-*-*-*-*-*-*-*-*-*-*-*"
 		    SF-STRING "Font" "Blippo"
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-COLOR "Glow Color" '(38 211 255)

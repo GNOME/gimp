@@ -24,6 +24,8 @@
 #include "rect_select.h"
 #include "rect_selectP.h"
 
+#include "libgimp/gimpintl.h"
+
 #define NO  0
 #define YES 1
 
@@ -108,25 +110,25 @@ create_selection_options (ToolType tool_type)
   switch (tool_type)
     {
     case RECT_SELECT:
-      label = gtk_label_new ("Rectangular Select Options");
+      label = gtk_label_new (_("Rectangular Select Options"));
       break;
     case ELLIPSE_SELECT:
-      label = gtk_label_new ("Elliptical Selection Options");
+      label = gtk_label_new (_("Elliptical Selection Options"));
       break;
     case FREE_SELECT:
-      label = gtk_label_new ("Free-hand Selection Options");
+      label = gtk_label_new (_("Free-hand Selection Options"));
       break;
     case FUZZY_SELECT:
-      label = gtk_label_new ("Fuzzy Selection Options");
+      label = gtk_label_new (_("Fuzzy Selection Options"));
       break;
     case BEZIER_SELECT:
-      label = gtk_label_new ("Bezier Selection Options");
+      label = gtk_label_new (_("Bezier Selection Options"));
       break;
     case ISCISSORS:
-      label = gtk_label_new ("Intelligent Scissors Options");
+      label = gtk_label_new (_("Intelligent Scissors Options"));
       break;
     case BY_COLOR_SELECT:
-      label = gtk_label_new ("By-Color Select Options");
+      label = gtk_label_new (_("By-Color Select Options"));
       break;
     default:
       break;
@@ -146,7 +148,7 @@ create_selection_options (ToolType tool_type)
     case FUZZY_SELECT:
     case ISCISSORS:
     case BY_COLOR_SELECT:
-      sample_merged_toggle = gtk_check_button_new_with_label ("Sample Merged");
+      sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
@@ -160,7 +162,7 @@ create_selection_options (ToolType tool_type)
 
   if (tool_type == BEZIER_SELECT)
     {
-      bezier_toggle = gtk_check_button_new_with_label ("Bezier Extends");
+      bezier_toggle = gtk_check_button_new_with_label (_("Bezier Extends"));
       gtk_box_pack_start (GTK_BOX (vbox), bezier_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (bezier_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
@@ -173,7 +175,7 @@ create_selection_options (ToolType tool_type)
   /*  the antialias toggle button  */
   if (tool_type != RECT_SELECT)
     {
-      antialias_toggle = gtk_check_button_new_with_label ("Antialiasing");
+      antialias_toggle = gtk_check_button_new_with_label (_("Antialiasing"));
       gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
@@ -185,7 +187,7 @@ create_selection_options (ToolType tool_type)
   /* Widgets for fixed size select */
   if (tool_type == RECT_SELECT || tool_type == ELLIPSE_SELECT) 
     {
-      fixed_size_toggle = gtk_check_button_new_with_label ("Fixed size / aspect ratio");
+      fixed_size_toggle = gtk_check_button_new_with_label (_("Fixed size / aspect ratio"));
       gtk_box_pack_start (GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
 			  (GtkSignalFunc)selection_toggle_update,
@@ -196,7 +198,7 @@ create_selection_options (ToolType tool_type)
       
       hbox = gtk_hbox_new (TRUE, 5);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (" Width: ");
+      label = gtk_label_new (_(" Width: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
@@ -214,7 +216,7 @@ create_selection_options (ToolType tool_type)
       
       hbox = gtk_hbox_new (TRUE, 5);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (" Height: ");
+      label = gtk_label_new (_(" Height: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
@@ -232,7 +234,7 @@ create_selection_options (ToolType tool_type)
     }
 
   /*  the feather toggle button  */
-  feather_toggle = gtk_check_button_new_with_label ("Feather");
+  feather_toggle = gtk_check_button_new_with_label (_("Feather"));
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -244,7 +246,7 @@ create_selection_options (ToolType tool_type)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Feather Radius");
+  label = gtk_label_new (_("Feather Radius"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -385,16 +387,16 @@ rect_select_button_press (Tool           *tool,
   switch (rect_sel->op)
     {
     case ADD:
-      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: ADD");
+      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: ADD"));
       break;
     case SUB:
-      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: SUBTRACT");
+      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: SUBTRACT"));
       break;
     case INTERSECT:
-      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: INTERSECT");
+      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: INTERSECT"));
       break;
     case REPLACE:
-      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: REPLACE");
+      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: REPLACE"));
       break;
     default:
       break;
@@ -592,7 +594,7 @@ rect_select_motion (Tool           *tool,
     }
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
-  g_snprintf (size, STATUSBAR_SIZE, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
+  g_snprintf (size, STATUSBAR_SIZE, _("Selection: %d x %d"), abs(rect_sel->w), abs(rect_sel->h));
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, size);
 
   draw_core_resume (rect_sel->core, tool);
@@ -722,43 +724,43 @@ ProcArg rect_select_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "The image"
+    N_("the image")
   },
   { PDB_FLOAT,
     "x",
-    "x coordinate of upper-left corner of rectangle"
+    N_("x coordinate of upper-left corner of rectangle")
   },
   { PDB_FLOAT,
     "y",
-    "y coordinate of upper-left corner of rectangle"
+    N_("y coordinate of upper-left corner of rectangle")
   },
   { PDB_FLOAT,
     "width",
-    "the width of the rectangle: width > 0"
+    N_("the width of the rectangle: width > 0")
   },
   { PDB_FLOAT,
     "height",
-    "the height of the rectangle: height > 0"
+    N_("the height of the rectangle: height > 0")
   },
   { PDB_INT32,
     "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
+    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
   },
   { PDB_INT32,
     "feather",
-    "feather option for selections"
+    N_("feather option for selections")
   },
   { PDB_FLOAT,
     "feather_radius",
-    "radius for feather operation"
+    N_("radius for feather operation")
   }
 };
 
 ProcRecord rect_select_proc =
 {
   "gimp_rect_select",
-  "Create a rectangular selection over the specified image",
-  "This tool creates a rectangular selection over the specified image.  The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
+  N_("Create a rectangular selection over the specified image"),
+  N_("This tool creates a rectangular selection over the specified image.  The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

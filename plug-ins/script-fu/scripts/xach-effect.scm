@@ -31,6 +31,9 @@
 			       hl-offset-y
 			       hl-color
 			       hl-opacity-comp
+			       red
+			       green
+			       blue
 			       ds-color
 			       ds-opacity
 			       ds-blur
@@ -40,6 +43,7 @@
   (let* ((ds-blur (max ds-blur 0))
 	 (ds-opacity (min ds-opacity 100))
 	 (ds-opacity (max ds-opacity 0))
+	 (new-color (list (red green blue))) 
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (hl-opacity (list hl-opacity-comp hl-opacity-comp hl-opacity-comp))
@@ -126,6 +130,9 @@
 		    SF-COLOR "Highlight Color" '(255 255 255)
 		    SF-ADJUSTMENT "Opacity" '(66 0 255 1 10 0 0)
 ;		    SF-COLOR "Opacity" '(66 66 66)
+		    SF-STRING "RED" "123"
+		    SF-STRING "GREEN" "0"
+		    SF-STRING "BLUE" "190"
 		    SF-COLOR "Drop Shadow Color" '(0 0 0)
 		    SF-ADJUSTMENT "Drop Shadow Opacity" '(100 0 100 1 10 0 0)
 		    SF-ADJUSTMENT "Drop Shadow Blur Radius" '(12 0 255 1 10 0 1)

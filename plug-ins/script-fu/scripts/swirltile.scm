@@ -34,7 +34,8 @@
 
     (plug-in-bump-map 1 img layer-one layer-one azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
 
-    (gimp-display-new img)
+;    (gimp-display-new img)
+    (gimp-file-save 1 img layer-one "/home/aklikins/test.jpg" "/home/aklikins/test.jpg")
     (gimp-image-enable-undo img)))
 
 (script-fu-register "script-fu-swirl-tile"

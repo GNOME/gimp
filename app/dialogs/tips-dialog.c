@@ -8,6 +8,8 @@
 #include "interface.h"
 #include "wilber.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TIPS_FILE_NAME "gimp_tips.txt"
 
 static int  tips_dialog_hide (GtkWidget *widget, gpointer data);
@@ -57,7 +59,7 @@ tips_dialog_create ()
     {
       tips_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (tips_dialog), "GIMP Tip of the day");
+      gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the day"));
       gtk_window_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
 			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
@@ -102,27 +104,27 @@ tips_dialog_create ()
       gtk_box_pack_start (GTK_BOX (hbox1), tips_label, TRUE, TRUE, 3);
       gtk_widget_show (tips_label);
 
-      button_close = gtk_button_new_with_label ("Close");
+      button_close = gtk_button_new_with_label (_("Close"));
       gtk_signal_connect (GTK_OBJECT (button_close), "clicked",
 			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
       gtk_box_pack_end (GTK_BOX (hbox2), button_close, FALSE, TRUE, 0);
       gtk_widget_show (button_close);
 
-      button_next = gtk_button_new_with_label ("Next Tip");
+      button_next = gtk_button_new_with_label (_("Next Tip"));
       gtk_signal_connect (GTK_OBJECT (button_next), "clicked",
 			  GTK_SIGNAL_FUNC (tips_show_next),
 			  (gpointer) "next");
       gtk_box_pack_end (GTK_BOX (hbox2), button_next, FALSE, TRUE, 0);
       gtk_widget_show (button_next);
 
-      button_prev = gtk_button_new_with_label ("Prev. Tip");
+      button_prev = gtk_button_new_with_label (_("Prev. Tip"));
       gtk_signal_connect (GTK_OBJECT (button_prev), "clicked",
 			  GTK_SIGNAL_FUNC (tips_show_next),
 			  (gpointer) "prev");
       gtk_box_pack_end (GTK_BOX (hbox2), button_prev, FALSE, TRUE, 0);
       gtk_widget_show (button_prev);
 
-      button_check = gtk_check_button_new_with_label ("Show tip next time");
+      button_check = gtk_check_button_new_with_label (_("Show tip next time"));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button_check),
 				   show_tips);
       gtk_signal_connect (GTK_OBJECT (button_check), "toggled",
@@ -220,9 +222,9 @@ read_tips_file (char *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      store_tip ("Your GIMP tips file appears to be missing!\n"
+      store_tip (_("Your GIMP tips file appears to be missing!\n"
 		 "There should be a file called " TIPS_FILE_NAME " in the\n"
-		 "GIMP data directory.  Please check your installation.");
+		 "GIMP data directory.  Please check your installation."));
       return;
     }
 

@@ -98,5 +98,5 @@
 		    "RGB*, GRAY*"
 		    SF-IMAGE "Image to Animage" 0
 		    SF-DRAWABLE "Drawable to Animate" 0
-		    SF-VALUE "Rippling Strength" "3"
-		    SF-VALUE "Number of Frames" "15")
+		    SF-ADJUSTMENT "Rippling Strentgh" '(3 0 256 1 10 3 0)
+		    SF-ADJUSTMENT "Number of Frames" '(15 0 256 1 10 0 1))

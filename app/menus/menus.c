@@ -35,7 +35,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#define MRU_MENU_ENTRY_SIZE sizeof (N_("/File/MRU00"))
+#define MRU_MENU_ENTRY_SIZE sizeof ("/File/MRU00 ")
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
 static void menus_init (void);
@@ -78,7 +78,6 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/File/Save as"), NULL, file_save_as_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
-  
   
   { N_("/File/Close"), "<control>W", file_close_cmd_callback, 0 },
   { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
@@ -310,7 +309,7 @@ menus_tools_create (ToolInfo *tool_info)
   
   /* entry.path = g_strconcat ("<Image>", tool_info->menu_path, NULL);*/
   /* entry.callback_data = tool_info; */
-  entry.path = tool_info->menu_path;
+  entry.path = gettext(tool_info->menu_path);
   entry.accelerator = tool_info->menu_accel;
   entry.callback = tools_select_cmd_callback;
   entry.callback_action = tool_info->tool_id;
@@ -340,12 +339,12 @@ menus_set_sensitive (char *path,
   if (ifactory)
     {
       widget = gtk_item_factory_get_widget (ifactory, path);
-      
+     
       gtk_widget_set_sensitive (widget, sensitive);
     }
   if (!ifactory || !widget)
     printf (_("Unable to set sensitivity for menu which doesn't exist:\n%s"), path);
-}
+}  
 
 void
 menus_set_state (char *path,
@@ -509,9 +508,7 @@ menus_init_mru ()
 
   gtk_item_factory_create_items_ac (toolbox_factory, last_opened_size,
   				    last_opened_entries, NULL, 2);
-  gtk_item_factory_create_item (toolbox_factory, &file_menu_separator, NULL, 2);
-  gtk_item_factory_create_item (toolbox_factory, &toolbox_end, NULL, 2);
-
+  
   for (i=0; i < last_opened_size; i++)
     {
       widget = gtk_item_factory_get_widget (toolbox_factory,
@@ -540,6 +537,14 @@ menus_init_toolbox ()
 				    translated_entries, NULL, 2);
   free_translated_entries(translated_entries, n_toolbox_entries);
   menus_init_mru ();
+
+  translated_entries=translate_entries(&file_menu_separator,1);
+  gtk_item_factory_create_item (toolbox_factory, translated_entries, NULL, 2);
+  free_translated_entries(translated_entries, 1);
+   
+  translated_entries=translate_entries(&toolbox_end,1);
+  gtk_item_factory_create_item (toolbox_factory, translated_entries, NULL, 2);
+  free_translated_entries(translated_entries, 1);
 }
 
 static GtkItemFactoryEntry *

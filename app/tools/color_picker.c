@@ -26,6 +26,8 @@
 #include "palette.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile.h"			/* ick. */
 
 /* maximum information buffer size */
@@ -101,12 +103,12 @@ create_color_picker_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Color Picker Options");
+  label = gtk_label_new (_("Color Picker Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /*  the sample merged toggle button  */
-  sample_merged_toggle = gtk_check_button_new_with_label ("Sample Merged");
+  sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
@@ -123,7 +125,7 @@ create_color_picker_options (void)
 
 static ActionAreaItem action_items[] =
 {
-  { "Close", color_picker_info_window_close_callback, NULL, NULL },
+  { N_("Close"), color_picker_info_window_close_callback, NULL, NULL },
 };
 
 static void
@@ -146,33 +148,33 @@ color_picker_button_press (Tool           *tool,
       if (color_picker_info)
 	info_dialog_free (color_picker_info);
 
-      color_picker_info = info_dialog_new ("Color Picker");
+      color_picker_info = info_dialog_new (_("Color Picker"));
       active_drawable = gimage_active_drawable (gdisp->gimage);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
       switch (drawable_type (active_drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Red", red_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Green", green_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Blue", blue_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Red"), red_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Green"), green_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Blue"), blue_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Alpha"), alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Hex Triplet"), hex_buf, NULL, NULL);
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Index", index_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Red", red_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Green", green_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Blue", blue_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Index"), index_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Alpha"), alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Red"), red_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Green"), green_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Blue"), blue_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Hex Triplet"), hex_buf, NULL, NULL);
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Intensity", gray_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Intensity"), gray_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Alpha"), alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, _("Hex Triplet"), hex_buf, NULL, NULL);
 	  break;
 
 	default :
@@ -381,13 +383,13 @@ color_picker_info_update (Tool *tool,
 {
   if (!valid)
     {
-      sprintf (red_buf, "N/A");
-      sprintf (green_buf, "N/A");
-      sprintf (blue_buf, "N/A");
-      sprintf (alpha_buf, "N/A");
-      sprintf (index_buf, "N/A");
-      sprintf (gray_buf, "N/A");
-      sprintf (hex_buf, "N/A");
+      sprintf (red_buf, _("N/A"));
+      sprintf (green_buf, _("N/A"));
+      sprintf (blue_buf, _("N/A"));
+      sprintf (alpha_buf, _("N/A"));
+      sprintf (index_buf, _("N/A"));
+      sprintf (gray_buf, _("N/A"));
+      sprintf (hex_buf, _("N/A"));
     }
   else
     {
@@ -400,7 +402,7 @@ color_picker_info_update (Tool *tool,
 	  if (sample_type == RGBA_GIMAGE)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, "N/A");
+	    sprintf (alpha_buf, _("N/A"));
 	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
 		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
 	  break;
@@ -410,7 +412,7 @@ color_picker_info_update (Tool *tool,
 	  if (sample_type == INDEXEDA_GIMAGE)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, "N/A");
+	    sprintf (alpha_buf, _("N/A"));
 	  sprintf (red_buf, "%d", col_value [RED_PIX]);
 	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
 	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
@@ -423,7 +425,7 @@ color_picker_info_update (Tool *tool,
 	  if (sample_type == GRAYA_GIMAGE)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, "N/A");
+	    sprintf (alpha_buf, _("N/A"));
 	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [GRAY_PIX],
 		   col_value [GRAY_PIX], col_value [GRAY_PIX]);
 	  break;
@@ -475,27 +477,27 @@ ProcArg color_picker_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_FLOAT,
     "x",
-    "x coordinate of upper-left corner of rectangle"
+    N_("x coordinate of upper-left corner of rectangle")
   },
   { PDB_FLOAT,
     "y",
-    "y coordinate of upper-left corner of rectangle"
+    N_("y coordinate of upper-left corner of rectangle")
   },
   { PDB_INT32,
     "sample_merged",
-    "use the composite image, not the drawable"
+    N_("use the composite image, not the drawable")
   },
   { PDB_INT32,
     "save_color",
-    "save the color to the active palette"
+    N_("save the color to the active palette")
   }
 };
 
@@ -503,15 +505,15 @@ ProcArg color_picker_out_args[] =
 {
   { PDB_COLOR,
     "color",
-    "the return color"
+    N_("the return color")
   }
 };
 
 ProcRecord color_picker_proc =
 {
   "gimp_color_picker",
-  "Determine the color at the given drawable coordinates",
-  "This tool determines the color at the specified coordinates.  The returned color is an RGB triplet even for grayscale and indexed drawables.  If the coordinates lie outside of the extents of the specified drawable, then an error is returned.  If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates.  If the alpha value is completely transparent (0), then an error is returned.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
+  N_("Determine the color at the given drawable coordinates"),
+  N_("This tool determines the color at the specified coordinates.  The returned color is an RGB triplet even for grayscale and indexed drawables.  If the coordinates lie outside of the extents of the specified drawable, then an error is returned.  If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates.  If the alpha value is completely transparent (0), then an error is returned.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

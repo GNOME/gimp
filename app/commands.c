@@ -67,6 +67,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct
 {
   GtkWidget * shell;
@@ -360,7 +362,7 @@ select_border_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%d", gimage_mask_border_radius);
-  query_string_box ("Border Selection", "Border selection by:", initial,
+  query_string_box (_("Border Selection"), _("Border selection by:"), initial,
 		    gimage_mask_border_callback, gdisp->gimage);
 }
 
@@ -374,7 +376,7 @@ select_feather_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%f", gimage_mask_feather_radius);
-  query_string_box ("Feather Selection", "Feather selection by:", initial,
+  query_string_box (_("Feather Selection"), _("Feather selection by:"), initial,
 		    gimage_mask_feather_callback, gdisp->gimage);
 }
 
@@ -388,7 +390,7 @@ select_grow_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%d", gimage_mask_grow_pixels);
-  query_string_box ("Grow Selection", "Grow selection by:", initial,
+  query_string_box (_("Grow Selection"), _("Grow selection by:"), initial,
 		    gimage_mask_grow_callback, gdisp->gimage);
 }
 
@@ -402,7 +404,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%d", gimage_mask_shrink_pixels);
-  query_string_box ("Shrink Selection", "Shrink selection by:", initial,
+  query_string_box (_("Shrink Selection"), _("Shrink selection by:"), initial,
 		    gimage_mask_shrink_callback, gdisp->gimage);
 }
 
@@ -736,8 +738,8 @@ image_resize_cmd_callback (GtkWidget *widget,
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", image_resize_callback, NULL, NULL },
-    { "Cancel", image_cancel_callback, NULL, NULL }
+    { N_("OK"), image_resize_callback, NULL, NULL },
+    { N_("Cancel"), image_cancel_callback, NULL, NULL }
   };
   GDisplay * gdisp;
   GtkWidget *vbox;
@@ -753,7 +755,7 @@ image_resize_cmd_callback (GtkWidget *widget,
   /*  the dialog  */
   image_resize->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (image_resize->shell), "image_resize", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (image_resize->shell), "Image Resize");
+  gtk_window_set_title (GTK_WINDOW (image_resize->shell), _("Image Resize"));
   gtk_window_set_policy (GTK_WINDOW (image_resize->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
 
@@ -783,8 +785,8 @@ image_scale_cmd_callback (GtkWidget *widget,
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", image_scale_callback, NULL, NULL },
-    { "Cancel", image_cancel_callback, NULL, NULL }
+    { N_("OK"), image_scale_callback, NULL, NULL },
+    { N_("Cancel"), image_cancel_callback, NULL, NULL }
   };
   GDisplay * gdisp;
   GtkWidget *vbox;
@@ -800,7 +802,7 @@ image_scale_cmd_callback (GtkWidget *widget,
   /*  the dialog  */
   image_scale->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (image_scale->shell), "image_scale", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (image_scale->shell), "Image Scale");
+  gtk_window_set_title (GTK_WINDOW (image_scale->shell), _("Image Scale"));
   gtk_window_set_policy (GTK_WINDOW (image_scale->shell), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);
 
@@ -1096,7 +1098,7 @@ image_resize_callback (GtkWidget *w,
 	}
       else 
 	{
-	  g_message ("Resize Error: Both width and height must be greater than zero.");
+	  g_message (_("Resize Error: Both width and height must be greater than zero."));
 	  return;
 	}
     }
@@ -1126,7 +1128,7 @@ image_scale_callback (GtkWidget *w,
 	}
       else 
 	{
-	  g_message ("Scale Error: Both width and height must be greater than zero.");
+	  g_message (_("Scale Error: Both width and height must be greater than zero."));
 	  return;
 	}
     }

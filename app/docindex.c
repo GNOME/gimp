@@ -21,6 +21,8 @@
 #include "docindex.h"
 #include "docindexif.h"
 
+#include "libgimp/gimpintl.h"
+
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
 static gint x = 0, y = 0, width = 0, height = 0;
@@ -168,13 +170,13 @@ make_idea_window( int x, int y )
   gtk_widget_show( ideas->status );
 
   /* Set the GOWindow title */
-  ideas->title = g_strdup( "Document Index" );
+  ideas->title = g_strdup( _("Document Index") );
 
   /* Set the GtkWindow title */
   gtk_window_set_title( GTK_WINDOW( ideas->window ), ideas->title );
 
   /* Set the initial status message */
-  gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid,  "GTK successfully started" );
+  gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid,  _("GTK successfully started") );
 
   /* Connect the signals */
   gtk_signal_connect( GTK_OBJECT( ideas->window ), "delete_event",
@@ -526,10 +528,10 @@ void idea_up_callback( GtkWidget *widget, gpointer data )
     {
       selected = GTK_TREE( ideas->tree )->selection->data;
       if ( idea_move( selected, -1, TRUE ) != -1 )
-	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "This file cannot be moved up." );
+	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("This file cannot be moved up.") );
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "There's no selection to move up." );
+    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to move up.") );
 }
 
 void idea_down_callback( GtkWidget *widget, gpointer data )
@@ -539,10 +541,10 @@ void idea_down_callback( GtkWidget *widget, gpointer data )
     {
       selected = GTK_TREE( ideas->tree )->selection->data;
       if ( idea_move( selected, 1, TRUE ) != 1 )
-	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "This file cannot be moved down." );
+	gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("This file cannot be moved down.") );
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "There's no selection to move down." );
+    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to move down.") );
 }
 
 void idea_remove_callback( GtkWidget *widget, gpointer data )
@@ -554,7 +556,7 @@ void idea_remove_callback( GtkWidget *widget, gpointer data )
       idea_remove( selected );
     }
   else
-    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, "There's no selection to remove." );
+    gtk_statusbar_push( GTK_STATUSBAR( ideas->status ), ideas->contextid, _("There's no selection to remove.") );
 }
 
 void

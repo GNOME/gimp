@@ -6,6 +6,7 @@
 #include "tile_manager.h"
 #include "tile_swap.h"
 
+#include "libgimp/gimpintl.h"
 
 /* EXPERIMENTAL Copy-On-Write goodies
  *  by Adam D. Moss
@@ -163,12 +164,12 @@ tile_destroy (Tile *tile)
 {
   if (tile->ref_count) 
     {
-      g_warning ("tried to destroy a ref'd tile");
+      g_warning (_("tried to destroy a ref'd tile"));
       return;
     }
   if (tile->share_count)
     {
-      g_warning ("tried to destroy an attached tile");
+      g_warning (_("tried to destroy an attached tile"));
       return;
     }
   if (tile->data) 
@@ -281,7 +282,7 @@ tile_detach (Tile *tile, void *tm, int tile_num)
 
   if (*link == NULL) 
     {
-      g_warning ("Tried to detach a nonattached tile");
+      g_warning (_("Tried to detach a nonattached tile"));
       return;
     }
 

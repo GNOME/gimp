@@ -17,6 +17,8 @@
 #include "docindex.h"
 #include "docindexif.h"
 
+#include "libgimp/gimpintl.h"
+
 void
 raise_if_match( gpointer data, gpointer user_data )
 {
@@ -71,27 +73,27 @@ GtkWidget *create_idea_toolbar()
   gtk_toolbar_set_button_relief( GTK_TOOLBAR( toolbar ), GTK_RELIEF_NONE );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Open", "Open a file", "Toolbar/Open",
+			   _("Open"), _("Open a file"), "Toolbar/Open",
 			   NULL,
 			   (GtkSignalFunc) file_open_callback, NULL);
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Up", "Move the selected entry up in the index", "Toolbar/Up",
+			   _("Up"), _("Move the selected entry up in the index"), "Toolbar/Up",
 			   NULL,
 			   (GtkSignalFunc) idea_up_callback, NULL);
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Down", "Move the selected entry down in the index", "Toolbar/Down",
+			   _("Down"), _("Move the selected entry down in the index"), "Toolbar/Down",
 			   NULL,
 			   (GtkSignalFunc) idea_down_callback, NULL );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Remove", "Remove the selected entry from the index", "Toolbar/Remove",
+			   _("Remove"), _("Remove the selected entry from the index"), "Toolbar/Remove",
 			   NULL,
 			   (GtkSignalFunc) idea_remove_callback, NULL );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Close", "Close the Document Index", "Toolbar/Hide",
+			   _("Close"), _("Close the Document Index"), "Toolbar/Hide",
 			   NULL,
 			   (GtkSignalFunc) idea_hide_callback, NULL );
   return toolbar;

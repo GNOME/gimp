@@ -54,6 +54,8 @@
 #include "gimprc.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
+
 static void sessionrc_write_info (SessionInfo *, FILE *);
 static void session_open_dialog (SessionInfo *);
 static void session_reset_open_state (SessionInfo *);
@@ -141,13 +143,13 @@ save_sessionrc (void)
       if (!fp)
 	return;
 
-      fprintf(fp, "# GIMP sessionrc\n");
-      fprintf(fp, "# This file takes session-specific info (that is info,\n");
-      fprintf(fp, "# you want to keep between two gimp-sessions). You are\n");
-      fprintf(fp, "# not supposed to edit it manually, but of course you\n");
-      fprintf(fp, "# can do. This file will be entirely rewritten every time\n"); 
-      fprintf(fp, "# you quit the gimp. If this file isn't found, defaults\n");
-      fprintf(fp, "# are used.\n\n");
+      fprintf(fp, _("# GIMP sessionrc\n"));
+      fprintf(fp, _("# This file takes session-specific info (that is info,\n"));
+      fprintf(fp, _("# you want to keep between two gimp-sessions). You are\n"));
+      fprintf(fp, _("# not supposed to edit it manually, but of course you\n"));
+      fprintf(fp, _("# can do. This file will be entirely rewritten every time\n")); 
+      fprintf(fp, _("# you quit the gimp. If this file isn't found, defaults\n"));
+      fprintf(fp, _("# are used.\n\n"));
 
       /* save window geometries */
       g_list_foreach (session_info_updates, (GFunc)sessionrc_write_info, fp);

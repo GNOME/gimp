@@ -29,6 +29,8 @@
 #include "image_map.h"
 #include "interface.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TEXT_WIDTH 55
 
 #define SHADOWS    0
@@ -273,7 +275,7 @@ tools_new_color_balance ()
 
   /*  The tool options  */
   if (!color_balance_options)
-    color_balance_options = tools_register_no_options (COLOR_BALANCE, "Color Balance Options");
+    color_balance_options = tools_register_no_options (COLOR_BALANCE, _("Color Balance Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (ColorBalance *) g_malloc (sizeof (ColorBalance));
@@ -317,7 +319,7 @@ color_balance_initialize (GDisplay *gdisp)
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Color balance operates only on RGB color drawables.");
+      g_message (_("Color balance operates only on RGB color drawables."));
       return;
     }
 
@@ -349,8 +351,8 @@ color_balance_initialize (GDisplay *gdisp)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", color_balance_ok_callback, NULL, NULL },
-  { "Cancel", color_balance_cancel_callback, NULL, NULL }
+  { N_("OK"), color_balance_ok_callback, NULL, NULL },
+  { N_("Cancel"), color_balance_cancel_callback, NULL, NULL }
 };
 
 static ColorBalanceDialog *
@@ -371,9 +373,9 @@ color_balance_new_dialog ()
   int i;
   char *appl_mode_names[3] =
   {
-    "Shadows",
-    "Midtones",
-    "Highlights"
+    N_("Shadows"),
+    N_("Midtones"),
+    N_("Highlights")
   };
   ActionCallback appl_mode_callbacks[3] =
   {
@@ -390,7 +392,7 @@ color_balance_new_dialog ()
   /*  The shell and main vbox  */
   cbd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (cbd->shell), "color_balance", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cbd->shell), "Color Balance");
+  gtk_window_set_title (GTK_WINDOW (cbd->shell), N_("Color Balance"));
   
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (cbd->shell), "delete_event",
@@ -405,7 +407,7 @@ color_balance_new_dialog ()
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Color Levels: ");
+  label = gtk_label_new (_("Color Levels: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
@@ -444,7 +446,7 @@ color_balance_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the cyan-red scale widget  */
-  start_label = gtk_label_new ("Cyan");
+  start_label = gtk_label_new (_("Cyan"));
   gtk_misc_set_alignment (GTK_MISC (start_label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), start_label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -461,7 +463,7 @@ color_balance_new_dialog ()
   gtk_signal_connect (GTK_OBJECT (data), "value_changed",
 		      (GtkSignalFunc) color_balance_cr_scale_update,
 		      cbd);
-  end_label = gtk_label_new ("Red");
+  end_label = gtk_label_new (_("Red"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), end_label, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -471,7 +473,7 @@ color_balance_new_dialog ()
   gtk_widget_show (slider);
 
   /*  Create the magenta-green scale widget  */
-  start_label = gtk_label_new ("Magenta");
+  start_label = gtk_label_new (_("Magenta"));
   gtk_misc_set_alignment (GTK_MISC (start_label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), start_label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -488,7 +490,7 @@ color_balance_new_dialog ()
   gtk_signal_connect (GTK_OBJECT (data), "value_changed",
 		      (GtkSignalFunc) color_balance_mg_scale_update,
 		      cbd);
-  end_label = gtk_label_new ("Green");
+  end_label = gtk_label_new (_("Green"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), end_label, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -498,7 +500,7 @@ color_balance_new_dialog ()
   gtk_widget_show (slider);
 
   /*  Create the yellow-blue scale widget  */
-  start_label = gtk_label_new ("Yellow");
+  start_label = gtk_label_new (_("Yellow"));
   gtk_misc_set_alignment (GTK_MISC (start_label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), start_label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -515,7 +517,7 @@ color_balance_new_dialog ()
   gtk_signal_connect (GTK_OBJECT (data), "value_changed",
 		      (GtkSignalFunc) color_balance_yb_scale_update,
 		      cbd);
-  end_label = gtk_label_new ("Blue");
+  end_label = gtk_label_new (_("Blue"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), end_label, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -529,7 +531,7 @@ color_balance_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), cbd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -538,7 +540,7 @@ color_balance_new_dialog ()
   gtk_widget_show (toggle);
 
   /*  The preserve luminosity toggle  */
-  toggle = gtk_check_button_new_with_label ("Preserve Luminosity");
+  toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), cbd->preserve_luminosity);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -618,7 +620,7 @@ static void
 color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
-    g_message ("color_balance_preview(): No image map");
+    g_message (_("color_balance_preview(): No image map"));
   active_tool->preserve = TRUE;
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
   active_tool->preserve = FALSE;
@@ -877,39 +879,39 @@ ProcArg color_balance_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_INT32,
     "transfer_mode",
-    "Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }"
+    N_("Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }")
   },
   { PDB_INT32,
     "preserve_lum",
-    "Preserve luminosity values at each pixel"
+    N_("Preserve luminosity values at each pixel")
   },
   { PDB_FLOAT,
     "cyan_red",
-    "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
+    N_("Cyan-Red color balance: (-100 <= cyan_red <= 100)")
   },
   { PDB_FLOAT,
     "magenta_green",
-    "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
+    N_("Magenta-Green color balance: (-100 <= magenta_green <= 100)")
   },
   { PDB_FLOAT,
     "yellow_blue",
-    "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
+    N_("Yellow-Blue color balance: (-100 <= yellow_blue <= 100)")
   }
 };
 
 ProcRecord color_balance_proc =
 {
   "gimp_color_balance",
-  "Modify the color balance of the specified drawable",
-  "Modify the color balance of the specified drawable.  There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue.  Negative values increase the amount of the former, positive values increase the amount of the latter.  Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently.  The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed.",
+  N_("Modify the color balance of the specified drawable"),
+  N_("Modify the color balance of the specified drawable.  There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue.  Negative values increase the amount of the former, positive values increase the amount of the latter.  Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently.  The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

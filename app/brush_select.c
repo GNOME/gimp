@@ -34,6 +34,7 @@
 #include "paint_funcs.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
 
 #define STD_CELL_WIDTH    24
 #define STD_CELL_HEIGHT   24
@@ -91,30 +92,30 @@ static void spacing_scale_update         (GtkAdjustment *, gpointer);
 /*  the option menu items -- the paint modes  */
 static MenuItem option_items[] =
 {
-  { "Normal", 0, 0, paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { "Dissolve", 0, 0, paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { "Behind", 0, 0, paint_mode_menu_callback, (gpointer) BEHIND_MODE, NULL, NULL },
-  { "Multiply (Burn)", 0, 0, paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { "Divide (Dodge)", 0, 0, paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
-  { "Screen", 0, 0, paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { "Overlay", 0, 0, paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { "Difference", 0, 0, paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { "Addition", 0, 0, paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { "Subtract", 0, 0, paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { "Darken Only", 0, 0, paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { "Lighten Only", 0, 0, paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { "Hue", 0, 0, paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { "Saturation", 0, 0, paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { "Color", 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { "Value", 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
+  { N_("Normal"), 0, 0, paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
+  { N_("Dissolve"), 0, 0, paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
+  { N_("Behind"), 0, 0, paint_mode_menu_callback, (gpointer) BEHIND_MODE, NULL, NULL },
+  { N_("Multiply (Burn)"), 0, 0, paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
+  { N_("Divide (Dodge)"), 0, 0, paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
+  { N_("Screen"), 0, 0, paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
+  { N_("Overlay"), 0, 0, paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
+  { N_("Difference"), 0, 0, paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
+  { N_("Addition"), 0, 0, paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
+  { N_("Subtract"), 0, 0, paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
+  { N_("Darken Only"), 0, 0, paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
+  { N_("Lighten Only"), 0, 0, paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
+  { N_("Hue"), 0, 0, paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
+  { N_("Saturation"), 0, 0, paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
+  { N_("Color"), 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
+  { N_("Value"), 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Close", brush_select_close_callback, NULL, NULL },
-  { "Refresh", brush_select_refresh_callback, NULL, NULL }
+  { N_("Close"), brush_select_close_callback, NULL, NULL },
+  { N_("Refresh"), brush_select_refresh_callback, NULL, NULL }
 };
 
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
@@ -186,7 +187,7 @@ brush_select_new (gchar * title,
 
   if(!title)
     {
-      gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
+      gtk_window_set_title (GTK_WINDOW (bsp->shell), _("Brush Selection"));
       session_set_window_geometry (bsp->shell, &brush_select_session_info, TRUE);
     }
   else
@@ -254,7 +255,7 @@ brush_select_new (gchar * title,
   util_box = gtk_hbox_new (FALSE, 5);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
 
-  bsp->brush_name = gtk_label_new ("Active");
+  bsp->brush_name = gtk_label_new (_("Active"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 2);
   bsp->brush_size = gtk_label_new ("(0x0)");
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
@@ -266,7 +267,7 @@ brush_select_new (gchar * title,
   /*  Create the paint mode option menu  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new ("Mode:");
+  label = gtk_label_new (_("Mode:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   menu = create_paint_mode_menu (paint_mode_menu_callback,(gpointer)bsp);
   option_menu = gtk_option_menu_new ();
@@ -280,7 +281,7 @@ brush_select_new (gchar * title,
   /*  Create the opacity scale widget  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new ("Opacity:");
+  label = gtk_label_new (_("Opacity:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   bsp->opacity_data = 
     GTK_ADJUSTMENT (gtk_adjustment_new ((active)?init_opacity:100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
@@ -297,7 +298,7 @@ brush_select_new (gchar * title,
 
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  label = gtk_label_new ("Spacing:");
+  label = gtk_label_new (_("Spacing:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   bsp->spacing_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0));
   slider = gtk_hscale_new (bsp->spacing_data);
@@ -314,7 +315,7 @@ brush_select_new (gchar * title,
   /*  Create the edit/new buttons  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
-  bsp->edit_button =  gtk_button_new_with_label ("Edit Brush");
+  bsp->edit_button =  gtk_button_new_with_label (_("Edit Brush"));
   gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
 		      (GtkSignalFunc) edit_brush_callback,
 		      NULL);
@@ -323,7 +324,7 @@ brush_select_new (gchar * title,
 
   gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
 
-  button2 =  gtk_button_new_with_label ("New Brush");
+  button2 =  gtk_button_new_with_label (_("New Brush"));
   gtk_signal_connect (GTK_OBJECT (button2), "clicked",
 		      (GtkSignalFunc) new_brush_callback,
 		      NULL);
@@ -494,7 +495,7 @@ brush_change_callbacks(BrushSelectP bsp, gint closing)
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message ("failed to run brush callback function");
+	g_message (_("failed to run brush callback function"));
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -1016,8 +1017,8 @@ edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
     }
   }
   else
-    g_message("We are all fresh out of brush editors today,\n"
-	      "please write your own or try back tomorrow\n");
+    g_message(_("We are all fresh out of brush editors today,\n"
+	        "please write your own or try back tomorrow\n"));
   return TRUE;
 }
 
@@ -1270,35 +1271,35 @@ ProcArg brushes_popup_in_args[] =
 {
   { PDB_STRING,
     "brush_callback",
-    "the callback PDB proc to call when brush selection is made"
+    N_("the callback PDB proc to call when brush selection is made")
   },
   { PDB_STRING,
     "popup title",
-    "title to give the popup window",
+    N_("title to give the popup window"),
   },
   { PDB_STRING,
     "initial brush",
-    "The name of the brush to set as the first selected",
+    N_("The name of the brush to set as the first selected"),
   },
   { PDB_FLOAT,
     "initial opacity",
-    "The initial opacity of the brush",
+    N_("The initial opacity of the brush"),
   },
   { PDB_INT32,
     "initial spacing",
-    "The initial spacing of the brush (if < 0 then use brush default spacing)",
+    N_("The initial spacing of the brush (if < 0 then use brush default spacing)"),
   },
   { PDB_INT32,
     "initial paint mode",
-    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
+    N_("The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"),
   },
 };
 
 ProcRecord brushes_popup_proc =
 {
   "gimp_brushes_popup",
-  "Invokes the Gimp brush selection",
-  "This procedure popups the brush selection dialog",
+  N_("Invokes the Gimp brush selection"),
+  N_("This procedure popups the brush selection dialog"),
   "Andy Thomas",
   "Andy Thomas",
   "1998",

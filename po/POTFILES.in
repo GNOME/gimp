@@ -3,8 +3,36 @@
 
 
 app/about_dialog.c
+app/app_procs.c
+app/batch.c
+app/blend.c
+app/boundary.c
+app/docindex.c
+app/docindexif.c
+app/drawable_cmds.c
+app/edit_cmds.c
+app/edit_selection.c
+app/ellipse_select.c
+app/equalize.c
+app/eraser.c
+app/errorconsole.c
+app/file_new_dialog.c
+app/fileops.c
+app/flip_tool.c
+app/floating_sel.c
+app/floating_sel_cmds.c
+app/free_select.c
+app/fuzzy_select.c
+app/gdisplay.c
+app/gdisplay_ops.c
+app/install.c
 app/main.c
 app/menus.c
+app/plug_in.c
+app/tools.c
+app/transform_tool.c
+app/undo_cmds.c
+app/xcf.c
 
 # Originally marked by the authors (GNU people)
 app/regex.c

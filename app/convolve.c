@@ -29,6 +29,8 @@
 #include "tools.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef enum
 {
   Blur,
@@ -126,9 +128,9 @@ create_convolve_options (void)
   int i;
   char *button_names[3] =
   {
-    "Blur",
-    "Sharpen",
-    "Custom"
+    N_("Blur"),
+    N_("Sharpen"),
+    N_("Custom")
   };
 
   /*  the new options structure  */
@@ -140,7 +142,7 @@ create_convolve_options (void)
   vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the main label  */
-  label = gtk_label_new ("Convolver Options");
+  label = gtk_label_new (_("Convolver Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -148,7 +150,7 @@ create_convolve_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Pressure");
+  label = gtk_label_new (_("Pressure"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -424,27 +426,27 @@ ProcArg convolve_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_FLOAT,
     "pressure",
-    "the pressure: 0 <= pressure <= 100"
+    N_("the pressure: 0 <= pressure <= 100")
   },
   { PDB_INT32,
     "convolve_type",
-    "convolve type: { BLUR (0), SHARPEN (1) }"
+    N_("convolve type: { BLUR (0), SHARPEN (1) }")
   },
   { PDB_INT32,
     "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
+    N_("number of stroke control points (count each coordinate as 2 points)")
   },
   { PDB_FLOATARRAY,
     "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
   }
 };
 
@@ -452,8 +454,8 @@ ProcArg convolve_args[] =
 ProcRecord convolve_proc =
 {
   "gimp_convolve",
-  "Convolve (Blur, Sharpen) using the current brush",
-  "This tool convolves the specified drawable with either a sharpening or blurring kernel.  The pressure parameter controls the magnitude of the operation.  Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
+  N_("Convolve (Blur, Sharpen) using the current brush"),
+  N_("This tool convolves the specified drawable with either a sharpening or blurring kernel.  The pressure parameter controls the magnitude of the operation.  Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -29,6 +29,8 @@
 #include "tools.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct _AirbrushTimeout AirbrushTimeout;
 
 struct _AirbrushTimeout
@@ -92,7 +94,7 @@ create_airbrush_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Airbrush Options");
+  label = gtk_label_new (_("Airbrush Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -101,7 +103,7 @@ create_airbrush_options (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new ("Rate");
+  label = gtk_label_new (_("Rate"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -119,7 +121,7 @@ create_airbrush_options (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new ("Pressure");
+  label = gtk_label_new (_("Pressure"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -155,7 +157,7 @@ airbrush_paint_func (PaintCore *paint_core,
       /* timer_state = OFF; */
       if (timer_state == ON)
 	{
-	  g_warning ("killing stray timer, please report to lewing@gimp.org");
+	  g_warning (_("killing stray timer, please report to lewing@gimp.org"));
 	  gtk_timeout_remove (timer);
 	}
       timer_state = OFF;
@@ -295,23 +297,23 @@ ProcArg airbrush_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "the drawable"
+    N_("the drawable")
   },
   { PDB_FLOAT,
     "pressure",
-    "The pressure of the airbrush strokes: 0 <= pressure <= 100"
+    N_("The pressure of the airbrush strokes: 0 <= pressure <= 100")
   },
   { PDB_INT32,
     "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
+    N_("number of stroke control points (count each coordinate as 2 points)")
   },
   { PDB_FLOATARRAY,
     "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
   }
 };
 
@@ -319,8 +321,8 @@ ProcArg airbrush_args[] =
 ProcRecord airbrush_proc =
 {
   "gimp_airbrush",
-  "Paint in the current brush with varying pressure.  Paint application is time-dependent",
-  "This tool simulates the use of an airbrush.  Paint pressure represents the relative intensity of the paint application.  High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
+  N_("Paint in the current brush with varying pressure.  Paint application is time-dependent"),
+  N_("This tool simulates the use of an airbrush.  Paint pressure represents the relative intensity of the paint application.  High pressure results in a thicker layer of paint while low pressure results in a thinner layer."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

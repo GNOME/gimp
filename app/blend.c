@@ -37,6 +37,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile.h"
 
 /*  target size  */
@@ -208,25 +210,25 @@ static PixelRegion distR =
 /*  the blend option menu items -- the blend modes  */
 static MenuItem blend_option_items[] =
 {
-  { "FG to BG (RGB)", 0, 0, blend_mode_callback, (gpointer) FG_BG_RGB_MODE, NULL, NULL },
-  { "FG to BG (HSV)", 0, 0, blend_mode_callback, (gpointer) FG_BG_HSV_MODE, NULL, NULL },
-  { "FG to Transparent", 0, 0, blend_mode_callback, (gpointer) FG_TRANS_MODE, NULL, NULL },
-  { "Custom (from editor)", 0, 0, blend_mode_callback, (gpointer) CUSTOM_MODE, NULL, NULL },
+  { N_("FG to BG RGB"), 0, 0, blend_mode_callback, (gpointer) FG_BG_RGB_MODE, NULL, NULL },
+  { N_("FG to BG HSV"), 0, 0, blend_mode_callback, (gpointer) FG_BG_HSV_MODE, NULL, NULL },
+  { N_("FG to Transparent"), 0, 0, blend_mode_callback, (gpointer) FG_TRANS_MODE, NULL, NULL },
+  { N_("Custom from editor"), 0, 0, blend_mode_callback, (gpointer) CUSTOM_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
 /*  the gradient option menu items -- the gradient modes  */
 static MenuItem gradient_option_items[] =
 {
-  { "Linear", 0, 0, gradient_type_callback, (gpointer) Linear, NULL, NULL },
-  { "Bi-Linear", 0, 0, gradient_type_callback, (gpointer) BiLinear, NULL, NULL },
-  { "Radial", 0, 0, gradient_type_callback, (gpointer) Radial, NULL, NULL },
-  { "Square", 0, 0, gradient_type_callback, (gpointer) Square, NULL, NULL },
-  { "Conical (symmetric)", 0, 0, gradient_type_callback, (gpointer) ConicalSymmetric, NULL, NULL },
-  { "Conical (asymmetric)", 0, 0, gradient_type_callback, (gpointer) ConicalAsymmetric, NULL, NULL },
-  { "Shapeburst (angular)", 0, 0, gradient_type_callback, (gpointer) ShapeburstAngular, NULL, NULL },
-  { "Shapeburst (spherical)", 0, 0, gradient_type_callback, (gpointer) ShapeburstSpherical, NULL, NULL },
-  { "Shapeburst (dimpled)", 0, 0, gradient_type_callback, (gpointer) ShapeburstDimpled, NULL, NULL },
+  { N_("Linear"), 0, 0, gradient_type_callback, (gpointer) Linear, NULL, NULL },
+  { N_("Bi-Linear"), 0, 0, gradient_type_callback, (gpointer) BiLinear, NULL, NULL },
+  { N_("Radial"), 0, 0, gradient_type_callback, (gpointer) Radial, NULL, NULL },
+  { N_("Square"), 0, 0, gradient_type_callback, (gpointer) Square, NULL, NULL },
+  { N_("Conical (symmetric)"), 0, 0, gradient_type_callback, (gpointer) ConicalSymmetric, NULL, NULL },
+  { N_("Conical (asymmetric)"), 0, 0, gradient_type_callback, (gpointer) ConicalAsymmetric, NULL, NULL },
+  { N_("Shapeburst (angular)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstAngular, NULL, NULL },
+  { N_("Shapeburst (spherical)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstSpherical, NULL, NULL },
+  { N_("Shapeburst (dimpled)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstDimpled, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -237,9 +239,9 @@ static BlendOptions *blend_options = NULL;
 
 static MenuItem repeat_option_items[] =
 {
-  { "None", 0, 0, repeat_type_callback, (gpointer) REPEAT_NONE, NULL, NULL },
-  { "Sawtooth wave", 0, 0, repeat_type_callback, (gpointer) REPEAT_SAWTOOTH, NULL, NULL },
-  { "Triangular wave", 0, 0, repeat_type_callback, (gpointer) REPEAT_TRIANGULAR, NULL, NULL },
+  { N_("None"), 0, 0, repeat_type_callback, (gpointer) REPEAT_NONE, NULL, NULL },
+  { N_("Sawtooth wave"), 0, 0, repeat_type_callback, (gpointer) REPEAT_SAWTOOTH, NULL, NULL },
+  { N_("Triangular wave"), 0, 0, repeat_type_callback, (gpointer) REPEAT_TRIANGULAR, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -355,7 +357,7 @@ create_blend_options ()
   vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the main label  */
-  label = gtk_label_new ("Blend Options");
+  label = gtk_label_new (_("Blend Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -365,7 +367,7 @@ create_blend_options ()
   gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
 
   /*  the opacity scale  */
-  label = gtk_label_new ("Opacity:");
+  label = gtk_label_new (_("Opacity:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -383,7 +385,7 @@ create_blend_options ()
   gtk_widget_show (opacity_scale);
 
   /*  the offset scale  */
-  label = gtk_label_new ("Offset:");
+  label = gtk_label_new (_("Offset:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -401,7 +403,7 @@ create_blend_options ()
   gtk_widget_show (offset_scale);
 
   /*  the paint mode menu  */
-  label = gtk_label_new ("Mode:");
+  label = gtk_label_new (_("Mode:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -414,7 +416,7 @@ create_blend_options ()
   gtk_widget_show (pm_option_menu);
 
   /*  the blend mode menu  */
-  label = gtk_label_new ("Blend:");
+  label = gtk_label_new (_("Blend:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -427,7 +429,7 @@ create_blend_options ()
   gtk_widget_show (bm_option_menu);
 
   /*  the gradient type menu  */
-  label = gtk_label_new ("Gradient:");
+  label = gtk_label_new (_("Gradient:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -441,7 +443,7 @@ create_blend_options ()
 
   /* the repeat option */
 
-  label = gtk_label_new("Repeat:");
+  label = gtk_label_new(_("Repeat:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 5, 6,
 		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -460,7 +462,7 @@ create_blend_options ()
 
   /* supersampling toggle */
 
-  button = gtk_check_button_new_with_label("Adaptive supersampling");
+  button = gtk_check_button_new_with_label(_("Adaptive supersampling"));
   gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc) supersample_toggle_update,
@@ -482,7 +484,7 @@ create_blend_options ()
 
   /* max depth scale */
 
-  label = gtk_label_new("Max depth:");
+  label = gtk_label_new(_("Max depth:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -501,7 +503,7 @@ create_blend_options ()
 
   /* threshold scale */
 
-  label = gtk_label_new("Threshold:");
+  label = gtk_label_new(_("Threshold:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
 		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
@@ -555,7 +557,7 @@ blend_button_press (Tool           *tool,
   switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      g_message ("Blend: Invalid for indexed images.");
+      g_message (_("Blend: Invalid for indexed images."));
       return;
 
       break;
@@ -580,7 +582,7 @@ blend_button_press (Tool           *tool,
 
   /* initialize the statusbar display */
   blend_tool->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, "Blend: 0, 0");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, _("Blend: 0, 0"));
 
   /*  Start drawing the blend tool  */
   draw_core_start (blend_tool->core, gdisp->canvas->window, tool);
@@ -636,7 +638,7 @@ blend_button_release (Tool           *tool,
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	g_message ("Blend operation failed.");
+	g_message (_("Blend operation failed."));
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -662,7 +664,7 @@ blend_motion (Tool           *tool,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
-  g_snprintf (vector, STATUSBAR_SIZE, "Blend: %d, %d", 
+  g_snprintf (vector, STATUSBAR_SIZE, _("Blend: %d, %d"), 
 	      abs(blend_tool->endx - blend_tool->startx), 
 	      abs(blend_tool->endy - blend_tool->starty));
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, vector);
@@ -1248,7 +1250,7 @@ gradient_render_pixel(double x, double y, color_t *color, void *render_data)
       break;
 
     default:
-      fatal_error("gradient_render_pixel(): unknown gradient type %d",
+      fatal_error(_("gradient_render_pixel(): unknown gradient type %d"),
 		  (int) rbd->gradient_type);
       return;
     }
@@ -1380,7 +1382,7 @@ gradient_fill_region (GImage       *gimage,
       break;
 
     default:
-      fatal_error("gradient_fill_region(): unknown blend mode %d",
+      fatal_error(_("gradient_fill_region(): unknown blend mode %d"),
 		  (int) blend_mode);
       break;
     }
@@ -1419,7 +1421,7 @@ gradient_fill_region (GImage       *gimage,
       break;
 
     default:
-      fatal_error("gradient_fill_region(): unknown gradient type %d",
+      fatal_error(_("gradient_fill_region(): unknown gradient type %d"),
 		  (int) gradient_type);
       break;
     }
@@ -1441,7 +1443,7 @@ gradient_fill_region (GImage       *gimage,
       break;
 
     default:
-      fatal_error("gradient_fill_region(): unknown repeat mode %d",
+      fatal_error(_("gradient_fill_region(): unknown repeat mode %d"),
 		  (int) repeat);
       break;
     }
@@ -1711,71 +1713,71 @@ ProcArg blend_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "The image"
+    N_("The image")
   },
   { PDB_DRAWABLE,
     "drawable",
-    "The affected drawable"
+    N_("The affected drawable")
   },
   { PDB_INT32,
     "blend_mode",
-    "The type of blend: { FG-BG-RGB (0), FG-BG-HSV (1), FG-TRANS (2), CUSTOM (3) }"
+    N_("The type of blend: { FG-BG-RGB (0), FG-BG-HSV (1), FG-TRANS (2), CUSTOM (3) }")
   },
   { PDB_INT32,
     "paint_mode",
-    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    N_("the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }")
   },
   { PDB_INT32,
     "gradient_type",
-    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8) }"
+    N_("The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8) }")
   },
   { PDB_FLOAT,
     "opacity",
-    "The opacity of the final blend (0 <= opacity <= 100)"
+    N_("The opacity of the final blend (0 <= opacity <= 100)")
   },
   { PDB_FLOAT,
     "offset",
-    "Offset relates to the starting and ending coordinates specified for the blend.  This parameter is mode depndent (0 <= offset)"
+    N_("Offset relates to the starting and ending coordinates specified for the blend.  This parameter is mode depndent (0 <= offset)")
   },
   { PDB_INT32,
     "repeat",
-    "Repeat mode: { REPEAT-NONE (0), REPEAT-SAWTOOTH (1), REPEAT-TRIANGULAR (2) }"
+    N_("Repeat mode: { REPEAT-NONE (0), REPEAT-SAWTOOTH (1), REPEAT-TRIANGULAR (2) }")
   },
   { PDB_INT32,
     "supersample",
-    "Do adaptive supersampling (true / false)"
+    N_("Do adaptive supersampling (true / false)")
   },
   { PDB_INT32,
     "max_depth",
-    "Maximum recursion levels for supersampling"
+    N_("Maximum recursion levels for supersampling")
   },
   { PDB_FLOAT,
     "threshold",
-    "Supersampling threshold"
+    N_("Supersampling threshold")
   },
   { PDB_FLOAT,
     "x1",
-    "The x coordinate of this blend's starting point"
+    N_("The x coordinate of this blend's starting point")
   },
   { PDB_FLOAT,
     "y1",
-    "The y coordinate of this blend's starting point"
+    N_("The y coordinate of this blend's starting point")
   },
   { PDB_FLOAT,
     "x2",
-    "The x coordinate of this blend's ending point"
+    N_("The x coordinate of this blend's ending point")
   },
   { PDB_FLOAT,
     "y2",
-    "The y coordinate of this blend's ending point"
+    N_("The y coordinate of this blend's ending point")
   }
 };
 
 ProcRecord blend_proc =
 {
   "gimp_blend",
-  "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
-  "This tool requires information on the paint application mode, the blend mode, and the gradient type.  It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
+  N_("Blend between the starting and ending coordinates with the specified blend mode and gradient type."),
+  N_("This tool requires information on the paint application mode, the blend mode, and the gradient type.  It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type."),
   "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
   "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
   "1995-1996",

@@ -23,6 +23,8 @@
 #include "channel.h"
 #include "channel_cmds.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "channel_pvt.h"
 
 static int int_value;
@@ -99,27 +101,27 @@ ProcArg channel_new_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image to which to add the channel"
+    N_("the image to which to add the channel")
   },
   { PDB_INT32,
     "width",
-    "the channel width: (width > 0)"
+    N_("the channel width: (width > 0)")
   },
   { PDB_INT32,
     "height",
-    "the channel height: (height > 0)"
+    N_("the channel height: (height > 0)")
   },
   { PDB_STRING,
     "name",
-    "the channel name"
+    N_("the channel name")
   },
   { PDB_FLOAT,
     "opacity",
-    "the channel opacity: (0 <= opacity <= 100)"
+    N_("the channel opacity: (0 <= opacity <= 100)")
   },
   { PDB_COLOR,
     "color",
-    "the channel compositing color"
+    N_("the channel compositing color")
   }
 };
 
@@ -127,15 +129,15 @@ ProcArg channel_new_out_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the newly created channel"
+    N_("the newly created channel")
   }
 };
 
 ProcRecord channel_new_proc =
 {
   "gimp_channel_new",
-  "Create a new channel",
-  "This procedure creates a new channel with the specified width and height.  Name, opacity, and color are also supplied parameters.  The new channel still needs to be added to the image, as this is not automatic.  Add the new channel with the 'gimp_image_add_channel' command.  Other attributes such as channel show masked, should be set with explicit procedure calls.  The channel's contents are undefined initially.",
+  N_("Create a new channel"),
+  N_("This procedure creates a new channel with the specified width and height.  Name, opacity, and color are also supplied parameters.  The new channel still needs to be added to the image, as this is not automatic.  Add the new channel with the 'gimp_image_add_channel' command.  Other attributes such as channel show masked, should be set with explicit procedure calls.  The channel's contents are undefined initially."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -190,7 +192,7 @@ ProcArg channel_copy_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel to copy"
+    N_("the channel to copy")
   }
 };
 
@@ -198,15 +200,15 @@ ProcArg channel_copy_out_args[] =
 {
   { PDB_CHANNEL,
     "channel_copy",
-    "the newly copied channel"
+    N_("the newly copied channel")
   }
 };
 
 ProcRecord channel_copy_proc =
 {
   "gimp_channel_copy",
-  "Copy a channel",
-  "This procedure copies the specified channel and returns the copy.",
+  N_("Copy a channel"),
+  N_("This procedure copies the specified channel and returns the copy."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -252,15 +254,15 @@ ProcArg channel_delete_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel to delete"
+    N_("the channel to delete")
   }
 };
 
 ProcRecord channel_delete_proc =
 {
   "gimp_channel_delete",
-  "Delete a channel",
-  "This procedure deletes the specified channel.  This does not need to be done if a gimage containing this channel was already deleted.",
+  N_("Delete a channel"),
+  N_("This procedure deletes the specified channel.  This does not need to be done if a gimage containing this channel was already deleted."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -312,7 +314,7 @@ ProcArg channel_get_name_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   }
 };
 
@@ -320,15 +322,15 @@ ProcArg channel_get_name_out_args[] =
 {
   { PDB_STRING,
     "name",
-    "the channel name"
+    N_("the channel name")
   }
 };
 
 ProcRecord channel_get_name_proc =
 {
   "gimp_channel_get_name",
-  "Get the name of the specified channel.",
-  "This procedure returns the specified channel's name.",
+  N_("Get the name of the specified channel."),
+  N_("This procedure returns the specified channel's name."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -377,19 +379,19 @@ ProcArg channel_set_name_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   },
   { PDB_STRING,
     "name",
-    "the new channel name"
+    N_("the new channel name")
   }
 };
 
 ProcRecord channel_set_name_proc =
 {
   "gimp_channel_set_name",
-  "Set the name of the specified channel.",
-  "This procedure sets the specified channel's name to the supplied name.",
+  N_("Set the name of the specified channel."),
+  N_("This procedure sets the specified channel's name to the supplied name."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -443,7 +445,7 @@ ProcArg channel_get_visible_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   }
 };
 
@@ -451,15 +453,15 @@ ProcArg channel_get_visible_out_args[] =
 {
   { PDB_INT32,
     "visible",
-    "the channel visibility"
+    N_("the channel visibility")
   }
 };
 
 ProcRecord channel_get_visible_proc =
 {
   "gimp_channel_get_visible",
-  "Get the visibility of the specified channel.",
-  "This procedure returns the specified channel's visibility.",
+  N_("Get the visibility of the specified channel."),
+  N_("This procedure returns the specified channel's visibility."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -508,19 +510,19 @@ ProcArg channel_set_visible_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   },
   { PDB_INT32,
     "visible",
-    "the new channel visibility"
+    N_("the new channel visibility")
   }
 };
 
 ProcRecord channel_set_visible_proc =
 {
   "gimp_channel_set_visible",
-  "Set the visibility of the specified channel.",
-  "This procedure sets the specified channel's visibility.",
+  N_("Set the visibility of the specified channel."),
+  N_("This procedure sets the specified channel's visibility."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -574,7 +576,7 @@ ProcArg channel_get_show_masked_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   }
 };
 
@@ -582,15 +584,15 @@ ProcArg channel_get_show_masked_out_args[] =
 {
   { PDB_INT32,
     "show_masked",
-    "composite method for channel"
+    N_("composite method for channel")
   }
 };
 
 ProcRecord channel_get_show_masked_proc =
 {
   "gimp_channel_get_show_masked",
-  "Get the composite type for the channel",
-  "This procedure returns the specified channel's composite type.  If it is non-zero, then the channel is composited with the image so that masked regions are shown.  Otherwise, selected regions are shown.",
+  N_("Get the composite type for the channel"),
+  N_("This procedure returns the specified channel's composite type.  If it is non-zero, then the channel is composited with the image so that masked regions are shown.  Otherwise, selected regions are shown."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -639,19 +641,19 @@ ProcArg channel_set_show_masked_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   },
   { PDB_INT32,
     "show_masked",
-    "the new channel show_masked value"
+    N_("the new channel show_masked value")
   }
 };
 
 ProcRecord channel_set_show_masked_proc =
 {
   "gimp_channel_set_show_masked",
-  "Set the composite type for the specified channel.",
-  "This procedure sets the specified channel's composite type.  If it is non-zero, then the channel is composited with the image so that masked regions are shown.  Otherwise, selected regions are shown.",
+  N_("Set the composite type for the specified channel."),
+  N_("This procedure sets the specified channel's composite type.  If it is non-zero, then the channel is composited with the image so that masked regions are shown.  Otherwise, selected regions are shown."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -705,7 +707,7 @@ ProcArg channel_get_opacity_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   }
 };
 
@@ -713,15 +715,15 @@ ProcArg channel_get_opacity_out_args[] =
 {
   { PDB_FLOAT,
     "opacity",
-    "the channel opacity",
+    N_("the channel opacity"),
   }
 };
 
 ProcRecord channel_get_opacity_proc =
 {
   "gimp_channel_get_opacity",
-  "Get the opacity of the specified channel.",
-  "This procedure returns the specified channel's opacity.",
+  N_("Get the opacity of the specified channel."),
+  N_("This procedure returns the specified channel's opacity."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -770,19 +772,19 @@ ProcArg channel_set_opacity_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   },
   { PDB_FLOAT,
     "opacity",
-    "the new channel opacity: (0 <= opacity <= 100)"
+    N_("the new channel opacity: (0 <= opacity <= 100)")
   }
 };
 
 ProcRecord channel_set_opacity_proc =
 {
   "gimp_channel_set_opacity",
-  "Set the opacity of the specified channel.",
-  "This procedure sets the specified channel's opacity.",
+  N_("Set the opacity of the specified channel."),
+  N_("This procedure sets the specified channel's opacity."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -841,7 +843,7 @@ ProcArg channel_get_color_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   }
 };
 
@@ -849,15 +851,15 @@ ProcArg channel_get_color_out_args[] =
 {
   { PDB_COLOR,
     "color",
-    "the channel's composite color",
+    N_("the channel's composite color"),
   }
 };
 
 ProcRecord channel_get_color_proc =
 {
   "gimp_channel_get_color",
-  "Get the compositing color of the specified channel.",
-  "This procedure returns the specified channel's compositing color.",
+  N_("Get the compositing color of the specified channel."),
+  N_("This procedure returns the specified channel's compositing color."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -908,19 +910,19 @@ ProcArg channel_set_color_args[] =
 {
   { PDB_CHANNEL,
     "channel",
-    "the channel"
+    N_("the channel")
   },
   { PDB_COLOR,
     "color",
-    "the composite color"
+    N_("the composite color")
   }
 };
 
 ProcRecord channel_set_color_proc =
 {
   "gimp_channel_set_color",
-  "Set the compositing color of the specified channel.",
-  "This procedure sets the specified channel's compositing color.",
+  N_("Set the compositing color of the specified channel."),
+  N_("This procedure sets the specified channel's compositing color."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -29,6 +29,8 @@
 #include "info_dialog.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #define STATUSBAR_SIZE 128
 
 typedef struct _crop Crop;
@@ -351,7 +353,7 @@ crop_motion (Tool           *tool,
       crop->function == RESIZING_LEFT || crop->function == RESIZING_RIGHT)
     {
       gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
-      g_snprintf (size, STATUSBAR_SIZE, "Crop: %d x %d", 
+      g_snprintf (size, STATUSBAR_SIZE, _("Crop: %d x %d"), 
 		  (crop->tx2 - crop->tx1), (crop->ty2 - crop->ty1));
       gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, size);
     }
@@ -521,7 +523,7 @@ tools_new_crop ()
   Crop * private;
 
   if (! crop_options)
-    crop_options = tools_register_no_options (CROP, "Crop Tool Options");
+    crop_options = tools_register_no_options (CROP, _("Crop Tool Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Crop *) g_malloc (sizeof (Crop));
@@ -701,7 +703,7 @@ crop_start (Tool *tool,
   
   /* initialize the statusbar display */
   crop->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "crop");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, "Crop: 0 x 0");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, _("Crop: 0 x 0"));
 
   draw_core_start (crop->core, gdisp->canvas->window, tool);
 }
@@ -713,22 +715,22 @@ crop_start (Tool *tool,
 
 static ActionAreaItem action_items[3] =
 {
-  { "Crop", crop_ok_callback, NULL, NULL },
-  { "Selection", crop_selection_callback, NULL, NULL },
-  { "Close", crop_close_callback, NULL, NULL },
+  { N_("Crop"), crop_ok_callback, NULL, NULL },
+  { N_("Selection"), crop_selection_callback, NULL, NULL },
+  { N_("Close"), crop_close_callback, NULL, NULL },
 };
 
 static void
 crop_info_create (Tool *tool)
 {
   /*  create the info dialog  */
-  crop_info = info_dialog_new ("Crop Information");
+  crop_info = info_dialog_new (_("Crop Information"));
 
   /*  add the information fields  */
-  info_dialog_add_field (crop_info, "X Origin: ", orig_x_buf, crop_orig_x_changed, tool);
-  info_dialog_add_field (crop_info, "Y Origin: ", orig_y_buf, crop_orig_y_changed, tool);
-  info_dialog_add_field (crop_info, "Width: ", width_buf, crop_width_changed, tool);
-  info_dialog_add_field (crop_info, "Height: ", height_buf, crop_height_changed, tool);
+  info_dialog_add_field (crop_info, _("X Origin: "), orig_x_buf, crop_orig_x_changed, tool);
+  info_dialog_add_field (crop_info, _("Y Origin: "), orig_y_buf, crop_orig_y_changed, tool);
+  info_dialog_add_field (crop_info, _("Width: "), width_buf, crop_width_changed, tool);
+  info_dialog_add_field (crop_info, _("Height: "), height_buf, crop_height_changed, tool);
 
   /* Create the action area  */
   build_action_area (GTK_DIALOG (crop_info->shell), action_items, 3, 0);
@@ -941,31 +943,31 @@ ProcArg crop_args[] =
 {
   { PDB_IMAGE,
     "image",
-    "the image"
+    N_("the image")
   },
   { PDB_INT32,
     "new_width",
-    "new image width: (0 < new_width <= width)"
+    N_("new image width: (0 < new_width <= width)")
   },
   { PDB_INT32,
     "new_height",
-    "new image height: (0 < new_height <= height)"
+    N_("new image height: (0 < new_height <= height)")
   },
   { PDB_INT32,
     "offx",
-    "x offset: (0 <= offx <= (width - new_width))"
+    N_("x offset: (0 <= offx <= (width - new_width))")
   },
   { PDB_INT32,
     "offy",
-    "y offset: (0 <= offy <= (height - new_height))"
+    N_("y offset: (0 <= offy <= (height - new_height))")
   }
 };
 
 ProcRecord crop_proc =
 {
   "gimp_crop",
-  "Crop the image to the specified extents.",
-  "This procedure crops the image so that it's new width and height are equal to the supplied parameters.  Offsets are also provided which describe the position of the previous image's content.  All channels and layers within the image are cropped to the new image extents; this includes the image selection mask.  If any parameters are out of range, an error is returned.",
+  N_("Crop the image to the specified extents."),
+  N_("This procedure crops the image so that it's new width and height are equal to the supplied parameters.  Offsets are also provided which describe the position of the previous image's content.  All channels and layers within the image are cropped to the new image extents; this includes the image selection mask.  If any parameters are out of range, an error is returned."),
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
