@@ -272,12 +272,9 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 	imagefile = gimp_imagefile_new (gimp, uri);
     
       if (imagefile)
-	{
-	  gimp_imagefile_update (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
-	  temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
-						GIMP_THUMBNAIL_SIZE_NORMAL,
-						GIMP_THUMBNAIL_SIZE_NORMAL);
-	}
+	temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
+					      GIMP_THUMBNAIL_SIZE_NORMAL,
+					      GIMP_THUMBNAIL_SIZE_NORMAL);
     
       if (temp_buf)
 	{

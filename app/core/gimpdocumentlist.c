@@ -160,9 +160,6 @@ gimp_document_list_deserialize (GimpConfig *config,
 
               imagefile = gimp_imagefile_new (document_list->gimp, uri);
 
-              if (size > 0)
-                gimp_imagefile_update (imagefile, size);
-
               g_free (uri);
 
               gimp_container_add (GIMP_CONTAINER (document_list),

@@ -289,16 +289,16 @@ gimp_init (Gimp *gimp)
 
   gimp->documents           = gimp_document_list_new (gimp);
 
-  gimp->templates               = gimp_list_new (GIMP_TYPE_TEMPLATE,
-                                                 GIMP_CONTAINER_POLICY_STRONG);
+  gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE,
+                                             GIMP_CONTAINER_POLICY_STRONG);
   gimp->image_new_last_template = NULL;
   gimp->have_current_cut_buffer = FALSE;
 
-  gimp->context_list            = NULL;
-  gimp->standard_context        = NULL;
-  gimp->default_context         = NULL;
-  gimp->user_context            = NULL;
-  gimp->current_context         = NULL;
+  gimp->context_list        = NULL;
+  gimp->standard_context    = NULL;
+  gimp->default_context     = NULL;
+  gimp->user_context        = NULL;
+  gimp->current_context     = NULL;
 }
 
 static void

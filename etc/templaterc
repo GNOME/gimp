@@ -191,7 +191,7 @@
 (GimpTemplate "NTSC - 720x486"
     (stock-id "gimp-video")
     (width 720)
-    (height 576)
+    (height 486)
     (unit millimeters)
     (xresolution 72.000000)
     (yresolution 72.000000)

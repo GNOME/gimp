@@ -203,18 +203,11 @@ gimp_imagefile_new (Gimp        *gimp,
 }
 
 void
-gimp_imagefile_update (GimpImagefile *imagefile,
-                       gint           size)
+gimp_imagefile_update (GimpImagefile *imagefile)
 {
   gchar *uri;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
-
-  if (size < 1)
-    return;
-
-  gimp_thumbnail_set_uri (imagefile->thumbnail,
-                          gimp_object_get_name (GIMP_OBJECT (imagefile)));
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
 
@@ -224,16 +217,12 @@ gimp_imagefile_update (GimpImagefile *imagefile,
 
   if (uri)
     {
-      GimpImagefile *documents_imagefile;
-
-      documents_imagefile = (GimpImagefile *)
+      GimpImagefile *documents_imagefile = (GimpImagefile *)
         gimp_container_get_child_by_name (imagefile->gimp->documents, uri);
 
-      if (GIMP_IS_IMAGEFILE (documents_imagefile) &&
-          (documents_imagefile != imagefile))
-        {
-          gimp_imagefile_update (documents_imagefile, size);
-        }
+      if (documents_imagefile != imagefile &&
+          GIMP_IS_IMAGEFILE (documents_imagefile))
+        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (documents_imagefile));
 
       g_free (uri);
     }
@@ -674,7 +663,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   g_object_unref (pixbuf);
 
   if (success)
-    gimp_imagefile_update (imagefile, size);
+    gimp_imagefile_update (imagefile);
 
   return success;
 }

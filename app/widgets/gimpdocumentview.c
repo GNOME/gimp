@@ -374,20 +374,11 @@ static void
 gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
                                             GimpContainerView *container_view)
 {
-  gimp_imagefile_update (imagefile, container_view->preview_size);
-
-  if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+  if (gimp_thumbnail_peek_image (imagefile->thumbnail) == GIMP_THUMB_STATE_NOT_FOUND)
     {
       gimp_container_remove (container_view->container,
                              GIMP_OBJECT (imagefile));
     }
-}
-
-static void
-gimp_document_view_update_foreach (GimpImagefile     *imagefile,
-                                   GimpContainerView *container_view)
-{
-  gimp_imagefile_update (imagefile, container_view->preview_size);
 }
 
 static void
@@ -408,7 +399,7 @@ gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
   else if (state & GDK_SHIFT_MASK)
     {
       gimp_container_foreach (editor->view->container,
-                              (GFunc) gimp_document_view_update_foreach,
+                              (GFunc) gimp_imagefile_update,
                               editor->view);
     }
 }

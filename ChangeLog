@@ -1,3 +1,20 @@
+2004-01-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.[ch] (gimp_imagefile_update): removed the
+	size parameter and do nothing but invalidating the preview.
+
+	* app/gui/file-open-dialog.c
+	* app/widgets/gimpdocumentview.c: changed accordingly.
+
+	* app/core/gimpdocumentlist.c (gimp_document_list_deserialize):
+	no need for calling gimp_imagefile_update() from here.
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/pdb/fileops_cmds.c (file_load_thumbnail): rewritten using the
+	GimpThumbnail API.
+
+	* app/core/gimp.c: cosmetics.
+
 2004-01-11  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: calculate the

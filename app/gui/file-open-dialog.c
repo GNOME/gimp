@@ -413,7 +413,7 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), selected);
-  gimp_imagefile_update (open_options_imagefile, gimp->config->thumbnail_size);
+  gimp_imagefile_update (open_options_imagefile);
 }
 
 static void
@@ -438,10 +438,8 @@ file_open_create_thumbnail (Gimp              *gimp,
         }
       else
         {
-          gimp_imagefile_update (imagefile, size);
-          gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile), size, size);
-
-          if (imagefile->thumbnail->thumb_state < GIMP_THUMB_STATE_FAILED)
+          if (gimp_thumbnail_peek_thumb (imagefile->thumbnail,
+                                         size) < GIMP_THUMB_STATE_FAILED)
             gimp_imagefile_create_thumbnail (imagefile, size);
         }
 
@@ -452,7 +450,7 @@ file_open_create_thumbnail (Gimp              *gimp,
       g_free (basename);
 
       gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
-      gimp_imagefile_update (open_options_imagefile, size);
+      gimp_imagefile_update (open_options_imagefile);
 
       g_free (uri);
     }
