@@ -165,6 +165,8 @@ gimp_tools_init (Gimp *gimp)
 
   tool_manager_init (gimp);
 
+  gimp_container_freeze (gimp->tool_info_list);
+
   for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
     {
       register_funcs[i] (gimp_tools_register, gimp);

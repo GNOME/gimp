@@ -103,6 +103,10 @@ menus_sources = \
 	file-open-menu.h		\
 	file-save-menu.c		\
 	file-save-menu.h		\
+	fonts-commands.c		\
+	fonts-commands.h		\
+	fonts-menu.c			\
+	fonts-menu.h			\
 	gradient-editor-commands.c	\
 	gradient-editor-commands.h	\
 	gradient-editor-menu.c		\

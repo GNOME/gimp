@@ -36,8 +36,6 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
-#include "text/gimp-fonts.h"
-
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdeviceinfo.h"
@@ -1795,23 +1793,6 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Web Browser to Use:"), 1.0, 0.5,
                              fileselection, 1, TRUE);
-
-  /*  Rescan Font List  */
-  vbox2 = prefs_frame_new (_("Fonts"), GTK_CONTAINER (vbox), FALSE);
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_label (_("Rescan Font List"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_fonts_load),
-                            gimp);
 
 
   /*************/

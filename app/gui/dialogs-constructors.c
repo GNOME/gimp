@@ -52,6 +52,7 @@
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimpfontview.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
@@ -367,10 +368,11 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_tree_view_new (context->gimp->fonts,
-				       context,
-				       preview_size, 1,
-                                       FALSE);
+  view = gimp_font_view_new (GIMP_VIEW_TYPE_LIST,
+                             context->gimp->fonts,
+                             context,
+                             preview_size, 1,
+                             factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Fonts"), NULL,
@@ -571,10 +573,11 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (context->gimp->fonts,
-				       context,
-				       preview_size, 1,
-                                       FALSE);
+  view = gimp_font_view_new (GIMP_VIEW_TYPE_GRID,
+                             context->gimp->fonts,
+                             context,
+                             preview_size, 1,
+                             factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Fonts"), NULL,

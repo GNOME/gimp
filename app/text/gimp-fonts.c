@@ -72,6 +72,8 @@ gimp_fonts_load (Gimp *gimp)
 
   gimp_set_busy (gimp);
 
+  gimp_container_freeze (GIMP_CONTAINER (gimp->fonts));
+
   gimp_container_clear (GIMP_CONTAINER (gimp->fonts));
 
   config = FcInitLoadConfig ();
@@ -100,6 +102,8 @@ gimp_fonts_load (Gimp *gimp)
   FcConfigSetCurrent (config);
 
   gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
+
+  gimp_container_thaw (GIMP_CONTAINER (gimp->fonts));
 
   gimp_unset_busy (gimp);
 }

@@ -47,6 +47,7 @@
 #include "file-open-menu.h"
 #include "file-save-menu.h"
 #include "file-commands.h"
+#include "fonts-menu.h"
 #include "gradient-editor-menu.h"
 #include "gradients-menu.h"
 #include "image-menu.h"
@@ -192,6 +193,13 @@ menus_init (Gimp *gimp)
                                    NULL, palettes_menu_update, TRUE,
                                    n_palettes_menu_entries,
                                    palettes_menu_entries);
+
+  gimp_menu_factory_menu_register (global_menu_factory, "<Fonts>",
+                                   _("Fonts Menu"),
+                                   GIMP_HELP_FONT_DIALOG,
+                                   NULL, fonts_menu_update, TRUE,
+                                   n_fonts_menu_entries,
+                                   fonts_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Buffers>",
                                    _("Buffers Menu"),

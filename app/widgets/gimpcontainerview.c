@@ -77,6 +77,11 @@ static void   gimp_container_view_reorder     (GimpContainerView      *view,
 					       gint                    new_index,
 					       GimpContainer          *container);
 
+static void   gimp_container_view_freeze      (GimpContainerView      *view,
+                                               GimpContainer          *container);
+static void   gimp_container_view_thaw        (GimpContainerView      *view,
+                                               GimpContainer          *container);
+
 static GtkWidget * gimp_container_view_get_preview (GimpDocked         *docked,
                                                     GimpContext        *context,
                                                     GtkIconSize         size);
@@ -279,6 +284,12 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       g_signal_handlers_disconnect_by_func (view->container,
 					    gimp_container_view_reorder,
 					    view);
+      g_signal_handlers_disconnect_by_func (view->container,
+					    gimp_container_view_freeze,
+					    view);
+      g_signal_handlers_disconnect_by_func (view->container,
+					    gimp_container_view_thaw,
+					    view);
 
       g_hash_table_destroy (view->hash_table);
 
@@ -321,6 +332,14 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 			       G_CONNECT_SWAPPED);
       g_signal_connect_object (view->container, "reorder",
 			       G_CALLBACK (gimp_container_view_reorder),
+			       view,
+			       G_CONNECT_SWAPPED);
+      g_signal_connect_object (view->container, "freeze",
+			       G_CALLBACK (gimp_container_view_freeze),
+			       view,
+			       G_CONNECT_SWAPPED);
+      g_signal_connect_object (view->container, "thaw",
+			       G_CALLBACK (gimp_container_view_thaw),
 			       view,
 			       G_CONNECT_SWAPPED);
 
@@ -669,6 +688,9 @@ gimp_container_view_add (GimpContainerView *view,
   gpointer insert_data = NULL;
   gint     index;
 
+  if (gimp_container_frozen (container))
+    return;
+
   index = gimp_container_get_child_index (container,
                                           GIMP_OBJECT (viewable));
 
@@ -685,6 +707,9 @@ gimp_container_view_remove (GimpContainerView *view,
 			    GimpContainer     *container)
 {
   gpointer insert_data;
+
+  if (gimp_container_frozen (container))
+    return;
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
@@ -706,6 +731,9 @@ gimp_container_view_reorder (GimpContainerView *view,
 {
   gpointer insert_data;
 
+  if (gimp_container_frozen (container))
+    return;
+
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
   if (insert_data)
@@ -714,6 +742,32 @@ gimp_container_view_reorder (GimpContainerView *view,
 							  viewable,
 							  new_index,
 							  insert_data);
+    }
+}
+
+static void
+gimp_container_view_freeze (GimpContainerView *view,
+                            GimpContainer     *container)
+{
+  gimp_container_view_clear_items (view);
+}
+
+static void
+gimp_container_view_thaw (GimpContainerView *view,
+                          GimpContainer     *container)
+{
+  gimp_container_foreach (view->container,
+                          (GFunc) gimp_container_view_add_foreach,
+                          view);
+
+  if (view->context)
+    {
+      GimpObject *object;
+
+      object = gimp_context_get_by_type (view->context,
+                                         view->container->children_type);
+
+      gimp_container_view_select_item (view, (GimpViewable *) object);
     }
 }
 

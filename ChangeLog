@@ -1,3 +1,34 @@
+2003-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimp-fonts.c (gimp_fonts_load): added
+	gimp_container_freeze() / _thaw() around font list reloading.
+
+	* app/tools/gimp-tools.c (gimp_tools_init): added missing
+	gimp_container_freeze().
+
+	* app/widgets/gimpcontainerview.c: connect to the container's
+	"freeze" and "thaw" signals and empty / refill the view
+	accordingly. Ignore "add", "remove" and "reorder" signals while
+	the container is frozen. Fixes font list sorting after refresh and
+	speeds up refreshing of fonts, brushes, patterns etc.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpfontview.[ch]: new widget for the font list/grid.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_FONT_REFRESH.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* app/gui/Makefile.am
+	* app/gui/fonts-commands.[ch]
+	* app/gui/fonts-menu.[ch]: new files: a menu for the font view.
+
+	* app/gui/menus.c (menus_init): register the new <Fonts> menu.
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): removed the
+	fonts refreshing hack from the "Environment" page.
+
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerview.c (gimp_container_view_get_preview):

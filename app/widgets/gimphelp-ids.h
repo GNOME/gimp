@@ -303,6 +303,7 @@
 #define GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL         "gimp-palette-editor-zoom-all"
 
 #define GIMP_HELP_FONT_DIALOG                     "gimp-font-dialog"
+#define GIMP_HELP_FONT_REFRESH                    "gimp-font-refresh"
 
 #define GIMP_HELP_BUFFER_DIALOG                   "gimp-buffer-dialog"
 #define GIMP_HELP_BUFFER_CUT                      "gimp-buffer-cut"
