@@ -1058,10 +1058,8 @@ bezier_select_button_press (Tool           *tool,
 	  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
 	  bezier_sel->last_point->next = curve_start;
 	  curve_start->prev = bezier_sel->last_point;
-/* 	  bezier_sel->cur_anchor = curve_start; */
-/* 	  bezier_sel->cur_control = curve_start->next; */
-	  bezier_sel->cur_anchor = NULL;
-	  bezier_sel->cur_control = NULL;
+ 	  bezier_sel->cur_anchor = curve_start; 
+ 	  bezier_sel->cur_control = curve_start->next; 
 
 	  bezier_sel->closed = 1;
 	  bezier_sel->state = BEZIER_EDIT;

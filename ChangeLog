@@ -1,3 +1,11 @@
+Sat Apr 22 14:01:06 BST 2000 <alt@gimp.org>
+	
+	* app/bezier_select.c
+
+	Fixed problem pointed out by Garry R. Osgood (manipulating 
+	control points where curve is closed). Thanks
+	again Garry for pointing it out.
+
 Fri Apr 21 11:25:24 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* libgimp/Makefile.am: gimpsignal.[ch] needs to go into libgimp,
