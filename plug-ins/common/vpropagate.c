@@ -1,7 +1,7 @@
 /* vpropagate.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1997/10/24 20:09:07 narazaki@InetQ.or.jp>
- * Version: 0.89
+ * Time-stamp: <1998/04/11 19:46:08 narazaki@InetQ.or.jp>
+ * Version: 0.89a
  *
  * Copyright (C) 1996-1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  *
@@ -252,7 +252,7 @@ query ()
 			  "Shuji Narazaki",
 			  "1996-1997",
 			  MENU_POSITION,
-			  "RGB*",
+			  "RGB*,GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);

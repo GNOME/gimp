@@ -330,7 +330,7 @@ void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile, MapSize)
                   {
                   buf[1]=buf[1] | (buf[1] << 4);
                   }
-                Write(f,buf,2);		/* Count -- Color */
+                Write(f,buf,2);			/* Count -- Color */
                 laenge+=2;
                 }
               else				/* unpacked */
@@ -408,6 +408,7 @@ save_dialog ()
   argv[0] = g_strdup ("bmp");
 
   gtk_init (&argc, &argv);
+
   gtk_rc_parse (gimp_gtkrc());
 
   dlg = gtk_dialog_new ();

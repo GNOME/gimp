@@ -1032,7 +1032,7 @@ dialog_update_preview(void)
 	double  left, right, bottom, top;
 	double  dx, dy;
 	double  px, py;
-	double  cx, cy;
+	double  cx = 0.0, cy = 0.0;
 	int     ix, iy;
 	int     x, y;
 	double  scale_x, scale_y;

@@ -1,3 +1,18 @@
+Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/gdisplay.c: reverted cosmetic fix below, broke zoomed
+	updates
+
+	* configure.in: changes to xdelta and jpeg checks
+
+	* updated bmp plugin
+
+	* portability patch for polar
+
+	* minor bugfix to vpropagate
+	
+	* fix for memory problem in xwd
+
 Sat Apr 11 00:03:33 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.25 release
@@ -205,7 +220,7 @@ Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
 	* updated iwarp to the version on the registry and reapplied
 	(hopefully) all portability-patches that were applied in between
 
-Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org
+Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org>
 	
 	* app/brightness_contrast.c
 	* app/by_color_select.c

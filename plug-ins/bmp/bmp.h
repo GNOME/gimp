@@ -7,9 +7,9 @@
 
 #define BitSet(byte, bit)  (((byte) & (bit)) == (bit))
 
-#define ReadOK(file,buffer,len) (fread(buffer, len, 1, file) != 0)
+#define ReadOK(file,buffer,len)  (fread(buffer, len, 1, file) != 0)
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
-#define WriteOK(file,buffer,len) (Write(file,buffer,len) != 0)
+#define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
 extern gint32 ToL(guchar *);
 extern void FromL(gint32, guchar *);
@@ -57,3 +57,4 @@ struct
     unsigned short bcPlanes;            /* 16 */
     unsigned short bcBitCnt;	        /* 18 */
   }Bitmap_OS2_Head;                
+

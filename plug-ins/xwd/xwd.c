@@ -42,8 +42,9 @@
  *                        Set gimp b/w-colormap if no xwdcolormap present
  * V 1.91, PK, 05-Apr-97: Return all arguments, even in case of an error
  * V 1.92, PK, 12-Oct-97: No progress bars for non-interactive mode
+ * V 1.93, PK, 11-Apr-98: Fix problem with overwriting memory
  */
-static char ident[] = "@(#) GIMP XWD file-plugin v1.92  12-Oct-97";
+static char ident[] = "@(#) GIMP XWD file-plugin v1.93  11-Apr-98";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1275,7 +1276,7 @@ load_xwd_f2_d16_b16 (char *filename,
  data = g_malloc (tile_height * width * 3);
 
  /* Get memory for mapping 16 bit XWD-pixel to GIMP-RGB */
- maxval = 0xffff * 3;
+ maxval = 0x10000 * 3;
  ColorMap = (unsigned char *)g_malloc (maxval);
  if (ColorMap == NULL)
  {

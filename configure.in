@@ -135,7 +135,8 @@ dnl Test for libjpeg
     if test "$jpeg_ok" = yes; then
       AC_MSG_CHECKING([for jpeg.h])
       AC_TRY_COMPILE(
-[#undef PACKAGE
+[#include <stdio.h>
+#undef PACKAGE
 #undef VERSION
 #include <jpeglib.h>],
 	jpeg_ok=yes,
@@ -185,9 +186,11 @@ dnl Test for libmpeg
 dnl Test for libxdelta
   if test -z "$LIBXDELTA_LIB"; then
     AC_CHECK_LIB(xdelta, xd_checkin,
-      xdelta_ok=yes,
-      xdelta_ok=no
-      AC_MSG_WARN(*** XD plug-in will not be built (XDELTA library not found) ***), -lglib -lgdbm)
+      xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
+      AC_CHECK_LIB(xdelta, xd_checkout,
+	xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm -lz',
+	xdelta_ok=no
+	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA library not found) ***), -lglib -lgdbm -lz), -lglib -lgdbm)
     if test "$xdelta_ok" = yes; then
       AC_MSG_CHECKING([for xdelta.h])
       AC_TRY_CPP(
@@ -197,7 +200,7 @@ dnl Test for libxdelta
 	xdelta_ok=no)
       AC_MSG_RESULT($xdelta_ok)
       if test "$xdelta_ok" = yes; then
-	XD='xd'; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm'
+	XD='xd'
       else
 	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA header file not found) ***)
       fi
