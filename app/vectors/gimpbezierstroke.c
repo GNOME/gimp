@@ -972,17 +972,17 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
                  * search for its loose end.
                  */
                 {
-                  if (listneighbor->prev &&
-                      listneighbor->prev->prev == NULL)
-                    {
-                      loose_end = -1;
-                      listneighbor = listneighbor->prev;
-                    }
-                  else if (listneighbor->next &&
+                  if (listneighbor->next &&
                            listneighbor->next->next == NULL)
                     {
                       loose_end = 1;
                       listneighbor = listneighbor->next;
+                    }
+                  else if (listneighbor->prev &&
+                      listneighbor->prev->prev == NULL)
+                    {
+                      loose_end = -1;
+                      listneighbor = listneighbor->prev;
                     }
                 }
             }

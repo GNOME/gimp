@@ -1178,10 +1178,14 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
               gint i;
 
               for (i = 0; i < coords->len; i += 2)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, i),
-                                             2, FALSE, FALSE);
+                {
+                  gimp_draw_tool_draw_dashed_line (draw_tool,
+                                    (g_array_index (coords, GimpCoords, i)).x,
+                                    (g_array_index (coords, GimpCoords, i)).y,
+                                    (g_array_index (coords, GimpCoords, i+1)).x,
+                                    (g_array_index (coords, GimpCoords, i+1)).y,
+                                    FALSE);
+                }
             }
 
           g_array_free (coords, TRUE);

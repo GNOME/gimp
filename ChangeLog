@@ -1,5 +1,15 @@
 2003-09-03  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpbezierstroke.c: Two small hacks to make the
+	editing behave more symmetric (no more a user visible difference
+	between extending to the start or to the end of a stroke).
+
+	* app/tools/gimpvectortool.c: Use dashed lines for the connection
+	between the anchor and the handles. Looks great IMHO.
+
+2003-09-03  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpvectortool.[ch]: properly keep track of the
 	active anchor and retrieve that information after a _thaw () so
 	that proper editing is possible after an undo. Now the

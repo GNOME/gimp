@@ -1133,11 +1133,21 @@ gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
 
           if (next && next->type == GIMP_ANCHOR_ANCHOR && next->selected)
             {
-              ret_list = g_list_prepend (ret_list, anchor);
+              /* Ok, this is a hack.
+               * The idea is to give control points at the end of a
+               * stroke a higher priority for the interactive tool. */
+              if (prev)
+                ret_list = g_list_prepend (ret_list, anchor);
+              else
+                ret_list = g_list_append (ret_list, anchor);
             }
           else if (prev && prev->type == GIMP_ANCHOR_ANCHOR && prev->selected)
             {
-              ret_list = g_list_prepend (ret_list, anchor);
+              /* same here... */
+              if (next)
+                ret_list = g_list_prepend (ret_list, anchor);
+              else
+                ret_list = g_list_append (ret_list, anchor);
             }
         }
     }
