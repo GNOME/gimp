@@ -1,4 +1,4 @@
-.TH GIMP "11 May 1998" Version 1.0
+.TH GIMPTOOL 1 "23 June 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimptool - script to perform various Gimpy functions
 .SH SYNOPSIS

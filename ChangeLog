@@ -1,3 +1,14 @@
+2000-06-23  Sven Neumann <sven@gimp.org>
+	
+	* Makefile.am
+	* configure.in
+	* gimptool.1: removed
+	* gimptool.1.in: new file to generate gimptool.1 with the proper 
+	version number
+
+	* gimp.1.in
+	* gimprc.5.in: unify use of version and date  
+	
 2000-06-22  Matt Wilson  <msw@redhat.com>
 
 	* app/paint_core.c (paint_core_new): allocate the tool's

@@ -1,6 +1,6 @@
-.TH GIMP 1 "13 June 2000" Version @GIMP_VERSION@
+.TH GIMP 1 "23 June 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
-Gimp - an image manipulation and paint program.
+gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP]

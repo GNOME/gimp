@@ -9,6 +9,7 @@ gimp.1
 gimp.spec
 gimprc
 gimprc.5
+gimptool.1
 config.status
 libtool
 aclocal.m4

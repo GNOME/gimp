@@ -176,6 +176,7 @@ EXTRA_DIST = \
 	user_install.bat			\
 	ps-menurc				\
 	gimp.1					\
+	gimprc.5				\
 	gimptool.1				\
 	gimp.m4					\
 	gimprc.win32				\
