@@ -1,5 +1,10 @@
 2004-02-04  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): added percentages to
+	the View->Zoom menu entries as suggested in bug #131563.
+
+2004-02-04  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc.[ch]: added the new function
 	gimp_rc_set_unknown_token() to get autosave working for unknown
 	gimprc tokens.

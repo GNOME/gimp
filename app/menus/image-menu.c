@@ -66,6 +66,17 @@
 #include "gimp-intl.h"
 
 
+#define VIEW_ZOOM_16_1 "/View/Zoom/16:1  (1600%)"
+#define VIEW_ZOOM_8_1  "/View/Zoom/8:1  (800%)"
+#define VIEW_ZOOM_4_1  "/View/Zoom/4:1  (400%)"
+#define VIEW_ZOOM_2_1  "/View/Zoom/2:1  (200%)"
+#define VIEW_ZOOM_1_1  "/View/Zoom/1:1  (100%)"
+#define VIEW_ZOOM_1_2  "/View/Zoom/1:2  (50%)"
+#define VIEW_ZOOM_1_4  "/View/Zoom/1:4  (25%)"
+#define VIEW_ZOOM_1_8  "/View/Zoom/1:8  (12.5%)"
+#define VIEW_ZOOM_1_16 "/View/Zoom/1:16  (6.25%)"
+
+
 /*  local function prototypes  */
 
 static void   image_menu_foreground_changed (GimpContext      *context,
@@ -367,47 +378,47 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/View/Zoom/---"),
 
-  { { N_("/View/Zoom/16:1"), NULL,
+  { { N_("/View/Zoom/16:1  (1600%)"), NULL,
       view_zoom_cmd_callback, 160000, "<RadioItem>" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
-  { { N_("/View/Zoom/8:1"), NULL,
-      view_zoom_cmd_callback, 80000, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/8:1  (800%)"), NULL,
+      view_zoom_cmd_callback, 80000, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
-  { { N_("/View/Zoom/4:1"), NULL,
-      view_zoom_cmd_callback, 40000, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/4:1  (400%)"), NULL,
+      view_zoom_cmd_callback, 40000, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
-  { { N_("/View/Zoom/2:1"), NULL,
-      view_zoom_cmd_callback, 20000, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/2:1  (200%)"), NULL,
+      view_zoom_cmd_callback, 20000, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
-  { { N_("/View/Zoom/1:1"), "1",
-      view_zoom_cmd_callback, 10000, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/1:1  (100%)"), "1",
+      view_zoom_cmd_callback, 10000, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_100, NULL },
-  { { N_("/View/Zoom/1:2"), NULL,
-      view_zoom_cmd_callback, 5000, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/1:2  (50%)"), NULL,
+      view_zoom_cmd_callback, 5000, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
-  { { N_("/View/Zoom/1:4"), NULL,
-      view_zoom_cmd_callback, 2500, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/1:4  (25%)"), NULL,
+      view_zoom_cmd_callback, 2500, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
-  { { N_("/View/Zoom/1:8"), NULL,
-      view_zoom_cmd_callback, 1250, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/1:8  (12.5%)"), NULL,
+      view_zoom_cmd_callback, 1250, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
-  { { N_("/View/Zoom/1:16"), NULL,
-      view_zoom_cmd_callback, 625, "/View/Zoom/16:1" },
+  { { N_("/View/Zoom/1:16  (6.25%)"), NULL,
+      view_zoom_cmd_callback, 625, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
 
   MENU_SEPARATOR ("/View/Zoom/---"),
 
   { { "/View/Zoom/O_ther...", NULL,
-      view_zoom_other_cmd_callback, 0, "/View/Zoom/16:1" },
+      view_zoom_other_cmd_callback, 0, VIEW_ZOOM_16_1 },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OTHER, NULL },
 
@@ -1505,16 +1516,16 @@ image_menu_update (GtkItemFactory *item_factory,
       SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
       SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
 
-      SET_SENSITIVE ("/View/Zoom/16:1",     gdisp);
-      SET_SENSITIVE ("/View/Zoom/8:1",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/4:1",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/2:1",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/1:1",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/1:2",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/1:4",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/1:8",      gdisp);
-      SET_SENSITIVE ("/View/Zoom/1:16",     gdisp);
-      SET_SENSITIVE ("/View/Zoom/Other...", gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_16_1,         gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_8_1,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_4_1,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_2_1,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_1_1,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_1_2,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_1_4,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_1_8,          gdisp);
+      SET_SENSITIVE (VIEW_ZOOM_1_16,         gdisp);
+      SET_SENSITIVE ("/View/Zoom/Other...",  gdisp);
 
       if (gdisp)
         image_menu_set_zoom (item_factory, shell);
@@ -1678,16 +1689,16 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
   switch (scale)
     {
-    case 16000:  menu = "/View/Zoom/16:1";  break;
-    case  8000:  menu = "/View/Zoom/8:1";   break;
-    case  4000:  menu = "/View/Zoom/4:1";   break;
-    case  2000:  menu = "/View/Zoom/2:1";   break;
-    case  1000:  menu = "/View/Zoom/1:1";   break;
-    case   500:  menu = "/View/Zoom/1:2";   break;
-    case   250:  menu = "/View/Zoom/1:4";   break;
-    case   125:  menu = "/View/Zoom/1:8";   break;
+    case 16000:  menu = VIEW_ZOOM_16_1;  break;
+    case  8000:  menu = VIEW_ZOOM_8_1;   break;
+    case  4000:  menu = VIEW_ZOOM_4_1;   break;
+    case  2000:  menu = VIEW_ZOOM_2_1;   break;
+    case  1000:  menu = VIEW_ZOOM_1_1;   break;
+    case   500:  menu = VIEW_ZOOM_1_2;   break;
+    case   250:  menu = VIEW_ZOOM_1_4;   break;
+    case   125:  menu = VIEW_ZOOM_1_8;   break;
     case    63:
-    case    62:  menu = "/View/Zoom/1:16";  break;
+    case    62:  menu = VIEW_ZOOM_1_16;  break;
     }
 
   g_snprintf (buf, sizeof (buf),

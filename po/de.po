@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-03 15:26+0100\n"
-"PO-Revision-Date: 2004-02-03 15:29+0100\n"
+"POT-Creation-Date: 2004-02-04 02:14+0100\n"
+"PO-Revision-Date: 2004-02-04 02:14+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -401,7 +401,7 @@ msgstr "»%s« konnte nicht angelegt werden: %s"
 msgid "Parsing '%s'\n"
 msgstr "»%s« wird verarbeitet\n"
 
-#: app/config/gimprc.c:579
+#: app/config/gimprc.c:601
 #, c-format
 msgid "Saving '%s'\n"
 msgstr "»%s« wird gespeichert\n"
@@ -2502,7 +2502,7 @@ msgstr "Skalierung festlegen"
 msgid "Zoom Ratio:"
 msgstr "Skalierung:"
 
-#: app/display/gimpdisplayshell-scale.c:570
+#: app/display/gimpdisplayshell-scale.c:567
 msgid "Zoom:"
 msgstr "Maßstab:"
 
@@ -3802,890 +3802,890 @@ msgstr ""
 
 #. <Image>/File
 #. <Toolbox>/File
-#: app/gui/image-menu.c:88 app/gui/toolbox-menu.c:49
+#: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Datei"
 
-#: app/gui/image-menu.c:90 app/gui/toolbox-menu.c:51
+#: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:51
 msgid "/File/_New..."
 msgstr "/Datei/_Neu..."
 
-#: app/gui/image-menu.c:95 app/gui/toolbox-menu.c:56
+#: app/gui/image-menu.c:106 app/gui/toolbox-menu.c:56
 msgid "/File/_Open..."
 msgstr "/Datei/Ö_ffnen..."
 
 #. <Image>/File/Open Recent
 #. <Toolbox>/File/Open Recent
-#: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:64
+#: app/gui/image-menu.c:114 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Datei/_Zuletzt geöffnet"
 
-#: app/gui/image-menu.c:105 app/gui/toolbox-menu.c:66
+#: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:66
 msgid "/File/Open Recent/(None)"
 msgstr "/Datei/Zuletzt geöffnet/(Keine)"
 
-#: app/gui/image-menu.c:110 app/gui/toolbox-menu.c:71
+#: app/gui/image-menu.c:121 app/gui/toolbox-menu.c:71
 msgid "/File/Open Recent/Document _History"
 msgstr "/Datei/Zuletzt geöffnet/_Journal"
 
-#: app/gui/image-menu.c:118
+#: app/gui/image-menu.c:129
 msgid "/File/_Save"
 msgstr "/Datei/_Speichern"
 
-#: app/gui/image-menu.c:123
+#: app/gui/image-menu.c:134
 msgid "/File/Save _as..."
 msgstr "/Datei/Speichern _unter..."
 
-#: app/gui/image-menu.c:128
+#: app/gui/image-menu.c:139
 msgid "/File/Save a Cop_y..."
 msgstr "/Datei/_Kopie speichern unter..."
 
-#: app/gui/image-menu.c:132
+#: app/gui/image-menu.c:143
 msgid "/File/Save as _Template..."
 msgstr "/Datei/Als _Vorlage speichern..."
 
-#: app/gui/image-menu.c:136
+#: app/gui/image-menu.c:147
 msgid "/File/Re_vert"
 msgstr "/Datei/Zu_rücksetzen"
 
-#: app/gui/image-menu.c:144
+#: app/gui/image-menu.c:155
 msgid "/File/_Close"
 msgstr "/Datei/S_chließen"
 
-#: app/gui/image-menu.c:149 app/gui/toolbox-menu.c:241
+#: app/gui/image-menu.c:160 app/gui/toolbox-menu.c:241
 msgid "/File/_Quit"
 msgstr "/Datei/_Beenden"
 
 #. <Image>/Edit
-#: app/gui/image-menu.c:159
+#: app/gui/image-menu.c:170
 msgid "/_Edit"
 msgstr "/_Bearbeiten"
 
-#: app/gui/image-menu.c:161
+#: app/gui/image-menu.c:172
 msgid "/Edit/_Undo"
 msgstr "/Bearbeiten/_Rückgängig"
 
-#: app/gui/image-menu.c:166
+#: app/gui/image-menu.c:177
 msgid "/Edit/_Redo"
 msgstr "/Bearbeiten/_Wiederholen"
 
-#: app/gui/image-menu.c:171
+#: app/gui/image-menu.c:182
 msgid "/Edit/Undo _History"
 msgstr "/Bearbeiten/_Journal"
 
-#: app/gui/image-menu.c:179
+#: app/gui/image-menu.c:190
 msgid "/Edit/Cu_t"
 msgstr "/Bearbeiten/_Ausschneiden"
 
-#: app/gui/image-menu.c:184
+#: app/gui/image-menu.c:195
 msgid "/Edit/_Copy"
 msgstr "/Bearbeiten/_Kopieren"
 
-#: app/gui/image-menu.c:189
+#: app/gui/image-menu.c:200
 msgid "/Edit/_Paste"
 msgstr "/Bearbeiten/E_infügen"
 
-#: app/gui/image-menu.c:194
+#: app/gui/image-menu.c:205
 msgid "/Edit/Paste _Into"
 msgstr "/Bearbeiten/In Aus_wahl einfügen"
 
-#: app/gui/image-menu.c:199
+#: app/gui/image-menu.c:210
 msgid "/Edit/Paste as _New"
 msgstr "/Bearbeiten/Als _neues Bild einfügen"
 
 #. <Image>/Edit/Buffer
-#: app/gui/image-menu.c:207
+#: app/gui/image-menu.c:218
 msgid "/Edit/_Buffer"
 msgstr "/Bearbeiten/A_blage"
 
-#: app/gui/image-menu.c:209
+#: app/gui/image-menu.c:220
 msgid "/Edit/Buffer/Cu_t Named..."
 msgstr "/Bearbeiten/Ablage/In Ablage _ausschneiden..."
 
-#: app/gui/image-menu.c:214
+#: app/gui/image-menu.c:225
 msgid "/Edit/Buffer/_Copy Named..."
 msgstr "/Bearbeiten/Ablage/In Ablage _kopieren..."
 
-#: app/gui/image-menu.c:219
+#: app/gui/image-menu.c:230
 msgid "/Edit/Buffer/_Paste Named..."
 msgstr "/Bearbeiten/Ablage/Aus Ablage e_infügen..."
 
-#: app/gui/image-menu.c:227
+#: app/gui/image-menu.c:238
 msgid "/Edit/Cl_ear"
 msgstr "/Bearbeiten/_Löschen"
 
-#: app/gui/image-menu.c:232
+#: app/gui/image-menu.c:243
 msgid "/Edit/Fill with _FG Color"
 msgstr "/Bearbeiten/Mit _VG-Farbe füllen"
 
-#: app/gui/image-menu.c:237
+#: app/gui/image-menu.c:248
 msgid "/Edit/Fill with B_G Color"
 msgstr "/Bearbeiten/Mit _HG-Farbe füllen"
 
-#: app/gui/image-menu.c:242
+#: app/gui/image-menu.c:253
 msgid "/Edit/Fill with P_attern"
 msgstr "/Bearbeiten/Mit _Muster füllen"
 
-#: app/gui/image-menu.c:247
+#: app/gui/image-menu.c:258
 msgid "/Edit/_Stroke Selection..."
 msgstr "/Bearbeiten/Auswahl _nachziehen..."
 
-#: app/gui/image-menu.c:252
+#: app/gui/image-menu.c:263
 msgid "/Edit/St_roke Path..."
 msgstr "/Bearbeiten/Pfad nach_ziehen..."
 
 #. <Image>/Select
-#: app/gui/image-menu.c:262
+#: app/gui/image-menu.c:273
 msgid "/_Select"
 msgstr "/_Auswahl"
 
-#: app/gui/image-menu.c:264
+#: app/gui/image-menu.c:275
 msgid "/Select/_All"
 msgstr "/Auswahl/_Alles"
 
-#: app/gui/image-menu.c:269
+#: app/gui/image-menu.c:280
 msgid "/Select/_None"
 msgstr "/Auswahl/_Nichts"
 
-#: app/gui/image-menu.c:274
+#: app/gui/image-menu.c:285
 msgid "/Select/_Invert"
 msgstr "/Auswahl/_Invertieren"
 
-#: app/gui/image-menu.c:279
+#: app/gui/image-menu.c:290
 msgid "/Select/_Float"
 msgstr "/Auswahl/_Schwebend"
 
-#: app/gui/image-menu.c:284
+#: app/gui/image-menu.c:295
 msgid "/Select/_By Color"
 msgstr "/Auswahl/Nach _Farbe"
 
-#: app/gui/image-menu.c:292
+#: app/gui/image-menu.c:303
 msgid "/Select/Fea_ther..."
 msgstr "/Auswahl/A_usblenden..."
 
-#: app/gui/image-menu.c:296
+#: app/gui/image-menu.c:307
 msgid "/Select/_Sharpen"
 msgstr "/Auswahl/S_chärfen"
 
-#: app/gui/image-menu.c:300
+#: app/gui/image-menu.c:311
 msgid "/Select/S_hrink..."
 msgstr "/Auswahl/Ver_kleinern..."
 
-#: app/gui/image-menu.c:305
+#: app/gui/image-menu.c:316
 msgid "/Select/_Grow..."
 msgstr "/Auswahl/Ver_größern..."
 
-#: app/gui/image-menu.c:310
+#: app/gui/image-menu.c:321
 msgid "/Select/Bo_rder..."
 msgstr "/Auswahl/_Rand..."
 
-#: app/gui/image-menu.c:318
+#: app/gui/image-menu.c:329
 msgid "/Select/Toggle _QuickMask"
 msgstr "/Auswahl/_QuickMask aktivieren/deaktivieren"
 
-#: app/gui/image-menu.c:323
+#: app/gui/image-menu.c:334
 msgid "/Select/Save to _Channel"
 msgstr "/Auswahl/In _Kanal speichern"
 
-#: app/gui/image-menu.c:328
+#: app/gui/image-menu.c:339
 msgid "/Select/To _Path"
 msgstr "/Auswahl/_Pfad aus Auswahl"
 
 #. <Image>/View
-#: app/gui/image-menu.c:336
+#: app/gui/image-menu.c:347
 msgid "/_View"
 msgstr "/An_sicht"
 
-#: app/gui/image-menu.c:338
+#: app/gui/image-menu.c:349
 msgid "/View/_New View"
 msgstr "/Ansicht/_Neue Ansicht"
 
-#: app/gui/image-menu.c:343
+#: app/gui/image-menu.c:354
 msgid "/View/_Dot for Dot"
 msgstr "/Ansicht/_Punkt für Punkt"
 
 #. <Image>/View/Zoom
-#: app/gui/image-menu.c:350
+#: app/gui/image-menu.c:361
 msgid "/View/_Zoom"
 msgstr "/Ansicht/_Zoom"
 
-#: app/gui/image-menu.c:352
+#: app/gui/image-menu.c:363
 msgid "/View/Zoom/Zoom _Out"
 msgstr "/Ansicht/Zoom/Ver_kleinern"
 
-#: app/gui/image-menu.c:357
+#: app/gui/image-menu.c:368
 msgid "/View/Zoom/Zoom _In"
 msgstr "/Ansicht/Zoom/Ver_größern"
 
-#: app/gui/image-menu.c:362
+#: app/gui/image-menu.c:373
 msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Ansicht/Zoom/In _Fenster einpassen"
 
-#: app/gui/image-menu.c:370
-msgid "/View/Zoom/16:1"
-msgstr "/Ansicht/Zoom/16:1"
+#: app/gui/image-menu.c:381
+msgid "/View/Zoom/16:1  (1600%)"
+msgstr "/Ansicht/Zoom/16:1  (1600%)"
 
-#: app/gui/image-menu.c:374
-msgid "/View/Zoom/8:1"
-msgstr "/Ansicht/Zoom/8:1"
+#: app/gui/image-menu.c:385
+msgid "/View/Zoom/8:1  (800%)"
+msgstr "/Ansicht/Zoom/8:1  (800%)"
 
-#: app/gui/image-menu.c:378
-msgid "/View/Zoom/4:1"
-msgstr "/Ansicht/Zoom/4:1"
+#: app/gui/image-menu.c:389
+msgid "/View/Zoom/4:1  (400%)"
+msgstr "/Ansicht/Zoom/4:1  (400%)"
 
-#: app/gui/image-menu.c:382
-msgid "/View/Zoom/2:1"
-msgstr "/Ansicht/Zoom/2:1"
+#: app/gui/image-menu.c:393
+msgid "/View/Zoom/2:1  (200%)"
+msgstr "/Ansicht/Zoom/2:1  (200%)"
 
-#: app/gui/image-menu.c:386
-msgid "/View/Zoom/1:1"
-msgstr "/Ansicht/Zoom/1:1"
+#: app/gui/image-menu.c:397
+msgid "/View/Zoom/1:1  (100%)"
+msgstr "/Ansicht/Zoom/1:1  (100%)"
 
-#: app/gui/image-menu.c:390
-msgid "/View/Zoom/1:2"
-msgstr "/Ansicht/Zoom/1:2"
+#: app/gui/image-menu.c:401
+msgid "/View/Zoom/1:2  (50%)"
+msgstr "/Ansicht/Zoom/1:2  (50%)"
 
-#: app/gui/image-menu.c:394
-msgid "/View/Zoom/1:4"
-msgstr "/Ansicht/Zoom/1:4"
+#: app/gui/image-menu.c:405
+msgid "/View/Zoom/1:4  (25%)"
+msgstr "/Ansicht/Zoom/1:4  (25%)"
 
-#: app/gui/image-menu.c:398
-msgid "/View/Zoom/1:8"
-msgstr "/Ansicht/Zoom/1:8"
+#: app/gui/image-menu.c:409
+msgid "/View/Zoom/1:8  (12.5%)"
+msgstr "/Ansicht/Zoom/1:8  (12,5%)"
 
-#: app/gui/image-menu.c:402
-msgid "/View/Zoom/1:16"
-msgstr "/Ansicht/Zoom/1:16"
+#: app/gui/image-menu.c:413
+msgid "/View/Zoom/1:16  (6.25%)"
+msgstr "/Ansicht/Zoom/1:16  (6,25%)"
 
-#: app/gui/image-menu.c:416
+#: app/gui/image-menu.c:427
 msgid "/View/_Info Window"
 msgstr "/Ansicht/_Info-Fenster"
 
-#: app/gui/image-menu.c:421
+#: app/gui/image-menu.c:432
 msgid "/View/Na_vigation Window"
 msgstr "/Ansicht/Na_vigationsfenster"
 
-#: app/gui/image-menu.c:426
+#: app/gui/image-menu.c:437
 msgid "/View/Display _Filters..."
 msgstr "/Ansicht/Ansichts_filter..."
 
-#: app/gui/image-menu.c:433
+#: app/gui/image-menu.c:444
 msgid "/View/Show _Selection"
 msgstr "/Ansicht/_Auswahl anzeigen"
 
-#: app/gui/image-menu.c:437
+#: app/gui/image-menu.c:448
 msgid "/View/Show _Layer Boundary"
 msgstr "/Ansicht/_Ebenenrahmen anzeigen"
 
-#: app/gui/image-menu.c:441
+#: app/gui/image-menu.c:452
 msgid "/View/Show _Guides"
 msgstr "/Ansicht/_Hilfslinien anzeigen"
 
-#: app/gui/image-menu.c:445
+#: app/gui/image-menu.c:456
 msgid "/View/Sn_ap to Guides"
 msgstr "/Ansicht/_Magnetische Hilfslinien"
 
-#: app/gui/image-menu.c:449
+#: app/gui/image-menu.c:460
 msgid "/View/S_how Grid"
 msgstr "/Ansicht/_Gitter anzeigen"
 
-#: app/gui/image-menu.c:453
+#: app/gui/image-menu.c:464
 msgid "/View/Sna_p to Grid"
 msgstr "/Ansicht/Magnetis_ches Gitter"
 
-#: app/gui/image-menu.c:460
+#: app/gui/image-menu.c:471
 msgid "/View/Show _Menubar"
 msgstr "/Ansicht/Menüleis_te anzeigen"
 
-#: app/gui/image-menu.c:464
+#: app/gui/image-menu.c:475
 msgid "/View/Show R_ulers"
 msgstr "/Ansicht/_Lineale anzeigen"
 
-#: app/gui/image-menu.c:468
+#: app/gui/image-menu.c:479
 msgid "/View/Show Scroll_bars"
 msgstr "/Ansicht/_Rollbalken anzeigen"
 
-#: app/gui/image-menu.c:472
+#: app/gui/image-menu.c:483
 msgid "/View/Show S_tatusbar"
 msgstr "/Ansicht/_Statusleiste anzeigen"
 
-#: app/gui/image-menu.c:479
+#: app/gui/image-menu.c:490
 msgid "/View/Shrink _Wrap"
 msgstr "/Ansicht/Fenster an_passen"
 
-#: app/gui/image-menu.c:484
+#: app/gui/image-menu.c:495
 msgid "/View/Fullscr_een"
 msgstr "/Ansicht/_Vollbild"
 
-#: app/gui/image-menu.c:489
+#: app/gui/image-menu.c:500
 msgid "/View/Move to Screen..."
 msgstr "/Ansicht/Auf Bildschirm verschieben..."
 
 #. <Image>/Image
-#: app/gui/image-menu.c:497
+#: app/gui/image-menu.c:508
 msgid "/_Image"
 msgstr "/_Bild"
 
 #. <Image>/Image/Mode
-#: app/gui/image-menu.c:501
+#: app/gui/image-menu.c:512
 msgid "/Image/_Mode"
 msgstr "/Bild/_Modus"
 
-#: app/gui/image-menu.c:503
+#: app/gui/image-menu.c:514
 msgid "/Image/Mode/_RGB"
 msgstr "/Bild/Modus/_RGB"
 
-#: app/gui/image-menu.c:508
+#: app/gui/image-menu.c:519
 msgid "/Image/Mode/_Grayscale"
 msgstr "/Bild/Modus/_Graustufen"
 
-#: app/gui/image-menu.c:513
+#: app/gui/image-menu.c:524
 msgid "/Image/Mode/_Indexed..."
 msgstr "/Bild/Modus/_Indiziert..."
 
 #. <Image>/Image/Transform
-#: app/gui/image-menu.c:521
+#: app/gui/image-menu.c:532
 msgid "/Image/_Transform"
 msgstr "/Bild/_Transformationen"
 
-#: app/gui/image-menu.c:523
+#: app/gui/image-menu.c:534
 msgid "/Image/Transform/Flip _Horizontally"
 msgstr "/Bild/Transformationen/_Horizontal spiegeln"
 
-#: app/gui/image-menu.c:528
+#: app/gui/image-menu.c:539
 msgid "/Image/Transform/Flip _Vertically"
 msgstr "/Bild/Transformationen/_Vertikal spiegeln"
 
 #. please use the degree symbol in the translation
-#: app/gui/image-menu.c:537
+#: app/gui/image-menu.c:548
 msgid "/Image/Transform/Rotate 90 degrees _CW"
 msgstr "/Bild/Transformationen/90° drehen (_rechts)"
 
-#: app/gui/image-menu.c:542
+#: app/gui/image-menu.c:553
 msgid "/Image/Transform/Rotate 90 degrees CC_W"
 msgstr "/Bild/Transformationen/90° drehen (_links)"
 
-#: app/gui/image-menu.c:547
+#: app/gui/image-menu.c:558
 msgid "/Image/Transform/Rotate _180 degrees"
 msgstr "/Bild/Transformationen/_180° drehen"
 
-#: app/gui/image-menu.c:557
+#: app/gui/image-menu.c:568
 msgid "/Image/Can_vas Size..."
 msgstr "/Bild/_Leinwandgröße..."
 
-#: app/gui/image-menu.c:562
+#: app/gui/image-menu.c:573
 msgid "/Image/_Scale Image..."
 msgstr "/Bild/Bild _skalieren..."
 
-#: app/gui/image-menu.c:567
+#: app/gui/image-menu.c:578
 msgid "/Image/_Crop Image"
 msgstr "/Bild/Bild _zuschneiden"
 
-#: app/gui/image-menu.c:572
+#: app/gui/image-menu.c:583
 msgid "/Image/_Duplicate"
 msgstr "/Bild/_Duplizieren"
 
-#: app/gui/image-menu.c:580
+#: app/gui/image-menu.c:591
 msgid "/Image/Merge Visible _Layers..."
 msgstr "/Bild/Sichtbare _Ebenen vereinen..."
 
-#: app/gui/image-menu.c:584
+#: app/gui/image-menu.c:595
 msgid "/Image/_Flatten Image"
 msgstr "/Bild/Bild z_usammenfügen"
 
-#: app/gui/image-menu.c:591
+#: app/gui/image-menu.c:602
 msgid "/Image/Configure G_rid..."
 msgstr "/Ansicht/_Gitter konfigurieren..."
 
 #. <Image>/Layer
-#: app/gui/image-menu.c:599
+#: app/gui/image-menu.c:610
 msgid "/_Layer"
 msgstr "/_Ebene"
 
-#: app/gui/image-menu.c:601
+#: app/gui/image-menu.c:612
 msgid "/Layer/_New Layer..."
 msgstr "/Ebene/_Neue Ebene..."
 
-#: app/gui/image-menu.c:606
+#: app/gui/image-menu.c:617
 msgid "/Layer/Du_plicate Layer"
 msgstr "/Ebene/Ebene _duplizieren"
 
-#: app/gui/image-menu.c:611
+#: app/gui/image-menu.c:622
 msgid "/Layer/Anchor _Layer"
 msgstr "/Ebene/Ebene _verankern"
 
-#: app/gui/image-menu.c:616
+#: app/gui/image-menu.c:627
 msgid "/Layer/Me_rge Down"
 msgstr "/Ebene/Nach _unten vereinen"
 
-#: app/gui/image-menu.c:621
+#: app/gui/image-menu.c:632
 msgid "/Layer/_Delete Layer"
 msgstr "/Ebene/Ebene _löschen"
 
-#: app/gui/image-menu.c:626
+#: app/gui/image-menu.c:637
 msgid "/Layer/Discard _Text Information"
 msgstr "/Ebene/Te_xtinformationen verwerfen"
 
 #. <Image>/Layer/Stack
-#: app/gui/image-menu.c:636
+#: app/gui/image-menu.c:647
 msgid "/Layer/Stac_k"
 msgstr "/Ebene/_Stapel"
 
-#: app/gui/image-menu.c:638
+#: app/gui/image-menu.c:649
 msgid "/Layer/Stack/Select _Previous Layer"
 msgstr "/Ebene/Stapel/_Vorherige Ebene auswählen"
 
-#: app/gui/image-menu.c:642
+#: app/gui/image-menu.c:653
 msgid "/Layer/Stack/Select _Next Layer"
 msgstr "/Ebene/Stapel/_Nächste Ebene auswählen"
 
-#: app/gui/image-menu.c:646
+#: app/gui/image-menu.c:657
 msgid "/Layer/Stack/Select _Top Layer"
 msgstr "/Ebene/Stapel/_Oberste Ebene auswählen"
 
-#: app/gui/image-menu.c:650
+#: app/gui/image-menu.c:661
 msgid "/Layer/Stack/Select _Bottom Layer"
 msgstr "/Ebene/Stapel/_Unterste Ebene auswählen"
 
-#: app/gui/image-menu.c:657
+#: app/gui/image-menu.c:668
 msgid "/Layer/Stack/_Raise Layer"
 msgstr "/Ebene/Stapel/Ebene an_heben"
 
-#: app/gui/image-menu.c:662
+#: app/gui/image-menu.c:673
 msgid "/Layer/Stack/_Lower Layer"
 msgstr "/Ebene/Stapel/Ebene ab_senken"
 
-#: app/gui/image-menu.c:667
+#: app/gui/image-menu.c:678
 msgid "/Layer/Stack/Layer to T_op"
 msgstr "/Ebene/Stapel/Ebene nach ganz o_ben"
 
-#: app/gui/image-menu.c:672
+#: app/gui/image-menu.c:683
 msgid "/Layer/Stack/Layer to Botto_m"
 msgstr "/Ebene/Stapel/Ebene nach ganz u_nten"
 
 #. <Image>/Layer/Colors
-#: app/gui/image-menu.c:680
+#: app/gui/image-menu.c:691
 msgid "/Layer/_Colors"
 msgstr "/Ebene/_Farben"
 
-#: app/gui/image-menu.c:682
+#: app/gui/image-menu.c:693
 msgid "/Layer/Colors/Color _Balance..."
 msgstr "/Ebene/Farben/Farb_abgleich..."
 
-#: app/gui/image-menu.c:687
+#: app/gui/image-menu.c:698
 msgid "/Layer/Colors/Hue-_Saturation..."
 msgstr "/Ebene/Farben/Farb_ton-Sättigung..."
 
-#: app/gui/image-menu.c:692
+#: app/gui/image-menu.c:703
 msgid "/Layer/Colors/Colori_ze..."
 msgstr "/Ebene/Farben/_Einfärben..."
 
-#: app/gui/image-menu.c:697
+#: app/gui/image-menu.c:708
 msgid "/Layer/Colors/B_rightness-Contrast..."
 msgstr "/Ebene/Farben/_Helligkeit-Kontrast..."
 
-#: app/gui/image-menu.c:702
+#: app/gui/image-menu.c:713
 msgid "/Layer/Colors/_Threshold..."
 msgstr "/Ebene/Farben/_Schwellwert..."
 
-#: app/gui/image-menu.c:707
+#: app/gui/image-menu.c:718
 msgid "/Layer/Colors/_Levels..."
 msgstr "/Ebene/Farben/_Werte..."
 
-#: app/gui/image-menu.c:712
+#: app/gui/image-menu.c:723
 msgid "/Layer/Colors/_Curves..."
 msgstr "/Ebene/Farben/_Kurven..."
 
-#: app/gui/image-menu.c:717
+#: app/gui/image-menu.c:728
 msgid "/Layer/Colors/_Posterize..."
 msgstr "/Ebene/Farben/_Posterisieren..."
 
-#: app/gui/image-menu.c:725
+#: app/gui/image-menu.c:736
 msgid "/Layer/Colors/_Desaturate"
 msgstr "/Ebene/Farben/Sättigung entfernen"
 
-#: app/gui/image-menu.c:730
+#: app/gui/image-menu.c:741
 msgid "/Layer/Colors/In_vert"
 msgstr "/Ebene/Farben/_Invertieren"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:738
+#: app/gui/image-menu.c:749
 msgid "/Layer/Colors/_Auto"
 msgstr "/Bild/Farben/_Automatisch"
 
-#: app/gui/image-menu.c:740
+#: app/gui/image-menu.c:751
 msgid "/Layer/Colors/Auto/_Equalize"
 msgstr "/Bild/Farben/Automatisch/_Angleichen"
 
-#: app/gui/image-menu.c:747
+#: app/gui/image-menu.c:758
 msgid "/Layer/Colors/_Histogram"
 msgstr "/Ebene/Farben/_Histogramm"
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:755
+#: app/gui/image-menu.c:766
 msgid "/Layer/_Mask"
 msgstr "/Ebene/_Maske"
 
-#: app/gui/image-menu.c:757
+#: app/gui/image-menu.c:768
 msgid "/Layer/Mask/_Add Layer Mask..."
 msgstr "/Ebene/Maske/Ebenenmaske _hinzufügen..."
 
-#: app/gui/image-menu.c:762
+#: app/gui/image-menu.c:773
 msgid "/Layer/Mask/A_pply Layer Mask"
 msgstr "/Ebene/Maske/Ebenenmaske an_wenden..."
 
-#: app/gui/image-menu.c:766
+#: app/gui/image-menu.c:777
 msgid "/Layer/Mask/_Delete Layer Mask"
 msgstr "/Ebene/Maske/Ebenenmaske _löschen"
 
-#: app/gui/image-menu.c:774
+#: app/gui/image-menu.c:785
 msgid "/Layer/Mask/_Mask to Selection"
 msgstr "/Ebene/Maske/_Auswahl aus Maske"
 
-#: app/gui/image-menu.c:779
+#: app/gui/image-menu.c:790
 msgid "/Layer/Mask/_Add to Selection"
 msgstr "/Ebene/Maske/Zur Auswahl _hinzufügen"
 
-#: app/gui/image-menu.c:784
+#: app/gui/image-menu.c:795
 msgid "/Layer/Mask/_Subtract from Selection"
 msgstr "/Ebene/Maske/Von Auswahl a_bziehen"
 
-#: app/gui/image-menu.c:789
+#: app/gui/image-menu.c:800
 msgid "/Layer/Mask/_Intersect with Selection"
 msgstr "/Ebene/Maske/Mit Auswahl _schneiden"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:797
+#: app/gui/image-menu.c:808
 msgid "/Layer/Tr_ansparency"
 msgstr "/Ebene/Tr_ansparenz"
 
-#: app/gui/image-menu.c:799
+#: app/gui/image-menu.c:810
 msgid "/Layer/Transparency/_Add Alpha Channel"
 msgstr "/Ebene/Transparenz/Alphakanal _hinzufügen"
 
-#: app/gui/image-menu.c:807
+#: app/gui/image-menu.c:818
 msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "/Ebene/Transparenz/_Auswahl aus Alphakanal"
 
-#: app/gui/image-menu.c:812
+#: app/gui/image-menu.c:823
 msgid "/Layer/Transparency/A_dd to Selection"
 msgstr "/Ebene/Transparenz/Zur Auswahl hin_zufügen"
 
-#: app/gui/image-menu.c:817
+#: app/gui/image-menu.c:828
 msgid "/Layer/Transparency/_Subtract from Selection"
 msgstr "/Ebene/Transparenz/Von Auswahl a_bziehen"
 
-#: app/gui/image-menu.c:822
+#: app/gui/image-menu.c:833
 msgid "/Layer/Transparency/_Intersect with Selection"
 msgstr "/Ebene/Transparenz/Mit Auswahl _schneiden"
 
 #. <Image>/Layer/Transform
-#: app/gui/image-menu.c:832
+#: app/gui/image-menu.c:843
 msgid "/Layer/_Transform"
 msgstr "/Ebene/_Transformationen"
 
-#: app/gui/image-menu.c:834
+#: app/gui/image-menu.c:845
 msgid "/Layer/Transform/Flip _Horizontally"
 msgstr "/Ebene/Transformationen/_Horizontal spiegeln"
 
-#: app/gui/image-menu.c:839
+#: app/gui/image-menu.c:850
 msgid "/Layer/Transform/Flip _Vertically"
 msgstr "/Ebene/Transformationen/_Vertikal spiegeln"
 
-#: app/gui/image-menu.c:847
+#: app/gui/image-menu.c:858
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
 msgstr "/Ebene/Transformationen/90° drehen (_rechts)"
 
-#: app/gui/image-menu.c:852
+#: app/gui/image-menu.c:863
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
 msgstr "/Ebene/Transformationen/90° drehen (_links)"
 
-#: app/gui/image-menu.c:857
+#: app/gui/image-menu.c:868
 msgid "/Layer/Transform/Rotate _180 degrees"
 msgstr "/Ebene/Transformationen/_180° drehen"
 
-#: app/gui/image-menu.c:862
+#: app/gui/image-menu.c:873
 msgid "/Layer/Transform/_Arbitrary Rotation..."
 msgstr "/Ebene/Transformationen/_Beliebig drehen..."
 
-#: app/gui/image-menu.c:870
+#: app/gui/image-menu.c:881
 msgid "/Layer/Transform/_Offset..."
 msgstr "/Ebene/Transformationen/_Versatz..."
 
-#: app/gui/image-menu.c:877
+#: app/gui/image-menu.c:888
 msgid "/Layer/Layer _Boundary Size..."
 msgstr "/Ebene/Ebenen_größe ändern... "
 
-#: app/gui/image-menu.c:882
+#: app/gui/image-menu.c:893
 msgid "/Layer/Layer to _Image Size"
 msgstr "/Ebene/Ebene auf _Bildgröße"
 
-#: app/gui/image-menu.c:887
+#: app/gui/image-menu.c:898
 msgid "/Layer/_Scale Layer..."
 msgstr "/Ebene/Ebene s_kalieren..."
 
-#: app/gui/image-menu.c:892
+#: app/gui/image-menu.c:903
 msgid "/Layer/Cr_op Layer"
 msgstr "/Ebene/Ebene _zuschneiden"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:902
+#: app/gui/image-menu.c:913
 msgid "/_Tools"
 msgstr "/_Werkzeuge"
 
-#: app/gui/image-menu.c:904
+#: app/gui/image-menu.c:915
 msgid "/Tools/Tool_box"
 msgstr "/Werkzeuge/_Werkzeugkasten"
 
-#: app/gui/image-menu.c:908
+#: app/gui/image-menu.c:919
 msgid "/Tools/_Default Colors"
 msgstr "/Werkzeuge/Vor_gabefarben"
 
-#: app/gui/image-menu.c:913
+#: app/gui/image-menu.c:924
 msgid "/Tools/S_wap Colors"
 msgstr "/Werkzeuge/Farben _vertauschen"
 
-#: app/gui/image-menu.c:921
+#: app/gui/image-menu.c:932
 msgid "/Tools/_Selection Tools"
 msgstr "/Werkzeuge/_Auswahlwerkzeuge"
 
-#: app/gui/image-menu.c:922
+#: app/gui/image-menu.c:933
 msgid "/Tools/_Paint Tools"
 msgstr "/Werkzeuge/_Malwerkzeuge"
 
-#: app/gui/image-menu.c:923
+#: app/gui/image-menu.c:934
 msgid "/Tools/_Transform Tools"
 msgstr "/Werkzeuge/_Transformationen"
 
-#: app/gui/image-menu.c:924
+#: app/gui/image-menu.c:935
 msgid "/Tools/_Color Tools"
 msgstr "/Werkzeuge/_Farben"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:928
+#: app/gui/image-menu.c:939
 msgid "/_Dialogs"
 msgstr "/_Dialoge"
 
-#: app/gui/image-menu.c:930
+#: app/gui/image-menu.c:941
 msgid "/Dialogs/Create New Doc_k"
 msgstr "/Dialoge/Dock _hinzufügen"
 
-#: app/gui/image-menu.c:932
+#: app/gui/image-menu.c:943
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths"
 msgstr "/Dialoge/Dock hinzufügen/_Ebenen, Kanäle und Pfade"
 
-#: app/gui/image-menu.c:936
+#: app/gui/image-menu.c:947
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
 msgstr "/Dialoge/Dock hinzufügen/_Pinsel, Muster und Farbverläufe"
 
-#: app/gui/image-menu.c:940
+#: app/gui/image-menu.c:951
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
 msgstr "/Dialoge/Dock hinzufügen/_Verschiedenes"
 
-#: app/gui/image-menu.c:945
+#: app/gui/image-menu.c:956
 msgid "/Dialogs/Tool _Options"
 msgstr "/Dialoge/_Werkzeugeinstellungen"
 
-#: app/gui/image-menu.c:950
+#: app/gui/image-menu.c:961
 msgid "/Dialogs/_Device Status"
 msgstr "/Dialoge/_Gerätestatus"
 
-#: app/gui/image-menu.c:958
+#: app/gui/image-menu.c:969
 msgid "/Dialogs/_Layers"
 msgstr "/Dialoge/_Ebenen"
 
-#: app/gui/image-menu.c:963
+#: app/gui/image-menu.c:974
 msgid "/Dialogs/_Channels"
 msgstr "/Dialoge/_Kanäle"
 
-#: app/gui/image-menu.c:968
+#: app/gui/image-menu.c:979
 msgid "/Dialogs/_Paths"
 msgstr "/Dialoge/_Pfade"
 
-#: app/gui/image-menu.c:973
+#: app/gui/image-menu.c:984
 msgid "/Dialogs/Inde_xed Palette"
 msgstr "/Dialoge/_Indizierte Palette"
 
-#: app/gui/image-menu.c:978
+#: app/gui/image-menu.c:989
 msgid "/Dialogs/Histogra_m"
 msgstr "/Dialoge/_Journal"
 
-#: app/gui/image-menu.c:983
+#: app/gui/image-menu.c:994
 msgid "/Dialogs/_Selection Editor"
 msgstr "/Dialoge/_Auswahleditor"
 
-#: app/gui/image-menu.c:988
+#: app/gui/image-menu.c:999
 msgid "/Dialogs/Na_vigation"
 msgstr "/Dialoge/_Navigation"
 
-#: app/gui/image-menu.c:993
+#: app/gui/image-menu.c:1004
 msgid "/Dialogs/_Undo History"
 msgstr "/Dialoge/_Journal"
 
-#: app/gui/image-menu.c:1001
+#: app/gui/image-menu.c:1012
 msgid "/Dialogs/Colo_rs"
 msgstr "/Dialoge/_Farben"
 
-#: app/gui/image-menu.c:1006
+#: app/gui/image-menu.c:1017
 msgid "/Dialogs/Brus_hes"
 msgstr "/Dialoge/Pin_sel"
 
-#: app/gui/image-menu.c:1011
+#: app/gui/image-menu.c:1022
 msgid "/Dialogs/P_atterns"
 msgstr "/Dialoge/_Muster"
 
-#: app/gui/image-menu.c:1016
+#: app/gui/image-menu.c:1027
 msgid "/Dialogs/_Gradients"
 msgstr "/Dialoge/Farb_verläufe"
 
-#: app/gui/image-menu.c:1021
+#: app/gui/image-menu.c:1032
 msgid "/Dialogs/Pal_ettes"
 msgstr "/Dialoge/Farbpa_letten"
 
-#: app/gui/image-menu.c:1026
+#: app/gui/image-menu.c:1037
 msgid "/Dialogs/_Fonts"
 msgstr "/Dialoge/S_chriften"
 
-#: app/gui/image-menu.c:1031
+#: app/gui/image-menu.c:1042
 msgid "/Dialogs/_Buffers"
 msgstr "/Dialoge/A_blagen"
 
-#: app/gui/image-menu.c:1039
+#: app/gui/image-menu.c:1050
 msgid "/Dialogs/_Images"
 msgstr "/Dialoge/Bil_der"
 
-#: app/gui/image-menu.c:1044
+#: app/gui/image-menu.c:1055
 msgid "/Dialogs/Document Histor_y"
 msgstr "/Dialoge/D_okumentenindx."
 
-#: app/gui/image-menu.c:1049
+#: app/gui/image-menu.c:1060
 msgid "/Dialogs/_Templates"
 msgstr "/Dialoge/Vo_rlagen"
 
-#: app/gui/image-menu.c:1054
+#: app/gui/image-menu.c:1065
 msgid "/Dialogs/T_ools"
 msgstr "/Dialoge/_Werkzeuge"
 
-#: app/gui/image-menu.c:1059
+#: app/gui/image-menu.c:1070
 msgid "/Dialogs/Error Co_nsole"
 msgstr "/Dialoge/Fe_hlerkonsole"
 
-#: app/gui/image-menu.c:1069
+#: app/gui/image-menu.c:1080
 msgid "/Filte_rs"
 msgstr "/_Filter"
 
-#: app/gui/image-menu.c:1071
+#: app/gui/image-menu.c:1082
 msgid "/Filters/Repeat Last"
 msgstr "/Filter/Letzten Vorgang wiederholen"
 
-#: app/gui/image-menu.c:1076
+#: app/gui/image-menu.c:1087
 msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Letzten Vorgang nochmal anzeigen"
 
-#: app/gui/image-menu.c:1084
+#: app/gui/image-menu.c:1095
 msgid "/Filters/_Blur"
 msgstr "/Filter/_Weichzeichnen"
 
-#: app/gui/image-menu.c:1085
+#: app/gui/image-menu.c:1096
 msgid "/Filters/_Colors"
 msgstr "/Filter/_Farben"
 
-#: app/gui/image-menu.c:1086
+#: app/gui/image-menu.c:1097
 msgid "/Filters/Colors/Ma_p"
 msgstr "/Filter/Farben/Ab_bilden"
 
-#: app/gui/image-menu.c:1087
+#: app/gui/image-menu.c:1098
 msgid "/Filters/_Noise"
 msgstr "/Filter/Rau_schen"
 
-#: app/gui/image-menu.c:1088
+#: app/gui/image-menu.c:1099
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filter/_Kanten finden"
 
-#: app/gui/image-menu.c:1089
+#: app/gui/image-menu.c:1100
 msgid "/Filters/En_hance"
 msgstr "/Filter/_Verbessern"
 
-#: app/gui/image-menu.c:1090
+#: app/gui/image-menu.c:1101
 msgid "/Filters/_Generic"
 msgstr "/Filter/_Allgemein"
 
-#: app/gui/image-menu.c:1094
+#: app/gui/image-menu.c:1105
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Filter/_Glas-Effekte"
 
-#: app/gui/image-menu.c:1095
+#: app/gui/image-menu.c:1106
 msgid "/Filters/_Light Effects"
 msgstr "/Filter/_Licht-Effekte"
 
-#: app/gui/image-menu.c:1096
+#: app/gui/image-menu.c:1107
 msgid "/Filters/_Distorts"
 msgstr "/Filter/Ver_zerren"
 
-#: app/gui/image-menu.c:1097
+#: app/gui/image-menu.c:1108
 msgid "/Filters/_Artistic"
 msgstr "/Filter/_Künstlerisch"
 
-#: app/gui/image-menu.c:1098
+#: app/gui/image-menu.c:1109
 msgid "/Filters/_Map"
 msgstr "/Filter/Ab_bilden"
 
-#: app/gui/image-menu.c:1099
+#: app/gui/image-menu.c:1110
 msgid "/Filters/_Render"
 msgstr "/Filter/_Render"
 
-#: app/gui/image-menu.c:1100
+#: app/gui/image-menu.c:1111
 msgid "/Filters/Render/_Clouds"
 msgstr "/Filter/Render/_Wolken"
 
-#: app/gui/image-menu.c:1101
+#: app/gui/image-menu.c:1112
 msgid "/Filters/Render/_Nature"
 msgstr "/Filter/Render/_Natur"
 
-#: app/gui/image-menu.c:1102
+#: app/gui/image-menu.c:1113
 msgid "/Filters/Render/_Pattern"
 msgstr "/Filter/Render/_Muster"
 
-#: app/gui/image-menu.c:1103
+#: app/gui/image-menu.c:1114
 msgid "/Filters/_Web"
 msgstr "/Filter/_Web"
 
-#: app/gui/image-menu.c:1107
+#: app/gui/image-menu.c:1118
 msgid "/Filters/An_imation"
 msgstr "/Filter/A_nimation"
 
-#: app/gui/image-menu.c:1108
+#: app/gui/image-menu.c:1119
 msgid "/Filters/C_ombine"
 msgstr "/Filter/K_ombinieren"
 
-#: app/gui/image-menu.c:1112
+#: app/gui/image-menu.c:1123
 msgid "/Filters/To_ys"
 msgstr "/Filter/_Spielzeug"
 
-#: app/gui/image-menu.c:1441
+#: app/gui/image-menu.c:1452
 #, c-format
 msgid "_Undo %s"
 msgstr "_Rückgängig: %s"
 
-#: app/gui/image-menu.c:1446
+#: app/gui/image-menu.c:1457
 #, c-format
 msgid "_Redo %s"
 msgstr "_Wiederholen: %s"
 
-#: app/gui/image-menu.c:1450
+#: app/gui/image-menu.c:1461
 msgid "_Undo"
 msgstr "_Rückgängig"
 
-#: app/gui/image-menu.c:1451
+#: app/gui/image-menu.c:1462
 msgid "_Redo"
 msgstr "_Wiederholen"
 
-#: app/gui/image-menu.c:1701
+#: app/gui/image-menu.c:1712
 #, c-format
 msgid "Other (%s) ..."
 msgstr "Anders (%s) ..."
 
-#: app/gui/image-menu.c:1710
+#: app/gui/image-menu.c:1721
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -6207,7 +6207,7 @@ msgstr "/Vorlage _bearbeiten..."
 msgid "/_Delete Template"
 msgstr "/Vorlage _löschen"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:221
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:219
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "»%s« wird geschrieben\n"
@@ -7281,20 +7281,20 @@ msgid "Querying plug-in: '%s'\n"
 msgstr "Plugin »%s« wird abgefragt\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:297
+#: app/plug-in/plug-ins.c:295
 msgid "Initializing Plug-ins"
 msgstr "Plugins werden initialisiert"
 
-#: app/plug-in/plug-ins.c:313
+#: app/plug-in/plug-ins.c:311
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Plugin »%s« wird initialisiert\n"
 
-#: app/plug-in/plug-ins.c:345
+#: app/plug-in/plug-ins.c:343
 msgid "Starting Extensions"
 msgstr "Erweiterungen werden gestartet"
 
-#: app/plug-in/plug-ins.c:354
+#: app/plug-in/plug-ins.c:352
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Erweiterung »%s« wird gestartet\n"
@@ -9903,6 +9903,12 @@ msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Bilder und Photos erstellen und bearbeiten"
+
+#~ msgid "/View/Zoom/1:4"
+#~ msgstr "/Ansicht/Zoom/1:4"
+
+#~ msgid "/View/Zoom/1:8"
+#~ msgstr "/Ansicht/Zoom/1:8"
 
 #, fuzzy
 #~ msgid "Other (%.2f%%) ..."
