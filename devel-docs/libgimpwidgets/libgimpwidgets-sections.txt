@@ -119,6 +119,7 @@ gimp_memsize_entry_new
 gimp_memsize_entry_set_value
 gimp_memsize_entry_get_value
 <SUBSECTION Standard>
+GimpMemsizeEntryClass
 GIMP_MEMSIZE_ENTRY
 GIMP_IS_MEMSIZE_ENTRY
 GIMP_TYPE_MEMSIZE_ENTRY
@@ -419,6 +420,7 @@ gimp_color_display_configure
 gimp_color_display_configure_reset
 gimp_color_display_changed
 <SUBSECTION Standard>
+GimpColorDisplayClass
 GIMP_COLOR_DISPLAY
 GIMP_IS_COLOR_DISPLAY
 GIMP_TYPE_COLOR_DISPLAY
@@ -444,6 +446,7 @@ gimp_color_selector_set_channel
 gimp_color_selector_color_changed
 gimp_color_selector_channel_changed
 <SUBSECTION Standard>
+GimpColorSelectorClass
 GIMP_COLOR_SELECTOR
 GIMP_IS_COLOR_SELECTOR
 GIMP_TYPE_COLOR_SELECTOR
@@ -459,6 +462,7 @@ GIMP_COLOR_SELECTOR_GET_CLASS
 GimpColorNotebook
 gimp_color_notebook_set_has_page
 <SUBSECTION Standard>
+GimpColorNotebookClass
 GIMP_COLOR_NOTEBOOK
 GIMP_IS_COLOR_NOTEBOOK
 GIMP_TYPE_COLOR_NOTEBOOK
@@ -476,6 +480,7 @@ gimp_color_scale_new
 gimp_color_scale_set_channel
 gimp_color_scale_set_color
 <SUBSECTION Standard>
+GimpColorScaleClass
 GIMP_COLOR_SCALE
 GIMP_IS_COLOR_SCALE
 GIMP_TYPE_COLOR_SCALE
@@ -513,6 +518,7 @@ gimp_color_select_get_type
 GimpPickButton
 gimp_pick_button_new
 <SUBSECTION Standard>
+GimpPickButtonClass
 GIMP_PICK_BUTTON
 GIMP_IS_PICK_BUTTON
 GIMP_TYPE_PICK_BUTTON
