@@ -27,13 +27,13 @@
 #
 
 proc gimptcl_query {} {
-    gimp-install-procedure "gimptcl_consolio2" \
+    gimp-install-procedure "gimptcl_consolio" \
 	"An interactive gimptcl shell" \
 	"Type commands at the prompt to do stuff" \
 	"Eric L. Hernes" \
 	"ELH" \
 	"1997" \
-        "<Toolbox>/Xtns/Gimptcl Consolio2" \
+        "<Toolbox>/Xtns/Gimptcl Consolio" \
 	"" \
 	extension \
 	{
@@ -297,7 +297,7 @@ proc tkConInitSlave {slave args} {
     $slave alias source tkConSafeSource $slave
     $slave alias load tkConSafeLoad $slave
     $slave alias open tkConSafeOpen $slave
-    $slave alias exit tkConExit
+    $slave alias exit tkConDestroy
     $slave alias file file
     interp eval $slave [dump var tcl_library env]
     interp eval $slave [list source [file join $tcl_library init.tcl]]
@@ -307,7 +307,7 @@ proc tkConInitSlave {slave args} {
   foreach cmd $tkCon(slavealias) { 
       $slave alias $cmd $cmd 
   }
-    $slave alias exit tkConExit
+    $slave alias exit tkConDestroy
   interp alias $slave ls $slave dir
   interp eval $slave set tcl_interactive $tcl_interactive \; \
       set argv0 [list $argv0] \; set argc [llength $args] \; \
@@ -702,7 +702,7 @@ proc tkConInitMenus {w title} {
     $m add separator
     $m add cascade -label "Attach Console " -un 0 -menu $m.apps
     $m add separator
-    $m add command -label "Quit" -un 0 -acc Ctrl-q -command tkConExit
+    $m add command -label "Quit" -un 0 -acc Ctrl-q -command tkConDestroy
 
     ## Attach Console Menu
     ##
@@ -885,7 +885,7 @@ proc tkConInterpMenu w {
     }
     if {[info exists loaded] && [info exists loadable]} { $m add separator }
     foreach pkg [array names loaded] {
-      $m add command -label "${pkg}$loaded($pkg) Loaded" -state disabled
+      $m add command -label "${pkg}-$loaded($pkg) Loaded" -state disabled
     }
   }
 
@@ -1184,6 +1184,7 @@ proc tkConMainInit {} {
     set tmp [interp create Slave[incr tkCon(slave)]]
     lappend tkCon(slaves) $tmp
     load {} Tk $tmp
+    tkConInitSlave $tmp
     lappend tkCon(interps) [$tmp eval [list tk appname "[tk appname] $tmp"]]
     $tmp eval set argc $argc \; set argv [list $argv] \; \
 	set argv0 [list $argv0]
@@ -1197,7 +1198,7 @@ proc tkConMainInit {} {
     $tmp alias tkConStateCleanup	tkConStateCleanup
     $tmp alias tkConStateCompare	tkConStateCompare
     $tmp alias tkConStateRevert		tkConStateRevert
-    $tmp alias exit tkConExit
+    $tmp alias exit tkConDestroy
     $tmp eval [list source $tkCon(SCRIPT)]
     return $tmp
   }
@@ -1211,9 +1212,9 @@ proc tkConMainInit {} {
     global tkCon
     if [string match {} $slave] {
       ## Main interpreter close request
-      if [tk_dialog $tkCon(base).destroyme {Quit TkCon?} \
+      if [tk_dialog $tkCon(base).destroyme {Quit Gimptcl Consolio?} \
 	      {Closing the Main console will quit TkCon} \
-	      warning 0 "Don't Quit" "Quit TkCon"] tkConExit
+	      warning 0 "Don't Quit" "Quit Consolio"] tkConExit
     } else {
       ## Slave interpreter close request
       set name [tkConInterpEval $slave]
@@ -2606,7 +2607,7 @@ proc tkConBindings {} {
   }
 
   ## <<TkCon_Exit>>
-  bind $tkCon(root) <Control-q> tkConExit
+  bind $tkCon(root) <Control-q> tkConDestroy
   ## <<TkCon_New>>
   bind $tkCon(root) <Control-N> { tkConNew }
   ## <<TkCon_Close>>

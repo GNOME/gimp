@@ -2,7 +2,7 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_SCRIPTS = consolio pdb_help stained_glass
+pluginlib_SCRIPTS = consolio pdb_help stained_glass sbutton
 
 SUFFIXES = .tcl
 
