@@ -88,7 +88,7 @@ static double  non_gui_incremental;
 
 /*  forward function declarations  */
 static void paintbrush_motion (PaintCore *, GimpDrawable *,
-			       double, double, gboolean, int);
+			       double, double, PaintApplicationMode, GradientPaintMode);
 
 
 /*  functions  */
@@ -382,8 +382,8 @@ paintbrush_motion (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
 		   double        fade_out,
 		   double        gradient_length,
-		   gboolean      incremental,
-		   int           gradient_type)
+		   PaintApplicationMode      incremental,
+		   GradientPaintMode         gradient_type)
 {
   GImage *gimage;
   TempBuf * area;
@@ -437,14 +437,14 @@ paintbrush_motion (PaintCore    *paint_core,
 	  r = r * 255.0;
 	  g = g * 255.0;
 	  b = b * 255.0;
-	  a = a * 255.0;
+ 	  a = a * 255.0;
 	  temp_blend =  (gint)((a * local_blend)/255);
 	  col[0] = (gint)r;
 	  col[1] = (gint)g;
 	  col[2] = (gint)b;
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
-	  paint_appl_mode = INCREMENTAL;
+	  incremental = INCREMENTAL;
 	}
       /* just leave this because I know as soon as i delete it i'll find a bug */
       /*          printf("temp_blend: %u grad_len: %f distance: %f \n",temp_blend, gradient_length, distance); */ 
@@ -454,10 +454,10 @@ paintbrush_motion (PaintCore    *paint_core,
 
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
-      if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
+      if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush) && !gradient_length)
 	{
 	  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
-	  paint_appl_mode = INCREMENTAL;
+	  incremental = INCREMENTAL;
 	}
       else
 	{
@@ -471,7 +471,7 @@ paintbrush_motion (PaintCore    *paint_core,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL),
 			       PRESSURE,
-			       paint_appl_mode);
+			       incremental ? INCREMENTAL : CONSTANT);
     }
 }
 

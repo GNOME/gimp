@@ -22,9 +22,9 @@
 
 #include <string.h>
 
+#include "apptypes.h"
 #include "drawable.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
+#include "layer.h"
 
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;

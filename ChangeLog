@@ -1,3 +1,12 @@
+Wed Aug 18 22:49:31 1999 Adrian Likins <alikins@redhat.com>
+	
+	* app/apptypes.h: add GradientPaintMode enum
+	* app/paint_core.h: move above enum
+	* app/paintbrush.c: use above enum
+
+	* app/drawable_cmds.c: include "layers.h" so it
+	will link again
+
 1999-08-19  Tor Lillqvist  <tml@iki.fi>
 
 	* app/*.[ch]: Actually use the enum types GimpImageType,
