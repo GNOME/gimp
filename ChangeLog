@@ -1,3 +1,8 @@
+Mon Sep 13 01:50:29 BST 1999 Nick Lamb <njl195@zepler.org>
+
+        * plug-ins/common/png.c: Update info structure after applying
+        transformations. No longer apply sBIT. Report errors nicely.
+
 Sun Sep 12 19:37:12 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * configure.in: Changes for perl i18n, some file moves, new po
