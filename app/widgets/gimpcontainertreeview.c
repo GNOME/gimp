@@ -38,6 +38,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpdnd.h"
+#include "gimpitemfactory.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
@@ -57,6 +58,7 @@ static void     gimp_container_tree_view_init         (GimpContainerTreeView    
 static GObject *gimp_container_tree_view_constructor  (GType                   type,
                                                        guint                   n_params,
                                                        GObjectConstructParam  *params);
+static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *widget);
 static void    gimp_container_tree_view_set_container (GimpContainerView      *view,
                                                        GimpContainer          *container);
 
@@ -125,14 +127,18 @@ static void
 gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 {
   GObjectClass           *object_class;
+  GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
 
   object_class         = G_OBJECT_CLASS (klass);
+  widget_class         = GTK_WIDGET_CLASS (klass);
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor              = gimp_container_tree_view_constructor;
+
+  widget_class->popup_menu               = gimp_container_tree_view_popup_menu;
 
   container_view_class->set_container    = gimp_container_tree_view_set_container;
   container_view_class->insert_item      = gimp_container_tree_view_insert_item;
@@ -249,6 +255,89 @@ gimp_container_tree_view_constructor (GType                  type,
   gtk_tree_view_set_enable_search (tree_view->view, TRUE);
 
   return object;
+}
+
+static void
+gimp_container_tree_view_menu_position (GtkMenu  *menu,
+                                        gint     *x,
+                                        gint     *y,
+                                        gpointer  data)
+{
+  GimpContainerTreeView *tree_view;
+  GtkWidget             *widget;
+  GtkTreeIter            selected_iter;
+  GtkRequisition         requisition;
+  GdkScreen             *screen;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (data);
+  widget    = GTK_WIDGET (tree_view->view);
+
+  gdk_window_get_origin (widget->window, x, y);
+
+  if (GTK_WIDGET_NO_WINDOW (widget))
+    {
+      *x += widget->allocation.x;
+      *y += widget->allocation.y;
+    }
+
+  if (gtk_tree_selection_get_selected (tree_view->selection, NULL,
+                                       &selected_iter))
+    {
+      GtkTreePath  *path;
+      GdkRectangle  cell_rect;
+
+      path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+      gtk_tree_view_get_cell_area (tree_view->view, path,
+                                   tree_view->main_column, &cell_rect);
+      gtk_tree_path_free (path);
+
+      *x += widget->allocation.width / 2;
+      *y += cell_rect.y + cell_rect.height / 2;
+    }
+  else
+    {
+      *x += widget->style->xthickness;
+      *y += widget->style->ythickness;
+    }
+
+  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+
+  if (*x + requisition.width > gdk_screen_get_width (screen))
+    *x -= requisition.width;
+
+  if (*x < 0)
+    *x = 0;
+
+  if (*y + requisition.height > gdk_screen_get_height (screen))
+    *y -= requisition.height;
+
+  if (*y < 0)
+    *y = 0;
+}
+
+static gboolean
+gimp_container_tree_view_popup_menu (GtkWidget *widget)
+{
+  GimpContainerTreeView *tree_view;
+  GimpEditor            *editor;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
+  editor    = GIMP_EDITOR (widget);
+
+  if (editor->item_factory &&
+      gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL))
+    {
+      gimp_item_factory_popup_with_data (editor->item_factory,
+                                         editor->item_factory_data,
+                                         gimp_container_tree_view_menu_position,
+                                         editor,
+                                         NULL);
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 GtkWidget *

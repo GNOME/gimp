@@ -36,6 +36,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainergridview.h"
+#include "gimpitemfactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gtkhwrapbox.h"
@@ -58,6 +59,7 @@ static gboolean gimp_container_grid_view_move_cursor  (GimpContainerGridView  *v
                                                        gint                    count);
 static gboolean gimp_container_grid_view_focus        (GtkWidget              *widget,
                                                        GtkDirectionType        direction);
+static gboolean  gimp_container_grid_view_popup_menu  (GtkWidget              *widget);
 
 static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
@@ -141,6 +143,7 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
   binding_set  = gtk_binding_set_by_class (klass);
 
   widget_class->focus                    = gimp_container_grid_view_focus;
+  widget_class->popup_menu               = gimp_container_grid_view_popup_menu;
 
   container_view_class->insert_item      = gimp_container_grid_view_insert_item;
   container_view_class->remove_item      = gimp_container_grid_view_remove_item;
@@ -350,6 +353,68 @@ gimp_container_grid_view_focus (GtkWidget        *widget,
     case GTK_DIR_TAB_FORWARD:
     case GTK_DIR_TAB_BACKWARD:
       break;
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_container_grid_view_menu_position (GtkMenu  *menu,
+                                        gint     *x,
+                                        gint     *y,
+                                        gpointer  data)
+{
+  GtkWidget      *widget;
+  GtkRequisition  requisition;
+  GdkScreen      *screen;
+
+  widget = GTK_WIDGET (data);
+
+  gdk_window_get_origin (widget->window, x, y);
+
+  if (GTK_WIDGET_NO_WINDOW (widget))
+    {
+      *x += widget->allocation.x;
+      *y += widget->allocation.y;
+    }
+
+  *x += widget->allocation.width  / 2;
+  *y += widget->allocation.height / 2;
+
+  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+
+  if (*x + requisition.width > gdk_screen_get_width (screen))
+    *x -= requisition.width;
+
+  if (*x < 0)
+    *x = 0;
+
+  if (*y + requisition.height > gdk_screen_get_height (screen))
+    *y -= requisition.height;
+
+  if (*y < 0)
+    *y = 0;
+}
+
+static gboolean
+gimp_container_grid_view_popup_menu (GtkWidget *widget)
+{
+  GimpContainerGridView *grid_view;
+  GimpEditor            *editor;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (widget);
+  editor    = GIMP_EDITOR (widget);
+
+  if (editor->item_factory && grid_view->selected_item)
+    {
+      gimp_item_factory_popup_with_data (editor->item_factory,
+                                         editor->item_factory_data,
+                                         gimp_container_grid_view_menu_position,
+                                         grid_view->selected_item,
+                                         NULL);
+      return TRUE;
     }
 
   return FALSE;

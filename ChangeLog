@@ -1,3 +1,11 @@
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c: implement
+	GtkWidget::popup_menu() and pop up the menu from the selected
+	item. If there is no selected item, return FALSE to
+	makeGimpDockable pop up the menu from its menu button.
+
 2003-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/dialogs-commands.c (dialogs_create_dockable_cmd_callback):
