@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 22:57+0100\n"
-"PO-Revision-Date: 2004-05-28 20:29+0200\n"
+"PO-Revision-Date: 2004-06-20 13:38+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to The GIMP !</big>"
 msgstr "<big>Üdvözli a GIMP!</big>"
 
@@ -64,7 +63,6 @@ msgstr ""
 "ismételje meg a Shift+kattintás műveletet."
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A Floating Selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
@@ -91,7 +89,6 @@ msgstr ""
 "GIMP-ből való kilépéskor a billentyűkombinációk elmentésre kerülnek."
 
 #: tips/gimp-tips.xml.in.h:9
-#, fuzzy
 msgid ""
 "Click and drag on a ruler to place a Guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -151,9 +148,10 @@ msgid ""
 "Nearly all image operations are performed by right-clicking on the image. "
 "And don't worry, you can undo most mistakes..."
 msgstr ""
+"A képműveletek menüje előhívható az egér jobb gombjával a képre történő "
+"kattintással is. A legtöbb művelet visszavonható."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -225,7 +223,6 @@ msgstr ""
 "az \"Alfa-csatorna hozzáadása\" funkciót."
 
 #: tips/gimp-tips.xml.in.h:21
-#, fuzzy
 msgid ""
 "To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
 "select. To place a circle precisely, drag horizontal and vertical guides "
@@ -265,7 +262,6 @@ msgstr ""
 "elkészült, érdemes lehet elmenteni JPEG, PNG vagy esetleg GIF formátumban."
 
 #: tips/gimp-tips.xml.in.h:24
-#, fuzzy
 msgid ""
 "You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
 "makes the window move, your window manager uses the <tt>Alt</tt> key "
@@ -341,7 +337,6 @@ msgstr ""
 "menüvel."
 
 #: tips/gimp-tips.xml.in.h:32
-#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a perfect square or "
@@ -392,9 +387,3 @@ msgstr ""
 "sarkában levő \"QuickMask be-ki\" gombra, majd módosítsa a kijelölést a "
 "képre való rajzolással, ez után kattintson ismét a gombra - ezzel a rajz "
 "vissza lesz alakítva normál kijelöléssé."
-
-#~ msgid ""
-#~ "The GIMP can undo most changes to the image, so feel free to experiment."
-#~ msgstr ""
-#~ "A legtöbb képművelet visszavonható, tehát nyugodtan kísérletezhet a "
-#~ "programmal."
