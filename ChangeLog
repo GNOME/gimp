@@ -1,5 +1,15 @@
 2003-05-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-crop.c (gimp_image_crop)
+	* app/core/gimpimage-resize.c (gimp_image_resize)
+	* app/core/gimpimage-scale.c (gimp_image_scale):
+	don't #include "gimpchannel.h". Moved code around so they all do
+	their stuff in the same order (improves readability when comparing
+	the functions). Use GimpItem variables instead of GimpChannel or
+	GimpLayer ones. Lots of cleanup.
+
+2003-05-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-crop.c (gimp_image_crop): resize all vectors
 	here, too.
 

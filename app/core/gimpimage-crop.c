@@ -27,8 +27,6 @@
 #include "base/pixel-region.h"
 
 #include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
 #include "gimpimage-guides.h"
@@ -61,27 +59,21 @@ typedef AutoCropType   (* ColorsEqualFunc) (guchar      *,
 
 /*  local function prototypes  */
 
-static void           gimp_image_crop_adjust_guides (GimpImage    *gimage,
-						     gint          x1,
-						     gint          y1,
-						     gint          x2,
-						     gint          y2);
-
-static AutoCropType   gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
-						     GetColorFunc  get_color_func,
-						     gint          bytes,
-						     gboolean      has_alpha,
-						     guchar       *color,
-						     gint          x1, 
-						     gint          x2, 
-						     gint          y1, 
-						     gint          y2);
-static gint           gimp_image_crop_colors_equal  (guchar       *col1,
-						     guchar       *col2,
-						     gint          bytes);
-static gint           gimp_image_crop_colors_alpha  (guchar       *col1,
-						     guchar       *col2,
-						     gint          bytes);
+static AutoCropType gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,
+                                                   GetColorFunc  get_color_func,
+                                                   gint          bytes,
+                                                   gboolean      has_alpha,
+                                                   guchar       *color,
+                                                   gint          x1, 
+                                                   gint          x2, 
+                                                   gint          y1, 
+                                                   gint          y2);
+static gint         gimp_image_crop_colors_equal  (guchar       *col1,
+                                                   guchar       *col2,
+                                                   gint          bytes);
+static gint         gimp_image_crop_colors_alpha  (guchar       *col1,
+                                                   guchar       *col2,
+                                                   gint          bytes);
 
 
 /*  public functions  */
@@ -95,153 +87,187 @@ gimp_image_crop (GimpImage *gimage,
 		 gboolean   active_layer_only,
 		 gboolean   crop_layers)
 {
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  GimpItem  *item;
-  GList     *list;
-  gint       width, height;
-  gint       lx1, ly1, lx2, ly2;
-  gint       off_x, off_y;
+  gint width, height;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   width  = x2 - x1;
   height = y2 - y1;
 
   /*  Make sure new width and height are non-zero  */
-  if (width && height)
+  if (width < 1 || height < 1)
+    return;
+
+  gimp_set_busy (gimage->gimp);
+
+  if (active_layer_only)
     {
-      gimp_set_busy (gimage->gimp);
+      GimpLayer *layer;
+      gint       off_x, off_y;
 
-      if (active_layer_only)
-	{
-	  gint doff_x, doff_y;
+      layer = gimp_image_get_active_layer (gimage);
 
-	  layer = gimp_image_get_active_layer (gimage);
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
-	  gimp_item_offsets (GIMP_ITEM (layer), &doff_x, &doff_y);
+      off_x -= x1;
+      off_y -= y1;
 
-	  off_x = (doff_x - x1);
-	  off_y = (doff_y - y1);
-
+      if (gimp_layer_is_floating_sel (layer))
+        {
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
                                        _("Resize Layer"));
 
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_relax (layer, TRUE);
+          floating_sel_relax (layer, TRUE);
+        }
 
-	  gimp_item_resize (GIMP_ITEM (layer), width, height, off_x, off_y);
+      gimp_item_resize (GIMP_ITEM (layer), width, height, off_x, off_y);
 
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_rigor (layer, TRUE);
+      if (gimp_layer_is_floating_sel (layer))
+        {
+          floating_sel_rigor (layer, TRUE);
 
-	  gimp_image_undo_group_end (gimage);
-	}
+          gimp_image_undo_group_end (gimage);
+        }
+    }
+  else
+    {
+      GimpLayer *floating_layer;
+      GimpItem  *item;
+      GList     *list;
+
+      floating_layer = gimp_image_floating_sel (gimage);
+
+      if (crop_layers)
+        gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CROP,
+                                     _("Crop Image"));
       else
-	{
-	  floating_layer = gimp_image_floating_sel (gimage);
+        gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_RESIZE,
+                                     _("Resize Image"));
 
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CROP,
-                                       _("Crop Image"));
+      /*  relax the floating layer  */
+      if (floating_layer)
+        floating_sel_relax (floating_layer, TRUE);
 
-	  /*  relax the floating layer  */
-	  if (floating_layer)
-	    floating_sel_relax (floating_layer, TRUE);
+      /*  Push the image size to the stack  */
+      gimp_image_undo_push_image_size (gimage, NULL);
 
-	  /*  Push the image size to the stack  */
-	  gimp_image_undo_push_image_size (gimage, NULL);
+      /*  Set the new width and height  */
+      gimage->width  = width;
+      gimage->height = height;
 
-	  /*  Set the new width and height  */
-	  gimage->width  = width;
-	  gimage->height = height;
+      /*  Resize all channels  */
+      for (list = GIMP_LIST (gimage->channels)->list;
+           list;
+           list = g_list_next (list))
+        {
+          item = (GimpItem *) list->data;
 
-	  /*  Resize all channels  */
-	  for (list = GIMP_LIST (gimage->channels)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      item = (GimpItem *) list->data;
+          gimp_item_resize (item, width, height, -x1, -y1);
+        }
 
-	      gimp_item_resize (item, width, height, -x1, -y1);
-	    }
+      /*  Resize all vectors  */
+      for (list = GIMP_LIST (gimage->vectors)->list;
+           list;
+           list = g_list_next (list))
+        {
+          item = (GimpItem *) list->data;
 
-	  /*  Resize all vectors  */
-	  for (list = GIMP_LIST (gimage->vectors)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      item = (GimpItem *) list->data;
+          gimp_item_resize (item, width, height, -x1, -y1);
+        }
 
-	      gimp_item_resize (item, width, height, -x1, -y1);
-	    }
+      /*  Don't forget the selection mask!  */
+      gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
+                        width, height, -x1, -y1);
+      gimp_image_mask_invalidate (gimage);
 
-	  /*  Don't forget the selection mask!  */
-	  gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
-                            width, height, -x1, -y1);
-	  gimp_image_mask_invalidate (gimage);
+      /*  crop all layers  */
+      list = GIMP_LIST (gimage->layers)->list;
 
-	  /*  crop all layers  */
-	  list = GIMP_LIST (gimage->layers)->list;
+      while (list)
+        {
+          item = (GimpItem *) list->data;
 
-	  while (list)
-	    {
-	      GList *next;
+          list = g_list_next (list);
 
-	      layer = (GimpLayer *) list->data;
+          gimp_item_translate (item, -x1, -y1, TRUE);
 
-	      next = g_list_next (list);
+          if (crop_layers)
+            {
+              gint off_x, off_y;
+              gint lx1, ly1, lx2, ly2;
 
-	      gimp_item_translate (GIMP_ITEM (layer), -x1, -y1, TRUE);
+              gimp_item_offsets (item, &off_x, &off_y);
 
-	      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+              lx1 = CLAMP (off_x, 0, gimage->width);
+              ly1 = CLAMP (off_y, 0, gimage->height);
+              lx2 = CLAMP (gimp_item_width  (item) + off_x,
+                           0, gimage->width);
+              ly2 = CLAMP (gimp_item_height (item) + off_y,
+                           0, gimage->height);
 
-	      if (crop_layers)
-		{
-		  lx1 = CLAMP (off_x, 0, gimage->width);
-		  ly1 = CLAMP (off_y, 0, gimage->height);
-		  lx2 = CLAMP ((gimp_item_width (GIMP_ITEM (layer)) + off_x),
-			       0, gimage->width);
-		  ly2 = CLAMP ((gimp_item_height (GIMP_ITEM (layer)) + off_y),
-			       0, gimage->height);
-		  width = lx2 - lx1;
-		  height = ly2 - ly1;
+              width  = lx2 - lx1;
+              height = ly2 - ly1;
 
-		  if (width && height)
-		    gimp_item_resize (GIMP_ITEM (layer), width, height,
-                                      -(lx1 - off_x),
-                                      -(ly1 - off_y));
-		  else
-		    gimp_image_remove_layer (gimage, layer);
-		}
+              if (width > 0 && height > 0)
+                gimp_item_resize (item, width, height,
+                                  -(lx1 - off_x),
+                                  -(ly1 - off_y));
+              else
+                gimp_image_remove_layer (gimage, GIMP_LAYER (item));
+            }
+        }
 
-	      list = next;
-	    }
+      /*  Reposition or remove all guides  */
+      list = gimage->guides;
+      while (list)
+        {
+          GimpGuide *guide        = list->data;
+          gboolean   remove_guide = FALSE;
+          gint       new_position = guide->position;
 
-	  /*  Make sure the projection matches the gimage size  */
-	  gimp_image_projection_allocate (gimage);
+          list = g_list_next (list);
 
-	  /*  rigor the floating layer  */
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
+          switch (guide->orientation)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              new_position -= y1;
+              if ((guide->position < y1) || (guide->position > y2))
+                remove_guide = TRUE;
+              break;
 
-	  /* Adjust any guides we might have laying about */
-	  gimp_image_crop_adjust_guides (gimage, x1, y1, x2, y2);
+            case GIMP_ORIENTATION_VERTICAL:
+              new_position -= x1;
+              if ((guide->position < x1) || (guide->position > x2))
+                remove_guide = TRUE;
+              break;
 
-	  gimp_image_undo_group_end (gimage);
-  	}
+            default:
+              break;
+            }
 
-      gimp_image_update (gimage,
-                         0, 0,
-                         gimage->width,
-                         gimage->height);
+          if (remove_guide)
+            gimp_image_remove_guide (gimage, guide, TRUE);
+          else if (new_position != guide->position)
+            gimp_image_move_guide (gimage, guide, new_position, TRUE);
+        }
+
+      /*  Make sure the projection matches the gimage size  */
+      gimp_image_projection_allocate (gimage);
+
+      /*  rigor the floating layer  */
+      if (floating_layer)
+        floating_sel_rigor (floating_layer, TRUE);
+
+      gimp_image_undo_group_end (gimage);
+
+      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
       gimp_image_mask_changed (gimage);
-
-      gimp_unset_busy (gimage->gimp);
     }
+
+  gimp_unset_busy (gimage->gimp);
 }
 
 gboolean
@@ -395,63 +421,6 @@ gimp_image_crop_auto_shrink (GimpImage *gimage,
 
 
 /*  private functions  */
-
-static void
-gimp_image_crop_adjust_guides (GimpImage *gimage,
-			       gint       x1,
-			       gint       y1,
-			       gint       x2,
-			       gint       y2)
-
-{
-  GList *list;
-
-  list = gimage->guides;
-  while (list)
-    {
-      GimpGuide *guide        = list->data;
-      gboolean   remove_guide = FALSE;
-
-      list = g_list_next (list);
-
-      switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
-	  if ((guide->position < y1) || (guide->position > y2))
-	    remove_guide = TRUE;
-	  break;
-
-	case GIMP_ORIENTATION_VERTICAL:
-	  if ((guide->position < x1) || (guide->position > x2))
-	    remove_guide = TRUE;
-	  break;
-
-	default:
-	  break;
-	}
-
-      if (remove_guide)
-	{
-          gimp_image_remove_guide (gimage, guide, TRUE);
-	}
-      else
-	{
-          switch (guide->orientation)
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              gimp_image_move_guide (gimage, guide, guide->position - y1, TRUE);
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              gimp_image_move_guide (gimage, guide, guide->position - x1, TRUE);
-              break;
-
-            default:
-              break;
-            }
-	}
-    }
-}
 
 static AutoCropType
 gimp_image_crop_guess_bgcolor (GObject      *get_color_obj,

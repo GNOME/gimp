@@ -23,7 +23,6 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
@@ -45,21 +44,18 @@ gimp_image_scale (GimpImage             *gimage,
                   GimpProgressFunc       progress_func,
                   gpointer               progress_data)
 {
-  GimpItem    *item;
-  GimpLayer   *layer;
-  GimpLayer   *floating_layer;
-  GList       *list;
-  GSList      *remove = NULL;
-  GSList      *slist;
-  GimpGuide   *guide;
-  gint         old_width;
-  gint         old_height;
-  gdouble      img_scale_w = 1.0;
-  gdouble      img_scale_h = 1.0;
-  gint         num_channels;
-  gint         num_layers;
-  gint         num_vectors;
-  gint         progress_current = 1;
+  GimpLayer *floating_layer;
+  GimpItem  *item;
+  GList     *list;
+  GList     *remove = NULL;
+  gint       old_width;
+  gint       old_height;
+  gdouble    img_scale_w = 1.0;
+  gdouble    img_scale_h = 1.0;
+  gint       num_channels;
+  gint       num_layers;
+  gint       num_vectors;
+  gint       progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -102,11 +98,9 @@ gimp_image_scale (GimpImage             *gimage,
       gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
 
       if (progress_func)
-        {
-          (* progress_func) (0, num_vectors + num_channels + num_layers,
-                             progress_current++,
-                             progress_data);
-        }
+        (* progress_func) (0, num_vectors + num_channels + num_layers,
+                           progress_current++,
+                           progress_data);
     }
 
   /*  Scale all vectors  */
@@ -119,19 +113,12 @@ gimp_image_scale (GimpImage             *gimage,
       gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
 
       if (progress_func)
-        {
-          (* progress_func) (0, num_vectors + num_channels + num_layers,
-                             progress_current++,
-                             progress_data);
-        }
+        (* progress_func) (0, num_vectors + num_channels + num_layers,
+                           progress_current++,
+                           progress_data);
     }
 
   /*  Don't forget the selection mask!  */
-  /*  if (channel_is_empty(gimage->selection_mask))
-        gimp_channel_resize(gimage->selection_mask, new_width, new_height, 0, 0)
-      else
-  */
-
   gimp_item_scale (GIMP_ITEM (gimage->selection_mask), new_width, new_height,
                    0, 0, interpolation_type);
   gimp_image_mask_invalidate (gimage);
@@ -148,34 +135,36 @@ gimp_image_scale (GimpImage             *gimage,
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented
-	   * here. Upstream warning implemented in resize_check_layer_scaling()
-	   * [resize.c line 1295], which offers the user the chance to bail out.
+	   * here. Upstream warning implemented in resize_check_layer_scaling(),
+	   * which offers the user the chance to bail out.
 	   */
-          remove = g_slist_append (remove, item);
+          remove = g_list_prepend (remove, item);
         }
 
       if (progress_func)
-        {
-          (* progress_func) (0, num_vectors + num_channels + num_layers,
-                             progress_current++,
-                             progress_data);
-        }
+        (* progress_func) (0, num_vectors + num_channels + num_layers,
+                           progress_current++,
+                           progress_data);
     }
 
   /* We defer removing layers lost to scaling until now so as not to mix
    * the operations of iterating over and removal from gimage->layers.
-   */  
-  for (slist = remove; slist; slist = g_slist_next (slist))
+   */
+  remove = g_list_reverse (remove);
+
+  for (list = remove; list; list = g_list_next (list))
     {
-      layer = slist->data;
+      GimpLayer *layer = list->data;
+
       gimp_image_remove_layer (gimage, layer);
     }
-  g_slist_free (remove);
 
-  /*  Scale any Guides  */
+  g_list_free (remove);
+
+  /*  Scale all Guides  */
   for (list = gimage->guides; list; list = g_list_next (list))
     {
-      guide = (GimpGuide *) list->data;
+      GimpGuide *guide = list->data;
 
       switch (guide->orientation)
 	{
@@ -190,7 +179,7 @@ gimp_image_scale (GimpImage             *gimage,
 	  break;
 
 	default:
-	  g_error("Unknown guide orientation II.\n");
+          break;
 	}
     }
 
@@ -235,9 +224,7 @@ gimp_image_check_scaling (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      GimpItem *item;
-
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       if (! gimp_item_check_scaling (item, new_width, new_height))
 	return FALSE;

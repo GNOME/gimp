@@ -23,7 +23,6 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-mask.h"
@@ -71,8 +70,8 @@ gimp_image_resize (GimpImage *gimage,
   gimage->height = new_height;
 
   /*  Resize all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       GimpItem *item = list->data;
@@ -81,47 +80,13 @@ gimp_image_resize (GimpImage *gimage,
     }
 
   /*  Resize all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
        list = g_list_next (list))
     {
       GimpItem *item = list->data;
 
       gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
-    }
-
-  /*  Reposition or remove any guides  */
-  list = gimage->guides;
-  while (list)
-    {
-      GimpGuide *guide        = list->data;
-      gboolean   remove_guide = FALSE;
-      gint       new_position = 0;
-
-      list = g_list_next (list);
-
-      switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
-          new_position = guide->position + offset_y;
-	  if (new_position < 0 || new_position > new_height)
-            remove_guide = TRUE;
-	  break;
-
-	case GIMP_ORIENTATION_VERTICAL:
-          new_position = guide->position + offset_x;
-	  if (new_position < 0 || new_position > new_width)
-            remove_guide = TRUE;
-	  break;
-
-	default:
-	  g_error ("Unknown guide orientation\n");
-	}
-
-      if (remove_guide)
-        gimp_image_remove_guide (gimage, guide, TRUE);
-      else
-        gimp_image_move_guide (gimage, guide, new_position, TRUE);
     }
 
   /*  Don't forget the selection mask!  */
@@ -130,13 +95,47 @@ gimp_image_resize (GimpImage *gimage,
   gimp_image_mask_invalidate (gimage);
 
   /*  Reposition all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      GimpItem *item = list->data;
 
-      gimp_item_translate (GIMP_ITEM (layer), offset_x, offset_y, TRUE);
+      gimp_item_translate (item, offset_x, offset_y, TRUE);
+    }
+
+  /*  Reposition or remove all guides  */
+  list = gimage->guides;
+  while (list)
+    {
+      GimpGuide *guide        = list->data;
+      gboolean   remove_guide = FALSE;
+      gint       new_position = guide->position;
+
+      list = g_list_next (list);
+
+      switch (guide->orientation)
+	{
+	case GIMP_ORIENTATION_HORIZONTAL:
+          new_position += offset_y;
+	  if (new_position < 0 || new_position > new_height)
+            remove_guide = TRUE;
+	  break;
+
+	case GIMP_ORIENTATION_VERTICAL:
+          new_position += offset_x;
+	  if (new_position < 0 || new_position > new_width)
+            remove_guide = TRUE;
+	  break;
+
+	default:
+          break;
+	}
+
+      if (remove_guide)
+        gimp_image_remove_guide (gimage, guide, TRUE);
+      else if (new_position != guide->position)
+        gimp_image_move_guide (gimage, guide, new_position, TRUE);
     }
 
   /*  Make sure the projection matches the gimage size  */
