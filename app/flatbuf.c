@@ -195,7 +195,7 @@ flatbuf_height  (
 }
 
 
-void 
+guint
 flatbuf_ref  (
               FlatBuf * f,
               int x,
@@ -207,6 +207,7 @@ flatbuf_ref  (
     {
       /* swap in */
     }
+  return FALSE;
 }
 
 
@@ -222,6 +223,19 @@ flatbuf_unref  (
     {
       /* swap out */
     }
+}
+
+
+void 
+flatbuf_init  (
+               FlatBuf * f,
+               FlatBuf * src,
+               int x,
+               int y
+               )
+{
+  /* the only time new store is allocated is in flatbuf_new(), and it
+     is init'ed there, so we have nothing to do */
 }
 
 

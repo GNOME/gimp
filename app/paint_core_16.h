@@ -107,6 +107,7 @@ struct _tool *     paint_core_16_new             (int type);
 
 void               paint_core_16_free            (struct _tool *);
 
+
 /* high level tool control functions */
 int                paint_core_16_init            (PaintCore16 *,
                                                   struct _GimpDrawable *,
@@ -123,35 +124,35 @@ void               paint_core_16_finish          (PaintCore16 *,
 void               paint_core_16_cleanup         (void);
 
 
-/* get scratchpad area for paint hit */
-struct _Canvas *   paint_core_16_get_paint_area  (PaintCore16 *,
+
+/* painthit buffer functions */
+struct _Canvas *   paint_core_16_area            (PaintCore16 *,
                                                   struct _GimpDrawable *);
 
-
-/* used only by clone.c to get unmodified image area */
-struct _Canvas *   paint_core_16_get_orig_image  (PaintCore16 *,
+struct _Canvas *   paint_core_16_area_original   (PaintCore16 *,
                                                   struct _GimpDrawable *,
                                                   int x1,
                                                   int y1,
                                                   int x2,
                                                   int y2);
 
-/* apply paint hit to image */
-void               paint_core_16_paste_canvas    (PaintCore16 *,
+void               paint_core_16_area_paste      (PaintCore16 *,
                                                   struct _GimpDrawable *,
-                                                  Paint *brush_opacity,
+                                                  Paint * brush_opacity,
                                                   Paint * image_opacity,
-                                                  int paint_mode,
                                                   BrushHardness brush_hardness,
-                                                  ApplyMode apply_mode);
+                                                  ApplyMode apply_mode,
+                                                  int paint_mode
+                                                  );
 
-/* used only by convolve.c to apply paint hit */
-void               paint_core_16_replace_canvas  (PaintCore16 *,\
+void               paint_core_16_area_replace    (PaintCore16 *,
                                                   struct _GimpDrawable *,
                                                   Paint * brush_opacity,
                                                   Paint * image_opacity,
                                                   BrushHardness brush_hardness,
                                                   ApplyMode apply_mode);
+
+
 
 
 

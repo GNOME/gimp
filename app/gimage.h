@@ -26,6 +26,11 @@
 #include "temp_buf.h"
 #include "tile_manager.h"
 
+struct _PixelArea;
+struct _Paint;
+struct _Canvas;
+
+
 /* the image types */
 #define RGB_GIMAGE       0
 #define RGBA_GIMAGE      1
@@ -163,10 +168,22 @@ GImage *        gimage_get_ID                 (int);
 TileManager *   gimage_shadow                 (GImage *, int, int, int);
 void            gimage_free_shadow            (GImage *);
 void            gimage_delete                 (GImage *);
-void            gimage_apply_image            (GImage *, GimpDrawable *, PixelRegion *, int, int, int,
+
+void            gimage_apply_image            (GImage *, GimpDrawable *,
+                                               PixelRegion *, int, int, int,
 					       TileManager *, int, int);
-void            gimage_replace_image          (GImage *, GimpDrawable *, PixelRegion *, int, int,
+void            gimage_apply_painthit         (GImage *, GimpDrawable *,
+                                               struct _PixelArea *, int undo,
+                                               struct _Paint *, int mode,
+                                               struct _Canvas *, int x, int y);
+void            gimage_replace_image          (GImage *, GimpDrawable *,
+                                               PixelRegion *, int, int,
 					       PixelRegion *, int, int);
+void            gimage_replace_painthit       (GImage *, GimpDrawable *,
+                                               struct _PixelArea *, int undo,
+                                               struct _Paint *, struct _PixelArea *,
+                                               int x, int y);
+
 void            gimage_get_foreground         (GImage *, GimpDrawable *, unsigned char *);
 void            gimage_get_background         (GImage *, GimpDrawable *, unsigned char *);
 void            gimage_get_color              (GImage *, int, unsigned char *,

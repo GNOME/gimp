@@ -41,8 +41,9 @@ Alpha            tilebuf_set_alpha      (TileBuf *, Alpha);
 guint            tilebuf_width          (TileBuf *);
 guint            tilebuf_height         (TileBuf *);
 
-void             tilebuf_ref            (TileBuf *, int x, int y);
+guint            tilebuf_ref            (TileBuf *, int x, int y);
 void             tilebuf_unref          (TileBuf *, int x, int y);
+void             tilebuf_init           (TileBuf *, TileBuf *, int x, int y);
 guchar *         tilebuf_data           (TileBuf *, int x, int y);
 int              tilebuf_rowstride      (TileBuf *, int x, int y);
 guint            tilebuf_portion_width  (TileBuf *, int x, int y);

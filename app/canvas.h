@@ -53,8 +53,9 @@ Tiling         canvas_set_tiling     (Canvas *, Tiling);
 int            canvas_width          (Canvas *);
 int            canvas_height         (Canvas *);
 
-void           canvas_ref            (Canvas *, int x, int y);
+guint          canvas_ref            (Canvas *, int x, int y);
 void           canvas_unref          (Canvas *, int x, int y);
+void           canvas_init           (Canvas *, Canvas *, int x, int y);
 guchar *       canvas_data           (Canvas *, int x, int y);
 int            canvas_rowstride      (Canvas *, int x, int y);
 int            canvas_portion_width  (Canvas *, int x, int y);

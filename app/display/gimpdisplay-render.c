@@ -4988,6 +4988,7 @@ render_image_init_info (RenderInfo *info,
   info->src_x = UNSCALE (gdisp, info->x);
   info->src_y = UNSCALE (gdisp, info->y);
   info->src_bpp = gimage_projection_bytes (gdisp->gimage);
+  info->src_precision = PRECISION_U8;
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();

@@ -41,6 +41,10 @@
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
 
+#include "paint.h"
+#include "canvas.h"
+#include "pixelarea.h"
+
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
 static void     gimage_allocate_shadow       (GImage *, int, int, int);
@@ -588,6 +592,103 @@ gimage_apply_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
 		     opacity, mode, active, operation);
 }
 
+
+void 
+gimage_apply_painthit  (
+                        GImage * gimage,
+                        GimpDrawable * drawable,
+                        PixelArea * src2PR,
+                        int undo,
+                        Paint * opacity,
+                        int mode,
+                        Canvas * src1_tiles,
+                        int x,
+                        int y
+                        )
+{
+#if 0
+  Channel * mask;
+  int x1, y1, x2, y2;
+  int offset_x, offset_y;
+  PixelRegion src1PR, destPR, maskPR;
+  int operation;
+  int active [MAX_CHANNELS];
+
+  /*  get the selection mask if one exists  */
+  mask = (gimage_mask_is_empty (gimage)) ?
+    NULL : gimage_get_mask (gimage);
+
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable, active);
+
+  /*  determine what sort of operation is being attempted and
+   *  if it's actually legal...
+   */
+  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  if (operation == -1)
+    {
+      warning ("gimage_apply_image sent illegal parameters\n");
+      return;
+    }
+
+  /*  get the layer offsets  */
+  drawable_offsets (drawable, &offset_x, &offset_y);
+
+  /*  make sure the image application coordinates are within gimage bounds  */
+  x1 = CLAMP (x, 0, drawable_width (drawable));
+  y1 = CLAMP (y, 0, drawable_height (drawable));
+  x2 = CLAMP (x + src2PR->w, 0, drawable_width (drawable));
+  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
+
+  if (mask)
+    {
+      /*  make sure coordinates are in mask bounds ...
+       *  we need to add the layer offset to transform coords
+       *  into the mask coordinate system
+       */
+      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y1 = CLAMP (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y2 = CLAMP (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+    }
+
+  /*  If the calling procedure specified an undo step...  */
+  if (undo)
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+
+  /* configure the pixel regions
+   *  If an alternative to using the drawable's data as src1 was provided...
+   */
+  if (src1_tiles)
+    pixel_region_init (&src1PR, src1_tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  else
+    pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+
+  if (mask)
+    {
+      int mx, my;
+
+      /*  configure the mask pixel region
+       *  don't use x1 and y1 because they are in layer
+       *  coordinate system.  Need mask coordinate system
+       */
+      mx = x1 + offset_x;
+      my = y1 + offset_y;
+
+      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
+      combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
+		       opacity, mode, active, operation);
+    }
+  else
+    combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
+		     opacity, mode, active, operation);
+#endif
+}
+
+
+
 /* Similar to gimage_apply_image but works in "replace" mode (i.e.
    transparent pixels in src2 make the result transparent rather
    than opaque.
@@ -707,6 +808,132 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
     combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
 		     opacity, active, operation);
 }
+
+
+
+void 
+gimage_replace_painthit  (
+                          GImage * gimage,
+                          GimpDrawable * drawable,
+                          PixelArea * src2PR,
+                          int undo,
+                          Paint * opacity,
+                          PixelArea * maskPR,
+                          int x,
+                          int y
+                          )
+{
+#if 0
+  Channel * mask;
+  int x1, y1, x2, y2;
+  int offset_x, offset_y;
+  PixelRegion src1PR, destPR;
+  PixelRegion mask2PR, tempPR;
+  unsigned char *temp_data;
+  int operation;
+  int active [MAX_CHANNELS];
+
+  /*  get the selection mask if one exists  */
+  mask = (gimage_mask_is_empty (gimage)) ?
+    NULL : gimage_get_mask (gimage);
+
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable, active);
+
+  /*  determine what sort of operation is being attempted and
+   *  if it's actually legal...
+   */
+  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  if (operation == -1)
+    {
+      warning ("gimage_apply_image sent illegal parameters\n");
+      return;
+    }
+
+  /*  get the layer offsets  */
+  drawable_offsets (drawable, &offset_x, &offset_y);
+
+  /*  make sure the image application coordinates are within gimage bounds  */
+  x1 = CLAMP (x, 0, drawable_width (drawable));
+  y1 = CLAMP (y, 0, drawable_height (drawable));
+  x2 = CLAMP (x + src2PR->w, 0, drawable_width (drawable));
+  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
+
+  if (mask)
+    {
+      /*  make sure coordinates are in mask bounds ...
+       *  we need to add the layer offset to transform coords
+       *  into the mask coordinate system
+       */
+      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y1 = CLAMP (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y2 = CLAMP (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+    }
+
+  /*  If the calling procedure specified an undo step...  */
+  if (undo)
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+
+  /* configure the pixel regions
+   *  If an alternative to using the drawable's data as src1 was provided...
+   */
+  pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+
+  if (mask)
+    {
+      int mx, my;
+
+      /*  configure the mask pixel region
+       *  don't use x1 and y1 because they are in layer
+       *  coordinate system.  Need mask coordinate system
+       */
+      mx = x1 + offset_x;
+      my = y1 + offset_y;
+
+      pixel_region_init (&mask2PR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
+
+      tempPR.bytes = 1;
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.rowstride = mask2PR.rowstride;
+      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
+      tempPR.data = temp_data;
+
+      copy_region (&mask2PR, &tempPR);
+
+      /* apparently, region operations can mutate some PR data. */
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
+
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
+		       opacity, active, operation);
+
+      g_free (temp_data);
+    }
+  else
+    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
+		     opacity, active, operation);
+#endif
+}
+
+
+
 
 
 void

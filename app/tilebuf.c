@@ -208,13 +208,14 @@ tilebuf_height  (
 }
 
 
-void 
+guint 
 tilebuf_ref  (
               TileBuf * t,
               int x,
               int y
               )
 {
+  guint rc = FALSE;
   int i = tile16_index(t, x, y);
   if (i >= 0)
     {
@@ -239,9 +240,11 @@ tilebuf_ref  (
               tile->valid = TRUE;
               tile->data = g_new (guchar, n);
               memset (tile->data, 0, n);
+              rc = TRUE;
             }
         }
     }
+  return rc;
 }
 
 
@@ -266,6 +269,35 @@ tilebuf_unref  (
         }
     }
 }
+
+
+void 
+tilebuf_init  (
+               TileBuf * t,
+               TileBuf * src,
+               int x,
+               int y
+               )
+{
+  int src_index = tile16_index(src, x, y);
+  int dst_index = tile16_index(t, x, y);
+
+  if ((src_index >= 0) && (dst_index >= 0))
+    {
+      Tile16 * st = &src->tiles[src_index];
+      Tile16 * dt = &t->tiles[dst_index];
+
+      if (dt->data && st->data)
+        {
+          int len =
+            TILE16_WIDTH *
+            TILE16_HEIGHT *
+            tag_bytes (tilebuf_tag (t));
+          memcpy (dt->data, st->data, len);
+        }
+    }
+}
+
 
 
 

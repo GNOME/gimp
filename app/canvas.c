@@ -81,11 +81,14 @@ canvas_delete  (
                 Canvas * c
                 )
 {
-  if (c->tile_data)
-    tilebuf_delete (c->tile_data);
-  if (c->flat_data)
-    flatbuf_delete (c->flat_data);
-  g_free (c);
+  if (c)
+    {
+      if (c->tile_data)
+        tilebuf_delete (c->tile_data);
+      if (c->flat_data)
+        flatbuf_delete (c->flat_data);
+      g_free (c);
+    }
 }
 
 
@@ -94,17 +97,21 @@ canvas_clone  (
                Canvas * c
                )
 {
-  Canvas *new_c;
+  if (c)
+    {
+      Canvas *new_c;
 
-  new_c = (Canvas *) g_malloc (sizeof (Canvas));
+      new_c = (Canvas *) g_malloc (sizeof (Canvas));
 
-  new_c->tiling = c->tiling;
-  if (c->tile_data)
-    new_c->tile_data = tilebuf_clone (c->tile_data);
-  if (c->flat_data)
-    new_c->flat_data = flatbuf_clone (c->flat_data);
-
-  return new_c;
+      new_c->tiling = c->tiling;
+      if (c->tile_data)
+        new_c->tile_data = tilebuf_clone (c->tile_data);
+      if (c->flat_data)
+        new_c->flat_data = flatbuf_clone (c->flat_data);
+      
+      return new_c;
+    }
+  return NULL;
 }
 
 
@@ -113,12 +120,13 @@ canvas_tag  (
              Canvas * c
              )
 {
-  if (c->tile_data)
-    return tilebuf_tag (c->tile_data);
-  else if (c->flat_data)
-    return flatbuf_tag (c->flat_data);
-  else
-    return tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE);
+  if (c)
+    if (c->tile_data)
+      return tilebuf_tag (c->tile_data);
+    else if (c->flat_data)
+      return flatbuf_tag (c->flat_data);
+
+  return tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE);
 }
 
 
@@ -154,7 +162,9 @@ canvas_tiling  (
                 Canvas * c
                 )
 {
-  return c->tiling;
+  if (c)
+    return c->tiling;
+  return TILING_NONE;
 }
 
 
@@ -207,12 +217,13 @@ canvas_width  (
                Canvas * c
                )
 {
-  if (c->tile_data)
-    return tilebuf_width (c->tile_data);
-  else if (c->flat_data)
-    return flatbuf_width (c->flat_data);
-  else
-    return 0;
+  if (c)
+    if (c->tile_data)
+      return tilebuf_width (c->tile_data);
+    else if (c->flat_data)
+      return flatbuf_width (c->flat_data);
+
+  return 0;
 }
 
 
@@ -221,26 +232,30 @@ canvas_height  (
                 Canvas * c
                 )
 {
-  if (c->tile_data)
-    return tilebuf_height (c->tile_data);
-  else if (c->flat_data)
-    return flatbuf_height (c->flat_data);
-  else
-    return 0;
+  if (c)
+    if (c->tile_data)
+      return tilebuf_height (c->tile_data);
+    else if (c->flat_data)
+      return flatbuf_height (c->flat_data);
+
+  return 0;
 }
 
 
-void 
+guint
 canvas_ref  (
              Canvas * c,
              int x,
              int y
              )
 {
-  if (c->tile_data)
-    tilebuf_ref (c->tile_data, x, y);
-  else if (c->flat_data)
-    flatbuf_ref (c->flat_data, x, y);
+  if (c)
+    if (c->tile_data)
+      return tilebuf_ref (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_ref (c->flat_data, x, y);
+
+  return FALSE;
 }
 
 
@@ -251,10 +266,27 @@ canvas_unref  (
                int y
                )
 {
-  if (c->tile_data)
-    tilebuf_unref (c->tile_data, x, y);
-  else if (c->flat_data)
-    flatbuf_unref (c->flat_data, x, y);
+  if (c)
+    if (c->tile_data)
+      tilebuf_unref (c->tile_data, x, y);
+    else if (c->flat_data)
+      flatbuf_unref (c->flat_data, x, y);
+}
+
+
+void
+canvas_init  (
+              Canvas * c,
+              Canvas * src,
+              int x,
+              int y
+              )
+{
+  if (c && src)
+    if ((c->tile_data) && (src->tile_data))
+      tilebuf_init (c->tile_data, src->tile_data, x, y);
+    else if ((c->flat_data) && (src->flat_data))
+      flatbuf_init (c->flat_data, src->flat_data, x, y);
 }
 
 
@@ -265,12 +297,13 @@ canvas_data  (
               int y
               )
 {
-  if (c->tile_data)
-    return tilebuf_data (c->tile_data, x, y);
-  else if (c->flat_data)
-    return flatbuf_data (c->flat_data, x, y);
-  else
-    return NULL;
+  if (c)
+    if (c->tile_data)
+      return tilebuf_data (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_data (c->flat_data, x, y);
+
+  return NULL;
 }
 
 
@@ -281,12 +314,13 @@ canvas_rowstride  (
                    int y
                    )
 {
-  if (c->tile_data)
-    return tilebuf_rowstride (c->tile_data, x, y);
-  else if (c->flat_data)
-    return flatbuf_rowstride (c->flat_data, x, y);
-  else
-    return 0;
+  if (c)
+    if (c->tile_data)
+      return tilebuf_rowstride (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_rowstride (c->flat_data, x, y);
+
+  return 0;
 }
 
 
@@ -297,12 +331,13 @@ canvas_portion_width  (
                        int y
                        )
 {
-  if (c->tile_data)
-    return tilebuf_portion_width (c->tile_data, x, y);
-  else if (c->flat_data)
-    return flatbuf_portion_width (c->flat_data, x, y);
-  else
-    return 0;
+  if (c)
+    if (c->tile_data)
+      return tilebuf_portion_width (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_width (c->flat_data, x, y);
+
+  return 0;
 }
 
 
@@ -313,36 +348,13 @@ canvas_portion_height  (
                         int y
                         )
 {
-  if (c->tile_data)
-    return tilebuf_portion_height (c->tile_data, x, y);
-  else if (c->flat_data)
-    return flatbuf_portion_height (c->flat_data, x, y);
-  else
-    return 0;
-}
-
-
-
-/* make this go away */
-Canvas * 
-canvas_realloc  (
-                 Canvas * c,
-                 Tag tag,
-                 int w,
-                 int h,
-                 Tiling tiling
-                 )
-{
   if (c)
-    {
-      if ((tag_equal (canvas_tag (c), tag)) &&
-          (canvas_width (c) == w) &&
-          (canvas_height (c) == h) &&
-          (canvas_tiling (c) == tiling))
-        return c;
-      canvas_delete (c);
-    }
-  return canvas_new (tag, w, h, tiling);
+    if (c->tile_data)
+      return tilebuf_portion_height (c->tile_data, x, y);
+    else if (c->flat_data)
+      return flatbuf_portion_height (c->flat_data, x, y);
+
+  return 0;
 }
 
 

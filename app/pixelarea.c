@@ -55,6 +55,7 @@ void
 pixelarea_init  (
                  PixelArea * pa,
                  Canvas * c,
+                 Canvas * init,
                  int x,
                  int y,
                  int w,
@@ -76,11 +77,10 @@ pixelarea_init  (
     pa->h = h;
 
   pa->canvas = c;
+  pa->init = init;
   pa->dirty = will_dirty;
   pa->startx = x;
   pa->starty = y;
-
-  /* pixelarea_ref (pa); */
 }
 
 
@@ -214,8 +214,8 @@ pixelarea_height  (
 
 int 
 pixelarea_x  (
-                  PixelArea * pa
-                  )
+              PixelArea * pa
+              )
 {
   return pa->x;
 }
@@ -223,36 +223,36 @@ pixelarea_x  (
 
 int 
 pixelarea_y  (
-                  PixelArea * pa
-                  )
+              PixelArea * pa
+              )
 {
   return pa->y;
 }
 
 
 guchar * 
-pixelarea_data  (
-                 PixelArea * pa
-                 )
+pixelarea_data (
+                PixelArea * pa
+                )
 {
   return canvas_data (pa->canvas, pa->x, pa->y);
 }
 
 
 int 
-pixelarea_rowstride  (
-                      PixelArea * pa
-                      )
+pixelarea_rowstride (
+                     PixelArea * pa
+                     )
 {
   return canvas_rowstride (pa->canvas, pa->x, pa->y);
 }
 
 
 void *
-pixelarea_register  (
-                     int num_areas,
-                     ...
-                     )
+pixelarea_register (
+                    int num_areas,
+                    ...
+                    )
 {
   PixelAreaGroup *pag;
   va_list ap;
@@ -305,9 +305,9 @@ pixelarea_process  (
 
 
 void 
-pixelarea_process_stop  (
-                         void * x
-                         )
+pixelarea_process_stop (
+                        void * x
+                        )
 {
   PixelAreaGroup *pag = (PixelAreaGroup *) x;
   GList * list = pag->pixelareas;
@@ -332,7 +332,10 @@ pixelarea_ref (
                PixelArea * pa
                )
 {
-  canvas_ref (pa->canvas, pa->x, pa->y);
+  if (canvas_ref (pa->canvas, pa->x, pa->y) == TRUE)
+    {
+      canvas_init (pa->canvas, pa->init, pa->x, pa->y);
+    }
 }
 
 

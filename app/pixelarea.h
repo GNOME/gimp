@@ -34,6 +34,9 @@ struct _PixelArea
 {
   /* the image we're iterating over */
   struct _Canvas * canvas;
+
+  /* the Canvas to init new storage from */
+  struct _Canvas * init;
   
   /* the current area */
   int   x, y;
@@ -50,15 +53,20 @@ struct _PixelArea
 
 
 /*  PixelArea functions  */
-void              pixelarea_init          (PixelArea *, struct _Canvas *,
+void              pixelarea_init          (PixelArea *,
+                                           struct _Canvas *, struct _Canvas *,
                                            int x, int y, int w, int h,
                                            int will_dirty);
 
 void              pixelarea_getdata       (PixelArea *, struct _PixelRow *, int);
-void              pixelarea_copy_row ( PixelArea *, struct _PixelRow *, int, int, int, int);
-void              pixelarea_copy_col ( PixelArea *, struct _PixelRow *, int, int, int, int);
-void              pixelarea_write_row ( PixelArea *, struct _PixelRow *, int, int, int);
-void              pixelarea_write_col ( PixelArea *, struct _PixelRow *, int, int, int);
+void              pixelarea_copy_row      (PixelArea *, struct _PixelRow *,
+                                           int, int, int, int);
+void              pixelarea_copy_col      (PixelArea *, struct _PixelRow *,
+                                           int, int, int, int);
+void              pixelarea_write_row     (PixelArea *, struct _PixelRow *,
+                                           int, int, int);
+void              pixelarea_write_col     (PixelArea *, struct _PixelRow *,
+                                           int, int, int);
 struct _Paint *   pixelarea_convert_paint (PixelArea *, struct _Paint *);
 
 Tag               pixelarea_tag           (PixelArea *);

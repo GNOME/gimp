@@ -41,8 +41,9 @@ Alpha          flatbuf_set_alpha      (FlatBuf *, Alpha);
 guint          flatbuf_width          (FlatBuf *);
 guint          flatbuf_height         (FlatBuf *);
 
-void           flatbuf_ref            (FlatBuf *, int x, int y);
+guint          flatbuf_ref            (FlatBuf *, int x, int y);
 void           flatbuf_unref          (FlatBuf *, int x, int y);
+void           flatbuf_init           (FlatBuf *, FlatBuf *, int x, int y);
 guchar *       flatbuf_data           (FlatBuf *, int x, int y);
 guint          flatbuf_rowstride      (FlatBuf *, int x, int y);
 guint          flatbuf_portion_width  (FlatBuf *, int x, int y);
