@@ -1,3 +1,8 @@
+2002-04-03  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/tools/Makefile.am
+	* plug-ins/tools/common/Makefile.am: make it work with automake 1.5
+
 2002-04-01  Nathan Summers  <rock@gimp.org>
 
 	* pretty much all files: One year of motif hacking has made me agree
