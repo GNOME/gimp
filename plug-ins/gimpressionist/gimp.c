@@ -196,7 +196,7 @@ run (const gchar      *name,
   /* Resources Cleanup */
   g_rand_free (random_generator);
   free_parsepath_cache();
-  reloadbrush(NULL, NULL);
+  brush_reload(NULL, NULL);
   preview_free_resources();
   brush_free();
   preset_free();

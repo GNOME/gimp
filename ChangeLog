@@ -1,3 +1,8 @@
+2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/*.[ch]: normalized some of brush.c's 
+	identifiers (= variable names and function name)
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-utils.c (gimp_g_value_get_memsize): handle NULL

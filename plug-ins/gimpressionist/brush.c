@@ -6,7 +6,6 @@
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -26,31 +25,31 @@
 
 
 
-static GtkWidget    *brushprev  = NULL;
-static GtkListStore *brushstore = NULL;
+static GtkWidget    *brush_preview  = NULL;
+static GtkListStore *brush_list_store = NULL;
 
-static GtkWidget *brushlist            = NULL;
-static GtkObject *brushreliefadjust    = NULL;
-static GtkObject *brushaspectadjust    = NULL;
-static GtkObject *brushgammaadjust     = NULL;
+static GtkWidget *brush_list            = NULL;
+static GtkObject *brush_relief_adjust    = NULL;
+static GtkObject *brush_aspect_adjust    = NULL;
+static GtkObject *brush_gamma_adjust     = NULL;
 
 static gchar *last_selected_brush = NULL;
 
-static gint brushfile = 2;
+static gint brush_from_file = 2;
 
 static ppm_t brushppm  = {0, 0, NULL};
 
 void brush_restore(void)
 {
-  reselect (brushlist, pcvals.selectedbrush);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushgammaadjust), pcvals.brushgamma);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushreliefadjust), pcvals.brushrelief);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT(brushaspectadjust), pcvals.brushaspect);
+  reselect (brush_list, pcvals.selectedbrush);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_gamma_adjust), pcvals.brushgamma);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_relief_adjust), pcvals.brushrelief);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_aspect_adjust), pcvals.brushaspect);
 }
 
 void brush_store(void)
 {
-  pcvals.brushgamma = GTK_ADJUSTMENT(brushgammaadjust)->value;
+  pcvals.brushgamma = GTK_ADJUSTMENT(brush_gamma_adjust)->value;
 }
 
 void brush_free(void)
@@ -60,13 +59,13 @@ void brush_free(void)
 
 void brush_get_selected (ppm_t *p)
 {
-  if(brushfile)
-    reloadbrush(pcvals.selectedbrush, p);
+  if(brush_from_file)
+    brush_reload(pcvals.selectedbrush, p);
   else
     copyppm(&brushppm, p);
 }
 
-static void  updatebrushprev (const char *fn);
+static void  update_brush_preview (const char *fn);
 
 static gboolean file_is_color (const char *fn)
 {
@@ -99,19 +98,19 @@ brushdmenuselect (GtkWidget *widget,
   if (id == -1)
     return;
 
-  if (brushfile == 2)
+  if (brush_from_file == 2)
     return; /* Not finished GUI-building yet */
 
-  if (brushfile)
+  if (brush_from_file)
     {
 #if 0
-      unselectall(brushlist);
+      unselectall(brush_list);
 #endif
       preset_save_button_set_sensitive (FALSE);
     }
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brushgammaadjust), 1.0);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brushaspectadjust), 0.0);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_gamma_adjust), 1.0);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_aspect_adjust), 0.0);
 
   drawable = gimp_drawable_get (id);
 
@@ -163,8 +162,8 @@ brushdmenuselect (GtkWidget *widget,
   if(bpp >= 3) pcvals.colorbrushes = 1;
   else pcvals.colorbrushes = 0;
 
-  brushfile = 0;
-  updatebrushprev(NULL);
+  brush_from_file = 0;
+  update_brush_preview(NULL);
 }
 
 #if 0
@@ -173,16 +172,16 @@ void dummybrushdmenuselect(GtkWidget *w, gpointer data)
   if(brushppm.col)
     killppm(&brushppm);
   newppm(&brushppm, 10,10);
-  brushfile = 0;
-  updatebrushprev(NULL);
+  brush_from_file = 0;
+  update_brush_preview(NULL);
 }
 #endif
 
 static void
 brushlistrefresh (void)
 {
-  gtk_list_store_clear (brushstore);
-  readdirintolist("Brushes", brushlist, NULL);
+  gtk_list_store_clear (brush_list_store);
+  readdirintolist ("Brushes", brush_list, NULL);
 }
 
 static void
@@ -257,7 +256,7 @@ validdrawable (gint32    imageid,
  * free the arguments.
  * */
 void
-reloadbrush (const gchar *fn,
+brush_reload (const gchar *fn,
              ppm_t       *p)
 {
   static char lastfn[256] = "";
@@ -294,18 +293,18 @@ padbrush (ppm_t *p,
 }
 
 static void
-updatebrushprev (const gchar *fn)
+update_brush_preview (const gchar *fn)
 {
   gint   i, j;
   guchar buf[100];
 
   if(fn)
-    brushfile = 1;
+    brush_from_file = 1;
 
-  if (!fn && brushfile) {
+  if (!fn && brush_from_file) {
     memset(buf, 0, 100);
     for(i = 0; i < 100; i++) {
-      gtk_preview_draw_row (GTK_PREVIEW (brushprev), buf, 0, i, 100);
+      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buf, 0, i, 100);
     }
   } else {
     double sc;
@@ -313,14 +312,14 @@ updatebrushprev (const gchar *fn)
     guchar gammatable[256];
     int newheight;
 
-    if(brushfile)
-      reloadbrush(fn, &p);
-    else if(brushppm.col)
+    if (brush_from_file)
+      brush_reload(fn, &p);
+    else if (brushppm.col)
       copyppm(&brushppm, &p);
 
-    set_colorbrushes(fn);
+    set_colorbrushes (fn);
 
-    sc = GTK_ADJUSTMENT(brushgammaadjust)->value;
+    sc = GTK_ADJUSTMENT (brush_gamma_adjust)->value;
     if(sc != 1.0)
       for(i = 0; i < 256; i++)
 	gammatable[i] = pow(i / 255.0, sc) * 255;
@@ -328,40 +327,40 @@ updatebrushprev (const gchar *fn)
       for(i = 0; i < 256; i++)
 	gammatable[i] = i;
 
-    newheight = p.height*pow(10,GTK_ADJUSTMENT(brushaspectadjust)->value);
+    newheight = p.height*pow (10,GTK_ADJUSTMENT(brush_aspect_adjust)->value);
     sc = p.width > newheight ? p.width : newheight;
     sc = 100.0 / sc;
-    resize_fast(&p, p.width*sc,newheight*sc);
-    padbrush(&p, 100, 100);
+    resize_fast (&p, p.width*sc,newheight*sc);
+    padbrush (&p, 100, 100);
     for(i = 0; i < 100; i++) {
       int k = i * p.width * 3;
       memset(buf,0,100);
       if(i < p.height)
 	for(j = 0; j < p.width; j++)
 	  buf[j] = gammatable[p.col[k + j * 3]];
-      gtk_preview_draw_row (GTK_PREVIEW (brushprev), buf, 0, i, 100);
+      gtk_preview_draw_row (GTK_PREVIEW (brush_preview), buf, 0, i, 100);
     }
     killppm(&p);
   }
-  gtk_widget_queue_draw (brushprev);
+  gtk_widget_queue_draw (brush_preview);
 }
 
-static gboolean brushdontupdate = FALSE;
+static gboolean brush_dont_update = FALSE;
 
 static void
-selectbrush (GtkTreeSelection *selection, gpointer data)
+brush_select (GtkTreeSelection *selection, gpointer data)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
   gchar        *fname = NULL;
   gchar        *brush = NULL;
 
-  if (brushdontupdate)
+  if (brush_dont_update)
     goto cleanup;
 
-  if (brushfile == 0)
+  if (brush_from_file == 0)
     {
-      updatebrushprev (NULL);
+      update_brush_preview (NULL);
       goto cleanup;
     }
 
@@ -388,10 +387,10 @@ selectbrush (GtkTreeSelection *selection, gpointer data)
             }
         }
 
-      brushdontupdate = TRUE;
-      gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), 1.0);
-      gtk_adjustment_set_value(GTK_ADJUSTMENT(brushaspectadjust), 0.0);
-      brushdontupdate = FALSE;
+      brush_dont_update = TRUE;
+      gtk_adjustment_set_value(GTK_ADJUSTMENT(brush_gamma_adjust), 1.0);
+      gtk_adjustment_set_value(GTK_ADJUSTMENT(brush_aspect_adjust), 0.0);
+      brush_dont_update = FALSE;
 
       if (brush)
         {
@@ -400,7 +399,7 @@ selectbrush (GtkTreeSelection *selection, gpointer data)
           g_strlcpy (pcvals.selectedbrush,
                      fname, sizeof (pcvals.selectedbrush));
 
-          updatebrushprev (fname);
+          update_brush_preview (fname);
 
         }
     }
@@ -412,18 +411,18 @@ cleanup:
 }
 
 static void
-selectbrushfile (GtkTreeSelection *selection, gpointer data)
+brush_select_file (GtkTreeSelection *selection, gpointer data)
 {
-  brushfile = 1;
+  brush_from_file = 1;
   preset_save_button_set_sensitive (TRUE);
-  selectbrush (selection, NULL);
+  brush_select (selection, NULL);
 }
 
 static void
-brushaspectadjust_cb (GtkWidget *w, gpointer data)
+brush_asepct_adjust_cb (GtkWidget *w, gpointer data)
 {
   gimp_double_adjustment_update (GTK_ADJUSTMENT(w), data);
-  updatebrushprev (pcvals.selectedbrush);
+  update_brush_preview (pcvals.selectedbrush);
 }
 
 void
@@ -448,9 +447,10 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE,TRUE,0);
   gtk_widget_show (box1);
 
-  view = createonecolumnlist (box1, selectbrushfile);
-  brushlist = view;
-  brushstore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+  view = createonecolumnlist (box1, brush_select_file);
+  brush_list = view;
+  brush_list_store = 
+      GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
   box2 = gtk_vbox_new (FALSE, 12);
@@ -462,7 +462,7 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  brushprev = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  brush_preview = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (tmpw), 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show (tmpw);
@@ -476,16 +476,16 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box3), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
 
-  brushgammaadjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1,
+  brush_gamma_adjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1,
 					0.1, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushgammaadjust));
+  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brush_gamma_adjust));
   gtk_widget_set_size_request (GTK_WIDGET(tmpw), 100, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_scale_set_digits(GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect_swapped (brushgammaadjust, "value_changed",
-			    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
+  g_signal_connect_swapped (brush_gamma_adjust, "value_changed",
+			    G_CALLBACK(update_brush_preview), pcvals.selectedbrush);
 
   gimp_help_set_help_data
     (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
@@ -523,7 +523,7 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  brushaspectadjust =
+  brush_aspect_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Aspect ratio:"),
 			  150, -1, pcvals.brushaspect,
@@ -532,11 +532,11 @@ create_brushpage(GtkNotebook *notebook)
 			  _("Specifies the aspect ratio of the brush"),
 			  NULL);
   gtk_size_group_add_widget (group,
-                             GIMP_SCALE_ENTRY_LABEL (brushaspectadjust));
-  g_signal_connect (brushaspectadjust, "value_changed",
-                    G_CALLBACK (brushaspectadjust_cb), &pcvals.brushaspect);
+                             GIMP_SCALE_ENTRY_LABEL (brush_aspect_adjust));
+  g_signal_connect (brush_aspect_adjust, "value_changed",
+                    G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brushaspect);
 
-  brushreliefadjust =
+  brush_relief_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
 			  150, -1, pcvals.brushrelief,
@@ -545,19 +545,20 @@ create_brushpage(GtkNotebook *notebook)
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);
   gtk_size_group_add_widget (group,
-                             GIMP_SCALE_ENTRY_LABEL (brushreliefadjust));
-  g_signal_connect (brushreliefadjust, "value_changed",
+                             GIMP_SCALE_ENTRY_LABEL (brush_relief_adjust));
+  g_signal_connect (brush_relief_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brushrelief);
 
-  selectbrush(selection, NULL);
-  readdirintolist("Brushes", view, pcvals.selectedbrush);
+  brush_select (selection, NULL);
+  readdirintolist ("Brushes", view, pcvals.selectedbrush);
 
   /* 
    * This is so the "changed signal won't get sent to the brushes' list
    * and reset the gamma and stuff.
    * */
-  gtk_widget_grab_focus (brushlist);
+  gtk_widget_grab_focus (brush_list);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }
+

@@ -152,7 +152,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
 			       (GtkTreeSelection *selection, gpointer data));
 
-void reloadbrush(const gchar *fn, struct ppm *p);
+void brush_reload(const gchar *fn, struct ppm *p);
 
 void create_orientmap_dialog(void);
 void update_orientmap_dialog(void);
