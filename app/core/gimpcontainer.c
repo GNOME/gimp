@@ -887,8 +887,11 @@ gimp_container_add_handler (GimpContainer *container,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
   g_return_val_if_fail (signame != NULL, 0);
-  g_return_val_if_fail (g_signal_lookup (signame, container->children_type), 0);
   g_return_val_if_fail (callback != NULL, 0);
+
+  if (strncmp (signame, "notify::", 8))
+    g_return_val_if_fail (g_signal_lookup (signame,
+                                           container->children_type), 0);
 
   handler = g_new0 (GimpContainerHandler, 1);
 

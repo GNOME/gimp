@@ -1,5 +1,10 @@
 2004-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontainer.c (gimp_container_add_handler): don't
+	try to lookup detailed "notify::foo" signal specs.
+
+2004-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolview.[ch]: if in list mode, add an "eye"
 	column which toggles tool visibility.
 
