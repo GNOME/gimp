@@ -1,3 +1,21 @@
+2000-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* pixmaps/wilber.xpm: new file.
+
+	* libgimp/gimpdialog.[ch]: uncommented some lines. Depending on
+	your window manager, you'll figure out what it does without having
+	to look at the sources...
+
+	* app/app_procs.c
+	* app/gradient.c
+	* app/menus.c: minor changes to bring the goodie above to all
+	places. Did dome cleanups.
+
+	* app/commands.c: I18N fix.
+
+	* app/channels_dialog.c: removed an unused declaration.
+
 Wed Feb  9 23:47:08 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/interface.c
