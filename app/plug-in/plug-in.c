@@ -85,6 +85,9 @@
 #include "libgimp/gimpprotocol.h"
 #include "libgimp/gimpwire.h"
 
+#include "base/tile.h"
+#include "base/tile-manager.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -102,8 +105,6 @@
 #include "gimpprogress.h"
 #include "gimprc.h"
 #include "plug_in.h"
-#include "tile.h"
-#include "tile_manager.h"
 
 #include "libgimp/gimpintl.h"
 

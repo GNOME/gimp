@@ -28,22 +28,23 @@
 
 #include "core-types.h"
 
+#include "base/boundary.h"
+#include "base/gimplut.h"
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+#include "base/tile.h"
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
-#include "boundary.h"
 #include "drawable.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
-#include "gimplut.h"
 #include "parasitelist.h"
-#include "pixel_processor.h"
-#include "pixel_region.h"
 #include "lut_funcs.h"
-#include "temp_buf.h"
-#include "tile.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

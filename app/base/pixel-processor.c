@@ -29,10 +29,10 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
-#include "pixel_processor.h"
-#include "pixel_region.h"
+#include "pixel-processor.h"
+#include "pixel-region.h"
 
 #ifdef ENABLE_MP
 #include "tile.h"
@@ -54,6 +54,7 @@ typedef void (* p4_func) (gpointer     ,
 			  PixelRegion *,
 			  PixelRegion *);
 
+
 struct _PixelProcessor
 {
   gpointer             data;
@@ -68,23 +69,24 @@ struct _PixelProcessor
   ProgressReportFunc   progress_report_func;
 };
 
+
 IF_THREAD(
 static void *
 do_parallel_regions (PixelProcessor *p_s)
 {
   PixelRegion tr[4];
-  int ntiles = 0;
-  int i;
-  int cont = 1;
+  gint       n tiles = 0;
+  gint        i;
+  gint        cont = 1;
 
-  pthread_mutex_lock(&p_s->mutex);
+  pthread_mutex_lock (&p_s->mutex);
 
   if (p_s->nthreads != 0 && p_s->PRI)
     p_s->PRI =  (PixelRegionIterator*)pixel_regions_process(p_s->PRI);
 
   if (p_s->PRI == NULL)
     {
-      pthread_mutex_unlock(&p_s->mutex);
+      pthread_mutex_unlock (&p_s->mutex);
       return NULL;
     }
 
@@ -100,7 +102,7 @@ do_parallel_regions (PixelProcessor *p_s)
 	      tile_lock(tr[i].curtile);
 	  }
 
-      pthread_mutex_unlock(&p_s->mutex);
+      pthread_mutex_unlock (&p_s->mutex);
       ntiles++;
 
       switch(p_s->n_regions)
@@ -136,7 +138,7 @@ do_parallel_regions (PixelProcessor *p_s)
 		    p_s->n_regions);
     }
 
-    pthread_mutex_lock(&p_s->mutex);
+    pthread_mutex_lock (&p_s->mutex);
 
     for (i = 0; i < p_s->n_regions; i++)
       if (p_s->r[i])
@@ -157,7 +159,7 @@ do_parallel_regions (PixelProcessor *p_s)
 
   p_s->nthreads--;
 
-  pthread_mutex_unlock(&p_s->mutex);
+  pthread_mutex_unlock (&p_s->mutex);
 
   return NULL;
 }
@@ -372,7 +374,7 @@ pixel_regions_process_parallel_progress (p_func             f,
   va_list         va;
 
   va_start (va, num_regions);
-  
+
   ret = pixel_regions_real_process_parallel (f, data,
 					     progress_func, progress_data,
 					     num_regions, va);
@@ -403,13 +405,13 @@ pixel_processor_cont (PixelProcessor *pp)
 
   if (pp->PRI)
     return pp;
-  
+
   pixel_processor_free (pp);
 
   return NULL;
 }
 
-void 
+void
 pixel_processor_free (PixelProcessor *pp)
 {
   if (pp->PRI)
@@ -417,4 +419,3 @@ pixel_processor_free (PixelProcessor *pp)
   else
     g_free(pp);
 }
-

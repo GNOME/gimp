@@ -26,6 +26,10 @@
 
 #include "tools-types.h"
 
+#include "base/gimplut.h"
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdrawable.h"
@@ -33,10 +37,7 @@
 
 #include "gdisplay.h"
 #include "gimage.h"
-#include "gimplut.h"
-#include "pixel_region.h"
 #include "selection.h"
-#include "temp_buf.h"
 
 #include "gimpdodgeburntool.h"
 #include "gimppainttool.h"

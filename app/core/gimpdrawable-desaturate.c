@@ -22,13 +22,14 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpimage.h"
-#include "pixel_region.h"
 
 
 void

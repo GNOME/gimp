@@ -28,10 +28,11 @@
 #include "procedural_db.h"
 
 #include "appenums.h"
+#include "base/base-types.h"
+#include "base/tile-manager.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "drawable.h"
-#include "tile_manager.h"
 #include "tools/gimpairbrushtool.h"
 #include "tools/gimpblendtool.h"
 #include "tools/gimpbucketfilltool.h"

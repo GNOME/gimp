@@ -28,6 +28,8 @@
 
 #include "tools-types.h"
 
+#include "base/pixel-region.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpcontext.h"
@@ -44,7 +46,6 @@
 #include "gui/paths-dialog.h"
 
 #include "floating_sel.h"
-#include "pixel_region.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpbezierselecttool.h"

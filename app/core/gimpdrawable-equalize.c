@@ -22,15 +22,16 @@
 
 #include "core-types.h"
 
+#include "base/gimplut.h"
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
+
 #include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
 #include "gimpimage.h"
-#include "gimplut.h"
 #include "lut_funcs.h"
 #include "gimphistogram.h"
-#include "pixel_processor.h"
-#include "pixel_region.h"
 
 
 void

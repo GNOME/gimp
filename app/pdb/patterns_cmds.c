@@ -27,12 +27,12 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "base/temp-buf.h"
 #include "context_manager.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
-#include "temp_buf.h"
 
 static ProcRecord patterns_get_pattern_proc;
 static ProcRecord patterns_set_pattern_proc;

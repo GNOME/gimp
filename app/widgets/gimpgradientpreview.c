@@ -25,11 +25,11 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpgradient.h"
 
 #include "gimpgradientpreview.h"
-
-#include "temp_buf.h"
 
 
 static void   gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass);

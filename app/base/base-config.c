@@ -16,23 +16,23 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BRUSH_SCALE_H__
-#define __BRUSH_SCALE_H__
+#include "config.h"
+
+#include <glib.h>
+
+#include "base-types.h"
+
+#include "base-config.h"
 
 
-MaskBuf * brush_scale_mask   (MaskBuf *brush_mask,
-			      gint     dest_width,
-			      gint     dest_height);
-MaskBuf * brush_scale_pixmap (MaskBuf *pixmap,
-			      gint     dest_width,
-			      gint     dest_height);
+static GimpBaseConfig  static_base_config =
+{
+  NULL,
+  NULL,
+  33554432,  /* 32 MB */
+  FALSE,
+  LINEAR_INTERPOLATION
+};
 
 
-#endif  /*  __BRUSH_SCALE_H__  */
-
-
-
-
-
-
-
+GimpBaseConfig *base_config = &static_base_config;

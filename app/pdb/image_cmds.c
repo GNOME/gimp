@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "app_procs.h"
+#include "base/temp-buf.h"
 #include "context_manager.h"
 #include "core/core-types.h"
 #include "core/gimpchannel.h"
@@ -40,7 +41,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"

@@ -22,8 +22,6 @@
 
 /*  global gimprc variables  */
 extern gchar             *plug_in_path;
-extern gchar             *temp_path;
-extern gchar             *swap_path;
 extern gchar             *brush_path;
 extern gchar             *default_brush;
 extern gchar             *pattern_path;
@@ -34,7 +32,6 @@ extern gchar             *gradient_path;
 extern gchar             *default_gradient;
 extern gchar             *pluginrc_path;
 extern gchar             *module_path;
-extern guint              tile_cache_size;
 extern gint               marching_speed;
 extern gint               last_opened_size;
 extern gdouble            gamma_val;
@@ -46,7 +43,6 @@ extern gint               min_colors;
 extern gboolean           install_cmap;
 extern gboolean           cycled_marching_ants;
 extern gint               default_threshold;
-extern gboolean           stingy_memory_use;
 extern gboolean           allow_resize_windows;
 extern gboolean           no_cursor_updating;
 extern gint               preview_size;
@@ -55,7 +51,6 @@ extern gboolean           show_rulers;
 extern GimpUnit           default_units;
 extern gboolean           show_statusbar;
 extern gboolean           auto_save;
-extern InterpolationType  interpolation_type;
 extern gboolean           confirm_on_close;
 extern gint               default_width, default_height;
 extern gint               default_type;
@@ -89,7 +84,7 @@ extern gint               cursor_mode;
 extern gboolean           disable_tearoff_menus;
 
 /*  function prototypes  */
-gboolean    parse_buffers_init  (void); /* this has to be called before any file
+gboolean    gimprc_init         (void); /* this has to be called before any file
 					 * is parsed
 					 */
 void        parse_gimprc        (void);

@@ -26,16 +26,17 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimp/gimplimits.h"
 
 #include "core-types.h"
 
-#include "errors.h"
+#include "base/temp-buf.h"
+
 #include "gimpimage.h"
 #include "gimpgradient.h"
-#include "gimprc.h"
-#include "temp_buf.h"
 
-#include "libgimp/gimplimits.h"
+#include "errors.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -34,10 +34,10 @@
 
 #include "core-types.h"
 
+#include "base/base-config.h"
+#include "base/temp-buf.h"
+
 #include "gimpbrushgenerated.h"
-#include "gimprc.h"
-#include "gimpbrush.h"
-#include "temp_buf.h"
 
 /*  this needs to go away  */
 #include "tools/gimppainttool.h"
@@ -227,7 +227,7 @@ gimp_brush_generated_dirty (GimpData *data)
 
   gbrush = GIMP_BRUSH (brush);
 
-  if (stingy_memory_use && gbrush->mask)
+  if (base_config->stingy_memory_use && gbrush->mask)
     temp_buf_unswap (gbrush->mask);
 
   if (gbrush->mask)
@@ -419,7 +419,7 @@ gimp_brush_generated_load (const gchar *filename)
 
   GIMP_DATA (brush)->dirty = FALSE;
 
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
   return GIMP_DATA (brush);

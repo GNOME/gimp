@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "base/temp-buf.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpbrush.h"
@@ -36,7 +38,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "selection.h"
-#include "temp_buf.h"
 
 #include "gimpairbrushtool.h"
 #include "paint_options.h"

@@ -25,6 +25,8 @@
 #include "libgimpcolor/gimpcolortypes.h"
 #include "libgimpmath/gimpmathtypes.h"
 
+#include "base/base-types.h"
+
 #include "undo_types.h"
 
 #include "appenums.h"
@@ -34,8 +36,6 @@
 
 typedef struct _Argument            Argument;
 
-typedef struct _BoundSeg            BoundSeg;
-
 typedef struct _ColorNotebook       ColorNotebook;
 
 typedef struct _GDisplay            GDisplay;
@@ -43,8 +43,6 @@ typedef struct _GDisplay            GDisplay;
 typedef struct _GimpHistogram       GimpHistogram;
 
 typedef struct _GimpImageNewValues  GimpImageNewValues;
-
-typedef struct _GimpLut             GimpLut;
 
 typedef struct _GimpParasite        GimpParasite;
 
@@ -66,22 +64,10 @@ typedef struct _PlugInProcDef       PlugInProcDef;
 
 typedef struct _ParasiteList        ParasiteList;
 
-typedef struct _PixelRegionIterator PixelRegionIterator;
-typedef struct _PixelRegion         PixelRegion;
-typedef struct _PixelRegionHolder   PixelRegionHolder;
-
 typedef struct _ProcArg             ProcArg;
 typedef struct _ProcRecord          ProcRecord;
 
 typedef         guint32             Tattoo;
-
-typedef struct _TempBuf             TempBuf;
-typedef struct _TempBuf             MaskBuf;
-
-typedef struct _Tile                Tile;
-typedef struct _TileManager         TileManager;
-
-typedef struct _ScanConvertPoint    ScanConvertPoint;
 
 typedef struct _Selection           Selection;
 
@@ -98,9 +84,6 @@ typedef         GSList              PathUndo;
 
 
 /*  functions  */
-
-typedef void   (* TileValidateProc)  (TileManager *tm,
-				      Tile        *tile);
 
 typedef void   (* ImageMapApplyFunc) (PixelRegion *srcPR,
 				      PixelRegion *destPR,

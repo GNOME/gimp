@@ -272,7 +272,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<process.h> "gimprc.h") ],
+	headers => [ qw(<process.h> "base/base-config.h") ],
 	vars => [ 'static gint id = 0', 'static gint pid' ],
 	code => <<'CODE'
 {
@@ -280,7 +280,7 @@ HELP
     pid = getpid();
 
   name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
-			  temp_path, pid, id++, extension);
+			  base_config->temp_path, pid, id++, extension);
 }
 CODE
     );

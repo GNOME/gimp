@@ -46,6 +46,10 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "base/base-config.h"
+#include "base/temp-buf.h"
+#include "base/tile-swap.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdatafactory.h"
@@ -75,8 +79,6 @@
 #include "plug_in.h"
 #include "module_db.h"
 
-#include "temp_buf.h"
-#include "tile_swap.h"
 #include "undo.h"
 #include "unitrc.h"
 #include "xcf.h"
@@ -165,7 +167,7 @@ app_init (void)
 
   g_free (filename);
 
-  if (parse_buffers_init ())
+  if (gimprc_init ())
     {
       parse_unitrc ();   /*  this needs to be done before gimprc loading  */
       parse_gimprc ();   /*  parse the local GIMP configuration file      */
@@ -243,12 +245,13 @@ app_init (void)
   RESET_BAR();
 
   /* Add the swap file  */
-  if (swap_path == NULL)
-    swap_path = g_get_tmp_dir ();
+  if (base_config->swap_path == NULL)
+    base_config->swap_path = g_get_tmp_dir ();
 
   toast_old_temp_files ();
   path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
-			  swap_path, (unsigned long) getpid ());
+			  base_config->swap_path,
+			  (unsigned long) getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
 
@@ -380,7 +383,7 @@ toast_old_temp_files (void)
   struct dirent *entry;
   GString       *filename = g_string_new ("");
 
-  dir = opendir (swap_path);
+  dir = opendir (base_config->swap_path);
 
   if (!dir)
     return;
@@ -405,7 +408,7 @@ toast_old_temp_files (void)
 	     *  so no harm trying.
 	     */
 	    g_string_sprintf (filename, "%s" G_DIR_SEPARATOR_S "%s",
-			      swap_path, entry->d_name);
+			      base_config->swap_path, entry->d_name);
 	    unlink (filename->str);
 	  }
       }

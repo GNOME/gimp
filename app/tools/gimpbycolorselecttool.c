@@ -28,6 +28,11 @@
 
 #include "tools-types.h"
 
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+#include "base/tile.h"
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdrawable.h"
@@ -38,15 +43,10 @@
 
 #include "widgets/gimpdnd.h"
 
-#include "boundary.h"
 #include "context_manager.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gdisplay.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
-#include "tile.h"
-#include "tile_manager.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"

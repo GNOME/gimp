@@ -35,6 +35,8 @@
 
 #include "core/core-types.h"
 
+#include "base/base-config.h"
+
 #include "appenv.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
@@ -381,7 +383,7 @@ user_install_continue_callback (GtkWidget *widget,
 #ifdef G_OS_WIN32
       FreeConsole ();
 #endif
-      parse_buffers_init ();
+      gimprc_init ();
       parse_unitrc ();
       parse_gimprc ();
       user_install_tuning ();
@@ -896,7 +898,7 @@ user_install_dialog_create (UserInstallCallback callback)
 
 #ifdef G_OS_WIN32
 
-char *
+static char *
 quote_spaces (char *string)
 {
   int nspaces = 0;
@@ -1106,7 +1108,7 @@ user_install_tuning (void)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  tile_cache_adj = gtk_adjustment_new (tile_cache_size, 
+  tile_cache_adj = gtk_adjustment_new (base_config->tile_cache_size, 
 				       0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
   memsize = gimp_mem_size_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
   gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
@@ -1132,7 +1134,8 @@ user_install_tuning (void)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  swap_path_filesel = gimp_file_selection_new (_("Select Swap Dir"), swap_path,
+  swap_path_filesel = gimp_file_selection_new (_("Select Swap Dir"),
+					       base_config->swap_path,
 					       TRUE, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), swap_path_filesel, FALSE, FALSE, 0);
   gtk_widget_show (swap_path_filesel);
@@ -1291,15 +1294,16 @@ user_install_resolution_done (void)
   new_monitor_yres =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
 
-  if (tile_cache_size != new_tile_cache_size)
+  if (base_config->tile_cache_size != new_tile_cache_size)
     {
-      tile_cache_size = new_tile_cache_size;
+      base_config->tile_cache_size = new_tile_cache_size;
       update = g_list_append (update, "tile-cache-size");
     }
-  if (swap_path && new_swap_path && 
-      strcmp (swap_path, new_swap_path))
+  if (base_config->swap_path && new_swap_path && 
+      strcmp (base_config->swap_path, new_swap_path))
     {
-      g_free (swap_path);      swap_path = new_swap_path;
+      g_free (base_config->swap_path);
+      base_config->swap_path = new_swap_path;
       update = g_list_append (update, "swap-path");
     }
   if (using_xserver_resolution != new_using_xserver_resolution ||

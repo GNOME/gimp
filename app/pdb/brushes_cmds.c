@@ -27,13 +27,13 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
+#include "base/base-types.h"
+#include "base/temp-buf.h"
 #include "context_manager.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
-#include "temp_buf.h"
 
 static ProcRecord brushes_refresh_proc;
 static ProcRecord brushes_get_brush_proc;

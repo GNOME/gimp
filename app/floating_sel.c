@@ -24,6 +24,10 @@
 
 #include "core/core-types.h"
 
+#include "base/boundary.h"
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpimage.h"
@@ -31,12 +35,9 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
-#include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

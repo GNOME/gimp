@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -33,19 +33,16 @@
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
- 
+
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
+#include "base-types.h"
+
+#include "base-config.h"
+#include "pixel-region.h"
+#include "temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
-
-#include "core/gimpimage.h"
-
-#include "gimprc.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
-#include "image_render.h"
 
 
 static guchar * temp_buf_allocate (guint);
@@ -574,7 +571,9 @@ generate_unique_filename (void)
 
   pid = getpid ();
   return g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp%d.%d",
-			  temp_path, (int) pid, swap_index++);
+			  base_config->temp_path,
+			  (gint) pid,
+			  swap_index++);
 }
 
 void
@@ -592,7 +591,7 @@ temp_buf_swap (TempBuf *buf)
   /*  Set the swapped flag  */
   buf->swapped = TRUE;
 
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     swap = buf;
   else
     {

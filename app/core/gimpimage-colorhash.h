@@ -16,13 +16,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TILE_CACHE_H__
-#define __TILE_CACHE_H__
+#ifndef __GIMP_IMAGE_COLOR_HASH_H__
+#define __GIMP_IMAGE_COLOR_HASH_H__
 
 
-void   tile_cache_insert   (Tile   *tile);
-void   tile_cache_flush    (Tile   *tile);
-void   tile_cache_set_size (gulong  cache_size);
+void   gimp_image_color_hash_init           (void);
+void   gimp_image_color_hash_exit           (void);
+
+void   gimp_image_color_hash_invalidate     (GimpImage       *gimage,
+					     gint             index);
+
+gint   gimp_image_color_hash_rgb_to_indexed (const GimpImage *gimage,
+					     gint             r,
+					     gint             g,
+					     gint             b);
 
 
-#endif /* __TILE_CACHE_H__ */
+#endif  /*  __GIMP_IMAGE_COLOR_HASH_H__  */

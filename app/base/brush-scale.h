@@ -29,10 +29,3 @@ MaskBuf * brush_scale_pixmap (MaskBuf *pixmap,
 
 
 #endif  /*  __BRUSH_SCALE_H__  */
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs core pdb tools widgets gui
+SUBDIRS = paint-funcs base core pdb tools widgets gui
 
 scriptdata =
 
@@ -101,36 +101,6 @@ gimp_SOURCES = \
 	scan_convert.c		\
 	scan_convert.h		\
 ##
-## lowlevel stuff for base/
-##
-	boundary.c		\
-	boundary.h		\
-	brush_scale.c		\
-	brush_scale.h		\
-	gimpcheck.h		\
-	gimplut.c		\
-	gimplut.h		\
-	lut_funcs.c		\
-	lut_funcs.h		\
-	pixel_processor.c	\
-	pixel_processor.h	\
-	pixel_region.c		\
-	pixel_region.h		\
-	pixel_surround.c	\
-	pixel_surround.h	\
-	temp_buf.c		\
-	temp_buf.h		\
-	tile.c			\
-	tile.h			\
-	tile_pvt.h		\
-	tile_cache.c		\
-	tile_cache.h		\
-	tile_manager.c		\
-	tile_manager.h		\
-	tile_manager_pvt.h	\
-	tile_swap.c		\
-	tile_swap.h		\
-##
 ## stuff that needs to be sorted into yet undecided subsystems, split up,
 ## removed or otherwise tortured
 ##
@@ -171,6 +141,8 @@ gimp_SOURCES = \
 	image_new.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h		\
+	lut_funcs.c		\
+	lut_funcs.h		\
 	main.c			\
 	path.c			\
 	path.h			\
@@ -225,6 +197,7 @@ gimp_LDADD = \
 	gui/libappgui.la						\
 	widgets/libappwidgets.la					\
 	core/libappcore.la						\
+	base/libappbase.la						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\

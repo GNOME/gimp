@@ -20,10 +20,10 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
-#include "brush_scale.h"
-#include "temp_buf.h"
+#include "brush-scale.h"
+#include "temp-buf.h"
 
 
 MaskBuf *

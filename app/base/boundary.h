@@ -38,16 +38,16 @@ struct _BoundSeg
 };
 
 
-BoundSeg *  find_mask_boundary (PixelRegion  *maskPR,
-				gint         *num_elems,
-				BoundaryType  type,
-				gint          x1,
-				gint          y1,
-				gint          x2,
-				gint          y2);
-BoundSeg *  sort_boundary      (BoundSeg     *segs, 
-				gint          num_segs, 
-				gint         *num_groups);
+BoundSeg * find_mask_boundary (PixelRegion  *maskPR,
+			       gint         *num_elems,
+			       BoundaryType  type,
+			       gint          x1,
+			       gint          y1,
+			       gint          x2,
+			       gint          y2);
+BoundSeg * sort_boundary      (BoundSeg     *segs, 
+			       gint          num_segs, 
+			       gint         *num_groups);
 
 
 #endif  /*  __BOUNDARY_H__  */

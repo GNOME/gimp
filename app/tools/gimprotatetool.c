@@ -38,8 +38,6 @@
 #include "selection.h"
 #include "undo.h"
 #include "path_transform.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 
 #include "gimprotatetool.h"
 #include "tool_manager.h"

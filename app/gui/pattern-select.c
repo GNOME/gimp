@@ -27,6 +27,8 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -41,7 +43,6 @@
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

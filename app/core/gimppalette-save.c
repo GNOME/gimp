@@ -32,10 +32,11 @@
 
 #include "core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "gimppalette.h"
 
 #include "gimprc.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

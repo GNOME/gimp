@@ -28,6 +28,9 @@
 
 #include "core/core-types.h"
 
+#include "base/base-config.h"
+#include "base/tile-cache.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
@@ -42,7 +45,6 @@
 #include "gimprc.h"
 #include "image_render.h"
 #include "resolution_calibrate.h"
-#include "tile_cache.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -440,7 +442,7 @@ prefs_ok_callback (GtkWidget *widget,
 
       if (edit_tile_cache_size != old_tile_cache_size)
 	{
-	  tile_cache_size = edit_tile_cache_size;
+	  base_config->tile_cache_size = edit_tile_cache_size;
 	  tile_cache_set_size (edit_tile_cache_size);
 	}
       break;
@@ -513,7 +515,7 @@ prefs_save_callback (GtkWidget *widget,
   prefs_dlg = NULL;
 
   /*  Save variables so that we can restore them later  */
-  save_stingy_memory_use         = stingy_memory_use;
+  save_stingy_memory_use         = base_config->stingy_memory_use;
   save_min_colors                = min_colors;
   save_install_cmap              = install_cmap;
   save_cycled_marching_ants      = cycled_marching_ants;
@@ -522,8 +524,8 @@ prefs_save_callback (GtkWidget *widget,
   save_nav_window_per_display    = nav_window_per_display;
   save_info_window_follows_mouse = info_window_follows_mouse;
 
-  save_temp_path      = temp_path;
-  save_swap_path      = swap_path;
+  save_temp_path      = base_config->temp_path;
+  save_swap_path      = base_config->swap_path;
   save_brush_path     = brush_path;
   save_pattern_path   = pattern_path;
   save_palette_path   = palette_path;
@@ -569,7 +571,7 @@ prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "show-statusbar");
       remove = g_list_append (remove, "dont-show-statusbar");
     }
-  if (interpolation_type != old_interpolation_type)
+  if (base_config->interpolation_type != old_interpolation_type)
     {
       update = g_list_append (update, "interpolation-type");
     }
@@ -710,7 +712,7 @@ prefs_save_callback (GtkWidget *widget,
   /*  values which can't be changed on the fly  */
   if (edit_stingy_memory_use != old_stingy_memory_use)
     {
-      stingy_memory_use = edit_stingy_memory_use;
+      base_config->stingy_memory_use = edit_stingy_memory_use;
       update = g_list_append (update, "stingy-memory-use");
     }
   if (edit_min_colors != old_min_colors)
@@ -759,12 +761,12 @@ prefs_save_callback (GtkWidget *widget,
 
   if (prefs_strcmp (old_temp_path, edit_temp_path))
     {
-      temp_path = edit_temp_path;
+      base_config->temp_path = edit_temp_path;
       update = g_list_append (update, "temp-path");
     }
   if (prefs_strcmp (old_swap_path, edit_swap_path))
     {
-      swap_path = edit_swap_path;
+      base_config->swap_path = edit_swap_path;
       update = g_list_append (update, "swap-path");
     }
   if (prefs_strcmp (old_brush_path, edit_brush_path))
@@ -801,7 +803,7 @@ prefs_save_callback (GtkWidget *widget,
   /*  values which are changed on "OK" or "Save"  */
   if (edit_tile_cache_size != old_tile_cache_size)
     {
-      tile_cache_size = edit_tile_cache_size;
+      base_config->tile_cache_size = edit_tile_cache_size;
       update = g_list_append (update, "tile-cache-size");
     }
 
@@ -813,23 +815,23 @@ prefs_save_callback (GtkWidget *widget,
     gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
 
   /*  restore variables which must not change  */
-  stingy_memory_use         = save_stingy_memory_use;
-  min_colors                = save_min_colors;
-  install_cmap              = save_install_cmap;
-  cycled_marching_ants      = save_cycled_marching_ants;
-  last_opened_size          = save_last_opened_size;
-  show_indicators           = save_show_indicators;
-  nav_window_per_display    = save_nav_window_per_display;
-  info_window_follows_mouse = save_info_window_follows_mouse;
+  base_config->stingy_memory_use = save_stingy_memory_use;
+  min_colors                     = save_min_colors;
+  install_cmap                   = save_install_cmap;
+  cycled_marching_ants           = save_cycled_marching_ants;
+  last_opened_size               = save_last_opened_size;
+  show_indicators                = save_show_indicators;
+  nav_window_per_display         = save_nav_window_per_display;
+  info_window_follows_mouse      = save_info_window_follows_mouse;
 
-  temp_path      = save_temp_path;
-  swap_path      = save_swap_path;
-  brush_path     = save_brush_path;
-  pattern_path   = save_pattern_path;
-  palette_path   = save_palette_path;
-  gradient_path  = save_gradient_path;
-  plug_in_path   = save_plug_in_path;
-  module_path    = save_module_path;
+  base_config->temp_path = save_temp_path;
+  base_config->swap_path = save_swap_path;
+  brush_path             = save_brush_path;
+  pattern_path           = save_pattern_path;
+  palette_path           = save_palette_path;
+  gradient_path          = save_gradient_path;
+  plug_in_path           = save_plug_in_path;
+  module_path            = save_module_path;
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 
@@ -845,6 +847,7 @@ prefs_cancel_callback (GtkWidget *widget,
   prefs_dlg = NULL;
 
   /*  restore ordinary gimprc variables  */
+  base_config->interpolation_type = old_interpolation_type;
   levels_of_undo           = old_levels_of_undo;
   marching_speed           = old_marching_speed;
   allow_resize_windows     = old_allow_resize_windows;
@@ -854,7 +857,6 @@ prefs_cancel_callback (GtkWidget *widget,
   show_tool_tips           = old_show_tool_tips;
   show_rulers              = old_show_rulers;
   show_statusbar           = old_show_statusbar;
-  interpolation_type       = old_interpolation_type;
   confirm_on_close         = old_confirm_on_close;
   save_session_info        = old_save_session_info;
   save_device_status       = old_save_device_status;
@@ -969,11 +971,11 @@ prefs_toggle_callback (GtkWidget *widget,
     }
 
   /*  radio buttons  */
-  else if (data == &thumbnail_mode     ||
-	   data == &interpolation_type ||
-           data == &trust_dirty_flag   ||
-	   data == &help_browser       ||
-	   data == &cursor_mode        ||
+  else if (data == &thumbnail_mode                  ||
+	   data == &base_config->interpolation_type ||
+           data == &trust_dirty_flag                ||
+	   data == &help_browser                    ||
+	   data == &cursor_mode                     ||
 	   data == &default_type)
     {
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1389,7 +1391,7 @@ preferences_dialog_create (void)
       /*  first time dialog is opened -
        *  copy config vals to edit variables.
        */
-      edit_stingy_memory_use         = stingy_memory_use;
+      edit_stingy_memory_use         = base_config->stingy_memory_use;
       edit_min_colors                = min_colors;
       edit_install_cmap              = install_cmap;
       edit_cycled_marching_ants      = cycled_marching_ants;
@@ -1399,8 +1401,8 @@ preferences_dialog_create (void)
       edit_info_window_follows_mouse = info_window_follows_mouse;
       edit_disable_tearoff_menus     = disable_tearoff_menus;
 
-      edit_temp_path      = prefs_strdup (temp_path);	
-      edit_swap_path      = prefs_strdup (swap_path);
+      edit_temp_path      = prefs_strdup (base_config->temp_path);	
+      edit_swap_path      = prefs_strdup (base_config->swap_path);
       edit_plug_in_path   = prefs_strdup (plug_in_path);
       edit_module_path    = prefs_strdup (module_path);
       edit_brush_path     = prefs_strdup (brush_path);
@@ -1412,9 +1414,10 @@ preferences_dialog_create (void)
   /*  assign edit variables for values which get changed on "OK" and "Save"
    *  but not on the fly.
    */
-  edit_tile_cache_size = tile_cache_size;
+  edit_tile_cache_size = base_config->tile_cache_size;
 
   /*  remember all old values  */
+  old_interpolation_type       = base_config->interpolation_type;
   old_perfectmouse             = perfectmouse;
   old_transparency_type        = transparency_type;
   old_transparency_size        = transparency_size;
@@ -1428,7 +1431,6 @@ preferences_dialog_create (void)
   old_show_tool_tips           = show_tool_tips;
   old_show_rulers              = show_rulers;
   old_show_statusbar           = show_statusbar;
-  old_interpolation_type       = interpolation_type;
   old_confirm_on_close         = confirm_on_close;
   old_save_session_info        = save_session_info;
   old_save_device_status       = save_device_status;
@@ -2266,7 +2268,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &interpolation_type, (gpointer) interpolation_type,
+			   &base_config->interpolation_type,
+			   (gpointer) base_config->interpolation_type,
 
 			   _("Nearest Neighbor (Fast)"),
 			   (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,

@@ -389,7 +389,7 @@ gimp_system_rc_file (void)
 }
 
 gboolean
-parse_buffers_init (void)
+gimprc_init (void)
 {
   if (!parse_info.buffer)
     {

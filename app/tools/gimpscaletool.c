@@ -34,7 +34,6 @@
 #include "drawable.h"
 #include "gimpprogress.h"
 #include "selection.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "gimpscaletool.h"

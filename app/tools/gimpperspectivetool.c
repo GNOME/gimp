@@ -31,7 +31,6 @@
 #include "gimpprogress.h"
 #include "gui/info-dialog.h"
 #include "selection.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "gimpperspectivetool.h"

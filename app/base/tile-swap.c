@@ -43,11 +43,11 @@
 #define _O_TEMPORARY 0
 #endif
 
-#include "apptypes.h"
+#include "base-types.h"
 
 #include "tile.h"
-#include "tile_pvt.h"
-#include "tile_swap.h"
+#include "tile-private.h"
+#include "tile-swap.h"
 
 
 #define MAX_OPEN_SWAP_FILES  16
@@ -142,7 +142,9 @@ static GSList        * async_swapin_tiles     = NULL;
 static GSList        * async_swapin_tiles_end = NULL;
 #endif
 
-static gboolean seek_err_msg = TRUE, read_err_msg = TRUE, write_err_msg = TRUE;
+static gboolean seek_err_msg  = TRUE;
+static gboolean read_err_msg  = TRUE;
+static gboolean write_err_msg = TRUE;
 
 
 static void

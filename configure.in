@@ -792,6 +792,7 @@ libgimpwidgets/Makefile
 libgimpwidgets/makefile.mingw
 app/Makefile
 app/makefile.mingw
+app/base/Makefile
 app/core/Makefile
 app/gui/Makefile
 app/paint-funcs/Makefile

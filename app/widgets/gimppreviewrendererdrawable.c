@@ -27,12 +27,12 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
 #include "gimpdrawablepreview.h"
-
-#include "temp_buf.h"
 
 
 static void   gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);

@@ -25,6 +25,7 @@
  *  used to compute the number of levels and there
  *  size. Each level is 1/2 the width and height of
  *  the level above it.
+ *
  * The toplevel is level 0. The smallest level in the
  *  hierarchy is "nlevels - 1". That level will be smaller
  *  than TILE_WIDTH x TILE_HEIGHT
@@ -95,23 +96,23 @@ void          tile_invalidate_tile           (Tile        **tile_ptr,
 /* Given a toplevel tile, this procedure will invalidate
  *  (set the dirty bit) for this toplevel tile.
  */
-void          tile_manager_invalidate_tiles (TileManager       *tm,
-					     Tile              *toplevel_tile);
+void          tile_manager_invalidate_tiles  (TileManager       *tm,
+					      Tile              *toplevel_tile);
 
-void          tile_manager_set_user_data    (TileManager       *tm,
-					     gpointer           user_data);
-gpointer      tile_manager_get_user_data    (const TileManager *tm);
+void          tile_manager_set_user_data     (TileManager       *tm,
+					      gpointer           user_data);
+gpointer      tile_manager_get_user_data     (const TileManager *tm);
 
-gint          tile_manager_width            (const TileManager *tm);
-gint          tile_manager_height           (const TileManager *tm);
-gint          tile_manager_bpp              (const TileManager *tm);
+gint          tile_manager_width             (const TileManager *tm);
+gint          tile_manager_height            (const TileManager *tm);
+gint          tile_manager_bpp               (const TileManager *tm);
 
-void          tile_manager_get_offsets      (const TileManager *tm,
-					     gint              *x,
-					     gint              *y);
-void          tile_manager_set_offsets      (TileManager       *tm,
-					     gint               x,
-					     gint               y);
+void          tile_manager_get_offsets       (const TileManager *tm,
+					      gint              *x,
+					      gint              *y);
+void          tile_manager_set_offsets       (TileManager       *tm,
+					      gint               x,
+					      gint               y);
 
 void          tile_manager_get_tile_coordinates (TileManager *tm,
 						 Tile        *tile,
@@ -121,5 +122,6 @@ void          tile_manager_get_tile_coordinates (TileManager *tm,
 void          tile_manager_map_over_tile        (TileManager *tm,
 						 Tile        *tile,
 						 Tile        *srctile);
+
 
 #endif /* __TILE_MANAGER_H__ */

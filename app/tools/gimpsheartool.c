@@ -37,8 +37,6 @@
 #include "gimpprogress.h"
 #include "selection.h"
 #include "undo.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 
 #include "gimpsheartool.h"
 #include "tool_manager.h"

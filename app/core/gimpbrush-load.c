@@ -43,17 +43,17 @@
 
 #include "core-types.h"
 
-#include "brush_scale.h"
+#include "base/base-config.h"
+#include "base/brush-scale.h"
+#include "base/temp-buf.h"
+
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"
-#include "gimprc.h"
-#include "temp_buf.h"
 
 /*  this needs to go away  */
 #include "tools/tools-types.h"
 #include "tools/gimppainttool.h"
-#include "brush_scale.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -322,7 +322,7 @@ gimp_brush_load (const gchar *filename)
   gimp_data_set_filename (GIMP_DATA (brush), filename);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     {
       temp_buf_swap (brush->mask);
 

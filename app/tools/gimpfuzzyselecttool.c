@@ -26,18 +26,19 @@
 
 #include "tools-types.h"
 
+#include "base/boundary.h"
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
 #include "app_procs.h"
-#include "boundary.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
-#include "tile.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"

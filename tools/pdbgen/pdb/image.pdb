@@ -1461,7 +1461,7 @@ CODE
 
 
 @headers = qw(<string.h> "gimage.h" "context_manager.h" "core/gimpcontainer.h"
-	      "core/gimplist.h" "temp_buf.h" 
+	      "core/gimplist.h" "base/temp-buf.h" 
 	      "libgimpmath/gimpmath.h" "libgimp/gimplimits.h"
               "libgimp/gimpintl.h");
 

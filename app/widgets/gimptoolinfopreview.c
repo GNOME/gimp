@@ -25,11 +25,11 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimptoolinfo.h"
 
 #include "gimptoolinfopreview.h"
-
-#include "temp_buf.h"
 
 
 /* FIXME: make tool icons nicer */

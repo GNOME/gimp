@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-2001 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,28 +16,23 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CHECKS_H__
-#define __GIMP_CHECKS_H__
+#ifndef __BASE_CONFIG_H__
+#define __BASE_CONFIG_H__
 
 
-/*  Transparency representation  */
+typedef struct _GimpBaseConfig GimpBaseConfig;
 
-typedef enum
+struct _GimpBaseConfig
 {
-  LIGHT_CHECKS = 0,
-  GRAY_CHECKS  = 1,
-  DARK_CHECKS  = 2,
-  WHITE_ONLY   = 3,
-  GRAY_ONLY    = 4,
-  BLACK_ONLY   = 5
-} GimpCheckType;
+  gchar             *temp_path;
+  gchar             *swap_path;
+  guint              tile_cache_size;
+  gboolean           stingy_memory_use;
+  InterpolationType  interpolation_type;
+};
 
-typedef enum
-{
-  SMALL_CHECKS  = 0,
-  MEDIUM_CHECKS = 1,
-  LARGE_CHECKS  = 2
-} GimpCheckSize;
 
-#endif  /*  __GIMP_CHECKS_H__  */
+extern GimpBaseConfig *base_config;
 
+
+#endif  /*  __BASE_CONFIG_H__  */

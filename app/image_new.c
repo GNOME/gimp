@@ -26,6 +26,8 @@
 
 #include "libgimp/gimpparasite.h"
 
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpcontext.h"
@@ -40,7 +42,6 @@
 #include "gimage.h"
 #include "gimprc.h"
 #include "image_new.h"
-#include "tile_manager.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -23,8 +23,6 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
@@ -141,10 +139,8 @@ gimage_cmap_change_handler (GimpImage *gimage,
 			    gint       ncol,
 			    gpointer   user_data)
 {
-  gdisplays_update_full (gimage);
-
   if (gimp_image_base_type (gimage) == INDEXED)
-    paint_funcs_invalidate_color_hash_table (gimage, ncol);
+    gdisplays_update_full (gimage);
 }
 
 static void

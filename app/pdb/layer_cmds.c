@@ -27,6 +27,7 @@
 #include "procedural_db.h"
 
 #include "appenums.h"
+#include "base/base-types.h"
 #include "core/core-types.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"

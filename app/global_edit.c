@@ -27,6 +27,9 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpchannel.h"
@@ -44,8 +47,6 @@
 #include "gimage.h"
 #include "global_edit.h"
 #include "image_new.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

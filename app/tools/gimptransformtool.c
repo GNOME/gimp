@@ -27,6 +27,12 @@
 
 #include "tools-types.h"
 
+#include "base/base-config.h"
+#include "base/pixel-region.h"
+#include "base/pixel-surround.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpchannel.h"
@@ -45,13 +51,8 @@
 #include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gimprc.h"
-#include "path_transform.h"
-#include "pixel_region.h"
-#include "pixel_surround.h"
 #include "undo.h"
-#include "tile_manager.h"
-#include "tile.h"
+#include "path_transform.h"
 
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -1149,7 +1150,7 @@ gimp_transform_tool_do (GimpImage        *gimage,
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix3_is_simple (matrix) ||
-      interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+      base_config->interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
     interpolation = FALSE;
 
   /*  Get the background color  */
@@ -1247,7 +1248,7 @@ gimp_transform_tool_do (GimpImage        *gimage,
   /* initialise the pixel_surround accessor */
   if (interpolation)
     {
-      if (interpolation_type == CUBIC_INTERPOLATION)
+      if (base_config->interpolation_type == CUBIC_INTERPOLATION)
 	{
 	  pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
 	}
@@ -1309,7 +1310,7 @@ gimp_transform_tool_do (GimpImage        *gimage,
 
           if (interpolation)
        	    {
-              if (interpolation_type == CUBIC_INTERPOLATION)
+              if (base_config->interpolation_type == CUBIC_INTERPOLATION)
        	        {
                   /*  ttx & tty are the subpixel coordinates of the point in
 		   *  the original selection's floating buffer.

@@ -22,11 +22,12 @@
 
 #include "core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "gimpimage.h"
 #include "gimpundo.h"
 
 #include "gimprc.h"
-#include "temp_buf.h"
 
 
 enum

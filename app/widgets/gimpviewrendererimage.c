@@ -25,11 +25,11 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpimage.h"
 
 #include "gimpimagepreview.h"
-
-#include "temp_buf.h"
 
 
 static void   gimp_image_preview_class_init (GimpImagePreviewClass *klass);

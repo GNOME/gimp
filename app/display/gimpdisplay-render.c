@@ -25,6 +25,9 @@
 
 #include "core/core-types.h"
 
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "core/gimpimage.h"
 
 #include "appenv.h"
@@ -32,10 +35,7 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "pixel_region.h"
 #include "scale.h"
-#include "tile.h"
-#include "tile_manager.h"
 
 
 #define MAX_PREVIEW_SIZE 256  /* EEK */

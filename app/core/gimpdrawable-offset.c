@@ -27,6 +27,9 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "drawable.h"
@@ -34,8 +37,6 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 
 
 void

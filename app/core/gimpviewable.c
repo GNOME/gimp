@@ -25,9 +25,10 @@
 
 #include "core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
-#include "temp_buf.h"
 
 
 enum

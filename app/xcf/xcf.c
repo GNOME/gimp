@@ -38,6 +38,10 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "base/tile.h"
+#include "base/tile-manager.h"
+#include "base/tile-manager-private.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -53,9 +57,6 @@
 #include "parasitelist.h"
 #include "path.h"
 #include "pathP.h"
-#include "tile.h"
-#include "tile_manager.h"
-#include "tile_manager_pvt.h"
 #include "xcf.h"
 
 #include "libgimp/gimplimits.h"

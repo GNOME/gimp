@@ -25,13 +25,14 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
 #include "core-types.h"
+
+#include "base/pixel-region.h"
+
+#include "paint-funcs/paint-funcs.h"
 
 /* FIXME: remove the Path <-> BezierSelect dependency */
 #include "tools/tools-types.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "app_procs.h"
 #include "drawable.h"
@@ -46,8 +47,6 @@
 #include "gimplist.h"
 #include "parasitelist.h"
 #include "path.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -21,12 +21,12 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
-#include "pixel_region.h"
-#include "tile_manager.h"
+#include "pixel-region.h"
+#include "tile-manager.h"
 #include "tile.h"
 
 
@@ -147,7 +147,7 @@ pixel_region_get_row (PixelRegion *PR,
 	    {
 	      for (b = 0; b < tilebpp; b++)
 		*data++ = tile_data[b];
-	      
+
 	      tile_data += inc;
 	    }
 	}

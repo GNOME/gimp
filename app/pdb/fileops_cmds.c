@@ -39,11 +39,11 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "base/base-config.h"
 #include "core/gimpimage.h"
 #include "file-open.h"
 #include "file-save.h"
 #include "file-utils.h"
-#include "gimprc.h"
 #include "plug_in.h"
 
 static ProcRecord file_load_proc;
@@ -392,7 +392,7 @@ temp_name_invoker (Argument *args)
 	pid = getpid();
     
       name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
-			      temp_path, pid, id++, extension);
+			      base_config->temp_path, pid, id++, extension);
     }
 
   return_args = procedural_db_return_args (&temp_name_proc, success);

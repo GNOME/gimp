@@ -28,13 +28,14 @@
 
 #include "tools-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 
-#include "boundary.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimprc.h"

@@ -36,43 +36,6 @@ package Gimp::CodeGen::enums;
 		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
 		       NO_FILL => 'NO_IMAGE_FILL' }
 	},
-    LayerModeEffects =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
-			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
-			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
-			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
-			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE
-			  DODGE_MODE BURN_MODE HARDLIGHT_MODE) ],
-	  mapping => { NORMAL_MODE => '0',
-		       DISSOLVE_MODE => '1',
-		       BEHIND_MODE => '2',
-		       MULTIPLY_MODE => '3',
-		       SCREEN_MODE => '4',
-		       OVERLAY_MODE => '5',
-		       DIFFERENCE_MODE => '6',
-		       ADDITION_MODE => '7',
-		       SUBTRACT_MODE => '8',
-		       DARKEN_ONLY_MODE => '9',
-		       LIGHTEN_ONLY_MODE => '10',
-		       HUE_MODE => '11',
-		       SATURATION_MODE => '12',
-		       COLOR_MODE => '13',
-		       VALUE_MODE => '14',
-		       DIVIDE_MODE => '15',
-		       DODGE_MODE => '16',
-		       BURN_MODE => '17',
-		       HARDLIGHT_MODE => '18' }
-	},
-    ConvolutionType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(NORMAL_CONVOL ABSOLUTE_CONVOL NEGATIVE_CONVOL) ],
-	  mapping => { NORMAL_CONVOL => '0',
-		       ABSOLUTE_CONVOL => '1',
-		       NEGATIVE_CONVOL => '2' }
-	},
     BrushApplicationMode =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -115,15 +78,6 @@ package Gimp::CodeGen::enums;
 		       LOOP_SAWTOOTH => '2',
 		       LOOP_TRIANGLE => '3',
 		       ONCE_END_COLOR => '4' }
-	},
-    InterpolationType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(LINEAR_INTERPOLATION CUBIC_INTERPOLATION
-			  NEAREST_NEIGHBOR_INTERPOLATION) ],
-	  mapping => { LINEAR_INTERPOLATION => '0',
-		       CUBIC_INTERPOLATION => '1',
-		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
 	},
     OrientationType =>
 	{ contig => 1,
@@ -241,6 +195,52 @@ package Gimp::CodeGen::enums;
 		       GREEN_LUT => '2',
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
+	},
+    LayerModeEffects =>
+	{ contig => 1,
+	  header => 'base/base-types.h',
+	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
+			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
+			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
+			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
+			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE
+			  DODGE_MODE BURN_MODE HARDLIGHT_MODE) ],
+	  mapping => { NORMAL_MODE => '0',
+		       DISSOLVE_MODE => '1',
+		       BEHIND_MODE => '2',
+		       MULTIPLY_MODE => '3',
+		       SCREEN_MODE => '4',
+		       OVERLAY_MODE => '5',
+		       DIFFERENCE_MODE => '6',
+		       ADDITION_MODE => '7',
+		       SUBTRACT_MODE => '8',
+		       DARKEN_ONLY_MODE => '9',
+		       LIGHTEN_ONLY_MODE => '10',
+		       HUE_MODE => '11',
+		       SATURATION_MODE => '12',
+		       COLOR_MODE => '13',
+		       VALUE_MODE => '14',
+		       DIVIDE_MODE => '15',
+		       DODGE_MODE => '16',
+		       BURN_MODE => '17',
+		       HARDLIGHT_MODE => '18' }
+	},
+    ConvolutionType =>
+	{ contig => 1,
+	  header => 'base/base-types.h',
+	  symbols => [ qw(NORMAL_CONVOL ABSOLUTE_CONVOL NEGATIVE_CONVOL) ],
+	  mapping => { NORMAL_CONVOL => '0',
+		       ABSOLUTE_CONVOL => '1',
+		       NEGATIVE_CONVOL => '2' }
+	},
+    InterpolationType =>
+	{ contig => 1,
+	  header => 'base/base-types.h',
+	  symbols => [ qw(LINEAR_INTERPOLATION CUBIC_INTERPOLATION
+			  NEAREST_NEIGHBOR_INTERPOLATION) ],
+	  mapping => { LINEAR_INTERPOLATION => '0',
+		       CUBIC_INTERPOLATION => '1',
+		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
 	},
     GimpImageBaseType =>
 	{ contig => 1,

@@ -28,6 +28,8 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -57,7 +59,6 @@
 #include "qmask.h"
 #include "scale.h"
 #include "selection.h"
-#include "temp_buf.h"
 #include "undo.h"
 
 #ifdef DISPLAY_FILTERS

@@ -30,41 +30,6 @@ typedef enum
   NO_FILL		/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
 
-/* Layer modes  */
-typedef enum 
-{
-  NORMAL_MODE,
-  DISSOLVE_MODE,
-  BEHIND_MODE,
-  MULTIPLY_MODE,
-  SCREEN_MODE,
-  OVERLAY_MODE,
-  DIFFERENCE_MODE,
-  ADDITION_MODE,
-  SUBTRACT_MODE,
-  DARKEN_ONLY_MODE,
-  LIGHTEN_ONLY_MODE,
-  HUE_MODE,
-  SATURATION_MODE,
-  COLOR_MODE,
-  VALUE_MODE,
-  DIVIDE_MODE,
-  DODGE_MODE,
-  BURN_MODE,
-  HARDLIGHT_MODE,
-  ERASE_MODE,         /*< skip >*/
-  REPLACE_MODE,       /*< skip >*/
-  ANTI_ERASE_MODE     /*< skip >*/
-} LayerModeEffects;
-
-/* Types of convolutions  */
-typedef enum 
-{
-  NORMAL_CONVOL,		/*  Negative numbers truncated  */
-  ABSOLUTE_CONVOL,		/*  Absolute value              */
-  NEGATIVE_CONVOL		/*  add 127 to values           */
-} ConvolutionType;
-
 /* Brush application types  */
 typedef enum
 {
@@ -98,13 +63,6 @@ typedef enum
   LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
   ONCE_END_COLOR   /* paint once, but keep painting with the end color */
 } GradientPaintMode;
-
-typedef enum
-{
-  LINEAR_INTERPOLATION,
-  CUBIC_INTERPOLATION,
-  NEAREST_NEIGHBOR_INTERPOLATION
-} InterpolationType;
 
 typedef enum /*< skip >*/
 {

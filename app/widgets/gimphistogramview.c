@@ -26,9 +26,7 @@
 
 #include "gimphistogramview.h"
 
-#include "gimage.h"
 #include "gimphistogram.h"
-#include "tile_manager.h"
 
 
 #define WAITING 0

@@ -26,6 +26,10 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpchannel.h"
@@ -50,9 +54,6 @@
 #include "gimprc.h"
 #include "parasitelist.h"
 #include "path_transform.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
-#include "tile.h"
 #include "undo.h"
 
 #include "libgimp/gimpparasite.h"

@@ -21,15 +21,16 @@
 #include <gtk/gtk.h>
 
 #include "core/core-types.h"
-#include "tools/tools-types.h"
+
+#include "base/temp-buf.h"
 
 #include "gimpcontext.h"
 #include "gimptoolinfo.h"
 
 #include "context_manager.h"
-#include "temp_buf.h"
 
 /* GRMPF */
+#include "tools/tools-types.h"
 #include "tools/gimprectselecttool.h"
 
 

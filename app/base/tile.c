@@ -20,13 +20,13 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
 #include "tile.h"
-#include "tile_pvt.h"
-#include "tile_cache.h"
-#include "tile_manager.h"
-#include "tile_swap.h"
+#include "tile-private.h"
+#include "tile-cache.h"
+#include "tile-manager.h"
+#include "tile-swap.h"
 
 
 static void tile_destroy (Tile *tile);

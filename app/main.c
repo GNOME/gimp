@@ -362,7 +362,11 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
-  g_log_set_handler ("Gimp-GUI",
+  g_log_set_handler ("Gimp-Base",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+  g_log_set_handler ("Gimp-Core",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
@@ -370,11 +374,15 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
+  g_log_set_handler ("Gimp-Widgets",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
   g_log_set_handler ("Gimp-Tools",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
-  g_log_set_handler ("Gimp-Widgets",
+  g_log_set_handler ("Gimp-GUI",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);

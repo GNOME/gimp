@@ -27,6 +27,8 @@
 
 #include "core/core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -41,7 +43,6 @@
 
 #include "context_manager.h"
 #include "gimage.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

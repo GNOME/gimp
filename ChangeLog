@@ -1,3 +1,71 @@
+2001-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: new directory app/base/
+
+	* app/Makefile.am
+	* app/boundary.[ch]
+	* app/brush_scale.[ch]
+	* app/gimpchecks.h
+	* app/gimplut.[ch]
+	* app/pixel_processor.[ch]
+	* app/pixel_region.[ch]
+	* app/pixel_surround.[ch]
+	* app/temp_buf.[ch]
+	* app/tile.[ch]
+	* app/tile_cache.[ch]
+	* app/tile_manager.[ch]
+	* app/tile_manager_pvt.h
+	* app/tile_pvt.h
+	* app/tile_swap.[ch]: moved to base/
+
+	* app/base/Makefile.am
+	* app/base/base-types.h
+	* app/base/*: new directory for the sub-object pixel maniplation
+	and storage stuff. Does not include Gtk+ or anything outside
+	base/. Did some cleanup in all files.
+
+	* app/appenums.h
+	* app/apptypes.h
+	* app/core/gimpimage.h: removed types which are now in
+	base/base-types.h.
+
+	* app/base/base-config.[ch]
+	* app/gimprc.[ch]: put the config variables for base/ to their own
+	file so base/ doesn not have to include gimprc.h (does not yet
+	work, i.e. the variables are un-configurable right now)
+
+	* app/main.c: set a log handler for "Gimp-Base".
+
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/paint-funcs.[ch]: removed the color hash which
+	maps RGB to color indices because it's a totally standalone system
+	which has nothing to do with the paint-funcs and introduced a
+	GimpImage dependency.
+
+	paint-funcs/ should be considered on the same sub-object
+	(glib-only) level as base/, only in a different directory.
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-colorhash.[ch]: put the color hash here.
+
+	* app/gimage.c: don't invalidate the color hash here...
+
+	* app/core/gimpimage.c: ... but in the colormap_changed() default
+	inplementation. Initialize the hash in class_init().
+
+	* tools/pdbgen/Makefile.am: scan app/base/base-types.h for enums.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/[lots]
+	* app/core/[of]
+	* app/gui/[files]
+	* app/pdb/[all]
+	* app/tools/[over]
+	* app/widgets/[the]
+	* tools/pdbgen/pdb/[place]: changed #includes accordingly. And use
+	base_config->value instead of the stuff from gimprc.h.
+
 2001-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* README.patch_xinput_airbrush

@@ -25,17 +25,6 @@
 
 #define GIMP_IMAGE_TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
-#define MAX_CHANNELS     4
-
-#define GRAY_PIX         0
-#define ALPHA_G_PIX      1
-#define RED_PIX          0
-#define GREEN_PIX        1
-#define BLUE_PIX         2
-#define ALPHA_PIX        3
-#define INDEXED_PIX      0
-#define ALPHA_I_PIX      1
-
 #define COLORMAP_SIZE    768
 
 typedef enum

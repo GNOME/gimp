@@ -104,6 +104,9 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+
 #include "app_procs.h"
 #include "gdisplay.h"
 
@@ -115,8 +118,6 @@
 #include "gimplist.h"
 #include "gimplayer.h"
 #include "gimppalette.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 

@@ -25,11 +25,11 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimppalette.h"
 
 #include "gimppalettepreview.h"
-
-#include "temp_buf.h"
 
 
 static void   gimp_palette_preview_class_init (GimpPalettePreviewClass *klass);

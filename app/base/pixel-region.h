@@ -19,6 +19,7 @@
 #ifndef __PIXEL_REGION_H__
 #define __PIXEL_REGION_H__
 
+
 struct _PixelRegion
 {
   guchar      *data;           /*  pointer to region data        */

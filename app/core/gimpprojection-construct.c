@@ -27,10 +27,15 @@
 
 #include "core-types.h"
 
-/* FIXME: remove the Path <-> BezierSelect dependency */
-#include "tools/tools-types.h"
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
 
 #include "paint-funcs/paint-funcs.h"
+
+/* FIXME: remove the Path <-> BezierSelect dependency */
+#include "tools/tools-types.h"
 
 #include "app_procs.h"
 #include "drawable.h"
@@ -38,6 +43,7 @@
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpimage-colorhash.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
@@ -49,10 +55,6 @@
 #include "gimpundostack.h"
 #include "parasitelist.h"
 #include "path.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
-#include "tile.h"
 #include "undo.h"
 
 #include "libgimp/gimplimits.h"
@@ -74,6 +76,8 @@ static void     gimp_image_init                  (GimpImage      *gimage);
 static void     gimp_image_destroy               (GtkObject      *object);
 static void     gimp_image_name_changed          (GimpObject     *object);
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
+static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
+						  gint            ncol);
 static TempBuf *gimp_image_get_preview           (GimpViewable   *gimage,
 						  gint            width,
 						  gint            height);
@@ -368,10 +372,12 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
   klass->repaint                      = NULL;
-  klass->colormap_changed             = NULL;
+  klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->undo                         = gimp_image_undo;
   klass->redo                         = gimp_image_redo;
+
+  gimp_image_color_hash_init ();
 }
 
 
@@ -521,6 +527,14 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
     floating_sel_invalidate (layer);
 
   gimage->comp_preview_valid = FALSE;
+}
+
+static void 
+gimp_image_real_colormap_changed (GimpImage *gimage,
+				  gint       ncol)
+{
+  if (gimp_image_base_type (gimage) == INDEXED)
+    gimp_image_color_hash_invalidate (gimage, ncol);
 }
 
 static void
@@ -1332,12 +1346,10 @@ gimp_image_transform_color (const GimpImage    *gimage,
 	  break;
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  /*  Least squares method  */
-	  *dest = map_rgb_to_indexed (gimage->cmap,
-				      gimage->num_cols,
-				      gimage,
-				      src[RED_PIX],
-				      src[GREEN_PIX],
-				      src[BLUE_PIX]);
+	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
+							src[RED_PIX],
+							src[GREEN_PIX],
+							src[BLUE_PIX]);
 	  break;
 	}
       break;
@@ -1356,12 +1368,10 @@ gimp_image_transform_color (const GimpImage    *gimage,
 	  break;
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  /*  Least squares method  */
-	  *dest = map_rgb_to_indexed (gimage->cmap,
-				      gimage->num_cols,
-				      gimage,
-				      src[GRAY_PIX],
-				      src[GRAY_PIX],
-				      src[GRAY_PIX]);
+	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
+							src[GRAY_PIX],
+							src[GRAY_PIX],
+							src[GRAY_PIX]);
 	  break;
 	}
       break;

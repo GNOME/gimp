@@ -26,7 +26,8 @@
 
 #include "core/core-types.h"
 
-#include "gimplut.h"
+#include "base/gimplut.h"
+
 #include "gimphistogram.h"
 
 

@@ -42,12 +42,12 @@
 
 #include "core-types.h"
 
+#include "base/base-config.h"
+#include "base/temp-buf.h"
+
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimppattern-header.h"
-
-#include "gimprc.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -180,7 +180,7 @@ gimp_pattern_duplicate (GimpData *data)
   pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
@@ -211,7 +211,7 @@ gimp_pattern_new (const gchar *name)
       }
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
@@ -334,7 +334,7 @@ gimp_pattern_load (const gchar *filename)
   gimp_data_set_filename (GIMP_DATA (pattern), filename);
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
+  if (base_config->stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);

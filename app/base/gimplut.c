@@ -22,25 +22,25 @@
 
 #include <stdio.h>
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
 #include "gimplut.h"
-#include "pixel_region.h"
+#include "pixel-region.h"
 
 
 GimpLut *
 gimp_lut_new (void)
 {
- GimpLut *lut;
+  GimpLut *lut;
 
- lut = g_new (GimpLut, 1);
+  lut = g_new (GimpLut, 1);
 
- lut->luts      = NULL;
- lut->nchannels = 0;
+  lut->luts      = NULL;
+  lut->nchannels = 0;
 
- return lut;
+  return lut;
 }
 
 void
@@ -50,6 +50,7 @@ gimp_lut_free (GimpLut *lut)
 
   for (i = 0; i < lut->nchannels; i++)
     g_free (lut->luts[i]);
+
   g_free (lut->luts);
 }
 
@@ -66,17 +67,22 @@ gimp_lut_setup (GimpLut     *lut,
     {
       for (i = 0; i < lut->nchannels; i++)
 	g_free (lut->luts[i]);
+
       g_free (lut->luts);
     }
+
   lut->nchannels = nchannels;
-  lut->luts = g_new (guchar*, lut->nchannels);
+  lut->luts      = g_new (guchar *, lut->nchannels);
 
   for (i = 0; i < lut->nchannels; i++)
     {
       lut->luts[i] = g_new (guchar, 256);
+
       for (v = 0; v < 256; v++)
-	{ /* to add gamma correction use func(v ^ g) ^ 1/g instead. */
+	{
+	  /* to add gamma correction use func(v ^ g) ^ 1/g instead. */
 	  val = 255.0 * func (user_data, lut->nchannels, i, v/255.0) + 0.5;
+
 	  if (val < 0.0)
 	    lut->luts[i][v] = 0;
 	  else if (val >= 255.0)
@@ -114,11 +120,11 @@ gimp_lut_process (GimpLut     *lut,
   if (lut->nchannels > 3)
     lut3 = lut->luts[3];
 
-  h = srcPR->h;
-  src  = srcPR->data;
-  dest = destPR->data;
-  width = srcPR->w;
-  src_r_i =  srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
+  h        = srcPR->h;
+  src      = srcPR->data;
+  dest     = destPR->data;
+  width    = srcPR->w;
+  src_r_i  =  srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
   dest_r_i = destPR->rowstride - (destPR->bytes * srcPR->w);
 
   if (src_r_i == 0 && dest_r_i == 0)
@@ -196,9 +202,9 @@ gimp_lut_process_inline (GimpLut     *lut,
   if (lut->nchannels > 3)
     lut3 = lut->luts[3];
 
-  h = srcPR->h;
-  src  = srcPR->data;
-  width = srcPR->w;
+  h       = srcPR->h;
+  src     = srcPR->data;
+  width   = srcPR->w;
   src_r_i =  srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
 
   if (src_r_i == 0)

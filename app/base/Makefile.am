@@ -3,6 +3,9 @@
 noinst_LTLIBRARIES = libappbase.la
 
 libappbase_la_SOURCES = \
+	base-types.h		\
+	base-config.c		\
+	base-config.h		\
 	boundary.c		\
 	boundary.h		\
 	brush-scale.c		\

@@ -49,6 +49,9 @@
 
 #include "core/core-types.h"
 
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdrawable.h"
@@ -57,8 +60,6 @@
 
 #include "dialog_handler.h"
 #include "gimprc.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimplimits.h"

@@ -22,13 +22,12 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
 #include "boundary.h"
-#include "errors.h"
-#include "pixel_region.h"
+#include "pixel-region.h"
 #include "tile.h"
-#include "tile_manager.h"
+#include "tile-manager.h"
 
 
 /* half intensity for mask */
@@ -237,9 +236,6 @@ make_seg (gint     x1,
 
       tmp_segs = (BoundSeg *) g_realloc ((void *) tmp_segs,
 					 sizeof (BoundSeg) * max_segs);
-
-      if (!tmp_segs)
-	gimp_fatal_error ("make_seg(): Unable to reallocate segments array for mask boundary.");
     }
 
   tmp_segs[num_segs].x1 = x1;
@@ -280,9 +276,6 @@ allocate_empty_segs (void)
       empty_segs_n = (gint *) g_realloc (empty_segs_n, sizeof (gint) * max_empty_segs);
       empty_segs_c = (gint *) g_realloc (empty_segs_c, sizeof (gint) * max_empty_segs);
       empty_segs_l = (gint *) g_realloc (empty_segs_l, sizeof (gint) * max_empty_segs);
-
-      if (!empty_segs_n || !empty_segs_l || !empty_segs_c)
-	gimp_fatal_error ("allocate_empty_segs(): Unable to reallocate empty segments array for mask boundary.");
     }
 }
 

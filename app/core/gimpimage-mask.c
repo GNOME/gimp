@@ -22,11 +22,14 @@
 
 #include "core-types.h"
 
-/* FIXME: move the "stroke" stuff into the core entirely */
-#include "tools/tools-types.h"
+#include "base/boundary.h"
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
+/* FIXME: move the "stroke" stuff into the core entirely */
+#include "tools/tools-types.h"
 #include "tools/tool_manager.h"
 
 #include "gimpchannel.h"
@@ -35,13 +38,10 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 
-#include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "pdb/procedural_db.h"

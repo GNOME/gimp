@@ -27,17 +27,17 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
+
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
 #include "gimphistogram.h"
 #include "gimprc.h"
-#include "pixel_processor.h"
-#include "pixel_region.h"
 
 
 struct _GimpHistogram

@@ -27,20 +27,18 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
+#include "base/base-types.h"
+
+#include "base/base-config.h"
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
 
 #include "paint-funcs.h"
 
-#include "gimprc.h"
-#include "pixel_processor.h"
-#include "pixel_region.h"
-#include "tile_manager.h"
-#include "tile.h"
-
 
 #define STD_BUF_SIZE       1021
-#define MAXDIFF            195076
-#define HASH_TABLE_SIZE    1021
 #define RANDOM_TABLE_SIZE  4096
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001
@@ -108,20 +106,8 @@ static const LayerMode layer_modes[] =
   { TRUE,  FALSE, TRUE,  }   /*  ANTI_ERASE_MODE    */
 };
 
-/*  ColorHash structure  */
-typedef struct _ColorHash ColorHash;
 
-struct _ColorHash
-{
-  gint       pixel;           /*  R << 16 | G << 8 | B  */
-  gint       index;           /*  colormap index        */
-  GimpImage *gimage;     
-};
-
-static ColorHash  color_hash_table[HASH_TABLE_SIZE];
 static gint       random_table[RANDOM_TABLE_SIZE];
-static gint       color_hash_misses;
-static gint       color_hash_hits;
 static guchar    *tmp_buffer;  /* temporary buffer available upon request */
 static gint       tmp_buffer_size;
 static guchar     no_mask = OPAQUE_OPACITY;
@@ -493,12 +479,6 @@ paint_funcs_setup (void)
   tmp_buffer      = g_new (guchar, STD_BUF_SIZE);
   tmp_buffer_size = STD_BUF_SIZE;
 
-  /*  initialize the color hash table--invalidate all entries  */
-  for (i = 0; i < HASH_TABLE_SIZE; i++)
-    color_hash_table[i].gimage = NULL;
-  color_hash_misses = 0;
-  color_hash_hits = 0;
-
   /*  generate a table of random seeds  */
   srand (RANDOM_SEED);
 
@@ -547,30 +527,6 @@ paint_funcs_free (void)
       100.0 * color_hash_hits / (color_hash_hits + color_hash_misses));
       */
 }
-
-void
-paint_funcs_invalidate_color_hash_table (GimpImage* gimage,
-					 gint       index)
-{
-  gint i;
-
-  g_return_if_fail (gimage != NULL);
-
-  if (index == -1) /* invalidate all entries */
-    {
-      for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].gimage == gimage)
-	  color_hash_table[i].gimage = NULL;
-    }
-  else
-    {
-      for (i = 0; i < HASH_TABLE_SIZE; i++)
-	if (color_hash_table[i].gimage == gimage && 
-	    color_hash_table[i].index  == index)
-	  color_hash_table[i].gimage = NULL;      
-    }
-}
-
 
 void
 color_pixels (guchar       *dest,
@@ -3383,67 +3339,6 @@ map_to_color (gint          src_type,
 }
 
 
-gint
-map_rgb_to_indexed (const guchar    *cmap,
-		    gint             num_cols,
-		    const GimpImage *gimage,
-		    gint             r,
-		    gint             g,
-		    gint             b)
-{
-  guint pixel;
-  gint  hash_index;
-  gint  cmap_index;
-
-  pixel = (r << 16) | (g << 8) | b;
-  hash_index = pixel % HASH_TABLE_SIZE;
-
-  /*  Hash table lookup hit  */
-  if (color_hash_table[hash_index].gimage == gimage &&
-      color_hash_table[hash_index].pixel == pixel)
-    {
-      cmap_index = color_hash_table[hash_index].index;
-      color_hash_hits++;
-    }
-  /*  Hash table lookup miss  */
-  else
-    {
-      const guchar *col;
-      gint          diff, sum, max;
-      gint          i;
-
-      max = MAXDIFF;
-      cmap_index = 0;
-
-      col = cmap;
-      for (i = 0; i < num_cols; i++)
-	{
-	  diff = r - *col++;
-	  sum = diff * diff;
-	  diff = g - *col++;
-	  sum += diff * diff;
-	  diff = b - *col++;
-	  sum += diff * diff;
-
-	  if (sum < max)
-	    {
-	      cmap_index = i;
-	      max = sum;
-	    }
-	}
-
-      /*  update the hash table  */
-      color_hash_table[hash_index].pixel  = pixel;
-      color_hash_table[hash_index].index  = cmap_index;
-      color_hash_table[hash_index].gimage = (GimpImage *) gimage;
-      color_hash_misses++;
-    }
-
-  return cmap_index;
-}
-
-
-
 /**************************************************/
 /*    REGION FUNCTIONS                            */
 /**************************************************/
@@ -4324,10 +4219,10 @@ get_scaled_row (void        **src,
 				 row, src_tmp, 1);
     if (new_width > srcPR->w)
       expand_line(src[3], row, srcPR->bytes, 
-		  srcPR->w, new_width, interpolation_type);
+		  srcPR->w, new_width, base_config->interpolation_type);
     else if (srcPR->w > new_width)
       shrink_line(src[3], row, srcPR->bytes, 
-		  srcPR->w, new_width, interpolation_type);
+		  srcPR->w, new_width, base_config->interpolation_type);
     else /* no scailing needed */
       memcpy(src[3], row, sizeof (double) * new_width * srcPR->bytes);
   }
@@ -4350,7 +4245,7 @@ scale_region (PixelRegion *srcPR,
   gint     old_y = -4, new_y;
   gint     x, y;
 
-  if (interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+  if (base_config->interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
   {
     scale_region_no_resample (srcPR, destPR);
     return;
@@ -4433,7 +4328,7 @@ scale_region (PixelRegion *srcPR,
 		       src_tmp);
 	old_y++;
       }
-      switch(interpolation_type)
+      switch(base_config->interpolation_type)
       {
        case CUBIC_INTERPOLATION:
        {

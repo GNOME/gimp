@@ -39,6 +39,8 @@ libappcore_la_SOURCES = \
 	gimpgradient.h			\
 	gimpimage.c			\
 	gimpimage.h			\
+	gimpimage-colorhash.c		\
+	gimpimage-colorhash.h		\
 	gimpimage-convert.c		\
 	gimpimage-convert.h		\
 	gimpimage-duplicate.c		\

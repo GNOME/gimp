@@ -44,11 +44,12 @@
 
 #include "core/core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpimage.h"
 
 #include "file-utils.h"
 #include "plug_in.h"
-#include "temp_buf.h"
 
 
 static PlugInProcDef *

@@ -26,13 +26,12 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+
 #include "gimpcontainer.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
-
-#include "pixel_region.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

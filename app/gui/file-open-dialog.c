@@ -40,6 +40,8 @@
 
 #include "core/core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
@@ -57,7 +59,6 @@
 #include "file-open.h"
 #include "file-utils.h"
 #include "plug_in.h"
-#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

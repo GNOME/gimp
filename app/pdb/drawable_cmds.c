@@ -28,6 +28,9 @@
 #include "procedural_db.h"
 
 #include "appenums.h"
+#include "base/temp-buf.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
 #include "core/core-types.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"
@@ -37,9 +40,6 @@
 #include "core/gimplayermask.h"
 #include "drawable.h"
 #include "pdb_glue.h"
-#include "temp_buf.h"
-#include "tile.h"
-#include "tile_manager.h"
 
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;

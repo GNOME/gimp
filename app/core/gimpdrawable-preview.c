@@ -26,6 +26,11 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpchannel.h"
@@ -33,10 +38,6 @@
 #include "gimpdrawable.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
-#include "tile.h"
 
 
 /*  local function prototypes  */

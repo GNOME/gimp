@@ -33,7 +33,6 @@
 #include "gdisplay.h"
 
 #include "gimprc.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

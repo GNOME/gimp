@@ -22,14 +22,14 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
 #include "tile.h"
-#include "tile_pvt.h"
-#include "tile_cache.h"
-#include "tile_manager.h"
-#include "tile_manager_pvt.h"
-#include "tile_swap.h"
+#include "tile-private.h"
+#include "tile-cache.h"
+#include "tile-manager.h"
+#include "tile-manager-private.h"
+#include "tile-swap.h"
 
 
 static gint tile_manager_get_tile_num (TileManager *tm,

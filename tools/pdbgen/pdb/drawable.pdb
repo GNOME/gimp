@@ -538,7 +538,8 @@ CODE
 
 @headers = qw("core/gimplayermask.h" "core/gimpchannel.h"
               "core/gimpdrawable.h" "drawable.h"
-	      "pdb_glue.h" "tile.h" "tile_manager.h" "temp_buf.h");
+	      "pdb_glue.h" "base/tile.h" "base/tile-manager.h"
+              "base/temp-buf.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

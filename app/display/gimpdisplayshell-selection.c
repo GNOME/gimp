@@ -22,10 +22,11 @@
 
 #include "core/core-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "boundary.h"
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"

@@ -25,6 +25,9 @@
 
 #include "tools-types.h"
 
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -38,9 +41,7 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "pixel_region.h"
 #include "selection.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

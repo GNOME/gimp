@@ -49,7 +49,6 @@
 #include "file-save.h"
 #include "file-utils.h"
 #include "plug_in.h"
-#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

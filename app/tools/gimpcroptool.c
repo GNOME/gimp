@@ -28,6 +28,8 @@
 
 #include "tools-types.h"
 
+#include "base/pixel-region.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -46,7 +48,6 @@
 
 #include "app_procs.h"
 #include "floating_sel.h"
-#include "pixel_region.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -26,10 +26,11 @@
 
 #include "core/core-types.h"
 
+#include "base/pixel-region.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 
-#include "pixel_region.h"
 #include "scan_convert.h"
 
 

@@ -29,10 +29,11 @@ typedef enum
   SWAP_COMPRESS
 } SwapCommand;
 
-typedef gint (*SwapFunc) (gint      fd,
-			  Tile     *tile,
-			  gint      cmd,
-			  gpointer  user_data);
+
+typedef gint (* SwapFunc) (gint      fd,
+			   Tile     *tile,
+			   gint      cmd,
+			   gpointer  user_data);
 
 
 void   tile_swap_exit     (void);

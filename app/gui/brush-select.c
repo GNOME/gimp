@@ -24,8 +24,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
 #include "widgets/widgets-types.h"
+
+#include "base/temp-buf.h"
 
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontainer.h"
@@ -45,7 +46,6 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
 

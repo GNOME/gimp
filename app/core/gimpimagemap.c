@@ -22,6 +22,10 @@
 
 #include "core/core-types.h"
 
+#include "base/pixel-region.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdrawable.h"
@@ -30,9 +34,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
-#include "pixel_region.h"
-#include "tile.h"
-#include "tile_manager.h"
 
 
 #define WAITING 0

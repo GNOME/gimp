@@ -27,6 +27,9 @@
 
 #include "core-types.h"
 
+#include "base/base-config.h"
+#include "base/temp-buf.h"
+
 /* FIXME: make a GimpToolFactory out of the tool_manager and put it here */
 #include "tools/tools-types.h"
 
@@ -46,7 +49,6 @@
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "temp_buf.h"
 
 
 typedef void (* GimpContextCopyArgFunc) (GimpContext *src,
@@ -1827,7 +1829,7 @@ gimp_context_real_set_brush (GimpContext *context,
     }
 
   /*  make sure the active brush is swapped before we get a new one...  */
-  if (stingy_memory_use &&
+  if (base_config->stingy_memory_use         &&
       context->brush && context->brush->mask &&
       GTK_OBJECT (context->brush)->ref_count == 2)
     {
@@ -1856,8 +1858,8 @@ gimp_context_real_set_brush (GimpContext *context,
 			  context);
 
       /*  Make sure the active brush is unswapped... */
-      if (stingy_memory_use &&
-	  brush->mask &&
+      if (base_config->stingy_memory_use &&
+	  brush->mask                    &&
 	  GTK_OBJECT (brush)->ref_count < 2)
 	{
 	  temp_buf_unswap (brush->mask);
@@ -1995,7 +1997,7 @@ gimp_context_real_set_pattern (GimpContext *context,
     }
 
   /*  make sure the active pattern is swapped before we get a new one...  */
-  if (stingy_memory_use &&
+  if (base_config->stingy_memory_use             &&
       context->pattern && context->pattern->mask &&
       GTK_OBJECT (context->pattern)->ref_count == 2)
     {
@@ -2021,8 +2023,8 @@ gimp_context_real_set_pattern (GimpContext *context,
 			  context);
 
       /*  Make sure the active pattern is unswapped... */
-      if (stingy_memory_use &&
-	  pattern->mask &&
+      if (base_config->stingy_memory_use   &&
+	  pattern->mask                    &&
 	  GTK_OBJECT (pattern)->ref_count < 2)
 	{
 	  temp_buf_unswap (pattern->mask);

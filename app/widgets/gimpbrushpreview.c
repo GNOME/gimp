@@ -25,13 +25,13 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpbrushpipe.h"
 
 #include "gimpbrushpreview.h"
 #include "gimpdnd.h"
-
-#include "temp_buf.h"
 
 
 static void   gimp_brush_preview_class_init (GimpBrushPreviewClass *klass);

@@ -22,6 +22,8 @@
 
 #include "widgets/widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
@@ -33,8 +35,6 @@
 #include "widgets/gimplistitem.h"
 #include "widgets/gimpmenuitem.h"
 #include "widgets/gimppreview.h"
-
-#include "temp_buf.h"
 
 
 static gchar * gimp_container_view_tool_name_func    (GtkWidget *widget);

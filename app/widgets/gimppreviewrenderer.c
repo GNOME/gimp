@@ -31,6 +31,8 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
@@ -51,7 +53,6 @@
 #include "gimptoolinfopreview.h"
 
 #include "image_render.h"
-#include "temp_buf.h"
 
 #include "libgimp/gimplimits.h"
 

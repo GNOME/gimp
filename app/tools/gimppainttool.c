@@ -28,6 +28,12 @@
 
 #include "tools-types.h"
 
+#include "base/brush-scale.h"
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpbrushpipe.h"
@@ -37,16 +43,11 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "brush_scale.h"
 #include "devices.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "pixel_region.h"
 #include "selection.h"
-#include "temp_buf.h"
-#include "tile.h"
-#include "tile_manager.h"
 #include "undo.h"
 
 #include "gimpdrawtool.h"

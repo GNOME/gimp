@@ -29,8 +29,6 @@
 void  paint_funcs_setup     (void);
 void  paint_funcs_free      (void);
 
-void paint_funcs_invalidate_color_hash_table (GimpImage* gimage,
-					      gint       index);
 
 /*  Paint functions  */
 
@@ -415,15 +413,15 @@ void  extract_from_inten_pixels           (unsigned char       *src,
 /*  extract information from indexed pixels based on
  *  a mask.
  */
-void  extract_from_indexed_pixels          (unsigned char *src,
-					    unsigned char       *dest,
-					    const unsigned char *mask,
-					    const unsigned char *cmap,
-					    const unsigned char *bg,
-					    int                  cut,
-					    int                  length,
-					    int                  bytes,
-					    int                  has_alpha);
+void  extract_from_indexed_pixels         (unsigned char *src,
+					   unsigned char       *dest,
+					   const unsigned char *mask,
+					   const unsigned char *cmap,
+					   const unsigned char *bg,
+					   int                  cut,
+					   int                  length,
+					   int                  bytes,
+					   int                  has_alpha);
 
 
 /*  variable source to RGB color mapping
@@ -431,25 +429,10 @@ void  extract_from_indexed_pixels          (unsigned char *src,
  *  src_type == 1  (GRAY)
  *  src_type == 2  (INDEXED)
  */
-void
-map_to_color                              (int                  src_type,
+void  map_to_color                        (int                  src_type,
 					   const unsigned char *cmap,
 					   const unsigned char *src,
 					   unsigned char       *rgb);
-
-
-/*  RGB to index mapping functions...
- *
- *  Hash table lookup speeds up the standard
- *  least squares method
- */
-gint   map_rgb_to_indexed                 (const guchar        *cmap,
-					   gint                 num_cols,
-					   const GimpImage     *gimage,
-					   gint                 r,
-					   gint                 g,
-					   gint                 b);
-
 
 /*  Region functions  */
 void  color_region                        (PixelRegion *dest, 

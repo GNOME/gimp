@@ -27,7 +27,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
+#include "base/base-types.h"
 #include "context_manager.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"

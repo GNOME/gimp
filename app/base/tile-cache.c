@@ -22,15 +22,15 @@
 #include <pthread.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
-#include "apptypes.h"
+#include "base-types.h"
 
-#include "gimprc.h"
+#include "base-config.h"
 #include "tile.h"
-#include "tile_cache.h"
-#include "tile_swap.h"
-#include "tile_pvt.h"
+#include "tile-cache.h"
+#include "tile-swap.h"
+#include "tile-private.h"
 
 
 /*  This is the percentage of the maximum cache size that should be cleared
@@ -48,11 +48,11 @@ static void     tile_cache_flush_internal (Tile     *tile);
 #ifdef USE_PTHREADS
 static gpointer tile_idle_thread          (gpointer  data);
 #else
-static gint     tile_idle_preswap         (gpointer  data);
+static gboolean tile_idle_preswap         (gpointer  data);
 #endif
 
 
-static int initialize = TRUE;
+static gboolean initialize = TRUE;
 
 typedef struct _TileList 
 {
@@ -60,24 +60,24 @@ typedef struct _TileList
   Tile *last;
 } TileList;
 
-static unsigned long max_tile_size = TILE_WIDTH * TILE_HEIGHT * 4;
-static unsigned long cur_cache_size = 0;
-static unsigned long max_cache_size = 0;
-static unsigned long cur_cache_dirty = 0;
+static gulong   max_tile_size = TILE_WIDTH * TILE_HEIGHT * 4;
+static gulong   cur_cache_size = 0;
+static gulong   max_cache_size = 0;
+static gulong   cur_cache_dirty = 0;
 static TileList clean_list = { NULL, NULL };
 static TileList dirty_list = { NULL, NULL };
 
 #ifdef USE_PTHREADS
-static pthread_t preswap_thread;
+static pthread_t       preswap_thread;
 static pthread_mutex_t dirty_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t dirty_signal = PTHREAD_COND_INITIALIZER;
+static pthread_cond_t  dirty_signal = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t tile_mutex  = PTHREAD_MUTEX_INITIALIZER;
-#define CACHE_LOCK pthread_mutex_lock(&tile_mutex)
+#define CACHE_LOCK   pthread_mutex_lock(&tile_mutex)
 #define CACHE_UNLOCK pthread_mutex_unlock(&tile_mutex)
 #else
-static gint idle_swapper = 0;
-#define CACHE_LOCK /*nothing*/
-#define CACHE_UNLOCK /*nothing*/
+static guint idle_swapper = 0;
+#define CACHE_LOCK   /* nothing */
+#define CACHE_UNLOCK /* nothing */
 #endif
 
 
@@ -252,14 +252,14 @@ tile_cache_init (void)
       clean_list.first = clean_list.last = NULL;
       dirty_list.first = dirty_list.last = NULL;
 
-      max_cache_size = tile_cache_size;
+      max_cache_size = base_config->tile_cache_size;
 
 #ifdef USE_PTHREADS
       pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
 #else
-      idle_swapper = gtk_timeout_add (IDLE_SWAPPER_TIMEOUT,
-				      (GtkFunction) tile_idle_preswap, 
-				      (gpointer) 0);
+      idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
+				    tile_idle_preswap, 
+				    NULL);
 #endif
     }
 }
@@ -374,7 +374,7 @@ tile_idle_thread (gpointer data)
 }
 
 #else
-static gint
+static gboolean
 tile_idle_preswap (gpointer data)
 {
   Tile *tile;

@@ -27,15 +27,13 @@
 
 #include "core-types.h"
 
+#include "base/pixel-region.h"
+
 #include "paint-funcs/paint-funcs.h"
 
-#include "boundary.h"
-#include "drawable.h"
 #include "gimplayermask.h"
-#include "pixel_region.h"
-#include "temp_buf.h"
-#include "tile_manager.h"
-#include "tile.h"
+
+#include "drawable.h"
 #include "undo.h"
 
 #include "libgimp/gimpparasite.h"

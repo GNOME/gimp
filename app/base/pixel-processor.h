@@ -24,28 +24,29 @@
 
 typedef struct _PixelProcessor PixelProcessor;
 
+
 typedef void (* p_func)             (void);
-typedef gint (* ProgressReportFunc) (void *,
-				     gint,
-				     gint,
-				     gint,
-				     gint);
+typedef gint (* ProgressReportFunc) (gpointer ,
+				     gint     ,
+				     gint     ,
+				     gint     ,
+				     gint     );
 
 
-void             pixel_regions_process_parallel (p_func         f,
-						 gpointer       data,
-						 gint           num_regions,
+void             pixel_regions_process_parallel (p_func             f,
+						 gpointer           data,
+						 gint               num_regions,
 						 ...);
-PixelProcessor * pixel_process_progress         (p_func         f,
-						 gpointer       data,
+PixelProcessor * pixel_process_progress         (p_func             f,
+						 gpointer           data,
 						 ProgressReportFunc progress_func,
-						 gpointer        progress_data,
-						 gint            num_regions,
+						 gpointer           progress_data,
+						 gint               num_regions,
 						 ...);
 
-void             pixel_processor_free           (PixelProcessor *);
-void             pixel_processor_stop           (PixelProcessor *);
-PixelProcessor * pixel_processor_cont           (PixelProcessor *);
+void             pixel_processor_free           (PixelProcessor    *pp);
+void             pixel_processor_stop           (PixelProcessor    *pp);
+PixelProcessor * pixel_processor_cont           (PixelProcessor    *pp);
 
 
 #endif /* __PIXEL_PROCESSOR_H__ */

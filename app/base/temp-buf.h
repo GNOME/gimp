@@ -19,7 +19,6 @@
 #ifndef __TEMP_BUF_H__
 #define __TEMP_BUF_H__
 
-#include "gimpchecks.h"
 
 struct _TempBuf
 {
@@ -37,52 +36,52 @@ struct _TempBuf
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new        (gint         width,
-			       gint         height,
-			       gint         bytes,
-			       gint         x,
-			       gint         y,
-			       guchar      *col);
-TempBuf * temp_buf_new_check  (gint          width,
-			       gint	     height,
-			       GimpCheckType check_type,
-			       GimpCheckSize check_size);
-TempBuf * temp_buf_copy       (TempBuf     *src,
-			       TempBuf     *dest);
-TempBuf * temp_buf_resize     (TempBuf     *buf,
-			       gint         bytes,
-			       gint         x,
-			       gint         y,
-			       gint         width,
-			       gint         height);
-TempBuf * temp_buf_scale      (TempBuf     *buf,
-			       gint         width,
-			       gint         height);
-TempBuf * temp_buf_copy_area  (TempBuf     *src,
-			       TempBuf     *dest,
-			       gint         x,
-			       gint         y,
-			       gint         width,
-			       gint         height,
-			       gint         dest_x,
-			       gint         dest_y);
-void      temp_buf_free       (TempBuf     *buf);
-guchar  * temp_buf_data       (TempBuf     *buf);
-guchar  * temp_buf_data_clear (TempBuf     *buf);
+TempBuf * temp_buf_new        (gint           width,
+			       gint           height,
+			       gint           bytes,
+			       gint           x,
+			       gint           y,
+			       guchar        *col);
+TempBuf * temp_buf_new_check  (gint           width,
+			       gint	      height,
+			       GimpCheckType  check_type,
+			       GimpCheckSize  check_size);
+TempBuf * temp_buf_copy       (TempBuf       *src,
+			       TempBuf       *dest);
+TempBuf * temp_buf_resize     (TempBuf       *buf,
+			       gint           bytes,
+			       gint           x,
+			       gint           y,
+			       gint           width,
+			       gint           height);
+TempBuf * temp_buf_scale      (TempBuf       *buf,
+			       gint           width,
+			       gint           height);
+TempBuf * temp_buf_copy_area  (TempBuf       *src,
+			       TempBuf       *dest,
+			       gint           x,
+			       gint           y,
+			       gint           width,
+			       gint           height,
+			       gint           dest_x,
+			       gint           dest_y);
+void      temp_buf_free       (TempBuf       *buf);
+guchar  * temp_buf_data       (TempBuf       *buf);
+guchar  * temp_buf_data_clear (TempBuf       *buf);
 
 /* The mask buffer functions  */
 
-MaskBuf * mask_buf_new        (gint         width,
-			       gint         height);
-void      mask_buf_free       (MaskBuf     *mask_buf);
-guchar  * mask_buf_data       (MaskBuf     *mask_buf);
-guchar  * mask_buf_data_clear (MaskBuf     *mask_buf);
+MaskBuf * mask_buf_new        (gint           width,
+			       gint           height);
+void      mask_buf_free       (MaskBuf       *mask_buf);
+guchar  * mask_buf_data       (MaskBuf       *mask_buf);
+guchar  * mask_buf_data_clear (MaskBuf       *mask_buf);
 
 /*  The disk caching functions  */
 
-void      temp_buf_swap       (TempBuf     *buf);
-void      temp_buf_unswap     (TempBuf     *buf);
-void      temp_buf_swap_free  (TempBuf     *buf);
+void      temp_buf_swap       (TempBuf       *buf);
+void      temp_buf_unswap     (TempBuf       *buf);
+void      temp_buf_swap_free  (TempBuf       *buf);
 
 
 /*  Called by app_procs:exit() to free up the cached undo buffer  */

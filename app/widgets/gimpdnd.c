@@ -49,7 +49,6 @@
 
 #include "context_manager.h"
 #include "gimprc.h"
-#include "temp_buf.h"
 
 #include "gimpdnd.h"
 #include "gimppreview.h"

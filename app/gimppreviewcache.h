@@ -20,9 +20,6 @@
 #define __GIMPPREVIEWCACHE_H__
 
 
-#include "temp_buf.h"
-
-
 #define PREVIEW_CACHE_PRIME_WIDTH  112
 #define PREVIEW_CACHE_PRIME_HEIGHT 112
 

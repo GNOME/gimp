@@ -44,9 +44,4 @@ extern MessageHandlerType message_handler;
 extern gboolean gimp_busy;
 
 
-#ifdef G_OS_WIN32
-gchar * quote_spaces (gchar *string);
-#endif
-
-
 #endif /*  __APPENV_H__  */

@@ -19,7 +19,6 @@
 #ifndef __IMAGE_RENDER_H__
 #define __IMAGE_RENDER_H__
 
-#include "gimpchecks.h"
 
 /*  Functions  */
 void   render_setup (GimpCheckType  check_type,

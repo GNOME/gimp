@@ -18,15 +18,13 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
-#include "core/core-types.h"
+#include "base-types.h"
 
-#include "core/gimpimage.h"
-
-#include "pixel_region.h"
-#include "pixel_surround.h"
-#include "tile_manager.h"
+#include "pixel-region.h"
+#include "pixel-surround.h"
+#include "tile-manager.h"
 #include "tile.h"
 
 
