@@ -1,3 +1,23 @@
+1999-12-10  Garry R. Osgood  <gosgood@idt.net>
+
+	* app/undo.c : An inadvertent substitution of UndoTypes LAYER_ADD_UNDO
+ 	and LAYER_REMOVE_UNDO in undo_pop_layer_mask() and undo_free_layer_mask()
+	sanity checks prevented the proper disposal of GimpLayerMasks and 
+	associated tile managers and tiles. Changed to LAYER_MASK_ADD_UNDO 
+	and LAYER_MASK_REMOVE_UNDO to be consistent with the undo_push_layer_mask()
+	function and to invoke proper cleanup and release of retiring alpha layer masks.
+	* docs/undo.txt: New file, an overview of undo logic written by 
+	Austin Donnelly so that I could write this change log entry with 
+	panache and flair. ;)
+	* app/undo.c
+	* app/undo_types.h
+	* app/gimpimage.c : Introduced a new UndoType, UNDO_NULL, which maps
+	to zero, introducing that value into the enumerated type and preventing
+	strict ANSI compilers from complaining about mixing enumerated and
+	unenumerated types. Use the type to signal type unknown/error/untyped
+	conditions.
+ 	Full patch documentation at http://idt.net/~gosgood/gimp-patch/patch02.html
+	
 1999-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/jpeg.c: The plugin allocated memory chunks of

@@ -26,10 +26,11 @@
  * the bottom of undo.c as well. */
 typedef enum
 {
-    /* Type 0 is special - in the gimpimage structure it means
+    /* Type UNDO_NULL (0) is special - in the gimpimage structure it means
      * there is no undo group currently being added to. */
 
-    IMAGE_UNDO = 1,
+    UNDO_NULL = 0, /* Picky compilers demand this in the enumeration - gosgood@idt.net */
+    IMAGE_UNDO,
     IMAGE_MOD_UNDO,
     MASK_UNDO,
     LAYER_DISPLACE_UNDO,

@@ -181,7 +181,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->undo_bytes            = 0;
   gimage->undo_levels           = 0;
   gimage->group_count           = 0;
-  gimage->pushing_undo_group    = 0;
+  gimage->pushing_undo_group    = UNDO_NULL;
   gimage->comp_preview_valid[0] = FALSE;
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;

@@ -316,7 +316,7 @@ undo_push (GImage   *gimage,
 	  gimage->dirty = 10000;
     }
 
-  if (!gimage->pushing_undo_group)
+  if (gimage->pushing_undo_group ==UNDO_NULL )
     if (! undo_free_up_space (gimage))
       return NULL;
 
@@ -325,7 +325,7 @@ undo_push (GImage   *gimage,
   gimage->undo_bytes += size;
 
   /*  only increment levels if not in a group  */
-  if (!gimage->pushing_undo_group)
+  if (gimage->pushing_undo_group == UNDO_NULL)
       gimage->undo_levels ++;
 
   gimage->undo_stack = g_slist_prepend (gimage->undo_stack, (void *) new);
@@ -333,7 +333,7 @@ undo_push (GImage   *gimage,
 
   /* lastly, tell people about the newly pushed undo (must come after
    * modification of undo_stack).  */
-  if (!gimage->pushing_undo_group)
+  if (gimage->pushing_undo_group == UNDO_NULL)
       gimp_image_undo_event (gimage, UNDO_PUSHED);
 
   return new;
@@ -456,7 +456,7 @@ undo_pop (GImage *gimage)
    * leave unbalanced group start marker earlier in the stack too,
    * causing much confusion when it's later reached and
    * mis-interpreted as a group start.  */
-  g_return_val_if_fail (gimage->pushing_undo_group == 0, FALSE);
+  g_return_val_if_fail (gimage->pushing_undo_group == UNDO_NULL, FALSE);
 
   return pop_stack (gimage, &gimage->undo_stack, &gimage->redo_stack, UNDO);
 }
@@ -466,7 +466,7 @@ int
 undo_redo (GImage *gimage)
 {
   /* ditto for redo stack */
-  g_return_val_if_fail (gimage->pushing_undo_group == 0, FALSE);
+  g_return_val_if_fail (gimage->pushing_undo_group == UNDO_NULL, FALSE);
 
   return pop_stack (gimage, &gimage->redo_stack, &gimage->undo_stack, REDO);
 }
@@ -501,7 +501,7 @@ undo_get_topitem_type (GSList *stack)
     Undo *object;
 
     if (!stack)
-	return 0;
+	return UNDO_NULL;
 
     object = stack->data;
 
@@ -529,11 +529,11 @@ undo_get_undo_name (GImage *gimage)
 UndoType
 undo_get_undo_top_type (GImage *gimage)
 {
-    g_return_val_if_fail (gimage != NULL, 0);
+    g_return_val_if_fail (gimage != NULL, UNDO_NULL);
 
     /* don't want to encourage undo while a group is open */
-    if (gimage->pushing_undo_group != 0)
-	return 0;
+    if (gimage->pushing_undo_group != UNDO_NULL)
+	return UNDO_NULL;
 
     return undo_get_topitem_type (gimage->undo_stack);
 }
@@ -545,7 +545,7 @@ undo_get_redo_name (GImage *gimage)
     g_return_val_if_fail (gimage != NULL, NULL);
 
     /* don't want to encourage redo while a group is open */
-    if (gimage->pushing_undo_group != 0)
+    if (gimage->pushing_undo_group != UNDO_NULL)
 	return NULL;
 
     return undo_get_topitem_name (gimage->redo_stack);
@@ -594,7 +594,7 @@ undo_map_over_undo_stack (GImage       *gimage,
 			  void         *data)
 {
     /* shouldn't have group open */
-    g_return_if_fail (gimage->pushing_undo_group == 0);
+    g_return_if_fail (gimage->pushing_undo_group == UNDO_NULL);
     undo_map_over_stack (gimage->undo_stack, fn, data);
 }
 
@@ -604,7 +604,7 @@ undo_map_over_redo_stack (GImage       *gimage,
 			  void         *data)
 {
     /* shouldn't have group open */
-    g_return_if_fail (gimage->pushing_undo_group == 0);
+    g_return_if_fail (gimage->pushing_undo_group == UNDO_NULL);
     undo_map_over_stack (gimage->redo_stack, fn, data);
 }
 
@@ -707,7 +707,7 @@ undo_push_group_end (GImage *gimage)
 					    boundary_marker);
       gimage->undo_bytes += boundary_marker->bytes;
 
-      gimage->pushing_undo_group = 0;
+      gimage->pushing_undo_group = UNDO_NULL;
 
       /* Do it here, since undo_push doesn't emit this event while in the
        * middle of a group */
@@ -1637,8 +1637,8 @@ undo_pop_layer_mask (GImage    *gimage,
   lmu = (LayerMaskUndo *) lmu_ptr;
 
   /*  remove layer mask  */
-  if ((state == UNDO && type == LAYER_ADD_UNDO) ||
-      (state == REDO && type == LAYER_REMOVE_UNDO))
+  if ((state == UNDO && type == LAYER_MASK_ADD_UNDO) ||
+      (state == REDO && type == LAYER_MASK_REMOVE_UNDO))
     {
       /*  remove the layer mask  */
       lmu->layer->mask       = NULL;
@@ -1690,8 +1690,8 @@ undo_free_layer_mask (UndoState  state,
    *  stack and it's a layer add, or if we're freeing from
    *  the undo stack and it's a layer remove
    */
-  if ((state == REDO && type == LAYER_ADD_UNDO) ||
-      (state == UNDO && type == LAYER_REMOVE_UNDO))
+  if ((state == REDO && type == LAYER_MASK_ADD_UNDO) ||
+      (state == UNDO && type == LAYER_MASK_REMOVE_UNDO))
     layer_mask_delete (lmu->mask);
 
   g_free (lmu);
@@ -2852,7 +2852,7 @@ static struct undo_name_t {
     UndoType type;
     const char *name;
 } undo_name[] = {
-    {0,				N_("<<invalid>>")},
+    {UNDO_NULL,     		N_("<<invalid>>")},
     {IMAGE_UNDO,		N_("image")},
     {IMAGE_MOD_UNDO,		N_("image mod")},
     {MASK_UNDO,			N_("mask")},
