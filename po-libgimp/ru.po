@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-04-12 21:52+0400\n"
+"PO-Revision-Date: 2004-04-20 00:07+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -125,8 +125,7 @@ msgstr "%s может обработать только RGB или индекс�
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr ""
-"%s может обработать только изображения в оттенках серого или индексированные"
+msgstr "%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:346
 #, c-format
@@ -186,7 +185,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить канал (сохранённое выделение) как %s.\n"
+"Вы собираетесь сохранить канал (сохраненное выделение) как %s.\n"
 "Видимые слои не будут сохранены."
 
 #: libgimp/gimpfontmenu.c:89
@@ -313,7 +312,7 @@ msgstr "/Цвет фона"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
-msgstr "/Чёрный"
+msgstr "/Черный"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
@@ -370,7 +369,7 @@ msgstr "Красный"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr "Зелёный"
+msgstr "Зеленый"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
@@ -429,8 +428,7 @@ msgstr "Каталог"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
-"Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
+msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -526,8 +524,7 @@ msgstr "Новое зерно"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Инициализировать генератор случайных чисел сгенерированным случайным числом"
+msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
@@ -535,8 +532,7 @@ msgstr "Перемешать"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
+msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
@@ -701,3 +697,4 @@ msgstr "Давление"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Нет (нормальное зрение)"
+

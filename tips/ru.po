@@ -1,18 +1,21 @@
+# translation of gimp.TIPS.ru.po to russian
 # translation of gimp20-tips.po to russian
 # Copyright (C) 2004 Free Software Foundation, Inc.
 # Roxana Chernogolova <padavan@mail.ru>, 2004.
+# AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP-2.0\n"
+"Project-Id-Version: gimp.TIPS.ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 22:57+0100\n"
-"PO-Revision-Date: 2004-02-14 15:44+0300\n"
-"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
+"PO-Revision-Date: 2004-05-10 18:59+0400\n"
+"Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to The GIMP !</big>"
@@ -43,7 +46,6 @@ msgstr ""
 "залить область цветом фона используйте клавишу <tt>Ctrl</tt>."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -74,7 +76,6 @@ msgstr ""
 "находящиеся в окне диалога слоев, или вызовите эти функции из меню."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -109,7 +110,6 @@ msgstr ""
 "\"Кривые\" (Слой-&gt;Цвета-&gt;Кривые)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -129,7 +129,6 @@ msgstr ""
 "изображения, чтобы скрыть или показать панель инструментов и окна диалогов."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -148,7 +147,6 @@ msgstr ""
 "кнопкой мыши. И не волнуйтесь, большинство действий можно отменить..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -178,7 +176,7 @@ msgid ""
 "will be saved compressed. Of course loading compressed images works too."
 msgstr ""
 "В GIMP поддерживиется архивирование gzip \"на лету\". Добавьте <tt>.gz</tt> "
-"(или <tt>.bz2</tt>) к имени файла, и изображение буедт заархивировано. "
+"(или <tt>.bz2</tt>) к имени файла, и изображение будет заархивировано. "
 "Заархивированные изображения можно открывать так же, как обычные."
 
 #: tips/gimp-tips.xml.in.h:18
@@ -209,7 +207,7 @@ msgid ""
 "and selecting \"Add Alpha Channel\"."
 msgstr ""
 "Слой \"Фон\" - особенный. В нем отсутствует прозрачность. Поэтому невозможно "
-"создать для маску слоя или переместить его выше в стопке слоев. ЧТобы "
+"создать для маску слоя или переместить его выше в стопке слоев. Чтобы "
 "добавить прозрачность для этого слоя, нажмите правой кнопкой мыши в диалоге "
 "слоев и выберите пункт \"Добавить альфа-канал\"."
 
@@ -266,22 +264,21 @@ msgstr ""
 "перемещением вправо и влево."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"В GIMP усть возможность создвавть и редактировать составные области "
+"В GIMP есть возможность создавать и редактировать составные области "
 "выделения при помощи контуров. В диалоге контуров можно работать с "
-"нсколькими контурами и преобразовывать их в области выделения."
+"несколькими контурами и преобразовывать их в области выделения."
 
 #: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"Если диалога слоев переместиь слой на панель инструментов, то будет создано "
+"Если диалога слоев переместить слой на панель инструментов, то будет создано "
 "новое изображение, состоящее только из этого слоя."
 
 #: tips/gimp-tips.xml.in.h:28
@@ -295,7 +292,6 @@ msgstr ""
 "(или его выделенная область) будет залито этим цветом."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -329,7 +325,7 @@ msgid ""
 "are making a selection in order to constrain it to a perfect square or "
 "circle, or to have it centered on its starting point."
 msgstr ""
-"ЧТобы создать выделенную облсать в виде квадрата и ли круга, а так же , "
+"Чтобы создать выделенную облсать в виде квадрата и ли круга, а так же , "
 "чтобы создать выделенную область из указанного центра, используйте клавиши "
 "<tt>Shift</tt> и <tt>Ctrl</tt>."
 
@@ -340,7 +336,7 @@ msgid ""
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Выделенную область можно сохранить как канал (Выделение-&gt;СОхранить в "
+"Выделенную область можно сохранить как канал (Выделение-&gt;Сохранить в "
 "канале), а потом редактировать этот канал при помощи любых инструментов. Для "
 "изменения видимости канала и преобразования его в выделенную область  "
 "используйте кнопки, находящиеся в диалоге каналов."
@@ -376,3 +372,4 @@ msgstr ""
 #~ msgstr ""
 #~ "Границу выделения области можно перемещать при помощи клавиши <tt>Alt</"
 #~ "tt>-drag."
+
