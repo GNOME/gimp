@@ -668,7 +668,7 @@ unsharp_preview_new (void)
   GtkObject *adj;
   GtkWidget *scrollbar;
   GtkWidget *preview_toggle;
-  
+
   gint       sel_width;
   gint       sel_height;
   gint       x1, y1, x2, y2;
@@ -750,7 +750,7 @@ unsharp_mask_dialog (void)
   GtkWidget *dialog;
   GtkWidget *table;
   GtkWidget *vbox;
-  GtkWidget *aligment;
+  GtkWidget *hbox;
   GtkWidget *scrollbar;
   GtkObject *adj;
   gboolean   run;
@@ -772,12 +772,12 @@ unsharp_mask_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  aligment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), aligment, FALSE, FALSE, 0);
-  gtk_widget_show (aligment);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   table = unsharp_preview_new ();
-  gtk_container_add (GTK_CONTAINER (aligment), table);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   table = gtk_table_new (3, 3, FALSE);

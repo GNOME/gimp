@@ -58,12 +58,12 @@ static void      sel_gauss               (GimpDrawable     *drawable,
                                           gdouble           radius,
                                           gint              maxdelta);
 static gboolean  sel_gauss_dialog        (GimpDrawable     *drawable);
-static void      preview_update_real     (GimpDrawable *drawable,
-                                          gboolean      apply_effect);
+static void      preview_update_real     (GimpDrawable     *drawable,
+                                          gboolean          apply_effect);
 static void      preview_move            (GimpDrawable     *drawable);
 static gboolean  preview_button_release  (GimpDrawable     *drawable);
-static void      preview_toggle_callback (GtkWidget    *toggle,
-                                          GimpDrawable *drawable);
+static void      preview_toggle_callback (GtkWidget        *toggle,
+                                          GimpDrawable     *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -222,7 +222,8 @@ static gboolean
 sel_gauss_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *alignment;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *scrollbar;
@@ -248,6 +249,12 @@ sel_gauss_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   /* preview stuff */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   sel_width     = x2 - x1;
@@ -255,13 +262,12 @@ sel_gauss_dialog (GimpDrawable *drawable)
   preview_width  = MIN (sel_width, PREVIEW_SIZE);
   preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), alignment,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (alignment), table);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   frame = gtk_frame_new (NULL);
@@ -330,9 +336,7 @@ sel_gauss_dialog (GimpDrawable *drawable)
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table,
-                     TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   spinbutton = gimp_spin_button_new (&adj,
                                      bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,

@@ -370,6 +370,13 @@ domain_locale_parse (HelpDomain  *domain,
                                NULL);
   g_free (base_dir);
 
+#ifdef GIMP_HELP_DEBUG
+          g_printerr ("help (%s): parsing '%s' for domain \"%s\"\n",
+                      locale->locale_id,
+                      filename,
+                      domain->help_domain);
+#endif
+
   io = g_io_channel_new_file (filename, "r", error);
   if (! io)
     {
