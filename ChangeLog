@@ -1,3 +1,22 @@
+2001-11-11  Tor Lillqvist  <tml@iki.fi>
+
+	* app/user_install.c: I finally had enough of the ugliness and
+	problems related to running the user_install.bat script, and
+	rewrote user_install_run() to setup the user .gimp-1.2 directory
+	by itself. GIMP already knows what needs to be done, the
+	information is in the tree_items array. Only a few new bits of
+	info per tree item were needed. As of now, this is used only on
+	Win32, but the same code should work on Unix, too (hint).
+	(copy_file, copy_directory): New auxiliary functions.
+	(quote_spaces): Now unused, remove.
+	
+	* user_install.bat: Remove.
+
+	* Makefile.am: Remove here, too.
+
+	* gimp-zip.in: Be afraid of Unisys, don't distribute gif.exe.  Add
+	etc/gimp/1.2.
+
 2001-11-10  Tor Lillqvist  <tml@iki.fi>
 
 	* app/user_install.c (user_install_run): Retract change from

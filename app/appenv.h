@@ -40,11 +40,6 @@ extern gboolean we_are_exiting;      /* this is used in session_get_window_info(
 extern GimpSet *image_context;
 extern MessageHandlerType message_handler;
 
-#ifdef G_OS_WIN32
-gchar * quote_spaces (gchar *string);
-#endif
-
-
 #endif /*  __APPENV_H__  */
 
 

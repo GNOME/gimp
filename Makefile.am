@@ -184,7 +184,6 @@ EXTRA_DIST = \
 	gimp_splash.ppm				\
 	rmshm					\
 	user_install				\
-	user_install.bat			\
 	ps-menurc				\
 	gimp.m4					\
 	gimprc.win32				\
@@ -195,9 +194,7 @@ EXTRA_DIST = \
 	po-plug-ins/makefile.mingw		\
 	po-script-fu/makefile.mingw
 
-if OS_WIN32
-user_install = user_install.bat
-else
+if !OS_WIN32
 user_install = user_install
 endif
 
