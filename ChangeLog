@@ -1,3 +1,10 @@
+2005-03-12  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/winclipboard.c: applied a patch from 
+	Sven Neumann that removes the paste functionality from the
+	plug-in. Since GTK+ 2.6.x, this isn't needed anymore. 
+	Fixes bug #168488.  
+
 2005-03-12  Sven Neumann  <sven@gimp.org>
 
 	* app/base/hue-saturation.[ch]
@@ -243,7 +250,7 @@
 	for SF-ENU	* in the register block which were changed (read broken) when
 	the entry was changed from SF-OPTION.
 
-2005-03-07  Raphaël Quinet  <raphael@gimp.org>
+2005-03-07  RaphaÃ«l Quinet  <raphael@gimp.org>
 
 	* configure.in
 	* plug-ins/Makefile.am (SUBDIRS): Enable build of metadata plug-in.
@@ -416,7 +423,7 @@
 	* menus/image-menu.xml.in: reordered stuff to be in guides, grid,
 	sample points order. Some cleanup and indentation.
 
-2005-03-04  Raphaël Quinet  <raphael@gimp.org>
+2005-03-04  RaphaÃ«l Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmpdump.c: test program that tries to extract
 	XMP metadata from files (image files, AI files, PDF documents...)
@@ -2171,7 +2178,7 @@
 	* libgimpconfig/gimpcolorconfig-enums.[ch]
 	* libgimpconfig/gimpcolorconfig.[ch]: added a first draft of a
 	color management configuration object. Not yet installed nor used
-	by anything. This is based on an older patch by Stefan Döhla.
+	by anything. This is based on an older patch by Stefan DÃ¶hla.
 
 2005-02-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
@@ -2714,7 +2721,7 @@
 
 	* menus/dockable-menu.xml.in: changed accordingly.
 
-2005-01-26  Raphaël Quinet  <raphael@gimp.org>
+2005-01-26  RaphaÃ«l Quinet  <raphael@gimp.org>
 
 	* app/composite/gimp-composite-generic.c: minor doc fix for
 	formula used by gimp_composite_multiply_any_any_any_generic().
@@ -3307,7 +3314,7 @@
 	* HACKING
 	* Makefile.am
 	* acinclude.m4
-	* autogen.sh: applied (modified) patch from Raphaël Quinet that
+	* autogen.sh: applied (modified) patch from RaphaÃ«l Quinet that
 	allows to build GIMP from CVS without having gtk-doc installed.
 	If you need to do this, pass --disable-gtk-doc to autogen.sh.
 
@@ -4446,7 +4453,7 @@
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	don't set array outside its bounds.  Should fix bug #161323.
-	Credit to Robert Ögren for figuring out what was wrong.
+	Credit to Robert Ãgren for figuring out what was wrong.
 	
 2004-12-27  Sven Neumann  <sven@gimp.org>
 

@@ -74,10 +74,6 @@ static int CB_CopyImage (gboolean    interactive,
 			 gint32      image_ID,
 			 gint32      drawable_ID);
 
-static int CB_PasteImage (gboolean   interactive,
-			  gint32     image_ID,
-			  gint32     drawable_ID);
-
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -112,36 +108,8 @@ query ()
                           G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
 
-  gimp_install_procedure ("plug_in_clipboard_paste",
-                          "paste image from clipboard",
-                          "Paste image from clipboard into active image.",
-                          "Hans Breuer",
-                          "Hans Breuer",
-                          "1999",
-                          N_("Paste from Clipboard"),
-                          "INDEXED*, RGB*, GRAY*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (copy_args), 0,
-                          copy_args, NULL);
-
-  gimp_install_procedure ("plug_in_clipboard_paste_as_new",
-                          "Get image from clipboard",
-                          "Get an image from the Windows clipboard, creating a new image",
-                          "Hans Breuer",
-                          "Hans Breuer",
-                          "1999",
-                          N_("From Clipboard"),
-                          "",
-                          GIMP_PLUGIN,
-                          1, 0,
-                          copy_args, NULL);
-
   gimp_plugin_menu_register ("plug_in_clipboard_copy",
                              "<Image>/Edit");
-  gimp_plugin_menu_register ("plug_in_clipboard_paste",
-                             "<Image>/Edit");
-  gimp_plugin_menu_register ("plug_in_clipboard_paste_as_new",
-                             "<Toolbox>/File/Acquire");
 }
 
 static void
@@ -169,26 +137,6 @@ run (const gchar      *name,
       if (CB_CopyImage (GIMP_RUN_INTERACTIVE==run_mode,
 			param[1].data.d_int32,
 			param[2].data.d_int32))
-	values[0].data.d_status = GIMP_PDB_SUCCESS;
-      else
-	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else if (strcmp (name, "plug_in_clipboard_paste") == 0)
-    {
-      *nreturn_vals = 1;
-      if (CB_PasteImage (GIMP_RUN_INTERACTIVE==run_mode,
-			 param[1].data.d_int32,
-			 param[2].data.d_int32))
-	values[0].data.d_status = GIMP_PDB_SUCCESS;
-      else
-	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else if (strcmp (name, "plug_in_clipboard_paste_as_new") == 0)
-    {
-      *nreturn_vals = 1;
-      if (CB_PasteImage (GIMP_RUN_INTERACTIVE==run_mode,
-			 IMAGE_NONE,
-			 IMAGE_NONE))
 	values[0].data.d_status = GIMP_PDB_SUCCESS;
       else
 	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -253,14 +201,14 @@ CB_CopyImage (gboolean interactive,
 	  pInfo->biWidth  = drawable->width;
 	  pInfo->biHeight = drawable->height;
 	  pInfo->biPlanes = 1;
-	  pInfo->biBitCount = 
+	  pInfo->biBitCount =
 	    (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type ? 8 : 24);
 	  pInfo->biCompression = BI_RGB; /* none */
 	  pInfo->biSizeImage = 0; /* not calculated/needed */
 	  pInfo->biXPelsPerMeter =
 	    pInfo->biYPelsPerMeter = 0;
 	  /* color map size */
-	  pInfo->biClrUsed = 
+	  pInfo->biClrUsed =
 	    (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type ? 256 : 0);
 	  pInfo->biClrImportant = 0; /* all */
 
@@ -431,292 +379,3 @@ CB_CopyImage (gboolean interactive,
 
   return bRet;
 } /* CB_CopyImage */
-
-static void
-decompose_mask (guint32  mask,
-		gint    *shift,
-		gint    *prec)
-{
-  *shift = 0;
-  *prec = 0;
-
-  while (!(mask & 0x1))
-    {
-      (*shift)++;
-      mask >>= 1;
-    }
-
-  while (mask & 0x1)
-    {
-      (*prec)++;
-      mask >>= 1;
-    }
-}
-
-static int
-CB_PasteImage (gboolean interactive,
-			   gint32   image_ID,
-			   gint32   drawable_ID)
-{
-  UINT fmt;
-  BOOL bRet=TRUE;
-  HANDLE hDIB;
-  BITMAPINFO *pInfo;
-  gint32 nWidth  = 0;
-  gint32 nHeight = 0;
-  gint32 nBitsPS = 0;
-  gint32 nColors = 0;
-  guint32 maskR;
-  guint32 maskG;
-  guint32 maskB;
-  gint shiftR;
-  gint shiftG;
-  gint shiftB;
-  gint precR;
-  gint precG;
-  gint precB;
-  gint maxR;
-  gint maxG;
-  gint maxB;
-
-  if (!OpenClipboard (NULL))
-    {
-      g_message("Failed to open clipboard");
-      return FALSE;
-    }
-
-  fmt = EnumClipboardFormats (0);
-  while ((CF_BITMAP != fmt) && (CF_DIB != fmt) && (0 != fmt))
-    fmt = EnumClipboardFormats (fmt);
-
-  if (0 == fmt)
-    {
-      g_message (_("Unsupported format or Clipboard empty!"));
-      bRet = FALSE;
-    }
-
-  /* there is something supported */
-  if (bRet)
-    {
-      hDIB = GetClipboardData (CF_DIB);
-
-      if (NULL == hDIB)
-	{
-	  g_message (_("Can't get Clipboard data."));
-	  bRet = FALSE;
-	}
-    }
-
-  /* read header */
-  if (bRet && hDIB)
-    {
-      pInfo = GlobalLock (hDIB);
-      if (NULL == pInfo)
-	{
-	  g_message ("Can't lock Clipboard data!");
-	  bRet = FALSE;
-	}
-
-      if (bRet && pInfo->bmiHeader.biCompression == BI_BITFIELDS)
-	{
-	  maskR = ((DWORD *)pInfo->bmiColors)[0];
-	  maskG = ((DWORD *)pInfo->bmiColors)[1];
-	  maskB = ((DWORD *)pInfo->bmiColors)[2];
-	  decompose_mask (maskR, &shiftR, &precR);
-	  maxR = (1 << precR) - 1;
-	  decompose_mask (maskG, &shiftG, &precG);
-	  maxG = (1 << precG) - 1;
-	  decompose_mask (maskB, &shiftB, &precB);
-	  maxB = (1 << precB) - 1;
-	}
-
-      if ((bRet) &&
-	  ((pInfo->bmiHeader.biSize != sizeof(BITMAPINFOHEADER)
-	    || (pInfo->bmiHeader.biCompression != BI_RGB
-		&& pInfo->bmiHeader.biCompression != BI_BITFIELDS))))
-	{
-	  g_message ("Unsupported bitmap format (%d)!",
-		     pInfo->bmiHeader.biCompression);
-	  bRet = FALSE;
-	}
-
-      if (bRet && pInfo)
-	{
-	  nWidth  = pInfo->bmiHeader.biWidth;
-	  nHeight = pInfo->bmiHeader.biHeight;
-	  nBitsPS = pInfo->bmiHeader.biBitCount;
-	  nColors = pInfo->bmiHeader.biClrUsed;
-	}
-    }
-
-  if ((0 != nWidth) && (0 != nHeight))
-    {
-      GimpDrawable *drawable;
-      GimpPixelRgn pixel_rgn;
-      guchar *pData;
-      GimpParam *params;
-      gint retval;
-      gboolean bIsNewImage = TRUE;
-      gint oldBPP = 0;
-      guchar *pLine;
-      RGBQUAD *pPal;
-      const int nSizeLine = ((nWidth*(nBitsPS/8)-1)/4+1)*4;
-
-      /* Check if clipboard data and existing image are compatible */
-      if (IMAGE_NONE != drawable_ID)
-	{
-	  drawable = gimp_drawable_get (drawable_ID);
-	  oldBPP = drawable->bpp;
-	  gimp_drawable_detach (drawable);
-	}
-
-      if ((IMAGE_NONE == image_ID)
-	  || (3 != oldBPP) || (24 != nBitsPS))
-	{
-	  /* create new image */
-	  image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? GIMP_INDEXED : GIMP_RGB);
-	  gimp_image_undo_disable(image_ID);
-	  drawable_ID = gimp_layer_new (image_ID, _("Background"), nWidth, nHeight,
-					nBitsPS <= 8 ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE,
-					100, GIMP_NORMAL_MODE);
-	}
-      else
-	{
-	  /* ??? gimp_image_convert_rgb (image_ID);
-	   */
-	  drawable_ID = gimp_layer_new (image_ID, _("Pasted"), nWidth, nHeight,
-					nBitsPS <= 8 ? GIMP_INDEXEDA_IMAGE : GIMP_RGBA_IMAGE,
-					100, GIMP_NORMAL_MODE);
-	  bIsNewImage = FALSE;
-	}
-
-      gimp_image_add_layer (image_ID, drawable_ID, -1);
-      drawable = gimp_drawable_get (drawable_ID);
-
-      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
-
-      /* following the slow part ... */
-      if (interactive)
-	gimp_progress_init (_("Pasting..."));
-
-      /* adjust pointer */
-      pPal  = pInfo->bmiColors;
-      if (pInfo->bmiHeader.biCompression == BI_BITFIELDS)
-        pData = (guchar*)pPal + sizeof(DWORD) * 3;
-      else
-        pData = (guchar*)pPal + sizeof(RGBQUAD) * nColors;
-
-      /* create palette */
-      if (0 != nColors)
-	{
-	  int c;
-	  guchar *cmap;
-
-	  cmap = g_new (guchar, nColors*3);
-	  for (c = 0; c < nColors; c++)
-	    {
-	      cmap[c*3]   = pPal[c].rgbRed;
-	      cmap[c*3+1] = pPal[c].rgbGreen;
-	      cmap[c*3+2] = pPal[c].rgbBlue;
-	    }
-	  gimp_image_set_colormap (image_ID, cmap, nColors);
-	  g_free (cmap);
-	}
-
-      /* speed it up with: */
-      gimp_tile_cache_size (drawable->width * gimp_tile_height () * drawable->bpp );
-
-      /* change data format and copy data */
-      if ((24 == nBitsPS && pInfo->bmiHeader.biCompression == BI_RGB)
-	  || (pInfo->bmiHeader.biCompression == BI_BITFIELDS))
-	{
-	  int y;
-	  const int bps = nBitsPS / 8;
-	  pLine = g_new (guchar, drawable->width*drawable->bpp);
-
-	  for (y = 0; y < drawable->height; y++)
-	    {
-	      int x;
-
-	      if ((interactive) && (StepProgress (y, drawable->height)))
-		gimp_progress_update ((double)y / drawable->height);
-
-	      if (pInfo->bmiHeader.biCompression == BI_RGB)
-		for (x = 0; x < drawable->width; x++)
-		  {
-		    pLine[x*drawable->bpp]   = pData[y*nSizeLine+x*bps+2];
-		    pLine[x*drawable->bpp+1] = pData[y*nSizeLine+x*bps+1];
-		    pLine[x*drawable->bpp+2] = pData[y*nSizeLine+x*bps];
-		    if (drawable->bpp == 4)
-		      pLine[x*drawable->bpp+3] = 255;
-		  }
-	      else
-		for (x = 0; x < drawable->width; x++)
-		  {
-		    guint dw;
-
-		    if (nBitsPS == 32)
-		      dw = *((DWORD *)(pData + y*nSizeLine + x*4));
-		    else
-		      dw = *((WORD *)(pData + y*nSizeLine + x*2));
-		    pLine[x*drawable->bpp]   = (255 * ((dw & maskR) >> shiftR)) / maxR;
-		    pLine[x*drawable->bpp+1] = (255 * ((dw & maskG) >> shiftG)) / maxG;
-		    pLine[x*drawable->bpp+2] = (255 * ((dw & maskB) >> shiftB)) / maxB;
-		    if (drawable->bpp == 4)
-		      pLine[x*drawable->bpp+3] = 255;
-		  }
-
-	      /* copy data to GIMP */
-	      gimp_pixel_rgn_set_rect (&pixel_rgn, pLine, 0, drawable->height-1-y, drawable->width, 1);
-	    }
-	  g_free (pLine);
-	}
-      else if (8 == nBitsPS)
-	{
-	  int y;
-	  /* copy line by line */
-	  /* This will only be reached for new images, so no need for alpha */
-	  for (y = 0; y < drawable->height; y++)
-	    {
-	      if ((interactive) && (StepProgress (y, drawable->height)))
-		gimp_progress_update ((double)y / drawable->height);
-
-	      pLine = pData + y*nSizeLine; /* adjust pointer */
-	      gimp_pixel_rgn_set_row (&pixel_rgn, pLine, 0, drawable->height-1-y, drawable->width);
-	    }
-	}
-      else
-	{
-	  /* copy and shift bits */
-	  g_message ("%d bits per sample not yet supported!", nBitsPS);
-	}
-
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);
-
-      /* Don't forget to display the new image! */
-      if (bIsNewImage)
-	gimp_display_new (image_ID);
-      else
-	{
-	  gimp_drawable_set_visible (drawable_ID, TRUE);
-	  gimp_displays_flush ();
-	}
-    }
-
-  /* done */
-  /* clear clipboard? */
-  if (NULL != hDIB)
-    {
-      GlobalUnlock (pInfo);
-      GlobalFree (hDIB);
-    }
-
-  CloseClipboard ();
-
-  /* shouldn't this be done by caller?? */
-  if (!gimp_image_undo_is_enabled (image_ID))
-    gimp_image_undo_enable (image_ID);
-
-  return bRet;
-} /* CB_PasteImage */
