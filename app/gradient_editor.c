@@ -20,7 +20,9 @@
  */
 
 
-/* hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping 
+/* alt: Added previews and some other buttons to gradient dialog. 
+ *
+ * hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping 
  *                                   preview widgetsize constant.
  * hof: Hofer Wolfgang, 1997.10.17   Added "Load From FG color"
  */
@@ -186,6 +188,7 @@
 #define GRAD_CONTROL_HEIGHT     10
 
 #define GRAD_CHECK_SIZE 8
+#define GRAD_CHECK_SIZE_SM 4
 
 #define GRAD_CHECK_DARK  (1.0 / 3.0)
 #define GRAD_CHECK_LIGHT (2.0 / 3.0)
@@ -251,7 +254,7 @@ typedef struct _gradient_t {
 	grad_segment_t *last_visited;
 	int             dirty;
 	char           *filename;
-	GtkWidget      *list_item;
+        GdkPixmap      *pixmap;
 } gradient_t;
 
 
@@ -266,8 +269,9 @@ typedef enum {
 
 typedef struct {
 	GtkWidget *shell;
+        GdkGC *gc;
 	GtkWidget *hint_label;
-	GtkWidget *list;
+	GtkWidget *clist;
 	GtkWidget *scrollbar;
 	GtkWidget *preview;
 	GtkWidget *control;
@@ -377,21 +381,28 @@ static GtkWidget *ed_create_button(gchar *label, double xalign, double yalign,
 
 static void       ed_set_hint(char *str);
 
-static void       ed_set_list_of_gradients(void);
+static int        ed_set_list_of_gradients(void);
 static void       ed_insert_in_gradients_listbox(gradient_t *grad, int pos, int select);
-static void       ed_list_item_update(GtkWidget *widget, gpointer data);
+static void       ed_list_item_update(GtkWidget *widget, 
+				      gint row,
+				      gint column,
+				      GdkEventButton *event,
+				      gpointer data);
 
 static void       ed_initialize_saved_colors(void);
 
 static gint       ed_close_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_refresh_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_new_gradient_callback(GtkWidget *widget, gpointer client_data);
+static void       ed_do_rename_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer call_data);
 static void       ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer call_data);
 static void       ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer call_data);
 static void       ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_cancel_delete_gradient_callback(GtkWidget *widget, gpointer client_data);
+static void       ed_rename_grads_callback(GtkWidget *widget, gpointer client_data);
+static void       ed_save_grads_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_save_pov_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_do_save_pov_callback(GtkWidget *widget, gpointer client_data);
 static void       ed_cancel_save_pov_callback(GtkWidget *widget, gpointer client_data);
@@ -524,6 +535,7 @@ static void        grad_free_gradient(gradient_t *grad);
 static void        grad_free_gradients(void);
 static void        grad_load_gradient(char *filename);
 static void        grad_save_gradient(gradient_t *grad, char *filename);
+static void        grad_save_all(int need_free);
 
 static gradient_t *grad_create_default_gradient(void);
 
@@ -568,6 +580,7 @@ static Argument *gradients_sample_custom_invoker(Argument *args);
 
 /***** Local variables *****/
 
+GdkColor black;
 static int         num_gradients         = 0;
 static GSList     *gradients_list        = NULL; /* The list of gradients */
 static gradient_t *curr_gradient         = NULL; /* The active gradient */
@@ -760,12 +773,13 @@ grad_create_gradient_editor(void)
 	GtkWidget *table;
 	GtkWidget *label;
 	GtkWidget *hbox;
-	GtkWidget *listbox;
 	GtkWidget *gvbox;
 	GtkWidget *button;
 	GtkWidget *frame;
 	GtkWidget *separator;
+	GdkColormap *colormap;
 	int        i;
+	int select_pos;
 
 	/* If the editor already exists, just show it */
 
@@ -843,21 +857,31 @@ grad_create_gradient_editor(void)
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
 	gtk_widget_show(hbox);
 
-	listbox = gtk_scrolled_window_new(NULL, NULL);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(listbox),
-				       GTK_POLICY_AUTOMATIC,
-				       GTK_POLICY_ALWAYS);
-	gtk_widget_set_usize(listbox, GRAD_LIST_WIDTH, GRAD_LIST_HEIGHT);
-	gtk_box_pack_start(GTK_BOX(hbox), listbox, TRUE, TRUE, 0);
-	gtk_widget_show(listbox);
+	/* clist preview of gradients */
 
-	g_editor->list = gtk_list_new();
-	gtk_list_set_selection_mode(GTK_LIST(g_editor->list), GTK_SELECTION_BROWSE);
-	gtk_container_add(GTK_CONTAINER(listbox), g_editor->list);
-	gtk_container_set_focus_vadjustment(GTK_CONTAINER(g_editor->list),
-					    gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(listbox)));
-	GTK_WIDGET_UNSET_FLAGS(GTK_SCROLLED_WINDOW(listbox)->vscrollbar, GTK_CAN_FOCUS);
-	gtk_widget_show(g_editor->list);
+	g_editor->clist = gtk_clist_new(2);
+	gtk_clist_set_border(GTK_CLIST(g_editor->clist), GTK_SHADOW_IN);
+
+	gtk_clist_set_row_height(GTK_CLIST(g_editor->clist), 18);
+
+	gtk_clist_set_column_width(GTK_CLIST(g_editor->clist), 0, 52);
+	gtk_clist_set_column_title(GTK_CLIST(g_editor->clist), 0, "Gradient");
+	gtk_clist_set_column_title(GTK_CLIST(g_editor->clist), 1, "Name");
+	gtk_clist_column_titles_show(GTK_CLIST(g_editor->clist));
+
+	gtk_clist_set_policy(GTK_CLIST(g_editor->clist), GTK_POLICY_AUTOMATIC, 
+        				       GTK_POLICY_AUTOMATIC);
+	
+ 	gtk_box_pack_start(GTK_BOX(hbox), g_editor->clist, TRUE, TRUE, 0); 
+ 	gtk_widget_show(g_editor->clist);
+
+	colormap = gtk_widget_get_colormap(g_editor->clist);
+	gdk_color_parse("black", &black);
+	gdk_color_alloc(colormap, &black);
+	
+	gtk_signal_connect(GTK_OBJECT(g_editor->clist), "select_row",
+			   GTK_SIGNAL_FUNC(ed_list_item_update),
+			   (gpointer) NULL);
 
 	/* Buttons for gradient functions */
 
@@ -885,6 +909,16 @@ grad_create_gradient_editor(void)
 
 	button = ed_create_button("Save as POV-Ray", 0.0, 0.5,
 				  (GtkSignalFunc) ed_save_pov_callback, NULL);
+	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
+	gtk_widget_show(button);
+
+	button = ed_create_button("Save Gradients", 0.0, 0.5,
+				  (GtkSignalFunc) ed_save_grads_callback, NULL);
+	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
+	gtk_widget_show(button);
+
+	button = ed_create_button("Rename Gradient", 0.0, 0.5,
+				  (GtkSignalFunc) ed_rename_grads_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
@@ -1054,10 +1088,14 @@ grad_create_gradient_editor(void)
 	cpopup_create_main_menu();
 
 	/* Show everything */
-
-	ed_set_list_of_gradients();
+	gtk_widget_realize(g_editor->shell);
+	g_editor->gc = gdk_gc_new(g_editor->shell->window);
+	select_pos = ed_set_list_of_gradients();
 
 	gtk_widget_show(g_editor->shell);
+
+	if(select_pos != -1)
+	  gtk_clist_moveto(GTK_CLIST(g_editor->clist),select_pos,0,0.0,0.0);
 } /* grad_create_gradient_editor */
 
 
@@ -1141,28 +1179,121 @@ ed_set_hint(char *str)
 
 /*****/
 
-static void
+static int
 ed_set_list_of_gradients(void)
 {
 	GSList     *list;
 	gradient_t *grad;
 	int         n;
+	int         select_pos = -1;
 
 	list = gradients_list;
 	n    = 0;
 
+	gtk_clist_freeze(GTK_CLIST(g_editor->clist));
+
 	while (list) {
 		grad = list->data;
 
-		if (grad == curr_gradient)
+		if (grad == curr_gradient) {	       
 			ed_insert_in_gradients_listbox(grad, n, 1);
-		else
+			select_pos = n;
+		}
+		else {
 			ed_insert_in_gradients_listbox(grad, n, 0);
+		}
 
 		list = g_slist_next(list);
 		n++;
 	} /* while */
+
+	gtk_clist_thaw(GTK_CLIST(g_editor->clist));
+
+	return select_pos;
 } /* ed_set_list_of_gradients */
+
+
+/*****/
+
+static void
+fill_clist_prev(gradient_t *grad, guchar *buf, gint width, gint height, double left, double right)
+{
+	guchar *p0, *p1,*even,*odd;
+	int     x, y;
+	double  dx, cur_x;
+	double  r, g, b, a;
+	double  c0, c1;
+	gradient_t *oldgrad = curr_gradient;
+	curr_gradient = grad;
+
+	dx    = (right - left) / (width - 1);
+	cur_x = left;
+	p0    = even = g_malloc(width*3);
+	p1    = odd = g_malloc(width*3);
+
+	/* Create lines to fill the image */
+
+	for (x = 0; x < width; x++) {
+		grad_get_color_at(cur_x, &r, &g, &b, &a);
+
+		if ((x / GRAD_CHECK_SIZE_SM) & 1) {
+			c0 = GRAD_CHECK_LIGHT;
+			c1 = GRAD_CHECK_DARK;
+		} else {
+			c0 = GRAD_CHECK_DARK;
+			c1 = GRAD_CHECK_LIGHT;
+		} /* else */
+
+		*p0++ = (c0 + (r - c0) * a) * 255.0;
+		*p0++ = (c0 + (g - c0) * a) * 255.0;
+		*p0++ = (c0 + (b - c0) * a) * 255.0;
+
+		*p1++ = (c1 + (r - c1) * a) * 255.0;
+		*p1++ = (c1 + (g - c1) * a) * 255.0;
+		*p1++ = (c1 + (b - c1) * a) * 255.0;
+
+		cur_x += dx;
+	} /* for */
+
+	for (y = 0; y < height; y++)
+	  {
+	    if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	      {
+ 		memcpy(buf+(width*y*3),odd,width*3); 
+	      }
+	    else
+	      {
+ 		memcpy(buf+(width*y*3),even,width*3); 
+	      }
+	  }
+
+	g_free(even);
+	g_free(odd);
+	curr_gradient = oldgrad;
+}
+
+/*****/
+static void 
+draw_small_preview(gradient_t *grad,int pos)
+{
+	char rgb_buf[48*16*3];
+
+	fill_clist_prev(grad,rgb_buf,48,16,0.0,1.0);
+
+	gdk_draw_rgb_image (grad->pixmap,
+                    g_editor->gc,
+                    0,
+                    0,
+                    48,
+                    16,
+                    GDK_RGB_DITHER_NORMAL,
+                    rgb_buf,
+                    48*3);
+
+    	gdk_gc_set_foreground(g_editor->gc, &black);
+	gdk_draw_rectangle(grad->pixmap, g_editor->gc, FALSE, 0, 0, 47, 15);
+ 	gtk_clist_set_text(GTK_CLIST(g_editor->clist),pos,1,grad->name);  
+}
 
 
 /*****/
@@ -1170,38 +1301,41 @@ ed_set_list_of_gradients(void)
 static void
 ed_insert_in_gradients_listbox(gradient_t *grad, int pos, int select)
 {
-	GtkWidget *list_item;
-	GList     *list;
+	char *string[2];
 
-	list_item       = gtk_list_item_new_with_label(grad->name);
-	grad->list_item = list_item;
-	gtk_signal_connect(GTK_OBJECT(list_item), "select",
-			   (GtkSignalFunc) ed_list_item_update,
-			   (gpointer) grad);
-	gtk_widget_show(list_item);
+	string[0] = NULL;
+	string[1] = grad->name;
 
-	list = g_list_append(NULL, list_item);
+	gtk_clist_insert(GTK_CLIST(g_editor->clist), pos,string);
 
-	gtk_list_insert_items(GTK_LIST(g_editor->list), list, pos);
+	grad->pixmap = gdk_pixmap_new(g_editor->shell->window,
+					  48, 16, gtk_widget_get_visual(g_editor->shell)->depth);
+
+	draw_small_preview(grad,pos);
+
+	gtk_clist_set_pixmap(GTK_CLIST(g_editor->clist), pos, 0, grad->pixmap, NULL);
 
 	if (select)
-		gtk_list_select_item(GTK_LIST(g_editor->list), pos);
+	{
+	        gtk_clist_select_row(GTK_CLIST(g_editor->clist),pos,-1);
+		gtk_clist_moveto(GTK_CLIST(g_editor->clist),pos,0,0.5,0.0);
+	}
+
 } /* ed_insert_in_gradients_listbox */
 
 
 /*****/
 
 static void
-ed_list_item_update(GtkWidget *widget, gpointer data)
+ed_list_item_update(GtkWidget *widget, 
+		    gint row,
+		   gint column,
+		   GdkEventButton *event,
+		   gpointer data)
 {
-	/* If this is not the selected item, do nothing */
-
-	if (widget->state != GTK_STATE_SELECTED)
-		return;
-
 	/* Update current gradient */
-
-	curr_gradient = (gradient_t *) data;
+        GSList* tmp = g_slist_nth(gradients_list,row);
+ 	curr_gradient = (gradient_t *)(tmp->data);
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 } /* ed_list_item_update */
@@ -1331,12 +1465,63 @@ ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer ca
 	/* Put new gradient in list */
 
 	pos = grad_insert_in_gradients_list(grad);
+	gtk_clist_freeze(GTK_CLIST(g_editor->clist));
 	ed_insert_in_gradients_listbox(grad, pos, 1);
+	gtk_clist_thaw(GTK_CLIST(g_editor->clist));
+	gtk_clist_moveto(GTK_CLIST(g_editor->clist),pos,0,0.5,0.0);
 
 	curr_gradient = grad;
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 } /* ed_do_new_gradient_callback */
+
+/*****/
+
+static void
+ed_do_rename_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer call_data)
+{
+	gradient_t *grad = NULL;
+	char       *gradient_name;
+	GSList     *tmp;
+	int         n;
+
+	gradient_name = (char *) call_data;
+
+	if (!gradient_name) {
+		g_message ("ed_do_rename_gradient_callback(): oops, received NULL in call_data");
+		return;
+	} /* if */
+
+	n   = 0;
+	tmp = gradients_list;
+
+	while (tmp) {
+		grad = tmp->data;
+
+		if (strcmp(gradient_name, grad->name) <= 0)
+			break; /* We found the one we want */
+
+		n++;
+		tmp = g_slist_next(tmp);
+	} /* while */
+
+	if (!grad) {
+		g_message ("ed_do_rename_gradient_callback(): oops, can't find gradient to delete");
+		return;
+	} /* if */
+
+	grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
+	grad->dirty    = 1;
+
+	/* Delete file and free gradient */
+	unlink(curr_gradient->filename);
+
+	grad->filename = build_user_filename(grad->name, gradient_path);
+
+ 	gtk_clist_set_text(GTK_CLIST(g_editor->clist),n,1,grad->name);  
+
+	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
+} /* ed_do_rename_gradient_callback */
 
 
 /*****/
@@ -1413,7 +1598,9 @@ ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer c
 	/* Put new gradient in list */
 
 	pos = grad_insert_in_gradients_list(grad);
+	gtk_clist_freeze(GTK_CLIST(g_editor->clist));
 	ed_insert_in_gradients_listbox(grad, pos, 1);
+	gtk_clist_thaw(GTK_CLIST(g_editor->clist));
 
 	curr_gradient = grad;
 
@@ -1494,24 +1681,24 @@ ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
-	GList      *list;
 	GSList     *tmp;
 	int         n;
+	int         real_pos;
 	gradient_t *g;
-	GtkWidget  *list_item;
 
 	gtk_widget_destroy(GTK_WIDGET(client_data));
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 
 	/* See which gradient we will have to select once the current one is deleted */
 
-	n   = 0;
+	real_pos = n = 0;
 	tmp = gradients_list;
 
 	while (tmp) {
 		g = tmp->data;
 
 		if (g == curr_gradient) {
+		        real_pos = n;
 			if (tmp->next == NULL)
 				n--; /* Will have to select the *previous* one */
 
@@ -1527,8 +1714,6 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	/* Delete gradient from gradients list */
 
-	list_item = curr_gradient->list_item; /* Remember list item to delete it later */
-
 	gradients_list = g_slist_remove(gradients_list, curr_gradient);
 
 	/* Delete file and free gradient */
@@ -1538,13 +1723,13 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	/* Delete gradient from listbox */
 
-	list = g_list_append(NULL, list_item);
-	gtk_list_remove_items(GTK_LIST(g_editor->list), list);
+	gtk_clist_remove(GTK_CLIST(g_editor->clist), real_pos);
 
 	/* Select new gradient */
 
 	curr_gradient = g_slist_nth(gradients_list, n)->data;
-	gtk_list_select_item(GTK_LIST(g_editor->list), n);
+	gtk_clist_select_row(GTK_CLIST(g_editor->clist),n,-1);
+	gtk_clist_moveto(GTK_CLIST(g_editor->clist),n,0,0.5,0.0);
 
 	/* Update! */
 
@@ -1561,6 +1746,28 @@ ed_cancel_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 } /* ed_cancel_delete_gradient_callback */
 
+/*****/
+
+static void
+ed_save_grads_callback(GtkWidget *widget, gpointer client_data)
+{
+        grad_save_all(0);
+}
+
+
+/*****/
+
+static void
+ed_rename_grads_callback(GtkWidget *widget, gpointer client_data)
+{
+        if(curr_gradient == NULL)
+	  return;
+
+	query_string_box("Rename gradient",
+			 "Enter a new name for the gradient",
+			 curr_gradient->name,
+			 ed_do_rename_gradient_callback, NULL);
+}
 
 /*****/
 
@@ -1592,26 +1799,21 @@ ed_save_pov_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_refresh_callback(GtkWidget *widget, gpointer client_data)
 {
-	GSList     *node;
-	gradient_t *grad;
-	GList      *list;
-
-	list = NULL;
-
-	for (node = gradients_list; node; node = g_slist_next(node)) {
-		grad = node->data;
-		list = g_list_append(list, grad->list_item);
-	}
-
-	gtk_list_remove_items(GTK_LIST(g_editor->list),list);
+        int select_pos;
+	gtk_clist_freeze(GTK_CLIST(g_editor->clist));
+	gtk_clist_clear(GTK_CLIST(g_editor->clist));
+	gtk_clist_thaw(GTK_CLIST(g_editor->clist));
 
 	grad_free_gradients();
 
 	gradients_init(FALSE);
 
-	ed_set_list_of_gradients();
+	select_pos = ed_set_list_of_gradients();
 
 	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL); 
+
+	if(select_pos != -1)
+	  gtk_clist_moveto(GTK_CLIST(g_editor->clist),select_pos,0,0.5,0.0);
 } /* ed_refresh_callback */
 
 /*****/
@@ -1937,6 +2139,11 @@ prev_update(int recalculate)
 	GtkAdjustment *adjustment;
 	guint16        width, height;
 	guint16        pwidth, pheight;
+	GSList     *tmp;
+	int         n;
+	gradient_t *g;
+	static gradient_t *last_grad = NULL;
+	static int last_row = -1;
 
 	/* We only update if we can draw to the widget and a gradient is present */
 
@@ -1993,6 +2200,26 @@ prev_update(int recalculate)
 
 		gtk_widget_draw(g_editor->preview, NULL);
 	} /* if */
+
+	if(last_grad != curr_gradient || last_row < 0) {
+	        n = 0;
+		tmp = gradients_list;
+		
+		while (tmp) {
+		  g = tmp->data;
+		  
+		  if (g == curr_gradient) {
+		    break; /* We found the one we want */
+		  } /* if */
+		  
+		  n++; /* Next gradient */
+		  tmp = g_slist_next(tmp);
+		} /* while */
+		last_grad = curr_gradient;
+		last_row = n;
+	} /* if */
+
+	draw_small_preview(curr_gradient,last_row);
 } /* prev_update */
 
 
@@ -5261,7 +5488,7 @@ grad_new_gradient(void)
 	grad->last_visited = NULL;
 	grad->dirty        = 0;
 	grad->filename     = NULL;
-	grad->list_item    = NULL;
+	grad->pixmap       = NULL;
 
 	return grad;
 } /* grad_new_gradient */
@@ -5290,7 +5517,7 @@ grad_free_gradient(gradient_t *grad)
 /*****/
 
 static void
-grad_free_gradients(void)
+grad_save_all(int need_free)
 {
 	GSList     *node;
 	gradient_t *grad;
@@ -5305,11 +5532,20 @@ grad_free_gradients(void)
 		if (grad->dirty)
 			grad_save_gradient(grad, grad->filename);
 
-		grad_free_gradient(grad);
+		if(need_free)
+		        grad_free_gradient(grad);
 
 		node = g_slist_next(node);
 	} /* while */
+}
 
+/*****/
+
+static void
+grad_free_gradients(void)
+{
+        grad_save_all(1);  
+  
 	g_slist_free(gradients_list);
 
 	num_gradients  = 0;
@@ -6098,6 +6334,7 @@ gradients_set_active_invoker(Argument *args)
 	GSList     *list;
 	gradient_t *grad;
 	int         success;
+	int         n = 0;
 
 	name = args[0].value.pdb_pointer;
 
@@ -6118,16 +6355,13 @@ gradients_set_active_invoker(Argument *args)
 
 				success = TRUE;
 
-				if (grad->list_item != NULL)
-					/* Select that gradient in the listbox */
-					gtk_list_select_child(GTK_LIST(g_editor->list), grad->list_item);
-				else
-					/* Just update the current gradient */
-					curr_gradient = grad;
-
+				/* Select that gradient in the listbox */
+				gtk_clist_select_row(GTK_CLIST(g_editor->clist),n,-1);
+				gtk_clist_moveto(GTK_CLIST(g_editor->clist),n,0,0.5,0.0);
 				break;
 			} /* if */
 
+			n++;
 			list = g_slist_next(list);
 		} /* while */
 	} /* if */
