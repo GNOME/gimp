@@ -34,6 +34,7 @@ deinterlace
 depthmerge
 despeckle
 destripe
+dicom
 diffraction
 displace
 edge

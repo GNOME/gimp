@@ -31,6 +31,7 @@
     'depthmerge' => { libdep => 'gtk', ui => 1 },
     'despeckle' => { libdep => 'gtk', ui => 1 },
     'destripe' => { libdep => 'gtk', ui => 1 },
+    'dicom' => { libdep => 'gtk', ui => 1 },
     'diffraction' => { libdep => 'gtk', ui => 1 },
     'displace' => { libdep => 'gtk', ui => 1 },
     'edge' => { libdep => 'gtk', ui => 1 },

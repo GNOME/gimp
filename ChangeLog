@@ -1,5 +1,13 @@
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/dicom.c: added DICOM file plug-in written by
+	Dov Grobgeld.
+
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c
 	* app/widgets/gimptooldialog.c: updated gtk-doc comments.
 

@@ -54,6 +54,7 @@ libexec_PROGRAMS = \
 	depthmerge \
 	despeckle \
 	destripe \
+	dicom \
 	diffraction \
 	displace \
 	edge \
@@ -552,6 +553,18 @@ destripe_SOURCES = \
 	destripe.c
 
 destripe_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	@GTK_LIBS@							\
+	@INTLLIBS@
+
+dicom_SOURCES = \
+	dicom.c
+
+dicom_LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\

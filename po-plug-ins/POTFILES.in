@@ -43,6 +43,7 @@ plug-ins/common/deinterlace.c
 plug-ins/common/depthmerge.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
+plug-ins/common/dicom.c
 plug-ins/common/diffraction.c
 plug-ins/common/displace.c
 plug-ins/common/edge.c
