@@ -136,13 +136,15 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("tab_border",
-                                                             NULL, NULL,
+                                                             NULL,
+                                                             "Width of the border around the tab contents",
                                                              0, G_MAXINT,
                                                              DEFAULT_TAB_BORDER,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tab_icon_size",
-                                                              NULL, NULL,
+                                                              NULL,
+                                                              "Size for icons displayed in the tab",
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TAB_ICON_SIZE,
                                                               G_PARAM_READABLE));

@@ -24,6 +24,7 @@
 <!ENTITY GimpStock SYSTEM "xml/gimpstock.xml">
 <!ENTITY GimpUnitMenu SYSTEM "xml/gimpunitmenu.xml">
 <!ENTITY GimpWidgets SYSTEM "xml/gimpwidgets.xml">
+<!ENTITY gimpwidgets-objecttree SYSTEM "xml/tree_index.sgml">
 <!ENTITY version SYSTEM "version.xml">
 ]>
 
@@ -35,6 +36,12 @@
 
   <part id="libgimpwidgets-widgets">
     <title>GIMP Widgets</title>
+
+    <chapter>
+      <title>Object Hierarchy</title>
+    &gimpwidgets-objecttree;
+    </chapter>    
+
     &GimpButton;
     &GimpChainButton;
     &GimpColorArea;
@@ -50,18 +57,20 @@
     &GimpUnitMenu;
     &GimpDialog;
 
-    <chapter id="libgimpwidgets-colordisplay">
-      <title>Display Filters</title>
-      &GimpColorDisplay;
-    </chapter>
+  </part>
 
-    <chapter id="libgimpwidgets-colorselector">
-      <title>Color Selectors</title>
-      &GimpColorSelector;
-      &GimpColorNotebook;
-      &GimpColorScales;
-      &GimpColorSelect;
-    </chapter>
+  
+  <part id="libgimpwidgets-colordisplay">
+    <title>GIMP Display Filters</title>
+    &GimpColorDisplay;
+  </part>
+
+  <part id="libgimpwidgets-colorselector">
+    <title>GIMP Color Selectors</title>
+    &GimpColorSelector;
+    &GimpColorNotebook;
+    &GimpColorScales;
+    &GimpColorSelect;
   </part>
 
   <part id="libgimpwidgets-utils">

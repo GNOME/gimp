@@ -2,13 +2,12 @@
 GimpColorSelector
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions and definitions for creating a pluggable GIMP color
-selector module.
+Pluggable GIMP color selector modules.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions and definitions for creating a pluggable GIMP color
-selector module.
+Functions and definitions for creating pluggable GIMP color
+selector modules.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

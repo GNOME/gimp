@@ -1,5 +1,11 @@
 2003-07-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolornotebook.c (gimp_color_notebook_class_init):
+	added blurbs for the style properties. These show up as descriptions
+	in the generated documentation.
+
+2003-07-25  Sven Neumann  <sven@gimp.org>
+
 	* Made 1.3.17 release.
 
 2003-07-25  Sven Neumann  <sven@gimp.org>

@@ -2,7 +2,7 @@
 GimpColorArea
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Displays a GimpRGB color, optionally with alpha-channel.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
