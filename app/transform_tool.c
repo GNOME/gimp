@@ -30,6 +30,8 @@ typedef struct _TransformOptions TransformOptions;
 struct _TransformOptions
 {
   int         smoothing;
+  int	      new_ui;
+  int	      grid_size;
   ToolType    type;
 };
 
@@ -71,6 +73,7 @@ create_transform_options (void)
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GtkWidget *smoothing_toggle;
+  GtkWidget *new_ui_toggle;
   GSList *group = NULL;
   int i;
   char *button_names[4] =
@@ -125,6 +128,19 @@ create_transform_options (void)
                       options->smoothing);
   gtk_widget_show (smoothing_toggle);
 
+
+  /*  the new UI toggle button  */
+  new_ui_toggle = gtk_check_button_new_with_label ("New user interface");
+  gtk_box_pack_start (GTK_BOX (vbox), new_ui_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (new_ui_toggle), "toggled",
+		      (GtkSignalFunc) transform_toggle_update,
+		      &options->new_ui);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (new_ui_toggle),
+                      options->new_ui);
+  gtk_widget_show (new_ui_toggle);
+
+  /*  the grid size entry  */
+  options->grid_size = 32;	/* XXX */
 
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (ROTATE, vbox);
@@ -202,4 +218,22 @@ transform_tool_smoothing ()
     return 1;
   else
     return transform_options->smoothing;
+}
+
+int
+transform_tool_new_ui ()
+{
+  if (!transform_options)
+    return 1;
+  else
+    return transform_options->new_ui;
+}
+
+int
+transform_tool_grid_size ()
+{
+  if (!transform_options)
+    return 32;
+  else
+    return transform_options->grid_size;
 }

@@ -21,6 +21,8 @@
 /*  tool functions  */
 Tool *        tools_new_transform_tool      (void);
 void          tools_free_transform_tool     (Tool *);
-int           transform_tool_smoothing    (void);
+int           transform_tool_smoothing      (void);
+int	      transform_tool_new_ui         (void);
+int	      transform_tool_grid_size	    (void);
 
 #endif  /*  __TRANSFORM_TOOL_H__  */

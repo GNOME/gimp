@@ -93,6 +93,14 @@ struct _transform_core
 				 * a button pressed before we deal with
 				 * motion events. ALT.
 				 */
+				/* The following fields are used by
+				   the "new UI".  */
+  int		  ngx, ngy;	/*  number of grid lines in original
+				    x and y directions  */
+  double	  *grid_coords;	/*  x and y coordinates of the grid
+				    endpoints (a total of (ngx+ngy)*2
+				    coordinate pairs)  */
+  double	  *tgrid_coords; /* transformed grid_coords  */
 };
 
 
