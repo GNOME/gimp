@@ -1,3 +1,13 @@
+2003-02-21  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/about-dialog.c
+	* app/widgets/gimpimagefilepreview.c
+	* app/widgets/gimptoolbox-color-area.c: use gdk_draw_pixbuf with
+	GTK+ 2.2 or higher instead of gdk_pixbuf_render_to_drawable.
+	That function will be deprecated in GTK+ 2.4. We should remove the
+	fallback at some point when we start depending on GTK+ 2.2 for other
+	stuff.
+
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplay-foreach.[ch]: added new function

@@ -131,6 +131,17 @@ gimp_imagefile_expose_event (GtkWidget      *widget,
   rect.y      = (widget->allocation.height - rect.height) / 2;
 
   if (gdk_rectangle_intersect (&rect, &event->area, &draw_rect))
+    /* FIXME: remove when we no longer support GTK 2.0.x */
+#if GTK_CHECK_VERSION(2,2,0)
+    gdk_draw_pixbuf (GDK_DRAWABLE (widget->window),
+                     widget->style->bg_gc[widget->state],
+                     preview->no_preview_pixbuf,
+                     draw_rect.x - rect.x, draw_rect.y - rect.y,
+                     draw_rect.x, draw_rect.y,
+                     draw_rect.width, draw_rect.height,
+                     GDK_RGB_DITHER_NORMAL,
+                     event->area.x, event->area.y);
+#else
     gdk_pixbuf_render_to_drawable (preview->no_preview_pixbuf,
                                    GDK_DRAWABLE (widget->window),
                                    widget->style->bg_gc[widget->state],
@@ -140,6 +151,7 @@ gimp_imagefile_expose_event (GtkWidget      *widget,
                                    draw_rect.width, draw_rect.height,
                                    GDK_RGB_DITHER_NORMAL,
                                    event->area.x, event->area.y);
+#endif
 
   return FALSE;
 }
