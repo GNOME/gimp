@@ -76,6 +76,7 @@ enum
   INITIALIZE,
   RESTORE,
   EXIT,
+  BUFFER_CHANGED,
   LAST_SIGNAL
 };
 
@@ -194,6 +195,15 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_BOOLEAN);
 
+  gimp_signals[BUFFER_CHANGED] =
+    g_signal_new ("buffer-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, buffer_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
 
@@ -202,6 +212,7 @@ gimp_class_init (GimpClass *klass)
   klass->initialize              = gimp_real_initialize;
   klass->restore                 = gimp_real_restore;
   klass->exit                    = gimp_real_exit;
+  klass->buffer_changed          = NULL;
 }
 
 static void
@@ -489,10 +500,8 @@ static gint64
 gimp_get_memsize (GimpObject *object,
                   gint64     *gui_size)
 {
-  Gimp   *gimp;
+  Gimp   *gimp    = GIMP (object);
   gint64  memsize = 0;
-
-  gimp = GIMP (object);
 
   memsize += gimp_g_list_get_memsize (gimp->user_units, 0 /* FIXME */);
 
@@ -937,6 +946,29 @@ gimp_exit (Gimp     *gimp,
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  force ? TRUE : FALSE,
                  &handled);
+}
+
+void
+gimp_set_global_buffer (Gimp       *gimp,
+                        GimpBuffer *buffer)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
+
+  if (buffer == gimp->global_buffer)
+    return;
+
+  if (gimp->global_buffer)
+    g_object_unref (gimp->global_buffer);
+
+  gimp->global_buffer = buffer;
+
+  if (gimp->global_buffer)
+    g_object_ref (gimp->global_buffer);
+
+  gimp->have_current_cut_buffer = (buffer != NULL);
+
+  g_signal_emit (gimp, gimp_signals[BUFFER_CHANGED], 0);
 }
 
 void

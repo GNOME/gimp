@@ -199,12 +199,14 @@ struct _GimpClass
 {
   GimpObjectClass  parent_class;
 
-  void     (* initialize) (Gimp               *gimp,
-                           GimpInitStatusFunc  status_callback);
-  void     (* restore)    (Gimp               *gimp,
-                           GimpInitStatusFunc  status_callback);
-  gboolean (* exit)       (Gimp               *gimp,
-                           gboolean            force);
+  void     (* initialize)     (Gimp               *gimp,
+                               GimpInitStatusFunc  status_callback);
+  void     (* restore)        (Gimp               *gimp,
+                               GimpInitStatusFunc  status_callback);
+  gboolean (* exit)           (Gimp               *gimp,
+                               gboolean            force);
+
+  void     (* buffer_changed) (Gimp               *gimp);
 };
 
 
@@ -231,6 +233,9 @@ void          gimp_restore              (Gimp               *gimp,
 
 void          gimp_exit                 (Gimp               *gimp,
                                          gboolean            force);
+
+void          gimp_set_global_buffer    (Gimp               *gimp,
+                                         GimpBuffer         *buffer);
 
 void          gimp_threads_enter        (Gimp               *gimp);
 void          gimp_threads_leave        (Gimp               *gimp);

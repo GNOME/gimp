@@ -329,12 +329,12 @@ gimp_edit_extract (GimpImage    *gimage,
 
   if (tiles)
     {
+      GimpBuffer *buffer;
+
       /*  Only crop if the gimage mask wasn't empty  */
       if (! empty)
         {
-          TileManager *crop;
-
-          crop = tile_manager_crop (tiles, 0);
+          TileManager *crop = tile_manager_crop (tiles, 0);
 
           if (crop != tiles)
             {
@@ -343,14 +343,9 @@ gimp_edit_extract (GimpImage    *gimage,
             }
         }
 
-      /*  Set the global edit buffer  */
-      if (gimage->gimp->global_buffer)
-	g_object_unref (gimage->gimp->global_buffer);
-
-      gimage->gimp->global_buffer = gimp_buffer_new (tiles, "Global Buffer",
-                                                     FALSE);
-
-      gimage->gimp->have_current_cut_buffer = TRUE;
+      buffer = gimp_buffer_new (tiles, "Global Buffer", FALSE);
+      gimp_set_global_buffer (gimage->gimp, buffer);
+      g_object_unref (buffer);
 
       return gimage->gimp->global_buffer;
     }

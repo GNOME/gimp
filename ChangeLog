@@ -1,5 +1,30 @@
 2004-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.[ch]: added new signal "buffer_changed" and new
+	function gimp_set_global_buffer() which emits it when the global
+	buffer changes.
+
+	* app/core/gimp-edit.c (gimp_edit_extract): use it instead
+	of fiddling with gimp->global_buffer manually.
+
+	* app/gui/image-menu.c: connect to "buffer_changed" and set the
+	"Paste" menu entries sensitive. Fixes bug #134752.
+
+	(image_menu_update): changed accordingly. Also changed a lot of
+	buggy SET_SENSITIVE() lines which made menu items which work fine
+	on any drawable insensitive when there were no layers (instead
+	of no drawable).
+
+	* app/gui/edit-commands.c: added new macro return_if_new_drawable()
+	and use it instead of return_if_no_image() so we don't run
+	into assertions if there is no active drawable.
+
+	(cut,copy_named_buffer_callback): unfortunately had to introduce
+	two new translated messages about not being able to cut/copy when
+	there is no active drawable.
+
+2004-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig-serialize.c
 	(gimp_config_serialize_property)
 	* app/config/gimpconfig-deserialize.c

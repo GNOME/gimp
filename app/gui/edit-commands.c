@@ -75,6 +75,12 @@
   if (! gimage) \
     return
 
+#define return_if_no_drawable(gimage,drawable,data) \
+  return_if_no_image (gimage, data); \
+  drawable = gimp_image_active_drawable (gimage); \
+  if (! drawable) \
+    return;
+
 
 /*  local function prototypes  */
 
@@ -114,27 +120,24 @@ void
 edit_cut_cmd_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_cut (gdisp->gimage,
-                     gimp_image_active_drawable (gdisp->gimage)))
-    {
-      gimp_image_flush (gdisp->gimage);
-    }
+  if (gimp_edit_cut (gimage, drawable))
+    gimp_image_flush (gimage);
 }
 
 void
 edit_copy_cmd_callback (GtkWidget *widget,
                         gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_copy (gimage, gimp_image_active_drawable (gimage)))
-    {
-      gimp_image_flush (gimage);
-    }
+  if (gimp_edit_copy (gimage, drawable))
+    gimp_image_flush (gimage);
 }
 
 void
@@ -233,10 +236,11 @@ void
 edit_clear_cmd_callback (GtkWidget *widget,
                          gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  gimp_edit_clear (gimage, gimp_image_active_drawable (gimage));
+  gimp_edit_clear (gimage, drawable);
   gimp_image_flush (gimage);
 }
 
@@ -246,12 +250,13 @@ edit_fill_cmd_callback (GtkWidget *widget,
                         guint      action)
 {
   GimpImage    *gimage;
+  GimpDrawable *drawable;
   GimpFillType  fill_type;
-  return_if_no_image (gimage, data);
+  return_if_no_drawable (gimage, drawable, data);
 
   fill_type = (GimpFillType) action;
 
-  gimp_edit_fill (gimage, gimp_image_active_drawable (gimage), fill_type);
+  gimp_edit_fill (gimage, drawable, fill_type);
   gimp_image_flush (gimage);
 }
 
@@ -259,8 +264,9 @@ void
 edit_stroke_cmd_callback (GtkWidget *widget,
                           gpointer   data)
 {
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
   edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
 }
@@ -301,8 +307,17 @@ cut_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *cut_buffer;
+  GimpDrawable     *active_drawable;
 
-  cut_buffer = gimp_edit_cut (gimage, gimp_image_active_drawable (gimage));
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to cut from."));
+      return;
+    }
+
+  cut_buffer = gimp_edit_cut (gimage, active_drawable);
 
   if (cut_buffer)
     {
@@ -316,9 +331,9 @@ cut_named_buffer_callback (GtkWidget   *widget,
       gimp_container_add (gimage->gimp->named_buffers,
                           GIMP_OBJECT (new_buffer));
       g_object_unref (new_buffer);
-    }
 
-  gimp_image_flush (gimage);
+      gimp_image_flush (gimage);
+    }
 }
 
 static void
@@ -328,8 +343,17 @@ copy_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *copy_buffer;
+  GimpDrawable     *active_drawable;
 
-  copy_buffer = gimp_edit_copy (gimage, gimp_image_active_drawable (gimage));
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to copy from."));
+      return;
+    }
+
+  copy_buffer = gimp_edit_copy (gimage, active_drawable);
 
   if (copy_buffer)
     {
@@ -343,5 +367,7 @@ copy_named_buffer_callback (GtkWidget   *widget,
       gimp_container_add (gimage->gimp->named_buffers,
                           GIMP_OBJECT (new_buffer));
       g_object_unref (new_buffer);
+
+      gimp_image_flush (gimage);
     }
 }

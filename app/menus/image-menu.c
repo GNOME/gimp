@@ -79,6 +79,8 @@
 
 /*  local function prototypes  */
 
+static void   image_menu_buffer_changed     (Gimp             *gimp,
+                                             GimpItemFactory  *item_factory);
 static void   image_menu_foreground_changed (GimpContext      *context,
                                              const GimpRGB    *color,
                                              GimpItemFactory  *item_factory);
@@ -1175,6 +1177,12 @@ image_menu_setup (GimpItemFactory *factory)
       }
   }
 
+  g_signal_connect_object (factory->gimp, "buffer_changed",
+                           G_CALLBACK (image_menu_buffer_changed),
+                           factory, 0);
+
+  image_menu_buffer_changed (factory->gimp, factory);
+
   {
     GimpContext *user_context;
     GimpRGB      fg;
@@ -1335,6 +1343,7 @@ image_menu_update (GtkItemFactory *item_factory,
   GimpLayer          *layer         = NULL;
   GimpVectors        *vectors       = NULL;
   GimpImageType       drawable_type = -1;
+  gboolean            ad            = FALSE;
   gboolean            is_rgb        = FALSE;
   gboolean            is_gray       = FALSE;
   gboolean            is_indexed    = FALSE;
@@ -1386,7 +1395,10 @@ image_menu_update (GtkItemFactory *item_factory,
 
       drawable = gimp_image_active_drawable (gimage);
       if (drawable)
-        drawable_type = gimp_drawable_type (drawable);
+        {
+          drawable_type = gimp_drawable_type (drawable);
+          ad            = TRUE;
+        }
 
       if (lp)
         {
@@ -1426,9 +1438,9 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  File  */
 
-  SET_SENSITIVE ("/File/Save",                gdisp && drawable);
-  SET_SENSITIVE ("/File/Save as...",          gdisp && drawable);
-  SET_SENSITIVE ("/File/Save a Copy...",      gdisp && drawable);
+  SET_SENSITIVE ("/File/Save",                gdisp && ad);
+  SET_SENSITIVE ("/File/Save as...",          gdisp && ad);
+  SET_SENSITIVE ("/File/Save a Copy...",      gdisp && ad);
   SET_SENSITIVE ("/File/Save as Template...", gdisp);
   SET_SENSITIVE ("/File/Revert",              gdisp && GIMP_OBJECT (gimage)->name);
   SET_SENSITIVE ("/File/Close",               gdisp);
@@ -1468,22 +1480,20 @@ image_menu_update (GtkItemFactory *item_factory,
     g_free (redo_name);
   }
 
-  SET_SENSITIVE ("/Edit/Cut",                   lp);
-  SET_SENSITIVE ("/Edit/Copy",                  lp);
+  SET_SENSITIVE ("/Edit/Cut",                   ad);
+  SET_SENSITIVE ("/Edit/Copy",                  ad);
   SET_SENSITIVE ("/Edit/Paste",                 gdisp && gimp->global_buffer);
   SET_SENSITIVE ("/Edit/Paste Into",            gdisp && gimp->global_buffer);
-  SET_SENSITIVE ("/Edit/Paste as New",          gimp->global_buffer);
 
-  SET_SENSITIVE ("/Edit/Buffer/Cut Named...",   lp);
-  SET_SENSITIVE ("/Edit/Buffer/Copy Named...",  lp);
-  SET_SENSITIVE ("/Edit/Buffer/Paste Named...", lp);
+  SET_SENSITIVE ("/Edit/Buffer/Cut Named...",   ad);
+  SET_SENSITIVE ("/Edit/Buffer/Copy Named...",  ad);
 
-  SET_SENSITIVE ("/Edit/Clear",                 lp);
-  SET_SENSITIVE ("/Edit/Fill with FG Color",    lp);
-  SET_SENSITIVE ("/Edit/Fill with BG Color",    lp);
-  SET_SENSITIVE ("/Edit/Fill with Pattern",     lp);
-  SET_SENSITIVE ("/Edit/Stroke Selection...",   lp && sel);
-  SET_SENSITIVE ("/Edit/Stroke Path...",        lp && vectors);
+  SET_SENSITIVE ("/Edit/Clear",                 ad);
+  SET_SENSITIVE ("/Edit/Fill with FG Color",    ad);
+  SET_SENSITIVE ("/Edit/Fill with BG Color",    ad);
+  SET_SENSITIVE ("/Edit/Fill with Pattern",     ad);
+  SET_SENSITIVE ("/Edit/Stroke Selection...",   ad && sel);
+  SET_SENSITIVE ("/Edit/Stroke Path...",        ad && vectors);
 
   /*  Select  */
 
@@ -1617,18 +1627,18 @@ image_menu_update (GtkItemFactory *item_factory,
                      lp && !fs && !aux && alpha && lind < (lnum - 1));
     }
 
-  SET_SENSITIVE ("/Layer/Colors/Color Balance...",       lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Colorize...",            lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Brightness-Contrast...", lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Threshold...",           lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Levels...",              lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Curves...",              lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Posterize...",           lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Desaturate",             lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Invert",                 lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Histogram",              lp);
+  SET_SENSITIVE ("/Layer/Colors/Color Balance...",       ad &&   is_rgb);
+  SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      ad &&   is_rgb);
+  SET_SENSITIVE ("/Layer/Colors/Colorize...",            ad &&   is_rgb);
+  SET_SENSITIVE ("/Layer/Colors/Brightness-Contrast...", ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Threshold...",           ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Levels...",              ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Curves...",              ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Posterize...",           ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Desaturate",             ad &&   is_rgb);
+  SET_SENSITIVE ("/Layer/Colors/Invert",                 ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          ad && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Histogram",              ad);
 
   SET_SENSITIVE ("/Layer/Mask/Add Layer Mask...",        lp && !fs && !aux && !lm && alpha);
   SET_SENSITIVE ("/Layer/Mask/Apply Layer Mask",         lm && !fs && !aux);
@@ -1644,12 +1654,12 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Transparency/Subtract from Selection",  lp && !aux);
   SET_SENSITIVE ("/Layer/Transparency/Intersect with Selection", lp && !aux);
 
-  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally",     lp);
-  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",       lp);
-  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CW",  lp);
-  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CCW", lp);
-  SET_SENSITIVE ("/Image/Transform/Rotate 180 degrees",    lp);
-  SET_SENSITIVE ("/Layer/Transform/Offset...",             lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally",     ad);
+  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",       ad);
+  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CW",  ad);
+  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CCW", ad);
+  SET_SENSITIVE ("/Image/Transform/Rotate 180 degrees",    ad);
+  SET_SENSITIVE ("/Layer/Transform/Offset...",             ad);
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE
@@ -1661,6 +1671,22 @@ image_menu_update (GtkItemFactory *item_factory,
 
 
 /*  private functions  */
+
+static void
+image_menu_buffer_changed (Gimp             *gimp,
+                           GimpItemFactory  *item_factory)
+{
+  GtkItemFactory *gtk_factory = GTK_ITEM_FACTORY (item_factory);
+  gboolean        buf         = (gimp->global_buffer != NULL);
+
+  if (GTK_IS_MENU_BAR (gtk_factory->widget))
+    {
+      gimp_item_factory_set_sensitive (gtk_factory, "/Edit/Paste",      buf);
+      gimp_item_factory_set_sensitive (gtk_factory, "/Edit/Paste Into", buf);
+    }
+
+  gimp_item_factory_set_sensitive (gtk_factory, "/Edit/Paste as New", buf);
+}
 
 static void
 image_menu_foreground_changed (GimpContext     *context,
