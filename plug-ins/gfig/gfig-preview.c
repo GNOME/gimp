@@ -584,9 +584,9 @@ gfig_update_stat_labels (void)
 
   if (current_obj->filename)
     {
-      gint slen;
-      gchar *hm  = (gchar *) g_get_home_dir ();
-      gchar *dfn = g_strdup (current_obj->filename);
+      gint         slen;
+      const gchar *hm  = g_get_home_dir ();
+      gchar       *dfn = g_strdup (current_obj->filename);
 
       if (hm != NULL && !strncmp (dfn, hm, strlen (hm)-1))
         {
@@ -602,11 +602,11 @@ gfig_update_stat_labels (void)
 	  str[40] ='\0';
 	}
       else
-	sprintf (str, "%.40s", dfn);
+        {
+          sprintf (str, "%.40s", dfn);
+        }
+
       g_free (dfn);
-#ifdef __EMX__
-      g_free (hm);
-#endif
     }
   else
     sprintf (str,_("<NONE>"));

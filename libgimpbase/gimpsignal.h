@@ -33,11 +33,6 @@ G_BEGIN_DECLS
  * ways useful to Gimp.
  */
 
-#ifdef __EMX__
-/* hope this is right for OS/2 */
-#define SA_RESTART SA_SYSV
-#endif
-
 /* GimpSignalHandlerFunc is a reference to a (signal handler) function
  * that takes a signal ID and returns void.
  * signal(2) returns such references; so does gimp_signal_private.
