@@ -1,3 +1,8 @@
+2001-07-01  Sven Neumann  <sven@gimp.org>
+
+	* acconfig.h: we forgot to add HAVE_FINITE and HAVE_ISFINITE here
+	(bug #56918).
+
 2001-06-30  Sven Neumann  <sven@gimp.org>
 
 	* app/global_edit.c: attach default comment to image created by

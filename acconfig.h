@@ -19,8 +19,10 @@
 #undef HAVE_CATGETS
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
+#undef HAVE_FINITE
 #undef HAVE_GETTEXT
 #undef HAVE_IPC_H
+#undef HAVE_ISFINITE
 #undef HAVE_LC_MESSAGES
 #undef HAVE_MMAP
 #undef HAVE_NDIR_H
