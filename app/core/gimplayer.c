@@ -897,7 +897,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
   PixelRegion    bufPR;
   GimpImageType  src_type;
   gint           width;
-  ginr           height;
+  gint           height;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
