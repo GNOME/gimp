@@ -1,3 +1,14 @@
+Mon Sep 20 18:23:18 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* configure.in: Add app/unittest/Makefile
+
+	* app/unittest/unittest.h: Common include file for unit tests.
+	* app/unittest/globals.c: Global data for unit test programs.
+	* app/unittest/README: 
+	* app/unittest/gimpparse.c: Parse test program 
+	* app/unittest/gimppath.c: Show GIMP paths.
+	First unit test programs for GIMP. Useful for porting and testing.
+
 Mon Sep 20 10:11:18 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* README.i18n: Daniel Egger sent me some corrections for this one

@@ -664,6 +664,7 @@ gimptool
 libgimp/gimpfeatures.h
 libgimp/Makefile
 app/Makefile
+app/unittest/Makefile
 plug-ins/Makefile
 plug-ins/perl/config.pl
 plug-ins/libgck/Makefile

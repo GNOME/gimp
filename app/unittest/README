@@ -1,0 +1,18 @@
+	
+	Unit test programs for GIMP.
+
+./gimppath 		- Display GIMP's paths and rc files.
+./gimpparse <rc file>	- Parse rc files.
+
+
+
+
+Have fun.
+
+	Asbjorn Pettersen.
+
+
+
+
+
+
