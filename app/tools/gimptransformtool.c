@@ -1263,12 +1263,12 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                           tool_info->help_id);
 
   gtk_dialog_add_buttons (GTK_DIALOG (tr_tool->info_dialog->shell),
-
                           GIMP_STOCK_RESET, RESPONSE_RESET,
                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                           stock_id,         GTK_RESPONSE_OK,
-
                           NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (tr_tool->info_dialog->shell),
+                                   GTK_RESPONSE_OK);
 
   g_signal_connect (tr_tool->info_dialog->shell, "response",
                     G_CALLBACK (gimp_transform_tool_response),

@@ -967,12 +967,12 @@ crop_info_create (GimpCropTool *crop)
                                      tool->tool_info->help_id);
 
   gtk_dialog_add_buttons (GTK_DIALOG (crop->crop_info->shell),
-
                           GTK_STOCK_CANCEL,     GTK_RESPONSE_CANCEL,
                           GIMP_STOCK_RESIZE,    GIMP_CROP_MODE_RESIZE,
                           GIMP_STOCK_TOOL_CROP, GIMP_CROP_MODE_CROP,
-
                           NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (crop->crop_info->shell),
+                                   GIMP_CROP_MODE_CROP);
 
   g_signal_connect (crop->crop_info->shell, "response",
                     G_CALLBACK (crop_response),

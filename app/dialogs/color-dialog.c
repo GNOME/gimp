@@ -137,12 +137,11 @@ color_notebook_new (GimpViewable          *viewable,
   g_object_set_data (G_OBJECT (cnp->shell), "color-notebook", cnp);
 
   gtk_dialog_add_buttons (GTK_DIALOG (cnp->shell),
-
                           GIMP_STOCK_RESET, RESPONSE_RESET,
                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                           GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
                           NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (cnp->shell), GTK_RESPONSE_OK);
 
   g_signal_connect (cnp->shell, "response",
                     G_CALLBACK (color_notebook_response),

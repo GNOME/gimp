@@ -1,3 +1,11 @@
+2004-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/color-notebook.c (color_notebook_new)
+	* app/tools/gimpcroptool.c (crop_info_create)
+	* app/tools/gimptransformtool.c (gimp_transform_tool_dialog):
+	explicitely set a default response for dialog buttons which were
+	created using gtk_dialog_add_buttons().
+
 2004-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.[ch]: cleaned up text tool logic.
