@@ -62,88 +62,100 @@ struct _PixelProcessor
   ProgressReportFunc progress_report_func;
 };
 
+IF_THREAD(
 static void *
-do_parallel_regions(PixelProcessor  *p_s)
+do_parallel_regions (PixelProcessor  *p_s)
 {
   PixelRegion tr[4];
   int ntiles = 0;
   int i;
   int cont = 1;
 
-  IF_THREAD(pthread_mutex_lock(&p_s->mutex);)
+  pthread_mutex_lock(&p_s->mutex);
+
   if (p_s->nthreads != 0 && p_s->PRI)
     p_s->PRI =  (PixelRegionIterator*)pixel_regions_process(p_s->PRI);
+
   if (p_s->PRI == NULL)
-  {
-    IF_THREAD(pthread_mutex_unlock(&p_s->mutex);)
-    return NULL;
-  }
+    {
+      pthread_mutex_unlock(&p_s->mutex);
+      return NULL;
+    }
+
   p_s->nthreads++;
 
   do
-  {
+    {
+      for (i = 0; i < p_s->n_regions; i++)
+	if (p_s->r[i])
+	  {
+	    memcpy(&tr[i], p_s->r[i], sizeof(PixelRegion));
+	    if (tr[i].tiles)
+	      tile_lock(tr[i].curtile);
+	  }
+
+      pthread_mutex_unlock(&p_s->mutex);
+      ntiles++;
+
+      switch(p_s->n_regions)
+	{
+	case 1:
+	  ((p1_func)p_s->f)(p_s->data,
+			    p_s->r[0] ? &tr[0] : NULL);
+	  break;
+
+	case 2:
+	  ((p2_func)p_s->f)(p_s->data,
+			    p_s->r[0] ? &tr[0] : NULL,
+			    p_s->r[1] ? &tr[1] : NULL);
+	  break;
+
+	case 3:
+	  ((p3_func)p_s->f)(p_s->data,
+			    p_s->r[0] ? &tr[0] : NULL,
+			    p_s->r[1] ? &tr[1] : NULL,
+			    p_s->r[2] ? &tr[2] : NULL);
+	  break;
+
+	case 4:
+	  ((p4_func)p_s->f)(p_s->data,
+			    p_s->r[0] ? &tr[0] : NULL,
+			    p_s->r[1] ? &tr[1] : NULL,
+			    p_s->r[2] ? &tr[2] : NULL,
+			    p_s->r[3] ? &tr[3] : NULL);
+	  break;
+
+	default:
+	  g_message("do_parallel_regions: Bad number of regions %d\n",
+		    p_s->n_regions);
+    }
+
+    pthread_mutex_lock(&p_s->mutex);
+
     for (i = 0; i < p_s->n_regions; i++)
       if (p_s->r[i])
-      {
-	memcpy(&tr[i], p_s->r[i], sizeof(PixelRegion));
-	IF_THREAD(
+	{
 	  if (tr[i].tiles)
-	    tile_lock(tr[i].curtile);
-	  )
-      }
-    IF_THREAD(pthread_mutex_unlock(&p_s->mutex);)
-    ntiles++;
-    switch(p_s->n_regions)
-    {
-     case 1:
-       ((p1_func)p_s->f)(p_s->data,
-			 p_s->r[0] ? &tr[0] : NULL);
-       break;
-     case 2:
-       ((p2_func)p_s->f)(p_s->data,
-			 p_s->r[0] ? &tr[0] : NULL,
-			 p_s->r[1] ? &tr[1] : NULL);
-       break;
-     case 3:
-       ((p3_func)p_s->f)(p_s->data,
-			 p_s->r[0] ? &tr[0] : NULL,
-			 p_s->r[1] ? &tr[1] : NULL,
-			 p_s->r[2] ? &tr[2] : NULL);
-       break;
-     case 4:
-       ((p4_func)p_s->f)(p_s->data,
-			 p_s->r[0] ? &tr[0] : NULL,
-			 p_s->r[1] ? &tr[1] : NULL,
-			 p_s->r[2] ? &tr[2] : NULL,
-			 p_s->r[3] ? &tr[3] : NULL);
-       break;
-     default:
-       g_message("do_parallel_regions: Bad number of regions %d\n",
-		 p_s->n_regions);
-    }
-    IF_THREAD(pthread_mutex_lock(&p_s->mutex);)
-    IF_THREAD(
-      {
-	for (i = 0; i < p_s->n_regions; i++)
-	  if (p_s->r[i])
-	  {
-	    if (tr[i].tiles)
-	      tile_release(tr[i].curtile, tr[i].dirty);
-	  }
-      })
-    if (p_s->progress_report_func)
-      if (!p_s->progress_report_func(p_s->progress_report_data,
-				     p_s->r[0]->x, p_s->r[0]->y, 
-				     p_s->r[0]->w, p_s->r[0]->h))
-	cont = 0;
-  } while (cont && p_s->PRI &&
-	   (p_s->PRI = (PixelRegionIterator*)pixel_regions_process(p_s->PRI)));
+	    tile_release(tr[i].curtile, tr[i].dirty);
+	}
+
+    if (p_s->progress_report_func && 
+	!p_s->progress_report_func(p_s->progress_report_data,
+				   p_s->r[0]->x, p_s->r[0]->y, 
+				   p_s->r[0]->w, p_s->r[0]->h))
+      cont = 0;
+
+    } 
+  while (cont && p_s->PRI &&
+	 (p_s->PRI = (PixelRegionIterator*)pixel_regions_process(p_s->PRI)));
+
   p_s->nthreads--;
   /*  fprintf(stderr, "processed %d tiles\n", ntiles); */
-  IF_THREAD(pthread_mutex_unlock(&p_s->mutex);)
+  pthread_mutex_unlock(&p_s->mutex);
+
   return NULL;
 }
-
+)
 
 /*  do_parallel_regions_single is just like do_parallel_regions 
  *   except that all the mutex and tile locks have been removed

@@ -960,7 +960,6 @@ p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites)
 char *
 p_alloc_video_info_name(char *basename)
 {
-  int   l_len;
   char *l_str;
 
   if(basename == NULL)

@@ -21,6 +21,7 @@
  */
 
 #include <gtk/gtk.h>
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 #include "message_window.h"
 

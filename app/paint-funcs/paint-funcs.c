@@ -539,13 +539,15 @@ color_pixels (unsigned char *dest,
      Is this safe to assume?  Lets find out.
      This is 4-7X as fast as the simple version.
      */
-  register unsigned char c0, c1, c2, c3;
 
-#if !defined(sparc) && !defined(__sparc__)
+#if defined(sparc) || defined(__sparc__)
+  register unsigned char c0, c1, c2, c3;
+#else
+  register unsigned char c0, c1, c2;
   register guint32 *longd, longc;
   register guint16 *shortd, shortc;
-#endif /* !sparc && !__sparc__ */
-  
+#endif
+
   switch (bytes)
   {
    case 1:

@@ -679,7 +679,7 @@ xjpg_save_drawable (char   *filename,
   GimpImageType drawable_type;
   struct jpeg_compress_struct cinfo;
   struct my_error_mgr jerr;
-  FILE *outfile;
+  FILE * volatile outfile;
   guchar *temp, *t;
   guchar *data;
   guchar *src, *s;
@@ -688,7 +688,7 @@ xjpg_save_drawable (char   *filename,
   int i, j;
   int alpha_offset;
   guchar alpha_byte;
-  guchar l_alpha_sum;
+  guchar volatile l_alpha_sum;
 
   alpha_offset = 0;
   has_alpha = 0;

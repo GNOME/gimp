@@ -310,7 +310,7 @@ load_image (gchar *filename)
    */
   gint       i, j, tile_height, row;	
   FILE      *file = NULL;
-  gchar     *progMessage;
+  gchar     *progMessage = ident;  /*  only to suppress compiler warnings  */
   guchar    *dest; 
   guchar    *dest_base;
   GimpDrawable *drawable;

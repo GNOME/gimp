@@ -1,3 +1,12 @@
+2000-10-17  Sven Neumann  <sven@gimp.org>
+
+	* app/paint_funcs.c
+	* app/pixel_processor.c
+	* plug-ins/common/pix.c
+	* plug-ins/gap/gap_pdb_calls.c
+	* plug-ins/gdyntext/message_window.c
+	* plug-ins/xjt/xjpeg.c: removed compiler warnings
+
 2000-10-17  Tor Lillqvist  <tml@iki.fi>
 
 	* app/makefile.mingw.in (gimp_OBJECTS): Add
