@@ -152,8 +152,9 @@ static void     apply_layer_mode_replace (guchar   *src1,
 					  guint     bytes1,
 					  guint     bytes2,
 					  gboolean *affect);
-static void     rotate_pointers          (gpointer *p,
-					  guint32   n);
+
+static inline void rotate_pointers       (guchar   **p,
+					  guint32    n);
 
 
 
@@ -2992,8 +2993,23 @@ shrink_line (gdouble               *dest,
                " failed. Please report.");
 }
 
+static inline void
+rotate_pointers (guchar  **p,
+		 guint32   n)
+{
+  guint32  i;
+  guchar  *tmp;
+
+  tmp = p[0];
+  for (i = 0; i < n-1; i++)
+    {
+      p[i] = p[i+1];
+    }
+  p[i] = tmp;
+}
+
 static void
-get_scaled_row (void                 **src,
+get_scaled_row (gdouble              **src,
 		gint                   y,
 		gint                   new_width,
 		PixelRegion           *srcPR,
@@ -3003,7 +3019,7 @@ get_scaled_row (void                 **src,
 {
   /* get the necesary lines from the source image, scale them,
      and put them into src[] */
-  rotate_pointers (src, 4);
+  rotate_pointers ((gpointer) src, 4);
   if (y < 0)
     y = 0;
   if (y < srcPR->h)
@@ -3086,7 +3102,7 @@ scale_region (PixelRegion           *srcPR,
           const gdouble inv_ratio = 1.0 / y_rat;
 
           if (y == 0) /* load the first row if this is the first time through */
-            get_scaled_row ((void **) &src[0], 0, width, srcPR, row,
+            get_scaled_row (&src[0], 0, width, srcPR, row,
                             src_tmp,
                             interpolation_type);
           new_y = (int) (y * y_rat);
@@ -3096,7 +3112,7 @@ scale_region (PixelRegion           *srcPR,
 
           max = (int) ((y + 1) * y_rat) - new_y - 1;
 
-          get_scaled_row ((void **) &src[0], ++new_y, width, srcPR, row,
+          get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                           src_tmp,
                           interpolation_type);
 
@@ -3104,7 +3120,7 @@ scale_region (PixelRegion           *srcPR,
             {
               for (x = 0; x < width * bytes; x++)
                 accum[x] += src[3][x];
-              get_scaled_row ((void **) &src[0], ++new_y, width, srcPR, row,
+              get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                               src_tmp,
                               interpolation_type);
               max--;
@@ -3124,7 +3140,7 @@ scale_region (PixelRegion           *srcPR,
             {
               /* get the necesary lines from the source image, scale them,
                  and put them into src[] */
-              get_scaled_row ((void **) &src[0], old_y + 2, width, srcPR, row,
+              get_scaled_row (&src[0], old_y + 2, width, srcPR, row,
                               src_tmp,
                               interpolation_type);
               old_y++;
@@ -3166,7 +3182,7 @@ scale_region (PixelRegion           *srcPR,
         }
       else /* height == orig_height */
         {
-          get_scaled_row ((void **) &src[0], y, width, srcPR, row,
+          get_scaled_row (&src[0], y, width, srcPR, row,
                           src_tmp,
                           interpolation_type);
           memcpy (accum, src[3], sizeof (gdouble) * width * bytes);
@@ -3525,21 +3541,6 @@ shapeburst_region (PixelRegion *srcPR,
 }
 
 static void
-rotate_pointers (gpointer *p,
-		 guint32   n)
-{
-  guint32  i;
-  gpointer tmp;
-
-  tmp = p[0];
-  for (i = 0; i < n-1; i++)
-    {
-      p[i] = p[i+1];
-    }
-  p[i] = tmp;
-}
-
-static void
 compute_border (gint16  *circ,
 		guint16  xradius,
 		guint16  yradius)
@@ -3630,7 +3631,7 @@ fatten_region (PixelRegion *src,
 
   for (y = 0; y < src->h; y++)
     {
-      rotate_pointers ((void **) buf, yradius + 1);
+      rotate_pointers (buf, yradius + 1);
       if (y < src->h - (yradius))
         pixel_region_get_row (src, src->x, src->y + y + yradius, src->w,
                               buf[yradius], 1);
@@ -3784,7 +3785,7 @@ thin_region (PixelRegion *src,
 
   for (y = 0; y < src->h; y++)
     {
-      rotate_pointers ((void **) buf, yradius + 1);
+      rotate_pointers (buf, yradius + 1);
       if (y < src->h - yradius)
         pixel_region_get_row (src, src->x, src->y + y + yradius, src->w,
                               buf[yradius], 1);
@@ -3958,7 +3959,7 @@ border_region (PixelRegion *src,
 
       for (y = 1; y < src->h; y++)
         {
-          rotate_pointers ((void **) source, 3);
+          rotate_pointers (source, 3);
           if (y + 1 < src->h)
             pixel_region_get_row (src, src->x, src->y + y + 1, src->w,
                                   source[2], 1);
@@ -4043,7 +4044,7 @@ border_region (PixelRegion *src,
 
   for (y = 1; y < yradius && y + 1 < src->h; y++) /* set up top of image */
     {
-      rotate_pointers ((void **) buf, 3);
+      rotate_pointers (buf, 3);
       pixel_region_get_row (src, src->x, src->y + y + 1, src->w, buf[2], 1);
       compute_transition (transition[y + 1], buf, src->w);
     }
@@ -4059,8 +4060,8 @@ border_region (PixelRegion *src,
     }
   for (y = 0; y < src->h; y++) /* main calculation loop */
     {
-      rotate_pointers ((void **) buf, 3);
-      rotate_pointers ((void **) transition, yradius + 1);
+      rotate_pointers (buf, 3);
+      rotate_pointers (transition, yradius + 1);
       if (y < src->h - (yradius + 1))
         {
           pixel_region_get_row (src, src->x, src->y + y + yradius + 1, src->w,

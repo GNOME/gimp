@@ -1,5 +1,11 @@
 2004-01-27  Manish Singh  <yosh@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c: inlined rotate_pointers, changed
+	prototypes and casts around so that we're compliant with C99 aliasing
+	rules.
+
+2004-01-27  Manish Singh  <yosh@gimp.org>
+
 	* app/composite/gimp-composite-generic.c
 	(gimp_composite_overlay_any_any_any_generic)
 	* app/paint-funcs/paint-funcs-generic.h (overlay_pixels): use more
