@@ -99,7 +99,7 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_AVERAGE_RADIUS,
                                    "average-radius", NULL,
-                                   1.0, 30.0, 3.0,
+                                   1.0, 300.0, 3.0,
                                    0);
 }
 
@@ -161,6 +161,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *button;
+  GtkObject *adj;
 
   if (GIMP_IS_HISTOGRAM_OPTIONS (tool_options))
     vbox = gimp_histogram_options_gui (tool_options);
@@ -186,11 +187,12 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
                             GIMP_COLOR_OPTIONS (config)->sample_average);
   g_object_set_data (G_OBJECT (button), "set_sensitive", table);
 
-  gimp_prop_scale_entry_new (config, "average-radius",
-                             GTK_TABLE (table), 0, 0,
-                             _("Radius:"),
-                             1.0, 3.0, 0,
-                             FALSE, 0.0, 0.0);
+  adj = gimp_prop_scale_entry_new (config, "average-radius",
+                                   GTK_TABLE (table), 0, 0,
+                                   _("Radius:"),
+                                   1.0, 10.0, 0,
+                                   FALSE, 0.0, 0.0);
+  gimp_scale_entry_set_logarithmic (adj, TRUE);
 
   return vbox;
 }

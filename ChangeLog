@@ -1,5 +1,10 @@
 2005-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcoloroptions.c: increased maximum radius for color
+	picking to 300 pixels and made the slider logarithmic.
+
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/uri/uri-backend-gnomevfs.c: use gimp_progress_set_text().
 
 2005-02-12  Sven Neumann  <sven@gimp.org>
