@@ -17,7 +17,6 @@
  */
 
 #include "config.h"
-
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
@@ -73,6 +72,18 @@
 
 #include "gimp-intl.h"
 
+typedef struct
+{
+  GimpDisplayShell      *shell;
+  GdkEventMotion        *mevent;
+  GdkDevice             *device;
+  guint32               time;
+  GdkModifierType       state;
+  gint                  keep_scrolling;
+  gint                  timeout_id;
+} ScrollInfo;
+
+
 
 /* #define DEBUG_MOVE_PUSH 1 */
 
@@ -102,6 +113,12 @@ static gboolean gimp_display_shell_get_event_state   (GimpDisplayShell *shell,
 static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
                                                       GdkDevice        *device,
                                                       GdkModifierType  *state);
+static gboolean autoscroll_timeout                   (gpointer          data);
+static void     begin_autoscrolling                  (ScrollInfo       *info,
+                                                      GimpDisplayShell *shell,
+                                                      GdkModifierType   state,
+                                                      GdkEventMotion   *mevent);
+static void     end_autoscrolling                    (ScrollInfo       *info);
 
 static GdkModifierType
                 gimp_display_shell_key_to_state      (gint              key);
@@ -206,12 +223,12 @@ gimp_display_shell_events (GtkWidget        *widget,
 
     case GDK_WINDOW_STATE:
       {
-	GdkEventWindowState *sevent = (GdkEventWindowState *) event;
+        GdkEventWindowState *sevent = (GdkEventWindowState *) event;
         GimpDisplayOptions  *options;
         gboolean             fullscreen;
         GimpActionGroup     *group;
 
-	shell->window_state = sevent->new_window_state;
+        shell->window_state = sevent->new_window_state;
 
         if (! (sevent->changed_mask & GDK_WINDOW_STATE_FULLSCREEN))
           break;
@@ -449,22 +466,108 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
   shell->draw_cursor = ! current_device->has_cursor;
 }
 
+#define AUTOSCROLL_DT 20
+#define AUTOSCROLL_DX 5
+
+static gboolean
+autoscroll_timeout (gpointer data)
+{
+  GimpCoords   device_coords, image_coords;
+  GimpDisplay *gdisp;
+  ScrollInfo  *info     = (ScrollInfo *)data;
+  gint         off_x    = 0;
+  gint         off_y    = 0;
+
+  if (!info->keep_scrolling)
+    {
+      info->timeout_id = 0;
+      return (FALSE);
+    }
+
+  info->time += AUTOSCROLL_DT;
+
+  gdisp = info->shell->gdisp;
+  gimp_display_shell_get_device_coords (info->shell,
+                                        info->device,
+                                        &device_coords);
+
+  if (device_coords.x < 0)
+    off_x = -AUTOSCROLL_DX * device_coords.x / 50.0;
+  else if (device_coords.x > info->shell->disp_width)
+    off_x = AUTOSCROLL_DX * (device_coords.x - info->shell->disp_width) / 50.0;
+
+  if (device_coords.y < 0)
+    off_y = -AUTOSCROLL_DX * device_coords.y / 50.0;
+  else if (device_coords.y > info->shell->disp_height)
+    off_y = AUTOSCROLL_DX * (device_coords.y - info->shell->disp_height) / 50.0;
+
+  if( off_x == 0 && off_y == 0 )
+    {
+      info->timeout_id = 0;
+      return (FALSE);
+    }
+  else
+    {
+      gimp_display_shell_scroll (info->shell, off_x, off_y);
+
+      gimp_display_shell_untransform_coords (info->shell,
+                                             &device_coords,
+                                             &image_coords);
+
+      tool_manager_motion_active (gdisp->gimage->gimp,
+                                  &image_coords,
+                                  info->time, info->state,
+                                  gdisp);
+
+      return (TRUE);
+    }
+}
+
+
+static void
+begin_autoscrolling (ScrollInfo       *info,
+                     GimpDisplayShell *shell,
+                     GdkModifierType   state,
+                     GdkEventMotion   *mevent)
+{
+  if(info->timeout_id == 0)
+    {
+      info->shell  = shell;
+      info->mevent = mevent;
+      info->device = mevent->device;
+      info->time   = gdk_event_get_time ((GdkEvent*) mevent);
+      info->state  = state;
+      info->timeout_id = g_timeout_add (AUTOSCROLL_DT,
+                                        autoscroll_timeout, (gpointer) info);
+      info->keep_scrolling = TRUE;
+    }
+}
+
+static void
+end_autoscrolling (ScrollInfo *info)
+{
+  info->keep_scrolling = FALSE;
+  info->timeout_id     = 0;
+}
+
+
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
 {
-  GimpDisplay     *gdisp;
-  GimpImage       *gimage;
-  Gimp            *gimp;
-  GdkDisplay      *gdk_display;
-  GimpTool        *active_tool;
-  GimpCoords       display_coords;
-  GimpCoords       image_coords;
-  GdkModifierType  state;
-  guint32          time;
-  gboolean         return_val    = FALSE;
-  gboolean         update_cursor = FALSE;
+  GimpDisplay      *gdisp;
+  GimpImage        *gimage;
+  Gimp             *gimp;
+  GdkDisplay       *gdk_display;
+  GimpTool         *active_tool;
+  GimpCoords        display_coords;
+  GimpCoords        image_coords;
+  GdkModifierType   state;
+  guint32           time;
+  gboolean          return_val    = FALSE;
+  gboolean          update_cursor = FALSE;
+  static ScrollInfo scroll_info   = {NULL, NULL, 0, 0};
 
   static GimpToolInfo *space_shaded_tool = NULL;
 
@@ -775,6 +878,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
+	end_autoscrolling (&scroll_info);
+
         if (gimp->busy)
           return TRUE;
 
@@ -1041,37 +1146,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      mevent->y > shell->disp_height) &&
                     ! gimp_tool_control_scroll_lock (active_tool->control))
                   {
-                    gint off_x = 0;
-                    gint off_y = 0;
-
-                    /*  The cases for scrolling  */
-                    if (mevent->x < 0)
-                      off_x = mevent->x;
-                    else if (mevent->x > shell->disp_width)
-                      off_x = mevent->x - shell->disp_width;
-
-                    if (mevent->y < 0)
-                      off_y = mevent->y;
-                    else if (mevent->y > shell->disp_height)
-                      off_y = mevent->y - shell->disp_height;
-
-                    if (gimp_display_shell_scroll (shell, off_x, off_y))
-                      {
-                        GimpCoords device_coords;
-
-                        gimp_display_shell_get_device_coords (shell,
-                                                              mevent->device,
-                                                              &device_coords);
-
-                        if (device_coords.x == mevent->x &&
-                            device_coords.y == mevent->y)
-                          {
-                            /*  Put this event back on the queue
-                             *  so it keeps scrolling
-                             */
-                            gdk_event_put ((GdkEvent *) mevent);
-                          }
-                      }
+                    begin_autoscrolling (&scroll_info, shell, state, mevent);
                   }
 
                 if (gimp_tool_control_motion_mode (active_tool->control) ==
@@ -1406,16 +1481,16 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
                                           "gimp-move-tool");
 
       if (tool_info)
-	{
+        {
           GimpTool *active_tool;
 
-	  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-				 tool_info);
+          gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+                                 tool_info);
 
-	  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+          active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-	  if (active_tool)
-	    {
+          if (active_tool)
+            {
               gdk_pointer_grab (shell->canvas->window, FALSE,
                                 GDK_POINTER_MOTION_HINT_MASK |
                                 GDK_BUTTON1_MOTION_MASK |
@@ -1424,9 +1499,9 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
 
               gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
 
-	      gimp_move_tool_start_hguide (active_tool, gdisp);
-	    }
-	}
+              gimp_move_tool_start_hguide (active_tool, gdisp);
+            }
+        }
     }
 
   return FALSE;
@@ -1451,16 +1526,16 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                           "gimp-move-tool");
 
       if (tool_info)
-	{
+        {
           GimpTool *active_tool;
 
-	  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-				 tool_info);
+          gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+                                 tool_info);
 
-	  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+          active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-	  if (active_tool)
-	    {
+          if (active_tool)
+            {
               gdk_pointer_grab (shell->canvas->window, FALSE,
                                 GDK_POINTER_MOTION_HINT_MASK |
                                 GDK_BUTTON1_MOTION_MASK |
@@ -1469,9 +1544,9 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
 
               gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
 
-	      gimp_move_tool_start_vguide (active_tool, gdisp);
-	    }
-	}
+              gimp_move_tool_start_vguide (active_tool, gdisp);
+            }
+        }
     }
 
   return FALSE;
@@ -1754,21 +1829,21 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
       event = gdk_event_get ();
 
       if (!event)
-	{
-	  /* Do nothing */
-	}
+        {
+          /* Do nothing */
+        }
       else if ((gtk_get_event_widget (event) == shell->canvas) &&
-	       (event->any.type == GDK_MOTION_NOTIFY))
-	{
+               (event->any.type == GDK_MOTION_NOTIFY))
+        {
           if (last_motion)
             gdk_event_free (last_motion);
 
-	  last_motion = event;
-	}
+          last_motion = event;
+        }
       else
-	{
-	  requeued_events = g_list_prepend (requeued_events, event);
-	}
+        {
+          requeued_events = g_list_prepend (requeued_events, event);
+        }
     }
 
   /* Replay the remains of our private event list back into the

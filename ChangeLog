@@ -1,3 +1,8 @@
+2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell-callbacks.c: use a timeout for
+	autoscrolling, to fix bug #8269.  Happy new year!
+
 2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/paint/gimpbrushcore.c
