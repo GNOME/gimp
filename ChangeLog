@@ -1,3 +1,11 @@
+Mon Apr  5 22:28:01 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/rcm: Added RotateColorMap plug-in. This is a rewrite
+	of the original plug-in by Pavel Grinfeld done by Sven Anders
+	(anderss@fmi.uni-passau.de)
+
 1999-04-05  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/action_area.h: #include <gtk/gtk.h>.

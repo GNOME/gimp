@@ -111,6 +111,7 @@ SUBDIRS = 			\
 	ps			\
 	psd			\
 	randomize		\
+	rcm			\
 	ripple			\
 	rotate			\
 	rotators		\

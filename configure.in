@@ -783,6 +783,7 @@ plug-ins/print/Makefile
 plug-ins/ps/Makefile
 plug-ins/psd/Makefile
 plug-ins/randomize/Makefile
+plug-ins/rcm/Makefile
 plug-ins/ripple/Makefile
 plug-ins/rotate/Makefile
 plug-ins/rotators/Makefile
