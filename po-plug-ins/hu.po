@@ -4993,7 +4993,7 @@ msgstr "Részletek >>"
 #: plug-ins/common/plugindetails.c:316
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
-msgstr "Bõvítmény interfészek száma: %d"
+msgstr "Bõvítményinterfészek száma: %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:334
