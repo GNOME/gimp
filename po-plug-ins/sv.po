@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-23 14:22+0900\n"
-"PO-Revision-Date: 2004-11-23 14:24+0900\n"
+"POT-Creation-Date: 2004-11-29 12:01+0900\n"
+"PO-Revision-Date: 2004-11-29 12:03+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:290
+#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:283
 #: plug-ins/gflare/gflare.c:891
 #, c-format
 msgid ""
@@ -382,8 +382,8 @@ msgstr "_Fraktaler"
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
 #: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
-#: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1252
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1491
+#: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -391,11 +391,11 @@ msgstr "_Fraktaler"
 #: plug-ins/common/psd_save.c:1588 plug-ins/common/raw.c:517
 #: plug-ins/common/raw.c:544 plug-ins/common/spheredesigner.c:2088
 #: plug-ins/common/sunras.c:513 plug-ins/common/tga.c:1030
-#: plug-ins/common/tiff.c:1809 plug-ins/common/xbm.c:996
+#: plug-ins/common/tiff.c:1810 plug-ins/common/xbm.c:996
 #: plug-ins/common/xwd.c:577 plug-ins/fits/fits.c:450
-#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:790
+#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:793
 #: plug-ins/gfli/gfli.c:715 plug-ins/ifscompose/ifscompose.c:2395
-#: plug-ins/winicon/icosave.c:236 plug-ins/xjt/xjt.c:1263
+#: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -421,8 +421,8 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
 #: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
-#: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:646
-#: plug-ins/common/jpeg.c:931 plug-ins/common/jpeg.c:2541
+#: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
+#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:395
@@ -431,10 +431,10 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/common/raw.c:635 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:382 plug-ins/common/svg.c:311
 #: plug-ins/common/svg.c:694 plug-ins/common/tga.c:415
-#: plug-ins/common/tiff.c:509 plug-ins/common/xbm.c:719
+#: plug-ins/common/tiff.c:510 plug-ins/common/xbm.c:719
 #: plug-ins/common/xwd.c:422 plug-ins/faxg3/faxg3.c:220
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:412
-#: plug-ins/gfig/gfig.c:428 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
+#: plug-ins/gfig/gfig.c:431 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
 #: plug-ins/help/domain.c:419 plug-ins/winicon/icoload.c:126
 #: plug-ins/xjt/xjt.c:2526 plug-ins/xjt/xjt.c:2534
 #, c-format
@@ -451,43 +451,43 @@ msgstr "\"%s\" är inte en FractalExplorer-fil"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "\"%s\" är trasig. Rad %d alternativsektion är felaktig"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:261
+#: plug-ins/FractalExplorer/FractalExplorer.c:269
 msgid "_Fractal Explorer..."
 msgstr "_FractalExplorer..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:392
+#: plug-ins/FractalExplorer/FractalExplorer.c:400
 msgid "Rendering Fractal..."
 msgstr "Renderar fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:766
+#: plug-ins/FractalExplorer/FractalExplorer.c:772
 #: plug-ins/gflare/gflare.c:3128
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Är du säker att du vill ta bort \"%s\" från listan och från disk?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:770
+#: plug-ins/FractalExplorer/FractalExplorer.c:776
 msgid "Delete Fractal"
 msgstr "Ta bort fraktal"
 
 #. the dialog
-#: plug-ins/FractalExplorer/FractalExplorer.c:847
+#: plug-ins/FractalExplorer/FractalExplorer.c:853
 msgid "Edit fractal name"
 msgstr "Redigera fraktalnamn"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:873
+#: plug-ins/FractalExplorer/FractalExplorer.c:879
 msgid "Fractal name:"
 msgstr "Fraktalnamn:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:895
+#: plug-ins/FractalExplorer/FractalExplorer.c:901
 msgid "New Fractal"
 msgstr "Ny fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1175
+#: plug-ins/FractalExplorer/FractalExplorer.c:1181
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Filen \"%s\" är inte en FractalExplorer-fil"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1184
+#: plug-ins/FractalExplorer/FractalExplorer.c:1190
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -496,27 +496,27 @@ msgstr ""
 "Filen \"%s\" är trasig.\n"
 "Rad %d alternativsektion är felaktig"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1234
+#: plug-ins/FractalExplorer/FractalExplorer.c:1240
 msgid "My first fractal"
 msgstr "Min första fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1250
+#: plug-ins/FractalExplorer/FractalExplorer.c:1256
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Välj fraktal genom att dubbelklicka på den"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1287
+#: plug-ins/FractalExplorer/FractalExplorer.c:1293
 msgid "Select folder and rescan collection"
 msgstr "Välj mapp och genomsök samlingen igen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1299
+#: plug-ins/FractalExplorer/FractalExplorer.c:1305
 msgid "Delete currently selected fractal"
 msgstr "Ta bort den just nu markerade fraktalen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1350
+#: plug-ins/FractalExplorer/FractalExplorer.c:1356
 msgid "Rescan for Fractals"
 msgstr "Genomsök igen efter fraktaler"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1367
+#: plug-ins/FractalExplorer/FractalExplorer.c:1373
 msgid "Add FractalExplorer Path"
 msgstr "Lägg till FractalExplorer-sökväg"
 
@@ -1181,13 +1181,13 @@ msgstr "Felaktig färgkarta"
 #. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
-#: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:651
-#: plug-ins/common/jpeg.c:938 plug-ins/common/pat.c:305
+#: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
+#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:400
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
 #: plug-ins/common/raw.c:640 plug-ins/common/sunras.c:436
-#: plug-ins/common/tga.c:420 plug-ins/common/tiff.c:514
+#: plug-ins/common/tga.c:420 plug-ins/common/tiff.c:515
 #: plug-ins/common/wmf.c:921 plug-ins/common/xbm.c:724
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:475
 #: plug-ins/faxg3/faxg3.c:203 plug-ins/gfli/gfli.c:465 plug-ins/sgi/sgi.c:323
@@ -1222,16 +1222,16 @@ msgstr "Oigenkänt eller felaktigt BMP-packningsformat."
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:949
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1098
-#: plug-ins/common/jpeg.c:2408 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
+#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:480
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
 #: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:925
-#: plug-ins/common/tga.c:929 plug-ins/common/tiff.c:832
+#: plug-ins/common/tga.c:929 plug-ins/common/tiff.c:833
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
-#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1220
+#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1286
 #: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
@@ -1253,16 +1253,16 @@ msgstr "Kan inte arbeta med okända bildtyper."
 #. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
-#: plug-ins/common/gih.c:1257 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1446 plug-ins/common/pat.c:438
+#: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
+#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:777
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
 #: plug-ins/common/sunras.c:518 plug-ins/common/tga.c:1035
-#: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1001
+#: plug-ins/common/tiff.c:1815 plug-ins/common/xbm.c:1001
 #: plug-ins/common/xpm.c:628 plug-ins/common/xwd.c:582
 #: plug-ins/fits/fits.c:455 plug-ins/gfli/gfli.c:682 plug-ins/sgi/sgi.c:545
-#: plug-ins/winicon/icosave.c:787 plug-ins/xjt/xjt.c:1682
+#: plug-ins/winicon/icosave.c:954 plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Sparar \"%s\" ..."
@@ -1883,7 +1883,7 @@ msgstr "Fyll (höger till vänster)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/common/align_layers.c:420 plug-ins/common/align_layers.c:451
-#: plug-ins/gfig/gfig-dialog.c:504
+#: plug-ins/gfig/gfig-dialog.c:495
 msgid "Snap to grid"
 msgstr "Fäst vid rutnät"
 
@@ -2216,7 +2216,7 @@ msgstr "Sträcker ut kontrast..."
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch: cmap var NULL! Avslutar...\n"
 
-#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:245
+#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
 #: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
 #: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:972
@@ -2674,50 +2674,50 @@ msgstr "Kanaler"
 msgid "C source code"
 msgstr "C källkod"
 
-#: plug-ins/common/csource.c:634
+#: plug-ins/common/csource.c:635
 msgid "Save as C-Source"
 msgstr "Spara som C-källkod"
 
-#: plug-ins/common/csource.c:658
+#: plug-ins/common/csource.c:659
 msgid "_Prefixed name:"
 msgstr "_Prefixnamn:"
 
 # src/header_stuff.c:462
-#: plug-ins/common/csource.c:667
+#: plug-ins/common/csource.c:668
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
 #. Use Comment
 #.
-#: plug-ins/common/csource.c:674
+#: plug-ins/common/csource.c:675
 msgid "_Save comment to file"
 msgstr "_Spara kommentar till fil"
 
 #. GLib types
 #.
-#: plug-ins/common/csource.c:686
+#: plug-ins/common/csource.c:687
 msgid "_Use GLib types (guint8*)"
 msgstr "_Använd GLib-typer (guint8*)"
 
 #. Use Macros
 #.
-#: plug-ins/common/csource.c:698
+#: plug-ins/common/csource.c:699
 msgid "Us_e macros instead of struct"
 msgstr "An_vänd makron istället för structar"
 
 #. Use RLE
 #.
-#: plug-ins/common/csource.c:710
+#: plug-ins/common/csource.c:711
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Använd _1-bytes Run-Length-kodning"
 
 #. Alpha
 #.
-#: plug-ins/common/csource.c:722
+#: plug-ins/common/csource.c:723
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Spa_ra alfa kanal (RGBARGB)"
 
-#: plug-ins/common/csource.c:740 plug-ins/common/sparkle.c:427
+#: plug-ins/common/csource.c:741 plug-ins/common/sparkle.c:427
 msgid "Op_acity:"
 msgstr "Op_acitet:"
 
@@ -2788,7 +2788,7 @@ msgstr "Automatisk _förhandsgranskning"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
-#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1156
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "Alternativ"
 
@@ -3263,31 +3263,31 @@ msgstr "_Smeta ut"
 msgid "_Black"
 msgstr "_Svart"
 
-#: plug-ins/common/dog.c:138
+#: plug-ins/common/dog.c:139
 msgid "Difference of Gaussians..."
 msgstr "Gaussisk differens..."
 
-#: plug-ins/common/dog.c:221 plug-ins/common/dog.c:272
+#: plug-ins/common/dog.c:222 plug-ins/common/dog.c:273
 msgid "DoG Edge Detect"
 msgstr "DoG kantdetektion"
 
-#: plug-ins/common/dog.c:293
+#: plug-ins/common/dog.c:294
 msgid "Smoothing parameters"
 msgstr "Utjämningssparametrar"
 
-#: plug-ins/common/dog.c:307
+#: plug-ins/common/dog.c:308
 msgid "_Radius 1:"
 msgstr "_Radie 1:"
 
-#: plug-ins/common/dog.c:311
+#: plug-ins/common/dog.c:312
 msgid "R_adius 2:"
 msgstr "R_adie 2:"
 
-#: plug-ins/common/dog.c:323 plug-ins/common/normalize.c:88
+#: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
 msgid "_Normalize"
 msgstr "_Normalisera"
 
-#: plug-ins/common/dog.c:334 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:335 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Invertera"
 
@@ -3461,7 +3461,7 @@ msgid "On Film:"
 msgstr "På film:"
 
 #. Create selection
-#: plug-ins/common/film.c:1169 plug-ins/imagemap/imap_selection.c:413
+#: plug-ins/common/film.c:1169 plug-ins/imagemap/imap_selection.c:408
 #: plug-ins/rcm/rcm_dialog.c:158
 msgid "Selection"
 msgstr "Markering"
@@ -3821,8 +3821,8 @@ msgstr "Fel i GIMP-penselfil \"%s\""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfil \"%s\"."
 
-#: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:495
-#: plug-ins/common/gih.c:1152 plug-ins/gflare/gflare.c:2991
+#: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:497
+#: plug-ins/common/gih.c:1154 plug-ins/gflare/gflare.c:2991
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -3839,7 +3839,7 @@ msgstr "Spara som pensel"
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
-#: plug-ins/common/gbr.c:694 plug-ins/common/gih.c:902
+#: plug-ins/common/gbr.c:694 plug-ins/common/gih.c:904
 #: plug-ins/common/pat.c:521 plug-ins/gimpressionist/presets.c:642
 msgid "Description:"
 msgstr "Beskrivning:"
@@ -3955,43 +3955,43 @@ msgid "_GIF comment:"
 msgstr "_GIF-kommentar:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1353
+#: plug-ins/common/gif.c:1348
 msgid "Animated GIF Options"
 msgstr "Inställningar för animerad GIF"
 
-#: plug-ins/common/gif.c:1359
+#: plug-ins/common/gif.c:1354
 msgid "_Loop forever"
 msgstr "_Loopa för evigt"
 
-#: plug-ins/common/gif.c:1372
+#: plug-ins/common/gif.c:1367
 msgid "_Delay between frames where unspecified:"
 msgstr "_Tidsmellanrum mellan bildrutor när ej specificerat:"
 
-#: plug-ins/common/gif.c:1385 plug-ins/common/mng.c:1522
+#: plug-ins/common/gif.c:1380 plug-ins/common/mng.c:1522
 msgid "milliseconds"
 msgstr "millisekunder"
 
-#: plug-ins/common/gif.c:1395
+#: plug-ins/common/gif.c:1390
 msgid "Frame disposal where unspecified: "
 msgstr "Bildrutehantering där ej specificerat: "
 
-#: plug-ins/common/gif.c:1399
+#: plug-ins/common/gif.c:1394
 msgid "I don't care"
 msgstr "Jag bryr mig inte"
 
-#: plug-ins/common/gif.c:1401
+#: plug-ins/common/gif.c:1396
 msgid "Cumulative layers (combine)"
 msgstr "Kumulativa lager (kombinera)"
 
-#: plug-ins/common/gif.c:1403
+#: plug-ins/common/gif.c:1398
 msgid "One frame per layer (replace)"
 msgstr "En bildruta per lager (ersätt)"
 
-#: plug-ins/common/gif.c:2616
+#: plug-ins/common/gif.c:2611
 msgid "Error writing output file."
 msgstr "Fel när filen sparades"
 
-#: plug-ins/common/gif.c:2686
+#: plug-ins/common/gif.c:2681
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren är begränsad till %d tecken."
@@ -4010,7 +4010,7 @@ msgid "Background (%d%s)"
 msgstr "Bakgrund (%d%s)"
 
 #: plug-ins/common/gifload.c:915 plug-ins/common/iwarp.c:783
-#: plug-ins/common/iwarp.c:815
+#: plug-ins/common/iwarp.c:817
 #, c-format
 msgid "Frame %d"
 msgstr "Bildruta %d"
@@ -4038,63 +4038,63 @@ msgstr "GIMP-pensel (animerad)"
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Lager %s har ingen alfakanal, hoppar över"
 
-#: plug-ins/common/gih.c:488
+#: plug-ins/common/gih.c:490
 msgid "Error in GIMP brush pipe file."
 msgstr "Fel i GIMP-penselrörfilen."
 
-#: plug-ins/common/gih.c:554
+#: plug-ins/common/gih.c:556
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMP-penselfilen verkar vara trasig."
 
-#: plug-ins/common/gih.c:702
+#: plug-ins/common/gih.c:704
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Kunde inte läsa in en pensel i röret; ger upp."
 
-#: plug-ins/common/gih.c:865
+#: plug-ins/common/gih.c:867
 msgid "Save as Brush Pipe"
 msgstr "Spara som penselrör"
 
-#: plug-ins/common/gih.c:888
+#: plug-ins/common/gih.c:890
 msgid "Spacing (percent):"
 msgstr "Mellanrum (procent):"
 
-#: plug-ins/common/gih.c:955
+#: plug-ins/common/gih.c:957
 msgid "Pixels"
 msgstr "Bildpunkter"
 
-#: plug-ins/common/gih.c:960
+#: plug-ins/common/gih.c:962
 msgid "Cell size:"
 msgstr "Cellstorlek:"
 
-#: plug-ins/common/gih.c:972
+#: plug-ins/common/gih.c:974
 msgid "Number of cells:"
 msgstr "Antal celler:"
 
-#: plug-ins/common/gih.c:997
+#: plug-ins/common/gih.c:999
 msgid " Rows of "
 msgstr " Rader med "
 
-#: plug-ins/common/gih.c:1009
+#: plug-ins/common/gih.c:1011
 msgid " Columns on each layer"
 msgstr " Kolumner på varje lager"
 
-#: plug-ins/common/gih.c:1013
+#: plug-ins/common/gih.c:1015
 msgid " (Width Mismatch!) "
 msgstr " (Fel bredd!) "
 
-#: plug-ins/common/gih.c:1017
+#: plug-ins/common/gih.c:1019
 msgid " (Height Mismatch!) "
 msgstr " (Fel höjd!) "
 
-#: plug-ins/common/gih.c:1022
+#: plug-ins/common/gih.c:1024
 msgid "Display as:"
 msgstr "Visa som:"
 
-#: plug-ins/common/gih.c:1031
+#: plug-ins/common/gih.c:1033
 msgid "Dimension:"
 msgstr "Dimension:"
 
-#: plug-ins/common/gih.c:1108
+#: plug-ins/common/gih.c:1110
 msgid "Ranks:"
 msgstr "Ranger:"
 
@@ -4154,9 +4154,9 @@ msgstr "_Rutnät..."
 msgid "Drawing Grid..."
 msgstr "Ritar rutnät..."
 
-#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:824
-#: plug-ins/gfig/gfig-dialog.c:1284 plug-ins/imagemap/imap_menu.c:385
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:168
+#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1355
+#: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_toolbar.c:168
 msgid "Grid"
 msgstr "Rutnät"
 
@@ -4401,93 +4401,93 @@ msgstr "_IWarp..."
 msgid "Warping..."
 msgstr "Förvrider..."
 
-#: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:793 plug-ins/common/iwarp.c:805
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Förvrider Bildruta %d..."
 
-#: plug-ins/common/iwarp.c:804
+#: plug-ins/common/iwarp.c:806
 msgid "Ping pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:938
+#: plug-ins/common/iwarp.c:941
 msgid "A_nimate"
 msgstr "A_nimera"
 
-#: plug-ins/common/iwarp.c:957
+#: plug-ins/common/iwarp.c:960
 msgid "Number of _Frames:"
 msgstr "Antal _bildrutor:"
 
-#: plug-ins/common/iwarp.c:966
+#: plug-ins/common/iwarp.c:969
 msgid "R_everse"
 msgstr "B_aklänges"
 
-#: plug-ins/common/iwarp.c:975
+#: plug-ins/common/iwarp.c:978
 msgid "_Ping Pong"
 msgstr "_Ping Pong"
 
-#: plug-ins/common/iwarp.c:988
+#: plug-ins/common/iwarp.c:991
 msgid "_Animate"
 msgstr "_Animera"
 
-#: plug-ins/common/iwarp.c:1009
+#: plug-ins/common/iwarp.c:1012
 msgid "Deform Mode"
 msgstr "Deformationstyp"
 
-#: plug-ins/common/iwarp.c:1022
+#: plug-ins/common/iwarp.c:1025
 msgid "_Move"
 msgstr "_Flytta"
 
-#: plug-ins/common/iwarp.c:1023
+#: plug-ins/common/iwarp.c:1026
 msgid "_Grow"
 msgstr "_Väx"
 
-#: plug-ins/common/iwarp.c:1024
+#: plug-ins/common/iwarp.c:1027
 msgid "S_wirl CCW"
 msgstr "V_irvla moturs"
 
-#: plug-ins/common/iwarp.c:1025
+#: plug-ins/common/iwarp.c:1028
 msgid "Remo_ve"
 msgstr "Ta _bort"
 
-#: plug-ins/common/iwarp.c:1026
+#: plug-ins/common/iwarp.c:1029
 msgid "S_hrink"
 msgstr "K_rymp"
 
-#: plug-ins/common/iwarp.c:1027
+#: plug-ins/common/iwarp.c:1030
 msgid "Sw_irl CW"
 msgstr "Vi_rvla medurs"
 
-#: plug-ins/common/iwarp.c:1056
+#: plug-ins/common/iwarp.c:1059
 msgid "_Deform radius:"
 msgstr "_Deformationsradie:"
 
-#: plug-ins/common/iwarp.c:1066
+#: plug-ins/common/iwarp.c:1069
 msgid "D_eform amount:"
 msgstr "D_eformationsmängd:"
 
-#: plug-ins/common/iwarp.c:1075
+#: plug-ins/common/iwarp.c:1078
 msgid "_Bilinear"
 msgstr "_Bilinjär"
 
-#: plug-ins/common/iwarp.c:1089
+#: plug-ins/common/iwarp.c:1092
 msgid "Adaptive s_upersample"
 msgstr "Adaptiv s_upersampling"
 
-#: plug-ins/common/iwarp.c:1109
+#: plug-ins/common/iwarp.c:1112
 msgid "Ma_x depth:"
 msgstr "Ma_x djup:"
 
-#: plug-ins/common/iwarp.c:1119
+#: plug-ins/common/iwarp.c:1122
 msgid "Thresho_ld:"
 msgstr "Tröskel_värde:"
 
-#: plug-ins/common/iwarp.c:1132 plug-ins/common/sinus.c:764
+#: plug-ins/common/iwarp.c:1135 plug-ins/common/sinus.c:764
 #: plug-ins/gflare/gflare.c:2795
 msgid "_Settings"
 msgstr "_Inställningar"
 
-#: plug-ins/common/iwarp.c:1148
+#: plug-ins/common/iwarp.c:1151
 msgid "IWarp"
 msgstr "IWarp"
 
@@ -4556,111 +4556,111 @@ msgstr "Varje pusselbit har raka sidor"
 msgid "Each piece has curved sides"
 msgstr "Varje pusselbit har avrundade sidor"
 
-#: plug-ins/common/jpeg.c:369 plug-ins/common/jpeg.c:407
+#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: plug-ins/common/jpeg.c:514
+#: plug-ins/common/jpeg.c:516
 msgid "Export Preview"
 msgstr "Förhandsgranska export"
 
-#: plug-ins/common/jpeg.c:877
+#: plug-ins/common/jpeg.c:880
 msgid "EXIF data will be ignored."
 msgstr "EXIF-data kommer att ignoreras."
 
-#: plug-ins/common/jpeg.c:1091
+#: plug-ins/common/jpeg.c:1094
 msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
-#: plug-ins/common/jpeg.c:1353
+#: plug-ins/common/jpeg.c:1356
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Filstorlek: %02.01f kB"
 
-#: plug-ins/common/jpeg.c:1800 plug-ins/common/jpeg.c:1901
+#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
 msgid "File size: unknown"
 msgstr "Filstorlek: okänd"
 
-#: plug-ins/common/jpeg.c:1866
+#: plug-ins/common/jpeg.c:1874
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
-#: plug-ins/common/jpeg.c:1887
+#: plug-ins/common/jpeg.c:1895
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1891
+#: plug-ins/common/jpeg.c:1899
 msgid "JPEG quality parameter"
 msgstr "JPEG kvalitetsparameter"
 
-#: plug-ins/common/jpeg.c:1910
+#: plug-ins/common/jpeg.c:1918
 msgid "Show _Preview in image window"
 msgstr "_Förhandsgranska i bildfönstret"
 
-#: plug-ins/common/jpeg.c:1923
+#: plug-ins/common/jpeg.c:1931
 msgid "_Advanced Options"
 msgstr "_Avancerade inställningar"
 
-#: plug-ins/common/jpeg.c:1951
+#: plug-ins/common/jpeg.c:1959
 msgid "_Smoothing:"
 msgstr "_Utjämnande:"
 
-#: plug-ins/common/jpeg.c:1964
+#: plug-ins/common/jpeg.c:1972
 msgid "Frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1978
+#: plug-ins/common/jpeg.c:1986
 msgid "Use restart markers"
 msgstr "Använd omstartsmarkörer"
 
-#: plug-ins/common/jpeg.c:1993 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "Optimera"
 
-#: plug-ins/common/jpeg.c:2007
+#: plug-ins/common/jpeg.c:2015
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:2026
+#: plug-ins/common/jpeg.c:2034
 msgid "Force baseline JPEG"
 msgstr "Tvinga grundläggande JPEG"
 
-#: plug-ins/common/jpeg.c:2042
+#: plug-ins/common/jpeg.c:2050
 msgid "Save EXIF data"
 msgstr "Spara EXIF-data"
 
-#: plug-ins/common/jpeg.c:2056
+#: plug-ins/common/jpeg.c:2064
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2070
+#: plug-ins/common/jpeg.c:2078
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2097
+#: plug-ins/common/jpeg.c:2105
 msgid "DCT method:"
 msgstr "DCT-metod:"
 
-#: plug-ins/common/jpeg.c:2103
+#: plug-ins/common/jpeg.c:2111
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: plug-ins/common/jpeg.c:2104
+#: plug-ins/common/jpeg.c:2112
 msgid "Integer"
 msgstr "Heltal"
 
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2113
 msgid "Floating-Point"
 msgstr "Flyttal"
 
 # src/sidebar.c:107
-#: plug-ins/common/jpeg.c:2119
+#: plug-ins/common/jpeg.c:2127
 msgid "Comment"
 msgstr "Kommentar"
 
-#: plug-ins/common/jpeg.c:2272
+#: plug-ins/common/jpeg.c:2280
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Öppnar miniatyrbild för \"%s\"..."
@@ -5224,7 +5224,7 @@ msgid "_Factory defaults"
 msgstr "Ställ in _standardvärden"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1193
+#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1258
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
@@ -7094,16 +7094,16 @@ msgstr "Tröskelvärde:"
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
-#: plug-ins/common/tiff.c:834
+#: plug-ins/common/tiff.c:835
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
 
-#: plug-ins/common/tiff.c:849
+#: plug-ins/common/tiff.c:850
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:858
+#: plug-ins/common/tiff.c:859
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7115,7 +7115,7 @@ msgstr ""
 "så den blir konverterad åt dig. På grund av konverteringen kommer "
 "information att förloras."
 
-#: plug-ins/common/tiff.c:1953
+#: plug-ins/common/tiff.c:1955
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7123,41 +7123,41 @@ msgstr ""
 "TIFF-formatet stöder endast kommentarer i\n"
 "7-bitars ASCII. Ingen kommentar sparad."
 
-#: plug-ins/common/tiff.c:2102
+#: plug-ins/common/tiff.c:2104
 msgid "Save as TIFF"
 msgstr "Spara som TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2116
+#: plug-ins/common/tiff.c:2118
 msgid "Compression"
 msgstr "Komprimering"
 
-#: plug-ins/common/tiff.c:2120
+#: plug-ins/common/tiff.c:2122
 msgid "_None"
 msgstr "_Ingen"
 
-#: plug-ins/common/tiff.c:2121
+#: plug-ins/common/tiff.c:2123
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2122
+#: plug-ins/common/tiff.c:2124
 msgid "_Pack Bits"
 msgstr "_Packa bitar"
 
-#: plug-ins/common/tiff.c:2123
+#: plug-ins/common/tiff.c:2125
 msgid "_Deflate"
 msgstr "_Packa ihop"
 
-#: plug-ins/common/tiff.c:2124
+#: plug-ins/common/tiff.c:2126
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2133
+#: plug-ins/common/tiff.c:2135
 msgid "Save _color values from transparent pixels"
 msgstr "Spara färg_värden från genomskinsliga bildpunkter"
 
 # src/header_stuff.c:462
-#: plug-ins/common/tiff.c:2149 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2151 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -7383,7 +7383,7 @@ msgstr "Lägger ihop..."
 msgid "Unsharp Mask"
 msgstr "Oskarp mask"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:434
+#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:429
 msgid "URL"
 msgstr "URL"
 
@@ -7590,7 +7590,7 @@ msgid "Smear"
 msgstr "Smeta ut"
 
 #: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:988
-#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1338
+#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1421
 msgid "Black"
 msgstr "Svart"
 
@@ -8283,8 +8283,8 @@ msgstr "Läs in FITS-fil"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "Ersätt BLANK/NaN bildpunkter"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1222
-#: plug-ins/gfig/gfig-dialog.c:1339
+#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/gfig/gfig-dialog.c:1422
 msgid "White"
 msgstr "Vitt"
 
@@ -8354,7 +8354,7 @@ msgstr "Virvla"
 msgid "Horseshoe"
 msgstr "Hästsko"
 
-#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1322
+#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1403
 msgid "Polar"
 msgstr "Polär"
 
@@ -8435,175 +8435,188 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Ritar linjer mellan kontrollpunkterna. Endast när kurvan skapas"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:302
+#: plug-ins/gfig/gfig-dialog.c:295
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:351
+#: plug-ins/gfig/gfig-dialog.c:341
 msgid "Tool options"
 msgstr "Verktygsalternativ"
 
-#: plug-ins/gfig/gfig-dialog.c:368
+#: plug-ins/gfig/gfig-dialog.c:358
 msgid "_Stroke"
 msgstr "_Stryk"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:414
+#: plug-ins/gfig/gfig-dialog.c:405
 msgid "Fill"
 msgstr "Fyll"
 
-#: plug-ins/gfig/gfig-dialog.c:428
+#: plug-ins/gfig/gfig-dialog.c:419
 msgid "No fill"
 msgstr "Ingen ifyllnad"
 
-#: plug-ins/gfig/gfig-dialog.c:429
+#: plug-ins/gfig/gfig-dialog.c:420
 msgid "Color fill"
 msgstr "Fyll med färg"
 
-#: plug-ins/gfig/gfig-dialog.c:430
+#: plug-ins/gfig/gfig-dialog.c:421
 msgid "Pattern fill"
 msgstr "Mönsterfyll"
 
-#: plug-ins/gfig/gfig-dialog.c:431
+#: plug-ins/gfig/gfig-dialog.c:422
 msgid "Gradient fill"
 msgstr "Fyll med färgskala"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:491
+#: plug-ins/gfig/gfig-dialog.c:482
 msgid "Show image"
 msgstr "Visa bild"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:513
+#: plug-ins/gfig/gfig-dialog.c:504
 msgid "Show grid"
 msgstr "Visa rutnät"
 
-#: plug-ins/gfig/gfig-dialog.c:645
+#: plug-ins/gfig/gfig-dialog.c:639
 msgid "Load Gfig object collection"
 msgstr "Läs in Gfig-objektsamling"
 
-#: plug-ins/gfig/gfig-dialog.c:740
-msgid "First Gfig"
-msgstr "Första Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:762
+#: plug-ins/gfig/gfig-dialog.c:683
 msgid "Save Gfig Drawing"
 msgstr "Spara Gfig-ritning"
 
-#: plug-ins/gfig/gfig-dialog.c:832
+#: plug-ins/gfig/gfig-dialog.c:820
+msgid "First Gfig"
+msgstr "Första Gfig"
+
+# src/menus.c:302
+#: plug-ins/gfig/gfig-dialog.c:859
+msgid "_Undo"
+msgstr "_Ångra"
+
+#: plug-ins/gfig/gfig-dialog.c:863
+msgid "_Clear"
+msgstr "_Töm"
+
+#: plug-ins/gfig/gfig-dialog.c:867
+msgid "_Grid"
+msgstr "_Rutnät"
+
+#: plug-ins/gfig/gfig-dialog.c:875
 msgid "Raise selected object"
 msgstr "Höj valt objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:836
+#: plug-ins/gfig/gfig-dialog.c:879
 msgid "Lower selected object"
 msgstr "Sänk valt objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:840
+#: plug-ins/gfig/gfig-dialog.c:883
 msgid "Raise selected object to top"
 msgstr "Sätt valt objekt överst"
 
-#: plug-ins/gfig/gfig-dialog.c:844
+#: plug-ins/gfig/gfig-dialog.c:887
 msgid "Lower selected object to bottom"
 msgstr "Sätt valt objekt underst"
 
-#: plug-ins/gfig/gfig-dialog.c:848
+#: plug-ins/gfig/gfig-dialog.c:891
 msgid "Show previous object"
 msgstr "Visa föregående objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:852
+#: plug-ins/gfig/gfig-dialog.c:895
 msgid "Show next object"
 msgstr "Visa nästa objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:856
+#: plug-ins/gfig/gfig-dialog.c:899
 msgid "Show all objects"
 msgstr "Visa alla objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:862
+#: plug-ins/gfig/gfig-dialog.c:905
 msgid "Create line"
 msgstr "Skapa linje"
 
-#: plug-ins/gfig/gfig-dialog.c:865
+#: plug-ins/gfig/gfig-dialog.c:908
 msgid "Create circle"
 msgstr "Skapa cirkel"
 
-#: plug-ins/gfig/gfig-dialog.c:868
+#: plug-ins/gfig/gfig-dialog.c:911
 msgid "Create ellipse"
 msgstr "Skapa ellips"
 
-#: plug-ins/gfig/gfig-dialog.c:871
+#: plug-ins/gfig/gfig-dialog.c:914
 msgid "Create arc"
 msgstr "Skapa båge"
 
-#: plug-ins/gfig/gfig-dialog.c:874
+#: plug-ins/gfig/gfig-dialog.c:917
 msgid "Create reg polygon"
 msgstr "Skapa liksidig polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:877
+#: plug-ins/gfig/gfig-dialog.c:920
 msgid "Create star"
 msgstr "Skapa stjärna"
 
-#: plug-ins/gfig/gfig-dialog.c:880
+#: plug-ins/gfig/gfig-dialog.c:923
 msgid "Create spiral"
 msgstr "Skapa spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:883
+#: plug-ins/gfig/gfig-dialog.c:926
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Skapa bezierkurva. Shift + musknapp avslutar skapandet."
 
-#: plug-ins/gfig/gfig-dialog.c:887
+#: plug-ins/gfig/gfig-dialog.c:930
 msgid "Move an object"
 msgstr "Flytta ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:890
+#: plug-ins/gfig/gfig-dialog.c:933
 msgid "Move a single point"
 msgstr "Flytta en punkt"
 
-#: plug-ins/gfig/gfig-dialog.c:893
+#: plug-ins/gfig/gfig-dialog.c:936
 msgid "Copy an object"
 msgstr "Kopiera ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:896
+#: plug-ins/gfig/gfig-dialog.c:939
 msgid "Delete an object"
 msgstr "Ta bort ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:899
+#: plug-ins/gfig/gfig-dialog.c:942
 msgid "Select an object"
 msgstr "Välj ett objekt"
 
-#: plug-ins/gfig/gfig-dialog.c:976
+#: plug-ins/gfig/gfig-dialog.c:1023
 msgid "This tool has no options"
 msgstr "Detta verktyg har inga alternativ"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1170
+#: plug-ins/gfig/gfig-dialog.c:1230
 msgid "Show position"
 msgstr "Visa position"
 
-#: plug-ins/gfig/gfig-dialog.c:1181
+#: plug-ins/gfig/gfig-dialog.c:1242
 msgid "Show control points"
 msgstr "Visa kontrollpunkter"
 
-#: plug-ins/gfig/gfig-dialog.c:1211
+#: plug-ins/gfig/gfig-dialog.c:1276
 msgid "Max undo:"
 msgstr "Max ångra:"
 
-#: plug-ins/gfig/gfig-dialog.c:1219 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Genomskinlig"
 
-#: plug-ins/gfig/gfig-dialog.c:1221
+#: plug-ins/gfig/gfig-dialog.c:1287
 msgid "Foreground"
 msgstr "Förgrund"
 
-#: plug-ins/gfig/gfig-dialog.c:1223 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Kopiera"
 
-#: plug-ins/gfig/gfig-dialog.c:1232
+#: plug-ins/gfig/gfig-dialog.c:1298
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8611,90 +8624,90 @@ msgstr ""
 "Bakgrundstyp för lager. Kopiera medför att förra lagret blir kopierat innan "
 "ritandet utförs"
 
-#: plug-ins/gfig/gfig-dialog.c:1237
+#: plug-ins/gfig/gfig-dialog.c:1304
 msgid "Background:"
 msgstr "Bakgrund:"
 
-#: plug-ins/gfig/gfig-dialog.c:1241
+#: plug-ins/gfig/gfig-dialog.c:1307
 msgid "Feather"
 msgstr "Fjäder"
 
-#: plug-ins/gfig/gfig-dialog.c:1265
+#: plug-ins/gfig/gfig-dialog.c:1331
 msgid "Radius:"
 msgstr "Radie:"
 
-#: plug-ins/gfig/gfig-dialog.c:1308
+#: plug-ins/gfig/gfig-dialog.c:1386
 msgid "Grid spacing:"
 msgstr "Rutnätsmellanrum:"
 
-#: plug-ins/gfig/gfig-dialog.c:1321 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gfig/gfig-dialog.c:1402 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:161
 msgid "Rectangle"
 msgstr "Rektangel"
 
-#: plug-ins/gfig/gfig-dialog.c:1323
+#: plug-ins/gfig/gfig-dialog.c:1404
 msgid "Isometric"
 msgstr "Isometrisk"
 
-#: plug-ins/gfig/gfig-dialog.c:1332
+#: plug-ins/gfig/gfig-dialog.c:1413
 msgid "Grid type:"
 msgstr "Rutnätstyp:"
 
-#: plug-ins/gfig/gfig-dialog.c:1337 plug-ins/gflare/gflare.c:559
+#: plug-ins/gfig/gfig-dialog.c:1420 plug-ins/gflare/gflare.c:559
 msgid "Normal"
 msgstr "Normalt"
 
-#: plug-ins/gfig/gfig-dialog.c:1340
+#: plug-ins/gfig/gfig-dialog.c:1423
 msgid "Grey"
 msgstr "Grått"
 
-#: plug-ins/gfig/gfig-dialog.c:1341
+#: plug-ins/gfig/gfig-dialog.c:1424
 msgid "Darker"
 msgstr "Mörkare"
 
-#: plug-ins/gfig/gfig-dialog.c:1342
+#: plug-ins/gfig/gfig-dialog.c:1425
 msgid "Lighter"
 msgstr "Ljusare"
 
-#: plug-ins/gfig/gfig-dialog.c:1343
+#: plug-ins/gfig/gfig-dialog.c:1426
 msgid "Very dark"
 msgstr "Mycket mörkt"
 
-#: plug-ins/gfig/gfig-dialog.c:1352
+#: plug-ins/gfig/gfig-dialog.c:1435
 msgid "Grid color:"
 msgstr "Rutnätsfärg:"
 
-#: plug-ins/gfig/gfig-dialog.c:1549
+#: plug-ins/gfig/gfig-dialog.c:1638
 msgid "Sides:"
 msgstr "Sidor:"
 
-#: plug-ins/gfig/gfig-dialog.c:1559
+#: plug-ins/gfig/gfig-dialog.c:1648
 msgid "Right"
 msgstr "Höger"
 
-#: plug-ins/gfig/gfig-dialog.c:1560
+#: plug-ins/gfig/gfig-dialog.c:1649
 msgid "Left"
 msgstr "Vänster"
 
-#: plug-ins/gfig/gfig-dialog.c:1570 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientering:"
 
-#: plug-ins/gfig/gfig-dialog.c:1795
+#: plug-ins/gfig/gfig-dialog.c:1885
 #, c-format
 msgid "Gfig layer %d"
 msgstr "Gfig lager %d"
 
-#: plug-ins/gfig/gfig-dobject.c:588
+#: plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
 msgstr "Hallå, vart har objektet tagit vägen ?"
 
-#: plug-ins/gfig/gfig-dobject.c:983
+#: plug-ins/gfig/gfig-dobject.c:979
 msgid "Error reading file"
 msgstr "Fel vid inläsning"
 
-#: plug-ins/gfig/gfig-dobject.c:1073
+#: plug-ins/gfig/gfig-dobject.c:1068
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 
@@ -8723,7 +8736,7 @@ msgstr "Stjärna antal punkter"
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:731
+#: plug-ins/gfig/gfig.c:734
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
@@ -8731,7 +8744,7 @@ msgstr ""
 "Fel när figuren ska sparas som parasit: kan inte lägga till parasiten till "
 "ritytan.\n"
 
-#: plug-ins/gfig/gfig.c:752
+#: plug-ins/gfig/gfig.c:755
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr "Fel när temporärfilen \"%s\" öppnas för inläsning av parasit.\n"
@@ -9886,7 +9899,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:186 plug-ins/imagemap/imap_tools.c:179
+#: plug-ins/imagemap/imap_selection.c:181 plug-ins/imagemap/imap_tools.c:179
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -10004,7 +10017,7 @@ msgstr "Lägg in punkt"
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_object_popup.c:109
-#: plug-ins/imagemap/imap_selection.c:177
+#: plug-ins/imagemap/imap_selection.c:172
 msgid "Move Down"
 msgstr "Flytta ner"
 
@@ -10024,7 +10037,7 @@ msgstr "Flytta fram"
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_object_popup.c:107
-#: plug-ins/imagemap/imap_selection.c:173
+#: plug-ins/imagemap/imap_selection.c:168
 msgid "Move Up"
 msgstr "Flytta upp"
 
@@ -10484,19 +10497,19 @@ msgstr "Övre vänstra _x:"
 msgid "Upper left _y:"
 msgstr "Övre högra _y:"
 
-#: plug-ins/imagemap/imap_selection.c:182 plug-ins/imagemap/imap_tools.c:174
+#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:174
 msgid "Edit"
 msgstr "Redigera"
 
-#: plug-ins/imagemap/imap_selection.c:423
+#: plug-ins/imagemap/imap_selection.c:418
 msgid "#"
 msgstr "#"
 
-#: plug-ins/imagemap/imap_selection.c:452
+#: plug-ins/imagemap/imap_selection.c:447
 msgid "ALT Text"
 msgstr "ALT-text"
 
-#: plug-ins/imagemap/imap_selection.c:462
+#: plug-ins/imagemap/imap_selection.c:457
 msgid "Target"
 msgstr "Mål"
 
@@ -11537,7 +11550,7 @@ msgstr "Ikondetaljer"
 msgid "Icon #%i"
 msgstr "Ikon #%i"
 
-#: plug-ins/winicon/icosave.c:773
+#: plug-ins/winicon/icosave.c:940
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Windows-ikoner kan inte vara högre eööer bredare än 256 bildpunkter."
 
