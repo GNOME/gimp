@@ -1,4 +1,4 @@
-%define ver      0.99.29
+%define ver      0.99.31
 %define rel      SNAP
 
 Summary: The GNU Image Manipulation Program

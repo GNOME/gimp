@@ -30,12 +30,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.8  1998/05/14 00:32:46  yosh
+ *   Revision 1.9  1998/05/17 07:16:45  yosh
+ *   0.99.31 fun
+ *
  *   updated print plugin
  *
- *   stubbed out nonworking frac code
- *
  *   -Yosh
+ *
+ *   Revision 1.11  1998/05/15  21:01:51  mike
+ *   Updated image positioning code (invert top and center left/top independently)
  *
  *   Revision 1.10  1998/05/08  21:18:34  mike
  *   Now enable microweaving in 720 DPI mode.
@@ -396,11 +399,13 @@ escp2_print(int       model,		/* I - Model */
     left = x;
   };
 
-  if (top < 0 || left < 0)
-  {
-    left = (page_width - out_width) / 2;
-    top  = (page_height + out_height) / 2;
-  };
+  if (left < 0)
+    left = (page_width - out_width) / 2 + page_left;
+
+  if (top < 0)
+    top  = (page_height + out_height) / 2 + page_bottom;
+  else
+    top = page_height - top + page_bottom;
 
  /*
   * Let the user know what we're doing...
@@ -491,7 +496,7 @@ escp2_print(int       model,		/* I - Model */
   out_width  = xdpi * out_width / 72;
   out_height = ydpi * out_height / 72;
 
-  left = ydpi * left / 72;
+  left = ydpi * (left - page_left) / 72;
 
  /*
   * Allocate memory for the raster data...

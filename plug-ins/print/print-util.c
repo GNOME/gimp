@@ -34,12 +34,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.9  1998/05/14 00:32:50  yosh
+ *   Revision 1.10  1998/05/17 07:16:49  yosh
+ *   0.99.31 fun
+ *
  *   updated print plugin
  *
- *   stubbed out nonworking frac code
- *
  *   -Yosh
+ *
+ *   Revision 1.14  1998/05/16  18:27:59  mike
+ *   Cleaned up dithering functions - unnecessary extra data in dither buffer.
  *
  *   Revision 1.13  1998/05/13  17:00:36  mike
  *   Minor change to CMYK generation code - now cube black difference value
@@ -118,7 +121,7 @@
  * (currently 720) to avoid problems...
  */
 
-int	error[2][4][14*720+4] =
+int	error[2][4][14*720+1] =
 	{
 	  { { 0 }, { 0 }, { 0 } , { 0 } },
 	  { { 0 }, { 0 }, { 0 } , { 0 } }
@@ -154,10 +157,8 @@ dither_black(guchar        *gray,	/* I - Grayscale pixels */
   xmod   = src_width % dst_width;
   length = (dst_width + 7) / 8;
 
-  kerror0    = error[row & 1][3] + 1;
-  kerror1    = error[1 - (row & 1)][3] + 1;
-  kerror1[0] = 0;
-  kerror1[1] = 0;
+  kerror0 = error[row & 1][3];
+  kerror1 = error[1 - (row & 1)][3];
 
   memset(black, 0, length);
 
@@ -167,6 +168,7 @@ dither_black(guchar        *gray,	/* I - Grayscale pixels */
        x ++, kerror0 ++, kerror1 ++)
   {
     k = 255 - *gray + ditherk / 8;
+
     if (k > 127)
     {
       *kptr |= bit;
@@ -250,25 +252,17 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
   xmod   = src_width % dst_width;
   length = (dst_width + 7) / 8;
 
-  cerror0    = error[row & 1][0] + 2;
-  cerror1    = error[1 - (row & 1)][0] + 2;
-  cerror1[0] = 0;
-  cerror1[1] = 0;
+  cerror0 = error[row & 1][0];
+  cerror1 = error[1 - (row & 1)][0];
 
-  merror0    = error[row & 1][1] + 2;
-  merror1    = error[1 - (row & 1)][1] + 2;
-  merror1[0] = 0;
-  merror1[1] = 0;
+  merror0 = error[row & 1][1];
+  merror1 = error[1 - (row & 1)][1];
 
-  yerror0    = error[row & 1][2] + 2;
-  yerror1    = error[1 - (row & 1)][2] + 2;
-  yerror1[0] = 0;
-  yerror1[1] = 0;
+  yerror0 = error[row & 1][2];
+  yerror1 = error[1 - (row & 1)][2];
 
-  kerror0    = error[row & 1][3] + 2;
-  kerror1    = error[1 - (row & 1)][3] + 2;
-  kerror1[0] = 0;
-  kerror1[1] = 0;
+  kerror0 = error[row & 1][3];
+  kerror1 = error[1 - (row & 1)][3];
 
   memset(cyan, 0, length);
   memset(magenta, 0, length);
@@ -276,8 +270,8 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
   if (black != NULL)
     memset(black, 0, length);
 
-  for (x = 0, bit = 128, cptr = cyan, mptr = magenta, yptr = yellow, kptr=black,
-           xerror = 0, ditherbit = rand(), ditherc = cerror0[0],
+  for (x = 0, bit = 128, cptr = cyan, mptr = magenta, yptr = yellow,
+           kptr = black, xerror = 0, ditherbit = rand(), ditherc = cerror0[0],
            ditherm = merror0[0], dithery = yerror0[0], ditherk = kerror0[0];
        x < dst_width;
        x ++, cerror0 ++, cerror1 ++, merror0 ++, merror1 ++, yerror0 ++,

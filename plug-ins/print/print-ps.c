@@ -32,12 +32,17 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.8  1998/05/14 00:32:49  yosh
+ *   Revision 1.9  1998/05/17 07:16:47  yosh
+ *   0.99.31 fun
+ *
  *   updated print plugin
  *
- *   stubbed out nonworking frac code
- *
  *   -Yosh
+ *
+ *   Revision 1.13  1998/05/15  21:01:51  mike
+ *   Updated image positioning code (invert top and center left/top independently)
+ *   Updated ps_imageable_area() to return a default imageable area when no PPD
+ *   file is available.
  *
  *   Revision 1.12  1998/05/11  23:56:56  mike
  *   Removed unused outptr variable.
@@ -270,7 +275,13 @@ ps_imageable_area(int  model,		/* I - Printer model */
       *left = *right = *bottom = *top = 0;
   }
   else
-    *left = *right = *bottom = *top = 0;
+  {
+    default_media_size(model, ppd_file, media_size, right, top);
+    *left   = 18;
+    *right  -= 18;
+    *top    -= 36;
+    *bottom = 36;
+  };
 }
 
 
@@ -486,11 +497,13 @@ ps_print(int       model,		/* I - Model (Level 1 or 2) */
 
   curtime = time(NULL);
 
-  if (top < 0 || left < 0)
-  {
+  if (left < 0)
     left = (page_width - out_width) / 2 + page_left;
+
+  if (top < 0)
     top  = (page_height + out_height) / 2 + page_bottom;
-  };
+  else
+    top = page_height - top + page_bottom;
 
 #ifdef DEBUG
   printf("out_width = %d, out_height = %d\n", out_width, out_height);

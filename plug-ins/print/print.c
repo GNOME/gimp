@@ -39,12 +39,28 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.9  1998/05/14 00:32:51  yosh
+ *   Revision 1.10  1998/05/17 07:16:50  yosh
+ *   0.99.31 fun
+ *
  *   updated print plugin
  *
- *   stubbed out nonworking frac code
- *
  *   -Yosh
+ *
+ *   Revision 1.21  1998/05/16  18:51:16  mike
+ *   Updated LaserJet and PostScript profiles.
+ *
+ *   Revision 1.20  1998/05/16  18:27:59  mike
+ *   Updated brightness LUT generation for correct calibration values.
+ *   Updated Stylus Color density - a little too high.
+ *
+ *   Revision 1.19  1998/05/16  16:45:24  mike
+ *   Added RGB/Grayscale gamma correction using the brightness (as well as the
+ *   CMY[K] gamma correction for each printer)
+ *
+ *   Revision 1.18  1998/05/15  21:01:51  mike
+ *   Top/left need to be in points.
+ *   All code in preview_motion_callback() was still commented out...
+ *   Updated DeskJet and Stylus color calibration values.
  *
  *   Revision 1.17  1998/05/11  23:56:05  mike
  *   Miscellaneous portability changes.
@@ -298,53 +314,53 @@ printer_t	printers[] =		/* List of supported printer types */
     ps_parameters,	ps_media_size,	ps_imageable_area,	ps_print },
   { "PostScript Level 2",	"ps2",		1,	1,	1.000,	1.000,
     ps_parameters,	ps_media_size,	ps_imageable_area,	ps_print },
-  { "HP DeskJet 500, 520",	"pcl-500",	0,	500,	0.541,	0.548,
+  { "HP DeskJet 500, 520",	"pcl-500",	0,	500,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 500C, 540C",	"pcl-501",	1,	501,	0.541,	0.548,
+  { "HP DeskJet 500C, 540C",	"pcl-501",	1,	501,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 550C, 560C",	"pcl-550",	1,	550,	0.541,	0.548,
+  { "HP DeskJet 550C, 560C",	"pcl-550",	1,	550,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 600 series",	"pcl-600",	1,	600,	0.541,	0.548,
+  { "HP DeskJet 600 series",	"pcl-600",	1,	600,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 800 series",	"pcl-800",	1,	800,	0.541,	0.548,
+  { "HP DeskJet 800 series",	"pcl-800",	1,	800,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 1100C, 1120C",	"pcl-1100",	1,	1100,	0.541,	0.548,
+  { "HP DeskJet 1100C, 1120C",	"pcl-1100",	1,	1100,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 1200C, 1600C",	"pcl-1200",	1,	1200,	0.541,	0.548,
+  { "HP DeskJet 1200C, 1600C",	"pcl-1200",	1,	1200,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet II series",	"pcl-2",	0,	2,	0.563,	0.596,
+  { "HP LaserJet II series",	"pcl-2",	0,	2,	1.000,	0.596,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet III series",	"pcl-3",	0,	3,	0.563,	0.596,
+  { "HP LaserJet III series",	"pcl-3",	0,	3,	1.000,	0.596,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 4 series",	"pcl-4",	0,	4,	0.599,	0.615,
+  { "HP LaserJet 4 series",	"pcl-4",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 4V, 4Si",	"pcl-4v",	0,	5,	0.599,	0.615,
+  { "HP LaserJet 4V, 4Si",	"pcl-4v",	0,	5,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 5 series",	"pcl-5",	0,	4,	0.599,	0.615,
+  { "HP LaserJet 5 series",	"pcl-5",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 5Si",		"pcl-5si",	0,	5,	0.599,	0.615,
+  { "HP LaserJet 5Si",		"pcl-5si",	0,	5,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 6 series",	"pcl-6",	0,	4,	0.599,	0.615,
+  { "HP LaserJet 6 series",	"pcl-6",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "EPSON Stylus Color",	"escp2",	1,	0,	0.325,	0.478,
+  { "EPSON Stylus Color",	"escp2",	1,	0,	0.597,	0.568,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color Pro",	"escp2-pro",	1,	1,	0.325,	0.478,
+  { "EPSON Stylus Color Pro",	"escp2-pro",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color Pro XL","escp2-proxl",	1,	1,	0.325,	0.478,
+  { "EPSON Stylus Color Pro XL","escp2-proxl",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 1500",	"escp2-1500",	1,	2,	0.325,	0.478,
+  { "EPSON Stylus Color 1500",	"escp2-1500",	1,	2,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 400",	"escp2-400",	1,	1,	0.530,	0.482,
+  { "EPSON Stylus Color 400",	"escp2-400",	1,	1,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 500",	"escp2-500",	1,	1,	0.530,	0.482,
+  { "EPSON Stylus Color 500",	"escp2-500",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 600",	"escp2-600",	1,	3,	0.530,	0.482,
+  { "EPSON Stylus Color 600",	"escp2-600",	1,	3,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 800",	"escp2-800",	1,	4,	0.530,	0.482,
+  { "EPSON Stylus Color 800",	"escp2-800",	1,	4,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 1520",	"escp2-1520",	1,	5,	0.530,	0.482,
+  { "EPSON Stylus Color 1520",	"escp2-1520",	1,	5,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 3000",	"escp2-3000",	1,	5,	0.530,	0.482,
+  { "EPSON Stylus Color 3000",	"escp2-3000",	1,	5,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print }
 };
 
@@ -384,8 +400,8 @@ query(void)
     { PARAM_INT32,	"brightness",	"Brightness (0-200%)" },
     { PARAM_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
     { PARAM_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
-    { PARAM_INT32,	"left",		"Left offset (10ths inches, -1 = centered)" },
-    { PARAM_INT32,	"top",		"Top offset (10ths inches, -1 = centered)" }
+    { PARAM_INT32,	"left",		"Left offset (points, -1 = centered)" },
+    { PARAM_INT32,	"top",		"Top offset (points, -1 = centered)" }
   };
   static int		nargs = sizeof(args) / sizeof(args[0]);
 
@@ -422,8 +438,11 @@ run(char   *name,		/* I - Name of print program. */
   GRunModeType	run_mode;	/* Current run mode */
   FILE		*prn;		/* Print file/command */
   printer_t	*printer;	/* Printer driver entry */
-  int		i, j;		/* Looping vars */
-  float		brightness;	/* Computed brightness */
+  int		i;		/* Looping var */
+  float		brightness,	/* Computed brightness */
+		screen_gamma,	/* Screen gamma correction */
+		print_gamma,	/* Printer gamma correction */
+		pixel;		/* Pixel value */
   guchar	lut[256];	/* Lookup table for brightness */
   guchar	*cmap;		/* Colormap (indexed images only) */
   int		ncolors;	/* Number of colors in colormap */
@@ -576,18 +595,23 @@ run(char   *name,		/* I - Name of print program. */
       * Got an output file/command, now compute a brightness lookup table...
       */
 
-      printer    = printers + current_printer;
-      brightness = 25500.0 * printer->density / vars.brightness;
+      printer      = printers + current_printer;
+      brightness   = 100.0 / vars.brightness;
+      screen_gamma = gimp_gamma() * brightness / 1.7;
+      print_gamma  = 1.0 / printer->gamma;
 
       for (i = 0; i < 256; i ++)
       {
-        j = 255.5 - brightness * (1.0 - pow((float)i / 255.0, printer->gamma));
-        if (j < 0)
-          lut[i] = 0;
-        else if (j < 255)
-          lut[i] = j;
-        else
-          lut[i] = 255;
+        pixel = 1.0 - pow((float)i / 255.0, screen_gamma);
+        pixel = 255.5 - 255.0 * printer->density *
+  	        	pow(brightness * pixel, print_gamma);
+
+	if (pixel <= 0.0)
+	  lut[i] = 0;
+	else if (pixel >= 255.0)
+	  lut[i] = 255;
+	else
+	  lut[i] = (int)pixel;
       };
 
      /*
@@ -1385,23 +1409,12 @@ plist_callback(GtkWidget *widget,	/* I - Driver option menu */
       };
   };
 
-  if (p->ppd_file[0] != '\0')
-    strcpy(vars.ppd_file, p->ppd_file);
-
-  if (p->media_size[0] != '\0')
-    strcpy(vars.media_size, p->media_size);
-
-  if (p->media_type[0] != '\0')
-    strcpy(vars.media_type, p->media_type);
-
-  if (p->media_source[0] != '\0')
-    strcpy(vars.media_source, p->media_source);
-
-  if (p->resolution[0] != '\0')
-    strcpy(vars.resolution, p->resolution);
-
-  if (p->command[0] != '\0')
-    strcpy(vars.output_to, p->command);
+  strcpy(vars.ppd_file, p->ppd_file);
+  strcpy(vars.media_size, p->media_size);
+  strcpy(vars.media_type, p->media_type);
+  strcpy(vars.media_source, p->media_source);
+  strcpy(vars.resolution, p->resolution);
+  strcpy(vars.output_to, p->command);
 
   if (p->output_type == OUTPUT_GRAY)
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(output_gray), TRUE);
@@ -1843,23 +1856,35 @@ preview_update(void)
                      width, length);
 
 
-  if (vars.left < 0 || vars.top < 0)
-    gdk_draw_rectangle(preview->widget.window, gc, 1,
-                       (PREVIEW_SIZE - print_width) / 2,
-                       (PREVIEW_SIZE - print_height) / 2,
-                       print_width, print_height);
+  if (vars.left < 0)
+    left = (page_width - print_width) / 2;
   else
   {
-    if (vars.left > (page_width - print_width))
-      vars.left = page_width - print_width;
-    if (vars.top > (page_height - print_height))
-      vars.top = page_height - print_height;
+    left = 10 * vars.left / 72;
 
-    gdk_draw_rectangle(preview->widget.window, gc, 1,
-                       page_left + vars.left,
-                       page_top + vars.top,
-                       print_width, print_height);
+    if (left > (page_width - print_width))
+    {
+      left      = page_width - print_width;
+      vars.left = 72 * left / 10;
+    };
   };
+
+  if (vars.top < 0)
+    top = (page_height - print_height) / 2;
+  else
+  {
+    top  = 10 * vars.top / 72;
+
+    if (top > (page_height - print_height))
+    {
+      top      = page_height - print_height;
+      vars.top = 72 * top / 10;
+    };
+  };
+
+  gdk_draw_rectangle(preview->widget.window, gc, 1,
+                     page_left + left, page_top + top,
+                     print_width, print_height);
 
   gdk_flush();
 }
@@ -1878,15 +1903,14 @@ static void
 preview_motion_callback(GtkWidget      *w,
                         GdkEventMotion *event)
 {
-#if 0
   if (vars.left < 0 || vars.top < 0)
   {
-    vars.left = (page_width - print_width) / 2;
-    vars.top  = (page_height - print_height) / 2;
+    vars.left = 72 * (page_width - print_width) / 20;
+    vars.top  = 72 * (page_height - print_height) / 20;
   };
 
-  vars.left += event->x - mouse_x;
-  vars.top  += event->y - mouse_y;
+  vars.left += 72 * (event->x - mouse_x) / 10;
+  vars.top  += 72 * (event->y - mouse_y) / 10;
 
   if (vars.left < 0)
     vars.left = 0;
@@ -1898,7 +1922,6 @@ preview_motion_callback(GtkWidget      *w,
 
   mouse_x = event->x;
   mouse_y = event->y;
-#endif /* 0 */
 }
 
 

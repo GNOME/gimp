@@ -1,3 +1,9 @@
+Sun May 17 00:15:40 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 0.99.29 release
+	
+	* updated print plugin
+
 Fri May 15 23:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/fileops.c: made url plugin autodetect work again
