@@ -1,3 +1,9 @@
+2003-09-17  Seth Burgess <sjburges@gimp.org>
+
+	* plug-ins/common/sparkle.c: use the rowstride of a pixel region
+	because you never know when you're starting on a selection.  Fixes
+	bug #50911.
+	
 2003-09-17  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Ok, since the obsolete undo
