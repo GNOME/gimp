@@ -135,7 +135,7 @@
 
 
 (script-fu-register "script-fu-big-header-gimp-org"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 		    "Big Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
@@ -154,7 +154,7 @@
 		    SF-ADJUSTMENT _"Number of Colors" '(15 2 255 1 10 0 1))
 
 (script-fu-register "script-fu-small-header-gimp-org"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 		    "Small Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
