@@ -1,3 +1,11 @@
+Sat Jan 29 10:39:03 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* fi.po
+	* hu.po
+	* nl.po
+	* sk.po: removed fuzzy comment before file header, it was
+	disturbing my statistics ...
+
 2000-01-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* ja.po: Updated Japanese translation.
