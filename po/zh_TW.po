@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
 "POT-Creation-Date: 2001-10-20 18:07+0800\n"
-"PO-Revision-Date: 2001-11-04 22:09+0800\n"
+"PO-Revision-Date: 2001-11-04 23:34+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1129,7 +1129,7 @@ msgstr "亮度等化不適用於索引色的可繪物件。"
 #. the hard toggle
 #: app/eraser.c:112
 msgid "Hard Edge"
-msgstr "硬邊"
+msgstr "邊界較分明"
 
 #. the anti_erase toggle
 #: app/eraser.c:122 app/paint_funcs.c:106
@@ -2769,15 +2769,15 @@ msgstr "最後固定的圖層應該："
 
 #: app/layers_dialog.c:4124
 msgid "Expanded as necessary"
-msgstr "在必要時擴張"
+msgstr "必要時擴大"
 
 #: app/layers_dialog.c:4126
 msgid "Clipped to image"
-msgstr "裁剪至圖像尺寸"
+msgstr "裁剪成圖像尺寸"
 
 #: app/layers_dialog.c:4128
 msgid "Clipped to bottom layer"
-msgstr "裁剪至最底的圖層尺寸"
+msgstr "裁剪成最底圖層的尺寸"
 
 #: app/lc_dialog.c:121
 msgid "Layers, Channels & Paths"
@@ -3781,7 +3781,7 @@ msgstr "卸載"
 
 #: app/module_db.c:900
 msgid "Purpose:"
-msgstr "作用："
+msgstr "用途："
 
 #: app/module_db.c:901
 msgid "Author:"
