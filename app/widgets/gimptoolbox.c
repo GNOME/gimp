@@ -198,7 +198,7 @@ gimp_toolbox_constructor (GType                  type,
   GimpToolbox   *toolbox;
   GimpContext   *context;
   GimpGuiConfig *config;
-  GimpUIManager *manager;
+  GtkUIManager  *manager;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
   GdkDisplay    *display;
@@ -220,9 +220,9 @@ gimp_toolbox_constructor (GType                  type,
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
 
-  manager = GIMP_DOCK (toolbox)->ui_manager;
+  manager = GTK_UI_MANAGER (GIMP_DOCK (toolbox)->ui_manager);
 
-  toolbox->menu_bar = gimp_ui_manager_ui_get (manager, "/toolbox-menubar");
+  toolbox->menu_bar = gtk_ui_manager_get_widget (manager, "/toolbox-menubar");
 
   if (toolbox->menu_bar)
     {

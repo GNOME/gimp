@@ -163,8 +163,8 @@ gimp_text_editor_new (const gchar     *title,
                                                       "<TextEditor>",
                                                       editor, FALSE);
 
-  toolbar = gimp_ui_manager_ui_get (editor->ui_manager,
-                                    "/text-editor-toolbar");
+  toolbar = gtk_ui_manager_get_widget (GTK_UI_MANAGER (editor->ui_manager),
+                                       "/text-editor-toolbar");
 
   if (toolbar)
     {

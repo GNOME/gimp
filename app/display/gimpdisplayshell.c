@@ -719,8 +719,9 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
-  shell->menubar = gimp_ui_manager_ui_get (shell->menubar_manager,
-                                           "/image-menubar");
+  shell->menubar =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
+                               "/image-menubar");
 
   if (shell->menubar)
     {
