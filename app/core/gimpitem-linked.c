@@ -28,6 +28,14 @@
 #include "gimplist.h"
 
 
+/*  local function prototypes  */
+
+static GList * gimp_item_linked_get_list (GimpImage *gimage,
+                                          GimpItem  *item);
+
+
+/*  public functions  */
+
 void
 gimp_item_linked_translate (GimpItem *item,
                             gint      offset_x,
@@ -35,90 +43,49 @@ gimp_item_linked_translate (GimpItem *item,
                             gboolean  push_undo)
 {
   GimpImage *gimage;
-  GimpItem  *linked_item;
+  GList     *linked_list;
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  for (list = GIMP_LIST (gimage->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
+  linked_list = gimp_item_linked_get_list (gimage, item);
 
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_translate (linked_item, offset_x, offset_y, push_undo);
-    }
+  for (list = linked_list; list; list = g_list_next (list))
+    gimp_item_translate (GIMP_ITEM (list->data),
+                         offset_x, offset_y, push_undo);
 
-  for (list = GIMP_LIST (gimage->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
-
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_translate (linked_item, offset_x, offset_y, push_undo);
-    }
-
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
-
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_translate (linked_item, offset_x, offset_y, push_undo);
-    }
+  g_list_free (linked_list);
 }
 
 void
 gimp_item_linked_flip (GimpItem            *item,
                        GimpOrientationType  flip_type,
-                       gdouble              axis)
+                       gdouble              axis,
+                       gboolean             clip_result)
 {
   GimpImage *gimage;
-  GimpItem  *linked_item;
+  GList     *linked_list;
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  for (list = GIMP_LIST (gimage->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
+  linked_list = gimp_item_linked_get_list (gimage, item);
 
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_flip (linked_item, flip_type, axis);
-    }
+  for (list = linked_list; list; list = g_list_next (list))
+    gimp_item_flip (GIMP_ITEM (list->data),
+                    flip_type, axis, clip_result);
 
-  for (list = GIMP_LIST (gimage->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
-
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_flip (linked_item, flip_type, axis);
-    }
-
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      linked_item = (GimpItem *) list->data;
-
-      if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_flip (linked_item, flip_type, axis);
-    }
+  g_list_free (linked_list);
 }
 
 void
@@ -131,14 +98,37 @@ gimp_item_linked_transform (GimpItem               *item,
                             gpointer                progress_data)
 {
   GimpImage *gimage;
-  GimpItem  *linked_item;
+  GList     *linked_list;
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  linked_list = gimp_item_linked_get_list (gimage, item);
+
+  for (list = linked_list; list; list = g_list_next (list))
+    gimp_item_transform (GIMP_ITEM (list->data),
+                         matrix, direction,
+                         interpolation_type, clip_result,
+                         progress_callback, progress_data);
+
+  g_list_free (linked_list);
+}
+
+
+/*  private functions  */
+
+static GList *
+gimp_item_linked_get_list (GimpImage *gimage,
+                           GimpItem  *item)
+{
+  GimpItem *linked_item;
+  GList    *list;
+  GList    *linked_list = NULL;
 
   for (list = GIMP_LIST (gimage->layers)->list;
        list;
@@ -147,9 +137,7 @@ gimp_item_linked_transform (GimpItem               *item,
       linked_item = (GimpItem *) list->data;
 
       if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_transform (linked_item, matrix, direction,
-                             interpolation_type, clip_result,
-                             progress_callback, progress_data);
+        linked_list = g_list_prepend (linked_list, linked_item);
     }
 
   for (list = GIMP_LIST (gimage->channels)->list;
@@ -159,9 +147,7 @@ gimp_item_linked_transform (GimpItem               *item,
       linked_item = (GimpItem *) list->data;
 
       if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_transform (linked_item, matrix, direction,
-                             interpolation_type, clip_result,
-                             progress_callback, progress_data);
+        linked_list = g_list_prepend (linked_list, linked_item);
     }
 
   for (list = GIMP_LIST (gimage->vectors)->list;
@@ -171,8 +157,8 @@ gimp_item_linked_transform (GimpItem               *item,
       linked_item = (GimpItem *) list->data;
 
       if (linked_item != item && gimp_item_get_linked (linked_item))
-        gimp_item_transform (linked_item, matrix, direction,
-                             interpolation_type, clip_result,
-                             progress_callback, progress_data);
+        linked_list = g_list_prepend (linked_list, linked_item);
     }
+
+  return g_list_reverse (linked_list);
 }

@@ -43,7 +43,6 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
-#include "gimpdrawable-transform.h"
 #include "gimplayer.h"
 #include "gimpparasitelist.h"
 
@@ -77,7 +76,8 @@ static void       gimp_channel_resize      (GimpItem         *item,
                                             gint              offy);
 static void       gimp_channel_flip        (GimpItem         *item,
                                             GimpOrientationType flip_type,
-                                            gdouble           axis);
+                                            gdouble           axis,
+                                            gboolean          flip_result);
 static void       gimp_channel_transform   (GimpItem         *item,
                                             GimpMatrix3       matrix,
                                             GimpTransformDirection direction,
@@ -397,18 +397,11 @@ gimp_channel_resize (GimpItem *item,
 static void
 gimp_channel_flip (GimpItem            *item,
                    GimpOrientationType  flip_type,
-                   gdouble              axis)
+                   gdouble              axis,
+                   gboolean             clip_result)
 {
-#ifdef __GNUC__
-#warning FIXME: implement clip_result for flipping
-#endif
-
-  g_print ("FIXME: implement channel flipping\n");
-
-#if 0
   GimpChannel *channel;
   GimpImage   *gimage;
-  TileManager *tiles;
 
   channel = GIMP_CHANNEL (item);
   gimage  = gimp_item_get_image (item);
@@ -416,19 +409,15 @@ gimp_channel_flip (GimpItem            *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Flip Channel"));
 
-  tiles = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (channel),
-                                              GIMP_DRAWABLE (channel)->tiles,
-                                              flip_type, axis,
-                                              TRUE /* always clip_result */);
+  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+    clip_result = TRUE;
 
-  if (tiles)
-    gimp_drawable_transform_paste (GIMP_DRAWABLE (channel), tiles, FALSE);
+  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
-#endif
 }
 
 static void
@@ -442,7 +431,6 @@ gimp_channel_transform (GimpItem               *item,
 {
   GimpChannel *channel;
   GimpImage   *gimage;
-  TileManager *tiles;
 
   channel = GIMP_CHANNEL (item);
   gimage  = gimp_item_get_image (item);
@@ -450,16 +438,12 @@ gimp_channel_transform (GimpItem               *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Transform Channel"));
 
-  tiles = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (channel),
-                                                GIMP_DRAWABLE (channel)->tiles,
-                                                matrix, direction,
-                                                interpolation_type,
-                                                TRUE, /* always clip_result */
-                                                progress_callback,
-                                                progress_data);
+  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+    clip_result = TRUE;
 
-  if (tiles)
-    gimp_drawable_transform_paste (GIMP_DRAWABLE (channel), tiles, FALSE);
+  GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
+                                             interpolation_type, clip_result,
+                                             progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);
 

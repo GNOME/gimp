@@ -26,7 +26,8 @@ void   gimp_item_linked_translate (GimpItem               *item,
                                    gboolean                push_undo);
 void   gimp_item_linked_flip      (GimpItem               *item,
                                    GimpOrientationType     flip_type,
-                                   gdouble                 axis);
+                                   gdouble                 axis,
+                                   gboolean                clip_result);
 void   gimp_item_linked_transform (GimpItem               *item,
                                    GimpMatrix3             matrix,
                                    GimpTransformDirection  direction,

@@ -264,9 +264,9 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     }
 
   if (gimp_item_get_linked (active_item))
-    gimp_item_linked_flip (active_item, options->flip_type, axis);
+    gimp_item_linked_flip (active_item, options->flip_type, axis, FALSE);
 
   return gimp_drawable_transform_tiles_flip (active_drawable,
                                              trans_tool->original,
-                                             options->flip_type, axis);
+                                             options->flip_type, axis, FALSE);
 }

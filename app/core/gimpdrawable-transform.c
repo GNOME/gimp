@@ -106,13 +106,12 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       GimpProgressFunc        progress_callback,
                                       gpointer                progress_data)
 {
-  GimpImage   *gimage;
-  PixelRegion  destPR;
-  TileManager *tiles;
-  GimpMatrix3  m;
-  GimpMatrix3  im;
-  PixelSurround surround;
-
+  GimpImage     *gimage;
+  PixelRegion    destPR;
+  TileManager   *tiles;
+  GimpMatrix3    m;
+  GimpMatrix3    im;
+  PixelSurround  surround;
 
   gint         x1, y1, x2, y2;        /* target bounding box */
   gint         x, y;                  /* target coordinates */
@@ -155,7 +154,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   /*  Get the background color  */
   gimp_image_get_background (gimage, drawable, bg_color);
 
-
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
     case GIMP_RGB:
@@ -177,16 +175,15 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       break;
     }
 
-  /*  enable rotating un-floated non-layers  */
-  if (tile_manager_bpp (float_tiles) == 1)
-    {
-      bg_color[0] = OPAQUE_OPACITY;
+  /*  "Outside" a channel is transparency, not the bg color  */
+  if (GIMP_IS_CHANNEL (drawable))
+    bg_color[0] = TRANSPARENT_OPACITY;
 
-      /*  setting alpha = 0 will cause the channel's value to be treated
-       *  as alpha and the color channel loops never to be entered
-       */
-      alpha = 0;
-    }
+  /*  setting alpha = 0 will cause the channel's value to be treated
+   *  as alpha and the color channel loops never to be entered
+   */
+  if (tile_manager_bpp (float_tiles) == 1)
+    alpha = 0;
 
   if (direction == GIMP_TRANSFORM_BACKWARD)
     {
@@ -203,19 +200,16 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gimp_matrix3_invert (matrix, m);
     }
 
-#ifdef __GNUC__
-#warning FIXME: path_transform_current_path
-#endif
-#if 0
-  path_transform_current_path (gimage, matrix, FALSE);
-#endif
-
   tile_manager_get_offsets (float_tiles, &u1, &v1);
   u2 = u1 + tile_manager_width (float_tiles);
   v2 = v1 + tile_manager_height (float_tiles);
 
+  /*  Always clip unfloated channels since they must keep their size  */
+  if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL && alpha == 0)
+    clip_result = TRUE;
+
   /*  Find the bounding coordinates of target */
-  if (alpha == 0 || clip_result)
+  if (clip_result)
     {
       x1 = u1;
       y1 = v1;
@@ -242,9 +236,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     }
 
   /*  Get the new temporary buffer for the transformed result  */
-  tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-                            tile_manager_bpp (float_tiles));
-  pixel_region_init (&destPR, tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  tiles = tile_manager_new (x2 - x1, y2 - y1, tile_manager_bpp (float_tiles));
+  pixel_region_init (&destPR, tiles, 0, 0, x2 - x, y2 - y1, TRUE);
   tile_manager_set_offsets (tiles, x1, y1);
 
   /* initialise the pixel_surround and pixel_cache accessors */
@@ -269,8 +262,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   vinc = m[1][0];
   winc = m[2][0];
 
-  coords = ((interpolation_type != GIMP_INTERPOLATION_NONE) ?
-            5 : 1);
+  coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
 
   /* these loops could be rearranged, depending on which bit of code
    * you'd most like to write more than once.
@@ -336,9 +328,9 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
           if (interpolation_type == GIMP_INTERPOLATION_NONE)
             {
               guchar color[MAX_CHANNELS];
-              gint iu = RINT (u[0]);
-              gint iv = RINT (v[0]);
-              gint b;
+              gint   iu = RINT (u[0]);
+              gint   iv = RINT (v[0]);
+              gint   b;
 
               if (iu >= u1 && iu < u2 &&
                   iv >= v1 && iv < v2)
@@ -435,7 +427,8 @@ TileManager *
 gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
                                     TileManager         *orig,
                                     GimpOrientationType  flip_type,
-                                    gdouble              axis)
+                                    gdouble              axis,
+                                    gboolean             clip_result)
 {
   TileManager *new;
   PixelRegion  srcPR, destPR;
@@ -448,6 +441,16 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (orig != NULL, NULL);
+
+#ifdef __GNUC__
+#warning FIXME: implement clip_result for flipping
+#endif
+
+  if (clip_result)
+    {
+      g_print ("FIXME: implement clip_result for gimp_drawable_transform_tiles_flip()\n");
+      return NULL;
+    }
 
   orig_width  = tile_manager_width (orig);
   orig_height = tile_manager_height (orig);
@@ -530,6 +533,10 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
     {
       TileManager *new_tiles;
 
+      /*  always clip unfloated channels so they keep their size  */
+      if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (float_tiles) == 1)
+        clip_result = TRUE;
+
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_affine (drawable,
                                                         float_tiles,
@@ -602,7 +609,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_flip (drawable, float_tiles,
-                                                      flip_type, axis);
+                                                      flip_type, axis, FALSE);
 
       /* Free the cut/copied buffer */
       tile_manager_destroy (float_tiles);
@@ -680,12 +687,12 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
         gimp_layer_new_from_tiles (tiles,
                                    gimage,
                                    gimp_drawable_type_with_alpha (drawable),
-                   _("Transformation"),
-                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                   _("Transformation"),
+                                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (! layer)
         {
           g_warning ("%s: gimp_layer_new_frome_tiles() failed",
-             G_GNUC_FUNCTION);
+                     G_GNUC_FUNCTION);
           return FALSE;
         }
 

@@ -1,5 +1,37 @@
 2003-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.[ch]: added "gboolean clip_result" to
+	GimpItem::flip().
+
+	* app/vectors/gimpvectors.c
+	* app/tools/gimpfliptool.c: changed accordingly.
+
+	* app/core/gimpdrawable.c: implement GimpItem::flip() and
+	GimpItem::transform().
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: chain up in flip() and transform() and do
+	only the layer/channel specific stuff here.
+
+	* app/core/gimpdrawable-transform.[ch]: fixed indentation.
+	(gimp_drawable_transform_tiles_flip): added "gboolean clip_result"
+	and warn that it is not yet implemented.
+	(gimp_drawable_transform_tiles_affine): when transforming a
+	channel set bg_color to transparent. Clip channels (but not layer
+	masks) only if the passed tiles have bpp == 1 (the channel is
+	unfloated).
+	(gimp_drawable_transform_affine): clip all unfloated channels.
+
+	* app/core/gimpitem-linked.[ch]: added gimp_item_linked_get_list()
+	utility function to avoind iterating all layers/channels/vectors
+	in all functions.
+
+	* app/tools/gimptransformtool.c: clip all unfloated channels.
+
+	The clipping fixes above together fix bug #112858.
+
+2003-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask.c (gimp_image_mask_extract):
 	s/bg/bg_color/g, cleanup.
 

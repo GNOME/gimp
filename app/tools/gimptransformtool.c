@@ -35,8 +35,8 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -775,6 +775,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpDrawable         *active_drawable;
   GimpItem             *active_item;
   GimpProgress         *progress;
+  gboolean              clip_result;
   TileManager          *ret;
 
   tool    = GIMP_TOOL (tr_tool);
@@ -797,12 +798,19 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 gimp_progress_update_and_flush : NULL,
                                 progress);
 
+  clip_result = options->clip;
+
+  /*  always clip unfloated channels so they keep their size  */
+  if (GIMP_IS_CHANNEL (active_drawable) &&
+      tile_manager_bpp (tr_tool->original) == 1)
+    clip_result = TRUE;
+
   ret = gimp_drawable_transform_tiles_affine (active_drawable,
                                               tr_tool->original,
                                               tr_tool->transform,
                                               options->direction,
                                               options->interpolation,
-                                              options->clip,
+                                              clip_result,
                                               progress ?
                                               gimp_progress_update_and_flush : 
                                               NULL,

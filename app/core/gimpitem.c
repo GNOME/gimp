@@ -683,7 +683,8 @@ gimp_item_resize (GimpItem *item,
 void
 gimp_item_flip (GimpItem            *item,
                 GimpOrientationType  flip_type,
-                gdouble              axis)
+                gdouble              axis,
+                gboolean             clip_result)
 {
   GimpItemClass *item_class;
 
@@ -691,7 +692,7 @@ gimp_item_flip (GimpItem            *item,
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
-  item_class->flip (item, flip_type, axis);
+  item_class->flip (item, flip_type, axis, clip_result);
 }
 
 void

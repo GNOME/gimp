@@ -35,7 +35,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpdrawable-invert.h"
-#include "gimpdrawable-transform.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
@@ -92,7 +91,8 @@ static void       gimp_layer_resize             (GimpItem           *item,
                                                  gint                offset_y);
 static void       gimp_layer_flip               (GimpItem           *item,
                                                  GimpOrientationType flip_type,
-                                                 gdouble             axis);
+                                                 gdouble             axis,
+                                                 gboolean            clip_result);
 static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpMatrix3         matrix,
                                                  GimpTransformDirection direction,
@@ -474,13 +474,11 @@ gimp_layer_resize (GimpItem *item,
 static void
 gimp_layer_flip (GimpItem            *item,
                  GimpOrientationType  flip_type,
-                 gdouble              axis)
+                 gdouble              axis,
+                 gboolean             clip_result)
 {
-  GimpLayer   *layer;
-  GimpImage   *gimage;
-  TileManager *tiles;
-  gint         off_x, off_y;
-  gint         old_off_x, old_off_y;
+  GimpLayer *layer;
+  GimpImage *gimage;
 
   layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
@@ -488,43 +486,12 @@ gimp_layer_flip (GimpItem            *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Flip Layer"));
 
-  gimp_item_offsets (item, &off_x, &off_y);
-
-  tile_manager_get_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            &old_off_x, &old_off_y);
-  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            off_x, off_y);
-
-  tiles = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (layer),
-                                              GIMP_DRAWABLE (layer)->tiles,
-                                              flip_type, axis);
-
-  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            old_off_x, old_off_y);
-
-  if (tiles)
-    gimp_drawable_transform_paste (GIMP_DRAWABLE (layer), tiles, FALSE);
+  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
   /*  If there is a layer mask, make sure it gets flipped also  */
   if (layer->mask)
-    {
-      tile_manager_get_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                &old_off_x, &old_off_y);
-      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                off_x, off_y);
-
-      tiles =
-        gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (layer->mask),
-                                            GIMP_DRAWABLE (layer->mask)->tiles,
-                                            flip_type, axis);
-
-      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                old_off_x, old_off_y);
-
-      if (tiles)
-        gimp_drawable_transform_paste (GIMP_DRAWABLE (layer->mask), tiles,
-                                       FALSE);
-    }
+    gimp_item_flip (GIMP_ITEM (layer->mask),
+                    flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
 
@@ -541,11 +508,8 @@ gimp_layer_transform (GimpItem               *item,
                       GimpProgressFunc        progress_callback,
                       gpointer                progress_data)
 {
-  GimpLayer   *layer;
-  GimpImage   *gimage;
-  TileManager *tiles;
-  gint         off_x, off_y;
-  gint         old_off_x, old_off_y;
+  GimpLayer *layer;
+  GimpImage *gimage;
 
   layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
@@ -553,51 +517,16 @@ gimp_layer_transform (GimpItem               *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Transform Layer"));
 
-  gimp_item_offsets (item, &off_x, &off_y);
-
-  tile_manager_get_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            &old_off_x, &old_off_y);
-  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            off_x, off_y);
-
-  tiles = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (layer),
-                                                GIMP_DRAWABLE (layer)->tiles,
-                                                matrix, direction,
-                                                interpolation_type,
-                                                clip_result,
-                                                progress_callback,
-                                                progress_data);
-
-  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
-                            old_off_x, old_off_y);
-
-  if (tiles)
-    gimp_drawable_transform_paste (GIMP_DRAWABLE (layer), tiles, FALSE);
+  GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
+                                             interpolation_type, clip_result,
+                                             progress_callback, progress_data);
 
   /*  If there is a layer mask, make sure it gets flipped also  */
   if (layer->mask)
-    {
-      tile_manager_get_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                &old_off_x, &old_off_y);
-      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                off_x, off_y);
-
-      tiles =
-        gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (layer->mask),
-                                              GIMP_DRAWABLE (layer->mask)->tiles,
-                                              matrix, direction,
-                                              interpolation_type,
-                                              clip_result,
-                                              progress_callback,
-                                              progress_data);
-
-      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
-                                old_off_x, old_off_y);
-
-      if (tiles)
-        gimp_drawable_transform_paste (GIMP_DRAWABLE (layer->mask), tiles,
-                                       FALSE);
-    }
+    gimp_item_transform (GIMP_ITEM (layer->mask),
+                         matrix, direction,
+                         interpolation_type, clip_result,
+                         progress_callback, progress_data);
 
   gimp_image_undo_group_end (gimage);
 

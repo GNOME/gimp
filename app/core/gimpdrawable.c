@@ -41,6 +41,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-preview.h"
+#include "gimpdrawable-transform.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo-push.h"
@@ -85,6 +86,17 @@ static void       gimp_drawable_resize             (GimpItem          *item,
                                                     gint               new_height,
                                                     gint               offset_x,
                                                     gint               offset_y);
+static void       gimp_drawable_flip               (GimpItem          *item,
+                                                    GimpOrientationType  flip_type,
+                                                    gdouble            axis,
+                                                    gboolean           clip_result);
+static void       gimp_drawable_transform          (GimpItem          *item,
+                                                    GimpMatrix3        matrix,
+                                                    GimpTransformDirection  direction,
+                                                    GimpInterpolationType   interpolation_type,
+                                                    gboolean           clip_result,
+                                                    GimpProgressFunc   progress_callback,
+                                                    gpointer           progress_data);
 
 
 /*  private variables  */
@@ -158,6 +170,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->duplicate              = gimp_drawable_duplicate;
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
+  item_class->flip                   = gimp_drawable_flip;
+  item_class->transform              = gimp_drawable_transform;
 
   klass->visibility_changed          = NULL;
 }
@@ -452,6 +466,70 @@ gimp_drawable_resize (GimpItem *item,
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
+}
+
+static void
+gimp_drawable_flip (GimpItem            *item,
+                    GimpOrientationType  flip_type,
+                    gdouble              axis,
+                    gboolean             clip_result)
+{
+  GimpDrawable *drawable;
+  TileManager  *tiles;
+  gint          off_x, off_y;
+  gint          old_off_x, old_off_y;
+
+  drawable = GIMP_DRAWABLE (item);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
+  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+
+  tiles = gimp_drawable_transform_tiles_flip (drawable,
+                                              drawable->tiles,
+                                              flip_type, axis,
+                                              clip_result);
+
+  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+
+  if (tiles)
+    gimp_drawable_transform_paste (drawable, tiles, FALSE);
+}
+
+static void
+gimp_drawable_transform (GimpItem               *item,
+                         GimpMatrix3             matrix,
+                         GimpTransformDirection  direction,
+                         GimpInterpolationType   interpolation_type,
+                         gboolean                clip_result,
+                         GimpProgressFunc        progress_callback,
+                         gpointer                progress_data)
+{
+  GimpDrawable *drawable;
+  TileManager  *tiles;
+  gint          off_x, off_y;
+  gint          old_off_x, old_off_y;
+
+  drawable = GIMP_DRAWABLE (item);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
+  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+
+  tiles = gimp_drawable_transform_tiles_affine (drawable,
+                                                drawable->tiles,
+                                                matrix, direction,
+                                                interpolation_type,
+                                                clip_result,
+                                                progress_callback,
+                                                progress_data);
+
+  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+
+  if (tiles)
+    gimp_drawable_transform_paste (drawable, tiles, FALSE);
 }
 
 void

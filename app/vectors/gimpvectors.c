@@ -72,7 +72,8 @@ static void       gimp_vectors_resize       (GimpItem         *item,
                                              gint              offset_y);
 static void       gimp_vectors_flip         (GimpItem         *item,
                                              GimpOrientationType  flip_type,
-                                             gdouble           axis);
+                                             gdouble           axis,
+                                             gboolean          clip_result);
 static void       gimp_vectors_transform    (GimpItem         *item,
                                              GimpMatrix3       matrix,
                                              GimpTransformDirection direction,
@@ -363,7 +364,8 @@ gimp_vectors_resize (GimpItem *item,
 static void
 gimp_vectors_flip (GimpItem            *item,
                    GimpOrientationType  flip_type,
-                   gdouble              axis)
+                   gdouble              axis,
+                   gboolean             clip_result)
 {
   GimpVectors *vectors;
   GList       *list;

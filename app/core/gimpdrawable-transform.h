@@ -44,7 +44,8 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable *drawable,
 TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable *drawable,
                                                     TileManager  *orig,
                                                     GimpOrientationType flip_type,
-                                                    gdouble       axis);
+                                                    gdouble       axis,
+                                                    gboolean      clip_result);
 
 gboolean      gimp_drawable_transform_affine       (GimpDrawable *drawable,
                                                     GimpMatrix3   matrix,

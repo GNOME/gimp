@@ -82,7 +82,8 @@ struct _GimpItemClass
                             gint                    offset_y);
   void       (* flip)      (GimpItem               *item,
                             GimpOrientationType     flip_type,
-                            gdouble                 axis);
+                            gdouble                 axis,
+                            gboolean                clip_result);
   void       (* transform) (GimpItem               *item,
                             GimpMatrix3             matrix,
                             GimpTransformDirection  direction,
@@ -152,7 +153,8 @@ void            gimp_item_resize_to_image  (GimpItem       *item);
 
 void            gimp_item_flip             (GimpItem       *item,
                                             GimpOrientationType flip_type,
-                                            gdouble         axis);
+                                            gdouble         axis,
+                                            gboolean        flip_result);
 void            gimp_item_transform        (GimpItem       *item,
                                             GimpMatrix3     matrix,
                                             GimpTransformDirection  direction,
