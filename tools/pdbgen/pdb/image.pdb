@@ -416,10 +416,9 @@ HELP
     %invoke = ( code => <<'CODE' );
 {
   if (gimage->disp_count == 0)
-    {
-      g_object_unref (gimage);
-      success = TRUE;
-    }
+    g_object_unref (gimage);
+  else
+    success = FALSE;
 }
 CODE
 }

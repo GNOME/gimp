@@ -349,10 +349,9 @@ image_delete_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimage->disp_count == 0)
-	{
-	  g_object_unref (gimage);
-	  success = TRUE;
-	}
+	g_object_unref (gimage);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&image_delete_proc, success);

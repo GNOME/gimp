@@ -1,5 +1,12 @@
 2003-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (image_delete): fixed "success"
+	return value.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2003-12-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphelp.c (gimp_idle_help): cleanup.
 
 2003-12-06  Michael Natterer  <mitch@gimp.org>
