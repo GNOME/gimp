@@ -44,7 +44,7 @@
     'glasstile' => { libdep => 'gtk' },
     'gqbist' => { libdep => 'gtk' },
     'gradmap' => { libdep => 'glib' },
-    'grid' => { libdep => 'gtk' },
+    'grid' => { libdep => 'gtk', ui => 1 },
     'gtm' => { libdep => 'gtk' },
     'guillotine' => { libdep => 'glib' },
     'gz' => { libdep => 'glib' },

@@ -522,6 +522,7 @@ grid_SOURCES = \
 	grid.c
 
 grid_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

@@ -1,3 +1,15 @@
+Tue Aug 24 20:32:39 MEST 1999  Sven Neumann <sven.gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/grid.c: use real-life units
+
+	I have heavily commented the interface code in the hope that it will
+	help other plug-in developers to adapt their plug-ins to make use
+	of the gimp_size_entry functionality. 
+	
+	We need more units support in the plug-ins!!
+
 Mon Aug 23 22:41:52 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/paint_funcs.c: fixed bug in scale_region that caused what

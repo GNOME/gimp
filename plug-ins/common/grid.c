@@ -1,31 +1,50 @@
-/* The GIMP -- an image manipulation program * Copyright (C) 1995 Spencer
- * Kimball and Peter Mattis * * This program is free software; you can
- * redistribute it and/or modify * it under the terms of the GNU General
- * Public License as published by * the Free Software Foundation; either
- * version 2 of the License, or * (at your option) any later version. * *
- * This program is distributed in the hope that it will be useful, * but
- * WITHOUT ANY WARRANTY; without even the implied warranty of *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the * GNU
- * General Public License for more details. * * You should have received a
- * copy of the GNU General Public License * along with this program; if not,
- * write to the Free Software * Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA. */
+/* The GIMP -- an image manipulation program 
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis 
+ * 
+ * This program is free software; you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation; either version 2 of the License, or 
+ * (at your option) any later version. 
+ *
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program; if not, write to the Free Software 
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. 
+ */
+
+/* Original plug-in coded by Tim Newsome. 
+ * 
+ * Changed to make use of real-life units by Sven Neumann <sven@gimp.org>.
+ * 
+ * The interface code is heavily commented in the hope that it will
+ * help other plug-in developers to adapt their plug-ins to make use
+ * of the gimp_size_entry functionality.
+ *
+ * For more info see libgimp/gimpsizeentry.h
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-#include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/gimpintl.h"
+#include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimpsizeentry.h"
 
 /* Declare local functions. */
-static void query (void);
-static void run (char *name,
-		 int nparams,
-		 GParam * param,
-		 int *nreturn_vals,
-		 GParam ** return_vals);
-static gint dialog ();
-
-static void doit (GDrawable * drawable);
+static void query  (void);
+static void run    (char    *name,
+		    int      nparams,
+		    GParam  *param,
+		    int     *nreturn_vals,
+		    GParam **return_vals);
+static gint dialog (gint32     image_ID,
+		    GDrawable *drawable);
+static void doit   (GDrawable *drawable);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -40,10 +59,12 @@ gint sx1, sy1, sx2, sy2;
 int run_flag = 0;
 
 typedef struct
-  {
-    gint width, height;
-    gint x_offset, y_offset;
-  }
+{
+  gint width;
+  gint height;
+  gint x_offset;
+  gint y_offset;
+}
 config;
 
 config my_config =
@@ -55,12 +76,13 @@ config my_config =
 
 MAIN ()
 
-     static void query ()
+static 
+void query (void)
 {
   static GParamDef args[] =
   {
     {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image (unused)"},
+    {PARAM_IMAGE, "image", "Input image"},
     {PARAM_DRAWABLE, "drawable", "Input drawable"},
     {PARAM_INT32, "width", "Width"},
     {PARAM_INT32, "height", "Height"},
@@ -75,8 +97,8 @@ MAIN ()
 			  "Draws a grid.",
 			  "",
 			  "Tim Newsome",
-			  "Tim Newsome",
-			  "1997",
+			  "Tim Newsome, Sven Neumann",
+			  "1997, 1999",
 			  "<Image>/Filters/Render/Grid",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -85,11 +107,15 @@ MAIN ()
 }
 
 static void
-run (char *name, int n_params, GParam * param, int *nreturn_vals,
-     GParam ** return_vals)
+run (char    *name, 
+     int      n_params, 
+     GParam  *param, 
+     int     *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
+  gint32 image_ID;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
@@ -97,6 +123,8 @@ run (char *name, int n_params, GParam * param, int *nreturn_vals,
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_int32;
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   if (run_mode == RUN_NONINTERACTIVE)
     {
@@ -119,10 +147,7 @@ run (char *name, int n_params, GParam * param, int *nreturn_vals,
 
       if (run_mode == RUN_INTERACTIVE)
 	{
-	  /* Oh boy. We get to do a dialog box, because we can't really expect the
-	   * user to set us up with the right values using gdb.
-	   */
-	  if (!dialog ())
+	  if (!dialog (image_ID, drawable))
 	    {
 	      /* The dialog was closed, or something similarly evil happened. */
 	      status = STATUS_EXECUTION_ERROR;
@@ -137,16 +162,12 @@ run (char *name, int n_params, GParam * param, int *nreturn_vals,
 
   if (status == STATUS_SUCCESS)
     {
-      /*  Get the specified drawable  */
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
-
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
 	{
-	  gimp_progress_init ("Drawing Grid...");
+	  gimp_progress_init (_("Drawing Grid..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-	  srand (time (NULL));
 	  doit (drawable);
 
 	  if (run_mode != RUN_NONINTERACTIVE)
@@ -173,8 +194,7 @@ doit (GDrawable * drawable)
   gint width, height;
   int w, h, b;
   guchar *copybuf;
-  guchar color[4] =
-  {0, 0, 0, 0};
+  guchar color[4] = {0, 0, 0, 0};
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -253,158 +273,184 @@ close_callback (GtkWidget * widget, gpointer data)
 static void
 ok_callback (GtkWidget * widget, gpointer data)
 {
+  GtkWidget *entry;
+
   run_flag = 1;
+
+  entry = gtk_object_get_data (GTK_OBJECT (data), "size");
+  my_config.width  = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
+  my_config.height = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
+  
+  entry = gtk_object_get_data (GTK_OBJECT (data), "offset");
+  my_config.x_offset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
+  my_config.y_offset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
+ 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
 entry_callback (GtkWidget * widget, gpointer data)
 {
-  if (data == &my_config.width)
-    my_config.width = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-  else if (data == &my_config.height)
-    my_config.height = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  else if (data == &my_config.x_offset)
-    my_config.x_offset = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  else if (data == &my_config.y_offset)
-    my_config.y_offset = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+  static gdouble x = -1.0;
+  static gdouble y = -1.0;
+  gdouble new_x;
+  gdouble new_y;
+
+  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+
+  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
+    {
+      if (new_x != x)
+	{
+	  y = new_y = x = new_x;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
+	}
+      if (new_y != y)
+	{
+	  x = new_x = y = new_y;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
+	}
+    }
+  else
+    {
+      if (new_x != x)
+	x = new_x;
+      if (new_y != y)
+	y = new_y;
+    }     
 }
 
 static gint
-dialog ()
+dialog (gint32     image_ID,
+	GDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *table;
-  gchar buffer[12];
+  GtkWidget *hbox;
+  GtkWidget *size;
+  GtkWidget *offset;
+  GUnit      unit;
+  gdouble    xres;
+  gdouble    yres;
   gchar **argv;
   gint argc;
 
   argc = 1;
   argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("plasma");
+  argv[0] = g_strdup ("grid");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Grid");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Grid"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
 
+  /*  Get the image resolution and unit  */
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit   = gimp_image_get_unit (image_ID);
+
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
 		      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /* The main table */
-  /* Set its size (y, x) */
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  /*  The size entries  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 4);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  size = gimp_size_entry_new (2,                            /*  number_of_fields  */ 
+			      unit,                         /*  unit              */
+			      "%a",                         /*  unit_format       */
+			      TRUE,                         /*  menu_show_pixels  */
+			      TRUE,                         /*  menu_show_percent */
+			      FALSE,                        /*  show_refval       */
+			      75,                           /*  spinbutton_usize  */
+			      GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
-	/**********************
-	 * The X/Y labels *
-	 **********************/
-  label = gtk_label_new ("X");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0,
-		    0);
-  gtk_widget_show (label);
+  /*  set the resolution to the image resolution  */
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0, xres, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1, yres, TRUE);
 
-  label = gtk_label_new ("Y");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0,
-		    0);
-  gtk_widget_show (label);
+  /*  set the size (in pixels) that will be treated as 0% and 100%  */
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size), 0, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size), 1, 0.0, (gdouble)(drawable->height));
 
-	/************************
-	 * The width entry: *
-	 ************************/
-  label = gtk_label_new ("Size:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0,
-		    0);
-  gtk_widget_show (label);
+  /*  set upper and lower limits (in pixels)  */
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 0, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 1, 0.0, (gdouble)(drawable->height));
 
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3, GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, 50, 0);
-  sprintf (buffer, "%i", my_config.width);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback, &my_config.width);
-  gtk_widget_show (entry);
+  /*  initialize the values  */
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, (gdouble)my_config.width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, (gdouble)my_config.height);
 
-	/************************
-	 * The height entry: *
-	 ************************/
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 2, 3, GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, 50, 0);
-  sprintf (buffer, "%i", my_config.height);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback, &my_config.height);
-  gtk_widget_show (entry);
+  /*  attach labels  */
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("X"), 0, 1, 0.5);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Y"), 0, 2, 0.5);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Size: "), 1, 0, 0.0); 
 
-  gtk_widget_show (dlg);
+  /*  put a chain_button under the size_entries  */
+  button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  if (my_config.width == my_config.height)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (size), button, 1, 3, 2, 3);
+  gtk_widget_show (button);
+ 
+  /*  connect to the 'value_changed' and "unit_changed" signals because we have to 
+      take care of keeping the entries in sync when the chainbutton is active        */
+  gtk_signal_connect (GTK_OBJECT (size), "value_changed", (GtkSignalFunc) entry_callback, button);
+  gtk_signal_connect (GTK_OBJECT (size), "unit_changed", (GtkSignalFunc) entry_callback, button);
 
-	/************************
-	 * The x_offset entry: *
-	 ************************/
-  label = gtk_label_new ("Offset:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, GTK_FILL, GTK_FILL, 0,
-		    0);
-  gtk_widget_show (label);
+  gtk_box_pack_end (GTK_BOX (hbox), size, FALSE, FALSE, 4);
+  gtk_widget_show (size);
+  gtk_widget_show (hbox);
 
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 3, 4, GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, 50, 0);
-  sprintf (buffer, "%i", my_config.x_offset);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback, &my_config.x_offset);
-  gtk_widget_show (entry);
-
-	/************************
-	 * The y_offset entry: *
-	 ************************/
-  entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 3, 4, GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize (entry, 50, 0);
-  sprintf (buffer, "%i", my_config.y_offset);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_callback, &my_config.y_offset);
-  gtk_widget_show (entry);
+  /*  the offset entries  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  offset = gimp_size_entry_new (2, unit, "%a", TRUE, TRUE, FALSE, 75, 
+				GIMP_SIZE_ENTRY_UPDATE_SIZE); 
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 1, yres, TRUE);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, (gdouble)(drawable->height));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0, (gdouble)(drawable->height));
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, (gdouble)my_config.x_offset);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 1, (gdouble)my_config.y_offset);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset: "), 1, 0, 0.0);
+  gtk_box_pack_end (GTK_BOX (hbox), offset, FALSE, FALSE, 4);
+  gtk_widget_show (offset);
+  gtk_widget_show (hbox);
 
   gtk_widget_show (dlg);
+
+  gtk_object_set_data (GTK_OBJECT (dlg), "size", size);
+  gtk_object_set_data (GTK_OBJECT (dlg), "offset", offset);  
 
   gtk_main ();
   gdk_flush ();
