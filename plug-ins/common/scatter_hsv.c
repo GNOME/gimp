@@ -38,39 +38,29 @@
 #define SHORT_NAME   "scatter_hsv"
 #define HELP_ID      "plug-in-scatter-hsv"
 
-static void   query (void);
-static void   run   (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals);
+static void     query               (void);
+static void     run                 (const gchar      *name,
+                                     gint              nparams,
+                                     const GimpParam  *param,
+                                     gint             *nreturn_vals,
+                                     GimpParam       **return_vals);
 
-static GimpPDBStatusType scatter_hsv   (gint32  drawable_id);
-static void        scatter_hsv_scatter (guchar *r,
-                                        guchar *g,
-                                        guchar *b);
-static gint        randomize_value     (gint    now,
-                                        gint    min,
-                                        gint    max,
-                                        gint    mod_p,
-                                        gint    rand_max);
+static void     scatter_hsv         (GimpDrawable     *drawable);
+static gboolean scatter_hsv_dialog  (GimpDrawable     *drawable);
+static void     scatter_hsv_preview (GimpPreview      *preview);
 
-static gboolean scatter_hsv_dialog         (void);
-static gboolean preview_event_handler      (GtkWidget     *widget,
-                                            GdkEvent      *event);
-static void     scatter_hsv_preview_update (void);
-static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
-                                            gpointer       data);
+static void     scatter_hsv_scatter (guchar           *r,
+                                     guchar           *g,
+                                     guchar           *b);
 
-#define PROGRESS_UPDATE_NUM 100
-#define PREVIEW_WIDTH       128
-#define PREVIEW_HEIGHT      128
+static gint     randomize_value     (gint              now,
+                                     gint              min,
+                                     gint              max,
+                                     gint              mod_p,
+                                     gint              rand_max);
+
 #define SCALE_WIDTH         100
 #define ENTRY_WIDTH           3
-
-static gint preview_width  = PREVIEW_WIDTH;
-static gint preview_height = PREVIEW_HEIGHT;
-
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -81,11 +71,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 typedef struct
-{                               /* gint, gdouble, and so on */
-  gint  holdness;
-  gint  hue_distance;
-  gint  saturation_distance;
-  gint  value_distance;
+{
+  gint     holdness;
+  gint     hue_distance;
+  gint     saturation_distance;
+  gint     value_distance;
+  gboolean preview;
 } ValueType;
 
 static ValueType VALS =
@@ -93,20 +84,9 @@ static ValueType VALS =
   2,
   3,
   10,
-  10
+  10,
+  TRUE
 };
-
-static gint      drawable_id;
-
-static GtkWidget *preview;
-static gint       preview_start_x = 0;
-static gint       preview_start_y = 0;
-static guchar    *preview_buffer = NULL;
-static gint       preview_offset_x = 0;
-static gint       preview_offset_y = 0;
-static gint       preview_dragging = FALSE;
-static gint       preview_drag_start_x = 0;
-static gint       preview_drag_start_y = 0;
 
 MAIN ()
 
@@ -146,14 +126,15 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode       run_mode;
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
-  drawable_id = param[2].data.d_int32;
+  drawable = gimp_drawable_get (param[2].data.d_int32);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -165,20 +146,20 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &VALS);
-      if (!gimp_drawable_is_rgb (drawable_id))
+      if (!gimp_drawable_is_rgb (drawable->drawable_id))
         {
           g_message ("Cannot operate on non-RGB drawables.");
           return;
         }
-      if (! scatter_hsv_dialog ())
+      if (! scatter_hsv_dialog (drawable))
         return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      VALS.holdness = param[3].data.d_int32;
-      VALS.hue_distance = param[4].data.d_int32;
+      VALS.holdness            = param[3].data.d_int32;
+      VALS.hue_distance        = param[4].data.d_int32;
       VALS.saturation_distance = param[5].data.d_int32;
-      VALS.value_distance = param[6].data.d_int32;
+      VALS.value_distance      = param[6].data.d_int32;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -186,7 +167,7 @@ run (const gchar      *name,
       break;
     }
 
-  status = scatter_hsv (drawable_id);
+  scatter_hsv (drawable);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
@@ -219,13 +200,9 @@ scatter_hsv_func (const guchar *src,
     dest[3] = src[3];
 }
 
-static GimpPDBStatusType
-scatter_hsv (gint32 drawable_id)
+static void
+scatter_hsv (GimpDrawable *drawable)
 {
-  GimpDrawable *drawable;
-
-  drawable = gimp_drawable_get (drawable_id);
-
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   gimp_progress_init (_("Scattering HSV..."));
@@ -233,8 +210,6 @@ scatter_hsv (gint32 drawable_id)
   gimp_rgn_iterate2 (drawable, 0 /* unused */, scatter_hsv_func, NULL);
 
   gimp_drawable_detach (drawable);
-
-  return GIMP_PDB_SUCCESS;
 }
 
 static gint
@@ -317,75 +292,80 @@ static void scatter_hsv_scatter (guchar *r,
     }
 }
 
+static void
+scatter_hsv_preview (GimpPreview *preview)
+{
+  GimpDrawable *drawable;
+  GimpPixelRgn  src_rgn;
+  guchar       *src, *dst;
+  gint          i;
+  gint          x1, y1;
+  gint          width, height;
+  gint          bpp;
+
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
+
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &width, &height);
+
+  bpp = drawable->bpp;
+
+  src = g_new (guchar, width * height * bpp);
+  dst = g_new (guchar, width * height * bpp);
+
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+                       x1, y1, width, height,
+                       FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
+
+  for (i = 0; i < width * height; i++)
+    scatter_hsv_func (src + i * bpp, dst + i * bpp, bpp, NULL);
+
+  gimp_preview_draw_buffer (preview, dst, width * bpp);
+
+  g_free (src);
+  g_free (dst);
+}
+
 /* dialog stuff */
 static gboolean
-scatter_hsv_dialog (void)
+scatter_hsv_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *pframe;
-  GtkWidget *abox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
 
   gimp_ui_init (SHORT_NAME, TRUE);
 
-  dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
-                         NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
+                            NULL, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("Right-Click Preview to Jump"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
-
-  preview = gimp_preview_area_new ();
-  {
-    gint width  = gimp_drawable_width (drawable_id);
-    gint height = gimp_drawable_height (drawable_id);
-
-    preview_width  = (PREVIEW_WIDTH  < width)  ? PREVIEW_WIDTH  : width;
-    preview_height = (PREVIEW_HEIGHT < height) ? PREVIEW_HEIGHT : height;
-  }
-  gtk_widget_set_size_request (preview, preview_width * 2, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
-  gtk_widget_set_events (preview,
-                         GDK_BUTTON_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON_MOTION_MASK |
-                         GDK_POINTER_MOTION_HINT_MASK);
+  preview = gimp_drawable_preview_new (drawable, &VALS.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
-
-  g_signal_connect (preview, "event",
-                    G_CALLBACK (preview_event_handler),
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (scatter_hsv_preview),
                     NULL);
-
-  gtk_widget_show (frame);
 
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -394,8 +374,11 @@ scatter_hsv_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (scatter_hsv_iscale_update),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.holdness);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("H_ue:"), SCALE_WIDTH, ENTRY_WIDTH,
@@ -403,8 +386,11 @@ scatter_hsv_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (scatter_hsv_iscale_update),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.hue_distance);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
@@ -412,8 +398,11 @@ scatter_hsv_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (scatter_hsv_iscale_update),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.saturation_distance);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                               _("_Value:"), SCALE_WIDTH, ENTRY_WIDTH,
@@ -421,180 +410,18 @@ scatter_hsv_dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (scatter_hsv_iscale_update),
+                    G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.value_distance);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  scatter_hsv_preview_update ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
 
-static gboolean
-preview_event_handler (GtkWidget *widget,
-                       GdkEvent  *event)
-{
-  gint            x, y;
-  gint            dx, dy;
-  GdkEventButton *bevent;
-
-  gtk_widget_get_pointer (widget, &x, &y);
-
-  bevent = (GdkEventButton *) event;
-
-  switch (event->type)
-    {
-    case GDK_BUTTON_PRESS:
-      if (x < preview_width)
-        {
-          if (bevent->button == 3)
-            {
-              preview_offset_x = - x;
-              preview_offset_y = - y;
-              scatter_hsv_preview_update ();
-            }
-          else
-            {
-              preview_dragging = TRUE;
-              preview_drag_start_x = x;
-              preview_drag_start_y = y;
-              gtk_grab_add (widget);
-            }
-        }
-      break;
-    case GDK_BUTTON_RELEASE:
-      if (preview_dragging)
-        {
-          gtk_grab_remove (widget);
-          preview_dragging = FALSE;
-          scatter_hsv_preview_update ();
-        }
-      break;
-    case GDK_MOTION_NOTIFY:
-      if (preview_dragging)
-        {
-          dx = x - preview_drag_start_x;
-          dy = y - preview_drag_start_y;
-
-          preview_drag_start_x = x;
-          preview_drag_start_y = y;
-
-          if ((dx == 0) && (dy == 0))
-            break;
-
-          preview_offset_x = MAX (preview_offset_x - dx, 0);
-          preview_offset_y = MAX (preview_offset_y - dy, 0);
-          scatter_hsv_preview_update ();
-        }
-      break;
-    default:
-      break;
-    }
-  return FALSE;
-}
-
-static void
-scatter_hsv_preview_update (void)
-{
-  GimpDrawable *drawable;
-  GimpPixelRgn  src_rgn;
-  gint          scale;
-  gint          x, y, dx, dy;
-  gint          bound_start_x, bound_start_y, bound_end_x, bound_end_y;
-  gint          src_has_alpha = FALSE;
-  gint          src_is_gray = FALSE;
-  gint          src_bpp, src_bpl;
-  guchar        data[3];
-  gdouble       shift_rate;
-  guchar       *buffer;
-
-  drawable = gimp_drawable_get (drawable_id);
-  gimp_drawable_mask_bounds (drawable_id,
-                             &bound_start_x, &bound_start_y,
-                             &bound_end_x, &bound_end_y);
-  src_has_alpha  = gimp_drawable_has_alpha (drawable_id);
-  src_is_gray =  gimp_drawable_is_gray (drawable_id);
-  src_bpp = (src_is_gray ? 1 : 3) + (src_has_alpha ? 1 : 0);
-  src_bpl = preview_width * src_bpp;
-
-  buffer = g_new (guchar, 2 * preview_width * preview_height * 3);
-  
-  if (! preview_buffer)
-    preview_buffer = g_new (guchar, src_bpl * preview_height);
-
-  if (preview_offset_x < 0)
-    preview_offset_x = (bound_end_x - bound_start_x) * (- preview_offset_x) /  preview_width;
-  if (preview_offset_y < 0)
-    preview_offset_y = (bound_end_y - bound_start_y) * (- preview_offset_y) /  preview_height;
-  preview_start_x = CLAMP (bound_start_x + preview_offset_x,
-                           bound_start_x, MAX (bound_end_x - preview_width, 0));
-  preview_start_y = CLAMP (bound_start_y + preview_offset_y,
-                           bound_start_y, MAX (bound_end_y - preview_height, 0));
-  if (preview_start_x == bound_start_x)
-    preview_offset_x = 0;
-  if (preview_start_y == bound_start_y)
-    preview_offset_y =0;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable, preview_start_x, preview_start_y,
-                       preview_width, preview_height,
-                       FALSE, FALSE);
-
-  /* Since it's small, get whole data before processing. */
-  gimp_pixel_rgn_get_rect (&src_rgn, preview_buffer,
-                           preview_start_x, preview_start_y,
-                           preview_width, preview_height);
-
-  scale = 4;
-  shift_rate = (gdouble) (scale - 1) / ( 2 * scale);
-  for (y = 0; y < preview_height/4; y++)
-    {
-      for (x = 0; x < preview_width/4; x++)
-        {
-          gint pos;
-          gint  i;
-
-          pos = (gint)(y + preview_height * shift_rate) * src_bpl
-                + (gint)(x + preview_width * shift_rate) * src_bpp;
-
-          for (i = 0; i < src_bpp; i++)
-            data[i] = preview_buffer[pos + i];
-
-          scatter_hsv_scatter (data+0, data+1, data+2);
-          for (dy = 0; dy < scale; dy++)
-            for (dx = 0; dx < scale; dx++)
-              memcpy ( buffer+((y*scale+dy)*2*preview_width+preview_width+x*scale+dx)*3,
-                       data, 3);
-        }
-    }
-  for (y = 0; y < preview_height; y ++)
-    for (x = 0; x < preview_width; x++)
-      {
-        gint    i;
-
-        for (i = 0; i < src_bpp; i++)
-          data[i] = preview_buffer[y * src_bpl + x * src_bpp + i];
-
-        scatter_hsv_scatter (data+0, data+1, data+2);
-        memcpy (buffer+(y*2*preview_width+x)*3, data, 3);
-      }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width * 2, preview_height,
-                          GIMP_RGB_IMAGE,
-                          buffer,
-                          preview_width * 2 * 3);
-  g_free (buffer);
-}
-
-static void
-scatter_hsv_iscale_update (GtkAdjustment *adjustment,
-                           gpointer       data)
-{
-  gimp_int_adjustment_update (adjustment, data);
-
-  scatter_hsv_preview_update ();
-}

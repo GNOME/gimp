@@ -1,3 +1,8 @@
+2004-10-15  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/scatter_hsv.c: ported to GimpDrawablePreview, and
+	removed many lines of codes.
+
 2004-10-14  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/neon.scm: Fixed minor error in script.

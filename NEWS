@@ -11,7 +11,7 @@ Overview of Changes in GIMP 2.1.7
 
 - Added even more plug-in previews (Value Propagate, Cubism, Colorify)
   and ported existing previews to the new widgets (AlienMap2, FlareFX,
-  Jigsaw, NL Filter, Waves).
+  Jigsaw, NL Filter, Waves, Scatter HSV).
 
 - More PDB API cleanups.
 
