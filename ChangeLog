@@ -2,6 +2,15 @@
 
 	Merged from HEAD branch:
 
+	* app/composite/gimp-composite-mmx-installer.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-mmx.[ch]: workaround bug #162778 by
+	disabling MMX acceleration for grayscale addition mode.
+
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/widgets/gimpactionview.c (gimp_action_view_new): connect to
 	"button_press_event" and start editing immidiately instead of
 	waiting for a second click. Fixes bug #163385.
