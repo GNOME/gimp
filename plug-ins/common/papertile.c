@@ -18,7 +18,7 @@
   this program; if not, write to the Free Software Foundation, Inc.,
   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
- *============================================================================*/
+ *===========================================================================*/
 
 #include "config.h"
 
@@ -31,15 +31,15 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/*============================================================================*/
-/* DEFINES                                                                    */
-/*============================================================================*/
+/*===========================================================================*/
+/* DEFINES                                                                   */
+/*===========================================================================*/
 
 #define PLUGIN_PROCEDURE_NAME     "plug_in_papertile"
 
-/*============================================================================*/
-/* TYPES                                                                      */
-/*============================================================================*/
+/*===========================================================================*/
+/* TYPES                                                                     */
+/*===========================================================================*/
 
 typedef enum
 {
@@ -72,9 +72,9 @@ struct _PluginParams
   GimpRGB         background_color;
 };
 
-/*============================================================================*/
-/* VARIABLES                                                                  */
-/*============================================================================*/
+/*===========================================================================*/
+/* VARIABLES                                                                 */
+/*===========================================================================*/
 
 static struct
 {
@@ -120,7 +120,7 @@ static struct
   FALSE                         /* run                   */
 };
 
-/*----------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
 
 static void
 params_save_to_gimp (void)
@@ -159,9 +159,9 @@ params_load_from_gimp (void)
     }
 }
 
-/*============================================================================*/
-/* GUI                                                                        */
-/*============================================================================*/
+/*===========================================================================*/
+/* GUI                                                                       */
+/*===========================================================================*/
 
 static struct
 {
@@ -331,7 +331,8 @@ open_dialog (void)
   gtk_widget_show (sep);
 
   button = gtk_check_button_new_with_mnemonic(_("C_entering"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), p.params.centering);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                p.params.centering);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -389,7 +390,7 @@ open_dialog (void)
 				 (gpointer) BACKGROUND_TYPE_FOREGROUND, NULL,
 				 _("Bac_kground Color"),
 				 (gpointer) BACKGROUND_TYPE_BACKGROUND, NULL,
-				 (gpointer) 1, /* button without label */
+				 _("S_elect here:"),
 				 (gpointer) BACKGROUND_TYPE_COLOR, &button,
 
 				 NULL);
@@ -401,7 +402,8 @@ open_dialog (void)
 					p.drawable_has_alpha ?
 					GIMP_COLOR_AREA_SMALL_CHECKS : 
 					GIMP_COLOR_AREA_FLAT);
-  gtk_container_add (GTK_CONTAINER (button), color_button);
+  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child),
+                      color_button, TRUE, TRUE, 0);
   gtk_widget_show (color_button);
 
   gtk_widget_set_sensitive (color_button,
@@ -418,9 +420,9 @@ open_dialog (void)
   gdk_flush ();
 }
 
-/*============================================================================*/
-/* PLUGIN CORE                                                                */
-/*============================================================================*/
+/*===========================================================================*/
+/* PLUGIN CORE                                                               */
+/*===========================================================================*/
 typedef struct _Tile
 {
   guint x;
@@ -793,7 +795,8 @@ filter (void)
 
   gimp_drawable_flush (p.drawable);
   gimp_drawable_merge_shadow (p.drawable->drawable_id, TRUE);
-  gimp_drawable_update (p.drawable->drawable_id, p.selection.x0, p.selection.y0,
+  gimp_drawable_update (p.drawable->drawable_id,
+                        p.selection.x0, p.selection.y0,
 			p.selection.width, p.selection.height);
 
   g_free (buffer);

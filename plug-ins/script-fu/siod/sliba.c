@@ -17,6 +17,8 @@
 #include <ctype.h>
 #include <math.h>
 
+#include <glib.h>
+
 #include "siod.h"
 #include "siodp.h"
 
@@ -166,7 +168,8 @@ array_prin1 (LISP ptr, struct gen_printio *f)
       gput_st (f, "#(");
       for (j = 0; j < ptr->storage_as.double_array.dim; ++j)
 	{
-	  sprintf (tkbuffer, "%g", ptr->storage_as.double_array.data[j]);
+          g_ascii_formatd (tkbuffer, sizeof(tkbuffer), "%g",
+                           ptr->storage_as.double_array.data[j]);
 	  gput_st (f, tkbuffer);
 	  if ((j + 1) < ptr->storage_as.double_array.dim)
 	    gput_st (f, " ");
@@ -1482,26 +1485,25 @@ number2string (LISP x, LISP b, LISP w, LISP p)
     my_err ("precision too large", p);
   if (NULLP (b) || EQ (sym_e, b) || EQ (sym_f, b))
     {
+      char format[32];
+
       if ((width >= 0) && (prec >= 0))
-	sprintf (buffer,
-		 NULLP (b) ? "% *.*g" : EQ (sym_e, b) ? "% *.*e" : "% *.*f",
-		 width,
-		 prec,
-		 y);
+        sprintf (format,
+                 NULLP (b) ? "%%%d.%dg" :
+                 EQ (sym_e, b) ? "%%%d.%dd" : "%%%d.%df",
+                 width, prec);
       else if (width >= 0)
-	sprintf (buffer,
-		 NULLP (b) ? "% *g" : EQ (sym_e, b) ? "% *e" : "% *f",
-		 width,
-		 y);
+	sprintf (format,
+		 NULLP (b) ? "%%%dg" : EQ (sym_e, b) ? "%%%de" : "%%%df",
+                 width);
       else if (prec >= 0)
-	sprintf (buffer,
-		 NULLP (b) ? "%.*g" : EQ (sym_e, b) ? "%.*e" : "%.*f",
-		 prec,
-		 y);
+	sprintf (format,
+		 NULLP (b) ? "%%.%dg" : EQ (sym_e, b) ? "%%.%de" : "%%.%df",
+                 prec);
       else
-	sprintf (buffer,
-		 NULLP (b) ? "%g" : EQ (sym_e, b) ? "%e" : "%f",
-		 y);
+        sprintf (format, NULLP (b) ? "%g" : EQ (sym_e, b) ? "%e" : "%f");
+
+      g_ascii_formatd (buffer, sizeof(buffer), format, y);
     }
   else if (((base = get_c_long (b)) == 10) || (base == 8) || (base == 16))
     {
@@ -1529,7 +1531,7 @@ string2number (LISP x, LISP b)
   str = get_c_string (x);
   if NULLP
     (b)
-      result = atof (str);
+      result = g_ascii_strtod (str, NULL);
   else if ((base = get_c_long (b)) == 10)
     {
       sscanf (str, "%ld", &value);

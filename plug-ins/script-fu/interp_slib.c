@@ -2711,7 +2711,7 @@ lprin1g (LISP exp, struct gen_printio * f)
       if (((double) n) == FLONM (exp))
 	sprintf (tkbuffer, "%ld", n);
       else
-	sprintf (tkbuffer, "%g", FLONM (exp));
+        g_ascii_formatd (tkbuffer, sizeof(tkbuffer), "%g", FLONM (exp));
       gput_st (f, tkbuffer);
       break;
     case tc_symbol:
@@ -3011,7 +3011,7 @@ lreadtk (char *buffer, long j)
     }
   if (*p)
     goto a_symbol;
-  return (flocons (atof (buffer)));
+  return (flocons (g_ascii_strtod (buffer, NULL)));
 a_symbol:
   return (rintern (buffer));
 }
@@ -3392,7 +3392,7 @@ parse_number (LISP x)
 {
   char *c;
   c = get_c_string (x);
-  return (flocons (atof (c)));
+  return (flocons (g_ascii_strtod (c, NULL)));
 }
 
 void

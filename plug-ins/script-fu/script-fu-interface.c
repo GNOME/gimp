@@ -1226,11 +1226,7 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  sf_interface->status = gtk_label_new (NULL);
-  buf = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
-                         sf_interface->title);
-  gtk_label_set_markup (GTK_LABEL (sf_interface->status), buf);
-  g_free (buf);
+  sf_interface->status = gtk_label_new (sf_interface->title);
   gtk_misc_set_alignment (GTK_MISC (sf_interface->status), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 0);
   gtk_widget_show (sf_interface->status);
@@ -1782,22 +1778,21 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
 	case SF_ADJUSTMENT:
-	  switch (script->arg_defaults[i].sfa_adjustment.type)
-	    {
-	    case SF_SLIDER:
-	      script->arg_values[i].sfa_adjustment.value =
-		script->arg_values[i].sfa_adjustment.adj->value;
-	      g_snprintf (buffer, sizeof (buffer), "%f",
-			  script->arg_values[i].sfa_adjustment.value);
-	      text = buffer;
+          switch (script->arg_defaults[i].sfa_adjustment.type)
+            {
+            case SF_SLIDER:
+              script->arg_values[i].sfa_adjustment.value =
+                script->arg_values[i].sfa_adjustment.adj->value;
+              
+              text = g_ascii_dtostr (buffer, sizeof (buffer),
+                                     script->arg_values[i].sfa_adjustment.value);
 	      break;
 
 	    case SF_SPINNER:
 	      script->arg_values[i].sfa_adjustment.value = 
 		gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
-	      g_snprintf (buffer, sizeof (buffer), "%f",
-			  script->arg_values[i].sfa_adjustment.value);
-	      text = buffer;
+              text = g_ascii_dtostr (buffer, sizeof (buffer),
+                                     script->arg_values[i].sfa_adjustment.value);
 	      break;
 
 	    default:
@@ -1833,13 +1828,20 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
 	case SF_BRUSH:
-	  g_snprintf (buffer, sizeof (buffer), "'(\"%s\" %f %d %d)",
-		      script->arg_values[i].sfa_brush.name,
-		      script->arg_values[i].sfa_brush.opacity,
-		      script->arg_values[i].sfa_brush.spacing,
-		      script->arg_values[i].sfa_brush.paint_mode);
-	  text = buffer;
-	  break;
+          {
+            gchar opacity[G_ASCII_DTOSTR_BUF_SIZE];
+
+            g_ascii_dtostr (opacity, sizeof (opacity),
+                            script->arg_values[i].sfa_brush.opacity);
+
+            g_snprintf (buffer, sizeof (buffer), "'(\"%s\" %s %d %d)",
+                        script->arg_values[i].sfa_brush.name,
+                        opacity,
+                        script->arg_values[i].sfa_brush.spacing,
+                        script->arg_values[i].sfa_brush.paint_mode);
+            text = buffer;
+          }
+          break;
 
 	case SF_OPTION:
 	  menu_item = 
