@@ -10,8 +10,8 @@ xjt_SOURCES = \
 	xjt.c xjpeg.c xjpeg.h xpdb_calls.c xpdb_calls.h
 
 INCLUDES = \
-	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \

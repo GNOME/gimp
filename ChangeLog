@@ -1,3 +1,8 @@
+1999-06-05  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* plug-ins/xjt/Makefile.am (INCLUDES): Reorder to include
+	$(top_srcdir) first.  This prevents rebuilding on `make install'.
+
 Sat Jun  5 16:19:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	app/errors.c
