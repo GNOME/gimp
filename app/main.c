@@ -461,51 +461,51 @@ on_signal (int sig_num)
     {
 #ifdef SIGHUP
     case SIGHUP:
-      gimp_terminate (_("sighup caught"));
+      gimp_terminate ("sighup caught");
       break;
 #endif
 #ifdef SIGINT
     case SIGINT:
-      gimp_terminate (_("sigint caught"));
+      gimp_terminate ("sigint caught");
       break;
 #endif
 #ifdef SIGQUIT
     case SIGQUIT:
-      gimp_terminate (_("sigquit caught"));
+      gimp_terminate ("sigquit caught");
       break;
 #endif
 #ifdef SIGABRT
     case SIGABRT:
-      gimp_terminate (_("sigabrt caught"));
+      gimp_terminate ("sigabrt caught");
       break;
 #endif
 #ifdef SIGBUS
     case SIGBUS:
-      gimp_fatal_error (_("sigbus caught"));
+      gimp_fatal_error ("sigbus caught");
       break;
 #endif
 #ifdef SIGSEGV
     case SIGSEGV:
-      gimp_fatal_error (_("sigsegv caught"));
+      gimp_fatal_error ("sigsegv caught");
       break;
 #endif
 #ifdef SIGPIPE
     case SIGPIPE:
-      gimp_terminate (_("sigpipe caught"));
+      gimp_terminate ("sigpipe caught");
       break;
 #endif
 #ifdef SIGTERM
     case SIGTERM:
-      gimp_terminate (_("sigterm caught"));
+      gimp_terminate ("sigterm caught");
       break;
 #endif
 #ifdef SIGFPE
     case SIGFPE:
-      gimp_fatal_error (_("sigfpe caught"));
+      gimp_fatal_error ("sigfpe caught");
       break;
 #endif
     default:
-      gimp_fatal_error (_("unknown signal"));
+      gimp_fatal_error ("unknown signal");
       break;
     }
 }

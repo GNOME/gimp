@@ -1,3 +1,8 @@
+Wed Jan  5 13:51:19 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/main.c: removed i18n tags from error messages in the 
+	segfault signal_handler
+
 2000-01-05  Michael Natterer  <mitch@gimp.org>
 
 	* PLUGIN_MAINTAINERS: I'm maintaining the helpbrowser (Sven, I
