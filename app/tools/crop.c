@@ -1326,7 +1326,7 @@ crop_automatic_callback (GtkWidget *w,
       for (x = 0; x < width && !abort; x++)
 	abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
     }
-  if (y == height) {
+  if (y == height && !abort) {
     g_free (buffer);
     goto FINISH;
   }

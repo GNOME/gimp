@@ -147,7 +147,7 @@ static void doit(GDrawable *drawable, gint32 image_id)
       abort = !colors_equal(color, buffer + x * bytes, bytes);
     }
   }
-  if (y == height) {
+  if (y == height && !abort) {
     g_free(buffer);
     gimp_drawable_detach(drawable);
     return;

@@ -1,3 +1,8 @@
+Fri Apr 23 01:31:29 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/crop.c: autocrop used to miss the bottom line
+	* plug-ins/autocrop/autocrop.c: same fix here
+
 1999-04-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	First version of per-tool paint options. No PDB interface yet.
