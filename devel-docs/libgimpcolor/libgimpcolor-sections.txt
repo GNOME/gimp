@@ -68,6 +68,7 @@ gimp_rgb_composite
 gimp_rgba_set
 gimp_rgba_set_uchar
 gimp_rgba_get_uchar
+gimp_rgba_parse_css
 gimp_rgba_add
 gimp_rgba_subtract
 gimp_rgba_multiply

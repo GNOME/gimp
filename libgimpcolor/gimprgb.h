@@ -102,6 +102,10 @@ void      gimp_rgba_get_uchar  (const GimpRGB *rgba,
                                 guchar        *blue,
                                 guchar        *alpha);
 
+gboolean  gimp_rgba_parse_css  (GimpRGB       *rgba,
+                                const gchar   *css,
+                                gint           len);
+
 void      gimp_rgba_add        (GimpRGB       *rgba1,
                                 const GimpRGB *rgba2);
 void      gimp_rgba_subtract   (GimpRGB       *rgba1,

@@ -244,6 +244,17 @@ GimpRGB
 @alpha: 
 
 
+<!-- ##### FUNCTION gimp_rgba_parse_css ##### -->
+<para>
+
+</para>
+
+@rgba: 
+@css: 
+@len: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rgba_add ##### -->
 <para>
 

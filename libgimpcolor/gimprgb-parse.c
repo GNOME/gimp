@@ -33,15 +33,21 @@
 
 #include "gimpcolortypes.h"
 
+#include "gimpcolorspace.h"
 #include "gimprgb.h"
 
 
-static gboolean  gimp_rgb_parse_name_internal (GimpRGB     *rgb,
-                                               const gchar *name);
-static gboolean  gimp_rgb_parse_hex_internal  (GimpRGB     *rgb,
-                                               const gchar *hex);
-static gboolean  gimp_rgb_parse_css_internal  (GimpRGB     *rgb,
-                                               const gchar *css);
+static gchar    * gimp_rgb_parse_strip         (const gchar *str,
+                                                gint         len);
+
+static gboolean   gimp_rgb_parse_name_internal (GimpRGB     *rgb,
+                                                const gchar *name);
+static gboolean   gimp_rgb_parse_hex_internal  (GimpRGB     *rgb,
+                                                const gchar *hex);
+static gboolean   gimp_rgb_parse_css_internal  (GimpRGB     *rgb,
+                                                const gchar *css);
+static gboolean   gimp_rgba_parse_css_internal (GimpRGB     *rgb,
+                                                const gchar *css);
 
 
 /**
@@ -74,10 +80,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
   g_return_val_if_fail (rgb != NULL, FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
 
-  if (len < 0)
-    len = strlen (name);
-
-  tmp = g_strstrip (g_strndup (name, len));
+  tmp = gimp_rgb_parse_strip (name, len);
 
   result = gimp_rgb_parse_name_internal (rgb, tmp);
 
@@ -113,10 +116,7 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
   g_return_val_if_fail (rgb != NULL, FALSE);
   g_return_val_if_fail (hex != NULL, FALSE);
 
-  if (len < 0)
-    len = strlen (hex);
-
-  tmp = g_strstrip (g_strndup (hex, len));
+  tmp = gimp_rgb_parse_strip (hex, len);
 
   result = gimp_rgb_parse_hex_internal (rgb, tmp);
 
@@ -133,7 +133,7 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
  *
  * Attempts to parse a string describing a color in RGB value in CSS
  * notation. This can be either a numerical representation
- * (<code>rgb (255, 0, 0)</code> or <code>rgb (100%, 0%, 0%)</code>) or
+ * (<code>rgb(255,0,0)</code> or <code>rgb(100%,0%,0%)</code>) or
  * a hexadecimal notation as parsed by gimp_rgb_parse_hex()
  * (<code>##ff0000</code>) or a color name as parsed by
  * gimp_rgb_parse_name() (<code>red</code>).
@@ -156,14 +156,83 @@ gimp_rgb_parse_css (GimpRGB     *rgb,
   g_return_val_if_fail (rgb != NULL, FALSE);
   g_return_val_if_fail (css != NULL, FALSE);
 
-  if (len < 0)
-    len = strlen (css);
-
-  tmp = g_strstrip (g_strndup (css, len));
+  tmp = gimp_rgb_parse_strip (css, len);
 
   result = gimp_rgb_parse_css_internal (rgb, tmp);
 
   g_free (tmp);
+
+  return result;
+}
+
+/**
+ * gimp_rgba_parse_css:
+ * @rgba: a #GimpRGB struct used to return the parsed color
+ * @css: a string describing a color in CSS notation
+ * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
+ *
+ * Similar to gimp_rgb_parse_css() but handles RGB colors with alpha
+ * channel in the numerical CSS notation (<code>rgba(255,0,0,255)</code>
+ * or <code>rgba(100%,0%,0%,1000%)</code>).
+ *
+ * It doesn't handle the hexadecimal notation or color names because
+ * they leave the alpha channel unspecified.
+ *
+ * Return value: %TRUE if @css was parsed successfully and @rgb has been
+ *               set, %FALSE otherwise
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_rgba_parse_css (GimpRGB     *rgba,
+                     const gchar *css,
+                     gint         len)
+{
+  gchar    *tmp;
+  gboolean  result;
+
+  g_return_val_if_fail (rgba != NULL, FALSE);
+  g_return_val_if_fail (css != NULL, FALSE);
+
+  if (len < 0)
+    len = strlen (css);
+
+  tmp = gimp_rgb_parse_strip (css, len);
+
+  result = gimp_rgba_parse_css_internal (rgba, tmp);
+
+  g_free (tmp);
+
+  return result;
+}
+
+static gchar *
+gimp_rgb_parse_strip (const gchar *str,
+                      gint         len)
+{
+  gchar *result;
+
+  while (len > 0 && g_ascii_isspace (*str))
+    {
+      str++;
+      len--;
+    }
+
+  if (len < 0)
+    {
+      while (g_ascii_isspace (*str))
+        str++;
+
+      len = strlen (str);
+    }
+
+  while (len > 0 && g_ascii_isspace (str[len]))
+    len--;
+
+  result = g_malloc (len + 1);
+
+  memcpy (result, str, len);
+  result[len] = '\0';
 
   return result;
 }
@@ -416,6 +485,90 @@ gimp_rgb_parse_hex_internal (GimpRGB     *rgb,
 
 
 static gboolean
+gimp_rgb_parse_css_numeric (GimpRGB     *rgb,
+                            const gchar *css)
+{
+  gdouble   values[4];
+  gboolean  alpha;
+  gboolean  hsl;
+  gint      i;
+
+  if (css[0] == 'r' && css[1] == 'g' && css[2] == 'b')
+    hsl = FALSE;
+  else if (css[0] == 'h' && css[1] == 's' && css[2] == 'l')
+    hsl = TRUE;
+  else
+    return FALSE;
+
+  if (css[3] == 'a' && css[4] == '(')
+    alpha = TRUE;
+else if (css[3] == '(')
+    alpha = FALSE;
+  else
+    return FALSE;
+
+  css += (alpha ? 5 : 4);
+
+  for (i = 0; i < (alpha ? 4 : 3); i++)
+    {
+      const gchar *end = css;
+
+      while (*end && *end != ',' && *end != '%' && *end != ')')
+        end++;
+
+      if (*end == '%')
+        {
+          values[i] = g_ascii_strtod (css, (gchar **) &end);
+
+          if (errno == ERANGE)
+            return FALSE;
+
+          if (*end == '%')
+            {
+              end++;
+              values[i] /= 100.0;
+            }
+        }
+      else
+        {
+          glong  value = strtol (css, (gchar **) &end, 10);
+
+          if (errno == ERANGE)
+            return FALSE;
+
+          if (hsl)
+            values[i] = value / (i == 0 ? 360.0 : 100.0);
+          else
+            values[i] = value / 255.0;
+        }
+
+      while (*end == ',' || g_ascii_isspace (*end))
+        end++;
+
+      css = end;
+    }
+
+  if (*css != ')')
+    return FALSE;
+
+  if (alpha)
+    gimp_rgba_set (rgb, values[0], values[1], values[2], values[3]);
+  else
+    gimp_rgb_set (rgb, values[0], values[1], values[2]);
+
+  gimp_rgb_clamp (rgb);
+
+  if (hsl)
+    {
+      GimpHSL  tmp = (*((GimpHSL *) rgb));
+
+      gimp_hsl_to_rgb (&tmp, rgb);
+    }
+
+  return TRUE;
+}
+
+static gboolean
 gimp_rgb_parse_css_internal (GimpRGB     *rgb,
                              const gchar *css)
 {
@@ -423,40 +576,24 @@ gimp_rgb_parse_css_internal (GimpRGB     *rgb,
     {
       return gimp_rgb_parse_hex_internal (rgb, css);
     }
-  else if (strncmp (css, "rgb(", 4) == 0)
+  else if (strncmp (css, "rgb(", 4) == 0 ||
+           strncmp (css, "hsl(", 4) == 0)
     {
-      gchar   *end;
-      gint     i;
-      gdouble  values[3];
-
-      for (i = 0; i < 3; i++)
-        {
-          values[i] = g_ascii_strtod (css, &end);
-
-          if (errno == ERANGE)
-            return FALSE;
-
-          if (*end == '%')
-            values[i] /= 100.0;
-
-          while (*end == ',' || g_ascii_isspace (*end))
-            end++;
-
-          css = end;
-        }
-
-      if (*css == ')')
-        {
-          gimp_rgb_set (rgb, values[0], values[1], values[2]);
-          gimp_rgb_clamp (rgb);
-
-          return TRUE;
-        }
+      return gimp_rgb_parse_css_numeric (rgb, css);
     }
   else
     {
       return gimp_rgb_parse_name_internal (rgb, css);
     }
+}
 
-  return FALSE;
+static gboolean
+gimp_rgba_parse_css_internal (GimpRGB     *rgba,
+                              const gchar *css)
+{
+  if (strncmp (css, "rgba(", 5) != 0 &&
+      strncmp (css, "hsla(", 5) != 0)
+    return FALSE;
+
+  return gimp_rgb_parse_css_numeric (rgba, css);
 }

@@ -1,6 +1,13 @@
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb-parse.c
+	* libgimpcolor/gimprgb.h: improved the CSS color parser code,
+	added new function gimp_rgba_parse_css(), added support for HSL
+	color values.
+
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb-parse.c
 	* libgimpcolor/gimprgb.h: use a signed integer to pass the string
 	length to the new parser functions. The API explicitely asks for
 	-1 to be passed...
