@@ -1360,7 +1360,7 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
 	      GtkWidget *dockbook;
 	      GList     *pages;
 
-	      dockbook = gimp_dockbook_new (factory->menu_factory);
+	      dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 
 	      gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
 

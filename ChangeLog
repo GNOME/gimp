@@ -1,3 +1,12 @@
+2003-09-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_restore_foreach): pass the menu_factory of
+	the newly created dock to gimp_dockbook_new(), not the one of the
+	dialog_factory we are restoring (doesn't matter since we have only
+	one global_menu_factory, but this code should still not do wrong
+	things)
+
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpscanner.c (gimp_scanner_new_file): workaround for
