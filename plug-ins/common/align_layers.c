@@ -133,7 +133,7 @@ query (void)
                           "Shuji Narazaki",
                           "1997",
                           N_("Align _Visible Layers..."),
-                          "RGB*,GRAY*",
+                          "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);

@@ -1,3 +1,9 @@
+2004-07-01  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/align_layers.c: there seems to be no reason why
+	this plug-in should not work on INDEXED* images, added it to the
+	registered image types
+
 2004-07-01  Roman Joost <roman@bromeco.de>
 
         * plug-ins/script-fu/scripts/blend-anim.scm
