@@ -144,39 +144,38 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
   
-  if (!aa_savable(param[2].data.d_int32)) 
-    {
-      values[0].data.d_status = STATUS_CALLING_ERROR;
-      return;
-    }
- 
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
   
-    /*  eventually export the image */ 
-    switch (run_mode)
-      {
-      case RUN_INTERACTIVE:
-      case RUN_WITH_LAST_VALS:
-	init_gtk ();
-	export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
-				    (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
-	if (export == EXPORT_CANCEL)
-	  {
-	    *nreturn_vals = 1;
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	    return;
-	  }
-	break;
-      default:
-	break;
-      }
-
+  /*  eventually export the image */ 
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+    case RUN_WITH_LAST_VALS:
+      init_gtk ();
+      export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
+				  (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+      if (export == EXPORT_CANCEL)
+	{
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  return;
+	}
+      break;
+    default:
+      break;
+    }
+  
+  if (!aa_savable (drawable_ID)) 
+    {
+      values[0].data.d_status = STATUS_CALLING_ERROR;
+      return;
+    }
+  
   switch (run_mode) 
     {
     case RUN_INTERACTIVE:
-      gimp_get_data("file_aa_save", &last_type);
+      gimp_get_data ("file_aa_save", &last_type);
       output_type = type_dialog (last_type);
       break;
       
@@ -203,7 +202,7 @@ run (char    *name,
       return;
     }
   
-  if (save_aa(output_type, param[3].data.d_string, image_ID, drawable_ID))
+  if (save_aa (output_type, param[3].data.d_string, image_ID, drawable_ID))
     {
       values[0].data.d_status = STATUS_EXECUTION_ERROR;
       last_type = output_type;
@@ -223,7 +222,7 @@ run (char    *name,
 static gint 
 save_aa (int     output_type, 
 	 char   *filename, 
-	 gint32  image,
+	 gint32  image_ID,
 	 gint32  drawable_ID)
 {
   aa_savedata savedata = {NULL, NULL};
@@ -248,7 +247,7 @@ save_aa (int     output_type,
   if (context == NULL)
     return 1;
   
-  gimp2aa (image, drawable_ID, context);
+  gimp2aa (image_ID, drawable_ID, context);
   aa_flush (context);
   aa_close (context);
   
@@ -269,8 +268,8 @@ gimp2aa (gint32      image,
   aa_renderparams *renderparams = NULL;
   int bpp;
   
-  width = aa_imgwidth(context);
-  height = aa_imgheight(context);
+  width = aa_imgwidth (context);
+  height = aa_imgheight (context);
   /*fprintf(stderr, "gimp2aa %i x %i\n", width, height); */
   
   drawable = gimp_drawable_get(drawable_ID);

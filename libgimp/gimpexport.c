@@ -80,6 +80,23 @@ export_convert_indexed (gint32  image_ID,
     gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 256, FALSE, FALSE, ""); 
 }
 
+static void
+export_add_alpha (gint32  image_ID,
+		  gint32 *drawable_ID)
+{  
+  gint nlayers;
+  gint i;
+  gint32 *layers;
+
+  layers = gimp_image_get_layers (image_ID, &nlayers);
+  for (i = 0; i < nlayers; i++)
+    {
+      if (!gimp_drawable_has_alpha (layers[i]))
+	gimp_layer_add_alpha (layers[i]);
+    }
+  g_free (layers);  
+}
+
 /* a set of predefined actions */
 
 static ExportAction export_action_merge =
@@ -164,6 +181,14 @@ static ExportAction export_action_convert_indexed_or_grayscale =
   0
 };
 
+static ExportAction export_action_add_alpha =
+{
+  &export_add_alpha,
+  NULL,
+  N_("needs an alpha channel"),
+  { N_("Add alpha channel"), NULL},
+  0
+};
 
 /* dialog functions */
 
@@ -349,23 +374,44 @@ gimp_export_image (gint32 *image_ID_ptr,
   GList *actions = NULL;
   GList *list;
   GimpImageBaseType type;
+  gint i;
   gint nlayers;
+  gint32* layers;
   gboolean added_flatten = FALSE;
 
   ExportAction *action;
 
   g_return_val_if_fail (*image_ID_ptr > -1 && *drawable_ID_ptr > -1, FALSE);
 
+  /* do some sanity checks */
+  if (cap & NEEDS_ALPHA)
+    cap |= CAN_HANDLE_ALPHA;
+  if (cap & CAN_HANDLE_LAYERS_AS_ANIMATION)
+    cap |= CAN_HANDLE_LAYERS;
+
   /* check alpha */
-  g_free (gimp_image_get_layers (*image_ID_ptr, &nlayers));
-  if (nlayers > 1 || gimp_drawable_has_alpha (*drawable_ID_ptr))
+  layers = gimp_image_get_layers (*image_ID_ptr, &nlayers);
+  for (i = 0; i < nlayers; i++)
     {
-      if ( !(cap & CAN_HANDLE_ALPHA ) )
+      if (gimp_drawable_has_alpha (layers[i]))
 	{
-	  actions = g_list_append (actions, &export_action_flatten);
-	  added_flatten = TRUE;
-	} 
+	  if ( !(cap & CAN_HANDLE_ALPHA) )
+	    {
+	      actions = g_list_append (actions, &export_action_flatten);
+	      added_flatten = TRUE;
+	      break;
+	    }
+	}
+      else 
+	{
+	  if (cap & NEEDS_ALPHA)
+	    {
+	      actions = g_list_append (actions, &export_action_add_alpha);
+	      break;
+	    }
+	}
     }
+  g_free (layers);
 
   /* check multiple layers */
   if (!added_flatten && nlayers > 1)

@@ -28,6 +28,7 @@
 #define CAN_HANDLE_ALPHA                1 << 3
 #define CAN_HANDLE_LAYERS               1 << 4
 #define CAN_HANDLE_LAYERS_AS_ANIMATION  1 << 5
+#define NEEDS_ALPHA                     1 << 6
 
 typedef enum
 {

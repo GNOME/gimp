@@ -43,6 +43,7 @@
  */
 
 #include <gtk/gtk.h>
+#include "gimprc.h"
 #include "gimpui.h"
 #include "temp_buf.h"
 #include "undo.h"
@@ -57,7 +58,7 @@
 #define GRAD_CHECK_DARK  (1.0 / 3.0)
 #define GRAD_CHECK_LIGHT (2.0 / 3.0)
 
-#define UNDO_THUMBNAIL_SIZE  24
+#define UNDO_HISTORY_PREVIEW_SIZE 24
 
 typedef struct
 {
@@ -165,13 +166,13 @@ undo_history_set_pixmap_idle (gpointer data)
   /* Get right aspect ratio */  
   if (width > height)
     { 
-      height = (UNDO_THUMBNAIL_SIZE * height) / width;
-      width  = UNDO_THUMBNAIL_SIZE;
+      height = (UNDO_HISTORY_PREVIEW_SIZE * height) / width;
+      width  = UNDO_HISTORY_PREVIEW_SIZE;
     }
   else
     {
-      width  = (UNDO_THUMBNAIL_SIZE * width) / height;
-      height = UNDO_THUMBNAIL_SIZE;
+      width  = (UNDO_HISTORY_PREVIEW_SIZE * width) / height;
+      height = UNDO_HISTORY_PREVIEW_SIZE;
     }
 
   buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
@@ -267,22 +268,30 @@ undo_history_set_pixmap_idle (gpointer data)
 
   gtk_clist_set_pixmap (idle->clist, idle->row, 0, pixmap, NULL);
   gdk_pixmap_unref (pixmap);
-
+  
   return (FALSE);
 }
 
+/* check if a preview is already made, otherwise gtk_idle_add the pixmap func */ 
 static void
 undo_history_set_pixmap (GtkCList *clist,
 			 gint      row,
 			 GImage   *gimage)
 {
   static idle_preview_args idle;
+  GdkPixmap *pixmap;
+  GdkPixmap *mask;
   
+  if (gtk_clist_get_pixmap (clist, row, 0, &pixmap, &mask))
+    return;
+    
   idle.clist  = clist;
   idle.row    = row;
   idle.gimage = gimage;
+
   gtk_idle_add ((GtkFunction)undo_history_set_pixmap_idle, &idle);
 }
+
 
 /* close button clicked */
 static void
@@ -436,8 +445,7 @@ undo_history_undo_event (GtkWidget *widget,
       g_return_if_fail (cur_selection >= 1);
       gtk_clist_select_row (clist, cur_selection - 1, -1);
       cur_selection--;
-      if (!gtk_clist_get_pixmap (clist, cur_selection, 0, &pixmap, &mask))
-	undo_history_set_pixmap (clist, cur_selection, st->gimage);
+      undo_history_set_pixmap (clist, cur_selection, st->gimage);
       if ( !(gtk_clist_row_is_visible (clist, cur_selection) & GTK_VISIBILITY_FULL))
 	gtk_clist_moveto (clist, cur_selection, 0, 0.0, 0.0);
       break;
@@ -447,8 +455,7 @@ undo_history_undo_event (GtkWidget *widget,
        g_return_if_fail (cur_selection+1 < clist->rows);
        gtk_clist_select_row (clist, cur_selection+1, -1);
        cur_selection++;
-       if (!gtk_clist_get_pixmap (clist, cur_selection, 0, &pixmap, &mask))
-	 undo_history_set_pixmap (clist, cur_selection, st->gimage);
+       undo_history_set_pixmap (clist, cur_selection, st->gimage);
        if ( !(gtk_clist_row_is_visible (clist, cur_selection) & GTK_VISIBILITY_FULL))
 	 gtk_clist_moveto (clist, cur_selection, 0, 1.0, 0.0);
        break;
@@ -500,6 +507,8 @@ undo_history_select_row_callback (GtkWidget *widget,
       undo_redo (st->gimage);
       st->old_selection++;
     }
+
+  undo_history_set_pixmap (GTK_CLIST (widget), cur_selection, st->gimage);
 
   gtk_signal_handler_unblock_by_func (GTK_OBJECT (st->gimage),
 				      undo_history_undo_event, st);    
@@ -634,8 +643,8 @@ undo_history_new (GImage *gimage)
   st->clist = gtk_clist_new (3);
   gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
   gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
-  gtk_clist_set_row_height (GTK_CLIST (st->clist), UNDO_THUMBNAIL_SIZE + 2);
-  gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, UNDO_THUMBNAIL_SIZE + 2);
+  gtk_clist_set_row_height (GTK_CLIST (st->clist), UNDO_HISTORY_PREVIEW_SIZE + 2);
+  gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, UNDO_HISTORY_PREVIEW_SIZE + 2);
   gtk_clist_set_column_width (GTK_CLIST (st->clist), 1, 18);
   gtk_clist_set_column_min_width (GTK_CLIST (st->clist), 2, 64);
 

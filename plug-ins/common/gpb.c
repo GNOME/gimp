@@ -1064,7 +1064,8 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | 
+				       NEEDS_ALPHA ));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;
@@ -1124,7 +1125,8 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | 
+				       CAN_HANDLE_LAYERS | NEEDS_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;

@@ -1,3 +1,15 @@
+Sat Oct  9 02:04:49 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/undo_history.c: catch another case where a new preview should
+	be drawn
+
+	* libgimp/gimpexport.[ch]: add NEED_ALPHA since gpb and gih need it
+
+	* plug-ins/common/aa.c: fixed my last change
+	
+	* plug-ins/common/gpb.c: use the new NEED_ALPHA so gimp_export_image 
+	prepares the images correctly
+
 Fri Oct  8 15:04:45 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimpintl.h
@@ -18,7 +30,7 @@ Fri Oct  8 22:00:00 MEST 1999  Sven Neumann <sven@gimp.org>
 	* plug-ins/common/aa.c
 	* plug-ins/common/csource.c
 	* plug-ins/common/gbr.c
-	* plug-ins/common/gpb.c: more file plug-ins that make use the export
+	* plug-ins/common/gpb.c: more file plug-ins that make use of the export
 	functionality
 
 	* plug-ins/common/jpeg.c: set the filename of the export preview so
