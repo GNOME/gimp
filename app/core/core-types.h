@@ -31,8 +31,12 @@
 
 /*  defines  */
 
-#define GIMP_OPACITY_TRANSPARENT 0.0
-#define GIMP_OPACITY_OPAQUE      1.0
+#define GIMP_OPACITY_TRANSPARENT     0.0
+#define GIMP_OPACITY_OPAQUE          1.0
+
+#define GIMP_COORDS_DEFAULT_PRESSURE 1.0
+#define GIMP_COORDS_DEFAULT_TILT     0.0
+#define GIMP_COORDS_DEFAULT_WHEEL    0.5
 
 
 /*  enums  */

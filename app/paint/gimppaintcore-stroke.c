@@ -126,10 +126,10 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
   coords[n_coords].x        = (gdouble) (stroke_segs[0].x1 - off_x + 0.5);
   coords[n_coords].y        = (gdouble) (stroke_segs[0].y1 - off_y + 0.5);
-  coords[n_coords].pressure = 1.0;
-  coords[n_coords].xtilt    = 0.5;
-  coords[n_coords].ytilt    = 0.5;
-  coords[n_coords].wheel    = 0.5;
+  coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
+  coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
+  coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
   n_coords++;
 
@@ -146,10 +146,10 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
                                                  off_x + 0.5);
           coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 -
                                                  off_y + 0.5);
-          coords[n_coords].pressure = 1.0;
-          coords[n_coords].xtilt    = 0.5;
-          coords[n_coords].ytilt    = 0.5;
-          coords[n_coords].wheel    = 0.5;
+          coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+          coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
+          coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
+          coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
           n_coords++;
 	  seg++;
@@ -191,10 +191,10 @@ gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
 
       coords[n_coords].x        = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
       coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
-      coords[n_coords].pressure = 1.0;
-      coords[n_coords].xtilt    = 0.5;
-      coords[n_coords].ytilt    = 0.5;
-      coords[n_coords].wheel    = 0.5;
+      coords[n_coords].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coords[n_coords].xtilt    = GIMP_COORDS_DEFAULT_TILT;
+      coords[n_coords].ytilt    = GIMP_COORDS_DEFAULT_TILT;
+      coords[n_coords].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 
       n_coords++;
     }

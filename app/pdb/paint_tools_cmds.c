@@ -116,10 +116,10 @@ paint_tools_stroke (Gimp             *gimp,
     {
       coords[i].x        = strokes[2 * i];
       coords[i].y        = strokes[2 * i + 1];
-      coords[i].pressure = 1.0;
-      coords[i].xtilt    = 0.5;
-      coords[i].ytilt    = 0.5;
-      coords[i].wheel    = 0.5;
+      coords[i].pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+      coords[i].xtilt    = GIMP_COORDS_DEFAULT_TILT;
+      coords[i].ytilt    = GIMP_COORDS_DEFAULT_TILT;
+      coords[i].wheel    = GIMP_COORDS_DEFAULT_WHEEL;
     }
 
   retval = gimp_paint_core_stroke (core, drawable, options,

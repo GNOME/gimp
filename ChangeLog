@@ -1,3 +1,16 @@
+2004-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added #defines for GimpCoords' default
+	pressure, tilt and wheel values.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/text/gimptext-vectors.c
+	* tools/pdbgen/pdb/paint_tools.pdb: use them. Fixes lots more
+	buggy default values for tilt (in fact all of them were wrong).
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2004-02-23  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: corrected the

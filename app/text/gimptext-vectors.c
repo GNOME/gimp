@@ -112,10 +112,10 @@ gimp_text_vector_coords (RenderContext   *context,
 {
   coords->x        = context->offset_x + (gdouble) vector->x / 64.0;
   coords->y        = context->offset_y - (gdouble) vector->y / 64.0;
-  coords->pressure = 1.0;
-  coords->xtilt    = 0.5;
-  coords->ytilt    = 0.5;
-  coords->wheel    = 0.5;
+  coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
+  coords->xtilt    = GIMP_COORDS_DEFAULT_TILT;
+  coords->ytilt    = GIMP_COORDS_DEFAULT_TILT;
+  coords->wheel    = GIMP_COORDS_DEFAULT_WHEEL;
 }
 
 static gint
