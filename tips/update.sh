@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKAGE="gimp14-tips"
+PACKAGE="gimp20-tips"
 PATH="$PATH:.."
 
 echo -n "Testing intltool version ... "
