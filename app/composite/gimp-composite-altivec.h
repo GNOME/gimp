@@ -25,6 +25,8 @@ extern void gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext 
 extern void gimp_composite_difference_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
 extern void gimp_composite_darken_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
 extern void gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
+extern void gimp_composite_multiply_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
+extern void gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
 #endif /* COMPILE_IS_OKAY */
 
 #endif

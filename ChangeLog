@@ -1,3 +1,11 @@
+2005-03-19  Manish Singh  <yosh@gimp.org>
+
+	* app/composite/gimp-composite-altivec.[ch]: More accelerated functions
+	(multiply, blend) from Frederic Leroy.
+
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-altivec-test.c: regenerated.
+
 2005-03-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/fp.c: use callbacks to handle

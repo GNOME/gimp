@@ -48,6 +48,12 @@
 
 static const vector unsigned char alphamask = (const vector unsigned char)
   INIT_VECTOR(0,0,0,0xff,0,0,0,0xff,0,0,0,0xff,0,0,0,0xff);
+static const vector unsigned char combine_high_bytes = (const vector unsigned char)
+  INIT_VECTOR(0,16,2,18,4,20,6,22,8,24,10,26,12,28,14,30);
+static const vector unsigned short ox0080 = (const vector unsigned short)
+  INIT_VECTOR(0x80,0x80,0x80,0x80,0x80,0x80,0x80,0x80);
+static const vector unsigned short ox0008 = (const vector unsigned short)
+  INIT_VECTOR(0x8,0x8,0x8,0x8,0x8,0x8,0x8,0x8);
 
 /* Load a vector from an unaligned location in memory */
 static inline vector unsigned char
@@ -373,6 +379,146 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   a=vec_adds(a,d);
   b=vec_andc(b,alphamask);
   d=vec_max(a, b);
+
+  StoreUnalignedLess(d, D, length);
+};
+
+void
+gimp_composite_multiply_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  vector unsigned char a,b,d,alpha_a,alpha_b,alpha;
+  vector unsigned short al,ah;
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      al=vec_mule(a,b);
+      al=vec_add(al,ox0080);
+      ah=vec_mulo(a,b);
+      ah=vec_add(ah,ox0080);
+      al=vec_add(al,vec_sr(al,ox0008));
+      ah=vec_add(ah,vec_sr(ah,ox0008));
+      d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
+
+      alpha_a=vec_and(a, alphamask);
+      alpha_b=vec_and(b, alphamask);
+      alpha=vec_min(alpha_a, alpha_b);
+
+      d=vec_andc(d, alphamask);
+      d=vec_or(d, alpha);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+    
+  al=vec_mule(a,b);
+  al=vec_add(al,ox0080);
+  ah=vec_mulo(a,b);
+  ah=vec_add(ah,ox0080);
+  al=vec_add(al,vec_sr(al,ox0008));
+  ah=vec_add(ah,vec_sr(ah,ox0008));
+  d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
+
+  alpha_a=vec_and(a, alphamask);
+  alpha_b=vec_and(b, alphamask);
+  alpha=vec_min(alpha_a, alpha_b);
+
+  d=vec_andc(d, alphamask);
+  d=vec_or(d, alpha);
+
+  StoreUnalignedLess(d, D, length);
+};
+
+void
+gimp_composite_blend_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
+{
+  const guchar *A = ctx->A;
+  const guchar *B = ctx->B;
+  guchar *D = ctx->D;
+  guint length = ctx->n_pixels;
+  guchar blend = ctx->blend.blend;
+  union
+    {
+      vector unsigned char v;
+      unsigned char u8[16];
+    } vblend;
+
+  vector unsigned char vblendc;
+  vector unsigned char a,b,d;
+  vector unsigned short al,ah,bl,bh,one=vec_splat_u16(1);
+  guchar tmp;
+
+  for (tmp=0; tmp<16; tmp++ )
+    vblend.u8[tmp]=blend;
+  vblendc=vec_nor(vblend.v,vblend.v);
+
+  while (length >= 4)
+    {
+      a=LoadUnaligned(A);
+      b=LoadUnaligned(B);
+
+      /* dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255; 
+       * to divide by 255 we use ((n+1)+(n+1)>>8)>>8 
+       * It works for all value but 0xffff
+       * happily blending formula can't give this value */
+      
+      al=vec_mule(a,vblendc);
+      ah=vec_mulo(a,vblendc);
+
+      bl=vec_mule(b,vblend.v);
+      bh=vec_mulo(b,vblend.v);
+      
+      al=vec_add(al,bl);
+      al=vec_add(al,one);
+      al=vec_add(al,vec_sr(al,ox0008));
+
+      ah=vec_add(ah,bh);
+      ah=vec_add(ah,one);
+      ah=vec_add(ah,vec_sr(ah,ox0008));
+
+      d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
+
+      StoreUnaligned(d, D);
+
+      A+=16;
+      B+=16;
+      D+=16;
+      length-=4;
+    }
+  /* process last pixels */
+  length = length*4;
+  a=LoadUnalignedLess(A, length);
+  b=LoadUnalignedLess(B, length);
+
+  al=vec_mule(a,vblendc);
+  ah=vec_mulo(a,vblendc);
+
+  bl=vec_mule(b,vblend.v);
+  bh=vec_mulo(b,vblend.v);
+
+  al=vec_add(al,bl);
+  al=vec_add(al,one);
+  al=vec_add(al,vec_sr(al,ox0008));
+
+  ah=vec_add(ah,bh);
+  ah=vec_add(ah,one);
+  ah=vec_add(ah,vec_sr(ah,ox0008));
+
+  d=vec_perm((vector unsigned char)al,(vector unsigned char)ah,combine_high_bytes);
 
   StoreUnalignedLess(d, D, length);
 };
