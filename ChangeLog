@@ -1,3 +1,8 @@
+2005-02-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimppropwidgets.c:  add gtk-doc comments to 
+	public functions in prep for moving to libgimpwidgets.
+
 2005-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/print-size-dialog.c
