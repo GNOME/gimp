@@ -1,3 +1,9 @@
+2002-11-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcontainer.c (gimp_container_get_child_by_name):
+	accept a NULL name and return NULL. Fixes warnings when starting
+	gimp w/o a gimprc.
+
 2002-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursor.c: removed commented out and unused

@@ -852,7 +852,9 @@ gimp_container_get_child_by_name (const GimpContainer *container,
 				  const gchar         *name)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+
+  if (!name)
+    return NULL;
 
   return GIMP_CONTAINER_GET_CLASS (container)->get_child_by_name (container,
 								  name);
