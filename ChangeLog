@@ -1,5 +1,10 @@
 2003-11-25  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/dialogs.c (toplevel_entries): remember the size of the
+	levels tool dialog. Fixes bug #127896.
+
+2003-11-25  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: applied a patch from Adrian Bunk that changes the
 	function to look for when checking for lcms (bug #127893). Also
 	added a warning when lcms is not found.
