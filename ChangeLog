@@ -1,5 +1,10 @@
 2004-12-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_ui_get): improved
+	error message about missing XML files.
+
+2004-12-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-appearance.c
 	* app/display/gimpdisplayshell.c
 	* app/widgets/gimpdockable.c

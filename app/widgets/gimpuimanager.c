@@ -39,6 +39,8 @@
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -489,7 +491,11 @@ gimp_ui_manager_ui_get (GimpUIManager *manager,
 
       if (! gimp_ui_manager_entry_load (manager, entry, &error))
         {
-          g_message (error->message);
+          g_message ("%s\n\n%s\n\n%s",
+                     _("Your GIMP installation is incomplete:"),
+                     error->message,
+                     _("Plase make sure the menu XML files are correctly "
+                       "installed."));
           g_clear_error (&error);
           return NULL;
         }
