@@ -2322,7 +2322,7 @@ msgstr ""
 
 #: app/info_window.c:211
 msgid "Extended"
-msgstr "Laajettettu"
+msgstr "Laajennettu"
 
 #. add the information fields
 #: app/info_window.c:274
@@ -3027,7 +3027,7 @@ msgstr "/Tiedosto/Sulje"
 #. <Image>/Edit
 #: app/menus.c:216
 msgid "/Edit/Undo"
-msgstr "/Tiedosto/Kumoa"
+msgstr "/Muokkaa/Kumoa"
 
 #: app/menus.c:218
 msgid "/Edit/Redo"
@@ -3179,7 +3179,7 @@ msgstr "/Näytä/Ikkunan tiedot..."
 
 #: app/menus.c:321
 msgid "/View/Nav. Window..."
-msgstr "/Näytä/Ikkunan tiedot..."
+msgstr "/Näytä/Navigointi-ikkuna..."
 
 #: app/menus.c:326
 msgid "/View/Toggle Selection"
