@@ -467,7 +467,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
                         NULL);
 
           str1 = g_strdup_printf (_("Keep height  %s"),
-                                  gimp_get_mod_string (GDK_SHIFT_MASK));
+                                  gimp_get_mod_string (GDK_CONTROL_MASK));
           str2 = g_strdup_printf (_("Keep width  %s"),
                                   gimp_get_mod_string (GDK_MOD1_MASK));
           str3 = g_strdup_printf (_("Keep aspect  %s"),
