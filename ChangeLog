@@ -1,5 +1,30 @@
 2002-10-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorscales.[ch]: the color scales from
+	the main color selection as GimpColorSelector subclass.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpwidgetstypes.h: changed accordingly.
+
+	* libgimpwidgets/gimpcolornotebook.c: skip it when iterating the
+	GimpColorSelector subclasses.
+
+	* libgimpwidgets/gimpcolorselector.[ch]: added virtual function
+	set_has_alpha() amd signal "channel_changed". Put RGB, HSV and
+	channel values into to the GimpColorSelector struct where they are
+	available for subclasses.
+
+	* libgimpwidgets/gimpcolorselect.[ch]
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: changed accordingly, cleanup.
+
+	* app/gui/color-notebook.[ch]: use the new GimpColorScales widget,
+	lots of cleanup.
+
+2002-10-28  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/unsharp.c: reordered action buttons.
 
 2002-10-28  Michael Natterer  <mitch@gimp.org>

@@ -47,44 +47,57 @@ typedef struct _GimpColorSelectorClass GimpColorSelectorClass;
 
 struct _GimpColorSelector
 {
-  GtkVBox  parent_instance;
+  GtkVBox                   parent_instance;
+
+  gboolean                  show_alpha;
+
+  GimpRGB                   rgb;
+  GimpHSV                   hsv;
+
+  GimpColorSelectorChannel  channel;
 };
 
 struct _GimpColorSelectorClass
 {
   GtkVBoxClass  parent_class;
 
-  const gchar *name;
-  const gchar *help_page;
+  const gchar  *name;
+  const gchar  *help_page;
 
   /*  virtual functions  */
-  void (* set_color)     (GimpColorSelector        *selector,
-                          const GimpRGB            *rgb,
-                          const GimpHSV            *hsv);
-  void (* set_channel)   (GimpColorSelector        *selector,
-                          GimpColorSelectorChannel  channel);
+  void (* set_show_alpha)  (GimpColorSelector        *selector,
+                            gboolean                  show_alpha);
+  void (* set_color)       (GimpColorSelector        *selector,
+                            const GimpRGB            *rgb,
+                            const GimpHSV            *hsv);
+  void (* set_channel)     (GimpColorSelector        *selector,
+                            GimpColorSelectorChannel  channel);
 
   /*  signals  */
-  void (* color_changed) (GimpColorSelector        *selector,
-                          const GimpRGB            *rgb,
-                          const GimpHSV            *hsv);
+  void (* color_changed)   (GimpColorSelector        *selector,
+                            const GimpRGB            *rgb,
+                            const GimpHSV            *hsv);
+  void (* channel_changed) (GimpColorSelector        *selector,
+                            GimpColorSelectorChannel  channel);
 };
 
 
-GType       gimp_color_selector_get_type (void) G_GNUC_CONST;
-GtkWidget * gimp_color_selector_new      (GType          selector_type,
-                                          const GimpRGB *rgb,
-                                          const GimpHSV *hsv);
+GType       gimp_color_selector_get_type   (void) G_GNUC_CONST;
+GtkWidget * gimp_color_selector_new        (GType                     selector_type,
+                                            const GimpRGB            *rgb,
+                                            const GimpHSV            *hsv,
+                                            GimpColorSelectorChannel  channel);
 
-void   gimp_color_selector_set_color     (GimpColorSelector        *selector,
-                                          const GimpRGB            *rgb,
-                                          const GimpHSV            *hsv);
-void   gimp_color_selector_set_channel   (GimpColorSelector        *selector,
-                                          GimpColorSelectorChannel  channel);
+void   gimp_color_selector_set_show_alpha  (GimpColorSelector        *selector,
+                                            gboolean                  show_alpha);
+void   gimp_color_selector_set_color       (GimpColorSelector        *selector,
+                                            const GimpRGB            *rgb,
+                                            const GimpHSV            *hsv);
+void   gimp_color_selector_set_channel     (GimpColorSelector        *selector,
+                                            GimpColorSelectorChannel  channel);
 
-void   gimp_color_selector_color_changed (GimpColorSelector        *selector,
-                                          const GimpRGB            *rgb,
-                                          const GimpHSV            *hsv);
+void   gimp_color_selector_color_changed   (GimpColorSelector        *selector);
+void   gimp_color_selector_channel_changed (GimpColorSelector        *selector);
 
 
 G_END_DECLS

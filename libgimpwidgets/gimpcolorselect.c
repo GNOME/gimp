@@ -1,19 +1,26 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * gimpcolorselect.c
+ * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * based on color_notebook module
+ * Copyright (C) 1998 Austin Donnelly <austin@greenend.org.uk>
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -75,31 +82,25 @@ typedef enum
 } ColorSelectUpdateType;
 
 
-
-#define GIMP_TYPE_COLOR_SELECT            (gimp_color_select_get_type ())
-#define GIMP_COLOR_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECT, GimpColorSelect))
 #define GIMP_COLOR_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SELECT, GimpColorSelectClass))
-#define GIMP_IS_COLOR_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECT))
 #define GIMP_IS_COLOR_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECT))
 #define GIMP_COLOR_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECT, GimpColorSelectClass))
 
 
+typedef struct _GimpColorSelectClass GimpColorSelectClass;
 
 struct _GimpColorSelect
 {
   GimpColorSelector  parent_instance;
 
-  GtkWidget *xy_color;
-  GtkWidget *z_color;
+  GtkWidget         *xy_color;
+  GtkWidget         *z_color;
 
-  gint       pos[3];
+  gint               pos[3];
 
-  GimpRGB    rgb;
-  GimpHSV    hsv;
-
-  gint       z_color_fill;
-  gint       xy_color_fill;
-  GdkGC     *gc;
+  gint               z_color_fill;
+  gint               xy_color_fill;
+  GdkGC             *gc;
 };
 
 struct _GimpColorSelectClass
@@ -118,8 +119,8 @@ struct _ColorSelectFill
   gint     y;
   gint     width;
   gint     height;
-  GimpHSV  hsv;
   GimpRGB  rgb;
+  GimpHSV  hsv;
 
   ColorSelectFillUpdateProc update;
 };
@@ -138,40 +139,37 @@ static void   gimp_color_select_set_channel (GimpColorSelector     *selector,
 
 static void   gimp_color_select_update      (GimpColorSelect       *select,
                                              ColorSelectUpdateType  type);
-static void   gimp_color_select_update_caller     (GimpColorSelect    *select);
-static void   gimp_color_select_update_values     (GimpColorSelect    *select);
-static void   gimp_color_select_update_rgb_values (GimpColorSelect    *select);
-static void   gimp_color_select_update_hsv_values (GimpColorSelect    *select);
-static void   gimp_color_select_update_pos        (GimpColorSelect    *select);
+static void   gimp_color_select_update_values  (GimpColorSelect    *select);
+static void   gimp_color_select_update_pos     (GimpColorSelect    *select);
 
 #if 0
-static void   gimp_color_select_drop_color        (GtkWidget          *widget,
-                                                   const GimpRGB      *color,
-                                                   gpointer            data);
+static void   gimp_color_select_drop_color     (GtkWidget          *widget,
+                                                const GimpRGB      *color,
+                                                gpointer            data);
 #endif
 
-static gboolean   gimp_color_select_xy_expose     (GtkWidget          *widget,
-                                                   GdkEventExpose     *eevent,
-                                                   GimpColorSelect    *select);
-static gboolean   gimp_color_select_xy_events     (GtkWidget          *widget,
-                                                   GdkEvent           *event,
-                                                   GimpColorSelect    *select);
-static gboolean   gimp_color_select_z_expose      (GtkWidget          *widget,
-                                                   GdkEventExpose     *eevent,
-                                                   GimpColorSelect    *select);
-static gboolean   gimp_color_select_z_events      (GtkWidget          *widet,
-                                                   GdkEvent           *event,
-                                                   GimpColorSelect    *select);
+static gboolean   gimp_color_select_xy_expose  (GtkWidget          *widget,
+                                                GdkEventExpose     *eevent,
+                                                GimpColorSelect    *select);
+static gboolean   gimp_color_select_xy_events  (GtkWidget          *widget,
+                                                GdkEvent           *event,
+                                                GimpColorSelect    *select);
+static gboolean   gimp_color_select_z_expose   (GtkWidget          *widget,
+                                                GdkEventExpose     *eevent,
+                                                GimpColorSelect    *select);
+static gboolean   gimp_color_select_z_events   (GtkWidget          *widet,
+                                                GdkEvent           *event,
+                                                GimpColorSelect    *select);
 
-static void   gimp_color_select_image_fill        (GtkWidget          *widget,
-                                                   ColorSelectFillType,
-                                                   const GimpHSV      *hsv,
-                                                   const GimpRGB      *rgb);
+static void   gimp_color_select_image_fill     (GtkWidget          *widget,
+                                                ColorSelectFillType,
+                                                const GimpHSV      *hsv,
+                                                const GimpRGB      *rgb);
 
-static void   gimp_color_select_draw_z_marker     (GimpColorSelect    *select,
-                                                   GdkRectangle       *clip);
-static void   gimp_color_select_draw_xy_marker    (GimpColorSelect    *select,
-                                                   GdkRectangle       *clip);
+static void   gimp_color_select_draw_z_marker  (GimpColorSelect    *select,
+                                                GdkRectangle       *clip);
+static void   gimp_color_select_draw_xy_marker (GimpColorSelect    *select,
+                                                GdkRectangle       *clip);
 
 static void   color_select_update_red              (ColorSelectFill *csf);
 static void   color_select_update_green            (ColorSelectFill *csf);
@@ -347,9 +345,6 @@ gimp_color_select_set_color (GimpColorSelector *selector,
 
   select = GIMP_COLOR_SELECT (selector);
 
-  select->rgb = *rgb;
-  select->hsv = *hsv;
-
   gimp_color_select_update_pos (select);
 
   gimp_color_select_update (select, UPDATE_Z_COLOR);
@@ -408,6 +403,10 @@ static void
 gimp_color_select_update (GimpColorSelect       *select,
                           ColorSelectUpdateType  update)
 {
+  GimpColorSelector *selector;
+
+  selector = GIMP_COLOR_SELECTOR (select);
+
   if (update & UPDATE_POS)
     gimp_color_select_update_pos (select);
 
@@ -417,64 +416,60 @@ gimp_color_select_update (GimpColorSelect       *select,
   if (update & UPDATE_XY_COLOR)
     {
       gimp_color_select_image_fill (select->xy_color, select->xy_color_fill,
-                                    &select->hsv, &select->rgb);
+                                    &selector->hsv, &selector->rgb);
       gtk_widget_queue_draw (select->xy_color);
     }
 
   if (update & UPDATE_Z_COLOR)
     {
       gimp_color_select_image_fill (select->z_color, select->z_color_fill,
-                                    &select->hsv, &select->rgb);
+                                    &selector->hsv, &selector->rgb);
       gtk_widget_queue_draw (select->z_color);
     }
 
   if (update & UPDATE_CALLER)
-    gimp_color_select_update_caller (select);
-}
-
-static void
-gimp_color_select_update_caller (GimpColorSelect *select)
-{
-  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (select),
-                                     &select->rgb,
-                                     &select->hsv);
+    gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (select));
 }
 
 static void
 gimp_color_select_update_values (GimpColorSelect *select)
 {
+  GimpColorSelector *selector;
+
+  selector = GIMP_COLOR_SELECTOR (select);
+
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->rgb.b = select->pos[0] / 255.0;
-      select->rgb.g = select->pos[1] / 255.0;
-      select->rgb.r = select->pos[2] / 255.0;
+      selector->rgb.b = select->pos[0] / 255.0;
+      selector->rgb.g = select->pos[1] / 255.0;
+      selector->rgb.r = select->pos[2] / 255.0;
       break;
     case COLOR_SELECT_GREEN:
-      select->rgb.b = select->pos[0] / 255.0;
-      select->rgb.r = select->pos[1] / 255.0;
-      select->rgb.g = select->pos[2] / 255.0;
+      selector->rgb.b = select->pos[0] / 255.0;
+      selector->rgb.r = select->pos[1] / 255.0;
+      selector->rgb.g = select->pos[2] / 255.0;
       break;
     case COLOR_SELECT_BLUE:
-      select->rgb.g = select->pos[0] / 255.0;
-      select->rgb.r = select->pos[1] / 255.0;
-      select->rgb.b = select->pos[2] / 255.0;
+      selector->rgb.g = select->pos[0] / 255.0;
+      selector->rgb.r = select->pos[1] / 255.0;
+      selector->rgb.b = select->pos[2] / 255.0;
       break;
 
     case COLOR_SELECT_HUE:
-      select->hsv.v = select->pos[0] / 255.0;
-      select->hsv.s = select->pos[1] / 255.0;
-      select->hsv.h = select->pos[2] / 255.0;
+      selector->hsv.v = select->pos[0] / 255.0;
+      selector->hsv.s = select->pos[1] / 255.0;
+      selector->hsv.h = select->pos[2] / 255.0;
       break;
     case COLOR_SELECT_SATURATION:
-      select->hsv.v = select->pos[0] / 255.0;
-      select->hsv.h = select->pos[1] / 255.0;
-      select->hsv.s = select->pos[2] / 255.0;
+      selector->hsv.v = select->pos[0] / 255.0;
+      selector->hsv.h = select->pos[1] / 255.0;
+      selector->hsv.s = select->pos[2] / 255.0;
       break;
     case COLOR_SELECT_VALUE:
-      select->hsv.s = select->pos[0] / 255.0;
-      select->hsv.h = select->pos[1] / 255.0;
-      select->hsv.v = select->pos[2] / 255.0;
+      selector->hsv.s = select->pos[0] / 255.0;
+      selector->hsv.h = select->pos[1] / 255.0;
+      selector->hsv.v = select->pos[2] / 255.0;
       break;
     }
 
@@ -483,64 +478,56 @@ gimp_color_select_update_values (GimpColorSelect *select)
     case COLOR_SELECT_RED:
     case COLOR_SELECT_GREEN:
     case COLOR_SELECT_BLUE:
-      gimp_color_select_update_hsv_values (select);
+      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
       break;
 
     case COLOR_SELECT_HUE:
     case COLOR_SELECT_SATURATION:
     case COLOR_SELECT_VALUE:
-      gimp_color_select_update_rgb_values (select);
+      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
       break;
     }
-}
-
-static void
-gimp_color_select_update_rgb_values (GimpColorSelect *select)
-{
-  gimp_hsv_to_rgb (&select->hsv, &select->rgb);
-}
-
-static void
-gimp_color_select_update_hsv_values (GimpColorSelect *select)
-{
-  gimp_rgb_to_hsv (&select->rgb, &select->hsv);
 }
 
 static void
 gimp_color_select_update_pos (GimpColorSelect *select)
 {
+  GimpColorSelector *selector;
+
+  selector = GIMP_COLOR_SELECTOR (select);
+
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = (gint) (select->rgb.b * 255.999);
-      select->pos[1] = (gint) (select->rgb.g * 255.999);
-      select->pos[2] = (gint) (select->rgb.r * 255.999);
+      select->pos[0] = (gint) (selector->rgb.b * 255.999);
+      select->pos[1] = (gint) (selector->rgb.g * 255.999);
+      select->pos[2] = (gint) (selector->rgb.r * 255.999);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = (gint) (select->rgb.b * 255.999);
-      select->pos[1] = (gint) (select->rgb.r * 255.999);
-      select->pos[2] = (gint) (select->rgb.g * 255.999);
+      select->pos[0] = (gint) (selector->rgb.b * 255.999);
+      select->pos[1] = (gint) (selector->rgb.r * 255.999);
+      select->pos[2] = (gint) (selector->rgb.g * 255.999);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = (gint) (select->rgb.g * 255.999);
-      select->pos[1] = (gint) (select->rgb.r * 255.999);
-      select->pos[2] = (gint) (select->rgb.b * 255.999);
+      select->pos[0] = (gint) (selector->rgb.g * 255.999);
+      select->pos[1] = (gint) (selector->rgb.r * 255.999);
+      select->pos[2] = (gint) (selector->rgb.b * 255.999);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = (gint) (select->hsv.v * 255.999);
-      select->pos[1] = (gint) (select->hsv.s * 255.999);
-      select->pos[2] = (gint) (select->hsv.h * 255.999);
+      select->pos[0] = (gint) (selector->hsv.v * 255.999);
+      select->pos[1] = (gint) (selector->hsv.s * 255.999);
+      select->pos[2] = (gint) (selector->hsv.h * 255.999);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = (gint) (select->hsv.v * 255.999);
-      select->pos[1] = (gint) (select->hsv.h * 255.999);
-      select->pos[2] = (gint) (select->hsv.s * 255.999);
+      select->pos[0] = (gint) (selector->hsv.v * 255.999);
+      select->pos[1] = (gint) (selector->hsv.h * 255.999);
+      select->pos[2] = (gint) (selector->hsv.s * 255.999);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = (gint) (select->hsv.s * 255.999);
-      select->pos[1] = (gint) (select->hsv.h * 255.999);
-      select->pos[2] = (gint) (select->hsv.v * 255.999);
+      select->pos[0] = (gint) (selector->hsv.s * 255.999);
+      select->pos[1] = (gint) (selector->hsv.h * 255.999);
+      select->pos[2] = (gint) (selector->hsv.v * 255.999);
       break;
     }
 }

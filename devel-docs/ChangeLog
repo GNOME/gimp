@@ -1,5 +1,15 @@
 2002-10-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/tmpl/gimpcolorscales.sgml: added GimpColorScales.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml; updated.
+
+2002-10-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/tmpl/gimpcolornotebook.sgml: added GimpColorNotebook.
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml

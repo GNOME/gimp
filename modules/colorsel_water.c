@@ -56,8 +56,6 @@ struct _ColorselWater
 {
   GimpColorSelector  parent_instance;
 
-  GimpRGB            rgb;
-
   gdouble            last_x;
   gdouble            last_y;
   gdouble            last_pressure;
@@ -82,8 +80,6 @@ static void       colorsel_water_finalize   (GObject           *object);
 static void       colorsel_water_set_color  (GimpColorSelector *selector,
                                              const GimpRGB     *rgb,
                                              const GimpHSV     *hsv);
-
-static void       colorsel_water_update     (ColorselWater     *water);
 
 static void       select_area_draw          (GtkWidget         *preview);
 static gboolean   button_press_event        (GtkWidget         *widget,
@@ -274,19 +270,6 @@ colorsel_water_set_color (GimpColorSelector *selector,
   ColorselWater *water;
 
   water = COLORSEL_WATER (selector);
-
-  water->rgb = *rgb;
-}
-
-static void
-colorsel_water_update (ColorselWater *water)
-{
-  GimpHSV hsv;
-
-  gimp_rgb_to_hsv (&water->rgb, &hsv);
-
-  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (water),
-                                     &water->rgb, &hsv);
 }
 
 static gdouble
@@ -336,21 +319,24 @@ select_area_draw (GtkWidget *preview)
 }
 
 static void
-add_pigment (ColorselWater *colorsel,
+add_pigment (ColorselWater *water,
 	     gboolean       erase,
 	     gdouble        x,
 	     gdouble        y,
 	     gdouble        much)
 {
-  gdouble r, g, b;
+  GimpColorSelector *selector;
+  gdouble            r, g, b;
 
-  much *= (gdouble) colorsel->pressure_adjust; 
+  selector = GIMP_COLOR_SELECTOR (water);
+
+  much *= (gdouble) water->pressure_adjust; 
 
   if (erase)
     {
-      colorsel->rgb.r = 1 - (1 - colorsel->rgb.r) * (1 - much);
-      colorsel->rgb.g = 1 - (1 - colorsel->rgb.g) * (1 - much);
-      colorsel->rgb.b = 1 - (1 - colorsel->rgb.b) * (1 - much);
+      selector->rgb.r = 1 - (1 - selector->rgb.r) * (1 - much);
+      selector->rgb.g = 1 - (1 - selector->rgb.g) * (1 - much);
+      selector->rgb.b = 1 - (1 - selector->rgb.b) * (1 - much);
     }
   else
     {
@@ -366,16 +352,18 @@ add_pigment (ColorselWater *colorsel,
       if (b < 0) b = 0;
       if (b > 1) b = 1;
 
-      colorsel->rgb.r *= (1 - (1 - r) * much);
-      colorsel->rgb.g *= (1 - (1 - g) * much);
-      colorsel->rgb.b *= (1 - (1 - b) * much);
+      selector->rgb.r *= (1 - (1 - r) * much);
+      selector->rgb.g *= (1 - (1 - g) * much);
+      selector->rgb.b *= (1 - (1 - b) * much);
     }
 
-  colorsel_water_update (colorsel);
+  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+
+  gimp_color_selector_color_changed (selector);
 }
 
 static void
-draw_brush (ColorselWater *colorsel,
+draw_brush (ColorselWater *water,
 	    GtkWidget     *widget,
 	    gboolean       erase,
 	    gdouble        x,
@@ -384,22 +372,22 @@ draw_brush (ColorselWater *colorsel,
 {
   gdouble much; /* how much pigment to mix in */
 
-  if (pressure < colorsel->last_pressure)
-    colorsel->last_pressure = pressure;
+  if (pressure < water->last_pressure)
+    water->last_pressure = pressure;
 
-  much = sqrt ((x - colorsel->last_x) * (x - colorsel->last_x) +
-	       (y - colorsel->last_y) * (y - colorsel->last_y) +
+  much = sqrt ((x - water->last_x) * (x - water->last_x) +
+	       (y - water->last_y) * (y - water->last_y) +
 	       1000 *
-	       (pressure - colorsel->last_pressure) *
-	       (pressure - colorsel->last_pressure));
+	       (pressure - water->last_pressure) *
+	       (pressure - water->last_pressure));
 
   much *= pressure * 0.05;
 
-  add_pigment (colorsel, erase, x, y, much);
+  add_pigment (water, erase, x, y, much);
 
-  colorsel->last_x        = x;
-  colorsel->last_y        = y;
-  colorsel->last_pressure = pressure;
+  water->last_x        = x;
+  water->last_y        = y;
+  water->last_pressure = pressure;
 }
 
 static gboolean

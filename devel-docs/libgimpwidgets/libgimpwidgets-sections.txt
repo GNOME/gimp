@@ -392,9 +392,11 @@ GIMP_COLOR_SELECTOR_SIZE
 GIMP_COLOR_SELECTOR_BAR_SIZE
 GimpColorSelectorChannel
 gimp_color_selector_new
+gimp_color_selector_set_show_alpha
 gimp_color_selector_set_color
 gimp_color_selector_set_channel
 gimp_color_selector_color_changed
+gimp_color_selector_channel_changed
 <SUBSECTION Standard>
 GIMP_COLOR_SELECTOR
 GIMP_IS_COLOR_SELECTOR
@@ -409,15 +411,11 @@ GIMP_COLOR_SELECTOR_GET_CLASS
 <FILE>gimpcolorselect</FILE>
 <TITLE>GimpColorSelect</TITLE>
 GimpColorSelect
-GimpColorSelectClass
 <SUBSECTION Standard>
 GIMP_COLOR_SELECT
 GIMP_IS_COLOR_SELECT
 GIMP_TYPE_COLOR_SELECT
 gimp_color_select_get_type
-GIMP_COLOR_SELECT_CLASS
-GIMP_IS_COLOR_SELECT_CLASS
-GIMP_COLOR_SELECT_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -459,4 +457,15 @@ gimp_color_notebook_get_type
 GIMP_COLOR_NOTEBOOK_CLASS
 GIMP_IS_COLOR_NOTEBOOK_CLASS
 GIMP_COLOR_NOTEBOOK_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcolorscales</FILE>
+GimpColorScales
+gimp_color_scales_set_toggles_sensitive
+<SUBSECTION Standard>
+GIMP_COLOR_SCALES
+GIMP_IS_COLOR_SCALES
+GIMP_TYPE_COLOR_SCALES
+gimp_color_scales_get_type
 </SECTION>

@@ -51,6 +51,8 @@ ColorNotebook * color_notebook_viewable_new (GimpViewable          *viewable,
                                              gboolean               wants_update,
                                              gboolean               show_alpha);
 
+void            color_notebook_free         (ColorNotebook         *cnb);
+
 void            color_notebook_set_viewable (ColorNotebook         *cnb,
                                              GimpViewable          *viewable);
 void            color_notebook_set_title    (ColorNotebook         *cnb,
@@ -58,7 +60,6 @@ void            color_notebook_set_title    (ColorNotebook         *cnb,
 
 void            color_notebook_show         (ColorNotebook         *cnb);
 void            color_notebook_hide         (ColorNotebook         *cnb);
-void            color_notebook_free         (ColorNotebook         *cnb);
 
 void            color_notebook_set_color    (ColorNotebook         *cnb,
                                              const GimpRGB         *color);

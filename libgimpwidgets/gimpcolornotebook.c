@@ -32,6 +32,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpcolornotebook.h"
+#include "gimpcolorscales.h"
 #include "gimpcolorselector.h"
 #include "gimpwidgetsmarshal.h"
 
@@ -131,6 +132,8 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   gimp_rgba_set (&notebook->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&notebook->rgb, &notebook->hsv);
 
+  notebook->channel = GIMP_COLOR_SELECTOR_HUE;
+
   selector_types = g_type_children (GIMP_TYPE_COLOR_SELECTOR, &n_selector_types);
 
   if (n_selector_types == 1)
@@ -141,12 +144,19 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
   for (i = 0; i < n_selector_types; i++)
     {
+      /*  skip the "Scales" color selector  */
+      if (g_type_is_a (selector_types[i], GIMP_TYPE_COLOR_SCALES))
+        continue;
+
       selector = gimp_color_selector_new (selector_types[i],
                                           &notebook->rgb,
-                                          &notebook->hsv);
+                                          &notebook->hsv,
+                                          notebook->channel);
 
       if (! selector)
         continue;
+
+      gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (selector), FALSE);
 
       label = gtk_label_new (GIMP_COLOR_SELECTOR_GET_CLASS (selector)->name);
 

@@ -61,9 +61,6 @@ struct _ColorselTriangle
 {
   GimpColorSelector  parent_instance;
 
-  GimpHSV            hsv;
-  GimpRGB            rgb;
-
   gdouble            oldsat;
   gdouble            oldval;
   gint               mode;
@@ -190,9 +187,6 @@ colorsel_triangle_init (ColorselTriangle *triangle)
   GtkWidget *frame;
   GtkWidget *hbox;
 
-  gimp_rgba_set (&triangle->rgb, 1.0, 1.0, 1.0, 1.0);
-  gimp_rgb_to_hsv (&triangle->rgb, &triangle->hsv);
-
   triangle->oldsat = 0;
   triangle->oldval = 0;
   triangle->mode   = 0;
@@ -232,9 +226,6 @@ colorsel_triangle_set_color (GimpColorSelector *selector,
 
   triangle = COLORSEL_TRIANGLE (selector);
 
-  triangle->rgb = *rgb;
-  triangle->hsv = *hsv;
-
   colorsel_triangle_update_previews (triangle, TRUE);
 }
 
@@ -272,13 +263,16 @@ static void
 colorsel_triangle_update_previews (ColorselTriangle *triangle,
                                    gboolean          hue_changed) 
 {
-  guchar   buf[3 * PREVIEWSIZE];
-  gint     x, y, k, r2, dx, col;
-  gint     x0, y0;
-  gdouble  hue, sat, val, atn;
-  gint     hx,hy, sx,sy, vx,vy;
+  GimpColorSelector *selector;
+  guchar             buf[3 * PREVIEWSIZE];
+  gint               x, y, k, r2, dx, col;
+  gint               x0, y0;
+  gdouble            hue, sat, val, atn;
+  gint               hx,hy, sx,sy, vx,vy;
 
-  hue = (gdouble) triangle->hsv.h * 2 * G_PI;
+  selector = GIMP_COLOR_SELECTOR (triangle);
+
+  hue = (gdouble) selector->hsv.h * 2 * G_PI;
 
   /* Colored point (value = 1, saturation = 1) */
   hx = RINT (sin (hue) * COLORTRIANGLERADIUS);
@@ -292,7 +286,7 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
   vx = RINT (sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS);
   vy = RINT (cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS);
 
-  hue = triangle->hsv.h * 360.0;
+  hue = selector->hsv.h * 360.0;
 
   if (hue_changed)
     {
@@ -408,10 +402,10 @@ colorsel_triangle_update_previews (ColorselTriangle *triangle,
 
   /* marker in triangle */
 
-  col = gimp_rgb_intensity (&triangle->rgb) > 0.5 ? 0 : 255;
+  col = gimp_rgb_intensity (&selector->rgb) > 0.5 ? 0 : 255;
 
-  sat = triangle->oldsat = triangle->hsv.s;
-  val = triangle->oldval = triangle->hsv.v;
+  sat = triangle->oldsat = selector->hsv.s;
+  val = triangle->oldval = selector->hsv.v;
 
   x0 = RINT (sx + (vx - sx) * val + (hx - vx) * sat * val);
   y0 = RINT (sy + (vy - sy) * val + (hy - vy) * sat * val);
@@ -498,10 +492,13 @@ colorsel_triangle_event (GtkWidget        *widget,
                          GdkEvent         *event,
                          ColorselTriangle *triangle)
 {
-  gint    x,y, angle, mousex, mousey;
-  gdouble r;
-  gdouble hue, sat, val;
-  gint    hx,hy, sx,sy, vx,vy;
+  GimpColorSelector *selector;
+  gint               x,y, angle, mousex, mousey;
+  gdouble            r;
+  gdouble            hue, sat, val;
+  gint               hx,hy, sx,sy, vx,vy;
+
+  selector = GIMP_COLOR_SELECTOR (triangle);
 
   switch (event->type)
     {
@@ -529,9 +526,7 @@ colorsel_triangle_event (GtkWidget        *widget,
       gtk_grab_remove (widget);
 
       /* callback the user */
-      gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle),
-                                         &triangle->rgb,
-                                         &triangle->hsv);
+      gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle));
       
       return FALSE;
       break;
@@ -552,23 +547,23 @@ colorsel_triangle_event (GtkWidget        *widget,
 
   if (triangle->mode == 1 ||
       (r > COLORWHEELRADIUS &&
-       (abs (angle - triangle->hsv.h * 360.0) < 30 ||
-	abs (abs (angle - triangle->hsv.h * 360.0) - 360) < 30)))
+       (abs (angle - selector->hsv.h * 360.0) < 30 ||
+	abs (abs (angle - selector->hsv.h * 360.0) - 360) < 30)))
     {
-      triangle->hsv.h = angle / 360.0;
-      gimp_hsv_to_rgb (&triangle->hsv, &triangle->rgb);
+      selector->hsv.h = angle / 360.0;
+      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
       colorsel_triangle_update_previews (triangle, TRUE);
     }
   else
     {
-      hue = triangle->hsv.h * 2 * G_PI;
+      hue = selector->hsv.h * 2 * G_PI;
       hx = sin (hue) * COLORTRIANGLERADIUS;
       hy = cos (hue) * COLORTRIANGLERADIUS;
       sx = sin (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       sy = cos (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       vx = sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       vy = cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-      hue = triangle->hsv.h * 360.0;
+      hue = selector->hsv.h * 360.0;
 
       if ((x - sx) * vx + (y - sy) * vy < 0)
 	{
@@ -617,6 +612,7 @@ colorsel_triangle_event (GtkWidget        *widget,
 		sat = (gdouble) (x - sx - val * (vx - sx)) / (val * (gdouble) (hx - vx));
 	      else
 		sat = (gdouble) (y - sy - val * (vy - sy)) / (val * (gdouble) (hy - vy));
+
 	      if (sat < 0)
 		sat = 0;
 	      else if (sat > 1)
@@ -624,16 +620,14 @@ colorsel_triangle_event (GtkWidget        *widget,
 	    }
 	}
 
-    triangle->hsv.s = sat;
-    triangle->hsv.v = val;
-    gimp_hsv_to_rgb (&triangle->hsv, &triangle->rgb);
-    colorsel_triangle_update_previews (triangle, FALSE);
-  }
+      selector->hsv.s = sat;
+      selector->hsv.v = val;
+      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
+      colorsel_triangle_update_previews (triangle, FALSE);
+    }
 
   /* callback the user */
-  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle),
-                                     &triangle->rgb,
-                                     &triangle->hsv);
+  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle));
 
   return FALSE;
 }

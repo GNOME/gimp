@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * gimpcolorselect.h
+ * gimpcolorscales.h
  * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
  *
  * based on color_notebook module
@@ -23,20 +23,23 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_COLOR_SELECT_H__
-#define __GIMP_COLOR_SELECT_H__
+#ifndef __GIMP_COLOR_SCALES_H__
+#define __GIMP_COLOR_SCALES_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_SELECT            (gimp_color_select_get_type ())
-#define GIMP_COLOR_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECT, GimpColorSelect))
-#define GIMP_IS_COLOR_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECT))
+#define GIMP_TYPE_COLOR_SCALES            (gimp_color_scales_get_type ())
+#define GIMP_COLOR_SCALES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SCALES, GimpColorScales))
+#define GIMP_IS_COLOR_SCALES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SCALES))
 
 
-GType   gimp_color_select_get_type (void) G_GNUC_CONST;
+GType   gimp_color_scales_get_type              (void) G_GNUC_CONST;
+
+void    gimp_color_scales_set_toggles_sensitive (GimpColorScales *scales,
+                                                 gboolean         sensitive);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_SELECT_H__ */
+#endif /* __GIMP_COLOR_SCALES_H__ */

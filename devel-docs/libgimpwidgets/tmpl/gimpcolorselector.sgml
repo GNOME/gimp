@@ -63,7 +63,19 @@ color selector module.
 @selector_type: 
 @rgb: 
 @hsv: 
+@channel: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@show_alpha: 
+
+
+<!-- ##### FUNCTION gimp_color_selector_set_show_alpha ##### -->
+<para>
+
+</para>
+
+@selector: 
+@show_alpha: 
 
 
 <!-- ##### FUNCTION gimp_color_selector_set_color ##### -->
@@ -91,9 +103,26 @@ color selector module.
 </para>
 
 @selector: 
+<!-- # Unused Parameters # -->
 @rgb: 
 @hsv: 
 
+
+<!-- ##### FUNCTION gimp_color_selector_channel_changed ##### -->
+<para>
+
+</para>
+
+@selector: 
+
+
+<!-- ##### SIGNAL GimpColorSelector::channel-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorselector: the object which received the signal.
+@arg1: 
 
 <!-- ##### SIGNAL GimpColorSelector::color-changed ##### -->
 <para>
