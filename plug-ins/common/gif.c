@@ -390,7 +390,13 @@ query (void)
 
   gimp_install_procedure ("file_gif_save",
                           "saves files in Compuserve GIF file format",
-                          "FIXME: write help for gif_save",
+                          "Save a file in Compuserve GIF format, with "
+			  "possible animation, transparency, and comment.  "
+			  "To save an animation, operate on a multi-layer "
+			  "file.  The plug-in will intrepret <50% alpha as "
+			  "transparent.  When run non-interactively, the "
+			  "value for the comment is taken from the "
+			  "'gimp-comment' parasite.  ",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "1995-1997",

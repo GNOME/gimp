@@ -104,7 +104,7 @@ query (void)
 
   gimp_install_procedure ("file_csource_save",
                           "Dump image data in RGB(A) format for C source",
-                          "FIXME: write help",
+                          "CSource cannot be run non-interactively.",
                           "Tim Janik",
                           "Tim Janik",
                           "1999",

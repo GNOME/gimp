@@ -1,3 +1,15 @@
+2000-10-19  Seth Burgess  <sjburges@gimp.org>
+
+	* plug-ins/common/xbm.c : fixed parasite handling so passed in 
+	strings and hotspots aren't overwritten with parasite.
+	
+	* plug-ins/common/csource.c : noted that has no non-interactive 
+	runmode in the Help string.
+	
+	* plug-ins/common/gif.c
+	* plug-ins/common/tiff.c : Added help string describing 
+	gimp-comment parasite to Help string.
+
 2000-10-19  Sven Neumann  <sven@gimp.org>
 
 	* app/authors.h

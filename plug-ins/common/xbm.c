@@ -367,44 +367,42 @@ run (gchar      *name,
 	  break;
 	}
 
-      /* Get the parasites */
-      parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+      if (runmode == GIMP_RUN_INTERACTIVE)
+          /* Get the parasites */
+          parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
 
-      if (parasite)
-	{
-	  gpointer data;
-	  gint     size;
+          if (parasite)
+    	    {
+	      gpointer data;
+	      gint     size;
 
-	  data = gimp_parasite_data (parasite);
-	  size = gimp_parasite_data_size (parasite);
+	      data = gimp_parasite_data (parasite);
+	      size = gimp_parasite_data_size (parasite);
 
-	  strncpy (xsvals.comment, data, MIN (size, MAX_COMMENT));
-	  xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
+	      strncpy (xsvals.comment, data, MIN (size, MAX_COMMENT));
+	      xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
 
-	  gimp_parasite_free (parasite);
-	}
-
-      parasite = gimp_image_parasite_find (image_ID, "hot-spot");
-
-      if (parasite)
-	{
-	  gpointer data;
-	  gint     x, y;
-
-	  data = gimp_parasite_data (parasite);
-
-	  if (sscanf (data, "%i %i", &x, &y) == 2)
-	    {
-	      xsvals.use_hot = TRUE;
-	      xsvals.x_hot = x;
-	      xsvals.y_hot = y;
+	      gimp_parasite_free (parasite);
 	    }
 
-	  gimp_parasite_free (parasite);
-	}
+          parasite = gimp_image_parasite_find (image_ID, "hot-spot");
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
+          if (parasite)
+	    {
+	      gpointer data;
+	      gint     x, y;
+
+	      data = gimp_parasite_data (parasite);
+
+	      if (sscanf (data, "%i %i", &x, &y) == 2)
+	       {
+	         xsvals.use_hot = TRUE;
+	         xsvals.x_hot = x;
+	         xsvals.y_hot = y;
+	       }
+	     gimp_parasite_free (parasite);
+	   }
+
 	  /*  Acquire information with a dialog  */
 	  if (! save_dialog (drawable_ID))
 	    status = GIMP_PDB_CANCEL;

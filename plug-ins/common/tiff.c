@@ -212,7 +212,9 @@ query (void)
 
   gimp_install_procedure ("file_tiff_save",
                           "saves files in the tiff file format",
-                          "FIXME: write help for tiff_save",
+                          "Saves files in the Tagged Image File Format.  "
+			  "The value for the saved comment is taken "
+			  "from the 'gimp-comment' parasite.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000",
