@@ -518,7 +518,7 @@ shoot_dialog (void)
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
+  main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
@@ -528,8 +528,7 @@ shoot_dialog (void)
   frame = gimp_frame_new (_("Grab"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   button = gtk_radio_button_new_with_mnemonic (radio_group,

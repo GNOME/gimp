@@ -1,3 +1,8 @@
+2004-05-10  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/screenshot.c (shoot_dialog): fixed the spacing
+	of the dialog, thanks to Sven for pointing out my mistake.
+
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptexteditor.c (gimp_text_editor_set_direction):
