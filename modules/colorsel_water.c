@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/color_selector.h>
 #include <libgimp/gimpmodule.h>
+#include "modregister.h"
 
 #ifndef M_PI
 #define M_PI  3.14159265358979323846
@@ -90,9 +91,13 @@ module_init (GimpModuleInfo **inforet)
 {
   GimpColorSelectorID id;
 
+#ifndef __EMX__
   id = gimp_color_selector_register ("Watercolor", "watercolor.html",
 				     &methods);
-
+#else
+   id = mod_color_selector_register ("Watercolor", "watercolor.html",
+				     &methods);
+#endif
   if (id)
   {
     info.shutdown_data = id;
@@ -111,7 +116,11 @@ module_unload (void *shutdown_data,
 	       void (*completed_cb)(void *),
 	       void *completed_data)
 {
+#ifndef __EMX__
   gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
+#else
+  mod_color_selector_unregister (shutdown_data, completed_cb, completed_data);
+#endif
 }
 
 
