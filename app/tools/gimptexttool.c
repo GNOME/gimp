@@ -703,6 +703,8 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
   gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
 
   gimp_image_add_vectors (text_tool->image, vectors, -1);
+  gimp_image_set_active_vectors (text_tool->image, vectors);
+  gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
   gimp_image_flush (text_tool->image);
 }
