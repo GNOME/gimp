@@ -395,12 +395,15 @@ gimp_dialog_add_buttons_valist (GimpDialog *dialog,
     {
       response_id = va_arg (args, gint);
 
-      /*  suppress a help button if we added one already  */
-      if ((response_id != GTK_RESPONSE_HELP) ||
-          (! g_object_get_data (G_OBJECT (dialog), "gimp-dialog-help-button")))
+      /*  hide the automatically added help button if another one is added  */
+      if (response_id == GTK_RESPONSE_HELP)
         {
-          gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
+          GtkWidget *button = g_object_get_data (G_OBJECT (dialog),
+                                                 "gimp-dialog-help-button");
+          gtk_widget_hide (button);
         }
+
+      gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
 
       if (response_id == GTK_RESPONSE_OK)
         {

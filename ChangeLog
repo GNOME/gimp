@@ -1,5 +1,18 @@
 2004-10-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned):
+	left-justify the label.
+
+	* libgimpwidgets/gimpdialog.c: if a button with GTK_RESPONSE_HELP
+	is being added, hide the automatically added help button.
+
+	* plug-ins/script-fu/script-fu-interface.c: five buttons are too
+	much for the action area. Renamed the About button to Help and
+	resurrected the help button in the about dialog as a way to get to
+	the actual help pages (pressing F1 will get you there as well).
+
+2004-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.c: added a help button.
 
 2004-10-05  Michael Natterer  <mitch@gimp.org>

@@ -57,6 +57,7 @@ typedef struct
   GtkWidget     *about_dialog;
 
   gchar         *title;
+  gchar         *help_id;
   gchar         *last_command;
   gint           command_count;
   gint           consec_command_count;
@@ -161,8 +162,7 @@ script_fu_interface (SFScript *script)
   GtkSizeGroup *group;
   GSList       *list;
   gchar        *title;
-  gchar        *help_id;
-  gchar        *buf;
+  gchar        *tmp;
   gint          i;
 
   static gboolean gtk_initted = FALSE;
@@ -188,41 +188,42 @@ script_fu_interface (SFScript *script)
   sf_interface->args_widgets = g_new0 (GtkWidget *, script->num_args);
 
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
-  buf = strstr (gettext (script->menu_path), _("/Script-Fu/"));
-  if (buf)
-    title = g_strdup (buf + strlen (_("/Script-Fu/")));
+  tmp = strstr (gettext (script->menu_path), _("/Script-Fu/"));
+  if (tmp)
+    title = g_strdup (tmp + strlen (_("/Script-Fu/")));
   else
     title = g_strdup (gettext (script->menu_path));
 
   /* strip mnemonics from the menupath */
-  sf_interface->title = gimp_strip_uline (title);
+  tmp = gimp_strip_uline (title);
+
+  g_free (title);
+  title = tmp;
+
+  tmp = strstr (title, "...");
+  if (tmp)
+    *tmp = '\0';
+
+  sf_interface->title = g_strdup_printf (_("Script-Fu: %s"), title);
   g_free (title);
 
-  help_id = g_strdup (script->pdb_name);
-  for (buf = help_id; buf && *buf; buf++)
-    if (*buf == '_')
-      *buf = '-';
+  sf_interface->help_id = g_strdup (script->pdb_name);
 
-  buf = strstr (sf_interface->title, "...");
-  if (buf)
-    *buf = '\0';
-
-  buf = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
+  for (tmp = sf_interface->help_id; tmp && *tmp; tmp++)
+    if (*tmp == '_')
+      *tmp = '-';
 
   sf_interface->dialog = dlg =
-    gimp_dialog_new (buf, "script-fu",
+    gimp_dialog_new (sf_interface->title, "script-fu",
                      NULL, 0,
-                     gimp_standard_help_func, help_id,
+                     gimp_standard_help_func, sf_interface->help_id,
 
-                     _("_About"),      RESPONSE_ABOUT,
+                     GTK_STOCK_HELP,   GTK_RESPONSE_HELP,
                      GIMP_STOCK_RESET, RESPONSE_RESET,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                      NULL);
-
-  g_free (buf);
-  g_free (help_id);
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (script_fu_response),
@@ -560,6 +561,7 @@ script_fu_interface_quit (SFScript *script)
   g_return_if_fail (sf_interface != NULL);
 
   g_free (sf_interface->title);
+  g_free (sf_interface->help_id);
 
   if (sf_interface->about_dialog)
     gtk_widget_destroy (sf_interface->about_dialog);
@@ -702,7 +704,7 @@ script_fu_response (GtkWidget *widget,
 {
   switch (response_id)
     {
-    case RESPONSE_ABOUT:
+    case GTK_RESPONSE_HELP:
       script_fu_about (script);
       break;
 
@@ -982,7 +984,7 @@ script_fu_about (SFScript *script)
       sf_interface->about_dialog = dialog =
         gimp_dialog_new (sf_interface->title, "script-fu-about",
                          sf_interface->dialog, 0,
-                         gimp_standard_help_func, NULL,
+                         gimp_standard_help_func, sf_interface->help_id,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

@@ -1577,7 +1577,7 @@ gimp_table_attach_aligned (GtkTable    *table,
     {
       label = gtk_label_new_with_mnemonic (label_text);
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
-      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_table_attach (table, label,
 			column, column + 1,
 			row, row + 1,
