@@ -1,6 +1,6 @@
 2004-10-29  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/jpeg.c: pass the name to filesystem encoding to
+	* plug-ins/common/jpeg.c: pass the name in filesystem encoding to
 	gimp_image_set_filename(). Fixes bug #153751 for the JPEG plug-in.
 
 2004-10-29  Sven Neumann  <sven@gimp.org>
