@@ -122,3 +122,4 @@ app/transform_tool.c
 app/undo_history.c
 app/undo.c
 app/xcf.c
+app/xinput_airbrush.c

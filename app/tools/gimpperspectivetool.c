@@ -59,7 +59,7 @@ perspective_tool_transform (Tool     *tool,
 	  transform_info =
 	    info_dialog_new (_("Perspective Transform Information"),
 			     tools_help_func, NULL);
-	  info_dialog_add_label (transform_info, "Matrix:",
+	  info_dialog_add_label (transform_info, _("Matrix:"),
 				 matrix_row_buf[0]);
 	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
 	  info_dialog_add_label (transform_info, "", matrix_row_buf[2]);

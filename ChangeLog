@@ -1,3 +1,9 @@
+1999-12-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* po/POTFILES.in: Added missing app/xinput_airbrush.c.
+
+	* app/perspective_tool.c: Added _() tag.
+
 Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
 
 	Fix of KDE/Kwm  selection add/sub/inter problem  
