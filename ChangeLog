@@ -1,3 +1,8 @@
+Wed Apr 15 02:44:58 1998  George Lebl  <jirka@5z.com>
+
+	* plug-ins/film/film.c: del_list_item_callback was calling
+	  gtk_widget_destroy on an already unrefed widget
+
 Wed Apr 15 02:03:25 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/disp_callbacks.c: disable keyboard accelerators

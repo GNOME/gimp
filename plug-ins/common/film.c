@@ -1121,14 +1121,6 @@ del_list_item_callback (GtkWidget *widget,
 
  gtk_list_remove_items (GTK_LIST (list), clear_list);
 
- tmp_list = clear_list;
-
- while (tmp_list)
- {
-   gtk_widget_destroy (GTK_WIDGET (tmp_list->data));
-   tmp_list = tmp_list->next;
- }
-
  g_list_free (clear_list);
 }
 
