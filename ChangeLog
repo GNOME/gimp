@@ -2,7 +2,7 @@
 
 	* plug-ins/imagemap/imap_csim_parse.[ch]: regenerated
 	* plug-ins/imagemap/imap_main.c (save_as_csim): write quoted WIDTH,
-	TAG and BORDER tags.
+	HEIGHT and BORDER tags.
 	* plug-ins/imagemap/Makefile.am: added -i flag to lex to generate 
 	case-insensitive scanners.
 	* plug-ins/imagemap/imap_csim.y: parse now accepts both tag=FLOAT and
