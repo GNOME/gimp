@@ -1,3 +1,8 @@
+2000-07-30  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* app/tools.c (tool_options_close_callback): use
+	gimp_dialog_hide() instead of gtk_widget_hide(). Closes bug #19164.
+
 2000-07-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: activate the help page 

@@ -1685,7 +1685,7 @@ tool_options_close_callback (GtkWidget *widget,
   GtkWidget *shell;
 
   shell = (GtkWidget *) data;
-  gtk_widget_hide (shell);
+  gimp_dialog_hide (shell);
 }
 
 static void
