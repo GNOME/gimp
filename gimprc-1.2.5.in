@@ -399,6 +399,9 @@ sequences are recognised and expanded as follows:
 %s  source scale factor
 .br
 %d  destination scale factor
+.br
+%Dx expands to x if the image is dirty, the empty string
+otherwise.  The x can be any character, eg %D*.
 
 The default format string is "%f-%p.%i (%t)".
 
