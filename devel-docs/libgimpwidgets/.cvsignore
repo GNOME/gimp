@@ -1,5 +1,6 @@
 Makefile
 Makefile.in
+deprecated
 libgimpwidgets.args
 libgimpwidgets.hierarchy
 libgimpwidgets.interfaces
