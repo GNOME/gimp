@@ -1347,14 +1347,13 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 
   if (gimp_display_shell_get_show_guides (shell))
     {
-      GList     *list;
-      GimpGuide *guide;
+      GList *list;
 
       for (list = shell->gdisp->gimage->guides; list; list = list->next)
 	{
-	  guide = (GimpGuide *) list->data;
-
-	  gimp_display_shell_draw_guide (shell, guide, FALSE);
+	  gimp_display_shell_draw_guide (shell,
+                                         (GimpGuide *) list->data,
+                                         FALSE);
 	}
     }
 }
@@ -1362,21 +1361,18 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 void
 gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 {
-  GdkGC        *gc;
-  GdkGCValues   values;
-  GdkColor      fg, bg;
+  GdkGC       *gc;
+  GdkGCValues  values;
+  GdkColor     fg, bg;
 
-  GimpGrid     *grid;
-  gdouble       xspacing, yspacing;
-  gdouble       xoffset,  yoffset;
-  GimpRGB      *fgcolor, *bgcolor;
-  GimpGridType  type;
+  GimpGrid    *grid;
 
-  gint          x1, x2;
-  gint          y1, y2;
-  gint          x, y;
-  gint          x_real, y_real;
-  const gint    length = 2;
+  gint         x1, x2;
+  gint         y1, y2;
+  gint         x, y;
+  gint         x_real, y_real;
+  gint         width, height;
+  const gint   length = 2;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1387,17 +1383,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
   if (gimp_display_shell_get_show_grid (shell))
     {
-      g_object_get (grid,
-                    "xspacing", &xspacing,
-                    "yspacing", &yspacing,
-                    "xoffset",  &xoffset,
-                    "yoffset",  &yoffset,
-                    "fgcolor",  &fgcolor,
-                    "bgcolor",  &bgcolor,
-                    "type",     &type,
-                    NULL);
-
-      switch (type)
+      switch (grid->type)
         {
         case GIMP_GRID_TYPE_ON_OFF_DASH:
           values.line_style = GDK_LINE_ON_OFF_DASH;
@@ -1412,18 +1398,19 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         case GIMP_GRID_TYPE_SOLID:
           values.line_style = GDK_LINE_SOLID;
           break;
-
-        default:
-          g_assert_not_reached ();
         }
 
       values.join_style = GDK_JOIN_MITER;
 
+      /* FIXME: This GC should be part of the display and should
+         be changed only when one of the relevant grid properties
+         changes (on notify)
+       */
       gc = gdk_gc_new_with_values (shell->canvas->window, &values,
                                    GDK_GC_LINE_STYLE | GDK_GC_JOIN_STYLE);
 
-      gimp_rgb_get_gdk_color (fgcolor, &fg);
-      gimp_rgb_get_gdk_color (bgcolor, &bg);
+      gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
+      gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
 
       gdk_gc_set_rgb_fg_color (gc, &fg);
       gdk_gc_set_rgb_bg_color (gc, &bg);
@@ -1434,15 +1421,22 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                                        shell->gdisp->gimage->height,
                                        &x2, &y2, FALSE);
 
-      switch (type)
+      width  = shell->gdisp->gimage->width;
+      height = shell->gdisp->gimage->height;
+
+      switch (grid->type)
         {
         case GIMP_GRID_TYPE_DOTS:
-          for (x = xoffset; x <= shell->gdisp->gimage->width; x += xspacing)
+          for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
-              for (y = yoffset; y <= shell->gdisp->gimage->height; y += yspacing)
+              for (y = grid->yoffset; y <= height; y += grid->yspacing)
                 {
-                  gimp_display_shell_transform_xy (shell, x, y, &x_real, &y_real, FALSE);
-                  if (x_real >= x1 && x_real < x2 && y_real >= y1 && y_real < y2)
+                  gimp_display_shell_transform_xy (shell,
+                                                   x, y, &x_real, &y_real,
+                                                   FALSE);
+
+                  if (x_real >= x1 && x_real < x2 &&
+                      y_real >= y1 && y_real < y2)
                     {
                       gdk_draw_point (shell->canvas->window, gc,
                                       x_real, y_real);
@@ -1452,22 +1446,29 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
           break;
 
         case GIMP_GRID_TYPE_INTERSECTIONS:
-          for (x = xoffset; x <= shell->gdisp->gimage->width; x += xspacing)
+          for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
-              for (y = yoffset; y <= shell->gdisp->gimage->height; y += yspacing)
+              for (y = grid->yoffset; y <= height; y += grid->yspacing)
                 {
-                  gimp_display_shell_transform_xy (shell, x, y, &x_real, &y_real, FALSE);
+                  gimp_display_shell_transform_xy (shell,
+                                                   x, y, &x_real, &y_real,
+                                                   FALSE);
+
                   if (x_real >= x1 && x_real < x2)
                     {
                       gdk_draw_line (shell->canvas->window, gc,
-                                     x_real, CLAMP (y_real - length, y1, y2 - 1),
-                                     x_real, CLAMP (y_real + length, y1, y2 - 1));
+                                     x_real,
+                                     CLAMP (y_real - length, y1, y2 - 1),
+                                     x_real,
+                                     CLAMP (y_real + length, y1, y2 - 1));
                     }
                   if (y_real >= y1 && y_real < y2)
                     {
                       gdk_draw_line (shell->canvas->window, gc,
-                                     CLAMP (x_real - length, x1, x2 - 1), y_real,
-                                     CLAMP (x_real + length, x1, x2 - 1), y_real);
+                                     CLAMP (x_real - length, x1, x2 - 1),
+                                     y_real,
+                                     CLAMP (x_real + length, x1, x2 - 1),
+                                     y_real);
                     }
                 }
             }
@@ -1476,24 +1477,31 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         case GIMP_GRID_TYPE_ON_OFF_DASH:
         case GIMP_GRID_TYPE_DOUBLE_DASH:
         case GIMP_GRID_TYPE_SOLID:
-          for (x = xoffset; x < shell->gdisp->gimage->width; x += xspacing)
+          for (x = grid->xoffset; x < width; x += grid->xspacing)
             {
-              gimp_display_shell_transform_xy (shell, x, 0, &x_real, &y_real, FALSE);
+              gimp_display_shell_transform_xy (shell,
+                                               x, 0, &x_real, &y_real,
+                                               FALSE);
+
               if (x_real > x1)
-                gdk_draw_line (shell->canvas->window, gc, x_real, y1, x_real, y2 - 1);
+                gdk_draw_line (shell->canvas->window, gc,
+                               x_real, y1, x_real, y2 - 1);
             }
 
-          for (y = yoffset; y < shell->gdisp->gimage->height; y += yspacing)
+          for (y = grid->yoffset; y < height; y += grid->yspacing)
             {
-              gimp_display_shell_transform_xy (shell, 0, y, &x_real, &y_real, FALSE);
+              gimp_display_shell_transform_xy (shell,
+                                               0, y, &x_real, &y_real,
+                                               FALSE);
+
               if (y_real > y1)
-                gdk_draw_line (shell->canvas->window, gc, x1, y_real, x2 - 1, y_real);
+                gdk_draw_line (shell->canvas->window, gc,
+                               x1, y_real, x2 - 1, y_real);
             }
           break;
-
-        default:
-          g_assert_not_reached ();
         }
+
+      g_object_unref (gc);
     }
 }
 

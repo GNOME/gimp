@@ -1,3 +1,13 @@
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_draw_grid):
+	access the grid structure directly instead of using g_object_get()
+	and leaking the returned values. Release the GC object instead of
+	leaking it (the GC should probably become part of the display).
+
+	* app/gui/grid-dialog.c (grid_dialog_new): removed an extraneous
+	reference count from grid_backup.
+
 2003-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: removed function map_to_color()
@@ -34,7 +44,7 @@
 	moving the "cropped" variable to a local scope.
 
 	* app/core/gimpimage-mask.c: calling gimp_image_update() followed
-	by gimp_viewable_imvalidate_preview(drawable) is equal to calling
+	by gimp_viewable_invalidate_preview(drawable) is equal to calling
 	gimp_drawable_update() directly.
 
 2003-09-05  Sven Neumann  <sven@gimp.org>

@@ -101,7 +101,6 @@ grid_dialog_new (GimpDisplay *gdisp)
       grid_backup = g_object_new (GIMP_TYPE_GRID, NULL);
       gimp_config_copy_properties (G_OBJECT (grid),
                                    G_OBJECT (grid_backup));
-      g_object_ref (grid_backup);
     }
   else
     {
@@ -381,7 +380,7 @@ remove_callback (GtkWidget  *widget,
 
   gimp_image_undo_push_image_grid (GIMP_IMAGE (gimage),
                                    _("Remove Grid"),
-                                   GIMP_GRID (grid_backup));
+                                   grid_backup);
   gimp_image_set_grid (GIMP_IMAGE (gimage), NULL, FALSE);
 
   gtk_widget_destroy (dialog);
