@@ -1,3 +1,8 @@
+2004-02-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumb-enums.sgml: updated.
+
 2004-02-24  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
