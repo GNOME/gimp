@@ -32,14 +32,15 @@
 /**
  * gimp_utf8_strtrim:
  * @str: an UTF-8 encoded string (or %NULL)
- * @max_chars: the maximum number of characters before the string get trimmed
+ * @max_chars: the maximum number of characters before the string get
+ * trimmed
  *
- * Creates a (possibly trimmed) copy of @str. The string is cut if it exceeds
- * @max_chars characters or on the first newline. The fact that the string was
- * trimmed is indicated by appending an ellipsis.
+ * Creates a (possibly trimmed) copy of @str. The string is cut if it
+ * exceeds @max_chars characters or on the first newline. The fact
+ * that the string was trimmed is indicated by appending an ellipsis.
  * 
- * Returns: A (possibly trimmed) copy of @str which should be freed using
- * g_free() when it is not needed any longer.
+ * Returns: A (possibly trimmed) copy of @str which should be freed
+ * using g_free() when it is not needed any longer.
  **/
 gchar *
 gimp_utf8_strtrim (const gchar *str,
@@ -76,7 +77,7 @@ gimp_utf8_strtrim (const gchar *str,
 	  break;
         }
 
-      if (p)
+      if (*p)
         {
           gsize  len     = p - str;
           gchar *trimmed = g_new (gchar, len + e_len + 2);

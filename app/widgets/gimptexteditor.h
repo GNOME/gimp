@@ -23,14 +23,8 @@
 #define __GIMP_TEXT_EDITOR_H__
 
 
-typedef void  (* GimpTextEditorCallback) (GtkWidget       *editor,
-					  GtkResponseType response,
-					  gpointer        data);
-
-GtkWidget * gimp_text_editor_new (GtkTextBuffer          *buffer,
-				  const gchar            *title,
-				  GimpTextEditorCallback  callback,
-				  gpointer                callback_data);
+GtkWidget * gimp_text_editor_new (const gchar   *title,
+                                  GtkTextBuffer *buffer);
 
 
 #endif  /* __GIMP_TEXT_EDITOR_H__ */

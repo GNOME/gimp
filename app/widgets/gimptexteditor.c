@@ -39,16 +39,12 @@ typedef struct _TextEditorData TextEditorData;
 
 struct _TextEditorData
 {
-  GtkTextBuffer          *buffer;
-  GtkWidget              *editor;
-  GtkWidget              *filesel;
-  GimpTextEditorCallback  callback;
-  gpointer                callback_data;
+  GtkTextBuffer *buffer;
+  GtkWidget     *editor;
+  GtkWidget     *filesel;
 };
 
 
-static void      gimp_text_editor_ok        (TextEditorData *data);
-static void      gimp_text_editor_cancel    (TextEditorData *data);
 static void      gimp_text_editor_load      (GtkWidget      *widget,
 					     TextEditorData *data);
 static void      gimp_text_editor_load_ok   (TextEditorData *data);
@@ -59,10 +55,8 @@ static void      gimp_text_editor_clear     (GtkWidget      *widget,
 
 
 GtkWidget *
-gimp_text_editor_new (GtkTextBuffer          *buffer,
-		      const gchar            *title,
-		      GimpTextEditorCallback  callback,
-		      gpointer                callback_data)
+gimp_text_editor_new (const gchar   *title,
+                      GtkTextBuffer *buffer)
 {
   GtkWidget      *editor;
   GtkWidget      *toolbar;
@@ -70,7 +64,8 @@ gimp_text_editor_new (GtkTextBuffer          *buffer,
   GtkWidget      *text_view;
   TextEditorData *data;
 
-  data = g_new0 (TextEditorData, 1);
+  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), NULL);
 
   editor = gimp_dialog_new (title, "text_editor",
 			    gimp_standard_help_func,
@@ -78,18 +73,15 @@ gimp_text_editor_new (GtkTextBuffer          *buffer,
 			    GTK_WIN_POS_NONE,
 			    FALSE, TRUE, FALSE,
 			    
-			    GTK_STOCK_CANCEL, gimp_text_editor_cancel,
-			    NULL, data, NULL, TRUE, TRUE,
-			    
-			    GTK_STOCK_OK, gimp_text_editor_ok,
-			    NULL, data, NULL, TRUE, TRUE,
-			    
+			    GTK_STOCK_CLOSE, gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
+
 			    NULL);
 
-  data->buffer        = buffer;
-  data->editor        = editor;
-  data->callback      = callback;
-  data->callback_data = callback_data;
+  data = g_new0 (TextEditorData, 1);
+
+  data->buffer = buffer;
+  data->editor = editor;
 
   g_object_weak_ref (G_OBJECT (editor), (GWeakNotify) g_free, data);
 
@@ -123,26 +115,6 @@ gimp_text_editor_new (GtkTextBuffer          *buffer,
   gtk_widget_show (text_view);
 
   return editor;
-}
-
-static void
-gimp_text_editor_response (TextEditorData  *data,
-			   GtkResponseType  response)
-{
-  if (data->callback)
-    data->callback (data->editor, response, data->callback_data);
-}
-
-static void
-gimp_text_editor_ok (TextEditorData *data)
-{
-  gimp_text_editor_response (data, GTK_RESPONSE_OK);
-}
-
-static void
-gimp_text_editor_cancel (TextEditorData *data)
-{
-  gimp_text_editor_response (data, GTK_RESPONSE_CANCEL);
 }
 
 static void

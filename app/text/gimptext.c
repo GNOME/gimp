@@ -122,7 +122,7 @@ gimp_text_class_init (GimpTextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,
-				   "GIMP",
+				   NULL,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
 				   "font", NULL,

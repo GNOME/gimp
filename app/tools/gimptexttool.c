@@ -57,36 +57,35 @@
 
 /*  local function prototypes  */
 
-static void     gimp_text_tool_class_init    (GimpTextToolClass *klass);
-static void     gimp_text_tool_init          (GimpTextTool      *tool);
+static void   gimp_text_tool_class_init (GimpTextToolClass *klass);
+static void   gimp_text_tool_init       (GimpTextTool      *tool);
 
-static void     text_tool_control              (GimpTool        *tool,
-                                                GimpToolAction   action,
-                                                GimpDisplay     *gdisp);
-static void     text_tool_button_press         (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                guint32          time,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
-static void     text_tool_button_release       (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                guint32          time,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
-static void     text_tool_cursor_update        (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
+static void   text_tool_control         (GimpTool          *tool,
+                                         GimpToolAction     action,
+                                         GimpDisplay       *gdisp);
+static void   text_tool_button_press    (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         guint32            time,
+                                         GdkModifierType    state,
+                                         GimpDisplay       *gdisp);
+static void   text_tool_button_release  (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         guint32            time,
+                                         GdkModifierType    state,
+                                         GimpDisplay       *gdisp);
+static void   text_tool_cursor_update   (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         GdkModifierType    state,
+                                         GimpDisplay       *gdisp);
 
-static void     gimp_text_tool_connect         (GimpTextTool    *tool,
-                                                GimpText        *text);
+static void   gimp_text_tool_connect    (GimpTextTool      *tool,
+                                         GimpText          *text);
 
-static void     text_tool_create_layer         (GimpTextTool    *text_tool);
+static void   text_tool_create_layer    (GimpTextTool      *text_tool);
 
-static void     text_tool_editor               (GimpTextTool    *text_tool);
-static void     text_tool_editor_response      (GtkWidget       *editor,
-						GtkResponseType  response,
-						gpointer         data);
+static void   text_tool_editor          (GimpTextTool      *text_tool);
+static void   text_tool_buffer_changed  (GtkTextBuffer     *buffer,
+                                         GimpTextTool      *text_tool);
 
 
 /*  local variables  */
@@ -232,10 +231,10 @@ text_tool_button_press (GimpTool        *tool,
         }
     }
 
+  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
+
   if (!text || text == text_tool->text)
     text_tool_editor (text_tool);
-
-  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
 }
 
 static void
@@ -273,14 +272,14 @@ text_tool_create_layer (GimpTextTool *text_tool)
 
   text = GIMP_TEXT (gimp_config_duplicate (G_OBJECT (options->text)));
 
-  gimp_text_tool_connect (text_tool, text);
-
   layer = gimp_text_layer_new (gimage, text);
 
   g_object_unref (text);
 
   if (!layer)
     return;
+
+  gimp_text_tool_connect (text_tool, text);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
@@ -327,13 +326,11 @@ gimp_text_tool_connect (GimpTextTool *tool,
     }
 }
 
-
-/* text editor */
-
 static void
 text_tool_editor (GimpTextTool *text_tool)
 {
   GimpTextOptions *options;
+  GClosure        *closure;
 
   if (text_tool->editor)
     {
@@ -343,35 +340,24 @@ text_tool_editor (GimpTextTool *text_tool)
 
   options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
-  text_tool->editor = gimp_text_editor_new (options->buffer,
-					    _("GIMP Text Editor"),
-					    text_tool_editor_response,
-					    text_tool);
+  text_tool->editor = gimp_text_editor_new (_("GIMP Text Editor"),
+                                            options->buffer);
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
 			     (gpointer *) &text_tool->editor);
+
+  closure = g_cclosure_new (G_CALLBACK (text_tool_buffer_changed),
+                            text_tool, NULL);
+  g_object_watch_closure (G_OBJECT (text_tool->editor), closure);
+  g_signal_connect_closure (options->buffer, "changed", closure, FALSE);
 
   gtk_widget_show (text_tool->editor);
 }
 
 static void
-text_tool_editor_response (GtkWidget       *editor,
-			   GtkResponseType  response,
-			   gpointer         data)
+text_tool_buffer_changed (GtkTextBuffer *buffer,
+                          GimpTextTool  *text_tool)
 {
-  gtk_widget_destroy (editor);
-
-  switch (response)
-    {
-    case GTK_RESPONSE_OK:
-      {
-	GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
-
-	if (! text_tool->text)
-	  text_tool_create_layer (text_tool);
-      }
-      break;
-    default:
-      break;
-    }
+  if (! text_tool->text)
+    text_tool_create_layer (text_tool);
 }

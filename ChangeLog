@@ -1,3 +1,19 @@
+2003-02-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_utf8_strtrim): trim the string
+	only if necessary.
+
+	* app/text/gimptext.c: changed the default text to NULL.
+
+	* app/widgets/gimptexteditor.[ch]: replaced Cancel and OK buttons
+	with a single Close button and removed the callback.
+
+	* app/widgets/gimppropwidgets.c: gtk_text_buffer_set_text()
+	doesn't like NULL pointers, pass it an empty string instead.
+
+	* app/tools/gimptexttool.c: create a new text layer as soon as the
+	user starts editing.
+
 2003-02-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

@@ -173,7 +173,7 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
                                    const gchar *false_text)
 {
   GParamSpec *param_spec;
-  GtkWidget  *optionmenu;
+  GtkWidget  *menu;
   gboolean    value;
 
   param_spec = check_param_spec (config, property_name,
@@ -185,24 +185,23 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (gimp_prop_option_menu_callback),
-			   config,
-			   GINT_TO_POINTER (value),
+  menu = gimp_option_menu_new2 (FALSE,
+                                G_CALLBACK (gimp_prop_option_menu_callback),
+                                config,
+                                GINT_TO_POINTER (value),
+                                
+                                true_text,  GINT_TO_POINTER (TRUE),  NULL,
+                                false_text, GINT_TO_POINTER (FALSE), NULL,
+                                
+                                NULL);
 
-			   true_text,  GINT_TO_POINTER (TRUE),  NULL,
-			   false_text, GINT_TO_POINTER (FALSE), NULL,
-
-			   NULL);
-
-  set_param_spec (G_OBJECT (optionmenu), optionmenu, param_spec);
+  set_param_spec (G_OBJECT (menu), menu, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_option_menu_notify),
-                  optionmenu);
+                  menu);
 
-  return optionmenu;
+  return menu;
 }
 
 GtkWidget *
@@ -212,7 +211,7 @@ gimp_prop_enum_option_menu_new (GObject     *config,
                                 gint         maximum)
 {
   GParamSpec *param_spec;
-  GtkWidget  *optionmenu;
+  GtkWidget  *menu;
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
@@ -226,30 +225,28 @@ gimp_prop_enum_option_menu_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      optionmenu =
-        gimp_enum_option_menu_new_with_range (param_spec->value_type,
-                                              minimum, maximum,
-                                              G_CALLBACK (gimp_prop_option_menu_callback),
-                                              config);
+      menu = gimp_enum_option_menu_new_with_range (param_spec->value_type,
+                                                   minimum, maximum,
+                                                   G_CALLBACK (gimp_prop_option_menu_callback),
+                                                   config);
     }
   else
     {
-      optionmenu =
-        gimp_enum_option_menu_new (param_spec->value_type,
-                                   G_CALLBACK (gimp_prop_option_menu_callback),
-                                   config);
+      menu = gimp_enum_option_menu_new (param_spec->value_type,
+                                        G_CALLBACK (gimp_prop_option_menu_callback),
+                                        config);
     }
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+  gimp_option_menu_set_history (GTK_OPTION_MENU (menu),
                                 GINT_TO_POINTER (value));
 
-  set_param_spec (G_OBJECT (optionmenu), optionmenu, param_spec);
+  set_param_spec (G_OBJECT (menu), menu, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_option_menu_notify),
-                  optionmenu);
+                  menu);
 
-  return optionmenu;
+  return menu;
 }
 
 GtkWidget *
@@ -258,7 +255,7 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
                                gboolean     with_behind_mode)
 {
   GParamSpec *param_spec;
-  GtkWidget  *optionmenu;
+  GtkWidget  *menu;
   gint        value;
 
   param_spec = check_param_spec (config, property_name,
@@ -270,19 +267,18 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  optionmenu =
-    gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_option_menu_callback),
-                              config,
-                              with_behind_mode,
-                              value);
+  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_option_menu_callback),
+                                   config,
+                                   with_behind_mode,
+                                   value);
 
-  set_param_spec (G_OBJECT (optionmenu), optionmenu, param_spec);
+  set_param_spec (G_OBJECT (menu), menu, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_option_menu_notify),
-                  optionmenu);
+                  menu);
 
-  return optionmenu;
+  return menu;
 }
 
 static void
@@ -291,16 +287,16 @@ gimp_prop_option_menu_callback (GtkWidget *widget,
 {
   if (GTK_IS_MENU (widget->parent))
     {
-      GtkWidget *optionmenu;
+      GtkWidget *menu;
 
-      optionmenu = gtk_menu_get_attach_widget (GTK_MENU (widget->parent));
+      menu = gtk_menu_get_attach_widget (GTK_MENU (widget->parent));
 
-      if (optionmenu)
+      if (menu)
         {
           GParamSpec *param_spec;
           gint        value;
 
-          param_spec = get_param_spec (G_OBJECT (optionmenu));
+          param_spec = get_param_spec (G_OBJECT (menu));
           if (! param_spec)
             return;
 
@@ -1108,7 +1104,7 @@ gimp_prop_text_buffer_new (GObject     *config,
                 NULL);
 
   text_buffer = gtk_text_buffer_new (NULL);
-  gtk_text_buffer_set_text (text_buffer, value, -1);
+  gtk_text_buffer_set_text (text_buffer, value ? value : "", -1);
 
   g_free (value);
 
@@ -1194,7 +1190,7 @@ gimp_prop_text_buffer_notify (GObject       *config,
                                    gimp_prop_text_buffer_callback,
                                    config);
 
-  gtk_text_buffer_set_text (text_buffer, value, -1);
+  gtk_text_buffer_set_text (text_buffer, value ? value : "", -1);
 
   g_signal_handlers_unblock_by_func (text_buffer,
                                      gimp_prop_text_buffer_callback,
