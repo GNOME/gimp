@@ -1387,10 +1387,8 @@ gflare_free (GFlare *gflare)
 {
   g_assert (gflare != NULL);
 
-  if (gflare->name)
-    g_free (gflare->name);
-  if (gflare->filename)
-    g_free (gflare->filename);
+  g_free (gflare->name);
+  g_free (gflare->filename);
   g_free (gflare);
 }
 
@@ -2944,11 +2942,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
 			  FALSE, FALSE,
 
-			  _("X:"), pvals.xcenter, xres,
+			  _("_X:"), pvals.xcenter, xres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
 			  0, gimp_drawable_width (drawable->drawable_id),
 
-			  _("Y:"), pvals.ycenter, yres,
+			  _("_Y:"), pvals.ycenter, yres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
 			  0, gimp_drawable_height (drawable->drawable_id));
 
@@ -2979,7 +2977,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Radius:"), SCALE_WIDTH, 0,
+			      _("_Radius:"), SCALE_WIDTH, 0,
 			      pvals.radius, 0.0, drawable->width / 2,
 			      1.0, 10.0, 1,
 			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
@@ -2992,7 +2990,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Rotation:"), SCALE_WIDTH, 0,
+			      _("Ro_tation:"), SCALE_WIDTH, 0,
 			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3004,7 +3002,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Hue Rotation:"), SCALE_WIDTH, 0,
+			      _("_Hue Rotation:"), SCALE_WIDTH, 0,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3016,7 +3014,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector Angle:"), SCALE_WIDTH, 0,
+			      _("Vector _Angle:"), SCALE_WIDTH, 0,
 			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3028,7 +3026,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector Length:"), SCALE_WIDTH, 0,
+			      _("Vector _Length:"), SCALE_WIDTH, 0,
 			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -3054,7 +3052,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  button = gtk_check_button_new_with_label (_("Adaptive Supersampling"));
+  button = gtk_check_button_new_with_mnemonic (_("A_daptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				pvals.use_asupsample);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -3080,7 +3078,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals.asupsample_max_depth);
   gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 0,
-			     _("Max Depth:"), 1.0, 1.0,
+			     _("_Max Depth:"), 1.0, 1.0,
 			     scale, 1, FALSE);
 
   adj = gtk_adjustment_new (pvals.asupsample_threshold,
@@ -3092,12 +3090,12 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &pvals.asupsample_threshold);
   gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 1,
-			     _("Threshold:"), 1.0, 1.0,
+			     _("_Threshold:"), 1.0, 1.0,
 			     scale, 1, FALSE);
 
   gtk_widget_show (asup_table);
 
-  button = gtk_check_button_new_with_label (_("Auto Update Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("A_uto Update Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (dlg_update_preview_callback),
@@ -3109,7 +3107,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
    *	Create Page
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), main_vbox,
-			    gtk_label_new (_("Settings")));
+			    gtk_label_new_with_mnemonic (_("_Settings")));
   gtk_signal_connect (GTK_OBJECT (table), "map",
 		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
 		      (gpointer) PAGE_SETTINGS);
@@ -3167,10 +3165,10 @@ dlg_make_page_selector (GFlareDialog *dlg,
   }
   buttons[] =
   {
-    { N_("New"),    (GtkSignalFunc) &dlg_selector_new_callback },
-    { N_("Edit"),   (GtkSignalFunc) &dlg_selector_edit_callback },
-    { N_("Copy"),   (GtkSignalFunc) &dlg_selector_copy_callback },
-    { N_("Delete"), (GtkSignalFunc) &dlg_selector_delete_callback }
+    { N_("_New"),    (GtkSignalFunc) &dlg_selector_new_callback },
+    { N_("_Edit"),   (GtkSignalFunc) &dlg_selector_edit_callback },
+    { N_("Co_py"),   (GtkSignalFunc) &dlg_selector_copy_callback },
+    { N_("_Delete"), (GtkSignalFunc) &dlg_selector_delete_callback }
   };
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
@@ -3205,7 +3203,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
   hbox = gtk_hbox_new (FALSE, 4);
   for (i = 0; i < G_N_ELEMENTS (buttons); i++)
     {
-      button = gtk_button_new_with_label (gettext (buttons[i].label));
+      button = gtk_button_new_with_mnemonic (gettext (buttons[i].label));
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  buttons[i].callback,
 			  button);
@@ -3221,7 +3219,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
    *	Create Page
    */
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("Selector")));
+			    gtk_label_new_with_mnemonic (_("S_elector")));
   gtk_signal_connect (GTK_OBJECT (vbox), "map",
 		      GTK_SIGNAL_FUNC (dlg_page_map_callback),
 		      (gpointer) PAGE_SELECTOR);

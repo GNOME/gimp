@@ -320,7 +320,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  X options  */
-  toggle = gtk_check_button_new_with_label (_("X Displacement:"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_X Displacement:"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
@@ -357,7 +357,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (option_menu);
 
   /*  Y Options  */
-  toggle = gtk_check_button_new_with_label (_("Y Displacement:"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Y Displacement:"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
@@ -406,7 +406,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Wrap"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -420,7 +420,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.displace_type == WRAP);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -434,7 +434,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.displace_type == SMEAR);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Black"));
+  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

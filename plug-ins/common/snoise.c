@@ -499,6 +499,7 @@ solid_noise_dialog (void)
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *table;
+  GtkWidget *label;
   GtkWidget *seed_hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -540,9 +541,11 @@ solid_noise_dialog (void)
   seed_hbox = gimp_random_seed_new (&snvals.seed,
 				    &snvals.timeseed,
 				    TRUE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Random Seed:"), 1.0, 0.5,
-			     seed_hbox, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("_Random Seed:"), 1.0, 0.5,
+				     seed_hbox, 1, TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
 
   /*  Detail  */
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
@@ -555,7 +558,7 @@ solid_noise_dialog (void)
                     &snvals.detail);
 
   /*  Turbulent  */
-  toggle = gtk_check_button_new_with_label ( _("T_urbulent"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("T_urbulent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
@@ -566,7 +569,7 @@ solid_noise_dialog (void)
                     &snvals.turbulent);
 
   /*  Tilable  */
-  toggle = gtk_check_button_new_with_label ( _("T_ilable"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("T_ilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);

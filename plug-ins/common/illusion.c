@@ -628,7 +628,7 @@ dialog (GimpDrawable *mangle)
   spinbutton = gimp_spin_button_new (&adj, parameters.division,
 				     -32, 64, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Division:"), 1.0, 0.5,
+			     _("_Division:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (G_OBJECT (adj), "value_changed",
@@ -638,7 +638,7 @@ dialog (GimpDrawable *mangle)
                     G_CALLBACK (filter_preview),
                     NULL);
 
-  radio = gtk_radio_button_new_with_label (group, _("Mode 1"));
+  radio = gtk_radio_button_new_with_mnemonic (group, _("Mode _1"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
   gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -653,7 +653,7 @@ dialog (GimpDrawable *mangle)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type1);
 
-  radio = gtk_radio_button_new_with_label (group, _("Mode 2"));
+  radio = gtk_radio_button_new_with_mnemonic (group, _("Mode _2"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
   gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);

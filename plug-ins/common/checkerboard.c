@@ -29,11 +29,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define SPIN_BUTTON_WIDTH 75
+
 /* Variables set in dialog box */
 typedef struct data
 {
-  gint mode;
-  gint size;
+  gint   mode;
+  gint   size;
 } CheckVals;
 
 typedef struct
@@ -53,13 +55,16 @@ static void      run    (gchar          *name,
 			 gint           *nreturn_vals,
 			 GimpParam     **return_vals);
 
-static void      check   (GimpDrawable  *drawable);
+static void      do_checkerboard_pattern (GimpDrawable  *drawable);
 static gint      inblock (gint           pos,
 			  gint           size);
 
-static gboolean  check_dialog      (void);
+static gboolean	 do_checkerboard_dialog (gint32        image_ID,
+					 GimpDrawable *drawable);
 static void      check_ok_callback (GtkWidget *widget,
 				    gpointer   data);
+
+static void      check_size_update_callback(GtkWidget * widget, gpointer data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -111,12 +116,14 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -130,7 +137,7 @@ run (gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_checkerboard", &cvals);
-      if (! check_dialog())
+      if (! do_checkerboard_dialog(image_ID, drawable))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -160,7 +167,7 @@ run (gchar      *name,
     {
       gimp_progress_init (_("Adding Checkerboard..."));
 
-      check (drawable);
+      do_checkerboard_pattern(drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
@@ -180,7 +187,7 @@ run (gchar      *name,
 
 
 static void
-check (GimpDrawable *drawable)
+do_checkerboard_pattern (GimpDrawable *drawable)
 {
   GimpPixelRgn dest_rgn;
   guchar   *dest_row;
@@ -229,6 +236,13 @@ check (GimpDrawable *drawable)
       break;
     }
 
+
+  if (cvals.size == 0)
+  {
+    /* make size 1 to prevent division by zero */
+    cvals.size = 1;
+  }
+ 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -287,7 +301,7 @@ inblock (gint pos,
 	 gint size)
 {
   static gint *in = NULL;		/* initialized first time */
-  gint i,j,k, len;
+  gint len;
 
   /* avoid a FP exception */
   if (size == 1)
@@ -300,36 +314,32 @@ inblock (gint pos,
    */
   if (in == NULL)
     {
+      gint cell = 1;	/* cell value */
+      gint i, j, k;
+
       in = g_new (gint, len);
-      if (in == NULL)
-	{
-	  return 0;
+
+      /*
+       * i is absolute index into in[]
+       * j is current number of blocks to fill in with a 1 or 0.
+       * k is just counter for the j cells.
+       */
+      i=0;
+      for (j=1; j<=size; j++ )
+	{ /* first half */
+	  for (k=0; k<j; k++ )
+	    {
+	      in[i++] = cell;
+	    }
+	  cell = !cell;
 	}
-      else
-	{
-	  int cell = 1;	/* cell value */
-	  /*
-	   * i is absolute index into in[]
-	   * j is current number of blocks to fill in with a 1 or 0.
-	   * k is just counter for the j cells.
-	   */
-	  i=0;
-	  for (j=1; j<=size; j++ )
-	    { /* first half */
-	      for (k=0; k<j; k++ )
-		{
-		  in[i++] = cell;
-		}
-	      cell = !cell;
+      for ( j=size-1; j>=1; j--)
+	{ /* second half */
+	  for (k=0; k<j; k++ )
+	    {
+	      in[i++] = cell;
 	    }
-	  for ( j=size-1; j>=1; j--)
-	    { /* second half */
-	      for (k=0; k<j; k++ )
-		{
-		  in[i++] = cell;
-		}
-	      cell = !cell;
-	    }
+	  cell = !cell;
 	}
     }
 
@@ -338,14 +348,18 @@ inblock (gint pos,
 }
 
 static gboolean
-check_dialog (void)
+do_checkerboard_dialog (gint32        image_ID,
+			GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *toggle;
-  GtkWidget *table;
-  GtkObject *size_data;
+  GtkWidget *size_entry;
+  gint	     size, width, height;
+  GimpUnit   unit;
+  gdouble    xres;
+  gdouble    yres;
 
   gimp_ui_init ("checkerboard", FALSE);
 
@@ -364,6 +378,10 @@ check_dialog (void)
   g_signal_connect (G_OBJECT (dlg), "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  /*  Get the image resolution and unit  */
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit = gimp_image_get_unit (image_ID);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -384,20 +402,40 @@ check_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &cvals.mode);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  size_entry = gimp_size_entry_new(1, unit, "%a", TRUE, TRUE, FALSE, 
+				  SPIN_BUTTON_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    _("Check _Size:"), 200, 0,
-				    cvals.size, 1, 400, 1, 10, 0,
-				    TRUE, 0, 0,
-				    NULL, NULL);
-  g_signal_connect (G_OBJECT (size_data), "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+  /*  set the unit back to pixels, since most times we will want pixels */
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
+
+  width = gimp_drawable_width (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
+  size = MIN (width, height);
+
+  /*  set the resolution to the image resolution  */
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+
+  /*  set the size (in pixels) that will be treated as 0% and 100%  */
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, (gdouble) size);
+
+  /*  set upper and lower limits (in pixels)  */
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0, 1.0, size);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
+
+  /*  initialize the values  */
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, (gdouble) cvals.size);
+
+  /*  attach labels  */
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry), _("_Size:"), 1, 0, 0.0);
+   
+  g_signal_connect (G_OBJECT (size_entry), "value_changed",
+                    G_CALLBACK (check_size_update_callback),
                     &cvals.size);
 
+  gtk_container_add (GTK_CONTAINER (vbox), size_entry);
+
+  gtk_widget_show (size_entry);
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -407,6 +445,13 @@ check_dialog (void)
 
   return cint.run;
 }
+
+static void 
+check_size_update_callback(GtkWidget * widget, gpointer data)
+{
+  cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+}
+
 
 static void
 check_ok_callback (GtkWidget *widget,

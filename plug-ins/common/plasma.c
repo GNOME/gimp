@@ -309,6 +309,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   GtkWidget *main_vbox;
   GtkWidget *abox;
   GtkWidget *frame;
+  GtkWidget *label;
   GtkWidget *table;
   GtkWidget *seed;
   GtkObject *adj;
@@ -375,9 +376,12 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   seed = gimp_random_seed_new (&pvals.seed,
 			       &pvals.timeseed,
 			       TRUE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Random Seed:"), 1.0, 0.5,
-			     seed, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("_Random Seed:"), 1.0, 0.5,
+				     seed, 1, TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+				 GIMP_RANDOM_SEED_SPINBUTTON (seed));
+
   g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
                             "value_changed",
                             G_CALLBACK (plasma_seed_changed_callback),
