@@ -1860,9 +1860,6 @@ void
 gfig_paint_callback (void)
 {
   GList      *objs;
-  gint        layer_count = 0;
-  gchar       buf[128];
-  gint        count;
   gint        ccount = 0;
   GfigObject *object;
 
@@ -1870,8 +1867,6 @@ gfig_paint_callback (void)
     return;
 
   objs = gfig_context->current_obj->obj_list;
-
-  count = g_list_length (objs);
 
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
 
@@ -1881,15 +1876,18 @@ gfig_paint_callback (void)
     {
       if (ccount == obj_show_single || obj_show_single == -1)
         {
+          FillType saved_filltype;
+
           object = objs->data;
-          sprintf (buf, _("Gfig layer %d"), layer_count++);
 
           gfig_style_apply (&object->style);
 
+          saved_filltype = gfig_context_get_current_style ()->fill_type;
+          gfig_context_get_current_style ()->fill_type = object->style.fill_type;
           object->class->paintfunc (object);
+          gfig_context_get_current_style ()->fill_type = saved_filltype;
 
           gimp_selection_none (gfig_context->image_id);
-
         }
 
       objs = g_list_next (objs);

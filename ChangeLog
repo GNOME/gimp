@@ -1,3 +1,9 @@
+2004-12-13  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-style.c: let objects keep their own fill_style
+	context.
+
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-convert.c: applied patch from Adam D. Moss with

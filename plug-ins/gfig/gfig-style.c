@@ -659,9 +659,9 @@ gfig_style_set_context_from_style (Style *style)
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
                                  (gint) style->fill_type);
 
-  gfig_context->enable_repaint = enable_repaint;
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle),
                                 style->paint_type);
+  gfig_context->enable_repaint = enable_repaint;
 }
 
 /*
