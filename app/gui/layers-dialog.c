@@ -1516,6 +1516,7 @@ layers_dialog_new_layer_callback (GtkWidget *w,
   if ((layer = gimage_floating_sel (gimage)))
     {
       floating_sel_to_layer (layer);
+      
       gdisplays_flush ();
     }
   else

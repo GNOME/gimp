@@ -158,7 +158,6 @@ floating_sel_to_layer (Layer *layer)
   FStoLayerUndo *fsu;
   int off_x, off_y;
   int width, height;
-  int update = FALSE;
 
   GImage *gimage;
 
@@ -182,10 +181,6 @@ floating_sel_to_layer (Layer *layer)
   drawable_offsets (layer->fs.drawable, &off_x, &off_y);
   width = drawable_width (layer->fs.drawable);
   height = drawable_height (layer->fs.drawable);
-  update = (update || ((GIMP_DRAWABLE(layer)->offset_x < off_x) ||
-		       (GIMP_DRAWABLE(layer)->offset_y < off_y) ||
-		       (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width > off_x + width) ||
-		       (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height > off_y + height)) ? TRUE : FALSE);
 
   /*  update the fs drawable--this updates the gimage composite preview
    *  as well as the underlying drawable's
@@ -205,13 +200,18 @@ floating_sel_to_layer (Layer *layer)
   /*  Set pointers  */
   layer->fs.drawable = NULL;
   gimage->floating_sel = NULL;
+  GIMP_DRAWABLE(layer)->visible = TRUE;
 
-  /*  if the floating selection exceeds the attached layer's extents, update the new layer  */
-  if (update)
-    drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-  /*  otherwise, just update the preview, because the image is valid as is  */
-  else
-    drawable_invalidate_preview (GIMP_DRAWABLE(layer));
+  /*  if the floating selection exceeds the attached layer's extents,
+      update the new layer  */
+
+  /*  I don't think that the preview is ever valid as is, since the layer
+      will be added on top of the others.  Revert this if I'm wrong.
+      msw@gimp.org
+  */
+
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0,
+		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
 
 void
