@@ -1,3 +1,9 @@
+Fri Oct 22 20:39:13 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/text_tool.c
+
+	Fixed the problem where the border values was been ignored.
+
 Thu Oct 21 21:29:40 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.c: handle CAN_HANDLE_LAYERS_AS_ANIMATIONS 

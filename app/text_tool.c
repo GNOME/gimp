@@ -185,7 +185,7 @@ text_options_new (void)
 
   options->border_w =
     gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (options->border_w), "changed",
+  gtk_signal_connect (GTK_OBJECT (options->border_w), "value_changed",
 		      (GtkSignalFunc) tool_options_int_adjustment_update,
 		      &options->border);
   spinbutton =
