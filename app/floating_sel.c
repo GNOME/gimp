@@ -382,7 +382,6 @@ floating_sel_composite (Layer *layer,
 			int    h,
 			int    undo)
 {
-  PixelArea fsPR;
   GImage *gimage;
   Layer *d_layer;
   int preserve_trans;
@@ -426,12 +425,6 @@ floating_sel_composite (Layer *layer,
 
       if ((x2 - x1) > 0 && (y2 - y1) > 0)
 	{
-	  /*  composite the area from the layer to the drawable  */
-	  pixelarea_init (&fsPR, GIMP_DRAWABLE(layer)->tiles,
-			     	(x1 - GIMP_DRAWABLE(layer)->offset_x), 
-				(y1 - GIMP_DRAWABLE(layer)->offset_y),
-			     	(x2 - x1), (y2 - y1), FALSE);
-
 	  /*  a kludge here to prevent the case of the drawable
 	   *  underneath having preserve transparency on, and disallowing
 	   *  the composited floating selection from being shown
@@ -459,10 +452,13 @@ floating_sel_composite (Layer *layer,
 	  /*  apply the fs with the undo specified by the value
 	   *  passed to this function
 	   */
-	  gimage_apply_painthit (gimage, layer->fs.drawable, NULL, 
-				&fsPR,
-			      	undo, layer->opacity, layer->mode,
-			      	(x1 - offx), (y1 - offy));
+	  gimage_apply_painthit (gimage, layer->fs.drawable,
+                                 NULL, GIMP_DRAWABLE(layer)->tiles,
+                                 (x1 - GIMP_DRAWABLE(layer)->offset_x), 
+                                 (y1 - GIMP_DRAWABLE(layer)->offset_y),
+                                 (x2 - x1), (y2 - y1),
+                                 undo, layer->opacity, layer->mode,
+                                 (x1 - offx), (y1 - offy));
 
 	  /*  restore preserve transparency  */
 	  if (preserve_trans)
@@ -479,7 +475,6 @@ BoundSeg *
 floating_sel_boundary (Layer *layer,
 		       int   *num_segs)
 {
-  PixelArea bPR;
   int i;
 
   if (layer->fs.boundary_known == FALSE)
@@ -488,12 +483,10 @@ floating_sel_boundary (Layer *layer,
 	g_free (layer->fs.segs);
 
       /*  find the segments  */
-      pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->tiles, 
-                      0, 0,
-                      0, 0,
-                      FALSE);
-      layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,
-					   WithinBounds,
+      layer->fs.segs = find_mask_boundary (GIMP_DRAWABLE(layer)->tiles,
+                                           0, 0,
+                                           0, 0,
+                                           &layer->fs.num_segs, WithinBounds,
                                            0, 0,
 					   drawable_width (GIMP_DRAWABLE(layer)),
                                            drawable_height (GIMP_DRAWABLE(layer)));

@@ -531,7 +531,11 @@ gimage_apply_painthit  (
                         GImage * gimage,
                         GimpDrawable * drawable,
                         Canvas * src1,
-                        PixelArea * src2_area,
+                        Canvas * src2,
+                        gint xx,
+                        gint yy,
+                        gint w,
+                        gint h,
                         int undo,
                         gfloat opacity,
                         int mode,
@@ -543,7 +547,7 @@ gimage_apply_painthit  (
   
   /* make sure we're doing something legal */
   operation = get_operation (drawable_tag (drawable),
-                             pixelarea_tag (src2_area));
+                             canvas_tag (src2));
 
   if (operation == -1)
     {
@@ -552,7 +556,7 @@ gimage_apply_painthit  (
     }
   
   {
-    PixelArea src1PR, destPR, maskPR;
+    PixelArea src1PR, src2PR, destPR, maskPR;
     Channel * mask;
 
     /* get the mask (if any) */
@@ -569,13 +573,17 @@ gimage_apply_painthit  (
       
       /*  get the layer offsets  */
       drawable_offsets (drawable, &offset_x, &offset_y);
+
+      /* convert shorthand for width and height */
+      if (w == 0) w = canvas_width (src2);
+      if (h == 0) h = canvas_height (src2);
       
       /*  make sure the image application coordinates are within
           gimage and mask bounds */
       x1 = CLAMP (x, 0, drawable_width (drawable));
       y1 = CLAMP (y, 0, drawable_height (drawable));
-      x2 = CLAMP (x + pixelarea_width (src2_area), 0, drawable_width (drawable));
-      y2 = CLAMP (y + pixelarea_height (src2_area), 0, drawable_height (drawable));
+      x2 = CLAMP (x + w, 0, drawable_width (drawable));
+      y2 = CLAMP (y + h, 0, drawable_height (drawable));
       
       if (mask)
         {
@@ -597,13 +605,11 @@ gimage_apply_painthit  (
                       FALSE);
       
       /* the painthit */
+      pixelarea_init (&src2PR, src2,
+                      xx + (x1-x), yy + (y1-y),
+                      x2 - x1, y2 - y1,
+                      FALSE);
 
-      pixelarea_resize (src2_area,
-                        pixelarea_x (src2_area) + (x1-x),
-                        pixelarea_y (src2_area) + (y1-y),
-                        x2 - x1, y2 - y1,
-                        FALSE);
-      
       pixelarea_init (&destPR, drawable_data (drawable),
                       x1, y1,
                       (x2 - x1), (y2 - y1),
@@ -626,10 +632,10 @@ gimage_apply_painthit  (
 
       {
         if (mask)
-          combine_areas (&src1PR, src2_area, &destPR, &maskPR, NULL,
+          combine_areas (&src1PR, &src2PR, &destPR, &maskPR, NULL,
                          opacity, mode, active, operation);
         else
-          combine_areas (&src1PR, src2_area, &destPR, NULL, NULL,
+          combine_areas (&src1PR, &src2PR, &destPR, NULL, NULL,
                          opacity, mode, active, operation);
       }
     }
@@ -2484,7 +2490,6 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   int visible[MAX_CHANNELS] = {1, 1, 1, 1};
   int off_x, off_y;
   Precision p;
-  Tag t;
   Format f;
   
   ratio = (double) width / (double) gimage->width;

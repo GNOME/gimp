@@ -173,7 +173,6 @@ drawable_merge_shadow  (
                         )
 {
   GImage * gimage;
-  PixelArea shadow_area;
   int x1, y1, x2, y2;
 
   g_return_if_fail (drawable != NULL);
@@ -188,13 +187,10 @@ drawable_merge_shadow  (
    */
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  pixelarea_init (&shadow_area, gimage->shadow, 
-                  x1, y1,
-                  (x2 - x1), (y2 - y1),
-                  FALSE);
-
   gimage_apply_painthit (gimage, drawable,
-                         NULL, &shadow_area,
+                         NULL, gimage->shadow,
+                         x1, y1,
+                         (x2 - x1), (y2 - y1),
                          undo, OPAQUE_OPACITY,
                          REPLACE_MODE, x1, y1);
 }

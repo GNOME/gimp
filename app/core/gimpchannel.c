@@ -514,7 +514,6 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 		  int x1, int y1, int x2, int y2)
 {
   int x3, y3, x4, y4;
-  PixelArea b_area;
   if (! mask->boundary_known)
     {
       /* free the out of date boundary segments */
@@ -525,12 +524,10 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
       
       if (channel_bounds (mask, &x3, &y3, &x4, &y4))
         {
-          pixelarea_init (&b_area, GIMP_DRAWABLE(mask)->tiles, 
-                          x3, y3, (x4 - x3), (y4 - y3), FALSE);
-	 
-           
-	  mask->segs_out = find_mask_boundary (&b_area, &mask->num_segs_out,
-					       IgnoreBounds,
+	  mask->segs_out = find_mask_boundary (GIMP_DRAWABLE(mask)->tiles,
+                                               x3, y3,
+                                               (x4 - x3), (y4 - y3),
+                                               &mask->num_segs_out, IgnoreBounds,
 					       x1, y1,
 					       x2, y2);
 	  x1 = MAXIMUM (x1, x3);
@@ -540,12 +537,10 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 
 	  if (x2 > x1 && y2 > y1)
 	    {
-	      pixelarea_init (&b_area, GIMP_DRAWABLE(mask)->tiles, 
-                              0, 0,
-                              0, 0,
-                              FALSE);
-	      mask->segs_in =  find_mask_boundary (&b_area, &mask->num_segs_in,
-						   WithinBounds,
+	      mask->segs_in =  find_mask_boundary (GIMP_DRAWABLE(mask)->tiles,
+                                                   0, 0,
+                                                   0, 0,
+                                                   &mask->num_segs_in, WithinBounds,
 						   x1, y1,
 						   x2, y2);
 	    }
@@ -1595,12 +1590,12 @@ channel_border (Channel *mask, int radius)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
-                  x1, y1,
-                  (x2 - x1), (y2 - y1),
-                  FALSE);
-
-  bs =  find_mask_boundary (&bPR, &num_segs, WithinBounds, x1, y1, x2, y2);
+  bs =  find_mask_boundary (drawable_data (GIMP_DRAWABLE (mask)),
+                            x1, y1,
+                            (x2 - x1), (y2 - y1),
+                            &num_segs, WithinBounds,
+                            x1, y1,
+                            x2, y2);
 
   /*  clear the channel  */
   if (mask->bounds_known && !mask->empty)

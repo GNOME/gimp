@@ -83,10 +83,11 @@ image_map_do (gpointer data)
   (* _image_map->apply_func) (&_image_map->src_area, &_image_map->dest_area, _image_map->user_data);
 
   /*  apply the results  */
-  pixelarea_init (&shadow_area, gimage->shadow,
-                  x, y, w, h, FALSE);
-  gimage_apply_painthit (gimage, _image_map->drawable, NULL, &shadow_area,
-		      FALSE, 1.0, REPLACE_MODE, x, y);
+  gimage_apply_painthit (gimage, _image_map->drawable,
+                         NULL, gimage->shadow,
+                         x, y,
+                         w, h,
+                         FALSE, 1.0, REPLACE_MODE, x, y);
 
   /*  display the results  */
   if (_image_map->gdisp)

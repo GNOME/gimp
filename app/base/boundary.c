@@ -48,7 +48,11 @@ static int        num_empty_l = 0;
 static int        max_empty_segs = 0;
 
 /* global state variables--improve parameter efficiency */
-static PixelArea * cur_PR;
+static Canvas * cur_mask;
+static int      cur_x;
+static int      cur_y;
+static int      cur_w;
+static int      cur_h;
 
 typedef void (*FindEmptySegsLineFunc) (PixelArea *, gint, gint, gint *, gint *, gint, gint, gint);
 static FindEmptySegsLineFunc find_empty_segs_line_func (Tag);
@@ -58,7 +62,7 @@ static void find_empty_segs_line_float (PixelArea *, gint, gint, gint *, gint *,
 
 /*  local function prototypes  */
 static void print_boundary (BoundSeg * b, int num_segs);
-static void find_empty_segs (PixelArea *, int, int *, int, int *,
+static void find_empty_segs (int, int *, int, int *,
 			     BoundaryType, int, int, int, int);
 static void make_seg (int, int, int, int, int);
 static void allocate_vert_segs (void);
@@ -99,8 +103,7 @@ find_empty_segs_line_func (Tag t)
 
 /*  Function definitions  */
 static void
-find_empty_segs (PixelArea  *maskPR,
-		 int           scanline,
+find_empty_segs (int           scanline,
 		 int           empty_segs[],
 		 int           max_empty,
 		 int          *num_empty,
@@ -113,15 +116,13 @@ find_empty_segs (PixelArea  *maskPR,
   int start, end;
   gint mask_x, mask_y, mask_w, mask_h;
   PixelArea area;
-  Tag tag = pixelarea_tag (maskPR);
-  void *pag;
+  Tag tag = canvas_tag (cur_mask);
   FindEmptySegsLineFunc find_empty_segs_line = find_empty_segs_line_func (tag);
  
-  /* These are the values before being portion-ized? */
-  mask_x = pixelarea_x (maskPR);
-  mask_y = pixelarea_y (maskPR);
-  mask_w = pixelarea_width (maskPR);
-  mask_h = pixelarea_height (maskPR);
+  mask_x = cur_x;
+  mask_y = cur_y;
+  mask_w = cur_w;
+  mask_h = cur_h;
 
   start = 0;
   end   = 0;
@@ -156,8 +157,15 @@ find_empty_segs (PixelArea  *maskPR,
     }
 
   /*get pixelarea for scanline from start to end */
-  pixelarea_init (&area, maskPR->canvas, start, scanline, end-start, 1, FALSE);  
-  (*find_empty_segs_line) (&area, start, end, num_empty, empty_segs, type, x1, x2);
+  pixelarea_init (&area, cur_mask,
+                  start, scanline,
+                  end - start, 1,
+                  FALSE);  
+
+  (*find_empty_segs_line) (&area,
+                           start, end,
+                           num_empty, empty_segs,
+                           type, x1, x2);
 }
 
 void find_empty_segs_line_u8( 
@@ -376,11 +384,13 @@ static void
 allocate_vert_segs (void)
 {
   int i;
-
+  int j = cur_w + cur_x;
+  
   /*  allocate and initialize the vert_segs array  */
-  vert_segs = (int *) g_realloc ((void *) vert_segs, (cur_PR->w + cur_PR->x + 1) * sizeof (int));
+  vert_segs = (int *) g_realloc ((void *) vert_segs,
+                                 (j + 1) * sizeof (int));
 
-  for (i = 0; i <= (cur_PR->w + cur_PR->x); i++)
+  for (i = 0; i <= j; i++)
     vert_segs[i] = -1;
 }
 
@@ -391,7 +401,7 @@ allocate_empty_segs (void)
   int need_num_segs;
 
   /*  find the maximum possible number of empty segments given the current mask  */
-  need_num_segs = cur_PR->w + 2;
+  need_num_segs = cur_w + 2;
 
   if (need_num_segs > max_empty_segs)
     {
@@ -492,22 +502,22 @@ generate_boundary (BoundaryType type,
     }
   else if (type == IgnoreBounds)
     {
-      start = cur_PR->y;
-      end = cur_PR->y + cur_PR->h;
+      start = cur_y;
+      end = cur_y + cur_h;
     }
 
   /*  Find the empty segments for the previous and current scanlines  */
-  find_empty_segs (cur_PR, start - 1, empty_segs_l,
+  find_empty_segs (start - 1, empty_segs_l,
 		   max_empty_segs, &num_empty_l,
 		   type, x1, y1, x2, y2);
-  find_empty_segs (cur_PR, start, empty_segs_c,
+  find_empty_segs (start, empty_segs_c,
 		   max_empty_segs, &num_empty_c,
 		   type, x1, y1, x2, y2);
 
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
-      find_empty_segs (cur_PR, scanline + 1, empty_segs_n,
+      find_empty_segs (scanline + 1, empty_segs_n,
 		       max_empty_segs, &num_empty_n,
 		       type, x1, y1, x2, y2);
 
@@ -531,7 +541,11 @@ generate_boundary (BoundaryType type,
 }
 
 BoundSeg *
-find_mask_boundary (PixelArea  *maskPR,
+find_mask_boundary (Canvas *      mask,
+                    int           x,
+                    int           y,
+                    int           w,
+                    int           h,
 		    int          *num_elems,
 		    BoundaryType  type,
 		    int           x1,
@@ -545,7 +559,14 @@ find_mask_boundary (PixelArea  *maskPR,
    *  has more than 1 bytes/pixel, the last byte of each pixel is
    *  used to determine the boundary outline.
    */
-  cur_PR = maskPR;
+  if (w == 0) w = canvas_width (mask);
+  if (h == 0) h = canvas_height (mask);
+
+  cur_mask = mask;
+  cur_x = x;
+  cur_y = y;
+  cur_w = w;
+  cur_h = h;
 
   /*  Calculate the boundary  */
   generate_boundary (type, x1, y1, x2, y2);

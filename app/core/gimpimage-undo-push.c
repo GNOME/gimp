@@ -714,13 +714,12 @@ undo_pop_mask (GImage *gimage,
   if (selection)
     {
       new_tiles = canvas_new (canvas_tag (sel_mask_canvas), 
-                              pixelarea_width (&srcPR), 
-                              pixelarea_height (&srcPR), STORAGE_FLAT);
+                              (x2 - x1), (y2 - y1),
+                              STORAGE_FLAT);
 
-      
       pixelarea_init (&destPR, new_tiles,
                       0, 0, 
-                      pixelarea_width (&srcPR), pixelarea_height (&srcPR),
+                      0, 0,
                       TRUE);
       
       copy_area (&srcPR, &destPR);

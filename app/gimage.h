@@ -151,7 +151,8 @@ void            gimage_delete                 (GImage *);
 
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
                                                struct _Canvas *,
-                                               struct _PixelArea *,
+                                               struct _Canvas *,
+                                               gint, gint, gint, gint,
                                                int undo,
                                                gfloat, int mode,
                                                int x, int y);

@@ -259,69 +259,6 @@ check_precision (
   return 0;
 }
   
-#if 0
-/* ---------------------------------------------------------
-
-       area functions with func (Area*, Area*) signature
-
-   --------------------------------------------------------- */
-
-#define AREA_FUNC_a_a(name) \
- \
-typedef void (*name##Func) (PixelRow*, PixelRow*); \
-static name##Func name##_area_funcs (Tag); \
- \
-static name##Func  \
-name##_area_funcs ( \
-                   Tag tag \
-                   ) \
-{ \
-  switch (tag_precision (tag)) \
-    { \
-    case PRECISION_U8: \
-      return name##_row_u8; \
-    case PRECISION_U16: \
-      return name##_row_u16; \
-    case PRECISION_FLOAT: \
-    case PRECISION_NONE: \
-    default: \
-      g_warning ("xx bad precision"); \
-    }  \
-  return NULL; \
-} \
- \
-void \
-name##_area ( \
-             PixelArea * a1, \
-             PixelArea * a2 \
-             ) \
-{ \
-  name##Func name##_row = name##_area_funcs (pixelarea_tag (a1)); \
-  void * pag; \
-  for (pag = pixelarea_register (2, a1, a2); \
-       pag != NULL; \
-       pag = pixelarea_process (pag)) \
-    { \
-      PixelRow r1; \
-      PixelRow r2; \
-      gint h = pixelarea_height (a1); \
-      while (h--) \
-        { \
-          pixelarea_getdata (a1, &r1, h); \
-          pixelarea_getdata (a2, &r2, h); \
-          (*name##_row) (&r1, &r2); \
-        } \
-    } \
-}
-
-AREA_FUNC_a_a (x_add)
-AREA_FUNC_a_a (x_sub)
-AREA_FUNC_a_a (x_min)
-AREA_FUNC_a_a (invert)
-
-#undef AREA_FUNC_a_a
-#endif
-
 typedef void (*x_addFunc) (PixelRow*, PixelRow*);
 static x_addFunc x_add_area_funcs (Tag);
 static x_addFunc
@@ -1220,8 +1157,8 @@ convolve_area  (
                 )
 {
   gint offset;
-  guint src_area_height = pixelarea_height (src_area);  
-  guint src_area_width = pixelarea_width (src_area);  
+  guint src_area_height = pixelarea_areaheight (src_area);  
+  guint src_area_width = pixelarea_areawidth (src_area);  
   Tag src_tag = pixelarea_tag (src_area);
   Tag dest_tag = pixelarea_tag (dest_area);
   ConvolveAreaFunc convolve_area_func = convolve_area_funcs (dest_tag);
@@ -1275,8 +1212,8 @@ convolve_area_u8 (
   Tag src_tag = pixelarea_tag (src_area); 
   
   /*  Initialize some values  */
-  src_width = pixelarea_width (src_area);
-  src_height = pixelarea_height (src_area);
+  src_width = pixelarea_areawidth (src_area);
+  src_height = pixelarea_areaheight (src_area);
   bytes = tag_bytes (src_tag);  /* per pixel */ 
   num_channels = tag_num_channels (src_tag); /* per pixel */
   
@@ -1386,8 +1323,8 @@ convolve_area_u16 (
   Tag src_tag = pixelarea_tag (src_area); 
   
   /*  Initialize some values  */
-  src_width = pixelarea_width (src_area);
-  src_height = pixelarea_height (src_area);
+  src_width = pixelarea_areawidth (src_area);
+  src_height = pixelarea_areaheight (src_area);
   bytes = tag_bytes (src_tag);  /* per pixel */ 
   num_channels = tag_num_channels (src_tag); /* per pixel */
  
@@ -1495,8 +1432,8 @@ convolve_area_float (PixelArea *src_area,
   Tag src_tag = pixelarea_tag (src_area); 
   
   /*  Initialize some values  */
-  src_width = pixelarea_width (src_area);
-  src_height = pixelarea_height (src_area);
+  src_width = pixelarea_areawidth (src_area);
+  src_height = pixelarea_areaheight (src_area);
   bytes = tag_bytes (src_tag);  /* per pixel */ 
   num_channels = tag_num_channels (src_tag); /* per pixel */
  
@@ -1624,8 +1561,8 @@ gaussian_blur_area  (
   gint *rle_count;  
   Tag rle_values_tag;
   Tag src_tag = pixelarea_tag (src_area);
-  guint width = pixelarea_width (src_area);
-  guint height = pixelarea_height (src_area);
+  guint width = pixelarea_areawidth (src_area);
+  guint height = pixelarea_areaheight (src_area);
   guint bytes_per_pixel = tag_bytes (src_tag);
   guint num_channels = tag_num_channels (src_tag);  /*per pixel*/
   guint bytes_per_channel = bytes_per_pixel / num_channels;
@@ -2167,10 +2104,10 @@ scale_area_no_resample  (
   guchar *dest_row_data,  *src_row_data;
   Tag src_tag = pixelarea_tag (src_area);
   Tag dest_tag = pixelarea_tag (dest_area);
-  gint orig_width = pixelarea_width (src_area);
-  gint orig_height = pixelarea_height (src_area); 
-  gint width = pixelarea_width (dest_area);
-  gint height = pixelarea_height (dest_area); 
+  gint orig_width = pixelarea_areawidth (src_area);
+  gint orig_height = pixelarea_areaheight (src_area); 
+  gint width = pixelarea_areawidth (dest_area);
+  gint height = pixelarea_areaheight (dest_area); 
   gint bytes_per_pixel = tag_bytes (src_tag);
   gint num_channels = tag_num_channels (src_tag);
   gint row_num_channels;
@@ -2340,10 +2277,10 @@ scale_area  (
   /* guchar *dest_row_data; */
   PixelRow dest_row;
   guchar *src, *src_m1, *src_p1, *src_p2, *s;
-  gint orig_width = pixelarea_width (src_area);
-  gint orig_height = pixelarea_height (src_area);
-  gint width = pixelarea_width (dest_area);
-  gint height = pixelarea_height (dest_area);
+  gint orig_width = pixelarea_areawidth (src_area);
+  gint orig_height = pixelarea_areaheight (src_area);
+  gint width = pixelarea_areawidth (dest_area);
+  gint height = pixelarea_areaheight (dest_area);
   Tag src_tag = pixelarea_tag (src_area);
   Tag dest_tag = pixelarea_tag (dest_area);
   gint num_channels = tag_num_channels (dest_tag);
@@ -3088,8 +3025,8 @@ thin_area  (
   
   Tag src_tag = pixelarea_tag (src_area);
   gint bytes_per_pixel = tag_bytes (src_tag);
-  guint width = pixelarea_width (src_area);
-  guint height = pixelarea_height (src_area);
+  guint width = pixelarea_areawidth (src_area);
+  guint height = pixelarea_areaheight (src_area);
   gint src_x = pixelarea_x (src_area); 
   gint src_y = pixelarea_y (src_area); 
 
@@ -3512,6 +3449,7 @@ copy_gray_to_area_funcs (
   } 
 }
 
+#define FIXME /* this can go */
 void 
 copy_gray_to_area  (
                     PixelArea * src_area,
@@ -3621,7 +3559,7 @@ initial_area  (
   PixelRow buf_row;
   guchar *buf_row_data = 0; 
   Tag src_tag = pixelarea_tag (src_area); 
-  gint src_width = pixelarea_width (src_area);
+  gint src_width = pixelarea_areawidth (src_area);
   gint src_num_channels = tag_num_channels (src_tag);
   gint src_bytes = tag_bytes (src_tag); /* per pixel */
   gint src_bytes_per_channel = src_bytes / src_num_channels;
@@ -3920,7 +3858,7 @@ combine_areas  (
   Tag dest_tag = pixelarea_tag (dest_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
   Tag buf_tag = src2_tag;
-  gint src2_width = pixelarea_width (src2_area);
+  gint src2_width = pixelarea_areawidth (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);
  
   if ((tag_precision (src1_tag) != tag_precision (src2_tag)) ||
@@ -4172,8 +4110,8 @@ draw_segments (
   PixelRow line;
   guchar *line_data;
   Tag dest_tag = pixelarea_tag (dest_area);
-  gint width = pixelarea_width (dest_area);
-  gint height = pixelarea_height (dest_area);
+  gint width = pixelarea_areawidth (dest_area);
+  gint height = pixelarea_areaheight (dest_area);
   gint bytes_per_pixel = tag_bytes (dest_tag); 
   
   length = MAXIMUM (width , height);

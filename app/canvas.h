@@ -43,6 +43,15 @@ typedef enum
 } AutoAlloc;
 
 
+/* ways to reference a portion */
+typedef enum
+{
+  REFTYPE_NONE  = 0,
+  REFTYPE_READ  = 1,
+  REFTYPE_WRITE = 2
+} RefType;
+
+
 /* the result of referencing a portion.  a successful ref means the
    data pointer is non-null */
 typedef enum

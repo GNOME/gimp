@@ -1520,8 +1520,10 @@ gradient_fill_region (GImage       *gimage,
             pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
             copy_area (&PRrender, &PRapply);
             
-            pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
-            gimage_apply_painthit (gimage, drawable, NULL, &PRapply,
+            gimage_apply_painthit (gimage, drawable,
+                                   NULL, apply,
+                                   0, 0,
+                                   0, 0,
                                    TRUE, opacity, mode, x, yy);
           }
       }

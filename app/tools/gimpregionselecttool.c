@@ -817,7 +817,6 @@ fuzzy_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 static GdkSegment *
 fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 {
-  PixelArea maskPR;
   FuzzySelect *fuzzy_sel;
   GDisplay *gdisp;
   Channel *new;
@@ -846,12 +845,10 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(fuzzy_mask)),
-                  0, 0,
-                  0, 0,
-                  FALSE);
-
-  bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
+  bsegs = find_mask_boundary (drawable_data (GIMP_DRAWABLE(fuzzy_mask)),
+                              0, 0,
+                              0, 0,
+                              nsegs, WithinBounds,
 			      0, 0,
 			      drawable_width (GIMP_DRAWABLE(fuzzy_mask)),
 			      drawable_height (GIMP_DRAWABLE(fuzzy_mask)));

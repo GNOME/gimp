@@ -1709,9 +1709,9 @@ text_gdk_image_to_region (GdkImage    *image,
   black_pixel = BlackPixel (DISPLAY, DefaultScreen (DISPLAY));
   data = pixelarea_data (textPR);
 
-  for (y = 0, scaley = 0; y < textPR->h; y++, scaley += scale)
+  for (y = 0, scaley = 0; y < pixelarea_height (textPR); y++, scaley += scale)
     {
-      for (x = 0, scalex = 0; x < textPR->w; x++, scalex += scale)
+      for (x = 0, scalex = 0; x < pixelarea_width (textPR); x++, scalex += scale)
 	{
 	  value = 0;
 
@@ -1863,8 +1863,8 @@ text_render (GImage *gimage,
       gdk_gc_set_foreground (gc, &black);
 
       /* adjust the x and y values */
-      x = -maskPR.x * antialias;
-      y = font->ascent - maskPR.y * antialias;
+      x = -1 * pixelarea_x (&maskPR) * antialias;
+      y = font->ascent - pixelarea_y (&maskPR) * antialias;
       str = text;
 
       for (k = 0; k < nstrs; k++)

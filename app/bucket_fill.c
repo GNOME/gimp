@@ -545,12 +545,11 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
       }
   
     /* apply painthit to the image */
-    pixelarea_init (&bufPR, buf_tiles,
-                    0, 0,
-                    0, 0,
-                    FALSE);
-  
-    gimage_apply_painthit (gimage, drawable, NULL, &bufPR, TRUE,
+    gimage_apply_painthit (gimage, drawable,
+                           NULL, buf_tiles,
+                           0, 0,
+                           0, 0,
+                           TRUE,
                            (opacity / 100.0), paint_mode, x1, y1);
   
     canvas_delete (buf_tiles);

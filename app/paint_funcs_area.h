@@ -110,22 +110,6 @@ void  hls_to_rgb            (int *, int *, int *);
 void paint_funcs_area_setup (void);
 void paint_funcs_area_free (void);
 
-#if 0
-#define AREA_FUNC_a_a(name) \
-void \
-name##_area ( \
-             struct _PixelArea *, \
-             struct _PixelArea * \
-            );
-
-AREA_FUNC_a_a (x_add)
-AREA_FUNC_a_a (x_sub)
-AREA_FUNC_a_a (x_min)
-AREA_FUNC_a_a (invert)
-
-#undef AREA_FUNC_a_a
-#endif
-
 void
 x_add_area (
 		struct _PixelArea *, 

@@ -19,7 +19,7 @@
 #define  __BOUNDARY_H__
 
 typedef struct _BoundSeg BoundSeg;
-struct _PixelArea;
+struct _Canvas;
 
 struct _BoundSeg
 {
@@ -37,7 +37,10 @@ typedef enum
 
 
 
-BoundSeg *  find_mask_boundary (struct _PixelArea *, int *, BoundaryType, int, int, int, int);
+BoundSeg *  find_mask_boundary (struct _Canvas *,
+                                int, int, int, int,
+                                int *, BoundaryType,
+                                int, int, int, int);
 BoundSeg *  sort_boundary (BoundSeg *, int, int *);
 
 #endif  /*  __BOUNDARY_H__  */

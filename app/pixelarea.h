@@ -19,47 +19,59 @@
 #define __PIXEL_AREA_H__
 
 #include "tag.h"
+#include "canvas.h"
 
 
 /* Forward declarations */
-struct _Canvas;
 struct _PixelRow;
 
 
+typedef struct _BoundBox BoundBox;
 typedef struct _PixelArea PixelArea;
+
+
+struct _BoundBox
+{
+  /* coords of upper left corner */
+  gint x1, y1;
+
+  /* coords of lower right corner */
+  gint x2, y2;
+};
+
 
 struct _PixelArea
 {
   /* the image we're iterating over */
-  struct _Canvas * canvas;
+  Canvas * canvas;
 
-  /* the current area */
-  int   x, y;
-  int   w, h;
+  /* the total area */
+  BoundBox area;
 
-  /* the initial region start */
-  int   startx;
-  int   starty;
+  /* the current chunk */
+  BoundBox chunk;
 
-  /*  will this area be dirtied?  */
-  int   dirty;
+  /* how to ref this area when iterating */
+  RefType reftype;
 };
 
 
 
 /*  PixelArea functions  */
-void              pixelarea_init          (PixelArea *, struct _Canvas *,
-                                           int x, int y, int w, int h,
-                                           int will_dirty);
-void              pixelarea_resize        (PixelArea *,
+void              pixelarea_init          (PixelArea *, Canvas *,
                                            int x, int y, int w, int h,
                                            int will_dirty);
 void              pixelarea_getdata       (PixelArea *, struct _PixelRow *, int);
 Tag               pixelarea_tag           (PixelArea *);
-int               pixelarea_width         (PixelArea *);
-int               pixelarea_height        (PixelArea *);
+
+int               pixelarea_areawidth     (PixelArea *);
+int               pixelarea_areaheight    (PixelArea *);
+
 int               pixelarea_x             (PixelArea *);
 int               pixelarea_y             (PixelArea *);
+int               pixelarea_width         (PixelArea *);
+int               pixelarea_height        (PixelArea *);
+
 guchar *          pixelarea_data          (PixelArea *);
 int               pixelarea_rowstride     (PixelArea *);
 guint             pixelarea_ref           (PixelArea *);

@@ -348,10 +348,11 @@ edit_clear (GImage *gimage,
 	0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_area (&bufPR, &background_color);
 
-  pixelarea_init (&bufPR, buf_tiles, 
-	0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_painthit(gimage, drawable, NULL, 
-			&bufPR, 1, 1.0, 
+  gimage_apply_painthit(gimage, drawable,
+                        NULL, buf_tiles,
+                        0, 0,
+                        (x2 - x1), (y2 - y1),
+                        1, 1.0, 
 			ERASE_MODE, x1, y1);
 
   /*  update the image  */
@@ -388,10 +389,11 @@ edit_fill (GImage *gimage,
 	0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_area (&bufPR, &background_color);
 
-  pixelarea_init (&bufPR, buf_tiles, 
-	0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_painthit (gimage, drawable, NULL, &bufPR, 1, 
-			1.0, NORMAL_MODE, x1, y1); 
+  gimage_apply_painthit (gimage, drawable,
+                         NULL, buf_tiles,
+                         0, 0,
+                         (x2 - x1), (y2 - y1),
+                         1, 1.0, NORMAL_MODE, x1, y1); 
 
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
