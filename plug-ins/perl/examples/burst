@@ -2,7 +2,7 @@
 
 # <sjburges@gimp.org> 
 #
-use Gimp qw(:auto N_ __);
+use Gimp;
 use Gimp::Fu;
 use Gimp::Util;
 
