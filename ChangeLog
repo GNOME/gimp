@@ -1,3 +1,13 @@
+2003-03-21  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/ps.c: always quote the filename, since system/popen
+	uses the shell (dropped in g_shell_quote from glib2). Also, never
+	quote the filename if we are reading from a parameter file (only
+	in the win32 case). Fixes #108648.
+
+	* tools/pdbgen/lib.pl: fix minor buglet that earlier perls silently
+	ate (fix from HEAD)
+
 2003-03-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_rectangle.c: applied a patch from
