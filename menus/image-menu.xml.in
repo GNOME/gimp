@@ -30,6 +30,8 @@
       <separator />
       <placeholder name="Send" />
       <separator />
+      <placeholder name="Info" />
+      <separator />
       <menuitem action="view-close" />
       <menuitem action="file-quit" />
     </menu>
