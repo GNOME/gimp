@@ -30,9 +30,6 @@
 
 /*
  * Ported to the 0.99.x architecture by Simon Budig, Simon.Budig@unix-ag.org
- *  *** Why does gimp_drawable_add_alpha cause the plugin to produce an
- *      ** WARNING **: received tile info did not match computed tile info
- *      ** WARNING **: expected tile ack and received: 0
  */
 
 /*
@@ -220,7 +217,7 @@ query (void)
 			  "Federico Mena Quintero and Simon Budig",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Distorts/Pagecurl..."),
-			  "RGBA, GRAYA",
+			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
 			  G_N_ELEMENTS (return_vals),
@@ -258,9 +255,8 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_id = param[1].data.d_image;
 
-  if ((gimp_drawable_is_rgb (drawable->drawable_id)
+  if (gimp_drawable_is_rgb (drawable->drawable_id)
        || gimp_drawable_is_gray (drawable->drawable_id))
-      && gimp_drawable_has_alpha (drawable->drawable_id))
     {
       switch (run_mode)
 	{
@@ -1015,6 +1011,8 @@ static void
 page_curl (void)
 {
   gimp_undo_push_group_start (image_id);
+  gimp_layer_add_alpha (drawable->drawable_id);
+  drawable = gimp_drawable_get (drawable->drawable_id);
   gimp_progress_init (_("Page Curl..."));
   init_calculation ();
   do_curl_effect ();

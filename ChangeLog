@@ -1,3 +1,8 @@
+2002-05-15  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/pagecurl/pagecurl.c: Made the pagecurl plugin
+	automatically add an alpha channel. Fixes #81611.
+
 2002-05-15  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.c: fixed documentation.
