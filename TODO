@@ -1,3 +1,33 @@
 Please add things to this file when the need to do them is
 discovered.  
 
+gui/functionality seperation
+	both file scope wise and in use, particulay so that
+	the gui version of the tool uses the pdb whenever possible
+	)for finding bugs, and for macro recording)
+
+
+fix the palette dialogs (it would be nice to be able to actually edit
+ palettes and the like), also replace that menubox with a list or
+ something
+
+tools...er, fix em or soemthing
+
+integrate palette saving into core
+
+more configurebilty (eek)
+
+fix stuff so that the tile size could actually be changed eventually?
+
+file new dialog stuff   (i'm working on this....)
+	1. default to size of cut buffer
+	2. add units and resolution options
+	3. make x,y values have dropdowns for last 5 or so used sizes
+	4. maybe an estimate of how much ram the image will take?
+	5. maybe some "preset" common image sizes?
+
+export filters...
+
+previews in file save (for jpeg compression, etc)
+
+
