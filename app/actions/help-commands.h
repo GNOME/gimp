@@ -106,6 +106,7 @@ void layers_resize_to_image_cmd_callback   (GtkWidget *, gpointer);
 
 void tools_default_colors_cmd_callback (GtkWidget *, gpointer);
 void tools_swap_colors_cmd_callback    (GtkWidget *, gpointer);
+void tools_swap_contexts_cmd_callback  (GtkWidget *, gpointer);
 void tools_select_cmd_callback         (GtkWidget *widget,
 					gpointer   callback_data,
 					guint      callback_action);

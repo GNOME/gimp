@@ -1,6 +1,20 @@
 2001-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimptoolinfopreview.[ch]: new widget.
+
+	* app/gimppreview.c
+	* app/tools/gimptoolinfo.c
+	* app/gimpdnd.c: changed for the tool info preview. Still buggy
+	and looks a bit funny at the moment :-)
+
+	* app/commands.[ch]
+	* app/menus.c: small new feature: shift-X toggles the whole context.
+
+2001-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/pixmaps.h
 	* app/wilber.h: removed some data files from app/
 

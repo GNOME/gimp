@@ -530,6 +530,8 @@ static GimpItemFactoryEntry image_entries[] =
     "toolbox/toolbox.html#default_colors", NULL },
   { { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
     "toolbox/toolbox.html#swap_colors", NULL },
+  { { N_("/Tools/Swap Contexts"), "<shift>X", tools_swap_contexts_cmd_callback, 0 },
+    "toolbox/toolbox.html#swap_colors", NULL },
   { { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
     NULL, NULL },
 

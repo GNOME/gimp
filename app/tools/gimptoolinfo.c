@@ -131,7 +131,9 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 {
   GimpToolInfo *tool_info;
   TempBuf      *temp_buf;
-  guchar        white[3] = { 255, 255, 255 };
+  guchar        opaque[4] = { 0, 0, 0, 0 };
+  gint          offset_x = 0;
+  gint          offset_y = 0;
   gint          r, s, cnt;
   guchar        value;
   guchar       *data;
@@ -151,11 +153,20 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 
   tool_info = GIMP_TOOL_INFO (viewable);
 
-  temp_buf = temp_buf_new (width, height, 3, 0, 0, white);
+#define TOOL_INFO_WIDTH  22
+#define TOOL_INFO_HEIGHT 22
+
+  if (width > TOOL_INFO_WIDTH)
+    offset_x = (width - TOOL_INFO_WIDTH) / 2;
+
+  if (height > TOOL_INFO_HEIGHT)
+    offset_y = (height - TOOL_INFO_HEIGHT) / 2;
+
+  temp_buf = temp_buf_new (width, height, 4, 0, 0, opaque);
 
   data = temp_buf_data (temp_buf);
 
-  p = data;
+  p = data + (offset_y * temp_buf->width * temp_buf->bytes);
 
   for (r = 0; r < height; r++)
     {
@@ -168,10 +179,11 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
               *p++ = colors[value - 'a'][0];
               *p++ = colors[value - 'a'][1];
               *p++ = colors[value - 'a'][2];
+              *p++ = 255;
             }
 	  else
 	    {
-	      p += 3;
+	      p += 4;
 	    }
 	}
     }

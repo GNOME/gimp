@@ -29,6 +29,8 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+
 #include "gimpbrush.h"
 #include "gimpbrushpreview.h"
 #include "gimpdrawable.h"
@@ -43,6 +45,7 @@
 #include "gimppattern.h"
 #include "gimppatternpreview.h"
 #include "gimppreview.h"
+#include "gimptoolinfopreview.h"
 #include "gimpviewable.h"
 #include "image_render.h"
 #include "temp_buf.h"
@@ -310,6 +313,10 @@ gimp_preview_new (GimpViewable *viewable,
     {
       preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
     }
+  else if (GIMP_IS_TOOL_INFO (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_TOOL_INFO_PREVIEW);
+    }
   else
     {
       preview = gtk_type_new (GIMP_TYPE_PREVIEW);
@@ -372,6 +379,10 @@ gimp_preview_new_full (GimpViewable *viewable,
   else if (GIMP_IS_PALETTE (viewable))
     {
       preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
+    }
+  else if (GIMP_IS_TOOL_INFO (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_TOOL_INFO_PREVIEW);
     }
   else
     {

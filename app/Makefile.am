@@ -305,6 +305,8 @@ gimp_SOURCES = \
 	gimppatternpreview.c		\
 	gimppreview.h			\
 	gimppreview.c			\
+	gimptoolinfopreview.h		\
+	gimptoolinfopreview.c		\
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\

@@ -89,6 +89,7 @@ typedef struct _GimpBrushPreview      GimpBrushPreview;
 typedef struct _GimpPatternPreview    GimpPatternPreview;
 typedef struct _GimpPalettePreview    GimpPalettePreview;
 typedef struct _GimpGradientPreview   GimpGradientPreview;
+typedef struct _GimpToolInfoPreview   GimpToolInfoPreview;
 
 typedef struct _GimpContainerView     GimpContainerView;
 typedef struct _GimpContainerListView GimpContainerListView;

@@ -773,7 +773,7 @@ gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
       target_table = palette_target_table;
       n_targets    = palette_n_targets;
     }
-  else if (type == GIMP_TYPE_TOOL)
+  else if (type == GIMP_TYPE_TOOL_INFO)
     {
       target_table = tool_target_table;
       n_targets    = tool_n_targets;
