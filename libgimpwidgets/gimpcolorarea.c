@@ -286,15 +286,23 @@ gimp_color_area_set_color (GimpColorArea *area,
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgba_distance (&area->color, color) > 0.000001)
+  if (area->type == GIMP_COLOR_AREA_FLAT)
     {
-      area->color = *color;
-
-      area->needs_render = TRUE;
-      gtk_widget_queue_draw (GTK_WIDGET (area));
-
-      g_signal_emit (area, gimp_color_area_signals[COLOR_CHANGED], 0);
+      if (gimp_rgb_distance (&area->color, color) < 0.000001)
+        return;
     }
+  else
+    {
+      if (gimp_rgba_distance (&area->color, color) < 0.000001)
+        return;
+    }
+
+  area->color = *color;
+
+  area->needs_render = TRUE;
+  gtk_widget_queue_draw (GTK_WIDGET (area));
+
+  g_signal_emit (area, gimp_color_area_signals[COLOR_CHANGED], 0);
 }
 
 /**
