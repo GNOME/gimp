@@ -251,7 +251,7 @@ gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
   new_desc = pango_font_description_from_string (fontname);
   if (new_desc)
     {
-      pango_font_description_set_size (new_desc, 12);  /* eeek */
+      pango_font_description_set_size (new_desc, 12 * PANGO_SCALE);  /* eeek */
       font = pango_context_load_font (fontsel->context, new_desc);
       pango_font_description_unset_fields (new_desc, PANGO_FONT_MASK_SIZE);
     }
