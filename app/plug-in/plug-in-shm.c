@@ -1072,6 +1072,7 @@ plug_in_set_menu_sensitivity (int base_type)
 {
   PlugInProcDef *proc_def;
   GSList *tmp;
+  int sensitive = FALSE;
 
   tmp = proc_defs;
   while (tmp)
@@ -1080,36 +1081,39 @@ plug_in_set_menu_sensitivity (int base_type)
       tmp = tmp->next;
 
       if (proc_def->image_types_val && proc_def->menu_path)
-	switch (base_type)
-	  {
-	  case -1:
-	    menus_set_sensitive (proc_def->menu_path, FALSE);
-	    break;
-	  case RGB_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & RGB_IMAGE);
-	    break;
-	  case RGBA_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & RGBA_IMAGE);
-	    break;
-	  case GRAY_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & GRAY_IMAGE);
-	    break;
-	  case GRAYA_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & GRAYA_IMAGE);
-	    break;
-	  case INDEXED_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & INDEXED_IMAGE);
-	    break;
-	  case INDEXEDA_GIMAGE:
-	    menus_set_sensitive (proc_def->menu_path,
-				 proc_def->image_types_val & INDEXEDA_IMAGE);
-	    break;
-	  }
+	{
+	  switch (base_type)
+	    {
+	    case -1:
+	      sensitive = FALSE;
+	      break;
+	    case RGB_GIMAGE:
+	      sensitive = proc_def->image_types_val & RGB_IMAGE;
+	      break;
+	    case RGBA_GIMAGE:
+	      sensitive = proc_def->image_types_val & RGBA_IMAGE;
+	      break;
+	    case GRAY_GIMAGE:
+	      sensitive = proc_def->image_types_val & GRAY_IMAGE;
+	      break;
+	    case GRAYA_GIMAGE:
+	      sensitive = proc_def->image_types_val & GRAYA_IMAGE;
+	      break;
+	    case INDEXED_GIMAGE:
+	      sensitive = proc_def->image_types_val & INDEXED_IMAGE;
+	      break;
+	    case INDEXEDA_GIMAGE:
+	      sensitive = proc_def->image_types_val & INDEXEDA_IMAGE;
+	      break;
+	    }
+
+	  menus_set_sensitive (proc_def->menu_path, sensitive);
+          if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
+	    {
+	      menus_set_sensitive ("<Image>/Filters/Repeat last", sensitive);
+	      menus_set_sensitive ("<Image>/Filters/Re-show last", sensitive);
+	    }
+	}
     }
 }
 
