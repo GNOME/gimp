@@ -49,7 +49,7 @@ In general, a Gimp::Fu script looks like this:
 C<examples/example-fu.pl>, which is small Gimp::Fu-script you can take as
 starting point for your experiments)
 
-E<Attention:> at the moment it's neccessary to always import the C<Gimp::Fu>
+B<Attention:> at the moment it's neccessary to always import the C<Gimp::Fu>
 module after the C<Gimp> module.
 
 =cut

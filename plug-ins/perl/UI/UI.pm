@@ -6,9 +6,15 @@ use Gtk;
 use base 'DynaLoader';
 
 BEGIN {
-   require DynaLoader;
    $VERSION = 1.18;
-   bootstrap Gimp::UI $VERSION;
+   eval {
+      require XSLoader;
+      XSLoader::load Gimp::UI $VERSION;
+   } or do {
+      require DynaLoader;
+      @ISA=qw(DynaLoader);
+      bootstrap Gimp::UI $VERSION;
+   }
 }
 
 =head1 NAME

@@ -2,11 +2,18 @@ package Gimp::Lib;
 
 use strict;
 use vars qw($VERSION @ISA);
-use base qw(DynaLoader);
 
-require DynaLoader;
-
-$VERSION = 1.18;
+BEGIN {
+   $VERSION = 1.18;
+   eval {
+      require XSLoader;
+      XSLoader::load Gimp::Lib $VERSION;
+   } or do {
+      require DynaLoader;
+      @ISA=qw(DynaLoader);
+      bootstrap Gimp::Lib $VERSION;
+   }
+}
 
 use subs qw(
 	gimp_call_procedure		gimp_main	gimp_init
@@ -31,8 +38,6 @@ sub unlock {
 }
 
 sub import {}
-
-bootstrap Gimp::Lib $VERSION;
 
 # functions to "autobless" where the autobless mechanism
 # does not work.

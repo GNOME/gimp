@@ -146,7 +146,7 @@ sub MY::install {
    my $self=shift;
    package MY;
    my $install = $self->SUPER::install(@_);
-   ($install =~ s/^(un)?install\b/really-$1install/gm) or return $install;
+   ($install =~ s/\b(un)?install\b/really-$1install/g) or return $install;
    '
 install :: install-po
 	@for dir in \

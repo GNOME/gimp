@@ -10,10 +10,15 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
 use subs qw(init end lock unlock canonicalize_color);
 
 BEGIN {
-   require DynaLoader;
-   @ISA=qw(DynaLoader);
    $VERSION = 1.18;
-   bootstrap Gimp $VERSION;
+   eval {
+      require XSLoader;
+      XSLoader::load Gimp $VERSION;
+   } or do {
+      require DynaLoader;
+      @ISA=qw(DynaLoader);
+      bootstrap Gimp $VERSION;
+   }
 }
 
 my @_param = qw(

@@ -31,6 +31,7 @@ Revision history for Gimp-Perl extension.
         - added examples/gap-vcr
         - applied Kevon Cozens patch to scm2scm. That's a great start, I
           should really add the rest of the function names.
+        - use XSLoader instead of DynaLoader where available.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.
