@@ -153,7 +153,7 @@ sub parse_entries {
 
 	    if (defined $options) {
 		my %options = parse_options($options);
-		next if defined $options{skip};
+		next if defined $options{"pdb-skip"};
 	    }
 
 	    $symbols .= $name . ' ';

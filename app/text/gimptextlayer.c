@@ -482,7 +482,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   drawable = GIMP_DRAWABLE (layer);
   item     = GIMP_ITEM (layer);
 
-  gimp_drawable_fill (drawable, &layer->text->color);
+  gimp_drawable_fill (drawable, &layer->text->color, NULL);
 
   bitmap.width = gimp_item_width  (item);
   bitmap.rows  = gimp_item_height (item);

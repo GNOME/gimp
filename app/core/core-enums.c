@@ -189,6 +189,7 @@ static const GEnumValue gimp_fill_type_enum_values[] =
   { GIMP_BACKGROUND_FILL, N_("Background"), "background-fill" },
   { GIMP_WHITE_FILL, N_("White"), "white-fill" },
   { GIMP_TRANSPARENT_FILL, N_("Transparent"), "transparent-fill" },
+  { GIMP_PATTERN_FILL, N_("Pattern"), "pattern-fill" },
   { GIMP_NO_FILL, N_("None"), "no-fill" },
   { 0, NULL, NULL }
 };

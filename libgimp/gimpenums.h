@@ -130,7 +130,7 @@ typedef enum
   GIMP_BACKGROUND_FILL,
   GIMP_WHITE_FILL,
   GIMP_TRANSPARENT_FILL,
-  GIMP_NO_FILL
+  GIMP_PATTERN_FILL
 } GimpFillType;
 
 typedef enum

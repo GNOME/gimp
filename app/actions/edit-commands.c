@@ -32,7 +32,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimptoolinfo.h"
@@ -247,17 +246,13 @@ edit_fill_cmd_callback (GtkWidget *widget,
 			gpointer   data,
 			guint      action)
 {
-  GimpImage          *gimage;
-  GimpBucketFillMode  fill_mode;
+  GimpImage    *gimage;
+  GimpFillType  fill_type;
   return_if_no_image (gimage, data);
 
-  fill_mode = (GimpBucketFillMode) action;
+  fill_type = (GimpFillType) action;
 
-  gimp_drawable_bucket_fill (gimp_image_active_drawable (gimage),
-                             fill_mode,
-                             GIMP_NORMAL_MODE, 1.0,
-                             FALSE /* no seed fill */,
-                             FALSE, 0.0, FALSE, 0.0, 0.0);
+  gimp_edit_fill (gimage, gimp_image_active_drawable (gimage), fill_type);
   gimp_image_flush (gimage);
 }
 

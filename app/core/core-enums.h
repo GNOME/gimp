@@ -27,8 +27,7 @@
    If you want the enum to be skipped by both scripts, you have to use
    /*< pdb-skip, skip >*/.
 
-   All enum values that are marked with /*< skip >*/ are skipped for
-   both targets.
+   The same syntax applies to enum values.
 #endif
 
 
@@ -125,7 +124,7 @@ typedef enum
   GIMP_FS_DITHER,          /*< desc="Floyd-Steinberg Color Dithering (Normal)" >*/
   GIMP_FSLOWBLEED_DITHER,  /*< desc="Floyd-Steinberg Color Dithering (Reduced Color Bleeding)" >*/
   GIMP_FIXED_DITHER,       /*< desc="Positioned Color Dithering" >*/
-  GIMP_NODESTRUCT_DITHER   /*< skip >*/
+  GIMP_NODESTRUCT_DITHER   /*< pdb-skip, skip >*/
 } GimpConvertDitherType;
 
 
@@ -154,11 +153,12 @@ GType gimp_fill_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"  >*/
-  GIMP_BACKGROUND_FILL,   /*< desc="Background"  >*/
-  GIMP_WHITE_FILL,        /*< desc="White"       >*/
-  GIMP_TRANSPARENT_FILL,  /*< desc="Transparent" >*/
-  GIMP_NO_FILL            /*< desc="None"        >*/
+  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"     >*/
+  GIMP_BACKGROUND_FILL,   /*< desc="Background"     >*/
+  GIMP_WHITE_FILL,        /*< desc="White"          >*/
+  GIMP_TRANSPARENT_FILL,  /*< desc="Transparent"    >*/
+  GIMP_PATTERN_FILL,      /*< desc="Pattern"        >*/
+  GIMP_NO_FILL            /*< desc="None", pdb-skip >*/
 } GimpFillType;
 
 

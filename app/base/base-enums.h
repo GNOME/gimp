@@ -21,18 +21,17 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
-   and gimp-mkenums. All enums that are not marked with 
+   and gimp-mkenums. All enums that are not marked with
    /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
-   not marked with /*< skip >*/ are registered with the GType system. 
-   If you want the enum to be skipped by both scripts, you have to use 
-   /*< pdb-skip, skip >*/. 
+   not marked with /*< skip >*/ are registered with the GType system.
+   If you want the enum to be skipped by both scripts, you have to use
+   /*< pdb-skip, skip >*/.
 
-   All enum values that are marked with /*< skip >*/ are skipped for
-   both targets.
+   The same syntax applies to enum values.
 #endif
 
 
-/* 
+/*
  * these enums that are registered with the type system
  */
 
@@ -42,7 +41,7 @@ GType gimp_check_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/ 
+  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/
   GIMP_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
   GIMP_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
 } GimpCheckSize;
@@ -129,9 +128,9 @@ typedef enum
   GIMP_GRAIN_EXTRACT_MODE,
   GIMP_GRAIN_MERGE_MODE,
   GIMP_COLOR_ERASE_MODE,
-  GIMP_ERASE_MODE,           /*< skip >*/
-  GIMP_REPLACE_MODE,         /*< skip >*/
-  GIMP_ANTI_ERASE_MODE       /*< skip >*/
+  GIMP_ERASE_MODE,           /*< pdb-skip, skip >*/
+  GIMP_REPLACE_MODE,         /*< pdb-skip, skip >*/
+  GIMP_ANTI_ERASE_MODE       /*< pdb-skip, skip >*/
 } GimpLayerModeEffects;
 
 
@@ -151,7 +150,7 @@ typedef enum
  * non-registered enums; register them if needed
  */
 
-typedef enum  /*< skip >*/ 
+typedef enum  /*< skip >*/
 {
   GIMP_NORMAL_CONVOL,      /*  Negative numbers truncated  */
   GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */
@@ -165,7 +164,7 @@ typedef enum  /*< skip >*/
   GIMP_GREEN_LUT,
   GIMP_BLUE_LUT,
   GIMP_ALPHA_LUT,
-  GIMP_GRAY_LUT = 0  /*< skip >*/
+  GIMP_GRAY_LUT = 0  /*< pdb-skip, skip >*/
 } GimpChannelLutType;
 
 typedef enum  /*< skip >*/

@@ -21,18 +21,17 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
-   and gimp-mkenums. All enums that are not marked with 
+   and gimp-mkenums. All enums that are not marked with
    /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
-   not marked with /*< skip >*/ are registered with the GType system. 
-   If you want the enum to be skipped by both scripts, you have to use 
-   /*< pdb-skip, skip >*/. 
+   not marked with /*< skip >*/ are registered with the GType system.
+   If you want the enum to be skipped by both scripts, you have to use
+   /*< pdb-skip, skip >*/.
 
-   All enum values that are marked with /*< skip >*/ are skipped for
-   both targets.
+   The same syntax applies to enum values.
 #endif
 
 
-/* 
+/*
  * these enums that are registered with the type system
  */
 
@@ -78,7 +77,7 @@ typedef enum
 {
   GIMP_BLUR_CONVOLVE,     /*< desc="Blur"    >*/
   GIMP_SHARPEN_CONVOLVE,  /*< desc="Sharpen" >*/
-  GIMP_CUSTOM_CONVOLVE    /*< skip >*/
+  GIMP_CUSTOM_CONVOLVE    /*< pdb-skip, skip >*/
 } GimpConvolveType;
 
 
@@ -113,7 +112,7 @@ typedef enum  /*< skip >*/
 {
   GIMP_BRUSH_HARD,
   GIMP_BRUSH_SOFT,
-  GIMP_BRUSH_PRESSURE  /*< skip >*/
+  GIMP_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
 } GimpBrushApplicationMode;
 
 

@@ -306,7 +306,6 @@ init_constants (void)
   setvar (cintern ("BG-IMAGE-FILL"),    flocons (GIMP_BACKGROUND_FILL),  NIL);
   setvar (cintern ("WHITE-IMAGE-FILL"), flocons (GIMP_WHITE_FILL),       NIL);
   setvar (cintern ("TRANS-IMAGE-FILL"), flocons (GIMP_TRANSPARENT_FILL), NIL);
-  setvar (cintern ("NO-IMAGE-FILL"),    flocons (GIMP_NO_FILL),          NIL);
 
   setvar (cintern ("APPLY"),     flocons (GIMP_MASK_APPLY),   NIL);
   setvar (cintern ("DISCARD"),   flocons (GIMP_MASK_DISCARD), NIL);

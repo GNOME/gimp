@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
+#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile-manager-crop.h"
 
@@ -40,6 +41,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
+#include "gimppattern.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -52,6 +54,7 @@ static const GimpBuffer * gimp_edit_extract       (GimpImage    *gimage,
                                                    gboolean      cut_pixels);
 static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
+                                                   GimpContext  *context,
                                                    GimpFillType  fill_type,
                                                    const gchar  *undo_desc);
 
@@ -208,6 +211,7 @@ gimp_edit_clear (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return gimp_edit_fill_internal (gimage, drawable,
+                                  gimp_get_current_context (gimage->gimp),
                                   GIMP_TRANSPARENT_FILL,
                                   _("Clear"));
 }
@@ -240,6 +244,10 @@ gimp_edit_fill (GimpImage    *gimage,
       undo_desc = _("Fill with Transparency");
       break;
 
+    case GIMP_PATTERN_FILL:
+      undo_desc = _("Fill with Pattern");
+      break;
+
     case GIMP_NO_FILL:
       return TRUE;  /*  nothing to do, but the fill succeded  */
 
@@ -250,7 +258,9 @@ gimp_edit_fill (GimpImage    *gimage,
       break;
     }
 
-  return gimp_edit_fill_internal (gimage, drawable, fill_type, undo_desc);
+  return gimp_edit_fill_internal (gimage, drawable,
+                                  gimp_get_current_context (gimage->gimp),
+                                  fill_type, undo_desc);
 }
 
 
@@ -311,14 +321,24 @@ gimp_edit_extract (GimpImage    *gimage,
 static gboolean
 gimp_edit_fill_internal (GimpImage    *gimage,
                          GimpDrawable *drawable,
+                         GimpContext  *context,
                          GimpFillType  fill_type,
                          const gchar  *undo_desc)
 {
   TileManager *buf_tiles;
   PixelRegion  bufPR;
   gint         x1, y1, x2, y2;
-  guchar       tmp_col[MAX_CHANNELS];
+  gint         tiles_bytes;
   guchar       col[MAX_CHANNELS];
+  TempBuf     *pat_buf = NULL;
+  gboolean     new_buf;
+
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  if (x1 == x2 || y1 == y2)
+    return TRUE;  /*  nothing to do, but the fill succeded  */
+
+  tiles_bytes = gimp_drawable_bytes (drawable);
 
   switch (fill_type)
     {
@@ -332,30 +352,51 @@ gimp_edit_fill_internal (GimpImage    *gimage,
       break;
 
     case GIMP_WHITE_FILL:
-      tmp_col[RED_PIX]   = 255;
-      tmp_col[GREEN_PIX] = 255;
-      tmp_col[BLUE_PIX]  = 255;
-      gimp_image_transform_color (gimage, drawable, col, GIMP_RGB, tmp_col);
-      undo_desc = _("Fill with White");
+      {
+        guchar tmp_col[MAX_CHANNELS];
+
+        tmp_col[RED_PIX]   = 255;
+        tmp_col[GREEN_PIX] = 255;
+        tmp_col[BLUE_PIX]  = 255;
+        gimp_image_transform_color (gimage, drawable, col, GIMP_RGB, tmp_col);
+      }
+      break;
+
+    case GIMP_PATTERN_FILL:
+      {
+        GimpPattern *pattern = gimp_context_get_pattern (context);
+
+        pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+                                                 pattern->mask, &new_buf);
+
+        if (! gimp_drawable_has_alpha (drawable) &&
+            (pat_buf->bytes == 2 || pat_buf->bytes == 4))
+          tiles_bytes++;
+      }
       break;
 
     case GIMP_NO_FILL:
       return TRUE;  /*  nothing to do, but the fill succeded  */
     }
 
-  if (gimp_drawable_has_alpha (drawable))
-    col[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if (x1 == x2 || y1 == y2)
-    return TRUE;  /*  nothing to do, but the fill succeded  */
-
-  buf_tiles = tile_manager_new (x2 - x1, y2 - y1,
-				gimp_drawable_bytes (drawable));
+  buf_tiles = tile_manager_new (x2 - x1, y2 - y1, tiles_bytes);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, TRUE);
-  color_region (&bufPR, col);
+
+  if (pat_buf)
+    {
+      pattern_region (&bufPR, NULL, pat_buf, 0, 0);
+
+      if (new_buf)
+        temp_buf_free (pat_buf);
+    }
+  else
+    {
+      if (gimp_drawable_has_alpha (drawable))
+        col[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+
+      color_region (&bufPR, col);
+    }
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,

@@ -284,7 +284,7 @@ edit_fill_invoker (Gimp     *gimp,
     success = FALSE;
 
   fill_type = args[1].value.pdb_int;
-  if (fill_type < GIMP_FOREGROUND_FILL || fill_type > GIMP_NO_FILL)
+  if (fill_type < GIMP_FOREGROUND_FILL || fill_type > GIMP_PATTERN_FILL)
     success = FALSE;
 
   if (success)
@@ -306,7 +306,7 @@ static ProcArg edit_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill_type",
-    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_NO_FILL (4)"
+    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_PATTERN_FILL (4)"
   }
 };
 

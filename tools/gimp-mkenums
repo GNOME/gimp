@@ -104,7 +104,7 @@ sub parse_entries {
 
 	    if (defined $options) {
 		my %options = parse_trigraph($options);
-		if (!defined $options{skip}) {
+		if (!defined $options{"skip"}) {
 		    push @entries, [ $name, $options{nick}, $options{desc} ];
 		}
 	    } else {
@@ -227,7 +227,7 @@ while (<>) {
          @x) {
 	if (defined $2) {
 	    my %options = parse_trigraph ($2);
-	    next if defined $options{skip};
+	    next if defined $options{"skip"};
 	    $enum_prefix = $options{prefix};
 	    $flags = $options{flags};
 	} else {

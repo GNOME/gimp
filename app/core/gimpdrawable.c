@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
+#include "base/temp-buf.h"
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
@@ -40,6 +41,7 @@
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
 #include "gimpmarshal.h"
+#include "gimppattern.h"
 #include "gimppreviewcache.h"
 
 #include "gimp-intl.h"
@@ -754,16 +756,18 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_fill (GimpDrawable  *drawable,
-		    const GimpRGB *color)
+gimp_drawable_fill (GimpDrawable      *drawable,
+		    const GimpRGB     *color,
+                    const GimpPattern *pattern)
 {
   GimpItem      *item;
   GimpImage     *gimage;
   GimpImageType  drawable_type;
   PixelRegion    destPR;
-  guchar         c[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (color != NULL || pattern != NULL);
+  g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
   item   = GIMP_ITEM (drawable);
   gimage = gimp_item_get_image (item);
@@ -772,52 +776,43 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
   drawable_type = gimp_drawable_type (drawable);
 
-  gimp_rgba_get_uchar (color,
-                       &c[RED_PIX],
-                       &c[GREEN_PIX],
-                       &c[BLUE_PIX],
-                       &c[ALPHA_PIX]);
-
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (drawable_type))
-    {
-    case GIMP_RGB:
-      if (drawable_type != GIMP_RGBA_IMAGE)
-	c[ALPHA_PIX] = OPAQUE_OPACITY;
-      break;
-
-    case GIMP_GRAY:
-      c[GRAY_PIX] = GIMP_RGB_INTENSITY (c[RED_PIX],
-                                        c[GREEN_PIX],
-                                        c[BLUE_PIX]) + 0.5;
-      c[ALPHA_G_PIX] = c[ALPHA_PIX];
-
-      if (drawable_type != GIMP_GRAYA_IMAGE)
-	c[ALPHA_G_PIX] = OPAQUE_OPACITY;
-      break;
-
-    case GIMP_INDEXED:
-      {
-        guchar index;
-
-        gimp_image_transform_color (gimage, drawable, &index, GIMP_RGB, c);
-        c[INDEXED_PIX] = index;
-        c[ALPHA_I_PIX] = c[ALPHA_PIX];
-
-        if (drawable_type != GIMP_INDEXEDA_IMAGE)
-          c[ALPHA_I_PIX] = OPAQUE_OPACITY;
-      }
-      break;
-
-    default:
-      g_warning ("%s: Cannot fill unknown image type.",
-                 G_GNUC_PRETTY_FUNCTION);
-      break;
-    }
-
   pixel_region_init (&destPR, gimp_drawable_data (drawable),
                      0, 0, gimp_item_width  (item), gimp_item_height (item),
                      TRUE);
-  color_region (&destPR, c);
+
+  if (color)
+    {
+      guchar tmp[MAX_CHANNELS];
+      guchar c[MAX_CHANNELS];
+
+      gimp_rgba_get_uchar (color,
+                           &tmp[RED_PIX],
+                           &tmp[GREEN_PIX],
+                           &tmp[BLUE_PIX],
+                           &tmp[ALPHA_PIX]);
+
+      gimp_image_transform_color (gimage, drawable, c, GIMP_RGB, tmp);
+
+      if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
+        c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA_PIX];
+      else
+        c[GIMP_IMAGE_TYPE_BYTES (drawable_type)] = OPAQUE_OPACITY;
+
+      color_region (&destPR, c);
+    }
+  else
+    {
+      TempBuf  *pat_buf;
+      gboolean  new_buf;
+
+      pat_buf = gimp_image_transform_temp_buf (gimage, drawable,
+                                               pattern->mask, &new_buf);
+
+      pattern_region (&destPR, NULL, pat_buf, 0, 0);
+
+      if (new_buf)
+        temp_buf_free (pat_buf);
+    }
 
   gimp_drawable_update (drawable,
 			0, 0,
@@ -830,7 +825,8 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 			    GimpContext  *context,
 			    GimpFillType  fill_type)
 {
-  GimpRGB color;
+  GimpRGB      color;
+  GimpPattern *pattern = NULL;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -852,6 +848,10 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
       break;
 
+    case GIMP_PATTERN_FILL:
+      pattern = gimp_context_get_pattern (context);
+      break;
+
     case GIMP_NO_FILL:
       return;
 
@@ -860,7 +860,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       return;
     }
 
-  gimp_drawable_fill (drawable, &color);
+  gimp_drawable_fill (drawable, pattern ? NULL : &color, pattern);
 }
 
 gboolean

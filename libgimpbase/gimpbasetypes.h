@@ -49,7 +49,7 @@ typedef enum
 
   GIMP_UNIT_END     = 5,
 
-  GIMP_UNIT_PERCENT = 65536 /*< skip >*/
+  GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
 } GimpUnit;
 
 typedef enum

@@ -88,7 +88,7 @@ init_generated_constants (void)
   setvar (cintern ("BACKGROUND-FILL"), flocons (1), NIL);
   setvar (cintern ("WHITE-FILL"), flocons (2), NIL);
   setvar (cintern ("TRANSPARENT-FILL"), flocons (3), NIL);
-  setvar (cintern ("NO-FILL"), flocons (4), NIL);
+  setvar (cintern ("PATTERN-FILL"), flocons (4), NIL);
 
   setvar (cintern ("GRADIENT-LINEAR"), flocons (0), NIL);
   setvar (cintern ("GRADIENT-BILINEAR"), flocons (1), NIL);

@@ -139,7 +139,8 @@ void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
-						  const GimpRGB      *color);
+						  const GimpRGB      *color,
+                                                  const GimpPattern  *pattern);
 void            gimp_drawable_fill_by_type       (GimpDrawable       *drawable,
 						  GimpContext        *context,
 						  GimpFillType        fill_type);

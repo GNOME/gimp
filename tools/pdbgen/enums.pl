@@ -256,12 +256,13 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'core/core-enums.h',
 	  symbols => [ qw(GIMP_FOREGROUND_FILL GIMP_BACKGROUND_FILL
-			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL GIMP_NO_FILL) ],
+			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL
+			  GIMP_PATTERN_FILL) ],
 	  mapping => { GIMP_FOREGROUND_FILL => '0',
 		       GIMP_BACKGROUND_FILL => '1',
 		       GIMP_WHITE_FILL => '2',
 		       GIMP_TRANSPARENT_FILL => '3',
-		       GIMP_NO_FILL => '4' }
+		       GIMP_PATTERN_FILL => '4' }
 	},
     GimpGradientType =>
 	{ contig => 1,

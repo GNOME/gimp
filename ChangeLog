@@ -1,3 +1,52 @@
+2004-01-06  Michael Natterer  <mitch@gimp.org>
+
+	Enabled skipping enum values for either the PDB or GType
+	registration (don't always skip both targets):
+
+	* tools/gimp-mkenums: skip enum values only if there is a literal
+	"skip" (don't match "pdb-skip").
+
+	* tools/pdbgen/enumgen.pl: skip only "pdb-skip" values, not "skip"
+	ones.
+
+	* app/base/base-enums.h
+	* app/core/core-enums.h
+	* app/paint/paint-enums.h
+	* libgimpbase/gimpbaseenums.h: use the right "pdb-skip"/"skip"
+	combination to skip enum values. Changed comments accordingly.
+
+	Cleaned up the fill functions:
+
+	* app/core/core-enums.[ch]: added GIMP_PATTERN_FILL enum value to
+	the GimpFillType enum. Don't export GIMP_NO_FILL to the PDB
+	because it's completely useless to export a NOP.
+
+	* app/core/gimp-edit.c (gimp_edit_fill, gimp_edit_fill_internal):
+	handle pattern fill requests.
+
+	* app/core/gimpdrawable.[ch] (gimp_drawable_fill): added GimpPattern
+	parameter and fill with it if it's non-NULL.
+
+	(gimp_drawable_fill_by_type): handle pattern fill and pass the
+	current pattern to gimp_drawable_fill().
+
+	* app/text/gimptextlayer.c: changed accordingly.
+
+	* app/gui/edit-commands.c
+	* app/gui/image-menu.c: use gimp_edit_fill() instead of
+	gimp_drawable_bucket_fill() for FG, BG and pattern filling.
+
+	* libgimp/gimpcompat.h
+	* plug-ins/script-fu/siod-wrapper.c: removed NO_IMAGE_FILL compat
+	enum value. It should have never been exported to the PDB.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2004-01-06  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: use gimp->config; edit_config is
