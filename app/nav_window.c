@@ -186,6 +186,17 @@ nav_window_disp_area (NavWinData *iwd,
   newwidth = gimage->width;
   newheight = gimage->height;
 
+  if (!gdisp->dot_for_dot)
+    {
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      newwidth = ((gdouble)newwidth * unit_factor)/(gdisp->gimage->xresolution);
+      newheight = ((gdouble)newheight * unit_factor)/(gdisp->gimage->yresolution);
+      iwd->dispx = ((gdouble)iwd->dispx * unit_factor)/(gdisp->gimage->xresolution);
+      iwd->dispy = ((gdouble)iwd->dispy * unit_factor)/(gdisp->gimage->yresolution);
+      iwd->dispwidth = ((gdouble)iwd->dispwidth * unit_factor)/(gdisp->gimage->xresolution);
+      iwd->dispheight = ((gdouble)iwd->dispheight * unit_factor)/(gdisp->gimage->yresolution);
+    }
+
   if((iwd->imagewidth > 0 && newwidth != iwd->imagewidth) ||
      (iwd->imageheight > 0 && newheight != iwd->imageheight))
     {
@@ -308,8 +319,17 @@ set_size_data (NavWinData *iwd)
     pheight = sel_height * iwd->ratio;
   }
 
-  iwd->pwidth = pwidth;
-  iwd->pheight = pheight;
+  if (gdisp->dot_for_dot)
+    {
+      iwd->pwidth = pwidth;
+      iwd->pheight = pheight;
+    }
+  else
+    {
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      iwd->pwidth = ((gdouble)pwidth * unit_factor)/(gdisp->gimage->xresolution);
+      iwd->pheight = ((gdouble)pheight * unit_factor)/(gdisp->gimage->yresolution);
+    }
 }
 
 static void 
@@ -397,6 +417,13 @@ update_real_view (NavWinData *iwd,
 
   ypnt = (gint)(((gdouble)(ty)*yratio)/iwd->ratio);
 
+  if (!gdisp->dot_for_dot)
+    {
+      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      xpnt = ((gdouble)xpnt * (gdisp->gimage->xresolution))/(unit_factor)+0.5;
+      ypnt = ((gdouble)ypnt * (gdisp->gimage->yresolution))/(unit_factor)+0.5;
+    }
+
   xoffset = xpnt - gdisp->offset_x;
   yoffset = ypnt - gdisp->offset_y;
   
@@ -410,6 +437,8 @@ nav_window_update_preview (NavWinData *iwd)
 {
   GDisplay *gdisp;
   TempBuf * preview_buf;
+  TempBuf * preview_buf_ptr;
+  TempBuf * preview_buf_notdot = NULL;
   guchar *src, *buf, *dest;
   gint x,y,has_alpha;
   gint pwidth, pheight;
@@ -429,18 +458,69 @@ nav_window_update_preview (NavWinData *iwd)
   pwidth = iwd->pwidth;
   pheight = iwd->pheight;
 
+  /* we need a large normal preview which we will cut down later.
+   *  gimp_image_construct_composite_preview() can't cope with 
+   *  dot_for_dot not been set.
+   */
+  if (!gdisp->dot_for_dot)
+    {
+      gdouble unit_factor = gimp_unit_get_factor (gimage->unit);
+      pwidth = ((gdouble)iwd->pwidth * (gimage->xresolution))/(unit_factor)+0.5;
+      pheight = ((gdouble)iwd->pheight * (gimage->yresolution))/(unit_factor)+0.5;
+    }
 
   preview_buf = gimp_image_construct_composite_preview (gimage,
 							MAX (pwidth, 2),
 							MAX (pheight, 2));
+  /* reset & get new preview */
+  if (!gdisp->dot_for_dot)
+    {
+      int loop1,loop2;
+      gdouble x_ratio,y_ratio;
+      guchar *src_data;
+      guchar *dest_data;
+
+      preview_buf_notdot = temp_buf_new(iwd->pwidth,
+					iwd->pheight,
+					preview_buf->bytes,0,0,NULL);
+
+      x_ratio = (gdouble)pwidth/(gdouble)iwd->pwidth;
+      y_ratio = (gdouble)pheight/(gdouble)iwd->pheight;
+      src_data = temp_buf_data(preview_buf);
+      dest_data = temp_buf_data(preview_buf_notdot);
+
+      for(loop1 = 0 ; loop1 < iwd->pheight ; loop1++)
+	for(loop2 = 0 ; loop2 < iwd->pwidth ; loop2++)
+	  {
+	    int i;
+	    guchar *src_pixel = src_data +
+	      ((gint)(loop2*x_ratio))*preview_buf->bytes +
+	      ((gint)(loop1*y_ratio))*pwidth*preview_buf->bytes;
+	    guchar *dest_pixel = dest_data + 
+	      (loop2+loop1*iwd->pwidth)*preview_buf->bytes;
+
+	    for(i = 0 ; i < preview_buf->bytes; i++)
+	      *dest_pixel++ = *src_pixel++;
+	  }
+
+      pwidth = iwd->pwidth;
+      pheight = iwd->pheight;
+      src = (gchar *) temp_buf_data (preview_buf_notdot);
+      preview_buf_ptr = preview_buf_notdot;
+    }
+  else
+    {
+      src = (gchar *) temp_buf_data (preview_buf);
+      preview_buf_ptr = preview_buf;
+    }
+  
   buf = g_new (gchar,  iwd->nav_preview_width * 3);
-  src = (gchar *) temp_buf_data (preview_buf);
-  has_alpha = (preview_buf->bytes == 2 || preview_buf->bytes == 4);
+  has_alpha = (preview_buf_ptr->bytes == 2 || preview_buf_ptr->bytes == 4);
 
   for (y = 0; y <pheight ; y++)
     {
       dest = buf;
-      switch (preview_buf->bytes)
+      switch (preview_buf_ptr->bytes)
 	{
 	case 4:
 	  for (x = 0; x < pwidth; x++)
@@ -471,11 +551,14 @@ nav_window_update_preview (NavWinData *iwd)
 	}
       
       gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *)buf, xoff, yoff+y, preview_buf->width);
+			    (guchar *)buf, xoff, yoff+y, preview_buf_ptr->width);
     }
 
   g_free (buf);
   temp_buf_free (preview_buf);
+
+  if(preview_buf_notdot)
+    temp_buf_free(preview_buf_notdot);
 
   gimp_remove_busy_cursors (NULL);
 }

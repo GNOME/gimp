@@ -1,3 +1,10 @@
+Wed Oct 20 23:08:31 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c
+
+	Now works correctly with non-square pixels. (dot-for-dot off
+	and xres != yres).
+
 Wed Oct 20 12:18:12 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/gimp-headers.scm
