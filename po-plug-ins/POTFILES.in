@@ -31,6 +31,7 @@ plug-ins/common/colorify.c
 plug-ins/common/colortoalpha.c
 plug-ins/common/compose.c
 plug-ins/common/convmatrix.c
+plug-ins/common/csource.c
 plug-ins/common/cubism.c
 plug-ins/common/curve_bend.c
 plug-ins/common/decompose.c
@@ -62,6 +63,7 @@ plug-ins/common/grid.c
 plug-ins/common/gtm.c
 plug-ins/common/guillotine.c
 plug-ins/common/gz.c
+plug-ins/common/header.c
 plug-ins/common/hot.c
 plug-ins/common/hrz.c
 plug-ins/common/illusion.c
@@ -112,8 +114,8 @@ plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
 plug-ins/common/sunras.c
 plug-ins/common/tga.c
-plug-ins/common/tiff.c
 plug-ins/common/threshold_alpha.c
+plug-ins/common/tiff.c
 plug-ins/common/tile.c
 plug-ins/common/tileit.c
 plug-ins/common/tiler.c
@@ -125,6 +127,7 @@ plug-ins/common/vpropagate.c
 plug-ins/common/warp.c
 plug-ins/common/waves.c
 plug-ins/common/whirlpinch.c
+plug-ins/common/winclipboard.c
 plug-ins/common/wind.c
 plug-ins/common/winprint.c
 plug-ins/common/wmf.c
