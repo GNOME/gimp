@@ -82,13 +82,9 @@ static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
 /*  brightness contrast action functions  */
 
-static void   brightness_contrast_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   brightness_contrast_button_release (Tool *, GdkEventButton *, gpointer);
-static void   brightness_contrast_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   brightness_contrast_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   brightness_contrast_control        (Tool *, ToolAction,       gpointer);
+static void   brightness_contrast_control (Tool *, ToolAction, gpointer);
 
-static BrightnessContrastDialog *  brightness_contrast_new_dialog (void);
+static BrightnessContrastDialog * brightness_contrast_new_dialog (void);
 
 static void   brightness_contrast_update                  (BrightnessContrastDialog *, int);
 static void   brightness_contrast_preview                 (BrightnessContrastDialog *);
@@ -102,45 +98,7 @@ static void   brightness_contrast_brightness_text_update  (GtkWidget *, gpointer
 static void   brightness_contrast_contrast_text_update    (GtkWidget *, gpointer);
 
 
-/*  by_color select action functions  */
-
-static void
-brightness_contrast_button_press (Tool           *tool,
-				  GdkEventButton *bevent,
-				  gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-static void
-brightness_contrast_button_release (Tool           *tool,
-				    GdkEventButton *bevent,
-				    gpointer        gdisp_ptr)
-{
-}
-
-static void
-brightness_contrast_motion (Tool           *tool,
-			    GdkEventMotion *mevent,
-			    gpointer        gdisp_ptr)
-{
-}
-
-static void
-brightness_contrast_cursor_update (Tool           *tool,
-				   GdkEventMotion *mevent,
-				   gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
+/*  brightness-contrast select action functions  */
 
 static void
 brightness_contrast_control (Tool       *tool,
@@ -179,25 +137,14 @@ tools_new_brightness_contrast ()
       tools_register (BRIGHTNESS_CONTRAST, brightness_contrast_options);
    }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (BrightnessContrast *) g_malloc (sizeof (BrightnessContrast));
+  tool = tools_new_tool (BRIGHTNESS_CONTRAST);
+  private = g_new (BrightnessContrast, 1);
 
-  tool->type = BRIGHTNESS_CONTRAST;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = brightness_contrast_button_press;
-  tool->button_release_func = brightness_contrast_button_release;
-  tool->motion_func = brightness_contrast_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
 
   return tool;

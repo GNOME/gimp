@@ -50,11 +50,7 @@ static HistogramToolDialog * histogram_tool_dialog = NULL;
 
 
 /*  histogram_tool action functions  */
-static void   histogram_tool_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   histogram_tool_button_release (Tool *, GdkEventButton *, gpointer);
-static void   histogram_tool_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   histogram_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   histogram_tool_control        (Tool *, ToolAction,       gpointer);
+static void   histogram_tool_control (Tool *, ToolAction, gpointer);
 
 static HistogramToolDialog *  histogram_tool_new_dialog (void);
 
@@ -143,44 +139,6 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
 /*  histogram_tool action functions  */
 
 static void
-histogram_tool_button_press (Tool           *tool,
-			     GdkEventButton *bevent,
-			     gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-static void
-histogram_tool_button_release (Tool           *tool,
-			       GdkEventButton *bevent,
-			       gpointer        gdisp_ptr)
-{
-}
-
-static void
-histogram_tool_motion (Tool           *tool,
-		       GdkEventMotion *mevent,
-		       gpointer        gdisp_ptr)
-{
-}
-
-static void
-histogram_tool_cursor_update (Tool           *tool,
-			      GdkEventMotion *mevent,
-			      gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
-
-static void
 histogram_tool_control (Tool       *tool,
 			ToolAction  action,
 			gpointer    gdisp_ptr)
@@ -216,25 +174,14 @@ tools_new_histogram_tool ()
       tools_register (HISTOGRAM, histogram_tool_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (HistogramTool *) g_malloc (sizeof (HistogramTool));
+  tool = tools_new_tool (HISTOGRAM);
+  private = g_new (HistogramTool, 1);
 
-  tool->type = HISTOGRAM;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = histogram_tool_button_press;
-  tool->button_release_func = histogram_tool_button_release;
-  tool->motion_func = histogram_tool_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = histogram_tool_cursor_update;
   tool->control_func = histogram_tool_control;
 
   return tool;

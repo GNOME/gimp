@@ -71,7 +71,7 @@ static GtkWidget *options_vbox = NULL;
 static GtkWidget *options_label = NULL;
 static GtkWidget *options_reset_button = NULL;
 
-static int        global_tool_ID = 0;
+static gint global_tool_ID = 0;
 
 ToolInfo tool_info[] =
 {
@@ -617,7 +617,7 @@ ToolInfo tool_info[] =
   }
 };
 
-gint num_tools = sizeof (tool_info) / sizeof (ToolInfo);
+gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 
 
 /*  Local function declarations  */
@@ -654,12 +654,6 @@ tools_select (ToolType type)
 
   tools_options_show (active_tool->type);
 
-  /*  Set the paused count variable to 0  */
-  active_tool->paused_count = 0;
-  active_tool->gdisp_ptr = NULL;
-  active_tool->drawable = NULL;
-  active_tool->ID = global_tool_ID++;
-
   /*  Update the device-information dialog  */
   device_status_update (current_device);
 }
@@ -677,7 +671,14 @@ tools_initialize (ToolType  type,
   /*  Activate the appropriate widget.
    *  Implicitly calls tools_select()
    */
-  tools_select (type);
+  if (active_tool->type == type)
+    {
+      tools_select (type);
+    }
+  else
+    {
+      gtk_widget_activate (tool_info[type].tool_widget);
+    }
 
   if (tool_info[(int) type].init_func)
     {
@@ -686,84 +687,12 @@ tools_initialize (ToolType  type,
       active_tool->drawable = gimage_active_drawable (gdisp->gimage);
     }
 
-  /* don't set gdisp_ptr here !!! (see commands.c) */
-}
-
-void
-tools_options_dialog_new ()
-{
-  GtkWidget *frame;
-  GtkWidget *vbox;
-
-  ActionAreaItem action_items[2] =
-  {
-    { N_("Reset"), tools_options_reset_callback, NULL, NULL },
-    { N_("Close"), tools_options_close_callback, NULL, NULL }
-  };
-
-  /*  The shell and main vbox  */
-  options_shell = gtk_dialog_new ();
-
-  /*  Register dialog */
-  dialog_register (options_shell);
-
-  gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options_shell), _("Tool Options"));
-  gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
-  session_set_window_geometry (options_shell, &tool_options_session_info,
-			       FALSE );
-
-  /*  The outer frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options_shell)->vbox), frame);
-  gtk_widget_show (frame);
-
-  /*  The vbox containing the title frame and the options vbox  */
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  /*  The title frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  options_label = gtk_label_new ("");
-  gtk_misc_set_padding (GTK_MISC (options_label), 1, 0);
-  gtk_container_add (GTK_CONTAINER (frame), options_label);
-  gtk_widget_show (options_label);
-
-  options_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (options_vbox), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), options_vbox, FALSE, FALSE, 0);
-
-  /* handle the window manager trying to close the window */
-  gtk_signal_connect (GTK_OBJECT (options_shell), "delete_event",
-		      GTK_SIGNAL_FUNC (tools_options_delete_callback),
-		      options_shell);
-
-  action_items[0].user_data = options_shell;
-  action_items[1].user_data = options_shell;
-  build_action_area (GTK_DIALOG (options_shell), action_items, 2, 1);
-
-  options_reset_button = action_items[0].widget;
-
-  gtk_widget_show (options_vbox);
-
-  /* hide the separator between the dialog's vbox and the action area */
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 1)));
+  /*  don't set gdisp_ptr here! (see commands.c)  */
 }
 
 void
 tools_options_dialog_show ()
 {
-  /* menus_activate_callback() will destroy the active tool in many
-     cases.  if the user tries to bring up the options before
-     switching tools, the dialog will be empty.  recreate the active
-     tool here if necessary to avoid this behavior */
-
   if (!GTK_WIDGET_VISIBLE (options_shell)) 
     {
       gtk_widget_show (options_shell);
@@ -772,34 +701,6 @@ tools_options_dialog_show ()
     {
       gdk_window_raise (options_shell->window);
     }
-}
-
-void
-tools_options_dialog_free ()
-{
-  session_get_window_info (options_shell, &tool_options_session_info);
-  gtk_widget_destroy (options_shell);
-}
-
-void
-tools_register (ToolType     tool_type,
-		ToolOptions *tool_options)
-{
-  g_return_if_fail (tool_options != NULL);
-
-  tool_info [(int) tool_type].tool_options = tool_options;
-
-  /*  need to check whether the widget is visible...this can happen
-   *  because some tools share options such as the transformation tools
-   */
-  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
-    {
-      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (tool_options->main_vbox);
-    }
-
-  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
 }
 
 void
@@ -857,21 +758,200 @@ active_tool_control (ToolAction  action,
     }
 }
 
-void
+/*  standard member functions  */
+
+static void
+standard_button_press_func (Tool           *tool,
+			    GdkEventButton *bevent,
+			    gpointer        gdisp_ptr)
+{
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+}
+
+static void
+standard_button_release_func (Tool           *tool,
+			      GdkEventButton *bevent,
+			      gpointer        gdisp_ptr)
+{
+}
+
+static void
+standard_motion_func (Tool           *tool,
+		      GdkEventMotion *bevent,
+		      gpointer        gdisp_ptr)
+{
+}
+
+static void
 standard_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  gpointer     gdisp_ptr)
 {
 }
 
-void
+static void
 standard_modifier_key_func (Tool        *tool,
 			    GdkEventKey *kevent,
 			    gpointer     gdisp_ptr)
 {
 }
 
-/*  tool options function  */
+static void
+standard_cursor_update_func (Tool           *tool,
+			     GdkEventMotion *mevent,
+			     gpointer        gdisp_ptr)
+{
+  GDisplay *gdisp;
+
+  gdisp = (GDisplay *) gdisp_ptr;
+  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+}
+
+static void
+standard_control_func (Tool       *tool,
+		       ToolAction  action,
+		       gpointer    gdisp_ptr)
+{
+}
+
+/*  Create a default tool structure 
+ *
+ *  TODO: objectifying the tools will remove lots of code duplication
+ */
+
+Tool *
+tools_new_tool (ToolType type)
+{
+  Tool *tool;
+
+  tool = g_new (Tool, 1);
+
+  tool->type = type;
+  tool->ID   = global_tool_ID++;
+
+  tool->state        = INACTIVE;
+  tool->paused_count = 0;
+  tool->scroll_lock  = FALSE;     /*  Allow scrolling  */
+  tool->auto_snap_to = TRUE;      /*  Snap to guides   */
+
+  tool->preserve  = TRUE;         /*  Preserve tool across drawable changes  */
+  tool->gdisp_ptr = NULL;
+  tool->drawable  = NULL;
+
+  tool->private   = NULL;
+
+  tool->button_press_func   = standard_button_press_func;
+  tool->button_release_func = standard_button_release_func;
+  tool->motion_func         = standard_motion_func;
+  tool->arrow_keys_func     = standard_arrow_keys_func;
+  tool->modifier_key_func   = standard_modifier_key_func;
+  tool->cursor_update_func  = standard_cursor_update_func;
+  tool->control_func        = standard_control_func;
+
+  return tool;
+}
+
+/*  Tool options function  */
+
+void
+tools_options_dialog_new ()
+{
+  GtkWidget *frame;
+  GtkWidget *vbox;
+
+  ActionAreaItem action_items[] =
+  {
+    { N_("Reset"), tools_options_reset_callback, NULL, NULL },
+    { N_("Close"), tools_options_close_callback, NULL, NULL }
+  };
+
+  /*  The shell and main vbox  */
+  options_shell = gtk_dialog_new ();
+
+  /*  Register dialog */
+  dialog_register (options_shell);
+
+  gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (options_shell), _("Tool Options"));
+  gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
+  session_set_window_geometry (options_shell, &tool_options_session_info,
+			       FALSE );
+
+  /*  The outer frame  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options_shell)->vbox), frame);
+  gtk_widget_show (frame);
+
+  /*  The vbox containing the title frame and the options vbox  */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  /*  The title frame  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  options_label = gtk_label_new ("");
+  gtk_misc_set_padding (GTK_MISC (options_label), 1, 0);
+  gtk_container_add (GTK_CONTAINER (frame), options_label);
+  gtk_widget_show (options_label);
+
+  options_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (options_vbox), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), options_vbox, FALSE, FALSE, 0);
+
+  /*  handle the window manager trying to close the window  */
+  gtk_signal_connect (GTK_OBJECT (options_shell), "delete_event",
+		      GTK_SIGNAL_FUNC (tools_options_delete_callback),
+		      options_shell);
+
+  action_items[0].user_data = options_shell;
+  action_items[1].user_data = options_shell;
+  build_action_area (GTK_DIALOG (options_shell), action_items, 2, 1);
+
+  options_reset_button = action_items[0].widget;
+
+  gtk_widget_show (options_vbox);
+
+  /*  hide the separator between the dialog's vbox and the action area  */
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 1)));
+}
+
+void
+tools_options_dialog_free ()
+{
+  session_get_window_info (options_shell, &tool_options_session_info);
+  gtk_widget_destroy (options_shell);
+}
+
+void
+tools_register (ToolType     tool_type,
+		ToolOptions *tool_options)
+{
+  g_return_if_fail (tool_options != NULL);
+
+  tool_info [(int) tool_type].tool_options = tool_options;
+
+  /*  need to check whether the widget is visible...this can happen
+   *  because some tools share options such as the transformation tools
+   */
+  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
+    {
+      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
+			  TRUE, TRUE, 0);
+      gtk_widget_show (tool_options->main_vbox);
+    }
+
+  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
+}
 
 static void
 tools_options_show (ToolType tooltype)
@@ -895,6 +975,8 @@ tools_options_hide (ToolType tooltype)
   if (tool_info[tooltype].tool_options)
     gtk_widget_hide (tool_info[tooltype].tool_options->main_vbox);
 }
+
+/*  Tool options callbacks  */
 
 static gint
 tools_options_delete_callback (GtkWidget *w,

@@ -109,7 +109,7 @@ ellipse_select_options_reset (void)
 }
 
 Tool *
-tools_new_ellipse_select (void)
+tools_new_ellipse_select  (void)
 {
   Tool *tool;
   EllipseSelect *private;
@@ -122,31 +122,21 @@ tools_new_ellipse_select (void)
       tools_register (ELLIPSE_SELECT, (ToolOptions *) ellipse_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (EllipseSelect *) g_malloc (sizeof (EllipseSelect));
+  tool = tools_new_tool (ELLIPSE_SELECT);
+  private = g_new (EllipseSelect, 1);
 
   private->core = draw_core_new (ellipse_select_draw);
   /*  Make the selection static, not blinking  */
   private->x = private->y = 0;
   private->w = private->h = 0;
 
-  tool->type = ELLIPSE_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = rect_select_button_press;
+  tool->button_press_func   = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
-  tool->motion_func = rect_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = rect_select_cursor_update;
-  tool->control_func = rect_select_control;
+  tool->motion_func         = rect_select_motion;
+  tool->cursor_update_func  = rect_select_cursor_update;
+  tool->control_func        = rect_select_control;
 
   return tool;
 }

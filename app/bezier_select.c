@@ -212,31 +212,25 @@ tools_new_bezier_select ()
       tools_register (BEZIER_SELECT, (ToolOptions *) bezier_options);
     }
 
-  tool = g_malloc (sizeof (Tool));
-  private = g_malloc (sizeof (BezierSelect));
+
+  tool = tools_new_tool (BEZIER_SELECT);
+  private = g_new (BezierSelect, 1);
 
   private->num_points = 0;
   private->mask = NULL;
   private->core = draw_core_new (bezier_select_draw);
   bezier_select_reset (private);
 
-  tool->type = BEZIER_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;   /*  Do not allow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = bezier_select_button_press;
+  tool->button_press_func   = bezier_select_button_press;
   tool->button_release_func = bezier_select_button_release;
-  tool->motion_func = bezier_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = bezier_select_cursor_update;
-  tool->control_func = bezier_select_control;
+  tool->motion_func         = bezier_select_motion;
+  tool->cursor_update_func  = bezier_select_cursor_update;
+  tool->control_func        = bezier_select_control;
 
   curCore = private->core;
   curSel  = private;

@@ -63,8 +63,9 @@ Channel * fuzzy_mask = NULL;
 static void   fuzzy_select_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_button_release  (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_motion          (Tool *, GdkEventMotion *, gpointer);
-static void   fuzzy_select_draw            (Tool *);
 static void   fuzzy_select_control         (Tool *, ToolAction,       gpointer);
+
+static void   fuzzy_select_draw            (Tool *);
 
 /*  fuzzy select action functions  */
 static GdkSegment * fuzzy_select_calculate (Tool *, void *, int *);
@@ -561,28 +562,20 @@ tools_new_fuzzy_select (void)
       tools_register (FUZZY_SELECT, (ToolOptions *) fuzzy_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (FuzzySelect *) g_malloc (sizeof (FuzzySelect));
+  tool = tools_new_tool (FUZZY_SELECT);
+  private = g_new (FuzzySelect, 1);
 
   private->core = draw_core_new (fuzzy_select_draw);
 
-  tool->type = FUZZY_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = fuzzy_select_button_press;
+  tool->button_press_func   = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
-  tool->motion_func = fuzzy_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = rect_select_cursor_update;
-  tool->control_func = fuzzy_select_control;
+  tool->motion_func         = fuzzy_select_motion;
+  tool->cursor_update_func  = rect_select_cursor_update;
+  tool->control_func        = fuzzy_select_control;
 
   return tool;
 }

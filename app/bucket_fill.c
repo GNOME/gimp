@@ -73,9 +73,7 @@ static BucketOptions *bucket_options = NULL;
 
 static void  bucket_fill_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bucket_fill_button_release  (Tool *, GdkEventButton *, gpointer);
-static void  bucket_fill_motion          (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-static void  bucket_fill_control         (Tool *, ToolAction,       gpointer);
 
 static void  bucket_fill_region          (BucketFillMode, PixelRegion *,
 					  PixelRegion *, unsigned char *,
@@ -248,15 +246,6 @@ bucket_fill_button_release (Tool           *tool,
   tool->state = INACTIVE;
 }
 
-
-static void
-bucket_fill_motion (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
-{
-}
-
-
 static void
 bucket_fill_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
@@ -315,13 +304,6 @@ bucket_fill_modifier_key_func (Tool        *tool,
 	}
       break;
     }
-}
-
-static void
-bucket_fill_control (Tool       *tool,
-		     ToolAction  action,
-		     gpointer    gdisp_ptr)
-{
 }
 
 void
@@ -584,9 +566,9 @@ bucket_fill_region (BucketFillMode  fill_mode,
     }
 }
 
-/*********************************/
-/*  Global bucket fill functions */
-/*********************************/
+/**********************************/
+/*  Global bucket fill functions  */
+/**********************************/
 
 Tool *
 tools_new_bucket_fill (void)
@@ -604,26 +586,17 @@ tools_new_bucket_fill (void)
       bucket_options_reset ();
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (BucketTool *) g_malloc (sizeof (BucketTool));
+  tool = tools_new_tool (BUCKET_FILL);
+  private = g_new (BucketTool, 1);
 
-  tool->type = BUCKET_FILL;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = bucket_fill_button_press;
+  tool->button_press_func   = bucket_fill_button_press;
   tool->button_release_func = bucket_fill_button_release;
-  tool->motion_func = bucket_fill_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  
-  tool->modifier_key_func = bucket_fill_modifier_key_func;
-  tool->cursor_update_func = bucket_fill_cursor_update;
-  tool->control_func = bucket_fill_control;
+  tool->modifier_key_func   = bucket_fill_modifier_key_func;
+  tool->cursor_update_func  = bucket_fill_cursor_update;
 
   return tool;
 }

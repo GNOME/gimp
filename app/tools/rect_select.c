@@ -422,7 +422,6 @@ rect_select_motion (Tool           *tool,
   draw_core_resume (rect_sel->core, tool);
 }
 
-
 void
 rect_select_draw (Tool *tool)
 {
@@ -446,12 +445,12 @@ rect_select_draw (Tool *tool)
 		      x1, y1, (x2 - x1), (y2 - y1));
 }
 
-
-void
-static selection_tool_update_op_state (RectSelect *rect_sel,
-				       int x, int y,
-				       int state,  
-				       GDisplay *gdisp)
+static void
+selection_tool_update_op_state (RectSelect *rect_sel,
+				int         x,
+				int         y,
+				int         state,  
+				GDisplay   *gdisp)
 {
   if (active_tool->state == ACTIVE)
     return;
@@ -561,31 +560,21 @@ tools_new_rect_select ()
       tools_register (RECT_SELECT, (ToolOptions *) rect_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (RectSelect *) g_malloc (sizeof (RectSelect));
+  tool = tools_new_tool (RECT_SELECT);
+  private = g_new (RectSelect, 1);
 
   private->core = draw_core_new (rect_select_draw);
   private->x = private->y = 0;
   private->w = private->h = 0;
   private->op = SELECTION_REPLACE;
 
-  tool->type = RECT_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = rect_select_button_press;
+  tool->button_press_func   = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
-  tool->motion_func = rect_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = rect_select_cursor_update;
-  tool->control_func = rect_select_control;
+  tool->motion_func         = rect_select_motion;
+  tool->cursor_update_func  = rect_select_cursor_update;
+  tool->control_func        = rect_select_control;
 
   return tool;
 }

@@ -118,7 +118,7 @@ void          paint_core_control         (Tool *, ToolAction,       gpointer);
 
 /*  paint tool functions  */
 void          paint_core_no_draw      (Tool *);
-Tool *        paint_core_new          (int);
+Tool *        paint_core_new          (ToolType);
 void          paint_core_free         (Tool *);
 int           paint_core_init         (PaintCore *, GimpDrawable *, double, double);
 void          paint_core_interpolate  (PaintCore *, GimpDrawable *);

@@ -135,7 +135,7 @@ void          transform_core_control        (Tool *, ToolAction,       gpointer)
 /*  transform tool functions  */
 void          transform_core_draw                 (Tool *);
 void          transform_core_no_draw              (Tool *);
-Tool *        transform_core_new                  (int, int);
+Tool *        transform_core_new                  (ToolType, int);
 void          transform_core_free                 (Tool *);
 void          transform_core_reset                (Tool *, void *);
 void	      transform_core_grid_density_changed (void);

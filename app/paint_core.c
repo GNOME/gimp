@@ -512,36 +512,25 @@ paint_core_draw (Tool *tool)
 }	      
 
 Tool *
-paint_core_new (int type)
+paint_core_new (ToolType type)
 {
   Tool * tool;
   PaintCore * private;
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (PaintCore *) g_malloc (sizeof (PaintCore));
+  tool = tools_new_tool (type);
+  private = g_new (PaintCore, 1);
 
   private->core = draw_core_new (paint_core_draw);
 
   private->pick_colors = FALSE;
 
-  tool->type = type;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;
-  tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = paint_core_button_press;
+  tool->button_press_func   = paint_core_button_press;
   tool->button_release_func = paint_core_button_release;
-  tool->motion_func = paint_core_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = paint_core_cursor_update;
-  tool->control_func = paint_core_control;
+  tool->motion_func         = paint_core_motion;
+  tool->cursor_update_func  = paint_core_cursor_update;
+  tool->control_func        = paint_core_control;
 
   return tool;
 }

@@ -108,7 +108,6 @@ static GtkWidget *text_tool_shell = NULL;
 
 static void   text_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   text_button_release (Tool *, GdkEventButton *, gpointer);
-static void   text_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   text_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   text_control        (Tool *, ToolAction,       gpointer);
 
@@ -242,26 +241,17 @@ tools_new_text ()
     }
 
   /*  the new text tool structure  */
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  the_text_tool = (TextTool *) g_malloc (sizeof (TextTool));
+  tool = tools_new_tool (TEXT);
+  the_text_tool = g_new (TextTool, 1);
 
-  tool->type = TEXT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /* Do not allow scrolling */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;  /* Disallow scrolling */
+
   tool->private = (void *) the_text_tool;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = text_button_press;
+  tool->button_press_func   = text_button_press;
   tool->button_release_func = text_button_release;
-  tool->motion_func = text_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = text_cursor_update;
-  tool->control_func = text_control;
+  tool->cursor_update_func  = text_cursor_update;
+  tool->control_func        = text_control;
 
   return tool;
 }
@@ -353,13 +343,6 @@ text_button_release (Tool           *tool,
 		     gpointer        gdisp_ptr)
 {
   tool->state = INACTIVE;
-}
-
-static void
-text_motion (Tool           *tool,
-	     GdkEventMotion *mevent,
-	     gpointer        gdisp_ptr)
-{
 }
 
 static void

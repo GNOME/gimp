@@ -31,7 +31,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#define EDIT_SELECT_SCROLL_LOCK 0
+#define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
 #define STATUSBAR_SIZE          128
 
@@ -53,8 +53,8 @@ struct _EditSelection
   MotionFunc          old_motion;        /*  old motion member function      */
   ToolCtlFunc         old_control;       /*  old control member function     */
   CursorUpdateFunc    old_cursor_update; /*  old cursor update function      */
-  int                 old_scroll_lock;   /*  old value of scroll lock        */
-  int                 old_auto_snap_to;  /*  old value of auto snap to       */
+  gboolean            old_scroll_lock;   /*  old value of scroll lock        */
+  gboolean            old_auto_snap_to;  /*  old value of auto snap to       */
 
   guint               context_id;        /*  for the statusbar               */
 };

@@ -527,10 +527,18 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   GDisplay * gdisp;
+  int new_val;
+
   return_if_no_display (gdisp);
 
-  selection_hide (gdisp->select, (void *) gdisp);
-  gdisplays_flush ();
+  new_val = GTK_CHECK_MENU_ITEM (widget)->active;
+
+  /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
+  if (new_val == gdisp->select->hidden)
+    {
+      selection_hide (gdisp->select, (void *) gdisp);
+      gdisplays_flush ();
+    }
 }
 
 void

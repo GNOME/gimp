@@ -463,30 +463,22 @@ tools_new_free_select (void)
       tools_register (FREE_SELECT, (ToolOptions *) free_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (FreeSelect *) g_malloc (sizeof (FreeSelect));
+  tool = tools_new_tool (FREE_SELECT);
+  private = g_new (FreeSelect, 1);
 
   private->core = draw_core_new (free_select_draw);
   private->num_pts = 0;
   private->op = SELECTION_REPLACE;
 
-  tool->type = FREE_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;   /*  Do not allow scrolling  */
-  tool->auto_snap_to = TRUE;
-  tool->private = (void *) private;
- 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
+  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
 
-  tool->button_press_func = free_select_button_press;
+  tool->private = (void *) private;
+
+  tool->button_press_func   = free_select_button_press;
   tool->button_release_func = free_select_button_release;
-  tool->motion_func = free_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = rect_select_cursor_update;
-  tool->control_func = free_select_control;
+  tool->motion_func         = free_select_motion;
+  tool->cursor_update_func  = rect_select_cursor_update;
+  tool->control_func        = free_select_control;
 
   return tool;
 }

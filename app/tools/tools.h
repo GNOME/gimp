@@ -20,6 +20,7 @@
 
 #include "layerF.h"
 #include "gdisplayF.h"
+#include "gimpcontext.h"
 #include "tool_options.h"
 
 #include "toolsF.h"
@@ -43,19 +44,19 @@ typedef enum
 struct _Tool
 {
   /*  Data  */
-  ToolType   type;          /*  Tool type  */
-  ToolState  state;         /*  state of tool activity  */
-  int        paused_count;  /*  paused control count  */
-  int        scroll_lock;   /*  allow scrolling or not  */
-  int        auto_snap_to;  /*  should the mouse snap to guides automatically */
-  void     * private;       /*  Tool-specific information  */
-  void     * gdisp_ptr;     /*  pointer to currently active gdisp  */
-  void     * drawable;      /*  pointer to the drawable that was
-				active when the tool was created */
-  int        ID;            /*  unique tool ID  */
+  ToolType    type;          /*  Tool type                                   */
+  gint        ID;            /*  unique tool ID                              */
 
-  int        preserve;      /*  Preserve this tool through the current
-				image changes  */
+  ToolState   state;         /*  state of tool activity                      */
+  gint        paused_count;  /*  paused control count                        */
+  gboolean    scroll_lock;   /*  allow scrolling or not                      */
+  gboolean    auto_snap_to;  /*  snap to guides automatically                */
+
+  gboolean    preserve;      /*  Preserve this tool across drawable changes  */
+  void      * gdisp_ptr;     /*  pointer to currently active gdisp           */
+  void      * drawable;      /*  pointer to the tool's current drawable      */
+
+  void      * private;       /*  Tool-specific information                   */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -89,14 +90,19 @@ struct _ToolInfo
   ToolInfoFreeFunc free_func;
   ToolInfoInitFunc init_func;
 
-  GtkWidget *tool_widget;
+  GtkWidget   *tool_widget;
+
+  GimpContext *tool_context;
 };
 
-/*  Global Data Structure  */
+/*  Global Data Structures  */
 extern Tool     * active_tool;
 extern ToolInfo   tool_info[];
+extern gint       num_tools;
 
 /*  Function declarations  */
+Tool * tools_new_tool             (ToolType     tool_type);
+
 void   tools_select               (ToolType     tool_type);
 void   tools_initialize           (ToolType     tool_type,
 				   GDisplay    *gdisplay);
@@ -110,9 +116,5 @@ void   tools_register             (ToolType     tool_type,
 
 void   active_tool_control        (ToolAction   action,
 				   void        *gdisp_ptr);
-
-/*  Standard member functions  */
-void   standard_arrow_keys_func   (Tool *, GdkEventKey *, gpointer);
-void   standard_modifier_key_func (Tool *, GdkEventKey *, gpointer);
 
 #endif  /*  __TOOLS_H__  */

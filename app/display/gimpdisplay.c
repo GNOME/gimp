@@ -1601,6 +1601,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   else
     {
       SET_SENSITIVE ("/View", TRUE);
+      SET_STATE ("/View/Toggle Selection", !gdisp->select->hidden);
       SET_STATE ("/View/Toggle Rulers",
 		 GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
       SET_STATE ("/View/Toggle Guides", gdisp->draw_guides);

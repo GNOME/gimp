@@ -49,11 +49,7 @@ static ThresholdDialog *threshold_dialog = NULL;
 
 
 /*  threshold action functions  */
-static void   threshold_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   threshold_button_release (Tool *, GdkEventButton *, gpointer);
-static void   threshold_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   threshold_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   threshold_control        (Tool *, ToolAction,       gpointer);
+static void   threshold_control (Tool *, ToolAction, gpointer);
 
 static ThresholdDialog * threshold_new_dialog (void);
 
@@ -159,44 +155,6 @@ threshold_histogram_range (HistogramWidget *w,
 /*  threshold action functions  */
 
 static void
-threshold_button_press (Tool           *tool,
-			GdkEventButton *bevent,
-			gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-static void
-threshold_button_release (Tool           *tool,
-			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
-{
-}
-
-static void
-threshold_motion (Tool           *tool,
-		  GdkEventMotion *mevent,
-		  gpointer        gdisp_ptr)
-{
-}
-
-static void
-threshold_cursor_update (Tool           *tool,
-			 GdkEventMotion *mevent,
-			 gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
-
-static void
 threshold_control (Tool       *tool,
 		   ToolAction  action,
 		   gpointer    gdisp_ptr)
@@ -239,25 +197,14 @@ tools_new_threshold ()
     if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
       gtk_widget_show (threshold_dialog->shell);
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (Threshold *) g_malloc (sizeof (Threshold));
+  tool = tools_new_tool (THRESHOLD);
+  private = g_new (Threshold, 1);
 
-  tool->type = THRESHOLD;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = threshold_button_press;
-  tool->button_release_func = threshold_button_release;
-  tool->motion_func = threshold_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = threshold_cursor_update;
   tool->control_func = threshold_control;
 
   return tool;

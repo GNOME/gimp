@@ -1732,28 +1732,20 @@ tools_new_blend ()
       tools_register (BLEND, (ToolOptions *) blend_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (BlendTool *) g_malloc (sizeof (BlendTool));
+  tool = tools_new_tool (BLEND);
+  private = g_new (BlendTool, 1);
 
   private->core = draw_core_new (blend_draw);
 
-  tool->type = BLEND;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = blend_button_press;
+  tool->button_press_func   = blend_button_press;
   tool->button_release_func = blend_button_release;
-  tool->motion_func = blend_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = blend_cursor_update;
-  tool->control_func = blend_control;
+  tool->motion_func         = blend_motion;
+  tool->cursor_update_func  = blend_cursor_update;
+  tool->control_func        = blend_control;
 
   return tool;
 }

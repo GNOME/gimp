@@ -48,13 +48,13 @@ static GdkGC *move_gc = NULL;
 
 
 /*  move tool action functions  */
-static void   move_tool_button_press      (Tool *, GdkEventButton *, gpointer);
-static void   move_tool_button_release    (Tool *, GdkEventButton *, gpointer);
-static void   move_tool_motion            (Tool *, GdkEventMotion *, gpointer);
-static void   move_tool_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-static void   move_tool_control		  (Tool *, ToolAction,       gpointer);
+static void   move_tool_button_press   (Tool *, GdkEventButton *, gpointer);
+static void   move_tool_button_release (Tool *, GdkEventButton *, gpointer);
+static void   move_tool_motion         (Tool *, GdkEventMotion *, gpointer);
+static void   move_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void   move_tool_control	       (Tool *, ToolAction,       gpointer);
 
-static void   move_create_gc              (GDisplay *);
+static void   move_create_gc           (GDisplay *);
 
 
 /*  move action functions  */
@@ -129,7 +129,8 @@ move_tool_button_press (Tool           *tool,
   /* if we've got an active tool grab the pointer */
   if (tool->state == ACTIVE)      
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
     
 }
@@ -444,30 +445,23 @@ tools_new_move_tool ()
       tools_register (MOVE, (ToolOptions *) move_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (MoveTool *) g_malloc (sizeof (MoveTool));
+  tool = tools_new_tool (MOVE);
+  private = g_new (MoveTool, 1);
 
   private->layer = NULL;
   private->guide = NULL;
   private->disp = NULL;
 
-  tool->type = MOVE;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;   /*  Allow scrolling  */
-  tool->auto_snap_to = FALSE;
+  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = move_tool_button_press;
+  tool->button_press_func   = move_tool_button_press;
   tool->button_release_func = move_tool_button_release;
-  tool->motion_func = move_tool_motion;
-  tool->arrow_keys_func = edit_sel_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = move_tool_cursor_update;
-  tool->control_func = move_tool_control;
+  tool->motion_func         = move_tool_motion;
+  tool->arrow_keys_func     = edit_sel_arrow_keys_func;
+  tool->cursor_update_func  = move_tool_cursor_update;
+  tool->control_func        = move_tool_control;
 
   return tool;
 }

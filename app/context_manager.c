@@ -20,6 +20,7 @@
 
 #include "appenv.h"
 #include "gdisplay.h"
+#include "tools.h"
 
 static void
 context_manager_display_changed (GimpContext *context,
@@ -45,6 +46,7 @@ void
 context_manager_init (void)
 {
   GimpContext *context;
+  gint i;
 
   /*  Implicitly create the standard context
    */
@@ -62,6 +64,32 @@ context_manager_init (void)
   gimp_context_set_user (context);
   gimp_context_set_current (context);
 
+  /*  Initialize the tools' contexts  */
+  for (i = 0; i < num_tools; i++)
+    {
+      switch (tool_info->tool_id)
+	{
+	case BUCKET_FILL:
+	case BLEND:
+	case PENCIL:
+	case PAINTBRUSH:
+	case ERASER:
+	case AIRBRUSH:
+	case CLONE:
+	case CONVOLVE:
+	case INK:
+	case DODGEBURN:
+	case SMUDGE:
+	  tool_info[i].tool_context =
+	    gimp_context_new (tool_info[i].private_tip, NULL, NULL);
+	  break;
+
+	default:
+	  tool_info[i].tool_context = NULL;
+	  break;
+	}
+    }
+
   gtk_signal_connect (GTK_OBJECT (context), "display_changed",
 		      GTK_SIGNAL_FUNC (context_manager_display_changed),
 		      NULL);
@@ -73,6 +101,17 @@ context_manager_init (void)
 void
 context_manager_free (void)
 {
+  gint i;
+
+  for (i = 0; i < num_tools; i++)
+    {
+      if (tool_info[i].tool_context != NULL)
+	{
+	  gtk_object_unref (GTK_OBJECT (tool_info[i].tool_context));
+	  tool_info[i].tool_context = NULL;
+	}
+    }
+
   gtk_object_unref (GTK_OBJECT (gimp_context_get_user ()));
   gimp_context_set_user (NULL);
   gimp_context_set_current (NULL);

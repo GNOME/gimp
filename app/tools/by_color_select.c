@@ -75,7 +75,6 @@ static ByColorDialog *  by_color_dialog = NULL;
 
 static void by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
 static void by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
-static void by_color_select_motion         (Tool *, GdkEventMotion *, gpointer);
 static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void by_color_select_control        (Tool *, ToolAction,       gpointer);
 
@@ -397,13 +396,6 @@ by_color_select_button_release (Tool           *tool,
 }
 
 static void
-by_color_select_motion (Tool           *tool,
-			GdkEventMotion *mevent,
-			gpointer        gdisp_ptr)
-{
-}
-
-static void
 by_color_select_cursor_update (Tool           *tool,
 			       GdkEventMotion *mevent,
 			       gpointer        gdisp_ptr)
@@ -474,26 +466,17 @@ tools_new_by_color_select ()
     if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
       gtk_widget_show (by_color_dialog->shell);
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (ByColorSelect *) g_malloc (sizeof (ByColorSelect));
+  tool = tools_new_tool (BY_COLOR_SELECT);
+  private = g_new (ByColorSelect, 1);
 
-  tool->type = BY_COLOR_SELECT;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = by_color_select_button_press;
+  tool->button_press_func   = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
-  tool->motion_func = by_color_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = by_color_select_cursor_update;
-  tool->control_func = by_color_select_control;
+  tool->cursor_update_func  = by_color_select_cursor_update;
+  tool->control_func        = by_color_select_control;
 
   return tool;
 }

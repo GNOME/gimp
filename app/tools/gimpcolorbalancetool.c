@@ -58,11 +58,7 @@ static ColorBalanceDialog *color_balance_dialog = NULL;
 
 /*  color balance action functions  */
 
-static void   color_balance_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   color_balance_button_release (Tool *, GdkEventButton *, gpointer);
-static void   color_balance_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   color_balance_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   color_balance_control        (Tool *, ToolAction,       gpointer);
+static void   color_balance_control (Tool *, ToolAction, gpointer);
 
 static ColorBalanceDialog * color_balance_new_dialog (void);
 
@@ -150,44 +146,6 @@ color_balance (PixelRegion *srcPR,
 /*  by_color select action functions  */
 
 static void
-color_balance_button_press (Tool           *tool,
-			    GdkEventButton *bevent,
-			    gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-static void
-color_balance_button_release (Tool           *tool,
-			      GdkEventButton *bevent,
-			      gpointer        gdisp_ptr)
-{
-}
-
-static void
-color_balance_motion (Tool           *tool,
-		      GdkEventMotion *mevent,
-		      gpointer        gdisp_ptr)
-{
-}
-
-static void
-color_balance_cursor_update (Tool           *tool,
-			     GdkEventMotion *mevent,
-			     gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
-
-static void
 color_balance_control (Tool       *tool,
 		       ToolAction  action,
 		       gpointer    gdisp_ptr)
@@ -227,25 +185,14 @@ tools_new_color_balance ()
       tools_register (COLOR_BALANCE, color_balance_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (ColorBalance *) g_malloc (sizeof (ColorBalance));
+  tool = tools_new_tool (COLOR_BALANCE);
+  private = g_new (ColorBalance, 1);
 
-  tool->type = COLOR_BALANCE;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = color_balance_button_press;
-  tool->button_release_func = color_balance_button_release;
-  tool->motion_func = color_balance_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = color_balance_cursor_update;
   tool->control_func = color_balance_control;
 
   return tool;

@@ -72,11 +72,7 @@ static PosterizeDialog *posterize_dialog = NULL;
 
 
 /*  posterize action functions  */
-static void   posterize_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   posterize_button_release (Tool *, GdkEventButton *, gpointer);
-static void   posterize_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   posterize_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   posterize_control        (Tool *, ToolAction,       gpointer);
+static void   posterize_control (Tool *, ToolAction, gpointer);
 
 static PosterizeDialog * posterize_new_dialog (void);
 
@@ -89,44 +85,6 @@ static gint   posterize_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 
 
 /*  posterize select action functions  */
-
-static void
-posterize_button_press (Tool           *tool,
-			GdkEventButton *bevent,
-			gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisp_ptr;
-
-  tool->gdisp_ptr = gdisp;
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
-}
-
-static void
-posterize_button_release (Tool           *tool,
-			  GdkEventButton *bevent,
-			  gpointer        gdisp_ptr)
-{
-}
-
-static void
-posterize_motion (Tool           *tool,
-		  GdkEventMotion *mevent,
-		  gpointer        gdisp_ptr)
-{
-}
-
-static void
-posterize_cursor_update (Tool           *tool,
-			 GdkEventMotion *mevent,
-			 gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
 
 static void
 posterize_control (Tool       *tool,
@@ -171,25 +129,14 @@ tools_new_posterize ()
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (Posterize *) g_malloc (sizeof (Posterize));
+  tool = tools_new_tool (POSTERIZE);
+  private = g_new (Posterize, 1);
 
-  tool->type = POSTERIZE;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = posterize_button_press;
-  tool->button_release_func = posterize_button_release;
-  tool->motion_func = posterize_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = posterize_cursor_update;
   tool->control_func = posterize_control;
 
   return tool;

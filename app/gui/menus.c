@@ -142,7 +142,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/View/Window Info..."), "<control><shift>I", view_window_info_cmd_callback, 0 },
 
   { N_("/View/---"), NULL, NULL, 0, "<Separator>" },
-  { N_("/View/Toggle Selection"), "<control>T", view_toggle_selection_cmd_callback, 0 },
+  { N_("/View/Toggle Selection"), "<control>T", view_toggle_selection_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Toggle Rulers"), "<control><shift>R", view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Toggle Statusbar"), "<control><shift>S", view_toggle_statusbar_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Toggle Guides"), "<control><shift>T", view_toggle_guides_cmd_callback, 0, "<ToggleItem>" },
@@ -300,8 +300,6 @@ static guint n_paths_entries = sizeof (paths_entries) / sizeof (paths_entries[0]
 static GtkItemFactory *paths_factory = NULL;
 
 static int initialize = TRUE;
-
-extern int num_tools;
 
 void
 menus_get_toolbox_menubar (GtkWidget     **menubar,

@@ -685,15 +685,15 @@ transform_core_draw (Tool *tool)
 }
 
 Tool *
-transform_core_new (int type,
-		    int interactive)
+transform_core_new (ToolType type,
+		    int      interactive)
 {
   Tool * tool;
   TransformCore * private;
   int i;
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (TransformCore *) g_malloc (sizeof (TransformCore));
+  tool = tools_new_tool (type);
+  private = g_new (TransformCore, 1);
 
   private->interactive = interactive;
 
@@ -712,23 +712,16 @@ transform_core_new (int type,
 
   private->grid_coords = private->tgrid_coords = NULL;
 
-  tool->type = type;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;    /*  Do not allow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;   /*  Destroy when the image is dirtied  */
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = transform_core_button_press;
+  tool->button_press_func   = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;
-  tool->motion_func = transform_core_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = transform_core_cursor_update;
-  tool->control_func = transform_core_control;
+  tool->motion_func         = transform_core_motion;
+  tool->cursor_update_func  = transform_core_cursor_update;
+  tool->control_func        = transform_core_control;
 
   return tool;
 }

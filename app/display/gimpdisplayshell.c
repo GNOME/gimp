@@ -97,8 +97,6 @@ static int pixmap_colors[8][3] =
   { 0xFF, 0xFF, 0xFF }, /* h - 255 */
 };
 
-extern int num_tools;
-
 #define COLUMNS   3
 #define ROWS      8
 #define MARGIN    2

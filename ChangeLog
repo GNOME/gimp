@@ -1,3 +1,22 @@
+1999-07-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/[all tools]: the Tool structure is now allocated by a common
+	constructor which sets default values and provides default tool
+	action functions. To get rid of much code duplication there should
+	be a object hierarchy of tools.
+
+	* app/context_manager.c
+	* app/tools.[ch]: create and destroy private contexts for the
+	paint tools on startup and exit. They are not used yet.
+
+	* app/interface.c
+	* app/menus.c
+	* app/tools.h: num_tools is now exported in tools.h
+
+	* app/commands.c
+	* app/gdisplay.c
+	* app/menus.c: made "Toggle Selection" a toggleable menu item.
+
 Thu Jul  1 23:37:38 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* ifscompose_storage.c: New file implementing saving

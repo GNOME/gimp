@@ -881,7 +881,6 @@ ink_button_release (Tool           *tool,
 }
 
 
-
 static void
 dist_smoother_init (InkTool* ink_tool, gdouble initval)
 {
@@ -894,7 +893,6 @@ dist_smoother_init (InkTool* ink_tool, gdouble initval)
       ink_tool->dt_buffer[i] = initval;
     }
 }
-
 
 static gdouble
 dist_smoother_result (InkTool* ink_tool)
@@ -910,7 +908,6 @@ dist_smoother_result (InkTool* ink_tool)
   return (result / (gdouble)DIST_SMOOTHER_BUFFER);
 }
 
-
 static void
 dist_smoother_add (InkTool* ink_tool, gdouble value)
 {
@@ -919,7 +916,6 @@ dist_smoother_add (InkTool* ink_tool, gdouble value)
   if ((++ink_tool->dt_index) == DIST_SMOOTHER_BUFFER)
     ink_tool->dt_index = 0;
 }
-
 
 
 static void
@@ -934,7 +930,6 @@ time_smoother_init (InkTool* ink_tool, guint32 initval)
       ink_tool->ts_buffer[i] = initval;
     }
 }
-
 
 static gdouble
 time_smoother_result (InkTool* ink_tool)
@@ -954,7 +949,6 @@ time_smoother_result (InkTool* ink_tool)
 #endif
 }
 
-
 static void
 time_smoother_add (InkTool* ink_tool, guint32 value)
 {
@@ -963,7 +957,6 @@ time_smoother_add (InkTool* ink_tool, guint32 value)
   if ((++ink_tool->ts_index) == TIME_SMOOTHER_BUFFER)
     ink_tool->ts_index = 0;
 }
-
 
 
 static void
@@ -1073,13 +1066,9 @@ ink_control (Tool       *tool,
 	     ToolAction  action,
 	     gpointer    gdisp_ptr)
 {
-  GDisplay *gdisp;
-  GimpDrawable *drawable;
   InkTool *ink_tool;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   ink_tool = (InkTool *) tool->private;
-  drawable = gimage_active_drawable (gdisp->gimage);
 
   switch (action)
     {
@@ -1102,7 +1091,7 @@ ink_control (Tool       *tool,
 
 static void
 ink_init (InkTool *ink_tool, GimpDrawable *drawable, 
-		 double x, double y)
+	  double x, double y)
 {
   /*  free the block structures  */
   if (undo_tiles)
@@ -1526,9 +1515,9 @@ ink_set_canvas_tiles (int x, int y, int w, int h)
     }
 }
 
-/****************************/
+/**************************/
 /*  Global ink functions  */
-/****************************/
+/**************************/
 
 void
 ink_no_draw (Tool *tool)
@@ -1552,30 +1541,19 @@ tools_new_ink (void)
       ink_options_reset ();
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (InkTool *) g_malloc (sizeof (InkTool));
+  tool = tools_new_tool (INK);
+  private = g_new (InkTool, 1);
 
   private->core = draw_core_new (ink_no_draw);
   private->last_blob = NULL;
 
-  tool->type = INK;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;
-  tool->gdisp_ptr = NULL;
   tool->private = private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = ink_button_press;
+  tool->button_press_func   = ink_button_press;
   tool->button_release_func = ink_button_release;
-  tool->motion_func = ink_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = ink_cursor_update;
-  tool->control_func = ink_control;
+  tool->motion_func         = ink_motion;
+  tool->cursor_update_func  = ink_cursor_update;
+  tool->control_func        = ink_control;
 
   return tool;
 }

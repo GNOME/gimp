@@ -96,7 +96,6 @@ static CRMatrix CR_basis =
 static void   curves_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   curves_button_release (Tool *, GdkEventButton *, gpointer);
 static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   curves_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   curves_control        (Tool *, ToolAction,       gpointer);
 
 static CurvesDialog * curves_new_dialog (void);
@@ -162,38 +161,6 @@ curves_lut_func (CurvesDialog *cd,
     }
   }
   return inten;
-}
-
-/*  curves action functions  */
-
-static void
-curves_button_press (Tool           *tool,
-		     GdkEventButton *bevent,
-		     gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-  GimpDrawable * drawable;
-
-  gdisp = gdisp_ptr;
-  drawable = gimage_active_drawable (gdisp->gimage);
-
-  tool->gdisp_ptr = gdisp;
-
-  if (drawable != tool->drawable)
-    {
-      active_tool->preserve = TRUE;
-      image_map_abort (curves_dialog->image_map);
-      active_tool->preserve = FALSE;
-
-      tool->drawable = drawable;
-
-      curves_dialog->drawable = drawable;
-      curves_dialog->color = drawable_color (drawable);
-      curves_dialog->image_map = image_map_create (gdisp, drawable);
-    }
-
-  if(tool)
-    tool->state = ACTIVE;
 }
 
 static void
@@ -271,6 +238,43 @@ curves_add_point(GimpDrawable * drawable,gint x, gint y,gint cchan)
   curves_dialog->points[cchan][closest_point][1] = curves_dialog->curve[cchan][curvex];
 }
 
+/*  curves action functions  */
+
+static void
+curves_button_press (Tool           *tool,
+		     GdkEventButton *bevent,
+		     gpointer        gdisp_ptr)
+{
+  GDisplay *gdisp;
+  gint x, y;
+  GimpDrawable * drawable;
+
+  gdisp = gdisp_ptr;
+  drawable = gimage_active_drawable (gdisp->gimage);
+
+  tool->gdisp_ptr = gdisp;
+
+  if (drawable != tool->drawable)
+    {
+      active_tool->preserve = TRUE;
+      image_map_abort (curves_dialog->image_map);
+      active_tool->preserve = FALSE;
+
+      tool->drawable = drawable;
+
+      curves_dialog->drawable = drawable;
+      curves_dialog->color = drawable_color (drawable);
+      curves_dialog->image_map = image_map_create (gdisp, drawable);
+    }
+
+  tool->state = ACTIVE;
+
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
+  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_update (curves_dialog, GRAPH | DRAW);
+}
+
 static void
 curves_button_release (Tool           *tool,
 		       GdkEventButton *bevent,
@@ -330,17 +334,6 @@ curves_motion (Tool           *tool,
 }
 
 static void
-curves_cursor_update (Tool           *tool,
-		      GdkEventMotion *mevent,
-		      gpointer        gdisp_ptr)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
-}
-
-static void
 curves_control (Tool       *tool,
 		ToolAction  action,
 		gpointer    gdisp_ptr)
@@ -376,26 +369,18 @@ tools_new_curves ()
       tools_register (CURVES, curves_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (Curves *) g_malloc (sizeof (Curves));
+  tool = tools_new_tool (CURVES);
+  private = g_new (Curves, 1);
 
-  tool->type = CURVES;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->auto_snap_to = TRUE;
+  tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
+
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = curves_button_press;
+  tool->button_press_func   = curves_button_press;
   tool->button_release_func = curves_button_release;
-  tool->motion_func = curves_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = curves_cursor_update;
-  tool->control_func = curves_control;
+  tool->motion_func         = curves_motion;
+  tool->control_func        = curves_control;
 
   return tool;
 }
@@ -507,9 +492,9 @@ curves_free ()
     }
 }
 
-/**************************/
-/*  Select Curves dialog  */
-/**************************/
+/*******************/
+/*  Curves dialog  */
+/*******************/
 
 static CurvesDialog *
 curves_new_dialog ()

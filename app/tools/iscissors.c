@@ -420,36 +420,28 @@ tools_new_iscissors ()
       tools_register (ISCISSORS, (ToolOptions *) iscissors_options);
     }
 
-  tool = (Tool *) g_malloc (sizeof (Tool));
-  private = (Iscissors *) g_malloc (sizeof (Iscissors));
+  tool = tools_new_tool (ISCISSORS);
+  private = g_new (Iscissors, 1);
 
   private->core = draw_core_new (iscissors_draw);
   private->edge_buf = NULL;
   private->kinks = NULL;
   private->mask = NULL;
 
-  tool->type = ISCISSORS;
-  tool->state = INACTIVE;
-  tool->scroll_lock = 0;  /*  Allow scrolling  */
-  tool->auto_snap_to = FALSE;
+  tool->auto_snap_to = FALSE;   /*  Dont't snap to guides   */
+
   tool->private = (void *) private;
 
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-
-  tool->button_press_func = iscissors_button_press;
+  tool->button_press_func   = iscissors_button_press;
   tool->button_release_func = iscissors_button_release;
-  tool->motion_func = iscissors_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
-  tool->modifier_key_func = standard_modifier_key_func;
-  tool->cursor_update_func = rect_select_cursor_update;
-  tool->control_func = iscissors_control;
-  
+  tool->motion_func         = iscissors_motion;
+  tool->cursor_update_func  = rect_select_cursor_update;
+  tool->control_func        = iscissors_control;
+
   last_tool = tool;
-  
+
   iscissors_reset (private);
-  
+
   return tool;
 }
 
