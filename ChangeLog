@@ -1,5 +1,10 @@
 2003-04-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-new-dialog.c: s/NewImageInfo/FileNewDialog/g,
+	cleanup.
+
+2003-04-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockable.[ch]: derive it from GtkBin, not from
 	GtkVBox. Removed "content_spacing" style property.
 

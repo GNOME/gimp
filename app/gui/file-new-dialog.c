@@ -18,17 +18,13 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
-#include "config/gimpconfig-utils.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -37,8 +33,6 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainermenuimpl.h"
-#include "widgets/gimpenummenu.h"
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -58,26 +52,26 @@ typedef struct
 
   Gimp         *gimp;
   gulong        memsize;
-} NewImageInfo;
+} FileNewDialog;
 
 
 /*  local function prototypes  */
 
 static void   file_new_ok_callback     (GtkWidget         *widget,
-                                        NewImageInfo      *info);
+                                        FileNewDialog     *dialog);
 static void   file_new_cancel_callback (GtkWidget         *widget,
-                                        NewImageInfo      *info);
+                                        FileNewDialog     *dialog);
 static void   file_new_reset_callback  (GtkWidget         *widget,
-                                        NewImageInfo      *info);
+                                        FileNewDialog     *dialog);
 static void   file_new_template_notify (GimpTemplate      *template,
                                         GParamSpec        *param_spec,
-                                        NewImageInfo      *info);
+                                        FileNewDialog     *dialog);
 static void   file_new_template_select (GimpContainerMenu *menu,
                                         GimpTemplate      *template,
                                         gpointer           insert_data,
-                                        NewImageInfo      *info);
-static void   file_new_confirm_dialog  (NewImageInfo      *info);
-static void   file_new_create_image    (NewImageInfo      *info);
+                                        FileNewDialog     *dialog);
+static void   file_new_confirm_dialog  (FileNewDialog     *dialog);
+static void   file_new_create_image    (FileNewDialog     *dialog);
 
 
 /*  public functions  */
@@ -86,21 +80,21 @@ void
 file_new_dialog_create (Gimp      *gimp,
                         GimpImage *gimage)
 {
-  NewImageInfo *info;
-  GimpTemplate *template;
-  GtkWidget    *main_vbox;
-  GtkWidget    *table;
-  GtkWidget    *optionmenu;
+  FileNewDialog *dialog;
+  GimpTemplate  *template;
+  GtkWidget     *main_vbox;
+  GtkWidget     *table;
+  GtkWidget     *optionmenu;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
 
-  info = g_new0 (NewImageInfo, 1);
+  dialog = g_new0 (FileNewDialog, 1);
 
-  info->gimp    = gimp;
-  info->memsize = 0;
+  dialog->gimp    = gimp;
+  dialog->memsize = 0;
 
-  info->dialog =
+  dialog->dialog =
     gimp_viewable_dialog_new (NULL,
                               _("New Image"), "new_image",
                               GIMP_STOCK_IMAGE,
@@ -109,22 +103,22 @@ file_new_dialog_create (Gimp      *gimp,
                               "dialogs/file_new.html",
 
                               GIMP_STOCK_RESET, file_new_reset_callback,
-                              info, NULL, NULL, FALSE, FALSE,
+                              dialog, NULL, NULL, FALSE, FALSE,
 
                               GTK_STOCK_CANCEL, file_new_cancel_callback,
-                              info, NULL, NULL, FALSE, TRUE,
+                              dialog, NULL, NULL, FALSE, TRUE,
 
                               GTK_STOCK_OK, file_new_ok_callback,
-                              info, NULL, &info->ok_button, TRUE, FALSE,
+                              dialog, NULL, &dialog->ok_button, TRUE, FALSE,
 
                               NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (info->dialog), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   /*  vbox holding the rest of the dialog  */
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (info->dialog)->vbox),
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox),
 		      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -139,80 +133,81 @@ file_new_dialog_create (Gimp      *gimp,
                              _("From _Template:"),  1.0, 0.5,
                              optionmenu, 1, FALSE);
 
-  info->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), info->template_menu);
-  gtk_widget_show (info->template_menu);
+  dialog->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), dialog->template_menu);
+  gtk_widget_show (dialog->template_menu);
 
-  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (info->template_menu),
+  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (dialog->template_menu),
                                    NULL);
 
-  g_signal_connect (info->template_menu, "select_item",
+  g_signal_connect (dialog->template_menu, "select_item",
                     G_CALLBACK (file_new_template_select),
-                    info);
+                    dialog);
 
   /*  Template editor  */
-  info->editor = gimp_template_editor_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), info->editor, FALSE, FALSE, 0);
-  gtk_widget_show (info->editor);
+  dialog->editor = gimp_template_editor_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
+  gtk_widget_show (dialog->editor);
 
-  g_signal_connect (GIMP_TEMPLATE_EDITOR (info->editor)->template, "notify",
+  g_signal_connect (GIMP_TEMPLATE_EDITOR (dialog->editor)->template, "notify",
                     G_CALLBACK (file_new_template_notify),
-                    info);
+                    dialog);
 
   template = gimp_image_new_get_last_template (gimp, gimage);
-  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (info->editor),
+  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
                                      template);
   g_object_unref (template);
 
-  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (info->editor)->size_se));
+  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se));
 
-  gtk_widget_show (info->dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 
 /*  private functions  */
 
 static void
-file_new_ok_callback (GtkWidget    *widget,
-		      NewImageInfo *info)
+file_new_ok_callback (GtkWidget     *widget,
+		      FileNewDialog *dialog)
 {
-  if (info->memsize > GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size)
-    file_new_confirm_dialog (info);
+  if (dialog->memsize >
+      GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
+    file_new_confirm_dialog (dialog);
   else
-    file_new_create_image (info);
+    file_new_create_image (dialog);
 }
 
 static void
-file_new_cancel_callback (GtkWidget    *widget,
-			  NewImageInfo *info)
+file_new_cancel_callback (GtkWidget     *widget,
+			  FileNewDialog *dialog)
 {
-  gtk_widget_destroy (info->dialog);
-  g_free (info);
+  gtk_widget_destroy (dialog->dialog);
+  g_free (dialog);
 }
 
 static void
-file_new_reset_callback (GtkWidget    *widget,
-			 NewImageInfo *info)
+file_new_reset_callback (GtkWidget     *widget,
+			 FileNewDialog *dialog)
 {
   GimpTemplate *template;
 
   template = gimp_template_new ("foo");
-  gimp_template_set_from_config (template, info->gimp->config);
-  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (info->editor),
+  gimp_template_set_from_config (template, dialog->gimp->config);
+  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
                                      template);
   g_object_unref (template);
 }
 
 static void
-file_new_template_notify (GimpTemplate *template,
-                          GParamSpec   *param_spec,
-                          NewImageInfo *info)
+file_new_template_notify (GimpTemplate  *template,
+                          GParamSpec    *param_spec,
+                          FileNewDialog *dialog)
 {
-  if (info->memsize != template->initial_size)
+  if (dialog->memsize != template->initial_size)
     {
-      info->memsize = template->initial_size;
+      dialog->memsize = template->initial_size;
 
-      gtk_widget_set_sensitive (info->ok_button,
+      gtk_widget_set_sensitive (dialog->ok_button,
                                 ! template->initial_size_too_large);
     }
 }
@@ -221,10 +216,10 @@ static void
 file_new_template_select (GimpContainerMenu *menu,
                           GimpTemplate      *template,
                           gpointer           insert_data,
-                          NewImageInfo      *info)
+                          FileNewDialog     *dialog)
 {
   if (template)
-    gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (info->editor),
+    gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
                                        template);
 }
 
@@ -236,25 +231,25 @@ file_new_confirm_dialog_callback (GtkWidget *widget,
 				  gboolean   create,
 				  gpointer   data)
 {
-  NewImageInfo *info = (NewImageInfo*) data;
+  FileNewDialog *dialog = (FileNewDialog *) data;
 
-  info->confirm_dialog = NULL;
+  dialog->confirm_dialog = NULL;
 
   if (create)
-    file_new_create_image (info);
+    file_new_create_image (dialog);
   else
-    gtk_widget_set_sensitive (info->dialog, TRUE);
+    gtk_widget_set_sensitive (dialog->dialog, TRUE);
 }
 
 static void
-file_new_confirm_dialog (NewImageInfo *info)
+file_new_confirm_dialog (FileNewDialog *dialog)
 {
   gchar *size_str;
   gchar *max_size_str;
   gchar *text;
 
-  size_str     = gimp_memsize_to_string (info->memsize);
-  max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size);
+  size_str     = gimp_memsize_to_string (dialog->memsize);
+  max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size);
 
   text = g_strdup_printf (_("You are trying to create an image with\n"
 			    "an initial size of %s.\n\n"
@@ -270,7 +265,7 @@ file_new_confirm_dialog (NewImageInfo *info)
   g_free (size_str);
   g_free (max_size_str);
 
-  info->confirm_dialog =
+  dialog->confirm_dialog =
     gimp_query_boolean_box (_("Confirm Image Size"),
 			    gimp_standard_help_func,
 			    "dialogs/file_new.html#confirm_size",
@@ -279,31 +274,31 @@ file_new_confirm_dialog (NewImageInfo *info)
 			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
 			    NULL, NULL,
 			    file_new_confirm_dialog_callback,
-			    info);
+			    dialog);
 
   g_free (text);
 
-  gtk_window_set_transient_for (GTK_WINDOW (info->confirm_dialog),
-				GTK_WINDOW (info->dialog));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog->confirm_dialog),
+				GTK_WINDOW (dialog->dialog));
 
-  gtk_widget_set_sensitive (info->dialog, FALSE);
+  gtk_widget_set_sensitive (dialog->dialog, FALSE);
 
-  gtk_widget_show (info->confirm_dialog);
+  gtk_widget_show (dialog->confirm_dialog);
 }
 
 static void
-file_new_create_image (NewImageInfo *info)
+file_new_create_image (FileNewDialog *dialog)
 {
   GimpTemplate *template;
 
   template =
-    gimp_template_editor_get_template (GIMP_TEMPLATE_EDITOR (info->editor));
+    gimp_template_editor_get_template (GIMP_TEMPLATE_EDITOR (dialog->editor));
 
-  gtk_widget_destroy (info->dialog);
+  gtk_widget_destroy (dialog->dialog);
 
-  gimp_template_create_image (info->gimp, template);
-  gimp_image_new_set_last_template (info->gimp, template);
+  gimp_template_create_image (dialog->gimp, template);
+  gimp_image_new_set_last_template (dialog->gimp, template);
   g_object_unref (template);
 
-  g_free (info);
+  g_free (dialog);
 }
