@@ -317,10 +317,10 @@ typedef struct
 typedef struct
 {
   GimpTile *tile;
-  gint   col;
-  gint   row;
-  gint   shadow;
-  gint   dirty;
+  gint      col;
+  gint      row;
+  gint      shadow;
+  gint      dirty;
 } TileKeeper;
 
 typedef struct _GradientMenu GradientMenu;
@@ -406,10 +406,10 @@ typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
  **/
 
 static void    plugin_query (void);
-static void    plugin_run   (gchar   *name,
-			     gint     nparams,
+static void    plugin_run   (gchar      *name,
+			     gint        nparams,
 			     GimpParam  *param,
-			     gint    *nreturn_vals,
+			     gint       *nreturn_vals,
 			     GimpParam **return_vals);
 
 static void     plug_in_parse_gflare_path (void);
@@ -598,7 +598,7 @@ static gchar *gflare_menu_modes[] =
 };
 
 static gint32              image_ID;
-static GimpDrawable          *drawable;
+static GimpDrawable       *drawable;
 static DrawableInfo        dinfo;
 static TileKeeper         *tk_read;
 static TileKeeper         *tk_write;
@@ -831,14 +831,14 @@ plugin_query (void)
 }
 
 void
-plugin_run (gchar   *name,
-	    gint     nparams,
+plugin_run (gchar      *name,
+	    gint        nparams,
 	    GimpParam  *param,
-	    gint    *nreturn_vals,
+	    gint       *nreturn_vals,
 	    GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunModeType run_mode;
+  static GimpParam  values[1];
+  GimpRunModeType   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   /* Initialize */
@@ -1063,21 +1063,26 @@ plugin_do (void)
 static void
 plugin_do_non_asupsample (void)
 {
-  GimpPixelRgn	src_rgn, dest_rgn;
-  gpointer	pr;
-  guchar	*src_row, *dest_row;
-  guchar	*src, *dest;
-  gint		row, col;
-  gint		x, y;
-  gint		b;
-  gint		progress, max_progress;
-  guchar	src_pix[4], dest_pix[4];
+  GimpPixelRgn  src_rgn, dest_rgn;
+  gpointer      pr;
+  guchar       *src_row;
+  guchar       *dest_row;
+  guchar       *src;
+  guchar       *dest;
+  gint          row, col;
+  gint          x, y;
+  gint          b;
+  gint          progress, max_progress;
+  guchar        src_pix[4];
+  guchar        dest_pix[4];
 
   progress = 0;
   max_progress = (dinfo.x2 - dinfo.x1) * (dinfo.y2 - dinfo.y1);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, TRUE, TRUE);
 
   for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process (pr))
@@ -2769,16 +2774,19 @@ dlg_preview_init_func (Preview *preview, gpointer data)
 /* render preview
    do what "preview" means, ie. render lense flare effect onto drawable */
 static void
-dlg_preview_render_func (Preview *preview, guchar *dest, gint y, gpointer data)
+dlg_preview_render_func (Preview  *preview,
+			 guchar   *dest,
+			 gint      y,
+			 gpointer  data)
 {
-  GimpPixelRgn	srcPR;
-  gint		x;
-  gint		dx, dy;		/* drawable x, y */
-  guchar	*src_row, *src;
-  guchar	src_pix[4], dest_pix[4];
-  gint		b;
+  GimpPixelRgn  srcPR;
+  gint          x;
+  gint          dx, dy;		/* drawable x, y */
+  guchar       *src_row, *src;
+  guchar        src_pix[4], dest_pix[4];
+  gint          b;
 
-  dy = dlg->pwin.y0 + (double) (dlg->pwin.y1 - dlg->pwin.y0) * y / DLG_PREVIEW_HEIGHT;
+  dy = dlg->pwin.y0 + (gdouble) (dlg->pwin.y1 - dlg->pwin.y0) * y / DLG_PREVIEW_HEIGHT;
   if (dy < 0 || dy >= drawable->height)
     {
       memset (dest, GRAY50, 3 * DLG_PREVIEW_WIDTH);
@@ -2786,7 +2794,8 @@ dlg_preview_render_func (Preview *preview, guchar *dest, gint y, gpointer data)
     }
 
   src_row = g_new (guchar, drawable->bpp * drawable->width);
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
   gimp_pixel_rgn_get_row (&srcPR, src_row, 0, dy, drawable->width);
 
   for (x = 0; x < DLG_PREVIEW_HEIGHT; x++)
@@ -3042,8 +3051,8 @@ dlg_position_entry_callback (GtkWidget *widget, gpointer data)
 {
   gint x, y;
 
-  x = ROUND (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  y = ROUND (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
+  x = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
+  y = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
   DEBUG_PRINT (("dlg_position_entry_callback\n"));
 

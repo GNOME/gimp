@@ -32,9 +32,9 @@
 
 typedef struct
 {
-  gdouble radius;
-  gint    horizontal;
-  gint    vertical;
+  gdouble  radius;
+  gboolean horizontal;
+  gboolean vertical;
 } BlurValues;
 
 typedef struct
@@ -53,35 +53,35 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      gauss_rle (GimpDrawable *drawable,
-			    gdouble    horizontal,
-			    gdouble    vertical);
+			    gdouble       horizontal,
+			    gdouble       vertical);
 
 /*
  * Gaussian blur interface
  */
-static gint      gauss_rle_dialog   (void);
-static gint      gauss_rle2_dialog  (gint32     image_ID, 
-				     GimpDrawable *drawable);
+static gint      gauss_rle_dialog  (void);
+static gint      gauss_rle2_dialog (gint32        image_ID, 
+				    GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
  */
 static gint *    make_curve        (gdouble    sigma,
-				    gint *     length);
-static void      run_length_encode (guchar *   src,
-				    gint *     dest,
+				    gint      *length);
+static void      run_length_encode (guchar    *src,
+				    gint      *dest,
 				    gint       bytes,
 				    gint       width);
 
-static void      gauss_ok_callback     (GtkWidget *widget,
-					gpointer   data);
+static void      gauss_ok_callback (GtkWidget *widget,
+				    gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -184,10 +184,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -424,7 +424,7 @@ gauss_rle_dialog (void)
 
 
 static gint
-gauss_rle2_dialog (gint32     image_ID,
+gauss_rle2_dialog (gint32        image_ID,
 		   GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -550,8 +550,8 @@ separate_alpha (guchar *buf,
 
 static void
 gauss_rle (GimpDrawable *drawable,
-	   gdouble    horz,
-	   gdouble    vert)
+	   gdouble       horz,
+	   gdouble       vert)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint    width, height;

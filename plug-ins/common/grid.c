@@ -57,22 +57,22 @@
 
 /* Declare local functions. */
 static void   query  (void);
-static void   run    (gchar   *name,
-		      gint     nparams,
+static void   run    (gchar      *name,
+		      gint        nparams,
 		      GimpParam  *param,
-		      gint    *nreturn_vals,
+		      gint       *nreturn_vals,
 		      GimpParam **return_vals);
 
-static guchar      best_cmap_match (guchar    *cmap, 
-				    gint       ncolors,
-				    guchar    *color);
-static void        doit            (gint32     image_ID, 
+static guchar      best_cmap_match (guchar       *cmap, 
+				    gint          ncolors,
+				    guchar       *color);
+static void        doit            (gint32        image_ID, 
 				    GimpDrawable *drawable, 
-				    gboolean   preview_mode);
-static gint        dialog          (gint32     image_ID, 
+				    gboolean      preview_mode);
+static gint        dialog          (gint32        image_ID, 
 				    GimpDrawable *drawable);
 static GtkWidget * preview_widget  (GimpDrawable *drawable);
-static void        fill_preview    (GtkWidget *preview_widget, 
+static void        fill_preview    (GtkWidget    *preview_widget, 
 				    GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -163,10 +163,10 @@ void query (void)
 }
 
 static void
-run (gchar   *name, 
-     gint     n_params, 
+run (gchar      *name, 
+     gint        n_params, 
      GimpParam  *param, 
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -326,9 +326,9 @@ pix_composite (guchar   *p1,
 
 
 static void
-doit (gint32     image_ID,
+doit (gint32        image_ID,
       GimpDrawable *drawable,
-      gboolean   preview_mode)
+      gboolean      preview_mode)
 {
   GimpPixelRgn srcPR, destPR;
   gint width, height, bytes;
@@ -523,19 +523,19 @@ ok_callback (GtkWidget *widget,
   run_flag = TRUE;
 
   entry = gtk_object_get_data (GTK_OBJECT (data), "width");
-  grid_cfg.hwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.vwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.iwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.vwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.iwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
   
   entry = gtk_object_get_data (GTK_OBJECT (data), "space");
-  grid_cfg.hspace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.vspace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.ispace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.vspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.ispace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
  
   entry = gtk_object_get_data (GTK_OBJECT (data), "offset");
-  grid_cfg.hoffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.voffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.ioffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hoffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.voffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.ioffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
@@ -605,30 +605,30 @@ update_preview_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   GimpDrawable *drawable;
-  GtkWidget *entry;
+  GtkWidget    *entry;
 
   drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
 
   entry = gtk_object_get_data (GTK_OBJECT (widget), "width");
-  grid_cfg.hwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.vwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.iwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.vwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.iwidth = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
   entry = gtk_object_get_data (GTK_OBJECT (widget), "space");
-  grid_cfg.hspace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.vspace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.ispace = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.vspace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.ispace = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
   entry = gtk_object_get_data (GTK_OBJECT (widget), "offset");
-  grid_cfg.hoffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
-  grid_cfg.voffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
-  grid_cfg.ioffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
+  grid_cfg.hoffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0));
+  grid_cfg.voffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1));
+  grid_cfg.ioffset = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2));
 
   doit (0, drawable, TRUE); /* we can set image_ID = 0 'cause we dont use it */
 }
 
 static gint
-dialog (gint32     image_ID,
+dialog (gint32        image_ID,
 	GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -981,20 +981,20 @@ preview_widget (GimpDrawable *drawable)
 }
 
 static void
-fill_preview (GtkWidget *widget, 
+fill_preview (GtkWidget    *widget, 
 	      GimpDrawable *drawable)
 {
   GimpPixelRgn  srcPR;
-  gint       width;
-  gint       height;
-  gint       x1, x2, y1, y2;
-  gint       bpp;
-  gint       x, y;
-  guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1;
-  guchar    *even, *odd;
+  gint          width;
+  gint          height;
+  gint          x1, x2, y1, y2;
+  gint          bpp;
+  gint          x, y;
+  guchar       *src;
+  gdouble       r, g, b, a;
+  gdouble       c0, c1;
+  guchar       *p0, *p1;
+  guchar       *even, *odd;
   
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 

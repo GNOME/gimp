@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -31,9 +32,9 @@
 
 typedef struct
 {
-  gdouble radius;
-  gint    horizontal;
-  gint    vertical;
+  gdouble  radius;
+  gboolean horizontal;
+  gboolean vertical;
 } BlurValues;
 
 typedef struct
@@ -52,41 +53,41 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam     *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
-static void      gauss_iir        (GimpDrawable *drawable,
-				   gdouble    horizontal,
-				   gdouble    vertical);
+static void      gauss_iir         (GimpDrawable *drawable,
+				    gdouble       horizontal,
+				    gdouble       vertical);
 
 /*
  * Gaussian blur interface
  */
-static gint      gauss_iir_dialog   (void);
-static gint      gauss_iir2_dialog  (gint32     image_ID, 
-				     GimpDrawable *drawable);
+static gint      gauss_iir_dialog  (void);
+static gint      gauss_iir2_dialog (gint32        image_ID, 
+				    GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
  */
-static void      find_constants   (gdouble n_p[],
-				   gdouble n_m[],
-				   gdouble d_p[],
-				   gdouble d_m[],
-				   gdouble bd_p[],
-				   gdouble bd_m[],
-				   gdouble std_dev);
-static void      transfer_pixels  (gdouble * src1,
-				   gdouble * src2,
-				   guchar *  dest,
-				   gint      bytes,
-				   gint      width);
+static void      find_constants    (gdouble  n_p[],
+				    gdouble  n_m[],
+				    gdouble  d_p[],
+				    gdouble  d_m[],
+				    gdouble  bd_p[],
+				    gdouble  bd_m[],
+				    gdouble  std_dev);
+static void      transfer_pixels   (gdouble *src1,
+				    gdouble *src2,
+				    guchar  *dest,
+				    gint     bytes,
+				    gint     width);
 
-static void      gauss_ok_callback     (GtkWidget *widget,
-					gpointer   data);
+static void      gauss_ok_callback (GtkWidget *widget,
+				    gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -188,10 +189,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -428,7 +429,7 @@ gauss_iir_dialog (void)
 
 
 static gint
-gauss_iir2_dialog (gint32     image_ID,
+gauss_iir2_dialog (gint32        image_ID,
 		   GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -555,8 +556,8 @@ separate_alpha (guchar *buf,
 
 static void
 gauss_iir (GimpDrawable *drawable,
-	   gdouble    horz,
-	   gdouble    vert)
+	   gdouble       horz,
+	   gdouble       vert)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint width, height;

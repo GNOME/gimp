@@ -1,5 +1,15 @@
 2000-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tile.c
+	* plug-ins/gflare/gflare.c: RINT (gimp_size_entry_get_refval ()),
+	indentation.
+
+2000-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/resize.c: same RINT (gimp_size_entry_get_refval ()) fix as
 	below and cleanup.
 

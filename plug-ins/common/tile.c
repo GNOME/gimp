@@ -440,9 +440,9 @@ tile_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   tvals.new_width =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 0);
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 0));
   tvals.new_height =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 1);
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 1));
 
   tvals.constrain =
     gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (tint.chainbutton));

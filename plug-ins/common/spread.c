@@ -56,30 +56,30 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      spread (GimpDrawable *drawable);
 
-static gint      spread_dialog          (gint32     image_ID,
+static gint      spread_dialog          (gint32        image_ID,
 					 GimpDrawable *drawable);
-static void      spread_ok_callback     (GtkWidget *widget,
-				         gpointer   data);
+static void      spread_ok_callback     (GtkWidget    *widget,
+				         gpointer      data);
 
 static GimpTile *   spread_pixel (GimpDrawable *drawable,
-			       GimpTile     *tile,
-			       gint       x1,
-			       gint       y1,
-			       gint       x2,
-			       gint       y2,
-			       gint       x,
-			       gint       y,
-			       gint      *row,
-			       gint      *col,
-			       guchar    *pixel);
+				  GimpTile     *tile,
+				  gint          x1,
+				  gint          y1,
+				  gint          x2,
+				  gint          y2,
+				  gint          x,
+				  gint          y,
+				  gint         *row,
+				  gint         *col,
+				  guchar       *pixel);
 
 
 /***** Local vars *****/
@@ -138,10 +138,10 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -239,8 +239,8 @@ run (gchar  *name,
 static void
 spread (GimpDrawable *drawable)
 {
-  GimpPixelRgn dest_rgn;
-  GimpTile   * tile = NULL;
+  GimpPixelRgn  dest_rgn;
+  GimpTile     *tile = NULL;
   gint      row = -1;
   gint      col = -1;
   gpointer  pr;
@@ -362,7 +362,7 @@ spread (GimpDrawable *drawable)
 
 
 static gint
-spread_dialog (gint32     image_ID,
+spread_dialog (gint32        image_ID,
 	       GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -447,15 +447,15 @@ spread_ok_callback (GtkWidget *widget,
 static GimpTile *
 spread_pixel (GimpDrawable *drawable,
 	      GimpTile     *tile,
-	      gint       x1,
-	      gint       y1,
-	      gint       x2,
-	      gint       y2,
-	      gint       x,
-	      gint       y,
-	      gint      *row,
-	      gint      *col,
-	      guchar    *pixel)
+	      gint          x1,
+	      gint          y1,
+	      gint          x2,
+	      gint          y2,
+	      gint          x,
+	      gint          y,
+	      gint         *row,
+	      gint         *col,
+	      guchar       *pixel)
 {
   static guchar empty_pixel[4] = {0, 0, 0, 0};
   guchar *data;
