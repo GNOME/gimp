@@ -1,3 +1,7 @@
+2001-07-17  Marius Andreiana  <mandreiana@yahoo.com>
+
+	* configure.in: Added ro (Romanian) to ALL_LINGUAS
+
 2001-07-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display_cmds.c
