@@ -36,7 +36,7 @@
 # fuzzy -> udflydende
 # gradient -> farveovergang
 # guide -> hjælpelinje
-# hue -> glød
+# hue -> farvetone
 # module, plugin -> [udvidelses]modul, [program]udvidelse (når der mere er tale om modulets funktionalitet)
 # magenta -> lilla
 # merge -> forén
@@ -835,7 +835,7 @@ msgstr "B"
 #: app/color_select.c:251 app/layers_dialog.c:389 app/paint_funcs.c:99
 #: app/tool_options.c:934
 msgid "Hue"
-msgstr "Glød"
+msgstr "Farvetone"
 
 #: app/color_select.c:252 app/layers_dialog.c:390 app/paint_funcs.c:100
 #: app/tool_options.c:935
@@ -1946,11 +1946,11 @@ msgstr "Almindelig RGB"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (glød mod uret)"
+msgstr "HSV (farvetone mod uret)"
 
 #: app/gradient.c:654
 msgid "HSV (clockwise hue)"
-msgstr "HSV (glød med uret)"
+msgstr "HSV (farvetone med uret)"
 
 #: app/gradient.c:910
 msgid "Gradient Editor"
@@ -2313,11 +2313,11 @@ msgstr "Information om kanal:"
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
 msgid "Hue-Saturation"
-msgstr "Glød/mætning"
+msgstr "Farvetone/mætning"
 
 #: app/hue_saturation.c:292
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Glød/mætning virker kun på tegneobjekter med RGB-farver."
+msgstr "Farvetone/mætning virker kun på tegneobjekter med RGB-farver."
 
 #: app/hue_saturation.c:360
 msgid "Master"
@@ -2337,12 +2337,12 @@ msgstr "M"
 
 #: app/hue_saturation.c:451
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "Justeringer for glød/lys/mætning"
+msgstr "Justeringer for farvetone/lys/mætning"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
 msgid "Hue:"
-msgstr "Glød:"
+msgstr "Farvetone:"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
@@ -3971,7 +3971,7 @@ msgstr "Slet"
 
 #: app/paintbrush.c:224
 msgid "Fade Out"
-msgstr "Fade ud"
+msgstr "Falmen"
 
 #. the gradient type
 #: app/paintbrush.c:303
@@ -5634,15 +5634,15 @@ msgstr "Justér lysstyrke og kontrast"
 
 #: app/tools.c:1083
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Billede/Farver/Glød og mætning"
+msgstr "/Billede/Farver/Farvetone og mætning"
 
 #: app/tools.c:1088
 msgid "Adjust hue and saturation"
-msgstr "Justér farveglød og mætning"
+msgstr "Justér farvetone og mætning"
 
 #: app/tools.c:1111
 msgid "/Image/Colors/Posterize..."
-msgstr "/Billede/Farver/Posterisér"
+msgstr "/Billede/Farver/Posterisér..."
 
 #: app/tools.c:1116
 msgid "Reduce image to a fixed numer of colors"
@@ -5741,7 +5741,7 @@ msgstr "Korrigerende"
 #. the show grid toggle button
 #: app/transform_tool.c:262
 msgid "Show Grid"
-msgstr "Vis net"
+msgstr "Vis gitter"
 
 #: app/transform_tool.c:273
 msgid "Density:"

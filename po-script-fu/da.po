@@ -450,11 +450,11 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/3d-omrids..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/Alien-glød..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/Alienglød..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/Alien-neon..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/Alienneon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
@@ -637,21 +637,20 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Værktøjer/Skrifttypekort..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alien-glød/Pil..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Pil..."
 
 # 'bullet' som i punktopstilling
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alien-glød/Punkt..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Punkt..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alien-glød/Knap..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Knap..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
-"<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alien-glød/Vandret linje..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Hjemmesidetemaer/Alienglød/Vandret linje..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
@@ -1523,7 +1522,7 @@ msgstr "Sammenstødsgrad"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr "Glødgrad"
+msgstr "Farvetonegrad"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"

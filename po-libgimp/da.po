@@ -32,7 +32,7 @@ msgstr "kan ikke håndtere lag"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
-msgstr "Sammenflet synlige lag"
+msgstr "Forén synlige lag"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
