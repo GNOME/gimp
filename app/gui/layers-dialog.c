@@ -286,8 +286,8 @@ lc_dialog_create (int gimage_id)
 			  &lc_shell);
       gtk_quit_add_destroy (1, GTK_OBJECT (lc_shell));
 
-      lc_subshell = gtk_vbox_new(FALSE, 1);
-      gtk_box_pack_start (GTK_BOX(GTK_DIALOG(lc_shell)->vbox), lc_subshell, TRUE, TRUE, 0);
+      lc_subshell = gtk_vbox_new(FALSE, 2);
+      gtk_box_pack_start (GTK_BOX(GTK_DIALOG(lc_shell)->vbox), lc_subshell, TRUE, TRUE, 2);
 
       /*  The hbox to hold the image option menu box  */
       util_box = gtk_hbox_new (FALSE, 1);
@@ -309,7 +309,7 @@ lc_dialog_create (int gimage_id)
       gtk_widget_show (util_box);
 
       separator = gtk_hseparator_new ();
-      gtk_box_pack_start (GTK_BOX(lc_subshell), separator, FALSE, TRUE, 5);
+      gtk_box_pack_start (GTK_BOX(lc_subshell), separator, FALSE, TRUE, 2);
       gtk_widget_show (separator);
 
       /*  The notebook widget  */
@@ -332,15 +332,16 @@ lc_dialog_create (int gimage_id)
 
       gtk_widget_show (lc_subshell);
 
+      gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
       /*  The close button  */
       button = gtk_button_new_with_label ("Close");
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG(lc_shell)->vbox), button, FALSE, FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG(lc_shell)->action_area), button, TRUE, TRUE, 0);
       gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) lc_dialog_close_callback,
 			  GTK_OBJECT (lc_shell));
       gtk_widget_show (button);
 
-      gtk_widget_hide (GTK_DIALOG(lc_shell)->action_area);
+      gtk_widget_show (GTK_DIALOG(lc_shell)->action_area);
 
       gtk_widget_show (lc_shell);
 

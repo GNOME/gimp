@@ -100,6 +100,7 @@ struct _BlendOptions
   int          paint_mode;
   GradientType gradient_type;
   RepeatMode   repeat;
+  GtkWidget   *repeat_mode_menu;
   int          supersample;
   GtkWidget   *frame;
   int          max_depth;
@@ -250,6 +251,8 @@ gradient_type_callback (GtkWidget *w,
 			gpointer   client_data)
 {
   blend_options->gradient_type = (GradientType) client_data;
+  gtk_widget_set_sensitive (blend_options->repeat_mode_menu, 
+			    (blend_options->gradient_type < 6));
 }
 
 static void
@@ -443,6 +446,8 @@ create_blend_options ()
 		   GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
   gtk_widget_show(label);
   gtk_widget_show(rt_option_menu);
+
+  options->repeat_mode_menu = rt_option_menu;
 
   /* show the whole table */
 

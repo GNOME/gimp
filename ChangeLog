@@ -1,3 +1,9 @@
+Wed Apr  1 20:04:26 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/layers_dialog.c: applied gimp-simon-980331-0
+	* app/blend.c: change the repeat_mode_menu to insensitive when
+	gradient_type is Shapeburst*
+
 Wed Apr 01 04:07:29 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c: Only destroy the current tool if you change
