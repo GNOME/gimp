@@ -1,1 +1,175 @@
-GIMP 1.1 Released!
+GIMP 1.1 - New features                    -*- text -*-
+
+The following list tries to describe all the new features that are
+already implemented or currently being worked on. I cannot guarantee
+that I describe everything correctly, since for most items I haven't
+read the code but only looked at the ChangeLog entry. I can however
+guarantee that a few things are missing.
+
+Older items are on top, newer ones further down the list. At the end a
+few common things are listed.
+
+XInput support
+   GIMP does now support special input devices like drawing tablets by
+   default. It depends on the device being supported by your
+   XServer. This is true for example for Wacom drawing
+   tablets. Support for multiple devices, pressure and tilt
+   sensitivity is slowly added to all paint tools.
+
+Ink tool
+   A nice new toy that really comes to life if you have an extended
+   input device as described above.
+
+'File New' dialog
+   The new dialog for creating new images allows to use real life
+   units like centimeters and inches along with a resolution entry.
+
+Hex display
+   A small but nifty feature was added to the Color Picker: It know
+   displays the HEX triplet of the selected color. Useful for WEB
+   artists.
+
+Pop-up button
+   The small rectangle between the rulers in the upper left corner of
+   the image window now gives access to the menu. Useful for people
+   with tablets or two-button mice.
+
+Status bar
+   The image display know has a status bar. Plug-ins display their
+   progress there and your mouse coordinates are displayed. Most tools
+   use it too. The Selection tool for example shows the selection size
+   while you drag.  And don't worry, it's possible to hide the
+   status bar to save screen estate.
+
+GUI enhancements
+   Lots of nifty enhancements to the user interface. Spinbuttons are
+   used in a lot of places. More stuff like that has to be added in
+   the future...
+
+Session management
+   GIMP remembers window positions and sizes and restores them on
+   startup. Not currently working.
+
+Selections
+   New algorithms are now used to grow and shrink the selection. The
+   result looks much better!
+
+PDB interface
+   A lot more internal functions are now exported to the PDB. This
+   should for example allow the GIMP Animation Plugin to work without
+   changes to the GIMP core.
+
+Better tile-caching
+   Tiles are now more intelligently cached and a threaded process
+   tries to swap out dirty tiles before you run out of physical
+   memory.
+
+Copy On Write
+   The MAD-COW patches that appeared too late to get integrated into
+   GIMP-1.0 are now integrated. And...its FASTER!!
+
+Document Index
+   The document index keeps track of the images you used with The
+   GIMP. You can even drag in an image from a file-manager (GNOME MC
+   for example).
+
+Editable Brushes
+   Well, editable brushes still need some work, but the basics are
+   there...
+
+Fixed size selections
+   The size or the aspect ratio of selections can now be entered
+   numerically as well.
+
+Script-Fu interface improvements
+   The Script-Fu dialog now allows a whole bunch of entry widgets,
+   like selectors for fonts, brushes, gradients and patterns. Strings
+   can be entered without the nasty quotes and numerical entries can
+   use sliders and spinbuttons.  Most of the scripts were already
+   updated.
+
+Quick Reference
+   The Quick Reference sheet looks much better and holds more
+   information. A must-have for your desktop.
+
+Transform Tool UI
+   The user interface for the Transform tool has seen a major
+   overhaul. It now offers a new 'Corrective' mode that for example
+   makes it easy to correct slightly rotated scans.
+
+Color representation
+   GIMP now uses GdkRGB to provide better dithering for non truecolor
+   displays. This should also speed GIMP up a bit.
+
+Parasites
+   Arbitrary data can be attached to an image and be retrieved later.
+
+Tattoos
+   A unique stamp can be attached to drawables. That way a plug-in can
+   easily keep track of layers.
+
+Dialogs
+   A few dialogs can now be controlled via the PDB. That allows a
+   plug-in to use the internal dialogs to select brushes, patterns and
+   gradients.
+
+Idle-Renderer
+   Display re-rendering is now handled in an interruptible
+   asynchronous thread. This makes The GIMP more responsive especially
+   when working with the Layers-dialog.
+
+Resolution support
+   Each image now has a resolution associated with it. This needs to
+   be integrated better into the GUI, but there are already a few file
+   plug-ins that make use of this.
+
+GimpPerl
+   The GIMP-Perl extension is now part of GIMP-1.1.
+
+Monitor resolution
+   The image can now be displayed in float scale factors. If GIMP
+   knows about your monitor resolution it displays one inch as one
+   inch. Still needs some work...
+
+Help in the DB Browser
+   The DB Browser now also display the help that is available for a
+   lot of functions in the PDB.
+
+Internationalization
+   National Language Support is coming!
+
+New plug-ins
+   Various new plug-ins were added. More have appeared in the Registry
+   and wait to be added or updated. A few nice ones that are now
+   included:
+
+      * WaterSelect - a nifty way to select colors
+      * NewsPrint - whee, you have to see that 
+      * Guillotine - slices the image up along its guides 
+
+Internals
+   Lots of changes were made to GIMP internals that I don't understand
+   correctly, like objectification and removal of the image ID
+   system. Read the ChangeLog yourself to figure this out.
+
+GTK+ compatibility
+   GIMP 1.1 makes use of the development version of GTK+. Therefore a
+   whole lot of work has been put in following the GTK+ development
+   and keeping The GIMP in sync.
+
+Plug-ins and Scripts
+   Various plug-ins and scripts not mentioned above have been updated
+   or fixed to work with changes in the GIMP core or GTK+. One day I
+   might add a list of all changed plug-ins to this list...
+
+Miscellaneous
+   - The painting functions (brush, pencil, airbrush, etc.) have been
+     optimized.
+   - The GAP plugin, which has some essential animation features, is
+     being integrated into GIMP.
+   - The font selector has been redesigned.
+   - The new, slightly incomplete MAINTAINERS file should help track
+     responsibility and expertise for various GIMP parts.
+
+Copyright 1998 by Sven Neumann
+Modified by Zach Beane

@@ -24,6 +24,7 @@
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpparasite.h"
 #include "parasitelist.h"
 
 #include "libgimp/parasite.h"

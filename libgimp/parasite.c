@@ -24,6 +24,7 @@
 #include <string.h>
 #include <glib.h>
 
+#ifdef DEBUG
 static void parasite_print(Parasite *p)
 {
   if (p == NULL)
@@ -41,6 +42,7 @@ static void parasite_print(Parasite *p)
   if (p->size > 0)
     printf("\tdata: %p\n", p->data);
 }
+#endif
 
 Parasite *
 parasite_new (const char *name, guint32 flags,
