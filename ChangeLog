@@ -1,3 +1,11 @@
+Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/dbbrowser/dbbrowser_util.c: make text entry for function
+	name read-only
+
+	* plug-ins/film/film.c
+	* plug-ins/animationplay/animationplay.c: minor cleanups
+
 Thu Apr 16 19:46:46 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/interp_slib.c: changed the link to 

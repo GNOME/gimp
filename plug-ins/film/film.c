@@ -878,7 +878,7 @@ draw_number (gint32 layer_ID,
 
 {char buf[32];
  GDrawable *drw;
- GParam *params;
+ GParam *params = NULL;
  gint nreturn_vals, k, delta, max_delta;
  gint32 image_ID, descent;
  char *family = filmvals.number_fontf;

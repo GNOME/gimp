@@ -268,6 +268,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   label = gtk_entry_new();
   gtk_entry_set_text(GTK_ENTRY(label),dbbrowser->selected_scheme_proc_name);
+  gtk_entry_set_editable(GTK_ENTRY(label), FALSE);
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    1, 4, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
