@@ -83,5 +83,7 @@ gboolean      gimp_text_buffer_save      (GtkTextBuffer   *buffer,
 void      gimp_toggle_button_set_visible (GtkToggleButton *toggle,
                                           GtkWidget       *widget);
 
+GClosure * gimp_action_get_accel_closure (GtkAction       *action);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

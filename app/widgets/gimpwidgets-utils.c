@@ -871,3 +871,32 @@ gimp_toggle_button_set_visible (GtkToggleButton *toggle,
     gtk_widget_hide (widget);
 }
 
+#ifdef __GNUC__
+#warning FIXME: remove this function as soon as bug #141750 is fixed.
+#endif
+GClosure *
+gimp_action_get_accel_closure (GtkAction *action)
+{
+  GtkWidget *menu_item;
+  GClosure  *closure = NULL;
+
+  g_return_val_if_fail (GTK_IS_ACTION (action), NULL);
+
+  menu_item = gtk_action_create_menu_item (action);
+
+  if (GTK_IS_MENU_ITEM (menu_item) &&
+      GTK_IS_ACCEL_LABEL (GTK_BIN (menu_item)->child))
+    {
+      GtkWidget *accel_label = GTK_BIN (menu_item)->child;
+
+      g_object_get (accel_label, "accel-closure", &closure, NULL);
+    }
+
+  if (menu_item)
+    gtk_object_sink (GTK_OBJECT (menu_item));
+
+  if (closure)
+    g_closure_unref (closure);
+
+  return closure;
+}

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpactionview.h
- * Copyright (C) 2004  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2005  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ enum
   GIMP_ACTION_VIEW_COLUMN_NAME,
   GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
   GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
-  GIMP_ACTION_VIEW_COLUMN_MENU_ITEM,
+  GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE,
   GIMP_ACTION_VIEW_NUM_COLUMNS
 };
 
@@ -60,8 +60,6 @@ struct _GimpActionView
 struct _GimpActionViewClass
 {
   GtkTreeViewClass  parent_class;
-
-  void (* changed) (GimpActionView *view);
 };
 
 

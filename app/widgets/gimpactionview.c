@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpactionview.c
- * Copyright (C) 2004  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2005  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -214,13 +214,13 @@ gimp_action_view_new (GimpUIManager *manager,
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
   store = gtk_tree_store_new (GIMP_ACTION_VIEW_NUM_COLUMNS,
-                              GTK_TYPE_ACTION,        /* COLUMN_ACTION     */
-                              G_TYPE_STRING,          /* COLUMN_STOCK_ID   */
-                              G_TYPE_STRING,          /* COLUMN_LABEL      */
-                              G_TYPE_STRING,          /* COLUMN_NAME       */
-                              G_TYPE_UINT,            /* COLUMN_ACCEL_KEY  */
-                              GDK_TYPE_MODIFIER_TYPE, /* COLUMN_ACCEL_MASK */
-                              GTK_TYPE_MENU_ITEM);    /* COLUMN_MENU_ITEM  */
+                              GTK_TYPE_ACTION,        /* COLUMN_ACTION        */
+                              G_TYPE_STRING,          /* COLUMN_STOCK_ID      */
+                              G_TYPE_STRING,          /* COLUMN_LABEL         */
+                              G_TYPE_STRING,          /* COLUMN_NAME          */
+                              G_TYPE_UINT,            /* COLUMN_ACCEL_KEY     */
+                              GDK_TYPE_MODIFIER_TYPE, /* COLUMN_ACCEL_MASK    */
+                              G_TYPE_CLOSURE);        /* COLUMN_ACCEL_CLOSURE */
 
   accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
 
@@ -246,94 +246,68 @@ gimp_action_view_new (GimpUIManager *manager,
 
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
-          GtkAction   *action = list2->data;
-          const gchar *name   = gtk_action_get_name (action);
+          GtkAction       *action        = list2->data;
+          const gchar     *name          = gtk_action_get_name (action);
+          gchar           *stock_id;
+          gchar           *label;
+          gchar           *tmp;
+          guint            accel_key     = 0;
+          GdkModifierType  accel_mask    = 0;
+          GClosure        *accel_closure = NULL;
+          GtkTreeIter      action_iter;
 
-          if (! strstr (name, "-menu") &&
-              ! strstr (name, "-popup"))
+          if (strstr (name, "-menu") || strstr (name, "-popup"))
+            continue;
+
+          g_object_get (action,
+                        "stock-id", &stock_id,
+                        "label",    &tmp,
+                        NULL);
+
+          label = gimp_strip_uline (tmp);
+          g_free (tmp);
+
+          if (show_shortcuts)
             {
-              GtkTreeIter      action_iter;
-              gchar           *stock_id;
-              gchar           *label;
-              gchar           *stripped;
-              guint            accel_key  = 0;
-              GdkModifierType  accel_mask = 0;
-              GtkWidget       *menu_item  = NULL;
+              accel_closure = gimp_action_get_accel_closure (action);
 
-              g_object_get (action,
-                            "stock-id", &stock_id,
-                            "label",    &label,
-                            NULL);
-
-              stripped = gimp_strip_uline (label);
-
-              if (show_shortcuts)
+              if (accel_closure)
                 {
-                  menu_item = gtk_action_create_menu_item (action);
+                  GtkAccelKey *key;
 
-                  if (GTK_IS_MENU_ITEM (menu_item) &&
-                      GTK_IS_ACCEL_LABEL (GTK_BIN (menu_item)->child))
+                  key = gtk_accel_group_find (accel_group,
+                                              gimp_action_view_accel_find_func,
+                                              accel_closure);
+
+                  if (key            &&
+                      key->accel_key &&
+                      key->accel_flags & GTK_ACCEL_VISIBLE)
                     {
-                      GtkWidget *accel_label = GTK_BIN (menu_item)->child;
-                      GClosure  *accel_closure;
-
-                      g_object_get (accel_label,
-                                    "accel-closure", &accel_closure,
-                                    NULL);
-
-                      if (accel_closure)
-                        {
-                          GtkAccelKey *key;
-
-                          key = gtk_accel_group_find (accel_group,
-                                                      gimp_action_view_accel_find_func,
-                                                      accel_closure);
-
-                          if (key            &&
-                              key->accel_key &&
-                              key->accel_flags & GTK_ACCEL_VISIBLE)
-                            {
-                              accel_key  = key->accel_key;
-                              accel_mask = key->accel_mods;
-                            }
-
-                          g_closure_unref (accel_closure);
-                        }
-
-                      g_object_ref (menu_item);
-                      gtk_object_sink (GTK_OBJECT (menu_item));
-                    }
-                  else if (menu_item)
-                    {
-                      gtk_object_sink (GTK_OBJECT (menu_item));
-                      menu_item = NULL;
+                      accel_key  = key->accel_key;
+                      accel_mask = key->accel_mods;
                     }
                 }
+            }
 
-              gtk_tree_store_append (store, &action_iter, &group_iter);
+          gtk_tree_store_append (store, &action_iter, &group_iter);
 
-              gtk_tree_store_set (store, &action_iter,
-                                  GIMP_ACTION_VIEW_COLUMN_ACTION,     action,
-                                  GIMP_ACTION_VIEW_COLUMN_STOCK_ID,   stock_id,
-                                  GIMP_ACTION_VIEW_COLUMN_LABEL,      stripped,
-                                  GIMP_ACTION_VIEW_COLUMN_NAME,       name,
-                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,  accel_key,
-                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK, accel_mask,
-                                  GIMP_ACTION_VIEW_COLUMN_MENU_ITEM,  menu_item,
-                                  -1);
+          gtk_tree_store_set (store, &action_iter,
+                              GIMP_ACTION_VIEW_COLUMN_ACTION,        action,
+                              GIMP_ACTION_VIEW_COLUMN_STOCK_ID,      stock_id,
+                              GIMP_ACTION_VIEW_COLUMN_LABEL,         label,
+                              GIMP_ACTION_VIEW_COLUMN_NAME,          name,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,     accel_key,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,    accel_mask,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE, accel_closure,
+                              -1);
 
-              g_free (stock_id);
-              g_free (label);
-              g_free (stripped);
+          g_free (stock_id);
+          g_free (label);
 
-              if (menu_item)
-                g_object_unref (menu_item);
-
-              if (select_action && ! strcmp (select_action, name))
-                {
-                  select_path = gtk_tree_model_get_path (GTK_TREE_MODEL (store),
-                                                         &action_iter);
-                }
+          if (select_action && ! strcmp (select_action, name))
+            {
+              select_path = gtk_tree_model_get_path (GTK_TREE_MODEL (store),
+                                                     &action_iter);
             }
         }
 
@@ -473,49 +447,39 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
            child_valid;
            child_valid = gtk_tree_model_iter_next (model, &child_iter))
         {
-          GtkWidget *menu_item;
+          GClosure *closure;
 
           gtk_tree_model_get (model, &child_iter,
-                              GIMP_ACTION_VIEW_COLUMN_MENU_ITEM, &menu_item,
+                              GIMP_ACTION_VIEW_COLUMN_ACCEL_CLOSURE, &closure,
                               -1);
 
-          if (menu_item)
+          if (closure)
+            g_closure_unref (closure);
+
+          if (accel_closure == closure)
             {
-              GClosure *item_closure;
+              GtkAccelKey     *key;
+              guint            accel_key  = 0;
+              GdkModifierType  accel_mask = 0;
 
-              g_object_get (GTK_BIN (menu_item)->child,
-                            "accel-closure", &item_closure,
-                            NULL);
+              key = gtk_accel_group_find (accel_group,
+                                          gimp_action_view_accel_find_func,
+                                          accel_closure);
 
-              g_object_unref (menu_item);
-
-              if (accel_closure == item_closure)
+              if (key            &&
+                  key->accel_key &&
+                  key->accel_flags & GTK_ACCEL_VISIBLE)
                 {
-                  GtkAccelKey     *key;
-                  guint            accel_key  = 0;
-                  GdkModifierType  accel_mask = 0;
-
-                  key = gtk_accel_group_find (accel_group,
-                                              gimp_action_view_accel_find_func,
-                                              accel_closure);
-
-                  if (key            &&
-                      key->accel_key &&
-                      key->accel_flags & GTK_ACCEL_VISIBLE)
-                    {
-                      accel_key  = key->accel_key;
-                      accel_mask = key->accel_mods;
-                    }
-
-                  gtk_tree_store_set (GTK_TREE_STORE (model), &child_iter,
-                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
-                                      accel_key,
-                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
-                                      accel_mask,
-                                      -1);
-
-                  return;
+                  accel_key  = key->accel_key;
+                  accel_mask = key->accel_mods;
                 }
+
+              gtk_tree_store_set (GTK_TREE_STORE (model), &child_iter,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,  accel_key,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK, accel_mask,
+                                  -1);
+
+              return;
             }
         }
     }
@@ -558,20 +522,20 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
                                    const gchar     *accel_path)
 {
   GimpActionGroup *group;
-  GimpMessageBox  *box;
   gchar           *label;
-  gchar           *stripped;
+  gchar           *tmp;
   gchar           *accel_string;
   ConfirmData     *confirm_data;
   GtkWidget       *dialog;
+  GimpMessageBox  *box;
 
   g_object_get (action,
                 "action-group", &group,
-                "label",        &label,
+                "label",        &tmp,
                 NULL);
 
-  stripped = gimp_strip_uline (label);
-  g_free (label);
+  label = gimp_strip_uline (tmp);
+  g_free (tmp);
 
   accel_string = gimp_get_accel_string (accel_key, accel_mask);
 
@@ -601,13 +565,13 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
   gimp_message_box_set_primary_text (box,
                                      _("Shortcut \"%s\" is already taken "
                                        "by \"%s\" from the \"%s\" group."),
-                                     accel_string, stripped, group->label);
+                                     accel_string, label, group->label);
   gimp_message_box_set_text (box,
                              _("Reassigning the shortcut will cause it "
                                "to be removed from \"%s\"."),
-                             stripped);
+                             label);
 
-  g_free (stripped);
+  g_free (label);
   g_free (accel_string);
 
   g_object_unref (group);
@@ -677,55 +641,54 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
         {
           g_message (_("Invalid shortcut."));
         }
-      else
+      else if (! gtk_accel_map_change_entry (accel_path,
+                                             accel_key, accel_mask, FALSE))
         {
-          if (! gtk_accel_map_change_entry (accel_path,
-                                            accel_key, accel_mask, FALSE))
+          GtkAction   *conflict_action = NULL;
+          GtkTreeIter  iter;
+          gboolean     iter_valid;
+
+          for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+               iter_valid;
+               iter_valid = gtk_tree_model_iter_next (model, &iter))
             {
-              GtkAction   *conflict_action = NULL;
-              GtkTreeIter  iter;
-              gboolean     iter_valid;
+              GtkTreeIter child_iter;
+              gboolean    child_valid;
 
-              for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-                   iter_valid;
-                   iter_valid = gtk_tree_model_iter_next (model, &iter))
+              for (child_valid = gtk_tree_model_iter_children (model,
+                                                               &child_iter,
+                                                               &iter);
+                   child_valid;
+                   child_valid = gtk_tree_model_iter_next (model, &child_iter))
                 {
-                  GtkTreeIter child_iter;
-                  gboolean    child_valid;
+                  guint           child_accel_key;
+                  GdkModifierType child_accel_mask;
 
-                  for (child_valid = gtk_tree_model_iter_children (model,
-                                                                   &child_iter,
-                                                                   &iter);
-                       child_valid;
-                       child_valid = gtk_tree_model_iter_next (model,
-                                                               &child_iter))
+                  gtk_tree_model_get (model, &child_iter,
+                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+                                      &child_accel_key,
+                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
+                                      &child_accel_mask,
+                                      -1);
+
+                  if (accel_key  == child_accel_key &&
+                      accel_mask == child_accel_mask)
                     {
-                      guint           child_accel_key;
-                      GdkModifierType child_accel_mask;
-
                       gtk_tree_model_get (model, &child_iter,
-                                          GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
-                                          &child_accel_key,
-                                          GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
-                                          &child_accel_mask,
+                                          GIMP_ACTION_VIEW_COLUMN_ACTION,
+                                          &conflict_action,
                                           -1);
-
-                      if (accel_key  == child_accel_key &&
-                          accel_mask == child_accel_mask)
-                        {
-                          gtk_tree_model_get (model, &child_iter,
-                                              GIMP_ACTION_VIEW_COLUMN_ACTION,
-                                              &conflict_action,
-                                              -1);
-                          break;
-                        }
+                      break;
                     }
-
-                  if (conflict_action)
-                    break;
                 }
 
-              if (conflict_action && conflict_action != action)
+              if (conflict_action)
+                break;
+            }
+
+          if (conflict_action != action)
+            {
+              if (conflict_action)
                 {
                   gimp_action_view_conflict_confirm (view, conflict_action,
                                                      accel_key,
@@ -733,7 +696,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                                      accel_path);
                   g_object_unref (conflict_action);
                 }
-              else if (conflict_action != action)
+              else
                 {
                   g_message (_("Changing shortcut failed."));
                 }

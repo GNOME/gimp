@@ -1,3 +1,13 @@
+2005-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_action_get_accel_closure):
+	new function as workaround for missing GTK+ API	(see bug #141750).
+
+	* app/widgets/gimpactionview.[ch]: use the function instead of
+	having this ugly hack here. Store the accel_closure instead of the
+	hackish menu_item in the tree store. Removed cruft and cleaned up
+	a bit.
+
 2005-01-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c: applied a patch from Geert
