@@ -82,7 +82,7 @@ text_render (GimpImage    *gimage,
   font = gimp_font_util_pango_font_description_to_string (desc);
 
   pango_font_description_free (desc);
-  
+
   gimp_context_get_foreground (context, &color);
 
   gtext = g_object_new (GIMP_TYPE_TEXT,
