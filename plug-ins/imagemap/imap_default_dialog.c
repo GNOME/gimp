@@ -122,11 +122,12 @@ make_default_dialog(const gchar *title)
    gtk_widget_show(data->cancel);
 
    data->help = gtk_button_new_with_label(_("Help..."));
-   GTK_WIDGET_SET_FLAGS(data->help, GTK_CAN_DEFAULT);
-   /* Fix me: no action yet */
-   gtk_box_pack_start(GTK_BOX(hbbox), data->help, FALSE, FALSE, 0);
-   gtk_widget_show(data->help);
-
+  /* Fix me: no action yet
+     GTK_WIDGET_SET_FLAGS(data->help, GTK_CAN_DEFAULT);
+     gtk_box_pack_start(GTK_BOX(hbbox), data->help, FALSE, FALSE, 0);
+     gtk_widget_show(data->help);
+   */
+  
    return data;
 }
 

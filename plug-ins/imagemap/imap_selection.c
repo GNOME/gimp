@@ -160,10 +160,10 @@ make_selection_toolbar(Selection_t *data, GtkWidget *window)
    gtk_toolbar_set_space_size(GTK_TOOLBAR(toolbar), 5);
 
    data->arrow_up = make_toolbar_icon(toolbar, window, arrow_up_xpm, "MoveUp",
-				      _("Move up"), selection_command, 
+				      _("Move Up"), selection_command, 
 				      &data->cmd_move_up);
    data->arrow_down = make_toolbar_icon(toolbar, window, arrow_down_xpm, 
-					"MoveDown", _("Move down"), 
+					"MoveDown", _("Move Down"), 
 					selection_command, 
 					&data->cmd_move_down);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));

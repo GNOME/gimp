@@ -220,12 +220,12 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Pagecurl effect"),
-			  _("This plug-in creates a pagecurl-effect."),
+			  "Pagecurl effect",
+			  "This plug-in creates a pagecurl-effect.",
 			  "Federico Mena Quintero and Simon Budig",
 			  "Federico Mena Quintero and Simon Budig",
 			  PLUG_IN_VERSION,
-              N_("<Image>/Filters/Distorts/Pagecurl..."),
+			  N_("<Image>/Filters/Distorts/Pagecurl..."),
 			  "RGBA, GRAYA",
 			  PROC_PLUG_IN,
 			  nargs,

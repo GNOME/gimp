@@ -657,7 +657,7 @@ do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 _("   Some data has been changed.   \n"
+	 _("Some data has been changed.\n"
 	   "Do you really want to continue?"));
    }
    default_dialog_set_ok_cb(dialog, continue_cb, param);
@@ -866,7 +866,7 @@ save_as(const gchar *filename)
       dump_output(out, save_to_file);
       fclose(out);
 
-      statusbar_set_status(_statusbar, "File \"%s\" saved.", filename);
+      statusbar_set_status(_statusbar, _("File \"%s\" saved."), filename);
       main_set_title(filename);
       object_list_clear_changed(_shapes);
    } else {
@@ -899,8 +899,8 @@ do_image_size_changed_dialog(void)
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 _("   Image size has changed.   \n"
-	 "Resize Area's?"));
+	 _("Image size has changed.\n"
+	   "Resize Area's?"));
 
       default_dialog_set_ok_cb(dialog, resize_image_ok_cb, NULL);
       default_dialog_set_cancel_cb(dialog, resize_image_cancel_cb, NULL);
@@ -976,7 +976,7 @@ preview_move(GtkWidget *widget, GdkEventMotion *event)
    if (obj != prev_obj) {
       prev_obj = obj;
       if (obj && _show_url) {
-	 statusbar_set_status(_statusbar, " URL: %s", obj->url);
+	 statusbar_set_status(_statusbar, _("URL: %s"), obj->url);
       } else {
 	 statusbar_clear_status(_statusbar);
       }

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-15 13:54+0100\n"
+"POT-Creation-Date: 2000-02-17 01:10+0100\n"
 "PO-Revision-Date: 2000-02-13 12:41+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Quit"
 msgstr "Beenden"
 
-#: app/app_procs.c:741 app/brightness_contrast.c:218 app/channel_ops.c:91
+#: app/app_procs.c:741 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2464 app/channels_dialog.c:2638
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:199 app/file_new_dialog.c:370
@@ -129,19 +129,19 @@ msgstr "Beenden"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: app/bezier_select.c:469
+#: app/bezier_select.c:476
 msgid "Bezier path already closed."
 msgstr "Bezier Pfad ist bereits geschlossen."
 
-#: app/bezier_select.c:490
+#: app/bezier_select.c:497
 msgid "Corrupt curve"
 msgstr "Kurve beschädigt"
 
-#: app/bezier_select.c:2855
+#: app/bezier_select.c:2862
 msgid "Curve not closed!"
 msgstr "Kurve ist nicht geschlossen!"
 
-#: app/bezier_select.c:3142 app/gimage_mask.c:605
+#: app/bezier_select.c:3149 app/gimage_mask.c:605
 msgid "Paintbrush operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -265,7 +265,7 @@ msgstr "Übergang..."
 msgid "Blend: "
 msgstr "Übergang: "
 
-#: app/brightness_contrast.c:127 app/brightness_contrast.c:209 app/tools.c:634
+#: app/brightness_contrast.c:127 app/brightness_contrast.c:209 app/tools.c:637
 msgid "Brightness-Contrast"
 msgstr "Helligkeit-Kontrast"
 
@@ -273,7 +273,7 @@ msgstr "Helligkeit-Kontrast"
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 
-#: app/brightness_contrast.c:214 app/channel_ops.c:89
+#: app/brightness_contrast.c:214 app/channel_ops.c:91
 #: app/channels_dialog.c:2462 app/channels_dialog.c:2636
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:197 app/file_new_dialog.c:366
@@ -288,7 +288,7 @@ msgstr "OK"
 #: app/brightness_contrast.c:216 app/by_color_select.c:630
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:368
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
-#: app/threshold.c:273 app/tools.c:1045 app/transform_core.c:413
+#: app/threshold.c:273 app/tools.c:1048 app/transform_core.c:412
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Standard"
@@ -323,7 +323,7 @@ msgstr "Pinseleditor"
 #: app/lc_dialog.c:195 app/measure.c:273 app/nav_window.c:1369
 #: app/palette.c:2091 app/palette.c:2107 app/palette.c:3153
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1047
+#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1050
 #: app/undo_history.c:762
 msgid "Close"
 msgstr "Schließen"
@@ -465,50 +465,50 @@ msgid "copy"
 msgstr "Kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1620 app/layer.c:318 app/layer.c:1543
+#: app/channel.c:195 app/gradient.c:1620 app/layer.c:318 app/layer.c:1550
 #, c-format
 msgid "%s copy"
 msgstr "%s Kopie"
 
-#: app/channel.c:607
+#: app/channel.c:613
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
-#: app/channel_ops.c:83 app/resize.c:392
+#: app/channel_ops.c:85 app/resize.c:392
 msgid "Offset"
 msgstr "Versatz"
 
 #. The offset labels
-#: app/channel_ops.c:107
+#: app/channel_ops.c:109
 msgid "Offset X:"
 msgstr "Versatz X:"
 
-#: app/channel_ops.c:113 app/crop.c:1063 app/file_new_dialog.c:543
+#: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:543
 #: app/resize.c:330 app/resize.c:415 app/resize.c:573 app/rotate_tool.c:106
 #: app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
 
 #. The wrap around option
-#: app/channel_ops.c:162
+#: app/channel_ops.c:164
 msgid "Wrap Around"
 msgstr "Herumwickeln"
 
-#: app/channel_ops.c:168
+#: app/channel_ops.c:170
 msgid "Fill Options"
 msgstr "Füllung"
 
-#: app/channel_ops.c:172 app/image_new.c:69 app/image_new.c:223
+#: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
 #: app/layers_dialog.c:3405
 msgid "Background"
 msgstr "Hintergrund"
 
-#: app/channel_ops.c:173 app/image_new.c:79 app/layers_dialog.c:3407
+#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3407
 msgid "Transparent"
 msgstr "Transparent"
 
 #. The by half height and half width option
-#: app/channel_ops.c:185
+#: app/channel_ops.c:187
 msgid "Offset by (x/2),(y/2)"
 msgstr "Versatz um (x/2),(y/2)"
 
@@ -618,7 +618,7 @@ msgid "No patterns available for this operation."
 msgstr "Für diese Funktion sind keine Muster vorhanden."
 
 #. The shell and main vbox
-#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:617
+#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:620
 msgid "Color Balance"
 msgstr "Farbausgleich"
 
@@ -946,7 +946,7 @@ msgid "Auto Shrink"
 msgstr "Automatisch schrumpfen"
 
 #. The shell and main vbox
-#: app/curves.c:390 app/curves.c:550 app/tools.c:702
+#: app/curves.c:390 app/curves.c:550 app/tools.c:705
 msgid "Curves"
 msgstr "Kurven"
 
@@ -1002,7 +1002,7 @@ msgid "Load/Save Curves"
 msgstr "Öffne/Sichere Kurven"
 
 #: app/curves.c:1609 app/curves.c:1627 app/levels.c:1428 app/levels.c:1446
-#: app/paths_dialog.c:2226
+#: app/paths_dialog.c:1930
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Kann Datei %s nicht öffnen"
@@ -1106,11 +1106,11 @@ msgstr "Nachbelichten"
 msgid "Mode"
 msgstr "Modus"
 
-#: app/edit_selection.c:177
+#: app/edit_selection.c:178
 msgid "Move: 0, 0"
 msgstr "Verschieben: 0, 0"
 
-#: app/edit_selection.c:410 app/edit_selection.c:420
+#: app/edit_selection.c:411 app/edit_selection.c:421
 msgid "Move: "
 msgstr "Verschieben: "
 
@@ -1479,11 +1479,11 @@ msgstr "Parasit mit Ebene verknüpfen"
 msgid "detach parasite from drawable"
 msgstr "Parasit von Ebene lösen"
 
-#: app/gimpdrawable.c:726
+#: app/gimpdrawable.c:734
 msgid "unnamed"
 msgstr "Unbenannt"
 
-#: app/gimpdrawable.c:743
+#: app/gimpdrawable.c:751
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Ebenentyp %d nicht unterstützt."
@@ -1506,31 +1506,31 @@ msgstr "Parasit dem Bild hinzufügen"
 msgid "detach parasite from image"
 msgstr "Parasit vom Bild lösen"
 
-#: app/gimpimage.c:2122
+#: app/gimpimage.c:2213
 msgid "Layer cannot be raised any further"
 msgstr "Ebene kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2148
+#: app/gimpimage.c:2239
 msgid "Layer cannot be lowered any further"
 msgstr "Ebene kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:2172
+#: app/gimpimage.c:2263
 msgid "Layer is already on top"
 msgstr "Ebene ist schon ganz oben"
 
-#: app/gimpimage.c:2178
+#: app/gimpimage.c:2269
 msgid "Can't raise Layer without alpha"
 msgstr "Kann Ebene ohne Alphakanal nicht anheben"
 
-#: app/gimpimage.c:2205
+#: app/gimpimage.c:2296
 msgid "Layer is already on bottom"
 msgstr "Ebene ist schon ganz unten"
 
-#: app/gimpimage.c:2260
+#: app/gimpimage.c:2351
 msgid "BG has no alpha, layer was placed above"
 msgstr "HG hat keinen Alphakanal, Ebene ist darüber plaziert worden"
 
-#: app/gimpimage.c:2329
+#: app/gimpimage.c:2420
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1539,13 +1539,13 @@ msgstr ""
 "den Vorgang \"Sichtbare Ebenen vereinen\" auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
-#: app/gimpimage.c:2409
+#: app/gimpimage.c:2500
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:2805
+#: app/gimpimage.c:2896
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1553,7 +1553,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:2809
+#: app/gimpimage.c:2900
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1561,7 +1561,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:2813
+#: app/gimpimage.c:2904
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1569,20 +1569,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:2820
+#: app/gimpimage.c:2911
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:2923
+#: app/gimpimage.c:3014
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2972
+#: app/gimpimage.c:3063
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3178 app/palette.c:379 app/palette.c:956 app/palette.c:1092
+#: app/gimpimage.c:3269 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2037 app/palette.c:2784 app/palette.c:2916
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -2091,7 +2091,7 @@ msgid "Gradient Selection"
 msgstr "Farbverlauf Auswahl"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:166 app/histogram_tool.c:270 app/tools.c:736
+#: app/histogram_tool.c:166 app/histogram_tool.c:270 app/tools.c:739
 msgid "Histogram"
 msgstr "Histogramm"
 
@@ -2128,7 +2128,7 @@ msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:368 app/tools.c:651
+#: app/hue_saturation.c:248 app/hue_saturation.c:368 app/tools.c:654
 msgid "Hue-Saturation"
 msgstr "Farbton-Sättigung"
 
@@ -3147,8 +3147,8 @@ msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
 #: app/lc_dialog.c:99
-msgid "Layers & Channels"
-msgstr "Ebenen und Kanäle"
+msgid "Layers, Channels & Paths"
+msgstr "Ebenen, Kanäle und Pfade"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3164,7 +3164,7 @@ msgid "Channels"
 msgstr "Kanäle"
 
 #. The shell and main vbox
-#: app/levels.c:197 app/levels.c:332 app/tools.c:719
+#: app/levels.c:197 app/levels.c:332 app/tools.c:722
 msgid "Levels"
 msgstr "Werte"
 
@@ -3456,8 +3456,8 @@ msgid "/File/Dialogs"
 msgstr "/Datei/Dialoge"
 
 #: app/menus.c:150
-msgid "/File/Dialogs/Layers & Channels..."
-msgstr "/Datei/Dialoge/Ebenen und Kanäle..."
+msgid "/File/Dialogs/Layers, Channels & Paths..."
+msgstr "/Datei/Dialoge/Ebenen, Kanäle und Pfade..."
 
 #: app/menus.c:152
 msgid "/File/Dialogs/Tool Options..."
@@ -3846,8 +3846,8 @@ msgid "/Layers"
 msgstr "/Ebenen"
 
 #: app/menus.c:476
-msgid "/Layers/Layers & Channels..."
-msgstr "/Ebenen/Ebenen und Kanäle..."
+msgid "/Layers/Layers, Channels & Paths..."
+msgstr "/Ebenen/Ebenen, Kanäle und Pfade..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:481
@@ -3946,8 +3946,8 @@ msgid "/Dialogs"
 msgstr "/Dialoge"
 
 #: app/menus.c:555
-msgid "/Dialogs/Layers & Channels..."
-msgstr "/Dialoge/Ebenen und Kanäle..."
+msgid "/Dialogs/Layers, Channels & Paths..."
+msgstr "/Dialoge/Ebenen, Kanäle und Pfade..."
 
 #: app/menus.c:557
 msgid "/Dialogs/Tool Options..."
@@ -4574,93 +4574,93 @@ msgstr "Paletten Auswahl"
 msgid "Path Tool"
 msgstr "Pfade"
 
-#: app/paths_dialog.c:169
+#: app/paths_dialog.c:156
 msgid "New Path"
 msgstr "Neuer Pfad"
 
-#: app/paths_dialog.c:173
+#: app/paths_dialog.c:160
 msgid "Duplicate Path"
 msgstr "Pfad duplizieren"
 
-#: app/paths_dialog.c:177
+#: app/paths_dialog.c:164
 msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
 
-#: app/paths_dialog.c:181
+#: app/paths_dialog.c:168
 msgid "Selection to Path"
 msgstr "Pfad aus Auswahl"
 
-#: app/paths_dialog.c:185
+#: app/paths_dialog.c:172
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
 
-#: app/paths_dialog.c:189
+#: app/paths_dialog.c:176
 msgid "Delete Path"
 msgstr "Pfad löschen"
 
-#: app/paths_dialog.c:198
+#: app/paths_dialog.c:185
 msgid "New Point"
 msgstr "Neuer Punkt"
 
-#: app/paths_dialog.c:202
+#: app/paths_dialog.c:189
 msgid "Add Point"
 msgstr "Punkt hinzufügen"
 
-#: app/paths_dialog.c:206
+#: app/paths_dialog.c:193
 msgid "Delete Point"
 msgstr "Punkt löschen"
 
-#: app/paths_dialog.c:210
+#: app/paths_dialog.c:197
 msgid "Edit Point"
 msgstr "Punkt verändern"
 
-#: app/paths_dialog.c:457
+#: app/paths_dialog.c:425
 #, c-format
 msgid "Path %d"
 msgstr "Pfad %d"
 
-#: app/paths_dialog.c:1239
+#: app/paths_dialog.c:1013
 msgid "Edit Path Attributes"
 msgstr "Pfadmerkmale verändern"
 
-#: app/paths_dialog.c:1242
+#: app/paths_dialog.c:1016
 msgid "Enter a new name for the path"
 msgstr "Geben sie diesem Pfad einen neuen Namen"
 
-#: app/paths_dialog.c:2240
+#: app/paths_dialog.c:1944
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Konnte nicht aus %s lesen"
 
-#: app/paths_dialog.c:2255
+#: app/paths_dialog.c:1959
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Konnte keinen Pfad aus %s lesen"
 
-#: app/paths_dialog.c:2262
+#: app/paths_dialog.c:1966
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "Pfaddatei %s enthält keine Punkte"
 
-#: app/paths_dialog.c:2273
+#: app/paths_dialog.c:1977
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Konnte keine Pfadpunkte aus %s lesen"
 
-#: app/paths_dialog.c:2346 app/xcf.c:419
+#: app/paths_dialog.c:2050 app/xcf.c:420
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Kann %s nicht öffnen: %s\n"
 
-#: app/paths_dialog.c:2368
+#: app/paths_dialog.c:2072
 msgid "Load/Store Bezier Curves"
 msgstr "Öffne/Sichere Bezierkurven"
 
-#: app/paths_dialog.c:2408
+#: app/paths_dialog.c:2112
 msgid "Load Path"
 msgstr "Pfad öffnen"
 
-#: app/paths_dialog.c:2430
+#: app/paths_dialog.c:2134
 msgid "Store Path"
 msgstr "Pfad sichern"
 
@@ -4733,7 +4733,7 @@ msgstr "Kann Plugin \"%s\" nicht finden"
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisieren funktioniert nicht mit indizierten Bildern."
 
-#: app/posterize.c:192 app/tools.c:668
+#: app/posterize.c:192 app/tools.c:671
 msgid "Posterize"
 msgstr "Posterisieren"
 
@@ -5068,7 +5068,7 @@ msgid "Disable Cursor Updating"
 msgstr "Deaktiviere Mauszeigeränderungen"
 
 #: app/preferences_dialog.c:2062 app/preferences_dialog.c:2064
-#: app/tools.c:1039
+#: app/tools.c:1042
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
@@ -5477,7 +5477,7 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Textebene"
 
-#: app/threshold.c:171 app/threshold.c:266 app/tools.c:685
+#: app/threshold.c:171 app/threshold.c:266 app/tools.c:688
 msgid "Threshold"
 msgstr "Schwellenwert"
 
@@ -5610,10 +5610,6 @@ msgstr "Abwedeln oder Nachbelichten"
 msgid "Smudge Tool"
 msgstr "Verschmieren"
 
-#: app/tool_options.c:473 app/tools.c:547
-msgid "Xinput Airbrush"
-msgstr "XInput Airbrush"
-
 #: app/tool_options.c:590
 msgid "Incremental"
 msgstr "Steigernd"
@@ -5736,7 +5732,7 @@ msgstr "Verändert die Bildgöße"
 
 #. the transform type radio buttons
 #: app/tools.c:241 app/tools.c:258 app/tools.c:275 app/tools.c:292
-#: app/transform_core.c:260 app/transform_tool.c:211
+#: app/transform_core.c:259 app/transform_tool.c:211
 msgid "Transform"
 msgstr "Transformation"
 
@@ -5806,7 +5802,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Stift"
 
 #: app/tools.c:399
 msgid "Draw sharp pencil strokes"
-msgstr "Scharfe Pinselstriche zeichnen"
+msgstr "Harte Pinselstriche zeichnen"
 
 #: app/tools.c:412
 msgid "/Tools/Paint Tools/Paintbrush"
@@ -5814,7 +5810,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Pinsel"
 
 #: app/tools.c:416
 msgid "Paint fuzzy brush strokes"
-msgstr "Unscharfe Pinselstriche zeichnen"
+msgstr "Weiche Pinselstriche zeichnen"
 
 #: app/tools.c:429
 msgid "/Tools/Paint Tools/Eraser"
@@ -5880,127 +5876,107 @@ msgstr "Verschmieren"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Werkzeuge/Malwerkzeuge/Verschmieren"
 
-#: app/tools.c:548
-msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/Werkzeuge/Malwerkzeuge/Xinput Airbrush"
-
-#: app/tools.c:552
-msgid "Natural Airbrush"
-msgstr "Natürlicher Airbrush"
-
-#: app/tools.c:564
+#: app/tools.c:566
 msgid "Measure"
 msgstr "Messen"
 
-#: app/tools.c:565
+#: app/tools.c:567
 msgid "/Tools/Measure"
 msgstr "/Werkzeuge/Messen"
 
-#: app/tools.c:569
+#: app/tools.c:571
 msgid "Measure distances and angles"
 msgstr "Distanzen und Winkel messen"
 
-#: app/tools.c:581
-msgid "Path"
-msgstr "Pfad"
-
-#: app/tools.c:582
-msgid "/Tools/Path"
-msgstr "/Werkzeuge/Pfad"
-
-#: app/tools.c:586
-msgid "Manipulate paths"
-msgstr "Pfade manipulieren"
-
-#: app/tools.c:600
+#: app/tools.c:603
 msgid "By Color Select"
 msgstr "Nach Farbe auswählen"
 
-#: app/tools.c:601
+#: app/tools.c:604
 msgid "/Select/By Color..."
 msgstr "/Auswahl/Nach Farbe..."
 
-#: app/tools.c:605
+#: app/tools.c:608
 msgid "Select regions by color"
 msgstr "Bereiche nach Farbe auswählen"
 
-#: app/tools.c:618
+#: app/tools.c:621
 msgid "/Image/Colors/Color Balance..."
 msgstr "/Bild/Farben/Ausgleichen..."
 
-#: app/tools.c:622
+#: app/tools.c:625
 msgid "Adjust color balance"
 msgstr "Farbausgleich einstellen"
 
-#: app/tools.c:635
+#: app/tools.c:638
 msgid "/Image/Colors/Brightness-Contrast..."
 msgstr "/Bild/Farben/Helligkeit-Kontrast..."
 
-#: app/tools.c:639
+#: app/tools.c:642
 msgid "Adjust brightness and contrast"
 msgstr "Helligkeit und Kontrast einstellen"
 
-#: app/tools.c:652
+#: app/tools.c:655
 msgid "/Image/Colors/Hue-Saturation..."
 msgstr "/Bild/Farben/Farbton-Sättigung..."
 
-#: app/tools.c:656
+#: app/tools.c:659
 msgid "Adjust hue and saturation"
 msgstr "Farbton und Sättigung einstellen"
 
-#: app/tools.c:669
+#: app/tools.c:672
 msgid "/Image/Colors/Posterize..."
 msgstr "/Bild/Farben/Posterisieren..."
 
-#: app/tools.c:673
+#: app/tools.c:676
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Bild auf eine bestimmte Zahl von Farben reduzieren"
 
-#: app/tools.c:686
+#: app/tools.c:689
 msgid "/Image/Colors/Threshold..."
 msgstr "/Bild/Farben/Schwellenwert..."
 
-#: app/tools.c:690
+#: app/tools.c:693
 msgid "Reduce image to two colors using a threshold"
 msgstr "Bild mittels Schwellenwert auf zwei Farben reduzieren"
 
-#: app/tools.c:703
+#: app/tools.c:706
 msgid "/Image/Colors/Curves..."
 msgstr "/Bild/Farben/Kurven..."
 
-#: app/tools.c:707
+#: app/tools.c:710
 msgid "Adjust color curves"
 msgstr "Farbkurven einstellen"
 
-#: app/tools.c:720
+#: app/tools.c:723
 msgid "/Image/Colors/Levels..."
 msgstr "/Bild/Farben/Werte..."
 
-#: app/tools.c:724
+#: app/tools.c:727
 msgid "Adjust color levels"
 msgstr "Farbwerte einstellen"
 
-#: app/tools.c:737
+#: app/tools.c:740
 msgid "/Image/Histogram..."
 msgstr "/Bild/Histogramm..."
 
-#: app/tools.c:741
+#: app/tools.c:744
 msgid "View image histogram"
 msgstr "Histogramm erstellen"
 
-#: app/transform_core.c:257
+#: app/transform_core.c:256
 msgid "Rotate"
 msgstr "Rotieren"
 
-#: app/transform_core.c:258
+#: app/transform_core.c:257
 msgid "Scale"
 msgstr "Skalieren"
 
-#: app/transform_core.c:259
+#: app/transform_core.c:258
 msgid "Shear"
 msgstr "Scheren"
 
-#: app/transform_core.c:368
+#: app/transform_core.c:367
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -6008,7 +5984,7 @@ msgstr ""
 "Transformationen funktionieren nicht\n"
 "auf Ebenen, die Masken enthalten."
 
-#: app/transform_core.c:1582
+#: app/transform_core.c:1581
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -6065,191 +6041,191 @@ msgstr "Zeige Pfad"
 msgid "Clip Result"
 msgstr "Ergebnis beschneiden"
 
-#: app/undo.c:2832
+#: app/undo.c:2833
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kann %s nicht rückgängig machen"
 
-#: app/undo.c:2863
+#: app/undo.c:2864
 msgid "<<invalid>>"
 msgstr "<<ungültig>>"
 
-#: app/undo.c:2864
+#: app/undo.c:2865
 msgid "image"
 msgstr "Bild"
 
-#: app/undo.c:2865
+#: app/undo.c:2866
 msgid "image mod"
 msgstr "Bildveränderung"
 
-#: app/undo.c:2866
+#: app/undo.c:2867
 msgid "mask"
 msgstr "Maske"
 
-#: app/undo.c:2867
+#: app/undo.c:2868
 msgid "layer move"
 msgstr "Ebene verschieben"
 
 #. ok
-#: app/undo.c:2868
+#: app/undo.c:2869
 msgid "transform"
 msgstr "Transformation"
 
-#: app/undo.c:2869
+#: app/undo.c:2870
 msgid "paint"
 msgstr "Zeichnen"
 
-#: app/undo.c:2870
+#: app/undo.c:2871
 msgid "new layer"
 msgstr "Ebene anlegen"
 
-#: app/undo.c:2871
+#: app/undo.c:2872
 msgid "delete layer"
 msgstr "Ebene löschen"
 
-#: app/undo.c:2872
+#: app/undo.c:2873
 msgid "layer mod"
 msgstr "Ebenenveränderung"
 
-#: app/undo.c:2873
+#: app/undo.c:2874
 msgid "add layer mask"
 msgstr "Ebenenmaske hinzufügen"
 
 #. ok
-#: app/undo.c:2874
+#: app/undo.c:2875
 msgid "delete layer mask"
 msgstr "Ebenenmaske löschen"
 
 #. ok
-#: app/undo.c:2875
+#: app/undo.c:2876
 msgid "rename layer"
 msgstr "Ebene umbenennen"
 
-#: app/undo.c:2876
+#: app/undo.c:2877
 msgid "layer reposition"
 msgstr "Ebene repositionieren"
 
 #. ok
-#: app/undo.c:2877
+#: app/undo.c:2878
 msgid "new channel"
 msgstr "Neuer Kanal"
 
-#: app/undo.c:2878
+#: app/undo.c:2879
 msgid "delete channel"
 msgstr "Kanal löschen"
 
-#: app/undo.c:2879
+#: app/undo.c:2880
 msgid "channel mod"
 msgstr "Kanalveränderung"
 
-#: app/undo.c:2880
+#: app/undo.c:2881
 msgid "FS to layer"
 msgstr "Schwebende Auswahl -> Ebene"
 
 #. ok
-#: app/undo.c:2881
+#: app/undo.c:2882
 msgid "gimage"
 msgstr "Bild"
 
-#: app/undo.c:2882
+#: app/undo.c:2883
 msgid "FS rigor"
 msgstr "Schwebende Auswahl zeigen"
 
-#: app/undo.c:2883
+#: app/undo.c:2884
 msgid "FS relax"
 msgstr "Schwebende Auswahl verstecken"
 
-#: app/undo.c:2884
+#: app/undo.c:2885
 msgid "guide"
 msgstr "Hilfslinie"
 
-#: app/undo.c:2885
+#: app/undo.c:2886
 msgid "text"
 msgstr "Text"
 
-#: app/undo.c:2886
+#: app/undo.c:2887
 msgid "float selection"
 msgstr "Auswahl -> schwebend"
 
-#: app/undo.c:2887
+#: app/undo.c:2888
 msgid "paste"
 msgstr "Einfügen"
 
-#: app/undo.c:2888
+#: app/undo.c:2889
 msgid "cut"
 msgstr "Ausschneiden"
 
-#: app/undo.c:2889
+#: app/undo.c:2890
 msgid "transform core"
 msgstr "Transformation"
 
-#: app/undo.c:2890
+#: app/undo.c:2891
 msgid "paint core"
 msgstr "Zeichenwerkzeug"
 
-#: app/undo.c:2891
+#: app/undo.c:2892
 msgid "floating layer"
 msgstr "Schwebende Ebene"
 
 #. unused!
-#: app/undo.c:2892
+#: app/undo.c:2893
 msgid "linked layer"
 msgstr "Ebene verbinden"
 
-#: app/undo.c:2893
+#: app/undo.c:2894
 msgid "apply layer mask"
 msgstr "Ebenenmaske anwenden"
 
 #. ok
-#: app/undo.c:2894
+#: app/undo.c:2895
 msgid "layer merge"
 msgstr "Ebenen vereinen"
 
-#: app/undo.c:2895
+#: app/undo.c:2896
 msgid "FS anchor"
 msgstr "Schwebende Auswahl verankern"
 
-#: app/undo.c:2896
+#: app/undo.c:2897
 msgid "gimage mod"
 msgstr "Bildveränderung"
 
-#: app/undo.c:2897
+#: app/undo.c:2898
 msgid "crop"
 msgstr "Zuschneiden"
 
-#: app/undo.c:2898
+#: app/undo.c:2899
 msgid "layer scale"
 msgstr "Ebene skalieren"
 
-#: app/undo.c:2899
+#: app/undo.c:2900
 msgid "layer resize"
 msgstr "Ebenengröße verändern"
 
-#: app/undo.c:2900
+#: app/undo.c:2901
 msgid "quickmask"
 msgstr "QMask"
 
-#: app/undo.c:2901
+#: app/undo.c:2902
 msgid "attach parasite"
 msgstr "Parasit zuweisen"
 
-#: app/undo.c:2902
+#: app/undo.c:2903
 msgid "remove parasite"
 msgstr "Parasit entfernen"
 
-#: app/undo.c:2903
+#: app/undo.c:2904
 msgid "resolution change"
 msgstr "Auflösung verändern"
 
-#: app/undo.c:2904
+#: app/undo.c:2905
 msgid "image scale"
 msgstr "Bild skalieren"
 
-#: app/undo.c:2905
+#: app/undo.c:2906
 msgid "image resize"
 msgstr "Bildgröße verändern"
 
-#: app/undo.c:2906
+#: app/undo.c:2907
 msgid "misc"
 msgstr "Verschiedenes"
 
@@ -6266,12 +6242,12 @@ msgstr "[ Basisbild ]"
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: app/xcf.c:365
+#: app/xcf.c:366
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF Dateiversion %d aufgetreten"
 
-#: app/xcf.c:1777
+#: app/xcf.c:1785
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6352,5 +6328,20 @@ msgstr "Wasserfarbe"
 msgid "Color History"
 msgstr "Farbliste"
 
-#~ msgid "Operations"
-#~ msgstr "Funktionen"
+#~ msgid "Xinput Airbrush"
+#~ msgstr "XInput Airbrush"
+
+#~ msgid "/Tools/Paint Tools/XinputAirbrush"
+#~ msgstr "/Werkzeuge/Malwerkzeuge/Xinput Airbrush"
+
+#~ msgid "Natural Airbrush"
+#~ msgstr "Natürlicher Airbrush"
+
+#~ msgid "Path"
+#~ msgstr "Pfad"
+
+#~ msgid "/Tools/Path"
+#~ msgstr "/Werkzeuge/Pfad"
+
+#~ msgid "Manipulate paths"
+#~ msgstr "Pfade manipulieren"

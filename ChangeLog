@@ -1,3 +1,12 @@
+Thu Feb 17 11:02:27 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/pagecurl/pagecurl.c: i18n fixes, typos, hide useless
+	(not connected) help buttons
+
 2000-02-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/imagemap/imap_circle.c
