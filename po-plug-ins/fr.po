@@ -2380,7 +2380,7 @@ msgstr "Nombre de segments"
 
 #: plug-ins/common/blur.c:204
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr "<Images>/Filtres/Flou/Flou..."
+msgstr "<Image>/Filtres/Flou/Flou..."
 
 #: plug-ins/common/blur.c:657 plug-ins/common/plasma.c:324
 #: plug-ins/common/randomize.c:745 plug-ins/common/snoise.c:556
@@ -2406,7 +2406,7 @@ msgstr "Nombre de fois où appliquer le filtre"
 
 #: plug-ins/common/bumpmap.c:339
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Images>/Filtres/Cartes/Carte en relief..."
+msgstr "<Image>/Filtres/Cartes/Carte en relief..."
 
 #: plug-ins/common/bumpmap.c:474
 msgid "Bump-mapping..."
@@ -3513,7 +3513,7 @@ msgstr "Centre de l'effet"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr "<Images>/Filtres/Cartes/Tracé de fractale..."
+msgstr "<Image>/Filtres/Cartes/Tracé de fractale..."
 
 #: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:733
 msgid "Fractal Trace"
@@ -3539,7 +3539,7 @@ msgstr "Paramètres de Mandelbrot"
 
 #: plug-ins/common/gauss_iir.c:163
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr "<Images>/Filtres/Flou/Flou gaussien (IIR)..."
+msgstr "<Image>/Filtres/Flou/Flou gaussien (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:236
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -3581,7 +3581,7 @@ msgstr "Verticalement :"
 
 #: plug-ins/common/gauss_rle.c:160
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr "<Images>/Filtres/Flou/Flou gaussien (RLE)..."
+msgstr "<Image>/Filtres/Flou/Flou gaussien (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:232
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
@@ -4089,7 +4089,7 @@ msgstr "produire illusion"
 
 #: plug-ins/common/illusion.c:115
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Images>/Filtres/Cartes/Illusion..."
+msgstr "<Image>/Filtres/Cartes/Illusion..."
 
 #. dialog window
 #: plug-ins/common/illusion.c:313
@@ -4553,7 +4553,7 @@ msgstr ""
 
 #: plug-ins/common/mblur.c:170
 msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr "<Images>/Filtres/Flou/Flou de Déplacement..."
+msgstr "<Image>/Filtres/Flou/Flou de Déplacement..."
 
 #: plug-ins/common/mblur.c:632 plug-ins/common/unsharp.c:288
 msgid "Blurring..."
@@ -4673,7 +4673,7 @@ msgstr "Sur-échantillonage :"
 
 #: plug-ins/common/nlfilt.c:157
 msgid "<Image>/Filters/Enhance/NL Filter..."
-msgstr "<Images>/Filtres/Améliorer/Filtre NL..."
+msgstr "<Image>/Filtres/Améliorer/Filtre NL..."
 
 #: plug-ins/common/nlfilt.c:267 plug-ins/common/nlfilt.c:354
 msgid "NL Filter"
@@ -4863,7 +4863,7 @@ msgstr "Sauver en tant que motif"
 
 #: plug-ins/common/pixelize.c:166
 msgid "<Image>/Filters/Blur/Pixelize..."
-msgstr "<Images>/Filtres/Flou/Pixeliser..."
+msgstr "<Image>/Filtres/Flou/Pixeliser..."
 
 #: plug-ins/common/pixelize.c:240
 msgid "Pixelizing..."
@@ -4879,7 +4879,7 @@ msgstr "Largeur de pixel :"
 
 #: plug-ins/common/plasma.c:170
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
-msgstr "<Images>/Filtres/Rendu/Nuages/Plasma..."
+msgstr "<Image>/Filtres/Rendu/Nuages/Plasma..."
 
 #: plug-ins/common/plasma.c:247
 msgid "Plasma..."
@@ -4911,7 +4911,7 @@ msgstr "Procédure temporaire "
 
 #: plug-ins/common/plugindetails.c:98
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr "<Boîte à Outils>/Extensions/Détails des Modules..."
+msgstr "<Toolbox>/Extensions/Détails des Modules..."
 
 #: plug-ins/common/plugindetails.c:213
 msgid "Details <<"
@@ -5315,7 +5315,7 @@ msgstr "Glissement aléatoire 1.7"
 
 #: plug-ins/common/randomize.c:241
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr "<Images>/Filtres/Perturbations/Lancer..."
+msgstr "<Image>/Filtres/Perturbations/Lancer..."
 
 #: plug-ins/common/randomize.c:253
 msgid "<Image>/Filters/Noise/Pick..."
@@ -5323,7 +5323,7 @@ msgstr "<Image>/Filtres/Perturbations/Choisir..."
 
 #: plug-ins/common/randomize.c:265
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr "<Images>/Filtres/Perturbations/Mélanger..."
+msgstr "<Image>/Filtres/Perturbations/Mélanger..."
 
 #: plug-ins/common/randomize.c:752
 msgid "Randomization (%):"
@@ -5551,7 +5551,7 @@ msgstr ""
 
 #: plug-ins/common/screenshot.c:146 plug-ins/winsnap/winsnap.c:1042
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr "<Boîte à Outils>/Fichier/Acquisition/Screen Shot..."
+msgstr "<Toolbox>/Fichier/Acquisition/Screen Shot..."
 
 #. Main Dialog
 #: plug-ins/common/screenshot.c:393
@@ -5585,7 +5585,7 @@ msgstr "Secondes de délai"
 
 #: plug-ins/common/sel_gauss.c:122
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
-msgstr "<Images>/Filtres/Flou/Flou Gaussien Sélectif..."
+msgstr "<Image>/Filtres/Flou/Flou Gaussien Sélectif..."
 
 #: plug-ins/common/sel_gauss.c:198 plug-ins/common/sel_gauss.c:241
 msgid "Selective Gaussian Blur"
@@ -5620,7 +5620,7 @@ msgstr "Ce filtre effectue une convolution sur l'image de façon sélective."
 # affiler ?
 #: plug-ins/common/sharpen.c:168
 msgid "<Image>/Filters/Enhance/Sharpen..."
-msgstr "<Images>/Filtres/Appliquer/Augmenter les contrastes..."
+msgstr "<Image>/Filtres/Appliquer/Augmenter les contrastes..."
 
 #.
 #. * Let the user know what we're doing...
@@ -6149,7 +6149,7 @@ msgstr "Pack Bits"
 
 #: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Images>/Filtres/Carte/Morceler..."
+msgstr "<Image>/Filtres/Carte/Morceler..."
 
 #: plug-ins/common/tile.c:198 plug-ins/common/tileit.c:334
 msgid "Tiling..."
@@ -6166,7 +6166,7 @@ msgstr "Morcelle avec une Nouvelle Taille"
 
 #: plug-ins/common/tileit.c:236
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Images>/Filtres/Carte/Petit Morceaux..."
+msgstr "<Image>/Filtres/Carte/Petit Morceaux..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
@@ -6210,7 +6210,7 @@ msgstr "Paramètres de la Segmentation"
 
 #: plug-ins/common/tiler.c:65
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Images>/Filtres/Carte/Homogénéiser"
+msgstr "<Image>/Filtres/Carte/Homogénéiser"
 
 #: plug-ins/common/tiler.c:170
 msgid "Tiler..."
@@ -6330,7 +6330,7 @@ msgstr "Enregistrer l'unité actuellement sélectionnée avant de quitter Gim"
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr "<Images>/Filtres/Améliorer/Enlever le Relief..."
+msgstr "<Image>/Filtres/Améliorer/Enlever le Relief..."
 
 #: plug-ins/common/unsharp.c:394
 msgid "Merging..."
@@ -6646,7 +6646,7 @@ msgstr "<Image>/Éditer/Coller à Partir du Presse-Papier"
 
 #: plug-ins/common/winclipboard.c:132
 msgid "<Toolbox>/File/Acquire/From Clipboard"
-msgstr "<Boîte à Outils>/Fichier/Acquérir/À partir du Presse-Papier"
+msgstr "<Toolbox>/Fichier/Acquérir/À partir du Presse-Papier"
 
 #: plug-ins/common/winclipboard.c:307
 msgid "Copying ..."
@@ -12843,7 +12843,7 @@ msgstr "Transfert des donéées TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:124
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Boîte à Outils>/Extensions/Navigateur Web/Ouvrir l'URL..."
+msgstr "<Toolbox>/Extensions/Navigateur Web/Ouvrir l'URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:260
 msgid "Open URL"
@@ -13189,10 +13189,10 @@ msgstr "Erreur, le fichier de propriétés XJT %s est vide."
 #~ msgstr "Fichier de log du serveur :"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-#~ msgstr "<Boîte à Outils>/Extensions/Script-Fu/Console..."
+#~ msgstr "<Toolbox>/Extensions/Script-Fu/Console..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-#~ msgstr "<Boîte à Outils>/Extensions/Script-Fu/Serveur..."
+#~ msgstr "<Toolbox>/Extensions/Script-Fu/Serveur..."
 
 #~ msgid "Re-read all available scripts"
 #~ msgstr "Relire tous les scripts disponibles"

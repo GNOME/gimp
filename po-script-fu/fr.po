@@ -162,11 +162,11 @@ msgstr "Fichier de log du serveur :"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Boîte à Outils>/Extensions/Script-Fu/Console..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Console..."
 
 #: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Boîte à Outils>/Extensions/Script-Fu/Serveur..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Serveur..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"

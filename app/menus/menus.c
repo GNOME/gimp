@@ -1684,6 +1684,7 @@ menu_translate (const gchar *path,
   static gchar *menupath = NULL;
 
   GtkItemFactory *item_factory = NULL;
+  gchar *retval;
   gchar *factory;
   gchar *fullpath;
   gchar *translation;
@@ -1696,12 +1697,12 @@ menu_translate (const gchar *path,
   if (menupath)
     g_free (menupath);
 
-  menupath = g_strdup (path);
+  retval = menupath = g_strdup (path);
 
   if ((strstr (path, "/tearoff1") != NULL) ||
       (strstr (path, "/---") != NULL) ||
       (strstr (path, "/MRU") != NULL))
-    return menupath;
+    return retval;
 
   if (factory)
     item_factory = gtk_item_factory_from_path (factory);
@@ -1734,7 +1735,6 @@ menu_translate (const gchar *path,
 	      else
 		break;
 	    }
-	  g_free (complete);
 	}
       else
 	{
@@ -1746,10 +1746,7 @@ menu_translate (const gchar *path,
        */
       if (strncmp (factory, translation, strlen (factory)) == 0)
 	{
-	  g_free (menupath);
-	  menupath = g_strdup (translation + strlen (factory));
-	  if (complete)
-	    g_free (translation);
+	  retval = translation + strlen (factory);
 	}
       else
 	{
@@ -1757,22 +1754,18 @@ menu_translate (const gchar *path,
 	  if (complete)
 	    g_free (translation);
 	}
-
-      g_free (fullpath);
     }
   else
     {
       translation = gettext (menupath);
+
       if (*translation == '/')
-	{
-	  g_free (menupath);
-	  menupath = g_strdup (translation);
-	}
+	retval = translation;
       else
 	g_warning ("bad translation for menupath: %s", menupath);
     }
 
-  return menupath;
+  return retval;
 }
 
 #endif  /*  ENABLE_NLS  */

@@ -98,7 +98,7 @@ msgid "Load"
 msgstr "Charger"
 
 msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Images>/Filtres/Logomatic/Basique II"
+msgstr "<Image>/Filtres/Logomatic/Basique II"
 
 msgid "illegal parasite specification, reference expected"
 msgstr ""
