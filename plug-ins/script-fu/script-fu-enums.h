@@ -40,7 +40,8 @@ typedef enum
   SF_DIRNAME,
   SF_OPTION,
   SF_PALETTE,
-  SF_TEXT
+  SF_TEXT,
+  SF_ENUM
 } SFArgType;
 
 typedef enum

@@ -451,6 +451,7 @@ init_constants (void)
   setvar (cintern ("SF-OPTION"),      flocons (SF_OPTION),     NIL);
   setvar (cintern ("SF-PALETTE"),     flocons (SF_PALETTE),    NIL);
   setvar (cintern ("SF-TEXT"),        flocons (SF_TEXT),       NIL);
+  setvar (cintern ("SF-ENUM"),        flocons (SF_ENUM),       NIL);
 
   /* for SF_ADJUSTMENT */
   setvar (cintern ("SF-SLIDER"),      flocons (SF_SLIDER),     NIL);

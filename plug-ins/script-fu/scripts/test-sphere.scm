@@ -111,7 +111,7 @@
 ; ----------------------------------------------------------------------
 ; SF-OPTION
 ; Only useful in interactive mode. It will create a widget in the control
-; dialog. The widget is an option_menu showing the options that are passed
+; dialog. The widget is a combo-box showing the options that are passed
 ; as a list. The first option is the default choice.
 ;
 ; Usage:
@@ -119,6 +119,19 @@
 ;
 ; The value returned when the script is invoked is the number of the
 ; choosen option, where the option first is counted as 0.
+; ----------------------------------------------------------------------
+; SF-ENUM
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget is a combo-box showing all enum values for the given
+; enum type. This has to be the name of a registered enum, without the
+; "Gimp" prefix. The second parameter speficies the default value, using
+; the enum value's nick.
+;
+; Usage:
+; SF-ENUM "Interpolation" '("InterpolationType" "linear")
+;
+; The value returned when the script is invoked corresponds to choosen
+; enum value.
 ; ----------------------------------------------------------------------
 
 
@@ -248,6 +261,7 @@
 						 gimp-data-directory
 						 "/scripts/images/beavis.jpg")
 		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
+		    SF-ENUM       "Interpolation"      '("InterpolationType" "linear")
 		    SF-DIRNAME    "Output directory"   "/var/tmp/"
 		    SF-IMAGE      "Image"              -1
 		    SF-LAYER      "Layer"              -1

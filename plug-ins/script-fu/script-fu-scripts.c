@@ -144,6 +144,8 @@ script_fu_add_script (LISP a)
 {
   GimpParamDef *args;
   SFScript     *script;
+  GType         enum_type;
+  GEnumValue   *enum_value;
   gchar        *val;
   gint          i;
   guchar        r, g, b;
@@ -510,7 +512,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_gradient =
 		    g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_gradient =
-		    g_strdup (script->arg_defaults[i].sfa_pattern);
+		    g_strdup (script->arg_defaults[i].sfa_gradient);
 
 		  args[i + 1].type        = GIMP_PDB_STRING;
 		  args[i + 1].name        = "gradient";
@@ -529,11 +531,51 @@ script_fu_add_script (LISP a)
 			g_slist_append (script->arg_defaults[i].sfa_option.list,
 					g_strdup (get_c_string (car (option_list))));
 		    }
+
 		  script->arg_defaults[i].sfa_option.history = 0;
 		  script->arg_values[i].sfa_option.history = 0;
 
 		  args[i + 1].type        = GIMP_PDB_INT32;
 		  args[i + 1].name        = "option";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
+		case SF_ENUM:
+		  if (!TYPEP (car (a),  tc_cons))
+		    return my_err ("script-fu-register: enum defaults must be a list", NIL);
+
+                  option_list = car (a);
+                  if (!TYPEP (car (option_list), tc_string))
+		    return my_err ("script-fu-register: first element in enum defaults must be a type-name", NIL);
+
+                  val = get_c_string (car (option_list));
+                  if (g_str_has_prefix (val, "Gimp"))
+                    val = g_strdup (val);
+                  else
+                    val = g_strconcat ("Gimp", val, NULL);
+
+                  enum_type = g_type_from_name (val);
+                  if (! G_TYPE_IS_ENUM (enum_type))
+                    {
+                      g_free (val);
+                      return my_err ("script-fu-register: first element in enum defaults must be the name of a registered type", NIL);
+                    }
+
+                  script->arg_defaults[i].sfa_enum.type_name = val;
+
+                  option_list = cdr (option_list);
+                  if (!TYPEP (car (option_list), tc_string))
+		    return my_err ("script-fu-register: second element in enum defaults must be a string", NIL);
+
+                  enum_value =
+                    g_enum_get_value_by_nick (g_type_class_peek (enum_type),
+                                              get_c_string (car (option_list)));
+                  if (enum_value)
+                    script->arg_defaults[i].sfa_enum.history =
+                      script->arg_values[i].sfa_enum.history = enum_value->value;
+
+		  args[i + 1].type        = GIMP_PDB_INT32;
+		  args[i + 1].name        = "enum";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
@@ -843,8 +885,9 @@ script_fu_script_proc (const gchar      *name,
                       break;
 
                     case SF_OPTION:
+                    case SF_ENUM:
                       g_string_append_printf (s, "%d", param->data.d_int32);
-                          break;
+                      break;
 
                     default:
                       break;
@@ -989,6 +1032,10 @@ script_fu_free_script (SFScript *script)
           g_slist_foreach (script->arg_defaults[i].sfa_option.list,
                            (GFunc) g_free, NULL);
           g_slist_free (script->arg_defaults[i].sfa_option.list);
+          break;
+
+        case SF_ENUM:
+          g_free (script->arg_defaults[i].sfa_enum.type_name);
           break;
 
         default:

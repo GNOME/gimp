@@ -1,5 +1,20 @@
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-types.h
+	* plug-ins/script-fu/siod-wrapper.c: added new script-fu
+	parameter SF-ENUM that allows to easily create a combo-box to
+	choose values from registered enums. For this to work correctly,
+	another change is needed that I will commit separately.
+
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm: use the new SF-ENUM
+	parameter.
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_expander_new().
 
 	* app/paint/gimppaintoptions.[ch]: added a property to track the

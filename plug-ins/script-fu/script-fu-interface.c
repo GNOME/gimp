@@ -439,8 +439,8 @@ script_fu_interface (SFScript *script)
 	  script->arg_values[i].sfa_file.file_entry = widget;
 
 	  g_signal_connect (widget, "filename_changed",
-			    G_CALLBACK (script_fu_file_entry_callback),
-			    &script->arg_values[i].sfa_file);
+                            G_CALLBACK (script_fu_file_entry_callback),
+                            &script->arg_values[i].sfa_file);
 	  break;
 
 	case SF_FONT:
@@ -500,6 +500,17 @@ script_fu_interface (SFScript *script)
                             G_CALLBACK (script_fu_combo_callback),
                             &script->arg_values[i].sfa_option);
 	  break;
+
+	case SF_ENUM:
+	  widget = gimp_enum_combo_box_new (g_type_from_name (script->arg_defaults[i].sfa_enum.type_name));
+
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget),
+                                         script->arg_values[i].sfa_enum.history);
+
+          g_signal_connect (widget, "changed",
+                            G_CALLBACK (gimp_int_combo_box_get_active),
+                            &script->arg_values[i].sfa_enum.history);
+          break;
 	}
 
       if (widget)
@@ -853,6 +864,10 @@ script_fu_ok (SFScript *script)
         case SF_OPTION:
           g_string_append_printf (s, "%d", arg_value->sfa_option.history);
           break;
+
+        case SF_ENUM:
+          g_string_append_printf (s, "%d", arg_value->sfa_enum.history);
+          break;
         }
     }
 
@@ -960,6 +975,11 @@ script_fu_reset (SFScript *script)
         case SF_OPTION:
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
                                     script->arg_defaults[i].sfa_option.history);
+          break;
+
+        case SF_ENUM:
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget),
+                                         script->arg_defaults[i].sfa_enum.history);
           break;
         }
     }
