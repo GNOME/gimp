@@ -552,15 +552,15 @@ if test "$gdk_target" = x11; then
         [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
           GIMP_REMOTE='gimp-remote-1.3';
 	  WEBBROWSER='webbrowser';
-          LIBXMU="$X_LIBS -lXmu -lXt -lSM -lICE",
+          LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
               GIMP_REMOTE='gimp-remote-1.3';
 	      WEBBROWSER='webbrowser';
-	      LIBXMU="$X_LIBS -lXmu -lXt",
+	      LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	      [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
-	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
+	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt)
       LDFLAGS="$gimp_save_LDFLAGS"
     fi
   else
@@ -1063,6 +1063,7 @@ dnl plug-ins/perl/config.pl
 dnl plug-ins/gap/Makefile
 dnl plug-ins/gdyntext/Makefile
 dnl plug-ins/perl/po/Makefile.in
+dnl plug-ins/plugin-helper/Makefile
 dnl plug-ins/tools/common/Makefile
 
 AC_OUTPUT([
@@ -1140,7 +1141,6 @@ plug-ins/print/Makefile
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
-plug-ins/plugin-helper/Makefile
 plug-ins/tools/Makefile
 modules/Makefile
 modules/makefile.mingw

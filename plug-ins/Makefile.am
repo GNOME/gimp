@@ -57,9 +57,9 @@ SUBDIRS = 			\
 	sel2path		\
 	$(WEBBROWSER)		\
 	$(XJT)			\
-	plugin-helper		\
 	common			\
 	tools
 
+##	plugin-helper		\
 ##	gap			\
 ##	gdyntext		\

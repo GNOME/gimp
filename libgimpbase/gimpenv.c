@@ -375,7 +375,8 @@ gimp_gtkrc (void)
 
 /**
  * gimp_path_runtime_fix:
- * @path: A pointer to a string (allocated with g_malloc) that is (or could be) a pathname.
+ * @path: A pointer to a string (allocated with g_malloc) that is
+ *        (or could be) a pathname.
  *
  * On Windows, this function checks if the string pointed to by @path
  * starts with the compile-time prefix, and in that case, replaces the
@@ -387,8 +388,7 @@ gimp_gtkrc (void)
  *
  * On Unix, does nothing.
  */
-
-void
+static void
 gimp_path_runtime_fix (gchar **path)
 {
 #if defined (G_OS_WIN32) && defined (PREFIX)

@@ -2,6 +2,12 @@
 
 noinst_LIBRARIES = libappbase.a
 
+if HAVE_ASM_MMX
+mmx_sources = detect-mmx.S
+else
+mmx_sources =
+endif
+
 libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	base.c			\
 	base.h			\
@@ -14,7 +20,7 @@ libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	boundary.h		\
 	brush-scale.c		\
 	brush-scale.h		\
-	detect-mmx.S		\
+	$(mmx_sources)		\
 	detect-mmx.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
@@ -53,11 +59,15 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 	@GIMP_MP_FLAGS@			\
 @STRIP_END@
 
+AM_ASFLAGS = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app
+
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GLIB_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GLIB_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 #

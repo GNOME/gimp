@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 
 const gchar * gimp_directory                  (void) G_GNUC_CONST;
 const gchar * gimp_data_directory             (void) G_GNUC_CONST;
-const gchar * gimp_locale_directory	          (void) G_GNUC_CONST;
+const gchar * gimp_locale_directory	      (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory	      (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;

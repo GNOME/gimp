@@ -153,7 +153,7 @@ CLEANFILES = $(noinst_DATA) stock-icons.list
 stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	( rm -f $@; \
           for image in $(STOCK_IMAGES); do \
-            echo -n $$image | \
+            echo $$image | \
               sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
 	    echo "  $(srcdir)/$$image" >> $@; \
 	  done )

@@ -1,5 +1,21 @@
 2002-05-30  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: added -lX11 to LIBXMU since GTK_LIBS doesn't provide
+	it for us anymore (reported by Tomas Ogren).
+
+	* libgimpbase/gimpenv.[ch]: declare gimp_path_runtime_fix() static.
+
+	* app/base/Makefile.am: conditionally build detect-mmx.S to avoid
+	warnings about empty object files (reported by Tomas Ogren).
+
+	* plug-ins/Makefile.am: commented out plugin-helper since it's just
+	too broken to be distributed.
+	
+	* themes/Default/images/Makefile.am: echo -n is not portable and not
+	needed, so removed it (reported by Tomas Ogren).
+
+2002-05-30  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui.c (gui_get_screen_resolution): do some sanity checks
 	on the values returned by GDK.
 
