@@ -1,19 +1,23 @@
+# Slovak translation of 
+# Slovak translation of
 # gimp-tips Slovak translation.
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2004 Free Software Foundation, Inc.
 # Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz> 2002
 # Zdenko Podobný <zdpo@mailbox.sk> 2003
+# Zdenko Podobný <zdpo@mailbox.sk>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-05 00:12+0100\n"
-"PO-Revision-Date: 2004-01-23 15:05+0100\n"
+"POT-Creation-Date: 2004-03-04 13:37+0100\n"
+"PO-Revision-Date: 2004-03-10 20:23+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3\n"
 
 #: tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to The GIMP !</big>"
@@ -44,13 +48,10 @@ msgstr ""
 "pozadia namiesto farby popredia."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr ""
-"Ťahanie s <tt>Ctrl</tt> s nástrojom Otočenie spôsobí otáčanie s 15 "
-"stupňovými krokmi."
+msgstr "Ťahanie s <tt>Ctrl</tt> s nástrojom Otočenie spôsobí otáčanie s 15 stupňovými krokmi."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -73,17 +74,12 @@ msgstr ""
 "\"Pohltiť vrstvu\" v dialógu Vrstvy, alebo to urobte pomocou ponuky."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. If \"Save Keyboard "
 "Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
-msgstr ""
-"Po povolení \"Dynamické klávesové skratky\" v dialógu Nastavenia, môžete "
-"meniť klávesové skratky. Spraviť to môžete pomocou otvorenia ponuky, "
-"označením položky a stlačením požadovanej klávesovej skratky. Ak je povolené "
-"\"Uložiť klávesové skratky\", tak sa skratky uložia, keď ukončíte GIMP."
+msgstr "Po povolení \"Dynamické klávesové skratky\" v dialógu Nastavenia, môžete meniť klávesové skratky. Spraviť to môžete pomocou otvorenia ponuky, označením položky a stlačením požadovanej klávesovej skratky. Ak je povolené \"Uložiť klávesové skratky\", tak sa skratky uložia, keď ukončíte GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -108,7 +104,6 @@ msgstr ""
 "nástrojom Krivky (Nástroje-&gt;Farby-&gt;Krivky)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -127,15 +122,11 @@ msgstr ""
 "v okne obrázka skryje alebo zobrazí panel nástrojov a ostatné dialógy."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
-msgstr ""
-"Väčšina zásuvných modulov pracuje s aktuálnou vrstvou aktuálneho obrázku. V "
-"niektorých prípadoch bude musieť zlúčiť všetky vrstvy (Obrázok-&gt;Do jednej "
-"vrstvy), ak chcete pracovať s celým obrázkom."
+msgstr "Väčšina zásuvných modulov pracuje s aktuálnou vrstvou aktuálneho obrázku. V niektorých prípadoch bude musieť zlúčiť všetky vrstvy (Obrázok-&gt;Do jednej vrstvy), ak chcete pracovať s celým obrázkom."
 
 #: tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -147,17 +138,12 @@ msgstr ""
 "funkcie \"Vrátiť späť\"..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
 "&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
-msgstr ""
-"Nie každý efekt sa dá použiť na všetky typy obrázkov. Môžete to zistiť podľa "
-"šedej položky v ponuke. Možno bude potrebné zmeniť mód obrázku na RGB "
-"(Obrázok-&gt;Režim-&gt;RGB), pridať alfa kanál (Vrstvy-&gt;Priesvitnosť-&gt;"
-"Pridať alfa kanál) alebo zlúčiť vrstvy (Obrázok&gt;Do jednej vrstvy)."
+msgstr "Nie každý efekt sa dá použiť na všetky typy obrázkov. Môžete to zistiť podľa šedej položky v ponuke. Možno bude potrebné zmeniť mód obrázku na RGB (Obrázok-&gt;Režim-&gt;RGB), pridať alfa kanál (Vrstvy-&gt;Priesvitnosť-&gt;Pridať alfa kanál) alebo zlúčiť vrstvy (Obrázok&gt;Do jednej vrstvy)."
 
 #: tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -269,14 +255,11 @@ msgstr ""
 "kliknutia a potiahnutia ľavým a pravým tlačítkom."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr ""
-"Môžete vytvoriť a upravovať komplexný výber použitím nástroja Cesta. Dialóg "
-"Cesty umožňuje pracovať s viacerými cestami a konvertovať ich do výberu."
+msgstr "Môžete vytvoriť a upravovať komplexný výber použitím nástroja Cesta. Dialóg Cesty umožňuje pracovať s viacerými cestami a konvertovať ich do výberu."
 
 #: tips/gimp-tips.xml.in.h:27
 msgid ""
@@ -298,16 +281,11 @@ msgstr ""
 "farbou."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Položka Úpravy-&gt;Obresliť výber umožňuje kresliť jednoduché štvorce alebo "
-"kruhy vykreslením čiary aktívnou stopou okolo hraníc aktuálneho výberu. "
-"Zložitejšie tvary je možné kresliť pomocou nástroja Cesta alebo cez Filtre-"
-"&gt;Generovanie-&gt;Gfig."
+msgstr "Položka Úpravy-&gt;Obresliť výber umožňuje kresliť jednoduché štvorce alebo kruhy vykreslením čiary aktívnou stopou okolo hraníc aktuálneho výberu. Zložitejšie tvary je možné kresliť pomocou Filtre-&gt;Generovanie-&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -374,3 +352,4 @@ msgstr ""
 "\"Rýchla maska\" na ľavom spodnom okraji okna. Zmena sa uskutoční kreslením "
 "do obrázku a opätovné stlačenie tlačítka ju skonvertuje späť na normály "
 "výber."
+

@@ -1,19 +1,20 @@
+# Slovak translation of 
 # Slovak translation of gimp-plug-ins.HEAD.pot
 # Copyright (C) 2001,2004 Free Software Foundation, Inc.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.HEAD\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-01-26 20:57+0100\n"
+"POT-Creation-Date: 2004-03-10 14:45+0100\n"
+"PO-Revision-Date: 2004-03-10 20:21+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.2beta3\n"
+"X-Generator: KBabel 1.3\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
@@ -71,8 +72,10 @@ msgstr "O module"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
 #: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
-#: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
+#: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Preview"
 msgstr "Náhľad"
 
@@ -258,8 +261,7 @@ msgstr "Použiť loglog vyhladzovanie"
 
 #: plug-ins/FractalExplorer/Dialogs.c:934
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Na eliminovanie \"páskovania\"\tvo výsledkoch sa použije loglog vyhladzovanie"
+msgstr "Na eliminovanie \"páskovania\"\tvo výsledkoch sa použije loglog vyhladzovanie"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:938
@@ -432,7 +434,7 @@ msgstr "_Fraktály"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -473,14 +475,13 @@ msgstr "Uložiť parametre fraktálu"
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
-#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
-#: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
+#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
+#: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
 #: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/helpbrowser/domain.c:256 plug-ins/xjt/xjt.c:2535
-#: plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nie je možné otvoriť '%s' pre čítanie: %s"
@@ -700,7 +701,7 @@ msgstr "Poloha X svetelného zdroja v XYZ priestore"
 
 #: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
-#: plug-ins/common/svg.c:799 plug-ins/common/xbm.c:1241
+#: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y:"
@@ -768,8 +769,7 @@ msgstr "Oko_lie:"
 
 #: plug-ins/Lighting/lighting_ui.c:717 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Množstvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
+msgstr "Množstvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
 
 #: plug-ins/Lighting/lighting_ui.c:729
 msgid "_Diffuse:"
@@ -1351,8 +1351,7 @@ msgstr "Použiť funkciu kosínus na červený komponent"
 
 #: plug-ins/common/AlienMap.c:1233
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Červený kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
+msgstr "Červený kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1252
 msgid "Use sine-function for green component."
@@ -1363,10 +1362,8 @@ msgid "Use cosine-function for green component."
 msgstr "Použiť funkciu kosínus na zelený komponent"
 
 #: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Zelený kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgstr "Zelený kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1275
 msgid "Use sine-function for blue component."
@@ -1377,10 +1374,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Použiť funkciu kosínus na modrý komponent"
 
 #: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Modrý kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Modrý kanál: použiť linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1360
 msgid "About AlienMap"
@@ -2407,8 +2402,7 @@ msgstr "Žiadna rozumná prípona, ukladám ako komprimovaný XCF."
 
 #: plug-ins/common/bz2.c:301 plug-ins/common/gz.c:393
 msgid "No sensible extension, attempting to load with file magic."
-msgstr ""
-"Žiadna rozumná prípona, pokus o načítanie pomocou súborov magických čísiel."
+msgstr "Žiadna rozumná prípona, pokus o načítanie pomocou súborov magických čísiel."
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -2903,15 +2897,12 @@ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtre/Skreslenie/_Skriviť..."
 
 #: plug-ins/common/curve_bend.c:709
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ohýbanie pracuje iba s vrstvami (alebo bolo volané na kanál alebo masku)"
+msgstr "Može pracovať iba s vrstvami (ale bolo volané na kanál alebo masku)."
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Nie je možné pracovať s neznámymi typmi obrázkov"
+msgstr "Nie je možné pracovať s prázdnym výberom."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3887,8 +3878,7 @@ msgstr "Jéj-lupa: Zásuvný modul v minulosti známy ako \"GIMP vajíčko!\""
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-2000"
+msgstr "Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3900,8 +3890,7 @@ msgstr "Názov ikony:"
 
 #: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr ""
-"Nie je možné jednoducho ďalej zredukovať farby. Ukladám ako nepriehľadné."
+msgstr "Nie je možné jednoducho ďalej zredukovať farby. Ukladám ako nepriehľadné."
 
 #: plug-ins/common/gif.c:910
 msgid ""
@@ -3912,8 +3901,7 @@ msgstr ""
 "je uložený."
 
 #: plug-ins/common/gif.c:971
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nie je možné uložiťobrázky v RGB farebnom režime. Skonvertujte ho najskôr na "
 "indexované farby alebo do odtieňov šedej."
@@ -4191,7 +4179,7 @@ msgid "Intersection"
 msgstr "Prienik"
 
 #. Width and Height
-#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:697
+#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
 #: plug-ins/print/gimp_main_window.c:1008
 #: plug-ins/print/gimp_main_window.c:1224
 msgid "Width:"
@@ -5583,8 +5571,7 @@ msgstr "Chyba počas ukladania '%s'. Nie je možné uložiť obrázok."
 #. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nie je možné bezstratovo uložiť priesvitnosť, ukladám ako nepriesvitné."
+msgstr "Nie je možné bezstratovo uložiť priesvitnosť, ukladám ako nepriesvitné."
 
 #: plug-ins/common/png.c:1553
 msgid "Save as PNG"
@@ -5772,7 +5759,7 @@ msgid "Rendering"
 msgstr "Generovanie"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:818
+#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1103
 msgid "Resolution:"
 msgstr "Rozlíšenie:"
@@ -6798,19 +6785,19 @@ msgstr "Uložiť ako SUNRAS"
 msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
 
-#: plug-ins/common/svg.c:243 plug-ins/common/svg.c:626
+#: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 msgid "Unknown reason"
 msgstr "Neznámy dôvod"
 
-#: plug-ins/common/svg.c:247
+#: plug-ins/common/svg.c:249
 msgid "Rendering SVG..."
 msgstr "Generujem SVG..."
 
-#: plug-ins/common/svg.c:257
+#: plug-ins/common/svg.c:259
 msgid "Rendered SVG"
 msgstr "Generovanie SVG"
 
-#: plug-ins/common/svg.c:422
+#: plug-ins/common/svg.c:424
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6818,51 +6805,50 @@ msgstr ""
 "SVG súbor neurčuje\n"
 "veľkosť!"
 
-#: plug-ins/common/svg.c:428
+#: plug-ins/common/svg.c:430
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: plug-ins/common/svg.c:632
+#: plug-ins/common/svg.c:634
 msgid "Open SVG"
 msgstr "Otvoriť SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/svg.c:644
+#: plug-ins/common/svg.c:646
 msgid "Render Scalable Vector Graphics"
 msgstr "Generovať Scalable Vector Graphics"
 
-#: plug-ins/common/svg.c:703 plug-ins/print/gimp_main_window.c:1025
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
 msgid "Height:"
 msgstr "Výška:"
 
-#: plug-ins/common/svg.c:777
+#: plug-ins/common/svg.c:779
 msgid "Ratio _X:"
 msgstr "Pomer _X:"
 
-#: plug-ins/common/svg.c:813
+#: plug-ins/common/svg.c:815
 msgid "Constrain aspect ratio"
 msgstr "Vynútiť pomer strán"
 
-#: plug-ins/common/svg.c:824
+#: plug-ins/common/svg.c:826
 #, c-format
 msgid "pixels/%a"
 msgstr "bodov/%a"
 
 #. Path Import
-#: plug-ins/common/svg.c:844
+#: plug-ins/common/svg.c:846
 msgid "Import _Paths"
 msgstr "Importovať _cesty"
 
-#: plug-ins/common/svg.c:850
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+#: plug-ins/common/svg.c:852
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovať elementy ciest z SVG, aby mohly byť použité s GIMP nástrojom pre "
 "cesty"
 
-#: plug-ins/common/svg.c:863
+#: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
 msgstr "Splynutie importovaných ciest"
 
@@ -7073,8 +7059,7 @@ msgid "ID"
 msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:85
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento reťazec bude použitý na identifikáciu jednotky v konfiguračnom súbore "
 "programu GIMP."
@@ -7383,7 +7368,7 @@ msgstr "Hlavné nastavenia"
 msgid "Step Size:"
 msgstr "Veľkosť kroku"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1290
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1293
 msgid "Iterations:"
 msgstr "Iterácie:"
 
@@ -8464,6 +8449,7 @@ msgstr "Popredie"
 
 #: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:127
 msgid "Copy"
 msgstr "Kopírovať"
@@ -9297,8 +9283,7 @@ msgid "Shadow depth:"
 msgstr "Hĺbka tieňa:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hĺbka vrhaného tieňa, t.j. ako ďaleko od objektov budú"
 
 #: plug-ins/gimpressionist/general.c:201
@@ -9310,7 +9295,7 @@ msgid "How much to blur the drop shadow"
 msgstr "Miera rozostrenia tieňov"
 
 #: plug-ins/gimpressionist/general.c:210
-msgid "Deviation treshold:"
+msgid "Deviation threshold:"
 msgstr "Prah odchýlky:"
 
 #: plug-ins/gimpressionist/general.c:214
@@ -9699,13 +9684,11 @@ msgid "The largest brush to create"
 msgstr "Najväčší vytváraný štetec"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nech hodnota (jas) oblasti určí rozmer ťahu"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdialenosť od stredu obrázka určí rozmer ťahu"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -9786,6 +9769,45 @@ msgid ""
 "influence"
 msgstr "Režim Voronoi berie do úvahy iba vplyv bodu najbližšieho vektora mv"
 
+#: plug-ins/help/domain.c:112
+#, c-format
+msgid ""
+"Failed to open help files:\n"
+"%s"
+msgstr ""
+"Nepodarilo sa otvoriť súbory pomocníka:\n"
+"%s"
+
+#: plug-ins/help/domain.c:114
+#, c-format
+msgid ""
+"Parse error in help domain:\n"
+"%s\n"
+"\n"
+"(Added entires before error anyway)"
+msgstr ""
+"Chyba spracovania domény pomocníka:\n"
+"%s\n"
+"\n"
+"(Pridal som položky pred chybou)"
+
+#: plug-ins/help/domain.c:129
+#, c-format
+msgid "Help ID '%s' unknown"
+msgstr "Neznáme ID pomocníka '%s'"
+
+#: plug-ins/help/domain.c:251
+msgid "The GIMP help files are not installed."
+msgstr "Súbory pomocníka GIMP nie sú nainštalované."
+
+#: plug-ins/help/domain.c:253
+msgid "The requested help files are not installed."
+msgstr "Požadované súbory pomocníka nie sú nainštalované."
+
+#: plug-ins/help/domain.c:260
+msgid "Please check your installation."
+msgstr "Prekontrolujte si inštaláciu."
+
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "Prehliadač GIMP pomocníka"
@@ -9814,45 +9836,6 @@ msgstr ""
 "vyššie zobrazené. Znamená to, že téma ešte nebola napísaná, alebo vaša "
 "inštalácia je nekompletná. Uistite sa, či je vaša inštalácia kompletná skôr, "
 "ako pošlete správu o chybe."
-
-#: plug-ins/helpbrowser/domain.c:113
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Nepodarilo sa otvoriť súbory pomocníka:\n"
-"%s"
-
-#: plug-ins/helpbrowser/domain.c:115
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(Added entires before error anyway)"
-msgstr ""
-"Chyba spracovania domény pomocníka:\n"
-"%s\n"
-"\n"
-"(Pridal som položky pred chybou)"
-
-#: plug-ins/helpbrowser/domain.c:130
-#, c-format
-msgid "Help ID '%s' unknown"
-msgstr "Neznáme ID pomocníka '%s'"
-
-#: plug-ins/helpbrowser/domain.c:252
-msgid "The GIMP help files are not installed."
-msgstr "Súbory pomocníka GIMP nie sú nainštalované."
-
-#: plug-ins/helpbrowser/domain.c:254
-msgid "The requested help files are not installed."
-msgstr "Požadované súbory pomocníka nie sú nainštalované."
-
-#: plug-ins/helpbrowser/domain.c:261
-msgid "Please check your installation."
-msgstr "Prekontrolujte si inštaláciu."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -9956,52 +9939,88 @@ msgstr "Farebná transformácia"
 msgid "Relative Probability:"
 msgstr "Relatívna pravdepodobnosť:"
 
-#: plug-ins/ifscompose/ifscompose.c:1255
+#: plug-ins/ifscompose/ifscompose.c:1191
+msgid "/Move"
+msgstr "/Presun"
+
+#: plug-ins/ifscompose/ifscompose.c:1193
+msgid "/Rotate\\/Scale"
+msgstr "/Otočenie\\/Mierka"
+
+#: plug-ins/ifscompose/ifscompose.c:1195
+msgid "/Stretch"
+msgstr "/Roztiahnutie"
+
+#: plug-ins/ifscompose/ifscompose.c:1198
+msgid "/New"
+msgstr "/Nový"
+
+#: plug-ins/ifscompose/ifscompose.c:1200
+msgid "/Delete"
+msgstr "/Zmazať"
+
+#: plug-ins/ifscompose/ifscompose.c:1202
+msgid "/Undo"
+msgstr "/Vrátiť späť"
+
+#: plug-ins/ifscompose/ifscompose.c:1204
+msgid "/Redo"
+msgstr "/Znovu"
+
+#: plug-ins/ifscompose/ifscompose.c:1206
+msgid "/Select All"
+msgstr "/Vybrať všetko"
+
+#: plug-ins/ifscompose/ifscompose.c:1208
+msgid "/Recompute Center"
+msgstr "/Prepočítať stred"
+
+#: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
 msgstr "Nastavenie Ifs kompozície"
 
-#: plug-ins/ifscompose/ifscompose.c:1277
+#: plug-ins/ifscompose/ifscompose.c:1280
 msgid "Max. Memory:"
 msgstr "Max. pamäť:"
 
-#: plug-ins/ifscompose/ifscompose.c:1304
+#: plug-ins/ifscompose/ifscompose.c:1307
 msgid "Subdivide:"
 msgstr "Poddelenie:"
 
-#: plug-ins/ifscompose/ifscompose.c:1317
+#: plug-ins/ifscompose/ifscompose.c:1320
 msgid "Spot Radius:"
 msgstr "Polomer bodu"
 
-#: plug-ins/ifscompose/ifscompose.c:1390
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Generujem IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1409
+#: plug-ins/ifscompose/ifscompose.c:1412
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopírujem IFS do obrázka (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1548
+#: plug-ins/ifscompose/ifscompose.c:1551
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformácia %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2675 plug-ins/ifscompose/ifscompose.c:2687
+#: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
 msgid "Open failed"
 msgstr "Otváranie zlyhalo"
 
-#: plug-ins/ifscompose/ifscompose.c:2682
+#: plug-ins/ifscompose/ifscompose.c:2685
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "Súbor '%s' zrejme nie je súbor kompozície IFS."
 
-#: plug-ins/ifscompose/ifscompose.c:2718
+#: plug-ins/ifscompose/ifscompose.c:2721
 msgid "Save as IFS file"
 msgstr "Uložiť ako IFS súbor"
 
-#: plug-ins/ifscompose/ifscompose.c:2743
+#: plug-ins/ifscompose/ifscompose.c:2746
 msgid "Open IFS file"
 msgstr "Otvoriť IFS súbor"
 
@@ -10054,6 +10073,7 @@ msgstr "Vytvoriť"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
+#: plug-ins/imagemap/imap_object_popup.c:111
 #: plug-ins/imagemap/imap_toolbar.c:124
 msgid "Cut"
 msgstr "Vystrihnúť"
@@ -10176,6 +10196,7 @@ msgstr "Vložiť bod"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
+#: plug-ins/imagemap/imap_object_popup.c:109
 #: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
 msgstr "Presunúť nižšie"
@@ -10195,6 +10216,7 @@ msgstr "Presunúť dopredu"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
+#: plug-ins/imagemap/imap_object_popup.c:107
 #: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Presunúť vyššie"
@@ -10449,7 +10471,7 @@ msgstr "_Upraviť"
 msgid "Deselect _All"
 msgstr "Od_značiť všetko"
 
-#: plug-ins/imagemap/imap_menu.c:278
+#: plug-ins/imagemap/imap_menu.c:278 plug-ins/imagemap/imap_object_popup.c:103
 msgid "Edit Area Info..."
 msgstr "Upraviť informáciu o oblasti"
 
@@ -10508,6 +10530,10 @@ msgstr "_Pomocník"
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "O mape obrázka..."
+
+#: plug-ins/imagemap/imap_object_popup.c:105
+msgid "Delete Area"
+msgstr "Zmazať oblasť"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -10677,7 +10703,7 @@ msgstr "Formát súboru mapy"
 msgid "View Source"
 msgstr "Zobraziť zdrojový kód"
 
-#: plug-ins/imagemap/imap_stock.c:45
+#: plug-ins/imagemap/imap_stock.c:47
 msgid "Edit Map Info..."
 msgstr "Upraviť informáciu o mape..."
 
@@ -11041,8 +11067,7 @@ msgstr "Na šírku"
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
-msgstr ""
-"Zvoľte orientáciu: na výšku, na šírku, hore nohami, na šírku hore nohami "
+msgstr "Zvoľte orientáciu: na výšku, na šírku, hore nohami, na šírku hore nohami "
 
 #: plug-ins/print/gimp_main_window.c:517
 msgid "Distance from the left of the paper to the image"
@@ -11475,10 +11500,8 @@ msgid "Adjust Output..."
 msgstr "Prispôsobiť výstup..."
 
 #: plug-ins/print/gimp_main_window.c:1470
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
-"Nastavenie farebného vyváženia, kontrastu, sýtosti a algoritmu rozptylu"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgstr "Nastavenie farebného vyváženia, kontrastu, sýtosti a algoritmu rozptylu"
 
 #: plug-ins/print/print.c:164
 msgid "<Image>/File/_Print..."
@@ -11711,3 +11734,4 @@ msgstr "Chyba: Nie je možné prečítať súbor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Súbor XJT vlastností '%s' je prázdny."
+
