@@ -1,7 +1,7 @@
 2003-04-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/old-photo.scm: applied a modified
-	version of a patch from Branko Collins that makes the border size
+	version of a patch from Branko Collin that makes the border size
 	configurable (bug #62087).
 
 2003-04-17  Sven Neumann  <sven@gimp.org>
