@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-11-09 18:14+0100\n"
-"PO-Revision-Date: 2001-11-09 18:27+0100\n"
+"POT-Creation-Date: 2001-11-27 19:23+0100\n"
+"PO-Revision-Date: 2001-11-27 19:23+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11319,7 +11319,7 @@ msgstr "K±t pocz±tkowy:"
 msgid "Angle span:"
 msgstr "Rozci±g³o¶æ k±tów:"
 
-#: plug-ins/gimpressionist/orientation.c:1 plug-ins/gimpressionist/size.c:1
+#: plug-ins/gimpressionist/orientation.c:1
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Liczba wykorzystywanych kierunków (pêdzli)"
 
@@ -11642,6 +11642,10 @@ msgstr "Rozmiar minimalny:"
 #: plug-ins/gimpressionist/size.c:1
 msgid "Max size:"
 msgstr "Rozmiar maksymalny:"
+
+#: plug-ins/gimpressionist/size.c:1
+msgid "The number of sizes of brushes to use"
+msgstr "Liczba wykorzystywanych rozmiarów pêdzli"
 
 #: plug-ins/gimpressionist/size.c:1
 msgid "The smallest brush to create"

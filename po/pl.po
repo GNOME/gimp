@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-11-12 11:33+0100\n"
-"PO-Revision-Date: 2001-11-12 11:35+0100\n"
+"POT-Creation-Date: 2001-11-27 19:13+0100\n"
+"PO-Revision-Date: 2001-11-27 19:20+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -101,6 +101,17 @@ msgstr "Palety"
 #: app/app_procs.c:1 app/internal_procs.c:1 app/preferences_dialog.c:1
 msgid "Gradients"
 msgstr "Gradienty"
+
+#: app/app_procs.c:1
+#, c-format
+msgid ""
+"Unable to open a test swap file.  Please check the\n"
+"location and permissions of the swap directory defined\n"
+"in your Preferences (currently '%s')."
+msgstr ""
+"Nie mo¿na otworzyæ testowego pliku wymiany. Sprawd¼po³o¿enie i uprawnienia "
+"do katalogu wymiany, zdefiniowanego\n"
+"w oknie preferencji (aktualnie \"%s\")."
 
 #: app/app_procs.c:1
 msgid "Really Quit?"
@@ -5059,6 +5070,20 @@ msgstr "Progowanie nie funkcjonuje w trybie indeksowanym"
 msgid "Threshold Range:"
 msgstr "Zakres progowania"
 
+#: app/tile_swap.c:1
+msgid ""
+"Unable to open swap file.  The Gimp has run out of memory\n"
+"and cannot use the swap file.  Some parts of your images\n"
+"may be corrupted.  Try to save your work using different\n"
+"filenames, exit the Gimp and check the location of the\n"
+"swap directory in your Preferences."
+msgstr ""
+"Nie mo¿na otworzyæ pliku wymiany. GIMP-owi brakuje pamiêci, a\n"
+"nie mo¿na uzyskaæ dostêpu do pliku wymiany. Pewne czê¶ci\n"
+"obrazów mog± z tego powodu byæ uszkodzone. Spróbuj zapisaæ\n"
+"efekty swej pracy korzystaj±c z innych nazw plików, zakoñcz\n"
+"GIMP-a i sprawd¼ po³o¿enie katalogu wymiany w oknie preferencji."
+
 #: app/tips_dialog.c:1
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.pl.txt"
@@ -6279,12 +6304,22 @@ msgid "Cannot get status of file %s"
 msgstr "Nie mo¿na uzyskaæ stanu pliku %s"
 
 #: app/user_install.c:1
-msgid "does not exist.  Cannot install."
-msgstr "nie istnieje. Nie mo¿na przeprowadziæ instalacji."
+#, c-format
+msgid ""
+"%s does not exist.\n"
+"Cannot install."
+msgstr ""
+"%s nie istnieje.\n"
+"Nie mo¿na przeprowadziæ instalacji."
 
 #: app/user_install.c:1
-msgid "has invalid permissions.  Cannot install."
-msgstr "ma niew³a¶ciwe uprawnienia. Nie mo¿na przeprowadziæ instalacji."
+#, c-format
+msgid ""
+"%s has invalid permissions.\n"
+"Cannot install."
+msgstr ""
+"Do %s s± przypisane niew³a¶ciwe uprawnienia.\n"
+"Nie mo¿na przeprowadziæ instalacji."
 
 #: app/user_install.c:1
 msgid ""
@@ -6428,12 +6463,3 @@ msgstr "Akwarela"
 #: modules/colorsel_water.c:1
 msgid "Color History"
 msgstr "Historia kolorów"
-
-msgid ""
-"Did you notice any error messages in the console window?\n"
-"If not, installation was successful!\n"
-"Otherwise, quit and investigate the possible reason..."
-msgstr ""
-"Czy dostrzegasz komunikaty b³êdów w oknie konsoli?\n"
-"Je¶li nie, instalacja przebieg³a pomy¶lnie!\n"
-"W przeciwnym wypadku zakoñcz instalacjê i zbadaj mo¿liwe przyczyny..."
