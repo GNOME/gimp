@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2003-07-11 12:55+0200\n"
+"PO-Revision-Date: 2003-07-12 23:11+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -3068,11 +3068,11 @@ msgstr "érték"
 
 #: plug-ins/common/decompose.c:134 plug-ins/common/decompose.c:137
 msgid "cyan"
-msgstr "encián"
+msgstr "ciánkék"
 
 #: plug-ins/common/decompose.c:135 plug-ins/common/decompose.c:138
 msgid "magenta"
-msgstr "bíbor"
+msgstr "bíborvörös"
 
 #: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:139
 msgid "yellow"
@@ -3080,7 +3080,7 @@ msgstr "sárga"
 
 #: plug-ins/common/decompose.c:137
 msgid "Cyan"
-msgstr "Encián"
+msgstr "Ciánkék"
 
 #: plug-ins/common/decompose.c:138
 msgid "Magenta"
@@ -3092,7 +3092,7 @@ msgstr "Sárga"
 
 #: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:144
 msgid "cyan_k"
-msgstr "encián_k"
+msgstr "ciánkék_k"
 
 #: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:145
 msgid "magenta_k"
@@ -3108,7 +3108,7 @@ msgstr "fekete"
 
 #: plug-ins/common/decompose.c:144
 msgid "Cyan_K"
-msgstr "Encián_K"
+msgstr "Ciánkék_K"
 
 #: plug-ins/common/decompose.c:145
 msgid "Magenta_K"
@@ -5546,7 +5546,7 @@ msgstr "Képtípusok"
 
 #: plug-ins/common/plugindetails.c:1053
 msgid "List View"
-msgstr "Listás nézet"
+msgstr "Listanézet"
 
 #. notebook->ctree
 #: plug-ins/common/plugindetails.c:1060
@@ -5555,7 +5555,7 @@ msgstr "Elérési útvonal/Név"
 
 #: plug-ins/common/plugindetails.c:1077
 msgid "Tree View"
-msgstr "Fa nézet"
+msgstr "Fanézet"
 
 #: plug-ins/common/plugindetails.c:1097
 msgid "Search:"
@@ -7641,9 +7641,8 @@ msgid "Tr_ailing"
 msgstr "Végső"
 
 #: plug-ins/common/wind.c:994
-#, fuzzy
 msgid "Bot_h"
-msgstr "Mindekettő"
+msgstr "_Mindkettő"
 
 #: plug-ins/common/wind.c:1026
 msgid "Higher values restrict the effect to fewer areas of the image"
@@ -11187,7 +11186,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:615
 msgid "Both"
-msgstr "Mindekettő"
+msgstr "Mindkettő"
 
 #: plug-ins/print/gimp_main_window.c:620
 msgid "Center the image on the paper"
