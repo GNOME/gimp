@@ -7,15 +7,10 @@ man_MANS = \
 	gimp-remote-$(GIMP_APP_VERSION).1
 
 EXTRA_DIST = \
-	gimp-$(GIMP_APP_VERSION).1.in		\
-	gimprc-$(GIMP_APP_VERSION).5.in		\
-	gimptool-$(GIMP_TOOL_VERSION).1.in	\
-	gimp-remote-$(GIMP_API_VERSION).1.in	\
 	Wilber.svg				\
 	Wilber.xcf.gz				\
 	Wilber.xcf.gz.README			\
 	Wilber_Construction_Kit.xcf.gz		\
-	gimp.txt				\
 	keybindings.txt 			\
 	quick_reference.ps 			\
 	quick_reference.tar.gz
