@@ -1,3 +1,11 @@
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb (image_is_dirty): fix typo in
+	parameter description.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2004-07-28  DindinX  <david.odin@cpe.fr>
 
 	*  plug-ins/common/unsharp.c: Added a toggle button to enable/disable

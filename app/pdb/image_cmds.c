@@ -2699,7 +2699,7 @@ static ProcArg image_is_dirty_outargs[] =
   {
     GIMP_PDB_INT32,
     "dirty",
-    "True if the image has unsaved changed."
+    "True if the image has unsaved changes."
   }
 };
 

@@ -1395,7 +1395,7 @@ gimp_image_clean_all (gint32 image_ID)
  * This procedure checks the specified image's dirty count to see if it
  * needs to be saved.
  *
- * Returns: True if the image has unsaved changed.
+ * Returns: True if the image has unsaved changes.
  */
 gboolean
 gimp_image_is_dirty (gint32 image_ID)

@@ -1007,7 +1007,7 @@ HELP
 
     @outargs = (
 	{ name => 'dirty', type => 'boolean', init => 1,
-	  desc => 'True if the image has unsaved changed.' }
+	  desc => 'True if the image has unsaved changes.' }
     );
 
     %invoke = ( code => 'dirty = (gimage->dirty != 0);' );
