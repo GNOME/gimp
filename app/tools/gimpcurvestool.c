@@ -204,7 +204,9 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   image_map_tool_class->shell_desc        = _("Adjust Color Curves");
   image_map_tool_class->settings_name     = "curves";
   image_map_tool_class->load_dialog_title = _("Load Curves");
+  image_map_tool_class->load_button_tip   = _("Load curves settings from file");
   image_map_tool_class->save_dialog_title = _("Save Curves");
+  image_map_tool_class->save_button_tip   = _("Save curves settings to file");
 
   image_map_tool_class->map               = gimp_curves_tool_map;
   image_map_tool_class->dialog            = gimp_curves_tool_dialog;
@@ -604,14 +606,10 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->load_button,
                       FALSE, FALSE, 0);
-  gimp_help_set_help_data (image_map_tool->load_button,
-                           _("Read curves settings from file"), NULL);
   gtk_widget_show (image_map_tool->load_button);
 
   gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->save_button,
                       FALSE, FALSE, 0);
-  gimp_help_set_help_data (image_map_tool->save_button,
-                           _("Save curves settings to file"), NULL);
   gtk_widget_show (image_map_tool->save_button);
 
   /*  The radio box for selecting the curve type  */

@@ -220,7 +220,9 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   image_map_tool_class->shell_desc        = _("Adjust Color Levels");
   image_map_tool_class->settings_name     = "levels";
   image_map_tool_class->load_dialog_title = _("Load Levels");
+  image_map_tool_class->load_button_tip   = _("Load levels settings from file");
   image_map_tool_class->save_dialog_title = _("Save Levels");
+  image_map_tool_class->save_button_tip   = _("Save levels settings to file");
 
   image_map_tool_class->map               = gimp_levels_tool_map;
   image_map_tool_class->dialog            = gimp_levels_tool_dialog;
@@ -650,14 +652,10 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->load_button,
                       FALSE, FALSE, 0);
-  gimp_help_set_help_data (image_map_tool->load_button,
-                           _("Read levels settings from file"), NULL);
   gtk_widget_show (image_map_tool->load_button);
 
   gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->save_button,
                       FALSE, FALSE, 0);
-  gimp_help_set_help_data (image_map_tool->save_button,
-                           _("Save levels settings to file"), NULL);
   gtk_widget_show (image_map_tool->save_button);
 
   hbbox = gtk_hbox_new (FALSE, 6);

@@ -56,7 +56,9 @@ struct _GimpImageMapToolClass
 
   const gchar        *shell_desc;
   const gchar        *settings_name;
+  const gchar        *load_button_tip;
   const gchar        *load_dialog_title;
+  const gchar        *save_button_tip;
   const gchar        *save_dialog_title;
 
   /* virtual functions */

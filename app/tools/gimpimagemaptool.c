@@ -42,6 +42,7 @@
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -85,13 +86,20 @@ static void     gimp_image_map_tool_response   (GtkWidget        *widget,
                                                 gint              response_id,
                                                 GimpImageMapTool *image_map_tool);
 
-static void     gimp_image_map_tool_load_clicked   (GtkWidget        *widget,
-                                                    GimpImageMapTool *image_map_tool);
-static void     gimp_image_map_tool_save_clicked   (GtkWidget        *widget,
-                                                    GimpImageMapTool *image_map_tool);
-static void    gimp_image_map_tool_settings_dialog (GimpImageMapTool *image_map_tool,
-                                                    const gchar      *title,
-                                                    gboolean          save);
+static void     gimp_image_map_tool_load_clicked     (GtkWidget        *widget,
+                                                      GimpImageMapTool *tool);
+static void     gimp_image_map_tool_load_ext_clicked (GtkWidget        *widget,
+                                                      GdkModifierType   state,
+                                                      GimpImageMapTool *tool);
+static void     gimp_image_map_tool_save_clicked     (GtkWidget        *widget,
+                                                      GimpImageMapTool *tool);
+static void     gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
+                                                      GdkModifierType   state,
+                                                      GimpImageMapTool *tool);
+
+static void    gimp_image_map_tool_settings_dialog   (GimpImageMapTool *image_map_tool,
+                                                      const gchar      *title,
+                                                      gboolean          save);
 
 static void     gimp_image_map_tool_notify_preview (GObject          *config,
                                                     GParamSpec       *pspec,
@@ -149,7 +157,9 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->shell_desc        = NULL;
   klass->settings_name     = NULL;
   klass->load_dialog_title = NULL;
+  klass->load_button_tip   = NULL;
   klass->save_dialog_title = NULL;
+  klass->save_button_tip   = NULL;
 
   klass->map           = NULL;
   klass->dialog        = NULL;
@@ -259,21 +269,61 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       if (klass->load_dialog_title)
         {
           image_map_tool->load_button =
-            gtk_button_new_from_stock (GTK_STOCK_OPEN);
+            g_object_new (GIMP_TYPE_BUTTON,
+                          "label",         GTK_STOCK_OPEN,
+                          "use_stock",     TRUE,
+                          "use_underline", TRUE,
+                          NULL);
 
           g_signal_connect (image_map_tool->load_button, "clicked",
                             G_CALLBACK (gimp_image_map_tool_load_clicked),
                             image_map_tool);
+
+          g_signal_connect (image_map_tool->load_button, "extended_clicked",
+                            G_CALLBACK (gimp_image_map_tool_load_ext_clicked),
+                            image_map_tool);
+
+          if (klass->load_button_tip)
+            {
+              gchar *str = g_strdup_printf ("%s\n"
+                                            "%s  %s",
+                                            klass->load_button_tip,
+                                            gimp_get_mod_string (GDK_SHIFT_MASK),
+                                            _("Quick Load"));
+
+              gimp_help_set_help_data (image_map_tool->load_button, str, NULL);
+              g_free (str);
+            }
         }
 
       if (klass->save_dialog_title)
         {
           image_map_tool->save_button =
-            gtk_button_new_from_stock (GTK_STOCK_SAVE);
+            g_object_new (GIMP_TYPE_BUTTON,
+                          "label",         GTK_STOCK_SAVE,
+                          "use_stock",     TRUE,
+                          "use_underline", TRUE,
+                          NULL);
 
           g_signal_connect (image_map_tool->save_button, "clicked",
                             G_CALLBACK (gimp_image_map_tool_save_clicked),
                             image_map_tool);
+
+          g_signal_connect (image_map_tool->save_button, "extended_clicked",
+                            G_CALLBACK (gimp_image_map_tool_save_ext_clicked),
+                            image_map_tool);
+
+          if (klass->save_button_tip)
+            {
+              gchar *str = g_strdup_printf ("%s\n"
+                                            "%s  %s",
+                                            klass->save_button_tip,
+                                            gimp_get_mod_string (GDK_SHIFT_MASK),
+                                            _("Quick Save"));
+
+              gimp_help_set_help_data (image_map_tool->save_button, str, NULL);
+              g_free (str);
+            }
         }
 
       /*  Fill in subclass widgets  */
@@ -539,6 +589,40 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 }
 
 static void
+gimp_image_map_tool_load_save (GimpImageMapTool *tool,
+                               const gchar      *filename,
+                               gboolean          save)
+{
+  FILE *file = fopen (filename, save ? "wt" : "rt");
+
+  if (! file)
+    {
+      g_message (save ?
+                 _("Could not open '%s' for writing: %s") :
+                 _("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename),
+                 g_strerror (errno));
+      return;
+    }
+
+  g_object_set (GIMP_TOOL (tool)->tool_info->tool_options,
+                "settings", filename,
+                NULL);
+
+  if (save)
+    {
+      gimp_image_map_tool_settings_save (tool, file);
+    }
+  else if (! gimp_image_map_tool_settings_load (tool, file))
+    {
+      g_message ("Error in reading file '%s'.",
+                 gimp_filename_to_utf8 (filename));
+    }
+
+  fclose (file);
+}
+
+static void
 settings_dialog_response (GtkWidget        *dialog,
                           gint              response_id,
                           GimpImageMapTool *tool)
@@ -550,38 +634,11 @@ settings_dialog_response (GtkWidget        *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar *filename;
-      FILE  *file;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      file = fopen (filename, save ? "wt" : "rt");
+      gimp_image_map_tool_load_save (tool, filename, save);
 
-      if (! file)
-        {
-          g_message (save ?
-                     _("Could not open '%s' for writing: %s") :
-                     _("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (filename),
-                     g_strerror (errno));
-          g_free (filename);
-          return;
-        }
-
-      g_object_set (GIMP_TOOL (tool)->tool_info->tool_options,
-                    "settings", filename,
-                    NULL);
-
-      if (save)
-        {
-          gimp_image_map_tool_settings_save (tool, file);
-        }
-      else if (! gimp_image_map_tool_settings_load (tool, file))
-        {
-          g_message ("Error in reading file '%s'.",
-                     gimp_filename_to_utf8 (filename));
-        }
-
-      fclose (file);
       g_free (filename);
     }
 
@@ -595,22 +652,70 @@ settings_dialog_response (GtkWidget        *dialog,
 
 static void
 gimp_image_map_tool_load_clicked (GtkWidget        *widget,
-                                  GimpImageMapTool *image_map_tool)
+                                  GimpImageMapTool *tool)
 {
-  GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
+  GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
-  gimp_image_map_tool_settings_dialog (image_map_tool,
-                                       klass->load_dialog_title, FALSE);
+  gimp_image_map_tool_settings_dialog (tool, klass->load_dialog_title, FALSE);
+}
+
+static void
+gimp_image_map_tool_load_ext_clicked (GtkWidget        *widget,
+                                      GdkModifierType   state,
+                                      GimpImageMapTool *tool)
+{
+  if (state & GDK_SHIFT_MASK)
+    {
+      gchar *filename;
+
+      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+                    "settings", &filename,
+                    NULL);
+
+      if (filename)
+        {
+          gimp_image_map_tool_load_save (tool, filename, FALSE);
+          g_free (filename);
+        }
+      else
+        {
+          gimp_image_map_tool_load_clicked (widget, tool);
+        }
+    }
 }
 
 static void
 gimp_image_map_tool_save_clicked (GtkWidget        *widget,
-                                  GimpImageMapTool *image_map_tool)
+                                  GimpImageMapTool *tool)
 {
-  GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
+  GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
-  gimp_image_map_tool_settings_dialog (image_map_tool,
-                                       klass->save_dialog_title, TRUE);
+  gimp_image_map_tool_settings_dialog (tool, klass->save_dialog_title, TRUE);
+}
+
+static void
+gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
+                                      GdkModifierType   state,
+                                      GimpImageMapTool *tool)
+{
+  if (state & GDK_SHIFT_MASK)
+    {
+      gchar *filename;
+
+      g_object_get (GIMP_TOOL (tool)->tool_info->tool_options,
+                    "settings", &filename,
+                    NULL);
+
+      if (filename)
+        {
+          gimp_image_map_tool_load_save (tool, filename, TRUE);
+          g_free (filename);
+        }
+      else
+        {
+          gimp_image_map_tool_save_clicked (widget, tool);
+        }
+    }
 }
 
 static void
