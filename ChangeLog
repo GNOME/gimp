@@ -1,3 +1,7 @@
+2003-01-09  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp_splash.png: new splash
+
 2003-01-09  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c (main)
