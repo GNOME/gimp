@@ -23,8 +23,8 @@ SUBDIRS = \
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	etc			\
-	docs			\
-	devel-docs
+	$(GIMP_DEVEL_DOCS)	\
+	docs
 
 bin_SCRIPTS = gimptool-$(LT_RELEASE) @GIMPINSTALL@
 
