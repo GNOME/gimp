@@ -22,23 +22,21 @@ undef $defaultfont;
 $calls = 0;
 
 sub growfont {
-	($fontname, $plussize) = @_;
-	@fontdesc = split /-/, $fontname;
-	$fontdesc[8] eq "*" ?  
-		$fontdesc[7] += $plussize/72 : # if in pixels  
-		$fontdesc[8] += $plussize;     # if in points
-	$outname = join "-", @fontdesc;
-	print ("!!!${fontdesc[8]}-${fondesc[9]}!!!\n");
-	$calls ++;
-	return $outname;
-	}
+        ($fontname, $plussize) = @_;
+        @fontdesc = split /-/, $fontname;
+        $fontdesc[8] eq "*" ?  ($fontdesc[7] += $plussize/72) : ($fontdesc[8]+= $plussize);
+        $outname = join "-", @fontdesc;
+        #print ("!!!${fontdesc[7]}-${fontdesc[8]}!!!\n");
+        $calls ++;
+        return $outname;
+        }                                                                                                                                                        
 
 register "fit_text",
          "Fit Text - fit text to a selection",
          "Have a rectangular selection, and select the font type and spacing.  It will fill the selection with text as closely as possible.  If no selection is made prior to running, it will fill the entire image.",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
-         "1999-03-21",
+         "2000-01-29",
          N_"<Image>/Filters/Render/Fit Text...",
          "*",
          [

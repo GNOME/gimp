@@ -23,7 +23,9 @@ firetext! AND _grayscale_ for map_gradient(!)
 sota-chrome pagesize of 2 is _wrong_
 
 bugs
-  * alow gimp_selection_shrink with a zero argument.
+[DONE]  * alow gimp_selection_shrink with a zero argument.
+  * font_text with negative size? bug report #5523
+  * g_direct_equal and glin hash, kill in favour of way nicer perl hashes.
   * ping-funktion für JENS.
 [DONE]  * never grayed out = "undef" imagetypes!!!
 [DONE]  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
