@@ -131,7 +131,7 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   type = gimp_prop_enum_option_menu_new (G_OBJECT (grid), "type",
-                                         GIMP_GRID_TYPE_INTERSECTION,
+                                         GIMP_GRID_TYPE_DOTS,
                                          GIMP_GRID_TYPE_SOLID);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Line _Style:"), 1.0, 0.5,

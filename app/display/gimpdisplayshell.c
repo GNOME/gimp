@@ -1416,10 +1416,6 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
       switch (type)
         {
-        case GIMP_GRID_TYPE_INTERSECTION:
-          values.line_style = GDK_LINE_SOLID;
-          break;
-
         case GIMP_GRID_TYPE_ON_OFF_DASH:
           values.line_style = GDK_LINE_ON_OFF_DASH;
           break;
@@ -1428,6 +1424,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
           values.line_style = GDK_LINE_DOUBLE_DASH;
           break;
 
+        case GIMP_GRID_TYPE_DOTS:
+        case GIMP_GRID_TYPE_INTERSECTIONS:
         case GIMP_GRID_TYPE_SOLID:
           values.line_style = GDK_LINE_SOLID;
           break;
@@ -1455,7 +1453,23 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
       switch (type)
         {
-        case GIMP_GRID_TYPE_INTERSECTION:
+        case GIMP_GRID_TYPE_DOTS:
+          for (x = xoffset; x <= shell->gdisp->gimage->width; x += xspacing)
+            {
+              for (y = yoffset; y <= shell->gdisp->gimage->height; y += yspacing)
+                {
+                  gimp_display_shell_transform_xy (shell, x, y, &x_real, &y_real, FALSE);
+                  if (x_real >= x1 && x_real < x2 && y_real >= y1 && y_real < y2)
+                    {
+                      gdk_draw_line (shell->canvas->window, gc,
+                                     x_real, y_real,
+                                     x_real, y_real);
+                    }
+                }
+            }
+          break;
+
+        case GIMP_GRID_TYPE_INTERSECTIONS:
           for (x = xoffset; x <= shell->gdisp->gimage->width; x += xspacing)
             {
               for (y = yoffset; y <= shell->gdisp->gimage->height; y += yspacing)

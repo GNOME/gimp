@@ -1,3 +1,17 @@
+2003-07-28  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/core/core-enums.h (GimpGridType): renamed
+	GIMP_GRID_TYPE_INTERSECTION to GIMP_GRID_TYPE_INTERSECTIONS, added
+	GIMP_GRID_TYPE_DOTS
+
+	* app/core/core-enums.c: regenerated
+
+	* app/gui/grid-dialog.c
+	* app/core/gimpgrid.c: changed accordingly
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_draw_grid):
+	added code to draw the dots-only grid
+
 2003-07-28  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (initial_sub_region)
