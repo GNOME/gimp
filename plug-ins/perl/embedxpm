@@ -14,7 +14,7 @@ embedxpm - embed xpm pictures into perl source
 
 embedxpm can be used to embed xpm pictures directly into a perl program. To
 do this, your program source has to contain some markers (in the form of
-ocmments) that describe the position where the picture should be inserted.
+comments) that describe the position where the picture should be inserted.
 To only insert the xpm data, use this form:
 
  #%XPM:<name of xpm>%

@@ -837,7 +837,7 @@ sub save_image($$) {
    my($interlace,$flatten,$quality,$type,$smooth,$compress,$loop,$dispose);
 
    $interlace=0;
-   $quality=0.75;
+   $quality=75;
    $smooth=0;
    $compress=7;
    $loop=0;
@@ -877,7 +877,7 @@ sub save_image($$) {
       }
       $layer->file_gif_save($path,$path,$interlace,$loop,$delay,$dispose);
    } elsif ($type eq "PNG") {
-      $layer->file_png_save($path,$path,$interlace,$noextra,$compress);
+      $layer->file_png_save($path,$path,$interlace,$compress,(!$noextra) x 5);
    } elsif ($type eq "PNM") {
       $layer->file_pnm_save($path,$path,1);
    } else {

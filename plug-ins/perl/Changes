@@ -23,7 +23,10 @@ Revision history for Gimp-Perl extension.
           them without knowing.
         - updated examples/xachvision.
         - make configuration more paranoid (break with standalone build rather
-          than inside the gimp)
+          than inside the gimp).
+        - docfix by Alexander Kurz.
+        - save_image now saves png again (reported by Michael Guntsche).
+        - perlotine updated (poatch by Michael Guntsche).
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

@@ -84,20 +84,13 @@ sub get_hguides {
 #
 
 sub dosel { 
-    ($img, $savepath, $imgpath, $imgbasename, $l,$r,$t,$b, $i,$j) = @_;
+    ($img, $savepath, $imgpath, $imgbasename, $extension, $l,$r,$t,$b, $i,$j) = @_;
     $filename =~ m/^(.*)\.[^\.]*$/ ;
-    $imgname = "$imgbasename-$i-$j.gif";
+    $imgname = "$imgbasename-$i-$j.$extension";
     $tmpimg = $img->channel_ops_duplicate;
     # print "Cropping from $l to $r, $t to $b\n";
     $tmpimg->crop($r-$l, $b-$t, $l, $t);
-    $tmplay = $tmpimg->active_drawable;
-    if (! $tmplay->is_indexed) {
-	# do this: fs/low-bleed dither, make palette, 256 colors, 
-	# dont dither alpha, do remove unused (is 1 "true" here?),
-	# custom palette is ignored (we create our own, thus "duck" works).
-        $tmpimg->convert_indexed (2,0,256,0,1,duck) 
-	}
-    $tmpimg->gimp_file_save(-1,"$savepath$imgpath$imgname","$savepath$imgpath$imgname");
+    $tmpimg->Gimp::Fu::save_image("$savepath$imgpath$imgname","$savepath$imgpath$imgname");
     $tmpimg->delete;
     return "$imgpath$imgname"; # what I want printed in html
     }
@@ -161,13 +154,14 @@ register "perlotine",
   [PF_STRING, "save_path", "The path to export the HTML to",$ENV{HOME}],
   [PF_STRING, "html_file_name", "Filename to export","perlotine.html"],
   [PF_STRING, "image_basename", "What to call the images","perlotine"],
+  [PF_RADIO,  "image_extension", "The format of the images: {gif, jpg, png}", "gif", [gif => "gif", jpg => "jpg", png => "png"]],
   [PF_TOGGLE, "separate_image_dir", "Use a separate directory for images?",0],
   [PF_STRING, "relative_image_path", "The path to export the images to, relative to the Save Path", "images/"],
   [PF_TOGGLE, "capitalize_tags", "Capatalize HTML tags?", 0],
   [PF_SPINNER, "cellspacing", "Add space between the table elements", 0, [0,15,1]],
   ], sub {
 
-    my($img,$layer,$savepath, $htmlname, $imgbasename, $separate, $imgpath, $capatalize, $cellspacing) =@_;
+    my($img,$layer,$savepath, $htmlname, $imgbasename, $extension, $separate, $imgpath, $capatalize, $cellspacing) =@_;
 
     @vert = get_vguides($img);
     @horz = get_hguides($img);
@@ -219,7 +213,7 @@ register "perlotine",
         $left=0;
         for ($j=0; $j<=scalar(@vert); $j++) {
             $right = ($j>$#vert) ? $img->width : $img->get_guide_position($vert[$j]);
-            $imgname = dosel($img, $savepath, $imgpath, $imgbasename, $left, $right, $top, $bot, $i, $j);
+            $imgname = dosel($img, $savepath, $imgpath, $imgbasename, $extension, $left, $right, $top, $bot, $i, $j);
             html_table_entry(\*FILE, $imgname, $right-$left, $bot-$top, $capatalize);
             $left = $right + $cellspacing;
 
