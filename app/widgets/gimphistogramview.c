@@ -31,6 +31,8 @@
 #include "gimphistogramview.h"
 
 
+#define MIN_HEIGHT 80
+
 enum
 {
   RANGE_CHANGED,
@@ -55,6 +57,8 @@ static void  gimp_histogram_view_get_property (GObject           *object,
 					       guint              property_id,
 					       GValue            *value,
 					       GParamSpec        *pspec);
+static void  gimp_histogram_view_size_request (GtkWidget         *widget,
+                                               GtkRequisition    *requisition);
 static gboolean  gimp_histogram_view_expose   (GtkWidget         *widget,
 					       GdkEventExpose    *event);
 
@@ -118,6 +122,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   object_class->set_property = gimp_histogram_view_set_property;
   object_class->finalize     = gimp_histogram_view_finalize;
 
+  widget_class->size_request = gimp_histogram_view_size_request;
   widget_class->expose_event = gimp_histogram_view_expose;
 
   klass->range_changed = NULL;
@@ -201,6 +206,14 @@ gimp_histogram_view_get_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_histogram_view_size_request (GtkWidget      *widget,
+                                  GtkRequisition *requisition)
+{
+  requisition->width  = widget->requisition.width  + 2;
+  requisition->height = MAX (MIN_HEIGHT, widget->requisition.height) + 2;
 }
 
 static gboolean
@@ -372,13 +385,9 @@ gimp_histogram_view_events (GimpHistogramView *view,
 }
 
 GtkWidget *
-gimp_histogram_view_new (gint     width,
-                         gint     height,
-                         gboolean range)
+gimp_histogram_view_new (gboolean range)
 {
   GtkWidget *view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
-
-  gtk_widget_set_size_request (view, width + 2, height + 2);
 
   if (range)
     {

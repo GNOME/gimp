@@ -34,7 +34,7 @@
 #include "gimp-intl.h"
 
 
-#define GRADIENT_HEIGHT 15
+#define GRADIENT_HEIGHT 12
 
 
 /*  local function prototypes  */
@@ -112,7 +112,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   GtkWidget *frame;
   GtkWidget *view;
 
-  gtk_box_set_spacing (GTK_BOX (box), 4);
+  gtk_box_set_spacing (GTK_BOX (box), 2);
 
   /*  The histogram  */
   frame = gtk_frame_new (NULL);
@@ -120,9 +120,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (box), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  view = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
-                                  GIMP_HISTOGRAM_VIEW_HEIGHT,
-                                  TRUE);
+  view = gimp_histogram_view_new (TRUE);
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
@@ -139,8 +137,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_widget_show (frame);
 
   box->gradient = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (box->gradient,
-                               GIMP_HISTOGRAM_VIEW_WIDTH, GRADIENT_HEIGHT);
+  gtk_widget_set_size_request (box->gradient, -1, GRADIENT_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
   gtk_widget_show (box->gradient);
 

@@ -70,8 +70,8 @@
 #define GRAPH_WIDTH    256
 #define GRAPH_HEIGHT   256
 #define XRANGE_WIDTH   256
-#define XRANGE_HEIGHT   16
-#define YRANGE_WIDTH    16
+#define XRANGE_HEIGHT   12
+#define YRANGE_WIDTH    12
 #define YRANGE_HEIGHT  256
 #define RADIUS           3
 #define MIN_DISTANCE     8

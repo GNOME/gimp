@@ -1,7 +1,21 @@
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogramview.[ch]: removed width and height
+	from the API. It can be set using gtk_widget_size_request(). Set a
+	mimimum height of 80 pixels.
+
+	* app/widgets/gimphistogrambox.c: changed accordinly. Reduced size
+	of color gradient.
+	
+	* app/tools/gimpcurvestool.c: reduced gradient sizes.
+
+	* app/tools/gimplevelstool.c: allow the histogram to expand
+	vertically.
+
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose): if
-	multiple histogram values fall onto the same x value, display the
+	multiple histogram values fall onto the same pixel, display the
 	maximum value.
 
 2003-11-01  Sven Neumann  <sven@gimp.org>

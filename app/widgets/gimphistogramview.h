@@ -23,10 +23,6 @@
 #include <gtk/gtkdrawingarea.h>
 
 
-#define GIMP_HISTOGRAM_VIEW_WIDTH  256
-#define GIMP_HISTOGRAM_VIEW_HEIGHT 150
-
-
 #define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
 #define GIMP_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
 #define GIMP_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))
@@ -62,9 +58,7 @@ struct _GimpHistogramViewClass
 
 GType           gimp_histogram_view_get_type      (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_histogram_view_new           (gint                  width,
-                                                   gint                  height,
-                                                   gboolean              range);
+GtkWidget     * gimp_histogram_view_new           (gboolean              range);
 void            gimp_histogram_view_set_histogram (GimpHistogramView    *view,
                                                    GimpHistogram        *histogram);
 GimpHistogram * gimp_histogram_view_get_histogram (GimpHistogramView    *view);
