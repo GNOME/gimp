@@ -339,6 +339,41 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_DEVICE_STATUS ##### -->
+<para>
+<inlinegraphic fileref="stock-device-status-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_IMAGES ##### -->
+<para>
+<inlinegraphic fileref="stock-images-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LAYERS ##### -->
+<para>
+<inlinegraphic fileref="stock-layers-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNELS ##### -->
+<para>
+<inlinegraphic fileref="stock-channels-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_PATHS ##### -->
+<para>
+<inlinegraphic fileref="stock-paths-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
 <para>
 <inlinegraphic fileref="stock-color-picker-black-18.png" format="png"></inlinegraphic>
