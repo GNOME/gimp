@@ -238,10 +238,13 @@ undo_push (GimpImage *gimage,
 {
   Undo *new;
 
+  g_return_val_if_fail (type > LAST_UNDO_GROUP, NULL);
+
   /* Does this undo dirty the image?  If so, we always want to mark
-   * image dirty, even if we can't actually push the undo. */
+   * image dirty, even if we can't actually push the undo.
+   */
   if (dirties_image)
-      gimp_image_dirty (gimage);
+    gimp_image_dirty (gimage);
 
   if (! gimage->undo_on)
     return NULL;
@@ -601,13 +604,16 @@ undo_push_group_start (GimpImage *gimage,
 {
   Undo *boundary_marker;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  /* Bad idea to push NO_UNDO_GROUP as the group type, since that
+   * won't be recognized as the start of the group later.
+   */
+  g_return_val_if_fail (type >  FIRST_UNDO_GROUP &&
+                        type <= LAST_UNDO_GROUP, FALSE);
+
   if (! gimage->undo_on)
     return FALSE;
-
-  /* Bad idea to push 0 as the group type, since that won't
-   * be recognized as the start of the group later.
-   */
-  g_return_val_if_fail (type != 0, FALSE);
 
   gimage->group_count ++;
   TRC (("group_start (%s)\n", undo_type_to_name (type)));
@@ -648,6 +654,8 @@ gboolean
 undo_push_group_end (GimpImage *gimage)
 {
   Undo *boundary_marker;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   if (! gimage->undo_on)
     return FALSE;
@@ -3230,6 +3238,8 @@ undo_name[] =
   { TEXT_UNDO_GROUP,               N_("Text")                      },
   { TRANSFORM_UNDO_GROUP,          N_("Transform")                 },
   { PAINT_UNDO_GROUP,              N_("Paint")                     },
+  { PARASITE_ATTACH_UNDO_GROUP,    N_("Attach Parasite")           },
+  { PARASITE_REMOVE_UNDO_GROUP,    N_("Remove Parasite")           },
   { MISC_UNDO_GROUP,               N_("Plug-In")                   },
 
   { IMAGE_UNDO,	                   N_("Image")                     },

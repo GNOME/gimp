@@ -50,7 +50,6 @@
 #include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
 
-#include "undo_types.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -963,7 +962,7 @@ gimp_drawable_parasite_attach (GimpDrawable *drawable,
   if (gimp_parasite_is_undoable (parasite))
     {
       /* do a group in case we have attach_parent set */
-      undo_push_group_start (drawable->gimage, PARASITE_ATTACH_UNDO);
+      undo_push_group_start (drawable->gimage, PARASITE_ATTACH_UNDO_GROUP);
 
       undo_push_drawable_parasite (drawable->gimage, drawable, parasite);
     }

@@ -1,3 +1,13 @@
+2002-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added parasite undo groups.
+
+	* app/undo.c: added assertions to make undo_push_group_start()
+	accept only "UndoType" values and undo_push() only "UndoImplType".
+
+	* app/core/gimpdrawable.c: use the new undo group and don't
+	include "undo_types.h".
+
 2002-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo_types.h
