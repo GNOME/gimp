@@ -1,5 +1,12 @@
 2002-08-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdrawablepreview.c (gimp_drawable_preview_render):
+	look at drawable->offset_[xy] != 0 when deciding whether to offset
+	the preview. Fixes bug where layers of the size of the image were
+	previewed with offset (0,0), regardless of their real offset.
+
+2002-08-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpchannellistview.c: removed all component item
 	signal handling code, which is cool...
 

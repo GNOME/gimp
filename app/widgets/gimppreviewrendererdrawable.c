@@ -207,12 +207,12 @@ gimp_drawable_preview_render (GimpPreview *preview)
 
   if (gimage && ! preview->is_popup)
     {
-      if (preview_width < preview->width)
+      if (drawable->offset_x != 0)
 	render_buf->x =
 	  ROUND ((((gdouble) preview->width / (gdouble) gimage->width) *
 		  (gdouble) drawable->offset_x));
 
-      if (preview_height < preview->height)
+      if (drawable->offset_y != 0)
 	render_buf->y =
 	  ROUND ((((gdouble) preview->height / (gdouble) gimage->height) *
 		  (gdouble) drawable->offset_y));
