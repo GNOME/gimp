@@ -1,3 +1,7 @@
+2001-10-12  Christian Rose  <menthos@menthos.com>
+
+	* sv.po: Updated Swedish translation.
+
 2001-09-27  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: different version for AM_GLIB_GNU_GETTEXT.
