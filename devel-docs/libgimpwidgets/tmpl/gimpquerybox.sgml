@@ -179,3 +179,11 @@ Note that you have to g_free() the returned string.
 @eek: 
 
 
+<!-- ##### MACRO GIMP_QUERY_BOX_VBOX ##### -->
+<para>
+
+</para>
+
+@qbox: 
+
+

@@ -21,6 +21,12 @@ color, the "color_changed" signal is emitted.
 #libgimpcolor-gimpcolorspace
 </para>
 
+<!-- ##### STRUCT GimpColorButton ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_color_button_new ##### -->
 <para>
 

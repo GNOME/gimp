@@ -15,6 +15,13 @@ helper functions.
 
 </para>
 
+<!-- ##### FUNCTION gimp_widgets_init ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### FUNCTION gimp_option_menu_new ##### -->
 <para>
 
@@ -115,6 +122,26 @@ gtk_object_set_user_data().</entry>
 @user_data: 
 
 
+<!-- ##### FUNCTION gimp_option_menu_set_sensitive ##### -->
+<para>
+
+</para>
+
+@option_menu: 
+@callback: 
+@callback_data: 
+
+
+<!-- ##### USER_FUNCTION GimpOptionMenuSensitivityCallback ##### -->
+<para>
+
+</para>
+
+@item_data: 
+@callback_data: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_radio_group_new ##### -->
 <para>
 
@@ -204,6 +231,15 @@ gtk_object_set_user_data().</entry>
 @Returns: 
 <!-- # Unused Parameters # -->
 @data: 
+
+
+<!-- ##### FUNCTION gimp_radio_group_set_active ##### -->
+<para>
+
+</para>
+
+@radio_button: 
+@item_data: 
 
 
 <!-- ##### FUNCTION gimp_spin_button_new ##### -->

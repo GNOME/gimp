@@ -15,6 +15,13 @@ dialog-related stuff.
 
 </para>
 
+<!-- ##### STRUCT GimpDialog ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+
 <!-- ##### FUNCTION gimp_dialog_new ##### -->
 <para>
 

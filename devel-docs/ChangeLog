@@ -1,3 +1,29 @@
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added GimpStock section,
+	removed GimpWidgetTypes.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added GimpStock templates.
+
+	* libgimpwidgets/tmpl/gimpwidgetstypes.sgml: removed.
+
+	* libgimpwidgets/tmpl/gimpbutton.sgml
+	* libgimpwidgets/tmpl/gimpchainbutton.sgml
+	* libgimpwidgets/tmpl/gimpcolorarea.sgml
+	* libgimpwidgets/tmpl/gimpcolorbutton.sgml
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimpfileselection.sgml
+	* libgimpwidgets/tmpl/gimphelpui.sgml
+	* libgimpwidgets/tmpl/gimpoffsetarea.sgml
+	* libgimpwidgets/tmpl/gimppatheditor.sgml
+	* libgimpwidgets/tmpl/gimppixmap.sgml
+	* libgimpwidgets/tmpl/gimpquerybox.sgml
+	* libgimpwidgets/tmpl/gimpsizeentry.sgml
+	* libgimpwidgets/tmpl/gimpunitmenu.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: updated.
+
 2002-05-03  Sven Neumann  <sven@gimp.org>
 
 	* includes.txt: fixed typo.

@@ -42,11 +42,26 @@ real-world-unit.
 gimp_coordinates_new()
 </para>
 
+<!-- ##### STRUCT GimpSizeEntry ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### STRUCT GimpSizeEntryField ##### -->
 <para>
 
 </para>
 
+
+<!-- ##### ENUM GimpSizeEntryUpdatePolicy ##### -->
+<para>
+
+</para>
+
+@GIMP_SIZE_ENTRY_UPDATE_NONE: 
+@GIMP_SIZE_ENTRY_UPDATE_SIZE: 
+@GIMP_SIZE_ENTRY_UPDATE_RESOLUTION: 
 
 <!-- ##### FUNCTION gimp_size_entry_new ##### -->
 <para>

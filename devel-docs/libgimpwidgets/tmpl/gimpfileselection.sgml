@@ -31,6 +31,12 @@ will be emitted.
 #GimpPathEditor
 </para>
 
+<!-- ##### STRUCT GimpFileSelection ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_file_selection_new ##### -->
 <para>
 

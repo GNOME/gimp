@@ -26,6 +26,12 @@ gimp_pixmap_button_new()
 #GtkPixmap
 </para>
 
+<!-- ##### STRUCT GimpPixmap ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_pixmap_new ##### -->
 <para>
 

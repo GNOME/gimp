@@ -14,6 +14,21 @@ GimpOffsetArea
 
 </para>
 
+<!-- ##### STRUCT GimpOffsetArea ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+@orig_width: 
+@orig_height: 
+@width: 
+@height: 
+@offset_x: 
+@offset_y: 
+@display_ratio_x: 
+@display_ratio_y: 
+
 <!-- ##### FUNCTION gimp_offset_area_new ##### -->
 <para>
 

@@ -14,11 +14,26 @@ GimpButton
 
 </para>
 
+<!-- ##### STRUCT GimpButton ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION gimp_button_new ##### -->
 <para>
 
 </para>
 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_button_extended_clicked ##### -->
+<para>
+
+</para>
+
+@button: 
+@state: 
 
 

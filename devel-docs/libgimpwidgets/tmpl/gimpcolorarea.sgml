@@ -14,6 +14,13 @@ GimpColorArea
 
 </para>
 
+<!-- ##### STRUCT GimpColorArea ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+
 <!-- ##### ENUM GimpColorAreaType ##### -->
 <para>
 
