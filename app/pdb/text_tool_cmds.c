@@ -102,19 +102,19 @@ text_fontname_invoker (Gimp     *gimp,
   if (success)
     {
       if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
-	success = FALSE;
+        success = FALSE;
 
       if (success)
-	{
-	  gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
+        {
+          gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-	  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
-				    border, antialias);
-	  if (text_layer == NULL)
-	    success = FALSE;
+          text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+                                    border, antialias);
+          if (text_layer == NULL)
+            success = FALSE;
 
-	  g_free (real_fontname);
-	}
+          g_free (real_fontname);
+        }
     }
 
   return_args = procedural_db_return_args (&text_fontname_proc, success);
@@ -241,8 +241,8 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
       real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
       success = text_get_extents (real_fontname, text,
-				  &width, &height,
-				  &ascent, &descent);
+                                  &width, &height,
+                                  &ascent, &descent);
 
       g_free (real_fontname);
     }
@@ -412,19 +412,19 @@ text_invoker (Gimp     *gimp,
   if (success)
     {
       if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
-	success = FALSE;
+        success = FALSE;
 
       if (success)
-	{
-	  gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
+        {
+          gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
-	  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
-				    border, antialias);
-	  if (text_layer == NULL)
-	    success = FALSE;
+          text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+                                    border, antialias);
+          if (text_layer == NULL)
+            success = FALSE;
 
-	  g_free (real_fontname);
-	}
+          g_free (real_fontname);
+        }
     }
 
   return_args = procedural_db_return_args (&text_proc, success);
@@ -622,8 +622,8 @@ text_get_extents_invoker (Gimp     *gimp,
       real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
       success = text_get_extents (real_fontname, text,
-				  &width, &height,
-				  &ascent, &descent);
+                                  &width, &height,
+                                  &ascent, &descent);
 
       g_free (real_fontname);
     }

@@ -93,15 +93,15 @@ by_color_select_invoker (Gimp     *gimp,
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
       gimp_channel_select_by_color (gimp_image_get_mask (gimage), drawable,
-				    sample_merged,
-				    &color,
-				    threshold,
-				    FALSE /* don't select transparent */,
-				    operation,
-				    antialias,
-				    feather,
-				    feather_radius,
-				    feather_radius);
+                                    sample_merged,
+                                    &color,
+                                    threshold,
+                                    FALSE /* don't select transparent */,
+                                    operation,
+                                    antialias,
+                                    feather,
+                                    feather_radius,
+                                    feather_radius);
     }
 
   return procedural_db_return_args (&by_color_select_proc, success);
@@ -210,13 +210,13 @@ ellipse_select_invoker (Gimp     *gimp,
 
   if (success)
     gimp_channel_select_ellipse (gimp_image_get_mask (gimage),
-				 (gint) x, (gint) y,
-				 (gint) width, (gint) height,
-				 operation,
-				 antialias,
-				 feather,
-				 feather_radius,
-				 feather_radius);
+                                 (gint) x, (gint) y,
+                                 (gint) width, (gint) height,
+                                 operation,
+                                 antialias,
+                                 feather,
+                                 feather_radius,
+                                 feather_radius);
 
   return procedural_db_return_args (&ellipse_select_proc, success);
 }
@@ -323,14 +323,14 @@ free_select_invoker (Gimp     *gimp,
 
   if (success)
     gimp_channel_select_polygon (gimp_image_get_mask (gimage),
-				 _("Free Select"),
-				 num_segs,
-				 (GimpVector2 *) segs, 
-				 operation,
-				 antialias,
-				 feather, 
-				 feather_radius,
-				 feather_radius);
+                                 _("Free Select"),
+                                 num_segs,
+                                 (GimpVector2 *) segs, 
+                                 operation,
+                                 antialias,
+                                 feather, 
+                                 feather_radius,
+                                 feather_radius);
 
   return procedural_db_return_args (&free_select_proc, success);
 }
@@ -435,16 +435,16 @@ fuzzy_select_invoker (Gimp     *gimp,
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
       gimp_channel_select_fuzzy (gimp_image_get_mask (gimage),
-				 drawable,
-				 sample_merged,
-				 x, y, 
-				 threshold,
-				 FALSE /* don't select transparent */,
-				 operation,
-				 antialias,
-				 feather,
-				 feather_radius,
-				 feather_radius);
+                                 drawable,
+                                 sample_merged,
+                                 x, y, 
+                                 threshold,
+                                 FALSE /* don't select transparent */,
+                                 operation,
+                                 antialias,
+                                 feather,
+                                 feather_radius,
+                                 feather_radius);
     }
 
   return procedural_db_return_args (&fuzzy_select_proc, success);
@@ -556,12 +556,12 @@ rect_select_invoker (Gimp     *gimp,
 
   if (success)
     gimp_channel_select_rectangle (gimp_image_get_mask (gimage),
-				   (gint) x, (gint) y,
-				   (gint) width, (gint) height,
-				   operation,
-				   feather,
-				   feather_radius,
-				   feather_radius);
+                                   (gint) x, (gint) y,
+                                   (gint) width, (gint) height,
+                                   operation,
+                                   feather,
+                                   feather_radius,
+                                   feather_radius);
 
   return procedural_db_return_args (&rect_select_proc, success);
 }

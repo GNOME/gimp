@@ -211,7 +211,7 @@ image_list_invoker (Gimp     *gimp,
     {
       image_ids = g_new (gint32, num_images);
       for (i = 0; i < num_images; i++, list = g_list_next (list))
-	image_ids[i] = gimp_image_get_ID (GIMP_IMAGE (list->data));
+        image_ids[i] = gimp_image_get_ID (GIMP_IMAGE (list->data));
     }
 
   return_args = procedural_db_return_args (&image_list_proc, TRUE);
@@ -405,9 +405,9 @@ image_delete_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimage->disp_count == 0)
-	g_object_unref (gimage);
+        g_object_unref (gimage);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&image_delete_proc, success);
@@ -750,8 +750,8 @@ image_scale_invoker (Gimp     *gimp,
   if (success)
     {
       gimp_image_scale (gimage, new_width, new_height,
-			gimp->config->interpolation_type,
-			NULL, NULL);
+                        gimp->config->interpolation_type,
+                        NULL, NULL);
     }
 
   return procedural_db_return_args (&image_scale_proc, success);
@@ -826,13 +826,13 @@ image_crop_invoker (Gimp     *gimp,
   if (success)
     {
       if (new_width  > gimage->width          ||
-	  new_height > gimage->height         ||
-	  offx > (gimage->width  - new_width) ||
-	  offy > (gimage->height - new_height))
-	success = FALSE;
+          new_height > gimage->height         ||
+          offx > (gimage->width  - new_width) ||
+          offy > (gimage->height - new_height))
+        success = FALSE;
       else
-	gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
-			 FALSE, TRUE);
+        gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
+                         FALSE, TRUE);
     }
 
   return procedural_db_return_args (&image_crop_proc, success);
@@ -1013,11 +1013,11 @@ image_get_layers_invoker (Gimp     *gimp,
       num_layers = g_list_length (list);
 
       if (num_layers)
-	{
-	  layer_ids = g_new (gint32, num_layers);
-	  for (i = 0; i < num_layers; i++, list = g_list_next (list))
-	    layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
-	}
+        {
+          layer_ids = g_new (gint32, num_layers);
+          for (i = 0; i < num_layers; i++, list = g_list_next (list))
+            layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+        }
     }
 
   return_args = procedural_db_return_args (&image_get_layers_proc, success);
@@ -1092,11 +1092,11 @@ image_get_channels_invoker (Gimp     *gimp,
       num_channels = g_list_length (list);
 
       if (num_channels)
-	{
-	  channel_ids = g_new (gint32, num_channels);
-	  for (i = 0; i < num_channels; i++, list = g_list_next (list))
-	    channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
-	}
+        {
+          channel_ids = g_new (gint32, num_channels);
+          for (i = 0; i < num_channels; i++, list = g_list_next (list))
+            channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+        }
     }
 
   return_args = procedural_db_return_args (&image_get_channels_proc, success);
@@ -1326,9 +1326,9 @@ image_floating_sel_attached_to_invoker (Gimp     *gimp,
       floating_sel = gimp_image_floating_sel (gimage);
 
       if (floating_sel)
-	drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
+        drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
       else
-	drawable = NULL;
+        drawable = NULL;
     }
 
   return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
@@ -1409,19 +1409,19 @@ image_pick_color_invoker (Gimp     *gimp,
   if (success)
     {
       if (!sample_merged)
-	if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
-	  success = FALSE;
+        if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
+          success = FALSE;
 
       if (success)
-	success = gimp_image_pick_color (gimage,
-					 drawable,
-					 (gint) x, (gint) y,
-					 sample_merged,
-					 sample_average,
-					 average_radius,
-					 NULL,
-					 &color,
-					 NULL);
+        success = gimp_image_pick_color (gimage,
+                                         drawable,
+                                         (gint) x, (gint) y,
+                                         sample_merged,
+                                         sample_average,
+                                         average_radius,
+                                         NULL,
+                                         &color,
+                                         NULL);
     }
 
   return_args = procedural_db_return_args (&image_pick_color_proc, success);
@@ -1592,14 +1592,14 @@ image_add_layer_invoker (Gimp     *gimp,
   if (success)
     {
       if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
-	  gimp_image_base_type (gimage))
-	{
-	  success = FALSE;
-	}
+          gimp_image_base_type (gimage))
+        {
+          success = FALSE;
+        }
       else
-	{
-	  success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
-	}
+        {
+          success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+        }
     }
 
   return procedural_db_return_args (&image_add_layer_proc, success);
@@ -2721,33 +2721,33 @@ image_thumbnail_invoker (Gimp     *gimp,
       dheight = gimp_image_get_height (gimage);
 
       if (dwidth > dheight)
-	req_height = MAX (1, (req_width * dheight) / dwidth);
+        req_height = MAX (1, (req_width * dheight) / dwidth);
       else
-	req_width  = MAX (1, (req_height * dwidth) / dheight);
+        req_width  = MAX (1, (req_height * dwidth) / dheight);
 
       if (gimage->gimp->config->layer_previews)
-	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-					     req_width, req_height);
+        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
+                                             req_width, req_height);
       else
-	buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
-					       req_width, req_height,
-					       gimp_image_has_alpha (gimage) ?
-					       4 : 3);
+        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (gimage),
+                                               req_width, req_height,
+                                               gimp_image_has_alpha (gimage) ?
+                                               4 : 3);
 
       if (buf)
-	{
-	  num_bytes      = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	  width          = buf->width;
-	  height         = buf->height;
-	  bpp            = buf->bytes;
+        {
+          num_bytes      = buf->height * buf->width * buf->bytes;
+          thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+          width          = buf->width;
+          height         = buf->height;
+          bpp            = buf->bytes;
 
-	  temp_buf_free (buf);
-	}
+          temp_buf_free (buf);
+        }
       else
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
     }
 
   return_args = procedural_db_return_args (&image_thumbnail_proc, success);
@@ -3126,11 +3126,11 @@ image_get_component_active_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_GRAY;
+        success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == GIMP_INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+        success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == GIMP_RGB;
+        success = gimp_image_base_type (gimage) == GIMP_RGB;
     }
 
   return_args = procedural_db_return_args (&image_get_component_active_proc, success);
@@ -3202,14 +3202,14 @@ image_set_component_active_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_GRAY;
+        success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == GIMP_INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+        success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == GIMP_RGB;
+        success = gimp_image_base_type (gimage) == GIMP_RGB;
 
       if (success)
-	gimp_image_set_component_active (gimage, component, active);
+        gimp_image_set_component_active (gimage, component, active);
     }
 
   return procedural_db_return_args (&image_set_component_active_proc, success);
@@ -3270,11 +3270,11 @@ image_get_component_visible_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_GRAY;
+        success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == GIMP_INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+        success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == GIMP_RGB;
+        success = gimp_image_base_type (gimage) == GIMP_RGB;
     }
 
   return_args = procedural_db_return_args (&image_get_component_visible_proc, success);
@@ -3346,14 +3346,14 @@ image_set_component_visible_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_GRAY;
+        success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == GIMP_INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
+        success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == GIMP_RGB;
+        success = gimp_image_base_type (gimage) == GIMP_RGB;
 
       if (success)
-	gimp_image_set_component_visible (gimage, component, visible);
+        gimp_image_set_component_visible (gimage, component, visible);
     }
 
   return procedural_db_return_args (&image_set_component_visible_proc, success);
@@ -3519,14 +3519,14 @@ image_get_name_invoker (Gimp     *gimp,
       filename = gimp_image_get_filename (gimage);
 
       if (filename)
-	{
-	  name = g_path_get_basename (filename);
-	  g_free (filename);
-	}
+        {
+          name = g_path_get_basename (filename);
+          g_free (filename);
+        }
       else
-	{
-	  name = g_strdup (_("Untitled"));
-	}
+        {
+          name = g_strdup (_("Untitled"));
+        }
     }
 
   return_args = procedural_db_return_args (&image_get_name_proc, success);
@@ -3653,18 +3653,18 @@ image_set_resolution_invoker (Gimp     *gimp,
   if (success)
     {
       if (! FINITE (xresolution) ||
-	  xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-	  ! FINITE (yresolution) ||
-	  yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
-	{
-	  g_message (_("Image resolution is out of bounds, "
-		       "using the default resolution instead."));
-	  success = FALSE;
-	}
+          xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+          ! FINITE (yresolution) ||
+          yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+        {
+          g_message (_("Image resolution is out of bounds, "
+                       "using the default resolution instead."));
+          success = FALSE;
+        }
       else
-	{
-	  gimp_image_set_resolution (gimage, xresolution, yresolution);
-	}
+        {
+          gimp_image_set_resolution (gimage, xresolution, yresolution);
+        }
     }
 
   return procedural_db_return_args (&image_set_resolution_proc, success);

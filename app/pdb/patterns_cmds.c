@@ -217,12 +217,12 @@ patterns_set_pattern_invoker (Gimp     *gimp,
   if (success)
     {
       pattern = (GimpPattern *)
-	gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
       if (success)
-	gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
+        gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&patterns_set_pattern_proc, success);
@@ -271,24 +271,24 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
   if (success)
     {
       if (strlen (name))
-	{
-	  pattern = (GimpPattern *)
-	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
-					      name);
-	}
+        {
+          pattern = (GimpPattern *)
+            gimp_container_get_child_by_name (gimp->pattern_factory->container,
+                                              name);
+        }
       else
-	{
-	  pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
-	}
+        {
+          pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
+        }
 
       if (pattern)
-	{
-	  length = pattern->mask->height * pattern->mask->width *
-		   pattern->mask->bytes;
-	  mask_data = g_memdup (temp_buf_data (pattern->mask), length);
-	}
+        {
+          length = pattern->mask->height * pattern->mask->width *
+                   pattern->mask->bytes;
+          mask_data = g_memdup (temp_buf_data (pattern->mask), length);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&patterns_get_pattern_data_proc, success);

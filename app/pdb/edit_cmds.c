@@ -204,16 +204,16 @@ edit_paste_invoker (Gimp     *gimp,
   if (success)
     {
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
-		 gimp->global_buffer != NULL);
+                 gimp->global_buffer != NULL);
 
       if (success)
-	{
-	  layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-				   drawable, gimp->global_buffer,
-				   paste_into, -1, -1, -1, -1);
-	  if (! layer)
-	    success = FALSE;
-	}
+        {
+          layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                   drawable, gimp->global_buffer,
+                                   paste_into, -1, -1, -1, -1);
+          if (! layer)
+            success = FALSE;
+        }
     }
 
   return_args = procedural_db_return_args (&edit_paste_proc, success);
@@ -410,21 +410,21 @@ edit_bucket_fill_invoker (Gimp     *gimp,
       GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
       if (! gimage)
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
       else
-	{
-	  gboolean do_seed_fill;
+        {
+          gboolean do_seed_fill;
 
-	  do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+          do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
-	  gimp_drawable_bucket_fill (drawable, fill_mode,
-				     paint_mode, opacity / 100.0,
-				     do_seed_fill,
-				     FALSE /* don't fill transparent */,
-				     threshold, sample_merged, x, y);
-	}
+          gimp_drawable_bucket_fill (drawable, fill_mode,
+                                     paint_mode, opacity / 100.0,
+                                     do_seed_fill,
+                                     FALSE /* don't fill transparent */,
+                                     threshold, sample_merged, x, y);
+        }
     }
 
   return procedural_db_return_args (&edit_bucket_fill_proc, success);
@@ -565,22 +565,22 @@ edit_blend_invoker (Gimp     *gimp,
   if (success)
     {
       if (! gimp_item_get_image (GIMP_ITEM (drawable)))
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
       else
-	{
-	  gimp_drawable_blend (drawable,
-			       blend_mode,
-			       paint_mode,
-			       gradient_type,
-			       opacity / 100.0,
-			       offset, repeat, reverse,
-			       supersample, max_depth,
-			       threshold, dither,
-			       x1, y1, x2, y2,
-			       NULL, NULL);
-	}
+        {
+          gimp_drawable_blend (drawable,
+                               blend_mode,
+                               paint_mode,
+                               gradient_type,
+                               opacity / 100.0,
+                               offset, repeat, reverse,
+                               supersample, max_depth,
+                               threshold, dither,
+                               x1, y1, x2, y2,
+                               NULL, NULL);
+        }
     }
 
   return procedural_db_return_args (&edit_blend_proc, success);
@@ -707,9 +707,9 @@ edit_stroke_invoker (Gimp     *gimp,
       tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
 
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-				  drawable,
-				  GIMP_OBJECT (tool_info->paint_info),
-				  TRUE /* use defaults, not tool option values */);
+                                  drawable,
+                                  GIMP_OBJECT (tool_info->paint_info),
+                                  TRUE /* use defaults, not tool option values */);
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

@@ -164,9 +164,9 @@ path_get_current_invoker (Gimp     *gimp,
       vectors = gimp_image_get_active_vectors (gimage);
 
       if (vectors)
-	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&path_get_current_proc, success);
@@ -233,9 +233,9 @@ path_set_current_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	gimp_image_set_active_vectors (gimage, vectors);
+        gimp_image_set_active_vectors (gimage, vectors);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_set_current_proc, success);
@@ -293,9 +293,9 @@ path_delete_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	gimp_image_remove_vectors (gimage, vectors);
+        gimp_image_remove_vectors (gimage, vectors);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_delete_proc, success);
@@ -358,40 +358,40 @@ path_get_points_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	{
-	  GimpVectorsCompatPoint *points;
-	  gint num_points;
+        {
+          GimpVectorsCompatPoint *points;
+          gint num_points;
 
-	  path_type = 1; /* BEZIER (1.2 compat) */
+          path_type = 1; /* BEZIER (1.2 compat) */
 
-	  points = gimp_vectors_compat_get_points (vectors, &num_points,
-						   &path_closed);
+          points = gimp_vectors_compat_get_points (vectors, &num_points,
+                                                   &path_closed);
 
-	  num_point_details = num_points * 3;
+          num_point_details = num_points * 3;
 
-	  if (points)
-	    {
-	      gdouble *curr_point;
-	      gint     i;
+          if (points)
+            {
+              gdouble *curr_point;
+              gint     i;
 
-	      points_pairs = g_new0 (gdouble, num_point_details);
+              points_pairs = g_new0 (gdouble, num_point_details);
 
-	      for (i = 0, curr_point = points_pairs;
-		   i < num_points;
-		   i++, curr_point += 3)
-		{
-		  curr_point[0] = points[i].x;
-		  curr_point[1] = points[i].y;
-		  curr_point[2] = points[i].type;
-		}
+              for (i = 0, curr_point = points_pairs;
+                   i < num_points;
+                   i++, curr_point += 3)
+                {
+                  curr_point[0] = points[i].x;
+                  curr_point[1] = points[i].y;
+                  curr_point[2] = points[i].type;
+                }
 
-	      g_free (points);
-	    }
-	  else
-	    success = FALSE;
-	}
+              g_free (points);
+            }
+          else
+            success = FALSE;
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&path_get_points_proc, success);
@@ -492,41 +492,41 @@ path_set_points_invoker (Gimp     *gimp,
   if (success)
     {
       if ((num_path_points / 3) % 3 == 0)
-	closed = TRUE;
+        closed = TRUE;
       else if ((num_path_points / 3) % 3 != 2)
-	success = FALSE;
+        success = FALSE;
 
       if (success)
-	{
-	  GimpVectors            *vectors;
-	  gdouble                *curr_point_pair;
-	  GimpVectorsCompatPoint *points;
-	  gint                    n_points;
-	  gint                    i;
+        {
+          GimpVectors            *vectors;
+          gdouble                *curr_point_pair;
+          GimpVectorsCompatPoint *points;
+          gint                    n_points;
+          gint                    i;
 
-	  n_points = num_path_points / 3;
+          n_points = num_path_points / 3;
 
-	  points = g_new0 (GimpVectorsCompatPoint, n_points);
+          points = g_new0 (GimpVectorsCompatPoint, n_points);
 
-	  for (i = 0, curr_point_pair = points_pairs;
-	       i < n_points;
-	       i++, curr_point_pair += 3)
-	    {
-	      points[i].x    = curr_point_pair[0];
-	      points[i].y    = curr_point_pair[1];
-	      points[i].type = curr_point_pair[2];
-	    }
+          for (i = 0, curr_point_pair = points_pairs;
+               i < n_points;
+               i++, curr_point_pair += 3)
+            {
+              points[i].x    = curr_point_pair[0];
+              points[i].y    = curr_point_pair[1];
+              points[i].type = curr_point_pair[2];
+            }
 
-	  vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
-					     closed);
+          vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
+                                             closed);
 
-	  g_free (points);
+          g_free (points);
 
-	  if (vectors)
-	    gimp_image_add_vectors (gimage, vectors, 0);
-	  else
-	    success = FALSE;
-	}
+          if (vectors)
+            gimp_image_add_vectors (gimage, vectors, 0);
+          else
+            success = FALSE;
+        }
     }
 
   return procedural_db_return_args (&path_set_points_proc, success);
@@ -596,17 +596,17 @@ path_stroke_current_invoker (Gimp     *gimp,
       drawable = gimp_image_active_drawable (gimage);
 
       if (vectors && drawable)
-	{
-	  GimpToolInfo *tool_info;
+        {
+          GimpToolInfo *tool_info;
 
-	  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+          tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
 
-	  success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
-				      GIMP_OBJECT (tool_info->paint_info),
-				      TRUE /* use defaults, not tool option values */);
-	}
+          success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
+                                      GIMP_OBJECT (tool_info->paint_info),
+                                      TRUE /* use defaults, not tool option values */);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_stroke_current_proc, success);
@@ -661,12 +661,12 @@ path_get_point_at_dist_invoker (Gimp     *gimp,
       vectors = gimp_image_get_active_vectors (gimage);
 
       if (vectors)
-	{
-	  g_warning ("FIXME: path_get_point_at_dist() is unimplemented");
-	  success = FALSE;
-	}
+        {
+          g_warning ("FIXME: path_get_point_at_dist() is unimplemented");
+          success = FALSE;
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&path_get_point_at_dist_proc, success);
@@ -754,9 +754,9 @@ path_get_tattoo_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+        tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&path_get_tattoo_proc, success);
@@ -831,9 +831,9 @@ path_set_tattoo_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
+        gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_set_tattoo_proc, success);
@@ -896,9 +896,9 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
 
       if (vectors)
-	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&get_path_by_tattoo_proc, success);
@@ -972,9 +972,9 @@ path_get_locked_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
+        lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&path_get_locked_proc, success);
@@ -1049,9 +1049,9 @@ path_set_locked_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
+        gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_set_locked_proc, success);
@@ -1131,16 +1131,16 @@ path_to_selection_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_name (gimage, name);
 
       if (vectors)
-	gimp_channel_select_vectors (gimp_image_get_mask (gimage),
-				     _("Path to Selection"),
-				     vectors,
-				     op,
-				     antialias,
-				     feather,
-				     feather_radius_x,
-				     feather_radius_y);
+        gimp_channel_select_vectors (gimp_image_get_mask (gimage),
+                                     _("Path to Selection"),
+                                     vectors,
+                                     op,
+                                     antialias,
+                                     feather,
+                                     feather_radius_x,
+                                     feather_radius_y);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&path_to_selection_proc, success);

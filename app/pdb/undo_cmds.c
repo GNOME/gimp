@@ -68,12 +68,12 @@ image_undo_group_start_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp->current_plug_in)
-	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+        undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_MISC, undo_desc);
 
       if (undo_desc)
-	g_free (undo_desc);
+        g_free (undo_desc);
     }
 
   return procedural_db_return_args (&image_undo_group_start_proc, success);

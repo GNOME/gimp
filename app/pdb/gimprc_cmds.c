@@ -74,7 +74,7 @@ gimprc_query_invoker (Gimp     *gimp,
       value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
 
       if (! value)
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);

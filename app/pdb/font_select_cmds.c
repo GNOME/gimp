@@ -71,12 +71,12 @@ fonts_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if (! gimp->no_interface &&
-	  (proc = procedural_db_lookup (gimp, font_callback)))
-	{
-	  font_select_new (gimp, popup_title, initial_font, font_callback);
-	}
+          (proc = procedural_db_lookup (gimp, font_callback)))
+        {
+          font_select_new (gimp, popup_title, initial_font, font_callback);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&fonts_popup_proc, success);
@@ -133,13 +133,13 @@ fonts_close_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if (! gimp->no_interface &&
-	  (proc = procedural_db_lookup (gimp, font_callback)) &&
-	  (font_select = font_select_get_by_callback (font_callback)))
-	{
-	  font_select_free (font_select);
-	}
+          (proc = procedural_db_lookup (gimp, font_callback)) &&
+          (font_select = font_select_get_by_callback (font_callback)))
+        {
+          font_select_free (font_select);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&fonts_close_popup_proc, success);
@@ -191,23 +191,23 @@ fonts_set_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if (! gimp->no_interface &&
-	  (proc = procedural_db_lookup (gimp, font_callback)) &&
-	  (font_select = font_select_get_by_callback (font_callback)))
-	{
-	  GimpFont *active = (GimpFont *)
-	    gimp_container_get_child_by_name (gimp->fonts, font_name);
+          (proc = procedural_db_lookup (gimp, font_callback)) &&
+          (font_select = font_select_get_by_callback (font_callback)))
+        {
+          GimpFont *active = (GimpFont *)
+            gimp_container_get_child_by_name (gimp->fonts, font_name);
 
-	  if (active)
-	    {
-	      gimp_context_set_font (font_select->context, active);
+          if (active)
+            {
+              gimp_context_set_font (font_select->context, active);
 
-	      gtk_window_present (GTK_WINDOW (font_select->shell));
-	    }
-	  else
-	    success = FALSE;
-	}
+              gtk_window_present (GTK_WINDOW (font_select->shell));
+            }
+          else
+            success = FALSE;
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&fonts_set_popup_proc, success);

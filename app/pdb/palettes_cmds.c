@@ -212,12 +212,12 @@ palettes_set_palette_invoker (Gimp     *gimp,
   if (success)
     {
       palette = (GimpPalette *)
-	gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
-	gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+        gimp_context_set_palette (gimp_get_current_context (gimp), palette);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&palettes_set_palette_proc, success);
@@ -268,34 +268,34 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
   if (success)
     {
       if (strlen (name))
-	{
-	  palette = (GimpPalette *)
-	    gimp_container_get_child_by_name (gimp->palette_factory->container,
-					      name);
-	}
+        {
+          palette = (GimpPalette *)
+            gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                              name);
+        }
       else
-	{
-	  palette = gimp_context_get_palette (gimp_get_current_context (gimp));
-	}
+        {
+          palette = gimp_context_get_palette (gimp_get_current_context (gimp));
+        }
 
       if (palette)
-	{
-	  if (entry_num < 0 || entry_num >= palette->n_colors) 
-	    {
-	      success = FALSE;
-	    }
-	  else
-	    {
-	      GimpPaletteEntry *entry;
+        {
+          if (entry_num < 0 || entry_num >= palette->n_colors) 
+            {
+              success = FALSE;
+            }
+          else
+            {
+              GimpPaletteEntry *entry;
 
-	      entry = (GimpPaletteEntry *)
-		g_list_nth_data (palette->colors, entry_num);
+              entry = (GimpPaletteEntry *)
+                g_list_nth_data (palette->colors, entry_num);
 
-	      color = entry->color;
-	    }
-	}
+              color = entry->color;
+            }
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&palettes_get_palette_entry_proc, success);

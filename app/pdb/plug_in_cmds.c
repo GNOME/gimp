@@ -86,12 +86,12 @@ progress_init_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->open)
-	{
-	  if (! gimp->no_interface)
-	    plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
-	}
+        {
+          if (! gimp->no_interface)
+            plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&progress_init_proc, success);
@@ -141,7 +141,7 @@ progress_update_invoker (Gimp     *gimp,
       success = TRUE;
 
       if (! gimp->no_interface)
-	plug_in_progress_update (gimp->current_plug_in, percentage);
+        plug_in_progress_update (gimp->current_plug_in, percentage);
     }
 
   return procedural_db_return_args (&progress_update_proc, success);
@@ -206,19 +206,19 @@ plugins_query_invoker (Gimp     *gimp,
       proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->prog && proc_def->menu_path)
-	{
-	  gchar *name = strrchr (proc_def->menu_path, '/');
+        {
+          gchar *name = strrchr (proc_def->menu_path, '/');
 
-	  if (name)
-	    name = name + 1;
-	  else
-	    name = proc_def->menu_path;
+          if (name)
+            name = name + 1;
+          else
+            name = proc_def->menu_path;
 
-	  if (search_str && match_strings (&sregex, name))
-	    continue;
+          if (search_str && match_strings (&sregex, name))
+            continue;
 
-	  num_plugins++;
-	}
+          num_plugins++;
+        }
     }
 
   menu_strs     = g_new (gchar *, num_plugins);
@@ -231,33 +231,33 @@ plugins_query_invoker (Gimp     *gimp,
   for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
       if (i > num_plugins)
-	g_error ("Internal error counting plugins");
+        g_error ("Internal error counting plugins");
 
       proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->prog && proc_def->menu_path)
-	{
-	  ProcRecord *pr = &proc_def->db_info;
+        {
+          ProcRecord *pr = &proc_def->db_info;
 
-	  gchar *name = strrchr (proc_def->menu_path, '/');
+          gchar *name = strrchr (proc_def->menu_path, '/');
 
-	  if (name)
-	    name = name + 1;
-	  else
-	    name = proc_def->menu_path;
+          if (name)
+            name = name + 1;
+          else
+            name = proc_def->menu_path;
 
-	  if (search_str && match_strings (&sregex,name))
-	    continue;
+          if (search_str && match_strings (&sregex,name))
+            continue;
 
-	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
-	  accel_strs[i]    = g_strdup (proc_def->accelerator);
-	  prog_strs[i]     = g_strdup (proc_def->prog);
-	  types_strs[i]    = g_strdup (proc_def->image_types);
-	  realname_strs[i] = g_strdup (pr->name);
-	  time_ints[i]     = proc_def->mtime;
+          menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
+          accel_strs[i]    = g_strdup (proc_def->accelerator);
+          prog_strs[i]     = g_strdup (proc_def->prog);
+          types_strs[i]    = g_strdup (proc_def->image_types);
+          realname_strs[i] = g_strdup (pr->name);
+          time_ints[i]     = proc_def->mtime;
 
-	  i++;
-	}
+          i++;
+        }
     }
 
   if (search_str)
@@ -387,12 +387,12 @@ plugin_domain_register_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->query)
-	{
-	  plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
-					      domain_name);
-	  plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
-					      domain_path);
-	}
+        {
+          plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
+                                              domain_name);
+          plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
+                                              domain_path);
+        }
     }
 
   return procedural_db_return_args (&plugin_domain_register_proc, success);
@@ -447,12 +447,12 @@ plugin_help_register_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->query)
-	{
-	  plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
-					    domain_name);
-	  plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
-					   domain_uri);
-	}
+        {
+          plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
+                                            domain_name);
+          plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
+                                           domain_uri);
+        }
     }
 
   return procedural_db_return_args (&plugin_help_register_proc, success);

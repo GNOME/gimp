@@ -64,9 +64,9 @@ floating_sel_remove_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-	floating_sel_remove (floating_sel);
+        floating_sel_remove (floating_sel);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_remove_proc, success);
@@ -111,9 +111,9 @@ floating_sel_anchor_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-	floating_sel_anchor (floating_sel);
+        floating_sel_anchor (floating_sel);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_anchor_proc, success);
@@ -158,9 +158,9 @@ floating_sel_to_layer_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-	floating_sel_to_layer (floating_sel);
+        floating_sel_to_layer (floating_sel);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_to_layer_proc, success);
@@ -212,7 +212,7 @@ floating_sel_attach_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	floating_sel_attach (layer, drawable);
+        floating_sel_attach (layer, drawable);
     }
 
   return procedural_db_return_args (&floating_sel_attach_proc, success);
@@ -265,9 +265,9 @@ floating_sel_rigor_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-	floating_sel_rigor (floating_sel, undo);
+        floating_sel_rigor (floating_sel, undo);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_rigor_proc, success);
@@ -320,9 +320,9 @@ floating_sel_relax_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-	floating_sel_relax (floating_sel, undo);
+        floating_sel_relax (floating_sel, undo);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&floating_sel_relax_proc, success);

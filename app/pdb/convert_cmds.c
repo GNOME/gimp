@@ -61,9 +61,9 @@ image_convert_rgb_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_image_base_type (gimage) != GIMP_RGB)
-	gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
+        gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&image_convert_rgb_proc, success);
@@ -108,9 +108,9 @@ image_convert_grayscale_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_image_base_type (gimage) != GIMP_GRAY)
-	gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
+        gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&image_convert_grayscale_proc, success);
@@ -181,39 +181,39 @@ image_convert_indexed_invoker (Gimp     *gimp,
       GimpPalette *palette = NULL;
 
       if (gimp_image_base_type (gimage) != GIMP_INDEXED)
-	{
-	  switch (palette_type)
-	    {
-	    case GIMP_MAKE_PALETTE:
-	      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
-		success = FALSE;
-	      break;
+        {
+          switch (palette_type)
+            {
+            case GIMP_MAKE_PALETTE:
+              if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+                success = FALSE;
+              break;
 
-	    case GIMP_CUSTOM_PALETTE:
-	      if (! gimp->palette_factory->container->num_children)
-		gimp_data_factory_data_init (gimp->palette_factory, FALSE);
+            case GIMP_CUSTOM_PALETTE:
+              if (! gimp->palette_factory->container->num_children)
+                gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 
-	      palette = (GimpPalette *)
-		gimp_container_get_child_by_name (gimp->palette_factory->container,
-						  palette_name);
+              palette = (GimpPalette *)
+                gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                                  palette_name);
 
-	      if (palette == NULL)
-		success = FALSE;
+              if (palette == NULL)
+                success = FALSE;
 
-	      break;
+              break;
 
-	    default:
-	      break;
-	    }
-	}
+            default:
+              break;
+            }
+        }
       else
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
 
       if (success)
-	gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
-			    alpha_dither, remove_unused, palette_type, palette);
+        gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
+                            alpha_dither, remove_unused, palette_type, palette);
     }
 
   return procedural_db_return_args (&image_convert_indexed_proc, success);

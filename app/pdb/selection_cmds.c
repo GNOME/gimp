@@ -372,14 +372,14 @@ selection_float_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	{
-	  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-	  layer = gimp_selection_float (gimp_image_get_mask (gimage),
-					drawable, TRUE, offx, offy);
-	  if (! layer)
-	    success = FALSE;
-	}
+          layer = gimp_selection_float (gimp_image_get_mask (gimage),
+                                        drawable, TRUE, offx, offy);
+          if (! layer)
+            success = FALSE;
+        }
     }
 
   return_args = procedural_db_return_args (&selection_float_proc, success);
@@ -868,8 +868,8 @@ selection_layer_alpha_invoker (Gimp     *gimp,
     {
       gimage = gimp_item_get_image (GIMP_ITEM (layer));
       gimp_channel_select_alpha (gimp_image_get_mask (gimage),
-				 GIMP_DRAWABLE (layer),
-				 GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
+                                 GIMP_DRAWABLE (layer),
+                                 GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_layer_alpha_proc, success);
@@ -920,11 +920,11 @@ selection_load_invoker (Gimp     *gimp,
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
-				   _("Channel to Selection"),
-				   channel, 
-				   off_x, off_y,
-				   GIMP_CHANNEL_OP_REPLACE,
-				   FALSE, 0.0, 0.0);
+                                   _("Channel to Selection"),
+                                   channel, 
+                                   off_x, off_y,
+                                   GIMP_CHANNEL_OP_REPLACE,
+                                   FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_load_proc, success);
@@ -1038,11 +1038,11 @@ selection_combine_invoker (Gimp     *gimp,
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
 
       gimp_channel_select_channel (gimp_image_get_mask (gimage),
-				   _("Channel to Selection"),
-				   channel, 
-				   off_x, off_y,
-				   operation,
-				   FALSE, 0.0, 0.0);
+                                   _("Channel to Selection"),
+                                   channel, 
+                                   off_x, off_y,
+                                   operation,
+                                   FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_combine_proc, success);

@@ -167,10 +167,10 @@ airbrush_invoker (Gimp     *gimp,
       GIMP_AIRBRUSH_OPTIONS (options)->pressure = pressure;
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_AIRBRUSH,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_AIRBRUSH,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&airbrush_proc, success);
@@ -243,10 +243,10 @@ airbrush_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_AIRBRUSH,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_AIRBRUSH,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&airbrush_default_proc, success);
@@ -343,10 +343,10 @@ clone_invoker (Gimp     *gimp,
     #endif
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_CLONE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_CLONE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&clone_proc, success);
@@ -434,10 +434,10 @@ clone_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_CLONE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_CLONE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&clone_default_proc, success);
@@ -515,15 +515,15 @@ convolve_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
 
       g_object_set (options,
-		    "type", convolve_type,
-		    "rate", pressure,
-		    NULL);
+                    "type", convolve_type,
+                    "rate", pressure,
+                    NULL);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_CONVOLVE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_CONVOLVE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&convolve_proc, success);
@@ -601,10 +601,10 @@ convolve_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_CONVOLVE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_CONVOLVE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&convolve_default_proc, success);
@@ -687,16 +687,16 @@ dodgeburn_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
 
       g_object_set (options,
-		    "type",     dodgeburn_type,
-		    "mode",     dodgeburn_mode,
-		    "exposure", exposure,
-		    NULL);
+                    "type",     dodgeburn_type,
+                    "mode",     dodgeburn_mode,
+                    "exposure", exposure,
+                    NULL);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_DODGE_BURN,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_DODGE_BURN,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&dodgeburn_proc, success);
@@ -779,10 +779,10 @@ dodgeburn_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_DODGE_BURN,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_DODGE_BURN,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&dodgeburn_default_proc, success);
@@ -860,15 +860,15 @@ eraser_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
 
       g_object_set (options,
-		    "application-mode", method,
-		    "hard",             hardness,
-		    NULL);
+                    "application-mode", method,
+                    "hard",             hardness,
+                    NULL);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_ERASER,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_ERASER,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&eraser_proc, success);
@@ -946,10 +946,10 @@ eraser_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_ERASER,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_ERASER,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&eraser_default_proc, success);
@@ -1032,18 +1032,18 @@ paintbrush_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
 
       g_object_set (options,
-		    "application-mode", method,
-		    "use-fade",         fade_out > 0.0,
-		    "fade-length",      fade_out,
-		    "use-gradient",     gradient_length > 0.0,
-		    "gradient-length",  gradient_length,
-		    NULL);
+                    "application-mode", method,
+                    "use-fade",         fade_out > 0.0,
+                    "fade-length",      fade_out,
+                    "use-gradient",     gradient_length > 0.0,
+                    "gradient-length",  gradient_length,
+                    NULL);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_PAINTBRUSH,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_PAINTBRUSH,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&paintbrush_proc, success);
@@ -1126,10 +1126,10 @@ paintbrush_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_PAINTBRUSH,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_PAINTBRUSH,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&paintbrush_default_proc, success);
@@ -1197,10 +1197,10 @@ pencil_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_PENCIL,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_PENCIL,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&pencil_proc, success);
@@ -1273,14 +1273,14 @@ smudge_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
 
       g_object_set (options,
-		    "rate", pressure,
-		    NULL);
+                    "rate", pressure,
+                    NULL);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_SMUDGE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_SMUDGE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&smudge_proc, success);
@@ -1353,10 +1353,10 @@ smudge_default_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
 
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_SMUDGE,
-				    options,
-				    drawable,
-				    num_strokes, strokes);
+                                    GIMP_TYPE_SMUDGE,
+                                    options,
+                                    drawable,
+                                    num_strokes, strokes);
     }
 
   return procedural_db_return_args (&smudge_default_proc, success);

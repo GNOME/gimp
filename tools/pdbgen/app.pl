@@ -54,7 +54,6 @@ sub format_code_frag {
     else {
 	$code =~ s/^/' ' x ($indent ? 4 : 2)/meg;
     }
-    while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
     $code .= "\n";
 
     $code =~ s/^\s+$//mg;
@@ -320,7 +319,6 @@ sub marshal_inargs {
 			    $frag = &format_code_frag($arg->{$key}, 1);
 			    $frag =~ s/\t/' ' x 8/eg;
 			    $frag =~ s/^/' ' x 2/meg;
-			    $frag =~ s/^ {8}/\t/mg;
 			}
 			$frag;
 		    }

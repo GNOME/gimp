@@ -206,12 +206,12 @@ gradients_set_gradient_invoker (Gimp     *gimp,
   if (success)
     {
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
-	gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
+        gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gradients_set_gradient_proc, success);
@@ -275,16 +275,16 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
       gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
 
       while (i--)
-	{
-	  gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+        {
+          gimp_gradient_get_color_at (gradient, pos, reverse, &color);
 
-	  *pv++ = color.r;
-	  *pv++ = color.g;
-	  *pv++ = color.b;
-	  *pv++ = color.a;
+          *pv++ = color.r;
+          *pv++ = color.g;
+          *pv++ = color.b;
+          *pv++ = color.a;
 
-	  pos += delta;
-	}
+          pos += delta;
+        }
     }
 
   return_args = procedural_db_return_args (&gradients_sample_uniform_proc, success);
@@ -374,16 +374,16 @@ gradients_sample_custom_invoker (Gimp     *gimp,
       gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
 
       while (i--)
-	{
-	  gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
+        {
+          gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
 
-	  *pv++ = color.r;
-	  *pv++ = color.g;
-	  *pv++ = color.b;
-	  *pv++ = color.a;
+          *pv++ = color.r;
+          *pv++ = color.g;
+          *pv++ = color.b;
+          *pv++ = color.a;
 
-	  pos++;
-	}
+          pos++;
+        }
     }
 
   return_args = procedural_db_return_args (&gradients_sample_custom_proc, success);
@@ -471,43 +471,43 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
   if (success)
     {
       if (strlen (name))
-	{
-	  gradient = (GimpGradient *)
-	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
-					      name);
-	}
+        {
+          gradient = (GimpGradient *)
+            gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                              name);
+        }
       else
-	{
-	  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
-	}
+        {
+          gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+        }
 
       if (gradient)
-	{
-	  gdouble *pv;
-	  gdouble  pos, delta;
-	  GimpRGB  color;
-	  gint     i;
+        {
+          gdouble *pv;
+          gdouble  pos, delta;
+          GimpRGB  color;
+          gint     i;
 
-	  i     = sample_size;
-	  pos   = 0.0;
-	  delta = 1.0 / (i - 1);
+          i     = sample_size;
+          pos   = 0.0;
+          delta = 1.0 / (i - 1);
 
-	  pv = values = g_new (gdouble, i * 4);
+          pv = values = g_new (gdouble, i * 4);
 
-	  while (i--)
-	    {
-	      gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+          while (i--)
+            {
+              gimp_gradient_get_color_at (gradient, pos, reverse, &color);
 
-	      *pv++ = color.r;
-	      *pv++ = color.g;
-	      *pv++ = color.b;
-	      *pv++ = color.a;
+              *pv++ = color.r;
+              *pv++ = color.g;
+              *pv++ = color.b;
+              *pv++ = color.a;
 
-	      pos += delta;
-	    }
-	}
+              pos += delta;
+            }
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&gradients_get_gradient_data_proc, success);

@@ -126,9 +126,9 @@ drawable_delete_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_item_is_floating (GIMP_ITEM (drawable)))
-	gimp_item_sink (GIMP_ITEM (drawable));
+        gimp_item_sink (GIMP_ITEM (drawable));
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_delete_proc, success);
@@ -1510,10 +1510,10 @@ drawable_merge_shadow_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp->current_plug_in)
-	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+        undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
       if (! undo_desc)
-	undo_desc = g_strdup (_("Plug-In"));
+        undo_desc = g_strdup (_("Plug-In"));
 
       gimp_drawable_merge_shadow (drawable, undo, undo_desc);
 
@@ -1657,25 +1657,25 @@ drawable_get_pixel_invoker (Gimp     *gimp,
   if (success)
     {
       if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
-	  y < gimp_item_height (GIMP_ITEM (drawable)))
-	{
-	  num_channels = gimp_drawable_bytes (drawable);
-	  pixel = g_new (guint8, num_channels);
+          y < gimp_item_height (GIMP_ITEM (drawable)))
+        {
+          num_channels = gimp_drawable_bytes (drawable);
+          pixel = g_new (guint8, num_channels);
 
-	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
-					TRUE, TRUE);
+          tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
+                                        TRUE, TRUE);
 
-	  x %= TILE_WIDTH;
-	  y %= TILE_HEIGHT;
+          x %= TILE_WIDTH;
+          y %= TILE_HEIGHT;
 
-	  p = tile_data_pointer (tile, x, y);
-	  for (b = 0; b < num_channels; b++)
-	    pixel[b] = p[b];
+          p = tile_data_pointer (tile, x, y);
+          for (b = 0; b < num_channels; b++)
+            pixel[b] = p[b];
 
-	  tile_release (tile, FALSE);
-	}
+          tile_release (tile, FALSE);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&drawable_get_pixel_proc, success);
@@ -1771,23 +1771,23 @@ drawable_set_pixel_invoker (Gimp     *gimp,
   if (success)
     {
       if (x < gimp_item_width  (GIMP_ITEM (drawable)) &&
-	  y < gimp_item_height (GIMP_ITEM (drawable)) &&
-	  num_channels == gimp_drawable_bytes (drawable))
-	{
-	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
-					TRUE, TRUE);
+          y < gimp_item_height (GIMP_ITEM (drawable)) &&
+          num_channels == gimp_drawable_bytes (drawable))
+        {
+          tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
+                                        TRUE, TRUE);
 
-	  x %= TILE_WIDTH;
-	  y %= TILE_HEIGHT;
+          x %= TILE_WIDTH;
+          y %= TILE_HEIGHT;
 
-	  p = tile_data_pointer (tile, x, y);
-	  for (b = 0; b < num_channels; b++)
-	    *p++ = *pixel++;
+          p = tile_data_pointer (tile, x, y);
+          for (b = 0; b < num_channels; b++)
+            *p++ = *pixel++;
 
-	  tile_release (tile, TRUE);
-	}
+          tile_release (tile, TRUE);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_set_pixel_proc, success);
@@ -2006,33 +2006,33 @@ drawable_thumbnail_invoker (Gimp     *gimp,
       dheight = gimp_item_height (GIMP_ITEM (drawable));
 
       if (dwidth > dheight)
-	req_height = MAX (1, (req_width * dheight) / dwidth);
+        req_height = MAX (1, (req_width * dheight) / dwidth);
       else
-	req_width  = MAX (1, (req_height * dwidth) / dheight);
+        req_width  = MAX (1, (req_height * dwidth) / dheight);
 
       if (gimage->gimp->config->layer_previews)
-	buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
-					     req_width, req_height);
+        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable),
+                                             req_width, req_height);
       else
-	buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
-					       req_width, req_height,
-					       gimp_drawable_has_alpha (drawable) ?
-					       4 : 3);
+        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+                                               req_width, req_height,
+                                               gimp_drawable_has_alpha (drawable) ?
+                                               4 : 3);
 
       if (buf)
-	{
-	  num_bytes      = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	  width          = buf->width;
-	  height         = buf->height;
-	  bpp            = buf->bytes;
+        {
+          num_bytes      = buf->height * buf->width * buf->bytes;
+          thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+          width          = buf->width;
+          height         = buf->height;
+          bpp            = buf->bytes;
 
-	  temp_buf_free (buf);
-	}
+          temp_buf_free (buf);
+        }
       else
-	{
-	  success = FALSE;
-	}
+        {
+          success = FALSE;
+        }
     }
 
   return_args = procedural_db_return_args (&drawable_thumbnail_proc, success);

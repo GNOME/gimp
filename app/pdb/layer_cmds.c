@@ -144,10 +144,10 @@ layer_new_invoker (Gimp     *gimp,
   if (success)
     {
       layer = gimp_layer_new (gimage,
-			      width, height,
-			      type,
-			      name,
-			      opacity / 100.0, mode);
+                              width, height,
+                              type,
+                              name,
+                              opacity / 100.0, mode);
       success = (layer != NULL);
     }
 
@@ -247,19 +247,19 @@ layer_new_from_drawable_invoker (Gimp     *gimp,
       GimpItem *new_item;
 
       if (GIMP_IS_LAYER (drawable))
-	new_type = G_TYPE_FROM_INSTANCE (drawable);
+        new_type = G_TYPE_FROM_INSTANCE (drawable);
       else
-	new_type = GIMP_TYPE_LAYER;
+        new_type = GIMP_TYPE_LAYER;
 
       if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-	new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
+        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
       else
-	new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
+        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
 
       if (new_item)
-	layer_copy = GIMP_LAYER (new_item);
+        layer_copy = GIMP_LAYER (new_item);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
@@ -446,24 +446,24 @@ layer_scale_invoker (Gimp     *gimp,
   if (success)
     {
       if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-	{
-	  floating_layer = gimp_image_floating_sel (gimage);
+        {
+          floating_layer = gimp_image_floating_sel (gimage);
 
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
-				       _("Scale Layer"));
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+                                       _("Scale Layer"));
 
-	  if (floating_layer)
-	    floating_sel_relax (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_relax (floating_layer, TRUE);
 
-	  gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, local_origin);
+          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, local_origin);
 
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_rigor (floating_layer, TRUE);
 
-	  gimp_image_undo_group_end (gimage);
-	}
+          gimp_image_undo_group_end (gimage);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_scale_proc, success);
@@ -541,24 +541,24 @@ layer_resize_invoker (Gimp     *gimp,
   if (success)
     {
       if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-	{
-	  floating_layer = gimp_image_floating_sel (gimage);
+        {
+          floating_layer = gimp_image_floating_sel (gimage);
 
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
-				       _("Resize Layer"));
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                                       _("Resize Layer"));
 
-	  if (floating_layer)
-	    floating_sel_relax (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_relax (floating_layer, TRUE);
 
-	  gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, offx, offy);
+          gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, offx, offy);
 
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_rigor (floating_layer, TRUE);
 
-	  gimp_image_undo_group_end (gimage);
-	}
+          gimp_image_undo_group_end (gimage);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_resize_proc, success);
@@ -623,9 +623,9 @@ layer_resize_to_image_size_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimp_item_get_image (GIMP_ITEM (layer)))
-	gimp_layer_resize_to_image (layer);
+        gimp_layer_resize_to_image (layer);
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_resize_to_image_size_proc, success);
@@ -678,33 +678,33 @@ layer_translate_invoker (Gimp     *gimp,
   if (success)
     {
       if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-	{
-	  floating_layer = gimp_image_floating_sel (gimage);
+        {
+          floating_layer = gimp_image_floating_sel (gimage);
 
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-				       _("Move Layer"));
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                       _("Move Layer"));
 
-	  if (floating_layer)
-	    floating_sel_relax (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_relax (floating_layer, TRUE);
 
-	  gimp_item_translate (GIMP_ITEM (layer),
-			       offx,
-			       offy,
-			       TRUE);
+          gimp_item_translate (GIMP_ITEM (layer),
+                               offx,
+                               offy,
+                               TRUE);
 
-	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
-	    gimp_item_linked_translate (GIMP_ITEM (layer),
-					offx,
-					offy,
-					TRUE);
+          if (gimp_item_get_linked (GIMP_ITEM (layer)))
+            gimp_item_linked_translate (GIMP_ITEM (layer),
+                                        offx,
+                                        offy,
+                                        TRUE);
 
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_rigor (floating_layer, TRUE);
 
-	  gimp_image_undo_group_end (gimage);
-	}
+          gimp_image_undo_group_end (gimage);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_translate_proc, success);
@@ -767,33 +767,33 @@ layer_set_offsets_invoker (Gimp     *gimp,
   if (success)
     {
       if ((gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-	{
-	  floating_layer = gimp_image_floating_sel (gimage);
+        {
+          floating_layer = gimp_image_floating_sel (gimage);
 
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-				       _("Move Layer"));
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                       _("Move Layer"));
 
-	  if (floating_layer)
-	    floating_sel_relax (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_relax (floating_layer, TRUE);
 
-	  gimp_item_translate (GIMP_ITEM (layer),
-			       offx - GIMP_ITEM (layer)->offset_x,
-			       offy - GIMP_ITEM (layer)->offset_y,
-			       TRUE);
+          gimp_item_translate (GIMP_ITEM (layer),
+                               offx - GIMP_ITEM (layer)->offset_x,
+                               offy - GIMP_ITEM (layer)->offset_y,
+                               TRUE);
 
-	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
-	    gimp_item_linked_translate (GIMP_ITEM (layer),
-					offx,
-					offy,
-					TRUE);
+          if (gimp_item_get_linked (GIMP_ITEM (layer)))
+            gimp_item_linked_translate (GIMP_ITEM (layer),
+                                        offx,
+                                        offy,
+                                        TRUE);
 
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
+          if (floating_layer)
+            floating_sel_rigor (floating_layer, TRUE);
 
-	  gimp_image_undo_group_end (gimage);
-	}
+          gimp_image_undo_group_end (gimage);
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_set_offsets_proc, success);

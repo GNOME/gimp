@@ -70,7 +70,7 @@ display_new_invoker (Gimp     *gimp,
 
       /* the first display takes ownership of the image */
       if (success && gimage->disp_count == 1)
-	g_object_unref (gimage);
+        g_object_unref (gimage);
     }
 
   return_args = procedural_db_return_args (&display_new_proc, success);

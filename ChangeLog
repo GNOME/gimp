@@ -1,5 +1,16 @@
 2004-03-26  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/app.pl: don't generate code with tabs.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: convert tabs to spaces in
+	helper function declaration.
+
+	* app/pdb/procedural_db.c: convert tabs to spaces.
+
+	* app/pdb/*.c: regenerated, no code changes, only tabs->spaces.
+
+2004-03-26  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/app.pl: kill whitespace in blank lines.
 
 	* app/pdb/*.c: regenerated, no code changes, only whitespace.

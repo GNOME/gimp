@@ -77,7 +77,7 @@ flip_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	success = gimp_drawable_transform_flip (drawable, flip_type);
+        success = gimp_drawable_transform_flip (drawable, flip_type);
     }
 
   return_args = procedural_db_return_args (&flip_proc, success);
@@ -164,32 +164,32 @@ perspective_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	{
-	  gint                  x1, y1, x2, y2;
-	  GimpMatrix3           matrix;
-	  GimpInterpolationType interpolation_type;
+        {
+          gint                  x1, y1, x2, y2;
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation_type;
 
-	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-	  /* Assemble the transformation matrix */
-	  gimp_transform_matrix_perspective (x1, y1, x2, y2,
-					     trans_info[X0], trans_info[Y0],
-					     trans_info[X1], trans_info[Y1],
-					     trans_info[X2], trans_info[Y2],
-					     trans_info[X3], trans_info[Y3],
-					     &matrix);
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_perspective (x1, y1, x2, y2,
+                                             trans_info[X0], trans_info[Y0],
+                                             trans_info[X1], trans_info[Y1],
+                                             trans_info[X2], trans_info[Y2],
+                                             trans_info[X3], trans_info[Y3],
+                                             &matrix);
 
-	  if (interpolation)
-	    interpolation_type = gimp->config->interpolation_type;
-	  else
-	    interpolation_type = GIMP_INTERPOLATION_NONE;
+          if (interpolation)
+            interpolation_type = gimp->config->interpolation_type;
+          else
+            interpolation_type = GIMP_INTERPOLATION_NONE;
 
-	  /* Perspective the selection */
-	  success = gimp_drawable_transform_affine (drawable,
-						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE, 3,
-						    FALSE);
-	}
+          /* Perspective the selection */
+          success = gimp_drawable_transform_affine (drawable,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, TRUE, 3,
+                                                    FALSE);
+        }
     }
 
   return_args = procedural_db_return_args (&perspective_proc, success);
@@ -303,27 +303,27 @@ rotate_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	{
-	  gint                  x1, y1, x2, y2;
-	  GimpMatrix3           matrix;
-	  GimpInterpolationType interpolation_type;
+        {
+          gint                  x1, y1, x2, y2;
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation_type;
 
-	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-	  /* Assemble the transformation matrix */
-	  gimp_transform_matrix_rotate (x1, y1, x2, y2, angle, &matrix);
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_rotate (x1, y1, x2, y2, angle, &matrix);
 
-	  if (interpolation)
-	    interpolation_type = gimp->config->interpolation_type;
-	  else
-	    interpolation_type = GIMP_INTERPOLATION_NONE;
+          if (interpolation)
+            interpolation_type = gimp->config->interpolation_type;
+          else
+            interpolation_type = GIMP_INTERPOLATION_NONE;
 
-	  /* Rotate the selection */
-	  success = gimp_drawable_transform_affine (drawable,
-						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, FALSE, 3,
-						    FALSE);
-	}
+          /* Rotate the selection */
+          success = gimp_drawable_transform_affine (drawable,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, FALSE, 3,
+                                                    FALSE);
+        }
     }
 
   return_args = procedural_db_return_args (&rotate_proc, success);
@@ -405,34 +405,34 @@ scale_invoker (Gimp     *gimp,
   if (success)
     {
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
-		 trans_info[X0] < trans_info[X1] &&
-		 trans_info[Y0] < trans_info[X1]);
+                 trans_info[X0] < trans_info[X1] &&
+                 trans_info[Y0] < trans_info[X1]);
 
       if (success)
-	{
-	  gint                  x1, y1, x2, y2;
-	  GimpMatrix3           matrix;
-	  GimpInterpolationType interpolation_type;
+        {
+          gint                  x1, y1, x2, y2;
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation_type;
 
-	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-	  /* Assemble the transformation matrix */
-	  gimp_transform_matrix_scale (x1, y1, x2, y2,
-				       trans_info[X0], trans_info[Y0],
-				       trans_info[X1], trans_info[Y1],
-				       &matrix);
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_scale (x1, y1, x2, y2,
+                                       trans_info[X0], trans_info[Y0],
+                                       trans_info[X1], trans_info[Y1],
+                                       &matrix);
 
-	  if (interpolation)
-	    interpolation_type = gimp->config->interpolation_type;
-	  else
-	    interpolation_type = GIMP_INTERPOLATION_NONE;
+          if (interpolation)
+            interpolation_type = gimp->config->interpolation_type;
+          else
+            interpolation_type = GIMP_INTERPOLATION_NONE;
 
-	  /* Scale the selection */
-	  success = gimp_drawable_transform_affine (drawable,
-						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE, 3,
-						    FALSE);
-	}
+          /* Scale the selection */
+          success = gimp_drawable_transform_affine (drawable,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, TRUE, 3,
+                                                    FALSE);
+        }
     }
 
   return_args = procedural_db_return_args (&scale_proc, success);
@@ -530,29 +530,29 @@ shear_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	{
-	  gint                  x1, y1, x2, y2;
-	  GimpMatrix3           matrix;
-	  GimpInterpolationType interpolation_type;
+        {
+          gint                  x1, y1, x2, y2;
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation_type;
 
-	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-	  /* Assemble the transformation matrix */
-	  gimp_transform_matrix_shear (x1, y1, x2, y2,
-				       shear_type, magnitude,
-				       &matrix);
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_shear (x1, y1, x2, y2,
+                                       shear_type, magnitude,
+                                       &matrix);
 
-	  if (interpolation)
-	    interpolation_type = gimp->config->interpolation_type;
-	  else
-	    interpolation_type = GIMP_INTERPOLATION_NONE;
+          if (interpolation)
+            interpolation_type = gimp->config->interpolation_type;
+          else
+            interpolation_type = GIMP_INTERPOLATION_NONE;
 
-	  /* Shear the selection */
-	  success = gimp_drawable_transform_affine (drawable,
-						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, FALSE, 3,
-						    FALSE);
-	}
+          /* Shear the selection */
+          success = gimp_drawable_transform_affine (drawable,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, FALSE, 3,
+                                                    FALSE);
+        }
     }
 
   return_args = procedural_db_return_args (&shear_proc, success);
@@ -653,28 +653,28 @@ transform_2d_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-	{
-	  GimpMatrix3           matrix;
-	  GimpInterpolationType interpolation_type;
+        {
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation_type;
 
-	  /* Assemble the transformation matrix */
-	  gimp_matrix3_identity  (&matrix);
-	  gimp_matrix3_translate (&matrix, -source_x, -source_y);
-	  gimp_matrix3_scale     (&matrix, scale_x, scale_y);
-	  gimp_matrix3_rotate    (&matrix, angle);
-	  gimp_matrix3_translate (&matrix, dest_x, dest_y);
+          /* Assemble the transformation matrix */
+          gimp_matrix3_identity  (&matrix);
+          gimp_matrix3_translate (&matrix, -source_x, -source_y);
+          gimp_matrix3_scale     (&matrix, scale_x, scale_y);
+          gimp_matrix3_rotate    (&matrix, angle);
+          gimp_matrix3_translate (&matrix, dest_x, dest_y);
 
-	  if (interpolation)
-	    interpolation_type = gimp->config->interpolation_type;
-	  else
-	    interpolation_type = GIMP_INTERPOLATION_NONE;
+          if (interpolation)
+            interpolation_type = gimp->config->interpolation_type;
+          else
+            interpolation_type = GIMP_INTERPOLATION_NONE;
 
-	  /* Transform the selection */
-	  success = gimp_drawable_transform_affine (drawable,
-						    &matrix, GIMP_TRANSFORM_FORWARD,
-						    interpolation_type, TRUE, 3,
-						    FALSE);
-	}
+          /* Transform the selection */
+          success = gimp_drawable_transform_affine (drawable,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, TRUE, 3,
+                                                    FALSE);
+        }
     }
 
   return_args = procedural_db_return_args (&transform_2d_proc, success);

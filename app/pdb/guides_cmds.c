@@ -73,12 +73,12 @@ image_add_hguide_invoker (Gimp     *gimp,
   if (success)
     {
       if (offset <= gimage->height)
-	{
-	  guide = gimp_image_add_hguide (gimage, offset, TRUE);
-	  guide_ID = guide->guide_ID;
-	}
+        {
+          guide = gimp_image_add_hguide (gimage, offset, TRUE);
+          guide_ID = guide->guide_ID;
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&image_add_hguide_proc, success);
@@ -150,12 +150,12 @@ image_add_vguide_invoker (Gimp     *gimp,
   if (success)
     {
       if (offset <= gimage->width)
-	{
-	  guide = gimp_image_add_vguide (gimage, offset, TRUE);
-	  guide_ID = guide->guide_ID;
-	}
+        {
+          guide = gimp_image_add_vguide (gimage, offset, TRUE);
+          guide_ID = guide->guide_ID;
+        }
       else
-	success = FALSE;
+        success = FALSE;
     }
 
   return_args = procedural_db_return_args (&image_add_vguide_proc, success);
@@ -225,16 +225,16 @@ image_delete_guide_invoker (Gimp     *gimp,
       success = FALSE;
 
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
-	{
-	  GimpGuide *g = (GimpGuide *) guides->data;
+        {
+          GimpGuide *g = (GimpGuide *) guides->data;
 
-	  if ((g->guide_ID == guide) && (g->position >= 0))
-	    {
-	      gimp_image_remove_guide (gimage, g, TRUE);
-	      success = TRUE;
-	      break;
-	    }
-	}
+          if ((g->guide_ID == guide) && (g->position >= 0))
+            {
+              gimp_image_remove_guide (gimage, g, TRUE);
+              success = TRUE;
+              break;
+            }
+        }
     }
 
   return procedural_db_return_args (&image_delete_guide_proc, success);
@@ -291,40 +291,40 @@ image_find_next_guide_invoker (Gimp     *gimp,
   if (success)
     {
       if (gimage->guides != NULL)
-	{
-	  success     = FALSE;
-	  guide_found = FALSE;
+        {
+          success     = FALSE;
+          guide_found = FALSE;
 
-	  for (guides = gimage->guides; guides; guides = g_list_next (guides))
-	    {
-	      GimpGuide *g = (GimpGuide *) guides->data;
+          for (guides = gimage->guides; guides; guides = g_list_next (guides))
+            {
+              GimpGuide *g = (GimpGuide *) guides->data;
 
-	      if (g->position < 0)
-		continue;
+              if (g->position < 0)
+                continue;
 
-	      if (guide == 0)  /* init - Return first guide ID in list */
-		{
-		  next_guide = g->guide_ID;
+              if (guide == 0)  /* init - Return first guide ID in list */
+                {
+                  next_guide = g->guide_ID;
 
-		  guide_found = TRUE;
-		  break;
-		}
+                  guide_found = TRUE;
+                  break;
+                }
 
-	      if (! guide_found)
-		{
-		  if (g->guide_ID == guide)
-		    guide_found = TRUE;
-		}
-	      else
-		{
-		  next_guide = g->guide_ID;
-		  break;
-		}
-	    }
+              if (! guide_found)
+                {
+                  if (g->guide_ID == guide)
+                    guide_found = TRUE;
+                }
+              else
+                {
+                  next_guide = g->guide_ID;
+                  break;
+                }
+            }
 
-	  if (guide_found)
-	    success = TRUE;
-	}
+          if (guide_found)
+            success = TRUE;
+        }
     }
 
   return_args = procedural_db_return_args (&image_find_next_guide_proc, success);
@@ -396,17 +396,17 @@ image_get_guide_orientation_invoker (Gimp     *gimp,
       success = FALSE;
 
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
-	{
-	  GimpGuide *g = (GimpGuide *) guides->data;
+        {
+          GimpGuide *g = (GimpGuide *) guides->data;
 
-	  if ((g->guide_ID == guide) && (g->position >= 0))
-	    {
-	      orientation = g->orientation;
+          if ((g->guide_ID == guide) && (g->position >= 0))
+            {
+              orientation = g->orientation;
 
-	      success = TRUE;
-	      break;
-	    }
-	}
+              success = TRUE;
+              break;
+            }
+        }
     }
 
   return_args = procedural_db_return_args (&image_get_guide_orientation_proc, success);
@@ -478,17 +478,17 @@ image_get_guide_position_invoker (Gimp     *gimp,
       success = FALSE;
 
       for (guides = gimage->guides; guides; guides = g_list_next (guides))
-	{
-	  GimpGuide *g = (GimpGuide *) guides->data;
+        {
+          GimpGuide *g = (GimpGuide *) guides->data;
 
-	  if ((g->guide_ID == guide) && (g->position >= 0))
-	    {
-	      position = g->position;
+          if ((g->guide_ID == guide) && (g->position >= 0))
+            {
+              position = g->position;
 
-	      success = TRUE;
-	      break;
-	    }
-	} 
+              success = TRUE;
+              break;
+            }
+        } 
     }
 
   return_args = procedural_db_return_args (&image_get_guide_position_proc, success);

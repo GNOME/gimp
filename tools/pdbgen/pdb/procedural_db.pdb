@@ -473,7 +473,7 @@ $extra{app}->{decls} =~ s/,\n$/\n};\n/;
 $extra{app}->{code} = <<'CODE';
 static int
 match_strings (regex_t     *preg,
-	       const gchar *a)
+               const gchar *a)
 {
   if (!a)
     a = "";
