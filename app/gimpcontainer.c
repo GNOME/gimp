@@ -45,6 +45,8 @@ enum
   GET_CHILD_BY_NAME,
   GET_CHILD_BY_INDEX,
   GET_CHILD_INDEX,
+  FREEZE,
+  THAW,
   LAST_SIGNAL
 };
 
@@ -58,7 +60,8 @@ static void   gimp_container_child_destroy_callback (GtkObject          *object,
 						     gpointer            data);
 
 
-static guint            container_signals[LAST_SIGNAL] = { 0 };
+static guint   container_signals[LAST_SIGNAL] = { 0 };
+
 static GimpObjectClass *parent_class = NULL;
 
 
@@ -177,6 +180,24 @@ gimp_container_class_init (GimpContainerClass* klass)
                     GTK_TYPE_INT, 1,
                     GIMP_TYPE_OBJECT);
 
+  container_signals[FREEZE] =
+    gtk_signal_new ("freeze",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       freeze),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  container_signals[THAW] =
+    gtk_signal_new ("thaw",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       thaw),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gtk_object_class_add_signals (object_class, container_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_container_destroy;
@@ -188,6 +209,8 @@ gimp_container_class_init (GimpContainerClass* klass)
   klass->get_child_by_name  = NULL;
   klass->get_child_by_index = NULL;
   klass->get_child_index    = NULL;
+  klass->freeze             = NULL;
+  klass->thaw               = NULL;
 }
 
 static void
@@ -435,6 +458,24 @@ gimp_container_get_child_index (const GimpContainer *container,
 		   object, &index);
 
   return index;
+}
+
+void
+gimp_container_freeze (GimpContainer *container)
+{
+  g_return_if_fail (container != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[FREEZE]);
+}
+
+void
+gimp_container_thaw (GimpContainer *container)
+{
+  g_return_if_fail (container != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[THAW]);
 }
 
 static void

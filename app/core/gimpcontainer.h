@@ -71,6 +71,8 @@ struct _GimpContainerClass
 				       gint           index);
   gint         (* get_child_index)    (GimpContainer *container,
 				       GimpObject    *object);
+  void         (* freeze)             (GimpContainer *container);
+  void         (* thaw)               (GimpContainer *container);
 };
 
 
@@ -97,6 +99,9 @@ GimpObject * gimp_container_get_child_by_index (const GimpContainer *container,
 						gint                 index);
 gint         gimp_container_get_child_index    (const GimpContainer *container,
 						const GimpObject    *object);
+
+void         gimp_container_freeze             (GimpContainer       *container);
+void         gimp_container_thaw               (GimpContainer       *container);
 
 GQuark       gimp_container_add_handler        (GimpContainer       *container,
 						const gchar         *signame,

@@ -18,14 +18,10 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <sys/types.h>
-
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
 
-#include "datafiles.h"
 #include "gimpcontext.h"
 #include "gimpdatalist.h"
 #include "gimppattern.h"
@@ -33,13 +29,6 @@
 #include "patterns.h"
 #include "pattern_select.h"
 #include "temp_buf.h"
-
-#include "libgimp/gimpintl.h"
-
-
-/*  local function prototypes  */
-static void   patterns_load_pattern (const gchar *filename,
-				     gpointer     loader_data);
 
 
 /*  global variables  */
@@ -61,8 +50,13 @@ patterns_init (gboolean no_data)
     {
       pattern_select_freeze_all ();
 
-      datafiles_read_directories (pattern_path, 0,
-				  patterns_load_pattern, global_pattern_list);
+      gimp_data_list_load (GIMP_DATA_LIST (global_pattern_list),
+			   pattern_path,
+
+			   (GimpDataObjectLoaderFunc) gimp_pattern_load,
+			   GIMP_PATTERN_FILE_EXTENSION,
+
+			   NULL);
 
       pattern_select_thaw_all ();
     }
@@ -117,26 +111,4 @@ patterns_get_standard_pattern (void)
     }
 
   return standard_pattern;
-}
-
-
-/*  private functions  */
-
-static void
-patterns_load_pattern (const gchar *filename,
-		       gpointer     loader_data)
-{
-  GimpPattern *pattern;
-
-  g_return_if_fail (filename != NULL);
-
-  if (datafiles_check_extension (filename, GIMP_PATTERN_FILE_EXTENSION))
-    {
-      pattern = gimp_pattern_load (filename);
-
-      if (! pattern)
-	g_message (_("Warning: Failed to load pattern\n\"%s\""), filename);
-      else
-	gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (pattern));
-    }
 }

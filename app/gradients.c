@@ -18,27 +18,16 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
 
-#include "datafiles.h"
 #include "gimpcontext.h"
 #include "gimpdatalist.h"
 #include "gimpgradient.h"
 #include "gimprc.h"
-#include "gradients.h"
 #include "gradient_select.h"
-#include "temp_buf.h"
-
-#include "libgimp/gimpintl.h"
-
-
-/*  local function prototypes  */
-static void   gradients_load_gradient (const gchar *filename,
-				       gpointer     loader_data);
+#include "gradients.h"
 
 
 /*  global variables  */
@@ -60,8 +49,14 @@ gradients_init (gint no_data)
     {
       gradient_select_freeze_all ();
 
-      datafiles_read_directories (gradient_path, 0,
-				  gradients_load_gradient, global_gradient_list);
+      gimp_data_list_load (GIMP_DATA_LIST (global_gradient_list),
+			   gradient_path,
+
+			   (GimpDataObjectLoaderFunc) gimp_gradient_load,
+			   GIMP_GRADIENT_FILE_EXTENSION,
+
+			   (GimpDataObjectLoaderFunc) gimp_gradient_load,
+			   NULL /* legacy loader */);
 
       gradient_select_thaw_all ();
     }
@@ -98,30 +93,4 @@ gradients_get_standard_gradient (void)
     }
 
   return standard_gradient;
-}
-
-
-/*  private functions  */
-
-static void
-gradients_load_gradient (const gchar *filename,
-			 gpointer     loader_data)
-{
-  GimpGradient *gradient = NULL;
-
-  g_return_if_fail (filename != NULL);
-
-  if (! datafiles_check_extension (filename, GIMP_GRADIENT_FILE_EXTENSION))
-    {
-      g_warning ("%s(): trying old gradient file format on file with "
-		 "unknown extension: %s",
-		 G_GNUC_FUNCTION, filename);
-    }
-
-  gradient = gimp_gradient_load (filename);
-
-  if (! gradient)
-    g_message (_("Warning: Failed to load gradient\n\"%s\""), filename);
-  else
-    gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (gradient));
 }

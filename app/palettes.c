@@ -22,7 +22,6 @@
 
 #include "apptypes.h"
 
-#include "datafiles.h"
 #include "gimpcontext.h"
 #include "gimpdatalist.h"
 #include "gimppalette.h"
@@ -30,13 +29,6 @@
 #include "palette.h"
 #include "palette_select.h"
 #include "palettes.h"
-
-#include "libgimp/gimpintl.h"
-
-
-/*  local function prototypes  */
-static void   palettes_load_palette (const gchar *filename,
-				     gpointer     loader_data);
 
 
 /*  global variables  */
@@ -58,8 +50,14 @@ palettes_init (gboolean no_data)
     {
       palette_select_freeze_all ();
 
-      datafiles_read_directories (palette_path, 0,
-				  palettes_load_palette, global_palette_list);
+      gimp_data_list_load (GIMP_DATA_LIST (global_palette_list),
+			   palette_path,
+
+			   (GimpDataObjectLoaderFunc) gimp_palette_load,
+			   GIMP_PALETTE_FILE_EXTENSION,
+
+			   (GimpDataObjectLoaderFunc) gimp_palette_load,
+			   NULL /* legacy loader */);
 
       palette_select_thaw_all ();
     }
@@ -95,30 +93,4 @@ palettes_get_standard_palette (void)
     }
 
   return standard_palette;
-}
-
-
-/*  private functions  */
-
-static void
-palettes_load_palette (const gchar *filename,
-		       gpointer     loader_data)
-{
-  GimpPalette *palette;
-
-  g_return_if_fail (filename != NULL);
-
-  if (! datafiles_check_extension (filename, GIMP_PALETTE_FILE_EXTENSION))
-    {
-      g_warning ("%s(): trying old palette file format on file with "
-		 "unknown extension: %s",
-		 G_GNUC_FUNCTION, filename);
-    }
-
-  palette = gimp_palette_load (filename);
-
-  if (! palette)
-    g_message (_("Warning: Failed to load palette\n\"%s\""), filename);
-  else
-    gimp_container_add (GIMP_CONTAINER (loader_data), GIMP_OBJECT (palette));
 }

@@ -24,14 +24,12 @@
 
 #include <time.h>
 
+
 typedef enum
 {
   INCLUDE_TEMP_DIR = 1 << 0,
   MODE_EXECUTABLE  = 1 << 1
 } GimpDataFileFlags;
-
-typedef void (* GimpDataFileLoaderFunc) (const gchar *filename,
-					 gpointer     loader_data);
 
 
 gboolean   datafiles_check_extension  (const gchar            *filename,

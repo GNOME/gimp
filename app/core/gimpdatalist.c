@@ -28,8 +28,11 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "datafiles.h"
 #include "gimpdata.h"
 #include "gimpdatalist.h"
+
+#include "libgimp/gimpintl.h"
 
 
 static void   gimp_data_list_class_init         (GimpDataListClass *klass);
@@ -142,6 +145,124 @@ gimp_data_list_new (GtkType  children_type)
   return list;
 }
 
+typedef struct _GimpDataListLoaderData GimpDataListLoaderData;
+
+struct _GimpDataListLoaderData
+{
+  GimpDataList *data_list;
+  GSList       *loader_funcs;
+  GSList       *extensions;
+};
+
+void
+gimp_data_list_load_callback (const gchar *filename,
+			      gpointer     callback_data)
+{
+  GimpDataListLoaderData   *loader_data;
+  GSList                   *func_list;
+  GSList                   *ext_list;
+  GimpDataObjectLoaderFunc  loader_func;
+  const gchar              *extension;
+
+  loader_data = (GimpDataListLoaderData *) callback_data;
+
+  for (func_list = loader_data->loader_funcs, ext_list = loader_data->extensions;
+       func_list && ext_list;
+       func_list = func_list->next, ext_list = ext_list->next)
+    {
+      loader_func = (GimpDataObjectLoaderFunc) func_list->data;
+      extension   = (const gchar *) ext_list->data;
+
+      if (extension)
+	{
+	  if (datafiles_check_extension (filename, extension))
+	    {
+	      goto insert;
+	    }
+	}
+      else
+	{
+	  g_warning ("%s(): trying legacy loader on file with unknown "
+		     "extension: %s",
+		     G_GNUC_FUNCTION, filename);
+	  goto insert;
+	}
+    }
+
+  return;
+
+ insert:
+  {
+    GimpData *data;
+
+    data = (GimpData *) (* loader_func) (filename);
+
+    if (! data)
+      g_message (_("Warning: Failed to load data from\n\"%s\""), filename);
+    else
+      gimp_container_add (GIMP_CONTAINER (loader_data->data_list),
+			  GIMP_OBJECT (data));
+  }
+}
+
+void
+gimp_data_list_load (GimpDataList             *data_list,
+		     const gchar              *data_path,
+		     GimpDataObjectLoaderFunc  loader_func,
+		     const gchar              *extension,
+		     ...)
+{
+  GimpDataListLoaderData *loader_data;
+  va_list                 args;
+
+  g_return_if_fail (data_list != NULL);
+  g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
+  g_return_if_fail (data_path != NULL);
+  g_return_if_fail (loader_func != NULL);
+
+  loader_data = g_new0 (GimpDataListLoaderData, 1);
+
+  loader_data->data_list    = data_list;
+  loader_data->loader_funcs = g_slist_append (loader_data->loader_funcs,
+					      loader_func);
+  loader_data->extensions   = g_slist_append (loader_data->extensions,
+					      (gpointer) extension);
+
+  va_start (args, extension);
+
+  while (extension)
+    {
+      loader_func = va_arg (args, GimpDataObjectLoaderFunc);
+
+      if (loader_func)
+	{
+	  extension = va_arg (args, const gchar *);
+
+	  loader_data->loader_funcs = g_slist_append (loader_data->loader_funcs,
+						      loader_func);
+	  loader_data->extensions   = g_slist_append (loader_data->extensions,
+						      (gpointer) extension);
+	}
+      else
+	{
+	  extension = NULL;
+	}
+    }
+
+  va_end (args);
+
+  gimp_container_freeze (GIMP_CONTAINER (data_list));
+
+  datafiles_read_directories (data_path, 0,
+			      gimp_data_list_load_callback, loader_data);
+
+  gimp_container_thaw (GIMP_CONTAINER (data_list));
+
+  g_slist_free (loader_data->loader_funcs);
+  g_slist_free (loader_data->extensions);
+  g_free (loader_data);
+}
+
 void
 gimp_data_list_save_and_clear (GimpDataList *data_list,
 			       const gchar  *data_path,
@@ -153,6 +274,8 @@ gimp_data_list_save_and_clear (GimpDataList *data_list,
   g_return_if_fail (GIMP_IS_DATA_LIST (data_list));
 
   list = GIMP_LIST (data_list);
+
+  gimp_container_freeze (GIMP_CONTAINER (data_list));
 
   while (list->list)
     {
@@ -171,6 +294,8 @@ gimp_data_list_save_and_clear (GimpDataList *data_list,
 
       gimp_container_remove (GIMP_CONTAINER (data_list), GIMP_OBJECT (data));
     }
+
+  gimp_container_thaw (GIMP_CONTAINER (data_list));
 }
 
 static void

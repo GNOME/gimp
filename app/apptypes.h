@@ -173,19 +173,23 @@ typedef         GSList              PathUndo;
 
 /*  functions  */
 
-typedef void (* TileValidateProc)     (TileManager *tm,
-				       Tile        *tile);
+typedef void       (* TileValidateProc)         (TileManager *tm,
+						 Tile        *tile);
 
-typedef void (* ToolOptionsResetFunc) (void);
+typedef void       (* ToolOptionsResetFunc)     (void);
 
-typedef void (* GimpProgressFunc)     (gint         min,
-				       gint         max,
-				       gint         current,
-				       gpointer     data);
+typedef void       (* GimpProgressFunc)         (gint         min,
+						 gint         max,
+						 gint         current,
+						 gpointer     data);
 
-typedef void (* ImageMapApplyFunc)    (PixelRegion *srcPR,
-				       PixelRegion *destPR,
-				       gpointer     data);
+typedef void       (* ImageMapApplyFunc)        (PixelRegion *srcPR,
+						 PixelRegion *destPR,
+						 gpointer     data);
+
+typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,
+						 gpointer     loader_data);
+typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar *filename);
 
 
 #endif /* __APPTYPES_H__ */

@@ -1,5 +1,25 @@
 2001-02-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/apptypes.h: added the datafile loader_func typedefs.
+
+	* app/datafiles.h: removed from here.
+
+	* app/gimpcontainer.[ch]: emit "freeze" and "thaw" signals to get
+	rid of those blah_select_[freeze|thaw]_all() stuff.
+
+	* app/gimpdatalist.[ch]: new function gimp_data_list_load() which
+	takes a va_list of GimpDataObjectLoaderFuncs and file extensions
+	and is almost a replacement for the four files below.
+
+	* app/brushes.c
+	* app/gradients.c
+	* app/palettes.c
+	* app/patterns.c: very simple now. It may be worth thinking about
+	making all GimpData subclasses managed by a descriptive array in
+	the context_manager.
+
+2001-02-11  Michael Natterer  <mitch@gimp.org>
+
 	Made a GimpContainer out of the palette list:
 
 	* app/Makefile.am
