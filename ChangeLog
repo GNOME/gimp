@@ -1,3 +1,12 @@
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayermask.c (gimp_layer_mask_class_init): set
+	translate_desc to "Move Layer Mask".
+
+	* app/tools/gimpeditselectiontool.c: take the undo desc
+	from the moved item's class instead of duplicating all
+	strings here.
+
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette-import.[ch]

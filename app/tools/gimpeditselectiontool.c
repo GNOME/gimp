@@ -242,26 +242,22 @@ init_edit_selection (GimpTool    *tool,
 
   edit_select->edit_type = edit_type;
 
+  if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE)
+    active_item = GIMP_ITEM (gimp_image_get_active_vectors (gdisp->gimage));
+  else
+    active_item = GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage));
+
   switch (edit_select->edit_type)
     {
     case EDIT_VECTORS_TRANSLATE:
-      undo_desc = _("Move Path");
-      break;
-
     case EDIT_CHANNEL_TRANSLATE:
-      undo_desc = _("Move Channel");
-      break;
-
     case EDIT_LAYER_MASK_TRANSLATE:
-      undo_desc = _("Move Layer Mask");
+    case EDIT_LAYER_TRANSLATE:
+      undo_desc = GIMP_ITEM_GET_CLASS (active_item)->translate_desc;
       break;
 
     case EDIT_MASK_TRANSLATE:
       undo_desc = _("Move Selection");
-      break;
-
-    case EDIT_LAYER_TRANSLATE:
-      undo_desc = _("Move Layer");
       break;
 
     default:
@@ -274,11 +270,6 @@ init_edit_selection (GimpTool    *tool,
                                GIMP_UNDO_GROUP_MASK :
                                GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                undo_desc);
-
-  if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE)
-    active_item = GIMP_ITEM (gimp_image_get_active_vectors (gdisp->gimage));
-  else
-    active_item = GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage));
 
   gimp_item_offsets (active_item, &off_x, &off_y);
 
@@ -1115,7 +1106,6 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
       edit_type = EDIT_MASK_TRANSLATE;
       undo_type = GIMP_UNDO_GROUP_MASK;
-      undo_desc = _("Move Selection");
     }
   else
     {
@@ -1155,7 +1145,6 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
           edit_type = EDIT_VECTORS_TRANSLATE;
           undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
-          undo_desc = _("Move Path");
         }
       else
         {
@@ -1198,22 +1187,18 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
                   if (GIMP_IS_LAYER_MASK (item))
                     {
                       edit_type = EDIT_LAYER_MASK_TRANSLATE;
-                      undo_desc = _("Move Layer Mask");
                     }
                   else if (GIMP_IS_CHANNEL (item))
                     {
                       edit_type = EDIT_CHANNEL_TRANSLATE;
-                      undo_desc = _("Move Channel");
                     }
                   else if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
                     {
                       edit_type = EDIT_FLOATING_SEL_TRANSLATE;
-                      undo_desc = _("Move Floating Layer");
                     }
                   else
                     {
                       edit_type = EDIT_LAYER_TRANSLATE;
-                      undo_desc = _("Move Layer");
                     }
 
                   undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
@@ -1224,6 +1209,17 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   if (! item)
     return;
+
+  switch (edit_type)
+    {
+    case EDIT_FLOATING_SEL_TRANSLATE:
+      undo_desc = _("Move Floating Layer");
+      break;
+
+    default:
+      undo_desc = GIMP_ITEM_GET_CLASS (item)->translate_desc;
+      break;
+    }
 
   undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 

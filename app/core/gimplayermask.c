@@ -131,9 +131,10 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   viewable_class->default_stock_id = "gimp-layer-mask";
 
-  item_class->is_attached = gimp_layer_mask_is_attached;
-  item_class->duplicate   = gimp_layer_mask_duplicate;
-  item_class->rename      = gimp_layer_mask_rename;
+  item_class->is_attached    = gimp_layer_mask_is_attached;
+  item_class->duplicate      = gimp_layer_mask_duplicate;
+  item_class->rename         = gimp_layer_mask_rename;
+  item_class->translate_desc = _("Move Layer Mask");
 }
 
 static void
