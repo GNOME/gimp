@@ -23,28 +23,28 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* 
+/*
  * Declare some local functions.
  */
 static void     query      (void);
-static void     run        (const gchar      *name, 
-                            gint              nparams, 
-                            const GimpParam  *param, 
-                            gint             *nreturn_vals, 
+static void     run        (const gchar      *name,
+                            gint              nparams,
+                            const GimpParam  *param,
+                            gint             *nreturn_vals,
                             GimpParam       **return_vals);
 static gboolean save_aa    (gint32            drawable_ID,
-                            gchar            *filename, 
+                            gchar            *filename,
                             gint              output_type);
-static void     gimp2aa    (gint32            drawable_ID, 
+static void     gimp2aa    (gint32            drawable_ID,
                             aa_context       *context);
 
 static gint     type_dialog                 (gint       selected);
-static void     type_dialog_toggle_update   (GtkWidget *widget, 
+static void     type_dialog_toggle_update   (GtkWidget *widget,
                                              gpointer   data);
-static void     type_dialog_cancel_callback (GtkWidget *widget, 
+static void     type_dialog_cancel_callback (GtkWidget *widget,
                                              gpointer   data);
 
-/* 
+/*
  * Some global variables.
  */
 
@@ -64,7 +64,7 @@ static gint selected_type = 0;
 
 MAIN ()
 
-static void 
+static void
 query (void)
 {
   static GimpParamDef save_args[] =
@@ -100,7 +100,7 @@ query (void)
  * specified by string.
  * -1 means it wasn't found.
  */
-static gint 
+static gint
 get_type_from_string (const gchar *string)
 {
   gint type = 0;
@@ -118,10 +118,10 @@ get_type_from_string (const gchar *string)
   return type;
 }
 
-static void 
-run (const gchar      *name, 
-     gint              nparams, 
-     const GimpParam  *param, 
+static void
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
@@ -144,13 +144,13 @@ run (const gchar      *name,
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
 
-  /*  eventually export the image */ 
+  /*  eventually export the image */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init ("aa", FALSE);
-      export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
+      export = gimp_export_image (&image_ID, &drawable_ID, "AA",
 				  (GIMP_EXPORT_CAN_HANDLE_RGB  |
                                    GIMP_EXPORT_CAN_HANDLE_GRAY |
 				   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
@@ -165,14 +165,14 @@ run (const gchar      *name,
     }
 
   if (! (gimp_drawable_is_rgb (drawable_ID) ||
-         gimp_drawable_is_gray (drawable_ID))) 
+         gimp_drawable_is_gray (drawable_ID)))
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      switch (run_mode) 
+      switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  gimp_get_data ("file_aa_save", &output_type);
@@ -217,7 +217,7 @@ run (const gchar      *name,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_ID);  
+    gimp_image_delete (image_ID);
 
   values[0].data.d_status = status;
 }
@@ -254,7 +254,7 @@ save_aa (gint32  drawable_ID,
 }
 
 static void
-gimp2aa (gint32      drawable_ID, 
+gimp2aa (gint32      drawable_ID,
 	 aa_context *context)
 {
   GimpDrawable    *drawable;
@@ -274,35 +274,37 @@ gimp2aa (gint32      drawable_ID,
   height = aa_imgheight (context);
   bpp    = drawable->bpp;
 
-  gimp_pixel_rgn_init (&pixel_rgn, 
-                       drawable, 0, 0, width, height, 
+  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+
+  gimp_pixel_rgn_init (&pixel_rgn,
+                       drawable, 0, 0, width, height,
                        FALSE, FALSE);
 
   buffer = g_new (guchar, width * bpp);
 
-  for (y = 0; y < height; y++) 
+  for (y = 0; y < height; y++)
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, y, width);
 
       switch (bpp)
         {
         case 1:  /* GRAY */
-          for (x = 0, p = buffer; x < width; x++, p++) 
+          for (x = 0, p = buffer; x < width; x++, p++)
             aa_putpixel (context, x, y, *p);
           break;
 
         case 2:  /* GRAYA, blend over black */
-          for (x = 0, p = buffer; x < width; x++, p += 2) 
+          for (x = 0, p = buffer; x < width; x++, p += 2)
             aa_putpixel (context, x, y, (p[0] * (p[1] + 1)) >> 8);
           break;
-      
+
         case 3:  /* RGB */
-          for (x = 0, p = buffer; x < width; x++, p += 3) 
+          for (x = 0, p = buffer; x < width; x++, p += 3)
             aa_putpixel (context, x, y, INTENSITY (p[0], p[1], p[2]));
           break;
-          
+
         case 4:  /* RGBA, blend over black */
-          for (x = 0, p = buffer; x < width; x++, p += 4) 
+          for (x = 0, p = buffer; x < width; x++, p += 4)
             aa_putpixel (context, x, y,
                          ((guchar) INTENSITY (p[0], p[1], p[2]) * (p[3] + 1))
                          >> 8);
@@ -319,16 +321,16 @@ gimp2aa (gint32      drawable_ID,
   renderparams = aa_getrenderparams ();
   renderparams->dither = AA_FLOYD_S;
 
-  aa_render (context, renderparams, 0, 0, 
+  aa_render (context, renderparams, 0, 0,
 	     aa_scrwidth (context), aa_scrheight (context));
 }
 
-/* 
+/*
  * User Interface dialog thingie.
  */
 
-static gint 
-type_dialog (gint selected) 
+static gint
+type_dialog (gint selected)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
@@ -363,13 +365,13 @@ type_dialog (gint selected)
   toggle_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER(toggle_vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-  
+
   group = NULL;
   {
     aa_format **p = (aa_format **) aa_formats;
     gint current = 0;
 
-    while (*p != NULL) 
+    while (*p != NULL)
       {
 	toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
 	group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -382,7 +384,7 @@ type_dialog (gint selected)
 
 	if (current == selected)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
-	
+
 	p++;
 	current++;
       }
@@ -403,17 +405,17 @@ type_dialog (gint selected)
  * Callbacks for the dialog.
  */
 
-static void 
-type_dialog_cancel_callback (GtkWidget *widget, 
-			     gpointer   data) 
+static void
+type_dialog_cancel_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   selected_type = -1;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void 
-type_dialog_toggle_update (GtkWidget *widget, 
-			   gpointer   data) 
+static void
+type_dialog_toggle_update (GtkWidget *widget,
+			   gpointer   data)
 {
-  selected_type = get_type_from_string ((gchar *) data);
+  selected_type = get_type_from_string ((const gchar *) data);
 }
