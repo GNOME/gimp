@@ -109,11 +109,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -911,11 +906,14 @@ bumpmap_dialog (void)
   bmint.preview_width  = MIN (sel_width, PREVIEW_SIZE);
   bmint.preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  bmint.preview = preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (bmint.preview),
-                    bmint.preview_width, bmint.preview_height);
+  bmint.preview = preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (bmint.preview,
+                               bmint.preview_width,
+                               bmint.preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), bmint.preview);
   gtk_widget_show (bmint.preview);
+  g_signal_connect (bmint.preview, "size_allocate", 
+                    G_CALLBACK (dialog_update_preview), NULL);
 
   bmint.preview_adj_x =
     gtk_adjustment_new (0, 0, sel_width, 1, 10, bmint.preview_width);
@@ -1377,14 +1375,10 @@ dialog_new_bumpmap (gboolean init_offsets)
 static void
 dialog_update_preview (void)
 {
-  static guchar dest_row[PREVIEW_SIZE * 4];
-  static guchar preview_row[PREVIEW_SIZE * 3];
+  static guchar dest_row[PREVIEW_SIZE * PREVIEW_SIZE * 4];
 
-  guchar *check_row;
-  guchar  check;
   gint    xofs;
-  gint    x, y;
-  guchar *sp, *p;
+  gint    y;
 
   bumpmap_init_params (&bmint.params);
 
@@ -1403,7 +1397,7 @@ dialog_update_preview (void)
                       && ! bmvals.tiled) ? 1 : 0;
       gint islast = (y == (- bmvals.yofs - bmint.preview_yofs - sel_y1
                            + bmint.bm_height - 1) && ! bmvals.tiled) ? 1 : 0;
-      bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row,
+      bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row+4*PREVIEW_SIZE*y,
                    bmint.preview_width, 4, TRUE,
                    bmint.bm_rows[y + isfirst],
                    bmint.bm_rows[y + 1],
@@ -1415,34 +1409,11 @@ dialog_update_preview (void)
                         + bmint.bm_height),
                    &bmint.params);
 
-      /* Paint row */
-
-      sp = dest_row;
-      p  = preview_row;
-
-      if ((y / GIMP_CHECK_SIZE) & 1)
-        check_row = bmint.check_row_0;
-      else
-        check_row = bmint.check_row_1;
-
-      for (x = 0; x < bmint.preview_width; x++)
-        {
-          check = check_row[x];
-
-          p[0] = check + ((sp[0] - check) * sp[3]) / 255;
-          p[1] = check + ((sp[1] - check) * sp[3]) / 255;
-          p[2] = check + ((sp[2] - check) * sp[3]) / 255;
-
-          sp += 4;
-          p  += 3;
-        }
-
-      gtk_preview_draw_row (GTK_PREVIEW(bmint.preview),
-                            preview_row, 0, y, bmint.preview_width);
     }
-
-  gtk_widget_queue_draw (bmint.preview);
-  gdk_flush ();
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (bmint.preview), 0, 0,
+                          bmint.preview_width, bmint.preview_height,
+                          GIMP_RGBA_IMAGE, dest_row,
+                          bmint.preview_width * 4);
 }
 
 #define SWAP_ROWS(a, b, t) { t = a; a = b; b = t; }
