@@ -282,9 +282,6 @@ unsharp_mask (GDrawable *drawable,
   glong width, height;
   glong bytes;
   gint x1, y1, x2, y2;
-  gdouble* cmatrix = NULL;
-  gint cmatrix_length;
-  gdouble* ctable;
 
   /* Get the input */
   gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);

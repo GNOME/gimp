@@ -1,3 +1,7 @@
+Wed Feb 16 03:49:40 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/unsharp.c: removed warnings
+
 Wed Feb 16 03:08:10 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/interface.c: new default toolbox layout: 5x5 tools
