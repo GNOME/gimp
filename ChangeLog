@@ -1,3 +1,11 @@
+Fri Sep  4 17:48:42 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/psd/psd.c: Added the ability to load
+	Guides info from PSD files.
+
+	* app/gimage_cmds.c: Don't allow careless callers
+	to add Guides outside of the image boundaries.
+
 Tue Sep  1 18:32:39 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* gimptool.1: minor updates to the gimptool

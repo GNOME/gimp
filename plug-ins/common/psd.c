@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 1.9.9.9f (BETA)
+ * PSD Plugin version 2.0.0
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -11,7 +11,6 @@
  *
  *          Copyright (C) 1997-98 Adam D. Moss
  *          Copyright (C) 1996    Torsten Martinsen
- * Portions Copyright (C) 1995    Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +34,10 @@
 
 /*
  * Revision history:
+ *
+ *  98.09.04 / v2.0.0 / Adam D. Moss
+ *       Now recognises and loads the new Guides extensions written
+ *       by Photoshop 4 and 5.
  *
  *  98.07.31 / v1.9.9.9f / Adam D. Moss
  *       Use OVERLAY_MODE if available.
@@ -114,6 +117,9 @@
 /* the max number of channels that this plugin should let a layer have */
 #define MAX_CHANNELS 30
 
+/* the max number of guides that this plugin should let an image have */
+#define MAX_GUIDES 200
+
 /* *** END OF DEFINES *** */
 
 
@@ -124,6 +130,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include <glib.h>
 #include "libgimp/gimp.h"
 
@@ -183,6 +190,14 @@ typedef struct PsdChannel
 
 
 
+typedef struct PsdGuide
+{
+  gboolean horizontal; /* else vertical */
+  gint position;
+} PSDguide;
+
+
+
 typedef struct PsdLayer
 {
   gint num_channels;
@@ -225,6 +240,9 @@ typedef struct PsdImage
 
   guint num_aux_channels;
   PSDchannel aux_channel[MAX_CHANNELS];
+
+  guint num_guides;
+  PSDguide guides[MAX_GUIDES];
 
   gchar *caption;
 
@@ -317,44 +335,19 @@ query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
-  /*  static GParamDef save_args[] =
-  {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
-    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
-  };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);*/
-
   gimp_install_procedure ("file_psd_load",
                           "loads files of the Photoshop(tm) PSD file format",
-                          "FIXME: write help for psd_load",
+                          "This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
                           "Adam D. Moss & Torsten Martinsen",
                           "Adam D. Moss & Torsten Martinsen",
-                          "1996-1997",
+                          "1996-1998",
                           "<Load>/PSD",
 			  NULL,
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  /*  gimp_install_procedure ("file_psd_save",
-                          "saves files in the Photoshop(tm) PSD file format",
-                          "FIXME: write help for psd_save",
-                          "Adam D. Moss & Torsten Martinsen",
-                          "Adam D. Moss & Torsten Martinsen",
-                          "1996-1997",
-                          "<Save>/PSD",
-			  "RGB, GRAY, INDEXED",
-                          PROC_PLUG_IN,
-                          nsave_args, 0,
-                          save_args, NULL);*/
-
   gimp_register_load_handler ("file_psd_load", "psd", "");
-  /*  gimp_register_save_handler ("file_psd_save", "psd", "");*/
 }
 
 
@@ -545,7 +538,7 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 		  if (slen > remaining)
 		    {
 		      IFDBG {printf("\nYay, a file bug.  "
-				    "Nice one Adobe(tm).  "
+				    "Yuck.  Photoshop 4/Mac?  "
 				    "I'll work around you.\n");fflush(stdout);}
 		      break;
 		    }
@@ -692,7 +685,76 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	throwchunk(Size, fd, "dispatch_res");
 	(*offset) += Size;
 	break;
+      case 0x0408:
+	{
+	  gint32 remaining = Size;
+	  int i;
+	  IFDBG printf ("\t\tGUIDE INFORMATION:\n");
+	  
+	  if (Size > 0)
+	    {
+	      glong magic1, magic2, magic3;
+	      glong num_guides;
 
+	      magic1 = getglong(fd, "guide");
+	      (*offset) += 4;
+	      magic2 = getglong(fd, "guide");
+	      (*offset) += 4;
+	      magic3 = getglong(fd, "guide");
+	      (*offset) += 4;
+	      remaining -= 12;
+
+	      IFDBG printf("\t\t\tMagic: %ld %ld %ld\n",
+			   magic1, magic2, magic3);
+	      IFDBG printf("\t\t\tMagic: %lx %lx %lx\n",
+			   magic1, magic2, magic3);
+
+	      num_guides = getglong(fd, "guide");
+	      (*offset) += 4; remaining -= 4;
+
+	      if (remaining != num_guides*5)
+		{
+		  IFDBG printf ("** FUNNY AMOUNT OF GUIDE DATA (%d)\n",
+				remaining);
+		  goto funny_amount_of_guide_data;
+		}
+
+	      IFDBG printf("\t\t\tNumber of guides is %ld\n", num_guides);
+	      if (num_guides > MAX_GUIDES)
+		{
+		  g_message ("Sorry, this image has too many Guides.  "
+			     "Tell Adam!\n");
+		  gimp_quit();
+		}
+	      psd_image.num_guides = num_guides;
+
+	      for (i=0; i<num_guides; i++)
+		{
+		  psd_image.guides[i].position = getglong(fd, "guide");
+		  /* FIXME: not 32 -- magic enum/denom!? */
+		  psd_image.guides[i].position =
+		    rint((double)psd_image.guides[i].position/(double)32.0);
+
+		  psd_image.guides[i].horizontal = (1==getguchar(fd, "guide"));
+		  (*offset) += 5; remaining -= 5;
+
+		  IFDBG printf("\t\t\tGuide %d at %d, %s\n", i+1,
+			       psd_image.guides[i].position,
+			       psd_image.guides[i].horizontal ? "horizontal" :
+			       "vertical");
+		}
+	    }
+
+	funny_amount_of_guide_data:
+	  
+	  if (remaining)
+	    {
+	      IFDBG printf ("** GUIDE INFORMATION DROSS: ");
+	      dumpchunk(remaining, fd, "dispatch_res");
+	      (*offset) += remaining;
+	    }
+	}
+	break;
       case 0x03e9:
       case 0x03ed:
       case 0x03f1:
@@ -1000,7 +1062,6 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 	    {
 	    case 0: /* raw data */
 	      {
-		/* FIXME: only lightly tested */
 		gint linei;
 		    
 		for (linei=0;
@@ -2004,6 +2065,20 @@ load_image(char *name)
 	g_free(psd_image.colmapdata);
     }
 
+  if (psd_image.num_guides > 0)
+    {
+      int i;
+
+      IFDBG printf("--- Adding %d Guides\n", psd_image.num_guides);
+
+      for (i=0; i<psd_image.num_guides; i++)
+	{
+	  if (psd_image.guides[i].horizontal)
+	    gimp_image_add_hguide (image_ID, psd_image.guides[i].position);
+	  else
+	    gimp_image_add_vguide (image_ID, psd_image.guides[i].position);
+	}
+    }
 
   gimp_displays_flush();
 
@@ -2433,6 +2508,7 @@ read_whole_file(FILE * fd)
     psd_image.type = PSDheader.mode;
     psd_image.colmaplen = 0;
     psd_image.num_aux_channels = 0;
+    psd_image.num_guides = 0;
 
 
     psd_image.colmaplen = getglong(fd, "color data length");

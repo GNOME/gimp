@@ -3604,6 +3604,12 @@ gimp_image_add_hguide_invoker (Argument *args)
   if (success)
     {
       offset = args[1].value.pdb_int;
+      if ((offset >= gimage->height) || (offset <= 0))
+	success = FALSE;
+    }
+
+  if (success)
+    {
       guide = gimp_image_add_hguide ((void *) gimage);
       guide->position = offset;
     }
@@ -3687,6 +3693,12 @@ gimp_image_add_vguide_invoker (Argument *args)
   if (success)
     {
       offset = args[1].value.pdb_int;
+      if ((offset >= gimage->width) || (offset <= 0))
+	success = FALSE;
+    }
+
+  if (success)
+    {
       guide = gimp_image_add_vguide ((void *) gimage);
       guide->position = offset;
     }
