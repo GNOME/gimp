@@ -520,7 +520,7 @@ ToolInfo tool_info[] =
     26,
     N_("/Tools/Path"),
     "",
-    (char **) measure_bits,
+    (char **) path_tool_bits,
     N_("Manipulate paths"),
     "ContextHelp/path",
     PATH_TOOL,

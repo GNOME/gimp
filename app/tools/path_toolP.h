@@ -40,33 +40,35 @@ typedef enum { SEGMENT_LINE, SEGMENT_BEZIER } SegmentType;
 
 
 typedef struct _path_segment PathSegment;
+typedef struct _path_curve PathCurve;
+typedef struct _path Path;
+
+typedef struct _path_tool PathTool;
 
 struct _path_segment
 {
    SegmentType type;          /* What type of segment */
    gdouble x, y;              /* location of starting-point in image space  */
+   gpointer data;             /* Additional data, dependant of segment-type */
    
    guint32 flags;             /* Various Flags: Is the Segment active? */
 
+   PathCurve *parent;         /* the parent Curve */
    PathSegment *next;         /* Next Segment or NULL */
    PathSegment *prev;         /* Previous Segment or NULL */
 
-   gpointer data;             /* Additional data, dependant of segment-type */
 };
 
-
-typedef struct _path_curve PathCurve;
 
 struct _path_curve
 {
    PathSegment * segments;    /* The segments of the curve */
    PathSegment * cur_segment; /* the current segment */
+   Path * parent;             /* the parent Path */
    PathCurve * next;          /* Next Curve or NULL */
    PathCurve * prev;          /* Previous Curve or NULL */
 };
 
-
-typedef struct _path Path;
 
 struct _path
 {
@@ -74,10 +76,9 @@ struct _path
    PathCurve * cur_curve;     /* the current curve */
    GString * name;            /* the name of the path */
    guint32 state;             /* is the path locked? */
+   PathTool * path_tool;      /* The parent Path Tool */
 };
 
-
-typedef struct _path_tool PathTool;
 
 struct _path_tool
 {
@@ -89,6 +90,14 @@ struct _path_tool
    Path *click_path;          /* On which Path/Curve/Segment       */
    PathCurve *click_curve;    /* was the click?                    */
    PathSegment *click_segment;
+
+   gint active_count;         /* How many segments are active?     */
+   /*
+    * WARNING: single_active_segment may contain non NULL Values
+    * which point to the nirvana. But they are important!
+    * The pointer is garantueed to be valid, when active_count==1
+    */
+   PathSegment *single_active_segment;  /* The only active segment */
 
    gint state;                /* state of tool                     */
    gint draw;                 /* all or part                       */

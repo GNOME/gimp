@@ -1,3 +1,16 @@
+Wed Sep 15 12:43:39 MEST 1999 Simon Budig <Simon.Budig@unix-ag.org>
+
+	* app/tools.c
+	* app/pixmaps2.h
+	* app/path_tool.c
+	* app/path_toolP.h
+
+	Own pixmap for the Path Tool. It is now possible to connect
+	open ends of curves. Simply activate one end and shift click
+	on the other. Control-Click deletes points.
+
+	Still no bezier/painting functions...
+
 1999-09-14  Tor Lillqvist  <tml@iki.fi>
 
 	* app/brush_select.c: Include config.h, guard inclusion of
