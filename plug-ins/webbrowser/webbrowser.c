@@ -29,6 +29,7 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -44,9 +45,12 @@
 #include <X11/Xlib.h>
 #include <X11/Xmu/WinUtil.h>	/* for XmuClientWindow() */
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Browser program name -- start in case it's not already running */
 #define BROWSER_PROGNAME	"netscape"
@@ -55,65 +59,67 @@
 #define OPEN_URL_NEW_WINDOW	1
 #define OPEN_URL_CURRENT_WINDOW	0
 
+#define URL_BUF_SIZE 255
+
+
 static void query (void);
-static void run (char *name,
-		 int nparams,
-		 GParam * param,
-		 int *nreturn_vals,
-		 GParam ** return_vals);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
+static gint open_url_dialog     (void);
+static void ok_callback         (GtkWidget *widget,
+				 gpointer   data);
+static void about_callback      (GtkWidget *widget,
+				 gpointer   data);
+static void new_window_callback (GtkWidget *widget,
+				 gpointer   data);
+static void url_callback        (GtkWidget *widget,
+				 gpointer   data);
 
-static gint open_url_dialog ();
-static void close_callback (GtkWidget * widget, gpointer data);
-static void ok_callback (GtkWidget * widget, gpointer data);
-static void about_callback (GtkWidget * widget, gpointer data);
-static void new_window_callback (GtkWidget * widget, gpointer data);
+static gint open_url            (gchar     *url,
+				 gint       new_window);
+static gint mozilla_remote      (gchar     *command);
 
-static void url_callback (GtkWidget * widget, gpointer data);
-static gint open_url (char *url, int new_window);
-static int mozilla_remote (char *command);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
-
 
 typedef struct
-  {
-    char url[255];
-    int  new_window;
-  }
-u_info;
+{
+  gchar url[URL_BUF_SIZE];
+  gint  new_window;
+} u_info;
 
-static u_info url_info = {
-  "http://www.gimp.org/",	/* Default URL */
-  OPEN_URL_NEW_WINDOW,		/* Change to ...CURRENT_WINDOW if
-				   you prefer that as the default */
+static u_info url_info =
+{
+  "http://www.gimp.org/",  /* Default URL */
+  OPEN_URL_NEW_WINDOW,     /* Change to ...CURRENT_WINDOW if
+			    * you prefer that as the default
+			    */
 };
 
-static int run_flag = 0;
+static gboolean run_flag = FALSE;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
-
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_STRING, "url", "URL of a document to open"},
-    {PARAM_INT32,  "new_window", "Create a new window or use existing one?"},
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_STRING, "url", "URL of a document to open" },
+    { PARAM_INT32,  "new_window", "Create a new window or use existing one?" },
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("extension_web_browser",
 			  "open URL in Netscape",
@@ -124,17 +130,16 @@ query ()
 			  N_("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
 			  PROC_EXTENSION,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
-
 static void
-run (char *name,
-     int nparams,
-     GParam * param,
-     int *nreturn_vals,
-     GParam ** return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GRunModeType run_mode;
@@ -146,7 +151,7 @@ run (char *name,
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   if (strcmp (name, "extension_web_browser") == 0)
     {
@@ -164,10 +169,12 @@ run (char *name,
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 3)
-	    status = STATUS_CALLING_ERROR;
-	  if(status == STATUS_SUCCESS)
 	    {
-	      strncpy (url_info.url, param[1].data.d_string, 255);
+	      status = STATUS_CALLING_ERROR;
+	    }
+	  else
+	    {
+	      strncpy (url_info.url, param[1].data.d_string, URL_BUF_SIZE);
 	      url_info.new_window = param[2].data.d_int32;
 	    }
 	  break;
@@ -175,7 +182,7 @@ run (char *name,
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("extension_web_browser", &url_info);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -198,56 +205,55 @@ run (char *name,
 }
 
 static gint
-start_browser (char *prog, char *url)
+start_browser (gchar *prog,
+	       gchar *url)
 {
 #ifndef __EMX__
-    pid_t cpid;
+  pid_t cpid;
 
-    if ((cpid = fork()) == 0)
+  if ((cpid = fork()) == 0)
     {
-	execlp (prog, prog, url, NULL);
-	exit (1);
+      execlp (prog, prog, url, NULL);
+      exit (1);
     }
 
-    return (cpid > 0);
+  return (cpid > 0);
 #else
-    return (spawnlp(P_NOWAIT, prog, prog, url, NULL) != -1);
+  return (spawnlp (P_NOWAIT, prog, prog, url, NULL) != -1);
 #endif
 }
 
 static gint
-open_url (char *url, int new_window)
+open_url (gchar *url,
+	  gint   new_window)
 {
-    char buf[512];
+  gchar buf[512];
 
-    while (isspace (*url))
-	++url;
+  while (isspace (*url))
+    ++url;
 
-    sprintf (buf, "openURL(%s%s)", url, new_window ? ",new-window" : "");
+  sprintf (buf, "openURL(%s%s)", url, new_window ? ",new-window" : "");
 
-    if (mozilla_remote (buf))
-	return (TRUE);
+  if (mozilla_remote (buf))
+    return (TRUE);
 
-    return (start_browser (BROWSER_PROGNAME, url));
+  return (start_browser (BROWSER_PROGNAME, url));
 }
 
 
 static gint
-open_url_dialog ()
+open_url_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
+  GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *button1;
-  GtkWidget *button2;
-  GSList *group;
+  GSList    *group;
 
-  gint argc;
+  gint    argc;
   gchar **argv;
-  gchar buffer[256];
+  gchar   buffer[256];
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -256,167 +262,110 @@ open_url_dialog ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Open URL"));
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
+  dlg = gimp_dialog_new (_("Open URL"), "webbbrowser",
+			 gimp_plugin_help_func, "filters/webbrowser.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-  
-  button = gtk_button_new_with_label (_("About"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) about_callback,
-		     dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-    
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-  
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-	
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-  
+			 _("About"), about_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("OK"), ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
   /* table */
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
-
-  /*  URL:  Label */
-  label = gtk_label_new (_("URL:"));
-  gtk_table_attach (GTK_TABLE (table), label,
-		    0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0);
-  gtk_widget_show (label);
-
-  /* URL: dialog */
+  /* URL */
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 3, 0, 1, 
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0);
   gtk_widget_set_usize (entry, 200, 0);
-  sprintf (buffer, "%s", url_info.url);
+  g_snprintf (buffer, sizeof (buffer), "%s", url_info.url);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("URL:"), 1.0, 0.5,
+			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) url_callback, &url_info.url);
+		      GTK_SIGNAL_FUNC (url_callback),
+		      &url_info.url);
   gtk_widget_show (entry);
 
-  /* Window label */
-  label = gtk_label_new (_("Window:"));
-  gtk_table_attach( GTK_TABLE (table), label ,
-		    0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0);
-  gtk_widget_show(label);
+  /* Window */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Window:"), 1.0, 0.5,
+			     hbox, 1, FALSE);
 
-  /* Window radiobutton */
-  button1 = gtk_radio_button_new_with_label( NULL, _("New"));
-  group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
-  button2 = gtk_radio_button_new_with_label( group, _("Current"));
-  if( url_info.new_window == OPEN_URL_NEW_WINDOW ) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button1),TRUE);
-  } else {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button2),TRUE);
-  }
-  gtk_signal_connect (GTK_OBJECT (button1), "toggled",
-		      (GtkSignalFunc) new_window_callback,
-		      (gpointer) "new" );
-  gtk_signal_connect (GTK_OBJECT (button2), "toggled",
-		      (GtkSignalFunc) new_window_callback,
-		      (gpointer) "current" );
+  button = gtk_radio_button_new_with_label (NULL, _("New"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  if (url_info.new_window == OPEN_URL_NEW_WINDOW)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (new_window_callback),
+		      (gpointer) OPEN_URL_NEW_WINDOW);
+  gtk_widget_show (button);
 
-  gtk_table_attach( GTK_TABLE (table), button1,
-		    1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, 
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0 );
-  gtk_widget_show( button1 );
-
-  gtk_table_attach( GTK_TABLE (table), button2,
-		    2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL,
-		    GTK_EXPAND | GTK_FILL,
-		    0, 0 );
-  gtk_widget_show( button2 );
-
+  button = gtk_radio_button_new_with_label (group, _("Current"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  if (url_info.new_window == OPEN_URL_CURRENT_WINDOW)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (new_window_callback),
+		      (gpointer) OPEN_URL_CURRENT_WINDOW);
+  gtk_widget_show (button);
 
   gtk_widget_show (dlg);
+
   gtk_main ();
   gdk_flush ();
+
   return run_flag;
-
-}
-
-
-static void
-close_callback (GtkWidget * widget, gpointer data)
-{
-  gtk_main_quit ();
 }
 
 static void
-ok_callback (GtkWidget * widget, gpointer data)
+ok_callback (GtkWidget *widget,
+	     gpointer   data)
 {
-  run_flag = 1;
+  run_flag = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
-about_callback (GtkWidget * widget, gpointer data)
+about_callback (GtkWidget *widget,
+		gpointer   data)
 {
-  open_url ("http://www.xcf.berkeley.edu/~misha/gimp/", 1);
+  open_url ("http://www.xcf.berkeley.edu/~misha/gimp/", OPEN_URL_NEW_WINDOW);
 }
 
 static void
-new_window_callback (GtkWidget * widget, gpointer data)
+new_window_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-    /* Ignore the toggle-off signal, we are only interested in
-       what is being set */
-    if( ! GTK_TOGGLE_BUTTON( widget )->active ) {
-	return;
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      url_info.new_window = (gint) data;
     }
-    if(strcmp (data, "new") == 0)
-	url_info.new_window = OPEN_URL_NEW_WINDOW;
-    if(strcmp (data, "current") == 0)
-	url_info.new_window = OPEN_URL_CURRENT_WINDOW;
 }
 
 static void
-url_callback (GtkWidget * widget, gpointer data)
+url_callback (GtkWidget *widget,
+	      gpointer   data)
 {
-  strncpy (url_info.url, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
+  strncpy (url_info.url, gtk_entry_get_text (GTK_ENTRY (widget)), URL_BUF_SIZE);
 }
 
 /* -*- Mode:C; tab-width: 8 -*-

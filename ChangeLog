@@ -1,3 +1,8 @@
+2000-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/webbrowser/webbrowser.c: use the ui stuff from libgimp.
+
 2000-03-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/dbbrowser/doc/doc: removed obsolete installation 
