@@ -64,6 +64,7 @@ static char *scroll_text[] =
   "Karl LaRocca",
   "Jens Lautenbacher",
   "Laramie Leavitt",
+  "Elliot Lee",
   "Raph Levien",
   "Adrian Likins",
   "Ingo Luetkebohle",
@@ -199,6 +200,10 @@ about_dialog_create (int timeout)
       gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
+
+      label = gtk_label_new ("Please visit http://www.gimp.org/ for more info");
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
+      gtk_widget_show (label);
 
       gtk_widget_realize (scroll_area);
       gdk_window_set_background (scroll_area->window, &scroll_area->style->white);
