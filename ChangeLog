@@ -1,3 +1,18 @@
+2004-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.[ch]
+	(gimp_drawable_transform_flip): renamed "center" to "auto_center".
+
+	(gimp_drawable_transform_rotate): added missing parameters so it
+	can be used for a to-be-added PDB wrapper offering a
+	GimpRotationType based rotate API.
+
+	Both functions: always clip when transforming a whole channel,
+	since they must keep their size.
+
+	(gimp_drawable_transform_affine): actually forward the passed
+	"clip_result" to transform_tiles_affine() instead of always FALSE.
+
 2004-11-01  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/pdb/color_cmds.c
