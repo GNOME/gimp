@@ -1882,7 +1882,11 @@ save_image (const gchar *filename,
     }
   if (alpha)
     {
-      extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
+      if (tsvals.save_transp_pixels)
+        extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
+      else
+        extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
+      
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
     }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
