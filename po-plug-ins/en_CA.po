@@ -6216,7 +6216,7 @@ msgstr "Smooth samples"
 
 #: ../plug-ins/common/sample_colorize.c:2638
 msgid "Sample Analyze..."
-msgstr "Sample Analyze..."
+msgstr "Sample Analyse..."
 
 #: ../plug-ins/common/sample_colorize.c:3008
 msgid "Remap Colorized..."
