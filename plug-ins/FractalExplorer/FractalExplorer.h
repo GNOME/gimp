@@ -161,8 +161,6 @@ typedef struct _fractalexplorerListOptions
 #define gradient_GRADIENTEDITOR  0x2
 
 extern fractalexplorerOBJ *current_obj;
-extern fractalexplorerOBJ *pic_obj;
-extern GtkWidget          *delete_dialog;
 
 GtkWidget * add_objects_list (void);
 
@@ -178,65 +176,20 @@ extern gdouble      xbild;
 extern gdouble      ybild;
 extern gdouble      xdiff;
 extern gdouble      ydiff;
-extern gdouble      x_press;
-extern gdouble      y_press;
-extern gdouble      x_release;
-extern gdouble      y_release;
-extern gfloat       cx;
-extern gfloat       cy;
-extern GimpDrawable   *drawable;
-extern gint         tile_width,
-                    tile_height;
-extern gint         img_width,
-                    img_height,
-                    img_bpp;
 extern gint         sel_x1,
                     sel_y1,
                     sel_x2,
                     sel_y2;
-extern gint         sel_width,
-                    sel_height;
 extern gint         preview_width,
                     preview_height;
-extern GimpTile       *the_tile;
-extern double       cen_x,
-                    cen_y;
-extern double       xpos,
-                    ypos,
-                    oldxpos,
-                    oldypos;
-extern GtkWidget   *maindlg;
-extern GtkWidget   *logodlg;
-extern GtkWidget   *cmap_preview;
-extern GtkWidget   *delete_frame_to_freeze;
-extern GtkWidget   *fractalexplorer_gtk_list;
-extern GtkWidget   *save_menu_item;
-extern GtkWidget   *fractalexplorer_op_menu;
-extern GdkCursor   *MyCursor;
-extern int          ready_now;
-extern explorer_vals_t
-                    zooms[100];
-extern DialogElements
-                   *elements;
-extern int          zoomindex;
-extern int          zoommax;
 extern gdouble     *gg;
 extern int          line_no;
 extern gchar       *filename;
 extern clrmap       colormap;
 extern gchar       *fractalexplorer_path;
-extern GList	   *fractalexplorer_list;
-extern GList	   *gradient_list;
-extern gchar 	   *tpath;
-extern fractalexplorerOBJ
-                   *fractalexplorer_obj_for_menu;
-extern GList       *rescan_list;
-extern int 	    lng;
 
 extern explorer_interface_t wint;
 
 extern explorer_vals_t wvals;
-
-extern explorer_vals_t standardvals;
 
 #endif

@@ -15,32 +15,63 @@
 
 #include "FractalExplorer.h"
 #include "Dialogs.h"
-#include "Events.h"
 
 #include "logo.h"
 
 #include "libgimp/stdplugins-intl.h"
 
+static gdouble 		*gradient_samples = NULL;
+static gchar   		*gradient_name    = NULL;
+static gboolean          ready_now = FALSE;
+static gchar 		*tpath = NULL;
+static DialogElements   *elements = NULL;
+static GtkWidget        *cmap_preview;
+static GtkWidget        *maindlg;
 
-#if 0 //def G_OS_WIN32
-#  include <io.h>
-#  ifndef W_OK
-#    define W_OK 2
-#  endif
-#  ifndef S_ISDIR
-#    define S_ISDIR(m) ((m) & _S_IFDIR)
-#  endif
-#  ifndef S_ISREG
-#    define S_ISREG(m) ((m) & _S_IFREG)
-#  endif
-#endif
+static explorer_vals_t	zooms[100];
+static gint          	zoomindex = 1;
+static gint          	zoommax = 1;
 
-static gdouble *gradient_samples = NULL;
-static gchar   *gradient_name    = NULL;
+static gint 		 oldxpos = -1;
+static gint 		 oldypos = -1;
+static GdkCursor	*MyCursor;
+static gdouble           x_press = -1.0;
+static gdouble           y_press = -1.0;
+
+static explorer_vals_t standardvals =
+{
+  0,
+  -2.0,
+  2.0,
+  -1.5,
+  1.5,
+  50.0,
+  -0.75,
+  -0.2,
+  0,
+  1.0,
+  1.0,
+  1.0,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  256,
+  0
+};
 
 /**********************************************************************
  FORWARD DECLARATIONS
  *********************************************************************/
+
+static void load_file_selection_ok     (GtkWidget          *widget,
+					GtkFileSelection   *fs,
+					gpointer            data);
+static void create_load_file_selection (void);
+static void create_file_selection      (void);
 
 static void explorer_logo_dialog (void);
 
@@ -247,6 +278,177 @@ explorer_gradient_select_callback (const gchar   *name,
     }
 }
 
+static void
+preview_draw_crosshair (gint px, gint py)
+{
+  gint     x, y;
+  guchar  *p_ul;
+
+  p_ul = wint.wimage + 3 * (preview_width * py + 0);
+  
+  for (x = 0; x < preview_width; x++)
+    {
+      p_ul[0] ^= 254;
+      p_ul[1] ^= 254;
+      p_ul[2] ^= 254;
+      p_ul += 3;
+    }
+  
+  p_ul = wint.wimage + 3 * (preview_width * 0 + px);
+  
+  for (y = 0; y < preview_height; y++)
+    {
+      p_ul[0] ^= 254;
+      p_ul[1] ^= 254;
+      p_ul[2] ^= 254;
+      p_ul += 3 * preview_width;
+    }
+}
+
+static void
+preview_redraw (void)
+{
+  gint	   y;
+  guchar  *p;
+
+  p = wint.wimage;
+
+  for (y = 0; y < preview_height; y++)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p,
+			    0, y, preview_width);
+      p += preview_width * 3;
+    }
+  
+  gtk_widget_queue_draw (wint.preview);
+}
+
+static gboolean
+preview_button_press_event (GtkWidget      *widget,
+			    GdkEventButton *event)
+{
+  if (event->button == 1)
+    {
+      x_press = event->x;
+      y_press = event->y;
+      xbild = preview_width;
+      ybild = preview_height;
+      xdiff = (xmax - xmin) / xbild;
+      ydiff = (ymax - ymin) / ybild;
+
+      preview_draw_crosshair (x_press, y_press);
+      preview_redraw ();
+    }
+  return TRUE;
+}
+
+static gboolean
+preview_motion_notify_event (GtkWidget      *widget,
+			     GdkEventButton *event)
+{
+  if (oldypos != -1)
+    {
+      preview_draw_crosshair (oldxpos, oldypos);
+    }
+
+  oldxpos = event->x;
+  oldypos = event->y;
+
+  if ((oldxpos >= 0.0) &&
+      (oldypos >= 0.0) &&
+      (oldxpos < preview_width) &&
+      (oldypos < preview_height))
+    {
+      preview_draw_crosshair (oldxpos, oldypos);
+    }
+  else
+    {
+      oldypos = -1;
+      oldxpos = -1;
+    }
+
+  preview_redraw ();
+
+  return TRUE;
+}
+
+static gboolean
+preview_leave_notify_event (GtkWidget      *widget,
+			    GdkEventButton *event)
+{
+  if (oldypos != -1)
+    {
+      preview_draw_crosshair (oldxpos, oldypos);
+    }
+  oldxpos = -1;
+  oldypos = -1;
+
+  preview_redraw ();
+
+  MyCursor = gdk_cursor_new (GDK_TOP_LEFT_ARROW);
+  gdk_window_set_cursor (maindlg->window, MyCursor);
+
+  return TRUE;
+}
+
+static gboolean
+preview_enter_notify_event (GtkWidget      *widget,
+			    GdkEventButton *event)
+{
+  MyCursor = gdk_cursor_new (GDK_TCROSS);
+  gdk_window_set_cursor (maindlg->window, MyCursor);
+
+  return TRUE;
+}
+
+static gboolean
+preview_button_release_event (GtkWidget      *widget,
+			      GdkEventButton *event)
+{
+  gdouble l_xmin;
+  gdouble l_xmax;
+  gdouble l_ymin;
+  gdouble l_ymax;
+
+  if (event->button == 1)
+    {
+      gdouble x_release, y_release;
+
+      x_release = event->x;
+      y_release = event->y;
+
+      if ((x_press >= 0.0) && (y_press >= 0.0) &&
+	  (x_release >= 0.0) && (y_release >= 0.0) &&
+	  (x_press < preview_width) && (y_press < preview_height) &&
+	  (x_release < preview_width) && (y_release < preview_height))
+	{
+	  l_xmin = (wvals.xmin +
+		    (wvals.xmax - wvals.xmin) * (x_press / preview_width));
+	  l_xmax = (wvals.xmin +
+		    (wvals.xmax - wvals.xmin) * (x_release / preview_width));
+	  l_ymin = (wvals.ymin +
+		    (wvals.ymax - wvals.ymin) * (y_press / preview_height));
+	  l_ymax = (wvals.ymin +
+		    (wvals.ymax - wvals.ymin) * (y_release / preview_height));
+
+	  zooms[zoomindex] = wvals;
+	  zoomindex++;
+	  if (zoomindex > 99)
+	    zoomindex = 99;
+	  zoommax = zoomindex;
+	  wvals.xmin = l_xmin;
+	  wvals.xmax = l_xmax;
+	  wvals.ymin = l_ymin;
+	  wvals.ymax = l_ymax;
+	  dialog_change_scale ();
+	  dialog_update_preview ();
+	  oldypos = oldxpos = -1;
+	}
+    }
+
+  return TRUE;
+}
+
 /**********************************************************************
  FUNCTION: explorer_dialog
  *********************************************************************/
@@ -285,17 +487,16 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new ("Fractal Explorer <Daniel Cotting/cotting@multimania.com>",
-		     "fractalexplorer",
+    gimp_dialog_new ("Fractal Explorer", "fractalexplorer",
 		     gimp_standard_help_func, "filters/fractalexplorer.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
-
 		     _("About"), explorer_logo_dialog,
 		     NULL, NULL, NULL, FALSE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
 
 		     GTK_STOCK_OK, dialog_ok_callback,
 		     NULL, NULL, NULL, TRUE, FALSE,
@@ -438,7 +639,7 @@ explorer_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("Parameters")));
+			    gtk_label_new_with_mnemonic (_("_Parameters")));
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (_("Fractal Parameters"));
@@ -642,7 +843,7 @@ explorer_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("Colors")));
+			    gtk_label_new_with_mnemonic (_("Co_lors")));
   gtk_widget_show (vbox);
 
   /*  Number of Colors frame  */
@@ -659,7 +860,7 @@ explorer_dialog (void)
 
   elements->ncol =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Number of Colors:"), SCALE_WIDTH, 0,
+			  _("Number of colors:"), SCALE_WIDTH, 0,
 			  wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
 			  TRUE, 0, 0,
 			  _("Change the number of colors in the mapping"),
@@ -669,7 +870,7 @@ explorer_dialog (void)
                     &wvals.ncolors);
 
   elements->useloglog = toggle =
-    gtk_check_button_new_with_label (_("Use loglog Smoothing"));
+    gtk_check_button_new_with_label (_("Use loglog smoothing"));
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 1, 2);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
@@ -868,7 +1069,7 @@ explorer_dialog (void)
   gtk_widget_show (toggle_vbox);
 
   toggle = elements->colormode[0] =
-    gtk_radio_button_new_with_label (group, _("As Specified above"));
+    gtk_radio_button_new_with_label (group, _("As specified above"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -890,7 +1091,7 @@ explorer_dialog (void)
 
   toggle = elements->colormode[1] =
     gtk_radio_button_new_with_label (group,
-				     _("Apply Active Gradient to Final Image"));
+				     _("Apply active gradient to final image"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -940,16 +1141,10 @@ explorer_dialog (void)
 
   frame = add_objects_list ();
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-			    gtk_label_new (_("Fractals")));
+			    gtk_label_new_with_mnemonic (_("_Fractals")));
   gtk_widget_show (frame);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
-
-  /* Done */
-
-  /* Popup for list area: Not yet fully implemented
-     fractalexplorer_op_menu_create(maindlg);
-  */
 
   gtk_widget_show (dialog);
   ready_now = TRUE;
@@ -960,16 +1155,11 @@ explorer_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  if (the_tile != NULL)
-    {
-      gimp_tile_unref (the_tile, FALSE);
-      the_tile = NULL;
-    }
-
   g_free (wint.wimage);
 
   return wint.run;
 }
+
 
 /**********************************************************************
  FUNCTION: dialog_update_preview
@@ -992,7 +1182,6 @@ dialog_update_preview (void)
   gint     ycoord;
   gint     iteration;
   guchar  *p_ul;
-  guchar  *p;
   gdouble  a;
   gdouble  b;
   gdouble  x;
@@ -1016,7 +1205,7 @@ dialog_update_preview (void)
   if (NULL == wint.preview)
     return;
 
-  if ((ready_now) && (wvals.alwayspreview))
+  if (ready_now && wvals.alwayspreview)
     {
       left = sel_x1;
       right = sel_x2 - 1;
@@ -1193,16 +1382,7 @@ dialog_update_preview (void)
 	  py += 1;
 	} /* for */
 
-      p = wint.wimage;
-
-      for (y = 0; y < preview_height; y++)
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p,
-				0, y, preview_width);
-	  p += preview_width * 3;
-	}
-
-      gtk_widget_queue_draw (wint.preview);
+      preview_redraw ();
       gdk_flush ();
     }
 }
@@ -1379,6 +1559,7 @@ make_color_map (void)
 static void
 explorer_logo_dialog (void)
 {
+  static GtkWidget *logodlg;
   GtkWidget *xdlg;
   GtkWidget *xlabel = NULL;
   GtkWidget *xlogo_box;
@@ -1407,7 +1588,7 @@ explorer_logo_dialog (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, gtk_widget_destroy,
+		     GTK_STOCK_CLOSE, gtk_widget_destroy,
 		     NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);
@@ -1552,7 +1733,7 @@ dialog_change_scale (void)
  FUNCTION: save_options
  *********************************************************************/
 
-void
+static void
 save_options (FILE * fp)
 {
   /* Save options */
@@ -1580,11 +1761,7 @@ save_options (FILE * fp)
   fputs ("#**********************************************************************\n", fp);
 }
 
-/**********************************************************************
- FUNCTION: save_callback
- *********************************************************************/
-
-void
+static void
 save_callback (void)
 {
   FILE  *fp;
@@ -1617,11 +1794,7 @@ save_callback (void)
   fclose (fp);
 }
 
-/**********************************************************************
- FUNCTION: file_selection_ok
- *********************************************************************/
-
-void
+static void
 file_selection_ok (GtkWidget        *w,
 		   GtkFileSelection *fs,
 		   gpointer          data)
@@ -1649,11 +1822,7 @@ file_selection_ok (GtkWidget        *w,
   gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
-/**********************************************************************
- FUNCTION: load_file_selection_ok
-**********************************************************************/
-
-void
+static void
 load_file_selection_ok (GtkWidget        *w,
 			GtkFileSelection *fs,
 			gpointer          data)
@@ -1673,16 +1842,11 @@ load_file_selection_ok (GtkWidget        *w,
   dialog_update_preview ();
 }
 
-/**********************************************************************
- FUNCTION: create_load_file_selection
- *********************************************************************/
-
-void
+static void
 create_load_file_selection (void)
 {
   static GtkWidget *window = NULL;
 
-  /* Load a single object */
   if (!window)
     {
       window = gtk_file_selection_new (_("Load Fractal Parameters"));
@@ -1696,26 +1860,17 @@ create_load_file_selection (void)
                         "clicked",
                         G_CALLBACK (load_file_selection_ok),
                         window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->ok_button,
-			       _("Click here to load your file"), NULL);
 
       g_signal_connect_swapped (GTK_FILE_SELECTION (window)->cancel_button,
                                 "clicked",
                                 G_CALLBACK (gtk_widget_destroy),
                                 window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->cancel_button,
-			       _("Click here to cancel load procedure"), NULL);
     }
 
-  if (!GTK_WIDGET_VISIBLE (window))
-    gtk_widget_show (window);
+  gtk_widget_show (window);
 }
 
-/**********************************************************************
- FUNCTION: create_file_selection
- *********************************************************************/
-
-void
+static void
 create_file_selection (void)
 {
   static GtkWidget *window = NULL;
@@ -1733,15 +1888,11 @@ create_file_selection (void)
                         "clicked",
                         G_CALLBACK (file_selection_ok),
                         window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->ok_button,
-			       _("Click here to save your file"), NULL);
 
       g_signal_connect_swapped (GTK_FILE_SELECTION(window)->cancel_button,
                                 "clicked",
                                 G_CALLBACK (gtk_widget_destroy),
                                 window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->cancel_button,
-			       _("Click here to cancel save procedure"), NULL);
     }
 
   if (tpath)
@@ -1770,15 +1921,10 @@ create_file_selection (void)
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
     }
 
-  if (!GTK_WIDGET_VISIBLE (window))
-    gtk_widget_show (window);
+  gtk_widget_show (window);
 }
 
-/**********************************************************************
- FUNCTION: get_line
- *********************************************************************/
-
-gchar *
+gchar*
 get_line (gchar *buf,
 	  gint   s,
 	  FILE  *from,
@@ -1813,10 +1959,6 @@ get_line (gchar *buf,
   return ret;
 }
 
-/**********************************************************************
- FUNCTION: load_options
- *********************************************************************/
-
 gint
 load_options (fractalexplorerOBJ *xxx,
 	      FILE               *fp)
@@ -1826,26 +1968,7 @@ load_options (fractalexplorerOBJ *xxx,
   gchar opt_buf[MAX_LOAD_LINE];
 
   /*  default values  */
-  xxx->opts.fractaltype   =   0;
-  xxx->opts.xmin          =  -2.0;
-  xxx->opts.xmax          =   2.0;
-  xxx->opts.ymin          =  -1.5;
-  xxx->opts.ymax          =   1.5;
-  xxx->opts.iter          =  50.0;
-  xxx->opts.cx            =  -0.75;
-  xxx->opts.cy            =  -0.2;
-  xxx->opts.colormode     =   0;
-  xxx->opts.redstretch    =   1.0;
-  xxx->opts.greenstretch  =   1.0;
-  xxx->opts.bluestretch   =   1.0;
-  xxx->opts.redmode       =   1;
-  xxx->opts.greenmode     =   1;
-  xxx->opts.bluemode      =   1;
-  xxx->opts.redinvert     =   0;
-  xxx->opts.greeninvert   =   0;
-  xxx->opts.blueinvert    =   0;
-  xxx->opts.alwayspreview =   1;
-  xxx->opts.ncolors       = 256;  /*  not saved  */
+  xxx->opts = standardvals;
   xxx->opts.gradinvert    = FALSE;
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
@@ -1866,122 +1989,74 @@ load_options (fractalexplorerOBJ *xxx,
 	}
       else if (!strcmp (str_buf, "xmin:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.xmin = sp;
+	  xxx->opts.xmin = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp (str_buf, "xmax:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.xmax = sp;
+	  xxx->opts.xmax = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp(str_buf, "ymin:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.ymin = sp;
+	  xxx->opts.ymin = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp (str_buf, "ymax:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.ymax = sp;
+	  xxx->opts.ymax = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp(str_buf, "redstretch:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
+	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
 	  xxx->opts.redstretch = sp / 128.0;
 	}
       else if (!strcmp(str_buf, "greenstretch:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
+	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
 	  xxx->opts.greenstretch = sp / 128.0;
 	}
       else if (!strcmp (str_buf, "bluestretch:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
+	  gdouble sp = g_ascii_strtod (opt_buf, NULL);
 	  xxx->opts.bluestretch = sp / 128.0;
 	}
       else if (!strcmp (str_buf, "iter:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.iter = sp;
+	  xxx->opts.iter = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp(str_buf, "cx:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.cx = sp;
+	  xxx->opts.cx = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp (str_buf, "cy:"))
 	{
-	  gdouble sp = 0;
-
-	  sp = atof (opt_buf);
-	  xxx->opts.cy = sp;
+	  xxx->opts.cy = g_ascii_strtod (opt_buf, NULL);
 	}
       else if (!strcmp(str_buf, "redmode:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.redmode = sp;
+	  xxx->opts.redmode = atoi (opt_buf);
 	}
       else if (!strcmp(str_buf, "greenmode:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.greenmode = sp;
+	  xxx->opts.greenmode = atoi (opt_buf);
 	}
       else if (!strcmp(str_buf, "bluemode:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.bluemode = sp;
+	  xxx->opts.bluemode = atoi (opt_buf);
 	}
       else if (!strcmp (str_buf, "redinvert:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.redinvert = sp;
+	  xxx->opts.redinvert = atoi (opt_buf);
 	}
       else if (!strcmp (str_buf, "greeninvert:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.greeninvert = sp;
+	  xxx->opts.greeninvert = atoi (opt_buf);
 	}
       else if (!strcmp(str_buf, "blueinvert:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.blueinvert = sp;
+	  xxx->opts.blueinvert = atoi (opt_buf);
 	}
       else if (!strcmp (str_buf, "colormode:"))
 	{
-	  gint sp = 0;
-
-	  sp = atoi (opt_buf);
-	  xxx->opts.colormode = sp;
+	  xxx->opts.colormode = atoi (opt_buf);
 	}
 
       get_line (load_buf, MAX_LOAD_LINE, fp, 0);
@@ -1989,10 +2064,6 @@ load_options (fractalexplorerOBJ *xxx,
 
   return 0;
 }
-
-/**********************************************************************
- FUNCTION: explorer_load
- *********************************************************************/
 
 void
 explorer_load (void)

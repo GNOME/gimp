@@ -1,3 +1,23 @@
+2003-10-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/FractalExplorer/Events.[ch]: splitting the dialogs and the
+	events didn't make sense. Code merged with Dialogs.[ch] and files
+	removed.
+
+	* plug-ins/FractalExplorer/Dialogs.[ch]
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]: major code clean-up.
+	Still lots of work to do (remove several deprecated widgets, etc.)
+
+2003-10-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/mosaic/mosaic_logo.h: removed (!) to make the plug-in more
+	consistent with other plug-ins.
+
+	* plug-ins/mosaic/Makefile.am
+	* plug-ins/mosaic/mosaic.c: changed accordingly + minor code clean-up.
+	Plug-in can now be moved to common directory since it's just a single
+	file.
+
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.def: added new symbols.

@@ -35,10 +35,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-/*  The mosaic logo  */
-#include "mosaic_logo.h"
-
 #define  SCALE_WIDTH     150
 
 #define  HORIZONTAL        0
@@ -440,8 +436,6 @@ mosaic (GimpDrawable *drawable)
 {
   gint     x1, y1, x2, y2;
   gint     alpha;
-  GimpRGB  foreground;
-  GimpRGB  background;
 
   /*  Find the mask bounds  */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -478,23 +472,8 @@ mosaic (GimpDrawable *drawable)
       back[0] = back[1] = back[2] = 0;
       break;
     case FG_BG:
-      gimp_palette_get_foreground (&foreground);
-      gimp_palette_get_background (&background);
-      switch (gimp_drawable_type (drawable->drawable_id))
-	{
-	case GIMP_RGB_IMAGE:
-	case GIMP_RGBA_IMAGE:
-	  gimp_rgb_get_uchar (&foreground, &fore[0], &fore[1], &fore[2]);
-	  gimp_rgb_get_uchar (&background, &back[0], &back[1], &back[2]);
-	  break;
-	case GIMP_GRAY_IMAGE:
-	case GIMP_GRAYA_IMAGE:
-	  fore[0] = gimp_rgb_intensity_uchar (&foreground);
-	  back[0] = gimp_rgb_intensity_uchar (&background);
-	  break;
-	default:
-	  break;
-	}
+      gimp_get_fg_guchar (drawable, FALSE, fore);
+      gimp_get_bg_guchar (drawable, FALSE, back);
       break;
     }
 
@@ -528,15 +507,11 @@ mosaic_dialog (void)
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *logo_box;
   GtkWidget *toggle_vbox;
   GtkWidget *main_hbox;
   GtkWidget *frame;
-  GtkWidget *logo;
   GtkWidget *table;
   GtkObject *scale_data;
-  GdkPixbuf *pixbuf;
 
   gimp_ui_init ("mosaic", TRUE);
 
@@ -567,31 +542,10 @@ mosaic_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
 
-  /*  The logo frame & drawing area  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  logo_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), logo_box, FALSE, FALSE, 0);
-  gtk_widget_show (logo_box);
-
-  frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (logo_box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  pixbuf = gdk_pixbuf_new_from_inline (-1, mosaic_logo, FALSE, NULL);
-  logo = gtk_image_new_from_pixbuf (pixbuf);
-  g_object_unref (pixbuf);
-
-  gtk_container_add (GTK_CONTAINER (frame), logo);
-  gtk_widget_show (logo);
-
   /*  the vertical box and its toggle buttons  */
   frame = gtk_frame_new (_("Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   toggle_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
@@ -648,7 +602,6 @@ mosaic_dialog (void)
 
   gtk_widget_show (toggle_vbox);
   gtk_widget_show (frame);
-  gtk_widget_show (hbox);
 
   /*  tiling primitive  */
   frame = gimp_radio_group_new2 (TRUE, _("Tiling Primitives"),
@@ -870,10 +823,10 @@ find_max_gradient (GimpPixelRgn *src_rgn,
 #ifndef SLOW_CODE
 #define ABSVAL(x) ((x) >= 0 ? (x) : -(x))
 
-	      for(s_iter = s, s_end = s + src_rgn->bpp;
-		  s_iter < s_end; s_iter++) {
+	      for (s_iter = s, s_end = s + src_rgn->bpp;
+		   s_iter < s_end; s_iter++) {
 		val = *s;
-		if(ABSVAL(val) > ABSVAL(max))
+		if (ABSVAL(val) > ABSVAL(max))
 		  max = val;
 	      }
 	      *d++ = max;
@@ -1012,13 +965,8 @@ gaussian_deriv (GimpPixelRgn *src_rgn,
 	  {
 	    for (chan = 0; chan < bytes; chan++)
 	      {
-		b[chan] = b[chan] + 128;
-		if (b[chan] > 255)
-		  dp[chan] = 255;
-		else if (b[chan] < 0)
-		  dp[chan] = 0;
-		else
-		  dp[chan] = b[chan];
+		b[chan] += 128;
+		dp[chan] = CLAMP0255 (b[chan]);
 	      }
 	    b += bytes;
 	    dp += bytes;
@@ -1028,12 +976,7 @@ gaussian_deriv (GimpPixelRgn *src_rgn,
 	  {
 	    for (chan = 0; chan < bytes; chan++)
 	      {
-		if (b[chan] > 255)
-		  dp[chan] = 255;
-		else if (b[chan] < 0)
-		  dp[chan] = 0;
-		else
-		  dp[chan] = b[chan];
+		dp[chan] = CLAMP0255 (b[chan]);
 	      }
 	    b += bytes;
 	    dp += bytes;
@@ -1105,13 +1048,8 @@ gaussian_deriv (GimpPixelRgn *src_rgn,
 	  {
 	    for (chan = 0; chan < bytes; chan++)
 	      {
-		b[chan] = b[chan] + 128;
-		if (b[chan] > 255)
-		  dp[chan] = 255;
-		else if (b[chan] < 0)
-		  dp[chan] = 0;
-		else
-		  dp[chan] = b[chan];
+		b[chan] += 128;
+		dp[chan] = CLAMP0255 (b[chan]);
 	      }
 	    b += bytes;
 	    dp += bytes;
@@ -1121,12 +1059,7 @@ gaussian_deriv (GimpPixelRgn *src_rgn,
 	  {
 	    for (chan = 0; chan < bytes; chan++)
 	      {
-		if (b[chan] > 255)
-		  dp[chan] = 255;
-		else if (b[chan] < 0)
-		  dp[chan] = 0;
-		else
-		  dp[chan] = b[chan];
+		dp[chan] = CLAMP0255 (b[chan]);
 	      }
 	    b += bytes;
 	    dp += bytes;
@@ -1218,7 +1151,6 @@ fp_rand (gdouble val)
   return g_random_double () * val;
 }
 
-
 static void
 grid_create_squares (gint x1,
 		     gint y1,
@@ -1255,7 +1187,6 @@ grid_create_squares (gint x1,
   grid_multiple = 1;
   grid_rowstride = cols + 2;
 }
-
 
 static void
 grid_create_hexagons (gint x1,
@@ -1432,7 +1363,6 @@ grid_localize (gint x1,
 	pt->y = max_y;
       }
 }
-
 
 static void
 grid_render (GimpDrawable *drawable)
@@ -1619,7 +1549,6 @@ grid_render (GimpDrawable *drawable)
   gimp_progress_update (1.0);
 }
 
-
 static void
 process_poly (Polygon      *poly,
 	      gint          allow_split,
@@ -1661,7 +1590,6 @@ process_poly (Polygon      *poly,
     render_poly (poly, drawable, col, color_vary);
 }
 
-
 static void
 render_poly (Polygon      *poly,
 	     GimpDrawable *drawable,
@@ -1682,7 +1610,6 @@ render_poly (Polygon      *poly,
   else
     fill_poly_image (poly, drawable, vary);
 }
-
 
 static void
 split_poly (Polygon      *poly,
@@ -1744,7 +1671,6 @@ split_poly (Polygon      *poly,
 	fill_poly_image (&new_poly, drawable, vary);
     }
 }
-
 
 static void
 clip_poly (gdouble  *dir,
@@ -2020,12 +1946,7 @@ find_poly_color (Polygon      *poly,
     for (b = 0; b < bytes; b++)
       {
 	col_sum[b] = (gint) (col_sum[b] / count + color_var);
-	if (col_sum[b] > 255)
-	  col[b] = 255;
-	else if (col_sum[b] < 0)
-	  col[b] = 0;
-	else
-	  col[b] = col_sum[b];
+	col[b] = CLAMP0255 (col_sum[b]);
       }
 
   g_free (min_scanlines);
@@ -2043,7 +1964,6 @@ scale_poly (Polygon *poly,
   polygon_scale (poly, poly_scale);
   polygon_translate (poly, tx, ty);
 }
-
 
 static void
 fill_poly_color (Polygon      *poly,
@@ -2224,7 +2144,6 @@ fill_poly_color (Polygon      *poly,
   g_free (max_scanlines);
 }
 
-
 static void
 fill_poly_image (Polygon      *poly,
 		 GimpDrawable *drawable,
@@ -2382,7 +2301,6 @@ fill_poly_image (Polygon      *poly,
   g_free (max_scanlines);
 }
 
-
 static void
 calc_spec_vec (SpecVec *vec,
 	       gint     x1,
@@ -2416,12 +2334,13 @@ calc_spec_contrib (SpecVec *vecs,
 		   gdouble  y)
 {
   gint i;
-  gdouble dist;
   gdouble contrib = 0;
-  gdouble x_p, y_p;
 
   for (i = 0; i < n; i++)
     {
+      gdouble x_p, y_p;
+      gdouble dist;
+
       x_p = x - vecs[i].base_x;
       y_p = y - vecs[i].base_y;
 
@@ -2445,7 +2364,6 @@ calc_spec_contrib (SpecVec *vecs,
   return contrib / 4.0;
 }
 
-
 static void
 convert_segment (gint  x1,
 		 gint  y1,
@@ -2459,26 +2377,27 @@ convert_segment (gint  x1,
   gdouble xinc, xstart;
 
   if (y1 > y2)
-    { tmp = y2; y2 = y1; y1 = tmp;
-      tmp = x2; x2 = x1; x1 = tmp; }
-  ydiff = (y2 - y1);
+    { 
+      tmp = y2; y2 = y1; y1 = tmp;
+      tmp = x2; x2 = x1; x1 = tmp; 
+    }
+  ydiff = y2 - y1;
 
-  if ( ydiff )
+  if (ydiff)
     {
       xinc = (gdouble) (x2 - x1) / (gdouble) ydiff;
       xstart = x1 + 0.5 * xinc;
       for (y = y1 ; y < y2; y++)
 	{
 	  if (xstart < min[y - offset])
-	    min[y-offset] = xstart;
+	    min[y - offset] = xstart;
 	  if (xstart > max[y - offset])
-	    max[y-offset] = xstart;
+	    max[y - offset] = xstart;
 
 	  xstart += xinc;
 	}
     }
 }
-
 
 static void
 polygon_add_point (Polygon *poly,
@@ -2494,7 +2413,6 @@ polygon_add_point (Polygon *poly,
   else
     g_print ( _("Unable to add additional point.\n"));
 }
-
 
 static int
 polygon_find_center (Polygon *poly,
@@ -2521,7 +2439,6 @@ polygon_find_center (Polygon *poly,
   return 1;
 }
 
-
 static void
 polygon_translate (Polygon *poly,
 		   gdouble  tx,
@@ -2535,7 +2452,6 @@ polygon_translate (Polygon *poly,
       poly->pts[i].y += ty;
     }
 }
-
 
 static void
 polygon_scale (Polygon *poly,
@@ -2579,7 +2495,6 @@ polygon_extents (Polygon *poly,
 
   return 1;
 }
-
 
 static void
 polygon_reset (Polygon *poly)

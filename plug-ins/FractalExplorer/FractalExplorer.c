@@ -71,7 +71,6 @@
 #include "pix_data.h"
 
 #include "FractalExplorer.h"
-#include "Events.h"
 #include "Dialogs.h"
 
 #include <gtk/gtklist.h>
@@ -81,6 +80,72 @@
 #endif
 
 #include "libgimp/stdplugins-intl.h"
+
+/**********************************************************************
+  Global variables  
+ *********************************************************************/
+
+gdouble             xmin = -2;
+gdouble             xmax = 1;
+gdouble             ymin = -1.5;
+gdouble             ymax = 1.5;
+gdouble             xbild;
+gdouble             ybild;
+gdouble             xdiff;
+gdouble             ydiff;
+gint                sel_x1;
+gint                sel_y1;
+gint                sel_x2;
+gint                sel_y2;
+gint                preview_width;
+gint                preview_height;
+GtkWidget          *delete_frame_to_freeze;
+gdouble            *gg;
+gint                line_no;
+gchar              *filename;
+clrmap              colormap;
+gchar		   *fractalexplorer_path = NULL;
+
+static gfloat       cx = -0.75;
+static gfloat       cy = -0.2;
+static GimpDrawable *drawable;
+static GList	   *fractalexplorer_list = NULL;
+static GtkWidget   *fractalexplorer_gtk_list;
+
+explorer_interface_t wint =
+{
+    NULL,			/* preview */
+    NULL,			/* wimage */
+    FALSE			/* run */
+};				/* wint */
+
+explorer_vals_t wvals =
+{
+  0,
+  -2.0,
+  2.0,
+  -1.5,
+  1.5,
+  50.0,
+  -0.75,
+  -0.2,
+  0,
+  1.0,
+  1.0,
+  1.0,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  256,
+  0
+};				/* wvals */
+
+fractalexplorerOBJ *current_obj;
+static GtkWidget *delete_dialog = NULL;
 
 static void query (void);
 static void run   (const gchar      *name,
@@ -131,7 +196,6 @@ static GtkWidget * fractalexplorer_list_item_new_with_label_and_pixmap
 static GtkWidget * fractalexplorer_new_pixmap  (GtkWidget           *list,
 						gchar              **pixdata);
 static GtkWidget * fractalexplorer_list_add    (fractalexplorerOBJ  *feOBJ);
-static void        list_button_update          (fractalexplorerOBJ  *feOBJ);
 static fractalexplorerOBJ *fractalexplorer_new (void);
 static void        build_list_items (GtkWidget *list);
 
@@ -200,7 +264,7 @@ query (void)
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			  "December, 1998",
-			  N_("<Image>/Filters/Render/Pattern/_Fractal Explorer..."),
+			  N_("<Image>/Filters/Render/_Fractal Explorer..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -221,11 +285,11 @@ run (const gchar      *name,
   static GimpParam   values[1];
   gint32             image_ID;
   GimpRunMode        run_mode;
-  gdouble            xhsiz;
-  gdouble            yhsiz;
   gint               pwidth;
   gint               pheight;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint         	     sel_width;
+  gint         	     sel_height;
 
   run_mode = param[0].data.d_int32;
 
@@ -240,24 +304,12 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_ID = param[1].data.d_image;
-  tile_width = gimp_tile_width ();
-  tile_height = gimp_tile_height ();
-
-  img_width = gimp_drawable_width (drawable->drawable_id);
-  img_height = gimp_drawable_height (drawable->drawable_id);
-  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
-
-  cen_x = (double) (sel_x2 - 1 + sel_x1) / 2.0;
-  cen_y = (double) (sel_y2 - 1 + sel_y1) / 2.0;
-
-  xhsiz = (double) (sel_width - 1) / 2.0;
-  yhsiz = (double) (sel_height - 1) / 2.0;
 
   /* Calculate preview size */
   if (sel_width > sel_height)
@@ -650,8 +702,6 @@ delete_dialog_callback (GtkWidget *widget,
 
       sellist = GTK_LIST(list)->selection;
 
-      /* g_print ("list: %i\n", g_list_length (sellist)); */
-
       sel_obj = (fractalexplorerOBJ *)
 	g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
@@ -690,8 +740,6 @@ delete_dialog_callback (GtkWidget *widget,
       gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);
 
       current_obj = g_list_nth_data (fractalexplorer_list, pos);
-
-      list_button_update(current_obj);
     }
   else
     {
@@ -747,11 +795,11 @@ fractalexplorer_list_ok_callback (GtkWidget *widget,
   GtkWidget *list;
   gint pos;
 
-  options = (fractalexplorerListOptions *) data;
+  options = (fractalexplorerListOptions*) data;
   list = options->list_entry;
 
   /*  Set the new layer name  */
-  g_free(options->obj->draw_name);
+  g_free (options->obj->draw_name);
   options->obj->draw_name =
     g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
@@ -865,15 +913,12 @@ new_fractalexplorer_obj (gchar *name)
   fractalexplorer->draw_name = g_strdup (name);
 
   /* Leave options as before */
-  pic_obj = current_obj = fractalexplorer;
+  current_obj = fractalexplorer;
 
-  new_list_item = fractalexplorer_list_add(fractalexplorer);
-
-  /*  obj_creating = tmp_line = NULL; */
+  new_list_item = fractalexplorer_list_add (fractalexplorer);
 
   /* Redraw areas */
   /*  update_draw_area(fractalexplorer_preview,NULL); */
-  list_button_update (fractalexplorer);
   return new_list_item;
 }
 
@@ -884,10 +929,10 @@ new_button_press (GtkWidget      *widget,
 {
   GtkWidget * new_list_item;
 
-  new_list_item = new_fractalexplorer_obj((gchar*)data);
-  fractalexplorer_dialog_edit_list(new_list_item,current_obj,TRUE);
+  new_list_item = new_fractalexplorer_obj ((gchar*) data);
+  fractalexplorer_dialog_edit_list (new_list_item,current_obj, TRUE);
 
-  return(FALSE);
+  return FALSE;
 }
 
 /*
@@ -953,7 +998,7 @@ fractalexplorer_list_item_new_with_label_and_pixmap (fractalexplorerOBJ *obj,
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
   gtk_widget_show(alignment);
 
-  gtk_box_pack_start(GTK_BOX(hbox),pix_widget,FALSE,FALSE,0);
+  gtk_box_pack_start(GTK_BOX(hbox), pix_widget, FALSE, FALSE, 0);
   gtk_container_add (GTK_CONTAINER (hbox), label_widget);
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
 
@@ -964,14 +1009,14 @@ fractalexplorer_list_item_new_with_label_and_pixmap (fractalexplorerOBJ *obj,
   return list_item;
 }
 
-GtkWidget *
+static GtkWidget *
 fractalexplorer_new_pixmap (GtkWidget  *list,
 			    gchar     **pixdata)
 {
   GtkWidget *pixmap_widget;
   GdkPixmap *pixmap;
   GdkColor transparent;
-  GdkBitmap *mask=NULL;
+  GdkBitmap *mask = NULL;
   GdkColormap *colormap;
 
   colormap = gtk_widget_get_default_colormap ();
@@ -988,7 +1033,7 @@ fractalexplorer_new_pixmap (GtkWidget  *list,
   return pixmap_widget;
 }
 
-GtkWidget *
+static GtkWidget *
 fractalexplorer_list_add (fractalexplorerOBJ *obj)
 {
   GList *list;
@@ -1019,49 +1064,39 @@ fractalexplorer_list_add (fractalexplorerOBJ *obj)
   return list_item;
 }
 
-static void
-list_button_update (fractalexplorerOBJ *obj)
-{
-  g_return_if_fail (obj != NULL);
-  pic_obj = obj;
-}
-
-fractalexplorerOBJ *
+static fractalexplorerOBJ *
 fractalexplorer_new (void)
 {
   return g_new0 (fractalexplorerOBJ, 1);
 }
 
-void
+static void
 build_list_items (GtkWidget *list)
 {
-  GList *tmp = fractalexplorer_list;
-  GtkWidget *list_item;
-  GtkWidget *list_pix;
-  fractalexplorerOBJ *g;
+  GList *tmp;
 
-  while (tmp)
+  for (tmp = fractalexplorer_list; tmp; tmp = tmp->next)
     {
+      GtkWidget *list_item, *list_pix;
+      fractalexplorerOBJ *g;
+
       g = tmp->data;
 
       if (g->obj_status & fractalexplorer_READONLY)
-	list_pix = fractalexplorer_new_pixmap(list,mini_cross_xpm);
+	list_pix = fractalexplorer_new_pixmap(list, mini_cross_xpm);
       else
-	list_pix = fractalexplorer_new_pixmap(list,bluedot_xpm);
+	list_pix = fractalexplorer_new_pixmap(list, bluedot_xpm);
 
       list_item =
 	fractalexplorer_list_item_new_with_label_and_pixmap
 	(g, g->draw_name,list_pix);
-      g_object_set_data (G_OBJECT (list_item), "factralexplorer",
-                         g);
+      g_object_set_data (G_OBJECT (list_item), "factralexplorer", g);
       gtk_list_append_items (GTK_LIST (list), g_list_append(NULL,list_item));
 
       g_signal_connect (list_item, "button_press_event",
                         G_CALLBACK (list_button_press),
                         g);
       gtk_widget_show (list_item);
-
-      tmp = tmp->next;
     }
 }
 
@@ -1071,29 +1106,16 @@ list_button_press (GtkWidget      *widget,
 		   gpointer        data)
 {
 
-  fractalexplorerOBJ * sel_obj;
+  fractalexplorerOBJ *sel_obj = (fractalexplorerOBJ*) data;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      list_button_update ((fractalexplorerOBJ *) data);
-      break;
-
-    case GDK_2BUTTON_PRESS:
-      sel_obj = (fractalexplorerOBJ *)data;
-
-      if (sel_obj)
-	{
-	  current_obj = sel_obj;
-	  wvals = current_obj->opts;
-	  dialog_change_scale ();
-	  set_cmap_preview ();
-	  dialog_update_preview ();
-	}
-      else
-	{
-	  g_warning ("Internal error - list item has null object!");
-	}
+      current_obj = sel_obj;
+      wvals = current_obj->opts;
+      dialog_change_scale ();
+      set_cmap_preview ();
+      dialog_update_preview ();
       break;
 
     default:
@@ -1134,7 +1156,7 @@ fractalexplorer_list_free_all (void)
   fractalexplorer_list = NULL;
 }
 
-fractalexplorerOBJ *
+static fractalexplorerOBJ *
 fractalexplorer_load (const gchar *filename,
 		      const gchar *name)
 {
@@ -1182,9 +1204,6 @@ fractalexplorer_load (const gchar *filename,
 
   fclose (fp);
 
-  if (!pic_obj)
-    pic_obj = fractalexplorer;
-
   fractalexplorer->obj_status = fractalexplorer_OK;
 
   return fractalexplorer;
@@ -1213,14 +1232,14 @@ static void
 fractalexplorer_list_load_all (const gchar *path)
 {
   /*  Make sure to clear any existing fractalexplorers  */
-  current_obj = pic_obj = NULL;
+  current_obj = NULL;
   fractalexplorer_list_free_all ();
 
   gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
                                    fractalexplorer_list_load_one,
                                    NULL);
 
-  if (! fractalexplorer_list)
+  if (!fractalexplorer_list)
     {
       fractalexplorerOBJ *fractalexplorer;
 
@@ -1229,7 +1248,7 @@ fractalexplorer_list_load_all (const gchar *path)
       fractalexplorer->draw_name = g_strdup (_("My first fractal"));
       fractalexplorer_list_insert (fractalexplorer);
     }
-  pic_obj = current_obj = fractalexplorer_list->data;  /* set to first entry */
+  current_obj = fractalexplorer_list->data;  /* set to first entry */
 }
 
 GtkWidget *
@@ -1320,7 +1339,6 @@ fractalexplorer_rescan_ok_callback (GtkWidget *widget,
       gtk_list_clear_items (GTK_LIST (fractalexplorer_gtk_list), 0, -1);
       fractalexplorer_list_load_all (fractalexplorer_path);
       build_list_items (fractalexplorer_gtk_list);
-      list_button_update (current_obj);
     }
 
   gtk_widget_destroy (GTK_WIDGET (data));

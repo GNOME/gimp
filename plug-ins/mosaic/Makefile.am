@@ -11,8 +11,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = mosaic
 
 mosaic_SOURCES = \
-	mosaic.c	\
-	mosaic_logo.h
+	mosaic.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
