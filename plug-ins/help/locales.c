@@ -34,10 +34,10 @@
 GList *
 locales_parse (const gchar *help_locales)
 {
-  GList        *locales = NULL;
-  GList        *list;
-  const gchar  *s;
-  const gchar  *p;
+  GList       *locales = NULL;
+  GList       *list;
+  const gchar *s;
+  const gchar *p;
 
   g_return_val_if_fail (help_locales != NULL, NULL);
 
@@ -53,28 +53,6 @@ locales_parse (const gchar *help_locales)
 
   if (*s)
     locales = g_list_append (locales, g_strdup (s));
-
-  /*  add locales w/o variants unless they exist already */
-  for (list = locales; list; list = list->next)
-    {
-      s = (const gchar *) list->data;
-      p = strchr (s, '_');
-
-      if (p)
-        {
-          GList *iter;
-          gchar *new = g_strndup (s, p - s);
-
-          for (iter = locales; iter; iter = iter->next)
-            if (strcmp ((const gchar *) iter->data, new) == 0)
-              break;
-
-          if (iter)
-            g_free (new);
-          else
-            locales = g_list_append (locales, new);
-        }
-    }
 
   /*  if the list doesn't contain the default domain yet, append it  */
   for (list = locales; list; list = list->next)
