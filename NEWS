@@ -23,6 +23,9 @@ Bugs fixed in GIMP 2.2.4
 - fixed saving of MNG files with negative layer offsets (bug #166059)
 - fixed use of the text tool on floating selections (bug #166829)
 - don't create duplicate templates when migrating user settings (bug #167893)
+- let the py-slice script ignore out-of-bounds guides (bug #167843)
+- store thumbnails in temporary folder if no valid home directory exists
+  (bug #167973)
 
 
 Bugs fixed in GIMP 2.2.3
