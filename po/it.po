@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:52+0200\n"
-"PO-Revision-Date: 2003-09-15 18:48+0200\n"
+"PO-Revision-Date: 2003-09-15 19:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3140,14 +3140,12 @@ msgid ""
 msgstr ""
 
 #: app/gui/file-commands.c:338
-#, fuzzy
 msgid "Revert Image"
-msgstr "Salva immagine"
+msgstr "Ripristina immagine"
 
 #: app/gui/file-commands.c:404
-#, fuzzy
 msgid "(Unnamed Template)"
-msgstr "Incolla buffer con nome"
+msgstr "(template senza nome)"
 
 #: app/gui/file-commands.c:478
 #, fuzzy, c-format
@@ -3160,9 +3158,8 @@ msgstr ""
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
-#, fuzzy
 msgid "Determine File _Type:"
-msgstr "Determina tipo file:"
+msgstr "Determina _tipo file:"
 
 #: app/gui/file-new-dialog.c:97 app/gui/preferences-dialog.c:1015
 #: app/gui/preferences-dialog.c:1018
@@ -3210,9 +3207,8 @@ msgid "Confirm Image Size"
 msgstr "Conferma dimensione immagine"
 
 #: app/gui/file-open-dialog.c:157 app/gui/file-open-dialog.c:184
-#, fuzzy
 msgid "Open Image"
-msgstr "Nuova immagine"
+msgstr "Apri immagine"
 
 #: app/gui/file-open-dialog.c:231
 #, c-format
@@ -3235,7 +3231,7 @@ msgstr "Nessuna selezione"
 #: app/gui/file-open-dialog.c:497 app/gui/file-open-dialog.c:528
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr ""
+msgstr "Miniatura %d di %d"
 
 #: app/gui/file-open-menu.c:46
 msgid "/Automatic"
@@ -3247,14 +3243,16 @@ msgstr "Salva immagine"
 
 #: app/gui/file-save-dialog.c:179
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "Salva una copia dell'immagine"
 
 #: app/gui/file-save-dialog.c:295
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
-msgstr "%s esiste, sovrascrivere?"
+msgstr ""
+"Il file '%s' esiste.\n"
+"Sovrascriverlo?"
 
 #: app/gui/file-save-dialog.c:300
 msgid "File Exists!"
@@ -3468,71 +3466,59 @@ msgstr "Sfumatura del segmento"
 
 #: app/gui/gradient-editor-menu.c:197
 msgid "/coloringtype/_RGB"
-msgstr ""
+msgstr "/tipocolorazione/_RGB"
 
 #: app/gui/gradient-editor-menu.c:202
-#, fuzzy
 msgid "/coloringtype/HSV (_counter-clockwise hue)"
-msgstr "HSV (contatore tonalità in senso orario)"
+msgstr "/tipocolorazione/HSV (tonalità in senso _antiorario)"
 
 #: app/gui/gradient-editor-menu.c:207
-#, fuzzy
 msgid "/coloringtype/HSV (clockwise _hue)"
-msgstr "HSV (tonalità in senso orario)"
+msgstr "/tipocolorazione/HSV (tonalità in senso _orario)"
 
 #: app/gui/gradient-editor-menu.c:212
 msgid "/coloringtype/(Varies)"
-msgstr ""
+msgstr "/tipocolorazione/(varia)"
 
 #: app/gui/gradient-editor-menu.c:250
-#, fuzzy
 msgid "/Ble_nd Endpoints' Colors"
-msgstr "Sfumatura dei colori agli estremi"
+msgstr "/Sfumatura _colori agli estremi"
 
 #: app/gui/gradient-editor-menu.c:254
-#, fuzzy
 msgid "/Blend Endpoints' Opacit_y"
-msgstr "Sfumatura opacità agli estremi"
+msgstr "/Sfumatura _opacità agli estremi"
 
 #: app/gui/gradient-editor-menu.c:399
-#, fuzzy
 msgid "_Blending Function for Segment"
-msgstr "Tipo di colorazione per il segmento"
+msgstr "Tipo di _sfumatura per il segmento"
 
 #: app/gui/gradient-editor-menu.c:400
-#, fuzzy
 msgid "Coloring _Type for Segment"
-msgstr "Tipo di colorazione per il segmento"
+msgstr "_Tipo di colorazione per il segmento"
 
 #: app/gui/gradient-editor-menu.c:402
-#, fuzzy
 msgid "_Flip Segment"
-msgstr "Rifletti segmento"
+msgstr "Ri_fletti segmento"
 
 #: app/gui/gradient-editor-menu.c:403
-#, fuzzy
 msgid "_Replicate Segment..."
-msgstr "Replica segmento"
+msgstr "_Replica segmento"
 
 #: app/gui/gradient-editor-menu.c:404
-#, fuzzy
 msgid "Split Segment at _Midpoint"
-msgstr "Dividi segmento a metà"
+msgstr "Dividi segmento a _metà"
 
 #: app/gui/gradient-editor-menu.c:405
-#, fuzzy
 msgid "Split Segment _Uniformly..."
-msgstr "Dividi uniformità segmento"
+msgstr "Dividi segmento _uniformemente..."
 
 #: app/gui/gradient-editor-menu.c:406
-#, fuzzy
 msgid "_Delete Segment"
-msgstr "Elimina segmento"
+msgstr "_Elimina segmento"
 
 #: app/gui/gradient-editor-menu.c:407
-#, fuzzy
 msgid "Re-_center Segment's Midpoint"
-msgstr "Ri-centra metà del segmento"
+msgstr "Ri-_centra la metà del segmento"
 
 #: app/gui/gradient-editor-menu.c:408
 #, fuzzy
