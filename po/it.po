@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-28 11:04+0100\n"
+"PO-Revision-Date: 2003-10-29 17:54+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -965,18 +965,16 @@ msgid "Pattern"
 msgstr "Motivo"
 
 #: app/core/core-enums.c:278
-#, fuzzy
 msgid "Miter"
-msgstr "Principale"
+msgstr "Angolo"
 
 #: app/core/core-enums.c:279 app/core/core-enums.c:299
 msgid "Round"
 msgstr "Tondo"
 
 #: app/core/core-enums.c:280
-#, fuzzy
 msgid "Bevel"
-msgstr "Smussatura"
+msgstr "Spigolo"
 
 #: app/core/core-enums.c:298
 msgid "Butt"
@@ -1097,7 +1095,6 @@ msgid "Convert Image"
 msgstr "Converte immagine"
 
 #: app/core/core-enums.c:556 app/core/gimpimage-crop.c:141
-#, fuzzy
 msgid "Crop Image"
 msgstr "Ritaglia immagine"
 
@@ -2363,14 +2360,12 @@ msgstr "Colore personalizzato"
 
 #. create the contents of the right_vbox  ********************************
 #: app/display/gimpdisplayshell.c:789
-#, fuzzy
 msgid "Set Canvas Padding Color"
-msgstr "Imposta il colore delle padding canvas"
+msgstr "Imposta il colore dei motivi di riempimento"
 
 #: app/display/gimpdisplayshell.c:798
-#, fuzzy
 msgid "Set canvas padding color"
-msgstr "Imposta il colore delle padding canvas"
+msgstr "Imposta il colore dei motivi di riempimento"
 
 #: app/display/gimpdisplayshell.c:810
 msgid "/From Theme"
@@ -2520,9 +2515,8 @@ msgid "Zoom to fit window"
 msgstr "Zoom a finestra intera"
 
 #: app/display/gimpnavigationview.c:415
-#, fuzzy
 msgid "Shrink Wrap"
-msgstr "Comprimi involucro"
+msgstr "Aggiusta cornice"
 
 #: app/display/gimpprogress.c:136
 msgid "Progress"
@@ -3721,7 +3715,6 @@ msgstr ""
 "Uscire da GIMP?"
 
 #: app/gui/image-commands.c:217
-#, fuzzy
 msgid "Flipping..."
 msgstr "Riflessione..."
 
@@ -3738,21 +3731,18 @@ msgid "Layers Merge Options"
 msgstr "Opzioni di fusione livelli"
 
 #: app/gui/image-commands.c:406
-#, fuzzy
 msgid "Final, Merged Layer should be:"
-msgstr "Il livello fuso finale deve essere:"
+msgstr "Fine, il livello fuso deve essere:"
 
 #: app/gui/image-commands.c:407
-#, fuzzy
 msgid "Final, Anchored Layer should be:"
-msgstr "Il livello ancorato finale deve essere:"
+msgstr "Fine, il livello ancorato deve essere:"
 
 #: app/gui/image-commands.c:412
 msgid "Expanded as necessary"
 msgstr "Espandi se necessario"
 
 #: app/gui/image-commands.c:415
-#, fuzzy
 msgid "Clipped to image"
 msgstr "Ridimensiona all'immagine"
 
@@ -4099,9 +4089,8 @@ msgid "/View/Show S_tatusbar"
 msgstr "/Visualizza/Mostra la barra di s_tato"
 
 #: app/gui/image-menu.c:475
-#, fuzzy
 msgid "/View/Shrink _Wrap"
-msgstr "/Visualizza/Riposiziona vista"
+msgstr "/Visualizza/Riposiziona _vista"
 
 #: app/gui/image-menu.c:480
 msgid "/View/Fullscr_een"
@@ -4605,22 +4594,18 @@ msgid "/Filters/_Map"
 msgstr "/Filtri/_Mappatura"
 
 #: app/gui/image-menu.c:1073
-#, fuzzy
 msgid "/Filters/_Render"
 msgstr "/Filtri/_Render"
 
 #: app/gui/image-menu.c:1074
-#, fuzzy
 msgid "/Filters/Render/_Clouds"
 msgstr "/Filtri/Render/_Nuvole"
 
 #: app/gui/image-menu.c:1075
-#, fuzzy
 msgid "/Filters/Render/_Nature"
 msgstr "/Filtri/Render/Na_tura"
 
 #: app/gui/image-menu.c:1076
-#, fuzzy
 msgid "/Filters/Render/_Pattern"
 msgstr "/Filtri/Render/_Motivi"
 
@@ -5641,17 +5626,14 @@ msgid "Show S_tatusbar"
 msgstr "Mostra barra di s_tato"
 
 #: app/gui/preferences-dialog.c:1479 app/gui/preferences-dialog.c:1508
-#, fuzzy
 msgid "Canvas Padding Mode:"
 msgstr "Modalità riempimento superficie:"
 
 #: app/gui/preferences-dialog.c:1482 app/gui/preferences-dialog.c:1511
-#, fuzzy
 msgid "Custom Padding Color:"
 msgstr "Colore personalizzato di riempimento:"
 
 #: app/gui/preferences-dialog.c:1483 app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Select Custom Canvas Padding Color"
 msgstr "Seleziona colore personalizzato di riempimento"
 
@@ -6623,16 +6605,14 @@ msgstr ""
 "parametri relativi allo strumento curve."
 
 #: app/gui/user-install-dialog.c:302
-#, fuzzy
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
 msgstr ""
-"Questa cartella serve a per memorizzare i file con i\n"
+"Questa cartella serve a memorizzare i file con i\n"
 "parametri relativi allo strumento livelli."
 
 #: app/gui/user-install-dialog.c:384
-#, fuzzy
 msgid ""
 "Installation successful.\n"
 "Click \"Continue\" to proceed."
@@ -7166,7 +7146,6 @@ msgid "Help procedures"
 msgstr "Procedure testo"
 
 #: app/pdb/internal_procs.c:138
-#, fuzzy
 msgid "Message procedures"
 msgstr "Messaggi procedure"
 
@@ -7211,9 +7190,8 @@ msgid "Image mask"
 msgstr "Maschera immagine"
 
 #: app/pdb/internal_procs.c:180
-#, fuzzy
 msgid "Selection Tool procedures"
-msgstr "Procedure di strumenti di selezione"
+msgstr "Procedure degli strumenti di selezione"
 
 #: app/pdb/internal_procs.c:183
 msgid "Text procedures"
@@ -7816,9 +7794,8 @@ msgid "Crop or Resize an image"
 msgstr "Ritaglia o ridimensiona un'immagine"
 
 #: app/tools/gimpcroptool.c:164
-#, fuzzy
 msgid "/Tools/Transform Tools/_Crop & Resize"
-msgstr "/Strumenti/Strumenti di trasformazione/Ritaglia e ridimensiona"
+msgstr "/Strumenti/Strumenti di trasformazione/Rita_glia e ridimensiona"
 
 #. initialize the statusbar display
 #: app/tools/gimpcroptool.c:502 app/tools/gimpcroptool.c:931
@@ -7853,23 +7830,20 @@ msgid "Adjust color curves"
 msgstr "Aggiusta curva colore"
 
 #: app/tools/gimpcurvestool.c:162
-#, fuzzy
 msgid "/Tools/Color Tools/_Curves..."
-msgstr "/Immagine/Colori/Curve..."
+msgstr "/Strumenti/Strumenti di colore/_Curve..."
 
 #: app/tools/gimpcurvestool.c:235
-#, fuzzy
 msgid "Adjust Color Curves"
-msgstr "Aggiusta curva colore"
+msgstr "Imposta curve di colore"
 
 #: app/tools/gimpcurvestool.c:292
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "Le Curve per figure in scala di colore non possono essere modificate."
+msgstr "Le curve per le immagini a colori indicizzati non sono impostabili."
 
 #: app/tools/gimpcurvestool.c:493 app/tools/gimplevelstool.c:437
-#, fuzzy
 msgid "R_eset Channel"
-msgstr "Canale superiore"
+msgstr "R_eimposta canale"
 
 #: app/tools/gimpcurvestool.c:502
 msgid "Modify Curves for Channel:"
@@ -7877,25 +7851,21 @@ msgstr "Modifica curve per canale:"
 
 #. Horizontal button box for load / save
 #: app/tools/gimpcurvestool.c:566 app/tools/gimplevelstool.c:658
-#, fuzzy
 msgid "All Channels"
-msgstr "Canali"
+msgstr "Tutti i canali"
 
 #: app/tools/gimpcurvestool.c:580
-#, fuzzy
 msgid "Read curves settings from file"
-msgstr "Salva lo stato dei dispositivi all'uscita"
+msgstr "Lettura impostazioni curve da file"
 
 #: app/tools/gimpcurvestool.c:590
-#, fuzzy
 msgid "Save curves settings to file"
-msgstr "Salva lo stato dei dispositivi all'uscita"
+msgstr "Salvataggio impostazioni curve su file"
 
 #. The radio box for selecting the curve type
 #: app/tools/gimpcurvestool.c:598
-#, fuzzy
 msgid "Curve Type"
-msgstr "Tipo di curve:"
+msgstr "Tipo di curva"
 
 #: app/tools/gimpcurvestool.c:1222
 msgid "Load Curves"
@@ -7906,12 +7876,10 @@ msgid "Save Curves"
 msgstr "Salva curve"
 
 #: app/tools/gimpdodgeburntool.c:71
-#, fuzzy
 msgid "Dodge or Burn strokes"
-msgstr "Scherma o Brucia disegno"
+msgstr "Scherma o Brucia tratti"
 
 #: app/tools/gimpdodgeburntool.c:72
-#, fuzzy
 msgid "/Tools/Paint Tools/Dod_geBurn"
 msgstr "/Strumenti/Strumenti di disegno/Sc_hermaBrucia"
 
@@ -7967,9 +7935,8 @@ msgstr "Anti gomma  %s"
 
 #: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:186
 #: app/tools/gimptransformoptions.c:295
-#, fuzzy
 msgid "Affect:"
-msgstr "Compensato:"
+msgstr "Influenza:"
 
 #. tool toggle
 #: app/tools/gimpflipoptions.c:181
@@ -8297,21 +8264,20 @@ msgid "degrees"
 msgstr "gradi"
 
 #: app/tools/gimpmoveoptions.c:196
-#, fuzzy
 msgid "Move Current Layer / Path"
-msgstr "Solo livello corrente"
+msgstr "Sposta tracciato / livello corrente"
 
 #: app/tools/gimpmoveoptions.c:197
 msgid "Pick a Layer / Path to Move"
-msgstr "Prendere un livello / tracciato da spostare"
+msgstr "Prendi un livello / tracciato da spostare"
 
 #: app/tools/gimpmovetool.c:106
 msgid "Move layers & selections"
-msgstr "Spostamento livelli e selezioni"
+msgstr "Sposta livelli e selezioni"
 
 #: app/tools/gimpmovetool.c:107
 msgid "/Tools/Transform Tools/_Move"
-msgstr "/Strumenti/Strumenti trasformazione/Spostamento"
+msgstr "/Strumenti/Strumenti di trasformazione/_Spostamento"
 
 #: app/tools/gimppaintbrushtool.c:54
 msgid "Paint fuzzy brush strokes"
@@ -8522,9 +8488,8 @@ msgid "Antialiasing"
 msgstr "Antialiasing"
 
 #: app/tools/gimpselectionoptions.c:426
-#, fuzzy
 msgid "Feather Edges"
-msgstr "Piumata"
+msgstr "Spigoli piumati"
 
 #: app/tools/gimpselectionoptions.c:461
 msgid "Show Interactive Boundary"
@@ -8563,14 +8528,12 @@ msgid "Shear Magnitude X:"
 msgstr "Cesoia Magnitude X:"
 
 #: app/tools/gimpsmudgetool.c:57
-#, fuzzy
 msgid "Smudge image"
 msgstr "Sfuma immagine"
 
 #: app/tools/gimpsmudgetool.c:58
-#, fuzzy
 msgid "/Tools/Paint Tools/_Smudge"
-msgstr "/Strumenti/Strumenti di disegno/Sfumino"
+msgstr "/Strumenti/Strumenti di disegno/_Sfumino"
 
 #: app/tools/gimptextoptions.c:268
 msgid "Open the font selection dialog"
@@ -8732,7 +8695,6 @@ msgid "/Tools/_Paths"
 msgstr "/Strumenti/_Tracciati"
 
 #: app/tools/gimpvectortool.c:345
-#, fuzzy
 msgid "Add Stroke"
 msgstr "Aggiungi tratto"
 
@@ -8761,12 +8723,10 @@ msgid "Drag Curve"
 msgstr "Trascina curve"
 
 #: app/tools/gimpvectortool.c:485
-#, fuzzy
 msgid "Connect Strokes"
 msgstr "Collega tratti"
 
 #: app/tools/gimpvectortool.c:521
-#, fuzzy
 msgid "Convert Edge"
 msgstr "Converti spigolo"
 
@@ -9004,12 +8964,10 @@ msgstr ""
 "%s%s%s Interseca"
 
 #: app/widgets/gimpcoloreditor.c:215
-#, fuzzy
 msgid "FG"
 msgstr "PP"
 
 #: app/widgets/gimpcoloreditor.c:215
-#, fuzzy
 msgid "BG"
 msgstr "SF"
 
@@ -9679,25 +9637,21 @@ msgstr "Sovrapposta"
 
 #: app/widgets/gimpwidgets-constructors.c:57
 #: app/widgets/gimpwidgets-constructors.c:90
-#, fuzzy
 msgid "Hard Light"
 msgstr "Luce forte"
 
 #: app/widgets/gimpwidgets-constructors.c:58
 #: app/widgets/gimpwidgets-constructors.c:91
-#, fuzzy
 msgid "Soft Light"
 msgstr "Luce debole"
 
 #: app/widgets/gimpwidgets-constructors.c:59
 #: app/widgets/gimpwidgets-constructors.c:92
-#, fuzzy
 msgid "Grain Extract"
 msgstr "Estrazione grani"
 
 #: app/widgets/gimpwidgets-constructors.c:60
 #: app/widgets/gimpwidgets-constructors.c:93
-#, fuzzy
 msgid "Grain Merge"
 msgstr "Fusione grani"
 
