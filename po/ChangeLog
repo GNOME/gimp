@@ -1,3 +1,7 @@
+2004-08-13  Tommi Vainikainen  <thv@iki.fi>
+
+	* fi.po: Unified some fields in po headers for Finnish team.
+
 2004-08-10  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: updated.
