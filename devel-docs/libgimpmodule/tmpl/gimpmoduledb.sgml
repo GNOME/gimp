@@ -2,11 +2,11 @@
 GimpModuleDB
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Keeps a list of #GimpModule's found in a given searchpath.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Keeps a list of #GimpModule's found in a given searchpath.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -16,7 +16,7 @@ GimpModuleDB
 
 <!-- ##### STRUCT GimpModuleDB ##### -->
 <para>
-
+The #GimpModuleDB struct contains no public members.
 </para>
 
 

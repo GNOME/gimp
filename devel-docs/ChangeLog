@@ -1,5 +1,12 @@
 2003-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/tmpl/gimpmodule.sgml
+	* libgimpmodule/tmpl/gimpmoduledb.sgml: updated. Documented
+	enums and structs. Fixes bug #5746.
+
+2003-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpmodule/tmpl/gimpmodule.sgml: regenerated, removed
 	some old cruft.
 

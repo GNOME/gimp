@@ -5,6 +5,7 @@ GimpModuleInfo
 GimpModuleState
 GimpModuleQueryFunc
 GimpModuleRegisterFunc
+GIMP_MODULE_ABI_VERSION
 <TITLE>GimpModule</TITLE>
 gimp_module_new
 gimp_module_modified
