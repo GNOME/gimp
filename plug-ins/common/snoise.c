@@ -23,7 +23,7 @@
  *
  * This plug-in generates solid noise textures based on the
  * `Noise' and `Turbulence' functions described in the paper
- *   
+ *
  *    Perlin, K, and Hoffert, E. M., "Hypertexture",
  *    Computer Graphics 23, 3 (August 1989)
  *
@@ -74,11 +74,12 @@
 
 /*---- Defines ----*/
 
-#define TABLE_SIZE 64
-#define WEIGHT(T) ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
+#define TABLE_SIZE   64
+#define WEIGHT(T)    ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
 
-#define SCALE_WIDTH 128
-#define SCALE_MAX    16.0
+#define SCALE_WIDTH  128
+#define SIZE_MIN     0.1
+#define SIZE_MAX     16.0
 
 
 /*---- Typedefs ----*/
@@ -199,7 +200,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
-  
+
   status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
@@ -207,7 +208,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -251,7 +252,7 @@ run (const gchar      *name,
     default:
       break;
     }
-  
+
   /*  Create texture  */
   if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (drawable->drawable_id) ||
@@ -277,10 +278,10 @@ run (const gchar      *name,
     {
       /* gimp_message ("solid noise: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
-    }  
+    }
 
   values[0].data.d_status = status;
-  
+
   gimp_drawable_detach (drawable);
 }
 
@@ -328,7 +329,7 @@ solid_noise (GimpDrawable *drawable)
       for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++)
         {
           dest = dest_row;
-          
+
           for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
             {
               val =
@@ -369,13 +370,10 @@ solid_noise_init (void)
   gr = g_rand_new ();
 
   /*  Force sane parameters  */
-  if (snvals.detail < 0)
-    snvals.detail = 0;
-  if (snvals.detail > 15)
-    snvals.detail = 15;
-  if (snvals.seed < 0)
-    snvals.seed = 0;
-  
+  snvals.detail = CLAMP (snvals.detail, 0, 15);
+  snvals.xsize  = CLAMP (snvals.xsize, SIZE_MIN, SIZE_MAX);
+  snvals.ysize  = CLAMP (snvals.ysize, SIZE_MIN, SIZE_MAX);
+
   /*  Set scaling factors  */
   if (snvals.tilable)
     {
@@ -393,15 +391,15 @@ solid_noise_init (void)
   /*  Set totally empiric normalization values  */
   if (snvals.turbulent)
     {
-      offset=0.0;
-      factor=1.0;
+      offset = 0.0;
+      factor = 1.0;
     }
   else
     {
-      offset=0.94;
-      factor=0.526;
+      offset = 0.94;
+      factor = 0.526;
     }
-  
+
   /*  Initialize the permutation table  */
   for (i = 0; i < TABLE_SIZE; i++)
     perm_tab[i] = i;
@@ -413,7 +411,7 @@ solid_noise_init (void)
       perm_tab[j] = perm_tab[k];
       perm_tab[k] = t;
     }
-  
+
   /*  Initialize the gradient table  */
   for (i = 0; i < TABLE_SIZE; i++)
     {
@@ -450,7 +448,7 @@ plain_noise (gdouble x,
   for (i = 0; i < 2; i++)
     for (j = 0; j < 2; j++)
       {
-	if (snvals.tilable) 
+	if (snvals.tilable)
 	  n = perm_tab[(((a + i) % (xclip * s)) + perm_tab[((b + j) % (yclip * s)) % TABLE_SIZE]) % TABLE_SIZE];
 	else
 	  n = perm_tab[(a + i + perm_tab[(b + j) % TABLE_SIZE]) % TABLE_SIZE];
@@ -475,7 +473,7 @@ noise (gdouble x,
   sum = 0.0;
   x *= xsize;
   y *= ysize;
-  
+
   for (i = 0; i <= snvals.detail; i++)
     {
       if (snvals.turbulent)
@@ -564,7 +562,7 @@ solid_noise_dialog (void)
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("_X Size:"), SCALE_WIDTH, 0,
-			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      snvals.xsize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   g_signal_connect (adj, "value_changed",
@@ -574,7 +572,7 @@ solid_noise_dialog (void)
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
 			      _("_Y Size:"), SCALE_WIDTH, 0,
-			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
+			      snvals.ysize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   g_signal_connect (adj, "value_changed",

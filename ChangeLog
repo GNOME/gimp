@@ -1,5 +1,10 @@
 2003-10-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/snoise.c: clamp x and y sizes to sane values.
+	Fixes bug #124389.
+
+2003-10-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/comic-logo.scm
 	(script-fu-comic-logo-alpha): fixed the script (bug #124441).
 
