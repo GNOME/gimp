@@ -324,7 +324,8 @@ reverse_list_col_children (GtkWrapBox       *wbox,
 	  if (GTK_WIDGET_VISIBLE (child->widget))
 	    {
 	      get_child_requisition (wbox, child->widget, &child_requisition);
-	      if (height + wbox->vspacing + child_requisition.height > col_height)
+	      if (height + wbox->vspacing + child_requisition.height > col_height ||
+		  child->forced_break)
 		break;
 	      height += wbox->vspacing + child_requisition.height;
 	      *max_child_size = MAX (*max_child_size, child_requisition.width);

@@ -324,7 +324,8 @@ reverse_list_row_children (GtkWrapBox       *wbox,
 	  if (GTK_WIDGET_VISIBLE (child->widget))
 	    {
 	      get_child_requisition (wbox, child->widget, &child_requisition);
-	      if (width + wbox->hspacing + child_requisition.width > row_width)
+	      if (width + wbox->hspacing + child_requisition.width > row_width ||
+		  child->forced_break)
 		break;
 	      width += wbox->hspacing + child_requisition.width;
 	      *max_child_size = MAX (*max_child_size, child_requisition.height);
@@ -620,7 +621,7 @@ layout_rows (GtkWrapBox    *wbox,
 		      line->children,
 		      children_per_line,
 		      line->expand);
-	  
+
 	  g_slist_free (line->children);
 	  g_free (line);
 	  line = next_line;

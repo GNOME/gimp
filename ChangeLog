@@ -1,3 +1,19 @@
+2000-02-07  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* app/interface.c: restructured toolbox to use a single
+	gtk_hwrap_box with the added "forced break" functionality to make
+	the selector boxes not run in with the rest of the tool buttons.
+	The toolbox should now not cut things off, although if the user
+	selects a really small toolbox the buttons or selectors may be,
+	um, difficult to use...
+
+	* app/gtkwrapbox.h: 
+	* app/gtkwrapbox.c: 
+	* app/gtkvwrapbox.c (reverse_list_col_children): 
+	* app/gtkhwrapbox.c (reverse_list_row_children): support for
+	"forced break" functionality needed for toolbox -- will forward
+	patches to Tim Janik as well
+
 Mon Feb  7 05:04:28 2000  Tim Janik  <timj@gtk.org>
 
 	* app/gtkhwrapbox.c:

@@ -256,7 +256,7 @@ create_indicator_area (GtkWidget *parent)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, FALSE, TRUE, FALSE, TRUE);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, TRUE, TRUE, TRUE, TRUE);
   gtk_widget_realize (frame);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -290,7 +290,8 @@ create_color_area (GtkWidget *parent)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, FALSE, TRUE, FALSE, TRUE);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, TRUE, TRUE, TRUE, TRUE);
+  gtk_wrap_box_set_child_forced_break (GTK_WRAP_BOX (parent), frame, TRUE);
   gtk_widget_realize (frame);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -346,11 +347,7 @@ create_tools (GtkWidget *parent)
   GSList *group;
   gint i, j;
 
-  /*create_logo (parent);*/
-  wbox = gtk_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), .36);
-  gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), wbox, TRUE, TRUE, TRUE, TRUE);
+  wbox = parent;
 
   gtk_widget_realize (gtk_widget_get_toplevel (wbox));
 
@@ -368,7 +365,7 @@ create_tools (GtkWidget *parent)
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
 	  gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
-			     FALSE, TRUE, FALSE, TRUE);
+			     FALSE, FALSE, FALSE, FALSE);
 
 	  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	  gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
@@ -592,16 +589,20 @@ create_toolbox (void)
 				gimp_standard_help_func,
 				"toolbox/toolbox.html");
 
-  wbox = gtk_vwrap_box_new (FALSE);
-  gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_FILL);
+  wbox = gtk_hwrap_box_new (FALSE);
+  gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_TOP);
+  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_LEFT);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 20);
   gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
   create_tools (wbox);
+
   create_color_area (wbox);
   if (show_indicators)
     create_indicator_area (wbox);
+
   gtk_widget_show (window);
   toolbox_set_drag_dest (window);
 
