@@ -143,12 +143,14 @@ gimp_OBJECTS = \
 	gimpbrushgenerated.obj	\
 	gimpbrushlist.obj	\
 	gimpbrushpipe.obj	\
+	gimpbrushpreview.obj	\
 	gimpcontext.obj		\
 	gimpdnd.obj		\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\
 	gimpparasite.obj	\
+	gimppatternpreview.obj	\
 	gimpprogress.obj	\
 	gimprc.obj		\
 	gimprc_cmds.obj		\
@@ -164,6 +166,7 @@ gimp_OBJECTS = \
 	histogram_tool.obj	\
 	hue_saturation.obj	\
 	image_map.obj		\
+	image_new.obj		\
 	image_render.obj	\
 	indicator_area.obj	\
 	info_dialog.obj		\

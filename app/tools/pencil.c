@@ -94,6 +94,7 @@ tools_new_pencil (void)
   private = (PaintCore *) tool->private;
   private->paint_func = pencil_paint_func;
   private->pick_colors = TRUE;
+  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
   return tool;
 }

@@ -1501,7 +1501,7 @@ read_tube_block (FILE *f,
     g_strdup_printf ("ncells:%d step:%d dim:%d cols:%d rows:%d "
 		     "rank0:%d rank1:%d "
 		     "placement:%s selection:%s",
-		     cell_count, step_size, 2, column_count, row_count,
+		     cell_count, step_size, 1, column_count, row_count,
 		     column_count, row_count,
 		     (placement_mode == tpmRandom ? "random" :
 		      (placement_mode == tpmConstant ? "constant" :

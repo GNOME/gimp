@@ -1,3 +1,20 @@
+1999-08-27  Tor Lillqvist  <tml@iki.fi>
+
+	* app/paint_core.h: Add a flags field and corresponding type
+	ToolFlags to PaintCore. The only flag bit defined so far is
+	TOOL_CAN_HANDLE_CHANGING_BRUSH, which those tools who don't mind
+	if the brush changes while painting (as in the case of pixmap pipe
+	brushes).
+
+	* app/paint_core.c: Test above flag before calling the brush's
+	select_brush method.
+
+	* app/airbrush.c
+	* app/paintbrush.c
+	* app/pencil.c: Set above flag.
+
+	* app/makefile.{cygwin,msc}: Add latest additions.
+
 Thu Aug 26 14:16:12 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimpbrushpreview.c: #include gimpbrushpipe.h and gimpbrushpipeP.h

@@ -184,6 +184,7 @@ tools_new_airbrush ()
   private = (PaintCore *) tool->private;
   private->paint_func = airbrush_paint_func;
   private->pick_colors = TRUE;
+  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
   return tool;
 }

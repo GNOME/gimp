@@ -350,6 +350,7 @@ tools_new_paintbrush ()
   private = (PaintCore *) tool->private;
   private->paint_func = paintbrush_paint_func;
   private->pick_colors = TRUE;
+  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
   return tool;
 }

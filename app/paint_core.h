@@ -31,6 +31,13 @@
 #define RESUME_PAINT    3
 #define FINISH_PAINT    4
 
+typedef enum
+{
+  TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001 /* Set for tools that don't mind
+					   * if the brush changes while
+					   * painting.
+					   */
+} ToolFlags;
 
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);
 struct _paint_core
@@ -69,6 +76,7 @@ struct _paint_core
 
   int             pick_colors;  /*  pick color if ctl or alt is pressed  */
   int             pick_state;   /*  was ctl or alt pressed when clicked?  */
+  int		  flags;	/*  tool flags, see ToolFlags above */
 };
 
 extern PaintCore  non_gui_paint_core;

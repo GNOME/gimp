@@ -273,9 +273,10 @@ paint_core_button_press (Tool           *tool,
     }
   else
     {
-      paint_core->brush =
-	(* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
-			     ->klass)->select_brush) (paint_core);
+      if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
+	paint_core->brush =
+	  (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+			       ->klass)->select_brush) (paint_core);
       (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
     }
 
@@ -532,7 +533,8 @@ paint_core_new (ToolType type)
   private->core = draw_core_new (paint_core_draw);
 
   private->pick_colors = FALSE;
-
+  private->flags = 0;
+  
   tool->private = (void *) private;
 
   tool->button_press_func   = paint_core_button_press;
@@ -755,9 +757,10 @@ paint_core_interpolate (PaintCore    *paint_core,
 	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
 	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
 	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
-	  paint_core->brush =
-	    (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
-				 ->klass)->select_brush) (paint_core);
+	  if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
+	    paint_core->brush =
+	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+				   ->klass)->select_brush) (paint_core);
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
 	}
     }
