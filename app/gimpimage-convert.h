@@ -34,11 +34,12 @@ typedef enum {
 
 /* adam's extra dither stuff */
 typedef enum {
-  NODITHER         = 0,
-  FSDITHER         = 1,
-  FIXEDDITHER      = 3,
+  NO_DITHER         = 0,
+  FS_DITHER         = 1,
+  FSLOWBLEED_DITHER = 2,
+  FIXED_DITHER      = 3,
 
-  NODESTRUCTDITHER = 2 /* NEVER USE NODESTRUCTDITHER EXPLICITLY */
+  NODESTRUCT_DITHER = 4 /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
 } ConvertDitherType;
 
 #define MAXNUMCOLORS 256

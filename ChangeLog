@@ -1,3 +1,14 @@
+Wed Sep  1 21:27:27 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/convert.c app/convert.h:
+	Optional low-bleed FS dithering
+
+	* app/fsdither.h: Tables are const
+
+	* app/convert_cmds.c app/internal_procs.c tools/pdbgen/enums.pl
+	tools/pdbgen/pdb/convert.pdb:
+	Clean up 'convert' PDB interface cruft.
+
 1999-09-01  Tor Lillqvist  <tml@iki.fi>
 
 	* app/appenv.h

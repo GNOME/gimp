@@ -59,7 +59,7 @@ void register_tools_procs           (void);
 void register_undo_procs            (void);
 void register_unit_procs            (void);
 
-/* 311 procedures registered total */
+/* 309 procedures registered total */
 
 void
 internal_procs_init (void)
@@ -73,87 +73,87 @@ internal_procs_init (void)
   app_init_update_status (NULL, _("Channel"), 0.045);
   register_channel_procs ();
 
-  app_init_update_status (NULL, _("Channel Ops"), 0.09);
+  app_init_update_status (NULL, _("Channel Ops"), 0.091);
   register_channel_ops_procs ();
 
-  app_init_update_status (NULL, _("Color"), 0.096);
+  app_init_update_status (NULL, _("Color"), 0.097);
   register_color_procs ();
 
-  app_init_update_status (NULL, _("Convert"), 0.135);
+  app_init_update_status (NULL, _("Convert"), 0.136);
   register_convert_procs ();
 
-  app_init_update_status (NULL, _("Drawable procedures"), 0.151);
+  app_init_update_status (NULL, _("Drawable procedures"), 0.146);
   register_drawable_procs ();
 
-  app_init_update_status (NULL, _("Edit procedures"), 0.222);
+  app_init_update_status (NULL, _("Edit procedures"), 0.217);
   register_edit_procs ();
 
-  app_init_update_status (NULL, _("File Operations"), 0.241);
+  app_init_update_status (NULL, _("File Operations"), 0.236);
   register_fileops_procs ();
 
-  app_init_update_status (NULL, _("Floating selections"), 0.26);
+  app_init_update_status (NULL, _("Floating selections"), 0.256);
   register_floating_sel_procs ();
 
-  app_init_update_status (NULL, _("GDisplay procedures"), 0.28);
+  app_init_update_status (NULL, _("GDisplay procedures"), 0.275);
   register_gdisplay_procs ();
 
-  app_init_update_status (NULL, _("Image"), 0.289);
+  app_init_update_status (NULL, _("Image"), 0.285);
   register_gimage_procs ();
 
-  app_init_update_status (NULL, _("Image mask"), 0.469);
+  app_init_update_status (NULL, _("Image mask"), 0.466);
   register_gimage_mask_procs ();
 
-  app_init_update_status (NULL, _("Gimprc procedures"), 0.524);
+  app_init_update_status (NULL, _("Gimprc procedures"), 0.521);
   register_gimprc_procs ();
 
-  app_init_update_status (NULL, _("Gradients"), 0.534);
+  app_init_update_status (NULL, _("Gradients"), 0.531);
   register_gradient_procs ();
 
-  app_init_update_status (NULL, _("Gradient UI"), 0.55);
+  app_init_update_status (NULL, _("Gradient UI"), 0.547);
   register_gradient_select_procs ();
 
-  app_init_update_status (NULL, _("Guide procedures"), 0.563);
+  app_init_update_status (NULL, _("Guide procedures"), 0.56);
   register_guides_procs ();
 
-  app_init_update_status (NULL, _("Interface"), 0.582);
+  app_init_update_status (NULL, _("Interface"), 0.579);
   register_interface_procs ();
 
-  app_init_update_status (NULL, _("Layer"), 0.592);
+  app_init_update_status (NULL, _("Layer"), 0.589);
   register_layer_procs ();
 
-  app_init_update_status (NULL, _("Miscellaneous"), 0.688);
+  app_init_update_status (NULL, _("Miscellaneous"), 0.686);
   register_misc_procs ();
 
-  app_init_update_status (NULL, _("Palette"), 0.695);
+  app_init_update_status (NULL, _("Palette"), 0.693);
   register_palette_procs ();
 
-  app_init_update_status (NULL, _("Parasite procedures"), 0.717);
+  app_init_update_status (NULL, _("Parasite procedures"), 0.715);
   register_parasite_procs ();
 
-  app_init_update_status (NULL, _("Paths"), 0.759);
+  app_init_update_status (NULL, _("Paths"), 0.757);
   register_paths_procs ();
 
-  app_init_update_status (NULL, _("Pattern UI"), 0.791);
+  app_init_update_status (NULL, _("Pattern UI"), 0.79);
   register_pattern_select_procs ();
 
-  app_init_update_status (NULL, _("Patterns"), 0.801);
+  app_init_update_status (NULL, _("Patterns"), 0.799);
   register_patterns_procs ();
 
-  app_init_update_status (NULL, _("Plug-in"), 0.814);
+  app_init_update_status (NULL, _("Plug-in"), 0.812);
   register_plug_in_procs ();
 
-  app_init_update_status (NULL, _("Procedural database"), 0.826);
+  app_init_update_status (NULL, _("Procedural database"), 0.825);
   register_procedural_db_procs ();
 
-  app_init_update_status (NULL, _("Text procedures"), 0.852);
+  app_init_update_status (NULL, _("Text procedures"), 0.851);
   register_text_tool_procs ();
 
-  app_init_update_status (NULL, _("Tool procedures"), 0.865);
+  app_init_update_status (NULL, _("Tool procedures"), 0.864);
   register_tools_procs ();
 
   app_init_update_status (NULL, _("Undo"), 0.958);
   register_undo_procs ();
 
-  app_init_update_status (NULL, _("Units"), 0.965);
+  app_init_update_status (NULL, _("Units"), 0.964);
   register_unit_procs ();
 }

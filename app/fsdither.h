@@ -25,7 +25,8 @@
  *  south-west pixels surrounding the current pixel respectively.
  */
 
-short range_array[] = {
+
+const short range_array[] = {
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -131,7 +132,7 @@ short range_array[] = {
   255,  255,  255,  255,  255,
 };
 
-short floyd_steinberg_error1[] = {
+const short floyd_steinberg_error1[] = {
  -223, -223, -222, -222, -221, -221, -220, -220, -220, -219,
  -219, -218, -218, -217, -217, -217, -216, -216, -215, -215,
  -214, -214, -213, -213, -213, -212, -212, -211, -211, -210,
@@ -237,7 +238,7 @@ short floyd_steinberg_error1[] = {
   222,  223,  223,  224,  224,
 };
 
-short floyd_steinberg_error2[] = {
+const short floyd_steinberg_error2[] = {
   -95,  -95,  -95,  -95,  -95,  -94,  -94,  -94,  -94,  -94,
   -93,  -93,  -93,  -93,  -93,  -93,  -92,  -92,  -92,  -92,
   -92,  -91,  -91,  -91,  -91,  -91,  -90,  -90,  -90,  -90,
@@ -343,7 +344,7 @@ short floyd_steinberg_error2[] = {
    95,   95,   95,   96,   96,
 };
 
-short floyd_steinberg_error3[] = {
+const short floyd_steinberg_error3[] = {
  -159, -159, -159, -158, -158, -158, -157, -157, -157, -156,
  -156, -156, -155, -155, -155, -155, -154, -154, -154, -153,
  -153, -153, -152, -152, -152, -151, -151, -151, -150, -150,
@@ -449,7 +450,7 @@ short floyd_steinberg_error3[] = {
   159,  159,  159,  160,  160,
 };
 
-short floyd_steinberg_error4[] = {
+const short floyd_steinberg_error4[] = {
   -34,  -33,  -33,  -33,  -33,  -33,  -34,  -33,  -32,  -33,
   -33,  -33,  -33,  -33,  -32,  -31,  -33,  -32,  -32,  -32,
   -32,  -32,  -33,  -32,  -31,  -32,  -32,  -32,  -32,  -32,

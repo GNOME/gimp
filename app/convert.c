@@ -25,6 +25,8 @@
    */
 
 /*
+ * 99/09/01 - Created a low-bleed FS-dither option.  [Adam]
+ *
  * 99/08/29 - Deterministic colour dithering to arbitrary palettes.
  *  Ideal for animations that are going to be delta-optimized or simply
  *  don't want to look 'busy' in static areas.  Also a bunch of bugfixes
@@ -163,6 +165,8 @@ static const unsigned char webpal[] =
   0,51,0,0,0,255,0,0,204,0,0,153,0,0,102,0,0,51,0,0,0
 };
 
+/* Note: convert.c code currently makes assumptions about some of the
+   below defines, so small fixes are needed if they change... */
 #define DM_WIDTH 128
 #define DM_WIDTHMASK 127
 #define DM_WIDTH_SHIFT 7
@@ -333,6 +337,7 @@ struct _QuantizeObj
   Histogram histogram;              /* holds the histogram               */
 
   int want_alpha_dither;
+  int error_freedom;                /* 0=much bleed, 1=controlled bleed */
 };
 
 typedef struct
@@ -373,6 +378,7 @@ typedef struct
   GimpImage*   gimage;
   int          nodither_flag;
   int          fsdither_flag;
+  int          fslowbleeddither_flag;
   int          fixeddither_flag;
   int          alphadither; /* flag */
   int          remdups;     /* flag */
@@ -423,17 +429,18 @@ PaletteEntriesP theCustomPalette = NULL;
 
 
 /* Defaults */
-static int      snum_cols         = 256;
-static gboolean sfsdither_flag    = TRUE;
-static gboolean snodither_flag    = FALSE;
-static gboolean sfixeddither_flag = FALSE;
-static gboolean smakepal_flag     = TRUE;
-static gboolean salphadither_flag = FALSE;
-static gboolean sremdups_flag     = TRUE;
-static gboolean swebpal_flag      = FALSE;
-static gboolean scustompal_flag   = FALSE;
-static gboolean smonopal_flag     = FALSE;
-static gboolean sreusepal_flag    = FALSE;
+static int      snum_cols               = 256;
+static gboolean sfsdither_flag          = TRUE;
+static gboolean sfslowbleeddither_flag  = TRUE;
+static gboolean snodither_flag          = FALSE;
+static gboolean sfixeddither_flag       = FALSE;
+static gboolean smakepal_flag           = TRUE;
+static gboolean salphadither_flag       = FALSE;
+static gboolean sremdups_flag           = TRUE;
+static gboolean swebpal_flag            = FALSE;
+static gboolean scustompal_flag         = FALSE;
+static gboolean smonopal_flag           = FALSE;
+static gboolean sreusepal_flag          = FALSE;
 
 
 void
@@ -479,6 +486,7 @@ convert_to_indexed (GimpImage *gimage)
   dialog->num_cols = snum_cols;
   dialog->nodither_flag = snodither_flag;
   dialog->fsdither_flag = sfsdither_flag;
+  dialog->fslowbleeddither_flag = sfslowbleeddither_flag;
   dialog->fixeddither_flag = sfixeddither_flag;
   dialog->alphadither = salphadither_flag;
   dialog->remdups = sremdups_flag;
@@ -683,7 +691,24 @@ convert_to_indexed (GimpImage *gimage)
     {
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       
-      toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering"));
+      toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering (reduced colour bleeding)"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  (GtkSignalFunc) indexed_radio_update,
+			  &(dialog->fslowbleeddither_flag));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->fslowbleeddither_flag);
+
+      gtk_widget_show (toggle);
+    }
+    gtk_widget_show (hbox);
+    hbox = gtk_hbox_new (FALSE, 1);
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      
+      toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering (normal)"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
@@ -897,11 +922,13 @@ indexed_ok_callback (GtkWidget *widget,
         else
           palette_type = REUSE_PALETTE;
 
-  if (dialog->nodither_flag) dither_type = NODITHER;
+  if (dialog->nodither_flag) dither_type = NO_DITHER;
   else
-    if (dialog->fsdither_flag) dither_type = FSDITHER;
+    if (dialog->fsdither_flag) dither_type = FS_DITHER;
     else
-      dither_type = FIXEDDITHER;
+      if (dialog->fslowbleeddither_flag) dither_type = FSLOWBLEED_DITHER;
+      else
+	dither_type = FIXED_DITHER;
 
   /*  Convert the image to indexed color  */
   convert_image (dialog->gimage, INDEXED, dialog->num_cols,
@@ -914,6 +941,7 @@ indexed_ok_callback (GtkWidget *widget,
   snum_cols = dialog->num_cols;
   snodither_flag = dialog->nodither_flag;
   sfsdither_flag = dialog->fsdither_flag;
+  sfslowbleeddither_flag = dialog->fslowbleeddither_flag;
   sfixeddither_flag = dialog->fixeddither_flag;
   salphadither_flag = dialog->alphadither;
   sremdups_flag = dialog->remdups;
@@ -1232,7 +1260,7 @@ convert_image (GImage		 *gimage,
 
       /* don't dither if the input is grayscale and we are simply mapping every color */
       if (old_type == GRAY && num_cols == 256 && palette_type == MAKE_PALETTE)
-	dither = NODITHER;
+	dither = NO_DITHER;
 
       quantobj = initialize_median_cut (old_type, num_cols, dither,
 					palette_type, alpha_dither);
@@ -1288,7 +1316,7 @@ convert_image (GImage		 *gimage,
 
 	  quantobj->delete_func (quantobj);
 	  quantobj = initialize_median_cut (old_type, num_cols,
-					    NODESTRUCTDITHER, palette_type,
+					    NODESTRUCT_DITHER, palette_type,
 					    alpha_dither);
 	  /* We can skip the first pass (palette creation) */
 
@@ -3423,55 +3451,66 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
  */
 
 static int *
-init_error_limit (void)
+init_error_limit (const int error_freedom)
 /* Allocate and fill in the error_limiter table */
 {
   int *table;
   int in, out;
 
+  /* #define STEPSIZE 16 */
+  /* #define STEPSIZE 200 */
+
   table = g_malloc (sizeof (int) * (255 * 2 + 1));
   table += 255;                 /* so we can index -255 ... +255 */
 
-  /* #define STEPSIZE 16 */
-#define STEPSIZE 200
-
-  for (in = 0; in < STEPSIZE; in++)
+  if (error_freedom == 0)
     {
-      table[in] = in;
-      table[-in] = -in;
+      /* Coarse function, much bleeding. */
+
+      const int STEPSIZE = 190;
+      
+      for (in = 0; in < STEPSIZE; in++)
+	{
+	  table[in] = in;
+	  table[-in] = -in;
+	}
+      for (; in <= 255; in++)
+	{
+	  table[in] = STEPSIZE;
+	  table[-in] = -STEPSIZE;
+	}
+      return (table);
     }
-  for (; in <= 255; in++)
+  else
     {
-      table[in] = STEPSIZE;
-      table[-in] = -STEPSIZE;
+      /* Smooth function, bleeding more constrained */
+
+      const int STEPSIZE = 24;
+
+      /* Map errors 1:1 up to +- STEPSIZE */
+      out = 0;
+      for (in = 0; in < STEPSIZE; in++, out++)
+	{
+	  table[in] = out;
+	  table[-in] = -out;
+	}
+      
+      /* Map errors 1:2 up to +- 3*STEPSIZE */
+      for (; in < STEPSIZE*3; in++, out += (in&1) ? 0 : 1)
+	{
+	  table[in] = out;
+	  table[-in] = -out;
+	}
+      
+      /* Clamp the rest to final out value (which is STEPSIZE*2) */
+      for (; in <= 255; in++)
+	{
+	  table[in] = out;
+	  table[-in] = -out;
+	}
+      
+      return table;
     }
-  return (table);
-
-  /* Map errors 1:1 up to +- 16 */
-  out = 0;
-  for (in = 0; in < STEPSIZE; in++, out++)
-    {
-      table[in] = out;
-      table[-in] = -out;
-    }
-
-  /* Map errors 1:2 up to +- 3*16 */
-  for (; in < STEPSIZE*3; in++, out += (in&1) ? 0 : 1)
-    {
-      table[in] = out;
-      table[-in] = -out;
-    }
-
-  /* Clamp the rest to final out value (which is 32) */
-  for (; in <= 255; in++)
-    {
-      table[in] = out;
-      table[-in] = -out;
-    }
-
-#undef STEPSIZE
-
-  return table;
 }
 
 
@@ -3490,9 +3529,9 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   ColorFreq *cachep;
   Color *color;
   int *error_limiter;
-  short *fs_err1, *fs_err2;
-  short *fs_err3, *fs_err4;
-  short *range_limiter;
+  const short *fs_err1, *fs_err2;
+  const short *fs_err3, *fs_err4;
+  const short *range_limiter;
   int src_bytes, dest_bytes;
   unsigned char *src, *dest;
   unsigned char *src_buf, *dest_buf;
@@ -3521,7 +3560,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 
-  error_limiter = init_error_limit ();
+  error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
 
   src_buf = g_malloc (width * src_bytes);
@@ -3686,9 +3725,9 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   ColorFreq *cachep;
   Color *color;
   int *error_limiter;
-  short *fs_err1, *fs_err2;
-  short *fs_err3, *fs_err4;
-  short *range_limiter;
+  const short *fs_err1, *fs_err2;
+  const short *fs_err3, *fs_err4;
+  const short *range_limiter;
   int src_bytes, dest_bytes;
   unsigned char *src, *dest;
   unsigned char *src_buf, *dest_buf;
@@ -3733,7 +3772,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 
-  error_limiter = init_error_limit ();
+  error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
 
   src_buf = g_malloc (width * src_bytes);
@@ -3986,15 +4025,24 @@ initialize_median_cut (int type,
 	  palette_type == MONO_PALETTE || palette_type == CUSTOM_PALETTE)
 	switch (dither_type)
 	  {
-	  case NODITHER:
+	  case NODESTRUCT_DITHER:
+	  default:
+	    g_warning("Uh-oh, bad dither type, W1");
+	  case NO_DITHER:
 	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	    quantobj->second_pass = median_cut_pass2_no_dither_rgb;
 	    break;
-	  case FSDITHER:
+	  case FS_DITHER:
+	    quantobj->error_freedom = 0;
 	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	    quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
 	    break;
-	  case FIXEDDITHER:
+	  case FSLOWBLEED_DITHER:
+	    quantobj->error_freedom = 1;
+	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
+	    quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
+	    break;
+	  case FIXED_DITHER:
 	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	    quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
 	    break;
@@ -4002,15 +4050,24 @@ initialize_median_cut (int type,
       else
 	switch (dither_type)
 	  {
-	  case NODITHER:
+	  case NODESTRUCT_DITHER:
+	  default:
+	    g_warning("Uh-oh, bad dither type, W2");
+	  case NO_DITHER:
 	    quantobj->second_pass_init = median_cut_pass2_gray_init;
 	    quantobj->second_pass = median_cut_pass2_no_dither_gray;
 	    break;
-	  case FSDITHER:
+	  case FS_DITHER:
+	    quantobj->error_freedom = 0;
 	    quantobj->second_pass_init = median_cut_pass2_gray_init;
 	    quantobj->second_pass = median_cut_pass2_fs_dither_gray;
 	    break;
-	  case FIXEDDITHER:
+	  case FSLOWBLEED_DITHER:
+	    quantobj->error_freedom = 1;
+	    quantobj->second_pass_init = median_cut_pass2_gray_init;
+	    quantobj->second_pass = median_cut_pass2_fs_dither_gray;
+	    break;
+	  case FIXED_DITHER:
 	    quantobj->second_pass_init = median_cut_pass2_gray_init;
 	    quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
 	    break;
@@ -4036,19 +4093,25 @@ initialize_median_cut (int type,
 	}
       switch (dither_type)
 	{
-	case NODITHER:
+	case NO_DITHER:
 	  quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	  quantobj->second_pass = median_cut_pass2_no_dither_rgb;
 	  break;
-	case FSDITHER:
+	case FS_DITHER:
+	  quantobj->error_freedom = 0;
 	  quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	  quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
 	  break;
-	case NODESTRUCTDITHER:
+	case FSLOWBLEED_DITHER:
+	  quantobj->error_freedom = 1;
+	  quantobj->second_pass_init = median_cut_pass2_rgb_init;
+	  quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
+	  break;
+	case NODESTRUCT_DITHER:
 	  quantobj->second_pass_init = NULL;
 	  quantobj->second_pass = median_cut_pass2_nodestruct_dither_rgb;
 	  break;
-	case FIXEDDITHER:
+	case FIXED_DITHER:
 	  quantobj->second_pass_init = median_cut_pass2_rgb_init;
 	  quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
 	  break;
