@@ -1,3 +1,8 @@
+Mon Jan 10 01:13:02 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/gimage.pdb: Made appropriate changes to
+	reflect Nick's previous change
+
 Mon Jan 10 06:10:00 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 
 	* app/gimage_cmds.c: Check resolution validity here too.

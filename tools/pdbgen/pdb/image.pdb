@@ -1187,11 +1187,22 @@ HELP
     foreach $coord (qw(x y)) {
 	my $arg = $inargs[$count];
 	$arg->{name} =~ s/res/"${coord}res"/e;
-	$arg->{alias} = "gimage->$arg->{name}";
-	$arg->{no_declare} = 1;
 	$arg->{desc} .= "in the $coord-axis, in dots per inch";
 	$count++;
     }
+
+    $invoke{code} = <<'CODE';
+{
+  if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+    success = FALSE;
+  else
+    {
+      gimage->xresolution = xresolution;
+      gimage->yresolution = yresolution;
+    }
+}
+CODE
 CODE2
 
 my $unit_help = <<'HELP';
@@ -1323,7 +1334,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "gimage.h");
+@headers = qw(<string.h> "gimage.h" "libgimp/gimplimits.h");
 
 $extra{app}->{code} = <<'CODE';
 /* Yuup, this is somewhat unsmooth, to say the least */

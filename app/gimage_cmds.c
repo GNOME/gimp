@@ -3323,24 +3323,28 @@ static Argument *
 image_set_resolution_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  gdouble xresolution, yresolution;
   GimpImage *gimage;
+  gdouble xresolution;
+  gdouble yresolution;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
   xresolution = args[1].value.pdb_float;
-  yresolution = args[2].value.pdb_float;
 
-  if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
-    success = FALSE;
+  yresolution = args[2].value.pdb_float;
 
   if (success)
     {
-      gimage->xresolution = args[1].value.pdb_float;
-      gimage->yresolution = args[2].value.pdb_float;
+      if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+	  yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
+	success = FALSE;
+      else
+	{
+	  gimage->xresolution = xresolution;
+	  gimage->yresolution = yresolution;
+	}
     }
 
   return procedural_db_return_args (&image_set_resolution_proc, success);
