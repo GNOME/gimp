@@ -72,7 +72,9 @@
                                           GRAY
                                           "Bumpmap"
                                           100
-                                          NORMAL-MODE))))
+                                          NORMAL-MODE)))
+         (bevelling-whole-image TRUE)
+         (select))
 
     (gimp-context-push)
 

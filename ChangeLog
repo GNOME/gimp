@@ -1,5 +1,10 @@
 2004-10-13  Kevin Cozens  <kcozens@cvs.gimp.org>
 
+	* plug-ins/script-fu/scripts/add-bevel.scm: two variables were
+	not defined before first use (bug #153900).
+
+2004-10-13  Kevin Cozens  <kcozens@cvs.gimp.org>
+
 	* app/widgets/gimpactionview.c: Fixed a spelling error.
 
 2004-10-13  DindinX  <dindinx@gimp.org>
