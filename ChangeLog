@@ -1,3 +1,8 @@
+2000-08-17  Nick Lamb  <njl195@zepler.org.uk>
+
+        * app/fileops.c: I venture once again into app/ to fix #11701.
+        This fix is somewhat evil. Tell me (rather than reverting it)
+        if you find a case for which it does not work.
 
 Thu Aug 17 22:07:50 BST 2000 Andy Thomas <alt@gimp.org>
 

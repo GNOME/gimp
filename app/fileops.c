@@ -151,6 +151,9 @@ static gint    file_check_magic_list        (GSList        *magics_list,
 static void    file_update_menus            (GSList        *procs,
 					     gint           image_type);
 
+static GSList* clist_to_slist               (GtkCList *file_list);
+
+
 
 static GtkWidget  *fileload = NULL;
 static GtkWidget  *filesave = NULL;
@@ -1451,7 +1454,6 @@ file_open_genbutton_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   GimpImage *gimage_to_be_thumbed;
-  gchar     *filename;
   guchar    *RGBbuf;
   TempBuf   *tempbuf;
   gint       RGBbuf_w;
@@ -1459,7 +1461,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   /* added for multi-file preview generation... */
   GtkFileSelection *fs;
-  gchar *mfilename = NULL;
+  gchar *full_filename = NULL;
   gchar *filedirname;
   struct stat buf;
   gint err;
@@ -1472,98 +1474,74 @@ file_open_genbutton_callback (GtkWidget *widget,
       return;
     }
 
-  filename = g_strdup (preview_fullname);
-
   gimp_add_busy_cursors ();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
   /* new mult-file preview make: */  
   {
-    GList *row = GTK_CLIST (fs->file_list)->row_list;
-    gint   rownum = 0;
-    gchar *temp;
+    GSList *list;
 
-    filedirname = g_dirname (filename);
+    /* Have to read the clist before touching anything else */
 
-    while (row)
+    list= clist_to_slist(GTK_CLIST(fs->file_list));
+
+    /* Find a real base directory for the multiple selection */
+
+    gtk_file_selection_set_filename (fs, "");
+    filedirname= gtk_file_selection_get_filename (fs);
+
+    while(list)
       {
-	if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
-	  {
-	    if (gtk_clist_get_cell_type (GTK_CLIST (fs->file_list),
-					 rownum, 0) == GTK_CELL_TEXT)
-	      {
-		gtk_clist_get_text (GTK_CLIST (fs->file_list),
-				    rownum, 0, &temp);
+        full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
+                                 (char *) list->data, NULL);
 
-		mfilename = g_strdup (temp);
+	err = stat (full_filename, &buf);
 
-		err = stat (mfilename, &buf);
+	if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+	  { /* Is not directory. */
+	    gint dummy;
 
-		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+	    gimage_to_be_thumbed = file_open_image (full_filename,
+						    list->data,
+						    NULL,
+						    RUN_NONINTERACTIVE,
+						    &dummy);
+
+	    if (gimage_to_be_thumbed)
+	      {			
+		tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
+		RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
+						    &RGBbuf_w,
+						    &RGBbuf_h);
+		if (thumbnail_mode)
 		  {
-		    /* Is not directory. */
-		    gint dummy;
-
-		    if (err)
-		      {
-			g_free (mfilename);
-			mfilename = g_strconcat (filedirname,
-						 G_DIR_SEPARATOR_S,
-						 temp, NULL);
-		      }
-
-		    gimage_to_be_thumbed = file_open_image (mfilename,
-							    temp,
-							    NULL,
-							    RUN_NONINTERACTIVE,
-							    &dummy);
-
-		    if (gimage_to_be_thumbed)
-		      {			
-			tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
-			RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
-							    &RGBbuf_w,
-							    &RGBbuf_h);
-			switch (thumbnail_mode)
-			  {
-			  case 0:
-			    break;
-			  default:
-			    file_save_thumbnail (gimage_to_be_thumbed,
-						 mfilename, tempbuf);
-			  }
-			set_preview (mfilename, RGBbuf, RGBbuf_w, RGBbuf_h);
-
-			gimage_delete (gimage_to_be_thumbed);
-
-			if (RGBbuf)
-			  g_free (RGBbuf);
-		      }
-		    else
-		      {
-			gtk_label_set_text (GTK_LABEL (open_options_label),
-					    _("(could not make preview)"));
-		      }
+		    file_save_thumbnail (gimage_to_be_thumbed,
+						 full_filename, tempbuf);
 		  }
+		set_preview (full_filename, RGBbuf, RGBbuf_w, RGBbuf_h);
+
+		gimage_delete (gimage_to_be_thumbed);
+
+		if (RGBbuf)
+		  g_free (RGBbuf);
+	      }
+	    else
+	      {
+		gtk_label_set_text (GTK_LABEL (open_options_label),
+				    _("(could not make preview)"));
 	      }
 	  }
-	if (mfilename)
-	  {
-	    g_free (mfilename);
-	    mfilename = NULL;
-	  }
-      	rownum++;
-	row = g_list_next (row);
+
+        g_free(full_filename);
+        g_free(list->data);
+        list= g_slist_next(list);
       }
+    g_slist_free(list);
+    list= NULL;
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   gimp_remove_busy_cursors (NULL);
-
-  if (filedirname)
-    g_free (filedirname);
-
-  g_free (filename);
 }
 
 static void
@@ -1571,28 +1549,26 @@ file_open_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   GtkFileSelection *fs;
-  gchar *filename;
-  gchar *raw_filename;
-  gchar *mfilename = NULL;
+  gchar *full_filename, *raw_filename;
   gchar *filedirname;
   struct stat buf;
   gint err;
   gint status;
 
   fs = GTK_FILE_SELECTION (data);
-  filename = gtk_file_selection_get_filename (fs);
+  full_filename = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
 
-  g_assert (filename && raw_filename);
+  g_assert (full_filename && raw_filename);
 
   if (strlen (raw_filename) == 0)
     return;
 
-  err = stat (filename, &buf);
+  err = stat (full_filename, &buf);
 
   if (err == 0 && (buf.st_mode & S_IFDIR))
     {
-      GString *s = g_string_new (filename);
+      GString *s = g_string_new (full_filename);
       if (s->str[s->len - 1] != G_DIR_SEPARATOR)
 	{
 	  g_string_append_c (s, G_DIR_SEPARATOR);
@@ -1604,10 +1580,10 @@ file_open_ok_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
-  if (err)
-    filename = raw_filename;
+  if (err) /* e.g. http://server/filename.jpg */
+    full_filename = raw_filename;
 
-  status = file_open (filename, raw_filename);
+  status = file_open (full_filename, raw_filename);
 
   if (status == PDB_SUCCESS)
     {
@@ -1615,107 +1591,89 @@ file_open_ok_callback (GtkWidget *widget,
     }
   else if (status != PDB_CANCEL)
     {
-      g_message (_("Open failed.\n%s"), filename);
+      g_message (_("Open failed.\n%s"), full_filename);
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 
   /*
    * Now deal with multiple selections from the filesel clist
    */
 
-  /*
-   * FIXME: cope with cwd != fileselcwd != dirname(filename)
-   */
-
-  /*
   {
-    HistoryCallbackArg *callback_arg;
-    GList *row = fs->history_list;
+    GSList *list;
 
-    while (row)
+    /* Have to read the clist before touching anything else */
+
+    list= clist_to_slist(GTK_CLIST(fs->file_list));
+
+    /* Find a real base directory for the multiple selection */
+
+    raw_filename= g_strdup(raw_filename);
+    gtk_file_selection_set_filename (fs, "");
+    filedirname= gtk_file_selection_get_filename (fs);
+
+    while(list)
       {
-	callback_arg = row->data;
+        full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
+                                 (char *) list->data, NULL);
 
-	printf ("(%s)\n", callback_arg->directory );
+        if (strcmp (list->data, raw_filename))
+          { /* don't load current selection twice */
 
-	row = g_list_next (row);
+            err = stat (full_filename, &buf);
+
+            if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+              { /* Is not directory. */
+
+                status = file_open (full_filename, (char *) list->data);
+
+                if (status == PDB_SUCCESS)
+                  {
+                    file_dialog_hide (data);
+                  }
+                else if (status != PDB_CANCEL)
+                  {
+                    g_message (_("Open failed.\n%s"), full_filename);
+                  }
+              }
+          }
+     
+        g_free(full_filename);
+        g_free(list->data);
+        list= g_slist_next(list);
       }
-      }*/
-
-  /*  filedirname = fs->history_list->data;*/
-  
-  filedirname = g_dirname (filename);
-
-  {
-    GList *row = GTK_CLIST (fs->file_list)->row_list;
-    gint   rownum = 0;
-    gchar *temp;
-
-    while (row)
-      {
-	if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
-	  {
-	    if (gtk_clist_get_cell_type (GTK_CLIST (fs->file_list),
-					 rownum, 0) == GTK_CELL_TEXT)
-	      {
-		gtk_clist_get_text (GTK_CLIST (fs->file_list),
-				    rownum, 0, &temp);
-
-		/* When doing multiple selections, the name
-		 * of the first item touched with the cursor will
-		 * become the text-field default - and we don't
-		 * want to load that twice.
-		 */
-		if (strcmp (temp, raw_filename) == 0)
-		  {
-		    goto next_iter;
-		  }
-
-		mfilename = g_strdup (temp);
-
-		err = stat (mfilename, &buf);
-
-		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-		  {
-		    /* Is not directory. */
-		    if (err)
-		      {
-			g_free (mfilename);
-			mfilename = g_strconcat (filedirname,
-						 G_DIR_SEPARATOR_S,
-						 temp, NULL);
-		      }
-
-		    status = file_open (mfilename, temp);
-
-		    if (status == PDB_SUCCESS)
-		      {
-			file_dialog_hide (data);
-		      }
-		    else if (status != PDB_CANCEL)
-		      {
-			g_message (_("Open failed.\n%s"), mfilename);
-		      }
-
-		    gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-		  }
-	      }
-	  }
-
-      next_iter:
-	if (mfilename)
-	  {
-	    g_free (mfilename);
-	    mfilename = NULL;
-	  }
-	rownum++;
-	row = g_list_next (row);
-      }
+    g_slist_free(list);
+    list= NULL;
   }
+    
+  gtk_file_selection_set_filename (fs, raw_filename);
+  g_free(raw_filename);
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 
-  if (filedirname)
-    g_free (filedirname);
+}
+
+static GSList *
+clist_to_slist (GtkCList *file_list)
+{
+  GSList *list = NULL;
+  GList *row = file_list->row_list;
+  gint   rownum = 0;
+  gchar *temp;
+  
+  while (row)
+    {
+      if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
+        {
+          if (gtk_clist_get_cell_type (file_list, rownum, 0) == GTK_CELL_TEXT)
+            {
+              gtk_clist_get_text (file_list, rownum, 0, &temp);
+              list = g_slist_prepend(list, strdup(temp));
+            }
+        }
+      rownum++;
+      row = g_list_next (row);
+    }
+  return list;
 }
 
 static void
