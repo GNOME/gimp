@@ -38,6 +38,7 @@
 #include "gimpperspectivetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+#include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -64,6 +65,7 @@ static gchar  matrix_row_buf [3][MAX_INFO_BUF];
 
 static GimpTransformToolClass *parent_class = NULL;
 
+static TransformOptions *perspective_options = NULL;
 
 /*  public functions  */
 
@@ -204,6 +206,15 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 
   tool    = GIMP_TOOL (perspective_tool);
   tr_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
+
+  if (! perspective_options)
+    {
+      perspective_options = transform_options_new (GIMP_TYPE_PERSPECTIVE_TOOL,
+                                            transform_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_PERSPECTIVE_TOOL,
+                                          (ToolOptions *) perspective_options);
+    }
 
   tool->tool_cursor   = GIMP_PERSPECTIVE_TOOL_CURSOR;
 

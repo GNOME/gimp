@@ -45,6 +45,7 @@
 #include "gimprotatetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+#include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -92,6 +93,7 @@ static GtkWidget *sizeentry = NULL;
 
 static GimpTransformToolClass *parent_class = NULL;
 
+static TransformOptions *rotate_options = NULL;
 
 /*  public functions  */
 
@@ -185,6 +187,15 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   tool    = GIMP_TOOL (rotate_tool);
   tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
+
+  if (! rotate_options)
+    {
+      rotate_options = transform_options_new (GIMP_TYPE_ROTATE_TOOL,
+                                            transform_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
+                                          (ToolOptions *) rotate_options);
+    }
 
   tool->tool_cursor   = GIMP_ROTATE_TOOL_CURSOR;
 

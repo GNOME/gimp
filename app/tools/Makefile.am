@@ -79,6 +79,8 @@ libapptools_la_SOURCES = \
 	gimptransformtool.c	\
 	gimptransformtool.h	\
 	\
+	transform_options.c     \
+	transform_options.h     \
 	paint_options.c		\
 	paint_options.h		\
 	selection_options.c	\

@@ -29,13 +29,6 @@
 #include "gui/info-dialog.h"
 #include "gdisplay.h"
 
-#include "tool_options.h"
-#include "gimptool.h"
-#include "gimpdrawtool.h"
-#include "gimptransformtool.h"
-#include "gimpscaletool.h"
-#include "tool_manager.h"
-
 #include "drawable.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
@@ -43,6 +36,11 @@
 #include "selection.h"
 #include "tile_manager.h"
 #include "undo.h"
+
+#include "gimpscaletool.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+#include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -78,6 +76,8 @@ static gchar      y_ratio_buf[MAX_INFO_BUF];
 /*  needed for original size unit update  */
 static GtkWidget *sizeentry = NULL;
 static GimpTransformToolClass *parent_class = NULL;
+
+static TransformOptions *scale_options = NULL;
 
 
 void
@@ -142,6 +142,15 @@ gimp_scale_tool_init (GimpScaleTool *sc_tool)
 
   tool    = GIMP_TOOL (sc_tool);
   tr_tool = GIMP_TRANSFORM_TOOL (sc_tool); 
+
+  if (! scale_options)
+    {
+      scale_options = transform_options_new (GIMP_TYPE_SCALE_TOOL,
+                                            transform_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_SCALE_TOOL,
+                                          (ToolOptions *) scale_options);
+    }
 
   tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;
 

@@ -44,6 +44,7 @@
 #include "gimpsheartool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+#include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -86,6 +87,8 @@ static gdouble  xshear_val;
 static gdouble  yshear_val;
 
 static GimpTransformToolClass *parent_class = NULL;
+
+static TransformOptions *shear_options = NULL;
 
 
 /* Public functions */
@@ -179,6 +182,15 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
 
   tool    = GIMP_TOOL (shear_tool);
   tr_tool = GIMP_TRANSFORM_TOOL (shear_tool);
+
+  if (! shear_options)
+    {
+      shear_options = transform_options_new (GIMP_TYPE_SHEAR_TOOL,
+                                            transform_options_reset);
+
+      tool_manager_register_tool_options (GIMP_TYPE_SHEAR_TOOL,
+                                          (ToolOptions *) shear_options);
+    }
 
   tool->tool_cursor   = GIMP_SHEAR_TOOL_CURSOR;
 

@@ -50,12 +50,11 @@
 #include "tile_manager.h"
 #include "tile.h"
 
-#include "tools/gimptool.h"
-#include "tools/gimptoolinfo.h"
-#include "tools/tool_manager.h"
-#include "tools/tool_options.h"
-#include "tools/gimpdrawtool.h"
-#include "tools/gimptransformtool.h"
+#include "gimptoolinfo.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+#include "transform_options.h"
+#include "gimptransformtool.h"
 
 #include "tools/gimpperspectivetool.h"
 #include "tools/gimprotatetool.h"
@@ -70,38 +69,6 @@ enum
 {
   TRANSFORM,
   LAST_SIGNAL
-};
-
-
-typedef struct _TransformOptions TransformOptions;
-
-struct _TransformOptions
-{
-  ToolOptions  tool_options;
-
-  gboolean     smoothing;
-  gboolean     smoothing_d;
-  GtkWidget   *smoothing_w;
-
-  gint	       direction;
-  gint         direction_d;
-  GtkWidget   *direction_w[2];  /* 2 radio buttons */
-
-  gboolean     show_grid;
-  gboolean     show_grid_d;
-  GtkWidget   *show_grid_w;
-
-  gint	       grid_size;
-  gint         grid_size_d;
-  GtkObject   *grid_size_w;
-
-  gboolean     clip;
-  gboolean     clip_d;
-  GtkWidget   *clip_w;
-
-  gboolean     showpath;
-  gboolean     showpath_d;
-  GtkWidget   *showpath_w;
 };
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
@@ -163,16 +130,12 @@ static void    gimp_transform_tool_control     (GimpTool               *tool,
 
 static void    gimp_transform_tool_draw        (GimpDrawTool           *draw_tool);
 
-static TransformOptions * transform_options_new   (void);
-static void               transform_options_reset (ToolOptions *tool_options);
-
 
 /*  variables  */
 static TranInfo           old_trans_info;
 InfoDialog               *transform_info        = NULL;
 static gboolean           transform_info_inited = FALSE;
 static GimpDrawToolClass *parent_class          = NULL;
-static TransformOptions  *transform_options     = NULL;
 static guint gimp_transform_tool_signals[LAST_SIGNAL] = { 0 };
 
 
@@ -261,22 +224,6 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 
-  if (! transform_options)
-    {
-      transform_options = transform_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
-					  (ToolOptions *) transform_options);
-      tool_manager_register_tool_options (GIMP_TYPE_SCALE_TOOL,
-					  (ToolOptions *) transform_options);
-      tool_manager_register_tool_options (GIMP_TYPE_SHEAR_TOOL,
-					  (ToolOptions *) transform_options);
-      tool_manager_register_tool_options (GIMP_TYPE_PERSPECTIVE_TOOL,
-					  (ToolOptions *) transform_options);
-
-      /*  press all default buttons  */
-      transform_options_reset ((ToolOptions *) transform_options);
-    }
 }
 
 TileManager *
@@ -1749,267 +1696,4 @@ gimp_transform_tool_cubic (gdouble dx,
 #endif
 
   return result;
-}
-
-static void
-gimp_transform_tool_show_grid_update (GtkWidget *widget,
-        	 		      gpointer   data)
-{
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
-  if (first_call)
-    {
-      first_call = FALSE;
-      return;
-    }
-
-  gimp_toggle_button_update (widget, data);
-
-  gimp_transform_tool_grid_density_changed ();
-}
-
-static void
-gimp_transform_tool_show_path_update (GtkWidget *widget,
-				      gpointer   data)
-{
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
-  if (first_call)
-    {
-      first_call = FALSE;
-      return;
-    }
-
-  gimp_transform_tool_showpath_changed (1); /* pause */
-  gimp_toggle_button_update (widget, data);
-  gimp_transform_tool_showpath_changed (0); /* resume */
-}
-
-static void
-gimp_transform_tool_direction_callback (GtkWidget *widget,
-			                gpointer   data)
-{
-  long dir = (long) data;
-
-  if (dir == TRANSFORM_TRADITIONAL)
-    transform_options->direction = TRANSFORM_TRADITIONAL;
-  else
-    transform_options->direction = TRANSFORM_CORRECTIVE;
-}
-
-static void
-gimp_transform_tool_grid_density_callback (GtkWidget *widget,
-				           gpointer   data)
-{
-  transform_options->grid_size =
-    (int) (pow (2.0, 7.0 - GTK_ADJUSTMENT (widget)->value) + 0.5);
-
-  gimp_transform_tool_grid_density_changed ();
-}
-
-static void
-transform_options_reset (ToolOptions *tool_options)
-{
-  TransformOptions *options;
-
-  options = (TransformOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
-				options->smoothing_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->showpath_w),
-				options->showpath_d);
-  gtk_toggle_button_set_active (((options->direction_d == TRANSFORM_TRADITIONAL) ?
-				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
-				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
-				TRUE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
-				options->show_grid_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
-			    7.0 - log (options->grid_size_d) / log (2.0));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
-				options->clip_d);
-}
-
-static TransformOptions *
-transform_options_new (void)
-{
-  TransformOptions *options;
-
-  GtkWidget *table;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
-  GtkWidget *label;
-  GtkWidget *frame;
-  GtkWidget *fbox;
-  GtkWidget *grid_density;
-
-  options = g_new0 (TransformOptions, 1);
-  tool_options_init ((ToolOptions *) options,
-		     transform_options_reset);
-
-  options->smoothing = options->smoothing_d = TRUE;
-  options->showpath  = options->showpath_d  = TRUE;
-  options->clip      = options->clip_d      = FALSE;
-  options->direction = options->direction_d = TRANSFORM_TRADITIONAL;
-  options->grid_size = options->grid_size_d = 32;
-  options->show_grid = options->show_grid_d = TRUE;
-
-
-  /*  the top hbox (containing two frames) */
-  hbox2 = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), hbox2,
-		      FALSE, FALSE, 0);
-
-  /*  the second radio frame and box, for transform direction  */
-  frame = gimp_radio_group_new (TRUE, _("Tool Paradigm"),
-
-				_("Traditional"), gimp_transform_tool_direction_callback,
-				TRANSFORM_TRADITIONAL, NULL,
-				&options->direction_w[0], TRUE,
-
-				_("Corrective"), gimp_transform_tool_direction_callback,
-				TRANSFORM_CORRECTIVE, NULL,
-				&options->direction_w[1], FALSE,
-
-				NULL);
-
-  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  /*  the grid frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0);
-
-  fbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (fbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), fbox);
-
-  /*  the show grid toggle button  */
-  options->show_grid_w = gtk_check_button_new_with_label (_("Show Grid"));
-  gtk_signal_connect (GTK_OBJECT (options->show_grid_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_show_grid_update),
-		      &options->show_grid);
-  gtk_box_pack_start (GTK_BOX (fbox), options->show_grid_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->show_grid_w);
-  
-  /*  the grid density entry  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (fbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Density:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->grid_size_w =
-    gtk_adjustment_new (7.0 - log (options->grid_size_d) / log (2.0), 0.0, 5.0,
-			1.0, 1.0, 0.0);
-  grid_density =
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
-  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
-  gtk_signal_connect (GTK_OBJECT (options->grid_size_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_grid_density_callback),
-		      &options->grid_size);
-  gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
-  gtk_widget_show (grid_density);
-  gtk_widget_set_sensitive (label, options->show_grid_d);
-  gtk_widget_set_sensitive (grid_density, options->show_grid_d);
-  gtk_object_set_data (GTK_OBJECT (options->show_grid_w), "set_sensitive",
-		       grid_density);
-  gtk_object_set_data (GTK_OBJECT (grid_density), "set_sensitive", label);  
-
-  gtk_widget_show (fbox);
-  gtk_widget_show (frame);
-
-  gtk_widget_show (hbox2);
-
-  /* the main table */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
-		      FALSE, FALSE, 0);
-
-  /*  the smoothing toggle button  */
-  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->smoothing);
-  gtk_table_attach_defaults (GTK_TABLE (table), 
-			     options->smoothing_w, 0, 1, 0, 1);
-  gtk_widget_show (options->smoothing_w);
-
-  /*  the showpath toggle button  */
-  options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
-  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_show_path_update),
-		      &options->showpath);
-  gtk_table_attach_defaults (GTK_TABLE (table), 
-			     options->showpath_w, 1, 2, 0, 1);
-  gtk_widget_show (options->showpath_w);
-
-  gtk_widget_show (table);
-
-  /*  the clip resulting image toggle button  */
-  options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
-  gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->clip);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), 
-		      options->clip_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->clip_w);
-  
-  return options;
-}
-
-gboolean
-gimp_transform_tool_smoothing (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->smoothing;
-}
-
-gboolean
-gimp_transform_tool_showpath (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->showpath;
-}
-
-gboolean
-gimp_transform_tool_clip (void)
-{
-  if (!transform_options)
-    return FALSE;
-  else
-    return transform_options->clip;
-}
-
-gint
-gimp_transform_tool_direction (void)
-{
-  if (!transform_options)
-    return TRANSFORM_TRADITIONAL;
-  else
-    return transform_options->direction;
-}
-
-gint
-gimp_transform_tool_grid_size (void)
-{
-  if (!transform_options)
-    return 32;
-  else
-    return transform_options->grid_size;
-}
-
-gboolean
-gimp_transform_tool_show_grid (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->show_grid;
 }
