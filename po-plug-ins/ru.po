@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-05-26 23:52-0700\n"
-"PO-Revision-Date: 2000-05-24 14:18+00:00\n"
+"POT-Creation-Date: 2000-06-04 15:17+0000\n"
+"PO-Revision-Date: 2000-06-04 15:34+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "О программе"
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1383
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/CML_explorer.c:1174
 #: plug-ins/common/CML_explorer.c:1932 plug-ins/common/CML_explorer.c:2252
-#: plug-ins/common/aa.c:346 plug-ins/common/align_layers.c:425
+#: plug-ins/common/aa.c:344 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
 #: plug-ins/common/bumpmap.c:848 plug-ins/common/checkerboard.c:349
@@ -123,7 +123,7 @@ msgstr "Да"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 #: plug-ins/Lighting/lighting_ui.c:1078 plug-ins/MapObject/mapobject_ui.c:1385
 #: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/CML_explorer.c:1176
-#: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:348
+#: plug-ins/common/CML_explorer.c:2254 plug-ins/common/aa.c:346
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
 #: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:850
@@ -1024,7 +1024,7 @@ msgstr "Включить сглаживание"
 
 #: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
+msgstr "Включить/Выключить удаление зубчатых краев (сглаживание)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:592
@@ -2072,12 +2072,12 @@ msgid "Error: failed to load parameters"
 msgstr "Ошибка: не удалось загрузить параметры"
 
 #. Create the actual window.
-#: plug-ins/common/aa.c:341
+#: plug-ins/common/aa.c:339
 msgid "Save as Text"
 msgstr "Сохранить как текст"
 
 #. file save type
-#: plug-ins/common/aa.c:358 plug-ins/common/pnm.c:945
+#: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:945
 #: plug-ins/common/sunras.c:1589
 msgid "Data Formatting"
 msgstr "Форматирование данных"
@@ -2446,9 +2446,8 @@ msgstr "Инвертировать рельеф"
 
 #. Tile bumpmap
 #: plug-ins/common/bumpmap.c:973
-#, fuzzy
 msgid "Tile Bumpmap"
-msgstr "Рельеф"
+msgstr ""
 
 #: plug-ins/common/bumpmap.c:1004
 msgid "Bump Map:"
@@ -8349,6 +8348,8 @@ msgid ""
 "Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
 msgstr ""
+"Показать кадр просмотра с выбранным\n"
+"исх.слоем в текущей управляющей точке."
 
 #: plug-ins/gap/gap_mov_dialog.c:489
 msgid "Anim Preview"
@@ -8421,15 +8422,18 @@ msgid ""
 "Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
+"Как вставлять исх.слой в\n"
+"стопку слоев кадра назначения\n"
+"0 означает сверху, т.е. спереди "
 
 #. toggle force visibility
 #: plug-ins/gap/gap_mov_dialog.c:608
 msgid "Force visibility"
-msgstr ""
+msgstr "Принудительная видимость"
 
 #: plug-ins/gap/gap_mov_dialog.c:614
 msgid "Force visibility for all copied Src-Layers"
-msgstr ""
+msgstr "Принудительная видимость для всех скопированных исх.слоев"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:620
@@ -8459,9 +8463,8 @@ msgid "Object on one frame"
 msgstr "Объект в одном кадре"
 
 #: plug-ins/gap/gap_mov_dialog.c:772
-#, fuzzy
 msgid "Exact Object on frames"
-msgstr "Разрешить извлечение кадров"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:802
 msgid "Anim Preview Mode"
@@ -8561,6 +8564,8 @@ msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Coordinates"
 msgstr ""
+"Как помещать исх.слой в координатах\n"
+"управляющей точки"
 
 #. to avoid side effects while initialization
 #. the frame
@@ -8659,6 +8664,8 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
+"Фиксировать управляющую точку по номеру\n"
+"ключевого кадра (0 == нет ключевого кадра)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2044
 msgid "Add Point"
@@ -8683,6 +8690,9 @@ msgid ""
 "pick/drag with left button\n"
 "or move with right button"
 msgstr ""
+"Показать линии пути и позволить\n"
+"выбор/перетаскивание с помощью левой или\n"
+"перемещение с помощью правой кнопки мыши"
 
 #: plug-ins/gap/gap_mov_dialog.c:2073
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
@@ -8843,9 +8853,8 @@ msgid "Reset Keyframes"
 msgstr "Сбросить ключевые кадры"
 
 #: plug-ins/gap/gap_mov_dialog.c:2743
-#, fuzzy
 msgid "Move Path Controlpointcheck"
-msgstr "Показать последнюю контрольную точку"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2744
 msgid "Errors:"
@@ -9376,7 +9385,7 @@ msgstr "Разрешить прозрачность"
 
 #: plug-ins/gap/gap_range_ops.c:360
 msgid "Enable dithering of transparency"
-msgstr ""
+msgstr "Включить смешивание прозрачности"
 
 #: plug-ins/gap/gap_range_ops.c:363
 msgid "Convert Frames to Indexed"
@@ -9489,6 +9498,8 @@ msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
 msgstr ""
+"Итоговый размер слоя создается из прямоугольных контуров\n"
+"всех видимых слоев (может отличаться от кадра к кадру)"
 
 #: plug-ins/gap/gap_range_ops.c:568
 msgid "Resulting Layer Size is the frame size"
@@ -9800,21 +9811,12 @@ msgstr "Неизвестный стиль шрифта \"%s\" для семейства \"%s\".\n"
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Фильтры/Визуализация/Динамический текст..."
 
-#: plug-ins/gdyntext/gdyntext.c:307
-msgid ""
-"Current layer isn't a GDynText layer or it has no alpha channel.\n"
-"  Forcing new layer creation.\n"
-msgstr ""
-"Текущий слой не является слоем динамического текста или не имеет "
-"альфа-канала.\n"
-"  Запущено создание нового слоя.\n"
-
-#: plug-ins/gdyntext/gdyntext.c:354
+#: plug-ins/gdyntext/gdyntext.c:351
 #, c-format
 msgid "Upgrading old GDynText layer to %s\n"
 msgstr "Обновление старого слоя GDynText до %s\n"
 
-#: plug-ins/gdyntext/gdyntext.c:358
+#: plug-ins/gdyntext/gdyntext.c:355
 #, c-format
 msgid ""
 "WARNING: GDynText is too old!\n"
@@ -9828,15 +9830,15 @@ msgstr ""
 "  Получите ее с %s\n"
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:397
+#: plug-ins/gdyntext/gdyntext.c:394
 msgid "GDynText Layer "
 msgstr "Слой динамического текста"
 
-#: plug-ins/gdyntext/gdyntext.c:434
+#: plug-ins/gdyntext/gdyntext.c:431
 msgid "GIMP Dynamic Text"
 msgstr "Динамический текст в Gimp"
 
-#: plug-ins/gdyntext/gdyntext.c:536
+#: plug-ins/gdyntext/gdyntext.c:533
 msgid "GDynText Layer"
 msgstr "Слой динамического текста"
 
@@ -12095,7 +12097,7 @@ msgstr "Показывать обработчик области"
 
 #: plug-ins/imagemap/imap_preferences.c:459
 msgid "Keep NCSA circles true"
-msgstr ""
+msgstr "Сохранить NCSA окружности"
 
 #: plug-ins/imagemap/imap_preferences.c:461
 msgid "Show area URL tip"
@@ -12277,6 +12279,8 @@ msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"Неправильный размер выделения.\n"
+"Лабиринт не будет работать правильно."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:588
@@ -12730,11 +12734,11 @@ msgstr "В"
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
 msgid "Treat as this"
-msgstr ""
+msgstr "Обрабатывать как это"
 
 #: plug-ins/rcm/rcm_dialog.c:490
 msgid "Change to this"
-msgstr ""
+msgstr "Изменить до этого"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:501
@@ -13085,10 +13089,3 @@ msgstr "Ошибка: невозможно прочитать файл свойств XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Ошибка: файл свойств XJT %s пуст"
-
-#~ msgid ""
-#~ "Sorry, no preview\n"
-#~ "for indexed images."
-#~ msgstr ""
-#~ "Извините, нет просмотра\n"
-#~ "для индексированных изображений."
