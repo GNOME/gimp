@@ -124,12 +124,6 @@ all other GIMP Library headers.
 @name: 
 @description: 
 
-<!-- ##### STRUCT GimpParamColor ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### STRUCT GimpParamRegion ##### -->
 <para>
 

@@ -14,7 +14,6 @@ GimpQueryProc
 GimpRunProc
 GimpPlugInInfo
 GimpParamDef
-GimpParamColor
 GimpParamRegion
 GimpParamData
 GimpParam
