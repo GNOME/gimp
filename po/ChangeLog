@@ -1,3 +1,8 @@
+1999-11-09  Tomas Ogren  <stric@ing.umu.se>
+
+	* POTFILES.in: app/undo.c belongs here too
+	* sv.po: Updated
+
 1999-11-03  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
