@@ -493,7 +493,7 @@ create_light_page (void)
                     &mapvals.lightsource.type);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("L_ight Type:"), 0.0, 0.5, combo, 1, TRUE);
+			     _("L_ight Type:"), 0.0, 0.5, combo, 1, FALSE);
 
   gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
 
@@ -509,7 +509,7 @@ create_light_page (void)
 		    NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Lig_ht Color:"), 0.0, 0.5,
-			     colorbutton, 1, TRUE);
+			     colorbutton, 1, FALSE);
 
   gimp_help_set_help_data (colorbutton,
 			   _("Set light source color"), NULL);
@@ -900,7 +900,7 @@ create_bump_page (void)
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Bumpm_ap Image:"), 0.0, 0.5,
-			     combo, 1, TRUE);
+			     combo, 1, FALSE);
 
   combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
                                   _("Logarithmic"), LOGARITHMIC_MAP,
@@ -915,7 +915,7 @@ create_bump_page (void)
                     &mapvals.bumpmaptype);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Cu_rve:"), 0.0, 0.5, combo, 1, TRUE);
+			     _("Cu_rve:"), 0.0, 0.5, combo, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
@@ -987,7 +987,7 @@ create_environment_page (void)
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("En_vironment Image:"), 0.0, 0.5,
-			     combo, 1, TRUE);
+			     combo, 1, FALSE);
   gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
 
   gtk_widget_show (page);
