@@ -1,3 +1,20 @@
+2003-08-21  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]: added _is_empty () that checks
+	if a stroke is empty.
+
+	* app/vectors/gimpbezierstroke.c: Implemented _anchor_delete ()
+
+	* app/vectors/gimpvectors.[ch]: added _stroke_remove ()
+
+	* app/tools/gimpvectortool.[ch]: implemented the deletion of
+	anchors. CTRL-Click on the anchor in Insert/Delete mode does
+	the trick. Also did some renaming to the Vector tool
+	(now Path tool) and set the Tooltip to something sane.
+
+	Folks, I think the new path tool is no longer a regression
+	against the 1.2 bezier select tool!
+
 2003-08-21  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/tools/gimpmovetool.c (gimp_move_tool_control): test

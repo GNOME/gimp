@@ -91,6 +91,8 @@ struct _GimpStrokeClass
                                           GimpAnchor            *neighbor,
                                           GimpVectorExtendMode   extend_mode);
                                           
+  gboolean      (* is_empty)             (const GimpStroke      *stroke);
+
   gdouble       (* get_length)           (const GimpStroke      *stroke);
 
   gdouble       (* get_distance)         (const GimpStroke      *stroke,
@@ -206,6 +208,8 @@ GimpAnchor * gimp_stroke_extend               (GimpStroke            *stroke,
                                                GimpAnchor            *neighbor,
                                                GimpVectorExtendMode   extend_mode);
                                           
+gboolean     gimp_stroke_is_empty             (const GimpStroke      *stroke);
+
 /* accessing the shape of the curve */
 
 gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke);

@@ -60,6 +60,8 @@ static void gimp_bezier_stroke_anchor_move_absolute (GimpStroke        *stroke,
 static void gimp_bezier_stroke_anchor_convert   (GimpStroke            *stroke,
                                                  GimpAnchor            *anchor,
                                                  GimpAnchorFeatureType  feature);
+static void gimp_bezier_stroke_anchor_delete        (GimpStroke        *stroke,
+                                                     GimpAnchor        *anchor);
 static gboolean gimp_bezier_stroke_anchor_is_insertable
                                                     (GimpStroke        *stroke,
                                                      GimpAnchor        *predec,
@@ -158,6 +160,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_relative = gimp_bezier_stroke_anchor_move_relative;
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
+  stroke_class->anchor_delete        = gimp_bezier_stroke_anchor_delete;
   stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
   stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
   stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
@@ -228,6 +231,32 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
   stroke->closed = closed ? TRUE : FALSE;
 
   return stroke;
+}
+
+static void
+gimp_bezier_stroke_anchor_delete (GimpStroke        *stroke,
+                                  GimpAnchor        *anchor)
+{
+  GList *list, *list2;
+  gint i;
+
+  /* Anchors always are surrounded by two handles that have to
+   * be deleted too */
+
+  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+  g_return_if_fail (anchor && anchor->type == GIMP_ANCHOR_ANCHOR);
+
+  list2 = g_list_find (stroke->anchors, anchor);
+  list = g_list_previous(list2);
+
+  for (i=0; i < 3; i++)
+    {
+      g_return_if_fail (list != NULL);
+      list2 = g_list_next (list);
+      gimp_anchor_free ((GimpAnchor *) list->data);
+      stroke->anchors = g_list_delete_link (stroke->anchors, list);
+      list = list2;
+    }
 }
 
 static gboolean

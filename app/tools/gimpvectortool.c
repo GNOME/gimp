@@ -121,11 +121,11 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_VECTOR_OPTIONS,
                 gimp_vector_options_gui,
                 0,
-                "gimp-vector-tool",
-                _("Vectors"),
-                _("the most promising path tool prototype... :-)"),
-                N_("/Tools/_Vectors"), NULL,
-                NULL, "tools/vector.html",
+                "gimp-path-tool",
+                _("Paths"),
+                _("Create and edit paths"),
+                N_("/Tools/_Paths"), NULL,
+                NULL, "tools/paths.html",
                 GIMP_STOCK_TOOL_PATH,
                 data);
 }
@@ -320,6 +320,23 @@ gimp_vector_tool_button_press (GimpTool        *tool,
               vector_tool->function = VECTORS_FINISHED;
             }
 
+          break;
+
+        case VECTORS_DELETE_ANCHOR:
+          if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                          gdisp, &anchor, &stroke)
+              && anchor->type == GIMP_ANCHOR_ANCHOR)
+            {
+              gimp_stroke_anchor_delete (stroke, anchor);
+
+              if (gimp_stroke_is_empty (stroke))
+                gimp_vectors_stroke_remove (vector_tool->vectors, stroke);
+
+              vector_tool->cur_stroke = NULL;
+              vector_tool->cur_anchor = NULL;
+              vector_tool->function = VECTORS_FINISHED;
+            }
+          
           break;
 
         default:
@@ -748,18 +765,8 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       return;
     }
 
-  anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords, NULL);
-
-  if (anchor && gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
-                                          coords->x,
-                                          coords->y,
-                                          GIMP_HANDLE_CIRCLE,
-                                          anchor->position.x,
-                                          anchor->position.y,
-                                          TARGET,
-                                          TARGET,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE))
+  if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                  gdisp, &anchor, NULL))
     {
       if (state & GDK_CONTROL_MASK)
         {
@@ -769,10 +776,18 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
             }
           else
             {
-              if (!options->polygonal)
-                vector_tool->function = VECTORS_MOVE_HANDLE;
+              if (edit_mode == GIMP_VECTOR_MODE_ADJUST
+                  && anchor->type == GIMP_ANCHOR_ANCHOR)
+                {
+                  vector_tool->function = VECTORS_DELETE_ANCHOR;
+                }
               else
-                vector_tool->function = VECTORS_MOVE_ANCHOR;
+                {
+                  if (!options->polygonal)
+                    vector_tool->function = VECTORS_MOVE_HANDLE;
+                  else
+                    vector_tool->function = VECTORS_MOVE_ANCHOR;
+                }
             }
         }
       else 
@@ -841,6 +856,9 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     case VECTORS_INSERT_ANCHOR:
       cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
+    case VECTORS_DELETE_ANCHOR:
+      cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
+      break;
     case VECTORS_MOVE_HANDLE:
     case VECTORS_CONVERT_EDGE:
       cmodifier = GIMP_CURSOR_MODIFIER_HAND;
@@ -854,7 +872,6 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     default:
       cursor = GIMP_BAD_CURSOR;
       cmodifier = GIMP_CURSOR_MODIFIER_NONE;
-      /* GIMP_CURSOR_MODIFIER_MINUS */
       break;
     }
 

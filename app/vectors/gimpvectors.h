@@ -55,6 +55,8 @@ struct _GimpVectorsClass
   /*  virtual functions  */
   void          (* stroke_add)        (GimpVectors       *vectors,
                                        GimpStroke        *stroke);
+  void          (* stroke_remove)     (GimpVectors       *vectors,
+                                       GimpStroke        *stroke);
   GimpStroke  * (* stroke_get)        (const GimpVectors *vectors,
                                        const GimpCoords  *coord);
   GimpStroke  * (* stroke_get_next)   (const GimpVectors *vectors,
@@ -130,6 +132,8 @@ void          gimp_vectors_anchor_select        (GimpVectors        *vectors,
 /* GimpStroke is a connected component of a GimpVectors object */
 
 void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
+                                                 GimpStroke         *stroke);
+void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
                                                  GimpStroke         *stroke);
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);

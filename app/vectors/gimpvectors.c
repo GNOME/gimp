@@ -91,6 +91,8 @@ static void       gimp_vectors_transform    (GimpItem               *item,
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
+static void       gimp_vectors_real_stroke_remove   (GimpVectors       *vectors,
+                                                     GimpStroke        *stroke);
 static GimpStroke * gimp_vectors_real_stroke_get    (const GimpVectors *vectors,
                                                      const GimpCoords  *coord);
 static GimpStroke *gimp_vectors_real_stroke_get_next(const GimpVectors *vectors,
@@ -202,6 +204,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   klass->thaw                     = gimp_vectors_real_thaw;
 
   klass->stroke_add               = gimp_vectors_real_stroke_add;
+  klass->stroke_remove            = gimp_vectors_real_stroke_remove;
   klass->stroke_get               = gimp_vectors_real_stroke_get;
   klass->stroke_get_next          = gimp_vectors_real_stroke_get_next;
   klass->stroke_get_length        = gimp_vectors_real_stroke_get_length;
@@ -612,6 +615,35 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
 
   vectors->strokes = g_list_append (vectors->strokes, stroke);
   g_object_ref (stroke);
+}
+
+void
+gimp_vectors_stroke_remove (GimpVectors *vectors,
+                            GimpStroke  *stroke)
+{
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  gimp_vectors_freeze (vectors);
+
+  GIMP_VECTORS_GET_CLASS (vectors)->stroke_remove (vectors, stroke);
+
+  gimp_vectors_thaw (vectors);
+}
+
+static void
+gimp_vectors_real_stroke_remove (GimpVectors *vectors,
+                                 GimpStroke  *stroke)
+{
+  GList *list;
+
+  list = g_list_find (vectors->strokes, stroke);
+
+  if (list)
+    {
+      vectors->strokes = g_list_delete_link (vectors->strokes, list);
+      g_object_unref (stroke);
+    }
 }
 
 
