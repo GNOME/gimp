@@ -130,8 +130,8 @@ about_dialog_create (void)
 				GDK_WINDOW_TYPE_HINT_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
       gtk_window_set_title (GTK_WINDOW (about_dialog), _("About The GIMP"));
-      gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
+      gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
 
       gimp_help_connect (about_dialog, gimp_standard_help_func,
 			 "dialogs/about.html");
@@ -161,7 +161,7 @@ about_dialog_create (void)
 
       gtk_widget_set_events (about_dialog, GDK_BUTTON_PRESS_MASK);
 
-      if (!about_dialog_load_logo (about_dialog))
+      if (! about_dialog_load_logo (about_dialog))
 	{
 	  gtk_widget_destroy (about_dialog);
 	  about_dialog = NULL;

@@ -129,7 +129,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 			    gint              preview_size,
 			    gint              min_items_x,
 			    gint              min_items_y,
-			    const gchar      *item_factory)
+			    GimpItemFactory  *item_factory)
 {
   GimpDataFactoryView *factory_view;
 
@@ -161,7 +161,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 				  gint                 preview_size,
 				  gint                 min_items_x,
 				  gint                 min_items_y,
-				  const gchar         *item_factory)
+				  GimpItemFactory     *item_factory)
 {
   GimpContainerEditor *editor;
 

@@ -117,12 +117,12 @@ static GtkTargetEntry toolbox_target_table[] =
 GtkWidget *
 toolbox_create (Gimp *gimp)
 {
-  GimpContext    *context;
-  GtkItemFactory *toolbox_factory;
-  GtkWidget      *window;
-  GtkWidget      *main_vbox;
-  GtkWidget      *wbox;
-  GList          *list;
+  GimpContext     *context;
+  GimpItemFactory *toolbox_factory;
+  GtkWidget       *window;
+  GtkWidget       *main_vbox;
+  GtkWidget       *wbox;
+  GList           *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -131,7 +131,7 @@ toolbox_create (Gimp *gimp)
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
-  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 
   g_signal_connect (G_OBJECT (window), "delete_event",
 		    G_CALLBACK (toolbox_delete),
@@ -169,12 +169,14 @@ toolbox_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
   gtk_widget_show (main_vbox);
 
-  toolbox_factory = gtk_item_factory_from_path ("<Toolbox>");
-  gtk_box_pack_start (GTK_BOX (main_vbox), toolbox_factory->widget,
+  toolbox_factory = gimp_item_factory_from_path ("<Toolbox>");
+  gtk_box_pack_start (GTK_BOX (main_vbox),
+                      GTK_ITEM_FACTORY (toolbox_factory)->widget,
 		      FALSE, FALSE, 0);
-  gtk_widget_show (toolbox_factory->widget);
+  gtk_widget_show (GTK_ITEM_FACTORY (toolbox_factory)->widget);
 
-  gtk_window_add_accel_group (GTK_WINDOW (window), toolbox_factory->accel_group);
+  gtk_window_add_accel_group (GTK_WINDOW (window),
+                              GTK_ITEM_FACTORY (toolbox_factory)->accel_group);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect (window,

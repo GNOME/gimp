@@ -769,7 +769,7 @@ gimp_preview_popup_timeout (GimpPreview *preview)
   preview->popup_y  = 0;
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_policy (GTK_WINDOW (window), FALSE, FALSE, TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);

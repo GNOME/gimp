@@ -81,7 +81,7 @@ struct _GimpDrawableListView
   GimpNewDrawableFunc      new_drawable_func;
   GimpEditDrawableFunc     edit_drawable_func;
 
-  gchar                   *item_factory;
+  GimpItemFactory         *item_factory;
 
   GtkWidget               *new_button;
   GtkWidget               *raise_button;
@@ -116,7 +116,7 @@ GtkWidget * gimp_drawable_list_view_new      (gint                     preview_s
                                               GimpConvertDrawableFunc  convert_drawable_func,
 					      GimpNewDrawableFunc      new_drawable_func,
 					      GimpEditDrawableFunc     edit_drawable_func,
-					      const gchar             *item_factory);
+					      GimpItemFactory         *item_facotry);
 
 void       gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 					      GimpImage            *gimage);

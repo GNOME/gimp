@@ -1,3 +1,57 @@
+2002-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: CPPFLAGS: added -DGTK_DISABLE_DEPRECATED
+
+	* libgimpwidgets/gimpdialog.c: still use the deprecated
+	gtk_window_set_policy() but spit out a #warning.
+
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpitemfactory.[ch]: made it a GtkItemFactory
+	subclass. This way we can reproduce the effect of
+	gtk_item_factory_get_from_path() which is deprectated for good
+	reasons.  For GIMP, using it its perfectly OK since we only have
+	one item factory per "<prefix>".
+
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdialogfactory.[ch]
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimppreview.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.[ch]: pass around GimpItemFactory
+	pointers instead of "const gchar *" item factory identifiers.
+	Replaced gtk_window_set_policy() by gtk_window_set_resizable()
+	and other recommended stuff.
+
+	* app/gui/about-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/menus.c
+	* app/gui/offset-dialog.c
+	* app/gui/splash.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.c: lots of
+	s/gtk_item_factory_from_path/gimp_item_factory_from_path/,
+	gtk_window_set_policy() replacements, misc fixes.
+
+	* plug-ins/gdyntext/charmap_window.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gdyntext/message_window.c
+	* plug-ins/imagemap/imap_main.c: replaced gtk_window_set_policy().
+
+2002-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/tga.c
+	* plug-ins/common/video.c: compile with GTK_DISABLE_DEPRECATED.
+
 2002-01-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tga.c: merged fix for bug #53278 from stable branch.

@@ -38,7 +38,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "base/temp-buf.h"
 
@@ -224,12 +224,12 @@ file_open_dialog_create (Gimp *gimp)
 		     "open/dialogs/file_open.html");
 
   {
-    GtkItemFactory *item_factory;
-    GtkWidget      *frame;
-    GtkWidget      *vbox;
-    GtkWidget      *hbox;
-    GtkWidget      *option_menu;
-    GtkWidget      *open_options_genbutton;
+    GimpItemFactory *item_factory;
+    GtkWidget       *frame;
+    GtkWidget       *vbox;
+    GtkWidget       *hbox;
+    GtkWidget       *option_menu;
+    GtkWidget       *open_options_genbutton;
 
     open_options = gtk_hbox_new (TRUE, 1);
 
@@ -250,9 +250,9 @@ file_open_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
-    item_factory = gtk_item_factory_from_path ("<Load>");
+    item_factory = gimp_item_factory_from_path ("<Load>");
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                              item_factory->widget);
+                              GTK_ITEM_FACTORY (item_factory)->widget);
 
     gtk_widget_show (vbox);
     gtk_widget_show (frame);

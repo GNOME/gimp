@@ -130,6 +130,7 @@ typedef enum
 
 typedef struct _GimpDeviceInfo          GimpDeviceInfo;
 typedef struct _GimpDialogFactory       GimpDialogFactory;
+typedef struct _GimpItemFactory         GimpItemFactory;
 
 
 /*  widgets  */

@@ -172,7 +172,7 @@ static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
   shell->gdisp                 = NULL;
-  shell->ifactory              = NULL;
+  shell->item_factory          = NULL;
 
   shell->offset_x              = 0;
   shell->offset_y              = 0;
@@ -239,6 +239,55 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cd_list               = NULL;
   shell->cd_ui                 = NULL;
 #endif /* DISPLAY_FILTERS */
+
+  gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
+  gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
+
+  gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
+                                              GDK_POINTER_MOTION_HINT_MASK |
+                                              GDK_BUTTON_PRESS_MASK        |
+                                              GDK_KEY_PRESS_MASK           |
+                                              GDK_KEY_RELEASE_MASK));
+
+  /*  active display callback  */
+  g_signal_connect (G_OBJECT (shell), "button_press_event",
+		    G_CALLBACK (gimp_display_shell_events),
+		    shell);
+  g_signal_connect (G_OBJECT (shell), "key_press_event",
+		    G_CALLBACK (gimp_display_shell_events),
+		    shell);
+
+  /*  dnd stuff  */
+  gtk_drag_dest_set (GTK_WIDGET (shell),
+		     GTK_DEST_DEFAULT_ALL,
+		     display_target_table,
+                     G_N_ELEMENTS (display_target_table),
+		     GDK_ACTION_COPY);
+
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
+			      gimp_display_shell_drop_drawable,
+                              shell);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
+			      gimp_display_shell_drop_drawable,
+                              shell);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
+			      gimp_display_shell_drop_drawable,
+                              shell);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
+			      gimp_display_shell_drop_pattern,
+                              shell);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
+			      gimp_display_shell_drop_buffer,
+                              shell);
+  gimp_dnd_color_dest_set    (GTK_WIDGET (shell),
+			      gimp_display_shell_drop_color,
+                              shell);
+
+  /*  connect the "F1" help key  */
+  gimp_help_connect (GTK_WIDGET (shell),
+		     gimp_standard_help_func,
+		     "image/image_window.html");
+
 }
 
 static void
@@ -385,63 +434,14 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
 
-  shell->gdisp = gdisp;
-
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
-  gtk_window_set_policy (GTK_WINDOW (shell), TRUE, TRUE, TRUE);
-  gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
-                                              GDK_POINTER_MOTION_HINT_MASK |
-                                              GDK_BUTTON_PRESS_MASK        |
-                                              GDK_KEY_PRESS_MASK           |
-                                              GDK_KEY_RELEASE_MASK));
-
-  /*  the popup menu  */
-  shell->ifactory = gtk_item_factory_from_path ("<Image>");
+  shell->gdisp        = gdisp;
+  shell->item_factory = gimp_item_factory_from_path ("<Image>");
 
   /*  The accelerator table for images  */
   gimp_window_add_accel_group (GTK_WINDOW (shell),
-			       shell->ifactory,
+			       GTK_ITEM_FACTORY (shell->item_factory),
 			       gimp_display_shell_get_accel_context,
 			       shell);
-
-  /*  active display callback  */
-  g_signal_connect (G_OBJECT (shell), "button_press_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
-  g_signal_connect (G_OBJECT (shell), "key_press_event",
-		    G_CALLBACK (gimp_display_shell_events),
-		    shell);
-
-  /*  dnd stuff  */
-  gtk_drag_dest_set (GTK_WIDGET (shell),
-		     GTK_DEST_DEFAULT_ALL,
-		     display_target_table,
-                     G_N_ELEMENTS (display_target_table),
-		     GDK_ACTION_COPY);
-
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
-			      gimp_display_shell_drop_drawable,
-                              shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
-			      gimp_display_shell_drop_drawable,
-                              shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
-			      gimp_display_shell_drop_drawable,
-                              shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
-			      gimp_display_shell_drop_pattern,
-                              shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
-			      gimp_display_shell_drop_buffer,
-                              shell);
-  gimp_dnd_color_dest_set    (GTK_WIDGET (shell),
-			      gimp_display_shell_drop_color,
-                              shell);
-
-  /*  connect the "F1" help key  */
-  gimp_help_connect (GTK_WIDGET (shell),
-		     gimp_standard_help_func,
-		     "image/image_window.html");
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have

@@ -156,7 +156,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 			     gint              preview_size,
 			     gint              min_items_x,
 			     gint              min_items_y,
-			     const gchar      *item_factory)
+			     GimpItemFactory  *item_factory)
 {
   GimpBrushFactoryView *factory_view;
   GimpContainerEditor  *editor;

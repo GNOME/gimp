@@ -40,6 +40,7 @@
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
 #include "gimpimagedock.h"
+#include "gimpitemfactory.h"
 
 
 typedef enum
@@ -183,7 +184,7 @@ gimp_dialog_factory_finalize (GObject *object)
 GimpDialogFactory *
 gimp_dialog_factory_new (const gchar       *name,
 			 GimpContext       *context,
-			 GtkItemFactory    *item_factory,
+			 GimpItemFactory   *item_factory,
 			 GimpDialogNewFunc  new_dock_func)
 {
   GimpDialogFactoryClass *factory_class;
@@ -191,7 +192,7 @@ gimp_dialog_factory_new (const gchar       *name,
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (! item_factory || GTK_IS_ITEM_FACTORY (item_factory),
+  g_return_val_if_fail (! item_factory || GIMP_IS_ITEM_FACTORY (item_factory),
 			NULL);
 
   /* EEK */

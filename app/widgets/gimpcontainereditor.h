@@ -40,8 +40,7 @@ struct _GimpContainerEditor
 {
   GtkVBox            parent_instance;
 
-  gchar             *item_factory;
-
+  GimpItemFactory   *item_factory;
   GimpContainerView *view;
 };
 
@@ -71,7 +70,7 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor *editor,
                                               gboolean             reorderable,
 					      gint                 min_items_x,
 					      gint                 min_items_y,
-					      const gchar         *item_factory);
+					      GimpItemFactory     *item_factory);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

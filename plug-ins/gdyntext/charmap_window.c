@@ -151,7 +151,8 @@ GtkWidget* charmap_window_new(const gchar *title)
 	cmw = gtk_type_new(charmap_window_get_type());
 	gtk_window_set_title(GTK_WINDOW(cmw), title);
 	gtk_container_set_border_width(GTK_CONTAINER(cmw), 4);
-	gtk_window_set_policy(GTK_WINDOW(cmw), TRUE, TRUE, FALSE);
+	gtk_window_set_resizable(GTK_WINDOW(cmw), TRUE);
+	gtk_widget_set_size_request(cmw, 0, 0);
 
 	return GTK_WIDGET(cmw);
 }

@@ -250,11 +250,11 @@ file_save_dialog_create (void)
 		     "save/dialogs/file_save.html");
 
   {
-    GtkItemFactory *item_factory;
-    GtkWidget      *frame;
-    GtkWidget      *hbox;
-    GtkWidget      *label;
-    GtkWidget      *option_menu;
+    GimpItemFactory *item_factory;
+    GtkWidget       *frame;
+    GtkWidget       *hbox;
+    GtkWidget       *label;
+    GtkWidget       *option_menu;
 
     save_options = gtk_hbox_new (TRUE, 1);
 
@@ -275,9 +275,9 @@ file_save_dialog_create (void)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
     gtk_widget_show (option_menu);
 
-    item_factory = gtk_item_factory_from_path ("<Save>");
+    item_factory = gimp_item_factory_from_path ("<Save>");
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                              item_factory->widget);
+                              GTK_ITEM_FACTORY (item_factory)->widget);
 
     gtk_widget_show (frame);
 

@@ -26,6 +26,7 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -100,7 +101,7 @@ dialogs_init (Gimp *gimp)
 
   global_dock_factory = gimp_dialog_factory_new ("dock",
 						 gimp_get_user_context (gimp),
-						 gtk_item_factory_from_path ("<Dialogs>"),
+						 gimp_item_factory_from_path ("<Dialogs>"),
 						 dialogs_dock_new);
 
   for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)

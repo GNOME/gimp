@@ -42,6 +42,7 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpimagedock.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
@@ -386,7 +387,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 				      TRUE,
 				      preview_size,
 				      5, 3,
-				      "<Brushes>");
+				      gimp_item_factory_from_path ("<Brushes>"));
 
   return dialogs_dockable_new (view,
 			       "Brush List", "Brushes",
@@ -407,7 +408,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Patterns>");
+				     gimp_item_factory_from_path ("<Patterns>"));
 
   return dialogs_dockable_new (view,
 			       "Pattern List", "Patterns",
@@ -428,7 +429,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Gradients>");
+				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
 			       "Gradient List", "Gradients",
@@ -449,7 +450,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Palettes>");
+				     gimp_item_factory_from_path ("<Palettes>"));
 
   return dialogs_dockable_new (view,
 			       "Palette List", "Palettes",
@@ -488,7 +489,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 			       context,
 			       preview_size,
 			       5, 3,
-			       "<Buffers>");
+			       gimp_item_factory_from_path ("<Buffers>"));
 
   return dialogs_dockable_new (view,
 			       "Buffer List", "Buffers",
@@ -532,7 +533,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				      TRUE,
 				      preview_size,
 				      5, 3,
-				      "<Brushes>");
+				      gimp_item_factory_from_path ("<Brushes>"));
 
   return dialogs_dockable_new (view,
 			       "Brush Grid", "Brushes",
@@ -553,7 +554,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Patterns>");
+				     gimp_item_factory_from_path ("<Patterns>"));
 
   return dialogs_dockable_new (view,
 			       "Pattern Grid", "Patterns",
@@ -574,7 +575,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Gradients>");
+				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
 			       "Gradient Grid", "Gradients",
@@ -595,7 +596,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     "<Gradients>");
+				     gimp_item_factory_from_path ("<Gradients>"));
 
   return dialogs_dockable_new (view,
 			       "Palette Grid", "Palettes",
@@ -634,7 +635,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 			       context,
 			       preview_size,
 			       5, 3,
-			       "<Buffers>");
+			       gimp_item_factory_from_path ("<Buffers>"));
 
   return dialogs_dockable_new (view,
 			       "Buffer Grid", "Buffers",
@@ -671,7 +672,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
      (GimpConvertDrawableFunc) gimp_layer_new_from_drawable,
      (GimpNewDrawableFunc)     layers_new_layer_query,
      (GimpEditDrawableFunc)    layers_edit_layer_query,
-     "<Layers>");
+     gimp_item_factory_from_path ("<Layers>"));
 
   dockable = dialogs_dockable_new (view,
 				   "Layer List", "Layers",
@@ -709,7 +710,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
      (GimpConvertDrawableFunc) NULL,
      (GimpNewDrawableFunc)     channels_new_channel_query,
      (GimpEditDrawableFunc)    channels_edit_channel_query,
-     "<Channels>");
+     gimp_item_factory_from_path ("<Channels>"));
 
   dockable = dialogs_dockable_new (view,
 				   "Channel List", "Channels",
@@ -789,7 +790,7 @@ dialogs_document_history_new (GimpDialogFactory *factory,
                                  context,
                                  preview_size,
                                  5, 3,
-                                 "<Documents>");
+                                 gimp_item_factory_from_path ("<Documents>"));
 
   return dialogs_dockable_new (view,
 			       "Document History", "History",

@@ -39,72 +39,102 @@ struct _GimpItemFactoryEntry
 };
 
 
-GtkItemFactory * gimp_item_factory_new (GType                      container_type,
-                                        const gchar               *path,
-                                        const gchar               *factory_path,
-                                        GimpItemFactoryUpdateFunc  update_func,
-                                        guint                      n_entries,
-                                        GimpItemFactoryEntry      *entries,
-                                        gpointer                   callback_data,
-                                        gboolean                   create_tearoff);
-
-void   gimp_item_factory_popup_with_data (GtkItemFactory   *item_factory,
-                                          gpointer          data,
-                                          GtkDestroyNotify  popdown_func);
-
-void   gimp_item_factory_create_item   (GtkItemFactory        *item_factory,
-                                        GimpItemFactoryEntry  *entry,
-                                        gpointer               callback_data,
-                                        guint                  callback_type,
-                                        gboolean               create_tearoff,
-                                        gboolean               static_entry);
-void   gimp_item_factory_create_items  (GtkItemFactory        *item_factory,
-                                        guint                  n_entries,
-                                        GimpItemFactoryEntry  *entries,
-                                        gpointer               callback_data,
-                                        guint                  callback_type,
-                                        gboolean               create_tearoff,
-                                        gboolean               static_entries);
-
-void   gimp_item_factory_set_active    (GtkItemFactory        *factory,
-                                        gchar                 *path,
-                                        gboolean               state);
-void   gimp_item_factory_set_color     (GtkItemFactory        *factory,
-                                        gchar                 *path,
-                                        const GimpRGB         *color,
-                                        gboolean               set_label);
-void   gimp_item_factory_set_label     (GtkItemFactory        *factory,
-                                        gchar                 *path,
-                                        const gchar           *label);
-void   gimp_item_factory_set_sensitive (GtkItemFactory        *factory,
-                                        gchar                 *path,
-                                        gboolean               sensitive);
-void   gimp_item_factory_set_visible   (GtkItemFactory        *factory,
-                                        gchar                 *path,
-                                        gboolean               visible);
+#define GIMP_TYPE_ITEM_FACTORY            (gimp_item_factory_get_type ())
+#define GIMP_ITEM_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_FACTORY, GimpItemFactory))
+#define GIMP_ITEM_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_FACTORY, GimpItemFactoryClass))
+#define GIMP_IS_ITEM_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_FACTORY))
+#define GIMP_IS_ITEM_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_FACTORY))
+#define GIMP_ITEM_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_FACTORY, GimpItemFactoryClass))
 
 
-void   gimp_item_factory_tearoff_callback (GtkWidget          *widget,
-					   gpointer            data,
-					   guint               action);
+typedef struct _GimpItemFactoryClass  GimpItemFactoryClass;
+
+struct _GimpItemFactory
+{
+  GtkItemFactory             parent_instance;
+
+  gchar                     *factory_path;
+  GimpItemFactoryUpdateFunc  update_func;
+};
+
+struct _GimpItemFactoryClass
+{
+  GtkItemFactoryClass  parent_class;
+
+  GHashTable          *factories;
+};
 
 
-void   gimp_menu_item_create           (GimpItemFactoryEntry  *entry,
-                                        gchar                 *domain_name,
-                                        gpointer               callback_data);
-void   gimp_menu_item_destroy          (gchar                 *path);
+GType   gimp_item_factory_get_type            (void) G_GNUC_CONST;
 
-void   gimp_menu_item_set_active       (gchar                 *path,
-                                        gboolean               state);
-void   gimp_menu_item_set_color        (gchar                 *path,
-                                       const GimpRGB         *color,
-                                        gboolean               set_label);
-void   gimp_menu_item_set_label        (gchar                 *path,
-                                        const gchar           *label);
-void   gimp_menu_item_set_sensitive    (gchar                 *path,
-                                        gboolean               sensitive);
-void   gimp_menu_item_set_visible      (gchar                 *path,
-                                        gboolean               visible);
+GimpItemFactory * gimp_item_factory_new       (GType                 container_type,
+                                               const gchar          *path,
+                                               const gchar          *factory_path,
+                                               GimpItemFactoryUpdateFunc  update_func,
+                                               guint                 n_entries,
+                                               GimpItemFactoryEntry *entries,
+                                               gpointer              callback_data,
+                                               gboolean              create_tearoff);
+
+GimpItemFactory * gimp_item_factory_from_path (const gchar      *path);
+
+void   gimp_item_factory_create_item          (GimpItemFactory       *factory,
+                                               GimpItemFactoryEntry  *entry,
+                                               gpointer               callback_data,
+                                               guint                  callback_type,
+                                               gboolean               create_tearoff,
+                                               gboolean               static_entry);
+void   gimp_item_factory_create_items         (GimpItemFactory       *factory,
+                                               guint                  n_entries,
+                                               GimpItemFactoryEntry  *entries,
+                                               gpointer               callback_data,
+                                               guint                  callback_type,
+                                               gboolean               create_tearoff,
+                                               gboolean               static_entries);
+
+void   gimp_item_factory_popup_with_data      (GimpItemFactory       *factory,
+                                               gpointer               data,
+                                               GtkDestroyNotify       popdown_func);
+
+void   gimp_item_factory_set_active           (GtkItemFactory        *factory,
+                                               gchar                 *path,
+                                               gboolean               state);
+void   gimp_item_factory_set_color            (GtkItemFactory        *factory,
+                                               gchar                 *path,
+                                               const GimpRGB         *color,
+                                               gboolean               set_label);
+void   gimp_item_factory_set_label            (GtkItemFactory        *factory,
+                                               gchar                 *path,
+                                               const gchar           *label);
+void   gimp_item_factory_set_sensitive        (GtkItemFactory        *factory,
+                                               gchar                 *path,
+                                               gboolean               sensitive);
+void   gimp_item_factory_set_visible          (GtkItemFactory        *factory,
+                                               gchar                 *path,
+                                               gboolean               visible);
+
+
+void   gimp_item_factory_tearoff_callback     (GtkWidget             *widget,
+                                               gpointer               data,
+                                               guint                  action);
+
+
+void   gimp_menu_item_create                  (GimpItemFactoryEntry  *entry,
+                                               gchar                 *domain_name,
+                                               gpointer               callback_data);
+void   gimp_menu_item_destroy                 (gchar                 *path);
+
+void   gimp_menu_item_set_active              (gchar                 *path,
+                                               gboolean               state);
+void   gimp_menu_item_set_color               (gchar                 *path,
+                                               const GimpRGB         *color,
+                                               gboolean               set_label);
+void   gimp_menu_item_set_label               (gchar                 *path,
+                                               const gchar           *label);
+void   gimp_menu_item_set_sensitive           (gchar                 *path,
+                                               gboolean               sensitive);
+void   gimp_menu_item_set_visible             (gchar                 *path,
+                                               gboolean               visible);
 
 
 G_END_DECLS

@@ -1794,22 +1794,22 @@ static GimpItemFactoryEntry qmask_entries[] =
 static gboolean menus_initialized = FALSE;
 
 
-static GtkItemFactory *toolbox_factory         = NULL;
-static GtkItemFactory *image_factory           = NULL;
-static GtkItemFactory *load_factory            = NULL;
-static GtkItemFactory *save_factory            = NULL;
-static GtkItemFactory *layers_factory          = NULL;
-static GtkItemFactory *channels_factory        = NULL;
-static GtkItemFactory *paths_factory           = NULL;
-static GtkItemFactory *dialogs_factory         = NULL;
-static GtkItemFactory *brushes_factory         = NULL;
-static GtkItemFactory *patterns_factory        = NULL;
-static GtkItemFactory *gradient_editor_factory = NULL;
-static GtkItemFactory *gradients_factory       = NULL;
-static GtkItemFactory *palettes_factory        = NULL;
-static GtkItemFactory *buffers_factory         = NULL;
-static GtkItemFactory *documents_factory       = NULL;
-static GtkItemFactory *qmask_factory           = NULL;
+static GimpItemFactory *toolbox_factory         = NULL;
+static GimpItemFactory *image_factory           = NULL;
+static GimpItemFactory *load_factory            = NULL;
+static GimpItemFactory *save_factory            = NULL;
+static GimpItemFactory *layers_factory          = NULL;
+static GimpItemFactory *channels_factory        = NULL;
+static GimpItemFactory *paths_factory           = NULL;
+static GimpItemFactory *dialogs_factory         = NULL;
+static GimpItemFactory *brushes_factory         = NULL;
+static GimpItemFactory *patterns_factory        = NULL;
+static GimpItemFactory *gradient_editor_factory = NULL;
+static GimpItemFactory *gradients_factory       = NULL;
+static GimpItemFactory *palettes_factory        = NULL;
+static GimpItemFactory *buffers_factory         = NULL;
+static GimpItemFactory *documents_factory       = NULL;
+static GimpItemFactory *qmask_factory           = NULL;
 
 
 /*  public functions  */
@@ -1869,12 +1869,12 @@ menus_init (Gimp *gimp)
 
     for (i = 0; i < gimprc.last_opened_size; i++)
       {
-        gimp_item_factory_set_visible (toolbox_factory,
+        gimp_item_factory_set_visible (GTK_ITEM_FACTORY (toolbox_factory),
                                        last_opened_entries[i].entry.path,
                                        FALSE);
       }
 
-    gimp_item_factory_set_sensitive (toolbox_factory,
+    gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (toolbox_factory),
                                      "/File/Open Recent/(None)",
                                      FALSE);
 
@@ -2017,7 +2017,7 @@ menus_init (Gimp *gimp)
   /*  reorder <Image>/Image/Colors  */
   tool_info = tool_manager_get_info_by_type (gimp, GIMP_TYPE_POSTERIZE_TOOL);
 
-  menu_item = gtk_item_factory_get_widget (image_factory,
+  menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
 					   tool_info->menu_path);
   if (menu_item && menu_item->parent)
     gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
@@ -2040,7 +2040,7 @@ menus_init (Gimp *gimp)
       {
 	tool_info = tool_manager_get_info_by_type (gimp, color_tools[i]);
 
-	menu_item = gtk_item_factory_get_widget (image_factory,
+	menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
 						 tool_info->menu_path);
 	if (menu_item && menu_item->parent)
 	  {
@@ -2212,12 +2212,12 @@ menus_restore (Gimp *gimp)
   static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
 					  "<Toolbox>/Xtns" };
 
-  GtkItemFactory *item_factory;
-  GtkWidget *menu_item;
-  GtkWidget *menu;
-  GList     *list;
-  gchar     *path;
-  gint      i, pos;
+  GimpItemFactory *item_factory;
+  GtkWidget       *menu_item;
+  GtkWidget       *menu;
+  GList           *list;
+  gchar           *path;
+  gint             i, pos;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -2225,7 +2225,7 @@ menus_restore (Gimp *gimp)
    *  separators to the top of the menu
    */
   pos = 1;
-  menu_item = gtk_item_factory_get_widget (toolbox_factory,
+  menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (toolbox_factory),
 					   "/Xtns/Module Browser...");
   if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
     {
@@ -2251,7 +2251,7 @@ menus_restore (Gimp *gimp)
    *  separators to the top of the menu
    */
   pos = 3;
-  menu_item = gtk_item_factory_get_widget (image_factory,
+  menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
 					   "/Filters/Filter all Layers...");
   if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
     {
@@ -2278,7 +2278,8 @@ menus_restore (Gimp *gimp)
   for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
     {
       path = g_strconcat ("/Image/Transform/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
+                                               path);
       g_free (path);
 
       if (menu_item && menu_item->parent)
@@ -2292,7 +2293,8 @@ menus_restore (Gimp *gimp)
   for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
     {
       path = g_strconcat ("/Layer/Transform/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
+                                               path);
       g_free (path);
 
       if (menu_item && menu_item->parent)
@@ -2306,7 +2308,8 @@ menus_restore (Gimp *gimp)
   for (i = 0; i < G_N_ELEMENTS (image_file_entries); i++)
     {
       path = g_strconcat ("/File/", image_file_entries[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
+                                               path);
       g_free (path);
 
       if (menu_item && menu_item->parent)
@@ -2316,8 +2319,9 @@ menus_restore (Gimp *gimp)
   /*  Reorder menus where plugins registered submenus  */
   for (i = 0; i < G_N_ELEMENTS (reorder_submenus); i++)
     {
-      item_factory = gtk_item_factory_from_path (reorder_submenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
+      item_factory = gimp_item_factory_from_path (reorder_submenus[i]);
+
+      menu = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
 					  reorder_submenus[i]);
 
       if (menu && GTK_IS_MENU (menu))
@@ -2328,8 +2332,9 @@ menus_restore (Gimp *gimp)
 
   for (i = 0; i < G_N_ELEMENTS (reorder_subsubmenus); i++)
     {
-      item_factory = gtk_item_factory_from_path (reorder_subsubmenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
+      item_factory = gimp_item_factory_from_path (reorder_subsubmenus[i]);
+
+      menu = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
 					  reorder_subsubmenus[i]);
 
       if (menu && GTK_IS_MENU (menu))
@@ -2350,7 +2355,7 @@ menus_restore (Gimp *gimp)
   /*  Move all submenus which registered after "<Image>/Filters/Toys"
    *  before the separator after "<Image>/Filters/Web"
    */
-  menu_item = gtk_item_factory_get_widget (image_factory,
+  menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
 					   "/Filters/---INSERT");
 
   if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
@@ -2358,7 +2363,7 @@ menus_restore (Gimp *gimp)
       menu = menu_item->parent;
       pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
 
-      menu_item = gtk_item_factory_get_widget (image_factory,
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
 					       "/Filters/Toys");
 
       if (menu_item && GTK_IS_MENU (menu_item))
@@ -2467,7 +2472,7 @@ menus_last_opened_update_labels (GimpContainer *container,
 
   num_documents = gimp_container_num_children (container);
 
-  gimp_item_factory_set_visible (toolbox_factory,
+  gimp_item_factory_set_visible (GTK_ITEM_FACTORY (toolbox_factory),
                                  "/File/Open Recent/(None)",
                                  num_documents == 0);
 
@@ -2477,7 +2482,8 @@ menus_last_opened_update_labels (GimpContainer *container,
 
       path_str = g_strdup_printf ("/File/Open Recent/%02d", i + 1);
 
-      widget = gtk_item_factory_get_widget (toolbox_factory, path_str);
+      widget = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (toolbox_factory),
+                                            path_str);
 
       g_free (path_str);
 
@@ -2575,7 +2581,7 @@ menus_debug_recurse_menu (GtkWidget *menu,
 	      accel = NULL;
 	    }
 
-	  item_factory = gtk_item_factory_from_path (path);
+	  item_factory = gimp_item_factory_from_path (path);
           help_page    = (gchar *) g_object_get_data (G_OBJECT (menu_item), 
                                                       "help_page");
 

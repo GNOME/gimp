@@ -62,7 +62,7 @@ GtkWidget * gimp_brush_factory_view_new      (GimpViewType      view_type,
 					      gint              preview_size,
 					      gint              min_items_x,
 					      gint              min_items_y,
-					      const gchar      *item_factory);
+					      GimpItemFactory  *item_factory);
 
 
 #endif  /*  __GIMP_BRUSH_FACTORY_VIEW_H__  */

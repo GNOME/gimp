@@ -232,6 +232,11 @@ gimp_dialog_newv (const gchar       *title,
   gtk_window_set_title (GTK_WINDOW (dialog), title);
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
   gtk_window_set_position (GTK_WINDOW (dialog), position);
+
+#ifdef __GNUC__
+#warning FIXME: need a new API for gimp_dialog_new()
+#endif
+
   gtk_window_set_policy (GTK_WINDOW (dialog),
 			 allow_shrink, allow_grow, auto_shrink);
 

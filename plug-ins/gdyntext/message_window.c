@@ -135,7 +135,8 @@ message_window_new (const gchar *title)
   gtk_window_set_title (GTK_WINDOW(mw), title);
   gimp_dialog_set_icon (GTK_WINDOW (mw));
   gtk_container_set_border_width (GTK_CONTAINER(mw), 4);
-  gtk_window_set_policy (GTK_WINDOW(mw), TRUE, TRUE, FALSE);
+  gtk_window_set_resizable (GTK_WINDOW(mw), TRUE);
+  gtk_widget_set_size_request (mw, 0, 0);
   
   return GTK_WIDGET(mw);
 }

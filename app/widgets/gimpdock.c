@@ -138,7 +138,7 @@ gimp_dock_init (GimpDock *dock)
   dock->context = NULL;
 
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
-  gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
 
   gtk_widget_set_size_request (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  

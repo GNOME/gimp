@@ -257,7 +257,7 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   if (view->item_factory)
     {
-      g_free (view->item_factory);
+      g_object_unref (G_OBJECT (view->item_factory));
       view->item_factory = NULL;
     }
 
@@ -280,7 +280,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
                              GimpConvertDrawableFunc  convert_drawable_func,
 			     GimpNewDrawableFunc      new_drawable_func,
 			     GimpEditDrawableFunc     edit_drawable_func,
-			     const gchar             *item_factory)
+			     GimpItemFactory         *item_factory)
 {
   GimpDrawableListView *list_view;
   GimpContainerView    *view;
@@ -298,7 +298,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
   /*  convert_drawable_func may be NULL  */
   g_return_val_if_fail (new_drawable_func != NULL, NULL);
   g_return_val_if_fail (edit_drawable_func != NULL, NULL);
-  g_return_val_if_fail (item_factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), NULL);
 
   if (drawable_type == GIMP_TYPE_LAYER)
     {
@@ -331,7 +331,8 @@ gimp_drawable_list_view_new (gint                     preview_size,
   list_view->new_drawable_func     = new_drawable_func;
   list_view->edit_drawable_func    = edit_drawable_func;
 
-  list_view->item_factory = g_strdup (item_factory);
+  list_view->item_factory = item_factory;
+  g_object_ref (G_OBJECT (list_view->item_factory));
 
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
@@ -504,18 +505,18 @@ gimp_drawable_list_view_context_item (GimpContainerView *view,
 				      GimpViewable      *item,
 				      gpointer           insert_data)
 {
-  GtkItemFactory *factory;
+  GimpDrawableListView *drawable_view;
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item (view,
 							    item,
 							    insert_data);
 
-  factory = gtk_item_factory_from_path (GIMP_DRAWABLE_LIST_VIEW (view)->item_factory);
+  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
 
-  if (factory)
+  if (drawable_view->item_factory)
     {
-      gimp_item_factory_popup_with_data (factory,
+      gimp_item_factory_popup_with_data (drawable_view->item_factory,
                                          gimp_drawable_gimage (GIMP_DRAWABLE (item)),
                                          NULL);
     }

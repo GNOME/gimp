@@ -193,6 +193,9 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                           GDK_TOP_LEFT_ARROW,
                                           GIMP_TOOL_CURSOR_NONE,
                                           GIMP_CURSOR_MODIFIER_NONE);
+
+  /*  allow shrinking  */
+  gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 }
 
 gboolean
@@ -485,7 +488,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_item_factory_popup_with_data (shell->ifactory,
+            gimp_item_factory_popup_with_data (shell->item_factory,
                                                gimage,
                                                NULL);
             return_val = TRUE;
@@ -1038,12 +1041,16 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
 
   if (! gdisp->gimage->gimp->busy && event->button == 1)
     {
-      gint x, y;
+      GtkItemFactory *factory;
+      gint            x, y;
 
-      gimp_display_shell_origin_menu_position (GTK_MENU (shell->ifactory->widget),
-                                               &x, &y, widget);
+      factory = GTK_ITEM_FACTORY (shell->item_factory);
 
-      gtk_item_factory_popup_with_data (shell->ifactory,
+      gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
+                                               &x, &y,
+                                               widget);
+
+      gtk_item_factory_popup_with_data (factory,
 					gdisp->gimage,
                                         NULL,
 					x, y,
@@ -1089,9 +1096,9 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 
   if ((event->type == GDK_BUTTON_PRESS) && (event->button == 3))
     {
-      GtkItemFactory *factory;
+      GimpItemFactory *factory;
 
-      factory = gtk_item_factory_from_path ("<QMask>");
+      factory = gimp_item_factory_from_path ("<QMask>");
 
       gimp_item_factory_popup_with_data (factory, shell, NULL);
 

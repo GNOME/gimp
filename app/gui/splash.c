@@ -54,7 +54,7 @@ splash_create (gboolean show_image)
   gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
-  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);

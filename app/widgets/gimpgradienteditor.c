@@ -811,9 +811,9 @@ preview_events (GtkWidget      *widget,
 
 	case 3:
           {
-            GtkItemFactory *factory;
+            GimpItemFactory *factory;
 
-            factory = gtk_item_factory_from_path ("<GradientEditor>");
+            factory = gimp_item_factory_from_path ("<GradientEditor>");
 
             gimp_item_factory_popup_with_data (factory, editor, NULL);
           }
@@ -1298,9 +1298,9 @@ control_button_press (GradientEditor *editor,
 
     case 3:
       {
-        GtkItemFactory *factory;
+        GimpItemFactory *factory;
 
-        factory = gtk_item_factory_from_path ("<GradientEditor>");
+        factory = gimp_item_factory_from_path ("<GradientEditor>");
 
         gimp_item_factory_popup_with_data (factory, editor, NULL);
       }

@@ -121,13 +121,13 @@ gimp_document_view_init (GimpDocumentView *view)
 }
 
 GtkWidget *
-gimp_document_view_new (GimpViewType   view_type,
-                        GimpContainer *container,
-                        GimpContext   *context,
-                        gint           preview_size,
-                        gint           min_items_x,
-                        gint           min_items_y,
-                        const gchar   *item_factory)
+gimp_document_view_new (GimpViewType     view_type,
+                        GimpContainer   *container,
+                        GimpContext     *context,
+                        gint             preview_size,
+                        gint             min_items_x,
+                        gint             min_items_y,
+                        GimpItemFactory *item_factory)
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;

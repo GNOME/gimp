@@ -179,7 +179,7 @@ create_about_dialog (void)
   window = gtk_window_new(GTK_WINDOW_DIALOG);
   gtk_container_set_border_width(GTK_CONTAINER(window), 0);
   gtk_window_set_title(GTK_WINDOW(window), _("GDynText: About ..."));
-  gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+  gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   gimp_dialog_set_icon (GTK_WINDOW (window));
   gtk_signal_connect(GTK_OBJECT(window), "destroy",
@@ -291,7 +291,7 @@ create_main_window (GdtMainWindow **main_window,
   title = g_strconcat (_("GDynText"), " ", GDYNTEXT_VERSION, NULL);
   gtk_window_set_title(GTK_WINDOW(mw->window), title);
   g_free (title);
-  gtk_window_set_policy(GTK_WINDOW(mw->window), TRUE, TRUE, FALSE);
+  gtk_window_set_resizable(GTK_WINDOW(mw->window), TRUE);
   gtk_widget_set_usize(mw->window, 550, 400);
   gtk_container_set_border_width(GTK_CONTAINER(mw->window), 0);
   gtk_signal_connect(GTK_OBJECT(mw->window), "destroy",

@@ -1336,7 +1336,8 @@ dialog(GimpDrawable *drawable)
    _shapes = make_object_list();
 
    _dlg = dlg = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_policy(GTK_WINDOW(dlg), TRUE, TRUE, FALSE);
+   gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
+   gtk_widget_set_size_request(dlg, 0, 0);
    gtk_widget_realize(dlg);
 
    main_set_title(NULL);

@@ -169,7 +169,9 @@ gimp_dockbook_style_set (GtkWidget *widget,
                         "tab_border", &tab_border,
                         NULL);
 
-  gtk_notebook_set_tab_border (GTK_NOTEBOOK (widget), tab_border);
+  g_object_set (G_OBJECT (widget),
+                "tab_border", tab_border,
+                NULL);
 }
 
 static gboolean
@@ -466,12 +468,13 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
   if (bevent->button == 3)
     {
-      GtkItemFactory *ifactory;
-      GtkWidget      *add_widget;
+      GimpItemFactory *item_factory;
+      GtkWidget       *add_widget;
 
-      ifactory = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
+      item_factory = dockbook->dock->factory->item_factory;
 
-      add_widget = gtk_item_factory_get_widget (ifactory, "/Select Tab");
+      add_widget = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
+                                                "/Select Tab");
 
       /*  do evil things  */
       {
@@ -480,6 +483,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
         notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
 
         g_object_ref (G_OBJECT (notebook_menu));
+
         gtk_menu_detach (GTK_MENU (notebook_menu));
 
         GTK_NOTEBOOK (dockbook)->menu = notebook_menu;
@@ -494,7 +498,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
        */
       g_object_ref (G_OBJECT (dockbook));
 
-      gimp_item_factory_popup_with_data (ifactory,
+      gimp_item_factory_popup_with_data (item_factory,
                                          dockbook,
                                          (GtkDestroyNotify) gimp_dockbook_menu_end);
     }

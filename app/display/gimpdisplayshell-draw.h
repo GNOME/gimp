@@ -52,7 +52,7 @@ struct _GimpDisplayShell
 
   GimpDisplay      *gdisp;
 
-  GtkItemFactory   *ifactory;
+  GimpItemFactory  *item_factory;
 
   gint              offset_x;          /*  offset of display image into raw image  */
   gint              offset_y;

@@ -119,8 +119,11 @@ gimp_container_editor_finalize (GObject *object)
 
   editor = GIMP_CONTAINER_EDITOR (object);
 
-  g_free (editor->item_factory);
-  editor->item_factory = NULL;
+  if (editor->item_factory)
+    {
+      g_object_unref (G_OBJECT (editor->item_factory));
+      editor->item_factory = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -134,17 +137,19 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  gboolean             reorderable,
 				 gint                 min_items_x,
 				 gint                 min_items_y,
-				 const gchar         *item_factory)
+				 GimpItemFactory     *item_factory)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), FALSE);
 
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
-  editor->item_factory = g_strdup (item_factory);
+  editor->item_factory = item_factory;
+  g_object_ref (G_OBJECT (editor->item_factory));
 
   switch (view_type)
     {
@@ -249,14 +254,9 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
     {
       if (editor->item_factory)
         {
-          GtkItemFactory *factory;
-
-          factory = gtk_item_factory_from_path (editor->item_factory);
-
-          if (factory)
-            {
-              gimp_item_factory_popup_with_data (factory, editor, NULL);
-            }
+          gimp_item_factory_popup_with_data (editor->item_factory,
+                                             editor,
+                                             NULL);
         }
     }
 }

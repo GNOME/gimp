@@ -91,11 +91,11 @@ tips_dialog_create (void)
   gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
   gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
-  gtk_window_set_policy (GTK_WINDOW (tips_dialog), FALSE, TRUE, FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (tips_dialog), TRUE);
 
   g_signal_connect (G_OBJECT (tips_dialog), "delete_event",
-		      G_CALLBACK (gtk_widget_destroy),
-		      NULL);
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
 
   g_signal_connect (G_OBJECT (tips_dialog), "destroy",
 		    G_CALLBACK (tips_dialog_destroy),
