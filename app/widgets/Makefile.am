@@ -27,6 +27,8 @@ libappwidgets_a_sources = \
 	gimpactiongroup.h		\
 	gimpactionview.c		\
 	gimpactionview.h		\
+	gimpblobeditor.c		\
+	gimpblobeditor.h		\
 	gimpbrusheditor.c		\
 	gimpbrusheditor.h		\
 	gimpbrushfactoryview.c		\

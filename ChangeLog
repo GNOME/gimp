@@ -1,3 +1,22 @@
+2004-08-04  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-brush-generated-*-16.png: removed ...
+
+	* themes/Default/images/stock-shape-*-16.png: ... and added back
+	with more generic names.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* app/widgets/gimpbrusheditor.c: changed accordingly.
+
+	* app/tools/gimpinkoptions-gui.c: use the new stock icons here as
+	well.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpblobeditor.[ch]: added a simple blob shape
+	editor widget factored out of app/tools/gimpinkoptions-gui.c.
+
 2004-08-04  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpbrushgenerated.c: Enhanced the range of the hardness

@@ -133,7 +133,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
 
   /* Stock Box for the brush shape */
   box = gimp_enum_stock_box_new (GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                 "gimp-brush-generated",
+                                 "gimp-shape",
                                  GTK_ICON_SIZE_MENU,
                                  G_CALLBACK (gimp_brush_editor_update_brush_shape),
                                  editor,
