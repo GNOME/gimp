@@ -2,16 +2,41 @@
 GimpSizeEntry
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Widget for entering pixel values and resolutions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+This widget is used to enter pixel distances/sizes and resolutions.
+</para>
+<para>
+You can specify the number of fields the widget should provide. For
+each field automatic mappings are performed between the field's
+"reference value" and it's "value".
+</para>
+<para>
+There is a #GimpUnitMenu right of the entry fields which lets you
+specify the #GimpUnit of the displayed values.
+</para>
+<para>
+For each field, there can be one or two #GtkSpinButton's to enter
+"value" and "reference value". If you specify @show_refval as #FALSE
+in gimp_size_entry_new() there will be only one #GtkSpinButton and the
+#GimpUnitMenu will contain an item for selecting GIMP_UNIT_PIXEL.
+</para>
+<para>
+The "reference value" is either of GIMP_UNIT_PIXEL or dpi, depending
+on which #GimpSizeEntryUpdatePolicy you specify in gimp_size_entry_new().
+The "value" is either the size in pixels mapped to the size in a
+real-world-unit (see #GimpUnit) or the dpi value mapped to pixels per
+real-world-unit.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GimpUnit
+</para>
+<para>
+#GimpUnitMenu
 </para>
 
 <!-- ##### STRUCT GimpSizeEntry ##### -->
@@ -22,13 +47,14 @@ GimpSizeEntry
 
 <!-- ##### MACRO GIMP_SIZE_ENTRY ##### -->
 <para>
-
+Checks if the passed pointer is a pointer to a #GimpSizeEntry and
+performes the cast if valid.
 </para>
 
-@obj: 
+@obj: The pointer to cast.
 
 
-<!-- ##### ENUM GimpSizeEntryUP ##### -->
+<!-- ##### ENUM GimpSizeEntryUpdatePolicy ##### -->
 <para>
 
 </para>

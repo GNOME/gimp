@@ -1218,7 +1218,7 @@ my $unit_misc = <<'CODE';
     $author = $copyright = 'Michael Natterer';
     $date = '1998';
 CODE
-&image_accessors('unit', 'unit (min UNIT_INCH)', 'unit', 0,
+&image_accessors('unit', 'unit (min GIMP_UNIT_INCH)', 'unit', 0,
 		 [ <<CODE1, <<CODE2 ]);
     \$help .= '$unit_help';
     $unit_misc

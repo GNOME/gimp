@@ -133,7 +133,7 @@ int       preview_size = 32;
 int       nav_preview_size = 112;
 int       show_rulers = TRUE;
 int       show_statusbar = TRUE;
-GUnit     default_units = UNIT_INCH;
+GimpUnit  default_units = GIMP_UNIT_INCH;
 int       auto_save = TRUE;
 InterpolationType interpolation_type = LINEAR_INTERPOLATION;
 int       confirm_on_close = TRUE;
@@ -146,7 +146,7 @@ int       default_height = 857;
 int       default_type = RGB;
 double    default_xresolution = 72.0;
 double    default_yresolution = 72.0;
-GUnit     default_resolution_units = UNIT_INCH;
+GimpUnit  default_resolution_units = GIMP_UNIT_INCH;
 int       default_dot_for_dot = TRUE;
 int       show_tips = TRUE;
 int       last_tip = -1;
@@ -1337,11 +1337,11 @@ parse_units (gpointer val1p,
     return ERROR;
   token = get_next_token ();
 
-  *((GUnit *) val1p) = UNIT_INCH;
-  for (i = UNIT_INCH; i < gimp_unit_get_number_of_units (); i++)
+  *((GimpUnit *) val1p) = GIMP_UNIT_INCH;
+  for (i = GIMP_UNIT_INCH; i < gimp_unit_get_number_of_units (); i++)
     if (strcmp (token_sym, gimp_unit_get_identifier (i)) == 0)
       {
-	*((GUnit *) val1p) = i;
+	*((GimpUnit *) val1p) = i;
 	break;
       }
 
@@ -2242,7 +2242,7 @@ parse_unit_info (gpointer val1p,
 {
   gint token;
 
-  GUnit unit;
+  GimpUnit unit;
 
   gchar   *identifier   = NULL;
   gdouble  factor       = 1.0;
@@ -2687,7 +2687,7 @@ static inline char *
 units_to_str (gpointer val1p,
 	      gpointer val2p)
 {
-  return g_strdup (gimp_unit_get_identifier (*((GUnit*)val1p)));
+  return g_strdup (gimp_unit_get_identifier (*((GimpUnit*)val1p)));
 }
 
 static inline char *

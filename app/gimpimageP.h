@@ -40,11 +40,11 @@ struct _GimpImage
   gboolean       has_filename;        /*  has a valid filename         */
   PlugInProcDef *save_proc;           /*  last PDB save proc used      */
 
-  gint     width, height;              /*  width and height attributes  */
-  gdouble  xresolution;               /*  image x-res, in dpi          */
-  gdouble  yresolution;               /*  image y-res, in dpi          */
-  GUnit    unit;                      /*  image unit                   */
-  GimpImageBaseType base_type;        /*  base gimp_image type         */
+  gint               width, height;   /*  width and height attributes  */
+  gdouble            xresolution;     /*  image x-res, in dpi          */
+  gdouble            yresolution;     /*  image y-res, in dpi          */
+  GimpUnit           unit;            /*  image unit                   */
+  GimpImageBaseType  base_type;       /*  base gimp_image type         */
 
   guchar *cmap;                       /*  colormap--for indexed        */
   int     num_cols;                   /*  number of cols--for indexed  */

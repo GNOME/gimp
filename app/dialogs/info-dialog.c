@@ -402,18 +402,18 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
 }
 
 GtkWidget *
-info_dialog_add_sizeentry (InfoDialog      *idialog,
-			   gchar           *title,
-			   gdouble         *value_ptr,
-			   gint             nfields,
-			   GUnit            unit,
-			   gchar           *unit_format,
-			   gboolean         menu_show_pixels,
-			   gboolean         menu_show_percent,
-			   gboolean         show_refval,
-			   GimpSizeEntryUP  update_policy,
-			   GtkSignalFunc    callback,
-			   gpointer         data)
+info_dialog_add_sizeentry (InfoDialog                *idialog,
+			   gchar                     *title,
+			   gdouble                   *value_ptr,
+			   gint                       nfields,
+			   GimpUnit                   unit,
+			   gchar                     *unit_format,
+			   gboolean                   menu_show_pixels,
+			   gboolean                   menu_show_percent,
+			   gboolean                   show_refval,
+			   GimpSizeEntryUpdatePolicy  update_policy,
+			   GtkSignalFunc              callback,
+			   gpointer                   data)
 {
   GtkWidget *alignment;
   GtkWidget *sizeentry;

@@ -2,16 +2,32 @@
 GimpUnitMenu
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Widget for selecting a #GimpUnit.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+This widget provides a #GtkOptionMenu which contains a list of #GimpUnit's.
+</para>
+<para>
+You can specify the string that will be displayed for each unit by
+passing a printf-like @format string to gimp_unit_menu_new().
+</para>
+<para>
+The constructor also lets you choose if the menu should contain items
+for GIMP_UNIT_PIXEL, GIMP_UNIT_PERCENT and a "More..." item which will
+pop up a dialog for selecting user-defined units.
+</para>
+<para>
+Whenever the user selects a unit from the menu or the dialog, the
+"unit_changed" signal will be emitted.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GimpUnit
+</para>
+<para>
+#GimpSizeEntry
 </para>
 
 <!-- ##### STRUCT GimpUnitMenu ##### -->
@@ -22,14 +38,51 @@ GimpUnitMenu
 
 <!-- ##### MACRO GIMP_UNIT_MENU ##### -->
 <para>
-
+Checks if the passed pointer is a pointer to a #GimpUnitMenu and
+performes the cast if valid.
 </para>
 
-@obj: 
+@obj: The pointer to cast.
 
 
 <!-- ##### FUNCTION gimp_unit_menu_new ##### -->
 <para>
+
+<informaltable pgwide=1 frame="none" role="enum">
+<tgroup cols="2"><colspec colwidth="1*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>% f</entry>
+<entry>Factor (how many units make up an inch)</entry>
+</row>
+
+<row>
+<entry>% y</entry>
+<entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
+</row>
+
+<row>
+<entry>% a</entry>
+<entry>Abbreviation</entry>
+</row>
+
+<row>
+<entry>% s</entry>
+<entry>Singular</entry>
+</row>
+
+<row>
+<entry>% p</entry>
+<entry>Plural</entry>
+</row>
+
+<row>
+<entry>%%</entry>
+<entry>Literal percent</entry>
+</row>
+
+</tbody></tgroup></informaltable>
 
 </para>
 
@@ -61,7 +114,8 @@ GimpUnitMenu
 
 <!-- ##### SIGNAL GimpUnitMenu::unit-changed ##### -->
 <para>
-
+This signal is emitted whenever the user selects a #GimpUnit from the
+#GimpUnitMenu.
 </para>
 
 @gimpunitmenu: the object which received the signal.

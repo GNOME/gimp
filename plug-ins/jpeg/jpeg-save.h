@@ -942,7 +942,7 @@ load_image (char         *filename,
 	case 2: /* dots per cm */
 	  xresolution *= 2.54;
 	  yresolution *= 2.54;
-	  gimp_image_set_unit (image_ID, UNIT_MM);
+	  gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
 	  break;
 
 	default:

@@ -541,9 +541,9 @@ load_image (gchar *filename)
   /* any resolution info in the file? */
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    gfloat xres = 72.0, yres = 72.0;
-    gushort read_unit;
-    GUnit unit = UNIT_PIXEL; /* invalid unit */
+    gfloat   xres = 72.0, yres = 72.0;
+    gushort  read_unit;
+    GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
 
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
       if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
@@ -558,13 +558,13 @@ load_image (gchar *filename)
 		break;
 		
 	      case RESUNIT_INCH:
-		unit = UNIT_INCH;
+		unit = GIMP_UNIT_INCH;
 		break;
 		
 	      case RESUNIT_CENTIMETER:
 		xres *= 2.54;
 		yres *= 2.54;
-		unit = UNIT_MM; /* as this is our default metric unit */
+		unit = GIMP_UNIT_MM; /* as this is our default metric unit */
 		break;
 		
 	      default:
@@ -593,7 +593,7 @@ load_image (gchar *filename)
       if (read_unit != RESUNIT_NONE)
 	{
 	  gimp_image_set_resolution (image, xres, yres);
-	  if (unit != UNIT_PIXEL)
+	  if (unit != GIMP_UNIT_PIXEL)
 	    gimp_image_set_unit (image, unit);
 	}
     }
@@ -1295,11 +1295,11 @@ static gint save_image (char   *filename,
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   /* resolution fields */
   {
-    double xresolution;
-    double yresolution;
-    unsigned short save_unit = RESUNIT_INCH;
-    GUnit unit;
-    float factor;
+    gdouble  xresolution;
+    gdouble  yresolution;
+    gushort  save_unit = RESUNIT_INCH;
+    GimpUnit unit;
+    gfloat   factor;
 
     gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
     unit = gimp_image_get_unit (orig_image);
@@ -1307,10 +1307,10 @@ static gint save_image (char   *filename,
 
     /*  if we have a metric unit, save the resolution as centimeters
      */
-    if ((ABS(factor - 0.0254) < 1e-5) ||  /* m */
-	(ABS(factor - 0.254) < 1e-5) ||   /* why not ;) */
-	(ABS(factor - 2.54) < 1e-5) ||    /* cm */
-	(ABS(factor - 25.4) < 1e-5))      /* mm */
+    if ((ABS (factor - 0.0254) < 1e-5) ||  /* m  */
+	(ABS (factor - 0.254) < 1e-5) ||   /* dm */
+	(ABS (factor - 2.54) < 1e-5) ||    /* cm */
+	(ABS (factor - 25.4) < 1e-5))      /* mm */
       {
 	save_unit = RESUNIT_CENTIMETER;
 	xresolution /= 2.54;

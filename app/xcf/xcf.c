@@ -1207,10 +1207,10 @@ xcf_save_prop (XcfInfo  *info,
       break;
     case PROP_USER_UNIT:
       {
-	GUnit   unit;
-	gchar  *unit_strings[5];
-	float   factor;
-	guint32 digits;
+	GimpUnit  unit;
+	gchar    *unit_strings[5];
+	gfloat    factor;
+	guint32   digits;
 
 	unit = va_arg (args, guint32);
 
@@ -1878,11 +1878,12 @@ xcf_load_image_props (XcfInfo *info,
 	   guint32 unit;
 
 	   info->cp += xcf_read_int32 (info->fp, &unit, 1);
-	   
-	   if ((unit >= gimp_unit_get_number_of_units()) )
+
+	   if ((unit <= GIMP_UNIT_PIXEL) ||
+	       (unit >= gimp_unit_get_number_of_units()))
 	     {
 	       g_message ("Warning, unit out of range in XCF file, falling back to inches");
-	       unit = UNIT_INCH;
+	       unit = GIMP_UNIT_INCH;
 	     }
 
 	   gimage->unit = unit;
@@ -1897,12 +1898,12 @@ xcf_load_image_props (XcfInfo *info,
 	  break;
 	case PROP_USER_UNIT:
 	  {
-	    gchar  *unit_strings[5];
-	    float   factor;
-	    guint32 digits;
-	    GUnit   unit;
-	    gint    num_units;
-	    gint    i;
+	    gchar    *unit_strings[5];
+	    float     factor;
+	    guint32   digits;
+	    GimpUnit  unit;
+	    gint      num_units;
+	    gint      i;
 
 	    info->cp += xcf_read_float (info->fp, &factor, 1);
 	    info->cp += xcf_read_int32 (info->fp, &digits, 1);

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimpunit.h
- * Copyright (C) 1999 Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -38,84 +38,45 @@ extern "C" {
 
 typedef enum
 {
-  UNIT_PIXEL = 0,
-  UNIT_INCH  = 1,
-  UNIT_MM    = 2,
-  UNIT_POINT = 3,
-  UNIT_PICA  = 4,
-  UNIT_END   = 5,      /*  never use UNIT_END but
-			*  gimp_unit_get_number_of_units() instead
-			*/
+  GIMP_UNIT_PIXEL   = 0,
 
-  UNIT_PERCENT = 65536 /*  this one does not really belong here but it's
-			*  convenient to use the unit system for the
-			*  various strings (symbol, singular, ...)
-			*
-			*  you can only ask it for it's strings, asking for
-			*  factor, digits or deletion_flag will produce
-			*  an error.
-			*/
-} GUnit;
+  GIMP_UNIT_INCH    = 1,
+  GIMP_UNIT_MM      = 2,
+  GIMP_UNIT_POINT   = 3,
+  GIMP_UNIT_PICA    = 4,
 
+  GIMP_UNIT_END     = 5,
 
-gint     gimp_unit_get_number_of_units          (void);
-gint     gimp_unit_get_number_of_built_in_units (void);
+  GIMP_UNIT_PERCENT = 65536
+} GimpUnit;
 
-/* Create a new user unit and returns it's ID.
- *
- * Note that a new unit is always created with it's deletion flag
- * set to TRUE. You will have to set it to FALSE after creation to make
- * the unit definition persistant.
- */
-GUnit    gimp_unit_new                 (gchar   *identifier,
-					gdouble  factor,
-					gint     digits,
-					gchar   *symbol,
-					gchar   *abbreviation,
-					gchar   *singular,
-					gchar   *plural);
+/* For information look into the C source or the html documentation */
 
-/* The following functions fall back to inch (not pixel, as pixel is not
- * a 'real' unit) if the value passed is out of range.
- *
- * Trying to change the deletion flag of built-in units will be ignored.
- */
+gint       gimp_unit_get_number_of_units          (void);
+gint       gimp_unit_get_number_of_built_in_units (void);
 
-/* If the deletion flag for a unit is TRUE on GIMP exit, this unit
- * will not be saved in the user units database.
- */
-guint    gimp_unit_get_deletion_flag   (GUnit  unit);
-void     gimp_unit_set_deletion_flag   (GUnit  unit,
-					guint  deletion_flag);
+GimpUnit   gimp_unit_new                 (gchar    *identifier,
+					  gdouble   factor,
+					  gint      digits,
+					  gchar    *symbol,
+					  gchar    *abbreviation,
+					  gchar    *singular,
+					  gchar    *plural);
 
-/* The meaning of 'factor' is:
- * distance_in_units == ( factor * distance_in_inches )
- *
- * Returns 0 for unit == UNIT_PIXEL as we don't have resolution info here
- */
-gdouble  gimp_unit_get_factor          (GUnit  unit);
+gboolean   gimp_unit_get_deletion_flag   (GimpUnit  unit);
+void       gimp_unit_set_deletion_flag   (GimpUnit  unit,
+					  gboolean  deletion_flag);
 
-/* The following function gives a hint how many digits a spinbutton
- * should provide to get approximately the accuracy of an inch-spinbutton
- * with two digits.
- *
- * Returns 0 for unit == UNIT_PIXEL as we don't have resolution info here.
- */
-gint     gimp_unit_get_digits          (GUnit  unit);
+gdouble    gimp_unit_get_factor          (GimpUnit  unit);
 
-/* NOTE:
- *
- * the gchar pointer returned is constant in the gimp application but must
- * be g_free()'d by plug-ins.
- */
+gint       gimp_unit_get_digits          (GimpUnit  unit);
 
-/* This one is an untranslated string for gimprc */
-gchar *  gimp_unit_get_identifier      (GUnit  unit);
+gchar    * gimp_unit_get_identifier      (GimpUnit  unit);
 
-gchar *  gimp_unit_get_symbol          (GUnit  unit);
-gchar *  gimp_unit_get_abbreviation    (GUnit  unit);
-gchar *  gimp_unit_get_singular        (GUnit  unit);
-gchar *  gimp_unit_get_plural          (GUnit  unit);
+gchar    * gimp_unit_get_symbol          (GimpUnit  unit);
+gchar    * gimp_unit_get_abbreviation    (GimpUnit  unit);
+gchar    * gimp_unit_get_singular        (GimpUnit  unit);
+gchar    * gimp_unit_get_plural          (GimpUnit  unit);
 
 #ifdef __cplusplus
 }

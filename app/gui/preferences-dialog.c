@@ -92,10 +92,10 @@ static gint               old_save_device_status;
 static gint               old_always_restore_session;
 static gint               old_default_width;
 static gint               old_default_height;
-static GUnit              old_default_units;
+static GimpUnit           old_default_units;
 static gdouble            old_default_xresolution;
 static gdouble            old_default_yresolution;
-static GUnit              old_default_resolution_units;
+static GimpUnit           old_default_resolution_units;
 static gint               old_default_type;
 static gint               old_default_dot_for_dot;
 static gint               old_stingy_memory_use;
@@ -259,7 +259,7 @@ file_prefs_check_settings (void)
       default_height = old_default_height;
       return PREFS_CORRUPT;
     }
-  if (default_units < UNIT_INCH ||
+  if (default_units < GIMP_UNIT_INCH ||
       default_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default unit must be within unit range."));
@@ -274,7 +274,7 @@ file_prefs_check_settings (void)
       default_yresolution = old_default_yresolution;
       return PREFS_CORRUPT;
     }
-  if (default_resolution_units < UNIT_INCH ||
+  if (default_resolution_units < GIMP_UNIT_INCH ||
       default_resolution_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default resolution unit must be within unit range."));
@@ -2337,7 +2337,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
   sizeentry =
-    gimp_size_entry_new (2, UNIT_INCH, pixels_per_unit, FALSE, FALSE, TRUE, 75,
+    gimp_size_entry_new (2, GIMP_UNIT_INCH, pixels_per_unit,
+			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   
   g_free (pixels_per_unit);
@@ -2429,7 +2430,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       { N_("Temp Dir:"), N_("Select Temp Dir"), &edit_temp_path },
       { N_("Swap Dir:"), N_("Select Swap Dir"), &edit_swap_path },
     };
-    static int ndirs = sizeof (dirs) / sizeof (dirs[0]);
+    static gint ndirs = sizeof (dirs) / sizeof (dirs[0]);
 
     table = gtk_table_new (ndirs + 1, 2, FALSE);
     gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -2492,7 +2493,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	N_("Select Modules Dir"),
 	&edit_module_path }
     };
-    static int npaths = sizeof (paths) / sizeof (paths[0]);
+    static gint npaths = sizeof (paths) / sizeof (paths[0]);
 	
     for (i = 0; i < npaths; i++)
       {

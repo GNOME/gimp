@@ -46,10 +46,10 @@
 #define PAINTBRUSH_DEFAULT_INCREMENTAL       FALSE
 #define PAINTBRUSH_DEFAULT_USE_FADE          FALSE
 #define PAINTBRUSH_DEFAULT_FADE_OUT          100.0
-#define PAINTBRUSH_DEFAULT_FADE_UNIT         UNIT_PIXEL
+#define PAINTBRUSH_DEFAULT_FADE_UNIT         GIMP_UNIT_PIXEL
 #define PAINTBRUSH_DEFAULT_USE_GRADIENT      FALSE
 #define PAINTBRUSH_DEFAULT_GRADIENT_LENGTH   100.0
-#define PAINTBRUSH_DEFAULT_GRADIENT_UNIT     UNIT_PIXEL
+#define PAINTBRUSH_DEFAULT_GRADIENT_UNIT     GIMP_UNIT_PIXEL
 #define PAINTBRUSH_DEFAULT_GRADIENT_TYPE     LOOP_TRIANGLE
 
 /*  the paintbrush structures  */
@@ -67,8 +67,8 @@ struct _PaintbrushOptions
   gdouble       fade_out_d;
   GtkObject    *fade_out_w;
 
-  GUnit         fade_unit;
-  GUnit         fade_unit_d;
+  GimpUnit      fade_unit;
+  GimpUnit      fade_unit_d;
   GtkWidget    *fade_unit_w;
 
   gboolean      use_gradient;
@@ -79,8 +79,8 @@ struct _PaintbrushOptions
   gdouble       gradient_length_d;
   GtkObject    *gradient_length_w;
 
-  GUnit         gradient_unit;
-  GUnit         gradient_unit_d;
+  GimpUnit      gradient_unit;
+  GimpUnit      gradient_unit_d;
   GtkWidget    *gradient_unit_w;
 
   gint          gradient_type;
@@ -92,12 +92,12 @@ struct _PaintbrushOptions
 static PaintbrushOptions * paintbrush_options = NULL;
 
 /*  local variables  */
-static gdouble  non_gui_fade_out;
-static gdouble  non_gui_gradient_length;
-static gint     non_gui_gradient_type;
-static gdouble  non_gui_incremental;
-static GUnit    non_gui_fade_unit;
-static GUnit    non_gui_gradient_unit;
+static gdouble   non_gui_fade_out;
+static gdouble   non_gui_gradient_length;
+static gint      non_gui_gradient_type;
+static gdouble   non_gui_incremental;
+static GimpUnit  non_gui_fade_unit;
+static GimpUnit  non_gui_gradient_unit;
 
 
 /*  forward function declarations  */
@@ -156,8 +156,8 @@ paintbrush_options_reset (void)
 			    options->fade_out_d);
   gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->fade_unit_w),
 			   options->fade_unit_d);
-  digits = ((options->fade_unit_d == UNIT_PIXEL) ? 0 :
-	    ((options->fade_unit_d == UNIT_PERCENT) ? 2 :
+  digits = ((options->fade_unit_d == GIMP_UNIT_PIXEL) ? 0 :
+	    ((options->fade_unit_d == GIMP_UNIT_PERCENT) ? 2 :
 	     (MIN (6, MAX (3, gimp_unit_get_digits (options->fade_unit_d))))));
   spinbutton = gtk_object_get_data (GTK_OBJECT (options->fade_unit_w), "set_digits");
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
@@ -168,8 +168,8 @@ paintbrush_options_reset (void)
 			    options->gradient_length_d);
   gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->gradient_unit_w),
 			   options->gradient_unit_d);
-  digits = ((options->gradient_unit_d == UNIT_PIXEL) ? 0 :
-	    ((options->gradient_unit_d == UNIT_PERCENT) ? 2 :
+  digits = ((options->gradient_unit_d == GIMP_UNIT_PIXEL) ? 0 :
+	    ((options->gradient_unit_d == GIMP_UNIT_PERCENT) ? 2 :
 	     (MIN (6, MAX (3, gimp_unit_get_digits (options->gradient_unit_d))))));
   spinbutton = gtk_object_get_data (GTK_OBJECT (options->gradient_unit_w), "set_digits");
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
@@ -390,10 +390,10 @@ paintbrush_paint_func (PaintCore    *paint_core,
     case MOTION_PAINT :
       switch (paintbrush_options->fade_unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  fade_out = paintbrush_options->fade_out;
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  fade_out = MAX (gdisp->gimage->width, gdisp->gimage->height) * 
 	    paintbrush_options->fade_out / 100;
 	  break;
@@ -406,10 +406,10 @@ paintbrush_paint_func (PaintCore    *paint_core,
       
       switch (paintbrush_options->gradient_unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  gradient_length = paintbrush_options->gradient_length;
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  gradient_length = MAX (gdisp->gimage->width, gdisp->gimage->height) * 
 	    paintbrush_options->gradient_length / 100;
 	  break;
@@ -603,10 +603,10 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 
   switch (non_gui_fade_unit)
     {
-    case UNIT_PIXEL:
+    case GIMP_UNIT_PIXEL:
       fade_out = non_gui_fade_out;
       break;
-    case UNIT_PERCENT:
+    case GIMP_UNIT_PERCENT:
       fade_out = MAX (gimage->width, gimage->height) * 
 	non_gui_fade_out / 100;
       break;
@@ -619,10 +619,10 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
   
   switch (non_gui_gradient_unit)
     {
-    case UNIT_PIXEL:
+    case GIMP_UNIT_PIXEL:
       gradient_length = non_gui_gradient_length;
       break;
-    case UNIT_PERCENT:
+    case GIMP_UNIT_PERCENT:
       gradient_length = MAX (gimage->width, gimage->height) * 
 	non_gui_gradient_length / 100;
       break;
@@ -649,15 +649,15 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
 			    double        *stroke_array)
 {
   PaintbrushOptions *options = paintbrush_options;
-  double             fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
+  gdouble            fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
   gboolean           incremental     = PAINTBRUSH_DEFAULT_INCREMENTAL;
   gboolean           use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
   gboolean           use_fade        = PAINTBRUSH_DEFAULT_USE_FADE;
-  double             gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
-  int                gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
-  GUnit              fade_unit       = PAINTBRUSH_DEFAULT_FADE_UNIT;
-  GUnit              gradient_unit   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
-  int                i;
+  gdouble            gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
+  gint               gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
+  GimpUnit           fade_unit       = PAINTBRUSH_DEFAULT_FADE_UNIT;
+  GimpUnit           gradient_unit   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
+  gint               i;
 
   if (options)
     {

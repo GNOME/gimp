@@ -22,10 +22,8 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -95,19 +93,20 @@ query (void)
 {
   static GParamDef args [] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    { PARAM_IMAGE, "image", "Input image (not used)"},
+    { PARAM_INT32,    "run_mode", "Interactive, non-interactive"},
+    { PARAM_IMAGE,    "image",    "Input image (not used)"},
     { PARAM_DRAWABLE, "drawable", "Input drawable"},
-    { PARAM_INT32, "max_p", "1 for maximizing, 0 for minimizing"}
+    { PARAM_INT32,    "max_p",    "1 for maximizing, 0 for minimizing"}
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Return an image in which each pixel holds only the channel that has the maximum value in three (red, green, blue) channels, and other channels are zero-cleared"),
+			  "Return an image in which each pixel holds only "
+			  "the channel that has the maximum value in three "
+			  "(red, green, blue) channels, and other channels "
+			  "are zero-cleared",
 			  "the help is not yet written for this plug-in",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
@@ -115,16 +114,16 @@ query (void)
                           N_("<Image>/Filters/Colors/Max RGB..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char	*name,
-     int	nparams,
-     GParam	*param,
-     int	*nreturn_vals,
-     GParam	**return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam	 values[1];
   GStatusType	status = STATUS_EXECUTION_ERROR;
@@ -146,9 +145,9 @@ run (char	*name,
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
-      if (!gimp_drawable_is_rgb(drawable_id))
+      if (!gimp_drawable_is_rgb (drawable_id))
 	{
-	  gimp_message (_("RGB drawable is not selected."));
+	  g_message (_("MaxRGB: Can only operate on RBG drawables."));
 	  return;
 	}
       if (! dialog ())
@@ -167,8 +166,8 @@ run (char	*name,
   status = main_function (drawable_id);
 
   if (run_mode != RUN_NONINTERACTIVE)
-    gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS )
+    gimp_displays_flush ();
+  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
 
   values[0].type = PARAM_STATUS;
@@ -195,8 +194,10 @@ main_function (gint32 drawable_id)
   total = (x2 - x1) * (y2 - y1);
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   gimp_progress_init ( _("max_rgb: scanning..."));
@@ -209,8 +210,8 @@ main_function (gint32 drawable_id)
 
 	  for (x = 0; x < src_rgn.w; x++)
 	    {
-	      gint	ch, max_ch = 0;
-	      guchar	max, tmp_value;
+	      gint   ch, max_ch = 0;
+	      guchar max, tmp_value;
 	      
 	      max = init_value;
 	      for (ch = 0; ch < 3; ch++)
@@ -228,15 +229,16 @@ main_function (gint32 drawable_id)
 		*dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
 	      if (gap) *dest++=*src++;
 	      if ((++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
-		gimp_progress_update ((double)processed /(double) total); 
+		gimp_progress_update ((gdouble) processed / (gdouble) total); 
 	    }
 	}
-  }
+    }
   gimp_progress_update (1.0);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
+
   return STATUS_SUCCESS;
 }
 

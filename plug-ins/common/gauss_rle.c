@@ -418,7 +418,7 @@ gauss_rle2_dialog (gint32     image_ID,
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *size;
-  GUnit      unit;
+  GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
   gchar **argv;
@@ -505,7 +505,7 @@ multiply_alpha (guchar *buf,
 		gint    width,
 		gint    bytes)
 {
-  gint i, j;
+  gint    i, j;
   gdouble alpha;
 
   for (i = 0; i < width * bytes; i += bytes)
@@ -523,10 +523,10 @@ separate_alpha (guchar *buf,
 		gint    width,
 		gint    bytes)
 {
-  gint i, j;
-  guchar alpha;
+  gint    i, j;
+  guchar  alpha;
   gdouble recip_alpha;
-  gint new_val;
+  gint    new_val;
 
   for (i = 0; i < width * bytes; i += bytes)
     {
@@ -549,23 +549,23 @@ gauss_rle (GDrawable *drawable,
 	   gdouble    vert)
 {
   GPixelRgn src_rgn, dest_rgn;
-  gint width, height;
-  gint bytes;
-  gint has_alpha;
+  gint    width, height;
+  gint    bytes;
+  gint    has_alpha;
   guchar *dest, *dp;
   guchar *src, *sp;
-  gint *buf, *bb;
-  gint pixels;
-  gint total = 1;
-  gint x1, y1, x2, y2;
-  gint i, row, col, b;
-  gint start, end;
-  gint progress, max_progress;
-  gint *curve;
-  gint *sum = NULL;
-  gint val;
-  gint length;
-  gint initial_p, initial_m;
+  gint   *buf, *bb;
+  gint    pixels;
+  gint    total = 1;
+  gint    x1, y1, x2, y2;
+  gint    i, row, col, b;
+  gint    start, end;
+  gint    progress, max_progress;
+  gint   *curve;
+  gint   *sum = NULL;
+  gint    val;
+  gint    length;
+  gint    initial_p, initial_m;
   gdouble std_dev;
 
   if (horz < 1.0 && vert < 1.0)

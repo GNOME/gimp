@@ -87,7 +87,7 @@ resize_widget_new (ResizeType    type,
 		   gint          height,
 		   gdouble       resolution_x,
 		   gdouble       resolution_y,
-		   GUnit         unit,
+		   GimpUnit      unit,
 		   gboolean      dot_for_dot,
 		   GtkSignalFunc ok_cb,
 		   GtkSignalFunc cancel_cb,
@@ -289,7 +289,8 @@ resize_widget_new (ResizeType    type,
   gtk_widget_show (private->size_se);
 
   if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se), UNIT_PIXEL);
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se),
+			      GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
 				  resolution_x, FALSE);
@@ -439,7 +440,7 @@ resize_widget_new (ResizeType    type,
 
       if (dot_for_dot)
 	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
-				  UNIT_PIXEL);
+				  GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
 				      resolution_x, FALSE);
@@ -777,25 +778,25 @@ static void
 orig_labels_update (GtkWidget *widget,
 		    gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  GUnit unit;
-  gchar format_buf[16];
-  gchar buf[32];
+  GimpUnit       unit;
+  gchar          format_buf[16];
+  gchar          buf[32];
 
-  static GUnit label_unit = UNIT_PIXEL;
+  static GimpUnit label_unit = GIMP_UNIT_PIXEL;
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
   unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 
-  if (unit != UNIT_PERCENT)
+  if (unit != GIMP_UNIT_PERCENT)
     label_unit = unit;
 
-  if (label_unit) /* unit != UNIT_PIXEL */
+  if (label_unit) /* unit != GIMP_UNIT_PIXEL */
     {
-      double unit_factor = gimp_unit_get_factor (label_unit);
+      gdouble unit_factor = gimp_unit_get_factor (label_unit);
   
       g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
                   gimp_unit_get_digits (label_unit) + 1,
@@ -807,7 +808,7 @@ orig_labels_update (GtkWidget *widget,
                   private->old_height * unit_factor / private->old_res_y);
       gtk_label_set_text (GTK_LABEL (private->orig_height_label), buf);
     }
-  else /* unit == UNIT_PIXEL */
+  else /* unit == GIMP_UNIT_PIXEL */
     {
       g_snprintf (buf, sizeof (buf), "%d", private->old_width);
       gtk_label_set_text (GTK_LABEL (private->orig_width_label), buf);

@@ -125,12 +125,12 @@ GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint                time_true,
 				    gint                time_false);
 
-GtkWidget * gimp_coordinates_new   (GUnit               unit,
+GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gchar              *unit_format,
 				    gboolean            menu_show_pixels,
 				    gboolean            menu_show_percent,
 				    gint                spinbutton_usize,
-				    GimpSizeEntryUP     update_policy,
+				    GimpSizeEntryUpdatePolicy  update_policy,
 
 				    gboolean            chainbutton_active,
 				    gboolean            chain_constrains_ratio,

@@ -1405,20 +1405,20 @@ gimage_mask_feather_callback (GtkWidget *widget,
 			      gpointer   client_data,
 			      gpointer   call_data)
 {
-  GImage  *gimage;
-  GUnit    unit;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GImage   *gimage;
+  GimpUnit  unit;
+  gdouble   radius_x;
+  gdouble   radius_y;
 
   gimage = GIMP_IMAGE (client_data);
 
   selection_feather_radius = *(gdouble *) call_data;
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_feather_radius;
 
-  if (unit != UNIT_PIXEL)
+  if (unit != GIMP_UNIT_PIXEL)
     {
       gdouble factor;
 
@@ -1440,20 +1440,20 @@ gimage_mask_border_callback (GtkWidget *widget,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage  *gimage;
-  GUnit    unit;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GImage   *gimage;
+  GimpUnit  unit;
+  gdouble   radius_x;
+  gdouble   radius_y;
 
   gimage = GIMP_IMAGE (client_data);
 
   selection_border_radius = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_border_radius;
 
-  if (unit != UNIT_PIXEL)
+  if (unit != GIMP_UNIT_PIXEL)
     {
       gdouble factor;
 
@@ -1475,20 +1475,20 @@ gimage_mask_grow_callback (GtkWidget *widget,
 			   gpointer   client_data,
 			   gpointer   call_data)
 {
-  GImage  *gimage;
-  GUnit    unit;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GImage   *gimage;
+  GimpUnit  unit;
+  gdouble   radius_x;
+  gdouble   radius_y;
 
   gimage = GIMP_IMAGE (client_data);
 
   selection_grow_pixels = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_grow_pixels;
 
-  if (unit != UNIT_PIXEL)
+  if (unit != GIMP_UNIT_PIXEL)
     {
       gdouble factor;
 
@@ -1511,7 +1511,7 @@ gimage_mask_shrink_callback (GtkWidget *widget,
 			     gpointer   call_data)
 {
   GImage    *gimage;
-  GUnit      unit;
+  GimpUnit   unit;
   gint       radius_x;
   gint       radius_y;
 
@@ -1519,7 +1519,7 @@ gimage_mask_shrink_callback (GtkWidget *widget,
 
   selection_shrink_pixels = (gint) (*(gdouble *) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
+  unit = (GimpUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_shrink_pixels;
 
@@ -1527,7 +1527,7 @@ gimage_mask_shrink_callback (GtkWidget *widget,
     ! GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (widget),
 					      "edge_lock_toggle"))->active;
 
-  if (unit != UNIT_PIXEL)
+  if (unit != GIMP_UNIT_PIXEL)
     {
       gdouble factor;
 

@@ -221,7 +221,7 @@ gimp_query_size_box (gchar         *title,
 		     gdouble        lower,
 		     gdouble        upper,
 		     gint           digits,
-		     GUnit          unit,
+		     GimpUnit       unit,
 		     gdouble        resolution,
 		     gboolean       dot_for_dot,
 		     GtkObject     *object,
@@ -239,7 +239,7 @@ gimp_query_size_box (gchar         *title,
   sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 100,
 				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
   if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
 				  resolution, FALSE);
   gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, digits);

@@ -81,7 +81,7 @@ package Gimp::CodeGen::pdb;
     boolean => { name => 'INT32', type => 'gboolean ' },
     tattoo  => { name => 'INT32', type => 'gint32 '   },
     guide   => { name => 'INT32', type => 'gint32 '   },
-    unit    => { name => 'INT32', type => 'GUnit '    },
+    unit    => { name => 'INT32', type => 'GimpUnit ' },
 
     region => { name => 'REGION', type => 'gpointer ' } # not supported
 );
@@ -132,13 +132,13 @@ sub arg_parse {
 sub arg_ptype {
     my $arg = shift;
     do {
-	if (exists $arg->{id_func})       { 'int'     }
-	elsif ($arg->{type} =~ /\*/)      { 'pointer' }
-	elsif ($arg->{type} =~ /boolean/) { 'int'     }
-	elsif ($arg->{type} =~ /GUnit/)   { 'int'     }
-	elsif ($arg->{type} =~ /int/)     { 'int'     }
-	elsif ($arg->{type} =~ /double/)  { 'float'   }
-	else                              { 'pointer' }
+	if (exists $arg->{id_func})        { 'int'     }
+	elsif ($arg->{type} =~ /\*/)       { 'pointer' }
+	elsif ($arg->{type} =~ /boolean/)  { 'int'     }
+	elsif ($arg->{type} =~ /GimpUnit/) { 'int'     }
+	elsif ($arg->{type} =~ /int/)      { 'int'     }
+	elsif ($arg->{type} =~ /double/)   { 'float'   }
+	else                               { 'pointer' }
     };
 }
 

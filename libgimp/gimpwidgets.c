@@ -657,12 +657,12 @@ gimp_coordinates_callback (GtkWidget *widget,
 }
 
 GtkWidget *
-gimp_coordinates_new (GUnit            unit,
+gimp_coordinates_new (GimpUnit         unit,
 		      gchar           *unit_format,
 		      gboolean         menu_show_pixels,
 		      gboolean         menu_show_percent,
 		      gint             spinbutton_usize,
-		      GimpSizeEntryUP  update_policy,
+		      GimpSizeEntryUpdatePolicy  update_policy,
 
 		      gboolean         chainbutton_active,
 		      gboolean         chain_constrains_ratio,
@@ -705,7 +705,7 @@ gimp_coordinates_new (GUnit            unit,
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
   gtk_widget_show (spinbutton);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1, yres, TRUE);
@@ -865,15 +865,15 @@ void
 gimp_unit_menu_update (GtkWidget *widget,
 		       gpointer   data)
 {
-  GUnit     *val;
+  GimpUnit  *val;
   GtkWidget *spinbutton;
   gint       digits;
 
-  val = (GUnit *) data;
+  val = (GimpUnit *) data;
   *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
 
-  digits = ((*val == UNIT_PIXEL) ? 0 :
-	    ((*val == UNIT_PERCENT) ? 2 :
+  digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
+	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
 	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
 
   spinbutton =

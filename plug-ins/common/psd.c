@@ -278,19 +278,18 @@ typedef struct PsdImage
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
+static void   run        (gchar   *name,
+                          gint     nparams,
                           GParam  *param,
-                          int     *nreturn_vals,
+                          gint    *nreturn_vals,
                           GParam **return_vals);
-static GDrawableType psd_type_to_gimp_type
-                         (psd_imagetype psdtype);
-static GImageType psd_type_to_gimp_base_type
-                         (psd_imagetype psdtype);
-static GLayerMode psd_lmode_to_gimp_lmode
-                         (gchar modekey[4]);
-static GUnit psd_unit_to_gimp_unit(int psdunit);
-static gint32 load_image (char   *filename);
+
+static GDrawableType  psd_type_to_gimp_type      (psd_imagetype  psdtype);
+static GImageType     psd_type_to_gimp_base_type (psd_imagetype  psdtype);
+static GLayerMode     psd_lmode_to_gimp_lmode    (gchar          modekey[4]);
+static GimpUnit       psd_unit_to_gimp_unit      (gint           psdunit);
+
+static gint32         load_image                 (gchar         *filename);
 
 
 
@@ -298,10 +297,10 @@ static gint32 load_image (char   *filename);
  */
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -521,23 +520,23 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
 }
 
 
-static GUnit
+static GimpUnit
 psd_unit_to_gimp_unit (int psdunit)
 {
-  switch(psdunit)
+  switch (psdunit)
     {
     case 1:
-      return UNIT_INCH;
+      return GIMP_UNIT_INCH;
     case 2: /* this means cm to PS, but MM is as close as we have */
-      return UNIT_MM;
+      return GIMP_UNIT_MM;
     case 3:
-      return UNIT_POINT;
+      return GIMP_UNIT_POINT;
     case 4:
-      return UNIT_PICA;
+      return GIMP_UNIT_PICA;
     case 5: /* 5 == Columns, but what the heck is a column? */
     default:
       IFDBG printf("Warning: unable to convert psd unit %d to gimp unit\n", psdunit);
-      return UNIT_PIXEL;
+      return GIMP_UNIT_PIXEL;
     }
 }
 

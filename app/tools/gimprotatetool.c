@@ -124,7 +124,7 @@ rotate_tool_transform (Tool           *tool,
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
 				gdisp->gimage->unit);
       if (gdisp->dot_for_dot)
-	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
 				      gdisp->gimage->xresolution, FALSE);

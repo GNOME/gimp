@@ -16,6 +16,8 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
+#include "gimplimits.h"
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 
@@ -27,16 +29,9 @@ static void gimp_size_entry_value_callback     (GtkWidget *widget,
 						gpointer   data);
 static void gimp_size_entry_refval_callback    (GtkWidget *widget,
 						gpointer   data);
-/*
-static int  gimp_size_entry_focus_in_callback  (GtkWidget *widget,
-						GdkEvent  *event,
-						gpointer   data);
-static int  gimp_size_entry_focus_out_callback (GtkWidget *widget,
-                                                GdkEvent  *event,
-						gpointer   data);
-*/
 
-enum {
+enum
+{
   VALUE_CHANGED,
   REFVAL_CHANGED,
   UNIT_CHANGED,
@@ -140,7 +135,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
   gse->fields = NULL;
   gse->number_of_fields = 0;
   gse->unitmenu = NULL;
-  gse->unit = UNIT_PIXEL;
+  gse->unit = GIMP_UNIT_PIXEL;
   gse->menu_show_pixels = TRUE;
   gse->menu_show_percent = TRUE;
   gse->show_refval = FALSE;
@@ -148,7 +143,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 }
 
 GtkType
-gimp_size_entry_get_type ()
+gimp_size_entry_get_type (void)
 {
   static guint gse_type = 0;
 
@@ -172,15 +167,60 @@ gimp_size_entry_get_type ()
   return gse_type;
 }
 
-GtkWidget*
-gimp_size_entry_new (gint             number_of_fields,
-		     GUnit            unit,
-		     gchar           *unit_format,
-		     gboolean         menu_show_pixels,
-		     gboolean         menu_show_percent,
-		     gboolean         show_refval,
-		     gint             spinbutton_usize,
-		     GimpSizeEntryUP  update_policy)
+/**
+ * gimp_size_entry_new:
+ * @number_of_fields: The number of input fields.
+ * @unit: The initial unit.
+ * @unit_format: A printf-like unit-format string (see #GimpUnitMenu).
+ * @menu_show_pixels: #TRUE if the unit menu shold contain an item for
+ *                    GIMP_UNIT_PIXEL (ignored if the @update_policy is not
+ *                    GIMP_SIZE_ENTRY_UPDATE_NONE).
+ * @menu_show_percent: #TRUE if the unit menu shold contain an item for
+ *                     GIMP_UNIT_PERCENT.
+ * @show_refval: #TRUE if you want an extra "refenence value" spinbutton per
+                 input field.
+ * @spinbutton_usize: The minimal horizontal size of the #GtkSpinButton's.
+ * @update_policy: How the automatic pixel <-> real-world-unit calculations
+ *                 should be performed.
+ *
+ * Creates a new #GimpSizeEntry widget.
+ *
+ * To have all automatic calculations performed correctly, set up the
+ * widget in the following order:
+ *
+ * 1. gimp_size_entry_new()
+ *
+ * 2. (for each additional input field) gimp_size_entry_add_field()
+ *
+ * 3. gimp_size_entry_set_unit()
+ *
+ * For each input field:
+ *
+ * 4. gimp_size_entry_set_resolution()
+ *
+ * 5. gimp_size_entry_set_refval_boundaries()
+ *    (or gimp_size_entry_set_value_boundaries())
+ *
+ * 6. gimp_size_entry_set_size()
+ *
+ * 7. gimp_size_entry_set_refval() (or gimp_size_entry_set_value())
+ *
+ * The #GimpSizeEntry is derived from #GtkTable and will have
+ * an empty border of one cell width on each side plus an empty column left
+ * of the #GimpUnitMenu to allow the caller to add labels or a #GimpChainButton.
+ *
+ * Returns: A Pointer to the new #GimpSizeEntry widget.
+ *
+ */
+GtkWidget *
+gimp_size_entry_new (gint                       number_of_fields,
+		     GimpUnit                   unit,
+		     gchar                     *unit_format,
+		     gboolean                   menu_show_pixels,
+		     gboolean                   menu_show_percent,
+		     gboolean                   show_refval,
+		     gint                       spinbutton_usize,
+		     GimpSizeEntryUpdatePolicy  update_policy)
 {
   GimpSizeEntry *gse;
   gint           i;
@@ -244,7 +284,7 @@ gimp_size_entry_new (gint             number_of_fields,
 						   1.0, 10.0, 0.0);
       gsef->value_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (gsef->value_adjustment), 1.0,
-			     (unit == UNIT_PERCENT) ? 2 :
+			     (unit == GIMP_UNIT_PERCENT) ? 2 :
 			     (MIN (gimp_unit_get_digits (unit), 5) + 1));
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(gsef->value_spinbutton),
 				       GTK_SHADOW_NONE);
@@ -254,17 +294,6 @@ gimp_size_entry_new (gint             number_of_fields,
 				 gse->show_refval+1, gse->show_refval+2);
       gtk_signal_connect (GTK_OBJECT (gsef->value_adjustment), "value_changed",
 			  (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
-
-      /* these callbacks are not used
-      gtk_signal_connect (GTK_OBJECT (gsef->value_spinbutton),
-			  "focus_in_event",
-			  (GdkEventFunc) gimp_size_entry_focus_in_callback,
-			  gsef);
-      gtk_signal_connect (GTK_OBJECT (gsef->value_spinbutton),
-			  "focus_out_event",
-			  (GdkEventFunc) gimp_size_entry_focus_out_callback,
-			  gsef);
-      */
 
       gtk_widget_show (gsef->value_spinbutton);
 
@@ -288,21 +317,10 @@ gimp_size_entry_new (gint             number_of_fields,
 			      (GtkSignalFunc) gimp_size_entry_refval_callback,
 			      gsef);
 
-	  /* these callbacks are not used
-	  gtk_signal_connect (GTK_OBJECT (gsef->refval_spinbutton),
-			      "focus_in_event",
-			      (GdkEventFunc) gimp_size_entry_focus_in_callback,
-			      gsef);
-	  gtk_signal_connect (GTK_OBJECT (gsef->refval_spinbutton),
-			      "focus_out_event",
-			      (GdkEventFunc) gimp_size_entry_focus_out_callback,
-			      gsef);
-	  */
-
 	  gtk_widget_show (gsef->refval_spinbutton);
 	}			
 
-      if (gse->menu_show_pixels && !gse->show_refval && (unit == UNIT_PIXEL))
+      if (gse->menu_show_pixels && !gse->show_refval && (unit == GIMP_UNIT_PIXEL))
 	gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				    gsef->refval_digits);
     }
@@ -322,11 +340,24 @@ gimp_size_entry_new (gint             number_of_fields,
 }
 
 
-/*  add a field to the sizeentry  */
+/**
+ * gimp_size_entry_add_field:
+ * @gse: The sizeentry you want to add a field to.
+ * @value_spinbutton: The spinbutton to display the field's value.
+ * @refval_spinbutton: The spinbutton to display the field's reference value.
+ *
+ * Adds an input field to the #GimpSizeEntry.
+ *
+ * The new input field will have the index 0. If you specified @show_refval
+ * as #TRUE in gimp_size_entry_new() you have to pass an additional
+ * #GtkSpinButton to hold the reference value. If @show_refval was #FALSE,
+ * @refval_spinbutton will be ignored.
+ *
+ */
 void
-gimp_size_entry_add_field  (GimpSizeEntry   *gse,
-			    GtkSpinButton   *value_spinbutton,
-			    GtkSpinButton   *refval_spinbutton)
+gimp_size_entry_add_field  (GimpSizeEntry *gse,
+			    GtkSpinButton *value_spinbutton,
+			    GtkSpinButton *refval_spinbutton)
 {
   GimpSizeEntryField *gsef;
 
@@ -364,17 +395,6 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
   gtk_signal_connect (GTK_OBJECT (gsef->value_adjustment), "value_changed",
 		      (GtkSignalFunc) gimp_size_entry_value_callback, gsef);
 
-  /* these callbacks are not used
-     gtk_signal_connect (GTK_OBJECT (value_spinbutton),
-                         "focus_in_event",
-			 (GdkEventFunc) gimp_size_entry_focus_in_callback,
-			 gsef);
-     gtk_signal_connect (GTK_OBJECT (value_spinbutton),
-			 "focus_out_event",
-			 (GdkEventFunc) gimp_size_entry_focus_out_callback,
-			 gsef);
-  */
-
   if (gse->show_refval)
     {
       gsef->refval_adjustment =
@@ -383,29 +403,26 @@ gimp_size_entry_add_field  (GimpSizeEntry   *gse,
       gtk_signal_connect (GTK_OBJECT (gsef->refval_adjustment), "value_changed",
 			  (GtkSignalFunc) gimp_size_entry_refval_callback,
 			  gsef);
-
-      /* these callbacks are not used
-	 gtk_signal_connect (GTK_OBJECT (refval_spinbutton),
-			     "focus_in_event",
-			     (GdkEventFunc) gimp_size_entry_focus_in_callback,
-			     gsef);
-	 gtk_signal_connect (GTK_OBJECT (refval_spinbutton),
-			     "focus_out_event",
-			     (GdkEventFunc) gimp_size_entry_focus_out_callback,
-			     gsef);
-      */
     }
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton),
 			      MIN (gimp_unit_get_digits (gse->unit), 5) + 1);
 
-  if (gse->menu_show_pixels && !gse->show_refval && (gse->unit == UNIT_PIXEL))
+  if (gse->menu_show_pixels && !gse->show_refval && (gse->unit == GIMP_UNIT_PIXEL))
     gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				gsef->refval_digits);
 }
 
-/*  convenience function for labeling the widget  ***********/
-
+/**
+ * gimp_size_entry_attach_label:
+ * @gse: The sizeentry you want to add a label to.
+ * @text: The text of the label.
+ * @row: The row where the label will be attached.
+ * @column: The column where the label will be attached.
+ * @alignment: The horizontal alignment of the label.
+ *
+ * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkTable).
+ */
 void
 gimp_size_entry_attach_label (GimpSizeEntry *gse,
 			      gchar         *text,
@@ -427,21 +444,37 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 }
 
 
-/*  resolution stuff  ***********/
-
+/**
+ * gimp_size_entry_set_resolution:
+ * @gse: The sizeentry you want to set a resolution for.
+ * @field: The index of the field you want to set the resolution for.
+ * @resolution: The new resolution (in dpi) for the chosen @field.
+ * @keep_size: #TRUE if the @field's size in pixels should stay the same.
+ *             #FALSE if the @field's size in units should stay the same.
+ *
+ * Sets the resolution (in dpi) for field # @field of the #GimpSizeEntry.
+ *
+ * The @resolution passed will be clamped to fit in
+ * [#GIMP_MIN_RESOLUTION..#GIMP_MAX_RESOLUTION].
+ *
+ * This function does nothing if the #GimpSizeEntryUpdatePolicy specified in
+ * gimp_size_entry_new() doesn't equal to GIMP_SIZE_ENTRY_UPDATE_SIZE.
+ *
+ */
 void
 gimp_size_entry_set_resolution (GimpSizeEntry *gse,
 				gint           field,
 				gdouble        resolution,
-				guint          keep_size)
+				gboolean       keep_size)
 {
   GimpSizeEntryField *gsef;
-  float               val;
+  gfloat              val;
 
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
-  g_return_if_fail (resolution > 0.0);
+
+  resolution = CLAMP (resolution, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->resolution = resolution;
@@ -457,8 +490,24 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
 }
 
 
-/*  percent stuff  ***********/
-
+/**
+ * gimp_size_entry_set_size:
+ * @gse: The sizeentry you want to set a size for.
+ * @field: The index of the field you want to set the size for.
+ * @lower: The reference value which will be treated as 0%.
+ * @upper: The reference value which will be treated as 100%.
+ *
+ * Sets the pixel values for field # @field of the #GimpSizeEntry
+ * which will be treated as 0% and 100%.
+ *
+ * These values will be used if you specified @menu_show_percent as #TRUE
+ * in gimp_size_entry_new() and the user has selected GIMP_UNIT_PERCENT in
+ * the #GimpSizeEntry's #GimpUnitMenu.
+ *
+ * This function does nothing if the #GimpSizeEntryUpdatePolicy specified in
+ * gimp_size_entry_new() doesn't equal to GIMP_SIZE_ENTRY_UPDATE_SIZE.
+ *
+ */
 void
 gimp_size_entry_set_size (GimpSizeEntry *gse,
 			  gint           field,
@@ -480,8 +529,24 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
 }
 
 
-/*  value stuff  ***********/
-
+/**
+ * gimp_size_entry_set_value_boundaries:
+ * @gse: The sizeentry you want to set value boundaries for.
+ * @field: The index of the field you want to set value boundaries for.
+ * @lower: The new lower boundary of the value of the chosen @field.
+ * @upper: The new upper boundary of the value of the chosen @field.
+ *
+ * Limits the range of possible values which can be entered in field # @field
+ * of the #GimpSizeEntry.
+ *
+ * The current value of the @field will be clamped to fit in the @field's
+ * new boundaries.
+ *
+ * NOTE: In most cases you won't be interested in these values because the
+ *       #GimpSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use gimp_size_entry_set_refval_boundaries() instead.
+ *
+ */
 void
 gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
 				       gint           field,
@@ -513,12 +578,12 @@ gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       switch (gse->unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  gimp_size_entry_set_refval_boundaries (gse, field,
 						 gsef->min_value,
 						 gsef->max_value);
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  gimp_size_entry_set_refval_boundaries (gse, field,
 						 gsef->lower +
 						 (gsef->upper - gsef->lower) *
@@ -553,6 +618,24 @@ gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
   gimp_size_entry_set_value (gse, field, gsef->value);
 }
 
+/**
+ * gimp_size_entry_get_value;
+ * @gse: The sizeentry you want to know a value of.
+ * @field: The index of the filed you want to know the value of.
+ *
+ * Returns the value of field # @field of the #GimpSizeEntry.
+ *
+ * The @value returned is a distance or resolution
+ * in the #GimpUnit the user has selected in the #GimpSizeEntry's
+ * #GimpUnitMenu.
+ *
+ * NOTE: In most cases you won't be interested in this value because the
+ *       #GimpSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use gimp_size_entry_get_refval() instead.
+ *
+ * Returns: The value of the chosen @field.
+ *
+ */
 gdouble
 gimp_size_entry_get_value (GimpSizeEntry *gse,
 			   gint           field)
@@ -584,10 +667,10 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       switch (gsef->gse->unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  gsef->refval = value;
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  gsef->refval =
 	    CLAMP (gsef->lower + (gsef->upper - gsef->lower) * value / 100,
 		   gsef->min_refval, gsef->max_refval);
@@ -617,6 +700,23 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
     }
 }
 
+/**
+ * gimp_size_entry_set_value;
+ * @gse: The sizeentry you want to set a value for.
+ * @field: The index of the field you want to set a value for.
+ * @value: The new value for @field.
+ *
+ * Sets the value for field # @field of the #GimpSizeEntry.
+ *
+ * The @value passed is treated to be a distance or resolution
+ * in the #GimpUnit the user has selected in the #GimpSizeEntry's
+ * #GimpUnitMenu.
+ *
+ * NOTE: In most cases you won't be interested in this value because the
+ *       #GimpSizeEntry's purpose is to shield the programmer from unit
+ *       calculations. Use gimp_size_entry_set_refval() instead.
+ *
+ */
 void
 gimp_size_entry_set_value (GimpSizeEntry *gse,
 			   gint           field,
@@ -658,8 +758,21 @@ gimp_size_entry_value_callback (GtkWidget *widget,
 }
 
 
-/*  refval stuff  ***********/
-
+/**
+ * gimp_size_entry_set_refval_boundaries:
+ * @gse: The sizeentry you want to set the reference value boundaries for.
+ * @field: The index of the field you want to set the reference value
+ *         boundaries for.
+ * @lower: The new lower boundary of the reference value of the chosen @field.
+ * @upper: The new upper boundary of the reference value of the chosen @field.
+ *
+ * Limits the range of possible reference values which can be entered in
+ * field # @field of the #GimpSizeEntry.
+ *
+ * The current reference value of the @field will be clamped to fit in the
+ * @field's new boundaries.
+ *
+ */
 void
 gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
 					gint           field,
@@ -695,12 +808,12 @@ gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       switch (gse->unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  gimp_size_entry_set_value_boundaries (gse, field,
 						gsef->min_refval,
 						gsef->max_refval);
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  gimp_size_entry_set_value_boundaries (gse, field,
 						100 * (gsef->min_refval -
 						       gsef->lower) /
@@ -736,6 +849,21 @@ gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
   gimp_size_entry_set_refval (gse, field, gsef->refval);
 }
 
+/**
+ * gimp_size_entry_set_refval_digits:
+ * @gse: The sizeentry you want to set the reference value digits for.
+ * @field: The index of the field you want to set the reference value for.
+ * @digits: The new number of decimal digits for the #GtkSpinButton which
+ *          displays @field's reference value.
+ *
+ * Sets the decimal digits of field # @field of the #GimpSizeEntry to
+ * @digits.
+ *
+ * If you don't specify this value explicitly, the reference value's number
+ * of digits will equal to 0 for GIMP_SIZE_ENTRY_UPDATE_SIZE and to 2 for
+ * GIMP_SIZE_ENTRY_UPDATE_RESOLUTION.
+ *
+ */
 void
 gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
 				   gint           field,
@@ -756,12 +884,26 @@ gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
       if (gse->show_refval)
 	gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
 				    gsef->refval_digits);
-      else if (gse->unit == UNIT_PIXEL)
+      else if (gse->unit == GIMP_UNIT_PIXEL)
 	gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				    gsef->refval_digits);
     }
 }
 
+/**
+ * gimp_size_entry_get_refval;
+ * @gse: The sizeentry you want to know a reference value of.
+ * @field: The index of the field you want to know the reference value of.
+ *
+ * Returns the reference value for field # @field of the #GimpSizeEntry.
+ *
+ * The reference value is either a distance in pixels or a resolution
+ * in dpi, depending on which #GimpSizeEntryUpdatePolicy you chose in
+ * gimp_size_entry_new().
+ *
+ * Returns: The reference value of the chosen @field.
+ *
+ */
 gdouble
 gimp_size_entry_get_refval (GimpSizeEntry *gse,
 			    gint           field)
@@ -794,10 +936,10 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       switch (gsef->gse->unit)
 	{
-	case UNIT_PIXEL:
+	case GIMP_UNIT_PIXEL:
 	  gsef->value = refval;
 	  break;
-	case UNIT_PERCENT:
+	case GIMP_UNIT_PERCENT:
 	  gsef->value =
 	    CLAMP (100 * (refval - gsef->lower) / (gsef->upper - gsef->lower),
 		   gsef->min_value, gsef->max_value);
@@ -825,6 +967,19 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
     }
 }
 
+/**
+ * gimp_size_entry_set_refval;
+ * @gse: The sizeentry you want to set a reference value for.
+ * @field: The index of the field you want to set the reference value for.
+ * @refval: The new reference value for @field.
+ *
+ * Sets the reference value for field # @field of the #GimpSizeEntry.
+ *
+ * The @refval passed is either a distance in pixels or a resolution in dpi,
+ * depending on which #GimpSizeEntryUpdatePolicy you chose in
+ * gimp_size_entry_new().
+ *
+ */
 void
 gimp_size_entry_set_refval (GimpSizeEntry *gse,
 			    gint           field,
@@ -869,20 +1024,28 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
 }
 
 
-/*  unit stuff  ***********/
-
-GUnit
+/**
+ * gimp_size_entry_get_unit:
+ * @gse: The sizeentry you want to know the unit of.
+ *
+ * Returns the #GimpUnit the user has selected in the #GimpSizeEntry's
+ * #GimpUnitMenu. 
+ *
+ * Returns: The sizeentry's unit.
+ *
+ */
+GimpUnit
 gimp_size_entry_get_unit (GimpSizeEntry *gse)
 {
-  g_return_val_if_fail (gse != NULL, UNIT_INCH);
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), UNIT_INCH);
+  g_return_val_if_fail (gse != NULL, GIMP_UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), GIMP_UNIT_INCH);
 
   return gse->unit;
 }
 
 static void
 gimp_size_entry_update_unit (GimpSizeEntry *gse,
-			     GUnit          unit)
+			     GimpUnit       unit)
 {
   GimpSizeEntryField *gsef;
   gint                i;
@@ -896,10 +1059,10 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
       if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
 	{
-	  if (unit == UNIT_PIXEL)
+	  if (unit == GIMP_UNIT_PIXEL)
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 					gsef->refval_digits);
-	  else if (unit == UNIT_PERCENT)
+	  else if (unit == GIMP_UNIT_PERCENT)
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 					2);
 	  else
@@ -909,7 +1072,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
       else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
 	{
 	  digits =
-	    -(gimp_unit_get_digits (unit) - gimp_unit_get_digits (UNIT_INCH));
+	    -(gimp_unit_get_digits (unit) - gimp_unit_get_digits (GIMP_UNIT_INCH));
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				      MAX(3 + digits, 3));
 	}
@@ -930,14 +1093,25 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 		   gimp_size_entry_signals[VALUE_CHANGED]);
 }
 
+/**
+ * gimp_size_entry_set_unit:
+ * @gse: The sizeentry you want to change the unit for.
+ * @unit: The new unit.
+ *
+ * Sets the #GimpSizeEntry's unit. The reference value for all fields will
+ * stay the same but the value in units or pixels per unit will change
+ * according to which #GimpSizeEntryUpdatePolicy you chose in
+ * gimp_size_entry_new().
+ *
+ */
 void
 gimp_size_entry_set_unit (GimpSizeEntry *gse, 
-			  GUnit          unit)
+			  GimpUnit       unit)
 {
   g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
-  g_return_if_fail (gse->menu_show_pixels || (unit != UNIT_PIXEL));
-  g_return_if_fail (gse->menu_show_percent || (unit != UNIT_PERCENT));
+  g_return_if_fail (gse->menu_show_pixels || (unit != GIMP_UNIT_PIXEL));
+  g_return_if_fail (gse->menu_show_percent || (unit != GIMP_UNIT_PERCENT));
 
   gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gse->unitmenu), unit);
   gimp_size_entry_update_unit (gse, unit);
@@ -953,7 +1127,14 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
 		   gimp_size_entry_signals[UNIT_CHANGED]);
 }
 
-/*  focus stuff  **********/
+/**
+ * gimp_size_entry_grab_focus:
+ * @gse: The sizeentry you want to grab the keyboard focus.
+ *
+ * This function is rather ugly and just a workaround for the fact that
+ * it's impossible to implement gtk_widget_grab_focus() for a #GtkTable.
+ *
+ */
 void
 gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 {
@@ -967,25 +1148,3 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
   gtk_widget_grab_focus (gse->show_refval ?
 			 gsef->refval_spinbutton : gsef->value_spinbutton);
 }
-
-/*
-static int
-gimp_size_entry_focus_in_callback (GtkWidget *widget,
-				   GdkEvent  *event,
-				   gpointer   data)
-{
-  gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1);
-
-  return TRUE;
-}
-
-static int
-gimp_size_entry_focus_out_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data)
-{
-  gtk_editable_select_region (GTK_EDITABLE (widget), 0, 0);
-
-  return TRUE;
-}
-*/

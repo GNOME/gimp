@@ -357,7 +357,7 @@ spread_dialog (gint32 image_ID)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *size;
-  GUnit      unit;
+  GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
   gchar **argv;

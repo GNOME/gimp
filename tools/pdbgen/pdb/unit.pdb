@@ -59,7 +59,7 @@ sub unit_get_number_of_units {
     &pdb_misc;
 
     @outargs = (
-	{ name => 'num_units', type => 'int32', libdef => 'UNIT_END',
+	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
 	  desc => 'The number of units',
 	  alias => 'gimp_unit_get_number_of_units ()', no_declare => 1 }
     );
@@ -96,7 +96,7 @@ HELP
     @outargs = ( &unit_arg );
     $outargs[0]->{desc} = "The new unit's ID";
     $outargs[0]->{init} = 1;
-    $outargs[0]->{libdef} = 'UNIT_INCH';
+    $outargs[0]->{libdef} = 'GIMP_UNIT_INCH';
 
     %invoke = (
 	code => <<'CODE'
@@ -199,7 +199,7 @@ HELP
 @headers = qw("libgimp/gimpunit.h");
 
 $extra{lib}->{protos} = <<'CODE';
-GUnit gimp_unit_get_number_of_built_in_units (void);
+GimpUnit gimp_unit_get_number_of_built_in_units (void);
 CODE
 
 $extra{lib}->{code} = <<'CODE';
@@ -216,7 +216,7 @@ typedef struct {
   gchar   *plural;
 } GimpUnitDef;
 
-static GimpUnitDef gimp_unit_defs[UNIT_END] =
+static GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
   { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
@@ -236,10 +236,10 @@ static GimpUnitDef gimp_unit_percent =
   FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
 };
 
-GUnit
+GimpUnit
 gimp_unit_get_number_of_built_in_units (void)
 {
-  return UNIT_END;
+  return GIMP_UNIT_END;
 }
 CODE
 

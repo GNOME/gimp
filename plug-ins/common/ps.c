@@ -445,9 +445,9 @@ static void
 ps_set_save_size (PSSaveVals *vals,
                   gint32      image_ID)
 {
-  gdouble xres, yres, factor, iw, ih;
-  guint width, height;
-  GUnit unit;
+  gdouble  xres, yres, factor, iw, ih;
+  guint    width, height;
+  GimpUnit unit;
 
   gimp_image_get_resolution (image_ID, &xres, &yres);
   if ((xres < 1e-5) || (yres < 1e-5))

@@ -265,7 +265,7 @@ sub marshal_inargs {
 					  "$var == 0");
 	    }
 	    elsif ($pdbtype eq 'unit') {
-		$typeinfo[0] = 'UNIT_PIXEL' unless defined $typeinfo[0];
+		$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
 		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
 					  "$var < $typeinfo[0] || $var >= " .
 					  'gimp_unit_get_number_of_units ()');

@@ -388,14 +388,14 @@ gimp_image_get_resolution (GimpImage *gimage,
 
 void
 gimp_image_set_unit (GimpImage *gimage,
-		     GUnit      unit)
+		     GimpUnit   unit)
 {
   undo_push_resolution (gimage);
 
   gimage->unit = unit;
 }
 
-GUnit
+GimpUnit
 gimp_image_get_unit (GimpImage *gimage)
 {
   return gimage->unit;

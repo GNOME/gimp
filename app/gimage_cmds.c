@@ -3443,14 +3443,14 @@ image_set_unit_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  GUnit unit;
+  GimpUnit unit;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
   unit = args[1].value.pdb_int;
-  if (unit < UNIT_INCH || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_INCH || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   if (success)

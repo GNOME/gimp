@@ -98,7 +98,7 @@ unit_new_invoker (Argument *args)
   gchar *abbreviation;
   gchar *singular;
   gchar *plural;
-  GUnit unit = 0;
+  GimpUnit unit = 0;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL)
@@ -205,10 +205,10 @@ unit_get_deletion_flag_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_deletion_flag_proc, success);
@@ -257,11 +257,11 @@ static Argument *
 unit_set_deletion_flag_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  GUnit unit;
+  GimpUnit unit;
   gboolean deletion_flag;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   deletion_flag = args[1].value.pdb_int ? TRUE : FALSE;
@@ -307,10 +307,10 @@ unit_get_identifier_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_identifier_proc, success);
@@ -360,10 +360,10 @@ unit_get_factor_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_factor_proc, success);
@@ -413,10 +413,10 @@ unit_get_digits_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_digits_proc, success);
@@ -466,10 +466,10 @@ unit_get_symbol_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_symbol_proc, success);
@@ -519,10 +519,10 @@ unit_get_abbreviation_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_abbreviation_proc, success);
@@ -572,10 +572,10 @@ unit_get_singular_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_singular_proc, success);
@@ -625,10 +625,10 @@ unit_get_plural_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GUnit unit;
+  GimpUnit unit;
 
   unit = args[0].value.pdb_int;
-  if (unit < UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
+  if (unit < GIMP_UNIT_PIXEL || unit >= gimp_unit_get_number_of_units ())
     success = FALSE;
 
   return_args = procedural_db_return_args (&unit_get_plural_proc, success);

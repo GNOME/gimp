@@ -370,7 +370,7 @@ tile_dialog (gint32 image_ID,
   gint     height;
   gdouble  xres;
   gdouble  yres;
-  GUnit    unit;
+  GimpUnit unit;
   gchar  **argv;
   gint     argc;
 

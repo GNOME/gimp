@@ -1,3 +1,31 @@
+2000-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/*
+	* libgimp/*
+	* plug-ins/*
+	* tools/pdbgen/*: did a global s/GUnit/GimpUnit/ and
+	s/GimpSizeEntryUP/GimpSizeEntryUpdatePolicy/
+
+	* libgimp/gimpcolorspace.c: renamed the parameter names to match
+	the names in the header.
+
+	* libgimp/gimphelpui.h
+	* libgimp/gimpimage.c
+	* libgimp/gimpmatrix.h
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpunit.[ch]
+	* libgimp/gimpunitmenu.[ch]
+	* libgimp/gimpwidgets.[ch]: added documentation and use g* types
+	all over the place (enables cross-referencing with the glib and
+	gtk+ html documentation).
+
+	* plug-ins/common/exchange.c
+	* plug-ins/common/max_rgb.c: small cleanups.
+
+	* plug-ins/common/mapcolor.c: the color buttons were attached in
+	the wrong order.
+
 Mon Feb  7 21:00:34 CET 2000  Sven Neumann <sven@gimp.org>  
 
 	* app/info_window.c: Got rid of the "Shades of Colors" info
@@ -123,7 +151,7 @@ Sun Feb  6 20:46:36 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/common/unsharp.c
 	* plug-ins/gflare/gflare.c
 	* plug-ins/sinus/sinus.c
-	* plug-ins/struc/struc.c: soem more consistency stuff.
+	* plug-ins/struc/struc.c: some more consistency stuff.
 
 2000-02-05  Asbjorn Pettersen  <asbjornP@dualog.no>
 

@@ -2396,9 +2396,9 @@ typedef struct _ResolutionUndo ResolutionUndo;
 
 struct _ResolutionUndo
 {
-  gdouble xres;
-  gdouble yres;
-  GUnit   unit;
+  gdouble  xres;
+  gdouble  yres;
+  GimpUnit unit;
 };
 
 int
@@ -2434,8 +2434,8 @@ undo_pop_resolution (GImage    *gimage,
 		     void      *data_ptr)
 {
   ResolutionUndo *data;
-  gdouble tmpres;
-  GUnit   tmpunit;
+  gdouble         tmpres;
+  GimpUnit        tmpunit;
 
   data = data_ptr;
 
@@ -2853,54 +2853,57 @@ undo_free_cantundo (UndoState  state,
 
 /* A "ok" to the name means I've checked where it's used and
    it seems plausible.  -- austin 23/9/99 */
-static struct undo_name_t {
-    UndoType type;
-    const char *name;
-} undo_name[] = {
-    {UNDO_NULL,     		N_("<<invalid>>")},
-    {IMAGE_UNDO,		N_("image")},
-    {IMAGE_MOD_UNDO,		N_("image mod")},
-    {MASK_UNDO,			N_("mask")},
-    {LAYER_DISPLACE_UNDO,	N_("layer move")}, /* ok */
-    {TRANSFORM_UNDO,		N_("transform")},
-    {PAINT_UNDO,		N_("paint")},
-    {LAYER_ADD_UNDO,		N_("new layer")},
-    {LAYER_REMOVE_UNDO,		N_("delete layer")},
-    {LAYER_MOD,			N_("layer mod")},
-    {LAYER_MASK_ADD_UNDO,	N_("add layer mask")},  /* ok */
-    {LAYER_MASK_REMOVE_UNDO,	N_("delete layer mask")}, /* ok */
-    {LAYER_RENAME_UNDO,		N_("rename layer")},
-    {LAYER_REPOSITION_UNDO,	N_("layer reposition")}, /* ok */
-    {CHANNEL_ADD_UNDO,		N_("new channel")},
-    {CHANNEL_REMOVE_UNDO,	N_("delete channel")},
-    {CHANNEL_MOD,		N_("channel mod")},
-    {FS_TO_LAYER_UNDO,		N_("FS to layer")}, /* ok */
-    {GIMAGE_MOD,		N_("gimage")},
-    {FS_RIGOR,			N_("FS rigor")},
-    {FS_RELAX,			N_("FS relax")},
-    {GUIDE_UNDO,		N_("guide")},
-    {TEXT_UNDO,			N_("text")},
-    {FLOAT_MASK_UNDO,		N_("float selection")},
-    {EDIT_PASTE_UNDO,		N_("paste")},
-    {EDIT_CUT_UNDO,		N_("cut")},
-    {TRANSFORM_CORE_UNDO,	N_("transform core")},
-    {PAINT_CORE_UNDO,		N_("paint core")},
-    {FLOATING_LAYER_UNDO,	N_("floating layer")}, /* unused! */
-    {LINKED_LAYER_UNDO,		N_("linked layer")},
-    {LAYER_APPLY_MASK_UNDO,	N_("apply layer mask")}, /* ok */
-    {LAYER_MERGE_UNDO,		N_("layer merge")},
-    {FS_ANCHOR_UNDO,		N_("FS anchor")},
-    {GIMAGE_MOD_UNDO,		N_("gimage mod")},
-    {CROP_UNDO,			N_("crop")},
-    {LAYER_SCALE_UNDO,		N_("layer scale")},
-    {LAYER_RESIZE_UNDO,		N_("layer resize")},
-    {QMASK_UNDO,		N_("quickmask")},
-    {PARASITE_ATTACH_UNDO,	N_("attach parasite")},
-    {PARASITE_REMOVE_UNDO,	N_("remove parasite")},
-    {RESOLUTION_UNDO,		N_("resolution change")},
-    {IMAGE_SCALE_UNDO,		N_("image scale")},
-    {IMAGE_RESIZE_UNDO,		N_("image resize")},
-    {MISC_UNDO,			N_("misc")}
+static struct undo_name_t
+{
+  UndoType     type;
+  const gchar *name;
+}
+undo_name[] =
+{
+  { UNDO_NULL,     		N_("<<invalid>>") },
+  { IMAGE_UNDO,		        N_("image") },
+  { IMAGE_MOD_UNDO,		N_("image mod") },
+  { MASK_UNDO,			N_("mask") },
+  { LAYER_DISPLACE_UNDO,	N_("layer move") }, /* ok */
+  { TRANSFORM_UNDO,		N_("transform") },
+  { PAINT_UNDO,		        N_("paint") },
+  { LAYER_ADD_UNDO,		N_("new layer") },
+  { LAYER_REMOVE_UNDO,		N_("delete layer") },
+  { LAYER_MOD,			N_("layer mod") },
+  { LAYER_MASK_ADD_UNDO,	N_("add layer mask") },  /* ok */
+  { LAYER_MASK_REMOVE_UNDO,	N_("delete layer mask") }, /* ok */
+  { LAYER_RENAME_UNDO,		N_("rename layer") },
+  { LAYER_REPOSITION_UNDO,	N_("layer reposition") }, /* ok */
+  { CHANNEL_ADD_UNDO,		N_("new channel") },
+  { CHANNEL_REMOVE_UNDO,	N_("delete channel") },
+  { CHANNEL_MOD,		N_("channel mod") },
+  { FS_TO_LAYER_UNDO,		N_("FS to layer") }, /* ok */
+  { GIMAGE_MOD,		        N_("gimage") },
+  { FS_RIGOR,			N_("FS rigor") },
+  { FS_RELAX,			N_("FS relax") },
+  { GUIDE_UNDO,		        N_("guide") },
+  { TEXT_UNDO,			N_("text") },
+  { FLOAT_MASK_UNDO,		N_("float selection") },
+  { EDIT_PASTE_UNDO,		N_("paste") },
+  { EDIT_CUT_UNDO,		N_("cut") },
+  { TRANSFORM_CORE_UNDO,	N_("transform core") },
+  { PAINT_CORE_UNDO,		N_("paint core") },
+  { FLOATING_LAYER_UNDO,	N_("floating layer") }, /* unused! */
+  { LINKED_LAYER_UNDO,		N_("linked layer") },
+  { LAYER_APPLY_MASK_UNDO,	N_("apply layer mask") }, /* ok */
+  { LAYER_MERGE_UNDO,		N_("layer merge") },
+  { FS_ANCHOR_UNDO,		N_("FS anchor") },
+  { GIMAGE_MOD_UNDO,		N_("gimage mod") },
+  { CROP_UNDO,			N_("crop") },
+  { LAYER_SCALE_UNDO,		N_("layer scale") },
+  { LAYER_RESIZE_UNDO,		N_("layer resize") },
+  { QMASK_UNDO,		        N_("quickmask") },
+  { PARASITE_ATTACH_UNDO,	N_("attach parasite") },
+  { PARASITE_REMOVE_UNDO,	N_("remove parasite") },
+  { RESOLUTION_UNDO,		N_("resolution change") },
+  { IMAGE_SCALE_UNDO,		N_("image scale") },
+  { IMAGE_RESIZE_UNDO,		N_("image resize") },
+  { MISC_UNDO,			N_("misc") }
 };
 #define NUM_NAMES (sizeof (undo_name) / sizeof (struct undo_name_t))
 

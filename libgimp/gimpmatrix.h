@@ -24,7 +24,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-typedef double GimpMatrix[3][3];
+typedef gdouble GimpMatrix[3][3];
 
 void          gimp_matrix_transform_point (GimpMatrix  matrix, 
 					   gdouble     x, 
@@ -52,9 +52,9 @@ void          gimp_matrix_invert          (GimpMatrix  matrix,
 void          gimp_matrix_duplicate       (GimpMatrix  src, 
 					   GimpMatrix  target);
 
-gboolean           gimp_matrix_is_diagonal     (GimpMatrix  matrix);
-gboolean           gimp_matrix_is_identity     (GimpMatrix  matrix);
-gboolean           gimp_matrix_is_simple       (GimpMatrix  matrix);
+gboolean      gimp_matrix_is_diagonal     (GimpMatrix  matrix);
+gboolean      gimp_matrix_is_identity     (GimpMatrix  matrix);
+gboolean      gimp_matrix_is_simple       (GimpMatrix  matrix);
 
 #ifdef __cplusplus
 }

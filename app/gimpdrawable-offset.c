@@ -136,7 +136,7 @@ channel_ops_offset (GimpImage* gimage)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (off_d->off_se);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (off_d->off_se), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (off_d->off_se), GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (off_d->off_se), 0,
                                   gimage->xresolution, FALSE);

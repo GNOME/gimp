@@ -11,7 +11,7 @@ GimpFileSelection
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GimpPathEditor
 </para>
 
 <!-- ##### STRUCT GimpFileSelection ##### -->
@@ -25,7 +25,7 @@ GimpFileSelection
 
 </para>
 
-@obj: 
+@obj: The pointer to cast.
 
 
 <!-- ##### FUNCTION gimp_file_selection_new ##### -->

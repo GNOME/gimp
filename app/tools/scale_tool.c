@@ -111,7 +111,7 @@ scale_tool_transform (Tool           *tool,
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
 				gdisp->gimage->unit);
       if (gdisp->dot_for_dot)
-	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
 				      gdisp->gimage->xresolution, FALSE);
@@ -207,11 +207,11 @@ scale_info_update (Tool *tool)
   TransformCore *transform_core;
   gdouble        ratio_x, ratio_y;
   gint           x1, y1, x2, y2, x3, y3, x4, y4;
-  GUnit          unit;
+  GimpUnit       unit;
   gdouble        unit_factor;
   gchar          format_buf[16];
 
-  static GUnit   label_unit = UNIT_PIXEL;
+  static GimpUnit  label_unit = GIMP_UNIT_PIXEL;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -223,12 +223,12 @@ scale_info_update (Tool *tool)
   x2 = transform_core->x2;
   y2 = transform_core->y2;
 
-  if (unit != UNIT_PERCENT)
+  if (unit != GIMP_UNIT_PERCENT)
     label_unit = unit;
 
   unit_factor = gimp_unit_get_factor (label_unit);
 
-  if (label_unit) /* unit != UNIT_PIXEL */
+  if (label_unit) /* unit != GIMP_UNIT_PIXEL */
     {
       g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
 		  gimp_unit_get_digits (label_unit) + 1,
@@ -238,7 +238,7 @@ scale_info_update (Tool *tool)
       g_snprintf (orig_height_buf, MAX_INFO_BUF, format_buf,
 		  (y2 - y1) * unit_factor / gdisp->gimage->yresolution);
     }
-  else /* unit == UNIT_PIXEL */
+  else /* unit == GIMP_UNIT_PIXEL */
     {
       g_snprintf (orig_width_buf, MAX_INFO_BUF, "%d", x2 - x1);
       g_snprintf (orig_height_buf, MAX_INFO_BUF, "%d", y2 - y1);

@@ -116,8 +116,8 @@ void            gimp_image_set_resolution         (GimpImage *,
 						   gdouble, gdouble);
 void            gimp_image_get_resolution         (GimpImage *,
 						   gdouble *, gdouble *);
-void            gimp_image_set_unit               (GimpImage *, GUnit);
-GUnit           gimp_image_get_unit               (GimpImage *);
+void            gimp_image_set_unit               (GimpImage *, GimpUnit);
+GimpUnit        gimp_image_get_unit               (GimpImage *);
 void            gimp_image_set_save_proc	  (GimpImage *,
 						   PlugInProcDef *);
 PlugInProcDef * gimp_image_get_save_proc	  (GimpImage *);

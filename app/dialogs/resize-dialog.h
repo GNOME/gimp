@@ -47,7 +47,7 @@ struct _Resize
 
   gdouble      resolution_x;
   gdouble      resolution_y;
-  GUnit        unit;
+  GimpUnit     unit;
 
   gdouble      ratio_x;
   gdouble      ratio_y;
@@ -69,7 +69,7 @@ Resize * resize_widget_new    (ResizeType    type,
 			       gint          height,
 			       gdouble       resolution_x,
 			       gdouble       resolution_y,
-			       GUnit         unit,
+			       GimpUnit      unit,
 			       gboolean      dot_for_dot,
 			       GtkSignalFunc ok_cb,
 			       GtkSignalFunc cancel_cb,

@@ -42,18 +42,18 @@ typedef struct
 {
   gint               width;
   gint               height;
-  GUnit              unit;
+  GimpUnit           unit;
 
   gdouble            xresolution;
   gdouble            yresolution;
-  GUnit              res_unit;
+  GimpUnit           res_unit;
   
   GimpImageBaseType  type;
   GimpFillType       fill_type;
 } GimpImageNewValues;
 
-GList* image_new_get_fill_type_names       (void);
-GList* image_new_get_image_base_type_names (void);
+GList * image_new_get_fill_type_names       (void);
+GList * image_new_get_image_base_type_names (void);
 
 void image_new_create_window        (const GimpImageNewValues *values, 
 				     const GimpImage          *image);

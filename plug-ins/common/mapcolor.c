@@ -73,7 +73,7 @@ gint run_flag = FALSE;
 /* Declare some local functions.
  */
 static void   query (void);
-static void   run   (char    *name,
+static void   run   (gchar   *name,
 		     gint     nparams,
 		     GParam  *param,
 		     gint    *nreturn_vals,
@@ -81,18 +81,18 @@ static void   run   (char    *name,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static gint   dialog                  (void);
 static void   mapcolor_ok_callback    (GtkWidget *widget,
 				       gpointer   data);
-static void   add_color_button        (int        csel_index,
-				       int        left,
-				       int        top,
+static void   add_color_button        (gint       csel_index,
+				       gint       left,
+				       gint       top,
 				       GtkWidget *table);
 
 static void   color_mapping           (GDrawable *drawable);
@@ -101,12 +101,12 @@ static void   color_mapping           (GDrawable *drawable);
 /* The run mode */
 static GRunModeType l_run_mode;
 
-static char *csel_title[4] = 
+static gchar *csel_title[4] = 
 { 
-  N_("First source color"), 
-  N_("Second source color"),
-  N_("First destination color"), 
-  N_("Second destination color") 
+  N_("First Source Color"), 
+  N_("Second Source Color"),
+  N_("First Destination Color"), 
+  N_("Second Destination Color") 
 };
 
 
@@ -122,7 +122,7 @@ query (void)
     { PARAM_IMAGE, "image", "Input image (not used)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable to adjust" }
   };
-  static int nadjust_args = sizeof (adjust_args) / sizeof (adjust_args[0]);
+  static gint nadjust_args = sizeof (adjust_args) / sizeof (adjust_args[0]);
 
   static GParamDef map_args[] =
   {
@@ -135,15 +135,15 @@ query (void)
     { PARAM_COLOR, "dstcolor_2", "Second destination color" },
     { PARAM_INT32, "map_mode", "Mapping mode (0: linear, others reserved)" }
   };
-  static int nmap_args = sizeof (map_args) / sizeof (map_args[0]);
+  static gint nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_color_adjust",
-                          "Adjust current foreground/background color in the\
- drawable to black/white",
-                          "The current foreground color is mapped to black, \
-the current background color is mapped to white.",
+                          "Adjust current foreground/background color in the "
+			  "drawable to black/white",
+                          "The current foreground color is mapped to black, "
+			  "the current background color is mapped to white.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
@@ -154,10 +154,10 @@ the current background color is mapped to white.",
                           adjust_args, NULL);
 
   gimp_install_procedure ("plug_in_color_map",
-                          "Map two source colors to two destination colors. \
-Other colors are mapped by interpolation.",
-                          "Map two source colors to two destination colors. \
-Other colors are mapped by interpolation.",
+                          "Map two source colors to two destination colors. "
+			  "Other colors are mapped by interpolation.",
+                          "Map two source colors to two destination colors. "
+			  "Other colors are mapped by interpolation.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
@@ -206,7 +206,7 @@ run (gchar   *name,
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       if (!gimp_drawable_is_rgb (drawable->id))
 	{
-	  gimp_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on grey/indexed images"));
+	  g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
 	  status = STATUS_EXECUTION_ERROR;
 	  break;
 	}
@@ -221,12 +221,16 @@ run (gchar   *name,
 
 	  c = &(plvals.colors[0][0]);      /* First source color */
 	  gimp_palette_get_foreground (c, c+1, c+2);
+
 	  c = &(plvals.colors[1][0]);      /* Second source color */
 	  gimp_palette_get_background (c, c+1, c+2);
+
 	  c = &(plvals.colors[2][0]);      /* First destination color */
 	  c[0] = c[1] = c[2] = 0;          /* Foreground mapped to black */
-	  c = &(plvals.colors[3][0]);      /* second destination color */
+
+	  c = &(plvals.colors[3][0]);      /* Second destination color */
 	  c[0] = c[1] = c[2] = 255;        /* Background mapped to white */
+
 	  plvals.map_mode = 0;
 
 	  if (run_mode != RUN_NONINTERACTIVE)
@@ -260,6 +264,7 @@ run (gchar   *name,
 
 	      c = &(plvals.colors[0][0]);      /* First source color */
 	      gimp_palette_get_foreground (c, c+1, c+2);
+
 	      c = &(plvals.colors[1][0]);      /* Second source color */
 	      gimp_palette_get_background (c, c+1, c+2);
 
@@ -356,8 +361,8 @@ dialog (void)
   gtk_widget_show (table);
 
   add_color_button (0, 0, 0, table);
-  add_color_button (1, 2, 0, table);
-  add_color_button (2, 0, 1, table);
+  add_color_button (1, 0, 1, table);
+  add_color_button (2, 2, 0, table);
   add_color_button (3, 2, 1, table);
 
   gtk_widget_show (dlg);

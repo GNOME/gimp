@@ -6,12 +6,17 @@ Widget for selecting a color.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-This widget provides a simple button with a preview showing the color. 
+This widget provides a simple button with a preview showing the
+color.
+</para>
+<para>
 On click a GtkColorSelectionDialog is opened. Additionally the button
 supports Drag and Drop and has a right-click menu that allows to choose
 the color from the current FG or BG color. If the user changes the 
-color, the "color_changed" signal is emitted. Note that the color is 
-changed in place. 
+color, the "color_changed" signal is emitted.
+</para>
+<para>
+Note that the color is changed in place. 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -27,10 +32,11 @@ changed in place.
 
 <!-- ##### MACRO GIMP_COLOR_BUTTON ##### -->
 <para>
-
+Checks if the passed pointer is a pointer to a #GimpColorButton and
+performes the cast if valid.
 </para>
 
-@obj: 
+@obj: The pointer to cast.
 
 
 <!-- ##### FUNCTION gimp_color_button_new ##### -->

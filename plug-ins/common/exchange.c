@@ -79,17 +79,17 @@ static void	color_button_callback (GtkWidget *, gpointer);
 static void	scale_callback        (GtkAdjustment *, gpointer);
 
 /* some global variables */
-GDrawable *drw;
-gboolean   has_alpha;
-myParams   xargs = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-gint       running = 0;
-GPixelRgn  origregion;
-GtkWidget *preview;
-GtkWidget *from_colorbutton;
-GtkWidget *to_colorbutton;
-gint       sel_x1, sel_y1, sel_x2, sel_y2;
-gint       prev_width, prev_height, sel_width, sel_height;
-gint       lock_thres = 0;
+static GDrawable *drw;
+static gboolean   has_alpha;
+static myParams   xargs = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+static gint       running = 0;
+static GPixelRgn  origregion;
+static GtkWidget *preview;
+static GtkWidget *from_colorbutton;
+static GtkWidget *to_colorbutton;
+static gint       sel_x1, sel_y1, sel_x2, sel_y2;
+static gint       prev_width, prev_height, sel_width, sel_height;
+static gint       lock_thres = 0;
 
 /* lets declare what we want to do */
 GPlugInInfo PLUG_IN_INFO =
@@ -122,9 +122,7 @@ query (void)
     { PARAM_INT8, "green_threshold", "Green threshold" },
     { PARAM_INT8, "blue_threshold", "Blue threshold" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -137,8 +135,8 @@ query (void)
 			  N_("<Image>/Filters/Colors/Map/Color Exchange..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 /* main function */
@@ -207,8 +205,10 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams != 10)
-	status = STATUS_EXECUTION_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_EXECUTION_ERROR;
+	}
+      else
 	{
 	  xargs.fromred         = param[3].data.d_int8;
 	  xargs.fromgreen       = param[4].data.d_int8;

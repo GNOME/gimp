@@ -62,8 +62,8 @@ struct _SelectionOptions
   gdouble      fixed_height_d;
   GtkObject   *fixed_height_w;
 
-  GUnit        fixed_unit;
-  GUnit        fixed_unit_d;
+  GimpUnit     fixed_unit;
+  GimpUnit     fixed_unit_d;
   GtkWidget   *fixed_unit_w;
 
   /*  used by bezier selection  */

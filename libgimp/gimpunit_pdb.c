@@ -29,18 +29,19 @@
 
 /*  internal structures  */
 
-typedef struct {
-  guint    delete_on_exit;
-  gdouble  factor;
-  gint     digits;
-  gchar   *identifier;
-  gchar   *symbol;
-  gchar   *abbreviation;
-  gchar   *singular;
-  gchar   *plural;
+typedef struct
+{
+  gboolean  delete_on_exit;
+  gdouble   factor;
+  gint      digits;
+  gchar    *identifier;
+  gchar    *symbol;
+  gchar    *abbreviation;
+  gchar    *singular;
+  gchar    *plural;
 } GimpUnitDef;
 
-static GimpUnitDef gimp_unit_defs[UNIT_END] =
+static GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
   { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
@@ -61,21 +62,28 @@ static GimpUnitDef gimp_unit_percent =
   FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
 };
 
-/*  public functions  */
 
+/**
+ * gimp_unit_get_number_of_units:
+ *
+ * Returns the number of units which are known to the #GimpUnit system.
+ *
+ * Returns: The number of defined units.
+ *
+ */
 gint
 gimp_unit_get_number_of_units (void)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
-  int number;
+  gint number;
 
   return_vals = gimp_run_procedure ("gimp_unit_get_number_of_units",
 				    &nreturn_vals,
 				    PARAM_END);
 
-  number = UNIT_END;
+  number = GIMP_UNIT_END;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     number = return_vals[1].data.d_int32;
 
@@ -84,14 +92,42 @@ gimp_unit_get_number_of_units (void)
   return number;
 }
 
+/**
+ * gimp_unit_get_number_of_built_in_units:
+ *
+ * Returns the number of #GimpUnit's which are hardcoded in the unit system
+ * (UNIT_INCH, UNIT_MM, UNIT_POINT, UNIT_PICA and the two "pseudo units"
+ *  UNIT_PIXEL and UNIT_PERCENT).
+ *
+ * Returns: The number of built-in units.
+ *
+ */
 gint
 gimp_unit_get_number_of_built_in_units (void)
 {
-  return UNIT_END;
+  return GIMP_UNIT_END;
 }
 
-
-GUnit
+/**
+ * gimp_unit_new:
+ * @identifier: The unit's identifier string.
+ * @factor: The unit's factor (how many units are in one inch).
+ * @digits: The unit's suggested number of digits (see gimp_unit_get_digits()).
+ * @symbol: The symbol of the unit (e.g. "''" for inch).
+ * @abbreviation: The abbreviation of the unit.
+ * @singular: The singular form of the unit.
+ * @plural: The plural form of the unit.
+ *
+ * Returns the integer ID of the new #GimpUnit.
+ *
+ * Note that a new unit is always created with it's deletion flag
+ * set to #TRUE. You will have to set it to #FALSE with
+ * gimp_unit_set_deletion_flag() to make the unit definition persistent.
+ *
+ * Returns: The ID of the new unit.
+ *
+ */
+GimpUnit
 gimp_unit_new (gchar   *identifier,
 	       gdouble  factor,
 	       gint     digits,
@@ -101,22 +137,22 @@ gimp_unit_new (gchar   *identifier,
 	       gchar   *plural)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
-  GUnit unit;
+  GimpUnit unit;
 
   return_vals = gimp_run_procedure ("gimp_unit_new",
 				    &nreturn_vals,
 				    PARAM_STRING, g_strdup (identifier),
-				    PARAM_FLOAT, factor,
-				    PARAM_INT32, digits,
+				    PARAM_FLOAT,  factor,
+				    PARAM_INT32,  digits,
 				    PARAM_STRING, g_strdup (symbol),
 				    PARAM_STRING, g_strdup (abbreviation),
 				    PARAM_STRING, g_strdup (singular),
 				    PARAM_STRING, g_strdup (plural),
 				    PARAM_END);
 
-  unit = UNIT_INCH;
+  unit = GIMP_UNIT_INCH;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     unit = return_vals[1].data.d_int32;
 
@@ -125,18 +161,24 @@ gimp_unit_new (gchar   *identifier,
   return unit;
 }
 
-
-guint
-gimp_unit_get_deletion_flag (GUnit unit)
+/**
+ * gimp_unit_get_deletion_flag:
+ * @unit: The unit you want to know the @deletion_flag of.
+ *
+ * Returns: The unit's @deletion_flag.
+ *
+ */
+gboolean
+gimp_unit_get_deletion_flag (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
-  guint flag;
+  gboolean flag;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, TRUE);
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, TRUE);
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return FALSE;
 
   return_vals = gimp_run_procedure ("gimp_unit_get_deletion_flag",
@@ -146,23 +188,36 @@ gimp_unit_get_deletion_flag (GUnit unit)
 
   flag = TRUE;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    flag = return_vals[1].data.d_int32;
+    flag = return_vals[1].data.d_int32 ? TRUE : FALSE;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return flag;
 }
 
+/**
+ * gimp_unit_set_deletion_flag:
+ * @unit: The unit you want to set the @deletion_flag for.
+ * @deletion_flag: The new deletion_flag.
+ *
+ * Sets a #GimpUnit's @deletion_flag. If the @deletion_flag of a unit is
+ * #TRUE when GIMP exits, this unit will not be saved in the uses's
+ * "unitrc" file.
+ *
+ * Trying to change the @deletion_flag of a built-in unit will be silently
+ * ignored.
+ *
+ */
 void
-gimp_unit_set_deletion_flag (GUnit  unit,
-			     guint  deletion_flag)
+gimp_unit_set_deletion_flag (GimpUnit unit,
+			     gboolean deletion_flag)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
-  g_return_if_fail (unit >= UNIT_PIXEL);
+  g_return_if_fail (unit >= GIMP_UNIT_PIXEL);
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return;
 
   return_vals = gimp_run_procedure ("gimp_unit_set_deletion_flag",
@@ -174,18 +229,30 @@ gimp_unit_set_deletion_flag (GUnit  unit,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-
+/**
+ * gimp_unit_get_factor:
+ * @unit: The unit you want to know the factor of.
+ *
+ * A #GimpUnit's @factor is defined to be:
+ *
+ * distance_in_units == (@factor * distance_in_inches)
+ *
+ * Returns 0 for @unit == GIMP_UNIT_PIXEL.
+ *
+ * Returns: The unit's factor.
+ *
+ */
 gdouble
-gimp_unit_get_factor (GUnit unit)
+gimp_unit_get_factor (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gdouble factor;
 
-  g_return_val_if_fail (unit >= UNIT_INCH, 1.0);
+  g_return_val_if_fail (unit >= GIMP_UNIT_INCH, 1.0);
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return gimp_unit_defs[unit].factor;
 
   return_vals = gimp_run_procedure ("gimp_unit_get_factor",
@@ -202,19 +269,30 @@ gimp_unit_get_factor (GUnit unit)
   return factor;
 }
 
-
+/**
+ * gimp_unit_get_digits:
+ * @unit: The unit you want to know the digits.
+ *
+ * Returns the number of digits an entry field should provide to get
+ * approximately the same accuracy as an inch input field with two digits.
+ *
+ * Returns 0 for @unit == GIMP_UNIT_PIXEL.
+ *
+ * Returns: The suggested number of digits.
+ *
+ */
 gint
-gimp_unit_get_digits (GUnit unit)
+gimp_unit_get_digits (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gint digits;
 
   if (unit < 0)
     return 0;
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return gimp_unit_defs[unit].digits;
 
   return_vals = gimp_run_procedure ("gimp_unit_get_digits",
@@ -222,7 +300,7 @@ gimp_unit_get_digits (GUnit unit)
 				    PARAM_INT32, unit,
 				    PARAM_END);
 
-  digits = gimp_unit_defs[UNIT_INCH].digits;
+  digits = gimp_unit_defs[GIMP_UNIT_INCH].digits;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     digits = return_vals[1].data.d_int32;
 
@@ -231,21 +309,32 @@ gimp_unit_get_digits (GUnit unit)
   return digits;
 }
 
-
+/**
+ * gimp_unit_get_identifier:
+ * @unit: The unit you want to know the identifier of.
+ *
+ * This is an unstranslated string.
+ *
+ * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
+ *       constant string when this function is used from inside the GIMP.
+ *
+ * Returns: The unit's identifier.
+ *
+ */
 gchar * 
-gimp_unit_get_identifier (GUnit unit)
+gimp_unit_get_identifier (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gchar *identifier;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return g_strdup (gimp_unit_defs[unit].identifier);
 
-  if (unit == UNIT_PERCENT)
+  if (unit == GIMP_UNIT_PERCENT)
     return g_strdup (gimp_unit_percent.identifier);
 
   return_vals = gimp_run_procedure ("gimp_unit_get_identifier",
@@ -262,21 +351,32 @@ gimp_unit_get_identifier (GUnit unit)
   return identifier ? identifier : g_strdup ("");
 }
 
-
+/**
+ * gimp_unit_get_symbol:
+ * @unit: The unit you want to know the symbol of.
+ *
+ * This is e.g. "''" for UNIT_INCH.
+ *
+ * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
+ *       constant string when this function is used from inside the GIMP.
+ *
+ * Returns: The unit's symbol.
+ *
+ */
 gchar *
-gimp_unit_get_symbol (GUnit unit)
+gimp_unit_get_symbol (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gchar *symbol;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return g_strdup (gimp_unit_defs[unit].symbol);
 
-  if (unit == UNIT_PERCENT)
+  if (unit == GIMP_UNIT_PERCENT)
     return g_strdup (gimp_unit_percent.symbol);
 
   return_vals = gimp_run_procedure ("gimp_unit_get_symbol",
@@ -294,20 +394,33 @@ gimp_unit_get_symbol (GUnit unit)
 }
 
 
+/**
+ * gimp_unit_get_abbreviation:
+ * @unit: The unit you want to know the abbreviation of.
+ *
+ * For built-in units, this function returns the translated abbreviation
+ * of the unit.
+ *
+ * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
+ *       constant string when this function is used from inside the GIMP.
+ *
+ * Returns: The unit's abbreviation.
+ *
+ */
 gchar *
-gimp_unit_get_abbreviation (GUnit unit)
+gimp_unit_get_abbreviation (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gchar *abbreviation;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return g_strdup (gimp_unit_defs[unit].abbreviation);
 
-  if (unit == UNIT_PERCENT)
+  if (unit == GIMP_UNIT_PERCENT)
     return g_strdup (gimp_unit_percent.abbreviation);
 
   return_vals = gimp_run_procedure ("gimp_unit_get_abbreviation",
@@ -325,20 +438,33 @@ gimp_unit_get_abbreviation (GUnit unit)
 }
 
 
+/**
+ * gimp_unit_get_singular:
+ * @unit: The unit you want to know the singular form of.
+ *
+ * For built-in units, this function returns the translated singular form
+ * of the unit's name.
+ *
+ * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
+ *       constant string when this function is used from inside the GIMP.
+ *
+ * Returns: The unit's singular form.
+ *
+ */
 gchar *
-gimp_unit_get_singular (GUnit unit)
+gimp_unit_get_singular (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gchar *singular;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return g_strdup (gettext (gimp_unit_defs[unit].singular));
 
-  if (unit == UNIT_PERCENT)
+  if (unit == GIMP_UNIT_PERCENT)
     return g_strdup (gettext (gimp_unit_percent.singular));
 
   return_vals = gimp_run_procedure ("gimp_unit_get_singular",
@@ -355,21 +481,33 @@ gimp_unit_get_singular (GUnit unit)
   return singular ? singular : g_strdup ("");
 }
 
-
+/**
+ * gimp_unit_get_plural:
+ * @unit: The unit you want to know the plural form of.
+ *
+ * For built-in units, this function returns the translated plural form
+ * of the unit's name.
+ *
+ * NOTE: This string has to be g_free()'d by plugins but is a pointer to a
+ *       constant string when this function is used from inside the GIMP.
+ *
+ * Returns: The unit's plural form.
+ *
+ */
 gchar *
-gimp_unit_get_plural (GUnit unit)
+gimp_unit_get_plural (GimpUnit unit)
 {
   GParam *return_vals;
-  int nreturn_vals;
+  gint nreturn_vals;
 
   gchar *plural;
 
-  g_return_val_if_fail (unit >= UNIT_PIXEL, g_strdup (""));
+  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, g_strdup (""));
 
-  if (unit < UNIT_END)
+  if (unit < GIMP_UNIT_END)
     return g_strdup (gettext (gimp_unit_defs[unit].plural));
 
-  if (unit == UNIT_PERCENT)
+  if (unit == GIMP_UNIT_PERCENT)
     return g_strdup (gettext (gimp_unit_percent.plural));
 
   return_vals = gimp_run_procedure ("gimp_unit_get_plural",

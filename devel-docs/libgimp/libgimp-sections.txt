@@ -694,7 +694,7 @@ GIMP_IS_PATH_EDITOR_CLASS
 <FILE>gimpsizeentry</FILE>
 GimpSizeEntry
 GIMP_SIZE_ENTRY
-GimpSizeEntryUP
+GimpSizeEntryUpdatePolicy
 GimpSizeEntryField
 <TITLE>GimpSizeEntry</TITLE>
 gimp_size_entry_new
@@ -795,7 +795,7 @@ gimp_gradient_close_popup
 
 <SECTION>
 <FILE>gimpunit</FILE>
-GUnit
+GimpUnit
 gimp_unit_get_number_of_units
 gimp_unit_get_number_of_built_in_units
 gimp_unit_new

@@ -1005,9 +1005,9 @@ crop_start (Tool *tool,
       if (gdisp->dot_for_dot)
 	{
 	  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (origin_sizeentry),
-				    UNIT_PIXEL);
+				    GIMP_UNIT_PIXEL);
 	  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_sizeentry),
-				    UNIT_PIXEL);
+				    GIMP_UNIT_PIXEL);
 	}
     }
 
@@ -1062,7 +1062,7 @@ crop_info_create (Tool *tool)
   origin_sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Y:"), orig_vals, 1,
 			       gdisp->dot_for_dot ? 
-			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       crop_orig_changed, crop_info);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (origin_sizeentry),
@@ -1078,7 +1078,7 @@ crop_info_create (Tool *tool)
   size_sizeentry =
     info_dialog_add_sizeentry (crop_info, _("Height:"), size_vals, 1,
 			       gdisp->dot_for_dot ? 
-			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 			       crop_size_changed, crop_info);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size_sizeentry),

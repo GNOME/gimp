@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpunit.h"
+#include "gimpunit.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,16 +43,16 @@ struct _GimpUnitMenu
 {
   GtkOptionMenu  optionmenu;
 
-  /* private */
-  GtkWidget     *selection;
-  GtkWidget     *clist;
-
-  /* public */
+  /* public (read only) */
   gchar         *format;
-  GUnit          unit;
+  GimpUnit       unit;
 
   gboolean       show_pixels;
   gboolean       show_percent;
+
+  /* private */
+  GtkWidget     *selection;
+  GtkWidget     *clist;
 };
 
 struct _GimpUnitMenuClass
@@ -62,34 +62,20 @@ struct _GimpUnitMenuClass
   void (* unit_changed) (GimpUnitMenu *gum);
 };
 
-GtkType gimp_unit_menu_get_type (void);
+/* For information look into the C source or the html documentation */
 
-/*  format       -- a printf-like format string for the menu items
- *  unit         -- the unit selected on widget creation
- *  show_pixels  -- should the menu contain 'pixels' ?
- *  show_percent -- should the menu contain 'percent' ?
- *  show_custom  -- should the menu contain an item 'More...' to pop up
- *                  the custom unit browser (not yet implemented)
- *
- *            the format string supports the following percent expansions:
- *
- *            %f -- factor (how many units make up an inch)
- *            %y -- symbol ("''" for inch)
- *            %a -- abbreviation
- *            %s -- singular
- *            %p -- plural
- *            %% -- literal percent
- */
+GtkType     gimp_unit_menu_get_type (void);
+
 GtkWidget * gimp_unit_menu_new      (gchar       *format,
-				     GUnit        unit,
+				     GimpUnit     unit,
 				     gboolean     show_pixels,
 				     gboolean     show_percent,
 				     gboolean     show_custom);
 
 void        gimp_unit_menu_set_unit (GimpUnitMenu *gum, 
-				     GUnit         unit);
+				     GimpUnit      unit);
 
-GUnit       gimp_unit_menu_get_unit (GimpUnitMenu *gum);
+GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *gum);
 
 #ifdef __cplusplus
 }

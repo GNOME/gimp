@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-typedef void (* GimpHelpFunc) (gchar *);
+typedef void (* GimpHelpFunc) (gchar *help_data);
 
 
 void  gimp_help_init               (void);

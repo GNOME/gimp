@@ -94,12 +94,12 @@ rect_select_button_press (Tool           *tool,
 			  GdkEventButton *bevent,
 			  gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  RectSelect * rect_sel;
-  gchar select_mode[STATUSBAR_SIZE];
-  int x, y;
-  GUnit unit = UNIT_PIXEL;
-  double unit_factor;
+  GDisplay   *gdisp;
+  RectSelect *rect_sel;
+  gchar       select_mode[STATUSBAR_SIZE];
+  gint        x, y;
+  GimpUnit    unit = GIMP_UNIT_PIXEL;
+  gdouble     unit_factor;
 
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -128,9 +128,9 @@ rect_select_button_press (Tool           *tool,
 
   switch (unit)
     {
-    case UNIT_PIXEL:
+    case GIMP_UNIT_PIXEL:
       break;
-    case UNIT_PERCENT:
+    case GIMP_UNIT_PERCENT:
       rect_sel->fixed_width =
 	gdisp->gimage->width * rect_sel->fixed_width / 100;
       rect_sel->fixed_height =

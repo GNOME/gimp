@@ -3402,7 +3402,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (options->size_se);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
                                   gimage->xresolution, FALSE);

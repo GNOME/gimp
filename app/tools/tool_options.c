@@ -143,7 +143,7 @@ selection_options_init (SelectionOptions     *options,
   options->fixed_size     = options->fixed_size_d     = FALSE;
   options->fixed_height   = options->fixed_height_d   = 1;
   options->fixed_width    = options->fixed_width_d    = 1;
-  options->fixed_unit     = options->fixed_unit_d     = UNIT_PIXEL;
+  options->fixed_unit     = options->fixed_unit_d     = GIMP_UNIT_PIXEL;
 
   options->feather_w        = NULL;
   options->feather_radius_w = NULL;
@@ -385,8 +385,8 @@ selection_options_reset (SelectionOptions *options)
 			       options->fixed_unit_d);
 
       digits =
-	((options->fixed_unit_d == UNIT_PIXEL) ? 0 :
-	 ((options->fixed_unit_d == UNIT_PERCENT) ? 2 :
+	((options->fixed_unit_d == GIMP_UNIT_PIXEL) ? 0 :
+	 ((options->fixed_unit_d == GIMP_UNIT_PERCENT) ? 2 :
 	  (MIN (6, MAX (3, gimp_unit_get_digits (options->fixed_unit_d))))));
 
       spinbutton =

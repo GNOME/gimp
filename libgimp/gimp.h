@@ -524,8 +524,8 @@ void       gimp_image_get_resolution        (gint32     image_ID,
 					     double     *xresolution,
 					     double     *yresolution);
 void       gimp_image_set_unit              (gint32     image_ID,
-					     GUnit      unit);
-GUnit      gimp_image_get_unit              (gint32     image_ID);
+					     GimpUnit   unit);
+GimpUnit   gimp_image_get_unit              (gint32     image_ID);
 gint32     gimp_image_get_layer_by_tattoo   (gint32     image_ID,
 					     gint32     tattoo);
 gint32     gimp_image_get_channel_by_tattoo (gint32     image_ID,

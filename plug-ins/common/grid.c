@@ -454,7 +454,7 @@ dialog (gint32     image_ID,
   GtkWidget *chain_button;
   GtkWidget *table;
   GtkWidget *align;
-  GUnit      unit;
+  GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
   gchar    **argv;
@@ -501,7 +501,7 @@ dialog (gint32     image_ID,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
   /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), GIMP_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 0, xres, TRUE);
@@ -561,7 +561,7 @@ dialog (gint32     image_ID,
 			       SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), GIMP_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 0, xres, TRUE);
@@ -620,7 +620,7 @@ dialog (gint32     image_ID,
 				SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 				GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), GIMP_UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);
