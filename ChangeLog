@@ -1,5 +1,10 @@
 2002-05-04  Sven Neumann  <sven@gimp.org>
 
+	* README: updated Bugs section. Mention gdkxft to avoid more
+	reports about crashes caused by such lousy LD_PRELOAD hacks.
+	
+2002-05-04  Sven Neumann  <sven@gimp.org>
+
 	* app/arch/i386/mmx/detect_mmx.S
 	* app/arch/i386/mmx/paint_funcs_mmx.S: applied a patch from 
 	iccii@hotmail.com that promises to fix build on mingw (bug #80681).

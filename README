@@ -16,6 +16,7 @@ distributor, dont' dare to ship this package to innocent users.
 
 For installation instructions, see the file INSTALL.
 
+
 1. Web Resources
 ================
 
@@ -107,9 +108,21 @@ any of your choice by editing ~/.gimp-1.3/menurc.
 =======
 
 Since this is a developers version, we are at the moment not really
-interested in receiving bug-reports. If you find a bug, contact the
-person who is working on this particular part of the program (check
-the ChangeLog) or try to fix it yourself.
+interested in receiving too many bug-reports. Some parts of the code
+are unfinished and under heavy development and we know that.
+Bug-reports for incomplete or missing are features are therefore often
+not helpful. Instead of filing a bug you should try to contact the
+person who is working on this particular part of the program (see the
+ChangeLog) or try to fix it yourself. You should report crashes and
+other severe bugs at Bugzilla (http://bugzilla.gnome.org/). Your
+bug-report needs to provide detailed instruction of how to reproduce
+the problem. For reports on crashes, please also include a stack
+trace.
+
+If you experience crashes whenever you try to start gimp-1.3, you are
+most probably using gdkxft or another LD_PRELOAD hack designed for
+gtk+-1.2. These hacks will not work with GTK+-2.0 applications like
+this version of The GIMP.
 
 
 Have fun,
