@@ -118,7 +118,8 @@ gint            gimp_drawable_height             (const GimpDrawable *drawable);
 
 gboolean	gimp_drawable_get_visible        (const GimpDrawable *drawable);
 void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
-                                                  gboolean            visible);
+                                                  gboolean            visible,
+                                                  gboolean            push_undo);
 
 void            gimp_drawable_offsets            (const GimpDrawable *drawable, 
 						  gint               *offset_x,

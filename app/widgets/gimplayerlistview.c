@@ -404,7 +404,7 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
       if (gimp_layer_get_mode (layer) != mode)
 	{
 	  BLOCK();
-	  gimp_layer_set_mode (layer, mode);
+	  gimp_layer_set_mode (layer, mode, TRUE);
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
@@ -433,7 +433,7 @@ gimp_layer_list_view_preserve_button_toggled (GtkWidget         *widget,
       if (gimp_layer_get_preserve_trans (layer) != preserve_trans)
 	{
 	  BLOCK();
-	  gimp_layer_set_preserve_trans (layer, preserve_trans);
+	  gimp_layer_set_preserve_trans (layer, preserve_trans, TRUE);
 	  UNBLOCK();
 	}
     }
@@ -460,7 +460,7 @@ gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
       if (gimp_layer_get_opacity (layer) != opacity)
 	{
 	  BLOCK();
-	  gimp_layer_set_opacity (layer, opacity);
+	  gimp_layer_set_opacity (layer, opacity, TRUE);
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);

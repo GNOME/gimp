@@ -389,7 +389,7 @@ gimp_layer_list_item_linked_toggled (GtkWidget *widget,
 				       gimp_layer_list_item_linked_changed,
 				       list_item);
 
-      gimp_layer_set_linked (layer, linked);
+      gimp_layer_set_linked (layer, linked, TRUE);
 
       g_signal_handlers_unblock_by_func (layer,
 					 gimp_layer_list_item_linked_changed,

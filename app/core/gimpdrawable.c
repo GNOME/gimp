@@ -662,15 +662,22 @@ gimp_drawable_get_visible (const GimpDrawable *drawable)
 
 void
 gimp_drawable_set_visible (GimpDrawable *drawable,
-                           gboolean      visible)
+                           gboolean      visible,
+                           gboolean      push_undo)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  visible = visible ? TRUE : FALSE;
-
   if (drawable->visible != visible)
     {
-      drawable->visible = visible;
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          if (gimage)
+            gimp_image_undo_push_drawable_visibility (gimage, NULL, drawable);
+        }
+
+      drawable->visible = visible ? TRUE : FALSE;
 
       g_signal_emit (drawable, gimp_drawable_signals[VISIBILITY_CHANGED], 0);
 

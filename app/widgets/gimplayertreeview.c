@@ -34,6 +34,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
+#include "core/gimpitemundo.h"
+#include "core/gimpundostack.h"
 
 #include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
@@ -88,8 +90,9 @@ static void   gimp_layer_tree_view_update_options (GimpLayerTreeView   *view,
 
 static void   gimp_layer_tree_view_linked_changed (GimpLayer           *layer,
                                                    GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_chain_toggled  (GtkCellRendererToggle *toggle,
+static void   gimp_layer_tree_view_chain_clicked  (GtkCellRendererToggle *toggle,
                                                    gchar               *path,
+                                                   GdkModifierType      state,
                                                    GimpLayerTreeView   *view);
 
 static void   gimp_layer_tree_view_mask_update    (GimpLayerTreeView   *view,
@@ -343,8 +346,8 @@ gimp_layer_tree_view_constructor (GType                  type,
   tree_view->renderer_cells = g_list_prepend (tree_view->renderer_cells,
                                               layer_view->mask_cell);
 
-  g_signal_connect (layer_view->chain_cell, "toggled",
-                    G_CALLBACK (gimp_layer_tree_view_chain_toggled),
+  g_signal_connect (layer_view->chain_cell, "clicked",
+                    G_CALLBACK (gimp_layer_tree_view_chain_clicked),
                     layer_view);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
@@ -612,7 +615,7 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
       if (gimp_layer_get_mode (layer) != mode)
 	{
 	  BLOCK();
-	  gimp_layer_set_mode (layer, mode);
+	  gimp_layer_set_mode (layer, mode, TRUE);
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
@@ -641,7 +644,7 @@ gimp_layer_tree_view_preserve_button_toggled (GtkWidget         *widget,
       if (gimp_layer_get_preserve_trans (layer) != preserve_trans)
 	{
 	  BLOCK();
-	  gimp_layer_set_preserve_trans (layer, preserve_trans);
+	  gimp_layer_set_preserve_trans (layer, preserve_trans, TRUE);
 	  UNBLOCK();
 	}
     }
@@ -667,8 +670,19 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
       if (gimp_layer_get_opacity (layer) != opacity)
 	{
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+          /*  compress opacity undos  */
+          if (GIMP_IS_ITEM_UNDO (undo)                   &&
+              undo->undo_type == GIMP_UNDO_LAYER_OPACITY &&
+              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+            push_undo = FALSE;
+
 	  BLOCK();
-	  gimp_layer_set_opacity (layer, opacity);
+	  gimp_layer_set_opacity (layer, opacity, push_undo);
 	  UNBLOCK();
 
 	  gimp_image_flush (gimage);
@@ -763,8 +777,9 @@ gimp_layer_tree_view_linked_changed (GimpLayer         *layer,
 }
 
 static void
-gimp_layer_tree_view_chain_toggled (GtkCellRendererToggle *toggle,
+gimp_layer_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
                                     gchar                 *path_str,
+                                    GdkModifierType        state,
                                     GimpLayerTreeView     *view)
 {
   GimpContainerTreeView *tree_view;
@@ -790,7 +805,7 @@ gimp_layer_tree_view_chain_toggled (GtkCellRendererToggle *toggle,
 
       layer  = GIMP_LAYER (renderer->viewable);
 
-      gimp_layer_set_linked (layer, !linked);
+      gimp_layer_set_linked (layer, !linked, TRUE);
 
       g_object_unref (renderer);
     }

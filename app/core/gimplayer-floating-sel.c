@@ -65,7 +65,7 @@ floating_sel_attach (GimpLayer    *layer,
     }
 
   /*  set the drawable and allocate a backing store  */
-  gimp_layer_set_preserve_trans (layer, TRUE);
+  gimp_layer_set_preserve_trans (layer, TRUE, FALSE);
   layer->fs.drawable = drawable;
   layer->fs.backing_store =
     tile_manager_new (GIMP_DRAWABLE (layer)->width,
@@ -214,10 +214,11 @@ floating_sel_to_layer (GimpLayer *layer)
   width  = gimp_drawable_width (layer->fs.drawable);
   height = gimp_drawable_height (layer->fs.drawable);
 
-  gimp_image_undo_push_fs_to_layer (gimage,
-                                    _("Floating Selection to Layer"),
-                                    layer,
-                                    layer->fs.drawable);
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_TO_LAYER,
+                               _("Floating Selection to Layer"));
+
+  gimp_image_undo_push_fs_to_layer (gimage, NULL,
+                                    layer, layer->fs.drawable);
 
   /*  clear the selection  */
   gimp_layer_invalidate_boundary (layer);
@@ -225,7 +226,9 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Set pointers  */
   layer->fs.drawable   = NULL;
   gimage->floating_sel = NULL;
-  gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE);
+  gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE, TRUE);
+
+  gimp_image_undo_group_end (gimage);
 
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0,
@@ -447,7 +450,7 @@ floating_sel_composite (GimpLayer *layer,
 	    {
 	      d_layer = GIMP_LAYER (layer->fs.drawable);
 	      if ((preserve_trans = gimp_layer_get_preserve_trans (d_layer)))
-		gimp_layer_set_preserve_trans (d_layer, FALSE);
+		gimp_layer_set_preserve_trans (d_layer, FALSE, FALSE);
 	    }
 	  else
 	    preserve_trans = FALSE;
@@ -475,7 +478,7 @@ floating_sel_composite (GimpLayer *layer,
 
 	  /*  restore preserve transparency  */
 	  if (preserve_trans)
-	    gimp_layer_set_preserve_trans (d_layer, TRUE);
+	    gimp_layer_set_preserve_trans (d_layer, TRUE, FALSE);
 
 	  /*  restore gimage active channels  */
 	  for (i = 0; i < MAX_CHANNELS; i++)

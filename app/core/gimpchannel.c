@@ -377,13 +377,33 @@ gimp_channel_get_opacity (const GimpChannel *channel)
 
 void
 gimp_channel_set_opacity (GimpChannel *channel,
-			  gdouble      opacity)
+			  gdouble      opacity,
+                          gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 
-  channel->color.a = opacity;
+  if (channel->color.a != opacity)
+    {
+      if (push_undo)
+        {
+          GimpImage *gimage;
+
+          gimage = gimp_item_get_image (GIMP_ITEM (channel));
+
+          if (gimage)
+            gimp_image_undo_push_channel_color (gimage, _("Set Channel Opacity"),
+                                                channel);
+        }
+
+      channel->color.a = opacity;
+
+      gimp_drawable_update (GIMP_DRAWABLE (channel),
+			    0, 0,
+			    GIMP_DRAWABLE (channel)->width,
+			    GIMP_DRAWABLE (channel)->height);
+    }
 }
 
 gboolean

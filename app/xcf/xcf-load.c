@@ -666,7 +666,7 @@ xcf_load_layer_props (XcfInfo   *info,
 
 	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
 	    gimp_drawable_set_visible (GIMP_DRAWABLE (layer),
-				       visible ? TRUE : FALSE);
+				       visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
 	case PROP_LINKED:
@@ -778,7 +778,7 @@ xcf_load_channel_props (XcfInfo     *info,
 
 	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
 	    gimp_drawable_set_visible (GIMP_DRAWABLE (channel),
-				       visible ? TRUE : FALSE);
+				       visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
 	case PROP_SHOW_MASKED:

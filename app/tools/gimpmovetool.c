@@ -278,8 +278,13 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
 
+#ifdef __GNUC__
+#warning FIXME: gimp_layer_set_linked()
+#endif
+#if 0
               if (state & GDK_SHIFT_MASK)
                 gimp_layer_set_linked (layer, ! gimp_layer_get_linked (layer));
+#endif
 
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }

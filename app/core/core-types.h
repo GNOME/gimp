@@ -111,6 +111,7 @@ typedef struct _GimpEnvironTable    GimpEnvironTable;
 /*  undo objects  */
 
 typedef struct _GimpUndo            GimpUndo;
+typedef struct _GimpItemUndo        GimpItemUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 

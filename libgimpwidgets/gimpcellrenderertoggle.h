@@ -48,6 +48,10 @@ struct _GimpCellRendererToggle
 struct _GimpCellRendererToggleClass
 {
   GtkCellRendererToggleClass  parent_class;
+
+  void (* clicked) (GimpCellRendererViewable *cell,
+                    const gchar              *path,
+                    GdkModifierType           state);
 };
 
 

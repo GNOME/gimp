@@ -201,7 +201,7 @@ gimp_drawable_list_item_eye_toggled (GtkWidget *widget,
 				       gimp_drawable_list_item_visibility_changed,
 				       list_item);
 
-      gimp_drawable_set_visible (drawable, visible);
+      gimp_drawable_set_visible (drawable, visible, TRUE);
 
       g_signal_handlers_unblock_by_func (drawable,
 					 gimp_drawable_list_item_visibility_changed,

@@ -38,6 +38,15 @@ GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
                                         gboolean          dirties_image,
                                         GimpUndoPopFunc   pop_func,
                                         GimpUndoFreeFunc  free_func);
+GimpUndo * gimp_image_undo_push_item   (GimpImage        *gimage,
+                                        GimpItem         *item,
+                                        gsize             size,
+                                        gsize             struct_size,
+                                        GimpUndoType      type,
+                                        const gchar      *name,
+                                        gboolean          dirties_image,
+                                        GimpUndoPopFunc   pop_func,
+                                        GimpUndoFreeFunc  free_func);
 
 
 #endif /* __GIMP_IMAGE_UNDO_H__ */

@@ -1186,7 +1186,7 @@ layer_set_visible_invoker (Gimp     *gimp,
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_drawable_set_visible (GIMP_DRAWABLE (layer), visible);
+    gimp_drawable_set_visible (GIMP_DRAWABLE (layer), visible, TRUE);
 
   return procedural_db_return_args (&layer_set_visible_proc, success);
 }
@@ -1290,7 +1290,7 @@ layer_set_preserve_trans_invoker (Gimp     *gimp,
   preserve_trans = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_preserve_trans (layer, preserve_trans);
+    gimp_layer_set_preserve_trans (layer, preserve_trans, TRUE);
 
   return procedural_db_return_args (&layer_set_preserve_trans_proc, success);
 }
@@ -1708,7 +1708,7 @@ layer_set_opacity_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_opacity (layer, opacity / 100.0);
+    gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
 
   return procedural_db_return_args (&layer_set_opacity_proc, success);
 }
@@ -1814,7 +1814,7 @@ layer_set_mode_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_mode (layer, mode);
+    gimp_layer_set_mode (layer, mode, TRUE);
 
   return procedural_db_return_args (&layer_set_mode_proc, success);
 }
@@ -1918,7 +1918,7 @@ layer_set_linked_invoker (Gimp     *gimp,
   linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_linked (layer, linked);
+    gimp_layer_set_linked (layer, linked, TRUE);
 
   return procedural_db_return_args (&layer_set_linked_proc, success);
 }

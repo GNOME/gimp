@@ -1,3 +1,66 @@
+2003-03-17  Michael Natterer  <mitch@gimp.org>
+
+	Made drawable/layer properties (visibility, opacity etc.)
+	undoable (fixes bug #73893).
+
+	* app/core/core-enums.[ch]: added undo types/groups for
+	visibility, mode, opacity, linked and preserve_trans.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpitemundo.[ch]: new GimpUndo subclass which holds a
+	ref'ed GimpItem pointer so (1) this doesn't need to be done by all
+	undo steps related to an item and (2) the item the undo step is
+	for can be determined from outside the undo system.
+
+	* app/core/gimpimage-undo.[ch]: added gimp_image_undo_push_item()
+	which returns a new GimpItemUndo.
+
+	* app/core/gimpimage-undo-push.[ch]: use it for all item related
+	undo steps. Removed lots of GimpItem, GimpLayer, GimpDrawable
+	and GimpVectors pointers from the private undo structs. Added
+	undo push functions for the new undo types added above.
+
+	* app/core/gimpdrawable.[ch] (gimp_drawable_set_visible): added
+	"gboolean push_undo" parameter.
+
+	* app/core/gimplayer.[ch] (gimp_layer_set_opacity, _mode,
+	_preserve_trans, _linked): added "gboolean push_undo" parameters.
+
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimplayer-floating-sel.c
+	* app/tools/gimpmovetool.c
+	* app/xcf/xcf-load.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c: changed accordingly.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: ditto. Added '$undo' paramaters to
+	the foo_accessors() functions. Removed $func from foo_accesors()
+	because we don't manipulate items without using getters/setters
+	any longer.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c: regenerated.
+
+	* app/widgets/gimpcellrenderertoggle.[ch]: added "clicked" signal
+	which carries an additional "GdkModifierType state" parameter as
+	in GimpCellRendererViewable .
+
+	* app/widgets/gimpcontainertreeview.c: emit "clicked" from
+	the toggle renderer, not "toggled" so the callbacks get the
+	modifier state.
+
+	* app/widgets/gimpdrawabletreeview.c: resurrected the "exclusive
+	visible by <shift>+click" feature as in 1.2.
+
+	* app/widgets/gimplayertreeview.c: compress layer opacity undos by
+	looking at the top of the undo stack and not pushing an undo if
+	there already is a GIMP_UNDO_DRAWABLE_OPACITY for the active
+	layer.
+
 2003-03-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c (run): put the actual effect

@@ -546,7 +546,7 @@ channel_set_visible_invoker (Gimp     *gimp,
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_drawable_set_visible (GIMP_DRAWABLE (channel), visible);
+    gimp_drawable_set_visible (GIMP_DRAWABLE (channel), visible, TRUE);
 
   return procedural_db_return_args (&channel_set_visible_proc, success);
 }
@@ -700,7 +700,7 @@ channel_get_opacity_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = channel->color.a * 100.0;
+    return_args[1].value.pdb_float = gimp_channel_get_opacity (channel) * 100.0;
 
   return return_args;
 }
@@ -756,7 +756,7 @@ channel_set_opacity_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    channel->color.a = opacity / 100.0;
+    gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);
 }
@@ -806,7 +806,7 @@ channel_get_color_invoker (Gimp     *gimp,
 
   if (success)
     {
-      color = channel->color;
+      gimp_channel_get_color (channel, &color);
     }
 
   return_args = procedural_db_return_args (&channel_get_color_proc, success);

@@ -487,10 +487,10 @@ gimp_image_merge_layers (GimpImage     *gimage,
   gimp_object_set_name (GIMP_OBJECT (merge_layer), name);
   g_free (name);
 
+  gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE, TRUE);
+
   /*  End the merge undo group  */
   gimp_image_undo_group_end (gimage);
-
-  gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE);
 
   gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 
 			0, 0, 

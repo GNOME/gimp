@@ -27,6 +27,8 @@
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
+#include "gimpitem.h"
+#include "gimpitemundo.h"
 #include "gimplist.h"
 #include "gimpundostack.h"
 
@@ -191,10 +193,28 @@ gimp_image_undo_push (GimpImage        *gimage,
                       GimpUndoPopFunc   pop_func,
                       GimpUndoFreeFunc  free_func)
 {
+  return gimp_image_undo_push_item (gimage, NULL,
+                                    size, struct_size,
+                                    type, name, dirties_image,
+                                    pop_func, free_func);
+}
+
+GimpUndo *
+gimp_image_undo_push_item (GimpImage        *gimage,
+                           GimpItem         *item,
+                           gsize             size,
+                           gsize             struct_size,
+                           GimpUndoType      type,
+                           const gchar      *name,
+                           gboolean          dirties_image,
+                           GimpUndoPopFunc   pop_func,
+                           GimpUndoFreeFunc  free_func)
+{
   GimpUndo *new;
   gpointer  undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (item == NULL || GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (type > GIMP_UNDO_GROUP_LAST, NULL);
 
   if (! name)
@@ -224,12 +244,22 @@ gimp_image_undo_push (GimpImage        *gimage,
   if (struct_size > 0)
     undo_struct = g_malloc0 (struct_size);
 
-  new = gimp_undo_new (gimage,
-                       type,
-                       name,
-                       undo_struct, size,
-                       dirties_image,
-                       pop_func, free_func);
+  if (item)
+    {
+      new = gimp_item_undo_new (gimage, item,
+                                type, name,
+                                undo_struct, size,
+                                dirties_image,
+                                pop_func, free_func);
+    }
+  else
+    {
+      new = gimp_undo_new (gimage,
+                           type, name,
+                           undo_struct, size,
+                           dirties_image,
+                           pop_func, free_func);
+    }
 
   if (gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
     {

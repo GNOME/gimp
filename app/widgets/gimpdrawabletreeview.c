@@ -88,8 +88,9 @@ static void   gimp_drawable_tree_view_new_color_dropped
 static void   gimp_drawable_tree_view_visibility_changed
                                                  (GimpDrawable          *drawable,
                                                   GimpDrawableTreeView  *view);
-static void   gimp_drawable_tree_view_eye_toggled(GtkCellRendererToggle *toggle,
+static void   gimp_drawable_tree_view_eye_clicked(GtkCellRendererToggle *toggle,
                                                   gchar                 *path,
+                                                  GdkModifierType        state,
                                                   GimpDrawableTreeView  *view);
 
 
@@ -194,8 +195,8 @@ gimp_drawable_tree_view_constructor (GType                  type,
   tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
                                             drawable_view->eye_cell);
 
-  g_signal_connect (drawable_view->eye_cell, "toggled",
-                    G_CALLBACK (gimp_drawable_tree_view_eye_toggled),
+  g_signal_connect (drawable_view->eye_cell, "clicked",
+                    G_CALLBACK (gimp_drawable_tree_view_eye_clicked),
                     drawable_view);
 
   gtk_tree_selection_set_select_function (tree_view->selection,
@@ -446,8 +447,9 @@ gimp_drawable_tree_view_visibility_changed (GimpDrawable         *drawable,
 }
 
 static void
-gimp_drawable_tree_view_eye_toggled (GtkCellRendererToggle *toggle,
+gimp_drawable_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
                                      gchar                 *path_str,
+                                     GdkModifierType        state,
                                      GimpDrawableTreeView  *view)
 {
   GimpContainerTreeView *tree_view;
@@ -473,12 +475,45 @@ gimp_drawable_tree_view_eye_toggled (GtkCellRendererToggle *toggle,
                     NULL);
 
       drawable = GIMP_DRAWABLE (renderer->viewable);
-      gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      gimp_drawable_set_visible (drawable, !active);
-      gimp_image_flush (gimage);
-
       g_object_unref (renderer);
+
+      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      if (state & GDK_SHIFT_MASK)
+        {
+          gboolean iter_valid;
+
+          gimp_image_undo_group_start (gimage,
+                                       GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY,
+                                       _("Set Drawable Exclusive Visible"));
+
+          for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
+                                                           &iter);
+               iter_valid;
+               iter_valid = gtk_tree_model_iter_next (tree_view->model,
+                                                      &iter))
+            {
+              gtk_tree_model_get (tree_view->model, &iter,
+                                  tree_view->model_column_renderer, &renderer,
+                                  -1);
+
+              if (renderer->viewable != (GimpViewable *) drawable)
+                gimp_drawable_set_visible (GIMP_DRAWABLE (renderer->viewable),
+                                           FALSE, TRUE);
+
+              g_object_unref (renderer);
+            }
+
+          gimp_drawable_set_visible (drawable, TRUE, TRUE);
+
+          gimp_image_undo_group_end (gimage);
+        }
+      else
+        {
+          gimp_drawable_set_visible (drawable, !active, TRUE);
+        }
+
+      gimp_image_flush (gimage);
     }
 
   gtk_tree_path_free (path);

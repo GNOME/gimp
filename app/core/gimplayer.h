@@ -133,19 +133,23 @@ GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 gboolean        gimp_layer_is_floating_sel     (const GimpLayer      *layer);
 
 void            gimp_layer_set_opacity         (GimpLayer            *layer,
-                                                gdouble               opacity);
+                                                gdouble               opacity,
+                                                gboolean              push_undo);
 gdouble         gimp_layer_get_opacity         (const GimpLayer      *layer);
 
 void                 gimp_layer_set_mode       (GimpLayer            *layer,
-                                                GimpLayerModeEffects  mode);
+                                                GimpLayerModeEffects  mode,
+                                                gboolean              push_undo);
 GimpLayerModeEffects gimp_layer_get_mode       (const GimpLayer      *layer);
 
 void            gimp_layer_set_preserve_trans  (GimpLayer            *layer,
-                                                gboolean              preserve);
+                                                gboolean              preserve,
+                                                gboolean              push_undo);
 gboolean        gimp_layer_get_preserve_trans  (const GimpLayer      *layer);
 
 void            gimp_layer_set_linked          (GimpLayer            *layer,
-                                                gboolean              linked);
+                                                gboolean              linked,
+                                                gboolean              push_undo);
 gboolean        gimp_layer_get_linked          (const GimpLayer      *layer);
 
 

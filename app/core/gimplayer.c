@@ -1546,7 +1546,8 @@ gimp_layer_is_floating_sel (const GimpLayer *layer)
 
 void
 gimp_layer_set_opacity (GimpLayer *layer,
-                        gdouble    opacity)
+                        gdouble    opacity,
+                        gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -1554,6 +1555,14 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
   if (layer->opacity != opacity)
     {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+          if (gimage)
+            gimp_image_undo_push_layer_opacity (gimage, NULL, layer);
+        }
+                                                   
       layer->opacity = opacity;
 
       g_signal_emit (layer, layer_signals[OPACITY_CHANGED], 0);
@@ -1575,12 +1584,21 @@ gimp_layer_get_opacity (const GimpLayer *layer)
 
 void
 gimp_layer_set_mode (GimpLayer            *layer,
-                     GimpLayerModeEffects  mode)
+                     GimpLayerModeEffects  mode,
+                     gboolean              push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (layer->mode != mode)
     {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+          if (gimage)
+            gimp_image_undo_push_layer_mode (gimage, NULL, layer);
+        }
+                                                   
       layer->mode = mode;
 
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
@@ -1602,12 +1620,21 @@ gimp_layer_get_mode (const GimpLayer *layer)
 
 void
 gimp_layer_set_preserve_trans (GimpLayer *layer,
-                               gboolean   preserve)
+                               gboolean   preserve,
+                               gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (layer->preserve_trans != preserve)
     {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+          if (gimage)
+            gimp_image_undo_push_layer_preserve_trans (gimage, NULL, layer);
+        }
+                                                   
       layer->preserve_trans = preserve ? TRUE : FALSE;
 
       g_signal_emit (layer, layer_signals[PRESERVE_TRANS_CHANGED], 0);
@@ -1624,12 +1651,21 @@ gimp_layer_get_preserve_trans (const GimpLayer *layer)
 
 void
 gimp_layer_set_linked (GimpLayer *layer,
-                       gboolean   linked)
+                       gboolean   linked,
+                       gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (layer->linked != linked)
     {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
+
+          if (gimage)
+            gimp_image_undo_push_layer_linked (gimage, NULL, layer);
+        }
+
       layer->linked = linked ? TRUE : FALSE;
 
       g_signal_emit (layer, layer_signals[LINKED_CHANGED], 0);

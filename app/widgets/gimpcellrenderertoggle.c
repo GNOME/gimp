@@ -25,10 +25,19 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimpcellrenderertoggle.h"
 
 
 #define DEFAULT_ICON_SIZE  GTK_ICON_SIZE_BUTTON
+
+
+enum
+{
+  CLICKED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -64,9 +73,18 @@ static void gimp_cell_renderer_toggle_render       (GtkCellRenderer *cell,
                                                     GdkRectangle    *cell_area,
                                                     GdkRectangle    *expose_area,
                                                     GtkCellRendererState flags);
+static gboolean gimp_cell_renderer_toggle_activate (GtkCellRenderer *cell,
+                                                    GdkEvent        *event,
+                                                    GtkWidget       *widget,
+                                                    const gchar     *path,
+                                                    GdkRectangle    *background_area,
+                                                    GdkRectangle    *cell_area,
+                                                    GtkCellRendererState  flags);
 static void gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
                                                      GtkWidget              *widget);
 
+
+static guint toggle_cell_signals[LAST_SIGNAL] = { 0 };
 
 static GtkCellRendererToggleClass *parent_class = NULL;
 
@@ -109,6 +127,17 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
   cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  toggle_cell_signals[CLICKED] =
+    g_signal_new ("clicked",
+		  G_OBJECT_CLASS_TYPE (object_class),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
+		  NULL, NULL,
+		  gimp_marshal_VOID__STRING_UINT,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_STRING,
+                  G_TYPE_UINT);
 
   object_class->finalize     = gimp_cell_renderer_toggle_finalize;
   object_class->get_property = gimp_cell_renderer_toggle_get_property;
@@ -372,6 +401,35 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                          GDK_RGB_DITHER_NORMAL,
                          0, 0);
     }
+}
+
+static gboolean
+gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
+                                    GdkEvent             *event,
+                                    GtkWidget            *widget,
+                                    const gchar          *path,
+                                    GdkRectangle         *background_area,
+                                    GdkRectangle         *cell_area,
+                                    GtkCellRendererState  flags)
+{
+  GtkCellRendererToggle *celltoggle;
+
+  celltoggle = GTK_CELL_RENDERER_TOGGLE (cell);
+
+  if (celltoggle->activatable)
+    {
+      GdkModifierType state = 0;
+
+      if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
+        state = ((GdkEventButton *) event)->state;
+
+      g_signal_emit (cell, toggle_cell_signals[CLICKED], 0,
+                     path, state);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void

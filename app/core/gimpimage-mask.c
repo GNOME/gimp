@@ -643,7 +643,7 @@ gimp_image_mask_save (GimpImage *gimage)
                                                    FALSE));
 
   /*  saved selections are not visible by default  */
-  gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE);
+  gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE, FALSE);
 
   gimp_image_add_channel (gimage, new_channel, -1);
 

@@ -749,8 +749,8 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   if (toggled_cell)
                     {
                       /*  don't select path  */
-                      g_signal_emit_by_name (toggled_cell, "toggled",
-                                             path_str);
+                      g_signal_emit_by_name (toggled_cell, "clicked",
+                                             path_str, bevent->state);
                     }
                   else if (clicked_cell)
                     {

@@ -30,7 +30,7 @@ sub operation_arg () {{
 }}
 
 sub channel_get_prop_proc {
-    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
+    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
 
     $core_type = 'channel' unless $core_type;
     $core_var  = 'channel' unless $core_var;
@@ -48,7 +48,7 @@ sub channel_get_prop_proc {
 	  desc => "The channel $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "gimp_${core_type}_get_$prop ($core_var)" : "$core_var->$prop";
+    my $alias = "gimp_${core_type}_get_$prop ($core_var)";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -60,14 +60,14 @@ sub channel_get_prop_proc {
 
 	$invoke{code} = <<'CODE'
 {
-  color = channel->color;
+  gimp_channel_get_color (channel, &color);
 }
 CODE
     }
 }
 
 sub channel_set_prop_proc {
-    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
+    my ($prop, $type, $desc, $undo, $core_type, $core_var) = @_;
 
     $core_type = 'channel' unless $core_type;
     $core_var  = 'channel' unless $core_var;
@@ -88,8 +88,8 @@ sub channel_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "gimp_${core_type}_set_$prop ($core_var, $prop);"
-			  : "$core_var->$prop = $prop;";
+    $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
+			  : "gimp_${core_type}_set_$prop ($core_var, $prop);";
 
     if ($type eq 'color') {
 	%invoke = (
@@ -103,16 +103,10 @@ sub channel_set_prop_proc {
 CODE
 	);
     }
-
-    if ($prop eq 'opacity') {
-	%invoke = (
-	    code => "channel->color.a = $prop / 100.0;"
-	);
-    }
 }
 
 sub channel_accessors {
-    my ($prop, $type, $desc, $func, $extra, $core_type, $core_var) = @_;
+    my ($prop, $type, $desc, $undo, $extra, $core_type, $core_var) = @_;
 
     $core_type = 'channel' unless $core_type;
     $core_var  = 'channel' unless $core_var;
@@ -129,7 +123,7 @@ sub channel_accessors {
 
 	eval <<SUB;
 sub @{[ scalar caller ]}::$proc {
-    \&channel_${_}_prop_proc('$prop', '$type', '$desc', $func,
+    \&channel_${_}_prop_proc('$prop', '$type', '$desc', $undo,
                              '$core_type', '$core_var');
     $extra{$_}
 }
@@ -264,7 +258,7 @@ HELP
 CODE
 }
 
-&channel_accessors('name', 'string', 'name', 1, [ undef, <<'CODE' ],
+&channel_accessors('name', 'string', 'name', 0, [ undef, <<'CODE' ],
 $invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
 $invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
 CODE
@@ -273,7 +267,7 @@ CODE
 &channel_accessors('visible', 'boolean', 'visibility', 1, undef,
                    'drawable', 'GIMP_DRAWABLE (channel)');
 
-&channel_accessors('show_masked', 'boolean', 'composite method', 1,
+&channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');
     $help .= <<'HELP'
 If it is non-zero, then the channel is composited with the image so that masked
@@ -281,16 +275,16 @@ regions are shown. Otherwise, selected regions are shown.
 HELP
 CODE
 
-&channel_accessors('opacity', '0 <= float <= 100', 'opacity', 0,
-		   [ '$outargs[0]->{alias} =
-			  "channel->color.a * 100.0"',
-		     '$invoke{code} =~
-			  s%(color.a);$%(($1 / 100.0);%' ]);
+&channel_accessors('opacity', '0 <= float <= 100', 'opacity', 1,
+		 [ '$outargs[0]->{alias} =
+		        "gimp_channel_get_opacity (channel) * 100.0"',
+		   '$invoke{code} =~
+			s%opacity, %opacity / 100.0, %' ]);
 
 &channel_accessors('color', 'color', 'compositing color', 0,
                    [ '$outargs[0]->{void_ret} = 1', '' ]);
 
-&channel_accessors('tattoo', 'tattoo', 'tattoo', 1,
+&channel_accessors('tattoo', 'tattoo', 'tattoo', 0,
 		   <<'CODE', 'item', 'GIMP_ITEM (channel)');
     $help .= <<'HELP';
 A tattoo is a unique and permanent identifier attached to a channel that can be

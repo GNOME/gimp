@@ -123,6 +123,8 @@ libappcore_a_sources = \
 	gimpimagemap.h			\
 	gimpitem.c			\
 	gimpitem.h			\
+	gimpitemundo.c			\
+	gimpitemundo.h			\
 	gimplayer.c			\
 	gimplayer.h			\
 	gimplayer-floating-sel.c	\
