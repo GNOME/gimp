@@ -399,7 +399,8 @@ shoot_dialog (void)
   g_signal_connect (G_OBJECT (button), "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
-  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FALSE);
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (FALSE));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), ! shootvals.root);
   gtk_widget_show (button);
 
@@ -413,7 +414,7 @@ shoot_dialog (void)
                     &shootvals.decor);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (decor_button), 
 				shootvals.decor);
-  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", decor_button);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", decor_button);
   gtk_box_pack_end (GTK_BOX (hbox), decor_button, FALSE, FALSE, 0);
   gtk_widget_show (decor_button);
   gtk_widget_show (hbox);
@@ -429,7 +430,8 @@ shoot_dialog (void)
   g_signal_connect (G_OBJECT (button), "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
-  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) TRUE);
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (TRUE));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.root);
   gtk_widget_show (button);
 

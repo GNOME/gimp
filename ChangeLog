@@ -1,5 +1,11 @@
 2001-12-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/screenshot.c: removed deprecated use of
+	"user_data" together with libgimpwidgets standard
+	callbacks. Reported by Carambide on #gimp.
+
+2001-12-10  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/tools.pdb: removed, chopped...
 
 	* tools/pdbgen/pdb/misc_tools.pdb
