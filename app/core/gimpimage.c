@@ -37,6 +37,7 @@
 
 #include "gimp.h"
 #include "gimp-parasites.h"
+#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpgrid.h"
 #include "gimpimage.h"
@@ -705,8 +706,7 @@ gimp_image_get_memsize (GimpObject *object,
   if (gimage->projection)
     memsize += tile_manager_get_memsize (gimage->projection);
 
-  memsize += (g_list_length (gimage->guides) * (sizeof (GList) +
-                                                sizeof (GimpGuide)));
+  memsize += gimp_g_list_get_memsize (gimage->guides, sizeof (GimpGuide));
 
   if (gimage->grid)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid), gui_size);
@@ -718,7 +718,7 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->vectors),
                                       gui_size);
 
-  memsize += g_slist_length (gimage->layer_stack) * sizeof (GSList);
+  memsize += gimp_g_slist_get_memsize (gimage->layer_stack, 0);
 
   if (gimage->selection_mask)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask),

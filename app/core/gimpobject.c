@@ -26,6 +26,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpmarshal.h"
 #include "gimpobject.h"
 
@@ -444,21 +445,6 @@ gimp_object_get_memsize (GimpObject *object,
     *gui_size = my_gui_size;
 
   return my_size;
-}
-
-gint64
-gimp_g_object_get_memsize (GObject *object)
-{
-  GTypeQuery  type_query;
-  gint64      memsize = 0;
-
-  g_return_val_if_fail (G_IS_OBJECT (object), 0);
-
-  g_type_query (G_TYPE_FROM_INSTANCE (object), &type_query);
-
-  memsize += type_query.instance_size;
-
-  return memsize;
 }
 
 static gint64

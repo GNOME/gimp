@@ -55,3 +55,41 @@ gimp_rectangle_intersect (gint  x1,
   return (d_w > 0 && d_h > 0);
 }
 
+gint64
+gimp_g_object_get_memsize (GObject *object)
+{
+  GTypeQuery type_query;
+  gint64     memsize = 0;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), 0);
+
+  g_type_query (G_TYPE_FROM_INSTANCE (object), &type_query);
+
+  memsize += type_query.instance_size;
+
+  return memsize;
+}
+
+gint64
+gimp_g_hash_table_get_memsize (GHashTable *hash)
+{
+  g_return_val_if_fail (hash != NULL, 0);
+
+  return (2 * sizeof (gint) +
+          5 * sizeof (gpointer) +
+          g_hash_table_size (hash) * 3 * sizeof (gpointer));
+}
+
+gint64
+gimp_g_slist_get_memsize (GSList  *slist,
+                          gint64   data_size)
+{
+  return g_slist_length (slist) * (data_size + sizeof (GSList));
+}
+
+gint64
+gimp_g_list_get_memsize (GList  *list,
+                         gint64  data_size)
+{
+  return g_list_length (list) * (data_size + sizeof (GList));
+}

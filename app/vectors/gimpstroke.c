@@ -25,6 +25,8 @@
 
 #include "vectors-types.h"
 
+#include "core/gimp-utils.h"
+
 #include "gimpanchor.h"
 #include "gimpstroke.h"
 
@@ -371,8 +373,7 @@ gimp_stroke_get_memsize (GimpObject *object,
 
   stroke = GIMP_STROKE (object);
 
-  memsize += g_list_length (stroke->anchors) * (sizeof (GList) +
-                                                sizeof (GimpAnchor));
+  memsize += gimp_g_list_get_memsize (stroke->anchors, sizeof (GimpAnchor));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

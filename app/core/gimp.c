@@ -49,6 +49,7 @@
 #include "gimp-parasites.h"
 #include "gimp-templates.h"
 #include "gimp-units.h"
+#include "gimp-utils.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
@@ -493,17 +494,15 @@ gimp_get_memsize (GimpObject *object,
 
   gimp = GIMP (object);
 
-  memsize += g_list_length (gimp->user_units) * sizeof (GList); /* FIXME */
+  memsize += gimp_g_list_get_memsize (gimp->user_units, 0 /* FIXME */);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites),
                                       gui_size);
 
   memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
 
-  memsize += (g_hash_table_size (gimp->image_table) *
-              3 * sizeof (gpointer)); /* FIXME */
-  memsize += (g_hash_table_size (gimp->item_table) *
-              3 * sizeof (gpointer)); /* FIXME */
+  memsize += gimp_g_hash_table_get_memsize (gimp->image_table);
+  memsize += gimp_g_hash_table_get_memsize (gimp->item_table);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
 
@@ -524,14 +523,13 @@ gimp_get_memsize (GimpObject *object,
               gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
                                        gui_size));
 
-  memsize += (g_hash_table_size (gimp->procedural_ht) *
-              3 * sizeof (gpointer)); /* FIXME */
+  memsize += gimp_g_hash_table_get_memsize (gimp->procedural_ht);
 
-  memsize += (g_list_length (gimp->procedural_db_data_list) *
-              sizeof (GList)); /* FIXME */
+  memsize += gimp_g_list_get_memsize (gimp->procedural_db_data_list,
+                                      0 /* FIXME */);
 
-  memsize += g_slist_length (gimp->load_procs) * sizeof (GSList); /* FIXME */
-  memsize += g_slist_length (gimp->save_procs) * sizeof (GSList); /* FIXME */
+  memsize += gimp_g_slist_get_memsize (gimp->load_procs, 0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (gimp->save_procs, 0 /* FIXME */);
 
   memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
                                        gui_size) +
@@ -544,7 +542,7 @@ gimp_get_memsize (GimpObject *object,
               gimp_object_get_memsize (GIMP_OBJECT (gimp->image_new_last_template),
                                        gui_size));
 
-  memsize += g_list_length (gimp->context_list) * sizeof (GList);
+  memsize += gimp_g_list_get_memsize (gimp->context_list, 0);
 
   memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_context),
                                        gui_size) +

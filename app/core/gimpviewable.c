@@ -33,6 +33,7 @@
 #include "config/gimpconfig-params.h"
 #include "config/gimpconfigwriter.h"
 
+#include "gimp-utils.h"
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
 

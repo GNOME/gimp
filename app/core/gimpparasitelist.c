@@ -36,6 +36,7 @@
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
+#include "gimp-utils.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
@@ -218,8 +219,7 @@ gimp_parasite_list_get_memsize (GimpObject *object,
 
   if (list->table)
     {
-      /* FIXME */
-      memsize += (g_hash_table_size (list->table) * 3 * sizeof (gpointer));
+      memsize += gimp_g_hash_table_get_memsize (list->table);
 
       g_hash_table_foreach (list->table,
                             gimp_parasite_list_get_memsize_foreach,

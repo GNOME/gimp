@@ -1,3 +1,17 @@
+2003-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpobject.[ch]: removed gimp_g_object_get_memsize()...
+
+	* app/core/gimp-utils.[ch]: ...and added it here along with
+	some other memsize utilities for GHashTables and G(S)Lists.
+
+	* app/core/gimp.c
+	* app/core/gimpimage.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimpviewable.c
+	* app/vectors/gimpstroke.c (GimpObject::get_memsize): use the new
+	functions.
+
 2003-11-22  Dave Neary  <bolsh@gimp.org>
 
 	* libgimp/Makefile.am: Applied patch from  deaddog@deaddog.org (Abel 

@@ -68,7 +68,6 @@ gint          gimp_object_name_collate  (GimpObject       *object1,
                                          GimpObject       *object2);
 gint64        gimp_object_get_memsize   (GimpObject       *object,
                                          gint64           *gui_size);
-gint64        gimp_g_object_get_memsize (GObject          *object);
 
 
 #endif  /* __GIMP_OBJECT_H__ */
