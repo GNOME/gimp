@@ -2148,7 +2148,7 @@ draw_buttons (GtkWidget *ww)
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      GTK_SIGNAL_FUNC (star_button_press),
 		      NULL);
-  gimp_help_set_help_data (button, "Create star", NULL); 
+  gimp_help_set_help_data (button, _("Create star"), NULL); 
 
   button = but_with_pix (spiral_xpm, &group, SPIRAL);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
@@ -2937,7 +2937,7 @@ select_brush_callback (GtkWidget *widget,
 {
   BrushDesc *bdesc = g_new0 (BrushDesc, 1);
  
-  gimp_interactive_selection_brush ("Gfig brush selection",
+  gimp_interactive_selection_brush (_("Gfig brush selection"),
 				    mygimp_brush_get (),
 				    1.0, /* Opacity */
 				    -1,  /* spacing (default)*/
@@ -3054,7 +3054,7 @@ brush_page (void)
                       (gpointer)brush_page_pw);
 
   /* Start of new brush selection code */
-  brush_sel_button = button = gtk_button_new_with_label ("Set Brush...");
+  brush_sel_button = button = gtk_button_new_with_label (_("Set Brush..."));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (brush_sel_button)->child), 2, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (select_brush_callback),

@@ -1,3 +1,15 @@
+2001-04-10  Sven Neumann  <sven@gimp.org>
+
+        * app/tools/posterize.c
+        * plug-ins/common/fractaltrace.c
+        * plug-ins/common/illusion.c
+        * plug-ins/flame/flame.c
+        * plug-ins/gfig/gfig.c
+        * plug-ins/gimpressionist/general.c
+        * plug-ins/imagemap/imap_cmd_guides.c
+        * plug-ins/mosaic/mosaic.c
+        * plug-ins/winsnap/winsnap.c: merged i18n fixes from stable branch
+
 2001-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

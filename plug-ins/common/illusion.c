@@ -618,7 +618,7 @@ dialog (GimpDrawable *mangle)
 		      GTK_SIGNAL_FUNC (filter_preview),
 		      NULL);
 
-  radio = gtk_radio_button_new_with_label (group, "Mode 1");
+  radio = gtk_radio_button_new_with_label (group, _("Mode 1"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio));
   gtk_signal_connect (GTK_OBJECT (radio), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
@@ -630,7 +630,7 @@ dialog (GimpDrawable *mangle)
   gtk_table_attach (GTK_TABLE (table), radio, 0, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (radio);
 
-  radio = gtk_radio_button_new_with_label (group, "Mode 2");
+  radio = gtk_radio_button_new_with_label (group, _("Mode 2"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio));
   gtk_signal_connect (GTK_OBJECT (radio), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),

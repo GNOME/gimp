@@ -594,7 +594,7 @@ mosaic_dialog (void)
   gtk_widget_show (logo_box);
 
   /*  the vertical box and its toggle buttons  */
-  frame = gtk_frame_new ("Options");
+  frame = gtk_frame_new (_("Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
