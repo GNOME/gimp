@@ -1,7 +1,3 @@
-Thu May 11 22:48:05 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* cs.po: Updated translation.
-
 Fri May  5 21:49:29 CEST 2000  Marc Lehmann <pcg@goof.com>
 	
         * $alltarget was never set (have to have a look at the logs).
