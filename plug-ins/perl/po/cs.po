@@ -1,12 +1,12 @@
-# Czech translation of GIMP perl 1.1.17.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
+# Czech translation of GIMP perl 1.1.18.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.17\n"
+"Project-Id-Version: gimp-perl 1.18\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-03-01 13:11+01:00\n"
+"PO-Revision-Date: 2000-03-06 11:25+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"

@@ -1,71 +1,71 @@
-# Czech translation of GIMP plugins 1.1.17.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
+# Czech translation of GIMP plugins 1.1.18.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.17\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 2000-02-14 11:56+01:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.18\n"
+"POT-Creation-Date: 2000-02-14 11:19+0100\n"
+"PO-Revision-Date: 2000-03-06 11:25+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:116
+#: libgimp/gimpcolorbutton.c:105
 msgid "/Use Foreground Color"
 msgstr "/Pou¾ít barvy popøedí"
 
-#: libgimp/gimpcolorbutton.c:117
+#: libgimp/gimpcolorbutton.c:106
 msgid "/Use Background Color"
 msgstr "/Pou¾ít barvy pozadí"
 
-#: libgimp/gimpexport.c:158
+#: libgimp/gimpexport.c:155
 msgid "can't Handle Layers"
 msgstr "neumí zpracovat vrstvy"
 
-#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
+#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
 msgid "Merge Visible Layers"
 msgstr "Slouèit viditelné vrstvy"
 
-#: libgimp/gimpexport.c:167
+#: libgimp/gimpexport.c:164
 msgid "can only Handle Layers as Animation Frames"
 msgstr "umí zpracovat vrstvy pouze jako políèka animace"
 
-#: libgimp/gimpexport.c:168
+#: libgimp/gimpexport.c:165
 msgid "Save as Animation"
 msgstr "Zapsat jako animaci"
 
-#: libgimp/gimpexport.c:176
+#: libgimp/gimpexport.c:173
 msgid "can't Handle Transparency"
 msgstr "neumí zpracovat prùhlednost"
 
-#: libgimp/gimpexport.c:177
+#: libgimp/gimpexport.c:174
 msgid "Flatten Image"
 msgstr "Slouèit obraz"
 
-#: libgimp/gimpexport.c:185
+#: libgimp/gimpexport.c:182
 msgid "can only Handle RGB Images"
 msgstr "umí zpracovat pouze RGB obrázky"
 
-#: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
 msgid "Convert to RGB"
 msgstr "Pøevést do RGB"
 
-#: libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:191
 msgid "can only Handle Grayscale Images"
 msgstr "umí zpracovat pouze obrázky v ¹edích"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
+#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
 msgid "Convert to Grayscale"
 msgstr "Pøevést do ¹edí"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:200
 msgid "can only Handle Indexed Images"
 msgstr "umí zpracovat pouze indexované obrázky"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -73,23 +73,23 @@ msgstr ""
 "Konverze do indexovaného pou¾ije implicitní nastavení\n"
 "(Ruèním provedením lze doladit výsledek)"
 
-#: libgimp/gimpexport.c:213
+#: libgimp/gimpexport.c:210
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "umí zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
 
-#: libgimp/gimpexport.c:222
+#: libgimp/gimpexport.c:219
 msgid "can only Handle RGB or Indexed Images"
 msgstr "umí zpracovat pouze RGB nebo indexované obrázky"
 
-#: libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:229
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "umí zpracovat pouze obrázky v ¹edích nebo indexované"
 
-#: libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:240
 msgid "needs an Alpha Channel"
 msgstr "vy¾aduje alfa kanál"
 
-#: libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:241
 msgid "Add Alpha Channel"
 msgstr "Pøidat alfa kanál"
 
@@ -98,42 +98,49 @@ msgstr "Pøidat alfa kanál"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:313
+#: libgimp/gimpexport.c:310
 msgid "Export File"
 msgstr "Exportovat soubor"
 
-#: libgimp/gimpexport.c:318
+#: libgimp/gimpexport.c:315
 msgid "Export"
 msgstr "Exportovat"
 
-#: libgimp/gimpexport.c:320
+#: libgimp/gimpexport.c:317
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
-#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
-#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:175
+#: libgimp/gimpquerybox.c:229 libgimp/gimpquerybox.c:285
+#: libgimp/gimpquerybox.c:348
 msgid "Cancel"
 msgstr "Zru¹it"
 
-#: libgimp/gimpexport.c:337
+#: libgimp/gimpexport.c:334
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 
 #. the footline
-#: libgimp/gimpexport.c:400
+#: libgimp/gimpexport.c:397
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:377
 msgid "Select File"
 msgstr "Výbìr souboru"
 
-#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
-#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
-#: libgimp/gimpunitmenu.c:495
+#: libgimp/gimpfileselection.c:387 libgimp/gimpunitmenu.c:484
+msgid "Select"
+msgstr "Výbìr"
+
+#: libgimp/gimpfileselection.c:388 libgimp/gimpunitmenu.c:486
+msgid "Close"
+msgstr "Zavøít"
+
+#: libgimp/gimpquerybox.c:175 libgimp/gimpquerybox.c:229
+#: libgimp/gimpquerybox.c:285 libgimp/gimpquerybox.c:348
 msgid "OK"
 msgstr "OK"
 
@@ -188,39 +195,30 @@ msgstr "procenta"
 msgid "More..."
 msgstr "Více..."
 
-#: libgimp/gimpunitmenu.c:490
+#: libgimp/gimpunitmenu.c:479
 msgid "Unit Selection"
 msgstr "Výbìr jednotek"
 
-#: libgimp/gimpunitmenu.c:527
+#: libgimp/gimpunitmenu.c:516
 msgid "Unit"
 msgstr "Jednotka"
 
-#: libgimp/gimpunitmenu.c:528
+#: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimp/gimpwidgets.c:704
+#: libgimp/gimpwidgets.c:594
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr ""
-"Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo "
-"náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
+msgstr "Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimp/gimpwidgets.c:709
+#: libgimp/gimpwidgets.c:599
 msgid "Time"
 msgstr "Èas"
 
-#: libgimp/gimpwidgets.c:718
+#: libgimp/gimpwidgets.c:611
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
-"Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
-
-#~ msgid "Select"
-#~ msgstr "Výbìr"
-
-#~ msgid "Close"
-#~ msgstr "Zavøít"
+msgstr "Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"

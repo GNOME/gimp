@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.17.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
+# Czech translation of GIMP plugins 1.1.18.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.17\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
-"PO-Revision-Date: 2000-03-02 09:44+01:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.18\n"
+"POT-Creation-Date: 2000-03-06 22:27+0100\n"
+"PO-Revision-Date: 2000-03-06 22:30+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -90,7 +90,7 @@ msgstr "O programu"
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1134
+#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1144
 #: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
 #: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
 #: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
@@ -172,7 +172,7 @@ msgstr "OK"
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:884 plug-ins/common/xbm.c:1136
+#: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
 #: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
@@ -1095,7 +1095,7 @@ msgstr "Poloha X svìtelného zdroje v prostoru XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
+#: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1572
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
@@ -1445,7 +1445,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:665 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3238
@@ -1494,7 +1494,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
-#: plug-ins/common/xbm.c:801 plug-ins/faxg3/faxg3.c:443
+#: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
@@ -1520,7 +1520,7 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:949
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
@@ -2741,7 +2741,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s pøedponou:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1186
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1196
 msgid "Comment:"
 msgstr "Komentáø:"
 
@@ -4887,7 +4887,7 @@ msgstr " Podrobnosti >>"
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:312
 #, c-format
-msgid " Number of Plugin Interfaces: %d"
+msgid "Number of Plugin Interfaces: %d"
 msgstr "Poèet rozhraní modulù: %d"
 
 #. menu path
@@ -4898,17 +4898,20 @@ msgstr "Cesta k menu:"
 #. show the name
 #: plug-ins/common/plugindetails.c:351
 #: plug-ins/dbbrowser/dbbrowser_utils.c:342
+#: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name:"
 msgstr "Jméno:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:373
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
 msgstr "Popis:"
 
 #: plug-ins/common/plugindetails.c:395
 #: plug-ins/dbbrowser/dbbrowser_utils.c:477
+#: plug-ins/gap/gap_dbbrowser_utils.c:459
 msgid "Help:"
 msgstr "Nápovìda:"
 
@@ -4925,6 +4928,7 @@ msgstr "Popis modulu"
 #: plug-ins/common/plugindetails.c:1000
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #: plug-ins/dbbrowser/dbbrowser_utils.c:170
+#: plug-ins/gap/gap_dbbrowser_utils.c:175
 msgid "Search by Name"
 msgstr "Hledat podle jména"
 
@@ -4960,6 +4964,7 @@ msgstr "Pohled pøes strom"
 
 #: plug-ins/common/plugindetails.c:1098
 #: plug-ins/dbbrowser/dbbrowser_utils.c:224
+#: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
 msgstr "Hledat:"
 
@@ -5483,7 +5488,7 @@ msgstr "Náhled (1:4) - skok pravým klepnutím"
 
 #: plug-ins/common/scatter_hsv.c:458
 msgid "Holdness:"
-msgstr "Zadrzení:"
+msgstr "Zadr¾ení:"
 
 #: plug-ins/common/screenshot.c:135
 msgid "Creates a screenshot of a single window or the whole screen"
@@ -6218,15 +6223,19 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
+"Definice jednotky bude zapsána pøed skonèením programu GIMP pouze po "
+"za¹krtnutí tohoto sloupeèku."
 
 #: plug-ins/common/uniteditor.c:544
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
+"Tento øetìzec bude pou¾it pouze k identifikaci jednotky v konfiguraèním "
+"souboru programu GIMP."
 
 #: plug-ins/common/uniteditor.c:546
 msgid "How man units make up an inch."
-msgstr ""
+msgstr "Poèet jednotek na palec."
 
 #: plug-ins/common/uniteditor.c:547
 msgid ""
@@ -6234,24 +6243,29 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
+"Toto pole je pokyn pro numerická vstupní pole. Urèuje, kolik desetinných "
+"èíslic vstupního pole dává pøibli¾nì stejnou pøesnost jako pole \"palec\" se "
+"dvìma desetinnými místy."
 
 #: plug-ins/common/uniteditor.c:553
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
+"Symbol jednotky, má-li nìjaký (napø. \"'\" pro palce). Zkratka bude pou¾ita, "
+"nemá-li jednotka symbol."
 
 #: plug-ins/common/uniteditor.c:556
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "Zkratka jednotky (napø. \"cm\" pro centimetry)."
 
 #: plug-ins/common/uniteditor.c:558
 msgid "The unit's singular form."
-msgstr ""
+msgstr "Jednotné èíslo jednotky."
 
 #: plug-ins/common/uniteditor.c:559
 msgid "The unit's plural form."
-msgstr ""
+msgstr "Mno¾né èíslo jednotky."
 
 #: plug-ins/common/uniteditor.c:575
 msgid "Saved"
@@ -6298,18 +6312,16 @@ msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Vytvoøit novou jednotku s právì zvolenou jednotkou jako vzorem."
 
 #: plug-ins/common/uniteditor.c:648
-#, fuzzy
 msgid "Don't Save Unit"
-msgstr "Smazat jednotku"
+msgstr "Nezapisovat jednotku"
 
 #: plug-ins/common/uniteditor.c:655
 msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "Nezapisovat právì zvolenou jednotku pøed skonèením programu GIMP."
 
 #: plug-ins/common/uniteditor.c:660
-#, fuzzy
 msgid "Save Unit"
-msgstr "Nová jednotka"
+msgstr "Zapsat jednotku"
 
 #: plug-ins/common/uniteditor.c:667
 msgid "Save the currently selected unit before GIMP exits."
@@ -6810,33 +6822,33 @@ msgstr "Pøená¹í se stránka"
 msgid "Created with The GIMP"
 msgstr "Vytvoøeno v programu GIMP"
 
-#: plug-ins/common/xbm.c:661
+#: plug-ins/common/xbm.c:671
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: nelze otevøít \"%s\"\n"
 
-#: plug-ins/common/xbm.c:744
+#: plug-ins/common/xbm.c:754
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: nelze èíst hlavièku (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:750
+#: plug-ins/common/xbm.c:760
 msgid "XBM: no image width specified\n"
 msgstr "XBM: nebyla zadána ¹íøka obrázku\n"
 
-#: plug-ins/common/xbm.c:756
+#: plug-ins/common/xbm.c:766
 msgid "XBM: no image height specified\n"
 msgstr "XBM: nebyla zadána vý¹ka obrázku\n"
 
-#: plug-ins/common/xbm.c:762
+#: plug-ins/common/xbm.c:772
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: nebyla zadán typ dat obrázku\n"
 
-#: plug-ins/common/xbm.c:879
+#: plug-ins/common/xbm.c:889
 msgid "XBM Warning"
 msgstr "XBM varování"
 
-#: plug-ins/common/xbm.c:900
+#: plug-ins/common/xbm.c:910
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6850,38 +6862,37 @@ msgstr ""
 "Pøeveïte jej nejdøíve do èernobílého (1bitového)\n"
 "indexovaného obrázku a zkuste znovu."
 
-#: plug-ins/common/xbm.c:971
+#: plug-ins/common/xbm.c:981
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: nelze vytvoøit \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1129
+#: plug-ins/common/xbm.c:1139
 msgid "Save as XBM"
 msgstr "Zapsat jako XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1146
+#: plug-ins/common/xbm.c:1156
 msgid "XBM Options"
 msgstr "Volby XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1157
+#: plug-ins/common/xbm.c:1167
 msgid "X10 Format Bitmap"
 msgstr "Bitová mapa formátu X10"
 
-#: plug-ins/common/xbm.c:1175
+#: plug-ins/common/xbm.c:1185
 msgid "Identifier Prefix:"
 msgstr "Pøedpona identifikátoru:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1193
+#: plug-ins/common/xbm.c:1203
 msgid "Write Hot Spot Values"
-msgstr ""
+msgstr "Zapsat hodnoty øídícího bodu"
 
-#: plug-ins/common/xbm.c:1217
-#, fuzzy
+#: plug-ins/common/xbm.c:1227
 msgid "Hot Spot X:"
-msgstr "Rotace X:"
+msgstr "Øídíci bod X:"
 
 #: plug-ins/common/xpm.c:794
 msgid "Save as XPM"
@@ -6965,28 +6976,33 @@ msgstr "Prohlí¾eè DB (inicializace...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
+#: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by Blurb"
 msgstr "Hledat podle popisu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:380
+#: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In:"
 msgstr "Vstup:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out:"
 msgstr "Výstup:"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:497 plug-ins/imagemap/imap_settings.c:89
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:530
+#: plug-ins/gap/gap_dbbrowser_utils.c:512
 msgid "Date:"
 msgstr "Datum:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:545
+#: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright:"
 msgstr "Copyright:"
 
@@ -7340,56 +7356,9 @@ msgstr "Pou¾ít GAP animovaného filtru"
 msgid "Animated Filter apply (init)"
 msgstr "Pou¾ít animovaného filtru (inicializovat)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:137
-msgid "Search :"
-msgstr "Hledat:"
-
 #: plug-ins/gap/gap_dbbrowser_utils.c:166
 msgid "Gen Code by name"
 msgstr "Generovat kód podle jména"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:175
-msgid "Search by name"
-msgstr "Hledat podle jména"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:183
-msgid "Search by blurb"
-msgstr "Hledat podle popisu"
-
-#. show the name
-#: plug-ins/gap/gap_dbbrowser_utils.c:325
-msgid "Name :"
-msgstr "Jméno:"
-
-#. show the description
-#: plug-ins/gap/gap_dbbrowser_utils.c:342
-msgid "Blurb :"
-msgstr "Popis:"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:364
-msgid "In :"
-msgstr "Vstup:"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:410
-msgid "Out :"
-msgstr "Výstup:"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:459
-msgid "Help :"
-msgstr "Nápovìda:"
-
-#. show the author & the copyright
-#: plug-ins/gap/gap_dbbrowser_utils.c:497
-msgid "Author :"
-msgstr "Autor:"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:512
-msgid "Date :"
-msgstr "Datum:"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:527
-msgid "Copyright :"
-msgstr "Copyright:"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:666
 msgid "Animated Filter apply (by name - please wait)"
@@ -12894,6 +12863,3 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor %s XJT vlastností je prázdný"
-
-#~ msgid "Undelete Unit"
-#~ msgstr "Zru¹it smazání jednotky"
