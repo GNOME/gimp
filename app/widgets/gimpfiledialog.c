@@ -500,7 +500,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
     {
       PlugInProcDef *file_proc = list->data;
 
-      if (file_proc->menu_paths && file_proc->extensions_list)
+      if (file_proc->extensions_list)
         {
           const gchar *domain;
           GString     *label;

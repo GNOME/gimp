@@ -198,13 +198,11 @@ xcf_init (Gimp *gimp)
    * PlugInProcDef struct.  -josh
    */
   procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
-  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>");
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
 
   procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
-  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>");
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
   plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);

@@ -543,9 +543,7 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
    */
   for (list = plug_in_def->proc_defs; list; list = list->next)
     {
-      PlugInProcDef *proc_def;
-
-      proc_def = (PlugInProcDef *) list->data;
+      PlugInProcDef *proc_def = list->data;
 
       if (! proc_def->extensions &&
           ! proc_def->prefixes   &&
@@ -563,10 +561,8 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
    */
   for (list = gimp->plug_in_defs; list; list = list->next)
     {
-      PlugInDef *ondisk_plug_in_def;
+      PlugInDef *ondisk_plug_in_def = list->data;
       gchar     *basename2;
-
-      ondisk_plug_in_def = (PlugInDef *) list->data;
 
       basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
 

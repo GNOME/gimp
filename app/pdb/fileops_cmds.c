@@ -642,7 +642,7 @@ static ProcRecord register_magic_load_handler_proc =
 {
   "gimp_register_magic_load_handler",
   "Registers a file load handler procedure.",
-  "Registers a procedural database procedure to be called to load files of a particular file format using magic file information. The procedure you use must have a <Load> menu path associated with it.",
+  "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -696,7 +696,7 @@ static ProcRecord register_load_handler_proc =
 {
   "gimp_register_load_handler",
   "Registers a file load handler procedure.",
-  "Registers a procedural database procedure to be called to load files of a particular file format. The procedure you use must have a <Load> menu path associated with it.",
+  "Registers a procedural database procedure to be called to load files of a particular file format.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -792,7 +792,7 @@ static ProcRecord register_save_handler_proc =
 {
   "gimp_register_save_handler",
   "Registers a file save handler procedure.",
-  "Registers a procedural database procedure to be called to save files in a particular file format. The procedure you use must have a <Save> menu path associated with it.",
+  "Registers a procedural database procedure to be called to save files in a particular file format.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

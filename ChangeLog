@@ -1,3 +1,19 @@
+2004-11-01  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
+	don't check for file_proc->menu_paths. Our load and save procedure
+	don't necessarily register a menu path any longer.
+
+	* app/plug-in/plug-ins.c: minor cleanup.
+
+	* app/xcf/xcf.c (xcf_init): no need for adding menu paths for the
+	XCF load and save procedures.
+
+	* tools/pdbgen/pdb/fileops.pdb: fixed outdated documentation.
+
+	* app/pdb/fileops_cmds.c
+	* libgimp/gimpfileops_pdb.c: regenerated.
+
 2004-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/drawable_transform.pdb: added "clip_result" to

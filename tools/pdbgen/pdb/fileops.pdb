@@ -378,8 +378,7 @@ sub register_magic_load_handler {
 
     $help = <<'HELP';
 Registers a procedural database procedure to be called to load files of a 
-particular file format using magic file information. The procedure you use
-must have a <Load> menu path associated with it.
+particular file format using magic file information.
 HELP
 
     &std_pdb_misc;
@@ -433,8 +432,7 @@ sub register_load_handler {
 
     $help = <<'HELP';
 Registers a procedural database procedure to be called to load files of a
-particular file format. The procedure you use must have a <Load> menu path
-associated with it.
+particular file format.
 HELP
 
     &std_pdb_misc;
@@ -453,8 +451,7 @@ sub register_save_handler {
 
     $help = <<'HELP';
 Registers a procedural database procedure to be called to save files in a
-particular file format. The procedure you use must have a <Save> menu path
-associated with it.
+particular file format.
 HELP
 
     &std_pdb_misc;

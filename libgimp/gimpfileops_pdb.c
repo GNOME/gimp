@@ -154,9 +154,7 @@ gimp_temp_name (const gchar *extension)
  * Registers a file load handler procedure.
  *
  * Registers a procedural database procedure to be called to load files
- * of a particular file format using magic file information. The
- * procedure you use must have a &lt;Load&gt; menu path associated with
- * it.
+ * of a particular file format using magic file information.
  *
  * Returns: TRUE on success.
  */
@@ -194,8 +192,7 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
  * Registers a file load handler procedure.
  *
  * Registers a procedural database procedure to be called to load files
- * of a particular file format. The procedure you use must have a
- * &lt;Load&gt; menu path associated with it.
+ * of a particular file format.
  *
  * Returns: TRUE on success.
  */
@@ -231,8 +228,7 @@ gimp_register_load_handler (const gchar *procedure_name,
  * Registers a file save handler procedure.
  *
  * Registers a procedural database procedure to be called to save files
- * in a particular file format. The procedure you use must have a
- * &lt;Save&gt; menu path associated with it.
+ * in a particular file format.
  *
  * Returns: TRUE on success.
  */
