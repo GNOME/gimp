@@ -276,7 +276,8 @@ N_("Sets the swap file location. The gimp uses a tile based memory " \
 N_("When enabled, menus can be torn off.")
 
 #define CAN_CHANGE_ACCELS_BLURB \
-N_("When enabled, you can change keyboard shortcuts for menu items on the fly.")
+N_("When enabled, you can change keyboard shortcuts for menu items " \
+   "by hitting a key combination while the menu item is highlighted.")
 
 #define SAVE_ACCELS_BLURB \
 N_("Save changed keyboard shortcuts when the GIMP exits.")

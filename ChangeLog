@@ -1,5 +1,11 @@
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h (CAN_CHANGE_ACCELS_BLURB): applied
+	(a slightly modified version) of a patch from Joao S. O. Bueno
+	(bug #126966).
+
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpscanner.c	
 	* app/config/gimpconfig-deserialize.c: configured the scanner to
 	use 64bit integers. This means you must now access value.v_int64
