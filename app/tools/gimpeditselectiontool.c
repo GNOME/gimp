@@ -824,7 +824,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                         edit_select->segs_in,
                                         edit_select->num_segs_in,
                                         edit_select->cumlx + off_x,
-                                        edit_select->cumly + off_y);
+                                        edit_select->cumly + off_y,
+                                        FALSE);
 
         if (edit_select->segs_out)
           {
@@ -832,7 +833,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                           edit_select->segs_out,
                                           edit_select->num_segs_out,
                                           edit_select->cumlx + off_x,
-                                          edit_select->cumly + off_y);
+                                          edit_select->cumly + off_y,
+                                          FALSE);
           }
         else if (edit_select->edit_type != EDIT_MASK_TRANSLATE)
           {
@@ -965,7 +967,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                     edit_select->segs_in,
                                     edit_select->num_segs_in,
                                     edit_select->cumlx,
-                                    edit_select->cumly);
+                                    edit_select->cumly,
+                                    FALSE);
       break;
     }
 

@@ -1,3 +1,13 @@
+2004-02-21  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch]: added "use_offsets" parameter
+	to gimp_draw_tool_draw_boundary() for consistency.
+
+	* app/tools/gimpeditselectiontool.c: Changed accordingly.
+
+	* app/tools/gimppainttool.c: when drawing straight lines draw
+	the brush preview at the end of the line.
+
 2004-02-20  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimplevelstool.[ch]: put the color bars into an event

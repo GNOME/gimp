@@ -1165,7 +1165,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                               const BoundSeg *bound_segs,
                               gint            n_bound_segs,
                               gdouble         offset_x,
-                              gdouble         offset_y)
+                              gdouble         offset_y,
+                              gboolean        use_offsets)
 {
   GimpDisplayShell *shell;
   GdkSegment       *gdk_segs;
@@ -1191,7 +1192,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                                          bound_segs[i].x1 + offset_x,
                                          bound_segs[i].y1 + offset_y,
                                          &x, &y,
-                                         FALSE);
+                                         use_offsets);
 
       gdk_segs[n_gdk_segs].x1 = RINT (CLAMP (x, -1, xmax));
       gdk_segs[n_gdk_segs].y1 = RINT (CLAMP (y, -1, ymax));
@@ -1200,7 +1201,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                                          bound_segs[i].x2 + offset_x,
                                          bound_segs[i].y2 + offset_y,
                                          &x, &y,
-                                         FALSE);
+                                         use_offsets);
 
       gdk_segs[n_gdk_segs].x2 = RINT (CLAMP (x, -1, xmax));
       gdk_segs[n_gdk_segs].y2 = RINT (CLAMP (y, -1, ymax));

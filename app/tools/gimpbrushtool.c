@@ -674,9 +674,6 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   if (drawable && shell->proximity)
     {
-      paint_tool->brush_x = coords->x;
-      paint_tool->brush_y = coords->y;
-
       if (gdisp == tool->gdisp && (state & GDK_SHIFT_MASK))
         {
           /*  If shift is down and this is not the first paint stroke,
@@ -729,10 +726,16 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                                g_type_name (G_TYPE_FROM_INSTANCE (tool)),
                                status_str);
 
+          paint_tool->brush_x = core->cur_coords.x + off_x;
+          paint_tool->brush_y = core->cur_coords.y + off_y;
+
           paint_tool->draw_line = TRUE;
         }
       else
         {
+          paint_tool->brush_x = coords->x;
+          paint_tool->brush_y = coords->y;
+
           paint_tool->draw_line = FALSE;
         }
 
@@ -851,7 +854,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                             core->brush_bound_segs,
                                             core->n_brush_bound_segs,
                                             brush_x,
-                                            brush_y);
+                                            brush_y,
+                                            FALSE);
             }
         }
     }

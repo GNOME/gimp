@@ -221,7 +221,8 @@ void       gimp_draw_tool_draw_boundary            (GimpDrawTool   *draw_tool,
                                                     const BoundSeg *bound_segs,
                                                     gint            n_bound_segs,
                                                     gdouble         offset_x,
-                                                    gdouble         offset_y);
+                                                    gdouble         offset_y,
+                                                    gboolean        use_offsets);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */
