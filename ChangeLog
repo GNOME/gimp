@@ -1,3 +1,11 @@
+2003-07-19  Dave Neary  <bolsh@gimp.org>
+
+	* app/paint/gimpclone.c: Fixed a mistake in the code which does
+	a pattern clone. Closes bug #117433.
+
+	* app/widgets/gimpbrushfactoryview.c: Added a tooltip for the 
+	Spacing slider.
+
 2003-07-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolornotebook.c: save some space by showing

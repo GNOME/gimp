@@ -115,7 +115,8 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
                                           _("Spacing:"), -1, -1,
                                           0.0, 1.0, 1000.0, 1.0, 10.0, 1,
                                           TRUE, 0.0, 0.0,
-                                          NULL, NULL));
+                                          _("Percentage of width of brush"), 
+                                          NULL));
 
   view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
