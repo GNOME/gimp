@@ -1,3 +1,14 @@
+Tue May 12 02:49:12 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/app_procs.c: create tips dialog after loading files on the
+	command line, instead of in an idle function. Lamer hack, but it
+	works better.
+
+	* app/gdisplay_ops.c: fix for new view on zoomed image
+
+	* Makefile.am
+	* gimptool.1: added man page for gimptool by Ben Gertzfield
+
 Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: added --install-bin options for installing already

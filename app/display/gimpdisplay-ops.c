@@ -77,6 +77,7 @@ gdisplay_new_view (GDisplay *gdisp)
   if (gdisp->gimage)
     {
       new_gdisp = gdisplay_new (gdisp->gimage, gdisp->scale);
+      new_gdisp->scale = gdisp->scale;
       new_gdisp->offset_x = gdisp->offset_x;
       new_gdisp->offset_y = gdisp->offset_y;
     }

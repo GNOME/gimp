@@ -1,0 +1,61 @@
+.TH GIMP "11 May 1998" Version 1.0
+.SH NAME
+gimp-tool - script to perform various Gimpy functions
+.SH SYNOPSIS
+.B gimp-tool
+[\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version] [\-\-libs] [\-\-cflags]
+[\-\-build \fIplug-in.c\fP] [\-\-install \fIplug-in.c\fP] [\-\-install-admin plug-in.c]
+.SH DESCRIPTION
+.PP
+\fIgimp-tool\fP is a tool that can, among other things, build plug-ins
+and install them if they are distributed in one .c file.
+.PP
+\fIgimp-tool\fP is also used by programs that need to know what libraries
+and include-paths \fIGimp\fP was compiled with. .m4 macros for use
+with GNU autoconf are also included, to make detection of these libraries
+et cetera easy for the upstream maintainer.
+.SH OPTIONS
+.l
+\fIgimp-tool\fP accepts the following options:
+.TP 8
+.B  \-\-build \fIplug-in.c\fP
+Compile and link \fIplug-in.c\fP into a Gimp plug-in.
+.TP 8
+.B  \-\-install \fIplug-in.c\fP
+Compile, link, and install \fIplug-in.c\fP into the user's personal Gimp
+configuration directory (for example, /home/che/.gimp/plug-ins/)
+.TP 8
+.B  \-\-install\-admin \fIplug-in.c\fP
+Compile, link, and install \fIplug-in.c\fP into the system-wide Gimp
+plug-ins directory (for example, /usr/lib/gimp/0.99/plug-ins/)
+.TP 8
+.B  \-\-version
+Display the currently installed version of Gimp.
+.TP 8
+.B  \-\-libs
+Display the libraries Gimp was compiled with.
+.TP 8
+.B  \-\-cflags
+Display the flags that were passed to the compiler when Gimp was compiled.
+.SH ENVIRONMENT
+.PP
+.TP 8
+.B GTK_CONFIG
+to get the location of the gtk-config program.
+.TP 8
+.B CC
+to get the name of the desired C compiler.
+.TP 8
+.B CFLAGS
+to get the preferred flags to pass to the C compiler.
+.SH SEE ALSO
+.BR gimp (1),
+.BR gtk-config (1)
+.SH COPYRIGHT
+Copyright \(co  1995 Spencer Kimball and Peter Mattis
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation.

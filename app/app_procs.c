@@ -105,18 +105,6 @@ static ProcRecord quit_proc =
 };
 
 
-/*  Warning: This is a hack.  This makes the files load _after_ the gtk_main
-    loop starts.  This means that if a file is on the command line, the
-    file handling plug-in's gtk_main won't cause any dialogs that have
-    set a gtk_quit_add_destroy (...) to die when the plug-in ends.
-    Thanks to Owen for this.
-*/
-
-gint file_open_wrapper (char *name) {
-   file_open (name, name);
-     return FALSE;
-}
-
 void
 gimp_init (int    gimp_argc,
 	   char **gimp_argv)
@@ -129,11 +117,15 @@ gimp_init (int    gimp_argc,
     while (gimp_argc--)
       {
 	if (*gimp_argv)
-	  gtk_idle_add ((GtkFunction) file_open_wrapper, *gimp_argv);
+	  file_open (*gimp_argv, *gimp_argv);
 	gimp_argv++;
       }
 
   batch_init ();
+
+  /* Handle showing dialogs with gdk_quit_adds here  */
+  if (!no_interface && show_tips)
+    tips_dialog_create ();
 }
 
 
@@ -255,7 +247,7 @@ splash_text_draw (GtkWidget *widget)
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-140-*-*-*-*-*-*");
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, NAME)) / 2), 
 		   (0.25 * logo_area_height),
 		   NAME);
@@ -263,19 +255,19 @@ splash_text_draw (GtkWidget *widget)
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2), 
 		   (0.45 * logo_area_height),
 		   GIMP_VERSION);
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2), 
 		   (0.65 * logo_area_height),
 		   BROUGHT);
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
 		   (0.80 * logo_area_height),
 		   AUTHORS);
@@ -444,7 +436,7 @@ app_init_update_status(char *label1val,
 #define RESET_BAR()
 
 void
-app_init ()
+app_init (void)
 {
   char filename[MAXPATHLEN];
   char *gimp_dir;
@@ -527,8 +519,6 @@ app_init ()
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
       tools_select (RECT_SELECT);
-      if (show_tips)
-	tips_dialog_create ();
     }
 
   color_transfer_init ();
@@ -545,7 +535,7 @@ app_exit_finish_done (void)
 }
 
 void
-app_exit_finish ()
+app_exit_finish (void)
 {
   if (app_exit_finish_done ())
     return;
