@@ -3,8 +3,8 @@
 	Merged from HEAD:
 
 	* app/display/gimpdisplayshell-callbacks.c
-	(gimp_display_shell_canvas_tool_events): switch display-wide grab
-	to application-wide grab while handling button-release event.
+	(gimp_display_shell_canvas_tool_events): switch from display-wide
+	grab to application-wide grab while handling button-release event.
 	Fixes bug #162823.
 
 2005-02-21  Manish Singh  <yosh@gimp.org>
