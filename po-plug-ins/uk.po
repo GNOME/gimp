@@ -1122,7 +1122,7 @@ msgstr "Перерахувати перегляд зображення"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Ф╕льтри/Мапа/Мапа об'╓кта..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/В╕добразити об'╓кт..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
@@ -1136,7 +1136,7 @@ msgstr "Цил╕ндр"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
-msgstr ""
+msgstr "В╕добразити на:"
 
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
@@ -1148,19 +1148,19 @@ msgstr "Сфера"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
-msgstr "тип об'╓кту в╕дображення"
+msgstr "Тип об'╓кту в╕дображення"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr ""
+msgstr "Зробити зображення прозорим за межами об'╓кта"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr "Розр╕зати вих╕дне зображення"
+msgstr "Розр╕зати початкове зображення"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
-msgstr "Розр╕зати вих╕дне зображення: корисно для безмежних площин"
+msgstr "Розр╕зати початкове зображення: корисно для безмежних площин"
 
 #: plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
@@ -1637,7 +1637,7 @@ msgstr "CEL: Неможливо створити нове зображення"
 #: plug-ins/common/CEL.c:370
 #, c-format
 msgid "Unsupported number of colors (%d)"
-msgstr ""
+msgstr "Неп╕дтримувана к╕льк╕сть кольор╕в (%d)"
 
 #: plug-ins/common/CEL.c:492
 msgid "Only an indexed-alpha image can be saved in CEL format"
@@ -2320,23 +2320,23 @@ msgstr "Ефект л╕нзи"
 
 #: plug-ins/common/apply_lens.c:413
 msgid "Keep Original Surroundings"
-msgstr ""
+msgstr "Зберегти ори╜╕нальне оточення"
 
 #: plug-ins/common/apply_lens.c:426
 msgid "Set Surroundings to Index 0"
-msgstr ""
+msgstr "Встановити оточення в ╕ндекс 0"
 
 #: plug-ins/common/apply_lens.c:427
 msgid "Set Surroundings to Background Color"
-msgstr ""
+msgstr "Встановити оточення у кол╕р тла"
 
 #: plug-ins/common/apply_lens.c:442
 msgid "Make Surroundings Transparent"
-msgstr ""
+msgstr "Зробити оточення прозорим"
 
 #: plug-ins/common/apply_lens.c:460
 msgid "Lens Refraction Index:"
-msgstr ""
+msgstr "Коф╕ц╕╓нт заломлення л╕нзи:"
 
 #: plug-ins/common/autocrop.c:73
 msgid "<Image>/Image/Transforms/Autocrop"
@@ -2454,7 +2454,7 @@ msgstr "256 (безглуздо?)"
 
 #: plug-ins/common/bumpmap.c:366
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Ф╕льтри/Мапа/Рель╓ф..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Рель╓ф..."
 
 #: plug-ins/common/bumpmap.c:521
 msgid "Bump-mapping..."
@@ -3267,7 +3267,7 @@ msgstr ""
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
-msgstr "<Image>/Ф╕льтри/Мапа/Зм╕щення..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Зм╕щення..."
 
 #: plug-ins/common/displace.c:254
 msgid "Displacing..."
@@ -3568,7 +3568,7 @@ msgstr ""
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr "<Image>/Ф╕льтри/Мапа/Фрактальний сл╕д..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Фрактальний сл╕д..."
 
 #: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:720
 msgid "Fractal Trace"
@@ -4112,7 +4112,7 @@ msgstr ""
 
 #: plug-ins/common/illusion.c:116
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Image>/Ф╕льтри/Мапа/╤люз╕я..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/╤люз╕я..."
 
 #: plug-ins/common/illusion.c:180
 msgid "Illusion..."
@@ -4449,7 +4449,7 @@ msgstr "Максимальне значення:"
 
 #: plug-ins/common/lic.c:1220
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr "<Image>/Ф╕льтри/Мапа/Ван ╫о╜ (LIC)..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Ван ╫о╜ (LIC)..."
 
 #: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
@@ -4869,7 +4869,7 @@ msgstr "31 Вересень 1999"
 
 #: plug-ins/common/papertile.c:839
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Ф╕льтри/Мапа/Paper Tile..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Paper Tile..."
 
 #: plug-ins/common/pat.c:407
 msgid "Save as Pattern"
@@ -6290,11 +6290,11 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:126
 msgid "<Image>/Filters/Map/Tile..."
-msgstr "<Image>/Ф╕льтри/Мапа/Плитка..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Плитка..."
 
 #: plug-ins/common/tile.c:203 plug-ins/common/tileit.c:333
 msgid "Tiling..."
-msgstr ""
+msgstr "Розс╕кання..."
 
 #: plug-ins/common/tile.c:378
 msgid "Tile"
@@ -6303,17 +6303,17 @@ msgstr "Плитка"
 #. parameter settings
 #: plug-ins/common/tile.c:395
 msgid "Tile to New Size"
-msgstr ""
+msgstr "Плитка нового розм╕ру"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr "<Image>/Ф╕льтри/Мапа/Мала плитка..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Мала плитка..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
 #: plug-ins/common/tileit.c:381
 msgid "TileIt"
-msgstr ""
+msgstr "Нар╕зати"
 
 #. Area for buttons etc
 #: plug-ins/common/tileit.c:437
@@ -6351,7 +6351,7 @@ msgstr ""
 
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr "<Image>/Ф╕льтри/Мапа/Без шв╕в"
+msgstr "<Image>/Ф╕льтри/В╕дображення/Без шв╕в"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
@@ -6673,7 +6673,7 @@ msgstr ""
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Ф╕льтри/Мапа/Деформац╕я..."
+msgstr "<Image>/Ф╕льтри/В╕дображення/Деформац╕я..."
 
 #: plug-ins/common/warp.c:455
 msgid "Main Options"
@@ -9975,7 +9975,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3091 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
-msgstr ""
+msgstr "Виправлення"
 
 #: plug-ins/gfig/gfig.c:1919
 msgid "Edit Gfig object collection"
@@ -10726,7 +10726,7 @@ msgstr "Коло"
 #: plug-ins/gflare/gflare.c:4061 plug-ins/imagemap/imap_menu.c:389
 #: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
-msgstr ""
+msgstr "Многокутник"
 
 #: plug-ins/gflare/gflare.c:4120
 msgid "Second Flares"
@@ -11614,7 +11614,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:184
 msgid "Horz. Spacing"
-msgstr ""
+msgstr "Горизонтальний ╕нтервал"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "No. Across"
@@ -11622,7 +11622,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:194
 msgid "Vert. Spacing"
-msgstr ""
+msgstr "Вертикальний ╕нтервал"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "No. Down"
@@ -11921,7 +11921,7 @@ msgstr "Виправлення ╕нформац╕╖ про д╕лянку..."
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
-msgstr "Перегляд"
+msgstr "Показ"
 
 #: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
@@ -11929,7 +11929,7 @@ msgstr "Список д╕лянок"
 
 #: plug-ins/imagemap/imap_menu.c:321
 msgid "Source..."
-msgstr "Джерело..."
+msgstr "Текст HTML..."
 
 #: plug-ins/imagemap/imap_menu.c:329
 msgid "Grayscale"
@@ -11949,7 +11949,7 @@ msgstr "Змаштабувати"
 
 #: plug-ins/imagemap/imap_menu.c:379
 msgid "Mapping"
-msgstr "В╕дображення"
+msgstr "Д╕лянки"
 
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
@@ -12149,7 +12149,7 @@ msgstr "Визначити прямокутну д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Circle/Oval area"
-msgstr "Визначити овальну д╕ляку"
+msgstr "Визначити овальну д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:140
 msgid "Define Polygon area"
