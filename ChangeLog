@@ -1,3 +1,13 @@
+2003-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteeditor.[ch]
+	* app/gui/palette-editor-commands.[ch]
+	* app/gui/palette-editor-menu.c: started to clean up the palette
+	editor: added buttons for all menu items and menu items for all
+	buttons. Improved selected palette entry handling. Moved all code
+	to gimppaletteeditor.c and call it from the menu callbacks.  Lots
+	of cleanup (unfinished).
+
 2003-05-26  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/tools/gimpeditselectiontool.c (selection_transform_segs):

@@ -35,21 +35,33 @@
 
 GimpItemFactoryEntry palette_editor_menu_entries[] =
 {
-  { { N_("/New Color"), NULL,
+  { { N_("/New Color"), "",
       palette_editor_new_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Edit Color..."), NULL,
+    NULL, NULL, NULL },
+  { { N_("/Edit Color..."), "",
       palette_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Color"), NULL,
+    NULL, NULL, NULL },
+  { { N_("/Delete Color"), "",
       palette_editor_delete_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
-    NULL,
-    NULL, NULL }
+    NULL, NULL, NULL },
+
+  { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
+
+  { { N_("/Zoom In"), "",
+      palette_editor_zoom_in_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_IN },
+    NULL, NULL, NULL },
+  { { N_("/Zoom Out"), "",
+      palette_editor_zoom_out_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_OUT },
+    NULL, NULL, NULL },
+  { { N_("/Zoom All"), "",
+      palette_editor_zoom_all_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_ZOOM_FIT },
+    NULL, NULL, NULL }
 };
 
 gint n_palette_editor_menu_entries = G_N_ELEMENTS (palette_editor_menu_entries);
@@ -60,15 +72,25 @@ palette_editor_menu_update (GtkItemFactory *factory,
                             gpointer        data)
 {
   GimpPaletteEditor *editor;
+  GimpDataEditor    *data_editor;
+  gboolean           editable = FALSE;
 
-  editor = GIMP_PALETTE_EDITOR (data);
+  editor      = GIMP_PALETTE_EDITOR (data);
+  data_editor = GIMP_DATA_EDITOR (data);
+
+  if (data_editor->data && data_editor->data_editable)
+    editable = TRUE;
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Color",     TRUE);
-  SET_SENSITIVE ("/Edit Color...", editor->color);
-  SET_SENSITIVE ("/Delete Color",  editor->color);
+  SET_SENSITIVE ("/New Color",     editable);
+  SET_SENSITIVE ("/Edit Color...", editable && editor->color);
+  SET_SENSITIVE ("/Delete Color",  editable && editor->color);
+
+  SET_SENSITIVE ("/Zoom In",  data_editor->data);
+  SET_SENSITIVE ("/Zoom Out", data_editor->data);
+  SET_SENSITIVE ("/Zoom All", data_editor->data);
 
 #undef SET_SENSITIVE
 }

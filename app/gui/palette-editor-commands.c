@@ -20,30 +20,11 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "gui-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimppalette.h"
-
 #include "widgets/gimppaletteeditor.h"
-#include "widgets/gimptoolbox-color-area.h"
 
-#include "color-notebook.h"
-#include "dialogs.h"
 #include "palette-editor-commands.h"
-
-#include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void   palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-                                                      const GimpRGB      *color,
-                                                      ColorNotebookState  state,
-                                                      gpointer            data);
 
 
 /*  public functions  */
@@ -53,26 +34,10 @@ palette_editor_new_color_cmd_callback (GtkWidget *widget,
                                        gpointer   data,
                                        guint      action)
 {
-  GimpPaletteEditor *editor;
-  GimpPalette       *palette;
-  GimpContext       *user_context;
-  GimpRGB            color;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  editor = GIMP_PALETTE_EDITOR (data);
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  if (! palette)
-    return;
-
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
-
-  if (active_color == FOREGROUND)
-    gimp_context_get_foreground (user_context, &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_get_background (user_context, &color);
-
-  editor->color = gimp_palette_add_entry (palette, NULL, &color);
+  if (GTK_WIDGET_SENSITIVE (editor->edit_button))
+    gtk_button_clicked (GTK_BUTTON (editor->edit_button));
 }
 
 void
@@ -80,44 +45,10 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
                                         gpointer   data,
                                         guint      action)
 {
-  GimpPaletteEditor *editor;
-  GimpPalette       *palette;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  editor = GIMP_PALETTE_EDITOR (data);
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  if (! (palette && editor->color))
-    return;
-
-  if (! editor->color_notebook)
-    {
-      editor->color_notebook =
-	color_notebook_viewable_new (GIMP_VIEWABLE (palette),
-                                     _("Edit Palette Color"),
-                                     GTK_STOCK_SELECT_COLOR,
-                                     _("Edit Color Palette Entry"),
-                                     global_dialog_factory,
-                                     "gimp-palette-editor-color-dialog",
-                                     (const GimpRGB *) &editor->color->color,
-                                     palette_editor_color_notebook_callback,
-                                     editor,
-                                     FALSE, FALSE);
-      editor->color_notebook_active = TRUE;
-    }
-  else
-    {
-      if (! editor->color_notebook_active)
-	{
-          color_notebook_set_viewable (editor->color_notebook,
-                                       GIMP_VIEWABLE (palette));
-	  color_notebook_show (editor->color_notebook);
-	  editor->color_notebook_active = TRUE;
-	}
-
-      color_notebook_set_color (editor->color_notebook,
-				&editor->color->color);
-    }
+  if (GTK_WIDGET_SENSITIVE (editor->edit_button))
+    gtk_button_clicked (GTK_BUTTON (editor->edit_button));
 }
 
 void
@@ -125,64 +56,41 @@ palette_editor_delete_color_cmd_callback (GtkWidget *widget,
                                           gpointer   data,
                                           guint      action)
 {
-  GimpPaletteEditor *editor;
-  GimpPalette       *palette;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  editor = GIMP_PALETTE_EDITOR (data);
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-
-  if (! (palette && editor->color))
-    return;
-
-  gimp_palette_delete_entry (palette, editor->color);
+  if (GTK_WIDGET_SENSITIVE (editor->delete_button))
+    gtk_button_clicked (GTK_BUTTON (editor->delete_button));
 }
 
-
-/*  private functions  */
-
-static void
-palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-					const GimpRGB      *color,
-					ColorNotebookState  state,
-					gpointer            data)
+void
+palette_editor_zoom_in_cmd_callback (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action)
 {
-  GimpPaletteEditor *editor;
-  GimpPalette       *palette;
-  GimpContext       *user_context;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  editor = GIMP_PALETTE_EDITOR (data);
+  if (GTK_WIDGET_SENSITIVE (editor->zoom_in_button))
+    gtk_button_clicked (GTK_BUTTON (editor->zoom_in_button));
+}
 
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+void
+palette_editor_zoom_out_cmd_callback (GtkWidget *widget,
+                                      gpointer   data,
+                                      guint      action)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  if (GTK_WIDGET_SENSITIVE (editor->zoom_out_button))
+    gtk_button_clicked (GTK_BUTTON (editor->zoom_out_button));
+}
 
-  switch (state)
-    {
-    case COLOR_NOTEBOOK_UPDATE:
-      break;
+void
+palette_editor_zoom_all_cmd_callback (GtkWidget *widget,
+                                      gpointer   data,
+                                      guint      action)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-    case COLOR_NOTEBOOK_OK:
-      if (editor->color)
-	{
-	  editor->color->color = *color;
-
-	  /*  Update either foreground or background colors  */
-	  if (active_color == FOREGROUND)
-	    gimp_context_set_foreground (user_context, color);
-	  else if (active_color == BACKGROUND)
-	    gimp_context_set_background (user_context, color);
-
-	  gimp_data_dirty (GIMP_DATA (palette));
-	}
-
-      /* Fallthrough */
-    case COLOR_NOTEBOOK_CANCEL:
-      if (editor->color_notebook_active)
-	{
-	  color_notebook_hide (editor->color_notebook);
-	  editor->color_notebook_active = FALSE;
-	}
-    }
+  if (GTK_WIDGET_SENSITIVE (editor->zoom_all_button))
+    gtk_button_clicked (GTK_BUTTON (editor->zoom_all_button));
 }

@@ -53,18 +53,22 @@ struct _GimpPaletteEditor
   GtkWidget        *color_name;
   GtkAdjustment    *columns_data;
 
+  GtkWidget        *new_button;
+  GtkWidget        *edit_button;
+  GtkWidget        *delete_button;
+  GtkWidget        *zoom_in_button;
+  GtkWidget        *zoom_out_button;
+  GtkWidget        *zoom_all_button;
+
   ColorNotebook    *color_notebook;
-  gboolean          color_notebook_active;
 
   GimpPaletteEntry *color;
   GimpPaletteEntry *dnd_color;
 
-  guint             entry_sig_id;
   gfloat            zoom_factor;  /* range from 0.1 to 4.0 */
   gint              col_width;
   gint              last_width;
   gint              columns;
-  gboolean          freeze_update;
   gboolean          columns_valid;
 };
 
