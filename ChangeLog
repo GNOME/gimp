@@ -1,3 +1,8 @@
+2003-08-27  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Update NEWS file, split path tool improvements into
+	user-visible chunks.
+
 2003-08-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/curve_bend.c: (party) applied patch from 

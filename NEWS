@@ -11,7 +11,15 @@ GIMP version 2.0.
 Overview of Changes in GIMP 1.3.19
 ==================================
 - Migration towards new gimp-help system [Mitch]
-- Lots of path tool improvements [Simon]
+- Deletion of anchor points on a path [Simon]
+- Path stroke moving [Simon]
+- Path stroke splitting by deleting an edge (Ctrl-click while in 
+  Delete mode) [Simon]
+- Drag path edges modifies curve [Simon]
+- DInsertion of points on path edges [Simon]
+- Joining two stroke paths is possible (Shift-Ctrl-Alt-Click on
+  the second end-point) [Simon]
+- Polygonal paths [Simon]
 - Improved new composite functions and enabled them by default [Helvetix]
 - UTF-8 validate all strings coming in from the PDB [Yosh, Mitch]
 - Paint-core improvements and bug-fixes [Jay Cox]
@@ -21,7 +29,7 @@ Overview of Changes in GIMP 1.3.19
 Other contributors:
   Adam D. Moss, Tor Lillqvist, Jakub Steiner, Alan Horkan,
   Avi Bercovich, S. Mukund, Maurits Rijk, Guillermo S. Romero,
-  Seth Burgess, Wolfgang Hofer, Sven Neumann
+  Seth Burgess, Wolfgang Hofer, Ville Pätsi, Sven Neumann
 
 
 Overview of Changes in GIMP 1.3.18
