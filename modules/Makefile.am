@@ -19,11 +19,16 @@ EXTRA_DIST = \
 	makefile.msc
 
 lib_LTLIBRARIES = \
+	libcolorsel_cmyk.la		\
 	libcolorsel_triangle.la		\
 	libcolorsel_water.la		\
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la
+
+libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
+libcolorsel_cmyk_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcolorsel_cmyk_la_LIBADD = $(libgimpcolor) $(libgimpwidgets) $(GTK_LIBS)
 
 libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module $(no_undefined)

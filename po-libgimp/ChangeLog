@@ -1,3 +1,9 @@
+2003-07-15  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added modules/colorsel_cmyk.c.
+
+	* de.po: updated german translation.
+
 2003-07-14  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation by Serbian team 

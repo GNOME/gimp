@@ -1,5 +1,5 @@
 # This is the German catalog for the libgimp.
-# Copyright (C) 1999,2000 Free Software Foundation, Inc.
+# Copyright (C) 1999 - 2003 Free Software Foundation, Inc.
 #
 # Daniel Egger <Daniel.Egger@suse.de>
 # Sven Neumann <sven@gimp.org>
@@ -7,16 +7,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.15\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2003-06-16 22:42+0200\n"
+"Project-Id-Version: GIMP 1.3.17\n"
+"POT-Creation-Date: 2003-07-15 02:16+0200\n"
+"PO-Revision-Date: 2003-07-15 02:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
@@ -148,7 +148,7 @@ msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -157,7 +157,7 @@ msgstr ""
 "Sie sichern eine Ebenenmaske als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -166,16 +166,16 @@ msgstr ""
 "Sie sichern einen Kanal (gesicherte Selektion) als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
+#: libgimp/gimpmenu.c:517
 msgid "None"
 msgstr "Keine"
 
@@ -183,7 +183,7 @@ msgstr "Keine"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:537
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -192,7 +192,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Musterauswahl"
 
@@ -235,9 +235,9 @@ msgstr "%1.f MB"
 msgid "Loading module: '%s'\n"
 msgstr "Lade Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -246,24 +246,24 @@ msgstr ""
 "Fehler beim Laden von Modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -477,7 +477,7 @@ msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Farbenblindheit Anzeigenfarbfilter (Algorithmus von Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
@@ -527,6 +527,46 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
+#: modules/colorsel_cmyk.c:74
+msgid "CMYK color selector"
+msgstr "CMYK Farbmischer"
+
+#: modules/colorsel_cmyk.c:136
+msgid "_CMYK"
+msgstr "_CMYK"
+
+#: modules/colorsel_cmyk.c:150
+msgid "_C"
+msgstr "_C"
+
+#: modules/colorsel_cmyk.c:151
+msgid "_M"
+msgstr "_M"
+
+#: modules/colorsel_cmyk.c:152
+msgid "_Y"
+msgstr "_Y"
+
+#: modules/colorsel_cmyk.c:153
+msgid "_K"
+msgstr "_K"
+
+#: modules/colorsel_cmyk.c:157
+msgid "Cyan"
+msgstr "Cyan"
+
+#: modules/colorsel_cmyk.c:158
+msgid "Magenta"
+msgstr "Magenta"
+
+#: modules/colorsel_cmyk.c:159
+msgid "Yellow"
+msgstr "Gelb (Yellow)"
+
+#: modules/colorsel_cmyk.c:160
+msgid "Black"
+msgstr "Schwarz (Key)"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Dreiecks-Farbauswahl im Stil von Painter"
@@ -546,9 +586,3 @@ msgstr "_Wasserfarbe"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druck"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
-
-#~ msgid "Colorblind display filter"
-#~ msgstr "Farbenblindheit Anzeigenfarbfilter"

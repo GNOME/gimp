@@ -26,6 +26,7 @@
 #include <libgimpcolor/gimpadaptivesupersample.h>
 #include <libgimpcolor/gimpbilinear.h>
 #include <libgimpcolor/gimpcolorspace.h>
+#include <libgimpcolor/gimpcmyk.h>
 #include <libgimpcolor/gimphsv.h>
 #include <libgimpcolor/gimprgb.h>
 

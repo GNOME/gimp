@@ -1,3 +1,10 @@
+2003-07-15  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimpcolor.h: include <libgimpcolor/gimpcmyk.h>.
+
+	* modules/Makefile.am
+	* modules/colorsel_cmyk.c: added a simple CMYK color selector.
+
 2003-07-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppattern.c (gimp_pattern_load): fixed pattern depth
