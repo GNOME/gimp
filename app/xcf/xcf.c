@@ -26,7 +26,6 @@
 #include "procedural_db.h"
 /* #include "tile_swap.h"*/
 #include "xcf.h"
-#include "frac.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -79,7 +78,7 @@ typedef enum
   COMPRESS_NONE = 0,
   COMPRESS_RLE = 1,
   COMPRESS_ZLIB = 2,
-  COMPRESS_FRACTAL = 3
+  COMPRESS_FRACTAL = 3  /* Unused. */
 } CompressionType;
 
 typedef GImage* XcfLoader(XcfInfo *info);
@@ -491,11 +490,6 @@ xcf_save_image (XcfInfo *info,
    *  we place the layer offset information.
    */
   saved_pos = info->cp;
-
-  /* Initialize the fractal compression saving routines
-   */
-  if (info->compression == COMPRESS_FRACTAL)
-    xcf_save_compress_frac_init (2, 2);
 
   /* seek to after the offset lists */
   xcf_seek_pos (info, info->cp + (nlayers + nchannels + 2) * 4);
@@ -1272,9 +1266,6 @@ xcf_save_layer (XcfInfo *info,
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
 
-  if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
-
   /* write out the layers name */
   info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(layer)->name, 1);
 
@@ -1486,7 +1477,7 @@ xcf_save_level (XcfInfo     *info,
 	      g_error (_("xcf: zlib compression unimplemented"));
 	      break;
 	    case COMPRESS_FRACTAL:
-	      xcf_save_frac_compressed_tile (info, level->tiles[i]);
+	      g_error (_("xcf: fractal compression unimplemented"));
 	      break;
 	    }
 
@@ -1665,9 +1656,6 @@ xcf_load_image (XcfInfo *info)
   if (!xcf_load_image_props (info, gimage))
     goto error;
 
-  if (info->compression == COMPRESS_FRACTAL)
-    xcf_load_compress_frac_init (1, 2);
-
   while (1)
     {
       /* read in the offset of the next layer */
@@ -1691,9 +1679,6 @@ xcf_load_image (XcfInfo *info)
       layer = xcf_load_layer (info, gimage);
       if (!layer)
 	goto error;
-
-      if (info->compression == COMPRESS_FRACTAL)
-	xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
@@ -2182,9 +2167,6 @@ xcf_load_layer (XcfInfo *info,
   /* read in the layer properties */
   if (!xcf_load_layer_props (info, gimage, layer))
     goto error;
-
-  if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
 
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);

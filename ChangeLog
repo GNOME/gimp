@@ -1,3 +1,10 @@
+
+Sat Aug 21 20:30:48 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/frac.[ch]: Eradicated.
+
+	* app/xcf.c: In mourning.
+
 1999-08-21  Tor Lillqvist  <tml@iki.fi>
 
 	* app/errorconsole.c: Also provide a Clear button.

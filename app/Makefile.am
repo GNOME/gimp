@@ -159,8 +159,6 @@ gimp_SOURCES = \
 	floating_sel_cmds.c	\
 	file_new_dialog.c	\
 	file_new_dialog.h	\
-	frac.c			\
-	frac.h			\
 	free_select.c		\
 	free_select.h		\
 	fsdither.h		\
