@@ -144,7 +144,9 @@ install ::
 
 sub MY::postamble {
    my $self=shift;
-   my $GT = $IN_GIMP ? '$(INSTALL_PROGRAM)' : "$GIMPTOOL --install-admin-bin";
+   my $install_program = $cfg{INSTALL_PROGRAM};
+   $install_program =~ s{^\.\./}{../../};
+   my $GT = $IN_GIMP ? $install_program : "$GIMPTOOL --install-admin-bin";
    my $UT = $IN_GIMP ? '$(RM_F)' : "$GIMPTOOL --uninstall-admin-bin";
    my $GT2 = $IN_GIMP ? '$(gimpplugindir)/plug-ins/' : '';
    my $postamble="
