@@ -92,10 +92,12 @@ internal_procs_init ()
   procedural_db_register (&crop_proc); pcount++;
   procedural_db_register (&ellipse_select_proc); pcount++;
   procedural_db_register (&eraser_proc); pcount++;
+  procedural_db_register (&eraser_extended_proc); pcount++;
   procedural_db_register (&flip_proc); pcount++;
   procedural_db_register (&free_select_proc); pcount++;
   procedural_db_register (&fuzzy_select_proc); pcount++;
   procedural_db_register (&paintbrush_proc); pcount++;
+  procedural_db_register (&paintbrush_extended_proc); pcount++;
   procedural_db_register (&pencil_proc); pcount++;
   procedural_db_register (&perspective_proc); pcount++;
   procedural_db_register (&rect_select_proc); pcount++;

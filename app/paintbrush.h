@@ -28,5 +28,6 @@ void          tools_free_paintbrush  (Tool *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord paintbrush_proc;
+extern ProcRecord paintbrush_extended_proc;
 
 #endif  /*  __PAINTBRUSH_H__  */

@@ -1,3 +1,24 @@
+Sat Feb 28 16:57:49 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: don't do docs generation by default
+
+	* configure.in: -lXt for webbrowser plugin
+
+	* libgimp/gimp.c
+	* libgimp/gimpprotocol.c
+	* libgimp/gimptile.c
+	* libgimp/gimpwire.c
+	* app/plug_in.c: applied memory leak patch from Mattias Gronlund
+
+	* app/eraser.c
+	* app/eraser.h
+	* app/internal_procs.c
+	* app/paintbrush.c
+	* app/paintbrush.h: incremental modes for eraser and paintbrush,
+	as well as a "hard eraser"
+
+	* plug-ins/ifscompose/ifscompose.c: pixmap visual fixups
+
 Sat Feb 28 00:09:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage_cmds.c (duplicate): Duplicate image wasn't copying

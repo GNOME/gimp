@@ -334,7 +334,10 @@ wire_read_string (int     fd,
 	{
 	  data[i] = g_new (gchar, tmp);
 	  if (!wire_read_int8 (fd, (guint8*) data[i], tmp))
-	    return FALSE;
+	    {
+	      g_free (data[i]);
+	      return FALSE;
+	    }
 	}
       else
 	{

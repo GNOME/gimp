@@ -30,10 +30,11 @@
 #include "tools.h"
 
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double);
+static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, gboolean);
 static Argument *   paintbrush_invoker     (Argument *);
+static Argument *   paintbrush_extended_invoker     (Argument *);
 
-static double non_gui_fade_out;
+static double non_gui_fade_out, non_gui_incremental;
 
 
 /*  defines  */
@@ -43,11 +44,26 @@ typedef struct _PaintOptions PaintOptions;
 struct _PaintOptions
 {
   double fade_out;
+  gboolean incremental;
 };
 
 /*  local variables  */
 static PaintOptions *paint_options = NULL;
 
+
+static void
+paintbrush_toggle_update (GtkWidget *w,
+			  gpointer   data)
+{
+  gboolean *toggle_val;
+
+  toggle_val = (gboolean *) data;
+
+  if (GTK_TOGGLE_BUTTON (w)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
 
 static void
 paintbrush_scale_update (GtkAdjustment *adjustment,
@@ -65,10 +81,12 @@ create_paint_options (void)
   GtkWidget *label;
   GtkWidget *fade_out_scale;
   GtkObject *fade_out_scale_data;
+  GtkWidget *incremental_toggle;
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
   options->fade_out = 0.0;
+  options->incremental = FALSE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -97,6 +115,16 @@ create_paint_options (void)
   gtk_widget_show (fade_out_scale);
   gtk_widget_show (hbox);
 
+
+  /* the incremental toggle */
+  incremental_toggle = gtk_check_button_new_with_label ("Incremental");
+  gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
+		      (GtkSignalFunc) paintbrush_toggle_update,
+		      &options->incremental);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
+  gtk_widget_show (incremental_toggle);
+  
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (PAINTBRUSH, vbox);
 
@@ -114,7 +142,7 @@ paintbrush_paint_func (PaintCore *paint_core,
       break;
 
     case MOTION_PAINT :
-      paintbrush_motion (paint_core, drawable, paint_options->fade_out);
+      paintbrush_motion (paint_core, drawable, paint_options->fade_out, paint_options->incremental);
       break;
 
     case FINISH_PAINT :
@@ -156,7 +184,8 @@ tools_free_paintbrush (Tool *tool)
 void
 paintbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable,
-		   double     fade_out)
+		   double     fade_out,
+		   gboolean   incremental)
 {
   GImage *gimage;
   TempBuf * area;
@@ -195,7 +224,8 @@ paintbrush_motion (PaintCore *paint_core,
       /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, blend,
 			       (int) (get_brush_opacity () * 255),
-			       get_brush_paint_mode (), SOFT, CONSTANT);
+			       get_brush_paint_mode (), SOFT,
+			       incremental ? INCREMENTAL : CONSTANT);
     }
 }
 
@@ -204,8 +234,8 @@ static void *
 paintbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
-{
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out);
+{	
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out, non_gui_incremental);
 
   return NULL;
 }
@@ -236,6 +266,34 @@ ProcArg paintbrush_args[] =
   }
 };
 
+ProcArg paintbrush_extended_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  },
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable"
+  },
+  { PDB_FLOAT,
+    "fade_out",
+    "fade out parameter: fade_out > 0"
+  },
+  { PDB_INT32,
+    "num_strokes",
+    "number of stroke control points (count each coordinate as 2 points)"
+  },
+  { PDB_FLOATARRAY,
+    "strokes",
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+  },
+  { PDB_INT32,
+    "method",
+    "CONTINUOUS(0) or INCREMENTAL(1)"
+  }
+};
+
 
 ProcRecord paintbrush_proc =
 {
@@ -257,6 +315,28 @@ ProcRecord paintbrush_proc =
 
   /*  Exec method  */
   { { paintbrush_invoker } },
+};
+
+ProcRecord paintbrush_extended_proc =
+{
+  "gimp_paintbrush_exteneded",
+  "Paint in the current brush with optional fade out parameter",
+  "This tool is the standard paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable in the foreground color with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  6,
+  paintbrush_extended_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { paintbrush_extended_invoker } },
 };
 
 static Argument *
@@ -319,6 +399,97 @@ paintbrush_invoker (Argument *args)
 
   if (success)
     {
+      non_gui_incremental = 0;
+      /*  set the paint core's paint func  */
+      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+
+      if (num_strokes == 1)
+	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+
+      for (i = 1; i < num_strokes; i++)
+	{
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
+
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	}
+
+      /*  finish the painting  */
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
+
+      /*  cleanup  */
+      paint_core_cleanup ();
+    }
+
+  return procedural_db_return_args (&paintbrush_proc, success);
+}
+static Argument *
+paintbrush_extended_invoker (Argument *args)
+{
+  int success = TRUE;
+  GImage *gimage;
+  GimpDrawable *drawable;
+  int num_strokes;
+  double *stroke_array;
+  int int_value;
+  double fp_value;
+  int i;
+
+  drawable = NULL;
+  num_strokes = 0;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+  /*  the drawable  */
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL || gimage != drawable_gimage (drawable))
+	success = FALSE;
+    }
+  /*  fade out  */
+  if (success)
+    {
+      fp_value = args[2].value.pdb_float;
+      if (fp_value >= 0.0)
+	non_gui_fade_out = fp_value;
+      else
+	success = FALSE;
+    }
+  /*  num strokes  */
+  if (success)
+    {
+      int_value = args[3].value.pdb_int;
+      if (int_value > 0)
+	num_strokes = int_value / 2;
+      else
+	success = FALSE;
+    }
+
+  /*  point array  */
+  if (success)
+    stroke_array = (double *) args[4].value.pdb_pointer;
+
+  if (success)
+    /*  init the paint core  */
+    success = paint_core_init (&non_gui_paint_core, drawable,
+			       stroke_array[0], stroke_array[1]);
+
+  if (success)
+    {
+      non_gui_incremental = args[5].value.pdb_int;
       /*  set the paint core's paint func  */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
 

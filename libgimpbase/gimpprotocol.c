@@ -504,7 +504,10 @@ _gp_proc_run_read (int fd, WireMessage *msg)
 
   proc_run = g_new (GPProcRun, 1);
   if (!wire_read_string (fd, &proc_run->name, 1))
-    return;
+    {
+      g_free (proc_run);
+      return;
+    }
   _gp_params_read (fd, &proc_run->params, (guint*) &proc_run->nparams);
 
   msg->data = proc_run;
@@ -529,6 +532,7 @@ _gp_proc_run_destroy (WireMessage *msg)
 
   proc_run = msg->data;
   _gp_params_destroy (proc_run->params, proc_run->nparams);
+  g_free (proc_run->name);
   g_free (proc_run);
 }
 
@@ -743,6 +747,8 @@ _gp_proc_install_destroy (WireMessage *msg)
       g_free (proc_install->return_vals[i].description);
     }
 
+  g_free (proc_install->params);
+  g_free (proc_install->return_vals);
   g_free (proc_install);
 }
 

@@ -121,7 +121,7 @@ fi
 dnl Test for Xmu
   if test -z "$LIBXMU_LIB"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,
-      WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lSM -lICE',
+      WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
       AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt -lSM -lICE)
   fi
 

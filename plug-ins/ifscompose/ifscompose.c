@@ -1103,7 +1103,7 @@ design_op_menu_create(GtkWidget *window)
   GtkAcceleratorTable *accelerator_table;
 
   ifsDesign->op_menu = gtk_menu_new();
-  gtk_object_ref (ifsDesign->op_menu);
+  gtk_object_ref (GTK_OBJECT (ifsDesign->op_menu));
   gtk_object_sink (GTK_OBJECT (ifsDesign->op_menu));
 
   accelerator_table = gtk_accelerator_table_new();
@@ -1572,7 +1572,7 @@ design_area_configure(GtkWidget *widget, GdkEventConfigure *event)
   ifsDesign->pixmap = gdk_pixmap_new(widget->window,
 				     widget->allocation.width,
 				     widget->allocation.height,
-				     -1);
+				     gtk_preview_get_visual()->depth);
 
   return FALSE;
 }

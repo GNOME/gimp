@@ -492,12 +492,3 @@ about_dialog_timer (gpointer data)
 
   return return_val;
 }
-
-
-
-
-
-
-
-
-
