@@ -1,3 +1,8 @@
+2003-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/airbrush_blob.[ch]: removed the last traces of
+	xinput_airbrush.
+
 2003-09-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/aa.c: set the tile cache size to speed up pixel
