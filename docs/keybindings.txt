@@ -1,0 +1,176 @@
+This is the set of default hotkeys for GIMP. Note: Gimp allows 
+menu keybindings to be dynamically re-assigned. So if you dont
+like these, they are easy enough to change. GIMP also comes with
+a menurc that will implement PS style keybindings, if you are used
+to PS, this may prove helpful.
+
+version 1.0 Nov 7 Adrian Likins <adrian@gimp.org>
+===========================================
+
+
+ToolBox
+
+File  
+
+	New		Ctrl+N
+	Open		Ctrl+O
+	Quit		Ctrl+Q
+
+	Dialogs
+		Brushes		Shift+Ctrl+B
+		Patterns	Shift+Ctrl+P
+		Palette		Ctrl+P
+		Gradient Editor Ctrl+G
+		Tool Options	Shift+Ctrl+T	
+
+
+
+Image
+
+File
+
+	New		Ctrl+N
+	Open		Ctrl+O
+	Save		Ctrl+S
+	Close		Ctrl+W
+	Quit		Ctrl+Q	
+	
+
+Edit
+
+	Cut		Ctrl+X
+	Copy		Ctrl+C
+	Paste		Ctrl+V
+	Clear		Ctrl+K
+	Fill		Ctrl+.
+	Undo		Ctrl+Z
+	Redo		Ctrl+R
+	Cut Named	Shift+Ctrl+X
+	Copy Named	Shift+Ctrl+C
+	Paste Named	Shift+Ctrl+V
+
+Select
+	
+	Toggle		Ctrl+T
+	Invert		Ctrl+I
+	All		Ctrl+A
+	None		Shift+Ctrl+A
+	Float		Shift+Ctrl+L
+	Sharpen		Shift+Ctrl+H
+	Feather		Shift+Ctrl+F
+
+View
+	Zoom in		=
+	Zoom out	-
+	Zoom (1:1)	1
+	Window Info	Shift+Ctrl+l
+	Toggle Rulers	Shift+Ctrl+R
+	Toggle Guides	Shift+Ctrl+T
+	Shrink Wrap	Ctrl+E
+
+Image
+
+	Channel Ops
+		Duplicate		Ctrl+D
+		Offset			Shift+Ctrl+O
+
+Layers
+
+	Layers		
+	& Channels..	Ctrl+L
+	Raise Layer	Ctrl+F
+	Lower Layer	Ctrl+B
+	Merge		
+	Visible Layers	Ctrl+M
+	
+Tools
+
+	Rect Select		R
+	Ellipse Select		E
+	Fuzzy Select		Z
+	Bezier Select		B
+	Intelligent Scissors	I
+	Move			M
+	Magnify			Shift+M
+	Crop			Shift+C
+	Transform		Shift+T
+	Flip			Shift+F
+	Text			T
+	Color Picker		O
+	Bucket Fill		Shift+B
+	Blend			L
+	Paintbrush		P
+	Pencil			Shift+P
+	Eraser			Shift+E
+	Airbrush		A
+	Clone			C
+	Convolve		V
+
+Filters
+
+	Repeat Last		Alt+F
+	Re-show Last		Shift+Alt+F
+				
+Dialogs
+	Brushes			Shift+Ctrl+B
+	Patterns		Shift+Ctrl+P
+	Palette			Ctrl+P
+	Gradient Editor		Ctrl+G
+	Layers&Channels		Ctrl+L
+	Tool Options		Shift+Ctrl+T	
+	
+
+Gradient Editor
+
+Gradient Ops Menu
+
+	Left Endpoint Color	L
+	Load From
+		Left neighbors right endpoint	Ctrl+L
+		Right endpoint			Alt+L
+	Righ Endpoint Color	R
+	Load From
+		Right neighbors right endpoint	Ctrl+R
+		Left endpoint			Alt+R
+	
+	Split Segment		S
+	 at midpoint
+	Split Segment		U
+	 uniformly				
+	Delete Segment		D
+	Re-center		C
+	  segments midpoint
+	Re-Distribute		Ctrl+C
+	  handles in segment
+
+	Selection Operands
+		Flip Segment		F
+		Replicate Segment	M
+		Blend Endpoints		B
+		  Colors	
+		Blend endpoints		Ctrl+B
+		  opacity
+
+
+Layers & Channels
+
+Layers Ops menu
+
+	New Layer		Ctrl+N
+	Raise Layer		Ctrl+F
+	Lower Layer		Ctrl+B
+	Duplicate Layer		Ctrl+C
+	Delete	Layer		Ctrl+X
+	Scale Layer		Ctrl+S
+	Resize Layer		Ctrl+R
+	Merge Visible Layers	Ctrl+M
+
+Channel Ops Menu
+
+	New Channel		Ctrl+N
+	Raise Channel		Ctrl+F
+	Lower Channel		Ctrl+B
+	Duplicate Channel	Ctrl+C
+	Delete Channel		Ctrl+X
+	Channel to selection	Ctrl+S
+	

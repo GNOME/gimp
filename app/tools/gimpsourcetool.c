@@ -1,0 +1,708 @@
+ /* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+#include <stdlib.h>
+#include <string.h>
+#include "appenv.h"
+#include "brushes.h"
+#include "drawable.h"
+#include "errors.h"
+#include "gdisplay.h"
+#include "gimage_mask.h"
+#include "interface.h"
+#include "paint_funcs.h"
+#include "paint_core.h"
+#include "patterns.h"
+#include "clone.h"
+#include "selection.h"
+#include "tools.h"
+
+#define TARGET_HEIGHT  15
+#define TARGET_WIDTH   15
+
+typedef enum
+{
+  ImageClone,
+  PatternClone
+} CloneType;
+
+/*  forward function declarations  */
+static void         clone_draw            (Tool *);
+static void         clone_motion          (PaintCore *, int, int, CloneType, int, int);
+static void	    clone_line_image      (GImage *, GImage *, int, int, unsigned char *,
+					   unsigned char *, int, int, int, int);
+static void         clone_line_pattern    (GImage *, int, GPatternP, unsigned char *,
+					   int, int, int, int);
+
+static Argument *   clone_invoker         (Argument *);
+
+
+static int non_gui_src_drawable;
+static int non_gui_offset_x;
+static int non_gui_offset_y;
+static CloneType non_gui_type;
+
+typedef struct _CloneOptions CloneOptions;
+struct _CloneOptions
+{
+  CloneType type;
+  int       aligned;
+};
+
+/*  local variables  */
+static int          src_x = 0;                /*                         */
+static int          src_y = 0;                /*  position of clone src  */
+static int          dest_x = 0;               /*                         */
+static int          dest_y = 0;               /*  position of clone src  */
+static int          offset_x = 0;             /*                         */
+static int          offset_y = 0;             /*  offset for cloning     */
+static int          first = TRUE;
+static int          trans_tx, trans_ty;       /*  transformed target  */
+static int          src_gdisp_ID = -1;        /*  ID of source gdisplay  */
+static int          src_drawable_ID = -1;     /*  ID of source drawable  */
+static CloneOptions *clone_options = NULL;
+
+
+static void
+clone_toggle_update (GtkWidget *widget,
+		     gpointer   data)
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
+
+static void
+clone_type_callback (GtkWidget *w,
+		     gpointer   client_data)
+{
+  clone_options->type =(CloneType) client_data;
+}
+
+static CloneOptions *
+create_clone_options (void)
+{
+  CloneOptions *options;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *aligned_toggle;
+  GtkWidget *radio_frame;
+  GtkWidget *radio_box;
+  GtkWidget *radio_button;
+  GSList *group = NULL;
+  int i;
+  char *button_names[2] =
+  {
+    "Image Source",
+    "Pattern Source"
+  };
+
+  /*  the new options structure  */
+  options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
+  options->type = ImageClone;
+  options->aligned = TRUE;
+
+  /*  the main vbox  */
+  vbox = gtk_vbox_new (FALSE, 1);
+
+  /*  the main label  */
+  label = gtk_label_new ("Clone Tool Options");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  /*  the radio frame and box  */
+  radio_frame = gtk_frame_new ("Source");
+  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+
+  /*  the radio buttons  */
+  for (i = 0; i < 2; i++)
+    {
+      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+			  (GtkSignalFunc) clone_type_callback,
+			  (void *)((long) i));
+      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_widget_show (radio_button);
+    }
+  gtk_widget_show (radio_box);
+  gtk_widget_show (radio_frame);
+
+  /*  the aligned toggle button  */
+  aligned_toggle = gtk_check_button_new_with_label ("Aligned");
+  gtk_box_pack_start (GTK_BOX (vbox), aligned_toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (aligned_toggle), "toggled",
+		      (GtkSignalFunc) clone_toggle_update,
+		      &options->aligned);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (aligned_toggle), options->aligned);
+  gtk_widget_show (aligned_toggle);
+
+  /*  Register this selection options widget with the main tools options dialog  */
+  tools_register_options (CLONE, vbox);
+
+  return options;
+}
+
+void *
+clone_paint_func (PaintCore *paint_core,
+		  int        drawable_id,
+		  int        state)
+{
+  GDisplay * gdisp;
+  GDisplay * src_gdisp;
+  int x1, y1, x2, y2;
+
+  gdisp = (GDisplay *) active_tool->gdisp_ptr;
+
+  switch (state)
+    {
+    case MOTION_PAINT :
+      x1 = paint_core->curx;
+      y1 = paint_core->cury;
+      x2 = paint_core->lastx;
+      y2 = paint_core->lasty;
+
+      /*  If the control key is down, move the src target and return */
+      if (paint_core->state & ControlMask)
+	{
+	  src_x = x1;
+	  src_y = y1;
+	  first = TRUE;
+	}
+      /*  otherwise, update the target  */
+      else
+	{
+	  dest_x = x1;
+	  dest_y = y1;
+	  if (first)
+	    {
+	      offset_x = src_x - dest_x;
+	      offset_y = src_y - dest_y;
+	      first = FALSE;
+	    }
+	  else
+	    {
+	      src_x = dest_x + offset_x;
+	      src_y = dest_y + offset_y;
+	    }
+
+	  clone_motion (paint_core, drawable_id, src_drawable_ID, clone_options->type, offset_x, offset_y);
+	}
+
+      draw_core_pause (paint_core->core, active_tool);
+      break;
+
+    case INIT_PAINT :
+      if (paint_core->state & ControlMask)
+	{
+	  src_gdisp_ID = gdisp->ID;
+	  src_drawable_ID = drawable_id;
+	  src_x = paint_core->curx;
+	  src_y = paint_core->cury;
+	  first = TRUE;
+	}
+      else if (clone_options->aligned == FALSE)
+	first = TRUE;
+
+      if (clone_options->type == PatternClone)
+	if (!get_active_pattern ())
+	  message_box ("No patterns available for this operation.", NULL, NULL);
+      break;
+
+    case FINISH_PAINT :
+      draw_core_stop (paint_core->core, active_tool);
+      return NULL;
+      break;
+
+    default :
+      break;
+    }
+
+  /*  Calculate the coordinates of the target  */
+  src_gdisp = gdisplay_get_ID (src_gdisp_ID);
+  if (!src_gdisp)
+    {
+      src_gdisp_ID = gdisp->ID;
+      src_gdisp = gdisplay_get_ID (src_gdisp_ID);
+    }
+
+  /*  Find the target cursor's location onscreen  */
+  gdisplay_transform_coords (src_gdisp, src_x, src_y, &trans_tx, &trans_ty, 1);
+
+  if (state == INIT_PAINT)
+    /*  Initialize the tool drawing core  */
+    draw_core_start (paint_core->core,
+		     src_gdisp->canvas->window,
+		     active_tool);
+  else if (state == MOTION_PAINT)
+    draw_core_resume (paint_core->core, active_tool);
+
+  return NULL;
+}
+
+Tool *
+tools_new_clone ()
+{
+  Tool * tool;
+  PaintCore * private;
+
+  if (! clone_options)
+    clone_options = create_clone_options ();
+
+  tool = paint_core_new (CLONE);
+
+  private = (PaintCore *) tool->private;
+  private->paint_func = clone_paint_func;
+  private->core->draw_func = clone_draw;
+
+  return tool;
+}
+
+void
+tools_free_clone (Tool *tool)
+{
+  paint_core_free (tool);
+}
+
+static void
+clone_draw (Tool *tool)
+{
+  PaintCore * paint_core;
+
+  paint_core = (PaintCore *) tool->private;
+
+  if (clone_options->type == ImageClone)
+    {
+      gdk_draw_line (paint_core->core->win, paint_core->core->gc,
+		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,
+		     trans_tx + (TARGET_WIDTH >> 1), trans_ty);
+      gdk_draw_line (paint_core->core->win, paint_core->core->gc,
+		     trans_tx, trans_ty - (TARGET_HEIGHT >> 1),
+		     trans_tx, trans_ty + (TARGET_HEIGHT >> 1));
+    }
+}
+
+static void
+clone_motion (PaintCore *paint_core,
+	      int        drawable_id,
+	      int        src_drawable_id,
+	      CloneType  type,
+	      int        offset_x,
+	      int        offset_y)
+{
+  GImage *gimage;
+  GImage *src_gimage;
+  unsigned char * s;
+  unsigned char * d;
+  TempBuf * orig;
+  TempBuf * area;
+  void * pr;
+  int y;
+  int x1, y1, x2, y2;
+  int has_alpha;
+  PixelRegion srcPR, destPR;
+  GPatternP pattern;
+
+  pr      = NULL;
+  pattern = NULL;
+
+  /*  Make sure we still have a source!  */
+  if ((! (src_gimage = drawable_gimage (src_drawable_id)) && type == ImageClone) ||
+      ! (gimage = drawable_gimage (drawable_id)))
+    return;
+
+  /*  Get a region which can be used to paint to  */
+  if (! (area = paint_core_get_paint_area (paint_core, drawable_id)))
+    return;
+
+  /*  Determine whether the source image has an alpha channel  */
+  has_alpha = drawable_has_alpha (src_drawable_id);
+
+  switch (type)
+    {
+    case ImageClone:
+      /*  Set the paint area to transparent  */
+      memset (temp_buf_data (area), 0, area->width * area->height * area->bytes);
+
+      /*  If the source gimage is different from the destination,
+       *  then we should copy straight from the destination image
+       *  to the canvas.
+       *  Otherwise, we need a call to get_orig_image to make sure
+       *  we get a copy of the unblemished (offset) image
+       */
+      if (src_drawable_id != drawable_id)
+	{
+	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (src_drawable_id));
+	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (src_drawable_id));
+	  x2 = BOUNDS (area->x + offset_x + area->width,
+		       0, drawable_width (src_drawable_id));
+	  y2 = BOUNDS (area->y + offset_y + area->height,
+		       0, drawable_height (src_drawable_id));
+
+	  if (!(x2 - x1) || !(y2 - y1))
+	    return;
+
+	  pixel_region_init (&srcPR, drawable_data (src_drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+	}
+      else
+	{
+	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (drawable_id));
+	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (drawable_id));
+	  x2 = BOUNDS (area->x + offset_x + area->width,
+		       0, drawable_width (drawable_id));
+	  y2 = BOUNDS (area->y + offset_y + area->height,
+		       0, drawable_height (drawable_id));
+
+	  if (!(x2 - x1) || !(y2 - y1))
+	    return;
+
+	  /*  get the original image  */
+	  orig = paint_core_get_orig_image (paint_core, drawable_id, x1, y1, x2, y2);
+
+	  srcPR.bytes = orig->bytes;
+	  srcPR.x = 0; srcPR.y = 0;
+	  srcPR.w = x2 - x1;
+	  srcPR.h = y2 - y1;
+	  srcPR.rowstride = srcPR.bytes * orig->width;
+	  srcPR.data = temp_buf_data (orig);
+	}
+
+      offset_x = x1 - (area->x + offset_x);
+      offset_y = y1 - (area->y + offset_y);
+
+      /*  configure the destination  */
+      destPR.bytes = area->bytes;
+      destPR.x = 0; destPR.y = 0;
+      destPR.w = srcPR.w;
+      destPR.h = srcPR.h;
+      destPR.rowstride = destPR.bytes * area->width;
+      destPR.data = temp_buf_data (area) + offset_y * destPR.rowstride +
+	offset_x * destPR.bytes;
+
+      pr = pixel_regions_register (2, &srcPR, &destPR);
+      break;
+
+    case PatternClone:
+      pattern = get_active_pattern ();
+
+      if (!pattern)
+	return;
+
+      destPR.bytes = area->bytes;
+      destPR.x = 0; destPR.y = 0;
+      destPR.w = area->width;
+      destPR.h = area->height;
+      destPR.rowstride = destPR.bytes * area->width;
+      destPR.data = temp_buf_data (area);
+
+      pr = pixel_regions_register (1, &destPR);
+      break;
+    }
+
+  for (; pr != NULL; pr = pixel_regions_process (pr))
+    {
+      s = srcPR.data;
+      d = destPR.data;
+      for (y = 0; y < destPR.h; y++)
+	{
+	  switch (type)
+	    {
+	    case ImageClone:
+	      clone_line_image (gimage, src_gimage, drawable_id, src_drawable_id, s, d,
+				has_alpha, srcPR.bytes, destPR.bytes, destPR.w);
+	      s += srcPR.rowstride;
+	      break;
+	    case PatternClone:
+	      clone_line_pattern (gimage, drawable_id, pattern, d,
+				  area->x + offset_x, area->y + y + offset_y,
+				  destPR.bytes, destPR.w);
+	      break;
+	    }
+
+	  d += destPR.rowstride;
+	}
+    }
+
+  /*  paste the newly painted canvas to the gimage which is being worked on  */
+  paint_core_paste_canvas (paint_core, drawable_id, OPAQUE,
+			   (int) (get_brush_opacity () * 255),
+			   get_brush_paint_mode (), SOFT, CONSTANT);
+}
+
+static void
+clone_line_image (GImage        *dest,
+		  GImage        *src,
+		  int            d_drawable,
+		  int            s_drawable,
+		  unsigned char *s,
+		  unsigned char *d,
+		  int            has_alpha,
+		  int            src_bytes,
+		  int            dest_bytes,
+		  int            width)
+{
+  unsigned char rgb[3];
+  int src_alpha, dest_alpha;
+
+  src_alpha = src_bytes - 1;
+  dest_alpha = dest_bytes - 1;
+
+  while (width--)
+    {
+      gimage_get_color (src, drawable_type (s_drawable), rgb, s);
+      gimage_transform_color (dest, d_drawable, rgb, d, RGB);
+
+      if (has_alpha)
+	d[dest_alpha] = s[src_alpha];
+      else
+	d[dest_alpha] = OPAQUE;
+
+      s += src_bytes;
+      d += dest_bytes;
+    }
+}
+
+static void
+clone_line_pattern (GImage        *dest,
+		    int            drawable_id,
+		    GPatternP      pattern,
+		    unsigned char *d,
+		    int            x,
+		    int            y,
+		    int            bytes,
+		    int            width)
+{
+  unsigned char *pat, *p;
+  int color, alpha;
+  int i;
+
+  /*  Make sure x, y are positive  */
+  while (x < 0)
+    x += pattern->mask->width;
+  while (y < 0)
+    y += pattern->mask->height;
+
+  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
+  pat = temp_buf_data (pattern->mask) +
+    (y % pattern->mask->height) * pattern->mask->width * pattern->mask->bytes;
+  color = (pattern->mask->bytes == 3) ? RGB : GRAY;
+
+  alpha = bytes - 1;
+
+  for (i = 0; i < width; i++)
+    {
+      p = pat + ((i + x) % pattern->mask->width) * pattern->mask->bytes;
+
+      gimage_transform_color (dest, drawable_id, p, d, color);
+
+      d[alpha] = OPAQUE;
+
+      d += bytes;
+    }
+}
+
+static void *
+clone_non_gui_paint_func (PaintCore *paint_core,
+			  int        drawable_id,
+			  int        state)
+{
+  clone_motion (paint_core, drawable_id, non_gui_src_drawable,
+		non_gui_type, non_gui_offset_x, non_gui_offset_y);
+
+  return NULL;
+}
+
+
+/*  The clone procedure definition  */
+ProcArg clone_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  },
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable"
+  },
+  { PDB_DRAWABLE,
+    "src_drawable",
+    "the source drawable"
+  },
+  { PDB_INT32,
+    "clone_type",
+    "the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }"
+  },
+  { PDB_FLOAT,
+    "src_x",
+    "the x coordinate in the source image"
+  },
+  { PDB_FLOAT,
+    "src_y",
+    "the y coordinate in the source image"
+  },
+  { PDB_INT32,
+    "num_strokes",
+    "number of stroke control points (count each coordinate as 2 points)"
+  },
+  { PDB_FLOATARRAY,
+    "strokes",
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
+  }
+};
+
+
+ProcRecord clone_proc =
+{
+  "gimp_clone",
+  "Clone from the source to the dest drawable using the current brush",
+  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  8,
+  clone_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { clone_invoker } },
+};
+
+
+static Argument *
+clone_invoker (Argument *args)
+{
+  int success = TRUE;
+  GImage *gimage;
+  int drawable_id;
+  double src_x, src_y;
+  int num_strokes;
+  double *stroke_array;
+  CloneType int_value;
+  int i;
+
+  drawable_id = -1;
+  num_strokes = 0;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+  /*  the drawable  */
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      if (! (gimage == drawable_gimage (int_value)))
+	success = FALSE;
+      else
+	drawable_id = int_value;
+    }
+  /*  the src drawable  */
+  if (success)
+    {
+      int_value = args[2].value.pdb_int;
+      if (! drawable_gimage (int_value))
+	success = FALSE;
+      else
+	non_gui_src_drawable = int_value;
+    }
+  /*  the clone type  */
+  if (success)
+    {
+      int_value = args[3].value.pdb_int;
+      switch (int_value)
+	{
+	case 0: non_gui_type = ImageClone; break;
+	case 1: non_gui_type = PatternClone; break;
+	default: success = FALSE;
+	}
+    }
+  /*  x, y offsets  */
+  if (success)
+    {
+      src_x = args[4].value.pdb_float;
+      src_y = args[5].value.pdb_float;
+    }
+  /*  num strokes  */
+  if (success)
+    {
+      int_value = args[6].value.pdb_int;
+      if (int_value > 0)
+	num_strokes = int_value / 2;
+      else
+	success = FALSE;
+    }
+
+  /*  point array  */
+  if (success)
+    stroke_array = (double *) args[7].value.pdb_pointer;
+
+  if (success)
+    /*  init the paint core  */
+    success = paint_core_init (&non_gui_paint_core, drawable_id,
+			       stroke_array[0], stroke_array[1]);
+
+  if (success)
+    {
+      /*  set the paint core's paint func  */
+      non_gui_paint_core.paint_func = clone_non_gui_paint_func;
+
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+
+      non_gui_offset_x = (int) (src_x - non_gui_paint_core.startx);
+      non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
+
+      if (num_strokes == 1)
+	clone_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
+
+      for (i = 1; i < num_strokes; i++)
+	{
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+
+	  paint_core_interpolate (&non_gui_paint_core, drawable_id);
+
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	}
+
+      /*  finish the painting  */
+      paint_core_finish (&non_gui_paint_core, drawable_id, -1);
+
+      /*  cleanup  */
+      paint_core_cleanup ();
+    }
+
+  return procedural_db_return_args (&clone_proc, success);
+}

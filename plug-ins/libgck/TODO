@@ -1,0 +1,15 @@
+
+The General Convenience Kit (GCK) 0.1.4 TODO list
+=================================================
+
+* Move the rest of the UI stuff into GTK.
+* More colorspace conversions (RGB<->HWB among others)
+* Conversion support for grayscale-and *A images
+* Documentation and more examples
+* More math stuff (fast square root, smoothing stuff, spline
+  functions etc.)
+* Create gckconvolve.c
+* Add more basic functions
+* ..
+
+

@@ -1,0 +1,81 @@
+dbbrowser: a development tool for the GIMP
+version 0.08 - 26th sept 1997
+
+Programming by Thomas Noel <thomas@minet.net> (mail to him only, please)
+Documentation and insane comments by Olivier Tharan <olive@minet.net>
+Wise Comments And Good Laughs (TM) by Olivier Fontenelle <fonto@minet.net>
+
+
+
+INSTALL, BUGS, TODO, CHANGELOG : see below
+
+
+The actual and original README (c) Olivier Tharan (he's a friend of mine, yep)
+
+Let me introduce myself... 
+--------------------------
+My name is dbbrowser, but I have been known in my youth as dblist, almost as
+of version 0.05! I am an extension for the Gimp and my purpose is to display a
+list of all the procedures that have registered themselves in the procedure
+database. The main thing I do is a gimp_query_procedure and a pair of
+gimp_query_database. 
+
+What can this marvel do ? 
+-------------------------
+The dbbrowser window is divided into two parts. On the left, you have a
+scrolling list containing the names of all the procedures registered within
+Gimp. When you click on one of them, its name, description and author(s) are
+displayed on the right side, altogether with the types and parameters the
+procedure takes and what it returns. 
+
+All this is rather brilliantly completed by two search buttons, one for a
+by-name search, the other one for a by-blurb search. Just enter any regexp you
+have in mind in the text widget beneath the list and click on the appropriate
+button; the results of the search are automagically displayed in the scrolling
+list. 
+
+Even fancier: script-fu-console integration 
+-------------------------------------------
+dbbrowser comes handy with a patch for script-fu-console.c which adds a button
+named ``Browse'' to the right of the console text widget. Clicking on the
+button launches dbbrowser from which you still can choose any procedure. But
+in the dbbrowser window, a fourth button has appeared, appropriately named
+``Apply'', for its goal is to take the selected procedure and its arguments,
+and insert them into the script-fu console command line. It would save
+developers a great deal of pain to debug their scripts (or even to develop
+some!)
+
+More information : http://www.minet.net/~thomas/dbbrowser/
+----------------
+
+
+(the following had been written by me, so, it's not *really* in english :)
+
+INSTALL
+
+These files go to gimp-xx.xx.xx/plug-ins/dbbrowser. That does not
+erase the files "Makefile*", so the plug-in is easy to re-compile : just
+do a  "make" in this directory. Then, "make install" (as root)
+to install the plug-in. 
+
+If it breaks, wait for GIMP 1.0 :) (or mail to <thomas@minet.net>)
+
+BUGS/TODO
+
+- refresh problem for the scrolled list (as in gtkfileselection)
+- add the "help" field (I wait for a "usable" gtk_text)
+- arg... well... my english is too bad to explain my others ideas :)
+
+CHANGELOG
+
+26 Sept : 0.08
+* delete all "gtk_widget_hide/destroy" sequences.
+* change the internal list structure (use gtk_objet_get/set_user_data)
+* try to optimize the first drawing (is it a success ?)
+
+25 June : 0.07
+* first public release (0.07)
+
+--
+Bon c'est pas tout ca les gars, mais j'ai mal a la tete, personne n'a
+une aspirine ? Non ? Bon.

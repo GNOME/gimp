@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>The General Convenience Kit (GCK)</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; Linux 2.0.27 i586) [Netscape]">
+   <META NAME="Author" CONTENT="Tom Bech">
+   <META NAME="Description" CONTENT="A page about GCK">
+   <META NAME="Keywords" CONTENT="GCK, GDK, GTK, GIMP">
+</HEAD>
+<BODY TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00FFFF" VLINK="#FF1493" ALINK="#FF0000" ALINK"#ff0000">
+
+<P><B><FONT SIZE=+4>The General Convenience Kit (GCK) 
+<HR WIDTH="100%"><BR>
+</FONT></B>Latest version: <B>0.06<I> alpha<BR>
+</I></B>Last updated: <B>12-Feb-1997<BR>
+</B>Tested platforms: <B>Linux 2.0.18, Linux 2.0.27<BR>
+</B>GDK/GTK version: <B>0.61</B></P>
+
+<P>You can download it <A HREF="http://www.ii.uib.no/~tomb/GCK-0.06.tar.gz">[here]</A>
+( 274613 bytes). This includes the sourcecode and precompiled static and
+shared Linux ELF libraries.</P>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<H4><FONT SIZE=+1>What is it?</FONT></H4>
+
+<P>GCK is meant as a general convenience kit for GIMP plug-in writers and
+users of the GDK/GTK libraries. It's basically a collection of stuff for
+UI construction, color- and image handling, vector operations, math funcs
+etc. (see below). Please note that GCK is still a pre-alpha version; many
+things doesn't work properly and the API is not completely stable yet.
+When the API&nbsp;is stable ,GCK will enter beta. Check it out and give
+me some feedback. </P>
+
+<H4><B><FONT SIZE=+1>What's new in 0.06?</FONT></B></H4>
+
+<UL>
+<LI>Changed <TT>gck_entryfield_new()</TT>; it now takes a double as the
+initial value, and not a pointer to a double. The function won't fiddle
+with the <TT>user_data</TT> field of the observer, but leaves this to the
+user.</LI>
+
+<LI>Added <TT>gck_tooltipswidget</TT>. Handy a-la MS and Netscape widget
+tips. Added a small example on its usage.</LI>
+
+<LI>Changed the behaviour of <TT>gdk_rgb_to_gdkcolor()</TT> a bit. The
+returned pointer to the <TT>GdkColor</TT> structure is now malloced, so
+remember to free it when you're done with it.</LI>
+
+<LI>Added two more gtk widgets; <TT>gck_menu</TT> and <TT>gck_menu_bar</TT>.
+Again, see the examples.</LI>
+
+<LI>Added <TT>gck_list_box</TT> widget - convenience routines for handling
+lists. I've included a couple of examples to show it off.</LI>
+</UL>
+
+<H4><FONT SIZE=+1>Contents</FONT></H4>
+
+<UL>
+<LI><A HREF="gckui.html">UI functions</A></LI>
+
+<LI><A HREF="gckcolor.html">Color functions</A></LI>
+
+<LI><A HREF="gckvector.html">Vector functions</A></LI>
+
+<LI><A HREF="gckmath.html">Math functions</A></LI>
+</UL>
+
+<P>
+<HR WIDTH="100%"><I><FONT SIZE=-1>Last changed 12-Feb-1997 by <A HREF="http://www.ii.uib.no/~tomb/">Tom
+Bech</A> (<A HREF="mailto:tomb@ii.uib.no">tomb@ii.uib.no</A>)</FONT></I><FONT SIZE=-1>
+</FONT></P>
+
+</BODY>
+</HTML>

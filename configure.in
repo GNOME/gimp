@@ -1,0 +1,417 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(gimprc.in)
+
+dnl Initialize automake stuff
+dnl $Format: "GIMP_MAJOR_VERSION_NUMBER=$ReleaseMajorVersion$" $
+GIMP_MAJOR_VERSION_NUMBER=0
+dnl $Format: "GIMP_MINOR_VERSION_NUMBER=$ReleaseMinorVersion$" $
+GIMP_MINOR_VERSION_NUMBER=99
+dnl $Format: "GIMP_MICRO_VERSION_NUMBER=$ReleaseMicroVersion$" $
+GIMP_MICRO_VERSION_NUMBER=15
+
+dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
+AM_INIT_AUTOMAKE(gimp, 0.99.15)
+
+dnl Specify a header configuration file
+AM_CONFIG_HEADER(config.h)
+
+dnl Initialize libtool
+AM_PROG_LIBTOOL
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+AC_CANONICAL_HOST
+
+AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
+if eval "test x$enable_debug = xyes"; then
+  DEBUGFLAG="-g"
+fi)
+
+AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
+		    , enable_ansi=no)
+
+dnl Possibly change default gimpdir from .gimp
+gimpdir=.gimp
+AC_ARG_ENABLE(gimpdir, [  --enable-gimpdir=DIR    change default gimpdir from .gimp to DIR],
+if eval "test x$enable_gimpdir != x"; then
+  if eval "test x$enable_gimpdir != xyes"; then
+    gimpdir=$enable_gimpdir
+  fi
+fi)
+
+AC_DEFUN(AC_GIMP_CHECK,
+[
+	AC_PATH_X
+	AC_PATH_XTRA
+
+	saved_cflags="$CFLAGS"
+	saved_ldflags="$LDFLAGS"
+
+	CFLAGS="$X_CFLAGS $CFLAGS"
+	LDFLAGS="$X_LDFLAGS $X_LIBS $LDFLAGS"
+
+	dnl Checks for libraries.
+	AC_CHECK_LIB(X11, XOpenDisplay,
+		x_libs="-lX11 $X_EXTRA_LIBS",
+		[AC_MSG_ERROR(No X11 installed)],
+		$X_EXTRA_LIBS)
+
+ 	LD_FLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS $x_libs"
+
+	AC_CHECK_LIB(Xext, XShmAttach,
+		x_libs="-lXext $x_libs", ,
+		$x_libs)
+
+	X_LIBS="$X_LIBS -lgtk -lgdk -lglib $x_libs -lm"
+
+ 	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
+
+	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
+	AC_MSG_CHECKING([for glib and gtk])
+        AC_TRY_COMPILE(
+[#include <gtk/gtk.h>],
+[gtk_button_new ();],
+gtk_found=yes,
+gtk_found=no)
+	AC_MSG_RESULT($gtk_found)
+
+	if test $gtk_found = no; then
+ 	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
+        fi
+
+        dnl CFLAGS="$saved_cflags"
+	dnl LDFLAGS="$saved_ldflags"
+])
+
+if test -n "$DEBUGFLAG"; then
+  CFLAGS="$DEBUGFLAG"
+fi
+
+dnl Checks for programs.
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_GIMP_CHECK
+
+if eval "test x$GCC = xyes"; then
+  if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
+    CFLAGS="$CFLAGS"
+  else
+    CFLAGS="$CFLAGS -Wall"
+  fi
+
+  if eval "test x$enable_ansi = xyes"; then
+    if echo "$CFLAGS" | grep "\-ansi" > /dev/null 2> /dev/null; then
+      CFLAGS="$CFLAGS"
+    else
+      CFLAGS="$CFLAGS -ansi"
+    fi
+
+    if echo "$CFLAGS" | grep "\-pedantic" > /dev/null 2> /dev/null; then
+      CFLAGS="$CFLAGS"
+    else
+      CFLAGS="$CFLAGS -pedantic"
+    fi
+  fi
+fi
+
+dnl Test for libtiff
+  if test -z "$LIBTIFF_LIB"; then
+    AC_CHECK_LIB(tiff, TIFFReadScanline,
+      TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+      AC_CHECK_LIB(tiff, TIFFWriteScanline,
+        TIFF='tiff'; LIBTIFF_LIB='-ltiff -lz -ljpeg',
+        AC_MSG_WARN(*** TIFF plug-in will not be built ***), -lz -ljpeg -lm), -lm)
+  fi
+
+dnl Test for libjpeg
+  if test -z "$LIBJPEG_LIB"; then
+    AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
+      JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
+      AC_MSG_WARN(*** JPEG plug-in will not be built ***))
+  fi
+
+dnl Test for libpng
+  if test -z "$LIBPNG_LIB"; then
+    AC_CHECK_LIB(png, png_read_info,
+      PNG='png'; LIBPNG_LIB='-lpng -lz',
+      AC_MSG_WARN(*** PNG plug-in will not be built ***), -lz -lm)
+  fi
+
+dnl Test for libmpeg
+  if test -z "$LIBMPEG_LIB"; then
+    AC_CHECK_LIB(mpeg, GetMPEGFrame,
+      MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
+      AC_MSG_WARN(*** MPEG plug-in will not be built ***))
+  fi
+
+dnl Test for libtcl
+  if test -z "$LIBTCL_LIB"; then
+    AC_CHECK_LIB(tcl, Tcl_Init,
+      GIMPTCL='gimptcl'; LIBTCL_LIB='-ltcl -ltk',
+      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm -ldl)
+  fi
+
+dnl Test for libxdelta
+  if test -z "$LIBXDELTA_LIB"; then
+    AC_CHECK_LIB(xdelta, xd_checkin,
+      XD='xd'; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
+      AC_MSG_WARN(*** XD plug-in will not be built ***), -lglib -lgdbm)
+  fi
+
+dnl Test for libXpm
+  if test -z "$LIBXPM_LIB"; then
+    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
+      XPM='xpm'; LIBXPM_LIB='-lXpm',
+      AC_MSG_WARN(*** XPM plug-in will not be build ***), $X_LIBS)
+  fi
+
+dnl Check for shared memory
+AC_CHECK_HEADER(sys/ipc.h, AC_DEFINE(HAVE_IPC_H), no_sys_ipc=yes)
+AC_CHECK_HEADER(sys/shm.h, AC_DEFINE(HAVE_SHM_H), no_sys_shm=yes)
+if test "$ac_cv_header_sys_shm_h" = "yes"; then
+  AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
+  AC_TRY_RUN([
+	#include <sys/types.h>
+	#include <sys/ipc.h>
+	#include <sys/shm.h>
+	int main()
+	{
+	  int id;
+	  char *shmaddr;
+	id = shmget (IPC_PRIVATE, 4, IPC_CREAT | 0777);
+	if (id == -1)
+	  exit (2);
+	  shmaddr = shmat (id, 0, 0);
+	  shmctl (id, IPC_RMID, 0);
+	  if ((char*) shmat (id, 0, 0) == (char*) -1)
+	  {
+	    shmdt (shmaddr);
+	    exit (1);
+	  }
+	  shmdt (shmaddr);
+	  shmdt (shmaddr);
+	  exit (0);
+	}
+    ],
+    AC_DEFINE(IPC_RMID_DEFERRED_RELEASE)
+      AC_MSG_RESULT(yes),
+    AC_MSG_RESULT(no),
+    AC_MSG_RESULT(assuming no))
+fi
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_HEADER_TIME
+
+AC_CHECK_HEADER(sys/time.h, AC_DEFINE(HAVE_SYS_TIME_H))
+AC_CHECK_HEADER(unistd.h, AC_DEFINE(HAVE_UNISTD_H))
+
+AC_TYPE_PID_T
+AC_TYPE_SIGNAL
+AC_FUNC_VPRINTF
+
+# Check for sys/select.h
+
+AC_MSG_CHECKING([fd_set and sys/select])
+AC_TRY_COMPILE([#include <sys/types.h>],
+        [fd_set readMask, writeMask;], gimp_ok=yes, gimp_ok=no)
+if test $gimp_ok = no; then
+    AC_HEADER_EGREP(fd_mask, sys/select.h, gimp_ok=yes)
+    if test $gimp_ok = yes; then
+        AC_DEFINE(HAVE_SYS_SELECT_H)
+    fi
+fi
+AC_MSG_RESULT($gimp_ok)
+if test $gimp_ok = no; then
+    AC_DEFINE(NO_FD_SET)
+fi
+
+dnl TVM: check for compiler characteristics
+AC_C_INLINE
+
+gimpdatadir=$datadir/$PACKAGE
+gimpplugindir=$libdir/$PACKAGE/$VERSION
+
+dnl This is for generating PDB docuemntation.
+AC_PATH_PROG(EMACS, emacs)
+
+AC_SUBST(gimpdir)
+AC_SUBST(gimpdatadir)
+AC_SUBST(gimpplugindir)
+AC_SUBST(TIFF)
+AC_SUBST(LIBTIFF_LIB)
+AC_SUBST(JPEG)
+AC_SUBST(LIBJPEG_LIB)
+AC_SUBST(PNG)
+AC_SUBST(LIBPNG_LIB)
+AC_SUBST(MPEG)
+AC_SUBST(LIBMPEG_LIB)
+AC_SUBST(GIMPTCL)
+AC_SUBST(LIBTCL_LIB)
+AC_SUBST(XD)
+AC_SUBST(LIBXDELTA_LIB)
+AC_SUBST(XPM)
+AC_SUBST(LIBXPM_LIB)
+
+
+dnl Output the Makefiles
+
+AC_OUTPUT(
+Makefile
+gimprc
+libgimp/Makefile
+plug-ins/Makefile
+plug-ins/build
+plug-ins/dbbrowser/Makefile
+plug-ins/CML_explorer/Makefile
+plug-ins/convmatrix/Makefile
+plug-ins/diffraction/Makefile
+plug-ins/pix/Makefile
+plug-ins/oilify/Makefile
+plug-ins/nova/Makefile
+plug-ins/normalize/Makefile
+plug-ins/noisify/Makefile
+plug-ins/nlfilt/Makefile
+plug-ins/mosaic/Makefile
+plug-ins/mblur/Makefile
+plug-ins/maze/Makefile
+plug-ins/max_rgb/Makefile
+plug-ins/mail/Makefile
+plug-ins/magiceye/Makefile
+plug-ins/lic/Makefile
+plug-ins/laplace/Makefile
+plug-ins/ifscompose/Makefile
+plug-ins/iwarp/Makefile
+plug-ins/hrz/Makefile
+plug-ins/hot/Makefile
+plug-ins/holes/Makefile
+plug-ins/gz/Makefile
+plug-ins/header/Makefile
+plug-ins/grid/Makefile
+plug-ins/gradmap/Makefile
+plug-ins/gqbist/Makefile
+plug-ins/gif/Makefile
+plug-ins/gicon/Makefile
+plug-ins/gfli/Makefile
+plug-ins/gbr/Makefile
+plug-ins/gauss_iir/Makefile
+plug-ins/gauss_rle/Makefile
+plug-ins/fp/Makefile
+plug-ins/fits/Makefile
+plug-ins/film/Makefile
+plug-ins/figures/Makefile
+plug-ins/faxg3/Makefile
+plug-ins/exchange/Makefile
+plug-ins/engrave/Makefile
+plug-ins/emboss/Makefile
+plug-ins/edge/Makefile
+plug-ins/displace/Makefile
+plug-ins/destripe/Makefile
+plug-ins/despeckle/Makefile
+plug-ins/depthmerge/Makefile
+plug-ins/deinterlace/Makefile
+plug-ins/decompose/Makefile
+plug-ins/cubism/Makefile
+plug-ins/coordmap/Makefile
+plug-ins/compose/Makefile
+plug-ins/checkerboard/Makefile
+plug-ins/bz2/Makefile
+plug-ins/xpm/Makefile
+plug-ins/AlienMap/Makefile
+plug-ins/c_astretch/Makefile
+plug-ins/bumpmap/Makefile
+plug-ins/dgimp/Makefile
+plug-ins/gflare/Makefile
+plug-ins/script-fu/Makefile
+plug-ins/script-fu/scripts/Makefile
+plug-ins/jpeg/Makefile
+plug-ins/mpeg/Makefile
+plug-ins/png/Makefile
+plug-ins/tiff/Makefile
+plug-ins/xd/Makefile
+plug-ins/bmp/Makefile
+plug-ins/aa/Makefile
+plug-ins/gag-0.3/Makefile
+plug-ins/Anamorphose/Makefile
+plug-ins/CentralReflection/Makefile
+plug-ins/Curtain/Makefile
+plug-ins/Encript_Decript/Makefile
+plug-ins/Julia/Makefile
+plug-ins/Mandelbrot/Makefile
+plug-ins/MapObject/Makefile
+plug-ins/megawidget/Makefile
+plug-ins/libgck/Makefile
+plug-ins/libgck/gck/Makefile
+plug-ins/blur/Makefile
+plug-ins/gfig/Makefile
+plug-ins/gfig/gfig-examples/Makefile
+plug-ins/flame/Makefile
+plug-ins/gimptcl/Makefile
+plug-ins/gimptcl/frags/Makefile
+plug-ins/gimptcl/misc/Makefile
+plug-ins/gimptcl/scripts/Makefile
+plug-ins/fuse/Makefile
+plug-ins/mathmap/Makefile
+plug-ins/rcm/Makefile
+plug-ins/refract/Makefile
+plug-ins/struc/Makefile
+plug-ins/twist/Makefile
+plug-ins/user_filter/Makefile
+plug-ins/user_filter/doc/Makefile
+plug-ins/warp/Makefile
+plug-ins/zealouscrop/Makefile
+plug-ins/xwd/Makefile
+plug-ins/whirlpinch/Makefile
+plug-ins/waves/Makefile
+plug-ins/vpropagate/Makefile
+plug-ins/vinvert/Makefile
+plug-ins/video/Makefile
+plug-ins/url/Makefile
+plug-ins/universal/Makefile
+plug-ins/tiler/Makefile
+plug-ins/tile/Makefile
+plug-ins/tileit/Makefile
+plug-ins/threshold_alpha/Makefile
+plug-ins/tga/Makefile
+plug-ins/sunras/Makefile
+plug-ins/stereogram/Makefile
+plug-ins/spread/Makefile
+plug-ins/sparkle/Makefile
+plug-ins/sobel/Makefile
+plug-ins/snp/Makefile
+plug-ins/snoise/Makefile
+plug-ins/smooth_palette/Makefile
+plug-ins/sinus/Makefile
+plug-ins/shift/Makefile
+plug-ins/sharpen/Makefile
+plug-ins/sgi/Makefile
+plug-ins/scatter_hsv/Makefile
+plug-ins/rotators/Makefile
+plug-ins/rotate/Makefile
+plug-ins/ripple/Makefile
+plug-ins/randomize/Makefile
+plug-ins/psd/Makefile
+plug-ins/ps/Makefile
+plug-ins/print/Makefile
+plug-ins/polar/Makefile
+plug-ins/pnm/Makefile
+plug-ins/plasma/Makefile
+plug-ins/pixelize/Makefile
+plug-ins/pcx/Makefile
+plug-ins/pat/Makefile
+plug-ins/blur2/Makefile
+plug-ins/blinds/Makefile
+plug-ins/autostretch_hsv/Makefile
+plug-ins/autocrop/Makefile
+plug-ins/apply_lens/Makefile
+plug-ins/animationplay/Makefile
+plug-ins/align_layers/Makefile
+plug-ins/CEL/Makefile
+app/Makefile
+docs/Makefile
+)

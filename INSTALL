@@ -1,0 +1,168 @@
+There are three basic steps to building and installing the
+GIMP on unix:
+
+  1. Configure the GIMP by running the `configure' script.
+  2. Build the GIMP by running `make'.
+  3. Install the GIMP by running `make install'.
+  4. Install the gimp-data package.  Be sure to install this, or you
+     won't have the GIMP's datafiles installed.
+
+Generic instructions for configuring and compiling auto-configured
+packages are included below. Here is an illustration of commands that
+might be used to build and install the GIMP. The actual configuration,
+compilation and installation output is not shown.
+
+  % tar xvfz gimp-1.0.0.tar.gz   # unpack the sources
+  % cd gimp-1.0.0                # change to the toplevel directory
+  % ./configure                  # run the `configure' script
+  % make                         # build the GIMP
+  % make install                 # install the GIMP
+
+The `configure' script examines your system, and adapts the GIMP to
+run on it. The script has many options, some of which are described in
+the generic instructions included at the end of this file. All of the
+options can be listed using the command `./configure --help'. There
+are six commands special options the GIMP `configure' script
+recognizes. These are:
+
+  1. --enable-shared and --disable-shared. This option affects whether
+     shared libraries will be built or not. Shared libraries provide
+     for much smaller executables, but they are difficult to debug
+     with. If you are interested in doing development, it is probably
+     wise to specify `--disable-shared'. The default is to enable
+     shared libraries.
+
+  2. --enable-debug and --disable-debug. This option causes the build
+     process to compile with debugging enabled. If debugging is
+     disabled, the GIMP will instead be compiled with optimizations turned
+     on. The default is for debugging to be disabled. NOTE: This
+     option is intended primarily as a convenience for developers.
+
+  3. --enable-ansi and --disable-ansi. This options causes stricter
+     ANSI C checking to be performed when compiling with GCC. The
+     default is for strict checking to be disabled. NOTE: This option
+     is intended primarily as a convenience for developers.
+
+  4. --enable-gimpdir=DIR. This option changes the default directory
+     the gimp uses to search for its configuration files from ~/.gimp (the
+     directory .gimp in the users home directory) to DIR.
+
+  5. --with-libtiff=DIR. This option specifies the location of the
+     tiff library and header files. For instance, the libtiff library
+     may reside in "/usr/local". This may be specified by
+     --with-libtiff="/usr/local". (Note: The compilation process
+     should automatically find the tiff library if it resides in
+     "/usr/local").
+
+  6. --with-libjpeg=DIR. This option specifies the location of the
+     jpeg library and header files. For instance, the libjpeg library
+     may reside in "/usr/local". This may be specified by
+     --with-libjpeg="/usr/local". (Note: The compilation process
+     should automatically find the tiff library if it resides in
+     "/usr/local").
+
+The `make' command builds several things:
+ - The libraries `gtk+/glib/libglib.la', `gtk+/gdk/libgdk.la',
+   `gtk+/gtk/libgtk.la', `libgimp/libgimp.la', `libgimp/libgimpi.la' and
+   `libgimp/libgimpui.la'. The `.la' suffix is used by libtool, the
+    program used to ease the compilation of shared libraries on
+    different platforms.
+ - The test programs `gtk+/glib/testglib' and `gtk+/gtk/testgtk'.
+ - The plug-in programs in the `plug-ins' subdirectory.
+ - The main GIMP program in `app/gimp'.
+
+The `make install' commands installs the glib, gdk and gtk header
+files and libraries, the gimp header files associated with libgimp and
+the libgimp library, the plug-ins, and the GIMP executable. After
+running `make install' and assuming the build process was successful
+you should be able to run `gimp'.
+
+
+      Generic Instructions for Building Auto-Configured Packages
+      ==========================================================
+
+
+To compile this package:
+
+1.  Configure the package for your system.  In the directory that this
+file is in, type `./configure'.  If you're using `csh' on an old
+version of System V, you might need to type `sh configure' instead to
+prevent `csh' from trying to execute `configure' itself.
+
+The `configure' shell script attempts to guess correct values for
+various system-dependent variables used during compilation, and
+creates the Makefile(s) (one in each subdirectory of the source
+directory).  In some packages it creates a C header file containing
+system-dependent definitions.  It also creates a file `config.status'
+that you can run in the future to recreate the current configuration.
+Running `configure' takes a minute or two.
+
+To compile the package in a different directory from the one
+containing the source code, you must use GNU make.  `cd' to the
+directory where you want the object files and executables to go and
+run `configure' with the option `--srcdir=DIR', where DIR is the
+directory that contains the source code.  Using this option is
+actually unnecessary if the source code is in the parent directory of
+the one in which you are compiling; `configure' automatically checks
+for the source code in `..' if it does not find it in the current
+directory.
+
+By default, `make install' will install the package's files in
+/usr/local/bin, /usr/local/lib, /usr/local/man, etc.  You can specify
+an installation prefix other than /usr/local by giving `configure' the
+option `--prefix=PATH'.  Alternately, you can do so by changing the
+`prefix' variable in the Makefile that `configure' creates (the
+Makefile in the top-level directory, if the package contains
+subdirectories).
+
+You can specify separate installation prefixes for machine-specific
+files and machine-independent files.  If you give `configure' the
+option `--exec-prefix=PATH', the package will use PATH as the prefix
+for installing programs and libraries.  Normally, all files are
+installed using the same prefix.
+
+`configure' ignores any other arguments that you give it.
+
+If your system requires unusual options for compilation or linking
+that `configure' doesn't know about, you can give `configure' initial
+values for some variables by setting them in the environment.  In
+Bourne-compatible shells, you can do that on the command line like
+this:
+        CC='gcc -traditional' DEFS=-D_POSIX_SOURCE ./configure
+
+The `make' variables that you might want to override with environment
+variables when running `configure' are:
+
+(For these variables, any value given in the environment overrides the
+value that `configure' would choose:)
+CC              C compiler program.
+                Default is `cc', or `gcc' if `gcc' is in your PATH.
+INSTALL         Program to use to install files.
+                Default is `install' if you have it, `cp' otherwise.
+INCLUDEDIR      Directory for `configure' to search for include files.
+                Default is /usr/include.
+
+(For these variables, any value given in the environment is added to
+the value that `configure' chooses:)
+DEFS            Configuration options, in the form '-Dfoo -Dbar ...'
+LIBS            Libraries to link with, in the form '-lfoo -lbar ...'
+
+If you need to do unusual things to compile the package, we encourage
+you to teach `configure' how to do them and mail the diffs to the
+address given in the README so we can include them in the next
+release.
+
+2.  Type `make' to compile the package.
+
+3.  Type `make install' to install programs, data files, and
+documentation.
+
+4.  You can remove the program binaries and object files from the
+source directory by typing `make clean'.  To also remove the
+Makefile(s), the header file containing system-dependent definitions
+(if the package uses one), and `config.status' (all the files that
+`configure' created), type `make distclean'.
+
+The file `configure.in' is used as a template to create `configure' by
+a program called `autoconf'.  You will only need it if you want to
+regenerate `configure' using a newer version of `autoconf'.

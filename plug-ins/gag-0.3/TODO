@@ -1,0 +1,104 @@
+legend:
+-------
+* open bugs || requests - please contribute!
+o I want to concern myself on that feature in the next version
+. already smashed bugs || satisfied requests
+
+
+I am sorry about my Czenglish (mixture of Czech and English) - but following lines
+are intended mainly for me :-)
+
+  Possible bugs:
+ -=-=-=-=-=-=-=-
+. progress bar does not work - I wonder why?
+* it seems that pop-up menu does not work properly - sometimes it is realy
+  ignorant to all your efforts to activate entry. Maybe there are deep secrets
+  in gtk which I have mised....
+. make sure that all functions do what I expect they do (min, max.... - they do
+  what they want,.. not what I want... :(
+* make sure that random, mute or evolve does not return too big expressions...
+* problem with converting gray-=> color -=> gray (because first is g->(g,g,g),
+  second is (r,g,b)->0.299*r + 0.587*g + b*0.114)
+* ugly problem: sin(x)= <-1,1>, but with current wrap func 1 means same color 
+  as 0 :-( - same for noise etc... - could be solved with pingpong wraper - but 
+  this is not satisfactory solution)
+. bug in "/" operator !!!
+
+
+  There are some random thoughts I had about GAG:
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+* another name for GAG? - GA Exploder? GA Dezorientator? GA Time waster? :-)
+* nice logo for GAG (of course do it with GAG :-)
+* GAG Homepage with nice pictures, screenshots and tutorials.... I hate homepages :( especialy those without any usefull 
+  information but with <censored> frames,java and tons of graphics...) (anyone want to volunteer nice humble lynx-friendly 
+  GAG homepage?)
+. colored pictures :-)
+* handle alpha channel
+. warp function
+. noise function (steal it from noise plug-in :-)
+. mutate 
+. mate ...
+. and, or xor
+* better gas_random which could identify interesting patters (ie non zero etc,
+  non constant..)
+. gimp version of GAG (ie gag should be real plug-in)
+* possibility of interupt computation
+* dialog for Render picture (current layer, create new layer, new image..)
+* it seems that function for setting weights of operators is highly needed -
+   there are only few operators which could act as leaf (const, vector[34],
+   x,y,(bw|color)-noise-xy) - so there are too many noise functions in
+  expressions so it is hard to evolve picture without any noise-function
+  (and I know that there are alse non-noisy nice pictures:)
+  - another possibile solution - delete noisy-xy functions so there will be only
+   two noise functions instead of four
+. noise functions must be independent on rand() (so anywhere & any time you can
+  obtain same pictures..)
+* another mutate function - permutate vector?
+*			    copy?
+* arbitrary matrix of individuals in one generation (rather than 3x3 ??)
+* library of nice epressions (please contribute! :-)
+. load from/save to this library
+.	on start load random expressions from library...
+.	save library  on exit
+* temporary library or some other mechanism for pushing/poping expressions (or 
+  all nine expressions) or some undo mechanism... (undo last mute&mate)
+* config file?
+* many many options for everything (and than another ga solver to find best values :)
+* options (buttons, switches and other ...) for:
+*		to be or not to be
+*		mutating? mating?
+*		check for 'uninteresting' pictures when creating 
+*			them with random?
+*		weights of operators
+*		choosing leaf prob. func
+*		mutating: function for choosing mutate function,.. weight of
+*			functions..
+*		type of mating ( 1:1 or according to the `beauty' of expression)
+*               switch for various types of wrapping... (when ! 0<x<1.0 ...)
+. parser for expression & possibility of editing expression by hand
+. beautify "edit by hand" dialog & add clear button & init value should be set to
+  current expression
+* parser for INfix expressions (as oposit to prefix of `scheme' like syntax) -
+  cut'n'copy it from parser I wrote for my patch to pov-ray (implicit and
+  parametric functions for pov-ray 2.2
+* history of typed expression...
+* more types of rand function  (ie not only <0,1>, but also <-1,1>, gauss, <-infity,+infity>...)
+* mosaic preview for faster computation so users will not be bored :-)
+* anyway, speed all things up... well, what about buing new Hyper Super Pentium 7x+ BPro MMX QTWYUIT @#$^%
+. (maybe repleace this recursive eval_* calls by stack based computation
+* and what about PVM and distribution of calculation over network??
+* antialiasing for final rendering
+* algorithm for find expression which is the best aproximation of given picture
+* % operator
+* color-map function (something like gradient-map plug-in)
+* take some inspirations from SBART?
+*	(x,y,0), (x,0,y), (0,x,y), (y,x,0), (y,0,x), (0,y,x) functions? 
+*	hypot func?
+*	nice tree editor for expressions?
+* how to implement that ifs function from Karl Sims's article?
+* function for simplify expressions (for speed things up, mostly for final
+  rendering - to eliminate abs(abs(..)), y+y+y,.... (btw it is not accident that
+  this entry is last in my todo list :)
+
+
+

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE></TITLE>
+   <META NAME="Author" CONTENT="Tom Bech">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; Linux 2.0.27 i586) [Netscape]">
+</HEAD>
+<BODY>
+
+<H1>GCK - General UI functions - Application Window</H1>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><A NAME="gck_application_window_new"></A><B><TT>GckApplicationWindow
+*gck_application_window_new(name)</TT></B></P>
+
+<TABLE BORDER=1 CELLSPACING=5 CELLPADDING=0 >
+<TR>
+<TD></TD>
+
+<TD><B>Type</B></TD>
+
+<TD><B>Variable</B></TD>
+
+<TD><B>Description</B></TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Input:</B></TD>
+
+<TD><TT>char</TT></TD>
+
+<TD><TT>name</TT></TD>
+
+<TD>Name of application window. This will be the title of the toplevel
+window.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Output:</B>&nbsp;&nbsp;</TD>
+
+<TD><TT><A HREF="gcktypes.html#GckApplicationWindow">GckApplicationWindow
+*</A></TT></TD>
+
+<TD></TD>
+
+<TD>A pointer to a initialized GckApplicationWindow structure.</TD>
+</TR>
+
+<TR>
+<TD COLSPAN="4">This function will create and initialize a GckApplicationWindow
+structure. This involves creating a top level window, selecting and setting
+up a visual and the companion colormap. It also creates a new style and
+sets its defaults to GIMP standard. Usually called when the UI of your
+application is to be set up.</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><A NAME="gck_application_window_destroy"></A><B><TT>void gck_application_window_destroy(appwin)</TT></B></P>
+
+<TABLE BORDER=1 CELLSPACING=5 CELLPADDING=0 >
+<TR>
+<TD></TD>
+
+<TD><B>Type</B></TD>
+
+<TD><B>Variable</B></TD>
+
+<TD><B>Description</B></TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Input:</B></TD>
+
+<TD><A HREF="gcktypes.html#GckApplicationWindow">GckApplicationWindow *</A></TD>
+
+<TD>appwin</TD>
+
+<TD>Pointer to the GckApplicationWindow structure to be destroyed.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Output:</B></TD>
+
+<TD><TT>void</TT></TD>
+
+<TD></TD>
+
+<TD>This function doesn't return any value.</TD>
+</TR>
+
+<TR>
+<TD COLSPAN="4">Frees all memory associated with the GckApplicationWindow
+structure and destroys the top level window. This function is typically
+called when your application terminates.</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><I><FONT SIZE=-1>Last changed 16-Dec-1996 by Tom Bech (tomb@ii.uib.no)</FONT></I></P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,2 @@
+#define PACKAGE "@PACKAGE@"
+#define GCK_VERSION "@VERSION@"

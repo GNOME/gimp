@@ -1,0 +1,656 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+
+#define ENTRY_WIDTH 100
+
+typedef struct
+{
+  gdouble radius;
+  gint horizontal;
+  gint vertical;
+} BlurValues;
+
+typedef struct
+{
+  gint run;
+} BlurInterface;
+
+
+/* Declare local functions.
+ */
+static void      query  (void);
+static void      run    (gchar     *name,
+			 gint       nparams,
+			 GParam     *param,
+			 gint      *nreturn_vals,
+			 GParam   **return_vals);
+
+static void      gauss_iir        (GDrawable *drawable,
+				   gint       horizontal,
+				   gint       vertical,
+				   gdouble    std_dev);
+
+/*
+ * Gaussian blur interface
+ */
+static gint      gauss_iir_dialog (void);
+
+/*
+ * Gaussian blur helper functions
+ */
+static void      find_constants   (gdouble n_p[],
+				   gdouble n_m[],
+				   gdouble d_p[],
+				   gdouble d_m[],
+				   gdouble bd_p[],
+				   gdouble bd_m[],
+				   gdouble std_dev);
+static void      transfer_pixels  (gdouble * src1,
+				   gdouble * src2,
+				   guchar *  dest,
+				   gint      bytes,
+				   gint      width);
+
+static void      gauss_close_callback  (GtkWidget *widget,
+					gpointer   data);
+static void      gauss_ok_callback     (GtkWidget *widget,
+					gpointer   data);
+static void      gauss_toggle_update   (GtkWidget *widget,
+					gpointer   data);
+static void      gauss_entry_callback  (GtkWidget *widget,
+					gpointer   data);
+
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,    /* init_proc */
+  NULL,    /* quit_proc */
+  query,   /* query_proc */
+  run,     /* run_proc */
+};
+
+static BlurValues bvals =
+{
+  5.0,  /*  radius  */
+  TRUE, /*  horizontal blur  */
+  TRUE  /*  vertical blur  */
+};
+
+static BlurInterface bint =
+{
+  FALSE  /*  run  */
+};
+
+
+MAIN ()
+
+static void
+query ()
+{
+  static GParamDef args[] =
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
+    { PARAM_INT32, "horizontal", "Blur in horizontal direction" },
+    { PARAM_INT32, "vertical", "Blur in vertical direction" },
+  };
+  static GParamDef *return_vals = NULL;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
+
+  gimp_install_procedure ("plug_in_gauss_iir",
+			  "Applies a gaussian blur to the specified drawable.",
+			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results.",
+			  "Spencer Kimball & Peter Mattis",
+			  "Spencer Kimball & Peter Mattis",
+			  "1995-1996",
+			  "<Image>/Filters/Blur/Gaussian Blur (IIR)",
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_vals,
+			  args, return_vals);
+}
+
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
+{
+  static GParam values[1];
+  GDrawable *drawable;
+  GRunModeType run_mode;
+  GStatusType status = STATUS_SUCCESS;
+  gdouble radius, std_dev;
+
+  run_mode = param[0].data.d_int32;
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+
+  values[0].type = PARAM_STATUS;
+  values[0].data.d_status = status;
+
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+      /*  Possibly retrieve data  */
+      gimp_get_data ("plug_in_gauss_iir", &bvals);
+
+      /*  First acquire information with a dialog  */
+      if (! gauss_iir_dialog ())
+	return;
+      break;
+
+    case RUN_NONINTERACTIVE:
+      /*  Make sure all the arguments are there!  */
+      if (nparams != 6)
+	status = STATUS_CALLING_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  bvals.radius = param[3].data.d_float;
+	  bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
+	  bvals.vertical = (param[5].data.d_int32) ? TRUE : FALSE;
+	}
+      if (status == STATUS_SUCCESS &&
+	  (bvals.radius < 1.0))
+	status = STATUS_CALLING_ERROR;
+      break;
+
+    case RUN_WITH_LAST_VALS:
+      /*  Possibly retrieve data  */
+      gimp_get_data ("plug_in_gauss_iir", &bvals);
+      break;
+
+    default:
+      break;
+    }
+
+  /*  Get the specified drawable  */
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+  /*  Make sure that the drawable is gray or RGB color  */
+  if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
+    {
+      gimp_progress_init ("IIR Gaussian Blur");
+
+      /*  set the tile cache size so that the gaussian blur works well  */
+      gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
+				   gimp_tile_width () + 1));
+
+      radius = fabs (bvals.radius) + 1.0;
+      std_dev = sqrt (-(radius * radius) / (2 * log (1.0 / 255.0)));
+
+      /*  run the gaussian blur  */
+      gauss_iir (drawable, bvals.horizontal, bvals.vertical, std_dev);
+
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
+
+      /*  Store data  */
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data ("plug_in_gauss_iir", &bvals, sizeof (BlurValues));
+    }
+  else
+    {
+      /* gimp_message ("gauss_iir: cannot operate on indexed color images"); */
+      status = STATUS_EXECUTION_ERROR;
+    }
+
+  values[0].data.d_status = status;
+
+  gimp_drawable_detach (drawable);
+}
+
+static gint
+gauss_iir_dialog ()
+{
+  GtkWidget *dlg;
+  GtkWidget *label;
+  GtkWidget *entry;
+  GtkWidget *button;
+  GtkWidget *toggle;
+  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  gchar buffer[12];
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gauss");
+
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+
+  dlg = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (dlg), "IIR Gaussian Blur");
+  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      (GtkSignalFunc) gauss_close_callback,
+		      NULL);
+
+  /*  Action area  */
+  button = gtk_button_new_with_label ("OK");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) gauss_ok_callback,
+                      dlg);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ("Cancel");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  /*  parameter settings  */
+  frame = gtk_frame_new ("Parameter Settings");
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 5);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+
+  toggle = gtk_check_button_new_with_label ("Blur Horizontally");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      (GtkSignalFunc) gauss_toggle_update,
+		      &bvals.horizontal);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label ("Blur Vertically");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      (GtkSignalFunc) gauss_toggle_update,
+		      &bvals.vertical);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
+  gtk_widget_show (toggle);
+
+  hbox = gtk_hbox_new (FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+
+  label = gtk_label_new ("Blur Radius: ");
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+  gtk_widget_show (label);
+
+  entry = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
+  sprintf (buffer, "%f", bvals.radius);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) gauss_entry_callback,
+		      NULL);
+  gtk_widget_show (entry);
+
+  gtk_widget_show (hbox);
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
+
+  return bint.run;
+}
+
+static void
+gauss_iir (GDrawable *drawable,
+	   gint       horz,
+	   gint       vert,
+	   gdouble    std_dev)
+{
+  GPixelRgn src_rgn, dest_rgn;
+  gint width, height;
+  gint bytes;
+  guchar *dest;
+  guchar *src, *sp_p, *sp_m;
+  gdouble n_p[5], n_m[5];
+  gdouble d_p[5], d_m[5];
+  gdouble bd_p[5], bd_m[5];
+  gdouble *val_p, *val_m, *vp, *vm;
+  gint x1, y1, x2, y2;
+  gint i, j;
+  gint row, col, b;
+  gint terms;
+  gint progress, max_progress;
+  gint initial_p[4];
+  gint initial_m[4];
+
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
+  width = (x2 - x1);
+  height = (y2 - y1);
+  bytes = drawable->bpp;
+
+  val_p = (gdouble *) malloc (MAX (width, height) * bytes * sizeof (gdouble));
+  val_m = (gdouble *) malloc (MAX (width, height) * bytes * sizeof (gdouble));
+
+  src = (guchar *) malloc (MAX (width, height) * bytes);
+  dest = (guchar *) malloc (MAX (width, height) * bytes);
+
+  /*  derive the constants for calculating the gaussian from the std dev  */
+  find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
+
+  progress = 0;
+  max_progress = (horz) ? width * height : 0;
+  max_progress += (vert) ? width * height : 0;
+
+  gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, TRUE);
+
+  if (vert)
+    {
+      /*  First the vertical pass  */
+      for (col = 0; col < width; col++)
+	{
+	  for (i = 0; i < height * bytes; i++)
+	    {
+	      val_p[i] = val_m[i] = 0;
+	    }
+
+	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+
+	  sp_p = src;
+	  sp_m = src + (height - 1) * bytes;
+	  vp = val_p;
+	  vm = val_m + (height - 1) * bytes;
+
+	  /*  Set up the first vals  */
+	  for (i = 0; i < bytes; i++)
+	    {
+	      initial_p[i] = sp_p[i];
+	      initial_m[i] = sp_m[i];
+	    }
+
+	  for (row = 0; row < height; row++)
+	    {
+	      terms = (row < 4) ? row : 4;
+
+	      for (b = 0; b < bytes; b++)
+		{
+		  for (i = 0; i <= terms; i++)
+		    {
+		      vp[b] += n_p[i] * sp_p[(-i * bytes) + b] -
+			d_p[i] * vp[(-i * bytes) + b];
+		      vm[b] += n_m[i] * sp_m[(i * bytes) + b] -
+			d_m[i] * vm[(i * bytes) + b];
+		    }
+		  for (j = i; j <= 4; j++)
+		    {
+		      vp[b] += (n_p[j] - bd_p[j]) * initial_p[b];
+		      vm[b] += (n_m[j] - bd_m[j]) * initial_m[b];
+		    }
+		}
+
+	      sp_p += bytes;
+	      sp_m -= bytes;
+	      vp += bytes;
+	      vm -= bytes;
+	    }
+
+	  transfer_pixels (val_p, val_m, dest, bytes, height);
+	  gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+
+	  progress += height;
+	  if ((col % 5) == 0)
+	    gimp_progress_update ((double) progress / (double) max_progress);
+	}
+
+      /*  prepare for the horizontal pass  */
+      gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, TRUE);
+    }
+
+  if (horz)
+    {
+      /*  Now the horizontal pass  */
+      for (row = 0; row < height; row++)
+	{
+	  for (i = 0; i < width * bytes; i++)
+	    {
+	      val_p[i] = val_m[i] = 0;
+	    }
+
+	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
+
+	  sp_p = src;
+	  sp_m = src + (width - 1) * bytes;
+	  vp = val_p;
+	  vm = val_m + (width - 1) * bytes;
+
+	  /*  Set up the first vals  */
+	  for (i = 0; i < bytes; i++)
+	    {
+	      initial_p[i] = sp_p[i];
+	      initial_m[i] = sp_m[i];
+	    }
+
+	  for (col = 0; col < width; col++)
+	    {
+	      terms = (col < 4) ? col : 4;
+
+	      for (b = 0; b < bytes; b++)
+		{
+		  for (i = 0; i <= terms; i++)
+		    {
+		      vp[b] += n_p[i] * sp_p[(-i * bytes) + b] -
+			d_p[i] * vp[(-i * bytes) + b];
+		      vm[b] += n_m[i] * sp_m[(i * bytes) + b] -
+			d_m[i] * vm[(i * bytes) + b];
+		    }
+		  for (j = i; j <= 4; j++)
+		    {
+		      vp[b] += (n_p[j] - bd_p[j]) * initial_p[b];
+		      vm[b] += (n_m[j] - bd_m[j]) * initial_m[b];
+		    }
+		}
+
+	      sp_p += bytes;
+	      sp_m -= bytes;
+	      vp += bytes;
+	      vm -= bytes;
+	    }
+
+	  transfer_pixels (val_p, val_m, dest, bytes, width);
+	  gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+
+	  progress += width;
+	  if ((row % 5) == 0)
+	    gimp_progress_update ((double) progress / (double) max_progress);
+	}
+    }
+
+  /*  merge the shadow, update the drawable  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+
+  /*  free up buffers  */
+  free (val_p);
+  free (val_m);
+  free (src);
+  free (dest);
+}
+
+static void
+find_constants (gdouble n_p[],
+		gdouble n_m[],
+		gdouble d_p[],
+		gdouble d_m[],
+		gdouble bd_p[],
+		gdouble bd_m[],
+		gdouble std_dev)
+{
+  gint i;
+  gdouble constants [8];
+  gdouble div;
+
+  /*  The constants used in the implemenation of a casual sequence
+   *  using a 4th order approximation of the gaussian operator
+   */
+
+  div = sqrt(2 * M_PI) * std_dev;
+  constants [0] = -1.783 / std_dev;
+  constants [1] = -1.723 / std_dev;
+  constants [2] = 0.6318 / std_dev;
+  constants [3] = 1.997  / std_dev;
+  constants [4] = 1.6803 / div;
+  constants [5] = 3.735 / div;
+  constants [6] = -0.6803 / div;
+  constants [7] = -0.2598 / div;
+
+  n_p [0] = constants[4] + constants[6];
+  n_p [1] = exp (constants[1]) *
+    (constants[7] * sin (constants[3]) -
+     (constants[6] + 2 * constants[4]) * cos (constants[3])) +
+       exp (constants[0]) *
+	 (constants[5] * sin (constants[2]) -
+	  (2 * constants[6] + constants[4]) * cos (constants[2]));
+  n_p [2] = 2 * exp (constants[0] + constants[1]) *
+    ((constants[4] + constants[6]) * cos (constants[3]) * cos (constants[2]) -
+     constants[5] * cos (constants[3]) * sin (constants[2]) -
+     constants[7] * cos (constants[2]) * sin (constants[3])) +
+       constants[6] * exp (2 * constants[0]) +
+	 constants[4] * exp (2 * constants[1]);
+  n_p [3] = exp (constants[1] + 2 * constants[0]) *
+    (constants[7] * sin (constants[3]) - constants[6] * cos (constants[3])) +
+      exp (constants[0] + 2 * constants[1]) *
+	(constants[5] * sin (constants[2]) - constants[4] * cos (constants[2]));
+  n_p [4] = 0.0;
+
+  d_p [0] = 0.0;
+  d_p [1] = -2 * exp (constants[1]) * cos (constants[3]) -
+    2 * exp (constants[0]) * cos (constants[2]);
+  d_p [2] = 4 * cos (constants[3]) * cos (constants[2]) * exp (constants[0] + constants[1]) +
+    exp (2 * constants[1]) + exp (2 * constants[0]);
+  d_p [3] = -2 * cos (constants[2]) * exp (constants[0] + 2 * constants[1]) -
+    2 * cos (constants[3]) * exp (constants[1] + 2 * constants[0]);
+  d_p [4] = exp (2 * constants[0] + 2 * constants[1]);
+
+  for (i = 0; i <= 4; i++)
+    d_m [i] = d_p [i];
+
+  n_m[0] = 0.0;
+  for (i = 1; i <= 4; i++)
+    n_m [i] = n_p[i] - d_p[i] * n_p[0];
+
+  {
+    gdouble sum_n_p, sum_n_m, sum_d;
+    gdouble a, b;
+
+    sum_n_p = 0.0;
+    sum_n_m = 0.0;
+    sum_d = 0.0;
+    for (i = 0; i <= 4; i++)
+      {
+	sum_n_p += n_p[i];
+	sum_n_m += n_m[i];
+	sum_d += d_p[i];
+      }
+
+    a = sum_n_p / (1 + sum_d);
+    b = sum_n_m / (1 + sum_d);
+
+    for (i = 0; i <= 4; i++)
+      {
+	bd_p[i] = d_p[i] * a;
+	bd_m[i] = d_m[i] * b;
+      }
+  }
+}
+
+static void
+transfer_pixels (gdouble *src1,
+		 gdouble *src2,
+		 guchar  *dest,
+		 gint     bytes,
+		 gint     width)
+{
+  gint b;
+  gdouble sum;
+
+  while (width --)
+    {
+      for (b = 0; b < bytes; b++)
+	{
+	  sum = src1[b] + src2[b];
+	  if (sum > 255) sum = 255;
+	  else if (sum < 0) sum = 0;
+
+	  dest[b] = (guchar) sum;
+	}
+      src1 += bytes;
+      src2 += bytes;
+      dest += bytes;
+    }
+}
+
+/*  Gauss interface functions  */
+
+static void
+gauss_close_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  gtk_main_quit ();
+}
+
+static void
+gauss_ok_callback (GtkWidget *widget,
+		   gpointer   data)
+{
+  bint.run = TRUE;
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
+gauss_toggle_update (GtkWidget *widget,
+		       gpointer   data)
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
+
+static void
+gauss_entry_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  bvals.radius = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
+  if (bvals.radius < 1.0)
+    bvals.radius = 1.0;
+}

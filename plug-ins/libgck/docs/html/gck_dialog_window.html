@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE></TITLE>
+   <META NAME="Author" CONTENT="Tom Bech">
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; Linux 2.0.27 i586) [Netscape]">
+</HEAD>
+<BODY>
+
+<H1>GCK - General UI functions - Dialog Window</H1>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><A NAME="gck_application_window_new"></A><B><TT>GckDialogWindow *gck_dialog_window_new(name,
+ok_cb, cancel_cb, help_cb)</TT></B></P>
+
+<TABLE BORDER=1 CELLSPACING=5 CELLPADDING=0 >
+<TR>
+<TD></TD>
+
+<TD><B>Type</B></TD>
+
+<TD><B>Variable</B></TD>
+
+<TD><B>Description</B></TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Input:</B></TD>
+
+<TD><TT>char</TT></TD>
+
+<TD><TT>name</TT></TD>
+
+<TD>Name of the dialog window. This will also be the title of the window.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD></TD>
+
+<TD><TT>GtkCallback</TT></TD>
+
+<TD><TT>ok_cb</TT></TD>
+
+<TD>Callback function to invoke when the dialog window &quot;Ok&quot; button
+is pressed.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD></TD>
+
+<TD><TT>GtkCallback</TT></TD>
+
+<TD><TT>cancel_cb</TT></TD>
+
+<TD>Callback function to invoke when the dialog window &quot;Cancel&quot;
+button is pressed.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD></TD>
+
+<TD><TT>GtkCallback</TT></TD>
+
+<TD><TT>help_cb</TT></TD>
+
+<TD>Callback function to invoke when the dialog window &quot;Help&quot;
+button is pressed.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Output:</B>&nbsp;&nbsp;</TD>
+
+<TD><TT><A HREF="http://www.ii.uib.no/~tomb/gcktypes.html#GckDialogWindow">GckDialogWindow
+*</A></TT></TD>
+
+<TD></TD>
+
+<TD>A pointer to a initialized GckDialogWindow structure.</TD>
+</TR>
+
+<TR>
+<TD COLSPAN="4">This function creates and initializes a GckDialogWindow
+structure. This involves creating a dialog window with a work- and actionarea.
+Three buttons are created in the actionarea; &quot;Ok&quot;, &quot;Cancel&quot;
+and &quot;Help&quot;. The workarea is left empty.</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><A NAME="gck_dialog_window_destroy"></A><B><TT>void gck_application_window_destroy(dialog)</TT></B></P>
+
+<TABLE BORDER=1 CELLSPACING=5 CELLPADDING=0 >
+<TR>
+<TD></TD>
+
+<TD><B>Type</B></TD>
+
+<TD><B>Variable</B></TD>
+
+<TD><B>Description</B></TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Input:</B></TD>
+
+<TD><TT><A HREF="http://www.ii.uib.no/~tomb/gcktypes.html#GckDialogWindow">GckDialogWindow
+*</A></TT></TD>
+
+<TD><TT>dialog</TT></TD>
+
+<TD>Pointer to the GckDialogWindow structure to be destroyed.</TD>
+</TR>
+
+<TR ALIGN=LEFT VALIGN=TOP>
+<TD><B>Output:</B></TD>
+
+<TD><TT>void</TT></TD>
+
+<TD></TD>
+
+<TD>This function doesn't return any value.</TD>
+</TR>
+
+<TR>
+<TD COLSPAN="4">Frees all memory associated with the GckDialogWindow structure
+and destroys the window. This function is typically called when the user
+has hit the &quot;Ok&quot; or &quot;Cancel&quot; button.</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR WIDTH="100%"></P>
+
+<P><I><FONT SIZE=-1>Last changed 16-Dec-1996 by Tom Bech (tomb@ii.uib.no)</FONT></I></P>
+
+</BODY>
+</HTML>

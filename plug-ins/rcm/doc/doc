@@ -1,0 +1,20 @@
+pavel@ml.com
+
+Change  rcm_change_me.h to the directory where you're gonna place the pixmaps!
+
+
+
+Hi,
+
+Thanks for using the Colormap Rotation Plug-In.
+
+I have never written Makefiles before so the one I'm including is decidedly 
+horrible. But it does the job for me. It should work for you, too!
+
+Enjoy!
+
+
+Pavel
+
+
+Please send questions, comments, and suggestions to pavel@ml.com

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+#  Script to perform the default installation steps for the
+#   specified user home directory.
+#
+#  1) Create ~/.gimp if it doesn't exist
+#  2) Copy system gimprc file to ~/.gimp
+#  3) Create brushes, gradients, palettes, patterns, plug-ins subdirs
+#  4) Create the tmp subdirectory for disk-swapping undo buffers
+#  5) Copy the palette files in system palette directory
+#
+
+echo "mkdir $2"
+mkdir $2
+
+echo "cp $1/gimprc $2/gimprc"
+cp $1/gimprc $2/gimprc
+
+echo "cp $1/gtkrc $2/gtkrc"
+cp $1/gtkrc $2/gtkrc
+
+echo "mkdir $2/brushes"
+mkdir $2/brushes
+echo "mkdir $2/gradients"
+mkdir $2/gradients
+echo "mkdir $2/palettes"
+mkdir $2/palettes
+echo "mkdir $2/patterns"
+mkdir $2/patterns
+echo "mkdir $2/plug-ins"
+mkdir $2/plug-ins
+echo "mkdir $2/gfig"
+mkdir $2/gfig
+echo "mkdir $2/tmp"
+mkdir $2/tmp
+
+echo "cp $1/palettes/* $2/palettes"
+cp $1/palettes/* $2/palettes

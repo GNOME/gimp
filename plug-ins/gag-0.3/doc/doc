@@ -1,0 +1,107 @@
+ I really have to write here something... later :-)
+ I am really sorry for my english... - anybody want to write tutorial and docs?
+
+FAQs & FAAs:
+
+Q) How to compile?  
+A) I expect that you know (or find) the answer to this question - well, it's
+developers version.. Do not expect too much from me!  For now you must have
+sizeof(double)==8 (for xor, or and and) - I fix this later.
+
+Q) How to install GAG-plug-in for one user?
+A) Copy gag-plugin binary to your local plug-in directory (for example ~/.gimp/
+   plug-ins/), gag-library to ~/.gimp/gag-library and then set gag-library in
+   gimprc file (ie add following line
+
+     (gag-library "${gimp_dir}/gag-library"} 
+
+Q) How to install GAG-plug-in for all users?
+A) It is similar to installing GAG-plug-in for one user - also do not forget to
+   change "user_install" script - so all users have own copy of gag-library
+ 
+Q) Hey, I can not do anything in GAG!  
+A) Feel adventurous! Do experiments! Click with mouse on one of nine
+pools. Right button of mouse! 
+
+Q) I expected much more from free software than "Feel adventurous"!  
+A) Ok, ok. Generate one or more random individual (or specify them by hand with
+expression. Be careful, expressions have scheme-like syntax). Then set weight -
+weight means how much you like such picture (set higher value of weight for
+pictures which you prefere...) Finally press button `New generation'. That's
+all.
+
+Q) Supported functions?
+A) See expressions.tmpl
+
+Q) Why GAG?
+A) I really do not know...
+
+Q) Algorithms?
+A) GAG uses genetic algorithms - for more info about them see
+
+      http://www.aracnet.com/~wwir/NovaGenetica/
+
+   Usage of genetic algorithms in task of generating nice pictures was firstly
+described in:
+
+	Karl Sims: Artificial Evolution for Computer Graphics, SIGGRAPH 1991
+	(Computer Graphics, vol 25, num 4, pages 319-328)
+
+Q) Some examples of evolved expressions?
+A) [simple but nice]
+(-
+  (cos
+    (x
+    )
+  )
+  (abs
+    (bw-noise-xy (x) (y)
+    )
+  )
+)     
+
+[for more examples see GAG library]
+
+Q) Is GAG free?
+A) Of course - it is distributed under GNU General Public License (see
+http://www.gnu.org). All users are encouraged to enhance current code and send
+improvements to author. (Also please send me any your comment, nice picture,
+bug, constructive critique,...)
+
+Short list of authors, contributors or active betatesters:
+
+  Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz)
+  Robert Saunders (rob@arch.usyd.EDU.AU)
+  Marcelo de Gomensoro Malheiros (malheiro@dca.fee.unicamp.br)
+
+Thanks to:
+
+  Karl Sims for his beautiful idea.
+
+  Linus Torwalds for Linux
+
+  Richard Stallman & many ohers for GNU, gcc, EMACS,...
+
+  The XFree86 Project Inc for their X11 server
+
+  Peter Mattis & Spencer Kimball for GIMP & GTK
+
+Adverts:
+
+  Have a look at homepage of XaoS - portable realtime fractal zoomer by Honza
+Hubicka!
+
+       http://www.paru.cas.cz/~hubicka/XaoS/
+
+------------------------------------------------------------------------------
+Daniel Skarda                               0rfelyus@atrey.karlin.mff.cuni.cz
+ Vesinova 16 
+100 00 Prague 10 
+Czech Republic 
+                        
+
+ugly homepage:
+     http://atrey.karlin.mff.cuni.cz/~0rfelyus 
+ftp archive:
+     ftp://atrey.karlin.mff.cuni.cz/pub/local/0rfelyus
+

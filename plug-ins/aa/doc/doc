@@ -1,0 +1,11 @@
+This plugin isnt compliled by default with GIMP at the moment due to
+the moving target status of the lib it is based on. But we included it for
+now since it is easier than removing it. If you want to compile it, you
+probabaly need to get the latest version of aa-lib from:
+
+So dont send us or Tim newsome bug reports about this yet.
+
+	ftp://ftp.ta.jcu.cz/pub/aa
+
+
+

@@ -1,0 +1,23 @@
+
+This is the first real release of gimptcl-1.0, distributed in
+the FreeBSD gimp-0.99.14 port.
+
+It comes with three sample plug-ins.
+ * Consolio, an interactive gimptcl shell
+ * pdb-help, an interactive thing for browsing
+   the pdb and running procedures
+ * stained-glass, a simple (and ugly) plugin for creating
+   stained glassy backgrounds.
+
+The ``scripts'' directory contains plug-ins that are real Tcl scripts.
+
+The ``frags'' directory contains tcl procs and fragments that I've used
+for testing the interpreter.  I usually just source them from inside
+consolio, then call the procs interactively.
+
+Unfortunately I'm not very artistic, so there's no pretty pictures
+to look at.
+
+Eric L. Hernes
+erich@rrnet.com
+

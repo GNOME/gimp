@@ -1,0 +1,196 @@
+# Lines that start with a '#' are comments.
+# Blank lines are ignored.
+
+# The variable gimp_dir is set to either the interned value
+# @gimpdir@ or the environment variable GIMP_DIRECTORY.  If
+# the path in GIMP_DIRECTORY is relative, it is considered
+# relative to your home directory.
+
+(prefix "@prefix@")
+(exec_prefix "@exec_prefix@")
+(gimp_data_dir "@gimpdatadir@")
+(gimp_plugin_dir "@gimpplugindir@")
+
+# Set the temporary storage directory...files will appear here
+# during the course of running the gimp.  Most files will disappear
+# when the gimp exits, but some files are likely to remain,
+# such as working palette files, so it is best if this directory
+# not be one that is shared by other users or is cleared on machine
+# reboot such as /tmp.
+(temp-path "${gimp_dir}/tmp")
+
+# Set the swap file location. The gimp uses a tile based memory
+# allocation scheme. The swap file is used to quickly and easily
+# swap files out to disk and back in. Be aware that the swap file
+# can easily get very large if the gimp is used with large images.
+# Also, things can get horribly slow if the swap file is created on 
+# a directory that is mounted over NFS.  For these reasons, it may 
+# be desirable to put your swap file in "/tmp".
+(swap-path "${gimp_dir}")
+
+# Set the brush search path...this path will be searched for valid
+#  brushes at startup.
+(brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
+
+# Specify a default brush. If none is specified it defaults to the
+#  "1circle.gbr" brush which is just a single pixel sized brush.
+#  The brush is searched for in the brush path.
+(default-brush "19fcircle.gbr")
+
+# Set the pattern search path...this path will be searched for valid
+#  patterns at startup.
+(pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
+
+# Specify a default pattern.
+#  The pattern is searched for in the specified pattern paths.
+(default-pattern "wood2.pat")
+
+# Set the palette search path...this path will be searched for valid
+#  palettes at startup.
+(palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
+
+# Specify a default palette.
+#  The pattern is searched for in the specified pattern paths.
+(default-palette "Default")
+
+# Set the gradient search path...this path will be searched for valid
+#  gradients at startup.
+(gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
+
+# Specify a default gradient.
+#  The gradient is searched for in the specified gradient paths.
+(default-gradient "German_flag_smooth")
+
+# Set the plug-in search path...this path will be searched for
+#  plug-ins when the plug-in is run.
+(plug-in-path "${gimp_dir}/plug-ins:${gimp_dir}/plug-ins/script-fu:${gimp_plugin_dir}/plug-ins")
+
+# Set the path for the script-fu plug-in.  This value is ignored by
+#  the GIMP if the script-fu plug-in is never run.
+(script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
+
+# The tile cache is used to make sure the gimp doesn't thrash
+# tiles between memory and disk. Setting this value higher will
+# cause the gimp to use less swap space, but will also cause
+# the gimp to use more memory. Conversely, a smaller cache size
+# causes the gimp to use more swap space and less memory.
+# Note: the gimp will still run even if `tile-cache-size' is
+# set to 0. The actual size can contain a suffix of 'm', 'M',
+# 'k', 'K', 'b' or 'B', which makes the gimp interpret the
+# size as being specified in megabytes, kilobytes and bytes
+# respectively. If no suffix is specified the size defaults to
+# being specified in kilobytes.
+(tile-cache-size 10m)
+
+# Speed of marching ants in the selection outline
+#  this value is in milliseconds
+#  (less time indicates faster marching)
+(marching-ants-speed 300)
+
+# Set the number of operations kept on the undo stack
+(undo-levels 5)
+
+# Set the color-cube resource for dithering on 8-bit displays
+#  The 4 values stand for Shades of red, green, blue and grays
+#  Multiplying the # of shades of each primary color yields
+#  the total number of colors that will be allocated from the
+#  gimp colormap.  This number should not exceed 256.  Most of the
+#  colors remaining after the allocation of the colorcube
+#  will be left to the system palette in an effort to reduce
+#  colormap "flashing".
+(color-cube 6 6 4 24)
+
+# Install a GIMP colormap by default -- only for 8-bit displays
+# (install-colormap)
+
+# Specify that marching ants for selected regions will be drawn
+#  with colormap cycling as oposed to redrawing with different stipple masks
+#  this color cycling option works only with 8-bit displays
+# (colormap-cycling)
+
+# Tools such as fuzzy-select and bucket fill find regions based on a
+#  seed-fill algorithm.  The seed fill starts at the intially selected
+#  pixel and progresses in all directions until the difference of pixel
+#  intensity from the original is greater than a specified threshold
+#  ==> This value represents the default threshold
+(default-threshold 15)
+
+# There is always a tradeoff between memory usage and speed.  In most
+#  cases, the GIMP opts for speed over memory.  However, if memory is
+#  a big issue, set stingy-memory-use
+# (stingy-memory-use)
+
+# When zooming into and out of images, this option enables the
+#  automatic resizing of windows
+# (allow-resize-windows)
+
+# Context-dependent cursors are cool.  They are enabled by default.
+#  However, they require overhead that you may want to do without.
+#  Uncomment this line to disable them.
+# (no-cursor-updating)
+
+# Layer preview sizes:
+#  none:    no previews in layers dialog/layer selector
+#  small:   32x32
+#  medium:  64x64
+#  large:   128x128
+#  #:       #x#
+(preview-size small)
+
+# Controlling ruler visibility
+#  The default behavior is for rulers to be ON
+#  This can also be toggled with the View->Show Rulers command or shift+control+r
+# (dont-show-rulers)
+
+# Ruler units
+#  The units of rulers can be one of: (pixels inches centimeters)
+#  The default is pixels
+(ruler-units pixels)
+
+# Disable auto saving
+#  Just uncomment the line below...
+# (dont-auto-save)
+
+# Disable confirmation before closing an image without saving
+#  Just uncomment the next line
+# (dont-confirm-on-close)
+
+# Setting the level of interpolation
+#  Uncommenting this line will enable cubic interpolation.
+#  By default, GIMP uses linear interpolation, which is faster, but has poorer quality
+# (cubic-interpolation)
+
+# Set the gamma correction values for the display
+#  1.0 corresponds to no gamma correction.  For most displays,
+#  gamma correction should be set to between 2.0 and 2.6
+#  Run the utility "gamma_correct" to determine appropriate values
+#  for your display.
+#
+# One important item to keep in mind:  Many images that you might
+#  get from outside sources will in all likelihood already be
+#  gamma-corrected.  In these cases, the image will look washed-out
+#  if the gimp has gamma-correction turned on.  If you are going
+#  to work with images of this sort, turn gamma correction off
+#  by removing this line, or setting the values to 1.0.
+#  gamma-correction 1.0
+#  gamma-correction 2.0
+#                 ___
+(gamma-correction 1.0)
+
+# Set the manner in which transparency is displayed in images
+#  Transparency type can be one of:
+#    0: Light Checks
+#    1: Mid-Tone Checks
+#    2: Dark Checks
+#    3: White Only
+#    4: Gray Only
+#    5: Black Only
+#  Check size can be one of:
+#    0: Small
+#    1: Medium
+#    2: Large
+(transparency-type 1)
+(transparency-size 2)
+
+# gfig pattern directory
+(gfig-path "${gimp_dir}/gfig")

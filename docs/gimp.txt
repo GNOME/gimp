@@ -1,0 +1,593 @@
+GIMP Documentation
+outline of basic information for manual/tutorial
+
+Main sections:
+
+Introduction
+	what is the gimp?
+	a brief history -> current release
+	what is it used for?
+	what isn't it used for?
+
+Setup
+	acquisition
+		ftp sites:  main, alternatives (sunsite, ftp.x.org, linux distributions)
+		discussion of online resources such as homepage and homepages
+		of various contributors
+		binary vs. source distributions
+	installation
+		if binary, make install
+		if source, make config, give details of compilation, make, make install
+		gimp library directory/personal gimp directories
+	gimprc
+		location of default gimprc
+		the various gimprc options (descriptions for each & default values)
+	discussion of tiles/swap
+		what are tiles?
+		why are they useful to the gimp?
+		what are reasonable settings for the tile cache size?
+		what is the gimp swapfile/tmp directory?
+		where should it be?  (on /tmp or in ~/.gimp)
+	discussion of color resolutions
+		what are color resolutions?
+		how do you find out which color resolutions are available to you?
+		what color resolutions does the gimp require?
+		why does the gimp "dither" in 8-bit color?
+		why do the colormaps change between grayscale and color in 8-bit
+		why don't indexed images use their own palette?
+		discuss other alternatives for viewing images under X windows (xv)
+		the color cube resource: how can the shades of color be controlled in 8-bit?
+	discussion of fonts (type1/truetype/bitmap/standard X11)
+		how are fonts used in the gimp?  (gimp requires X to render them)
+		what fonts can X render?  (type1/bitmap)
+		what fonts come standard with X?
+		where can more fonts be obtained?
+
+Images
+	the toolbox
+		foreground
+		background
+		changing the colors/color select dialog
+		main menu
+		tool descriptor field
+	new
+		gimp works on "images" which are defined by a width, height, depth,
+		a selection mask, a set of layers, and a set of auxillary channels
+		image types: what are the options?
+		what are the image types used for
+		why can't an indexed image be created?
+		why are indexed images a pain?
+		how should indexed images be dealt with?
+		a short example of "new" command
+		image menus
+		scrollbars
+		rulers (options for hiding/showing rulers)
+		ruler units (in gimprc)  {pixels, inches, centimeters}
+		concepts of layers
+		bucket fill the new layer
+		add a layer, blend it
+	transparency
+		what is it?
+		how is it used?
+		how can its appearance be controlled?  (via preference dialog/gimprc)
+		what file formats support it?
+	undo/redo
+		multiple (can be set via gimprc and preferences)
+		on a per-image basis
+	loading/saving
+		loading and saving of images is accomplished through plug-ins
+		most load/save plug-ins have no knowledge of the full set of
+		attributes which the gimp needs for an image.  In fact, most are
+		limited to saving only 1 layer, and in some cases, an alpha channel
+		such plug-ins are limited by their respective file formats (jpeg, tiff, etc)
+		these plug-ins will save only the active layer of an image
+		the xcf file format, however, can save all pertinent information about
+		an image so that it can be stored and retrieved in full
+	viewing
+		viewing an image can be efficiently accomplished through a variety of features
+		the image can be zoomed in or out with the magnify tool and the zoom
+		hot-keys and menu-items
+		the zoomed image can be panned using the scrollbars at the sides of the image
+		or the middle mouse button
+		<possibly discuss the navigator here, if implemented>
+		multiple views can be created to view the image at different zoom ratios
+		the image window can be expanded to reveal hidden areas
+		and if necessary, the shrink wrap hot-key/menu-item can be invoked
+		to limit the window borders to the image extents.
+		the "always resize" option of the magnify tool and the gimprc can
+		be enabled to cause the window to resize appropriately for each successive zoom
+	resizing/scaling
+		images can be resized or scaled
+		resizing involves changing the width and height of the image by either
+		cropping or adding area to its contents
+		scaling involves actually changing the contents of the image, either
+		"stretching" or "compressing" the layers and channels to fit to the
+		new size
+
+Selections
+	introduction
+		what are selections?
+		so is a selection just another channel?  (what makes it special)
+		how can selections be created?
+		why are selections useful--they constrain operations by
+		allowing regions of an image to be specified
+		denoted by a boundary of marching ants--speed controlled in gimprc file
+		selection mask extends over entire image
+		if a layer in the image covers only part of the image extents, then
+		the parts of the selection boundary which lie outside the active layer will be
+		drawn, but will not march.
+	brief description of selection tools
+	pointer to channels section for information on how to "paint" selections
+	<possibility of "quit edit" mode for masks here>
+	common operations on selections
+		feathering -- like a gaussian blur (can also be done with selection tools)
+		bordering -- description of the algorithm
+		sharpen -- gives all points of the selection values of 0 or 255
+		invert -- gives each point of the selection the value = (255 - value)
+		stroke -- uses the current brush and foreground color and "strokes"
+			the outline of the current selection
+		clear -- if there is a selection, this clears the selected area of the active layer.
+			if the active layer has an alpha channel, this clears to transparent.
+			if not, this clears to the background color.
+			if there is no selection, this affects the entire image
+		fill -- similar to clear, except that it always fills to the background
+			color.
+
+Tools
+	what are tools?
+		typically activated from toolbox, hot keys or menu items
+		only one active at a time
+		discussion of context sensitive cursors
+	the tools dialog
+		what is it?
+		double clicking on the tool icon
+		selecting from the dialogs menu
+	what are the common features of their usage:
+		always invoked with the left mouse button, and can be cancelled
+		by pressing the right mouse button before you release the left
+		shift, control keys are often used to modify the behavior of the current
+		tool
+	selection tools
+		rectangular:  creates rectangular regions of selection which can be
+		added, subtracted, or used to replace the current selection.
+		holding down the shift and control keys constrains the region to a square
+		elliptical:  creates elliptical selections similar to rectangular.  holding the
+		shift and control keys creates circles.  this selection tool has an antialiasing
+		option which is on by default and creates selections which appear smoother
+		but contain intermediate selection values.  that is, there are points in the
+		selection which aren't completely "on" or "off".
+		freehand: can create any kind of selections, but requires a steady hand
+		possibility here for the (dynadraw option for much smoother input).  when
+		the left mouse button is released, the created polygon is closed automatically.
+		there is an antialiasing option for this tool which produces smoother selections.
+		bezier:  the bezier selection tool can be used to create either polygonal or curved
+		regions of selection.  There are typically two stages to bezier selection.  the first
+		involves placing bezier control points.  control points are point which the final
+		curve will be constrained to pass through.  these should be placed on the edges
+		of the boundary which is desired.  no selection can be made until a final control
+		point is place atop the first control point.  a selection can be made by clicking
+		in the interior of the polygon.  each control point has two additional points which
+		control the curve segment which passes through.  these two additional points can
+		be manipulated by dragging on the control point.  holding down shift while
+		dragging constrains the movement to just one of the additional control points.
+		holding down the "control" key while dragging one of the original control points
+		translates that point.  the bezier tool has an antialiasing feature which is useful
+		for producing smooth output.
+		fuzzy:  the fuzzy selection tool is invoked by left-clicking in a region of interest
+		it works using a seed fill algorithm and expands outwards from the initial point
+		to adjacent pixels with similar color.  its expansion is limited by a threshold
+		parameter which limits the acceptable difference between neighboring pixels.
+		this tool also contains an antialias option which, depending on the underlying
+		image, can produce smoother selections.  this tool also has an option "sample merged"
+		which specifies that the underlying pixel information is to be taken from the image
+		as it appears to the user, and not just from the active layer or channel
+		holding down the left mouse button and dragging allows the threshold parameter
+		to be dynamically adjusted.  moving the mouse left or up decreases the threshold;
+		moving the mouse right or down, increases.
+		intelligent scissors:  take the shit i wrote a long time ago
+		by-color:  this tool is invoked not through the toolbox, but through the menus
+		it selects in a manner similar to the fuzzy selection tool, except that it searches the
+		entire image for pixels of color similar to the initial point, instead of doing a seed
+		fill.
+		give an explanation of the by-color-select dialog and its uses
+		for all selection tools, the produced region replaces the current selection by default
+		however, holding down shift will "add" the new selection to the current
+		holding down control will "subtract" the new selection from the current
+		all selection tools and the move tool will translate the current selection if
+		the "alt" key is depressed.
+	magnify:  allows easy zooming on portions of the image.  a mouse click centers
+		at the mouse click and zooms in one step.  a shift-click centers at the
+		mouse position and zooms out one step
+		clicking and dragging with the mouse highlights an approximate
+		rectangular area which will be fitted as closely as possible to the
+		size of the window.
+	move tool: primarily deals with layer translation including floating selections
+		can be used to move selections when the "alt" key is depressed
+	crop: crops through all layers, channels and selection mask
+		<possibly an option for cropping only the current layer>
+		operation of cropping extents  (dragging vs expanding/contracting)
+	transform tools:
+		discussion about the method of operation of transform tools
+		they float the current selection if there is one and transform the contents
+		if there is no current selection mask, they simply transform the active layer
+		if there is no selection mask and a channel is active, they have no effect
+		with the exception of the flip tools, all transforming tools pop up a dialog
+		box which gives information on the current transformation.
+		with the exception of the flip tools, all transformations can be done with
+		or without smoothing.  smoothing results in a better final result, but
+		takes additional time and can possibly introduce intermediate shades
+		of the original colors to the final product.  Smoothing cannot be used
+		with indexed images.
+		the degree (quality) of the smoothing algorithm can either be linear
+		or cubic.  cubic takes substantially more time but yields superior results.
+		the degree of smoothing can be set as an option in the gimprc file.
+		flip horz:  flips horizontally
+		flip vert: flips vertically
+		rotate: rotates.  shift constrains the angle of rotation to 5 degree intervals
+		scale:  scales.  shift constrains the current height.  control constrains the
+		current width.  shift-control constrains the original aspect ratio
+		shear:  shears.  the direction of the shear (either horizontal or vertical)
+		is determined by the direction the mouse is first dragged in
+		perspective:  allows the rectangular region to be mapped into any arbitrary
+		quadrilateral.  the corners of the rectangle can be dragged to any new locations
+		and the resulting region is the mapping of the rectangle into the new quadrilateral
+	bucket fill: if there is a selection, fills inside the selection bounds.  if there is no selection,
+		executes a seed fill from the point the mouse was initially clicked in.  in the case of
+		no selection, an antialiasing parameter may be set which can yield better
+		results in the final fill.  This option is similar to the one for the fuzzy selection tool.
+		the bucket fill tool fills an area with the foreground color.  If the shift key is depressed
+		then the background color is used as the fill color.
+		patterns are used in conjunction with the bucket tool and are tiled to fill the
+		area.  pattern dialog allows the selection of an active pattern
+		the behavior of the bucket fill tool can be selected from the tools dialog
+		to specify either pattern filling or color filling.
+		the pattern dialog can be displayed from the dialogs submenu
+		patterns are found in the directories listed in the gimprc
+		new patterns can be defined by saving an image in one of the searched
+		directories in the gimp pattern format.
+		the list of directories can be reparsed at any time with the refresh button
+		description of paint modes--tie in to paint tools/blend (they all use them too)
+		bucket fills can also be done with a specified opacity which controls how the
+		paint being applied from the tool interacts with the existing image
+	blend:  blend typically works by filling from the foreground to the background color
+		the tool is activated by clicking and dragging in the desired direction and
+		then releasing.  while dragging, a rubber-banded line will appear which
+		has different meanings depending on the current blending mode
+		there are a number of different blend modes including
+			linear: perpendicular lines to the drag line from foreground to background
+			bilinear: perpendicular lines to the drag line from foreground to background
+				 in both directions
+			radial: concentric circles outwards from the starting of the drag line to the end
+			square:  concentric squares outwards starting with FG and ending with BG
+			conical (asymmetric):  cone with rays extending outwards from the
+				drag line's starting point.  length of drag line has no meaning
+			conical (symmetric): cone of rays goes from fg to bg in both directions
+			shapeburst (angular, spherical, dimpled): shapeburst assigns a color
+				to pixels somewhere between fg and bg depending on how
+				far the pixel is from the nearest edge of the selection
+		blend, like bucket fill has both a paint mode and an opacity
+		blend does not necessarily work between the foreground and background
+		colors.  the gradient editor can be used to construct arbitrarily complex fades
+		between as many colors as desired.
+		complete description of gradient editor
+		maybe a note about how all of the blend modes assign a value between 0 and 1
+		for each considered pixel and in the case of a simple blend, this corresponds to
+		a color intermediate to bg and fg.  in the case of a custom blend, it corresponds
+		to a point on the collection of segments defined in the gradient editor.
+		blends can be done in RGB space, HSV space, and from the fg color to transparent
+	painting tools
+		all painting tools are applied using the left mouse button and dragging
+		paint is then applied as though the mouse cursor were a paintbrush
+		applied paint can be blended with the underlying image using a number
+		of different modes (as in bucket fill/blend)
+			normal: the color being applied is independent of the existing image
+			addition: the color is added to the existing
+			subtract: color is subtracted
+			multiply: color is multiplied, result is always darker
+			screen: inverse of multiply, result is always lighter
+			color only: hue and saturation of color are used, existing lightness kept
+			hue only: only hue of color is used
+			value only: only value is used
+			saturation only: only saturation is used
+			behind: color is applied "behind the existing image" meaning that
+				painting only affects parts of the image which have some
+				transparency
+			lighten only: color is applied only if its value exceeds existing
+			darken only: color is applied only if its value doesn't exceed existing
+		whatever sort of paint the painting tool is applying (this can even be "erasing"
+		paint, in the case of the eraser tool), the application is limited by a brush mask.
+		a brush mask is a grayscale image which determines the amount of paint to
+		apply at each stroke.
+		there are a number of brush masks that come with the gimp
+		brush masks are found from a list of directories specified in the gimprc
+		brush masks can be created by saving a grayscale image with the gimp brush
+		file loader/saver
+		brush masks can be selected using the brush dialog which is invoked from
+		the dialogs submenu.
+		complete description of the brush dialog
+			set paint mode
+			paint opacity
+			brush name, width, height, appearance
+			brush spacing
+			refresh feature for researching the brush paths
+		when using indexed images, all brush masks are converted from grayscale
+		to black and white so that additional colors are not introduced into the image
+		the paint tools are as follows:
+
+		paintbrush: applies the foreground color.  a fade out parameter can be
+		set in pixels which specifies how long a stroke can be before it begins to fade
+		to transparency
+		pencil: similar to paintbrush, but it uses non-antialiased brush masks for
+		precise work which requires absolute pixel accuracy
+		eraser:  the eraser tool does not apply paint, but removes it.  if an image has
+		an alpha channel, paint is removed in favor of transparency.  if an image does
+		not have an alpha channel, the eraser tool is similar to the paintbrush, but
+		paints in the background color.
+		airbrush:  the airbrush tool paints in the foreground color, but unlike the
+		paintbrush which is constrained to apply an even coating of paint during
+		a single stroke, the airbrush can apply as much paint as desired.  a pressure
+		parameter controls how quickly paint is applied, and a rate parameter controls
+		how quickly paint is applied when the mouse is stationary.
+		clone:  the clone tool works by transfering paint from a source to a specified
+		destination.  the source can either be an image or a pattern.  the type of source
+		is selected through the clone tool dialog.  if the source is an image, the actual
+		source coordinates can be specified by shift clicking the mouse
+		at the appropriate location.  then, when painting, the image at the
+		source coordinates is effectively copied from the source to the destination.
+		cloning from image to image automatically adjusts between the different
+		image types (ie grayscale-> RGB, RGB->indexed).  The RGB->indexed
+		conversion is complicated and can slow down the operation of the tool
+		at times.  when cloning from image to image, the source and destination
+		can either be the same image or different images.  if the clone source type
+		 is a pattern, the active pattern is used as a source of pixels to paint to the
+		destination.  the active pattern is selected the same way as with bucket fills.
+		convolve:  convolving can involve either sharpening or blurring.  a
+		pressure parameter in the convolve dialog allows the degree of sharpening
+		and blurring to be set.
+
+Floating Selections
+	floating selections are temporary layers which are "floating" above another layer
+	or channel.  only one floating selection at a time may exist in an image.  floating selections
+	appear in layers dialog as a temporary icon, but can be treated in many respects
+	like a normal layer in the image (ie, opacity, combination mode)
+	can't be raised or lowered, given layer masks, etc.
+	created by pasting, floating a selection
+	introduce concept of global edit buffer
+	the edit/copy command saves region inside current selection
+	the edit/cut command save region inside current selection and extracts
+	the contents from the active drawable.  if the layer has an alpha channel, extraction
+	yields transparent pixels.  otherwise, extraction yields the background color.
+	if there is no selection, edit/cut copies and removes the entire layer or channel
+	edit/paste copies the contents of the global edit buffer into an image.
+	this stage automatically takes care of any conversions between image types
+	when the contents of the global edit buffer are pasted, any current selection
+	is removed
+	edit/paste has a special option "paste into" which does not remove the current selection
+	the appearance of floating selections--marching ants
+	if there is a selection with a floating selection, the boundary of the selection does not march
+	the selection mask acts as a mask when compositing the floating selection to the image. that is:
+	any areas of the floating selection which lie within the selection mask are visible,
+	while any areas which lie without the selection mask are masked out.
+	if edit/paste or select/float are invoked while a floating selection exists, the current
+	floating selection is "anchored" to the image
+	the floating selection can be anchored at any time (which simply means it is composited
+	permanently with the image) by clicking outside its boundary, or by invoking select/anchor
+	the move tool translates floating selection exactly as it translates layers
+	assuming no selection exists, transform tools transform the entire floating selection,
+	yielding a new one.
+	named buffers allow multiple edit buffers which can be recalled by name
+
+Layers
+	introduction
+		layers are the basic building block of images
+		when a new image is created, a default layer is created
+		layers can have any extents relative to the image
+		image is like a frame, layers are cellophane overlays
+		layers have transparency, except for the bottommost layer, which doesn't necessarily
+		layers are composited with composite modes and opacities to form the final image
+		layers allow separate elements of an image to remain independent
+		for a final image, layers are composited into a final image
+	the layers dialog (blending mode, opacity, ordering, visibility, activation, attributes)
+		the layers dialog controls the layer compositing
+		the active layer is the one which is highlighted
+		when a tool is used, the active layer is the one affected
+		the active layer can be set by clicking in the list box item
+		the option menu controls the blending mode, (list all modes, uses)
+		the opacity slider allows the overall transparency of a layer to be set
+		each layer item has two icons on the left
+			the first is a small eye, which controls the visibility of a layer
+			the visibility allows layers to be hidden for clarity
+			the second is a fleur, which controls layer "linkage"
+			layer linkage is a feature which allows multiple layers to
+			be translated simultaneously with the active layer
+		layer list items are highlighted when active and their order in the
+		list denotes the composite order.  composition proceeds from bottom to top
+	layer select feature
+		like the windows 3.1 task manager
+		shift-tab switches between layers
+		works like a stack.  last visited layer is the next to pop up
+	layer previews
+		the size of layer previews in the layer selector and the layers dialog
+		can be controlled via the gimprc with the preview size setting
+		smaller preview sizes are often not quicker to calculate, but do require
+		less memory and allow more layers to be displayed simultaneously
+		set layer preview size to "none" for efficiency
+	merging
+		layers are merged by combining the visible layers
+		can be constrained by: image size, bottommost layer, or expanded as necessary
+	flattening
+		flattening is similar to merging, but removes transparency, and limits to image size
+	delete
+		removes the active layer
+	duplicate
+		makes a duplicate of the active layer, new layer is inserted above the active layer
+	new
+		new layer: specify size, name
+	resizing
+		layer can be resized so that additional border space is available, or the
+		layer's contents can be cropped.
+		dialog allows the contents of the layer to be positioned within the new layer
+	scaling
+		the layer is scaled to a new size
+	lowering/raising
+		allows the layers to be reordered
+	preserve transparency
+		an option which restricts all paint operations so that they have
+		no affect on the transparency of the layer
+	layer masks (all the modes of operation)
+		layer masks are additional alpha channels for layers.
+		they are essentially grayscale images with the same extents as the layer
+		a layer is limited to at most one
+		they allow independent localized changes to transparency
+		control-click in the layer mask preview toggles the activation
+			this creates a red border around the layer mask preview
+		shift-click makes the layer mask visible instead of the layer
+			this creates a green border around the layer mask preview
+		to toggle between editing the layer mask or the layer itself, click the previews
+		a border denotes which is currently active
+	layer mask creation
+		a layer mask is created for the active layer by selecting the layer mask menu item
+		the initial layer mask can be completely white (all areas of the layer will be visible)
+		completely black (the entire layer is invisible)
+		or set initially to the layer's alpha channel (useful for some effects)
+	layer mask application
+		choosing the layer mask apply menu item removes the layer mask
+		a choice is given between apply or discard.
+		apply causes the layer mask to be composited with the layer's alpha channel
+		discard removes the layer mask as though it never existed
+	layer mask restrictions
+		cannot transform a layer with a layer mask
+		layer masks cannot be given to floating selection layers
+	layer alpha to selection operation
+		the select/layer alpha command causes a layer's alpha channel to be
+		used as the basis for the image's selection mask
+
+Channels
+	introduction
+		the two kinds of channels (image components, auxillary channels)
+		selection masks are channels
+	image components
+		for each type of image, the components are the independent
+		channels.  for RGB: red, green, blue.  grayscale and indexed have 1 component
+		alpha channels of images are not considered a component for the purposes of
+		discussing channels
+	auxillary channels
+		auxillary channels are not involved with the image.
+		they are used for storing selection masks and editing them as though
+		they were images.
+		they can be made visible by giving them a color and opacity.
+		they are then composited on top of the layers composite
+	interaction between active layer/active channel(s)
+		any combination of image components may be active at a given
+		time.  the activation of image components acts to constrain the
+		application of paint to the active layer.
+		if a layer is active, no auxillary channels can be active
+		if an auxillary channel is active, no layers are active, and the
+		image components are insensitized
+	the channels dialog
+		invoked from the dialogs menu.
+		for each image, the image components are displayed first
+		auxillary channels are then displayed
+		each item has one icon on the left of a small eye and controls the
+		visibility of the channel or component
+		new
+			creates a new auxillary channel
+			image components cannot be created
+		duplicate
+			duplicates the current channel.  this can be done for image
+			components and auxillary channel.   the result is an auxillary channel
+		delete
+			deletes the active auxillary channel
+			image components cannot be deleted
+		double clicking an aux channel list item allows it's attributes to be edited
+		auxillary channel attributes include name and composite color & opacity
+
+Image Correction
+	image correction deals with changing the characteristics of whole regions of an image
+	image correction tools operate on the contents of the current selection or the entire layer
+	if there is no selection
+
+	hue/saturation
+		allows adjustment of hue saturation--more on this
+	brightness/contrast
+		more on this shit
+	levels
+		histogram
+	curves
+		maybe by 1.0!
+	color balance
+		slider controls the relative color shift
+
+Plug-ins
+	introduction (why are they cool, what are they)
+	how they work
+	registration
+	interface
+	effects
+	extensions
+	file loaders/savers
+
+Very Large Images
+	tiles
+		tile size is compiled into the gimp
+		tiles can be used to distribute gimp processing
+		tiles can be used for quick loading of images at varying resolutions
+		tiles are a nice mechanism for dealing with images >> physical memory size
+	performance issues (getting the most out of GIMP)
+		compositing is time consumptive--hiding layers when possible is a good idea
+		viewing only a small portion of the image at 1:1 makes redisplays after
+		big edits much faster
+		tile cache size should be set as high as possible, but should still be
+		sufficiently small that the system does not swap processes.
+		tile cache swap should be located on a partition with sufficient space
+			<give approximate rules of thumb here>
+	programming issues and approaches (plug-ins, extending GIMP)
+		plug-ins can use put, get-pixel abstractions
+		for efficiency, actual tiles should be dealt with
+		in both plug-ins and GIMP programming, the pixel regions are useful for
+		programming algorithms with tiles.
+			register_regions, process_regions
+			get_row, set_row
+			get_col, set_col
+			get_area, set_area
+
+Scripting--The Procedural Database
+	introduction
+		scripting is extremely useful for automating image creation or common editing functions
+		there is no specific scripting language for the GIMP, instead procedural database
+		this way, there are no limits to what can be done with GIMP functionality:  imagine
+		remote process servers which crunch through CPU intensive imaging tasks and return
+		data.  the flow of image information is controlled through the interface to the pdb.
+	the procedural database
+		all procedures which handle the GIMP's functionality are registered here
+		all plug-ins and extensions must register themselves with the main database
+		once registered, plug-ins & extensions can call other plug-ins or internal gimp procs.
+		procedural database contains information on each procedure including:
+		blurb, help, author, copyright, input & output arguments (with descriptions)
+		all procedures are blocking
+	internal procedures
+		internal procedures constitute the inner workings of the main application.
+		images, channels, layers, etc. can be created here and the functionality
+		of almost all the tools can be accessed through internal procedures
+		in fact, the entire plug-in interface simplifies calls to internal procedures
+		<give header file location for internal procedures>
+		<data structures for arguments, procedure definition>
+		<give call here for registering>
+		<invocation procedures>
+		<short example>
+	plug-ins/extensions
+		plug-ins and extensions are expected to register themselves in the
+		procedural database upon initialization which occurs if the executable
+		is found by the gimp in an appropriate directory.
+		once registered, a plug-in or extension can be accessed in the same
+		way as every other procedure.
+		<registration example--all plug-ins must do this>
+		<plug-in interface to procedural database>
+	interface documentation
+		can be automatically generated with procedural_db_dump call.
+		then an elisp script creates a tex info file.
+		registering a procedure with full information is important for these docs
+	available scripting extensions
+		give a list--probably will contain something for the siod interpreter
+		siod-scheme in one defun
+		all procedures in pdb are queried, scheme wrappers are auto-generated

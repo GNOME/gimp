@@ -1,0 +1,228 @@
+#!/bin/sh
+
+# save the program name
+progname=$0
+
+# need to know common directories
+srcdir="@srcdir@"
+top_srcdir="@top_srcdir@"
+top_builddir=".."
+prefix="@prefix@"
+
+# need to know some file and library location
+gtkxconfig="$top_builddir/gtk+/gtk+.xconfig"
+libgimp="$top_builddir/libgimp/libgimp.la"
+libgimpui="$top_builddir/libgimp/libgimpui.la"
+libgtk="$top_builddir/gtk+/gtk/libgtk.la"
+libgdk="$top_builddir/gtk+/gdk/libgdk.la"
+libglib="$top_builddir/gtk+/glib/libglib.la"
+
+# print out a usage summary and exit
+usage ()
+{
+  cat <<EOF
+Usage: $progname [option] <plug_in_name>"
+
+   -h                  Display this help message and exit.
+   --help
+
+   -s <file>           Specify a source file or files. If
+   --source <file>     a source file is not specified the name
+		       of the source file will be determined
+		       from the name of the plugin. For example,
+		       the plugin "blur" would have the source
+		       file "blur.c" associated with it.
+
+   -v                  Print out messages saying what is happening
+   --verbose           at each step of the build process.
+
+   -n                  Print out commands that would be executed
+   --nothing           but don't actually execute them.
+
+   -e                  Print the build environment and exit.
+   --environment
+
+   <var>=<value>       Set the build environment variable <var> tp
+                       have the value <value>.
+   -<var>=<value>      Append <value> to the build environment
+                       variable <var>.
+   +<var>=<value>      Prepend <value> to the build environment
+                       variable <var>
+EOF
+  exit 0
+}
+
+# initialize various variable to blank
+plugin=
+sources=
+verbose=
+environment=
+nothing=
+prev=
+
+# loop over the options
+for option
+do
+  # if the previous option takes an argument
+  # we take care of setting the appropriate variable
+  # here
+  if test -n "$prev"; then
+    eval "$prev=\"\$$prev \$option\""
+    prev=
+    continue
+  fi
+
+  case "$option" in
+  -h|--help) usage ;;
+  -s|--source) prev="sources" ;;
+  -v|--verbose) verbose="true" ;;
+  -e|--environment) environment="true" ;;
+  -n|--nothing) nothing="true" ;;
+  *=*)
+    # if the option was of the form [-+]<var>=<value>
+    # then we want to evaluate the argument as it
+    # is intended to set an environment variable.
+    # this would fairly simple, except for having to
+    # deal with the [-+] symbols that can be prepended.
+    # these have to be stripped off and converted into
+    # the corresponding "post_" and "pre_" strings
+    # respectively.
+    opt=`echo "$option" | sed 's/=[_a-zA-Z0-9]*//'`
+    arg=`echo "$option" | sed 's/[-+_a-zA-Z0-9]*=//'`
+
+    case "$opt" in
+    -*) opt=`echo "$opt" | sed 's/-//'`
+        opt="post_$opt" ;;
+    +*) opt=`echo "$opt" | sed 's/+//'`
+        opt="pre_$opt" ;;
+    esac
+
+    eval "$opt=\$arg" ;;
+  *)
+    if test -z "$plugin"; then
+      plugin="$option"
+    else
+      usage
+    fi ;;
+  esac
+done
+
+# get build environment variables
+
+if test ! -f $gtkxconfig; then
+  echo "error: could not find \"$gtkxconfig\""
+fi
+
+# extract the X flags from the gtk+.xconfig file
+X_CFLAGS=`grep X_CFLAGS $gtkxconfig | sed 's/X_CFLAGS[ \t]*=[ \t]*//'`
+X_LDFLAGS=`grep X_LDFLAGS $gtkxconfig | sed 's/X_LDFLAGS[ \t]*=[ \t]*//'`
+X_LIBS=`grep X_LIBS $gtkxconfig | sed 's/X_LIBS[ \t]*=[ \t]*//'`
+
+# we only set environment variables if they aren't already defined
+CC=${CC:-"$pre_CC @CC@ $post_CC"}
+LIBTOOL=${LIBTOOL:-"$pre_LIBTOOL $top_builddir/libtool $post_LIBTOOL"}
+CFLAGS=${CFLAGS:-"$pre_CFLAGS @CFLAGS@ $post_CFLAGS"}
+INCLUDES=${INCLUDES:-"$pre_INCLUDES $X_CFLAGS -I$top_srcdir -I$top_srcdir/gtk+ -I/usr/local/include $post_INCLUDES"}
+DEFS=${DEFS:-"$pre_DEFS @DEFS@ -I. -I$srcdir -I.. $post_defs"}
+CPPFLAGS=${CPPFLAGS:-"$pre_CPPFLAGS @CPPFLAGS@ $post_CPPFLAGS"}
+LDFLAGS=${LDFLAGS:-"$pre_LDFLAGS @LDFLAGS@ $post_LDFLAGS"}
+LDADD=${LDADD:-"$pre_LDADD $X_LDFLAGS -L/usr/local/lib $post_LDADD"}
+LIBS=${LIBS:-"$pre_LIBS $X_LIBS $libgimp $libgtk $libgdk $libglib -lc -lm $post_LIBS"}
+COMPILE=${COMPILE:-"$pre_COMPILE $CC $DEFS $INCLUDES $CPPFLAGS $CFLAGS $post_COMPILE"}
+LINK=${LINK:-"$pre_LINK $LIBTOOL --mode=link $CC $LDFLAGS -o $plugin $post_LINK"}
+
+# print out the environment and exit if the user specified us to do so
+if test -n "$environment"; then
+  echo CC = $CC
+  echo LIBTOOL = $LIBTOOL
+  echo CFLAGS = $CFLAGS
+  echo INCLUDES = $INCLUDES
+  echo DEFS = $DEFS
+  echo CPPFLAGS = $CPPFLAGS
+  echo LDFLAGS = $LDFLAGS
+  echo LDADD = $LDADD
+  echo LIBS = $LIBS
+  echo COMPILE = $COMPILE
+  echo LINK = $LINK
+  exit 0
+fi
+
+# if a name for a plugin wasn't specified then nothing can be done
+if test -z "$plugin"; then
+  usage
+fi
+
+# strip off the extension if it is present (we'll add it
+# back in real soon to determine the name of the source file
+# to use)
+plugin=`echo $plugin | sed 's/\.c//'`
+
+# if the user didn't specify any sources, then calculate
+# the source file based on the plugin name
+if test -z "$sources"; then
+  sources="$plugin.c"
+fi
+
+# show the user what we're doing
+echo "plugin:   $plugin"
+echo "sources:  $sources"
+
+# compile the source files. a source file is only compiled
+# if either a) its object file doesn't exist or b) it is
+# newer than its object file.
+objects=
+for file in $sources; do
+  objfile=`echo "$file" | sed 's/\.c/\.o/'`
+
+  if test ! -f "$objfile" || test "$file" -nt "$objfile"; then
+    cmd="$COMPILE -c $file"
+
+    if test -n "$verbose"; then
+      echo $cmd
+    else
+      echo "compiling $file"
+    fi
+
+    if test -z "$nothing"; then
+      eval "$cmd"
+    fi
+  fi
+
+  objects="$objects $objfile";
+done
+
+deps="$objects $libgimp $libgtk $libgdk $libglib"
+
+# determine if the plugin needs to be linked with libgimpui.
+# (most plugins don't). we simply check the sources to see
+# if they include "gimpui.h"
+needlibgimpui=`grep gimpui.h $sources`
+if test -n "needlibgimpui"; then
+  LIBS="$libgimpui $LIBS"
+  deps="$deps $libgimpui"
+fi
+
+# determine if the plugin needs to be linked. if any of the
+# dependencies (objects or libraries) are newer than the plugin
+# or the plugin does not exist it will be built.
+cmd=
+for file in $deps; do
+  if test ! -f "$plugin" || test "$file" -nt "$plugin"; then
+    cmd="$LINK $objects $LDADD $LIBS"
+    break
+  fi
+done
+
+if test -n "$cmd"; then
+  if test -n "$verbose"; then
+    echo $cmd
+  else
+    echo "linking $plugin"
+  fi
+
+  if test -z "$nothing"; then
+    eval "$cmd"
+  fi
+else
+  echo "\`$plugin' is up to date"
+fi

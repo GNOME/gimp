@@ -1,0 +1,156 @@
+Description
+-----------
+
+Hierarchy of images.
+Each layer of the hierarchy is composed of 64x64 pixel tiles.
+
+
+Properties
+----------
+
+  Properties consist of a 4 byte identifier, a 4 byte size field
+  interpreted as an unsigned integer and the property data which is
+  "size" bytes in length. Unknown properties *must* be skipped.
+
+
+  Property types
+  --------------
+
+    PROP_COLORMAP [1]
+      uint32 ncolors
+      uchar cmap[ncolors]
+
+    PROP_ACTIVE_LAYER [2]
+      <nothing>
+
+    PROP_ACTIVE_CHANNEL [3]
+      <nothing>
+
+    PROP_SELECTION [4]
+      <nothing>
+
+    PROP_FLOATING_SELECTION [5]
+      uint32 drawable_offset
+
+    PROP_OPACITY [6]
+      int32 opacity
+
+    PROP_MODE [7]
+      int32 mode
+
+    PROP_VISIBLE [8]
+      boolean visible
+
+    PROP_LINKED [9]
+      boolean linked
+
+    PROP_PRESERVE_TRANSPARENCY [10]
+      boolean preserve_transparency
+
+    PROP_APPLY_MASK [11]
+      boolean apply_mask
+
+    PROP_SHOW_MASKED [12]
+      boolean show_masked
+
+    PROP_OFFSETS [13]
+      int32 x_offset
+      int32 y_offset
+
+    PROP_COLOR [14]
+      uchar color[3]
+
+
+Sections
+--------
+
+  Image
+  -----
+
+    "gimp xcf file"
+
+    uint32 width
+    uint32 height
+    int32 image_type
+    property properties
+
+    uint32 layer_file_offsets[]
+    uint32 channel_file_offsets[]
+
+    Properties
+    ----------
+
+      PROP_COLORMAP
+
+
+  Layer
+  -----
+
+    uint32 width
+    uint32 height
+    int32 layer_type
+    string name
+    property properties
+
+    uint32 hierarchy_file_offset
+    uint32 layer_mask_offset
+
+    Properties
+    ----------
+
+      PROP_ACTIVE_LAYER
+      PROP_FLOATING_SELECTION
+      PROP_OPACITY
+      PROP_VISIBLE
+      PROP_LINKED
+      PROP_PRESERVE_TRANSPARENCY
+      PROP_APPLY_MASK
+      PROP_EDIT_MASK
+      PROP_SHOW_MASK
+      PROP_OFFSETS
+      PROP_MODE
+
+
+  Channel
+  -------
+
+    uint32 width
+    uint32 height
+    string name
+    property properties
+
+    uint32 hierarchy_file_offset
+
+    Properties
+    ----------
+
+      PROP_ACTIVE_CHANNEL
+      PROP_SELECTION
+      PROP_OPACITY
+      PROP_VISIBLE
+      PROP_SHOW_MASKED
+      PROP_COLOR
+
+
+  Hierarchy
+  ---------
+
+    uint32 width
+    uint32 height
+    uint32 bpp
+
+    uint32 level_file_offsets[]
+
+
+  Level
+  -----
+
+    uint32 width
+    uint32 height
+    uint32 tile_file_offsets[]
+
+
+  Tile
+  ----
+
+    uchar data[]

@@ -1,0 +1,34 @@
+
+put files in the right directories :
+
+	$ cd /usr/src
+	$ tar zvf dbbrowser-x.xx.tar.gz 
+	$ cd dbbrowser-x.xx
+	$ cp *.c *.h compile_dbbrowser ../gimp-0.99.xx/plug-ins
+
+compile & install dbbrowser :
+
+	$ cd gimp-0.99.xx/plug-ins
+	$ sh ./compile_dbbrowser
+	$ cp dbbrowser ~/.gimp/plug-ins/
+
+patch script-fu :
+
+	$ cd gimp-0.99.xx/plug-ins/script-fu
+	$ patch < ../../dbbrowser-x.x/dbbrowser-script-fu-console.patch
+	  (it modifies script-fu-console.c and Makefile.in)
+
+compile & install script-fu with browse :
+
+	$ make
+	$ make install
+
+test dbbrowser :
+
+	$ gimp
+		    -> Xtns/DB Browser
+		    -> Xtns/Script-Fu/Console
+
+
+<thomas@maisel.int-evry.fr>
+

@@ -1,0 +1,22 @@
+%{
+#include <string.h>
+
+#include "exprtree.h"
+#include "parser.tab.h"
+%}
+
+%option noyywrap
+
+%%
+
+[a-zA-Z_][a-zA-Z0-9_]*      { strncpy(yylval.ident, yytext, 63);
+	                      yylval.ident[63] = 0;
+ 	                      return T_IDENT;
+	                    }
+[0-9]+                      { yylval.exprtree = make_number(atof(yytext)); return T_NUMBER; }
+[0-9]*\.[0-9]+              { yylval.exprtree = make_number(atof(yytext)); return T_NUMBER; }
+[-,()+*/%]                  return yytext[0];
+;.*                         ;
+[ \t\n]                     ;
+
+%%

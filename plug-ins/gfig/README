@@ -1,0 +1,276 @@
+GFig
+~~~~
+
+Andy Thomas (alt@picnic.demon.co.uk).
+http://www.picnic.demon.co.uk. 
+
+(This README could do with expanding).
+
+Release 0.9.
+~~~~~~~~~~~~
+
+This is the first release of GFig plug-in for the GIMP.
+
+With this plug-in you can created vector graphics and "render" them using the
+GIMPs painting functions. The vector graphics stuff is some what akin to those 
+found in xfig but not as advanced (I have not used any code from xfig - didn't 
+even look at the source when trying to figure out some of the maths).
+
+I have not attempted to implement features that are
+already present in the GIMP itself.
+
+Patch file
+++++++++++
+
+All released up to and including 0.99.14 contain a bug in the paintbrush.c code.
+I have submitted a patch to correct this fault. If you have NOT applied 
+this patch then in the source code you MUST REMOVE the following line form 
+the start of the source file:-
+
+#define HAVE_PATCHED 1
+
+The patch is included at the end of this README.
+
+This define will be removed when the patch is integrated into the GIMP release.
+
+Objects
++++++++
+
+The plug-in allows you to draw the following shapes:-
+
+Lines
+Circles
+Ellipses
+n sided polygons (n >=3)
+Curves
+
+An object is constructed as a number of control points and these are used 
+to select the object on the drawing area once it has been created.
+
+The drawing area preview is currently set to 
+	MIN(256 x 256,img_width x img_height). 
+You can change this altering the PREVIEW_SIZE item in the source code. 
+Try and keep to multiples of 256 & remember the small preview scale is 
+related to this.
+
+
+Operations
+++++++++++
+
+The following operations can be performed on objects:-
+
+The objects can either be moved independently around the drawing area or 
+all together.
+
+Each control point can be moved.
+Objects can be copied.
+Objects can be deleted.
+N sided Polygons can be split into N line segments.
+The drawing area can be scaled.
+Control points can be hidden.
+
+To aid alignment of objects a "grid" can be placed on the drawing area.
+This can be either a normal rectangular grid or a polar type grid centered 
+in the drawing area. 
+The spacings of the grid can be changed as well as the colours used to draw the 
+grid lines. When "Snap to grid" is checked then all operations will be 
+constrained to fall on a grid intersection. (Fun when using the polar grid).
+
+The image that was selected when Gfig was started can also be shown (scaled) in 
+the drawing area. (Options tag).
+
+Painting
+++++++++
+
+When the paint button is pressed each object will be rendered/drawn onto 
+the image using the currently selected ink colour. The objects can be drawn 
+onto the original layer or onto a new layer (either a single layer or 
+multiple layers - latter is good for animations). When new layers are 
+created the background can either be:-
+	
+Transparent.
+Background (the current BG colour).
+White.
+Copy.
+
+The last option means that the layer is duplicated from the previous layer 
+berfore the draw operation is performed (re good for animations).
+
+Lines can be drawn in reverse order. This means that polygons/curves/lines that
+are normally constructed of lines can be drawn starting at either "end". This
+is only noticeable when the current brush has fading turned on.
+The "Approx Circles/Ellipses" toggle allows the same effects when drawing these
+types of objects.
+
+Note that in the current version any selections present in the image are first 
+de-selected when Gfig starts up. This is because selections are used to 
+draw circles and ellipses (unless the Approx. Circles & Ellipses toggle is set).
+
+Brush
++++++
+
+I am not really happy with these contols. You can select a brush by name
+but I would really like to have a preview of the bush as well. - just 
+copying the GIMP code begs code bloat question. Maybe I'll add a small 
+preview window that just contains the selected brush. 
+
+The Fade option allows the "brush fading" to be selected. I am sure that some
+nifty anims can be created with this option. 
+
+Presently I suggest that you also have the "Brush" dialog open when doing the
+painting since the brush spacing/opacity/selection/mode is honoured in 
+the rendering.
+
+Scaling
++++++++
+
+When Gfig first comes up the selected group of objects are automatically scaled 
+upwards to the image size. (If the source image is < 256*256 then no automatic 
+scaling is performed - change PREVIEW_SIZE in source to alter this values).
+By toggling the scale button the objects can then be scaled in the drawing 
+area. This scaling will be reflected when the objects are drawn.
+To reposition the objects on the drawing area use SHIFT + MOVE_OBJ operation.
+
+
+Other ops
++++++++++
+
+Double click on polygon object selection to get dialog with slider to 
+selected the number of sides to draw.
+
+SHIFT + MOVE_PNT will break a polygon into a number of connected lines.
+
+When drawing lines if the SHIFT modifier is used then connected lines 
+can be drawn.
+
+SHIFT + MOVE_OBJ will move all objects. Note if "snap to grid" is selected then
+the new point will be constrained to fall on a grid intersection.
+
+Gfig objects
+++++++++++++
+
+The upper right part of gfig contains a scroll region when different 
+collection of objects can be found. When button 1 is pressed on an entry 
+the small preview window will be updated with the objects contained in 
+the selected figure. Thes objects can then be loaded into the main window 
+by using the "Edit" button or the "Merge" button. In the former case 
+the objects area will first be cleared before the new objects
+are added. In the latter case the objects will be merged into the drawing area.
+
+When a collection of objects is altered to small image of a floppy disc 
+will be placed next to the entry signifying that this collection needs to be 
+saved. If a red cross appears here then the file associated with the 
+entry is read only and cannot be saved to (it can be copied however).
+
+Button 3 brings up a popup menu that allows collections to be saved away to 
+different files. (Accel. keys also exist for some functions).
+
+The buttons on the right of the list area allow the following operations:-
+
+Rescan:-
+This popus up a window which allows you to add directories to the internal 
+gfig-path.  A (re)scan of these directories can the performed. Note any 
+modification to the gfig-path will NOT be mirrored in your ~/.gimp/gimprc file.
+
+Load:-
+Allows you to load a single collection of objects.
+
+New:-
+Create a new collection. Note that until this is saved away to a file then no
+filename will be associated with it. (See status area).
+
+Delete:-
+Popups a dialog asking if you wish to delete the entry selected in the list 
+box as well as on disc.
+
+Additionally button 3 over the list area allows the following:-
+
+Save as...:-
+Save collection to new filename. The collections filename is also 
+changed to this new name. The original name is NOT deleted from the disc 
+but it is effectively removed from the list selection area (actually it 
+is overwritten internally).
+
+Save:-
+Save the currently selected entry to disc.
+
+Copy:-
+Make a copy of the collection.
+
+Edit:-
+Same as the "Edit button".
+
+Double click on entry with Button 1 popups up a dialog that allows you to 
+modify the nme of an entry (similar to other list areas in the GIMP).
+
+ 
+Installation
+++++++++++++
+
+Simply build(?) the Gfig object and install it in your plug-in directory. 
+The program can be found under the following option.
+The program is distributed as a single "C" source files - hopefully
+makes building easier.
+
+	<Image>/Filter/Render/Gfig.
+
+
+In common with a number of other plug-ins Gfig uses an entry in the gimprc file
+to specify a directory to search for groups of objects. If this entry is absent 
+or unreadable a warning dialog will appear. To remove this warning create the 
+directory "gfig" in your gimp directory and add the following to 
+your .gimp/gimprc file:-
+
+(gfig-path "${gimp_dir}/gfig")
+
+The distribution contains a number of example figures. (Copy the contents
+of gfig-examples to a directory on gfig-path or use the "Rescan" button).
+
+I have only managed to test this on Linux (8bit + 16bit displays). It should
+port to other platforms. (I am a little concerned over the rint() function
+- not sure which other systems have this).
+
+
+Problems?
++++++++++
+
+If you have any problems with this plug-in please mail me 
+(alt@picnic.demon.co.uk) and I will try to help.
+
+
+
+TODO
+++++
+
+Some random ideas your thoughts welcome (no order implied & I might never
+get around to doing them!):-
+
+1) Allow objects to be drawn with different brushes.
+2) Rotate objects (but you can do this in the GIMP?).
+3) More object types (sprial, helix, .....).
+4) Scale individual objects.
+5) Some type of "Tab" through selection of objects.
+6) Preview window for brush selection.
+7) Expand the drawing area (add scroll bars?)
+8) Pointer locationa (x,y) indicator
+
+
+Let me know if you find this plug-in useful.
+
+
+PATCH
++++++
+
+Apply to paintbrush.c in gimp*/app directory. Long ago this was a bug in 
+another form! (See my web page on the script-fu script I wrote.)
+
+--- paintbrush.c.orig	Tue Oct 14 23:15:15 1997
++++ paintbrush.c	Tue Oct 14 23:15:59 1997
+@@ -323,7 +323,6 @@
+       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+ 
+-      num_strokes /= 2;
+       if (num_strokes == 1)
+ 	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
+ 

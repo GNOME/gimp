@@ -1,0 +1,36 @@
+CC=gcc
+LINK=gcc
+INCDIR=
+LIBDIR=-L/usr/X11/lib
+LDLIBS=-lgdk -lgtk -lglib -lgimp -lm -lfl
+OPTFLAGS= -m486 -O3 -fomit-frame-pointer -funroll-loops -ffast-math -Wall
+DEST=user_filter
+#DEFINES=-DYYDEBUG
+
+OBJS=user_filter.o afslex.o afsparse.tab.o
+SRCS=user_filter.c afslex.l afsparse.y
+
+CFLAGS=  $(OPTFLAGS) $(DEFINES) $(INCDIR)
+LFLAGS= $(LIBDIR) $(LDLIBS)
+
+$(DEST) : $(OBJS)
+	$(LINK) $(CFLAGS) -o $@ $(OBJS) $(LFLAGS)
+
+tar: $(DEST) $(SRCS) README INSTALL
+	tar -czvf user_filter-1.0.0.tgz README INSTALL $(DEST) $(SRCS)
+
+install: $(DEST)
+	cp $(DEST) $(HOME)/.gimp/plug-ins
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+afsparse.tab.c: afsparse.y
+	bison --defines --verbose afsparse.y
+
+afslex.c: afslex.l afsparse.tab.c
+	flex -Cem -oafslex.c afslex.l
+
+user_filter.o: user_filter.c
+afsparse.tab.o: afsparse.tab.c
+afslex.o: afslex.c

@@ -1,0 +1,36 @@
+User Filter Pluginv0.1ß
+-----------------------
+
+This is far from beeing complete, or correct. 
+But you can experiment with it.
+
+For information about usage, look at:
+
+http://www.fhd-stuttgart.de/~ws01/fffaq.htm
+-or-
+http://pluginhead.eyecandy.com/ffc.htm
+-or-
+http://www.netins.net/showcase/wolf359/fffaq.htm
+
+For bug-reports, comments, suggestions and feature-requests write to
+Jens Ch. Restemeier <jchrr@hrz.uni-bielefeld.de>
+
+I added two .afs files for first experiments:
+
+(could someone with windoze and Ph*t*sh*p verify the results ?)
+
+shadow.afs:
+  Category: Neology
+  Title: Shadowcaster
+  Copyright: (c) 1997 by Werner D. Streidt 100526.16@compuserve.com
+  Author: Werner D. Streidt
+  Filename: shadow.afs
+
+dart.afs:
+  Category: Render
+  Title: Dart
+  Copyright: c't magazine
+  Author: c't magazine
+  Filename: dart.afs
+
+	-- This isn't ready to be added to the main GIMP distribution --

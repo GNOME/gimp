@@ -1,0 +1,82 @@
+
+The General Convenience Kit (GCK) 0.1.4
+=======================================
+
+Copyright (C) 1996 Tom Bech (tomb@ii.uib.no)
+Copyright (C) 1996 Federico Mena Quintero (federico@nuclecu.unam.mx)
+
+The General Drawing Kit (GDK), The General Toolkit (GTK) and The GIMP was
+developed and is (C) by Peter Mattis and Spencer Kimball. You can contact
+them at gimp@xcf.berkeley.edu, or visit the GIMP home page which is located
+at http://www.gimp.org
+
+There's additional GIMP stuff on my home page:
+
+http://www.ii.uib.no/~tomb/gimp.html
+
+Legal stuff
+===========
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program (see the "COPYING" file); if not, write to the Free Software Foundation,
+Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+In other words, you can't sue us for whatever happens while using this ;)
+
+Description
+===========
+
+Short: This library is a collection of more or less useful stuff for GIMP plug-in
+writers and/or users of GDK/GTK.
+
+I must point out that this is not an attempt to enhance GDK|GTK in any way; there's nothing
+in it that can't be done using GDK|GTK alone. IMHO, improvements or new functionality
+should be integrated with GDK|GTK, not added on top.
+
+Here's a quick description of each file;
+
+./gck/
+gckcommon.c :     Common variables and defines
+gckmath.c :       Useful math routines not in math.h
+gckcolor.c :      Conversion routines from raw RGB(A) to GdkImage (RGB to
+                  32/24/16/8 bpp). Basic RGB operations (add,sub etc.), super-
+                  sampling routines, bilinear interpolation and other color-related
+                  functions (color-space conversions etc.)
+gckui.c :         Convenience routines for creating various UI elements
+                  (dialogs, buttons, sliders, container-boxes etc.). Almost like
+                  the libgimp calls, but with more options and the possibility to
+                  mix it with other GDK|GTK things if you want
+gckcolor_select : Source for the GCK color select window
+gckvector.c :     2d and 3d vector operations (2d->3d, 3d->2d, add, sub, cross-product,
+                  rotate etc.)
+
+./examples/misc/* :   Various small examples of how to use the library
+./examples/gimp/* :   GIMP plug-in examples.
+./examples/opengl/* : Examples of binding OpenGL and GDK/GTK.
+
+Hopefully this will grow with time. The goal is to provide GIMP plug-in writers
+and GDK/GTK users with a library to ease the writing of applications and UIs.
+
+Some things may become obsolete as the GIMP/GDK/GTK API evolves, and in the long
+run the whole library may be unnecessary. Until I get around to writing some kind
+of documentation you'll have to dig around in the sources on your own.
+
+Take a look at the examples and the plug-ins I've written using this library,
+and you'll soon get the hang of it. Feel free to modify and/or add new things
+to the library, but remember to send me a patch if you do :)
+
+Check out the TODO file for things missing and in the works.
+
+Have fun,
+
+Tom
+

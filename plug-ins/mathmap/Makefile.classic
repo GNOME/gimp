@@ -1,0 +1,36 @@
+CFLAGS=-D_GIMP
+
+OBJECTS=mathmap.o builtins.o exprtree.o parser.o scanner.o postfix.o
+
+mathmap : $(OBJECTS)
+	gcc -o mathmap -lglib -lgdk -lgtk -lgimp -lm $(OBJECTS)
+
+mathmap.o : mathmap.c
+	gcc $(CFLAGS) -c mathmap.c
+
+builtins.o : builtins.c
+	gcc $(CFLAGS) -c builtins.c
+
+exprtree.o : exprtree.c
+	gcc $(CFLAGS) -c exprtree.c
+
+postfix.o : postfix.c
+	gcc $(CFLAGS) -c postfix.c
+
+parser.o : parser.tab.c
+	gcc $(CFLAGS) -c -o parser.o parser.tab.c
+
+scanner.o : lex.yy.c
+	gcc $(CFLAGS) -c -o scanner.o lex.yy.c
+
+parser.tab.c : parser.y
+	bison -d parser.y
+
+lex.yy.c : scanner.fl
+	flex scanner.fl
+
+install : mathmap
+	cp mathmap $(HOME)/.gimp/plug-ins/
+
+clean :
+	rm -f *~ *.o mathmap lex.yy.c parser.tab.[ch]

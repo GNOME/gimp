@@ -1,0 +1,57 @@
+ GAG 0.3 (Wed Aug 20 1997)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+o new GAG library entries by Marcelo de Gomensoro Malheiros
+o now you can load/save libraries from file 
+o several dialogs are now placed under mouse cursor (GTK_WIN_POS_MOUSE)
+o I reorganized Library popup menu so now "Delete" is not the
+  first item
+o All scales are now initialy set to 0.0 - also Reset scales set all 
+  scales to 0.0
+o GAG is now GiMP plug-in! GAG now renders pictures to current drawable
+  - now, there are two binaries: gag (stand-alone program) and gag-plugin
+o gag-plugin requires one more entry in gimprc - gag-library - for example:
+   (gag-library "${gimp_dir}/gag-library")
+o repaired "/" bug (unfortunately expressions with "/" operator looks
+  differently under gag-0.2 and gag-0.3)
+
+    
+ GAG 0.2 (Thu Aug 14 1997)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+o mosaic preview
+o output of (bw|color)-noise is now independent on time or platform (ie with
+  one expression you obtain same picture any time you try do render it)
+o library is loaded from "gag-library" file on start, on exit whole library
+ is saved to this file. Syntax of "gag-library" file is very similar to scheme
+ - but be aware that this is just similarity (it is not real scheme - for more
+ info see gag-lib.c :-)
+
+ GAG 0.2 pre1 (Tue Aug 12 1997)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+o Library is now working (save to/load from)
+   "left doubleckick" -=> preview
+   "right mouse button" -=> more actions
+o small improvements in edit entry (it allows edit of current expression)
+
+ GAG 0.1 (Mon Aug 11 1997)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+o Improvements & bugfixes in user interface by Robert Saunders
+o I completly rewrote part of GAG which evaluates expressions  
+o you can now use (color) vectors in expressions (rgb or rgba vectors) but rgba
+  is not yet utilized
+o noise* functions renamed to bw-noise*
+o new functions color-noise, color-noise-xy
+o I temporarily disabled *-noise-xy functions - for more explanation see
+  TODO list (if you want them back delete comments  in expressions.tmpl 
+  file). Other *-noise functions are enabled (so GAG use noise functions in
+  expressions but not enormously often)
+
+ GAG 0.0 (Fri Aug 8 1997)
+-=-=-=-=-=-=-=-=-=-=-=-=-
+
+o No changes (sorry :) - initial release..
+
+

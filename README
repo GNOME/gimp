@@ -1,0 +1,135 @@
+The GIMP: the GNU Image Manipulation Program
+--------------------------------------------
+
+This is version 0.99.15 of the GIMP. For the most part it contains all
+of the features that will be in version 1.0 of the GIMP. It does,
+however, lack a) documentation, b) robustness and c) some of the
+plug-ins found in the 0.54 version.
+
+The main difference between v0.99.15 and much earlier versions is the
+use of a tile based memory management for images. This allows the GIMP
+to work with images much larger than physical memory in a usable
+fashion. Before such memory management, the GIMP was nearly unusable
+for large images. (Large being something on the order of
+4000x3000). With the tile memory management, image size is effectively
+limited by disk space. It is due to the switch to a tile based memory
+management system that old plug-ins will not work with this version of
+the GIMP.
+
+The GIMP uses GNU libtool in order to build shared libraries on a
+variety of systems. While this is very nice for making usable
+binaries, it can be a pain when trying to debug a program. For that
+reason, compilation of shared libraries can be turned off by
+specifying the "--disable-shared" option to "configure". Similarly,
+compiling with "-O2" instead of "-g" can be specified by using the
+"--disable-debug" option to "configure". We strongly recommend
+compiling with the debugging flag as the GIMP appears to be much more
+buggy when compiled with optimization turned on.  Your mileage may vary.
+
+The plug-in API has changed drastically from previous versions. The
+result is that it is now possible to access much of the GIMP's
+internals through a database of procedures aptly named the procedure
+database. Plug-ins fit into the procedure database by inserting
+themselves into it. The result is that plug-ins can call GIMP internal
+procedures and other plug-ins. Most plug-ins now fully support the
+procedural database, so that you can call them from scripts and other
+places as well.
+
+The procedure database is self-documenting. To add a procedure to the
+procedure database the programmer must specify a help string and help
+strings for the arguments and return values. This allows us to
+automatically create documentation for the procedures in the procedure
+database. The documentation resides in "docs" and is provided in
+texinfo format.
+
+A new type of plug-in called an extension has been created. Extensions
+are similar to plug-ins in that they are external program, but they
+differ in when and how they are run. The essential difference is that
+plug-ins are associated with a particular image/drawable, while
+extensions are not.
+
+A good example of a complex extension is Script-fu, which resides in
+the "plug-ins/script-fu" directory.  Script-fu is a simple Scheme
+interpreter that provides bindings to the GIMP's procedural database.
+This way you can write useful scripts that call the GIMP's functions
+and plug-ins, thus allowing automatization of repetitive tasks.  Many
+scripts are included for your enjoyment in the
+"plug-ins/script-fu/scripts" directory.
+
+Another extension is the "dbbrowser" utility, which lets you
+interactively browse through the procedures installed in the
+procedural database.  This will mainly be of use to Script-fu
+programmers.  Dbbrowser is also nicely integrated in the interactive
+Script-fu console.
+
+Lastly, there is new file format (xcf) designed specifically for
+saving GIMP images. It handles layers, channels and tiles as well as
+saving all of the state information about the image, such as the
+active channel, the selection, etc. The format needs testing to make
+sure that it really is portable (we think we did it right) as well as
+robust. It also will probably change sometime in (near) the future to
+implement some form of compression for the tiles.
+
+The GIMP's new home page is at 
+
+	http://www.gimp.org
+
+Please be sure to visit this site for information, documentation,
+tutorials, news, etc.  All things GIMP-ish are available from there.
+
+The automated plug-in registry is located at
+
+	http://gimp.foebud.org/registry
+
+There you can get the latest versions of plug-ins using a convenient
+forms-based interface.
+
+We have several mailing lists dedicated to GIMP user and development
+discussion.  To subscribe, send mail to
+
+	majordomo@scam.xcf.berkeley.edu
+
+and in the body of the message put
+
+	subscribe <list-name> your@email.address
+
+substituting <list-name> for "gimp-user" or "gimp-developer" (without
+the quotes, of course) depending on the list you want to subscribe
+to.  The mailing list archives can be found at
+
+	http://kiwi.cs.berkeley.edu/~gimp
+
+Gimp-user is a mailing list dedicated to user problems, hints and
+tips, discussion of cool effects, etc.  Gimp-developer is oriented to
+GIMP core and plug-in developers.  Most people will only want to be
+subscribed to gimp-user.
+
+And finally, for the real junkies, there are two IRC channels devoted
+to the GIMP :-) On EFNET there is a small #gimp channel.  On Byxnet (a
+private mostly-GIMP network) there is #gimp, too.  Some of the Byxnet
+servers are:
+
+	irc.mint.net:6666
+	irc.canweb.net:6667
+	rudolf.canberra.edu.au:6666
+	levien.com:6666
+
+More information about Byxnet can be found at 
+
+	http://rudolf.canberra.edu.au/gimp/byxnet.html
+
+Manish Singh (msingh@uclink4.berkeley.edu) has contributed a set of
+keybindings similar to those in Adobe Photoshop (tm).  You can find
+them in the ps-menurc file.  To use them, copy this file to
+~/.gimp/menurc
+
+We sincerely hope you enjoy the program.  Please report problems to
+gimp-developer@scam.xcf.berkeley.edu.  Before reporting a problem, you
+may want to see if someone else has already did (check the mailing
+list archives for this).
+
+Have fun,
+
+  Spencer Kimball <spencer@xcf.berkeley.edu>
+  Peter Mattis <petm@xcf.berkeley.edu>
+  Federico Mena <federico@nuclecu.unam.mx>

@@ -1,0 +1,71 @@
+
+PostScript file plugin V1.02 for the GIMP Peter Kirchgessner, 12-Oct-97
+========================================= e-mail: pkirchg@aol.com
+                                          WWW   : http://members.aol.com/pkirchg
+
+Here is a PostScript file plugin for the GIMP.
+The plugin will not work with GIMP V 0.54 !
+In the directory
+
+    ftp://members.aol.com/pkirchg/pub/gimp
+
+you will find the following files:
+
+    ps.txt                    : this document
+    ps.tgz                    : gzipped tarfile with source
+    ps.linux.386.elf.tgz      : gzipped tarfile with Linux executable
+
+News:
+  V 1.02 support for anti-aliasing (George White).
+         no progress bars for non-interactive mode.
+         new procedure file_ps_load_setargs to set
+         load arguments non-interactively.
+         Check for GS_OPTIONS. If not set, use at least "-dSAFER".
+  V 1.01 parse rc file (changes font in dialogue).
+  V 1.00 clip everything outside BoundingBox.
+         support for multi page documents.
+         PDF input.
+
+The PostScript file plugin handles reading and writing of PostScript files.
+For interpreting PostScript, ghostscript must be installed. The gs-
+executable must include the pbmraw, pgmraw, ppmraw and pnmraw devices.
+At least the ppmraw device is necessary.
+If ghostscript supports PDF reading, the plugin can also read PDF.
+For writing PostScript, the following image-operators are used:
+
+   colorimage (indexed and RGB images)
+   image (gray images)
+
+The colorimage operator is available with PostScript Level II,
+but it should also be available on Color PostScript Printers
+with PostScript Level I.
+For usage of antialiasing, ghostscript must support the
+-dTextAlphaBits and -dGraphicsAlphaBits commandline arguments for
+the ppm-devices. These are available with V 4.01, but maybe also
+with V 3.65. For PDF-input, anti-aliasing seems not to work
+(at least not with gs V 4.01). The -d...AlphaBits options are not
+used by the plug-in, when the anti-aliasing options are set to "none".
+The path to locate ghostscript can be changed by setting
+the environment variable GS_PROG to point to the executable. 
+If additional arguments must be passed to ghostscript, please
+use the environment variable GS_OPTIONS. This is evaluated by
+ghostscript itself. If GS_OPTIONS is not set, the plug-in adds
+-dSAFER automatically.
+The procedure file_ps_load_setargs can be used within script-fu to
+specify the interpretation options for the plug-in. The arguments to
+file_ps_load_setargs are:
+
+    PARAM_INT32: Resolution to interprete image (dpi)
+    PARAM_INT32: Desired width
+    PARAM_INT32: Desired height
+    PARAM_INT32: 0: Use width/height, 1: Use BoundingBox
+    PARAM_STRING: Pages to load (e.g.: 1,3,5-7)
+    PARAM_INT32: coloring. 4: b/w, 5: grey, 6: colour image, 7: automatic
+    PARAM_INT32: text antialiasing: 1: none, 2: weak, 4: strong
+    PARAM_INT32: graphics antialiasing: 1: none, 2: weak, 4: strong
+ 
+Installation:
+To tell the GIMP about the PostScript-file-plugin, copy the ps-executable
+to /usr/local/lib/gimp/0.99.x/plug-ins .
+
+Bug reports or suggestions should be e-mailed to pkirchg@aol.com

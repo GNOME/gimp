@@ -1,0 +1,768 @@
+Wed Nov 19 13:22:09 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* updated vpropagate.c and align_layers.c
+
+Tue Nov 18 16:40:22 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
+
+	* Larry Ewing fixed a bug which caused multible confirm-on close
+	Windows to appear and took GIMP with them on close
+
+	* plug-ins/iwarp added
+	
+
+Mon Nov 17 14:29:00 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
+
+	* plug-ins/gqbist/gqbist.c updated from registry
+
+	* plug-ins/fuse/fuse.c updated from registry
+
+	* plug-ins/fp/fp.c fixed buggy feature list
+	(now handles also layered images, patch resubmitted by 
+	Daniel R Risacher <risacher@worldnet.att.net>)
+
+Mon Nov 17 15:14:14 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* Finally fixed the scripts that broke with the last 
+	  release. This includes crystal-logo.scm, sota-chrome-logo.scm,
+	  and chome-it.scm. 
+
+Sun Nov 16 20:39:26 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
+
+	* applied all patches of these Mails (or improved ones) 
+
+	<0000094A.1892@dril-quip.com>
+	(special thanks to Art_Haas@dril-quip.com (Art HAAS)
+	addresses bzero and other compatibility/style  problems)
+
+	* speedup of script-fu start
+	<199710312031.MAA05318@callisto.hip.berkeley.edu>
+	(thanks to Raph Levien <raph@acm.org>)
+
+	* fixes a PI to M_PI in twist.c 
+	(not sure if this is what we want))
+	<Pine.LNX.3.96.971103021445.10834A-200000@s9412a.steinan.ntnu.no>
+	(thanks to  Trond Eivind Glomsrxd <teg@pvv.ntnu.no>)
+
+        * fixes preview for megawidgetbased plug-ins / speed up 
+	<19971105154336.33004@dca.fee.unicamp.br>
+        <19971105155848.26367@dca.fee.unicamp.br>
+        <19971105160238.05244@dca.fee.unicamp.br>
+        (big thanks to Marcelo Malheiros <malheiro@dca.fee.unicamp.br>)
+
+        * fixes some "returning pointers to stack"
+	<00000A37.1892@dril-quip.com>
+	(special thanks to Art_Haas@dril-quip.com (Art HAAS)
+	and  Nathan Carl Summers <summersn@cs.byu.edu>)
+	        
+	* moved all plug-ins to dirs of their own (finally)
+	and reconfigured
+	
+
+Fri Nov 14 23:27:01 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tools.c (tools_options_dialog_show): Fixed the tool dialog
+	raise code to only raise it if its shown, and only show if it's
+	not already shown.  (Probably not important, but can't hurt.)
+
+	* app/interface.c (create_toolbox): Fixed an uninitialized static
+	variable error, was causing the "raise toolbox" menu option to
+	fail miserably.  (Not sure when this happened; option used to
+	work.)
+
+Tue Nov 11 14:57:16 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/xcf.c (xcf_save_image): Added versioning for XCF file
+	format.  Coded support for XCF version 1, which fixes the problem
+	in version 0 with only saving 1/3 of the colormap of images with
+	colormaps (i.e. indexed images).
+
+Fri Nov  7 00:27:44 CST 1997 Adrian Likins <adrian@gimp.org>
+
+	* added docs/cheat_sheet.txt and docs/keybindings.txt 
+
+Thu Nov  6 14:08:35 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* configure.in (gimpdatadir): Changed gimpdatadir to be
+	$datadir/$PACKAGE instead of $datadir/$PACKAGE/$VERSION.
+	Datafiles are version-independent.
+
+Tue Nov  4 08:46:19 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/commands.c app/gimprc.c: Patch from Raph Levien to fix the
+	preferences and gimprc mechanism.
+
+	* app/convert.c: Adam's patch to fix web and mono palette modes.
+
+	* app/selection.h app/selection.c: Updated the USE_XDRAWPOINTS patch.
+
+	* plug-ins/script-fu/script-fu.c (init_procedures): Patch from
+	Raph Levien to do fast loading of the pdb procedures.
+
+	* app/gdisplay.c app/menus.c: Another patch from Lauri Alanko to
+	fix the tools mechanism.
+
+	* app/tips_dialog.c: New look for the tip-of-the-day dialog, by
+	Raphael Quinet and Tuomas Kuosmanen.
+
+	* app/interface.c: Patch from Andreas Dilger to enable tooltips.
+
+	* INSTALL: Updated INSTALL file from Owen Taylor.
+
+	* plug-ins/displace.c (displace_dialog): Removed printf() of PID.
+
+	* plug-ins/emboss.c: Patch from Spencer to fix grayscale images
+	and number of arguments in non-interactive mode.
+
+Thu Oct 30 14:57:32 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* configure and makefile tweaking for christoph's new plugins
+
+Wed Oct 29 17:52:57 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
+
+	* added and autoconfigured plug-ins/{twist,fuse,refract,warp,struc}
+	(Keep in mind that these are new, alpha plug-ins (esp. warp which
+	is not yet ready for general consumption according to author
+	John Beale <beale@best.com>)
+	
+	* added plug-ins/{flame,mathmap,rcm,user_filter}
+	
+	* plug-ins/gqbist.c: updated to v1.7
+	
+
+Tue Oct 28 22:30:32 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* plug-ins/MapObject/mapobject_main.c (run): removed an
+	inappropriate cast of radius from float to int
+
+Mon Oct 27 07:45:23 EST 1997 Adrian Likins ,adrian@gimp.org
+
+	* updated title-header.scm to not add a layer twice 
+
+	* remove t-o-p.scm, it was a duplicate of t-o-p-logo.scm
+	 jsut registered under a different name
+
+Sun Oct 26 22:28:15 EST 1997  Adrian Likins <adrian@gimp.org>
+
+        * added Spencer's patch to the brush and patterns dialog. Now
+          instead of scrolling the object around to see all of, a small
+	  window popups showing the entire brush or pattern.
+
+        * added Spencers patch to add pop-up help to the toolbar.
+
+
+Sun Oct 26 18:01:36 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* configure: finished adding the xpm plug-in (someone else added
+	  it to the makefiles, but forgot to ensure that its makefile was
+	  built...)
+
+	* app/about_dialog.c (about_dialog_create): About dialog now shows
+	  "true" version (instead of 1.0) and randomizes the names in the
+	  scrollbar instead of showing them in alphabetical order.
+
+Sat Oct 25 14:53:27 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* plug-ins/MapObject/mapobject_main.c: Eliminated use of
+	  FLOATARRAYs in arguments due to shortcoming of argument passing
+ 	  protocol.
+
+	* app/plug_in.c (plug_in_handle_proc_install): Added code to
+	  sanitize plugins for compliance with the array passing
+	  convention restriction.  Noncompliant plugins will be rejected.
+
+	* app/layers_dialog.c: Fixed layers dialog resize bug - now
+	  resizes interior of dialog instead of the close button. :)
+
+Sat Oct 25 02:56:15 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* Added auto-raise for most dialogs (if selected when already
+	  "visible").  Also added a "Toolbox" menu entry to the Tools menu
+	  that raises the Toolbox (no default binding cuz I can't think of
+	  one).  Fixed the off-by-one-month timestamp bug.
+
+Fri Oct 24 21:45:11 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Made 0.99.15 release.
+
+Fri Oct 24 17:54:54 EDT 1997 Adrian Likins <adrian@gimp.org>
+
+	* Applied a patch by Josh Parsons <josh@coombs.anu.edu.au>
+          by way of Adam Moss to gif.c so that it works while
+	  trying to save non-interactively. The comment string
+          wasnt being handled well in non-interactive mode.
+
+Fri Oct 24 11:49:55 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/fileops.c: Will Wagner's patch to fix the file dialog.
+
+	* app/convert.c: Adam Moss's patch to add color counting.
+
+	* Applied Lauri Alanko's patches to fix the curves tool and some of
+	the general tools mechanism.
+
+	* plug-ins/blinds.c plug-ins/sharpen.c: Art Haas's patch to clean
+ 	up several warnings in plug-ins.
+
+	* libgimp/gimppixelrgn.c: #ifndef'ed out some variables according
+	to Adam's MEMCPY_IS_NICE stuff so that the compiler emits no
+	warnings about unused variables.
+
+	* plug-ins/header.c: Raphael Quinet's patch to fix green channel
+	and save reasonably-sized lines instead of a single enormous
+	string.  Broken compilers barf on them.
+
+	* app/layers_dialog.c (lc_dialog_create): Patch to raise the
+	layers dialog if it is invoked when it was already shown.
+
+	* app/commands.c (file_new_cmd_callback): Patch to not let the
+	file/new dialog create indexed images.
+
+	* app/tips_dialog.c (read_tips_file): Added fclose(fp).
+
+	* app/gimprc.c (save_gimprc): Added g_free(cur_line).  It was
+	missing and thus causing a memory leak.
+
+	* README: Added reference to the plug-in registry.
+
+Thu Oct 23 11:20:05 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/layers_dialog.c: Removed layer_widget_raise_callback() and
+	layer_widget_lower_callback(), they were not used.
+
+	* app/frac.c (xcf_save_compress_frac_init): Fixed double printf format.
+	(xcf_save_frac_compressed_tile): Fixed pointer printf args.
+
+	* Fixed a *lot* of uninitialized variables in the app/ directory,
+ 	mainly in the pdb function invoker procedures.  This should
+ 	supress a trillion compiler warnings.
+
+	* app/brush_select.c: removed brush_select_cancel_callback(); it
+	was never being used.
+
+	* app/disp_callbacks.c (gdisplay_canvas_events): Changed the type
+	of tmask to be GdkModifierType.
+
+	* app/channels_dialog.c: Removed channel_widget_raise_callback()
+	and channel_widget_lower_callback(); they were not being used.
+
+	* app/brushes.c: Removed the declaration of int_value (it is never used).
+
+	* app/gimprc.c app/gimprc.h app/commands.c app/tips_dialog.c:
+ 	save_gimprc() may modify the lists it gets passed (by
+ 	adding/removing elements).  Changed the prototype to take GList**
+ 	values instead of just GList*.  Changed the calls to save_gimprc()
+	accordingly.
+
+Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
+
+        * app/menus.c: applied patch malheiro-970917 which
+          prevents installing bogus accelerator handlers for the
+          menu separators.
+
+        * All the rest of these are from Eiichi Takamori 
+          <taka@ma1.seikyou.ne.jp>
+
+        * plug-ins/gicon.c: fixed the number of return values on save
+
+        * plug-ins/gicon.c: fixed the number of return values on save
+
+        * libgimp/gimpprotocol.c fixed GPProcrun/GPProcReturn typo and
+          freed params in _gp_params_destroy()
+
+        * libgimp/gimp.c: gimp_run_procedure() now frees proc_run.params,
+          since it is allocated in that function and no longer used
+
+        * app/plug_in.c: fixed memory overrun in plug_in.c when 
+          nargs < current_return_nvals, in case the plug-in returns bad 
+          number of return values.
+
+        * app/plug_in.c: destroy arguments when PDB lookup failed.
+
+        * app/plug_in.c: fixed memory leak in plug_in_params_destroy()
+          and plug_in_args_destroy()
+
+Wed Oct 22 20:38:46 EDT 1997  Adrian Likins <adrian@gimp.org>
+
+	* Added the www.gimp.org web page look scripts (gimp-labels.scm
+	  and gimp-headers.scm)to the dist
+
+	* also added a handful of scripts (predator.scm, circuit.scm, 
+	  xach-effect.scm, copy-visible.scm, select_to_brush.scm, 
+	  select_to_image.scm, and glow.scm). 
+	  see www.gimp.org/~adrian/scripts.html
+
+	* patched maze.c to work better interactively
+
+        * patched noisify.c to show more informative labels and to 
+          correct a bug with values of 0 for a channel still allowing
+          some noise to be added.
+
+        * changed some of the alien-glow-* scripts to have better defaults
+
+        * moving script-fu wasnt entirely my idea :-)
+  
+Wed Oct 22 18:48:28 1997  Shawn T. Amundson <amundson@gimp.org>
+
+	* this was actually all Adrian's idea -- moved all the
+          scripts from <Image>/Filters/Script-Fu to just 
+          <Image>/Script-Fu
+
+Fri Oct 17 15:59:58 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
+
+	* changed and autoconfigured gimptcl (needs further integration,
+	  works only with -ldl), gfig (click 2 buttons bug) 
+
+	* plug-ins/gimptcl/gtclenums.h: fixed a typo
+
+	* added gimptcl (1.0), gfig (0.9)
+
+Thu Oct 16 17:05:32 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
+
+	* translated c++-style comments to c-style ones
+
+	* plug-ins/{CentralReflection,Anamorphose}: update to 1.02
+
+	* plug-ins/rotate.c: Sven Neumanns update to 0.4 (selection support)
+	
+Wed Oct 22 11:42:50 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/polar.c: Updates by Sven Neumann.
+
+	* app/about_dialog.c (scroll_text): Added missing people to the
+	credits list.  This is still incomplete, though.
+
+	* Raphael Quinet's and Tristan Tarrant's big patch to add
+	preferences saving, tip of the day, and some bugfixes to the
+	gimprc code.  Thanks!
+
+	* Adam Moss's patch to fix scaling of indexed images and the
+	transform tool.
+
+	* app/main.c: Miles O'Neal's patch to send error when an invalid
+	command line switch is used.
+
+	* app/paintbrush.c (paintbrush_invoker): Removed division by 2 of
+	num_strokes.  This fixes calls to the paintbrush from the pdb
+	(patch by Andy Thomas).
+
+	* plug-ins/MapObject/mapobject_preview.c: Added prototype for
+	clear_wireframe().
+
+	* app/gimage.c: Scott Goehring's patch to disallow adding a layer
+	to the wrong image, or adding the same layer twice to the same image.
+
+	* app/global_edit.c: Applied Owen Taylor's patch to fix edit_clear
+	when the image has no layers.
+
+	* app/app_procs.c: Applied Jason Riedy's patch to fix gimpdir checking.
+
+	* app/layers_dialog.c: Applied Scott Goehring's patch to avoid
+	desensitizing the Close button when there are no images.
+
+Fri Oct 17 13:34:22 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/emboss.c: Applied Eric Hernes's patch to fix the
+	crashes in the plug-in.
+
+Thu Oct 16 10:30:15 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/channel.c app/paint_funcs.c app/paint_funcs.h: Applied Scott
+	Goehring's patch to fix the feathering with 0 radius.
+
+	* plug-ins/waves.c: Applied Lauri Alanko's patch to make the
+	plug-in not store its past drawable and image and operate in the
+	"normal" way.
+
+	* app/xcf.c (xcf_save_image): Applied Scott Goehring's patch to
+	fix "disk full" error.
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
+	Applied Adrian Likins's patch to fix the toggle buttons with
+	incorrect state.
+
+	* app/disp_callbacks.c: Applied Lauri Alanko's patch to reset the
+	tool when the active drawable changes (this fixes the flip tool
+	bug, for example).
+
+	* app/color_area.c: Applied Lauri Alanko's patch to fix the cancel
+	function on the color dialog.
+
+	* plug-ins/destripe.c plug-ins/emboss.c plug-ins/gfli.c
+ 	plug-ins/nlfilt.c plug-ins/sinus.c plug-ins/zealouscrop.c: fixed
+ 	"inline" functions.  PLEASE DO NOT USE THIS.
+
+	* plug-ins/dgimp/dgimp.c: Added inclusion of <sys/select.h> if necessary.
+
+	* libgimp/gimp.c: Added inclusion of <sys/select.h> if necessary.
+
+	* plug-ins/emboss.c (run): Fixed the check for the number of
+	parameters --- this was causing the plug-in to crash when being
+	called non-interactively.  Also changed accepted drawable types to
+	RGB*; it was missing the *.
+
+Wed Oct 15 08:52:23 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/png/Makefile.am (LDADD): Added -lm to LDADD.
+
+	* plug-ins/AlienMap/AlienMap.c plug-ins/Curtain/Curtain.c
+ 	plug-ins/Encript_Decript/Encript_Decript.c plug-ins/Julia/Julia.c
+ 	plug-ins/Mandelbrot/Mandelbrot.c: Removed C++-style comments.
+  	PLEASE DON'T PUT IN THIS KIND OF COMMENTS!
+
+	* plug-ins/MapObject/mapobject_preview.c: Added prototypes for
+	draw_wireframe_plane() and draw_wireframe_sphere().
+
+	* Added -I$(includedir) to the Makefile.am's in all directories.
+
+	* plug-ins/fp.c plug-ins/engrave.c plug-ins/hot.c
+ 	plug-ins/magiceye.c plug-ins/universal.c: Changed registered
+ 	procedure names to follow the plug-in convetion.
+
+	* app/magnify.c: Added "info_window.h" to #includes.
+
+	* app/app_procs.c (really_quit_delete_callback): casted widget to
+	GTK_BUTTON to avoid warning.
+
+	* plug-ins/tiff/tiff.c plug-ins/gqbist.c plug-ins/sgi.c
+ 	plug-ins/snp.c plug-ins/tileit.c plug-ins/sharpen.c
+ 	plug-ins/sgilib.c plug-ins/ifscompose_utils.c: Added <string.h> to
+ 	includes to avoid warnings.
+
+	* libgimp/gimpwire.c: Added <string.h> to includes to avoid warnings.
+
+	* app/convert.c (compute_color_rgb): Applied Adam's patch to fix
+	division by zero on completely transparent images.
+
+	* libgimp/gimpenums.h (enum): Fixed SUBTRACT_MODE typo.  Oops :-)
+
+Mon Oct 13 14:28:20 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* libgimp/gimpmenu.h libgimp/gimp.h: Applied Tom Bech's patch to
+	make ld not puke on plug-ins written in C++.
+
+Sun Oct 12 09:19:19 1997  Tim Janik  <timj@psynet.net>
+
+	* acconfig.h:
+	* configure.in:
+	* app/plug_in.c: Added configure check for IPC_RMID_DEFERRED_RELEASE,
+	because shmat() fails after a shmctl(..., IPC_RMID,...) for OSF1 V3.2,
+	SunOS 4.1.1, 5.5, 5.5.1, 5.6, IRIX 5.2 and 6.2.
+
+Sat Oct 11 11:03:30 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/gdisplay_ops.c: Applied Shuji Narazaki's patch to fix the
+	behavior of shrink-wrap and auto-resize window.
+
+	* plug-ins/script-fu/script-fu.c (init_constants): Applied Shuji
+	Narazaki's patch to replace SUBTRACTION for SUBTRACT, to be
+	consistent with the rest of the program.
+
+Thu Oct  9 19:32:17 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/fileops.c (file_open_callback): Applied Tom Bech's patch to
+	fix disappearing file list items.
+
+	* app/gimprc.c (gimp_directory): Applied Raphael Quinet's patch to
+ 	fix NULL home directory.
+
+	* app/brush_select.c, app/pattern_select.c: Applied Tom Bech's
+	patch to allow proper resizing of the windows.
+
+Wed Oct  8 21:33:50 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
+
+	* plug-ins/
+	added MapObject (0.32) plugin (still requires libgck to be installed)
+	written by Tom Bech <tomb@gimp.org>
+	added, updated (all 1.01 now) and autoconfigured (ADUPAC) following
+	 AlienMap, Anamorphose, CentralReflection, Curtain, Encript_Decript,
+	 Julia, Mandelbrot by Daniel Cotting (CSP) <cotting@mygale.org>
+	plug-ins/aa/aa.c: upgraded to v1.0
+	plug-ins/xd:      noticed upgrade by Josh
+	applied inline patch by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu>
+	       (reduces gcc-ism a bit and makes use of autoconf features)
+	reflecting plugin changes within managementfiles (configure.in)
+	
+Mon Oct  6 13:22:01 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/pat.c, plug-ins/gbr.c: Applied Lauri Alanko's patch to
+	fix number of returned arguments.
+
+	* configure.in: Applied Tim Mooney's patch to allow passing of
+	extra linker options to X and Gtk tests.
+	Applied Kaz Sasayama's patch to allow use of the srcdir option in
+	configure.
+
+Mon Oct  6 01:15:21 CDT 1997 Tim Mooney  <mooney@dogbert.cc.ndsu.NoDak.edu>
+
+ 	* configure.in, config.h.in, plug-ins/destripe.c, plug-ins/emboss.c,
+ 	plug-ins/gfli.c, plug-ins/nlfilt.c, plug-ins/sinus.c,
+ 	plug-ins/zealouscrop.c: added a call to AC_C_INLINE in configure.in
+ 	to test for the appropriate flavor of the inline keyword, and changed
+ 	all plug-ins currently using __inline__ to use just `inline', which will
+ 	be defined to something in the toplevel config.h
+
+Fri Oct  3 19:36:50 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/fileops.c: Applied Kevin Turner's patch to fix resizing of
+	the file open/save dialogs.
+
+Thu Oct  2 17:41:51 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/color_select.c (color_select_update_hue_value): Applied
+	Laury Alanko's patch to fix hue calculation.
+
+	* libgimp/gimppixelrgn.c: Applied Adam Moss's patch to use
+	memcpy() instead of for() loops to copy tile data.
+
+Wed Oct  1 01:25:38 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/gdisplay_ops.c: Applied Lauri Alanko's patch for optional
+	confirmation when closing dirty images.
+
+Tue Sep 30 17:18:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/sinus.c: replaced rint() by the ROUND_TO_INT() macro.
+
+	* app/commands.c (file_new_ok_callback): Applied Lauri Alanko's
+	patch to mark new images as non-dirty.
+
+	* app/color_select.c: Applied Lauri Alanko's patch to make color
+	selection update immediate.
+
+	* libgimp/gimplayer.c (gimp_layer_copy): fixed pdb run procedure.
+
+	* main.c (main): Applied Miles O'Neal's patch to change the help output.
+
+Mon Sep 29 13:08:47 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* configure.in: Applied Jason Riedy's patch for non-GNUish systems.
+
+	* configure.in: Changed second function for testing of libtiff so
+	that the previous cached result is not used.
+
+	* plug-ins/Makefile.am: Fixed linking of libraries for some
+ 	plug-ins (Peter).
+
+	* configure.in: Changed linking order of gtk and X libraries (Peter).
+
+Fri Sep 26 14:57:12 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Made 0.99.12 release.  Whew! :-)
+
+	* app/paint_core.c (paint_core_button_press): Applied Ray
+	Lehtiniemi's patch for pointer motion tracking when pressing MOD1.
+
+	* app/disp_callbacks.c (gdisplay_canvas_events): Applied Owen
+	Taylor's patch (sent by Adam Moss) to fix pointer tracking.
+
+Thu Sep 25 17:16:47 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/lic.c: added the LIC plug-in.
+
+	* plug-ins/tga.c: updated the TGA plug-in to the new version.
+
+	* Added the xd plug-in by Josh MacDonald.
+
+	* Separated Gtk+ from GIMP.  Hope the chainsawing was correct :-)
+
+	* plug-ins/apply_lens.c: Morten Eriksen authorized the removal of
+	the additional licensing restriction, so I removed it.  Thanks!!!
+
+	* plug-ins/gflare/gtkmultioptionmenu.c: Changed "restrict" to
+	"restrict_area" to avoid name collision.
+
+Wed Sep 24 13:47:31 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Applied Owen Taylor's
+	patch to avoid multiple initializations of the Gtk.
+
+	* plug-ins/smooth_palette.c: srandom(), random() replaced by
+	srand() and rand().
+
+	* plug-ins/sinus.c: PI replaced by M_PI.
+
+	* plug-ins/gqbist.c: srandom(), random() replaced by srand() and rand().
+
+	* plug-ins/laplace.c: ROUND_TO_INT() macro removed because it is
+	not used.
+
+	* plug-ins: Removed MIN/MAX/BOUNDS macros and replaced them by the
+	appropriate ones from glib.h.
+
+	* Now plug-ins that require special libraries reside in their own
+	subdirectories.  This is sort of a kluge to make optional
+	compilation work.
+
+	* app/: Applied Larry Ewing's big patch to properly handle
+	delete_event in all windows.
+
+	* app/about_dialog.c: Applied Owen Taylor's patch to avoid eating
+	infinite CPU time when the about dialog is resized.
+
+Tue Sep 23 12:22:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* libgimp/gimp.c: From Tim Janik's patch; now _shm_ID = -1.
+
+	* app/plug_in.c: Applied Tim Janik's patch to mark shm segments
+	with IPC_RMID so that they are automatically removed always.
+
+	* app/gdisplay.c (gdisplay_delete): Applied Nick Lamb's patch to
+	fix file/open bug.
+
+	* plug-ins/psd.c: Commented out "#include <endian.h>".  It does
+	not seem to be required, but I'm not sure.
+
+	* app/procedural_db.c (procedural_db_execute): Applied Gordon
+	Matzigkeit's patch to avoid memory leak when calling plug-ins.
+
+	* app/plug_in.h: Applied Gordon Matzigkeit's patch to avoid memory
+	leak when calling plug-ins.
+
+	* app/plug_in.c: Applied Gordon Matzigkeit's patch to avoid memory
+	leak when calling plug-ins.
+
+	* app/fileops.c (file_open): Applied Gordon Matzigkeit's patch to avoid
+	memory leak when freeing arguments.
+
+	* app/plug_in.c: Applied Gordon Matzigkeit's patch for plug-in return args.
+
+	* plug-ins/dbbrowser/dbbrowser.c: Removed the X includes; they are
+	not needed.
+
+	* plug-ins/maze.c (run): Removed string from putchar() call and
+	replaced it with fprintf().
+
+	* app/layers_dialog.c (layers_dialog_set_menu_sensitivity): Fixed
+	bug which would lead to crashes when layer == NULL.
+
+	* plug-ins/script-fu/scripts/clothify.scm: Fixed "gratuitous
+	vulgarity".  Bleh.
+
+	* Fixed calls to plug-in-bump-map in all scripts that needed it.
+
+	* app/brushes.c (brushes_refresh_brush_proc =): Fixed unterminated
+	strings.
+
+	* plug-ins/mblur.c (mblur): Fixed bad default case on switch().
+
+	* plug-ins/hot.c: Fixed unterminated strings.
+
+	* plug-ins: removed trailing semicolon from all MAIN() macro calls.
+
+	* plug-ins/dbbrowser/dbbrowser.c (run): Changed values[0] to values[1].
+
+	* plug-ins/sgi.c: Updated the sgi plug-in.
+
+	* plug-ins/png.c: Updated the png plug-in.
+
+	* Applied Lauri Alanko's patch to remove gcc-isms.
+
+Mon Sep 22 21:19:14 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Added the mpeg plug-in.
+
+	* Made configure.in and plug-ins/Makefile.am properly detect
+	whether file format libraries are installed and thus decide
+	whether to build some plug-ins or not.
+
+
+Wed Sep 24 13:47:31 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Applied Owen Taylor's
+	patch to avoid multiple initializations of the Gtk.
+
+	* plug-ins/smooth_palette.c: srandom(), random() replaced by
+	srand() and rand().
+
+	* plug-ins/sinus.c: PI replaced by M_PI.
+
+	* plug-ins/gqbist.c: srandom(), random() replaced by srand() and rand().
+
+	* plug-ins/laplace.c: ROUND_TO_INT() macro removed because it is
+	not used.
+
+	* plug-ins: Removed MIN/MAX/BOUNDS macros and replaced them by the
+	appropriate ones from glib.h.
+
+	* Now plug-ins that require special libraries reside in their own
+	subdirectories.  This is sort of a kluge to make optional
+	compilation work.
+
+	* app/: Applied Larry Ewing's big patch to properly handle
+	delete_event in all windows.
+
+	* app/about_dialog.c: Applied Owen Taylor's patch to avoid eating
+	infinite CPU time when the about dialog is resized.
+
+Tue Sep 23 12:22:52 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* libgimp/gimp.c: From Tim Janik's patch; now _shm_ID = -1.
+
+	* app/plug_in.c: Applied Tim Janik's patch to mark shm segments
+	with IPC_RMID so that they are automatically removed always.
+
+	* app/gdisplay.c (gdisplay_delete): Applied Nick Lamb's patch to
+	fix file/open bug.
+
+	* plug-ins/psd.c: Commented out "#include <endian.h>".  It does
+	not seem to be required, but I'm not sure.
+
+	* app/procedural_db.c (procedural_db_execute): Applied Gordon
+	Matzigkeit's patch to avoid memory leak when calling plug-ins.
+
+	* app/plug_in.h: Applied Gordon Matzigkeit's patch to avoid memory
+	leak when calling plug-ins.
+
+	* app/plug_in.c: Applied Gordon Matzigkeit's patch to avoid memory
+	leak when calling plug-ins.
+
+	* app/fileops.c (file_open): Applied Gordon Matzigkeit's patch to avoid
+	memory leak when freeing arguments.
+
+	* app/plug_in.c: Applied Gordon Matzigkeit's patch for plug-in return args.
+
+	* plug-ins/dbbrowser/dbbrowser.c: Removed the X includes; they are
+	not needed.
+
+	* plug-ins/maze.c (run): Removed string from putchar() call and
+	replaced it with fprintf().
+
+	* app/layers_dialog.c (layers_dialog_set_menu_sensitivity): Fixed
+	bug which would lead to crashes when layer == NULL.
+
+	* plug-ins/script-fu/scripts/clothify.scm: Fixed "gratuitous
+	vulgarity".  Bleh.
+
+	* Fixed calls to plug-in-bump-map in all scripts that needed it.
+
+	* app/brushes.c (brushes_refresh_brush_proc =): Fixed unterminated
+	strings.
+
+	* plug-ins/mblur.c (mblur): Fixed bad default case on switch().
+
+	* plug-ins/hot.c: Fixed unterminated strings.
+
+	* plug-ins: removed trailing semicolon from all MAIN() macro calls.
+
+	* plug-ins/dbbrowser/dbbrowser.c (run): Changed values[0] to values[1].
+
+	* plug-ins/sgi.c: Updated the sgi plug-in.
+
+	* plug-ins/png.c: Updated the png plug-in.
+
+	* Applied Lauri Alanko's patch to remove gcc-isms.
+
+Mon Sep 22 21:19:14 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Added the mpeg plug-in.
+
+	* Made configure.in and plug-ins/Makefile.am properly detect
+	whether file format libraries are installed and thus decide
+	whether to build some plug-ins or not.
+
+
+Mon Sep 22 17:34:09 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* Made 0.99.11 release.  See the files NOTES and TODO-DIST for
+	more info.
+	
