@@ -32,7 +32,6 @@
 #include "config/gimprc.h"
 
 #include "pdb/procedural_db.h"
-#include "pdb/internal_procs.h"
 
 #include "plug-in/plug-ins.h"
 
@@ -524,6 +523,7 @@ gimp_get_memsize (GimpObject *object,
                                        gui_size));
 
   memsize += gimp_g_hash_table_get_memsize (gimp->procedural_ht);
+  memsize += gimp_g_hash_table_get_memsize (gimp->procedural_compat_ht);
 
   memsize += gimp_g_list_get_memsize (gimp->procedural_db_data_list,
                                       0 /* FIXME */);
@@ -663,7 +663,7 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  register all internal procedures  */
   (* status_callback) (_("Procedural Database"), NULL, -1);
-  internal_procs_init (gimp, status_callback);
+  procedural_db_init_procs (gimp, status_callback);
 
   (* status_callback) (_("Plug-In Environment"), "", -1);
 

@@ -32,6 +32,7 @@
 
 #include "plug-in/plug-in-run.h"
 
+#include "internal_procs.h"
 #include "procedural_db.h"
 
 #include "gimp-intl.h"
@@ -53,6 +54,7 @@ procedural_db_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->procedural_ht           = g_hash_table_new (g_str_hash, g_str_equal);
+  gimp->procedural_compat_ht    = g_hash_table_new (g_str_hash, g_str_equal);
   gimp->procedural_db_data_list = NULL;
 }
 
@@ -75,8 +77,13 @@ procedural_db_free (Gimp *gimp)
       g_hash_table_foreach (gimp->procedural_ht,
                             procedural_db_free_entry, NULL);
       g_hash_table_destroy (gimp->procedural_ht);
-
       gimp->procedural_ht = NULL;
+    }
+
+  if (gimp->procedural_compat_ht)
+    {
+      g_hash_table_destroy (gimp->procedural_compat_ht);
+      gimp->procedural_compat_ht = NULL;
     }
 
   if (gimp->procedural_db_data_list)
@@ -98,6 +105,59 @@ procedural_db_free (Gimp *gimp)
       g_list_free (gimp->procedural_db_data_list);
       gimp->procedural_db_data_list = NULL;
     }
+}
+
+void
+procedural_db_init_procs (Gimp               *gimp,
+                          GimpInitStatusFunc  status_callback)
+{
+  static const struct
+  {
+    const gchar *old_name;
+    const gchar *new_name;
+  }
+  compat_procs[] =
+  {
+    { "gimp_brushes_list",         "gimp_brushes_get_list"        },
+    { "gimp_channel_delete",       "gimp_drawable_delete"         },
+    { "gimp_channel_get_name",     "gimp_drawable_get_name"       },
+    { "gimp_channel_get_tattoo",   "gimp_drawable_get_tattoo"     },
+    { "gimp_channel_get_visible",  "gimp_drawable_get_visible"    },
+    { "gimp_channel_set_name",     "gimp_drawable_set_name"       },
+    { "gimp_channel_set_tattoo",   "gimp_drawable_set_tattoo"     },
+    { "gimp_channel_set_visible",  "gimp_drawable_set_visible"    },
+    { "gimp_convert_grayscale",    "gimp_image_convert_grayscale" },
+    { "gimp_convert_indexed",      "gimp_image_convert_indexed"   },
+    { "gimp_convert_rgb",          "gimp_image_convert_rgb"       },
+    { "gimp_crop",                 "gimp_image_crop"              },
+    { "gimp_drawable_image",       "gimp_drawable_get_image"      },
+    { "gimp_gradients_get_active", "gimp_gradients_get_gradient"  },
+    { "gimp_gradients_set_active", "gimp_gradients_set_gradient"  },
+    { "gimp_layer_delete",         "gimp_drawable_delete"         },
+    { "gimp_layer_get_linked",     "gimp_drawable_get_linked"     },
+    { "gimp_layer_get_name",       "gimp_drawable_get_name"       },
+    { "gimp_layer_get_tattoo",     "gimp_drawable_get_tattoo"     },
+    { "gimp_layer_get_visible",    "gimp_drawable_get_visible"    },
+    { "gimp_layer_mask",           "gimp_layer_get_mask"          },
+    { "gimp_layer_set_linked",     "gimp_drawable_set_linked"     },
+    { "gimp_layer_set_name",       "gimp_drawable_set_name"       },
+    { "gimp_layer_set_tattoo",     "gimp_drawable_set_tattoo"     },
+    { "gimp_layer_set_visible",    "gimp_drawable_set_visible"    },
+    { "gimp_palette_refresh",      "gimp_palettes_refresh"        },
+    { "gimp_patterns_list",        "gimp_patterns_get_list"       }
+  };
+
+  gint i;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (status_callback != NULL);
+
+  internal_procs_init (gimp, status_callback);
+
+  for (i = 0; i < G_N_ELEMENTS (compat_procs); i++)
+    g_hash_table_insert (gimp->procedural_compat_ht,
+                         (gpointer) compat_procs[i].old_name,
+                         (gpointer) compat_procs[i].new_name);
 }
 
 void
@@ -243,12 +303,16 @@ procedural_db_execute (Gimp        *gimp,
 	  return_args = g_new (Argument, 1);
 	  return_args->arg_type      = GIMP_PDB_STATUS;
 	  return_args->value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
-	  break;
+
+          return return_args;
 	}
 
-      if ((return_args[0].value.pdb_int != GIMP_PDB_SUCCESS) &&
-	  (procedure->num_values > 0))
-	memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
+      if (return_args[0].value.pdb_int != GIMP_PDB_SUCCESS      &&
+          return_args[0].value.pdb_int != GIMP_PDB_PASS_THROUGH &&
+	  procedure->num_values > 0)
+        {
+          memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
+        }
 
       if (return_args[0].value.pdb_int == GIMP_PDB_PASS_THROUGH)
         {

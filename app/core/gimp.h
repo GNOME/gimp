@@ -161,6 +161,7 @@ struct _Gimp
   GimpDataFactory        *palette_factory;
 
   GHashTable             *procedural_ht;
+  GHashTable             *procedural_compat_ht;
   GList                  *procedural_db_data_list;
 
   GSList                 *load_procs;

@@ -1,3 +1,29 @@
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
+	Made 3rd party scripts work again after all that PDB function
+	renaming:
+
+	* app/core/gimp.[ch]: added "GHashTable *procedural_compat_ht" to
+	the Gimp struct which maps old procedure names to new ones.
+	Call new function procedural_db_init_procs() instead of
+	internal_procs_init().
+
+	* app/pdb/procedural_db.[ch]: create and destroy the new compat
+	hash table. Added new function procedural_db_init_procs() which
+	registers the internal procedures and fills the compat hash table.
+
+	(procedural_db_execute): minor fixes.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): if
+	the requested procedure was not found, try the compat table.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: made all PDB query
+	procedures compat aware. For compat procedures, return help
+	strings which declare the procedure as deprecated and tell
+	the new name of the procedure. Cleanup.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2003-12-05  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/psd.c: GIMP 1.3/2.0 needs its layer/channel

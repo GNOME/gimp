@@ -41,24 +41,42 @@
 #endif
 
 
+#define COMPAT_BLURB "This procedure is deprecated! Use the procedure returned as 'help' instead."
+
+
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
 
 struct _PDBQuery
 {
-  regex_t name_regex;
-  regex_t blurb_regex;
-  regex_t help_regex;
-  regex_t author_regex;
-  regex_t copyright_regex;
-  regex_t date_regex;
-  regex_t proc_type_regex;
+  Gimp     *gimp;
 
-  gchar **list_of_procs;
-  int     num_procs;
+  regex_t   name_regex;
+  regex_t   blurb_regex;
+  regex_t   help_regex;
+  regex_t   author_regex;
+  regex_t   copyright_regex;
+  regex_t   date_regex;
+  regex_t   proc_type_regex;
+
+  gchar   **list_of_procs;
+  gint      num_procs;
+  gboolean  querying_compat;
 };
 
-static gchar *proc_type_str[] = 
+
+typedef struct _PDBStrings PDBStrings;
+
+struct _PDBStrings
+{
+  const gchar *blurb;
+  const gchar *help;
+  const gchar *author;
+  const gchar *copyright;
+  const gchar *date;
+};
+
+static gchar *proc_type_str[] =
 {
   N_("Internal GIMP procedure"),
   N_("GIMP Plug-In"),
@@ -116,13 +134,36 @@ register_procedural_db_procs (Gimp *gimp)
 }
 
 static int
-match_strings (regex_t *preg,
-	       gchar   *a)
+match_strings (regex_t     *preg,
+	       const gchar *a)
 {
   if (!a)
-    a = "";	
+    a = "";
 
   return regexec (preg, a, 0, NULL, 0);
+}
+
+static void
+get_pdb_strings (PDBStrings *strings,
+                 ProcRecord *proc,
+                 gboolean    compat)
+{
+  if (compat)
+    {
+      strings->blurb     = COMPAT_BLURB;
+      strings->help      = proc->name;
+      strings->author    = NULL;
+      strings->copyright = NULL;
+      strings->date      = NULL;
+    }
+  else
+    {
+      strings->blurb     = proc->blurb;
+      strings->help      = proc->help;
+      strings->author    = proc->author;
+      strings->copyright = proc->copyright;
+      strings->date      = proc->date;
+    }
 }
 
 static void
@@ -130,59 +171,71 @@ procedural_db_query_entry (gpointer key,
                            gpointer value,
                            gpointer user_data)
 {
-  GList      *list;
-  ProcRecord *proc;
-  PDBQuery   *pdb_query;
-  gint        new_length;
+  PDBQuery    *pdb_query = user_data;
+  GList       *list;
+  ProcRecord  *proc;
+  const gchar *proc_name;
+  PDBStrings   strings;
 
-  list = (GList *) value;
+  proc_name = key;
+
+  if (pdb_query->querying_compat)
+    list = g_hash_table_lookup (pdb_query->gimp->procedural_ht, value);
+  else
+    list = value;
+
+  if (! list)
+    return;
+
   proc = (ProcRecord *) list->data;
-  pdb_query = (PDBQuery *) user_data;
 
-  if (!match_strings (&pdb_query->name_regex, proc->name) &&
-      !match_strings (&pdb_query->blurb_regex, proc->blurb) &&
-      !match_strings (&pdb_query->help_regex, proc->help) &&
-      !match_strings (&pdb_query->author_regex, proc->author) &&
-      !match_strings (&pdb_query->copyright_regex, proc->copyright) &&
-      !match_strings (&pdb_query->date_regex, proc->date) &&
-      !match_strings (&pdb_query->proc_type_regex,
-		      proc_type_str[(int) proc->proc_type]))
+  get_pdb_strings (&strings, proc, pdb_query->querying_compat);
+
+  if (! match_strings (&pdb_query->name_regex,      proc_name)         &&
+      ! match_strings (&pdb_query->blurb_regex,     strings.blurb)     &&
+      ! match_strings (&pdb_query->help_regex,      strings.help)      &&
+      ! match_strings (&pdb_query->author_regex,    strings.author)    &&
+      ! match_strings (&pdb_query->copyright_regex, strings.copyright) &&
+      ! match_strings (&pdb_query->date_regex,      strings.date)      &&
+      ! match_strings (&pdb_query->proc_type_regex,
+                       proc_type_str[(gint) proc->proc_type]))
     {
-      new_length = proc->name ? (strlen (proc->name) + 1) : 0;
-
-      if (new_length)
-        {
-          pdb_query->num_procs++;
-          pdb_query->list_of_procs = g_realloc (pdb_query->list_of_procs,
-                                               (sizeof (gchar **) * pdb_query->num_procs));
-          pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc->name);
-        }
+      pdb_query->num_procs++;
+      pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
+                                          pdb_query->num_procs);
+      pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
     }
 }
 
-static void
-output_string (FILE       *file,
-               const char *string)
+static gboolean
+output_string (FILE        *file,
+               const gchar *string)
 {
-  fprintf (file, "\"");
+  if (fprintf (file, "\"") < 0)
+    return FALSE;
 
   if (string)
     while (*string)
       {
         switch (*string)
           {
-          case '\\' : fprintf (file, "\\\\"); break;
-          case '\"' : fprintf (file, "\\\""); break;
-          case '{'  : fprintf (file, "@{"); break;
-          case '@'  : fprintf (file, "@@"); break;
-          case '}'  : fprintf (file, "@}"); break;
+          case '\\' : if (fprintf (file, "\\\\") < 0) return FALSE; break;
+          case '\"' : if (fprintf (file, "\\\"") < 0) return FALSE; break;
+          case '{'  : if (fprintf (file, "@{")   < 0) return FALSE; break;
+          case '@'  : if (fprintf (file, "@@")   < 0) return FALSE; break;
+          case '}'  : if (fprintf (file, "@}")   < 0) return FALSE; break;
+
           default:
-            fprintf (file, "%c", *string);
+            if (fprintf (file, "%c", *string) < 0)
+              return FALSE;
           }
         string++;
       }
 
-  fprintf (file, "\"\n");
+  if (fprintf (file, "\"\n") < 0)
+    return FALSE;
+
+  return TRUE;
 }
 
 static void
@@ -375,10 +428,17 @@ procedural_db_query_invoker (Gimp     *gimp,
       regcomp (&pdb_query.date_regex, date, 0);
       regcomp (&pdb_query.proc_type_regex, proc_type, 0);
     
-      pdb_query.list_of_procs = NULL;
-      pdb_query.num_procs = 0;
+      pdb_query.gimp            = gimp;
+      pdb_query.list_of_procs   = NULL;
+      pdb_query.num_procs       = 0;
+      pdb_query.querying_compat = FALSE;
     
       g_hash_table_foreach (gimp->procedural_ht,
+			    procedural_db_query_entry, &pdb_query);
+    
+      pdb_query.querying_compat = TRUE;
+    
+      g_hash_table_foreach (gimp->procedural_compat_ht,
 			    procedural_db_query_entry, &pdb_query);
     
       regfree (&pdb_query.name_regex);
@@ -477,6 +537,7 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *proc_name;
+  PDBStrings strings;
   ProcRecord *proc = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
@@ -484,17 +545,40 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (proc = procedural_db_lookup (gimp, proc_name)) != NULL;
+    {
+      proc = procedural_db_lookup (gimp, proc_name);
+    
+      if (proc)
+	{
+	  get_pdb_strings (&strings, proc, FALSE);
+	}
+      else
+	{
+	  const gchar *compat_name;
+    
+	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+    
+	  if (compat_name)
+	    {
+	      proc = procedural_db_lookup (gimp, compat_name);
+    
+	      if (proc)
+		get_pdb_strings (&strings, proc, TRUE);
+	    }
+	}
+    
+      success = (proc != NULL);
+    }
 
   return_args = procedural_db_return_args (&procedural_db_proc_info_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (proc->blurb);
-      return_args[2].value.pdb_pointer = g_strdup (proc->help);
-      return_args[3].value.pdb_pointer = g_strdup (proc->author);
-      return_args[4].value.pdb_pointer = g_strdup (proc->copyright);
-      return_args[5].value.pdb_pointer = g_strdup (proc->date);
+      return_args[1].value.pdb_pointer = g_strdup (strings.blurb);
+      return_args[2].value.pdb_pointer = g_strdup (strings.help);
+      return_args[3].value.pdb_pointer = g_strdup (strings.author);
+      return_args[4].value.pdb_pointer = g_strdup (strings.copyright);
+      return_args[5].value.pdb_pointer = g_strdup (strings.date);
       return_args[6].value.pdb_int = proc->proc_type;
       return_args[7].value.pdb_int = proc->num_args;
       return_args[8].value.pdb_int = proc->num_values;
@@ -592,6 +676,17 @@ procedural_db_proc_arg_invoker (Gimp     *gimp,
   if (success)
     {
       proc = procedural_db_lookup (gimp, proc_name);
+    
+      if (! proc)
+	{
+	  const gchar *compat_name;
+    
+	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+    
+	  if (compat_name)
+	    proc = procedural_db_lookup (gimp, compat_name);
+	}
+    
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
 	arg = &proc->args[arg_num];
       else
@@ -679,6 +774,17 @@ procedural_db_proc_val_invoker (Gimp     *gimp,
   if (success)
     {
       proc = procedural_db_lookup (gimp, proc_name);
+    
+      if (! proc)
+	{
+	  const gchar *compat_name;
+    
+	  compat_name = g_hash_table_lookup (gimp->procedural_compat_ht, proc_name);
+    
+	  if (compat_name)
+	    proc = procedural_db_lookup (gimp, compat_name);
+	}
+    
       if (proc && (val_num >= 0 && val_num < proc->num_values))
 	val = &proc->values[val_num];
       else
