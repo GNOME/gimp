@@ -1,3 +1,10 @@
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager-crop.c: removed trailing whitespace.
+
+	* plug-ins/imagemap/imap_selection.c: need to define
+	GTK_DISABLE_DEPRECATED for gtk_toolbar_append_space().
+
 2004-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.[ch]: added new function

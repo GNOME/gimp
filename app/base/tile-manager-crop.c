@@ -59,8 +59,8 @@ tile_manager_crop (TileManager *tiles,
 
   pixel_region_init (&PR, tiles, 0, 0, x1, y1, FALSE);
 
-  for (pr = pixel_regions_register (1, &PR); 
-       pr != NULL; 
+  for (pr = pixel_regions_register (1, &PR);
+       pr != NULL;
        pr = pixel_regions_process (pr))
     {
       data = PR.data + alpha;
@@ -71,7 +71,7 @@ tile_manager_crop (TileManager *tiles,
 	{
 	  found = FALSE;
 
-	  for (x = PR.x; x < ex; x++, data+=bytes)
+	  for (x = PR.x; x < ex; x++, data += bytes)
 	    if (*data)
 	      {
 		if (x < x1)
@@ -95,7 +95,7 @@ tile_manager_crop (TileManager *tiles,
   x2 = CLAMP (x2 + 1, 0, tile_manager_width (tiles));
   y2 = CLAMP (y2 + 1, 0, tile_manager_height (tiles));
 
-  empty = (x1 == tile_manager_width (tiles) && 
+  empty = (x1 == tile_manager_width (tiles) &&
 	   y1 == tile_manager_height (tiles));
 
   if (empty)
@@ -104,9 +104,9 @@ tile_manager_crop (TileManager *tiles,
 
       new_tiles = NULL;
     }
-  else if (x1 == 0 && y1 == 0 && 
+  else if (x1 == 0 && y1 == 0 &&
 	   x2 == tile_manager_width (tiles)  &&
-	   y2 == tile_manager_height (tiles) && 
+	   y2 == tile_manager_height (tiles) &&
 	   border == 0)
     {
       /*  If no cropping, return original buffer  */
@@ -148,9 +148,9 @@ tile_manager_crop (TileManager *tiles,
 	  color_region (&destPR, black);
 	}
 
-      pixel_region_init (&srcPR, tiles, 
+      pixel_region_init (&srcPR, tiles,
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, new_tiles, 
+      pixel_region_init (&destPR, new_tiles,
 			 border, border, (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
