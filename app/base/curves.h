@@ -19,11 +19,12 @@
 #ifndef __CURVES_H__
 #define __CURVES_H__
 
+#define CURVES_NUM_POINTS 17
 
 struct _Curves
 {
   GimpCurveType curve_type[5];
-  gint          points[5][17][2];
+  gint          points[5][CURVES_NUM_POINTS][2];
   guchar        curve[5][256];
 };
 

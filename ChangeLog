@@ -1,6 +1,19 @@
+2004-09-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/base/curves.[ch]
+	* app/tools/gimpcurvestool.c: defined CURVES_NUM_POINTS and use it.
+
+	* tools/pdbgen/pdb/color.pdb (curves_spline_invoker): unset the
+	last control point which got initialized to (255,255) by
+	curves_init(). Fixes bug #153635.
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
-	Merged from HEAD:
+	Merged from HEAD branch:
 
 	* app/tools/gimpairbrushtool.c (gimp_airbrush_tool_register)
 	* app/tools/gimppenciltool.c (gimp_pencil_tool_register):
