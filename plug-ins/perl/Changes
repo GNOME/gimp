@@ -2,6 +2,10 @@ Revision history for Gimp-Perl extension.
 
 	- scm2perl had broken cdr and cddr stubs...
         - fixed examples/font_table.
+        - applied fixes from Lupe Christoph.
+        - allow uppercase letters in hex colour specifications.
+        - gimp_text_fontname ignored the image argument in
+          compatibility mode (patch by Dov Grobgeld).
 
 1.092 Wed Jun  2 14:52:29 CEST 1999
 	- testsuite failed when !HAVE_PDL (and the whole package broke on

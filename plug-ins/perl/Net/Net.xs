@@ -9,7 +9,15 @@
 #define NEED_newCONSTSUB
 #include "ppport.h"
 
+#if !defined(PERLIO_IS_STDIO) && defined(HASATTRIBUTE)
+# undef printf
+#endif
+
 #include <glib.h>
+
+#if !defined(PERLIO_IS_STDIO) && defined(HASATTRIBUTE)
+# define printf PerlIO_stdoutf
+#endif
 
 #if HAVE_PDL
 

@@ -116,11 +116,19 @@ fun 1,1,gimp_text_get_extents_fontname,sub {
 };
 	
 fun 1,1,gimp_text_fontname,sub {
-   shift if $_[0]->isa('Gimp::Image');
+   my $img = shift if $_[0]->isa('Gimp::Image');
    my ($drw, $x,$y, $string,$border,$antialias, $xlfd_size, $xlfd_unit, $xlfd) = @_;
+   my @params;
+
+   if (!defined $drw || $drw == -1) {
+       $drw = undef;
+       @params = ($img);
+   }
+
+   push(@params, $drw, $x, $y, $string, $border, $antialias,
+	xlfd_unpack($xlfd, $xlfd_size, $xlfd_unit));
    
-   Gimp->text_ext($drw, $x, $y, $string, $border, $antialias,
-                  xlfd_unpack($xlfd, $xlfd_size, $xlfd_unit));
+   Gimp->text_ext(@params);
 };
 
 fun 1,1,gimp_paintbrush,sub {

@@ -608,7 +608,10 @@ param_stash (GParamType type)
 	                    0		, 0		, 0		, 0		, 0		,
 	                    PKG_COLOR	, PKG_REGION	, PKG_DISPLAY	, PKG_IMAGE	, PKG_LAYER	,
 	                    PKG_CHANNEL	, PKG_DRAWABLE	, PKG_SELECTION	, 0		, 0		,
-	                    PKG_PARASITE, 0
+#if GIMP_PARASITE
+	                    PKG_PARASITE,
+#endif
+	                    0
 	                   };
   
   if (bless [type] && !bless_hv [type])

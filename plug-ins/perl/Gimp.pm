@@ -183,7 +183,7 @@ sub canonicalize_colour {
       [@_];
    } elsif (ref $_[0]) {
       $_[0];
-   } elsif ($_[0] =~ /^#([0-9a-f]{2,2})([0-9a-f]{2,2})([0-9a-f]{2,2})$/) {
+   } elsif ($_[0] =~ /^#([0-9a-fA-F]{2,2})([0-9a-fA-F]{2,2})([0-9a-fA-F]{2,2})$/) {
       [map {eval "0x$_"} ($1,$2,$3)];
    } else {
       unless (defined %rgb_db) {
