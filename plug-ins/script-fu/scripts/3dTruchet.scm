@@ -149,8 +149,8 @@
     
     
     (gimp-image-delete tile)
-    (gimp-display-new img)
     (gimp-image-enable-undo img)
+    (gimp-display-new img)
     )
   )
 

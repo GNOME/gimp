@@ -50,8 +50,8 @@
   (gimp-image-set-active-layer img layer-two)
 
   (plug-in-gradmap 1 img layer-two)
-  (gimp-display-new img)
   (gimp-image-enable-undo img)
+  (gimp-display-new img)
 ))
 
 (script-fu-register "script-fu-flatland"

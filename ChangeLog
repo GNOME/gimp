@@ -1,3 +1,11 @@
+Mon Jul 13 18:08:35 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	 plug-ins/script-fu/scripts/flatland.scm
+	 plug-ins/script-fu/scripts/truchet.scm:
+	updated these scripts to return the display they open,
+	mainly so i can use them in another script
+
 Mon Jul 13 17:48:21 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* app/rect_select.[ch]: applied gimp-chap-980709-0
