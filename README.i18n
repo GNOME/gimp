@@ -1,4 +1,4 @@
-This document exists to document the important things to care 
+This document exists to document the important things to care
 for because of locale support. It is aimed at developers and
 translators. If you are a translator, you can skip the first
 sections, but you definitely want to read sections 5 - 9.
@@ -23,7 +23,7 @@ sections, but you definitely want to read sections 5 - 9.
  Unfortunately not everyone is able to understand English. But
  even those people sometimes like to use good and free software
  without using a dictionary to get the unknown words.
- So why not simply localise the software to make it available to 
+ So why not simply localise the software to make it available to
  the mass which isn't wholly English native? Of course this also
  eases the migration from PhotoX to GIMP. :))
 
@@ -45,7 +45,7 @@ sections, but you definitely want to read sections 5 - 9.
  system which GIMP is compiled on and will deactivate language support
  if it's not.
 
- If the gettext system is there it will declare 3 functions which will be 
+ If the gettext system is there it will declare 3 functions which will be
  described below.
 
 3.1 _() [more correctly: char * _( char * )]
@@ -60,8 +60,8 @@ sections, but you definitely want to read sections 5 - 9.
  - If it is found a pointer to the string will be returned to the caller.
  - If not, the caller will receive a pointer to the original string.
 
- This way it is ensured that there isn't any harm caused to the program 
- (i.e. The GIMP) if no useful catalog is installed. 
+ This way it is ensured that there isn't any harm caused to the program
+ (i.e. The GIMP) if no useful catalog is installed.
 
  Please note that it is important to use _() directly (and not gettext())
  for simple messages because of reasons that will be mentioned below.
@@ -70,7 +70,7 @@ sections, but you definitely want to read sections 5 - 9.
  for a better source understanding I suggest to use it consistently only
  for text (like _("That's text!")) and not for variables (like _(text)).
  Use gettext(text) instead.
- 
+
 
 3.2 N_() [more correctly: const char * ( const char * ) ]
 
@@ -90,20 +90,20 @@ sections, but you definitely want to read sections 5 - 9.
  which will be described below. This one doesn't do anything but it
  marks the text as important to the xgettext extractor.
 
- The text has to be translated manually with the next function.  
- 
+ The text has to be translated manually with the next function.
+
 3.3 gettext()
 
  This function is the same as that macro in 3.1. But there is one big
  difference: The _()'s and N_()'s are the only expressions which get
- parsed by the template generator. 
+ parsed by the template generator.
  If you have strings that should be translated but are unfortunately
  in a structure you have to do that on your own which means that you
  have to parse the fields with the messages in a loop and translate
  the texts with this gettext() function.
 
  Please note that it may be necessary to free or allocate memory in
- this case!      
+ this case!
 
 4. Some magic...
 
@@ -112,17 +112,17 @@ sections, but you definitely want to read sections 5 - 9.
  there are 3 different files which are importart:
 
  gimp.pot:
- 
+
  This one is the so called template. It contains the messages which
  are extracted from the sources and empty fields which have to get
  filled by the author. It is used to start a new catalog or to update
- the an already available one. 
+ the an already available one.
 
  The Makefile will automatically call the program gettext which will
  extract all messages that are wrapped by a _() or a N_() (but NOT
  gettext()) and concat them to this template.
 
- [language].po: 
+ [language].po:
 
  This file has to be an edited gimp.pot and contains the original
  messages plus the translated ones. This file will be delivered
@@ -153,7 +153,7 @@ sections, but you definitely want to read sections 5 - 9.
  string seems similar to a new one and it already has a translation,
  it will be taken over to the new catalog together with a remark that
 this one may not necessarily fit.
- 
+
 6. Gimp is different
 
  Gimp is a complex application which has a bunch of scripts and
@@ -161,11 +161,11 @@ this one may not necessarily fit.
  not one catalog but many. For a full translation of the GIMP's UI,
  you will have to add translations for the following catalogs:
 
-	 po/gimp14.po                       --  the core
-	 po-libgimp/gimp14-libgimp.pot      --  the libgimp library
-	 po-plugins/gimp14-std-plugins.pot  --  most of the plug-ins
-	 po-script-fu/gimp14-script-fu.pot  --  the script-fu scripts
-         tips/gimp-tips14.pot               --  the startup tips
+	 po/gimp20.po                       --  the core
+	 po-libgimp/gimp20-libgimp.pot      --  the libgimp library
+	 po-plugins/gimp20-std-plugins.pot  --  most of the plug-ins
+	 po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
+         tips/gimp-tips20.pot               --  the startup tips
 
  If you are looking for the translations of gimp-perl, please note that
  gimp-perl has been moved into it's own CVS module called gimp-perl.
@@ -207,7 +207,7 @@ this one may not necessarily fit.
  extracted from gimp-tips.xml.in so translators can use the usual
  tools to create a <lang>.po file that holds the translations. All
  translations are then merged into gimp-tips.xml with language
- identifiers taken from the po filename. 
+ identifiers taken from the po filename.
 
  GIMP needs to know what language it should select from gimp-tips.xml.
  Therefore, there's the special message "tips-locale:C" in the main
@@ -223,8 +223,8 @@ this one may not necessarily fit.
  Any help with translations is appreciated. If you want to help,
  please get in contact with the people from the GNOME Translation
  Project who coordinate all translation efforts in the GNOME CVS
- tree. They have a nice web-page at 
-	http://developer.gnome.org/projects/gtp/. 
+ tree. They have a nice web-page at
+	http://developer.gnome.org/projects/gtp/.
 
 10. And more?
 
@@ -236,6 +236,5 @@ this one may not necessarily fit.
 
 Happy Gimping.
 	Daniel Egger
-	Sven Neumann 
-                     
+	Sven Neumann
 
