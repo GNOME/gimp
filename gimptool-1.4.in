@@ -89,20 +89,16 @@ if test $# -eq 0; then
   usage 1
 fi
 
-if test x${GTK_CONFIG+set} != xset ; then
+if test x${PKG_CONFIG+set} != xset ; then
   gtk_cflags='@GTK_CFLAGS@'
   gtk_libs='@GTK_LIBS@'
-else
-  gtk_cflags=`$GTK_CONFIG --cflags`
-  gtk_libs=`$GTK_CONFIG --libs`
-fi
-
-if test x${GLIB_CONFIG+set} != xset ; then
   glib_cflags='@GLIB_CFLAGS@'
   glib_libs='@GLIB_LIBS@'
 else
-  glib_cflags=`$GLIB_CONFIG --cflags`
-  glib_libs=`$GLIB_CONFIG --libs`
+  gtk_cflags=`$PKG_CONFIG --cflags gtk+-2.0`
+  gtk_libs=`$PKG_CONFIG --libs gtk+-2.0`
+  glib_cflags=`$PKG_CONFIG --cflags glib-2.0`
+  glib_libs=`$PKG_CONFIG --libs glib-2.0`
 fi
 
 if test x${INSTALL+set} != xset ; then

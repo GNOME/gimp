@@ -1,5 +1,12 @@
 2001-07-25  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for pkg-config (>= 0.7)
+	
+	* gimptool-1.4.in: use pkg-config instead of glib-config and 
+	gtk-config.
+
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
 	* app_procs.c
 	* errors.c
 	* errors.h

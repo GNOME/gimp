@@ -91,6 +91,16 @@ ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro r
 
 AM_GNU_GETTEXT
 
+dnl Find pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test x$PKG_CONFIG = xno ; then
+  AC_MSG_ERROR([*** pkg-config not found. See http://pkgconfig.sourceforge.net])
+fi
+
+if ! pkg-config --atleast-pkgconfig-version 0.7 ; then
+  AC_MSG_ERROR([*** pkg-config too old; version 0.7 or better required.])
+fi
+
 dnl Check for GTK+
 AM_PATH_GTK_2_0(1.3.7,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
@@ -737,6 +747,8 @@ AC_SUBST(LT_AGE)
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
+
+AC_SUBST(PKG_CONFIG)
 
 AC_SUBST(HAVE_GLIBC_REGEX)
 
