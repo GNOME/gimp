@@ -132,17 +132,6 @@ SUBDIRS = 			\
 
 scriptdata =
 
-pluginlibdir = $(gimpplugindir)/plug-ins
-
-EXTRA_DIST = build.in
-
-INCLUDES = \
-	$(X_CFLAGS)			\
-	-I$(top_srcdir)			\
-	-I$(includedir)
-
-LIBGIMPUI = $(top_builddir)/libgimp/libgimpui.la
-
 .PHONY: files
 
 files:

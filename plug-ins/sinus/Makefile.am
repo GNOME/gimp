@@ -5,24 +5,26 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = sinus
 
 sinus_SOURCES = \
-	sinus.c sinus_logo.h  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
+	$(top_srcdir)/plug-ins/megawidget/megawidget.h	\
+	sinus.c						\
+	sinus_logo.h
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
+	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a		\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/plug-ins/megawidget/libmegawidget.a
 
 sinus_DEPENDENCIES = $(DEPS)
 

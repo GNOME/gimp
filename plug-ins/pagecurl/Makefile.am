@@ -5,22 +5,30 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = pagecurl
 
 pagecurl_SOURCES = \
-	pagecurl.c curl0.xpm curl1.xpm curl2.xpm curl3.xpm curl4.xpm curl5.xpm curl6.xpm curl7.xpm
+	pagecurl.c	\
+	curl0.xpm	\
+	curl1.xpm	\
+	curl2.xpm	\
+	curl3.xpm	\
+	curl4.xpm	\
+	curl5.xpm	\
+	curl6.xpm	\
+	curl7.xpm
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 pagecurl_DEPENDENCIES = $(DEPS)
 

@@ -12,21 +12,21 @@ EXTRA_DIST = $(brushdata_DATA)
 
 .PHONY: files
 
-FILES	=\
-	10x10square.gbr	\
+FILES = \
+	10x10square.gbr		\
 	10x10squareBlur.gbr	\
-	11circle.gbr	\
-	11fcircle.gbr	\
-	13circle.gbr	\
-	13fcircle.gbr	\
-	15circle.gbr	\
-	15fcircle.gbr	\
-	17circle.gbr	\
-	17fcircle.gbr	\
-	19circle.gbr	\
-	19fcircle.gbr	\
-	1circle.gbr	\
-	20x20square.gbr	\
+	11circle.gb		\
+	11fcircle.gbr		\
+	13circle.gbr		\
+	13fcircle.gbr		\
+	15circle.gbr		\
+	15fcircle.gbr		\
+	17circle.gbr		\
+	17fcircle.gbr		\
+	19circle.gbr		\
+	19fcircle.gbr		\
+	1circle.gbr		\
+	20x20square.gbr		\
 	20x20squareBlur.gbr	\
 	3circle.gbr		\
 	3fcircle.gbr		\

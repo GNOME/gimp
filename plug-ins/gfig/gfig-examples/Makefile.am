@@ -14,9 +14,6 @@ gfigdata_DATA = \
 	star2			\
 	stars
 
-
-
-
 EXTRA_DATA =
 EXTRA_DIST = $(gfigdata_DATA)
 

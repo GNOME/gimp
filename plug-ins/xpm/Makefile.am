@@ -8,20 +8,20 @@ xpm_SOURCES = \
 	xpm.c
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	@LIBXPM_LIB@				\
-	$(X_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
+	@LIBXPM_LIB@						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 xpm_DEPENDENCIES = $(DEPS)
 

@@ -5,23 +5,32 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = flame
 
 flame_SOURCES = \
-	cmap.c cmap.h flame.c flame.h libifs.c libifs.h megawidget.c megawidget.h rect.c rect.h
+	cmap.c		\
+	cmap.h		\
+	flame.c		\
+	flame.h		\
+	libifs.c	\
+	libifs.h	\
+	megawidget.c	\
+	megawidget.h	\
+	rect.c		\
+	rect.h
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-	$(LIBUCB_LIB)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
+	$(LIBUCB_LIB)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 flame_DEPENDENCIES = $(DEPS)
 

@@ -5,25 +5,25 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = faxg3
 
 faxg3_SOURCES = \
-	faxg3.c g3.c g3.h run_tbl.c   
+	faxg3.c		\
+	g3.c		\
+	g3.h		\
+	run_tbl.c   
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-					\
-			\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-			\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 faxg3_DEPENDENCIES = $(DEPS)
 

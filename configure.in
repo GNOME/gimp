@@ -2,17 +2,23 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(gimprc.in)
 
 dnl Initialize automake stuff
-dnl $Format: "GIMP_MAJOR_VERSION=$ReleaseMajorVersion$" $
 GIMP_MAJOR_VERSION=1
-dnl $Format: "GIMP_MINOR_VERSION=$ReleaseMinorVersion$" $
 GIMP_MINOR_VERSION=1
-dnl $Format: "GIMP_MICRO_VERSION=$ReleaseMicroVersion$" $
 GIMP_MICRO_VERSION=0
-
+GIMP_INTERFACE_AGE=0
+GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
-dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
-AM_INIT_AUTOMAKE(gimp, $GIMP_VERSION)
+dnl libtool versioning
+LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+LT_CURRENT=`expr $GIMP_MICRO_VERSION - $GIMP_INTERFACE_AGE`
+LT_REVISION=$GIMP_INTERFACE_AGE
+LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
+
+VERSION=$GIMP_VERSION
+PACKAGE=gimp
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
 dnl Specify a header configuration file
 AM_CONFIG_HEADER(config.h)
@@ -32,7 +38,6 @@ fi)
 
 AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
 		    , enable_ansi=no)
-AC_ARG_WITH(threads, [  --with-threads=[posix] support threading ])
 
 dnl Possibly change default gimpdir from .gimp
 gimpdir=.gimp-1.1
@@ -42,16 +47,6 @@ if eval "test x$enable_gimpdir != x"; then
     gimpdir=$enable_gimpdir
   fi
 fi)
-
-AC_DEFUN(AC_GIMP_CHECK,
-[
-	AM_PATH_GTK(1.1.0,,
- 	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
-        X_LIBS=$GTK_LIBS
-        X_CFLAGS=$GTK_CFLAGS
-        AC_SUBST(X_LIBS)
-        AC_SUBST(X_CFLAGS)
-])
 
 if test -n "$DEBUGFLAG"; then
   CFLAGS="$DEBUGFLAG $CFLAGS"
@@ -64,7 +59,12 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
-AC_GIMP_CHECK
+
+dnl Check for our required libraries
+AM_PATH_GLIB(1.1.0,,
+  AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.))
+AM_PATH_GTK(1.1.0,,
+  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
@@ -93,6 +93,7 @@ gimp_save_LDFLAGS="$LDFLAGS"
 gimp_save_LIBS="$LIBS"
 
 CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
+LDFLAGS="$LDFLAGS `echo $GLIB_LIBS | sed 's/\(.*\)\(-lglib.*\)/\1/'`"
 LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
 LIBS="$LIBS $GTK_LIBS"
 
@@ -306,6 +307,7 @@ dnl check for difftime
 AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
 dnl Threads
+AC_ARG_WITH(threads, [  --with-threads=[posix] support threading ])
 if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init,
     AC_DEFINE(USE_PTHREADS)
@@ -403,6 +405,11 @@ AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
 AC_SUBST(GIMP_MICRO_VERSION)
 AC_SUBST(GIMP_VERSION)
+
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)

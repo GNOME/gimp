@@ -2,32 +2,37 @@
 
 gckincludedir = $(includedir)/gck
 
-lib_LTLIBRARIES = libgck.la
+lib_LTLIBRARIES = libgck-1.1.la
 
-libgck_la_SOURCES =	gckcolor.c	\
-			gcklistbox.c	\
-			gckmath.c	\
-			gckui.c		\
-			gckvector.c
+libgck_1_1_la_SOURCES = \
+	gckcolor.c	\
+	gcklistbox.c	\
+	gckmath.c	\
+	gckui.c		\
+	gckvector.c
 
-gckinclude_HEADERS =	gck.h		\
-			gckcolor.h	\
-			gckcommon.h	\
-			gckimage.h	\
-			gcklistbox.h	\
-			gckmath.h	\
-			gcktypes.h	\
-			gckui.h		\
-			gckvector.h
+gckinclude_HEADERS = \
+	gck.h		\
+	gckcolor.h	\
+	gckcommon.h	\
+	gckimage.h	\
+	gcklistbox.h	\
+	gckmath.h	\
+	gcktypes.h	\
+	gckui.h		\
+	gckvector.h
 
-libgck_la_LDFLAGS = -version-info 1:0:0
+libgck_1_1_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 INCLUDES = \
 	-I..			\
 	-I$(srcdir)/..		\
-	$(X_CFLAGS)		\
 	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
+
+LIBADD = \
+	$(GTK_LIBS)
 
 .PHONY: files
 

@@ -29,21 +29,21 @@ script_fu_SOURCES = \
 	regex.c
 
 INCLUDES = \
-	$(X_CFLAGS)			\
+	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
 	-I$(includedir)
 
 LDADD = \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimp/libgimp.la			\
-	$(X_LIBS)						\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o
 
 script_fu_DEPENDENCIES = $(DEPS)
 

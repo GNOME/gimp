@@ -5,25 +5,25 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = bmp
 
 bmp_SOURCES = \
-	bmp.c bmp.h bmpread.c bmpwrite.c   
+	bmp.c		\
+	bmp.h		\
+	bmpread.c	\
+	bmpwrite.c   
 
 INCLUDES = \
-	$(X_CFLAGS)			\
+	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-					\
-			\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-			\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la
 
 bmp_DEPENDENCIES = $(DEPS)
 

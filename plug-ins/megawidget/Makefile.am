@@ -5,24 +5,25 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_LIBRARIES = libmegawidget.a
 
 libmegawidget_a_SOURCES = \
-	megawidget.c megawidget.h
+	megawidget.c		\
+	megawidget.h
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
-libmegawidget_aDEPENDENCIES = $(DEPS)
+libmegawidget_a_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 

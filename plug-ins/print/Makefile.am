@@ -5,7 +5,12 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = print
 
 print_SOURCES = \
-	print-escp2.c print-pcl.c print-ps.c print-util.c print.c print.h   
+	print-escp2.c	\
+	print-pcl.c	\
+	print-ps.c	\
+	print-util.c	\
+	print.c		\
+	print.h   
 
 CPPFLAGS = \
 	@LP_DEF@	\
@@ -14,20 +19,19 @@ CPPFLAGS = \
 	@LPC_DEF@
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-					\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 print_DEPENDENCIES = $(DEPS)
 

@@ -3,7 +3,15 @@
 SRC_SUBDIRS = gck
 SUBDIRS = gck
 
-EXTRA_DIST = TODO
+EXTRA_DIST = \
+	TODO					\
+	docs/html/gck.html			\
+	docs/html/gck_application_window.html	\
+	docs/html/gck_dialog_window.html	\
+	docs/html/gckcolor.html			\
+	docs/html/gckmath.html			\
+	docs/html/gckui.html			\
+	docs/html/gckvector.html
 
 .PHONY: files
 
@@ -17,4 +25,3 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
-

@@ -8,20 +8,20 @@ jpeg_SOURCES = \
 	jpeg.c
 
 INCLUDES = \
-	$(X_CFLAGS)			\
+	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
-	@LIBJPEG_LIB@				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
+	@LIBJPEG_LIB@						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 jpeg_DEPENDENCIES = $(DEPS)
 

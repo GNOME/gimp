@@ -300,13 +300,14 @@ CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
-gimp_LDADD = \
+LDADD = \
 	$(top_builddir)/libgimp/libgimpi.a	\
-	$(X_LIBS)
+	$(GTK_LIBS)				\
+	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpi.a

@@ -5,22 +5,23 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = struc
 
 struc_SOURCES = \
-	struc.c struc.h
+	struc.c		\
+	struc.h
 
 INCLUDES = \
-	$(X_CFLAGS)			\
+	$(GTK_CFLAGS)			\
 	-I$(top_srcdir)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 struc_DEPENDENCIES = $(DEPS)
 
@@ -36,8 +37,3 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
-
-
-
-
-

@@ -1,3 +1,8 @@
+Fri Jun 19 12:34:29 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* changes libgimp versioning to gtk-style. Bunch o' Makefile.am
+	changes for that
+
 Thu Jun 18 23:11:36 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/ink.c: Shift the range to smaller brushes.

@@ -5,22 +5,23 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = AlienMap
 
 AlienMap_SOURCES = \
-	AlienMap.c logo.h
+	AlienMap.c	\
+	logo.h
 
 INCLUDES = \
-	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(X_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la		\
+	$(GTK_LIBS)						\
 	-lc
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la
+	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
+	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
 AlienMap_DEPENDENCIES = $(DEPS)
 
@@ -36,8 +37,3 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
-
-
-
-
-
