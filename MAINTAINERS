@@ -180,3 +180,11 @@ which just goes to show that succinctness is its own reward. My patch documentat
 archive is http://idt.net/~gosgood/gimp-patch/
 commit access: yes
 
+Name: David Monniaux
+Email: monniaux@genievre.ens.fr
+url: http://www.di.ens.fr/~monniaux
+ircnick: Submarine
+expertise: i18n, French i18n, MMX
+current-work: not enough time to work on Gimp, ported forward my old code for MMX-accelerated paint_funcs
+commit access: yes
+
