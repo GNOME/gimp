@@ -28,9 +28,9 @@
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>
-#    define _(String) dgettext ("gimp-libgimp", String)
+#    define _(String) dgettext ("gimp14-libgimp", String)
 #    undef gettext
-#    define gettext(String) dgettext ("gimp-libgimp", String)
+#    define gettext(String) dgettext ("gimp14-libgimp", String)
 #    ifdef gettext_noop
 #        define N_(String) gettext_noop (String)
 #    else

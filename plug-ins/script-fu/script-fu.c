@@ -105,7 +105,7 @@ script_fu_query (void)
     { GIMP_PDB_STRING, "logfile",  "The file to log server activity to" }
   };
 
-  gimp_plugin_domain_register ("gimp-script-fu", NULL);
+  gimp_plugin_domain_register ("gimp14-script-fu", NULL);
 
   gimp_install_procedure ("extension_script_fu",
 			  "A scheme interpreter for scripting GIMP operations",
