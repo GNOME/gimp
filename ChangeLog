@@ -1,3 +1,8 @@
+2004-09-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c: simulate the behaviour of GNU gettext and
+	look at the LANGUAGE environment variable if the locale is not "C".
+
 2004-09-13  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpcroptool.c: Fix trailing whitespace introduced by me.

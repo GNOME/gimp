@@ -63,13 +63,14 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help      (gpointer     data);
-static gboolean  gimp_help_internal  (Gimp        *gimp);
-static void      gimp_help_call      (Gimp        *gimp,
-                                      const gchar *procedure,
-                                      const gchar *help_domain,
-                                      const gchar *help_locales,
-                                      const gchar *help_id);
+static gint      gimp_idle_help        (gpointer       data);
+static gboolean  gimp_help_internal    (Gimp          *gimp);
+static void      gimp_help_call        (Gimp          *gimp,
+                                        const gchar   *procedure,
+                                        const gchar   *help_domain,
+                                        const gchar   *help_locales,
+                                        const gchar   *help_id);
+static gchar *   gimp_help_get_locales (GimpGuiConfig *config);
 
 
 /*  public functions  */
@@ -94,10 +95,7 @@ gimp_help_show (Gimp        *gimp,
       if (help_domain && strlen (help_domain))
 	idle_help->help_domain = g_strdup (help_domain);
 
-      if (config->help_locales && strlen (config->help_locales))
-        idle_help->help_locales = g_strdup (config->help_locales);
-      else
-        idle_help->help_locales = gimp_get_default_language ("LC_MESSAGES");
+      idle_help->help_locales = gimp_help_get_locales (config);
 
       if (help_id && strlen (help_id))
 	idle_help->help_id = g_strdup (help_id);
@@ -335,4 +333,28 @@ gimp_help_call (Gimp        *gimp,
 
       procedural_db_destroy_args (return_vals, n_return_vals);
     }
+}
+
+static gchar *
+gimp_help_get_locales (GimpGuiConfig *config)
+{
+  const gchar *lang;
+  gchar       *locale;
+
+  if (config->help_locales && strlen (config->help_locales))
+    return g_strdup (config->help_locales);
+
+  locale = gimp_get_default_language ("LC_MESSAGES");
+
+  /*  Simulate the behaviour of GNU gettext() and look
+   *  at LANGUAGE if the locale is not the "C" locale.
+   */
+  lang = g_getenv ("LANGUAGE");
+  if (lang && (locale == NULL || strcmp (locale, "C")))
+    {
+      g_free (locale);
+      return g_strdup (lang);
+    }
+
+  return g_strdup (locale);
 }
