@@ -142,6 +142,7 @@ gimp_channel_combine_masks
 <FILE>gimpcolor</FILE>
 gimp_brightness_contrast
 gimp_levels
+gimp_levels_auto
 gimp_posterize
 gimp_desaturate
 gimp_equalize

@@ -165,6 +165,77 @@ CODE
     );
 }
 
+sub levels_auto {
+    $blurb = 'Automatically modifies intensity levels in the specified drawable.';
+
+    $help = <<'HELP';
+This procedure allows intensity levels in the specified drawable to be
+remapped according to a set of guessed parameters. It is equivalent to
+clicking the "Auto" button in the Levels tool. This procedure is
+only valid on RGB color and grayscale images. It will not operate on
+indexed drawables.
+HELP
+
+    $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
+    $date = '2003';
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    %invoke = (
+        headers => [ qw("base/levels.h" "base/gimphistogram.h") ],
+	vars => [ 'PixelRegion srcPR, destPR', 
+                  'Levels levels', 
+                  'gint x1, y1, x2, y2',
+                  'GimpLut *lut', 
+                  'GimpImage *image',
+                  'GimpHistogram *hist' ],
+        code => <<'CODE'
+{
+  if (gimp_drawable_is_indexed (drawable))
+    success = FALSE;
+
+  if (success)
+    {
+      /* Build the histogram */
+      image = gimp_item_get_image (GIMP_ITEM (drawable));
+      hist = gimp_histogram_new (image->gimp->config);
+
+      gimp_drawable_calculate_histogram (drawable, hist);
+
+      /* Calculate the levels */
+      levels_init (&levels);
+      levels_auto (&levels, hist, !gimp_drawable_is_gray (drawable));
+
+      /* Set up the lut */
+      lut  = gimp_lut_new ();
+      gimp_lut_setup (lut,
+	              (GimpLutFunc) levels_lut_func,
+                      &levels,
+                      gimp_drawable_bytes (drawable));
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+             x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+                      &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+      gimp_histogram_free (hist);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+      gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
 sub posterize {
     $blurb = 'Posterize the specified drawable.';
 
@@ -741,9 +812,9 @@ CODE
               "core/gimpdrawable.h" "core/gimpimage.h"
               "gimp-intl.h");
 
-@procs = qw(brightness_contrast levels posterize desaturate equalize invert
-	    curves_spline curves_explicit color_balance histogram
-	    hue_saturation threshold);
+@procs = qw(brightness_contrast levels levels_auto posterize desaturate
+	    equalize invert curves_spline curves_explicit color_balance
+	    histogram hue_saturation threshold);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';

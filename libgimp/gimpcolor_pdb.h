@@ -39,6 +39,7 @@ gboolean gimp_levels              (gint32              drawable_ID,
 				   gdouble             gamma,
 				   gint                low_output,
 				   gint                high_output);
+gboolean gimp_levels_auto         (gint32              drawable_ID);
 gboolean gimp_posterize           (gint32              drawable_ID,
 				   gint                levels);
 gboolean gimp_desaturate          (gint32              drawable_ID);

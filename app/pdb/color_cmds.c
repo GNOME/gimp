@@ -49,6 +49,7 @@
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
+static ProcRecord levels_auto_proc;
 static ProcRecord posterize_proc;
 static ProcRecord desaturate_proc;
 static ProcRecord equalize_proc;
@@ -65,6 +66,7 @@ register_color_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &brightness_contrast_proc);
   procedural_db_register (gimp, &levels_proc);
+  procedural_db_register (gimp, &levels_auto_proc);
   procedural_db_register (gimp, &posterize_proc);
   procedural_db_register (gimp, &desaturate_proc);
   procedural_db_register (gimp, &equalize_proc);
@@ -312,6 +314,93 @@ static ProcRecord levels_proc =
   0,
   NULL,
   { { levels_invoker } }
+};
+
+static Argument *
+levels_auto_invoker (Gimp     *gimp,
+                     Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  PixelRegion srcPR, destPR;
+  Levels levels;
+  gint x1, y1, x2, y2;
+  GimpLut *lut;
+  GimpImage *image;
+  GimpHistogram *hist;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp_drawable_is_indexed (drawable))
+	success = FALSE;
+    
+      if (success)
+	{
+	  /* Build the histogram */
+	  image = gimp_item_get_image (GIMP_ITEM (drawable));
+	  hist = gimp_histogram_new (image->gimp->config);
+    
+	  gimp_drawable_calculate_histogram (drawable, hist);
+    
+	  /* Calculate the levels */
+	  levels_init (&levels);
+	  levels_auto (&levels, hist, !gimp_drawable_is_gray (drawable));
+    
+	  /* Set up the lut */
+	  lut  = gimp_lut_new ();
+	  gimp_lut_setup (lut,
+			  (GimpLutFunc) levels_lut_func,
+			  &levels,
+			  gimp_drawable_bytes (drawable));
+    
+	  /* The application should occur only within selection bounds */
+	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+    
+	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+		 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+		 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+    
+	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
+			  &srcPR, &destPR);
+    
+	  gimp_lut_free (lut);
+	  gimp_histogram_free (hist);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+	}
+    }
+
+  return procedural_db_return_args (&levels_auto_proc, success);
+}
+
+static ProcArg levels_auto_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcRecord levels_auto_proc =
+{
+  "gimp_levels_auto",
+  "Automatically modifies intensity levels in the specified drawable.",
+  "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool. This procedure is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  levels_auto_inargs,
+  0,
+  NULL,
+  { { levels_auto_invoker } }
 };
 
 static Argument *

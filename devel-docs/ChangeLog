@@ -1,3 +1,8 @@
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpcolor.sgml: updated for new PDB function.
+
 2003-08-28  Sven Neumann  <sven@gimp.org>
 
 	* app/app.interfaces: removed, it's a generated file.

@@ -1,3 +1,12 @@
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb: applied a patch from Shawn Willden
+	that adds the new PDB function levels_auto.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpcolor_pdb.[ch]: regenerated.
+
 2003-08-31  Raphael Quinet  <quinet@gamers.org>
 
 	* data/palettes/Makefile.am (palettedata_DATA): fixed the spelling
