@@ -1,5 +1,9 @@
 2004-10-03  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/destripe.c: ported to GimpAspectPreview.
+
+2004-10-03  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/nova.c: ported to GimpAspectPreview.
 
 2004-10-03  DindinX  <dindinx@gimp.org>

@@ -42,7 +42,6 @@
 #define PLUG_IN_NAME     "plug_in_destripe"
 #define PLUG_IN_VERSION  "0.2"
 #define HELP_ID          "plug-in-destripe"
-#define PREVIEW_SIZE     200
 #define SCALE_WIDTH      140
 #define MAX_AVG          100
 
@@ -58,14 +57,10 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static void      destripe                (void);
+static void      destripe        (GimpDrawable *drawable,
+                                  GimpPreview  *preview);
 
-static gboolean  destripe_dialog         (void);
-
-static void      preview_init            (void);
-static void      preview_update          (void);
-static void      preview_scroll_callback (void);
-
+static gboolean  destripe_dialog (GimpDrawable *drawable);
 
 /*
  * Globals...
@@ -79,34 +74,18 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-GtkWidget      *preview;                /* Preview widget */
-gint            preview_width,          /* Width of preview widget */
-                preview_height,         /* Height of preview widget */
-                preview_x1,             /* Upper-left X of preview */
-                preview_y1,             /* Upper-left Y of preview */
-                preview_x2,             /* Lower-right X of preview */
-                preview_y2;             /* Lower-right Y of preview */
-GtkObject      *hscroll_data,           /* Horizontal scrollbar data */
-               *vscroll_data;           /* Vertical scrollbar data */
-
-GimpDrawable   *drawable = NULL;        /* Current image */
-gint            sel_x1,                 /* Selection bounds */
-                sel_y1,
-                sel_x2,
-                sel_y2;
-gint            img_bpp;                /* Bytes-per-pixel in image */
-
-
 typedef struct
 {
-  gboolean      histogram;
-  gint          avg_width;
+  gboolean histogram;
+  gint     avg_width;
+  gboolean preview;
 } DestripeValues;
 
 static DestripeValues vals =
 {
-  FALSE,
-  36
+  FALSE, /* histogram     */
+  36,    /* average width */
+  TRUE   /* preview */
 };
 
 
@@ -148,9 +127,10 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode       run_mode;   /* Current run mode */
-  GimpPDBStatusType status;     /* Return status */
-  static GimpParam  values[1];  /* Return values */
+  GimpRunMode        run_mode;   /* Current run mode */
+  GimpPDBStatusType  status;     /* Return status */
+  static GimpParam   values[1];  /* Return values */
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
 
@@ -173,11 +153,6 @@ run (const gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
-
   /*
    * See how we will run
    */
@@ -193,7 +168,7 @@ run (const gchar      *name,
       /*
        * Get information from the dialog...
        */
-      if (!destripe_dialog ())
+      if (!destripe_dialog (drawable))
         return;
       break;
 
@@ -237,7 +212,7 @@ run (const gchar      *name,
           /*
            * Run!
            */
-          destripe ();
+          destripe (drawable, NULL);
 
           /*
            * If run mode is interactive, flush displays...
@@ -267,22 +242,19 @@ run (const gchar      *name,
 }
 
 static void
-destripe_rect (gint      sel_x1,
-               gint      sel_y1,
-               gint      sel_x2,
-               gint      sel_y2,
-               gboolean  do_preview)
+destripe (GimpDrawable *drawable,
+          GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn;        /* source image region */
   GimpPixelRgn  dst_rgn;        /* destination image region */
   guchar       *src_rows;       /* image data */
-  guchar       *dest_rgba = NULL;
-  double        progress, progress_inc;
-  int           sel_width = sel_x2 - sel_x1;
-  int           sel_height = sel_y2 - sel_y1;
-  long         *hist, *corr;        /* "histogram" data */
-  int           tile_width = gimp_tile_width ();
-  int           i, x, y, ox, cols;
+  gdouble       progress, progress_inc;
+  gint          x1, x2, y1, y2;
+  gint          width, height;
+  gint          bpp;
+  glong        *hist, *corr;        /* "histogram" data */
+  gint          tile_width = gimp_tile_width ();
+  gint          i, x, y, ox, cols;
 
   /* initialize */
 
@@ -292,16 +264,23 @@ destripe_rect (gint      sel_x1,
   /*
    * Let the user know what we're doing...
    */
-
-  if (!do_preview)
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+    }
+  else
     {
       gimp_progress_init (_("Destriping..."));
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
+      width  = x2 - x1;
+      height = y2 - y1;
       progress = 0;
-      progress_inc = 0.5 * tile_width / sel_width;
-    } else
-    {
-      dest_rgba = g_new(guchar, img_bpp * preview_width * preview_height);
+      progress_inc = 0.5 * tile_width / width;
     }
 
   /*
@@ -309,40 +288,40 @@ destripe_rect (gint      sel_x1,
    */
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+                       x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+                       x1, y1, width, height, (preview == NULL), TRUE);
 
-  hist = g_new (long, sel_width * img_bpp);
-  corr = g_new (long, sel_width * img_bpp);
-  src_rows = g_new (guchar, tile_width * sel_height * img_bpp);
+  hist = g_new (long, width * bpp);
+  corr = g_new (long, width * bpp);
+  src_rows = g_new (guchar, tile_width * height * bpp);
 
-  memset (hist, 0, sel_width * img_bpp * sizeof (long));
+  memset (hist, 0, width * bpp * sizeof (long));
 
   /*
    * collect "histogram" data.
    */
 
-  for (ox = sel_x1; ox < sel_x2; ox += tile_width)
+  for (ox = x1; ox < x2; ox += tile_width)
     {
       guchar *rows = src_rows;
 
-      cols = sel_x2 - ox;
+      cols = x2 - ox;
       if (cols > tile_width)
         cols = tile_width;
 
-      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, sel_y1, cols, sel_height);
+      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, y1, cols, height);
 
-      for (y = 0; y < sel_height; y++)
+      for (y = 0; y < height; y++)
         {
-          long   *h       = hist + (ox - sel_x1) * img_bpp;
-          guchar *row_end = rows + cols * img_bpp;
+          long   *h       = hist + (ox - x1) * bpp;
+          guchar *row_end = rows + cols * bpp;
 
           while (rows < row_end)
             *h++ += *rows++;
         }
 
-      if (!do_preview)
+      if (!preview)
         gimp_progress_update (progress += progress_inc);
     }
 
@@ -350,86 +329,61 @@ destripe_rect (gint      sel_x1,
    * average out histogram
    */
 
-  if (TRUE)
-    {
-      gint extend = (vals.avg_width / 2) * img_bpp;
+  {
+    gint extend = (vals.avg_width / 2) * bpp;
 
-      for (i = 0; i < MIN (3, img_bpp); i++)
-        {
-          long *h   = hist - extend + i;
-          long *c   = corr - extend + i;
-          long  sum = 0;
-          gint  cnt = 0;
+    for (i = 0; i < MIN (3, bpp); i++)
+      {
+        long *h   = hist - extend + i;
+        long *c   = corr - extend + i;
+        long  sum = 0;
+        gint  cnt = 0;
 
-          for (x = -extend; x < sel_width * img_bpp; x += img_bpp)
-            {
-              if (x + extend < sel_width * img_bpp)
-                {
-                  sum += h[ extend]; cnt++;
-                }
-              if (x - extend >= 0)
-                {
-                  sum -= h[-extend]; cnt--;
-                }
-              if (x >= 0)
-                {
-                  if (*h)
-                    *c = ((sum / cnt - *h) << 10) / *h;
-                  else
-                    *c = G_MAXINT;
-                }
+        for (x = -extend; x < width * bpp; x += bpp)
+          {
+            if (x + extend < width * bpp)
+              {
+                sum += h[ extend]; cnt++;
+              }
+            if (x - extend >= 0)
+              {
+                sum -= h[-extend]; cnt--;
+              }
+            if (x >= 0)
+              {
+                if (*h)
+                  *c = ((sum / cnt - *h) << 10) / *h;
+                else
+                  *c = G_MAXINT;
+              }
 
-              h += img_bpp;
-              c += img_bpp;
-            }
-        }
-    }
-  else
-    {
-      for (i = 0; i < MIN (3, img_bpp); i++)
-        {
-          long *h = hist + i + sel_width * img_bpp - img_bpp;
-          long *c = corr + i + sel_width * img_bpp - img_bpp;
-          long  i = *h;
-
-          do
-            {
-              h -= img_bpp;
-              c -= img_bpp;
-
-              if (*h - i > vals.avg_width && i - *h > vals.avg_width)
-                i = *h;
-
-              if (*h)
-                *c = (i-128) << 10 / *h;
-              else
-                *c = G_MAXINT;
-            }
-          while (h > hist);
-        }
-    }
+            h += bpp;
+            c += bpp;
+          }
+      }
+  }
 
   /*
    * remove stripes.
    */
 
-  for (ox = sel_x1; ox < sel_x2; ox += tile_width)
+  for (ox = x1; ox < x2; ox += tile_width)
     {
       guchar *rows = src_rows;
 
-      cols = sel_x2 - ox;
+      cols = x2 - ox;
       if (cols > tile_width)
         cols = tile_width;
 
-      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, sel_y1, cols, sel_height);
+      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, y1, cols, height);
 
-      if (!do_preview)
+      if (!preview)
         gimp_progress_update (progress += progress_inc);
 
-      for (y = 0; y < sel_height; y++)
+      for (y = 0; y < height; y++)
         {
-          long   *c = corr + (ox - sel_x1) * img_bpp;
-          guchar *row_end = rows + cols * img_bpp;
+          long   *c = corr + (ox - x1) * bpp;
+          guchar *row_end = rows + cols * bpp;
 
           if (vals.histogram)
             while (rows < row_end)
@@ -443,18 +397,12 @@ destripe_rect (gint      sel_x1,
                 *rows = MIN (255, MAX (0, *rows + (*rows * *c >> 10) ));
                 c++; rows++;
               }
-
-          if (do_preview)
-            memcpy (dest_rgba + img_bpp * (y * preview_width+ox-sel_x1),
-                    rows - cols * img_bpp, cols * img_bpp);
         }
 
-      if (!do_preview)
-        {
-          gimp_pixel_rgn_set_rect (&dst_rgn, src_rows,
-                                   ox, sel_y1, cols, sel_height);
-          gimp_progress_update (progress += progress_inc);
-        }
+      gimp_pixel_rgn_set_rect (&dst_rgn, src_rows,
+                               ox, y1, cols, height);
+      if (!preview)
+        gimp_progress_update (progress += progress_inc);
     }
 
   g_free (src_rows);
@@ -463,46 +411,29 @@ destripe_rect (gint      sel_x1,
    * Update the screen...
    */
 
-  if (do_preview)
+  if (preview)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, preview_width, preview_height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              dest_rgba,
-                              img_bpp * preview_width);
-      g_free (dest_rgba);
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &dst_rgn);
     }
   else
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
-                            sel_x1, sel_y1, sel_width, sel_height);
+                            x1, y1, width, height);
     }
   g_free (hist);
   g_free (corr);
 }
 
-/*
- * 'destripe()' - Destripe an image.
- *
- */
-
-static void
-destripe (void)
-{
-  destripe_rect (sel_x1, sel_y1, sel_x2, sel_y2, FALSE);
-}
-
 static gboolean
-destripe_dialog (void)
+destripe_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
   gboolean   run;
@@ -518,67 +449,21 @@ destripe_dialog (void)
 
                             NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(table), frame, 0, 1, 0, 1,
-                   0, 0, 0, 0);
-  gtk_widget_show (frame);
-
-  preview_width  = MIN (sel_x2 - sel_x1, PREVIEW_SIZE);
-  preview_height = MIN (sel_y2 - sel_y1, PREVIEW_SIZE);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
-
-  hscroll_data = gtk_adjustment_new (0, 0, sel_x2 - sel_x1 - 1, 1.0,
-                                     MIN (preview_width, sel_x2 - sel_x1),
-                                     MIN (preview_width, sel_x2 - sel_x1));
-
-  g_signal_connect (hscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  vscroll_data = gtk_adjustment_new (0, 0, sel_y2 - sel_y1 - 1, 1.0,
-                                     MIN (preview_height, sel_y2 - sel_y1),
-                                     MIN (preview_height, sel_y2 - sel_y1));
-
-  g_signal_connect (vscroll_data, "value_changed",
-                    G_CALLBACK (preview_scroll_callback),
-                    NULL);
-
-  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1, 0,
-                    GTK_FILL, 0, 0);
-  gtk_widget_show (scrollbar);
-
-  preview_init ();
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (destripe),
+                            drawable);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -589,25 +474,23 @@ destripe_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &vals.avg_width);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (preview_update),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   button = gtk_check_button_new_with_mnemonic (_("Create _histogram"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), vals.histogram);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &vals.histogram);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (preview_update),
-                    NULL);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dialog);
-
-  preview_update ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -616,30 +499,3 @@ destripe_dialog (void)
   return run;
 }
 
-/*  preview functions  */
-
-static void
-preview_init (void)
-{
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_y2 -sel_y1);
-}
-
-static void
-preview_scroll_callback (void)
-{
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);
-  preview_y2 = preview_y1 + MIN (preview_height, sel_y2 - sel_y1);
-
-  preview_update ();
-}
-
-static void
-preview_update (void)
-{
-  destripe_rect (preview_x1, preview_y1, preview_x2, preview_y2, TRUE);
-}
