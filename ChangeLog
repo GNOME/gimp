@@ -1,5 +1,17 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-altivec.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c
+	* app/composite/gimp-composite-vis.c: moved includes out of the
+	#if __GNUC__ >= 3 to make the code compile on other compilers.
+
+	* app/composite/gimp-composite-3dnow.[ch]: added the same stubs here
+	for symmetry.
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpimage-unit.[ch]: added small wrappers to ease
 	handling of image units and to hide the core GimpUnit API.

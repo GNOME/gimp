@@ -23,9 +23,6 @@
 
 #include "config.h"
 
-#if defined(USE_VIS)
-#if defined(ARCH_SPARC)
-
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -35,6 +32,8 @@
 #include "gimp-composite.h"
 #include "gimp-composite-vis.h"
 
+#if defined(USE_VIS)
+#if defined(ARCH_SPARC)
 #if __GNUC__ >= 3
 
 #endif /* __GNUC__ > 3 */
@@ -45,8 +44,8 @@ int
 gimp_composite_vis_init (void)
 {
 #ifdef ARCH_SPARC
-		return (1);
+  return (1);
 #else
-		return (0);
+  return (0);
 #endif
 }

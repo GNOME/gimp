@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#ifdef ARCH_PPC
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -31,6 +30,7 @@
 #include "gimp-composite.h"
 #include "gimp-composite-altivec.h"
 
+#ifdef ARCH_PPC
 #if __GNUC__ >= 3
 
 #endif /* __GNUC__ > 3 */

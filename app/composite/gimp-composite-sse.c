@@ -32,10 +32,6 @@
 
 #include "config.h"
 
-#if defined(USE_SSE)
-#if defined(ARCH_X86)
-#if __GNUC__ >= 3
-
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -46,6 +42,10 @@
 #include "gimp-composite.h"
 #include "gimp-composite-sse.h"
 #include "gimp-composite-x86.h"
+
+#if defined(USE_SSE)
+#if defined(ARCH_X86)
+#if __GNUC__ >= 3
 
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
 #define pmaxub(src,dst,tmp)  "pmaxub " "%%" #src ", %%" #dst

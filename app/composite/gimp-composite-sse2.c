@@ -25,9 +25,6 @@
 
 #include "config.h"
 
-#if defined(USE_SSE)
-#if defined(ARCH_X86)
-
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -39,6 +36,8 @@
 #include "gimp-composite-sse2.h"
 #include "gimp-composite-x86.h"
 
+#if defined(USE_SSE)
+#if defined(ARCH_X86)
 #if __GNUC__ >= 3
 
 static const guint32 rgba8_alpha_mask_128[4] = { 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 };

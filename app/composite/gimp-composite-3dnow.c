@@ -23,26 +23,34 @@
 
 #include "config.h"
 
-#if defined(USE_MMX)
-#if defined(ARCH_X86)
-
 #include <stdio.h>
 
 #include <glib-object.h>
 
 #include "base/base-types.h"
+#include "base/cpu-accel.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-3dnow.h"
 
+#if defined(USE_MMX)
+#if defined(ARCH_X86)
 #if __GNUC__ >= 3
 
 #endif /* __GNUC__ > 3 */
-#endif /* defined(ARCH_X86) */
-#endif /* defined(USE_MMX) */
+#endif /* ARCH_X86 */
+#endif  /* USE_MMX */
 
-void
-gimp_composite_3dnow_init(void)
+int
+gimp_composite_3dnow_init (void)
 {
+#if defined(USE_MMX) && defined(ARCH_X86)
+  guint32 cpu = cpu_accel ();
 
+  if (cpu & CPU_ACCEL_X86_3DNOW)
+    {
+      return (1);
+    }
+#endif
+  return (0);
 }

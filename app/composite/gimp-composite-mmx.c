@@ -31,10 +31,6 @@
 
 #include "config.h"
 
-#if defined(USE_MMX)
-#if defined(ARCH_X86)
-#if __GNUC__ >= 3
-
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -45,6 +41,10 @@
 #include "gimp-composite.h"
 #include "gimp-composite-mmx.h"
 #include "gimp-composite-x86.h"
+
+#if defined(USE_MMX)
+#if defined(ARCH_X86)
+#if __GNUC__ >= 3
 
 #define pminub(src,dst,tmp)  "\tmovq %%" #dst ", %%" #tmp ";" "psubusb %%" #src ", %%" #tmp ";" "psubb %%" #tmp ", %%" #dst "\n"
 #define pmaxub(a,b,tmp)      "\tmovq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b "\n"
