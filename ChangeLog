@@ -1,3 +1,10 @@
+Thu Mar  9 12:51:21 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/common/uniteditor.c: Typo fixes.
+
 Thu Mar  9 14:00:55 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/color_picker.c: for indexed images set Index in the info_window

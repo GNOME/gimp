@@ -536,7 +536,7 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
   if(l_max_found < 0)
   {
        global_errlist = g_strdup_printf(
-	       _("cant find any extracted frames,\n%s\nmaybe xanim has failed or was canclled"),
+	       _("can't find any extracted frames,\n%s\nmaybe xanim has failed or was cancelled"),
 	       l_src_frame);
        return(-1);
   }
@@ -1088,7 +1088,7 @@ gap_xanim_decode(GRunModeType run_mode)
      gimp_progress_init (_("extracting frames..."));
      gimp_progress_update (0.1);  /* fake some progress */
      /* note:
-      *  we cant show realistic progress for the extracting process
+      *  we can't show realistic progress for the extracting process
       *  because we know nothing about videofileformat and how much frames
       *  are realy stored in the videofile.
       *
@@ -1131,8 +1131,8 @@ gap_xanim_decode(GRunModeType run_mode)
      if (p_find_max_xanim_frame (first_frame, extension) < first_frame)
      {
         global_errlist = g_strdup_printf(
-	       _("cant find any extracted frames,\n"
-	         "xanim has failed or was canclled"));
+	       _("can't find any extracted frames,\n"
+	         "xanim has failed or was cancelled"));
         l_rc = -1;
      }
      else

@@ -562,7 +562,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 			  0,                                  /* digits */
 			  FALSE,                              /* constrain */
 			  0.0, 999999.0,                      /* lower, upper (unconstrained) */
-			  _("How to insert SrcLayer into the\nDst.Frame's Layerstack\n0 means on top i.e in front"),
+			  _("How to insert SrcLayer into the\nDst. Frame's Layerstack\n0 means on top i.e. in front"),
 			  NULL);                              /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -1089,7 +1089,7 @@ mov_imglayer_menu_callback(gint32 id, gpointer data)
                (long)pvals->src_image_id, (long)pvals->src_layer_id);
 	/* TODO:
 	 * if any remove old src layer from preview
-	 * add this layer to preview (at current point koords)
+	 * add this layer to preview (at current point coords)
 	 * update_preview 
 	 */
 	
@@ -1475,7 +1475,7 @@ mov_src_sel_create()
   menu = p_buildmenu (option_handle_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gimp_help_set_help_data(option_menu,
-                       _("How to place the SrcLayer at   \nControlpoint Koordinates")
+                       _("How to place the SrcLayer at   \nControlpoint Coordinates")
                        , NULL);
   gtk_widget_show(option_menu);
 
@@ -2590,7 +2590,7 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
   l_offset_x = (cur_ptr->currX - cur_ptr->l_handleX) + l_src_offset_x;
   l_offset_y = (cur_ptr->currY - cur_ptr->l_handleY) + l_src_offset_y;
   
-  /* modify koordinate offsets of the copied layer within dest. image */
+  /* modify coordinate offsets of the copied layer within dest. image */
   gimp_layer_set_offsets(l_cp_layer_id, l_offset_x, l_offset_y);
 
   /* clip the handled layer to image size if desired */

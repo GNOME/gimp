@@ -543,7 +543,7 @@ unit_editor_dialog (void)
 				 "GIMP exits if this column is checked.");
   help_strings[IDENTIFIER]   = _("This string will be used to identify a "
 				 "unit in GIMP's configuration files.");
-  help_strings[FACTOR]       = _("How man units make up an inch.");
+  help_strings[FACTOR]       = _("How many units make up an inch.");
   help_strings[DIGITS]       = _("This field is a hint for numerical input "
 				 "fields. It specifies how many decimal digits "
 				 "the input field should provide to get "

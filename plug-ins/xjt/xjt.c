@@ -3123,12 +3123,12 @@ t_image_props * p_load_prop_file(gchar *prop_filename)
   l_file_buff = p_load_linefile(prop_filename, &l_filesize);
   if(l_file_buff == NULL)
   {
-    g_message(_("Error: Cant read XJT propertyfile %s"), prop_filename);
+    g_message(_("Error: Can't read XJT propertyfile %s"), prop_filename);
     goto cleanup;
   }
   if(l_filesize == 0)
   {
-    g_message(_("Error,XJT propertyfile %s is empty"), prop_filename);
+    g_message(_("Error, XJT propertyfile %s is empty"), prop_filename);
     goto cleanup;
   }
 
