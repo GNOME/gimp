@@ -1,3 +1,9 @@
+2001-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/devices.c
+	* app/gimprc.c: save the foreground and background color as array
+	of RGBA doubles in "devicerc".
+
 2001-01-15  Sven Neumann  <sven@gimp.org>
 
 	* app/color_notebook.c: make use of GimpColorAreas. Added two

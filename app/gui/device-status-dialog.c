@@ -689,12 +689,11 @@ devices_write_rc_device (DeviceInfo *device_info,
 
   {
     GimpRGB color;
-    guchar  r, g, b;
 
     gimp_context_get_foreground (device_info->context, &color);
-    gimp_rgb_get_uchar (&color, &r, &g, &b);
 
-    fprintf (fp, "\n        (foreground %d %d %d)", r, g, b);
+    fprintf (fp, "\n        (foreground %f %f %f %f)",
+	     color.r, color.g, color.b, color.a);
   }
 
   if (gimp_context_get_brush (device_info->context))

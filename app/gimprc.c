@@ -2153,41 +2153,43 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
-	  guchar color[3] = { 0, 0, 0 };
+	  gdouble color[4];
 
 	  values |= DEVICE_FOREGROUND;
 
-	  for (i = 0; i < 3; i++)
+	  for (i = 0; i < 4; i++)
 	    {
 	      token = peek_next_token ();
 	      if (!token || (token != TOKEN_NUMBER))
 		goto error;
 	      token = get_next_token ();
 
-	      color[i] = token_int;
+	      color[i] = token_num;
 	    }
 
-	  gimp_rgb_set_uchar (&foreground,
-			      color[0], color[1], color[2]);
+	  gimp_rgba_set (&foreground,
+			 color[0], color[1], color[2], color[3]);
+	  gimp_rgb_clamp (&foreground);
 	}
       else if (!strcmp ("background", token_sym))
 	{
-	  guchar color[3] = { 0, 0, 0 };
+	  gdouble color[4];
 
 	  values |= DEVICE_BACKGROUND;
 
-	  for (i = 0; i < 3; i++)
+	  for (i = 0; i < 4; i++)
 	    {
 	      token = peek_next_token ();
 	      if (!token || (token != TOKEN_NUMBER))
 		goto error;
 	      token = get_next_token ();
 
-	      color[i] = token_int;
+	      color[i] = token_num;
 	    }
 
-	  gimp_rgb_set_uchar (&foreground,
-			      color[0], color[1], color[2]);
+	  gimp_rgba_set (&background,
+			 color[0], color[1], color[2], color[3]);
+	  gimp_rgb_clamp (&background);
 	}
       else if (!strcmp ("brush", token_sym))
 	{
