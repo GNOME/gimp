@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -191,8 +191,8 @@ msgstr "Birim Seçimi"
 msgid "Gradient Selection"
 msgstr "Birim Seçimi"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
 msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
@@ -351,7 +351,7 @@ msgid "Hue"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr ""
 
@@ -391,24 +391,24 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 #, fuzzy
 msgid "Select Folder"
 msgstr "Dosya Seç"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Dosya Seç"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "Kilobayt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "Megabayt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 #, fuzzy
 msgid "GigaBytes"
 msgstr "Megabayt"
@@ -510,7 +510,7 @@ msgstr "Birim"
 msgid "Factor"
 msgstr "Etken"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -519,18 +519,18 @@ msgstr ""
 "Eğer \"Zaman\" düğmesi basılı değilse, bu değeri raslantısal sayı üreticinin "
 "tohumu olarak kullan - bu \"raslantısal\" bir işlemi tekrarlamanızı sağlar"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Raslantısal sayı üreticinin tohumu olarak şu anki zamanı kullan - bu makul "
 "bir raslantısallığı garantiler"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr ""
 
@@ -546,15 +546,15 @@ msgstr ""
 msgid "Color _Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
@@ -590,31 +590,31 @@ msgstr ""
 msgid "Color Proof"
 msgstr ""
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr ""
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr ""
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr ""
 

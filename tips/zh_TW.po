@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-tips 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-03-23 22:17+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>歡迎使用 GIMP！</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -59,11 +60,12 @@ msgstr ""
 "圖層而隱藏其它圖層。再做一次則會顯示所有圖層。"
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "對影像進行任何操作前，浮動選擇區域必須先固定在新的圖層或是最後使用的圖層上。"
 "要進行以上的程序，可以在「圖層」對話方塊中選取「新增圖層」或「固定圖層」按"
@@ -81,8 +83,9 @@ msgstr ""
 "時，這些按鍵組合會被儲存下來。"
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -128,25 +131,18 @@ msgstr ""
 "有圖層 (影像→影像平面化)，增效模組才會對整幅影像產生效用。"
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"幾乎所有的影像處理都可以在影像上按下右邊滑鼠按鈕來進行。不需太擔心，大部份的"
-"錯誤都是可以復原的..."
-
-#: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "並非所有效果都適用於各類影像。當某項功能無法使用時，選單的文字會以淺灰色表"
 "示。如果需要該種效果，可能需要將影像的色系轉為 RGB (影像→模式→RGB)、加入透明"
 "色版 (圖層→透明度→新增透明色版) 或者將它平面化 (影像→影像平面化)。"
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -154,6 +150,11 @@ msgid ""
 msgstr ""
 "在選取區域之前按下 <tt>Shift</tt> 鍵，便會將新選擇的區域加到舊的區域一起而非"
 "代替舊的區域。使用 <tt>Ctrl</tt> 則是將舊的區域減去新的區域。"
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -195,10 +196,11 @@ msgstr ""
 "透明色版」可以替它加上透明度。"
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -229,10 +231,11 @@ msgstr ""
 "後，可以將影像另存為 JPEG、PNG、GIF 等等..."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "按 <tt>Alt</tt> 鍵再用滑鼠拖曳可以調整和重新放置選擇區域。如果這個組合令視窗"
 "移動，即表示視窗總管已經使用了 <tt>Alt</tt>鍵。這個時候，請試試同時按下 "
@@ -296,10 +299,11 @@ msgstr ""
 "能。"
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "當選取區域時可以同時按下 <tt>Shift</tt> 及 <tt>Ctrl</tt> 鍵，這樣可以限制選擇"
 "區域為正方形或正圓形，或是將滑鼠開始拖曳的位置定為選擇區域的中心點。"
@@ -338,6 +342,13 @@ msgid ""
 msgstr ""
 "您可以使用繪畫工具來更改選擇區域。按下影像視窗左下角的「快速遮罩」按鈕。透過"
 "在影像上繪圖可以更改選擇區域，然後再按一次按鈕可以將之轉換為普通的選擇區域。"
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "幾乎所有的影像處理都可以在影像上按下右邊滑鼠按鈕來進行。不需太擔心，大部份"
+#~ "的錯誤都是可以復原的..."
 
 #~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
 #~ msgstr "您可以透過按下 <tt>Alt</tt> 鍵再拖曳滑鼠來調整及重新放置選擇區域。"

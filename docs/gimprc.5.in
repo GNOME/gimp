@@ -221,7 +221,7 @@ are yes and no.
 (default-image
     (width 256)
     (height 256)
-    (unit inches)
+    (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
     (resolution-unit inches)
@@ -366,7 +366,7 @@ When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
 
 .TP
-(image-title-format "%D*%f-%p.%i (%t, %L) %z%%")
+(image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
 
 Sets the text to appear in image window titles.  This is a format string;
 certain % character sequences are recognised and expanded as follows:
@@ -569,10 +569,10 @@ is an integer value.
 (default-threshold 15)
 
 Tools such as fuzzy-select and bucket fill find regions based on a seed-fill
-algorithm.  The seed fill starts at the intially selected pixel and progresses
-in all directions until the difference of pixel intensity from the original is
-greater than a specified threshold. This value represents the default
-threshold.  This is an integer value.
+algorithm.  The seed fill starts at the initially selected pixel and
+progresses in all directions until the difference of pixel intensity from the
+original is greater than a specified threshold. This value represents the
+default threshold.  This is an integer value.
 
 .TP
 (info-window-per-display no)
@@ -655,6 +655,24 @@ specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 specified the size defaults to being specified in kilobytes.
 
 .TP
+(toolbox-color-area yes)
+
+The toolbox-color-area property has no description.  Possible values are yes
+and no.
+
+.TP
+(toolbox-foo-area yes)
+
+The toolbox-foo-area property has no description.  Possible values are yes and
+no.
+
+.TP
+(toolbox-image-area yes)
+
+The toolbox-image-area property has no description.  Possible values are yes
+and no.
+
+.TP
 (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
 
 Sets the theme search path.  This is a colon-separated list of folders to
@@ -698,14 +716,14 @@ to the command with a space separating the two.  This is a single filename.
 
 The window type hint that is set on the toolbox. This may affect how your
 window manager decorates and handles the toolbox window.  Possible values are
-normal and utility.
+normal, utility and keep-above.
 
 .TP
 (dock-window-hint normal)
 
 The window type hint that is set on dock windows. This may affect the way your
-window manager decorates and handles dock windows.  Possible values are normal
-and utility.
+window manager decorates and handles dock windows.  Possible values are
+normal, utility and keep-above.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")

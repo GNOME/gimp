@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-03-21 01:54+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -196,9 +196,9 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Geen"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -363,7 +363,7 @@ msgid "Hue"
 msgstr "Kleurtoon"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Verzadiging"
 
@@ -406,23 +406,23 @@ msgstr "Huidige:"
 msgid "Old:"
 msgstr "Oude:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Selecteer map"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Selecteer bestand"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "Megabytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "Gigabytes"
 
@@ -522,7 +522,7 @@ msgstr "Eenheid"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -530,18 +530,18 @@ msgstr ""
 "Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
 "Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_Nieuw brongetal"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
 "een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 
@@ -559,16 +559,16 @@ msgid "Color _Deficiency Type:"
 msgstr "Type beperkt kleurzicht:"
 
 # Is 'Protanopia' called the same in Dutch?
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (ongevoelig voor rood)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (ongevoelig voor groen)"
 
 # Is 'Tritanopia' called the same in Dutch?
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (ongevoelig voor blauw)"
 
@@ -605,35 +605,35 @@ msgid "Color Proof"
 msgstr "Kleurcontrole"
 
 # waarneembaar?
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Gevoelsmatig"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr "Relatief colorimetrisch"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr "Absoluut colorimetrisch"
 
 # Feitelijk
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "_Type:"
 
 # kiezen / uitkiezen 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Een ICC-kleurprofiel uitkiezen"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "_Profiel:"
 
 # Zwart compensatie?
 # Zwartpunt compensatie
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "Zwartpuntcompensatie"
 
@@ -702,3 +702,6 @@ msgstr "Waterverf"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druk"
+
+#~ msgid "None"
+#~ msgstr "Geen"

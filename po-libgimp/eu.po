@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-04-06 17:16+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -197,9 +197,9 @@ msgstr "Letra-tipoaren hautapena"
 msgid "Gradient Selection"
 msgstr "Gradientearen hautapena"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Bat ere ez"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -354,7 +354,7 @@ msgid "Hue"
 msgstr "�bardura"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Saturazioa"
 
@@ -394,23 +394,23 @@ msgstr "Unekoa:"
 msgid "Old:"
 msgstr "Zaharra:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Hautatu karpeta"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Hautatu fitxategia"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "MegaByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "GigaByte"
 
@@ -510,7 +510,7 @@ msgstr "Unitatea"
 msgid "Factor"
 msgstr "Faktorea"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -518,15 +518,15 @@ msgstr ""
 "Erabili balio hau ausazko zenbaki-sortzailearen hazi gisa, hala \"ausazko\" "
 "eragiketa jakin bat errepika dezakezu"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_Hazi berria"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "Hasi ausazko zenbaki-sortzailea sortutako ausazko zenbaki batekin"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Ausaz nahastu"
 
@@ -543,15 +543,15 @@ msgstr "Kolore-ikusmen urria"
 msgid "Color _Deficiency Type:"
 msgstr "Kolorearen _urritasun-mota:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (gorriarekiko sentikortasunik ez)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (berdearekiko sentikortasunik ez)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (urdinarekiko sentikortasunik ez)"
 
@@ -587,31 +587,31 @@ msgstr "Kolore seguruaren iragazkia, ICC kolore-profilan erabilia"
 msgid "Color Proof"
 msgstr "Kolore segurua"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Pertzeptiboa"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr "Kolore erlatiboaren metrika"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr "Kolore absolutuaren metrika"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "_Helburua:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Aukeratu ICC kolore-profil bat"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "_Profila:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "Puntu -beltzaren konpentsazioa"
 
@@ -678,6 +678,9 @@ msgstr "Akuarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Presioa"
+
+#~ msgid "None"
+#~ msgstr "Bat ere ez"
 
 #~ msgid "Preview"
 #~ msgstr "Aurrebista"

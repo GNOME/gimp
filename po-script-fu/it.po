@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-01 12:25+0200\n"
+"POT-Creation-Date: 2004-06-02 14:09+0200\n"
 "PO-Revision-Date: 2004-06-01 13:11+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -590,7 +590,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Incandescenza aliena/P_ulsante..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Incandescenza aliena/P_ulsante..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -742,7 +743,8 @@ msgstr "Diametro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Motivi in rilievo/_Pulsante..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Motivi in rilievo/_Pulsante..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
@@ -1448,25 +1450,33 @@ msgstr "Colore ombra"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-pulsante a t_ubo..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-"
+"pulsante a t_ubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/_Etichetta sotto-sotto-pulsante tubolare..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/_Etichetta sotto-"
+"sotto-pulsante tubolare..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichette _generali tubolare..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichette "
+"_generali tubolare..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta pulsante _tubolare..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta "
+"pulsante _tubolare..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-03-10 20:23+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -20,7 +20,8 @@ msgstr ""
 "X-Generator: KBabel 1.3\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Vitajte v GIMPe!</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -65,11 +66,12 @@ msgstr ""
 "kliknutie všetkyvrstvy zobrazí."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Plávajúci výber musí byť pred použitím v ďalších operáciách pohltený v novej "
 "alebo poslednej aktívnej vrstve. Kliknite na tlačítko \"Nová vrstva\" alebo "
@@ -88,8 +90,9 @@ msgstr ""
 "\"Uložiť klávesové skratky\", tak sa skratky uložia, keď ukončíte GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -138,19 +141,11 @@ msgstr ""
 "vrstvy), ak chcete pracovať s celým obrázkom."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"Skoro všetky operácie s obrázkami sa spúšťajú pomocou kliknutia pravým "
-"tlačítkom na obrázok. A nebojte sa, väčšinu chýb môžete opraviť pomocou "
-"funkcie \"Vrátiť späť\"..."
-
-#: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Nie každý efekt sa dá použiť na všetky typy obrázkov. Môžete to zistiť podľa "
@@ -158,7 +153,7 @@ msgstr ""
 "(Obrázok-&gt;Režim-&gt;RGB), pridať alfa kanál (Vrstvy-&gt;Priesvitnosť-&gt;"
 "Pridať alfa kanál) alebo zlúčiť vrstvy (Obrázok&gt;Do jednej vrstvy)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -167,6 +162,11 @@ msgstr ""
 "Stlačením a podržaním klávesy <tt>Shift</tt> pred vytvorením výberu, bude "
 "nový výber pridaný k predchádzajúcemu. Naopak, pomocou klávesy <tt>Ctrl</tt> "
 "môžete ubrať z aktuálneho výberu."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -212,10 +212,11 @@ msgstr ""
 "\"Pridať alfa kanál\"."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -250,10 +251,11 @@ msgstr ""
 "môžete uložiť ako JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Výber môžete upraviť a nahradiť pomocou ťahania s <tt>Alt</tt>. Pokiaľ to "
 "hýbe oknom, kláves <tt>Alt</tt> už používa váš správca okien. Vyskúšajte "
@@ -323,10 +325,11 @@ msgstr ""
 "tlačítkom myši na označenie vrstvy v dialógu Vrstvy."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "Stlačením alebo pustením kláves <tt>Shift</tt> a <tt>Ctrl</tt> počas "
 "vytvárania výberu môžete vybrať dokonalý štvorec alebo kruh, alebo vyberať "
@@ -370,3 +373,11 @@ msgstr ""
 "\"Rýchla maska\" na ľavom spodnom okraji okna. Zmena sa uskutoční kreslením "
 "do obrázku a opätovné stlačenie tlačítka ju skonvertuje späť na normály "
 "výber."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Skoro všetky operácie s obrázkami sa spúšťajú pomocou kliknutia pravým "
+#~ "tlačítkom na obrázok. A nebojte sa, väčšinu chýb môžete opraviť pomocou "
+#~ "funkcie \"Vrátiť späť\"..."

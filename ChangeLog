@@ -1,5 +1,9 @@
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.1.0 development release.
+
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c
 	* app/gui/info-window.c
 	* app/gui/preferences-dialog.c

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-05-16 14:46+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -125,7 +125,8 @@ msgstr "%s может обработать только RGB или индекс�
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s может обработать только изображения в оттенках серого или индексированные"
+msgstr ""
+"%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:346
 #, c-format
@@ -196,9 +197,9 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Без"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -355,7 +356,7 @@ msgid "Hue"
 msgstr "Тон"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Насыщенность"
 
@@ -395,23 +396,23 @@ msgstr "Текущий:"
 msgid "Old:"
 msgstr "Прежний:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Выбрать каталог"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Выбрать файл"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "Килобайты"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "Мегабайты"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "Гигабайты"
 
@@ -428,7 +429,8 @@ msgstr "Каталог"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
+msgstr ""
+"Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -510,7 +512,7 @@ msgstr "Единица"
 msgid "Factor"
 msgstr "Множитель"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -518,21 +520,23 @@ msgstr ""
 "Используйте это значение для инициализации генератора случайных чисел - это "
 "даст возможность повторить заданную \"случайную\" операцию"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "Новое зерно"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
-msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
+msgstr ""
+"Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "Перемешать"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
+msgstr ""
+"Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
@@ -542,15 +546,15 @@ msgstr "Зрение со сниженным цветовосприятием"
 msgid "Color _Deficiency Type:"
 msgstr "Тип сниженного цветовосприятия:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Протанопия (нечувствительность к красному)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Девтеранопия (нечувствительность к зелёному)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Тританопия (нечувствительность к синему)"
 
@@ -586,31 +590,31 @@ msgstr "Фильтр настройки цветопередачи, исполь
 msgid "Color Proof"
 msgstr "Настройка цветопередачи"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Перцепционый"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr "Отн. колориметрический"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr "Абсол. колориметрический"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "Тип:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Файл параметров ICC"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "Параметры:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "Компенсация черных точек"
 
@@ -678,6 +682,9 @@ msgstr "Акварель"
 msgid "Pressure"
 msgstr "Давление"
 
+#~ msgid "None"
+#~ msgstr "Без"
+
 #~ msgid "Preview"
 #~ msgstr "Просмотр"
 
@@ -697,4 +704,3 @@ msgstr "Давление"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Нет (нормальное зрение)"
-

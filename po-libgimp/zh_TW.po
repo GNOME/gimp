@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-03-23 22:13+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -192,9 +192,9 @@ msgstr "字型選擇"
 msgid "Gradient Selection"
 msgstr "漸層選擇"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "無"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -349,7 +349,7 @@ msgid "Hue"
 msgstr "色相"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "彩度"
 
@@ -389,23 +389,23 @@ msgstr "目前顏色："
 msgid "Old:"
 msgstr "原有顏色："
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "選取資料夾"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "選取檔案"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "KB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "MB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "GB"
 
@@ -503,22 +503,22 @@ msgstr "單位"
 msgid "Factor"
 msgstr "比例"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "產生隨機數(_N)"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
@@ -534,15 +534,15 @@ msgstr "模擬色盲人士的視覺"
 msgid "Color _Deficiency Type:"
 msgstr "色盲類型(_D)："
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "紅色盲"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "綠色盲"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "藍色盲"
 
@@ -578,31 +578,31 @@ msgstr ""
 msgid "Color Proof"
 msgstr ""
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr ""
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr ""
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr ""
 
@@ -669,3 +669,6 @@ msgstr "水彩"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "壓力"
+
+#~ msgid "None"
+#~ msgstr "無"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Luis Henrique Sestari Rocha <subdirect@bol.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -194,9 +194,9 @@ msgstr "Seleção de Fonte"
 msgid "Gradient Selection"
 msgstr "Seleção de Degradê"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Nenhum"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -351,7 +351,7 @@ msgid "Hue"
 msgstr "Matiz"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Saturação"
 
@@ -391,23 +391,23 @@ msgstr "Atual:"
 msgid "Old:"
 msgstr "Antiga:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Selecionar Diretório"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Selecionar Arquivo"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -507,7 +507,7 @@ msgstr "Unidade"
 msgid "Factor"
 msgstr "Fator"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -515,15 +515,15 @@ msgstr ""
 "Usar este valor para a semente do gerador de números randômicos - isso "
 "permite que qualquer operação \"randômica\" possa ser repetida"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_Nova Semente"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "Semear o gerador de números aleatórios com um número aleatório gerado"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Randomizar"
 
@@ -540,15 +540,15 @@ msgstr "Visão com Deficiência de Cor"
 msgid "Color _Deficiency Type:"
 msgstr "Tipo de _Deficiência de Cor:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (insensitividade ao vermelho)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensitividade ao verde)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensitividade ao azul)"
 
@@ -584,31 +584,31 @@ msgstr "Filtro de prova de cores usando perfil de cor ICC"
 msgid "Color Proof"
 msgstr "Prova de Cores"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Perceptual"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr "Colorimetria Relativa"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr "Colorimetria Absoluta"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "_Intenção:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Escolha um perfil de cor ICC"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "_Perfil:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "_Compensação de Ponto Negro"
 
@@ -675,6 +675,9 @@ msgstr "Watercolor"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressão"
+
+#~ msgid "None"
+#~ msgstr "Nenhum"
 
 #~ msgid "Parameter Settings"
 #~ msgstr "Configurações de Parâmetros"

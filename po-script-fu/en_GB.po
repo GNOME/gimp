@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-02 14:09+0200\n"
 "PO-Revision-Date: 2004-03-30 14:07-0500\n"
 "Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
 "Language-Team: English, British\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:140
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu console mode allows only interactive invocation"
@@ -23,38 +23,37 @@ msgstr "Script-Fu console mode allows only interactive invocation"
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:195
 msgid "SIOD Output"
 msgstr "SIOD Output"
 
-#. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:276
 msgid "Current Command"
 msgstr "Current Command"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Browse..."
 msgstr "Browse..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:592
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Unable to open a stream on the SIOD output pipe"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:598
 msgid "Unable to open the SIOD output pipe"
 msgstr "Unable to open the SIOD output pipe"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:643
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evaluate mode allows only noninteractive invocation"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1111
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1125
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -70,59 +69,59 @@ msgstr "Script Arguments"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Colour Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu File Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1314
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Folder Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Font Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1334
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu Pattern Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Gradient Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Brush Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
-#: plug-ins/dbbrowser/dbbrowser_utils.c:486
+#: plug-ins/script-fu/script-fu-scripts.c:1927
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Author:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
-#: plug-ins/dbbrowser/dbbrowser_utils.c:502
+#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
-#: plug-ins/dbbrowser/dbbrowser_utils.c:494
+#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Date:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 msgid "Image Types:"
 msgstr "Image Types:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -137,27 +136,33 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Server Options"
 
-#: plug-ins/script-fu/script-fu-server.c:629
+#: plug-ins/script-fu/script-fu-server.c:630
 msgid "Server Port:"
 msgstr "Server Port:"
 
-#: plug-ins/script-fu/script-fu-server.c:635
+#: plug-ins/script-fu/script-fu-server.c:636
 msgid "Server Logfile:"
 msgstr "Server Logfile:"
 
-#: plug-ins/script-fu/script-fu.c:122
-msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#: plug-ins/script-fu/script-fu.c:123
+#, fuzzy
+msgid "Script-Fu _Console"
+msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu.c:147
-msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:153
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
 msgstr "Re-read all available scripts"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:286
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 
@@ -176,43 +181,43 @@ msgstr "Search by _Name"
 msgid "Search by _Blurb"
 msgstr "Search by _Blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:205
+#: plug-ins/dbbrowser/dbbrowser_utils.c:206
 msgid "_Search:"
 msgstr "_Search:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:345
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Name:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:354
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:366
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr "In:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:414
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr "Out:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:468
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr "Help:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:579
+#: plug-ins/dbbrowser/dbbrowser_utils.c:582
 msgid "Searching by name - please wait"
 msgstr "Searching by name - please wait"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:603
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "Searching by blurb - please wait"
 msgstr "Searching by blurb - please wait"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:613
+#: plug-ins/dbbrowser/dbbrowser_utils.c:616
 msgid "Searching - please wait"
 msgstr "Searching - please wait"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:650
+#: plug-ins/dbbrowser/dbbrowser_utils.c:653
 msgid "No matches"
 msgstr "No matches"
 
@@ -1142,7 +1147,8 @@ msgid "Effect Size (pixels)"
 msgstr "Effect Size (pixels)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy _Visible"
+#, fuzzy
+msgid "<Image>/Edit/Copy/Copy _Visible"
 msgstr "<Image>/Edit/Copy _Visible"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1385,11 +1391,15 @@ msgid "Shadow Weight (%)"
 msgstr "Shadow Weight (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1431,27 +1441,35 @@ msgid "Shadow Color"
 msgstr "Shadow Colour"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 
@@ -2433,6 +2451,12 @@ msgstr "Highlight X Offset"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Highlight Y Offset"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 
 #, fuzzy
 #~ msgid "Border"

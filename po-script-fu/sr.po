@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-02 14:09+0200\n"
 "PO-Revision-Date: 2004-01-23 12:55+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:140
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Скрипт-Фу конзола дозвољава само интерактивно кориштење"
@@ -27,39 +27,38 @@ msgstr "Скрипт-Фу конзола дозвољава само интер�
 msgid "Script-Fu Console"
 msgstr "Скрипт-Фу Конзола"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:195
 msgid "SIOD Output"
 msgstr "SIOD излаз"
 
-#. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:276
 msgid "Current Command"
 msgstr "Тренутна наредба"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Browse..."
 msgstr "Тражи..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:592
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Не може да отвори проток на цевоводу SIOD излаза"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:598
 msgid "Unable to open the SIOD output pipe"
 msgstr "Не могу да отворим цевовод SIOD излаза"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:643
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Скрипт-Фу провера је дозвољена само као не-интерактивни позив"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1111
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1125
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
@@ -76,59 +75,59 @@ msgstr "Аргументи Скрипте"
 #
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу избор боје"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу избор датотеке"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1314
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу избор директоријума"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу избор фонта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1334
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу избор мустре"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу избор прелива"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу избор четке"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
-#: plug-ins/dbbrowser/dbbrowser_utils.c:486
+#: plug-ins/script-fu/script-fu-scripts.c:1927
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Аутор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
-#: plug-ins/dbbrowser/dbbrowser_utils.c:502
+#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Ауторска права:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
-#: plug-ins/dbbrowser/dbbrowser_utils.c:494
+#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Датум:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 msgid "Image Types:"
 msgstr "Врсте Слика:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -143,27 +142,33 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу поставке Сервера"
 
-#: plug-ins/script-fu/script-fu-server.c:629
+#: plug-ins/script-fu/script-fu-server.c:630
 msgid "Server Port:"
 msgstr "Серверски Порт:"
 
-#: plug-ins/script-fu/script-fu-server.c:635
+#: plug-ins/script-fu/script-fu-server.c:636
 msgid "Server Logfile:"
 msgstr "Дневник сервера:"
 
-#: plug-ins/script-fu/script-fu.c:122
-msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Скрипт-Фу _конзола"
+#: plug-ins/script-fu/script-fu.c:123
+#, fuzzy
+msgid "Script-Fu _Console"
+msgstr "Скрипт-Фу Конзола"
 
-#: plug-ins/script-fu/script-fu.c:147
-msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Проширења/Скрипт-Фу/Покрени _сервер..."
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Неонка..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:153
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
 msgstr "Поново учитај све доступне скрипте"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:286
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Проширења/Скрипт-Фу/_Освежи скрипте"
 
@@ -182,43 +187,43 @@ msgstr "Тражи по и_мену"
 msgid "Search by _Blurb"
 msgstr "Тражи по _похвали"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:205
+#: plug-ins/dbbrowser/dbbrowser_utils.c:206
 msgid "_Search:"
 msgstr "Тражи:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:345
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Име:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:354
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr "Похвала:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:366
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr "У:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:414
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr "Из:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:468
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr "Помоћ:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:579
+#: plug-ins/dbbrowser/dbbrowser_utils.c:582
 msgid "Searching by name - please wait"
 msgstr "Тражим по имену — молим, сачекајте"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:603
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "Searching by blurb - please wait"
 msgstr "Тражим по похвали — молим, сачекајте"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:613
+#: plug-ins/dbbrowser/dbbrowser_utils.c:616
 msgid "Searching - please wait"
 msgstr "Тражим — молим да сачекате"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:650
+#: plug-ins/dbbrowser/dbbrowser_utils.c:653
 msgid "No matches"
 msgstr "Без резултата"
 
@@ -1148,7 +1153,8 @@ msgid "Effect Size (pixels)"
 msgstr "Ефективна величина (тачака)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy _Visible"
+#, fuzzy
+msgid "<Image>/Edit/Copy/Copy _Visible"
 msgstr "<Image>/Уреди/Умножи видљиво"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1391,11 +1397,15 @@ msgid "Shadow Weight (%)"
 msgstr "Тежина сенке (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Велико заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Мало заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1437,26 +1447,34 @@ msgid "Shadow Color"
 msgstr "Боја сенке"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Ознака другог дугмета...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Проширења/Скрипт-Фу/Вeb Теме/Gimp.Org/Ознака трећег дугмета..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Проширења/Скрипт-Фу/Вeb теме/Gimp.оrg/Опште ознаке за ваљке..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Проширења/Скрипт-Фу/Веб теме/Gimp.оrg/Ознака ваљк. дугмета..."
 
@@ -2438,6 +2456,12 @@ msgstr "X одступање осветљености"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y одступање осветљености"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#~ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Скрипт-Фу _конзола"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Покрени _сервер..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
 #~ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Мустре/Увојци (растављиво)..."

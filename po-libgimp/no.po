@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-22 12:54+0200\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-04-22 00:59+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -22,11 +22,6 @@ msgstr "Penselvalg"
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
 msgstr "_Bla gjennom..."
-
-#: libgimp/gimpdrawablecombobox.c:283 libgimp/gimpimagecombobox.c:147
-#: libgimp/gimpmenu.c:411
-msgid "(Empty)"
-msgstr ""
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
@@ -198,6 +193,10 @@ msgstr "Skrifttypevalg"
 msgid "Gradient Selection"
 msgstr "Graderingsvalg"
 
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
+
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Mønstervalg"
@@ -351,7 +350,7 @@ msgid "Hue"
 msgstr "Glød"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:318
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Metning"
 
@@ -585,33 +584,33 @@ msgstr "Fargeprøvefilter for ICC fargeprofil"
 msgid "Color Proof"
 msgstr "Fargeprøve"
 
-#: modules/cdisplay_proof.c:314
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Perseptuell"
 
-#: modules/cdisplay_proof.c:316
+#: modules/cdisplay_proof.c:315
 #, fuzzy
 msgid "Relative Colorimetric"
 msgstr "Relativ fastsetting av farge"
 
-#: modules/cdisplay_proof.c:320
+#: modules/cdisplay_proof.c:319
 #, fuzzy
 msgid "Absolute Colorimetric"
 msgstr "Absolutt fastsetting av farge"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "_Hensikt:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Velg en ICC fargeprofil"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "_Svartpunktskompensering"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-scriptfu for Gnome 2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-02 14:09+0200\n"
 "PO-Revision-Date: 2002-07-20 15:36+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:140
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
@@ -23,38 +23,37 @@ msgstr ""
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:195
 msgid "SIOD Output"
 msgstr "SIOD Output"
 
-#. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:276
 msgid "Current Command"
 msgstr "Lệnh Hiện Thời"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Browse..."
 msgstr "Duyệt..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:592
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Không thể mở một stream trên SIOD output pipe"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:598
 msgid "Unable to open the SIOD output pipe"
 msgstr "Không thể mở SIOD output pipe"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:643
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1111
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1125
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -70,59 +69,59 @@ msgstr "Đối số của Script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Chọn Màu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu File Selection"
 msgstr "Chọn Tập Tin của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1314
 msgid "Script-Fu Folder Selection"
 msgstr "Chọn Thư Mục của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Font Selection"
 msgstr "Chọn Phông của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1334
 msgid "Script-fu Pattern Selection"
 msgstr "Chọn Mẫu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Gradient Selection"
 msgstr "Chọn Độ Dốc của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-Fu Brush Selection"
 msgstr "Chọn Bút Vẽ của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
-#: plug-ins/dbbrowser/dbbrowser_utils.c:486
+#: plug-ins/script-fu/script-fu-scripts.c:1927
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Tác giả:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
-#: plug-ins/dbbrowser/dbbrowser_utils.c:502
+#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Bản quyền:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
-#: plug-ins/dbbrowser/dbbrowser_utils.c:494
+#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Ngày:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 msgid "Image Types:"
 msgstr "Kiểu Ảnh:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -137,29 +136,33 @@ msgstr ""
 msgid "Script-Fu Server Options"
 msgstr "Tùy Chọn Máy Chủ Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:629
+#: plug-ins/script-fu/script-fu-server.c:630
 msgid "Server Port:"
 msgstr "Cổng Máy Chủ:"
 
-#: plug-ins/script-fu/script-fu-server.c:635
+#: plug-ins/script-fu/script-fu-server.c:636
 msgid "Server Logfile:"
 msgstr "Logfile của Máy Chủ:"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:123
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Hộp công cụ>/Xtns/Script-Fu/Console..."
+msgid "Script-Fu _Console"
+msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu.c:147
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Hộp công cụ>/Xtns/Script-Fu/Máy chủ..."
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Neon Lạ..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:153
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
 msgstr "Đọc lại toàn bộ các script đang có"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:286
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Làm tươi lại"
@@ -179,43 +182,43 @@ msgstr "Tìm kiếm theo Tên"
 msgid "Search by _Blurb"
 msgstr "Tìm kiếm theo Lời _giới thiệu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:205
+#: plug-ins/dbbrowser/dbbrowser_utils.c:206
 msgid "_Search:"
 msgstr "Tìm _Kiếm:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:345
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Tên:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:354
+#: plug-ins/dbbrowser/dbbrowser_utils.c:356
 msgid "Blurb:"
 msgstr "Lời giới thiệu:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:366
+#: plug-ins/dbbrowser/dbbrowser_utils.c:368
 msgid "In:"
 msgstr "Trong:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:414
+#: plug-ins/dbbrowser/dbbrowser_utils.c:416
 msgid "Out:"
 msgstr "Ngoài:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:468
+#: plug-ins/dbbrowser/dbbrowser_utils.c:470
 msgid "Help:"
 msgstr "Trợ giúp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:579
+#: plug-ins/dbbrowser/dbbrowser_utils.c:582
 msgid "Searching by name - please wait"
 msgstr "Đang tìm theo Tên - Hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:603
+#: plug-ins/dbbrowser/dbbrowser_utils.c:606
 msgid "Searching by blurb - please wait"
 msgstr "Đang tìm theo Lời giới thiệu - hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:613
+#: plug-ins/dbbrowser/dbbrowser_utils.c:616
 msgid "Searching - please wait"
 msgstr "Đang tìm kiếm - hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:650
+#: plug-ins/dbbrowser/dbbrowser_utils.c:653
 msgid "No matches"
 msgstr "Không có kết quả"
 
@@ -1187,7 +1190,7 @@ msgid "Effect Size (pixels)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy _Visible"
+msgid "<Image>/Edit/Copy/Copy _Visible"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1445,12 +1448,14 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Hrule..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Bullet..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1494,25 +1499,29 @@ msgstr "Màu bóng"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Trang Web Themes/Mẫu Góc Xiên/Hrule..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
@@ -2540,6 +2549,14 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#~ msgstr "<Hộp công cụ>/Xtns/Script-Fu/Console..."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Hộp công cụ>/Xtns/Script-Fu/Máy chủ..."
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-04-12 19:41+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -21,7 +21,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>¡Bienvenido a El GIMP!</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -66,11 +67,12 @@ msgstr ""
 "<tt>Mayús.</tt> y pulse otra vez en él para mostrar todas las capas."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Una selección flotante debe anclarse a una capa nueva o a la última capa "
 "activa antes de realizar otras operaciones sobre la imagen. Pulse sobre los "
@@ -91,8 +93,9 @@ msgstr ""
 "combinaciones se guardarán al salir de El GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -145,19 +148,11 @@ msgstr ""
 "imagen."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"Casi todas las operaciones de imágenes se ejecutan al pulsar con el botón "
-"derecho sobre la imagen. Y no se preocupe, puede deshacer la mayoría de los "
-"errores..."
-
-#: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "No todos los efectos pueden ser aplicados a todos los tipos de imágenes. "
@@ -166,7 +161,7 @@ msgstr ""
 "agregar un canal alfa (Capa-&gt;Agregar canal alfa) o aplanarla (Imagen-&gt;"
 "Aplanar la imagen)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -175,6 +170,11 @@ msgstr ""
 "Manteniendo presionada la tecla <tt>Mayús.</tt> antes de hacer una selección "
 "le permite agregar a la selección actual en vez de reemplazarla. Usando "
 "<tt>Ctrl</tt> antes de hacer una selección sustrae de la selección actual."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -221,10 +221,11 @@ msgstr ""
 "diálogo de «Capas y luego seleccionando «Añadir canal alfa»."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -260,10 +261,11 @@ msgstr ""
 "PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Puede ajustar y recolocar una selección utilizando <tt>Alt</tt> y arrastrar. "
 "Si esto hace que la ventana se mueva, su administrador de ventanas ya "
@@ -335,10 +337,11 @@ msgstr ""
 "sobre la etiqueta de texto de una capa en el diálogo Capas."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "Puede presionar o soltar la teclas <tt>Mayús.</tt> y <tt>Ctrl</tt> mientras "
 "está haciendo una selección para limitarla a un cuadrado o círculo perfecto, "
@@ -385,3 +388,11 @@ msgstr ""
 "izquierda de la ventana de la imagen. Cambie su selección pintando sobre la "
 "imagen y pulse otra vez sobre el botón para convertirla de nuevo en una "
 "selección normal."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Casi todas las operaciones de imágenes se ejecutan al pulsar con el botón "
+#~ "derecho sobre la imagen. Y no se preocupe, puede deshacer la mayoría de "
+#~ "los errores..."

@@ -172,7 +172,7 @@
 # (default-image
 #     (width 256)
 #     (height 256)
-#     (unit inches)
+#     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
 #     (resolution-unit inches)
@@ -324,7 +324,7 @@
 # %U  unit abbreviation
 # 
 # 
-# (image-title-format "%D*%f-%p.%i (%t, %L) %z%%")
+# (image-title-format "%D*%f-%p.%i (%t, %L) %wx%h")
 
 # Sets the text to appear in image window status bars.  This is a format
 # string; certain % character sequences are recognised and expanded as
@@ -436,7 +436,7 @@
 # (snap-distance 8)
 
 # Tools such as fuzzy-select and bucket fill find regions based on a
-# seed-fill algorithm.  The seed fill starts at the intially selected pixel
+# seed-fill algorithm.  The seed fill starts at the initially selected pixel
 # and progresses in all directions until the difference of pixel intensity
 # from the original is greater than a specified threshold. This value
 # represents the default threshold.  This is an integer value.
@@ -510,6 +510,21 @@
 # 
 # (max-new-image-size 64M)
 
+# The toolbox-color-area property has no description.  Possible values are
+# yes and no.
+# 
+# (toolbox-color-area yes)
+
+# The toolbox-foo-area property has no description.  Possible values are yes
+# and no.
+# 
+# (toolbox-foo-area yes)
+
+# The toolbox-image-area property has no description.  Possible values are
+# yes and no.
+# 
+# (toolbox-image-area yes)
+
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.
 # 
@@ -546,13 +561,13 @@
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values
-# are normal and utility.
+# are normal, utility and keep-above.
 # 
 # (toolbox-window-hint normal)
 
 # The window type hint that is set on dock windows. This may affect the way
 # your window manager decorates and handles dock windows.  Possible values
-# are normal and utility.
+# are normal, utility and keep-above.
 # 
 # (dock-window-hint normal)
 

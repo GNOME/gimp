@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-04-06 21:31+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "X-Generator: KBabel 1.0.2\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Ongi etorri GIMPera!</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -62,11 +63,12 @@ msgstr ""
 "berriro <tt>Maius</tt> tekla sakatuta, geruza guztiak agertzeko."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Hautapen mugikorra geruza berri batean edo azken geruza aktiboan ainguratu "
 "behar da, irudian beste eragiketarik egin baino lehen. Sakatu \"Geruza berria"
@@ -85,8 +87,9 @@ msgstr ""
 "irtendakoan gordetzen da."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -136,18 +139,11 @@ msgstr ""
 "osoan lan egitea nahi baduzu."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"Ia irudi-eragiketa gehienak saguaren eskuineko botoiaz irudian klik eginda "
-"burutzen dira. Eta ez kezkatu, akats gehienak desegin daitezke eta..."
-
-#: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "fektu guztiak ez dira berdin aplikatzen irudi-mota guztietan. Hori "
@@ -155,7 +151,7 @@ msgstr ""
 "aldatu behar duzu (Irudia-&gt;Modua-&gt;RGB), alfa kanal bat gehitu (Geruzak-"
 "&gt;Gehitu alfa kanala) edo irudia berdindu (Geruzak-&gt;Berdindu irudia)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -164,6 +160,11 @@ msgstr ""
 "Hautapena egin aurretik <tt>Shift</tt> tekla sakatuta baduzu, uneko "
 "hautapenera gehituko duzu ordeztu beharrean. Hautapena egin aurretik "
 "<tt>Ctrl</tt> erabiltzen bada, unekotik kendu egiten da."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -210,10 +211,11 @@ msgstr ""
 "hautatu \"Gehitu alfa kanala\"."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -248,10 +250,11 @@ msgstr ""
 "JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr "Hautapen bat doitzeko eta ordezteko, erabili <tt>Alt</tt>-arrastatu. "
 
 #: tips/gimp-tips.xml.in.h:25
@@ -320,10 +323,11 @@ msgstr ""
 "klik eginda."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "Hautapen bat egiten ari zarenean <tt>Maius</tt> eta <tt>Ktrl</tt> teklak "
 "sakatutzen edo askatzen badituzu, lauki edo zirkulu perfektu bihurtuko da "
@@ -369,3 +373,11 @@ msgstr ""
 "leiho bateko behealdeko ezkerreko \"Maskara azkarra\" botoian. Aldatu "
 "hautapena irudian marraztuz, eta egin klik berriro botoian hautapen "
 "arruntera itzultzeko."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Ia irudi-eragiketa gehienak saguaren eskuineko botoiaz irudian klik "
+#~ "eginda burutzen dira. Eta ez kezkatu, akats gehienak desegin daitezke "
+#~ "eta..."

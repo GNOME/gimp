@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-23 19:47+0200\n"
+"POT-Creation-Date: 2004-06-02 20:48+0200\n"
 "PO-Revision-Date: 2004-05-28 20:07+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -165,7 +165,8 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr ""
+"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -193,9 +194,9 @@ msgstr "Betűkészlet kiválasztása"
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Nincs"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -350,7 +351,7 @@ msgid "Hue"
 msgstr "Árnyalat"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:317
 msgid "Saturation"
 msgstr "Telítettség"
 
@@ -390,23 +391,23 @@ msgstr "Jelenlegi:"
 msgid "Old:"
 msgstr "Régi:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "kilobájt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "megabájt"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "gigabájt"
 
@@ -506,7 +507,7 @@ msgstr "Mértékegység"
 msgid "Factor"
 msgstr "Szorzó"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -514,23 +515,24 @@ msgstr ""
 "Ezt az értéket használja a véletlenszám-előállítás kiindulóértékeként - ez "
 "lehetővé teszi egy adott \"véletlen\" művelet megismétlését"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "Ú_j kiindulóérték"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "A véletlenszám-előállítás kiindulóértékének beállítása egy előállított "
 "véletlenszámmal"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Véletlenszerűen"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
+msgstr ""
+"Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
@@ -540,15 +542,15 @@ msgstr "Színérzékelési probléma"
 msgid "Color _Deficiency Type:"
 msgstr "Érzékelési probléma _típusa:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (a vörös szín érzékelésének hiánya)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (a zöld szín érzékelésének hiánya)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (a kék szín érzékelésének hiánya)"
 
@@ -584,31 +586,31 @@ msgstr "ICC színprofilt használó \"színes próbanyomat\" szűrő"
 msgid "Color Proof"
 msgstr "Színes próbanyomat"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:313
 msgid "Perceptual"
 msgstr "Érzékelési"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:315
 msgid "Relative Colorimetric"
 msgstr "Relatív színmérési"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:319
 msgid "Absolute Colorimetric"
 msgstr "Abszolút színmérési"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:330
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:333
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:336
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:344
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 
@@ -675,3 +677,6 @@ msgstr "Vízfestmény"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Nyomás"
+
+#~ msgid "None"
+#~ msgstr "Nincs"

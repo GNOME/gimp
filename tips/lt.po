@@ -9,16 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (tips) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-23 14:13+0300\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-05-23 14:17+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Sveiki GIMP vartotojai!</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -63,11 +64,12 @@ msgstr ""
 "Pakartokite tai dar kartą jei norite, kad visi sluoksniai vėl būtų matomi."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Prieš veiksmų atlikimą plaukiojantis pažymėjimas turi būti pririštas prie "
 "naujo sluoksnio arba prie paskutinio aktyvaus sluoksnio. Tai įvykdysite "
@@ -88,8 +90,9 @@ msgstr ""
 "klavišų kombinacijas“."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -139,15 +142,6 @@ msgstr ""
 "reikia sujungti sluoksnius (Paveikslėlis-&gt;Sujungti sluoksnius)."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"Beveik visi veiksmai vykdomi dešiniojo pelės klavišo paspaudimu "
-"paveikslėlyje. Dirbkite nesijaudindami, GIMP galėsite atšaukti daug "
-"klaidingai įvykdytų veiksmų."
-
-#: tips/gimp-tips.xml.in.h:15
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
@@ -161,7 +155,7 @@ msgstr ""
 "(Sluoksniai-&gt;Permatomumas-&gt;Pridėti Alfa kanalą) arba sujungti "
 "paveikslėlio sluoksnius (Paveikslėlis-&gt;Sujungti sluoksnius)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -170,6 +164,11 @@ msgstr ""
 "Jei pradėdami pažymėjimo veiksmą laikysite nuspaudę <tt>Shift</tt> klavišą, "
 "papildysite pažymėtą plotą, o ne atliksite naują pažymėjimą. Naudodami "
 "<tt>Ctlr</tt> klavišu atimsite žymimą plotą iš jau pažymėto."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -214,10 +213,11 @@ msgstr ""
 "pasirinkę „Pridėti Alfa kanalą“."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -250,10 +250,11 @@ msgstr ""
 "formatais."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Galite pakoreguoti pažymėjimą, spausdami <tt>Alt</tt> ir kairįjį pelės "
 "klavišą. Jei tai priverčia judėti langą, reiškia, kad <tt>Alt</tt> klavišas "
@@ -323,10 +324,11 @@ msgstr ""
 "jo pavadinimo Sluoksnių dialoge."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "Jei norite pažymėti tikslų kvadratą arba apskritimą ir žymėti juos nuo "
 "centrinio taško, žymėdami spauskite <tt>Ctrl</tt> ir <tt>Shift</tt>."
@@ -370,3 +372,10 @@ msgstr ""
 "pakeiskite pažymėjimą ir paspauskite tą patį mygtuką, kad grįžtumėte į "
 "normalų režimą."
 
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Beveik visi veiksmai vykdomi dešiniojo pelės klavišo paspaudimu "
+#~ "paveikslėlyje. Dirbkite nesijaudindami, GIMP galėsite atšaukti daug "
+#~ "klaidingai įvykdytų veiksmų."

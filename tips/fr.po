@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-02 13:12+0200\n"
 "PO-Revision-Date: 2004-02-28 16:07+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Bienvenue sur Le Gimp !</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -63,11 +64,12 @@ msgstr ""
 "afficher tous les calques."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Une sélection flottante doit être ancrée comme un nouveau calque ou au "
 "dernier calque actif avant de procéder à de nouvelles opérations sur "
@@ -90,8 +92,9 @@ msgstr ""
 "clavier» est activé, Ils sont enregistrés lorsque vous quittez GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -144,20 +147,11 @@ msgstr ""
 "l'image) si vous souhaitez que le filtre agisse sur l'image entière."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"À peu près toutes les opérations sur les images sont réalisables par un clic-"
-"droit sur l'image. Et ne vous en faites pas, vous pouvez annuler toutes les "
-"mauvaises manipulations..."
-
-#: tips/gimp-tips.xml.in.h:15
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Tous les effets ne peuvent pas être appliqués sur tous les types d'images. "
@@ -166,7 +160,7 @@ msgstr ""
 "ajouter un canal alpha (Calque-&gt; Transparence-&gt;Ajouter un canal alpha) "
 "ou l'aplatir (Image-&gt;Aplatir l'image)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -176,6 +170,11 @@ msgstr ""
 "vous permet de l'ajouter à la sélection courante au lieu de la remplacer. "
 "Utiliser <tt>Ctrl</tt> avant de faire une sélection la soustrait de la "
 "sélection courante."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -222,10 +221,11 @@ msgstr ""
 "alpha »."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -260,10 +260,11 @@ msgstr ""
 "qu'un projet est terminé, vous pouvez l'enregistrer en JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:24
+#, fuzzy
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Vous pouvez ajuster ou replacer une sélection en utilisant <tt>Alt</tt> "
 "glissé. Si cette action porvoque un déplacement de la fenêtre c'est que "
@@ -338,10 +339,11 @@ msgstr ""
 "d'un calque dans le dialogue des calques."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
 "Vous pouvez presser et maintenir les touches <tt>Shift</tt> et <tt>Ctrl</tt> "
 "tandis que vous faites une sélection de façon à la contraindre à un cercle "
@@ -387,6 +389,14 @@ msgstr ""
 "sur le bouton « Masquage rapide » dans le coin bas gauche de la fenêtre "
 "d'image. Changez votre sélection en dessinant dans l'image et cliquez à "
 "nouveau sur le bouton pour la reconvertir comme une sélection normale."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "À peu près toutes les opérations sur les images sont réalisables par un "
+#~ "clic-droit sur l'image. Et ne vous en faites pas, vous pouvez annuler "
+#~ "toutes les mauvaises manipulations..."
 
 #~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
 #~ msgstr ""

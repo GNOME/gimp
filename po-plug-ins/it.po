@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-01 11:46+0200\n"
+"POT-Creation-Date: 2004-06-02 13:55+0200\n"
 "PO-Revision-Date: 2004-06-01 13:20+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
@@ -385,7 +385,7 @@ msgstr "_Frattali"
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1058
 #: plug-ins/common/psd_save.c:1558 plug-ins/common/spheredesigner.c:2087
 #: plug-ins/common/sunras.c:516 plug-ins/common/tga.c:1032
-#: plug-ins/common/tiff.c:1798 plug-ins/common/xbm.c:1000
+#: plug-ins/common/tiff.c:1800 plug-ins/common/xbm.c:1000
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:454
 #: plug-ins/flame/flame.c:439 plug-ins/gfig/gfig.c:1023
 #: plug-ins/gfli/gfli.c:718 plug-ins/ifscompose/ifscompose.c:2542
@@ -423,7 +423,7 @@ msgstr "Salva parametri frattali"
 #: plug-ins/common/psp.c:1461 plug-ins/common/spheredesigner.c:1989
 #: plug-ins/common/sunras.c:385 plug-ins/common/svg.c:245
 #: plug-ins/common/svg.c:628 plug-ins/common/tga.c:417
-#: plug-ins/common/tiff.c:511 plug-ins/common/xbm.c:723
+#: plug-ins/common/tiff.c:513 plug-ins/common/xbm.c:723
 #: plug-ins/common/xwd.c:388 plug-ins/faxg3/faxg3.c:221
 #: plug-ins/fits/fits.c:341 plug-ins/flame/flame.c:408
 #: plug-ins/gfig/gfig.c:720 plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
@@ -1167,7 +1167,7 @@ msgstr "Mappa colore non valida"
 #: plug-ins/common/pix.c:342 plug-ins/common/png.c:680
 #: plug-ins/common/pnm.c:404 plug-ins/common/postscript.c:941
 #: plug-ins/common/psd.c:1775 plug-ins/common/sunras.c:439
-#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:516
+#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:518
 #: plug-ins/common/wmf.c:400 plug-ins/common/xbm.c:728
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:439
 #: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327
@@ -1205,7 +1205,7 @@ msgstr "Errore lettura intestazione file BMP da '%s'"
 #: plug-ins/common/png.c:807 plug-ins/common/pnm.c:484
 #: plug-ins/common/psd.c:2184 plug-ins/common/smooth_palette.c:256
 #: plug-ins/common/sunras.c:928 plug-ins/common/tga.c:931
-#: plug-ins/common/tiff.c:834 plug-ins/common/tile.c:267
+#: plug-ins/common/tiff.c:836 plug-ins/common/tile.c:267
 #: plug-ins/common/winclipboard.c:579 plug-ins/common/xbm.c:871
 #: plug-ins/faxg3/faxg3.c:466 plug-ins/fits/fits.c:512
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2437
@@ -1236,7 +1236,7 @@ msgstr "Impossibile manipolare tipi immagine sconosciuti"
 #: plug-ins/common/pix.c:525 plug-ins/common/png.c:1184
 #: plug-ins/common/pnm.c:781 plug-ins/common/postscript.c:1063
 #: plug-ins/common/psd_save.c:1563 plug-ins/common/sunras.c:521
-#: plug-ins/common/tga.c:1037 plug-ins/common/tiff.c:1803
+#: plug-ins/common/tga.c:1037 plug-ins/common/tiff.c:1805
 #: plug-ins/common/xbm.c:1005 plug-ins/common/xpm.c:624
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:685
 #: plug-ins/sgi/sgi.c:542 plug-ins/xjt/xjt.c:1686
@@ -1678,7 +1678,10 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "Il pulsante \"Seme fissato\" è un alias.\n"
-"Lo stesso seme produce la stessa immagine, se (1) la larghezza delle immagini è la stessa (questa è la ragione per la quale l'immagine è differente dall'anteprima), (2) tutte le velocità di mutazione sono uguali a zero."
+"Lo stesso seme produce la stessa immagine, se (1) la larghezza delle "
+"immagini è la stessa (questa è la ragione per la quale l'immagine è "
+"differente dall'anteprima), (2) tutte le velocità di mutazione sono uguali a "
+"zero."
 
 #: plug-ins/common/CML_explorer.c:1409
 msgid "O_thers"
@@ -2045,13 +2048,19 @@ msgstr "Rendi l'a_mbiente circostante trasparente"
 msgid "_Lens refraction index:"
 msgstr "Indice di rifrazione _lente:"
 
-#: plug-ins/common/autocrop.c:85 plug-ins/common/autocrop.c:100
-msgid "_Autocrop"
+#: plug-ins/common/autocrop.c:85
+#, fuzzy
+msgid "_Autocrop Image"
 msgstr "_Autoritaglio"
 
 #: plug-ins/common/autocrop.c:92
 msgid "<Image>/Image/Crop"
 msgstr "<Image>/Immagine/Ritaglio"
+
+#: plug-ins/common/autocrop.c:100
+#, fuzzy
+msgid "_Autocrop Layer"
+msgstr "_Autoritaglio"
 
 #: plug-ins/common/autocrop.c:107 plug-ins/common/zealouscrop.c:76
 msgid "<Image>/Layer/Crop"
@@ -5603,6 +5612,8 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1546
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -6993,16 +7004,16 @@ msgstr "Immagini TIFF"
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
-#: plug-ins/common/tiff.c:836
+#: plug-ins/common/tiff.c:838
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: plug-ins/common/tiff.c:851
+#: plug-ins/common/tiff.c:853
 msgid "TIFF Channel"
 msgstr "Canali TIFF"
 
-#: plug-ins/common/tiff.c:860
+#: plug-ins/common/tiff.c:862
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7014,7 +7025,7 @@ msgstr ""
 "bit, perciò convertirà l'immagine per voi. A causa della conversione alcune "
 "informazioni andranno perse."
 
-#: plug-ins/common/tiff.c:1935
+#: plug-ins/common/tiff.c:1937
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7022,40 +7033,40 @@ msgstr ""
 "Il formato TIFF supporta solo commenti nella\n"
 "codifica ASCII a 7bit. Nessun commento salvato."
 
-#: plug-ins/common/tiff.c:2084
+#: plug-ins/common/tiff.c:2086
 msgid "Save as TIFF"
 msgstr "Salva come TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2098
+#: plug-ins/common/tiff.c:2100
 msgid "Compression"
 msgstr "Compressione"
 
-#: plug-ins/common/tiff.c:2102
+#: plug-ins/common/tiff.c:2104
 msgid "_None"
 msgstr "_Nessuna"
 
-#: plug-ins/common/tiff.c:2103
+#: plug-ins/common/tiff.c:2105
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2104
+#: plug-ins/common/tiff.c:2106
 msgid "_Pack Bits"
 msgstr "_Pack bits"
 
-#: plug-ins/common/tiff.c:2105
+#: plug-ins/common/tiff.c:2107
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: plug-ins/common/tiff.c:2106
+#: plug-ins/common/tiff.c:2108
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2115
+#: plug-ins/common/tiff.c:2117
 msgid "Save _color values from transparent pixels"
 msgstr "Salva valori _colore dai punti trasparenti"
 
-#: plug-ins/common/tiff.c:2130 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:2132 plug-ins/common/xbm.c:1205
 msgid "Comment:"
 msgstr "Commento:"
 
@@ -7867,6 +7878,7 @@ msgstr ""
 "'%s':\n"
 "Nessun tipo di dati immagini specificato"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:964
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9417,6 +9429,7 @@ msgstr "_GIMPressionista..."
 msgid "Painting..."
 msgstr "Pittura..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -10387,7 +10400,8 @@ msgstr "Collegamento relati_vo"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "Nome fotogramma di destinazione/ID: (opzionale - usato solo per fotogrammi)"
+msgstr ""
+"Nome fotogramma di destinazione/ID: (opzionale - usato solo per fotogrammi)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:273
 msgid "ALT te_xt: (optional)"
@@ -11249,7 +11263,9 @@ msgstr "Comando:"
 msgid ""
 "Enter the command to print to your printer. Note: Please do not remove the `-"
 "l' or `-oraw' from the command string, or printing will probably fail!"
-msgstr "Inserisci il comando necessario per stampare. Nota: non rimuovere le opzioni -l o -oraw dal comando o la stampa probabilmente fallirà!"
+msgstr ""
+"Inserisci il comando necessario per stampare. Nota: non rimuovere le opzioni "
+"-l o -oraw dal comando o la stampa probabilmente fallirà!"
 
 #: plug-ins/print/gimp_main_window.c:781
 msgid "Choose PPD File"
