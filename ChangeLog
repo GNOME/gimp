@@ -1,3 +1,10 @@
+Mon Apr 13 01:47:22 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/flarefx/flarefx.c: applied gimp-timecop-980412-0
+	and tweaked it a bit to make it have proper behavior
+
+	* plug-ins/snoise/snoise.c: updated plug-in
+
 Sun Apr 12 22:31:11 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Changed address for FSF in all .h and .c files

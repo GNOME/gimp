@@ -1,8 +1,8 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* Solid Noise plug-in -- creates solid noise textures
+ * Copyright (C) 1997, 1998 Marcelo de Gomensoro Malheiros
  *
- * Solid Noise plug-in -- creates solid noise textures
- * Copyright (C) 1997 Marcelo de Gomensoro Malheiros
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Solid Noise plug-in version 1.02, Aug 1997
+/* Solid Noise plug-in version 1.03, Apr 1998
  *
  * This plug-in generates solid noise textures based on the
  * `Noise' and `Turbulence' functions described in the paper
@@ -31,13 +31,19 @@
  * creation of seamless tiles.
  *
  * You can contact me at <malheiro@dca.fee.unicamp.br>.
- * Comments for this code are appreciated.
+ * Comments and improvements for this code are welcome.
  *
  * The overall plug-in structure is based on the Whirl plug-in,
  * which is Copyright (C) 1997 Federico Mena Quintero
  */
 
-/* Version 1.02:
+/* Version 1.03:
+ *
+ *  Added patch from Kevin Turner <kevint@poboxes.com> to use the
+ *  current time as the random seed. Thank you!
+ *  Incorporated some portability changes from the GIMP distribution.
+ *
+ * Version 1.02:
  *
  *  Fixed a stupid bug with the alpha channel.
  *  Fixed a rounding bug for small tilable textures.
@@ -54,9 +60,9 @@
  */
 
 
+#include <time.h>
 #include <math.h>
 #include <stdlib.h>
-#include <time.h> /* For random seeding */
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
@@ -85,8 +91,8 @@ typedef struct {
   gint    detail;
   gdouble xsize;
   gdouble ysize;
-     /* Interface only */
-  gboolean timeseed;
+  /*  Interface only  */
+  gint    timeseed;
 } SolidNoiseValues;
 
 typedef struct {
@@ -134,7 +140,7 @@ static SolidNoiseValues snvals = {
   1,   /* detail */
   4.0, /* xsize */
   4.0, /* ysize */
-  TRUE /* Time seed? */ 
+  0    /* use time seed */ 
 };
 
 static SolidNoiseInterface snint = {
@@ -177,7 +183,7 @@ query (void)
 			  "Generates 2D textures using Perlin's classic solid noise function.",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
-			  "Aug 1997, 1.02",
+			  "Apr 1998, v1.03",
 			  "<Image>/Filters/Render/Solid Noise",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -223,10 +229,8 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
     break;
 
   case RUN_NONINTERACTIVE:
-    /*  Make sure all the arguments are present  */
-    if (nparams != 9)
-      status = STATUS_CALLING_ERROR;
-    if (status == STATUS_SUCCESS) {
+    /*  Test number of arguments  */
+    if (nparams == 9) {
       snvals.tilable = param[3].data.d_int32;
       snvals.turbulent = param[4].data.d_int32;
       snvals.seed = param[5].data.d_int32;
@@ -234,6 +238,8 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
       snvals.xsize = param[7].data.d_float;
       snvals.ysize = param[8].data.d_float;
     }
+    else
+      status = STATUS_CALLING_ERROR;
     break;
 
   case RUN_WITH_LAST_VALS:
@@ -260,8 +266,7 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
         gimp_displays_flush();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE || 
-	  (snvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
+      if (run_mode==RUN_INTERACTIVE || run_mode==RUN_WITH_LAST_VALS)
         gimp_set_data("plug_in_solid_noise", &snvals,
                       sizeof(SolidNoiseValues));
     }
@@ -358,7 +363,7 @@ solid_noise_init (void)
   
   /*  Define the pseudo-random number generator seed  */
   if (snvals.timeseed)
-       snvals.seed = time(NULL);
+    snvals.seed = time(NULL);
   srand (snvals.seed);
 
   /*  Set scaling factors  */
@@ -504,12 +509,12 @@ solid_noise_dialog (void)
                     GTK_FILL, GTK_FILL, 1, 0);
   gtk_widget_show (label);
   
-  seed_hbox = gtk_hbox_new(FALSE, 2);
+  seed_hbox = gtk_hbox_new (FALSE, 2);
   gtk_table_attach (GTK_TABLE (table), seed_hbox, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
   entry = gtk_entry_new ();
-  gtk_box_pack_start(GTK_BOX(seed_hbox), entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (seed_hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
   sprintf(buffer, "%d", snvals.seed);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
@@ -518,7 +523,7 @@ solid_noise_dialog (void)
   gtk_widget_show (entry);
 
   time_button = gtk_toggle_button_new_with_label ("Time");
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(time_button),snvals.timeseed);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(time_button), snvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
 		      (GtkSignalFunc) dialog_toggle_update,
 		      &snvals.timeseed);
