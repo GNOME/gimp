@@ -203,7 +203,7 @@ procedure_select_callback (GtkWidget *widget,
   gchar *func;
 
   g_return_val_if_fail (widget != NULL, FALSE);
-  //  g_return_val_if_fail (bevent != NULL, FALSE);
+  /*  g_return_val_if_fail (bevent != NULL, FALSE);  */
   g_return_val_if_fail (dbbrowser != NULL, FALSE);
 
   if ((func = (gchar *) (gtk_clist_get_row_data (GTK_CLIST (widget), row))))
