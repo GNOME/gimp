@@ -371,8 +371,7 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
                           GimpImage       *gimage,
                           const gchar     *uri)
 {
-  gchar    *real_uri  = NULL;
-  gboolean  is_folder = FALSE;
+  gchar *real_uri  = NULL;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
@@ -382,37 +381,27 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
       gchar *filename = gimp_image_get_filename (gimage);
 
       if (filename)
-        {
-          gchar *dirname = g_path_get_dirname (filename);
-
-          g_free (filename);
-
-          real_uri = g_filename_to_uri (dirname, NULL, NULL);
-          g_free (dirname);
-
-          is_folder = TRUE;
-        }
+        real_uri = g_filename_to_uri (filename, NULL, NULL);
     }
   else if (uri)
     {
       real_uri = g_strdup (uri);
     }
 
-  if (! real_uri)
+  if (real_uri)
+    {
+      gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), real_uri);
+    }
+  else
     {
       gchar *current = g_get_current_dir ();
 
       real_uri = g_filename_to_uri (current, NULL, NULL);
       g_free (current);
 
-      is_folder = TRUE;
+      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                               real_uri);
     }
-
-  if (is_folder)
-    gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                             real_uri);
-  else
-    gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), real_uri);
 
   g_free (real_uri);
 }

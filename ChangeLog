@@ -1,3 +1,10 @@
+2004-09-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 2.1.5.
+	
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_uri): select
+	the image file, not only the folder it lives in. Fixes bug #151638.
+
 2004-09-05  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/cartoon.c: Added a preview.
