@@ -1,5 +1,11 @@
 2004-09-14  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpquerybox.c: set the "activates-default"
+	property on the entries in all query boxes so hitting "return"
+	confirms them. Addresses bug #148026.
+
+2004-09-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpbufferview.c: simplified the code which deals
 	with the global_buffer's preview. The new buffer view renderer
 	does the aspect ratio magic all by itself now.

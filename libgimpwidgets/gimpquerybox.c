@@ -246,9 +246,9 @@ gimp_query_string_box (const gchar             *title,
     return NULL;
 
   entry = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (entry), initial ? initial : "");
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), entry, FALSE, FALSE, 0);
-  if (initial)
-    gtk_entry_set_text (GTK_ENTRY (entry), initial);
   gtk_widget_grab_focus (entry);
   gtk_widget_show (entry);
 
@@ -308,6 +308,7 @@ gimp_query_int_box (const gchar          *title,
   spinbutton = gimp_spin_button_new (&adjustment,
 				     initial, lower, upper, 1, 10, 0,
 				     1, 0);
+  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
   gtk_widget_show (spinbutton);
@@ -370,6 +371,7 @@ gimp_query_double_box (const gchar             *title,
   spinbutton = gimp_spin_button_new (&adjustment,
 				     initial, lower, upper, 1, 10, 0,
 				     1, digits);
+  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
   gtk_widget_show (spinbutton);
@@ -426,6 +428,7 @@ gimp_query_size_box (const gchar           *title,
 {
   QueryBox  *query_box;
   GtkWidget *sizeentry;
+  GtkWidget *spinbutton;
 
   query_box = create_query_box (title, parent, help_func, help_id,
 				G_CALLBACK (size_query_box_response),
@@ -448,6 +451,9 @@ gimp_query_size_box (const gchar           *title,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
 					 lower, upper);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, initial);
+
+  spinbutton = gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (sizeentry), 0);
+  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
 
   gtk_box_pack_start (GTK_BOX (query_box->vbox), sizeentry, FALSE, FALSE, 0);
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (sizeentry));
