@@ -149,6 +149,7 @@ app/dialogs/module-dialog.c
 app/dialogs/offset-dialog.c
 app/dialogs/palette-import-dialog.c
 app/dialogs/preferences-dialog.c
+app/dialogs/print-size-dialog.c
 app/dialogs/quit-dialog.c
 app/dialogs/resize-dialog.c
 app/dialogs/resolution-calibrate-dialog.c
