@@ -33,24 +33,26 @@
  *      images are piped to uuencode and then to mail...
  *
  *
- *   This works fine for .99.10. I havent actually tried it in combination with
- *   the gz plugin, but it works with all other file types. I will eventually get
- *   around to making sure it works with gz.
+ *   This works fine for .99.10. I havent actually tried it in
+ *   combination with the gz plugin, but it works with all other file
+ *   types. I will eventually get around to making sure it works with
+ *   gz.
  *
  *  To use: 1) image->File->mail image
- *          2) when the mail dialog popups up, fill it out. Only to: and filename are required
- *             note: the filename needs to a type that the image can be saved as. otherwise
- *                   you will just send an empty message.
+ *          2) when the mail dialog popups up, fill it out. Only to:
+ *             and filename are required note: the filename needs to a
+ *             type that the image can be saved as. otherwise you will
+ *             just send an empty message.
  *          3) click ok and it should be on its way
  *
  *
- * NOTE: You probabaly need sendmail installed. If your sendmail is in an odd spot
- *       you can change the #define below. If you use qmail or other MTA's, and this
- *       works after changing the MAILER, let me know how well or what changes were
- *       needed.
+ * NOTE: You probabaly need sendmail installed. If your sendmail is in
+ *       an odd spot you can change the #define below. If you use
+ *       qmail or other MTA's, and this works after changing the
+ *       MAILER, let me know how well or what changes were needed.
  *
- * NOTE: Uuencode is needed. If it is in the path, it should work fine as is. Other-
- *       wise just change the UUENCODE.
+ * NOTE: Uuencode is needed. If it is in the path, it should work fine
+ *       as is. Other- wise just change the UUENCODE.
  *
  *
  * TODO: 1) the aforementioned abilty to specify the
@@ -70,41 +72,11 @@
  *      11) better handling of filesave errors
  *
  *
- *  Version history
- *       .5  - 6/30/97 - inital relese
- *       .51 - 7/3/97  - fixed a few spelling errors and the like
- *       .65 - 7/4/97  - a fairly significant revision. changed it from a file
- *                       plugin to an image plugin.
- *                     - Changed some strcats into strcpy to be a bit more robust.
- *                     - added the abilty to specify the filename you want it sent as
- *                     - no more annoying hassles with the file saves as dialog
- *                     - plugin now registers itself as <image>/File/Mail image
- *       .7  - 9/12/97 - (RB) added support for MIME encapsulation
- *       .71 - 9/17/97 - (RB) included Base64 encoding functions from mpack
- *                       instead of using external program.
- *                     - General cleanup of the MIME handling code.
- *       .80 - 6/23/98 - Added a text box so you can compose real messages.
- *       .85 - 3/19/99 - Added a "From:" field. Made it check gimprc for a
- *                       "gump-from" token and use it. Also made "run with last
- *                        values" work.
  * As always: The utility of this plugin is left as an exercise for the reader
  *
  */
 
-#define ENCAPSULATION_UUENCODE 0
-#define ENCAPSULATION_MIME     1
-
-#define BUFFER_SIZE            256
-
 #include "config.h"
-
-#ifndef SENDMAIL
-#define SENDMAIL "/usr/lib/sendmail"
-#endif
-
-#ifndef UUENCODE
-#define UUENCODE "uuencode"
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -122,6 +94,72 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
+
+/* GdkPixbuf RGBA C-Source image dump 1-byte-run-length-encoded */
+
+#ifdef __SUNPRO_C
+#pragma align 4 (mail_icon)
+#endif
+#ifdef __GNUC__
+static const guint8 mail_icon[] __attribute__ ((__aligned__ (4))) =
+#else
+static const guint8 mail_icon[] =
+#endif
+{ ""
+  /* Pixbuf magic (0x47646b50) */
+  "GdkP"
+  /* length: header (24) + pixel_data (473) */
+  "\0\0\1\361"
+  /* pixdata_type (0x2010002) */
+  "\2\1\0\2"
+  /* rowstride (64) */
+  "\0\0\0@"
+  /* width (16) */
+  "\0\0\0\20"
+  /* height (16) */
+  "\0\0\0\20"
+  /* pixel_data: */
+  "\261\0\0\0\0\3\0\0\0e\0\0\0\377\40\40\40\377\211\0\0\0\377\1\0\0\0e\203"
+  "\0\0\0\0\2\0\0\0\377ttt\377\211\365\365\365\377\2DDD\377\0\0\0\377\203"
+  "\0\0\0\0\15\0\0\0\377\365\365\365\377ggg\377\361\361\361\377\343\343"
+  "\343\377\365\365\365\377\343\343\343\377\363\363\363\377\343\343\343"
+  "\377\330\330\330\377VVV\377\270\270\270\377\0\0\0\377\203\0\0\0\0\15"
+  "\0\0\0\377\365\365\365\377\343\343\343\377hhh\377\363\363\363\377\345"
+  "\345\345\377\362\362\362\377\343\343\343\377\326\326\326\377YYY\377\326"
+  "\326\326\377\260\260\260\377\0\0\0\377\203\0\0\0\0\2\0\0\0\377\365\365"
+  "\365\377\202\343\343\343\377\11eee\377\363\363\363\377\343\343\343\377"
+  "\333\333\333\377YYY\377\343\343\343\377\323\323\323\377\260\260\260\377"
+  "\0\0\0\377\203\0\0\0\0\15\0\0\0\377\365\365\365\377\343\343\343\377\336"
+  "\336\336\377\177\177\177\377YYY\377\365\365\365\377YYY\377nnn\377\330"
+  "\330\330\377\306\306\306\377\257\257\257\377\0\0\0\377\203\0\0\0\0\4"
+  "\0\0\0\377\365\365\365\377\340\340\340\377yyy\377\202\343\343\343\377"
+  "\1YYY\377\202\333\333\333\377\4eee\377\266\266\266\377\257\257\257\377"
+  "\0\0\0\377\203\0\0\0\0\15\0\0\0\377\365\365\365\377{{{\377\343\343\343"
+  "\377\323\323\323\377\334\334\334\377\325\325\325\377\333\333\333\377"
+  "\324\324\324\377\270\270\270\377JJJ\377\265\265\265\377\0\0\0\377\203"
+  "\0\0\0\0\3\0\0\0\377ZZZ\377\252\252\252\377\203\253\253\253\377\1\252"
+  "\252\252\377\202\254\254\254\377\4\255\255\255\377\262\262\262\377DD"
+  "D\377\0\0\0\377\203\0\0\0\0\1\0\0\0e\213\0\0\0\377\1\0\0\0e\262\0\0\0"
+  "\0"};
+
+
+
+#define ENCAPSULATION_UUENCODE 0
+#define ENCAPSULATION_MIME     1
+
+#define BUFFER_SIZE            256
+
+#ifndef SENDMAIL
+#define SENDMAIL "/usr/lib/sendmail"
+#endif
+
+#ifndef UUENCODE
+#define UUENCODE "uuencode"
+#endif
+
+#define PLUG_IN_NAME  "plug_in_mail_image"
+#define HELP_ID       "plug-in-mail-image"
 
 
 static void   query (void);
@@ -205,7 +243,7 @@ query (void)
     { GIMP_PDB_INT32,  "encapsulation", "Uuencode, MIME" }
   };
 
-  gimp_install_procedure ("plug_in_mail_image",
+  gimp_install_procedure (PLUG_IN_NAME,
 			  "pipe files to uuencode then mail them",
 			  "You need to have uuencode and mail installed",
 			  "Adrian Likins, Reagan Blundell",
@@ -218,7 +256,9 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_mail_image",  "<Image>/File/Send");
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Send");
+  gimp_plugin_icon_register (PLUG_IN_NAME,
+                             GIMP_ICON_TYPE_INLINE_PIXBUF, mail_icon);
 }
 
 static void
@@ -246,12 +286,12 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, "plug_in_mail_image") == 0)
+  if (strcmp (name, PLUG_IN_NAME) == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data ("plug_in_mail_image", &mail_info);
+	  gimp_get_data (PLUG_IN_NAME, &mail_info);
 	  if (!save_dialog ())
 	    status = GIMP_PDB_CANCEL;
 	  break;
@@ -275,7 +315,7 @@ run (const gchar      *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("plug_in_mail_image", &mail_info);
+	  gimp_get_data (PLUG_IN_NAME, &mail_info);
 	  break;
 
 	default:
@@ -290,7 +330,7 @@ run (const gchar      *name,
 			       run_mode);
 
 	  if (status == GIMP_PDB_SUCCESS)
-	    gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
+	    gimp_set_data (PLUG_IN_NAME, &mail_info, sizeof(m_info));
 	}
     }
   else
@@ -422,7 +462,7 @@ save_dialog (void)
 
   gimp_ui_init ("mail", FALSE);
 
-  /* check gimprc for a preffered "From:" address */
+  /* check gimprc for a preferred "From:" address */
   gump_from = gimp_gimprc_query ("gump-from");
 
   if (gump_from)
@@ -431,9 +471,9 @@ save_dialog (void)
       g_free (gump_from);
     }
 
-  dlg = gimp_dialog_new (_("Send to Mail"), "mail",
+  dlg = gimp_dialog_new (_("Send as Mail"), "mail",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-mail-image",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
