@@ -1,3 +1,18 @@
+2004-01-27  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-layer-mask-16.png
+	* themes/Default/images/stock-layer-mask-24.png
+	* themes/Default/images/stock-layer-mask-32.png
+	* themes/Default/images/stock-layer-mask-48.png
+	* themes/Default/images/stock-selection-border-16.png
+	* libgimpwidgets/gimpstock.[ch]: added forgotten layer mask and
+	new "border selection" icons from Jimmac (-32 and -48 ones to be
+	updated, they are currently copies of the channel icons).
+
+	* app/core/gimplayermask.c (gimp_layer_mask_class_init)
+	* app/gui/image-menu.c (image_menu_entries): use them.
+
 2004-01-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gimpressionist/brush.c

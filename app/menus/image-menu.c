@@ -308,7 +308,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     GIMP_HELP_SELECTION_GROW, NULL },
   { { N_("/Select/Bo_rder..."), NULL,
-      select_border_cmd_callback, 0 },
+      select_border_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_BORDER },
     NULL,
     GIMP_HELP_SELECTION_BORDER, NULL },
 

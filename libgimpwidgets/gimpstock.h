@@ -159,6 +159,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CHANNEL_BLUE             "gimp-channel-blue"
 #define GIMP_STOCK_CHANNEL_GRAY             "gimp-channel-gray"
 #define GIMP_STOCK_CHANNEL_ALPHA            "gimp-channel-alpha"
+#define GIMP_STOCK_LAYER_MASK               "gimp-layer-mask"
 #define GIMP_STOCK_PATH                     "gimp-path"
 #define GIMP_STOCK_TEMPLATE                 "gimp-template"
 #define GIMP_STOCK_INDEXED_PALETTE          "gimp-indexed-palette"
@@ -173,6 +174,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_NONE           "gimp-selection-none"
 #define GIMP_STOCK_SELECTION_GROW           "gimp-selection-grow"
 #define GIMP_STOCK_SELECTION_SHRINK         "gimp-selection-shrink"
+#define GIMP_STOCK_SELECTION_BORDER         "gimp-selection-border"
 
 #define GIMP_STOCK_NAVIGATION               "gimp-navigation"
 #define GIMP_STOCK_QMASK_OFF                "gimp-qmask-off"

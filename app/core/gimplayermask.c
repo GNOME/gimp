@@ -89,9 +89,11 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
-  GimpItemClass *item_class;
+  GimpItemClass     *item_class;
+  GimpViewableClass *viewable_class;
 
-  item_class = GIMP_ITEM_CLASS (klass);
+  item_class     = GIMP_ITEM_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -121,6 +123,8 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
+
+  viewable_class->default_stock_id = "gimp-layer-mask";
 
   item_class->is_attached = gimp_layer_mask_is_attached;
   item_class->duplicate   = gimp_layer_mask_duplicate;

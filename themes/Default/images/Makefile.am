@@ -68,6 +68,7 @@ STOCK_MENU_IMAGES = \
 	stock-join-round-16.png				\
 	stock-landscape-16.png				\
 	stock-layer-16.png				\
+	stock-layer-mask-16.png				\
 	stock-layer-to-imagesize-16.png			\
 	stock-layers-16.png				\
 	stock-list-16.png				\
@@ -93,6 +94,7 @@ STOCK_MENU_IMAGES = \
 	stock-selection-grow-16.png			\
 	stock-selection-none-16.png			\
 	stock-selection-shrink-16.png			\
+	stock-selection-border-16.png			\
 	stock-swap-colors-12.png			\
 	stock-template-16.png				\
 	stock-text-layer-16.png				\
@@ -143,6 +145,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-indexed-palette-24.png		\
 	stock-info-24.png			\
 	stock-layer-24.png			\
+	stock-layer-mask-24.png			\
 	stock-layers-24.png			\
 	stock-letter-spacing-22.png		\
 	stock-line-spacing-22.png		\
@@ -187,6 +190,7 @@ STOCK_DND_IMAGES = \
 	stock-floating-selection-32.png		\
 	stock-image-32.png			\
 	stock-layer-32.png			\
+	stock-layer-mask-32.png			\
 	stock-text-layer-32.png
 
 STOCK_DIALOG_IMAGES = \
@@ -201,6 +205,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-image-48.png			\
 	stock-info-64.png			\
 	stock-layer-48.png			\
+	stock-layer-mask-48.png			\
 	stock-question-64.png			\
 	stock-text-layer-48.png			\
 	stock-texture-64.png			\
