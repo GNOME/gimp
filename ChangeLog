@@ -1,3 +1,21 @@
+1999-03-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/app_procs.c: only save sessionrc if the corresponding
+	preferences option is enabled
+
+	* app/preferences_dialog.c: preferences renovation part I: the
+	directories page uses the new widgets from libgimp
+
+	* libgimp/Makefile.am
+	* ligbimp/gimpi.def
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimppatheditor.[ch]: new widgets which enable a more
+	comfortable file and searchpath selection
+
+	* Makefile.am
+	* pixmaps/no.xpm
+	* pixmaps/yes.xpm: pixmaps used by the new widgets
+
 Sat Mar 13 19:46:54 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* Makefile.am
@@ -26,7 +44,7 @@ Sat Mar 13 19:46:54 MET 1999 Sven Neumann <sven@gimp.org>
 	* app/paths_dialog.c
 	* app/palette.c
 	* libgimp/gimpchainbutton.c: adjusted some #include's
-	
+
 Fri Mar 12 21:30:57 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

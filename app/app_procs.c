@@ -638,7 +638,8 @@ app_exit_finish (void)
       gximage_free ();
       render_free ();
       tools_options_dialog_free ();
-      save_sessionrc ();
+      if (save_session_info)
+	save_sessionrc ();
     }
 
   /*  gtk_exit (0); */

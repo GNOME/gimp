@@ -51,6 +51,8 @@
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpfileselection.h"
+#include "libgimp/gimppatheditor.h"
 
 
 /*  preferences local functions  */
@@ -532,7 +534,7 @@ file_prefs_save_callback (GtkWidget *widget,
 
 static int
 file_prefs_delete_callback (GtkWidget *widget,
-			    GdkEvent *event,
+			    GdkEvent  *event,
 			    GtkWidget *dlg) 
 {
   file_prefs_cancel_callback (widget, dlg);
@@ -736,6 +738,26 @@ file_prefs_string_callback (GtkWidget *widget,
 }
 
 static void
+file_prefs_filename_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  gchar **val;
+
+  val = data;
+  file_prefs_strset (val, gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget)));
+}
+
+static void
+file_prefs_path_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  gchar **val;
+
+  val = data;
+  file_prefs_strset (val, gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget)));
+}
+
+static void
 file_prefs_clear_session_info_callback (GtkWidget *widget,
 					gpointer data)
 {
@@ -779,7 +801,7 @@ file_prefs_res_source_callback (GtkWidget *widget,
 
 static void
 file_prefs_default_size_callback (GtkWidget *widget,
-				  gpointer data)
+				  gpointer   data)
 {
   default_width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   default_height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -789,7 +811,7 @@ file_prefs_default_size_callback (GtkWidget *widget,
 
 static void
 file_prefs_default_resolution_callback (GtkWidget *widget,
-					gpointer data)
+					gpointer   data)
 {
   static float xres = 0.0;
   static float yres = 0.0;
@@ -835,7 +857,7 @@ file_prefs_default_resolution_callback (GtkWidget *widget,
 
 static void
 file_prefs_monitor_resolution_callback (GtkWidget *widget,
-					gpointer data)
+					gpointer   data)
 {
   static float xres = 0.0;
   static float yres = 0.0;
@@ -883,7 +905,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *abox;
   GtkWidget *label;
   GtkWidget *radio_box;
-  GtkWidget *entry;
+  GtkWidget *fileselection;
+  GtkWidget *patheditor;
   GtkWidget *spinbutton;
   GtkWidget *combo;
   GtkWidget *comboitem;
@@ -891,6 +914,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
   GtkWidget *notebook;
+  GtkWidget *notebook2;
   GtkWidget *table;
   GtkAdjustment *adj;
   GSList *group;
@@ -934,17 +958,25 @@ file_pref_cmd_callback (GtkWidget *widget,
       {N_("MegaBytes"), (1024*1024)}
     };
   static const struct {
-    char *label;
-    char **mpath;
+    char  *label;
+    char  *fs_label;
+    char **mdir;
   } dirs[] =
     {
-      {N_("Temp dir:"), &edit_temp_path},
-      {N_("Swap dir:"), &edit_swap_path},
-      {N_("Brushes dir:"), &edit_brush_path},
-      {N_("Gradients dir:"), &edit_gradient_path},
-      {N_("Patterns dir:"), &edit_pattern_path},
-      {N_("Palette dir:"), &edit_palette_path},
-      {N_("Plug-in dir:"), &edit_plug_in_path}
+      {N_("Temp dir:"), N_("Select Temp Dir"), &edit_temp_path},
+      {N_("Swap dir:"), N_("Select Swap Dir"), &edit_swap_path},
+    };
+  static const struct {
+    char  *label;
+    char  *fs_label;
+    char **mpath;
+  } paths[] =
+    {
+      {N_("Brushes"),   N_("Select Brushes Dir"),   &edit_brush_path},
+      {N_("Gradients"), N_("Select Gradients Dir"), &edit_gradient_path},
+      {N_("Patterns"),  N_("Select Patterns Dir"),  &edit_pattern_path},
+      {N_("Palettes"),  N_("Select Palette Dir"),   &edit_palette_path},
+      {N_("Plug-ins"),  N_("Select Plug-in Dir"),   &edit_plug_in_path}
     };
   static const struct {
     char *label;
@@ -959,6 +991,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   int ntransparencies = sizeof (transparencies) / sizeof (transparencies[0]);
   int nchecks = sizeof (checks) / sizeof (checks[0]);
   int ndirs = sizeof(dirs) / sizeof (dirs[0]);
+  int npaths = sizeof(paths) / sizeof (paths[0]);
   int npreview_sizes = sizeof(preview_sizes) / sizeof (preview_sizes[0]); 
   int nmem_size_units = sizeof(mem_size_units) / sizeof (mem_size_units[0]);
   int i;
@@ -1669,15 +1702,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_set_usize (out_frame, 320, 200);
       gtk_widget_show (out_frame);
 
-      vbox = gtk_vbox_new (FALSE, 2);
+      vbox = gtk_vbox_new (FALSE, 5);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
 
-      table = gtk_table_new (ndirs+1, 2, FALSE);
+      table = gtk_table_new (ndirs + 1, 2, FALSE);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
       gtk_widget_show (table);
 
       for (i = 0; i < ndirs; i++)
@@ -1688,15 +1721,37 @@ file_pref_cmd_callback (GtkWidget *widget,
                             GTK_FILL, GTK_FILL, 0, 0);
 	  gtk_widget_show (label);
  
-          entry = gtk_entry_new ();
-          gtk_widget_set_usize (entry, 25, 0);
-          gtk_entry_set_text (GTK_ENTRY (entry), *(dirs[i].mpath));
-	  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			      (GtkSignalFunc) file_prefs_string_callback,
-			      dirs[i].mpath);
-          gtk_table_attach (GTK_TABLE (table), entry, 1, 2, i, i+1,
+          fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
+						   *(dirs[i].mdir),
+						   TRUE, TRUE);
+	  gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
+			      (GtkSignalFunc) file_prefs_filename_callback,
+			      dirs[i].mdir);
+          gtk_table_attach (GTK_TABLE (table), fileselection, 1, 2, i, i+1,
                             GTK_EXPAND | GTK_FILL, 0, 0, 0);
-          gtk_widget_show (entry); 
+          gtk_widget_show (fileselection); 
+	}
+
+      notebook2 = gtk_notebook_new ();
+      gtk_box_pack_start (GTK_BOX (vbox), notebook2, TRUE, TRUE, 0);
+      gtk_widget_show (notebook2);
+
+      for (i = 0; i < npaths; i++)
+	{
+	  vbox = gtk_vbox_new (FALSE, 0);
+	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	  gtk_widget_show (vbox);
+
+          patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
+					     *(paths[i].mpath));
+	  gtk_signal_connect (GTK_OBJECT (patheditor), "path_changed",
+			      (GtkSignalFunc) file_prefs_path_callback,
+			      paths[i].mpath);
+	  gtk_container_add (GTK_CONTAINER (vbox), patheditor);
+          gtk_widget_show (patheditor);
+
+	  label = gtk_label_new (gettext(paths[i].label));
+	  gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), vbox, label);
 	}
 
       label = gtk_label_new (_("Directories"));

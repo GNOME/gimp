@@ -10,6 +10,10 @@ EXPORTS
 	gimp_chain_button_set_active
 	gimp_data_directory
 	gimp_directory
+	gimp_file_selection_get_filename
+	gimp_file_selection_get_type
+	gimp_file_selection_new
+	gimp_file_selection_set_filename
 	gimp_gtkrc
 	gimp_personal_rc_file
 	gimp_matrix_duplicate
@@ -23,6 +27,9 @@ EXPORTS
 	gimp_matrix_yshear
 	gimp_matrix_determinant
 	gimp_matrix_invert
+	gimp_path_editor_get_path
+	gimp_path_editor_get_type
+	gimp_path_editor_new
 	gimp_size_entry_attach_label
 	gimp_size_entry_get_refval
 	gimp_size_entry_get_type

@@ -16,6 +16,7 @@ EXTRA_DIST = \
 	pixmaps/lower.xpm	 \
 	pixmaps/mask.xbm	 \
 	pixmaps/new.xpm		 \
+	pixmaps/no.xpm		 \
 	pixmaps/raise.xpm	 \
 	pixmaps/paths.xbm	 \
 	pixmaps/penadd.xpm	 \
@@ -24,6 +25,7 @@ EXTRA_DIST = \
 	pixmaps/pennorm.xpm	 \
 	pixmaps/penstroke.xpm	 \
 	pixmaps/toselection.xpm  \
+	pixmaps/yes.xpm          \
 	pixmaps/zoom_in.xpm	 \
 	pixmaps/zoom_out.xpm	 \
 	README.i18n		 \

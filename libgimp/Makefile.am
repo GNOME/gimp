@@ -30,8 +30,12 @@ libgimpi_a_SOURCES = \
 	gimpenv.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
+	gimpfileselection.c	\
+	gimpfileselection.h	\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
+	gimppatheditor.c	\
+	gimppatheditor.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpsizeentry.c		\
@@ -93,9 +97,11 @@ gimpinclude_HEADERS = \
 	gimpenums.h		\
 	gimpenv.h		\
 	gimpfeatures.h		\
+	gimpfileselection.h	\
 	gimpmatrix.h		\
 	gimpmenu.h		\
 	gimpmodule.h		\
+	gimppatheditor.h	\
 	gimpsizeentry.h		\
 	gimpui.h		\
 	gimpunit.h              \
