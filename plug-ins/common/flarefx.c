@@ -57,7 +57,8 @@
 
 
 /* --- Defines --- */
-#define ENTRY_WIDTH   75
+#define ENTRY_WIDTH  75
+#define PREVIEW_SIZE 128
 #define PREVIEW_MASK (GDK_EXPOSURE_MASK | \
 		      GDK_BUTTON_PRESS_MASK | \
 		      GDK_BUTTON1_MOTION_MASK)
@@ -189,6 +190,7 @@ static  RGBfloat   color, glow, inner, outer, halo;
 static  Reflect    ref1[19];
 static  guchar    *preview_bits;
 static  GtkWidget *preview;
+static  gdouble    preview_scale;
 static  gboolean   show_cursor = 0;
 
 /* --- Functions --- */
@@ -411,29 +413,26 @@ FlareFX (GDrawable *drawable,
 
   if (preview_mode) 
     {
-      gdouble scale;
-
-      width = GTK_PREVIEW (preview)->buffer_width;
+      width  = GTK_PREVIEW (preview)->buffer_width;
       height = GTK_PREVIEW (preview)->buffer_height;
-      bytes = GTK_PREVIEW (preview)->bpp;
+      bytes  = GTK_PREVIEW (preview)->bpp;
       gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-      scale = (gdouble)(x2 - x1) / (gdouble)width;
-      xs = (gdouble)fvals.posx / scale;
-      scale = (gdouble)(y2 - y1) / (gdouble)height;
-      ys = (gdouble)fvals.posy / scale;
+      xs = (gdouble)fvals.posx * preview_scale;
+      ys = (gdouble)fvals.posy * preview_scale;
 
       /* now, we clobber the x1 x2 y1 y2 with the real sizes */
-      x1=y1=0;
-      x2=width;
-      y2=height;
+      x1 = y1 = 0;
+      x2 = width;
+      y2 = height;
     } 
   else 
     {
       gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-      width = drawable->width;
+      width  = drawable->width;
       height = drawable->height;
-      bytes = drawable->bpp;
+      bytes  = drawable->bpp;
+
       xs = fvals.posx; /* set x,y of flare center */
       ys = fvals.posy;
     }
@@ -529,8 +528,8 @@ FlareFX (GDrawable *drawable,
       gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
     }
 
-  free (cur_row);
-  free (dest);
+  g_free (cur_row);
+  g_free (dest);
 }
 
 static void
@@ -908,13 +907,13 @@ fill_preview_with_thumb (GtkWidget *widget,
   guchar  *drawable_data;
   gint     bpp;
   gint     x,y;
-  gint     width  = 128;
-  gint     height = 128;
+  gint     width  = PREVIEW_SIZE;
+  gint     height = PREVIEW_SIZE;
   gint     realwidth;
   guchar  *src;
   gdouble  r, g, b, a;
   gdouble  c0, c1;
-  guchar  *p0, *p1,*even,*odd;
+  guchar  *p0, *p1, *even, *odd;
 
   bpp = 0; /* Only returned */
   
@@ -929,6 +928,7 @@ fill_preview_with_thumb (GtkWidget *widget,
     width = width - 2;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
+  preview_scale = (gdouble)realwidth / (gdouble)gimp_drawable_width (drawable_ID);
 
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
@@ -1024,6 +1024,7 @@ flare_center_draw (FlareCenter *center,
 	      center->cursor,
 	      center->oldx, center->oldy, center->curx, center->cury);
       gdk_gc_set_function (preview->style->black_gc, GDK_INVERT);
+
       if (show_cursor) 
 	{
 	  if (center->cursor)

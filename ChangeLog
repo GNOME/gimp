@@ -1,5 +1,17 @@
 2000-05-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/flarefx.c: fixed a bug in the new 
+	preview code and some other small changes
+
+	* plug-ins/common/glasstile.c: applied modified version
+	of gimp-timecop-200005-5.glasstile which adds a preview 
+	to the glasstile plug-in. 
+
+	While I was on it, I fixed a bug that caused glasstile 
+	to crash when invoked on a small selection.
+
+2000-05-22  Sven Neumann  <sven@gimp.org>
+
 	* gtkrc: for tooltips set the foreground color too. Closes
 	bug #11547.
 	
