@@ -45,7 +45,8 @@
 /*  The types of tools...  */
 typedef enum
 {
-  RECT_SELECT,
+  FIRST_TOOLBOX_TOOL,
+  RECT_SELECT = FIRST_TOOLBOX_TOOL,
   ELLIPSE_SELECT,
   FREE_SELECT,
   FUZZY_SELECT,
@@ -70,6 +71,8 @@ typedef enum
   AIRBRUSH,
   CLONE,
   CONVOLVE,
+  INK,
+  LAST_TOOLBOX_TOOL = INK,
 
   /*  Non-toolbox tools  */
   BY_COLOR_SELECT,

@@ -780,6 +780,8 @@ paint_core_subsample_mask (mask, x, y)
   return dest;
 }
 
+/* #define FANCY_PRESSURE */
+
 static MaskBuf *
 paint_core_pressurize_mask (brush_mask, x, y, pressure)
      MaskBuf * brush_mask;
@@ -787,13 +789,15 @@ paint_core_pressurize_mask (brush_mask, x, y, pressure)
      double pressure;
 {
   static MaskBuf *last_brush = NULL;
-  static double map[256];
   static unsigned char mapi[256];
   unsigned char *source;
   unsigned char *dest;
   MaskBuf *subsample_mask;
   int i;
+#ifdef FANCY_PRESSURE
+  static double map[256];
   double ds,s,c;
+#endif
 
   /* Get the raw subsampled mask */
   subsample_mask = paint_core_subsample_mask(brush_mask, x, y);
@@ -811,6 +815,7 @@ paint_core_pressurize_mask (brush_mask, x, y, pressure)
 				     brush_mask->height +2);
     }
 
+#ifdef FANCY_PRESSURE
   /* Create the pressure profile
 
      It is: I'(I) = tanh(20*(pressure-0.5)*I) : pressure > 0.5
@@ -854,6 +859,18 @@ paint_core_pressurize_mask (brush_mask, x, y, pressure)
       for (i=0;i<256;i++)
 	mapi[i] = (int)(255*(1-map[i]/map[0]));
     }
+#else /* ! FANCY_PRESSURE */
+
+  for (i=0;i<256;i++)
+    {
+      int tmp = (pressure/0.5)*i;
+      if (tmp > 255)
+	mapi[i] = 255;
+      else
+	mapi[i] = tmp;
+    }
+
+#endif /* FANCY_PRESSURE */
 
   /* Now convert the brush */
 

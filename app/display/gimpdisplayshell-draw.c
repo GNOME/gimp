@@ -161,6 +161,10 @@ static ToolButton tool_data[] =
     "Blur or sharpen",
     "ContextHelp/convolve",
     (gpointer) CONVOLVE },
+  { (char **) ink_bits,
+    "Draw in ink",
+    "ContextHelp/ink",
+    (gpointer) INK },
   { NULL,
     NULL,
     NULL,
@@ -213,7 +217,7 @@ static int pixmap_colors[8][3] =
 
 #define NUM_TOOLS (sizeof (tool_data) / sizeof (ToolButton))
 #define COLUMNS   3
-#define ROWS      7
+#define ROWS      8
 #define MARGIN    2
 
 /*  Widgets for each tool button--these are used from command.c to activate on
@@ -409,7 +413,7 @@ create_tools (GtkWidget *parent)
 
   group = NULL;
 
-  for (i = 0; i < 21; i++)
+  for (i = 0; i < 22; i++)
     {
       tool_widgets[i] = button = gtk_radio_button_new (group);
       gtk_container_border_width (GTK_CONTAINER (button), 0);

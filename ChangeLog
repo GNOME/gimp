@@ -1,3 +1,13 @@
+Sun Jun 14 18:37:06 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/blob.[ch] (blob_bounds): Added new files for
+	handling scan-converted convex polygons. (From
+	gsumi) (these will be moved out to a plug-in tool directory
+	when such a thing exists)
+
+	* app/ink.[ch]: New tool for drawing with a hard-edged
+	pressure and tilt-sensitive brush.
+
 Sun Jun 14 16:03:29 EDT 1998 Adrian Likins <adrian@gimp.org>
 	
 	* TODO: cleaned up and expanded the todo

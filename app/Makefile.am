@@ -23,6 +23,8 @@ gimp_SOURCES = \
 	bezier_selectP.h	\
 	blend.c			\
 	blend.h			\
+	blob.c                  \
+	blob.h                  \
 	boundary.c		\
 	boundary.h		\
 	brightness_contrast.c	\
@@ -161,6 +163,8 @@ gimp_SOURCES = \
 	info_dialog.h		\
 	info_window.c		\
 	info_window.h		\
+	ink.c                   \
+	ink.h		        \
 	install.c		\
 	install.h		\
 	interface.c		\

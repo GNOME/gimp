@@ -924,3 +924,36 @@ static char *swap_bits [] =
   "........eae..",
   ".........e..."
 };
+#define bezier_width 22
+#define bezier_height 22
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: swap  */
+
+
+static char *ink_bits [] =
+{
+  "......................",
+  "......................",
+  "......................",
+  "...............a......",
+  "...............ae.....",
+  "..............aaae....",
+  ".............ahagae...",
+  ".............ahahae...",
+  ".............ahahae...",
+  "............ahgaggae..",
+  "............ahgaggae..",
+  "...........ahgaaaggae.",
+  "...........ahgeaeggae.",
+  "............agggggaee.",
+  ".............agggaee..",
+  ".............aaaaae...",
+  ".............aeaaae...",
+  ".............aeaaae...",
+  ".............aeaaae...",
+  ".............aeaaae...",
+  "..............eeeee...",
+  "......................"
+};
+#define ink_width 22
+#define ink_height 22

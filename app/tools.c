@@ -41,6 +41,7 @@
 #include "fuzzy_select.h"
 #include "gimprc.h"
 #include "histogram_tool.h"
+#include "ink.h"
 #include "interface.h"
 #include "iscissors.h"
 #include "levels.h"
@@ -95,17 +96,18 @@ ToolInfo tool_info[] =
   { NULL, "Airbrush", 18 },
   { NULL, "Clone", 19 },
   { NULL, "Convolve", 20 },
+  { NULL, "Ink", 21 },
 
   /*  Non-toolbox tools  */
-  { NULL, "By Color Select", 21 },
-  { NULL, "Color Balance", 22 },
-  { NULL, "Brightness-Contrast", 23 },
-  { NULL, "Hue-Saturation", 24 },
-  { NULL, "Posterize", 25 },
-  { NULL, "Threshold", 26 },
-  { NULL, "Curves", 27 },
-  { NULL, "Levels", 28 },
-  { NULL, "Histogram", 29 }
+  { NULL, "By Color Select", 22 },
+  { NULL, "Color Balance", 23 },
+  { NULL, "Brightness-Contrast", 24 },
+  { NULL, "Hue-Saturation", 25 },
+  { NULL, "Posterize", 26 },
+  { NULL, "Threshold", 27 },
+  { NULL, "Curves", 28 },
+  { NULL, "Levels", 29 },
+  { NULL, "Histogram", 30 }
 };
 
 
@@ -204,6 +206,9 @@ active_tool_free (void)
       break;
     case CONVOLVE:
       tools_free_convolve (active_tool);
+      break;
+    case INK:
+      tools_free_ink (active_tool);
       break;
     case BY_COLOR_SELECT:
       tools_free_by_color_select (active_tool);
@@ -324,6 +329,9 @@ tools_select (ToolType type)
       break;
     case CONVOLVE:
       active_tool = tools_new_convolve ();
+      break;
+    case INK:
+      active_tool = tools_new_ink ();
       break;
     case BY_COLOR_SELECT:
       active_tool = tools_new_by_color_select ();
@@ -463,6 +471,9 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
       break;
     case CONVOLVE:
       active_tool = tools_new_convolve ();
+      break;
+    case INK:
+      active_tool = tools_new_ink ();
       break;
     case BY_COLOR_SELECT:
       if (gdisp) {

@@ -1670,12 +1670,12 @@ parse_device (gpointer val1p,
 	  token = get_next_token ();
 
 	  /* FIXME: this shouldn't be hard coded like this */
-	  for (tool = RECT_SELECT; tool <= CONVOLVE; tool++)
+	  for (tool = FIRST_TOOLBOX_TOOL; tool <= LAST_TOOLBOX_TOOL; tool++)
 	    {
 	      if (!strcmp(tool_info[tool].tool_name, token_str))
 		break;
 	    }
-	  if (tool > CONVOLVE)
+	  if (tool > LAST_TOOLBOX_TOOL)
 	    goto error;
 	  
 	}
