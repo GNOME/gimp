@@ -1,3 +1,8 @@
+2003-11-15  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimpui.c: and #undef GTK_DISABLE_DEPRECATED, for
+	gtk_preview_set_gamma declaration.
+
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/themes.c (themes_get_theme_file): new utility function
