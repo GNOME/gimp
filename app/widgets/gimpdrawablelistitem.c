@@ -45,17 +45,11 @@
 static void   gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass);
 static void   gimp_drawable_list_item_init       (GimpDrawableListItem      *list_item);
 
-static void   gimp_drawable_list_item_set_viewable    (GimpListItem      *list_item,
-                                                       GimpViewable      *viewable);
+static void   gimp_drawable_list_item_set_viewable       (GimpListItem   *list_item,
+                                                          GimpViewable   *viewable);
 
-static gboolean   gimp_drawable_list_item_drag_drop   (GtkWidget         *widget,
-                                                       GdkDragContext    *context,
-                                                       gint               x,
-                                                       gint               y,
-                                                       guint              time);
-
-static void   gimp_drawable_list_item_eye_toggled     (GtkWidget         *widget,
-                                                       gpointer           data);
+static void   gimp_drawable_list_item_eye_toggled        (GtkWidget      *widget,
+                                                          gpointer        data);
 
 static void   gimp_drawable_list_item_visibility_changed (GimpDrawable   *drawable,
                                                           gpointer        data);
@@ -84,7 +78,7 @@ gimp_drawable_list_item_get_type (void)
         (GInstanceInitFunc) gimp_drawable_list_item_init,
       };
 
-      list_item_type = g_type_register_static (GIMP_TYPE_LIST_ITEM,
+      list_item_type = g_type_register_static (GIMP_TYPE_ITEM_LIST_ITEM,
                                                "GimpDrawableListItem",
                                                &list_item_info, 0);
     }
@@ -95,15 +89,11 @@ gimp_drawable_list_item_get_type (void)
 static void
 gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass)
 {
-  GtkWidgetClass    *widget_class;
   GimpListItemClass *list_item_class;
 
-  widget_class    = GTK_WIDGET_CLASS (klass);
   list_item_class = GIMP_LIST_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  widget_class->drag_drop       = gimp_drawable_list_item_drag_drop;
 
   list_item_class->set_viewable = gimp_drawable_list_item_set_viewable;
 }
@@ -178,76 +168,6 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
 			   G_CALLBACK (gimp_drawable_list_item_visibility_changed),
 			   G_OBJECT (list_item),
 			   0);
-}
-
-static gboolean
-gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
-                                   GdkDragContext *context,
-                                   gint            x,
-                                   gint            y,
-                                   guint           time)
-{
-  GimpListItem  *list_item;
-  GimpViewable  *src_viewable;
-  gint           dest_index;
-  GdkDragAction  drag_action;
-  GimpDropType   drop_type;
-  gboolean       return_val;
-
-  list_item = GIMP_LIST_ITEM (widget);
-
-  return_val = gimp_list_item_check_drag (list_item, context, x, y,
-                                          &src_viewable,
-                                          &dest_index,
-                                          &drag_action,
-                                          &drop_type);
-
-  gtk_drag_finish (context, return_val, FALSE, time);
-
-  list_item->drop_type = GIMP_DROP_NONE;
-
-  if (return_val)
-    {
-      if (widget->parent && /* EEK */
-          widget->parent->parent && /* EEEEK */
-          widget->parent->parent->parent && /* EEEEEEK */
-          widget->parent->parent->parent->parent && /* EEEEEEEEK */
-	  GIMP_IS_ITEM_LIST_VIEW (widget->parent->parent->parent->parent))
-        {
-          GimpItemListView *item_view;
-
-          item_view =
-	    GIMP_ITEM_LIST_VIEW (widget->parent->parent->parent->parent);
-
-          if (item_view->gimage == gimp_item_get_image (GIMP_ITEM (src_viewable)))
-            {
-              item_view->reorder_item_func (item_view->gimage,
-                                            src_viewable,
-                                            dest_index,
-                                            TRUE);
-            }
-          else if (item_view->convert_item_func)
-            {
-              GimpViewable *new_viewable;
-
-              new_viewable = item_view->convert_item_func (src_viewable,
-                                                           item_view->gimage);
-
-              item_view->add_item_func (item_view->gimage,
-                                        new_viewable,
-                                        dest_index);
-            }
-
-          gdisplays_flush ();
-        }
-      else
-        {
-          g_warning ("%s(): GimpDrawableListItem is not "
-                     "part of a GimpItemListView", G_GNUC_FUNCTION);
-        }
-    }
-
-  return return_val;
 }
 
 static void

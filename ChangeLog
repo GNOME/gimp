@@ -1,3 +1,16 @@
+2002-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpitemlistitem.[ch]: new GimpListItem subclass
+	which handles DND reordering of GimpItems.
+
+	* app/widgets/gimpdrawablelistitem.[ch]: derive from GimpItemListItem
+	and removed the reordering code.
+
+	* app/widgets/gimplistitem.c: create a GimpItemListItem if the
+	passed viewable is a GimpItem.
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: updated

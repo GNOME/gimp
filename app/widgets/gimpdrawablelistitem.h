@@ -22,7 +22,8 @@
 #ifndef __GIMP_DRAWABLE_LIST_ITEM_H__
 #define __GIMP_DRAWABLE_LIST_ITEM_H__
 
-#include "gimplistitem.h"
+
+#include "gimpitemlistitem.h"
 
 
 #define GIMP_TYPE_DRAWABLE_LIST_ITEM            (gimp_drawable_list_item_get_type ())
@@ -37,14 +38,14 @@ typedef struct _GimpDrawableListItemClass  GimpDrawableListItemClass;
 
 struct _GimpDrawableListItem
 {
-  GimpListItem  parent_instance;
+  GimpItemListItem  parent_instance;
 
-  GtkWidget    *eye_button;
+  GtkWidget        *eye_button;
 };
 
 struct _GimpDrawableListItemClass
 {
-  GimpListItemClass  parent_class;
+  GimpItemListItemClass  parent_class;
 };
 
 

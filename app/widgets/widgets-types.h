@@ -168,6 +168,7 @@ typedef struct _GimpDataFactoryView     GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
 
 typedef struct _GimpListItem            GimpListItem;
+typedef struct _GimpItemListItem        GimpItemListItem;
 typedef struct _GimpChannelListItem     GimpChannelListItem;
 typedef struct _GimpDrawableListItem    GimpDrawableListItem;
 typedef struct _GimpLayerListItem       GimpLayerListItem;

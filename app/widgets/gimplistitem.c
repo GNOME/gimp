@@ -282,6 +282,10 @@ gimp_list_item_new (GimpViewable  *viewable,
     {
       list_item = g_object_new (GIMP_TYPE_DRAWABLE_LIST_ITEM, NULL);
     }
+  else if (GIMP_IS_ITEM (viewable))
+    {
+      list_item = g_object_new (GIMP_TYPE_ITEM_LIST_ITEM, NULL);
+    }
   else
     {
       list_item = g_object_new (GIMP_TYPE_LIST_ITEM, NULL);
