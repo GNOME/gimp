@@ -1,3 +1,11 @@
+2004-02-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_stock_box): cannot
+	gtk_widget_destroy() a floating widget, sink it instead.
+
+	* libgimpwidgets/gimppatheditor.c (gimp_path_editor_set_path):
+	plugged a small memleak.
+
 2004-02-17  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/pagecurl/pagecurl.c: Corrected the pairing of

@@ -395,6 +395,8 @@ gimp_path_editor_set_path (GimpPathEditor *editor,
                           COLUMN_WRITABLE,  FALSE,
                           -1);
 
+      g_free (utf8);
+
       editor->num_items++;
     }
 

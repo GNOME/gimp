@@ -305,7 +305,8 @@ gimp_editor_add_stock_box (GimpEditor  *editor,
     }
 
   g_list_free (children);
-  gtk_widget_destroy (hbox);
+
+  gtk_object_sink (GTK_OBJECT (hbox));
 
   return first_button;
 }
