@@ -42,7 +42,6 @@
 #define MIN_MOVE       5
 
 /*  variables local to this file  */
-static gint        direction_unknown;
 static gdouble     xshear_val;
 static gdouble     yshear_val;
 
@@ -87,8 +86,7 @@ shear_tool_transform (Tool     *tool,
 				      shear_y_mag_changed, tool);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
-      direction_unknown = 1;
-      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
+      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;
       transform_core->trans_info[XSHEAR] = 0.0;
       transform_core->trans_info[YSHEAR] = 0.0;
 
@@ -107,7 +105,6 @@ shear_tool_transform (Tool     *tool,
 
     case FINISH :
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      direction_unknown = 1;
       return shear_tool_shear (gdisp->gimage,
 			       gimage_active_drawable (gdisp->gimage),
 			       gdisp,
@@ -234,7 +231,7 @@ shear_tool_motion (Tool *tool,
    *  decide using the maximum differential
    */
 
-  if (direction_unknown)
+  if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_UNKNOWN)
     {
       if (abs(diffx) > MIN_MOVE || abs(diffy) > MIN_MOVE)
 	{
@@ -249,7 +246,6 @@ shear_tool_motion (Tool *tool,
 	      transform_core->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
 	    }
 
-	  direction_unknown = 0;
 	}
       /*  set the current coords to the last ones  */
       else
@@ -260,7 +256,7 @@ shear_tool_motion (Tool *tool,
     }
 
   /*  if the direction is known, keep track of the magnitude  */
-  if (!direction_unknown)
+  if (transform_core->trans_info[HORZ_OR_VERT] != ORIENTATION_UNKNOWN)
     {
       dir = transform_core->trans_info[HORZ_OR_VERT];
       switch (transform_core->function)

@@ -1,10 +1,16 @@
+Wed Dec 29 11:10:22 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/shear_tool.c: 
+	applied a patch from David Hodson <hodsond@ozemail.com.au> that
+	fixes a bug in the Shear Tool.
+	
 Tue Dec 28 23:18:25 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/Lighting/lighting_ui.c
 	* plug-ins/common/gtm.c
 	* plug-ins/common/jigsaw.c
 	* plug-ins/mosaic/mosaic.c: corrected some typos and moved Jigsaw
-	and Mosaic into Filter/Render/Pattern
+	and Mosaic into Filters/Render/Pattern
 
 1999-12-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
