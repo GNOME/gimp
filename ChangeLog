@@ -1,5 +1,21 @@
 2003-02-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpui.c
+	* libgimp/gimpunit.c
+	* libgimpbase/gimpenv.c
+	* libgimpmodule/gimpmodule.c
+	* libgimpmodule/gimpmoduledb.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpdialog.c
+	* libgimpwidgets/gimpfileselection.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c
+	* libgimpwidgets/gimpwidgets.c: documentation fixes / improvements.
+
+2003-02-06  Sven Neumann  <sven@gimp.org>
+
 	Switched to DocBook XML for the developers documentation:
 	
 	* configure.in: check for gtk-doc >= 1.0.

@@ -387,7 +387,7 @@ gimp_query_double_box (const gchar             *title,
  * @unit:        The unit initially shown by the #GimpUnitMenu.
  * @resolution:  The resolution (in dpi) which will be used for pixel/unit
  *               calculations.
- * @dot_for_dot: #TRUE if the #GimpUnitMenu's initial unit should be "pixels".
+ * @dot_for_dot: %TRUE if the #GimpUnitMenu's initial unit should be "pixels".
  * @object:      The object this query box is associated with.
  * @signal:      The object's signal which will cause the query box
  *               to be closed.

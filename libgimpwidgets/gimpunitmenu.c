@@ -151,11 +151,11 @@ gimp_unit_menu_finalize (GObject *object)
  * @format:       A printf-like format string which is used to create the unit
  *                strings.
  * @unit:         The initially selected unit.
- * @show_pixels:  #TRUE if the unit menu should contain an item for
+ * @show_pixels:  %TRUE if the unit menu should contain an item for
  *                GIMP_UNIT_PIXEL.
- * @show_percent: #TRUE in the unit menu should contain an item for
+ * @show_percent: %TRUE in the unit menu should contain an item for
  *                GIMP_UNIT_PERCENT.
- * @show_custom:  #TRUE if the unit menu should contain a "More..." item for
+ * @show_custom:  %TRUE if the unit menu should contain a "More..." item for
  *                opening the user-defined-unit selection dialog.
  *
  * Creates a new #GimpUnitMenu widget.
@@ -243,7 +243,8 @@ gimp_unit_menu_new (const gchar *format,
       gtk_widget_show (menuitem);
       
       menuitem =
-	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, unit));
+	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format,
+                                                                   unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu", 
                          GINT_TO_POINTER (unit));

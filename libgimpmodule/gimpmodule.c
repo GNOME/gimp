@@ -236,8 +236,8 @@ gimp_module_unload (GTypeModule *module)
 /**
  * gimp_module_new:
  * @filename:     The filename of a loadable module.
- * @load_inhibit: Pass #TRUE to exclude this module from auto-loading.
- * @verbose:      Pass #TRUE to enable debugging output.
+ * @load_inhibit: Pass %TRUE to exclude this module from auto-loading.
+ * @verbose:      Pass %TRUE to enable debugging output.
  * 
  * Creates a new #GimpModule instance.
  * 
@@ -283,7 +283,7 @@ gimp_module_new (const gchar *filename,
  * may implement. After successful query, the @info field of the
  * #GimpModule struct will be available for further inspection.
  * 
- * Return value: #TRUE on success.
+ * Return value: %TRUE on success.
  **/
 gboolean
 gimp_module_query_module (GimpModule *module)
@@ -371,7 +371,7 @@ gimp_module_modified (GimpModule *module)
 /**
  * gimp_module_set_load_inhibit:
  * @module:       A #GimpModule.
- * @load_inhibit: Pass #TRUE to exclude this module from auto-loading.
+ * @load_inhibit: Pass %TRUE to exclude this module from auto-loading.
  * 
  * Sets the @load_inhibit property if the module. Emits "modified".
  **/

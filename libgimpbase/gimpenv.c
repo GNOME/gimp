@@ -431,7 +431,7 @@ gimp_path_runtime_fix (gchar **path)
  * gimp_path_parse:
  * @path:         A list of directories separated by #G_SEARCHPATH_SEPARATOR.
  * @max_paths:    The maximum number of directories to return.
- * @check:        #TRUE if you want the directories to be checked.
+ * @check:        %TRUE if you want the directories to be checked.
  * @check_failed: Returns a #GList of path elements for which the
  *                check failed.
  *

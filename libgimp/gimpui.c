@@ -29,8 +29,8 @@
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
  *             gtk_init(). It's a convention to use the name of the
  *             executable and _not_ the PDB procedure name or something.
- * @preview: #TRUE if the plug-in has some kind of preview in it's UI.
- *           Note that passing #TRUE is recommended also if one of the
+ * @preview: %TRUE if the plug-in has some kind of preview in it's UI.
+ *           Note that passing %TRUE is recommended also if one of the
  *           used GIMP Library widgets contains a preview (like the image
  *           menu returned by gimp_image_menu_new()).
  *

@@ -193,11 +193,11 @@ gimp_chain_button_new (GimpChainPosition position)
 
 /** 
  * gimp_chain_button_set_active:
- * @button:    Pointer to a #GimpChainButton.
+ * @button: Pointer to a #GimpChainButton.
  * @active: The new state.
  * 
- * Sets the state of the #GimpChainButton to be either locked (#TRUE) or 
- * unlocked (#FALSE) and changes the showed pixmap to reflect the new state.
+ * Sets the state of the #GimpChainButton to be either locked (%TRUE) or 
+ * unlocked (%FALSE) and changes the showed pixmap to reflect the new state.
  */
 void       
 gimp_chain_button_set_active (GimpChainButton  *button,
@@ -207,12 +207,15 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 
   if (button->active != active)
     {
+      guint num;
+
       button->active = active ? TRUE : FALSE;
- 
-      gtk_image_set_from_stock
-        (GTK_IMAGE (button->image),
-         gimp_chain_stock_items[((button->position & GIMP_CHAIN_LEFT) << 1) + ! button->active],
-         GTK_ICON_SIZE_BUTTON);
+
+      num = ((button->position & GIMP_CHAIN_LEFT) << 1) + (active ? 0 : 1);
+
+      gtk_image_set_from_stock (GTK_IMAGE (button->image),
+                                gimp_chain_stock_items[num],
+                                GTK_ICON_SIZE_BUTTON);
     }
 }
 
@@ -222,7 +225,7 @@ gimp_chain_button_set_active (GimpChainButton  *button,
  * 
  * Checks the state of the #GimpChainButton. 
  *
- * Returns: TRUE if the #GimpChainButton is active (locked).
+ * Returns: %TRUE if the #GimpChainButton is active (locked).
  */
 gboolean   
 gimp_chain_button_get_active (GimpChainButton *button)

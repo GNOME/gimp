@@ -181,14 +181,14 @@ gimp_help_connect (GtkWidget    *widget,
 /**
  * gimp_help_set_help_data:
  * @widget: The #GtkWidget you want to set a @tooltip and/or @help_data for.
- * @tooltip: The text for this widget's tooltip.
+ * @tooltip: The text for this widget's tooltip (or %NULL).
  * @help_data: The @help_data for the #GtkTipsQuery tooltips inspector.
  *
  * The reason why we don't use gtk_tooltips_set_tip() is that it's
  * impossible to set a @private_tip (aka @help_data) without a visible
  * @tooltip.
  *
- * This function can be called with @tooltip == #NULL. Use this feature
+ * This function can be called with %NULL for @tooltip. Use this feature
  * if you want to set a HTML help link for a widget which shouldn't have
  * a visible tooltip.
  *

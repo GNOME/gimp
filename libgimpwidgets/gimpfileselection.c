@@ -188,8 +188,8 @@ gimp_file_selection_destroy (GtkObject *object)
  * gimp_file_selection_new:
  * @title: The title of the #GtkFileSelection dialog.
  * @filename: The initial filename.
- * @dir_only: #TRUE if the file selection should accept directories only.
- * @check_valid: #TRUE if the widget should check if the entered file
+ * @dir_only: %TRUE if the file selection should accept directories only.
+ * @check_valid: %TRUE if the widget should check if the entered file
  *               really exists.
  *
  * Creates a new #GimpFileSelection widget.
@@ -245,7 +245,7 @@ gimp_file_selection_get_filename (GimpFileSelection *selection)
  * @selection: The file selection you want to set the filename for.
  * @filename: The new filename.
  *
- * If you specified @check_valid as #TRUE in gimp_file_selection_new()
+ * If you specified @check_valid as %TRUE in gimp_file_selection_new()
  * the #GimpFileSelection will immediately check the validity of the file
  * name.
  *

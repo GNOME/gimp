@@ -203,17 +203,18 @@ gimp_size_entry_finalize (GObject *object)
  * gimp_size_entry_new:
  * @number_of_fields:  The number of input fields.
  * @unit:              The initial unit.
- * @unit_format:       A printf-like unit-format string (see #GimpUnitMenu).
- * @menu_show_pixels:  #TRUE if the unit menu shold contain an item for
+ * @unit_format:       A printf-like unit-format string as is used with
+ *                     gimp_unit_menu_new().
+ * @menu_show_pixels:  %TRUE if the unit menu shold contain an item for
  *                     GIMP_UNIT_PIXEL (ignored if the @update_policy is not
  *                     GIMP_SIZE_ENTRY_UPDATE_NONE).
- * @menu_show_percent: #TRUE if the unit menu shold contain an item for
+ * @menu_show_percent: %TRUE if the unit menu shold contain an item for
  *                     GIMP_UNIT_PERCENT.
- * @show_refval:       #TRUE if you want an extra "refenence value"
+ * @show_refval:       %TRUE if you want an extra "refenence value"
  *                     spinbutton per input field.
  * @spinbutton_width:  The minimal horizontal size of the #GtkSpinButton's.
- * @update_policy:     How the automatic pixel <-> real-world-unit calculations
- *                     should be performed.
+ * @update_policy:     How the automatic pixel <-> real-world-unit
+ *                     calculations should be done.
  *
  * Creates a new #GimpSizeEntry widget.
  *
@@ -239,7 +240,8 @@ gimp_size_entry_finalize (GObject *object)
  *
  * The #GimpSizeEntry is derived from #GtkTable and will have
  * an empty border of one cell width on each side plus an empty column left
- * of the #GimpUnitMenu to allow the caller to add labels or a #GimpChainButton.
+ * of the #GimpUnitMenu to allow the caller to add labels or a
+ * #GimpChainButton.
  *
  * Returns: A Pointer to the new #GimpSizeEntry widget.
  **/
@@ -360,7 +362,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 	  gtk_widget_show (gsef->refval_spinbutton);
 	}			
 
-      if (gse->menu_show_pixels && !gse->show_refval && (unit == GIMP_UNIT_PIXEL))
+      if (gse->menu_show_pixels && (unit == GIMP_UNIT_PIXEL) &&
+          ! gse->show_refval)
 	gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				    gsef->refval_digits);
     }
@@ -383,15 +386,15 @@ gimp_size_entry_new (gint                       number_of_fields,
 
 /**
  * gimp_size_entry_add_field:
- * @gse: The sizeentry you want to add a field to.
- * @value_spinbutton: The spinbutton to display the field's value.
+ * @gse:               The sizeentry you want to add a field to.
+ * @value_spinbutton:  The spinbutton to display the field's value.
  * @refval_spinbutton: The spinbutton to display the field's reference value.
  *
  * Adds an input field to the #GimpSizeEntry.
  *
  * The new input field will have the index 0. If you specified @show_refval
- * as #TRUE in gimp_size_entry_new() you have to pass an additional
- * #GtkSpinButton to hold the reference value. If @show_refval was #FALSE,
+ * as %TRUE in gimp_size_entry_new() you have to pass an additional
+ * #GtkSpinButton to hold the reference value. If @show_refval was %FALSE,
  * @refval_spinbutton will be ignored.
  **/
 void
@@ -514,8 +517,8 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
  * @gse:        The sizeentry you want to set a resolution for.
  * @field:      The index of the field you want to set the resolution for.
  * @resolution: The new resolution (in dpi) for the chosen @field.
- * @keep_size:  #TRUE if the @field's size in pixels should stay the same.
- *              #FALSE if the @field's size in units should stay the same.
+ * @keep_size:  %TRUE if the @field's size in pixels should stay the same.
+ *              %FALSE if the @field's size in units should stay the same.
  *
  * Sets the resolution (in dpi) for field # @field of the #GimpSizeEntry.
  *
@@ -563,7 +566,7 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
  * Sets the pixel values for field # @field of the #GimpSizeEntry
  * which will be treated as 0% and 100%.
  *
- * These values will be used if you specified @menu_show_percent as #TRUE
+ * These values will be used if you specified @menu_show_percent as %TRUE
  * in gimp_size_entry_new() and the user has selected GIMP_UNIT_PERCENT in
  * the #GimpSizeEntry's #GimpUnitMenu.
  *

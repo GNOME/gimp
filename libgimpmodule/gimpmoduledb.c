@@ -188,7 +188,7 @@ gimp_module_db_finalize (GObject *object)
 
 /**
  * gimp_module_db_new:
- * @verbose: Pass #TRUE to enable debugging output.
+ * @verbose: Pass %TRUE to enable debugging output.
  * 
  * Creates a new #GimpModuleDB instance. The @verbose parameter will be
  * passed to the created #GimpModule instances using gimp_module_new().

@@ -117,7 +117,7 @@ gimp_dialog_delete_event (GtkWidget   *widget,
  * @allow_grow:   ... it't @allow_grow flag and ...
  * @auto_shrink:  ... it's @auto_shrink flag which will all be set with
  *                gtk_window_set_policy().
- * @...:          A #NULL terminated @va_list destribing the
+ * @...:          A %NULL-terminated @va_list destribing the
  *                action_area buttons.
  *
  * This function simply packs the action_area arguments passed in "..."
@@ -238,7 +238,7 @@ gimp_dialog_newv (const gchar       *title,
 /**
  * gimp_dialog_create_action_area:
  * @dialog: The #GimpDialog you want to create the action_area for.
- * @...:    A #NULL terminated @va_list destribing the action_area buttons.
+ * @...:    A %NULL-terminated @va_list destribing the action_area buttons.
  *
  * This function simply packs the action_area arguments passed in "..."
  * into a @va_list variable and passes everything to
