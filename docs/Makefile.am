@@ -1,12 +1,12 @@
 EXTRA_DIST = \
-	gimp.txt 		  pdb_self_doc.el \
-	pdb_dump 		  xcf.doc \
-	cheat_sheet.txt		  keybindings.txt \
-	texinfo.tex 		  script-fu.tex \
-	architecture.eps 	  logo.eps \
-	net-fu.eps 		  timeline.eps \
-	pdb_dump.texi		  gimp_quick_reference.ps \
-	gimp_quick_reference.tex
+	gimp.txt	 		pdb_self_doc.el \
+	pdb_dump 			xcf.doc \
+	cheat_sheet.txt			keybindings.txt \
+	texinfo.tex 			script-fu.tex \
+	architecture.eps	 	logo.eps \
+	net-fu.eps 			timeline.eps \
+	pdb_dump.texi			gimp_quick_reference.ps \
+	gimp_quick_reference.tar.gz
 
 BUILT_SOURCES = pdb_dump.texi
 

@@ -1,3 +1,8 @@
+Sat Mar 21 14:43:06 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* docs/gimp_quick_reference.[ps|tar.gz]: 
+	Changes to the reference sheet.
+
 Fri Mar 20 18:15:06 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* s/bzero/memset/ and s/bcopy/memcpy/ in plug-ins
