@@ -21,6 +21,7 @@
  * You can contact Federico Mena Quintero at quartic@polloux.fciencias.unam.mx
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  */
+
 #include "config.h"
 
 #include <time.h>
@@ -212,27 +213,26 @@ run (const gchar      *name,
 static void
 spread (GimpDrawable *drawable)
 {
-  GimpPixelRgn  dest_rgn;
-  gpointer      pr;
+  GimpPixelRgn      dest_rgn;
+  gpointer          pr;
   GimpPixelFetcher *pft;
 
-  gint    width, height;
-  gint    bytes;
-  guchar *destrow;
-  guchar *dest;
-  gint    x1, y1, x2, y2;
-  gint    x, y;
-  gint    progress, max_progress;
-  gdouble x_amount, y_amount;
-  gdouble angle;
-  gint xdist, ydist;
-  gint xi, yi;
-
-  GRand *gr;
+  gint     width, height;
+  gint     bytes;
+  guchar  *destrow;
+  guchar  *dest;
+  gint     x1, y1, x2, y2;
+  gint     x, y;
+  gint     progress, max_progress;
+  gdouble  x_amount, y_amount;
+  gdouble  angle;
+  gint     xdist, ydist;
+  gint     xi, yi;
+  GRand   *gr;
 
   gr = g_rand_new ();
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 

@@ -275,7 +275,7 @@ edge (GimpDrawable *drawable)
   if (evals.amount < 1.0)
     evals.amount = 1.0;
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (pft, evals.wrapmode);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -299,20 +299,22 @@ edge (GimpDrawable *drawable)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      srcrow = src_rgn.data;
+      srcrow  = src_rgn.data;
       destrow = dest_rgn.data;
+
       for (y = dest_rgn.y;
-            y < (dest_rgn.y + dest_rgn.h);
-            y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride)
+           y < (dest_rgn.y + dest_rgn.h);
+           y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride)
         {
-          src = srcrow;
+          src  = srcrow;
           dest = destrow;
+
           for (x = dest_rgn.x;
                x < (dest_rgn.x + dest_rgn.w);
                x++,  src += src_rgn.bpp, dest += dest_rgn.bpp)
             {
-              if(dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 2 &&
-                 dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 2)
+              if (dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 2 &&
+                  dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 2)
                 {
                   /*
                   ** 3x3 kernel is inside of the tile -- do fast
@@ -323,13 +325,16 @@ edge (GimpDrawable *drawable)
                       /* get the 3x3 kernel into a guchar array,
                        * and send it to edge_detect */
                       guchar kernel[9];
-                      int i,j;
+                      gint   i,j;
+
 #define PIX(X,Y)  src[ (Y-1)*(int)src_rgn.rowstride + (X-1)*(int)src_rgn.bpp + chan ]
                       /* make convolution */
                       for(i = 0; i < 3; i++)
                         for(j = 0; j < 3; j++)
                           kernel[3*i + j] = PIX(i,j);
+
 #undef  PIX
+
                       dest[chan] = edge_detect(kernel);
                     }
                 }

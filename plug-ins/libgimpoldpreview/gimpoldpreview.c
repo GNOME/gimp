@@ -487,7 +487,7 @@ gimp_old_preview_fill_scaled (GimpOldPreview *preview,
 
   py = y1;
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
   for (y = 0; y < height; y++)
     {
@@ -502,6 +502,7 @@ gimp_old_preview_fill_scaled (GimpOldPreview *preview,
       gimp_old_preview_do_row (preview, y, width, dest);
       py += dy;
     }
+
   gimp_pixel_fetcher_destroy (pft);
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;

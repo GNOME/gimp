@@ -52,6 +52,10 @@ GimpTile     * gimp_drawable_get_tile2           (GimpDrawable  *drawable,
                                                   gint           x,
                                                   gint           y);
 
+void           gimp_drawable_get_color_uchar     (gint32         drawable_ID,
+                                                  const GimpRGB *color,
+                                                  guchar        *color_uchar);
+
 guchar       * gimp_drawable_get_thumbnail_data  (gint32         drawable_ID,
                                                   gint          *width,
                                                   gint          *height,

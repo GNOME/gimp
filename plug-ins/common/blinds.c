@@ -528,13 +528,19 @@ blindsapply (guchar *srow,
 static void
 dialog_update_preview (void)
 {
-  gint    y;
-  guchar *p, *buffer;
-  guchar  bg[4];
+  gint     y;
+  guchar  *p, *buffer;
+  GimpRGB  background;
+  guchar   bg[4];
 
   p = preview->cache;
 
-  gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
+  gimp_palette_get_background (&background);
+
+  if (bvals.bg_trans)
+    gimp_rgb_set_alpha (&background, 0.0);
+
+  gimp_drawable_get_color_uchar (blindsdrawable->drawable_id, &background, bg);
 
   buffer = (guchar*) g_malloc (preview->rowstride);
 
@@ -620,18 +626,24 @@ dialog_update_preview (void)
 static void
 apply_blinds (void)
 {
-  GimpPixelRgn des_rgn;
-  GimpPixelRgn src_rgn;
-  guchar *src_rows, *des_rows;
-  gint x,y;
-  guchar bg[4];
-  gint sel_x1, sel_y1, sel_x2, sel_y2;
-  gint sel_width, sel_height;
+  GimpPixelRgn  des_rgn;
+  GimpPixelRgn  src_rgn;
+  guchar       *src_rows, *des_rows;
+  gint          x, y;
+  GimpRGB       background;
+  guchar        bg[4];
+  gint          sel_x1, sel_y1, sel_x2, sel_y2;
+  gint          sel_width, sel_height;
 
-  gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
+  gimp_palette_get_background (&background);
 
-  gimp_drawable_mask_bounds (blindsdrawable->drawable_id, &sel_x1, &sel_y1,
-                             &sel_x2, &sel_y2);
+  if (bvals.bg_trans)
+    gimp_rgb_set_alpha (&background, 0.0);
+
+  gimp_drawable_get_color_uchar (blindsdrawable->drawable_id, &background, bg);
+
+  gimp_drawable_mask_bounds (blindsdrawable->drawable_id,
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -648,8 +660,8 @@ apply_blinds (void)
     {
       for (y = 0; y < sel_height; y += STEP)
         {
-          int rr;
-          int step;
+          gint rr;
+          gint step;
 
           if((y + STEP) > sel_height)
             step = sel_height - y;
@@ -686,7 +698,7 @@ apply_blinds (void)
        * this act as a transfomation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
-      int     i;
+      gint    i;
       gint   *sr  = g_new (gint, sel_height * 4);
       gint   *dr  = g_new (gint, sel_height * 4);
       guchar *dst = g_new (guchar, STEP * 4);

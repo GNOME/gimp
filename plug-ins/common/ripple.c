@@ -264,7 +264,7 @@ ripple_vertical (gint x,
 
   needy = y + displace_amount(x);
   yi = floor(needy);
-  
+
   /* Tile the image. */
   if (rvals.edges == WRAP)
     {
@@ -276,7 +276,7 @@ ripple_vertical (gint x,
     {
       yi = CLAMP (yi, 0, height - 1);
     }
-  
+
   if (rvals.antialias)
     {
       if (yi == height - 1)
@@ -291,7 +291,7 @@ ripple_vertical (gint x,
 	{
 	  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
 	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
-	  
+
 	  average_two_pixels (dest, pixel, needy, bpp, param->has_alpha);
 	}
       else
@@ -300,7 +300,7 @@ ripple_vertical (gint x,
 	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
 	  gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, pixel[2]);
 	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, pixel[3]);
-	  
+
 	  average_four_pixels (dest, pixel, needy, bpp, param->has_alpha);
 	}
     } /* antialias */
@@ -328,7 +328,7 @@ ripple_horizontal (gint x,
 
   needx = x + displace_amount(y);
   xi = floor (needx);
-  
+
   /* Tile the image. */
   if (rvals.edges == WRAP)
     {
@@ -340,7 +340,7 @@ ripple_horizontal (gint x,
     {
       xi = CLAMP(xi, 0, width - 1);
     }
-  
+
   if (rvals.antialias)
     {
       if (xi == width - 1)
@@ -351,12 +351,12 @@ ripple_horizontal (gint x,
 	{
 	  gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
 	}
-      
+
       else if (xi == width - 2 || xi == 0)
 	{
 	  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
 	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
-	  
+
 	  average_two_pixels (dest, pixel, needx, bpp, param->has_alpha);
 	}
       else
@@ -365,11 +365,11 @@ ripple_horizontal (gint x,
 	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
 	  gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, pixel[2]);
 	  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, pixel[3]);
-	  
+
 	  average_four_pixels (dest, pixel, needx, bpp, param->has_alpha);
 	}
     } /* antialias */
-  
+
   else
     {
       gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
@@ -380,12 +380,12 @@ static void
 ripple (GimpDrawable *drawable)
 {
   GimpRgnIterator *iter;
-  RippleParam_t param;
+  RippleParam_t    param;
 
-  param.pft = gimp_pixel_fetcher_new (drawable);
+  param.pft       = gimp_pixel_fetcher_new (drawable, FALSE);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  param.width  = drawable->width;
-  param.height = drawable->height;
+  param.width     = drawable->width;
+  param.height    = drawable->height;
 
   if ( rvals.tile )
     {

@@ -317,25 +317,25 @@ static void
 cubism (GimpDrawable *drawable)
 {
   GimpPixelRgn src_rgn;
-  guchar bg_col[4];
-  gdouble x, y;
-  gdouble width, height;
-  gdouble theta;
-  gint ix, iy;
-  gint rows, cols;
-  gint i, j, count;
-  gint num_tiles;
-  gint x1, y1, x2, y2;
-  Polygon poly;
-  guchar col[4];
-  guchar *dest;
-  gint bytes;
-  gint has_alpha;
-  gint *random_indices;
-  gpointer pr;
-  GRand *gr;
+  guchar       bg_col[4];
+  gdouble      x, y;
+  gdouble      width, height;
+  gdouble      theta;
+  gint         ix, iy;
+  gint         rows, cols;
+  gint         i, j, count;
+  gint         num_tiles;
+  gint         x1, y1, x2, y2;
+  Polygon      poly;
+  guchar       col[4];
+  guchar      *dest;
+  gint         bytes;
+  gboolean     has_alpha;
+  gint        *random_indices;
+  gpointer     pr;
+  GRand       *gr;
 
-  gr = g_rand_new();
+  gr = g_rand_new ();
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   bytes = drawable->bpp;
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -347,7 +347,11 @@ cubism (GimpDrawable *drawable)
     }
   else
     {
-      gimp_get_bg_guchar (drawable, TRUE, bg_col);
+      GimpRGB color;
+
+      gimp_palette_get_background (&color);
+      gimp_rgb_set_alpha (&color, 0.0);
+      gimp_drawable_get_color_uchar (drawable->drawable_id, &color, bg_col);
     }
 
   gimp_progress_init (_("Cubistic Transformation"));
@@ -358,6 +362,7 @@ cubism (GimpDrawable *drawable)
   /*  Fill the image with the background color  */
   gimp_pixel_rgn_init (&src_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+
   for (pr = gimp_pixel_rgns_register (1, &src_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -385,15 +390,15 @@ cubism (GimpDrawable *drawable)
     {
       i = random_indices[count] / (cols + 1);
       j = random_indices[count] % (cols + 1);
-      x = j * cvals.tile_size + (cvals.tile_size / 4.0) 
+      x = j * cvals.tile_size + (cvals.tile_size / 4.0)
 	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + x1;
-      y = i * cvals.tile_size + (cvals.tile_size / 4.0) 
+      y = i * cvals.tile_size + (cvals.tile_size / 4.0)
 	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + y1;
-      width = (cvals.tile_size + 
+      width = (cvals.tile_size +
 	       g_rand_double_range (gr, 0, cvals.tile_size / 4.0) -
 	       cvals.tile_size / 8.0) * cvals.tile_saturation;
-      height = (cvals.tile_size + 
-		g_rand_double_range (gr, 0, cvals.tile_size / 4.0) - 
+      height = (cvals.tile_size +
+		g_rand_double_range (gr, 0, cvals.tile_size / 4.0) -
 		cvals.tile_size / 8.0) * cvals.tile_saturation;
       theta = g_rand_double_range (gr, 0, 2 * G_PI);
       polygon_reset (&poly);

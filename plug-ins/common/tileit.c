@@ -974,109 +974,113 @@ cache_preview (void)
 static void
 do_tiles(void)
 {
-  GimpPixelRgn dest_rgn;
-  gpointer  pr;
-  gint      progress, max_progress;
-  guchar   *dest_row;
-  guchar   *dest;
-  gint      row, col;
-  gint	    bpp;
-  guchar    pixel[4];
-  int 	    nc,nr;
-  int       i;
+  GimpPixelRgn      dest_rgn;
+  gpointer          pr;
+  gint              progress, max_progress;
+  guchar           *dest_row;
+  guchar           *dest;
+  gint              row, col;
+  gint	            bpp;
+  guchar            pixel[4];
+  gint 	            nc, nr;
+  gint              i;
   GimpPixelFetcher *pft;
 
   /* Initialize pixel region */
 
-  pft = gimp_pixel_fetcher_new (tileitdrawable);
+  pft = gimp_pixel_fetcher_new (tileitdrawable, FALSE);
 
-  gimp_pixel_rgn_init(&dest_rgn, tileitdrawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, tileitdrawable,
+                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  img_bpp = gimp_drawable_bpp(tileitdrawable->drawable_id);
+  img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);
 
   bpp = (has_alpha) ? img_bpp - 1 : img_bpp;
 
   for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
-       pr != NULL; pr = gimp_pixel_rgns_process(pr)) {
-    dest_row = dest_rgn.data;
+       pr != NULL;
+       pr = gimp_pixel_rgns_process(pr))
+    {
+      dest_row = dest_rgn.data;
 
-    for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++) {
-      dest = dest_row;
+      for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++)
+        {
+          dest = dest_row;
 
-      for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
-	{
-	  int an_action;
+          for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
+            {
+              gint an_action;
 
-	  an_action =
-	    tiles_xy(sel_width,
-		     sel_height,
-		     col-sel_x1,row-sel_y1,
-		     &nc,&nr);
+              an_action = tiles_xy (sel_width,
+                                    sel_height,
+                                    col-sel_x1,row-sel_y1,
+                                    &nc,&nr);
 
-	  gimp_pixel_fetcher_get_pixel (pft, nc + sel_x1, nr + sel_y1,
-					pixel);
+              gimp_pixel_fetcher_get_pixel (pft, nc + sel_x1, nr + sel_y1,
+                                            pixel);
 
-	  for (i = 0; i < bpp; i++)
-	    *dest++ = pixel[i];
+              for (i = 0; i < bpp; i++)
+                *dest++ = pixel[i];
 
-	  if (has_alpha)
-	    {
-	      *dest++ = (pixel[bpp]*opacity)/100;
-	    }
-	}
-      dest_row += dest_rgn.rowstride;
+              if (has_alpha)
+                *dest++ = (pixel[bpp] * opacity) / 100;
+            }
+
+          dest_row += dest_rgn.rowstride;
+        }
+
+      progress += dest_rgn.w * dest_rgn.h;
+      gimp_progress_update ((double) progress / max_progress);
     }
-
-    progress += dest_rgn.w * dest_rgn.h;
-    gimp_progress_update((double) progress / max_progress);
-  }
 
   gimp_pixel_fetcher_destroy (pft);
 
-  gimp_drawable_flush(tileitdrawable);
-  gimp_drawable_merge_shadow(tileitdrawable->drawable_id, TRUE);
-  gimp_drawable_update(tileitdrawable->drawable_id,
-		       sel_x1, sel_y1, sel_width, sel_height);
+  gimp_drawable_flush (tileitdrawable);
+  gimp_drawable_merge_shadow (tileitdrawable->drawable_id, TRUE);
+  gimp_drawable_update (tileitdrawable->drawable_id,
+                        sel_x1, sel_y1, sel_width, sel_height);
 }
 
 
 /* Get the xy pos and any action */
 static gint
-tiles_xy(gint width,
-	 gint height,
-	 gint x,
-	 gint y,
-	 gint *nx,
-	 gint *ny)
+tiles_xy (gint  width,
+          gint  height,
+          gint  x,
+          gint  y,
+          gint *nx,
+          gint *ny)
 {
-  gint px,py;
-  gint rnum,cnum;
-  gint actiontype;
-  gdouble rnd = 1 - (1.0/(gdouble)itvals.numtiles) +0.01;
+  gint    px,py;
+  gint    rnum,cnum;
+  gint    actiontype;
+  gdouble rnd = 1 - (1.0 / (gdouble) itvals.numtiles) + 0.01;
 
-  rnum = y*itvals.numtiles/height;
+  rnum = y * itvals.numtiles / height;
 
-  py = (y*itvals.numtiles)%height;
-  px = (x*itvals.numtiles)%width;
-  cnum = x*itvals.numtiles/width;
+  py   = (y * itvals.numtiles) % height;
+  px   = (x * itvals.numtiles) % width;
+  cnum = x * itvals.numtiles / width;
 
-  if((actiontype = tileactions[cnum][rnum]))
+  if ((actiontype = tileactions[cnum][rnum]))
     {
-      if(actiontype & HORIZONTAL)
+      if (actiontype & HORIZONTAL)
 	{
 	  gdouble pyr;
+
 	  pyr =  height - y - 1 + rnd;
-	  py = ((int)(pyr*(gdouble)itvals.numtiles))%height;
+	  py = ((gint) (pyr * (gdouble) itvals.numtiles)) % height;
 	}
 
-      if(actiontype & VERTICAL)
+      if (actiontype & VERTICAL)
 	{
 	  gdouble pxr;
+
 	  pxr = width - x - 1 + rnd;
-	  px = ((int)(pxr*(gdouble)itvals.numtiles))%width;
+	  px = ((gint) (pxr * (gdouble) itvals.numtiles)) % width;
 	}
     }
 
@@ -1089,21 +1093,21 @@ tiles_xy(gint width,
 
 /* Given a row then srink it down a bit */
 static void
-do_tiles_preview(guchar *dest_row,
-	    guchar *src_rows,
-	    gint width,
-	    gint dh,
-	    gint height,
-	    gint bpp)
+do_tiles_preview (guchar *dest_row,
+                  guchar *src_rows,
+                  gint    width,
+                  gint    dh,
+                  gint    height,
+                  gint    bpp)
 {
-  gint x;
-  gint i;
-  gint px,py;
-  gint rnum,cnum;
-  gint actiontype;
-  gdouble rnd = 1 - (1.0/(gdouble)itvals.numtiles) +0.01;
+  gint    x;
+  gint    i;
+  gint    px, py;
+  gint    rnum,cnum;
+  gint    actiontype;
+  gdouble rnd = 1 - (1.0 / (gdouble) itvals.numtiles) + 0.01;
 
-  rnum = dh*itvals.numtiles/height;
+  rnum = dh * itvals.numtiles / height;
 
   for (x = 0; x < width; x ++)
     {

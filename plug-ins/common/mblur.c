@@ -264,9 +264,10 @@ run (const gchar      *name,
 static void
 mblur_linear (void)
 {
-  GimpPixelRgn	   dest_rgn;
+  GimpPixelRgn	    dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	   pr;
+  gpointer	    pr;
+  GimpRGB           background;
 
   guchar *dest;
   guchar *d;
@@ -280,9 +281,10 @@ mblur_linear (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_pixel_fetcher_set_bg_color (pft);
+  gimp_palette_get_background (&background);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -423,9 +425,10 @@ mblur_linear (void)
 static void
 mblur_radial (void)
 {
-  GimpPixelRgn	dest_rgn;
+  GimpPixelRgn	    dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	pr;
+  gpointer	    pr;
+  GimpRGB           background;
 
   guchar       *dest;
   guchar       *d;
@@ -446,9 +449,10 @@ mblur_radial (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_pixel_fetcher_set_bg_color (pft);
+  gimp_palette_get_background (&background);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -559,9 +563,10 @@ mblur_radial (void)
 static void
 mblur_zoom (void)
 {
-  GimpPixelRgn	dest_rgn;
+  GimpPixelRgn	    dest_rgn;
   GimpPixelFetcher *pft;
-  gpointer	pr;
+  gpointer	    pr;
+  GimpRGB           background;
 
   guchar	*dest, *d;
   guchar	pixel[4];
@@ -579,9 +584,10 @@ mblur_zoom (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_pixel_fetcher_set_bg_color (pft);
+  gimp_palette_get_background (&background);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   progress     = 0;
   max_progress = sel_width * sel_height;

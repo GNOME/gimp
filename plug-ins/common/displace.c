@@ -469,7 +469,7 @@ displace (GimpDrawable *drawable)
   mxrow = NULL;
   myrow = NULL;
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (pft, dvals.displace_type);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);

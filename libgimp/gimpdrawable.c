@@ -182,6 +182,43 @@ gimp_drawable_get_tile2 (GimpDrawable *drawable,
   return gimp_drawable_get_tile (drawable, shadow, row, col);
 }
 
+void
+gimp_drawable_get_color_uchar (gint32         drawable_ID,
+                               const GimpRGB *color,
+                               guchar        *color_uchar)
+{
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (color_uchar != NULL);
+
+  switch (gimp_drawable_type (drawable_ID))
+    {
+    case GIMP_RGB_IMAGE:
+      gimp_rgb_get_uchar (color,
+                          &color_uchar[0], &color_uchar[1], &color_uchar[2]);
+      color_uchar[3] = 255;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      gimp_rgba_get_uchar (color,
+                           &color_uchar[0], &color_uchar[1], &color_uchar[2],
+                           &color_uchar[3]);
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      color_uchar[0] = gimp_rgb_intensity_uchar (color);
+      color_uchar[1] = 255;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      color_uchar[0] = gimp_rgb_intensity_uchar (color);
+      gimp_rgba_get_uchar (color, NULL, NULL, NULL, &color_uchar[1]);
+      break;
+
+    default:
+      break;
+    }
+}
+
 guchar *
 gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
 				  gint   *width,

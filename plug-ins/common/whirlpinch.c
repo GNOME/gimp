@@ -340,17 +340,18 @@ run (const gchar      *name,
 static void
 whirl_pinch (void)
 {
-  GimpPixelRgn        dest_rgn;
-  gint             progress, max_progress;
-  guchar          *top_row, *bot_row;
-  guchar          *top_p, *bot_p;
-  gint             row, col;
-  guchar           **pixel;
-  double           whirl;
-  double           cx, cy;
-  int              ix, iy;
-  int              i;
+  GimpPixelRgn      dest_rgn;
+  gint              progress, max_progress;
+  guchar           *top_row, *bot_row;
+  guchar           *top_p, *bot_p;
+  gint              row, col;
+  guchar          **pixel;
+  gdouble           whirl;
+  gdouble           cx, cy;
+  gint              ix, iy;
+  gint              i;
   GimpPixelFetcher *pft, *pfb;
+  GimpRGB           background;
 
   /* Initialize rows */
   top_row = g_malloc (img_bpp * sel_width);
@@ -363,11 +364,12 @@ whirl_pinch (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  pft = gimp_pixel_fetcher_new (drawable);
-  pfb = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
+  pfb = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  gimp_pixel_fetcher_set_bg_color (pft);
-  gimp_pixel_fetcher_set_bg_color (pfb);
+  gimp_palette_get_background (&background);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
+  gimp_pixel_fetcher_set_bg_color (pfb, &background);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -573,7 +575,7 @@ build_preview_source_image (void)
 
   py = top;
 
-  pf = gimp_pixel_fetcher_new (drawable);
+  pf = gimp_pixel_fetcher_new (drawable, FALSE);
 
   p = wpint.image;
 

@@ -445,8 +445,7 @@ init_plasma (GimpDrawable *drawable,
       has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
       alpha     = (has_alpha) ? bpp - 1 : bpp;
 
-      pft = gimp_pixel_fetcher_new (drawable);
-      gimp_pixel_fetcher_set_shadow (pft, TRUE);
+      pft = gimp_pixel_fetcher_new (drawable, TRUE);
     }
 
   progress     = 0;

@@ -54,6 +54,7 @@ EXPORTS
 	gimp_drawable_fill
 	gimp_drawable_flush
 	gimp_drawable_get
+	gimp_drawable_get_color_uchar
 	gimp_drawable_get_image
 	gimp_drawable_get_linked
 	gimp_drawable_get_name
@@ -121,9 +122,7 @@ EXPORTS
 	gimp_free_select
 	gimp_fuzzy_select
 	gimp_gamma
-	gimp_get_bg_guchar
 	gimp_get_default_comment
-	gimp_get_fg_guchar
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo
@@ -314,7 +313,6 @@ EXPORTS
 	gimp_pixel_fetcher_put_pixel
 	gimp_pixel_fetcher_set_bg_color
 	gimp_pixel_fetcher_set_edge_mode
-	gimp_pixel_fetcher_set_shadow
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect

@@ -1093,11 +1093,10 @@ plugin_do_non_asupsample (void)
 static void
 plugin_do_asupsample (void)
 {
-  tk_read  = gimp_pixel_fetcher_new (drawable);
+  tk_read  = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (tk_read, GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
-  tk_write = gimp_pixel_fetcher_new (drawable);
-  gimp_pixel_fetcher_set_shadow (tk_write, TRUE);
+  tk_write = gimp_pixel_fetcher_new (drawable, TRUE);
 
   gimp_adaptive_supersample_area (dinfo.x1, dinfo.y1, dinfo.x2 - 1, dinfo.y2 - 1,
 				  pvals.asupsample_max_depth,

@@ -216,11 +216,15 @@ checkerboard_func (gint x,
 static void
 do_checkerboard_pattern (GimpDrawable *drawable)
 {
-  CheckerboardParam_t param;
-  GimpRgnIterator *iter;
+  CheckerboardParam_t  param;
+  GimpRgnIterator     *iter;
+  GimpRGB              color;
 
-  gimp_get_bg_guchar (drawable, FALSE, param.bg);
-  gimp_get_fg_guchar (drawable, FALSE, param.fg);
+  gimp_palette_get_background (&color);
+  gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.bg);
+
+  gimp_palette_get_foreground (&color);
+  gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.fg);
 
   if (cvals.size < 1)
     {

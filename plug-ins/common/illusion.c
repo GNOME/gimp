@@ -255,17 +255,18 @@ illusion_func (gint x,
 static void
 filter (GimpDrawable *drawable)
 {
-  IllusionParam_t param;
+  IllusionParam_t  param;
   GimpRgnIterator *iter;
-  gint width, height;
-  gint x1, y1, x2, y2;
+  gint             width, height;
+  gint             x1, y1, x2, y2;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width = x2 - x1;
+  width  = x2 - x1;
   height = y2 - y1;
 
-  param.pft = gimp_pixel_fetcher_new (drawable);
+  param.pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (param.pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
+
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.center_x = (x1 + x2) / 2.0;
   param.center_y = (y1 + y2) / 2.0;

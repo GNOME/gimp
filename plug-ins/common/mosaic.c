@@ -39,7 +39,6 @@
 
 #define  HORIZONTAL        0
 #define  VERTICAL          1
-#define  OPAQUE          255
 #define  SUPERSAMPLE       3
 #define  MAG_THRESHOLD     7.5
 #define  COUNT_THRESHOLD   0.1
@@ -425,6 +424,7 @@ mosaic (GimpDrawable *drawable)
 {
   gint     x1, y1, x2, y2;
   gint     alpha;
+  GimpRGB  color;
 
   /*  Find the mask bounds  */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -460,18 +460,17 @@ mosaic (GimpDrawable *drawable)
       fore[0] = fore[1] = fore[2] = 255;
       back[0] = back[1] = back[2] = 0;
       break;
+
     case FG_BG:
-      gimp_get_fg_guchar (drawable, FALSE, fore);
-      gimp_get_bg_guchar (drawable, FALSE, back);
+      gimp_palette_get_foreground (&color);
+      gimp_drawable_get_color_uchar (drawable->drawable_id, &color, fore);
+
+      gimp_palette_get_background (&color);
+      gimp_drawable_get_color_uchar (drawable->drawable_id, &color, back);
       break;
     }
 
   alpha = drawable->bpp - 1;
-  if (gimp_drawable_has_alpha (drawable->drawable_id))
-    {
-      fore[alpha] = OPAQUE;
-      back[alpha] = OPAQUE;
-    }
 
   light_x = -cos (mvals.light_dir * G_PI / 180.0);
   light_y = sin (mvals.light_dir * G_PI / 180.0);
@@ -760,7 +759,7 @@ find_gradients (GimpDrawable *drawable,
 	  else {
 	    hmax = *dh - 128;
 	    vmax = *dv - 128;
-	    
+
 	    *gr = (guchar)sqrt (SQR (hmax) + SQR (hmax));
 	  }
 
@@ -1994,9 +1993,9 @@ fill_poly_color (Polygon      *poly,
     ys = (gint) pts_tmp[poly_npts-1].y;
     xe = (gint) pts_tmp->x;
     ye = (gint) pts_tmp->y;
-  
+
     calc_spec_vec (vecs, xs, ys, xe, ye);
-  
+
     for (i = 1; i < poly_npts; i++)
       {
 	xs = (gint) (pts_tmp->x);
@@ -2004,7 +2003,7 @@ fill_poly_color (Polygon      *poly,
 	pts_tmp++;
 	xe = (gint) pts_tmp->x;
 	ye = (gint) pts_tmp->y;
-	
+
 	calc_spec_vec (vecs+i, xs, ys, xe, ye);
       }
   }
@@ -2356,9 +2355,9 @@ convert_segment (gint  x1,
   gdouble xinc, xstart;
 
   if (y1 > y2)
-    { 
+    {
       tmp = y2; y2 = y1; y1 = tmp;
-      tmp = x2; x2 = x1; x1 = tmp; 
+      tmp = x2; x2 = x1; x1 = tmp;
     }
   ydiff = y2 - y1;
 

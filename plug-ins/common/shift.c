@@ -210,24 +210,23 @@ run (const gchar      *name,
 static void
 shift (GimpDrawable *drawable)
 {
-  GimpPixelRgn dest_rgn;
-  gpointer  pr;
+  GimpPixelRgn      dest_rgn;
+  gpointer          pr;
   GimpPixelFetcher *pft;
-  gint    width, height;
-  gint    bytes;
-  guchar *destline;
-  guchar *dest;
-  gint    x1, y1, x2, y2;
-  gint    x, y;
-  gint    progress, max_progress;
-  gint 	  amount;
-  gint 	  xdist, ydist;
-
-  GRand *gr; /* The random number generator we're using */
+  gint              width, height;
+  gint              bytes;
+  guchar           *destline;
+  guchar           *dest;
+  gint              x1, y1, x2, y2;
+  gint              x, y;
+  gint              progress, max_progress;
+  gint 	            amount;
+  gint 	            xdist, ydist;
+  GRand            *gr;
 
   gr = g_rand_new ();
 
-  pft = gimp_pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);

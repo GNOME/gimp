@@ -35,36 +35,31 @@ typedef enum
   GIMP_PIXEL_FETCHER_EDGE_NONE,
   GIMP_PIXEL_FETCHER_EDGE_WRAP,
   GIMP_PIXEL_FETCHER_EDGE_SMEAR,
-  GIMP_PIXEL_FETCHER_EDGE_BLACK
+  GIMP_PIXEL_FETCHER_EDGE_BLACK,
+  GIMP_PIXEL_FETCHER_EDGE_BACKGROUND
 } GimpPixelFetcherEdgeMode;
 
 
 typedef struct _GimpPixelFetcher GimpPixelFetcher;
 
-GimpPixelFetcher * gimp_pixel_fetcher_new           (GimpDrawable     *drawable);
-void 		   gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher *pf,
-                                                     GimpPixelFetcherEdgeMode mode);
 
-void               gimp_pixel_fetcher_set_bg_color  (GimpPixelFetcher *pf);
-void		   gimp_pixel_fetcher_set_shadow    (GimpPixelFetcher *pf,
-						     gboolean          shadow);
-void               gimp_pixel_fetcher_get_pixel     (GimpPixelFetcher *pf,
-						     gint              x,
-						     gint              y,
-						     guchar           *pixel);
-void               gimp_pixel_fetcher_put_pixel     (GimpPixelFetcher *pf,
-						     gint              x,
-						     gint              y,
-						     const guchar     *pixel);
-void               gimp_pixel_fetcher_destroy       (GimpPixelFetcher *pf);
+GimpPixelFetcher * gimp_pixel_fetcher_new       (GimpDrawable     *drawable,
+                                                 gboolean          shadow);
+void               gimp_pixel_fetcher_destroy   (GimpPixelFetcher *pf);
 
+void   gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
+                                         GimpPixelFetcherEdgeMode  mode);
+void   gimp_pixel_fetcher_set_bg_color  (GimpPixelFetcher         *pf,
+                                         const GimpRGB            *color);
 
-void		   gimp_get_bg_guchar               (GimpDrawable     *drawable,
-						     gboolean          transparent,
-						     guchar           *bg);
-void		   gimp_get_fg_guchar               (GimpDrawable     *drawable,
-						     gboolean          transparent,
-						     guchar           *fg);
+void   gimp_pixel_fetcher_get_pixel     (GimpPixelFetcher         *pf,
+                                         gint                      x,
+                                         gint                      y,
+                                         guchar                   *pixel);
+void   gimp_pixel_fetcher_put_pixel     (GimpPixelFetcher         *pf,
+                                         gint                      x,
+                                         gint                      y,
+                                         const guchar             *pixel);
 
 G_END_DECLS
 

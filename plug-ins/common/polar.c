@@ -341,17 +341,21 @@ polarize_func (gint x,
 static void
 polarize (void)
 {
-  GimpRgnIterator *iter;
+  GimpRgnIterator  *iter;
   GimpPixelFetcher *pft;
+  GimpRGB           background;
 
-  pft = gimp_pixel_fetcher_new (drawable);
-  gimp_pixel_fetcher_set_bg_color (pft);
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
+
+  gimp_palette_get_background (&background);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
 
   gimp_progress_init (_("Polarizing..."));
+
   iter = gimp_rgn_iterator_new (drawable, run_mode);
   gimp_rgn_iterator_dest (iter, polarize_func, pft);
-
   gimp_rgn_iterator_free (iter);
+
   gimp_pixel_fetcher_destroy (pft);
 }
 
@@ -362,33 +366,33 @@ calc_undistorted_coords (gdouble  wx,
 			 gdouble *y)
 {
   gboolean inside;
-  gdouble phi, phi2;
-  gdouble xx, xm, ym, yy;
-  gint    xdiff, ydiff;
-  gdouble r;
-  gdouble m;
-  gdouble xmax, ymax, rmax;
-  gdouble x_calc, y_calc;
-  gdouble xi, yi;
-  gdouble circle, angl, t, angle;
-  gint    x1, x2, y1, y2;
+  gdouble  phi, phi2;
+  gdouble  xx, xm, ym, yy;
+  gint     xdiff, ydiff;
+  gdouble  r;
+  gdouble  m;
+  gdouble  xmax, ymax, rmax;
+  gdouble  x_calc, y_calc;
+  gdouble  xi, yi;
+  gdouble  circle, angl, t, angle;
+  gint     x1, x2, y1, y2;
 
   /* initialize */
 
   phi = 0.0;
-  r = 0.0;
+  r   = 0.0;
 
-  x1 = 0;
-  y1 = 0;
-  x2 = img_width;
-  y2 = img_height;
-  xdiff = x2 - x1;
-  ydiff = y2 - y1;
-  xm = xdiff / 2.0;
-  ym = ydiff / 2.0;
+  x1     = 0;
+  y1     = 0;
+  x2     = img_width;
+  y2     = img_height;
+  xdiff  = x2 - x1;
+  ydiff  = y2 - y1;
+  xm     = xdiff / 2.0;
+  ym     = ydiff / 2.0;
   circle = pcvals.circle;
-  angle = pcvals.angle;
-  angl = (double)angle / 180.0 * G_PI;
+  angle  = pcvals.angle;
+  angl   = (gdouble) angle / 180.0 * G_PI;
 
   if (pcvals.polrec)
     {
@@ -725,10 +729,13 @@ dialog_update_preview (void)
   gint	   bpp;
   gdouble  scale_x, scale_y;
   guchar  *p_ul, *i;
+  GimpRGB  background;
   guchar   outside[4];
   guchar  *buffer;
 
-  gimp_get_bg_guchar (drawable, TRUE, outside);
+  gimp_palette_get_background (&background);
+  gimp_rgb_set_alpha (&background, 0.0);
+  gimp_drawable_get_color_uchar (drawable->drawable_id, &background, outside);
 
   left   = sel_x1;
   right  = sel_x2 - 1;

@@ -27,12 +27,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
-#include <glib.h>
-
 #include "gimp.h"
-#include "gimppixelfetcher.h"
 
 
 struct _GimpPixelFetcher
@@ -51,12 +46,34 @@ struct _GimpPixelFetcher
   gboolean                  shadow;
 };
 
+
+/*  local function prototypes  */
+
+static guchar * gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
+                                                 gint              x,
+                                                 gint              y);
+
+
+/*  public functions  */
+
 GimpPixelFetcher *
-gimp_pixel_fetcher_new (GimpDrawable *drawable)
+gimp_pixel_fetcher_new (GimpDrawable *drawable,
+                        gboolean      shadow)
 {
   GimpPixelFetcher *pf;
+  gint              width;
+  gint              height;
+  gint              bpp;
 
-  pf = g_new (GimpPixelFetcher, 1);
+  g_return_val_if_fail (drawable != NULL, NULL);
+
+  width  = gimp_drawable_width  (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
+  bpp    = gimp_drawable_bpp    (drawable->drawable_id);
+
+  g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
+
+  pf = g_new0 (GimpPixelFetcher, 1);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &pf->sel_x1, &pf->sel_y1,
@@ -64,9 +81,9 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
 
   pf->col           = -1;
   pf->row           = -1;
-  pf->img_width     = gimp_drawable_width  (drawable->drawable_id);
-  pf->img_height    = gimp_drawable_height (drawable->drawable_id);
-  pf->img_bpp       = gimp_drawable_bpp    (drawable->drawable_id);
+  pf->img_width     = width;
+  pf->img_height    = height;
+  pf->img_bpp       = bpp;
   pf->tile_width    = gimp_tile_width ();
   pf->tile_height   = gimp_tile_height ();
   pf->bg_color[0]   = 0;
@@ -77,49 +94,159 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
   pf->drawable      = drawable;
   pf->tile          = NULL;
   pf->tile_dirty    = FALSE;
-  pf->shadow        = FALSE;
-
-  /* this allows us to use (slightly faster) do-while loops */
-  g_assert (pf->img_bpp > 0);
+  pf->shadow        = shadow;
 
   return pf;
+}
+
+void
+gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
+{
+  g_return_if_fail (pf != NULL);
+
+  if (pf->tile)
+    gimp_tile_unref (pf->tile, pf->tile_dirty);
+
+  g_free (pf);
 }
 
 void
 gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
                                   GimpPixelFetcherEdgeMode  mode)
 {
+  g_return_if_fail (pf != NULL);
+
   pf->mode = mode;
 }
 
 void
-gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf)
+gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf,
+                                 const GimpRGB    *color)
 {
-  GimpRGB background;
-
-  gimp_palette_get_background (&background);
+  g_return_if_fail (pf != NULL);
+  g_return_if_fail (color != NULL);
 
   switch (pf->img_bpp)
     {
     case 2: pf->bg_color[1] = 255;
     case 1:
-      pf->bg_color[0] = gimp_rgb_intensity_uchar (&background);
+      pf->bg_color[0] = gimp_rgb_intensity_uchar (color);
       break;
 
     case 4: pf->bg_color[3] = 255;
     case 3:
-      gimp_rgb_get_uchar (&background,
+      gimp_rgb_get_uchar (color,
                           pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
       break;
     }
 }
 
 void
-gimp_pixel_fetcher_set_shadow (GimpPixelFetcher *pf,
-                               gboolean          shadow)
+gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
+                              gint              x,
+                              gint              y,
+                              guchar           *pixel)
 {
-  pf->shadow = shadow;
+  guchar *p;
+  gint    i;
+
+  g_return_if_fail (pf != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  if (pf->mode == GIMP_PIXEL_FETCHER_EDGE_NONE &&
+      (x < pf->sel_x1 || x >= pf->sel_x2 ||
+       y < pf->sel_y1 || y >= pf->sel_y2))
+    {
+      return;
+    }
+
+  if (x < 0 || x >= pf->img_width ||
+      y < 0 || y >= pf->img_height)
+    {
+      switch (pf->mode)
+        {
+        case GIMP_PIXEL_FETCHER_EDGE_WRAP:
+          if (x < 0 || x >= pf->img_width)
+            {
+              x %= pf->img_width;
+
+              if (x < 0)
+                x += pf->img_width;
+            }
+
+          if (y < 0 || y >= pf->img_height)
+            {
+              y %= pf->img_height;
+
+              if (y < 0)
+                y += pf->img_height;
+            }
+          break;
+
+        case GIMP_PIXEL_FETCHER_EDGE_SMEAR:
+          x = CLAMP (x, 0, pf->img_width - 1);
+          y = CLAMP (y, 0, pf->img_height - 1);
+          break;
+
+        case GIMP_PIXEL_FETCHER_EDGE_BLACK:
+          for (i = 0; i < pf->img_bpp; i++)
+            pixel[i] = 0;
+          return;
+
+        case GIMP_PIXEL_FETCHER_EDGE_BACKGROUND:
+          for (i = 0; i < pf->img_bpp; i++)
+            pixel[i] = pf->bg_color[i];
+          return;
+
+        default:
+          return;
+        }
+    }
+
+  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
+
+  i = pf->img_bpp;
+
+  do
+    {
+      *pixel++ = *p++;
+    }
+  while (--i);
 }
+
+void
+gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
+                              gint              x,
+                              gint              y,
+                              const guchar     *pixel)
+{
+  guchar *p;
+  gint    i;
+
+  g_return_if_fail (pf != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  if (x < pf->sel_x1 || x >= pf->sel_x2 ||
+      y < pf->sel_y1 || y >= pf->sel_y2)
+    {
+      return;
+    }
+
+  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
+
+  i = pf->img_bpp;
+
+  do
+    {
+      *p++ = *pixel++;
+    }
+  while (--i);
+
+  pf->tile_dirty = TRUE;
+}
+
+
+/*  private functions  */
 
 static guchar *
 gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
@@ -149,155 +276,3 @@ gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
 
   return pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
 }
-
-void
-gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
-                              gint              x,
-                              gint              y,
-                              const guchar     *pixel)
-{
-  guchar *p;
-  gint    i;
-
-  if (x < pf->sel_x1 || x >= pf->sel_x2 ||
-      y < pf->sel_y1 || y >= pf->sel_y2)
-    {
-      return;
-    }
-
-  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
-
-  i = pf->img_bpp;
-  do
-    *p++ = *pixel++;
-  while (--i);
-
-  pf->tile_dirty = TRUE;
-}
-
-void
-gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
-                              gint              x,
-                              gint              y,
-                              guchar           *pixel)
-{
-  guchar *p;
-  gint    i;
-
-  if (pf->mode == GIMP_PIXEL_FETCHER_EDGE_NONE &&
-      (x < pf->sel_x1 || x >= pf->sel_x2 ||
-       y < pf->sel_y1 || y >= pf->sel_y2))
-    {
-      return;
-    }
-  else if (x < 0 || x >= pf->img_width ||
-           y < 0 || y >= pf->img_height)
-    switch (pf->mode)
-      {
-      case GIMP_PIXEL_FETCHER_EDGE_WRAP:
-        if (x < 0 || x >= pf->img_width)
-          {
-            x %= pf->img_width;
-            if (x < 0)
-              x += pf->img_width;
-          }
-        if (y < 0 || y >= pf->img_height)
-          {
-            y %= pf->img_height;
-            if (y < 0)
-              y += pf->img_height;
-          }
-        break;
-
-      case GIMP_PIXEL_FETCHER_EDGE_SMEAR:
-        x = CLAMP (x, 0, pf->img_width - 1);
-        y = CLAMP (y, 0, pf->img_height - 1);
-        break;
-
-      case GIMP_PIXEL_FETCHER_EDGE_BLACK:
-        if (x < 0 || x >= pf->img_width ||
-            y < 0 || y >= pf->img_height)
-          {
-            for (i = 0; i < pf->img_bpp; i++)
-              pixel[i] = 0;
-
-            return;
-          }
-        break;
-
-      default:
-        return;
-      }
-
-  p = gimp_pixel_fetcher_provide_tile (pf, x, y);
-
-  i = pf->img_bpp;
-  do
-    *pixel++ = *p++;
-  while (--i);
-}
-
-void
-gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
-{
-  if (pf->tile)
-    gimp_tile_unref (pf->tile, pf->tile_dirty);
-
-  g_free (pf);
-}
-
-static void
-gimp_get_color_guchar (GimpDrawable *drawable,
-                       GimpRGB            *color,
-                       gboolean      transparent,
-                       guchar       *bg)
-{
-  switch (gimp_drawable_type (drawable->drawable_id))
-    {
-    case GIMP_RGB_IMAGE :
-      gimp_rgb_get_uchar (color, &bg[0], &bg[1], &bg[2]);
-      bg[3] = 255;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      gimp_rgb_get_uchar (color, &bg[0], &bg[1], &bg[2]);
-      bg[3] = transparent ? 0 : 255;
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (color);
-      bg[1] = 255;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (color);
-      bg[1] = transparent ? 0 : 255;
-      break;
-
-    default:
-      break;
-    }
-}
-
-void
-gimp_get_bg_guchar (GimpDrawable *drawable,
-                    gboolean      transparent,
-                    guchar       *bg)
-{
-  GimpRGB  background;
-
-  gimp_palette_get_background (&background);
-  gimp_get_color_guchar (drawable, &background, transparent, bg);
-}
-
-void
-gimp_get_fg_guchar (GimpDrawable *drawable,
-                    gboolean      transparent,
-                    guchar       *fg)
-{
-  GimpRGB  foreground;
-
-  gimp_palette_get_foreground (&foreground);
-  gimp_get_color_guchar (drawable, &foreground, transparent, fg);
-}
-

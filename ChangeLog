@@ -1,3 +1,51 @@
+2004-03-12  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up the remaining libgimp API issues:
+
+	* libgimp/gimppixelfetcher.[ch] (enum GimpPixelFetcherEdgeMode):
+	added new enum value GIMP_PIXEL_FETCHER_EDGE_BACKGROUND so we
+	can actually use the bg_color feature of the GimpPixelFetcher.
+
+	(gimp_pixel_fetcher_new): added "gboolean shadow" parameter
+	because it must not change while the GimpPixelFetcher exists.
+
+	(gimp_pixel_fetcher_set_shadow): removed.
+
+	(gimp_pixel_fetcher_set_bg_color): added "GimpRGB *color"
+	parameter and don't call gimp_palette_get_foreground().
+
+	(gimp_pixel_fetcher_get_pixel): handle BACKGROUND mode. Cleaned up
+	the function.
+
+	(gimp_get_bg_guchar)
+	(gimp_get_fg_guchar): removed these functions...
+
+	* libgimp/gimpdrawable.[ch]: ...and added
+	gimp_drawable_get_color_uchar() instead.
+
+	* libgimp/gimp.def
+	* plug-ins/common/blinds.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/mosaic.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/libgimpoldpreview/gimpoldpreview.c: changed accordingly.
+
+	(Didn't test the changed plug-ins because I wanted to get this
+	API change into CVS as soon as possible)
+
 2004-03-12  Raphaël Quinet  <quinet@gamers.org>
 
 	* app/core/gimpdrawable-transform.c (RECURSION_LEVEL): Set to 0 in
