@@ -1,3 +1,8 @@
+2002-03-02  Sven Neumann  <sven@gimp.org>
+
+	* update.sh: latest intltool changes allow me to simplify the script
+	even further.
+
 2002-03-02  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation from gimp-1-2 branch and
