@@ -644,30 +644,18 @@ edge_dialog (GimpDrawable *drawable)
                          NULL);
 
   /*  compression  */
-  frame = gimp_radio_group_new2 (TRUE, _("Algorithm"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &evals.edgemode,
-                                 GINT_TO_POINTER (evals.edgemode),
+  frame = gimp_int_radio_group_new (TRUE, _("Algorithm"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &evals.edgemode, evals.edgemode,
 
-                                 _("_Sobel"),
-                                 GINT_TO_POINTER (SOBEL), NULL,
+                                    _("_Sobel"),        SOBEL,        NULL,
+                                    _("_Prewitt"),      PREWITT,      NULL,
+                                    _("_Gradient"),     GRADIENT,     NULL,
+                                    _("_Roberts"),      ROBERTS,      NULL,
+                                    _("_Differential"), DIFFERENTIAL, NULL,
+                                    _("_Laplace"),      LAPLACE,      NULL,
 
-                                 _("_Prewitt"),
-                                 GINT_TO_POINTER (PREWITT), NULL,
-
-                                 _("_Gradient"),
-                                 GINT_TO_POINTER (GRADIENT), NULL,
-
-                                 _("_Roberts"),
-                                 GINT_TO_POINTER (ROBERTS), NULL,
-
-                                 _("_Differential"),
-                                 GINT_TO_POINTER (DIFFERENTIAL), NULL,
-
-                                 _("_Laplace"),
-                                 GINT_TO_POINTER (LAPLACE), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame);
   gtk_widget_show (frame);

@@ -475,28 +475,23 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   gtk_widget_show (label);
 
   colorblind->optionmenu =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (colorblind_deficiency_callback),
-                           colorblind,
-                           GINT_TO_POINTER (colorblind->deficiency),
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (colorblind_deficiency_callback),
+                              colorblind, colorblind->deficiency,
 
-                           _("None (normal vision)"),
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_NONE),
-                           NULL,
+                              _("None (normal vision)"),
+                              COLORBLIND_DEFICIENCY_NONE, NULL,
 
-                           _("Protanopia (insensitivity to red)"),
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_PROTANOPIA),
-                           NULL,
+                              _("Protanopia (insensitivity to red)"),
+                              COLORBLIND_DEFICIENCY_PROTANOPIA, NULL,
 
-                           _("Deuteranopia (insensitivity to green)"),
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_DEUTERANOPIA),
-                           NULL,
+                              _("Deuteranopia (insensitivity to green)"),
+                              COLORBLIND_DEFICIENCY_DEUTERANOPIA, NULL,
 
-                           _("Tritanopia (insensitivity to blue)"),
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_TRITANOPIA),
-                           NULL,
+                              _("Tritanopia (insensitivity to blue)"),
+                              COLORBLIND_DEFICIENCY_TRITANOPIA, NULL,
 
-                           NULL);
+                              NULL);
 
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), colorblind->optionmenu,
                       FALSE, FALSE, 0);

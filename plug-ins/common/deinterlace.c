@@ -295,18 +295,14 @@ deinterlace_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &DeinterlaceValue,
-                                 GINT_TO_POINTER (DeinterlaceValue),
+  frame = gimp_int_radio_group_new (TRUE, _("Mode"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &DeinterlaceValue, DeinterlaceValue,
 
-                                 _("Keep O_dd Fields"),
-                                 GINT_TO_POINTER (ODD_FIELDS), NULL,
+                                    _("Keep O_dd Fields"),  ODD_FIELDS,  NULL,
+                                    _("Keep _Even Fields"), EVEN_FIELDS, NULL,
 
-                                 _("Keep _Even Fields"),
-                                 GINT_TO_POINTER (EVEN_FIELDS), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

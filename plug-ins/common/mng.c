@@ -1270,43 +1270,42 @@ mng_save_dialog (gint32 image_id)
   gimp_image_get_layers (image_id, &num_layers);
 
   if (num_layers == 1)
-    menu = gimp_option_menu_new2 (FALSE,
-				  G_CALLBACK (gimp_menu_item_update),
-				  &mng_data.default_chunks,
-				  GINT_TO_POINTER (mng_data.default_chunks),
-				  "PNG",
-				  GINT_TO_POINTER (CHUNKS_PNG_D), NULL,
-				  "JNG",
-				  GINT_TO_POINTER (CHUNKS_JNG_D), NULL, NULL);
+    menu = gimp_int_option_menu_new (FALSE,
+				     G_CALLBACK (gimp_menu_item_update),
+				     &mng_data.default_chunks,
+				     mng_data.default_chunks,
+
+				     _("PNG"), CHUNKS_PNG_D, NULL,
+				     _("JNG"), CHUNKS_JNG_D, NULL,
+
+				     NULL);
   else
-    menu = gimp_option_menu_new2 (FALSE,
-				  G_CALLBACK (gimp_menu_item_update),
-				  &mng_data.default_chunks,
-				  GINT_TO_POINTER (mng_data.default_chunks),
-				  "PNG + Delta PNG",
-				  GINT_TO_POINTER (CHUNKS_PNG_D), NULL,
-				  "JNG + Delta PNG",
-				  GINT_TO_POINTER (CHUNKS_JNG_D), NULL,
-				  "All PNG",
-				  GINT_TO_POINTER (CHUNKS_PNG), NULL,
-				  "All JNG",
-				  GINT_TO_POINTER (CHUNKS_JNG), NULL,
-				  NULL);
+    menu = gimp_int_option_menu_new (FALSE,
+				     G_CALLBACK (gimp_menu_item_update),
+				     &mng_data.default_chunks,
+				     mng_data.default_chunks,
+
+				     _("PNG + Delta PNG"), CHUNKS_PNG_D, NULL,
+				     _("JNG + Delta PNG"), CHUNKS_JNG_D, NULL,
+				     _("All PNG"),         CHUNKS_PNG,   NULL,
+				     _("All JNG"),         CHUNKS_JNG,   NULL,
+
+				     NULL);
 
   gtk_widget_set_sensitive (menu, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Default Chunks Type:"), 1.0, 0.5,
                              menu, 1, FALSE);
 
-  menu = gimp_option_menu_new2 (FALSE,
-				G_CALLBACK (gimp_menu_item_update),
-				&mng_data.default_dispose,
-				GINT_TO_POINTER (mng_data.default_dispose),
-				_("Combine"),
-				GINT_TO_POINTER (DISPOSE_COMBINE), NULL,
-				_("Replace"),
-				GINT_TO_POINTER (DISPOSE_REPLACE), NULL,
-				NULL);
+  menu = gimp_int_option_menu_new (FALSE,
+				   G_CALLBACK (gimp_menu_item_update),
+				   &mng_data.default_dispose,
+				   mng_data.default_dispose,
+
+				   _("Combine"), DISPOSE_COMBINE, NULL,
+				   _("Replace"), DISPOSE_REPLACE, NULL,
+
+				   NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Default Frame Disposal:"), 1.0, 0.5,

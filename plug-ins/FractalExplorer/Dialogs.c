@@ -796,31 +796,30 @@ explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   toggle_vbox =
-    gimp_radio_group_new2 (FALSE, NULL,
-			   G_CALLBACK (explorer_radio_update),
-			   &wvals.fractaltype,
-			   (gpointer) wvals.fractaltype,
+    gimp_int_radio_group_new (FALSE, NULL,
+			      G_CALLBACK (explorer_radio_update),
+			      &wvals.fractaltype, wvals.fractaltype,
 
-			   _("Mandelbrot"), (gpointer) TYPE_MANDELBROT,
-			   &(elements->type[TYPE_MANDELBROT]),
-			   _("Julia"), (gpointer) TYPE_JULIA,
-			   &(elements->type[TYPE_JULIA]),
-			   _("Barnsley 1"), (gpointer) TYPE_BARNSLEY_1,
-			   &(elements->type[TYPE_BARNSLEY_1]),
-			   _("Barnsley 2"), (gpointer) TYPE_BARNSLEY_2,
-			   &(elements->type[TYPE_BARNSLEY_2]),
-			   _("Barnsley 3"), (gpointer) TYPE_BARNSLEY_3,
-			   &(elements->type[TYPE_BARNSLEY_3]),
-			   _("Spider"), (gpointer) TYPE_SPIDER,
-			   &(elements->type[TYPE_SPIDER]),
-			   _("Man'o'war"), (gpointer) TYPE_MAN_O_WAR,
-			   &(elements->type[TYPE_MAN_O_WAR]),
-			   _("Lambda"), (gpointer) TYPE_LAMBDA,
-			   &(elements->type[TYPE_LAMBDA]),
-			   _("Sierpinski"), (gpointer) TYPE_SIERPINSKI,
-			   &(elements->type[TYPE_SIERPINSKI]),
+			      _("Mandelbrot"), TYPE_MANDELBROT,
+			      &(elements->type[TYPE_MANDELBROT]),
+			      _("Julia"),      TYPE_JULIA,
+			      &(elements->type[TYPE_JULIA]),
+			      _("Barnsley 1"), TYPE_BARNSLEY_1,
+			      &(elements->type[TYPE_BARNSLEY_1]),
+			      _("Barnsley 2"), TYPE_BARNSLEY_2,
+			      &(elements->type[TYPE_BARNSLEY_2]),
+			      _("Barnsley 3"), TYPE_BARNSLEY_3,
+			      &(elements->type[TYPE_BARNSLEY_3]),
+			      _("Spider"),     TYPE_SPIDER,
+			      &(elements->type[TYPE_SPIDER]),
+			      _("Man'o'war"),  TYPE_MAN_O_WAR,
+			      &(elements->type[TYPE_MAN_O_WAR]),
+			      _("Lambda"),     TYPE_LAMBDA,
+			      &(elements->type[TYPE_LAMBDA]),
+			      _("Sierpinski"), TYPE_SIERPINSKI,
+			      &(elements->type[TYPE_SIERPINSKI]),
 
-			   NULL);
+			      NULL);
 
   toggle_vbox2 = gtk_vbox_new (FALSE, 1);
   for (i = TYPE_BARNSLEY_2; i <= TYPE_SPIDER; i++)
@@ -959,18 +958,18 @@ explorer_dialog (void)
   gtk_widget_show (hbox);
 
   /*  Redmode radio frame  */
-  frame = gimp_radio_group_new2 (TRUE, _("Red"),
-				 G_CALLBACK (explorer_radio_update),
-				 &wvals.redmode, (gpointer) wvals.redmode,
+  frame = gimp_int_radio_group_new (TRUE, _("Red"),
+				    G_CALLBACK (explorer_radio_update),
+				    &wvals.redmode, wvals.redmode,
 
-				 _("Sine"), (gpointer) SINUS,
-				 &elements->redmode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
-				 &elements->redmode[COSINUS],
-				 _("None"), (gpointer) NONE,
-				 &elements->redmode[NONE],
+				    _("Sine"),         SINUS,
+				    &elements->redmode[SINUS],
+				    _("Cosine"),       COSINUS,
+				    &elements->redmode[COSINUS],
+				    _("None"),         NONE,
+				    &elements->redmode[NONE],
 
-				 NULL);
+				    NULL);
   gimp_help_set_help_data (elements->redmode[SINUS],
 			   _("Use sine-function for this color component"),
 			   NULL);
@@ -1000,18 +999,18 @@ explorer_dialog (void)
 			     "versa"), NULL);
 
   /*  Greenmode radio frame  */
-  frame = gimp_radio_group_new2 (TRUE, _("Green"),
-				 G_CALLBACK (explorer_radio_update),
-				 &wvals.greenmode, (gpointer) wvals.greenmode,
+  frame = gimp_int_radio_group_new (TRUE, _("Green"),
+				    G_CALLBACK (explorer_radio_update),
+				    &wvals.greenmode, wvals.greenmode,
 
-				 _("Sine"), (gpointer) SINUS,
-				 &elements->greenmode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
-				 &elements->greenmode[COSINUS],
-				 _("None"), (gpointer) NONE,
-				 &elements->greenmode[NONE],
+				    _("Sine"),           SINUS,
+				    &elements->greenmode[SINUS],
+				    _("Cosine"),         COSINUS,
+				    &elements->greenmode[COSINUS],
+				    _("None"),           NONE,
+				    &elements->greenmode[NONE],
 
-				 NULL);
+				    NULL);
   gimp_help_set_help_data (elements->greenmode[SINUS],
 			   _("Use sine-function for this color component"),
 			   NULL);
@@ -1041,18 +1040,18 @@ explorer_dialog (void)
 			     "versa"), NULL);
 
   /*  Bluemode radio frame  */
-  frame = gimp_radio_group_new2 (TRUE, _("Blue"),
-				 G_CALLBACK (explorer_radio_update),
-				 &wvals.bluemode, (gpointer) wvals.bluemode,
+  frame = gimp_int_radio_group_new (TRUE, _("Blue"),
+				    G_CALLBACK (explorer_radio_update),
+				    &wvals.bluemode, wvals.bluemode,
 
-				 _("Sine"), (gpointer) SINUS,
-				 &elements->bluemode[SINUS],
-				 _("Cosine"), (gpointer) COSINUS,
-				 &elements->bluemode[COSINUS],
-				 _("None"), (gpointer) NONE,
-				 &elements->bluemode[NONE],
+				    _("Sine"),          SINUS,
+				    &elements->bluemode[SINUS],
+				    _("Cosine"),        COSINUS,
+				    &elements->bluemode[COSINUS],
+				    _("None"),          NONE,
+				    &elements->bluemode[NONE],
 
-				 NULL);
+				    NULL);
   gimp_help_set_help_data (elements->bluemode[SINUS],
 			   _("Use sine-function for this color component"),
 			   NULL);

@@ -295,23 +295,14 @@ maze_dialog (void)
   trow++;
 
   /* Algorithm Choice */
-  frame = gimp_radio_group_new (TRUE, _("Style"),
+  frame = gimp_int_radio_group_new (TRUE, _("Style"),
+                                    G_CALLBACK (gimp_radio_button_update),
+				    &mvals.algorithm, mvals.algorithm,
 
-				_("Depth First"),
-				gimp_radio_button_update,
-				&mvals.algorithm,
-				(gpointer) DEPTH_FIRST,
-				NULL,
-				(mvals.algorithm == DEPTH_FIRST),
+				    _("Depth First"),      DEPTH_FIRST,     NULL,
+				    _("Prim's Algorithm"), PRIMS_ALGORITHM, NULL,
 
-				_("Prim's Algorithm"),
-				gimp_radio_button_update,
-				&mvals.algorithm,
-				(gpointer) PRIMS_ALGORITHM,
-				NULL,
-				(mvals.algorithm == PRIMS_ALGORITHM),
-
-				NULL);
+				    NULL);
 
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 6);

@@ -747,21 +747,15 @@ mblur_dialog (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Blur Type"),
-                                 G_CALLBACK (mblur_radio_button_update),
-                                 &mbvals.mblur_type,
-                                 GINT_TO_POINTER (mbvals.mblur_type),
+  frame = gimp_int_radio_group_new (TRUE, _("Blur Type"),
+                                    G_CALLBACK (mblur_radio_button_update),
+                                    &mbvals.mblur_type, mbvals.mblur_type,
 
-                                 _("_Linear"),
-                                 GINT_TO_POINTER (MBLUR_LINEAR), NULL,
+                                    _("_Linear"), MBLUR_LINEAR, NULL,
+                                    _("_Radial"), MBLUR_RADIAL, NULL,
+                                    _("_Zoom"),   MBLUR_ZOOM,   NULL,
 
-                                 _("_Radial"),
-                                 GINT_TO_POINTER (MBLUR_RADIAL), NULL,
-
-                                 _("_Zoom"),
-                                 GINT_TO_POINTER (MBLUR_ZOOM), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

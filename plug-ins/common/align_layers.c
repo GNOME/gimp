@@ -408,67 +408,57 @@ align_layers_dialog (void)
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 7, 3);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
-			   &VALS.h_style, (gpointer) VALS.h_style,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
+			      &VALS.h_style, VALS.h_style,
 
-			   _("None"),
-			   (gpointer) H_NONE, NULL,
-			   _("Collect"),
-			   (gpointer) H_COLLECT, NULL,
-			   _("Fill (left to right)"),
-			   (gpointer) LEFT2RIGHT, NULL,
-			   _("Fill (right to left)"),
-			   (gpointer) RIGHT2LEFT, NULL,
-			   _("Snap to Grid"),
-			   (gpointer) SNAP2HGRID, NULL,
+			      _("None"),                 H_NONE,     NULL,
+			      _("Collect"),              H_COLLECT,  NULL,
+			      _("Fill (left to right)"), LEFT2RIGHT, NULL,
+			      _("Fill (right to left)"), RIGHT2LEFT, NULL,
+			      _("Snap to Grid"),         SNAP2HGRID, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Horizontal Style:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
-			   &VALS.h_base, (gpointer) VALS.h_base,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
+			      &VALS.h_base, VALS.h_base,
 
-			   _("Left Edge"),  (gpointer) H_BASE_LEFT, NULL,
-			   _("Center"),     (gpointer) H_BASE_CENTER, NULL,
-			   _("Right Edge"), (gpointer) H_BASE_RIGHT, NULL,
+			      _("Left Edge"),  H_BASE_LEFT,   NULL,
+			      _("Center"),     H_BASE_CENTER, NULL,
+			      _("Right Edge"), H_BASE_RIGHT,   NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Ho_rizontal Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
-			   &VALS.v_style, (gpointer) VALS.v_style,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
+			      &VALS.v_style, VALS.v_style,
 
-			   _("None"),
-			   (gpointer) V_NONE, NULL,
-			   _("Collect"),
-			   (gpointer) V_COLLECT, NULL,
-			   _("Fill (top to bottom)"),
-			   (gpointer) TOP2BOTTOM, NULL,
-			   _("Fill (bottom to top)"),
-			   (gpointer) BOTTOM2TOP, NULL,
-			   _("Snap to Grid"),
-			   (gpointer) SNAP2VGRID, NULL,
+			      _("None"),                 V_NONE,     NULL,
+			      _("Collect"),              V_COLLECT,  NULL,
+			      _("Fill (top to bottom)"), TOP2BOTTOM, NULL,
+			      _("Fill (bottom to top)"), BOTTOM2TOP, NULL,
+			      _("Snap to Grid"),         SNAP2VGRID, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Vertical Style:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
-			   &VALS.v_base, (gpointer) VALS.v_base,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
+			      &VALS.v_base, VALS.v_base,
 
-			   _("Top Edge"),    (gpointer) V_BASE_TOP, NULL,
-			   _("Center"),      (gpointer) V_BASE_CENTER, NULL,
-			   _("Bottom Edge"), (gpointer) V_BASE_BOTTOM, NULL,
+			      _("Top Edge"),    V_BASE_TOP,    NULL,
+			      _("Center"),      V_BASE_CENTER, NULL,
+			      _("Bottom Edge"), V_BASE_BOTTOM, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Ver_tical Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);

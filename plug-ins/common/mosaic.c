@@ -586,18 +586,15 @@ mosaic_dialog (void)
   gtk_widget_show (frame);
 
   /*  tiling primitive  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tiling Primitives"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &mvals.tile_type, (gpointer) mvals.tile_type,
+  frame = gimp_int_radio_group_new (TRUE, _("Tiling Primitives"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &mvals.tile_type, mvals.tile_type,
 
-				 _("_Squares"),
-				 (gpointer) SQUARES, NULL,
-				 _("He_xagons"),
-				 (gpointer) HEXAGONS, NULL,
-				 _("Oc_tagons & Squares"),
-				 (gpointer) OCTAGONS, NULL,
+				    _("_Squares"),            SQUARES,  NULL,
+				    _("He_xagons"),           HEXAGONS, NULL,
+				    _("Oc_tagons & Squares"), OCTAGONS, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

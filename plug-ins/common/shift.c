@@ -326,18 +326,14 @@ shift_dialog (gint32 image_ID)
                          NULL);
 
   /*  parameter settings  */
-  frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &shvals.orientation,
-                                 GINT_TO_POINTER (shvals.orientation),
+  frame = gimp_int_radio_group_new (TRUE, _("Parameter Settings"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &shvals.orientation, shvals.orientation,
 
-                                 _("Shift _Horizontally"),
-                                 GINT_TO_POINTER (HORIZONTAL), NULL,
+                                    _("Shift _Horizontally"), HORIZONTAL, NULL,
+                                    _("Shift _Vertically"),   VERTICAL,   NULL,
 
-                                 _("Shift _Vertically"),
-                                 GINT_TO_POINTER (VERTICAL), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);

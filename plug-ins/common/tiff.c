@@ -1783,27 +1783,17 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, TRUE, 0);
 
   /*  compression  */
-  frame = gimp_radio_group_new2 (TRUE, _("Compression"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &tsvals.compression,
-                                 GINT_TO_POINTER (tsvals.compression),
+  frame = gimp_int_radio_group_new (TRUE, _("Compression"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &tsvals.compression, tsvals.compression,
 
-                                 _("_None"),
-                                 GINT_TO_POINTER (COMPRESSION_NONE), NULL,
+                                    _("_None"),      COMPRESSION_NONE,     NULL,
+                                    _("_LZW"),       COMPRESSION_LZW,      NULL,
+                                    _("_Pack Bits"), COMPRESSION_PACKBITS, NULL,
+                                    _("_Deflate"),   COMPRESSION_DEFLATE,  NULL,
+                                    _("_JPEG"),      COMPRESSION_JPEG,     NULL,
 
-                                 _("_LZW"),
-                                 GINT_TO_POINTER (COMPRESSION_LZW), NULL,
-
-                                 _("_Pack Bits"),
-                                 GINT_TO_POINTER (COMPRESSION_PACKBITS), NULL,
-
-                                 _("_Deflate"),
-                                 GINT_TO_POINTER (COMPRESSION_DEFLATE), NULL,
-
-                                 _("_JPEG"),
-                                 GINT_TO_POINTER (COMPRESSION_JPEG), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -1264,24 +1264,16 @@ struc_dialog (void)
 
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Direction"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &svals.direction,
-                                 GINT_TO_POINTER (svals.direction),
+  frame = gimp_int_radio_group_new (TRUE, _("Direction"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &svals.direction, svals.direction,
 
-                                 _("_Top-Right"),
-                                 GINT_TO_POINTER (TOP_RIGHT), NULL,
+                                    _("_Top-Right"),    TOP_RIGHT,    NULL,
+                                    _("Top-_Left"),     TOP_LEFT,     NULL,
+                                    _("_Bottom-Left"),  BOTTOM_LEFT,  NULL,
+                                    _("Bottom-_Right"), BOTTOM_RIGHT, NULL,
 
-                                 _("Top-_Left"),
-                                 GINT_TO_POINTER (TOP_LEFT), NULL,
-
-                                 _("_Bottom-Left"),
-                                 GINT_TO_POINTER (BOTTOM_LEFT), NULL,
-
-                                 _("Bottom-_Right"),
-                                 GINT_TO_POINTER (BOTTOM_RIGHT), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -1869,13 +1869,15 @@ save_dialog (void)
 
   /* Subsampling */
   menu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (menu_callback),
-			   &jsvals.subsmp, GINT_TO_POINTER (jsvals.subsmp),
-			   "2x2,1x1,1x1",  GINT_TO_POINTER (0), NULL,
-			   "2x1,1x1,1x1 (4:2:2)", GINT_TO_POINTER (1), NULL,
-			   "1x1,1x1,1x1",  GINT_TO_POINTER (2), NULL,
-			   NULL);
+    gimp_int_option_menu_new (FALSE,
+			      G_CALLBACK (menu_callback),
+			      &jsvals.subsmp, jsvals.subsmp,
+
+			      "2x2,1x1,1x1",         0, NULL,
+			      "2x1,1x1,1x1 (4:2:2)", 1, NULL,
+			      "1x1,1x1,1x1",         2, NULL,
+
+			      NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 7,
 			     _("Subsampling:"),
@@ -1884,13 +1886,15 @@ save_dialog (void)
 
   /* DCT method */
   menu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (menu_callback),
-			   &jsvals.dct, GINT_TO_POINTER (jsvals.dct),
-			   _("Fast Integer"),   GINT_TO_POINTER (1), NULL,
-			   _("Integer"),        GINT_TO_POINTER (0), NULL,
-			   _("Floating-Point"), GINT_TO_POINTER (2), NULL,
-			   NULL);
+    gimp_int_option_menu_new (FALSE,
+			      G_CALLBACK (menu_callback),
+			      &jsvals.dct, jsvals.dct,
+
+			      _("Fast Integer"),   1, NULL,
+			      _("Integer"),        0, NULL,
+			      _("Floating-Point"), 2, NULL,
+			      
+			      NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 8,
 			     _("DCT method (Speed/quality tradeoff):"),

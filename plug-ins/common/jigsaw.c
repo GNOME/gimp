@@ -2646,18 +2646,14 @@ dialog_box (void)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Jigsaw Style"),
-				 G_CALLBACK (jigsaw_radio_button_update),
-				 &config.style,
-                                 GINT_TO_POINTER (config.style),
+  frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
+				    G_CALLBACK (jigsaw_radio_button_update),
+				    &config.style, config.style,
 
-				 _("_Square"),
-                                 GINT_TO_POINTER (BEZIER_1), &rbutton1,
+				    _("_Square"), BEZIER_1, &rbutton1,
+				    _("C_urved"), BEZIER_2, &rbutton2,
 
-				 _("C_urved"),
-                                 GINT_TO_POINTER (BEZIER_2), &rbutton2,
-
-				 NULL);
+				    NULL);
 
   gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
   gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"), NULL);

@@ -264,6 +264,120 @@ gimp_option_menu_new2 (gboolean         menu_only,
 }
 
 /**
+ * gimp_int_option_menu_new:
+ * @menu_only:          %TRUE if the function should return a #GtkMenu only.
+ * @menu_item_callback: The callback each menu item's "activate" signal will
+ *                      be connected with.
+ * @menu_item_callback_data:
+ *                      The data which will be passed to g_signal_connect().
+ * @initial:            The @item_data of the initially selected menu item.
+ * @...:                A %NULL-terminated @va_list describing the menu items.
+ *
+ * Convenience function to create a #GtkOptionMenu or a #GtkMenu. This
+ * function does the same thing as gimp_option_menu_new2(), but it takes
+ * integers as @item_data instead of pointers, since that is a very
+ * common case (mapping an enum to a menu).
+ *
+ * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
+ **/
+GtkWidget *
+gimp_int_option_menu_new (gboolean         menu_only,
+		          GCallback        menu_item_callback,
+		          gpointer         callback_data,
+		          gint             initial, /* item_data */
+
+		          /* specify menu items as va_list:
+			   *  const gchar *label,
+			   *  gint         item_data,
+			   *  GtkWidget  **widget_ptr,
+			   */
+
+		          ...)
+{
+  GtkWidget *menu;
+  GtkWidget *menuitem;
+
+  /*  menu item variables  */
+  const gchar  *label;
+  gint          item_data;
+  gpointer      item_ptr;
+  GtkWidget   **widget_ptr;
+
+  va_list args;
+  gint    i;
+  gint    initial_index;
+
+  menu = gtk_menu_new ();
+
+  /*  create the menu items  */
+  initial_index = 0;
+
+  va_start (args, initial);
+  label = va_arg (args, const gchar *);
+
+  for (i = 0; label; i++)
+    {
+      item_data  = va_arg (args, gint);
+      widget_ptr = va_arg (args, GtkWidget **);
+
+      item_ptr = GINT_TO_POINTER (item_data);
+
+      if (strcmp (label, "---"))
+	{
+	  menuitem = gtk_menu_item_new_with_label (label);
+
+	  g_signal_connect (menuitem, "activate",
+			    menu_item_callback,
+			    callback_data);
+
+	  if (item_data)
+            {
+              g_object_set_data (G_OBJECT (menuitem), "gimp-item-data",
+                                 item_ptr);
+
+              /*  backward compat  */
+              g_object_set_data (G_OBJECT (menuitem), "user_data", item_ptr);
+            }
+	}
+      else
+	{
+	  menuitem = gtk_menu_item_new ();
+
+	  gtk_widget_set_sensitive (menuitem, FALSE);
+	}
+
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+      if (widget_ptr)
+	*widget_ptr = menuitem;
+
+      gtk_widget_show (menuitem);
+
+      /*  remember the initial menu item  */
+      if (item_data == initial)
+	initial_index = i;
+
+      label = va_arg (args, const gchar *);
+    }
+  va_end (args);
+
+  if (! menu_only)
+    {
+      GtkWidget *optionmenu;
+
+      optionmenu = gtk_option_menu_new ();
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+
+      /*  select the initial menu item  */
+      gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+
+      return optionmenu;
+    }
+
+  return menu;
+}
+
+/**
  * gimp_option_menu_set_history:
  * @option_menu: A #GtkOptionMenu as returned by gimp_option_menu_new() or
  *               gimp_option_menu_new2().
@@ -519,6 +633,118 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
           /*  backward compatibility  */
           g_object_set_data (G_OBJECT (button), "user_data", item_data);
+        }
+
+      if (widget_ptr)
+	*widget_ptr = button;
+
+      if (initial == item_data)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      g_signal_connect (button, "toggled",
+			radio_button_callback,
+			callback_data);
+
+      gtk_widget_show (button);
+
+      label = va_arg (args, const gchar *);
+    }
+  va_end (args);
+
+  if (in_frame)
+    {
+      GtkWidget *frame;
+
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
+      return frame;
+    }
+
+  return vbox;
+}
+
+/**
+ * gimp_int_radio_group_new:
+ * @in_frame:              %TRUE if you want a #GtkFrame around the
+ *                         radio button group.
+ * @frame_title:           The title of the Frame or %NULL if you don't want
+ *                         a title.
+ * @radio_button_callback: The callback each button's "toggled" signal will
+ *                         be connected with.
+ * @radio_button_callback_data:
+ *                         The data which will be passed to g_signal_connect().
+ * @initial:               The @item_data of the initially pressed radio button.
+ * @...:                   A %NULL-terminated @va_list describing
+ *                         the radio buttons.
+ *
+ * Convenience function to create a group of radio buttons embedded into
+ * a #GtkFrame or #GtkVbox. This function does the same thing as
+ * gimp_radio_group_new2(), but it takes integers as @item_data instead of
+ * pointers, since that is a very common case (mapping an enum to a radio
+ * group).
+ *
+ * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
+ **/
+GtkWidget *
+gimp_int_radio_group_new (gboolean         in_frame,
+		          const gchar     *frame_title,
+		          GCallback        radio_button_callback,
+		          gpointer         callback_data,
+		          gint             initial, /* item_data */
+
+		          /* specify radio buttons as va_list:
+			   *  const gchar *label,
+			   *  gint         item_data,
+			   *  GtkWidget  **widget_ptr,
+			   */
+
+		          ...)
+{
+  GtkWidget *vbox;
+  GtkWidget *button;
+  GSList    *group;
+
+  /*  radio button variables  */
+  const gchar *label;
+  gint         item_data;
+  gpointer     item_ptr;
+  GtkWidget  **widget_ptr;
+
+  va_list args;
+
+  vbox = gtk_vbox_new (FALSE, 1);
+
+  group = NULL;
+
+  /*  create the radio buttons  */
+  va_start (args, initial);
+  label = va_arg (args, const gchar *);
+
+  while (label)
+    {
+      item_data  = va_arg (args, gint);
+      widget_ptr = va_arg (args, GtkWidget **);
+
+      item_ptr = GINT_TO_POINTER (item_data);
+
+      if (label != GINT_TO_POINTER (1))
+	button = gtk_radio_button_new_with_mnemonic (group, label);
+      else
+	button = gtk_radio_button_new (group);
+
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+      if (item_data)
+        {
+          g_object_set_data (G_OBJECT (button), "gimp-item-data", item_ptr);
+
+          /*  backward compatibility  */
+          g_object_set_data (G_OBJECT (button), "user_data", item_ptr);
         }
 
       if (widget_ptr)

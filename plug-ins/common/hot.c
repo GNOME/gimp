@@ -592,34 +592,27 @@ pluginCoreIA (piArgs *argp)
                     G_CALLBACK (gimp_toggle_button_update),
                     &argp->new_layerp);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &argp->mode,
-                                 GINT_TO_POINTER (argp->mode),
+  frame = gimp_int_radio_group_new (TRUE, _("Mode"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &argp->mode, argp->mode,
 
-				 "N_TSC", GINT_TO_POINTER (MODE_NTSC), NULL,
-				 "_PAL",  GINT_TO_POINTER (MODE_PAL), NULL,
+				    "N_TSC", MODE_NTSC, NULL,
+				    "_PAL",  MODE_PAL,  NULL,
 
-				 NULL);
+				    NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Action"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &argp->action,
-                                 GINT_TO_POINTER (argp->action),
+  frame = gimp_int_radio_group_new (TRUE, _("Action"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &argp->action, argp->action,
 
-                                 _("Reduce _Luminance"),
-                                 GINT_TO_POINTER (ACT_LREDUX), NULL,
+                                    _("Reduce _Luminance"),  ACT_LREDUX, NULL,
+                                    _("Reduce _Saturation"), ACT_SREDUX, NULL,
+                                    _("_Blacken"),           ACT_FLAG,   NULL,
 
-                                 _("Reduce _Saturation"),
-                                 GINT_TO_POINTER (ACT_SREDUX), NULL,
-
-                                 _("_Blacken"),
-                                 GINT_TO_POINTER (ACT_FLAG), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

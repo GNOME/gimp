@@ -411,21 +411,15 @@ save_dialog (void)
 			 NULL);
 
   /*  file save type  */
-  frame = gimp_radio_group_new2 (TRUE, _("Data Compression"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &psvals.compression,
-				 GINT_TO_POINTER (psvals.compression),
+  frame = gimp_int_radio_group_new (TRUE, _("Data Compression"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &psvals.compression, psvals.compression,
 
-				 _("None"),
-                                 GINT_TO_POINTER (PSP_COMP_NONE), NULL,
+				    _("None"), PSP_COMP_NONE, NULL,
+				    _("RLE"),  PSP_COMP_RLE,  NULL,
+				    _("LZ77"), PSP_COMP_LZ77, NULL,
 
-				 _("RLE"),
-                                 GINT_TO_POINTER (PSP_COMP_RLE), NULL,
-
-				 _("LZ77"),
-                                 GINT_TO_POINTER (PSP_COMP_LZ77), NULL,
-
-				 NULL);
+				    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);

@@ -510,14 +510,14 @@ pluginCoreIA (piArgs *argp)
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   emboss_do_preview (preview);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Function"),
-				 G_CALLBACK (emboss_radio_button_callback),
-				 &argp->embossp, (gpointer) argp->embossp,
+  frame = gimp_int_radio_group_new (TRUE, _("Function"),
+				    G_CALLBACK (emboss_radio_button_callback),
+				    &argp->embossp, argp->embossp,
 
-				 _("_Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,
-				 _("_Emboss"), (gpointer) FUNCTION_EMBOSS, NULL,
+				    _("_Bumpmap"), FUNCTION_BUMPMAP, NULL,
+				    _("_Emboss"),  FUNCTION_EMBOSS,  NULL,
 
-				 NULL);
+				    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);

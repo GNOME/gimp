@@ -749,18 +749,14 @@ sinus_dialog (void)
                     G_CALLBACK (sinus_toggle_button_update),
                     &svals.tiling);
 
-  vbox2 = gimp_radio_group_new2 (FALSE, NULL,
-                                 G_CALLBACK (sinus_radio_button_update),
-                                 &svals.perturbation,
-                                 GINT_TO_POINTER (svals.perturbation),
+  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
+                                    G_CALLBACK (sinus_radio_button_update),
+                                    &svals.perturbation, svals.perturbation,
 
-                                 _("_Ideal"),
-                                 GINT_TO_POINTER (IDEAL), NULL,
+                                    _("_Ideal"),     IDEAL,     NULL,
+                                    _("_Distorted"), PERTURBED, NULL,
 
-                                 _("_Distorted"),
-                                 GINT_TO_POINTER (PERTURBED), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 0);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -795,18 +791,18 @@ sinus_dialog (void)
     }
   else
     {
-      frame = gimp_radio_group_new2 (TRUE, _("Colors"),
-				     G_CALLBACK (sinus_radio_button_update),
-				     &svals.colors, (gpointer) svals.colors,
+      frame = gimp_int_radio_group_new (TRUE, _("Colors"),
+				        G_CALLBACK (sinus_radio_button_update),
+				        &svals.colors, svals.colors,
 
-				     _("Bl_ack & White"),
-				     (gpointer) B_W, NULL,
-				     _("_Foreground & Background"),
-				     (gpointer) USE_FG_BG, NULL,
-				     _("C_hoose here:"),
-				     (gpointer) USE_COLORS, NULL,
+				        _("Bl_ack & White"),
+				        B_W, NULL,
+				        _("_Foreground & Background"),
+				        USE_FG_BG, NULL,
+				        _("C_hoose here:"),
+				        USE_COLORS, NULL,
 
-				     NULL);
+				        NULL);
 
       gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
@@ -906,15 +902,15 @@ sinus_dialog (void)
   gtk_widget_show (vbox);
 
   frame =
-    gimp_radio_group_new2 (TRUE, _("Gradient"),
-                           G_CALLBACK (sinus_radio_button_update),
-			   &svals.colorization, (gpointer) svals.colorization,
+    gimp_int_radio_group_new (TRUE, _("Gradient"),
+                              G_CALLBACK (sinus_radio_button_update),
+			      &svals.colorization, svals.colorization,
 
-			   _("L_inear"),     (gpointer) LINEAR, NULL,
-			   _("Bili_near"),   (gpointer) BILINEAR, NULL,
-			   _("Sin_usoidal"), (gpointer) SINUS, NULL,
+			      _("L_inear"),     LINEAR,   NULL,
+			      _("Bili_near"),   BILINEAR, NULL,
+			      _("Sin_usoidal"), SINUS,    NULL,
 
-			   NULL);
+			      NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

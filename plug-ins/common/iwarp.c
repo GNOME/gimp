@@ -1084,30 +1084,19 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  vbox2 = gimp_radio_group_new2 (FALSE, NULL,
-				 G_CALLBACK (gimp_radio_button_update),
-				 &iwarp_vals.deform_mode,
-				 GINT_TO_POINTER (iwarp_vals.deform_mode),
+  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
+				    G_CALLBACK (gimp_radio_button_update),
+				    &iwarp_vals.deform_mode,
+				    iwarp_vals.deform_mode,
 
-				 _("_Move"),
-                                 GINT_TO_POINTER (MOVE), NULL,
+				    _("_Move"),      MOVE,      NULL,
+				    _("_Grow"),      GROW,      NULL,
+				    _("S_wirl CCW"), SWIRL_CCW, NULL,
+				    _("Remo_ve"),    REMOVE,    &widget[0],
+				    _("S_hrink"),    SHRINK,    &widget[1],
+				    _("Sw_irl CW"),  SWIRL_CW,  &widget[2],
 
-				 _("_Grow"),
-                                 GINT_TO_POINTER (GROW), NULL,
-
-				 _("S_wirl CCW"),
-                                 GINT_TO_POINTER (SWIRL_CCW), NULL,
-
-				 _("Remo_ve"),
-                                 GINT_TO_POINTER (REMOVE), &widget[0],
-
-				 _("S_hrink"),
-                                 GINT_TO_POINTER (SHRINK), &widget[1],
-
-				 _("Sw_irl CW"),
-                                 GINT_TO_POINTER (SWIRL_CW), &widget[2],
-
-				 NULL);
+				    NULL);
 
   gtk_container_add (GTK_CONTAINER (hbox), vbox2);
   gtk_widget_show (vbox2);

@@ -212,14 +212,13 @@ gimp_memsize_entry_new (guint64  value,
                     entry);
 
   entry->menu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (gimp_memsize_entry_unit_callback),
-			   entry,
-			   GUINT_TO_POINTER (shift),
-			   _("KiloBytes"), GUINT_TO_POINTER (10), NULL,
-			   _("MegaBytes"), GUINT_TO_POINTER (20), NULL,
-			   _("GigaBytes"), GUINT_TO_POINTER (30), NULL,
-			   NULL);
+    gimp_int_option_menu_new (FALSE,
+			      G_CALLBACK (gimp_memsize_entry_unit_callback),
+			      entry, shift,
+			      _("KiloBytes"), 10, NULL,
+			      _("MegaBytes"), 20, NULL,
+			      _("GigaBytes"), 30, NULL,
+			      NULL);
 
   gtk_box_pack_start (GTK_BOX (entry), entry->menu, FALSE, FALSE, 0);
   gtk_widget_show (entry->menu);

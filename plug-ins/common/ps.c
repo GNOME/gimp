@@ -2697,16 +2697,16 @@ load_dialog (void)
   gtk_widget_show (frame);
 
   /* Colouring */
-  frame = gimp_radio_group_new2 (TRUE, _("Coloring"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &plvals.pnm_type, (gpointer) plvals.pnm_type,
+  frame = gimp_int_radio_group_new (TRUE, _("Coloring"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &plvals.pnm_type, plvals.pnm_type,
 
-				 _("B/W"),       (gpointer) 4, NULL,
-				 _("Gray"),      (gpointer) 5, NULL,
-				 _("Color"),     (gpointer) 6, NULL,
-				 _("Automatic"), (gpointer) 7, NULL,
+				    _("B/W"),       4, NULL,
+				    _("Gray"),      5, NULL,
+				    _("Color"),     6, NULL,
+				    _("Automatic"), 7, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2714,29 +2714,27 @@ load_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Text Antialiasing"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &plvals.textalpha,
-                                 (gpointer) plvals.textalpha,
+  frame = gimp_int_radio_group_new (TRUE, _("Text Antialiasing"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &plvals.textalpha, plvals.textalpha,
 
-				 _("None"),   (gpointer) 1, NULL,
-				 _("Weak"),   (gpointer) 2, NULL,
-				 _("Strong"), (gpointer) 4, NULL,
+				    _("None"),   1, NULL,
+				    _("Weak"),   2, NULL,
+				    _("Strong"), 4, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Graphic Antialiasing"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &plvals.graphicsalpha,
-				 (gpointer) plvals.graphicsalpha,
+  frame = gimp_int_radio_group_new (TRUE, _("Graphic Antialiasing"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &plvals.graphicsalpha, plvals.graphicsalpha,
 
-				 _("None"),   (gpointer) 1, NULL,
-				 _("Weak"),   (gpointer) 2, NULL,
-				 _("Strong"), (gpointer) 4, NULL,
+				    _("None"),   1, NULL,
+				    _("Weak"),   2, NULL,
+				    _("Strong"), 4, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -2869,18 +2867,14 @@ save_dialog (void)
                     &psvals.keep_ratio);
 
   /* Unit */
-  uframe = gimp_radio_group_new2 (TRUE, _("Unit"),
-				  G_CALLBACK (save_unit_toggle_update),
-				  vals,
-                                  GINT_TO_POINTER (psvals.unit_mm),
+  uframe = gimp_int_radio_group_new (TRUE, _("Unit"),
+				     G_CALLBACK (save_unit_toggle_update),
+				     vals, psvals.unit_mm,
 
-				  _("_Inch"),
-                                  GINT_TO_POINTER (FALSE), NULL,
+				     _("_Inch"),       FALSE, NULL,
+				     _("_Millimeter"), TRUE,  NULL,
 
-				  _("_Millimeter"),
-                                  GINT_TO_POINTER (TRUE), NULL,
-
-				  NULL);
+				     NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
   gtk_widget_show (uframe);
@@ -2889,17 +2883,16 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Rotation */
-  frame = gimp_radio_group_new2 (TRUE, _("Rotation"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &psvals.rotate,
-                                 GINT_TO_POINTER (psvals.rotate),
+  frame = gimp_int_radio_group_new (TRUE, _("Rotation"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &psvals.rotate, psvals.rotate,
 
-				 "_0",   GINT_TO_POINTER (0),   NULL,
-				 "_90",  GINT_TO_POINTER (90),  NULL,
-				 "_180", GINT_TO_POINTER (180), NULL,
-				 "_270", GINT_TO_POINTER (270), NULL,
+				    "_0",   0,   NULL,
+				    "_90",  90,  NULL,
+				    "_180", 180, NULL,
+				    "_270", 270, NULL,
 
-				 NULL);
+				    NULL);
 
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

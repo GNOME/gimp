@@ -532,17 +532,16 @@ create_options_page (void)
   gtk_widget_show (label);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (mapmenu_callback),
-			   &mapvals.maptype,
-			   (gpointer) mapvals.maptype,
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (mapmenu_callback),
+			      &mapvals.maptype, mapvals.maptype,
 
-			   _("Plane"),    (gpointer) MAP_PLANE, NULL,
-			   _("Sphere"),   (gpointer) MAP_SPHERE, NULL,
-			   _("Box"),      (gpointer) MAP_BOX, NULL,
-			   _("Cylinder"), (gpointer) MAP_CYLINDER, NULL,
+			      _("Plane"),    MAP_PLANE,    NULL,
+			      _("Sphere"),   MAP_SPHERE,   NULL,
+			      _("Box"),      MAP_BOX,      NULL,
+			      _("Cylinder"), MAP_CYLINDER, NULL,
 
-			   NULL);
+			      NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
 
@@ -675,19 +674,17 @@ create_light_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);  gtk_widget_show (table);
 
-  optionmenu = gimp_option_menu_new2 (FALSE,
-                                      G_CALLBACK (lightmenu_callback),
-				      &mapvals.lightsource.type,
-				      (gpointer) mapvals.lightsource.type,
+  optionmenu =
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (lightmenu_callback),
+			      &mapvals.lightsource.type,
+			      mapvals.lightsource.type,
 
-				      _("Point Light"),
-				      (gpointer) POINT_LIGHT, NULL,
-				      _("Directional Light"),
-				      (gpointer) DIRECTIONAL_LIGHT, NULL,
-				      _("No Light"),
-				      (gpointer) NO_LIGHT, NULL,
+			      _("Point Light"),       POINT_LIGHT,       NULL,
+			      _("Directional Light"), DIRECTIONAL_LIGHT, NULL,
+			      _("No Light"),          NO_LIGHT,          NULL,
 
-				      NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Lightsource Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);

@@ -340,18 +340,18 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   nlfilt_do_preview (preview);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Filter"),
-				 G_CALLBACK (nlfilt_radio_button_update),
-				 &argp->filter, (gpointer) argp->filter,
+  frame = gimp_int_radio_group_new (TRUE, _("Filter"),
+				    G_CALLBACK (nlfilt_radio_button_update),
+				    &argp->filter, argp->filter,
 
-				 _("_Alpha Trimmed Mean"),
-				 (gpointer) filter_alpha_trim, NULL,
-				 _("Op_timal Estimation"),
-				 (gpointer) filter_opt_est, NULL,
-				 _("_Edge Enhancement"),
-				 (gpointer) filter_edge_enhance, NULL,
+				    _("_Alpha Trimmed Mean"),
+				    filter_alpha_trim, NULL,
+				    _("Op_timal Estimation"),
+				    filter_opt_est, NULL,
+				    _("_Edge Enhancement"),
+				    filter_edge_enhance, NULL,
 
-				 NULL);
+				    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -916,15 +916,14 @@ save_dialog (void)
 			 NULL);
 
   /*  file save type  */
-  frame = gimp_radio_group_new2 (TRUE, _("Data Formatting"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &psvals.raw,
-                                 GINT_TO_POINTER (psvals.raw),
+  frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &psvals.raw, psvals.raw,
 
-				 _("Raw"),   GINT_TO_POINTER (TRUE),  NULL,
-				 _("Ascii"), GINT_TO_POINTER (FALSE), NULL,
+				    _("Raw"),   TRUE,  NULL,
+				    _("Ascii"), FALSE, NULL,
 
-				 NULL);
+				    NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
 

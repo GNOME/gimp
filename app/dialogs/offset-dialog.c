@@ -200,19 +200,17 @@ offset_dialog_create (GimpDrawable *drawable,
 
   /*  The fill options  */
   frame =
-    gimp_radio_group_new2 (TRUE, _("Fill Type"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &off_d->fill_type,
-			   GINT_TO_POINTER (off_d->fill_type),
+    gimp_int_radio_group_new (TRUE, _("Fill Type"),
+			      G_CALLBACK (gimp_radio_button_update),
+			      &off_d->fill_type, off_d->fill_type,
 
-			   _("_Background"),
-			   GINT_TO_POINTER (GIMP_OFFSET_BACKGROUND), NULL,
+			      _("_Background"),
+			      GIMP_OFFSET_BACKGROUND, NULL,
 
-			   _("_Transparent"),
-			   GINT_TO_POINTER (GIMP_OFFSET_TRANSPARENT),
-                           &radio_button,
+			      _("_Transparent"),
+			      GIMP_OFFSET_TRANSPARENT, &radio_button,
 
-			   NULL);
+			      NULL);
 
   if (! gimp_drawable_has_alpha (drawable))
     gtk_widget_set_sensitive (radio_button, FALSE);

@@ -499,21 +499,18 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  optionmenu = gimp_option_menu_new2 (FALSE,
-                                      G_CALLBACK (lightmenu_callback),
-				      &mapvals.lightsource.type,
-				      (gpointer) mapvals.lightsource.type,
+  optionmenu =
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (lightmenu_callback),
+			      &mapvals.lightsource.type,
+			      mapvals.lightsource.type,
 
-				      _("None"),
-				      (gpointer) NO_LIGHT, NULL,
-				      _("Directional"),
-				      (gpointer) DIRECTIONAL_LIGHT, NULL,
-				      _("Point"),
-				      (gpointer) POINT_LIGHT, NULL,
-/*				      _("Spot"),
-				      (gpointer) SPOT_LIGHT, NULL, */
+			      _("None"),        NO_LIGHT,          NULL,
+			      _("Directional"), DIRECTIONAL_LIGHT, NULL,
+			      _("Point"),       POINT_LIGHT,       NULL,
+			      /* _("Spot"),     SPOT_LIGHT,        NULL, */
 
-				      NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("L_ight Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -923,15 +920,15 @@ create_bump_page (void)
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  optionmenu = gimp_option_menu_new2 (FALSE,
-				      G_CALLBACK (mapmenu2_callback),
-				      &mapvals.bumpmaptype,
-				      (gpointer) mapvals.bumpmaptype,
-				      _("Linear"),      (gpointer) LINEAR_MAP, NULL,
-				      _("Logarithmic"), (gpointer) LOGARITHMIC_MAP, NULL,
-				      _("Sinusoidal"),  (gpointer) SINUSOIDAL_MAP, NULL,
-				      _("Spherical"),   (gpointer) SPHERICAL_MAP, NULL,
-				      NULL);
+  optionmenu =
+    gimp_int_option_menu_new (FALSE,
+			      G_CALLBACK (mapmenu2_callback),
+			      &mapvals.bumpmaptype, mapvals.bumpmaptype,
+			      _("Linear"),      LINEAR_MAP,      NULL,
+			      _("Logarithmic"), LOGARITHMIC_MAP, NULL,
+			      _("Sinusoidal"),  SINUSOIDAL_MAP,  NULL,
+			      _("Spherical"),   SPHERICAL_MAP,   NULL,
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Cu_rve:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);

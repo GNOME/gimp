@@ -954,15 +954,15 @@ bumpmap_dialog (void)
 
   /* Type of map */
   frame =
-    gimp_radio_group_new2 (TRUE, _("Map Type"),
-			   G_CALLBACK (dialog_map_type_callback),
-			   &bmvals.type, (gpointer) bmvals.type,
+    gimp_int_radio_group_new (TRUE, _("Map Type"),
+			      G_CALLBACK (dialog_map_type_callback),
+			      &bmvals.type, bmvals.type,
 
-			   _("_Linear Map"),     (gpointer) LINEAR, NULL,
-			   _("_Spherical Map"),  (gpointer) SPHERICAL, NULL,
-			   _("S_inuosidal Map"), (gpointer) SINUOSIDAL, NULL,
+			      _("_Linear Map"),     LINEAR,     NULL,
+			      _("_Spherical Map"),  SPHERICAL,  NULL,
+			      _("S_inuosidal Map"), SINUOSIDAL, NULL,
 
-			   NULL);
+			      NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

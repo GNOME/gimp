@@ -1251,14 +1251,14 @@ alienmap2_dialog (void)
 
   /*  Mode toggle box  */
   frame =
-    gimp_radio_group_new2 (TRUE, _("Mode"),
-			   G_CALLBACK (alienmap2_radio_update),
-			   &wvals.colormodel, (gpointer) wvals.colormodel,
+    gimp_int_radio_group_new (TRUE, _("Mode"),
+			      G_CALLBACK (alienmap2_radio_update),
+			      &wvals.colormodel, wvals.colormodel,
 
-			   _("_RGB Color Model"), (gpointer) RGB_MODEL, NULL,
-			   _("_HSL Color Model"), (gpointer) HSL_MODEL, NULL,
+			      _("_RGB Color Model"), RGB_MODEL, NULL,
+			      _("_HSL Color Model"), HSL_MODEL, NULL,
 
-			   NULL);
+			      NULL);
   gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
 

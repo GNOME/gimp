@@ -979,38 +979,38 @@ load_dialog (void)
 		      TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("BLANK/NaN Pixel Replacement"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &plvals.replace, (gpointer) plvals.replace,
+  frame = gimp_int_radio_group_new (TRUE, _("BLANK/NaN Pixel Replacement"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &plvals.replace, plvals.replace,
 
-				 _("Black"), (gpointer) 0, NULL,
-				 _("White"), (gpointer) 255, NULL,
+				    _("Black"), 0,   NULL,
+				    _("White"), 255, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame =
-    gimp_radio_group_new2 (TRUE, _("Pixel Value Scaling"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &plvals.use_datamin, (gpointer) plvals.use_datamin,
+    gimp_int_radio_group_new (TRUE, _("Pixel Value Scaling"),
+			      G_CALLBACK (gimp_radio_button_update),
+			      &plvals.use_datamin, plvals.use_datamin,
 
-			   _("Automatic"),          (gpointer) FALSE, NULL,
-			   _("By DATAMIN/DATAMAX"), (gpointer) TRUE, NULL,
+			      _("Automatic"),          FALSE, NULL,
+			      _("By DATAMIN/DATAMAX"), TRUE,  NULL,
 
-			   NULL);
+			      NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame =
-    gimp_radio_group_new2 (TRUE, _("Image Composing"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &plvals.compose, (gpointer) plvals.compose,
+    gimp_int_radio_group_new (TRUE, _("Image Composing"),
+			      G_CALLBACK (gimp_radio_button_update),
+			      &plvals.compose, plvals.compose,
 
-			   _("None"),                 (gpointer) FALSE, NULL,
-			   "NAXIS=3, NAXIS3=2,...,4", (gpointer) TRUE, NULL,
+			      _("None"),                 FALSE, NULL,
+			      "NAXIS=3, NAXIS3=2,...,4", TRUE,  NULL,
 
-			   NULL);
+			      NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

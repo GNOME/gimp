@@ -903,18 +903,14 @@ dialog_box (GimpDrawable *drawable)
     radio buttons for choosing wind rendering algorithm
     ******************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, _("Style"),
-                                 G_CALLBACK (radio_callback),
-				 &config.alg,
-                                 GINT_TO_POINTER (config.alg),
+  frame = gimp_int_radio_group_new (TRUE, _("Style"),
+                                    G_CALLBACK (radio_callback),
+				    &config.alg, config.alg,
 
-				 _("_Wind"),
-                                 GINT_TO_POINTER (RENDER_WIND), &style1,
+				    _("_Wind"),  RENDER_WIND,  &style1,
+				    _("_Blast"), RENDER_BLAST, &style2,
 
-				 _("_Blast"),
-                                 GINT_TO_POINTER (RENDER_BLAST), &style2,
-
-				 NULL);
+				    NULL);
 
   g_object_set_data (G_OBJECT (style1), "drawable", drawable);
   g_object_set_data (G_OBJECT (style2), "drawable", drawable);
@@ -927,18 +923,14 @@ dialog_box (GimpDrawable *drawable)
     radio buttons for choosing LEFT or RIGHT
     **************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, _("Direction"),
-                                 G_CALLBACK (radio_callback),
-				 &config.direction,
-                                 GINT_TO_POINTER (config.direction),
+  frame = gimp_int_radio_group_new (TRUE, _("Direction"),
+                                    G_CALLBACK (radio_callback),
+				    &config.direction, config.direction,
 
-				 _("_Left"),
-                                 GINT_TO_POINTER (LEFT), &dir1,
+				    _("_Left"),  LEFT,  &dir1,
+				    _("_Right"), RIGHT, &dir2,
 
-				 _("_Right"),
-                                 GINT_TO_POINTER (RIGHT), &dir2,
-
-				 NULL);
+				    NULL);
 
   g_object_set_data (G_OBJECT (dir1), "drawable", drawable);
   g_object_set_data (G_OBJECT (dir2), "drawable", drawable);
@@ -951,21 +943,15 @@ dialog_box (GimpDrawable *drawable)
     radio buttons for choosing BOTH, LEADING, TRAILING
     ***************************************************/
 
-  frame = gimp_radio_group_new2 (TRUE, _("Edge Affected"),
-                                 G_CALLBACK (radio_callback),
-				 &config.edge,
-                                 GINT_TO_POINTER (config.edge),
+  frame = gimp_int_radio_group_new (TRUE, _("Edge Affected"),
+                                    G_CALLBACK (radio_callback),
+				    &config.edge, config.edge,
 
-				 _("L_eading"),
-                                 GINT_TO_POINTER (LEADING), &edge1,
+				    _("L_eading"),  LEADING,  &edge1,
+				    _("Tr_ailing"), TRAILING, &edge2,
+				    _("Bot_h"),     BOTH,     &edge3,
 
-				 _("Tr_ailing"),
-                                 GINT_TO_POINTER (TRAILING), &edge2,
-
-				 _("Bot_h"),
-                                 GINT_TO_POINTER (BOTH), &edge3,
-
-				 NULL);
+				    NULL);
 
   g_object_set_data (G_OBJECT (edge1), "drawable", drawable);
   g_object_set_data (G_OBJECT (edge2), "drawable", drawable);

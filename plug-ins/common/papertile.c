@@ -292,19 +292,19 @@ open_dialog (void)
                     G_CALLBACK (tile_size_adj_changed),
                     NULL);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Fractional Pixels"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &p.params.fractional_type,
-				 (gpointer) p.params.fractional_type,
+  frame = gimp_int_radio_group_new (TRUE, _("Fractional Pixels"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &p.params.fractional_type,
+				    p.params.fractional_type,
 
-				 _("_Background"),
-				 (gpointer) FRACTIONAL_TYPE_BACKGROUND, NULL,
-				 _("_Ignore"),
-				 (gpointer) FRACTIONAL_TYPE_IGNORE, NULL,
-				 _("_Force"),
-				 (gpointer) FRACTIONAL_TYPE_FORCE, NULL,
+				    _("_Background"),
+				    FRACTIONAL_TYPE_BACKGROUND, NULL,
+				    _("_Ignore"),
+				    FRACTIONAL_TYPE_IGNORE, NULL,
+				    _("_Force"),
+				    FRACTIONAL_TYPE_FORCE, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -359,25 +359,25 @@ open_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &p.params.wrap_around);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Background Type"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &p.params.background_type,
-				 (gpointer) p.params.background_type,
+  frame = gimp_int_radio_group_new (TRUE, _("Background Type"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &p.params.background_type,
+				    p.params.background_type,
 
-				 _("_Transparent"),
-				 (gpointer) BACKGROUND_TYPE_TRANSPARENT, NULL,
-				 _("I_nverted Image"),
-				 (gpointer) BACKGROUND_TYPE_INVERTED, NULL,
-				 _("Im_age"),
-				 (gpointer) BACKGROUND_TYPE_IMAGE, NULL,
-				 _("Fo_reground Color"),
-				 (gpointer) BACKGROUND_TYPE_FOREGROUND, NULL,
-				 _("Bac_kground Color"),
-				 (gpointer) BACKGROUND_TYPE_BACKGROUND, NULL,
-				 _("S_elect here:"),
-				 (gpointer) BACKGROUND_TYPE_COLOR, &button,
+				    _("_Transparent"),
+				    BACKGROUND_TYPE_TRANSPARENT, NULL,
+				    _("I_nverted Image"),
+				    BACKGROUND_TYPE_INVERTED, NULL,
+				    _("Im_age"),
+				    BACKGROUND_TYPE_IMAGE, NULL,
+				    _("Fo_reground Color"),
+				    BACKGROUND_TYPE_FOREGROUND, NULL,
+				    _("Bac_kground Color"),
+				    BACKGROUND_TYPE_BACKGROUND, NULL,
+				    _("S_elect here:"),
+				    BACKGROUND_TYPE_COLOR, &button,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

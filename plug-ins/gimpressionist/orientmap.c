@@ -549,15 +549,16 @@ void create_orientmap_dialog(void)
   gtk_container_add(GTK_CONTAINER(hbox), vbox);
   gtk_widget_show (vbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Type"),
-				 G_CALLBACK (vectypeclick),
-				 &vector_type, (gpointer) 0,
+  frame = gimp_int_radio_group_new (TRUE, _("Type"),
+				    G_CALLBACK (vectypeclick),
+				    &vector_type, 0,
 
-				 _("_Normal"), 0, &vectypes[0],
-				 _("Vorte_x"), 1, &vectypes[1],
-				 _("Vortex_2"), 2, &vectypes[2],
-				 _("Vortex_3"), 3, &vectypes[3],
-				 NULL);
+				    _("_Normal"),  0, &vectypes[0],
+				    _("Vorte_x"),  1, &vectypes[1],
+				    _("Vortex_2"), 2, &vectypes[2],
+				    _("Vortex_3"), 3, &vectypes[3],
+
+				    NULL);
   gtk_container_add(GTK_CONTAINER(vbox), frame);
   gtk_widget_show(frame);
 

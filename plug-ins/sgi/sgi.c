@@ -616,19 +616,18 @@ save_dialog (void)
 
 			 NULL);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &compression,
-                                 GINT_TO_POINTER (compression),
+  frame = gimp_int_radio_group_new (TRUE, _("Compression Type"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &compression, compression,
 
-				 _("No Compression"),
-				 GINT_TO_POINTER (SGI_COMP_NONE), NULL,
-				 _("RLE Compression"),
-				 GINT_TO_POINTER (SGI_COMP_RLE), NULL,
-				 _("Aggressive RLE\n(Not Supported by SGI)"),
-				 GINT_TO_POINTER (SGI_COMP_ARLE), NULL,
+				    _("No Compression"),
+				    SGI_COMP_NONE, NULL,
+				    _("RLE Compression"),
+				    SGI_COMP_RLE, NULL,
+				    _("Aggressive RLE\n(Not Supported by SGI)"),
+				    SGI_COMP_ARLE, NULL,
 
-				 NULL);
+				    NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);

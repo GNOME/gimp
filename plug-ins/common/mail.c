@@ -570,17 +570,15 @@ save_dialog (void)
   gtk_widget_show (label);
 
   /* Encapsulation radiobuttons */
-  vbox = gimp_radio_group_new2 (FALSE, NULL,
-				G_CALLBACK (gimp_radio_button_update),
-				&mail_info.encapsulation,
-				(gpointer) mail_info.encapsulation,
+  vbox = gimp_int_radio_group_new (FALSE, NULL,
+				   G_CALLBACK (gimp_radio_button_update),
+				   &mail_info.encapsulation,
+				   mail_info.encapsulation,
 
-				_("Uuencode"),
-				(gpointer) ENCAPSULATION_UUENCODE, NULL,
-				_("MIME"),
-				(gpointer) ENCAPSULATION_MIME, NULL,
+				   _("Uuencode"), ENCAPSULATION_UUENCODE, NULL,
+				   _("MIME"),     ENCAPSULATION_MIME,     NULL,
 
-				NULL);
+				   NULL);
   gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 6, 8,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vbox);

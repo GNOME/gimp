@@ -47,13 +47,14 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Placement"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &pcvals.placetype, (gpointer) 0,
+  frame = gimp_int_radio_group_new (TRUE, _("Placement"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &pcvals.placetype, 0,
 
-				 _("Randomly"), 0, &placeradio[0],
-				 _("Evenly distributed"), 1, &placeradio[1],
-				 NULL);
+				    _("Randomly"),           0, &placeradio[0],
+				    _("Evenly distributed"), 1, &placeradio[1],
+
+				    NULL);
 
   gimp_help_set_help_data 
     (placeradio[0], _("Place strokes randomly around the image"), NULL);

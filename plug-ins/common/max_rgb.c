@@ -265,18 +265,17 @@ dialog (GimpDrawable *drawable)
   main_function (drawable, TRUE);
   gtk_widget_show (preview->widget);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
-				 G_CALLBACK (radio_callback),
-				 &pvals.max_p,
-                                 GINT_TO_POINTER (pvals.max_p),
+  frame = gimp_int_radio_group_new (TRUE, _("Parameter Settings"),
+				    G_CALLBACK (radio_callback),
+				    &pvals.max_p, pvals.max_p,
 
-				 _("_Hold the Maximal Channels"),
-				 GINT_TO_POINTER (MAX_CHANNELS), &max,
+				    _("_Hold the Maximal Channels"),
+				    MAX_CHANNELS, &max,
 
-				 _("Ho_ld the Minimal Channels"),
-				 GINT_TO_POINTER (MIN_CHANNELS), &min,
+				    _("Ho_ld the Minimal Channels"),
+				    MIN_CHANNELS, &min,
 
-				 NULL);
+				    NULL);
 
   g_object_set_data (G_OBJECT (max), "drawable", drawable);
   g_object_set_data (G_OBJECT (min), "drawable", drawable);

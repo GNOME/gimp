@@ -408,24 +408,23 @@ image_layers_merge_query (GimpImage   *gimage,
 		     vbox);
 
   frame =
-    gimp_radio_group_new2 (TRUE,
-                           merge_visible ?
-                           _("Final, Merged Layer should be:") :
-                           _("Final, Anchored Layer should be:"),
-                           G_CALLBACK (gimp_radio_button_update),
-                           &options->merge_type,
-                           GINT_TO_POINTER (options->merge_type),
+    gimp_int_radio_group_new (TRUE,
+                              merge_visible ?
+                                _("Final, Merged Layer should be:") :
+                                _("Final, Anchored Layer should be:"),
+                              G_CALLBACK (gimp_radio_button_update),
+                              &options->merge_type, options->merge_type,
 
-                           _("Expanded as necessary"),
-                           GINT_TO_POINTER (GIMP_EXPAND_AS_NECESSARY), NULL,
+                              _("Expanded as necessary"),
+                              GIMP_EXPAND_AS_NECESSARY, NULL,
 
-                           _("Clipped to image"),
-                           GINT_TO_POINTER (GIMP_CLIP_TO_IMAGE), NULL,
+                              _("Clipped to image"),
+                              GIMP_CLIP_TO_IMAGE, NULL,
 
-                           _("Clipped to bottom layer"),
-                           GINT_TO_POINTER (GIMP_CLIP_TO_BOTTOM_LAYER), NULL,
+                              _("Clipped to bottom layer"),
+                              GIMP_CLIP_TO_BOTTOM_LAYER, NULL,
 
-                           NULL);
+                              NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

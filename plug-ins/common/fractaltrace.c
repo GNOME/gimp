@@ -775,19 +775,19 @@ dialog_show (void)
   gtk_widget_show (preview.preview);
 
   /*  Settings  */
-  frame = gimp_radio_group_new2 (TRUE, _("Outside Type"),
-				 G_CALLBACK (dialog_outside_type_callback),
-				 &parameters.outside_type,
-				 (gpointer) parameters.outside_type,
+  frame = gimp_int_radio_group_new (TRUE, _("Outside Type"),
+				    G_CALLBACK (dialog_outside_type_callback),
+				    &parameters.outside_type,
+				    parameters.outside_type,
 
-				 _("_Warp"),
-				 (gpointer) OUTSIDE_TYPE_WRAP, NULL,
-				 _("_Transparent"),
-				 (gpointer) OUTSIDE_TYPE_TRANSPARENT, NULL,
-				 _("_Black"),
-				 (gpointer) OUTSIDE_TYPE_BLACK, NULL,
-				 _("_White"),
-				 (gpointer) OUTSIDE_TYPE_WHITE, NULL,
+				    _("_Warp"),
+				    OUTSIDE_TYPE_WRAP, NULL,
+				    _("_Transparent"),
+				    OUTSIDE_TYPE_TRANSPARENT, NULL,
+				    _("_Black"),
+				    OUTSIDE_TYPE_BLACK, NULL,
+				    _("_White"),
+				    OUTSIDE_TYPE_WHITE, NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);

@@ -86,6 +86,19 @@ GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
 
 				    ...);
 
+GtkWidget * gimp_int_option_menu_new (gboolean            menu_only,
+				      GCallback           menu_item_callback,
+				      gpointer            menu_item_callback_data,
+				      gint                initial, /* item_data */
+
+				      /* specify menu items as va_list:
+				       *  gchar          *label,
+				       *  gint            item_data,
+				       *  GtkWidget     **widget_ptr,
+				       */
+
+				      ...);
+
 void  gimp_option_menu_set_history   (GtkOptionMenu    *option_menu,
                                       gpointer          item_data);
 
@@ -122,6 +135,20 @@ GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				     */
 
 				    ...);
+
+GtkWidget * gimp_int_radio_group_new (gboolean            in_frame,
+				      const gchar        *frame_title,
+				      GCallback           radio_button_callback,
+				      gpointer            radio_button_callback_data,
+				      gint                initial, /* item_data */
+
+				      /* specify radio buttons as va_list:
+				       *  const gchar    *label,
+				       *  gint            item_data,
+				       *  GtkWidget     **widget_ptr,
+				       */
+
+				      ...);
 
 void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);

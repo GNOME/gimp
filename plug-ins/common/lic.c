@@ -722,40 +722,40 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &licvals.effect_channel,
-				 (gpointer) licvals.effect_channel,
+  frame = gimp_int_radio_group_new (TRUE, _("Effect Channel"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &licvals.effect_channel,
+				    licvals.effect_channel,
 
-				 _("_Hue"),        (gpointer) 0, NULL,
-				 _("_Saturation"), (gpointer) 1, NULL,
-				 _("_Brightness"), (gpointer) 2, NULL,
+				    _("_Hue"),        0, NULL,
+				    _("_Saturation"), 1, NULL,
+				    _("_Brightness"), 2, NULL,
 
-				 NULL);
+				    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Effect Operator"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &licvals.effect_operator,
-				 (gpointer) licvals.effect_operator,
+  frame = gimp_int_radio_group_new (TRUE, _("Effect Operator"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &licvals.effect_operator,
+				    licvals.effect_operator,
 
-				 _("_Derivative"), (gpointer) 0, NULL,
-				 _("_Gradient"),   (gpointer) 1, NULL,
+				    _("_Derivative"), 0, NULL,
+				    _("_Gradient"),   1, NULL,
 
-				 NULL);
+				    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Convolve"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &licvals.effect_convolve,
-				 (gpointer) licvals.effect_convolve,
+  frame = gimp_int_radio_group_new (TRUE, _("Convolve"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &licvals.effect_convolve,
+				    licvals.effect_convolve,
 
-				 _("_With White Noise"),  (gpointer) 0, NULL,
-				 _("W_ith Source Image"), (gpointer) 1, NULL,
+				    _("_With White Noise"),  0, NULL,
+				    _("W_ith Source Image"), 1, NULL,
 
-				 NULL);
+				    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 

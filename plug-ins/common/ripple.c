@@ -471,46 +471,42 @@ ripple_dialog (void)
   gtk_widget_show (frame);
 
   /*  Orientation toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Orientation"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &rvals.orientation,
-                                 GINT_TO_POINTER (rvals.orientation),
+  frame = gimp_int_radio_group_new (TRUE, _("Orientation"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &rvals.orientation, rvals.orientation,
 
-                                 _("_Horizontal"),
-                                 GINT_TO_POINTER (HORIZONTAL), NULL,
+                                    _("_Horizontal"), HORIZONTAL, NULL,
+                                    _("_Vertical"),   VERTICAL,   NULL,
 
-                                 _("_Vertical"),
-                                 GINT_TO_POINTER (VERTICAL), NULL,
-
-                                 NULL);
+                                    NULL);
 
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
   /*  Edges toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Edges"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &rvals.edges, (gpointer) rvals.edges,
+  frame = gimp_int_radio_group_new (TRUE, _("Edges"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &rvals.edges, rvals.edges,
 
-				 _("_Wrap"),  (gpointer) WRAP, NULL,
-				 _("_Smear"), (gpointer) SMEAR, NULL,
-				 _("_Black"), (gpointer) BLACK, NULL,
+				    _("_Wrap"),  WRAP,  NULL,
+				    _("_Smear"), SMEAR, NULL,
+				    _("_Black"), BLACK, NULL,
 
-				 NULL);
+				    NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
   /*  Wave toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Wave Type"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &rvals.waveform, (gpointer) rvals.waveform,
+  frame = gimp_int_radio_group_new (TRUE, _("Wave Type"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &rvals.waveform, rvals.waveform,
 
-				 _("Saw_tooth"), (gpointer) SAWTOOTH, NULL,
-				 _("S_ine"),     (gpointer) SINE, NULL,
+				    _("Saw_tooth"), SAWTOOTH, NULL,
+				    _("S_ine"),     SINE,     NULL,
 
-				 NULL);
+				    NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);

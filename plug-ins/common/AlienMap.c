@@ -1227,15 +1227,15 @@ alienmap_dialog (void)
                     &wvals.bluestretch);
 
   /*  Redmode toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Red"),
-				 G_CALLBACK (alienmap_toggle_update),
-				 &wvals.redmode, (gpointer) wvals.redmode,
+  frame = gimp_int_radio_group_new (TRUE, _("Red"),
+				    G_CALLBACK (alienmap_toggle_update),
+				    &wvals.redmode, wvals.redmode,
 
-				 _("_Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
-				 _("_None"),   (gpointer) NONE, &toggle3,
+				    _("_Sine"),   SINUS,    &toggle1,
+				    _("Cos_ine"), COSINUS, &toggle2,
+				    _("_None"),   NONE,    &toggle3,
 
-				 NULL);
+				    NULL);
 
   gimp_help_set_help_data (toggle1,
 			   _("Use sine-function for red component."), NULL);
@@ -1250,15 +1250,15 @@ alienmap_dialog (void)
   gtk_widget_show (frame);
 
   /*  Greenmode toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Green"),
-				 G_CALLBACK (alienmap_toggle_update),
-				 &wvals.greenmode, (gpointer) wvals.greenmode,
+  frame = gimp_int_radio_group_new (TRUE, _("Green"),
+				    G_CALLBACK (alienmap_toggle_update),
+				    &wvals.greenmode, wvals.greenmode,
 
-				 _("_Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
-				 _("_None"),   (gpointer) NONE, &toggle3,
+				    _("_Sine"),   SINUS,   &toggle1,
+				    _("Cos_ine"), COSINUS, &toggle2,
+				    _("_None"),   NONE,    &toggle3,
 
-				 NULL);
+				    NULL);
 
   gimp_help_set_help_data (toggle1,
 			   _("Use sine-function for green component."), NULL);
@@ -1273,15 +1273,15 @@ alienmap_dialog (void)
   gtk_widget_show (frame);
 
   /*  Bluemode toggle box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Blue"),
-				 G_CALLBACK (alienmap_toggle_update),
-				 &wvals.bluemode, (gpointer) wvals.bluemode,
+  frame = gimp_int_radio_group_new (TRUE, _("Blue"),
+				    G_CALLBACK (alienmap_toggle_update),
+				    &wvals.bluemode, wvals.bluemode,
 
-				 _("_Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
-				 _("_None"),   (gpointer) NONE, &toggle3,
+				    _("_Sine"),   SINUS,   &toggle1,
+				    _("Cos_ine"), COSINUS, &toggle2,
+				    _("_None"),   NONE,    &toggle3,
 
-				 NULL);
+				    NULL);
 
   gimp_help_set_help_data (toggle1,
 			   _("Use sine-function for blue component."), NULL);

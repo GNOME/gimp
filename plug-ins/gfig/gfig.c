@@ -1414,13 +1414,13 @@ num_sides_dialog (gchar *d_title,
       GtkWidget *option_menu;
 
       option_menu =
-	gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
-			       which_way, GINT_TO_POINTER (*which_way),
+	gimp_int_option_menu_new (FALSE, G_CALLBACK (gimp_menu_item_update),
+			          which_way, *which_way,
 
-			       _("Clockwise"),      GINT_TO_POINTER (0), NULL,
-			       _("Anti-Clockwise"), GINT_TO_POINTER (1), NULL,
+			          _("Clockwise"),      0, NULL,
+			          _("Anti-Clockwise"), 1, NULL,
 
-			       NULL);
+			          NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Orientation:"), 1.0, 0.5,
 				 option_menu, 1, TRUE);
@@ -1679,15 +1679,15 @@ gfig_brush_preview (GtkWidget **pv)
   gtk_widget_show (vbox);
 
   option_menu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gfig_brush_menu_callback),
-			   *pv, GINT_TO_POINTER (selvals.brshtype),
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gfig_brush_menu_callback),
+			      *pv, selvals.brshtype,
 
-			   _("Brush"),    GINT_TO_POINTER (BRUSH_BRUSH_TYPE), NULL,
-			   _("Airbrush"), GINT_TO_POINTER (BRUSH_AIRBRUSH_TYPE), NULL,
-			   _("Pencil"),   GINT_TO_POINTER (BRUSH_PENCIL_TYPE), NULL,
-			   _("Pattern"),  GINT_TO_POINTER (BRUSH_PATTERN_TYPE), NULL,
+			      _("Brush"),    BRUSH_BRUSH_TYPE,    NULL,
+			      _("Airbrush"), BRUSH_AIRBRUSH_TYPE, NULL,
+			      _("Pencil"),   BRUSH_PENCIL_TYPE,   NULL,
+			      _("Pattern"),  BRUSH_PATTERN_TYPE,  NULL,
 
-			   NULL);
+			      NULL);
   gtk_widget_show (option_menu);
 
   gtk_container_add (GTK_CONTAINER (vbox), option_menu);
@@ -2036,14 +2036,14 @@ paint_page (void)
   gtk_widget_show (table);
 
   page_menu_layers =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
-			   GINT_TO_POINTER (PAINT_LAYERS_MENU), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
+			      GINT_TO_POINTER (PAINT_LAYERS_MENU), 0,
 
-			   _("Original"), GINT_TO_POINTER (ORIGINAL_LAYER), NULL,
-			   _("New"),      GINT_TO_POINTER (SINGLE_LAYER), NULL,
-			   _("Multiple"), GINT_TO_POINTER (MULTI_LAYER), NULL,
+			      _("Original"), ORIGINAL_LAYER, NULL,
+			      _("New"),      SINGLE_LAYER,   NULL,
+			      _("Multiple"), MULTI_LAYER,    NULL,
 
-			   NULL);
+			      NULL);
 
   gimp_help_set_help_data (page_menu_layers,
 			_("Draw all objects on one layer (original or new) "
@@ -2055,17 +2055,14 @@ paint_page (void)
 			     page_menu_layers, 1, TRUE);
 
   page_menu_type =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
-			   GINT_TO_POINTER (PAINT_TYPE_MENU), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
+			      GINT_TO_POINTER (PAINT_TYPE_MENU), 0,
 
-			   _("Brush"),
-                           GINT_TO_POINTER (PAINT_BRUSH_TYPE), &item1,
-			   _("Selection"),
-			   GINT_TO_POINTER (PAINT_SELECTION_TYPE), &item2,
-			   _("Selection+Fill"),
-			   GINT_TO_POINTER (PAINT_SELECTION_FILL_TYPE), &item3,
+			     _("Brush"),          PAINT_BRUSH_TYPE, &item1,
+			     _("Selection"),      PAINT_SELECTION_TYPE, &item2,
+			     _("Selection+Fill"), PAINT_SELECTION_FILL_TYPE, &item3,
 
-			   NULL);
+			     NULL);
 
   gimp_help_set_help_data (page_menu_type,
 			_("Draw type. Either a brush or a selection. "
@@ -2076,16 +2073,16 @@ paint_page (void)
 			     page_menu_type, 1, TRUE);
 
   page_menu_bg =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (paint_menu_callback),
-			   GINT_TO_POINTER (PAINT_BGS_MENU), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
+			      GINT_TO_POINTER (PAINT_BGS_MENU), 0,
 
-			   _("Transparent"), GINT_TO_POINTER (LAYER_TRANS_BG), NULL,
-			   _("Background"),  GINT_TO_POINTER (LAYER_BG_BG), NULL,
-			   _("Foreground"),  GINT_TO_POINTER (LAYER_FG_BG), NULL,
-			   _("White"),       GINT_TO_POINTER (LAYER_WHITE_BG), NULL,
-			   _("Copy"),        GINT_TO_POINTER (LAYER_COPY_BG), NULL,
+			      _("Transparent"), LAYER_TRANS_BG, NULL,
+			      _("Background"),  LAYER_BG_BG,    NULL,
+			      _("Foreground"),  LAYER_FG_BG,    NULL,
+			      _("White"),       LAYER_WHITE_BG, NULL,
+			      _("Copy"),        LAYER_COPY_BG,  NULL,
 
-			   NULL);
+			      NULL);
   gimp_help_set_help_data (page_menu_bg,
 			_("Layer background type. Copy causes previous "
 			  "layer to be copied before the draw is performed"),
@@ -2397,15 +2394,15 @@ select_page (void)
    */
 
   /* 1 */
-  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
-				GINT_TO_POINTER (SELECT_TYPE_MENU), 0,
+  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
+				   GINT_TO_POINTER (SELECT_TYPE_MENU), 0,
 
-				_("Add"),       GINT_TO_POINTER (ADD), NULL,
-				_("Subtract"),  GINT_TO_POINTER (SUBTRACT), NULL,
-				_("Replace"),   GINT_TO_POINTER (REPLACE), NULL,
-				_("Intersect"), GINT_TO_POINTER (INTERSECT), NULL,
+				   _("Add"),       ADD, NULL,
+				   _("Subtract"),  SUBTRACT, NULL,
+				   _("Replace"),   REPLACE, NULL,
+				   _("Intersect"), INTERSECT, NULL,
 
-				NULL);
+				   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Selection Type:"), 1.0, 0.5,
 			     menu, 1, FALSE);
@@ -2443,14 +2440,14 @@ select_page (void)
 
   /* 5 */
   menu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
-			   GINT_TO_POINTER (SELECT_TYPE_MENU_FILL), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
+			      GINT_TO_POINTER (SELECT_TYPE_MENU_FILL), 0,
 
-			   _("Pattern"),    GINT_TO_POINTER (FILL_PATTERN), NULL,
-			   _("Foreground"), GINT_TO_POINTER (FILL_FOREGROUND), NULL,
-			   _("Background"), GINT_TO_POINTER (FILL_BACKGROUND), NULL,
+			      _("Pattern"),    FILL_PATTERN,    NULL,
+			      _("Foreground"), FILL_FOREGROUND, NULL,
+			      _("Background"), FILL_BACKGROUND, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Fill Type:"), 1.0, 0.5,
 			     menu, 1, FALSE);
@@ -2470,25 +2467,25 @@ select_page (void)
 
   /* 7 */
   menu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
-                           GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
+                              GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN), 0,
 
-			   _("Each Selection"), GINT_TO_POINTER (FILL_EACH), NULL,
-			   _("All Selections"), GINT_TO_POINTER (FILL_AFTER), NULL,
+			      _("Each Selection"), FILL_EACH,  NULL,
+			      _("All Selections"), FILL_AFTER, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Fill after:"), 1.0, 0.5,
 			     menu, 1, FALSE);
 
   /* 8 */
-  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (select_menu_callback),
-				GINT_TO_POINTER (SELECT_ARCTYPE_MENU), 0,
+  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (select_menu_callback),
+				   GINT_TO_POINTER (SELECT_ARCTYPE_MENU), 0,
 
-				_("Segment"), GINT_TO_POINTER (ARC_SEGMENT), NULL,
-				_("Sector"),  GINT_TO_POINTER (ARC_SECTOR), NULL,
+				   _("Segment"), ARC_SEGMENT, NULL,
+				   _("Sector"),  ARC_SECTOR,  NULL,
 
-				NULL);
+				   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Arc as:"), 1.0, 0.5,
 			     menu, 1, FALSE);
@@ -2558,14 +2555,14 @@ options_page (void)
 			     NULL, 0, 0,
 			     button, 1, TRUE);
 
-  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (gridtype_menu_callback),
-                                GINT_TO_POINTER (GRID_TYPE_MENU), 0,
+  menu = gimp_int_option_menu_new (FALSE, G_CALLBACK (gridtype_menu_callback),
+                                   GINT_TO_POINTER (GRID_TYPE_MENU), 0,
 
-				_("Rectangle"), GINT_TO_POINTER (RECT_GRID), NULL,
-				_("Polar"),     GINT_TO_POINTER (POLAR_GRID), NULL,
-				_("Isometric"), GINT_TO_POINTER (ISO_GRID), NULL,
+				   _("Rectangle"), RECT_GRID,  NULL,
+				   _("Polar"),     POLAR_GRID, NULL,
+				   _("Isometric"), ISO_GRID,   NULL,
 
-				NULL);
+				   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Grid Type:"), 1.0, 0.5,
 			     menu, 1, TRUE);
@@ -2573,18 +2570,18 @@ options_page (void)
   gfig_opt_widget.gridtypemenu = menu;
 
   menu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gridtype_menu_callback),
-			   GINT_TO_POINTER (GRID_RENDER_MENU), 0,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (gridtype_menu_callback),
+			      GINT_TO_POINTER (GRID_RENDER_MENU), 0,
 
-			   _("Normal"),     GINT_TO_POINTER (GTK_STATE_NORMAL), NULL,
-			   _("Black"),      GINT_TO_POINTER (GFIG_BLACK_GC), NULL,
-			   _("White"),      GINT_TO_POINTER (GFIG_WHITE_GC), NULL,
-			   _("Grey"),       GINT_TO_POINTER (GFIG_GREY_GC), NULL,
-			   _("Darker"),     GINT_TO_POINTER (GTK_STATE_ACTIVE), NULL,
-			   _("Lighter"),    GINT_TO_POINTER (GTK_STATE_PRELIGHT), NULL,
-			   _("Very Dark"),  GINT_TO_POINTER (GTK_STATE_SELECTED), NULL,
+			      _("Normal"),     GTK_STATE_NORMAL,   NULL,
+			      _("Black"),      GFIG_BLACK_GC,      NULL,
+			      _("White"),      GFIG_WHITE_GC,      NULL,
+			      _("Grey"),       GFIG_GREY_GC,       NULL,
+			      _("Darker"),     GTK_STATE_ACTIVE,   NULL,
+			      _("Lighter"),    GTK_STATE_PRELIGHT, NULL,
+			      _("Very Dark"),  GTK_STATE_SELECTED, NULL,
 
-			   NULL);
+			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Grid Color:"), 1.0, 0.5,
 			     menu, 1, TRUE);

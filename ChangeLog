@@ -1,3 +1,76 @@
+2003-11-14  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]: implementedgimp_int_option_menu_new
+	and gimp_int_radio_group_new, which are the same as
+	gimp_option_menu_new2 and gimp_radio_group_new2, but they take
+	integers as values to map instead of gpointers, which avoids casts
+	in pretty much all uses of it in the tree.
+
+	* app/gui/image-commands.c
+	* app/gui/offset-dialog.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpwidgets-constructors.c
+	* libgimpwidgets/gimpmemsizeentry.c
+	* modules/cdisplay_colorblind.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/mosaic.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/wind.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/color.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/sgi/sgi.c: Use gimp_int_option_menu_new and
+	gimp_int_radio_group_new.
+
+	* plug-ins/common/CML_explorer.c: make function_graph_new take a
+	gpointer *data instead of a gpointer data, and properly pass an
+	int through it.
+
+	* plug-ins/common/mng.c: mark menu strings for translation.
+
+	* plug-ins/rcm/rcm.c: remove initialization for Success member
+	in RcmParams, since it's gone now.
+
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c: introduced utility function

@@ -312,15 +312,15 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  menu = gimp_option_menu_new2 (FALSE,
-                                G_CALLBACK (gimp_prop_option_menu_callback),
-                                config,
-                                GINT_TO_POINTER (value),
+  menu =
+    gimp_int_option_menu_new (FALSE,
+                              G_CALLBACK (gimp_prop_option_menu_callback),
+                              config, value,
 
-                                true_text,  GINT_TO_POINTER (TRUE),  NULL,
-                                false_text, GINT_TO_POINTER (FALSE), NULL,
+                              true_text,  TRUE,  NULL,
+                              false_text, FALSE, NULL,
 
-                                NULL);
+                              NULL);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
@@ -540,15 +540,15 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  frame = gimp_radio_group_new2 (TRUE, title,
-                                 G_CALLBACK (gimp_prop_radio_button_callback),
-                                 config,
-                                 GINT_TO_POINTER (value),
+  frame =
+    gimp_int_radio_group_new (TRUE, title,
+                              G_CALLBACK (gimp_prop_radio_button_callback),
+                              config, value,
 
-                                 false_text, GINT_TO_POINTER (FALSE), &button,
-                                 true_text,  GINT_TO_POINTER (TRUE),  NULL,
+                              false_text, FALSE, &button,
+                              true_text,  TRUE,  NULL,
 
-                                 NULL);
+                              NULL);
 
   set_param_spec (G_OBJECT (GTK_BIN (frame)->child), NULL, param_spec);
 

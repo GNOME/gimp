@@ -705,21 +705,20 @@ edit_callback (GtkWidget *widget,
                                 NULL);
 
       optionmenu =
-	gimp_option_menu_new2 (FALSE, G_CALLBACK (menu_cb),
-			       &config.variation,
-			       (gpointer) VARIATION_SAME,
+	gimp_int_option_menu_new (FALSE, G_CALLBACK (menu_cb),
+			          &config.variation, VARIATION_SAME,
 
-			       _("Same"),     (gpointer) VARIATION_SAME, NULL,
-			       _("Random"),   (gpointer) variation_random, NULL,
-			       _("Linear"),     (gpointer) 0, NULL,
-			       _("Sinusoidal"), (gpointer) 1, NULL,
-			       _("Spherical"),  (gpointer) 2, NULL,
-			       _("Swirl"),      (gpointer) 3, NULL,
-			       _("Horseshoe"),  (gpointer) 4, NULL,
-			       _("Polar"),      (gpointer) 5, NULL,
-			       _("Bent"),       (gpointer) 6, NULL,
+			          _("Same"),       VARIATION_SAME,   NULL,
+			          _("Random"),     variation_random, NULL,
+			          _("Linear"),     0,                NULL,
+			          _("Sinusoidal"), 1,                NULL,
+			          _("Spherical"),  2,                NULL,
+			          _("Swirl"),      3,                NULL,
+			          _("Horseshoe"),  4,                NULL,
+			          _("Polar"),      5,                NULL,
+			          _("Bent"),       6,                NULL,
 
-			       NULL);
+			          NULL);
       gtk_box_pack_end (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
       gtk_widget_show (optionmenu);
 

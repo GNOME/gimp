@@ -1364,18 +1364,14 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Curve for Border"),
-                                 G_CALLBACK (bender_border_callback),
-                                 &cd->outline,
-                                 GINT_TO_POINTER (cd->outline),
+  frame = gimp_int_radio_group_new (TRUE, _("Curve for Border"),
+                                    G_CALLBACK (bender_border_callback),
+                                    &cd->outline, cd->outline,
 
-                                 _("_Upper"),
-                                 GINT_TO_POINTER (OUTLINE_UPPER), &upper,
+                                    _("_Upper"), OUTLINE_UPPER, &upper,
+                                    _("_Lower"), OUTLINE_LOWER, &lower,
 
-                                 _("_Lower"),
-                                 GINT_TO_POINTER (OUTLINE_LOWER), &lower,
-
-                                 NULL);
+                                    NULL);
 
   g_object_set_data (G_OBJECT (upper), "cd", cd);
   g_object_set_data (G_OBJECT (lower), "cd", cd);
@@ -1383,18 +1379,14 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Curve Type"),
-                                 G_CALLBACK (bender_type_callback),
-                                 &cd->curve_type,
-                                 GINT_TO_POINTER (cd->curve_type),
+  frame = gimp_int_radio_group_new (TRUE, _("Curve Type"),
+                                    G_CALLBACK (bender_type_callback),
+                                    &cd->curve_type, cd->curve_type,
 
-                                 _("Smoot_h"),
-                                 GINT_TO_POINTER (SMOOTH), &smooth,
+                                    _("Smoot_h"), SMOOTH, &smooth,
+                                    _("_Free"),   GFREE,  &freew,
 
-                                 _("_Free"),
-                                 GINT_TO_POINTER (GFREE), &freew,
-
-                                 NULL);
+                                    NULL);
   g_object_set_data (G_OBJECT (smooth), "cd", cd);
   g_object_set_data (G_OBJECT (freew), "cd", cd);
 

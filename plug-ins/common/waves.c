@@ -313,14 +313,14 @@ pluginCoreIA (piArgs *argp,
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   waves_do_preview ();
 
-  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-				 G_CALLBACK (waves_radio_button_update),
-				 &argp->type, (gpointer) argp->type,
+  frame = gimp_int_radio_group_new (TRUE, _("Mode"),
+				    G_CALLBACK (waves_radio_button_update),
+				    &argp->type, argp->type,
 
-				 _("_Smear"),   (gpointer) MODE_SMEAR, NULL,
-				 _("_Blacken"), (gpointer) MODE_BLACKEN, NULL,
+				    _("_Smear"),   MODE_SMEAR,   NULL,
+				    _("_Blacken"), MODE_BLACKEN, NULL,
 
-				 NULL);
+				    NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

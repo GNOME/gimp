@@ -361,7 +361,7 @@ static void     CML_explorer_menu_entry_init     (WidgetEntry *widget_entry,
 
 static void    preview_update                      (void);
 static void    function_graph_new                  (GtkWidget *widget,
-						    gpointer   data);
+						    gpointer  *data);
 static void    CML_set_or_randomize_seed_callback  (GtkWidget *widget,
 						    gpointer   data);
 static void    CML_copy_parameters_callback        (GtkWidget *widget,
@@ -1288,40 +1288,39 @@ CML_explorer_dialog (void)
       gtk_widget_show (table);
 
       optionmenu =
-	gimp_option_menu_new2
+	gimp_int_option_menu_new
 	(FALSE, G_CALLBACK (CML_initial_value_menu_update),
-	 &VALS.initial_value,
-	 (gpointer) VALS.initial_value,
+	 &VALS.initial_value, VALS.initial_value,
 
 	 gettext (initial_value_names[0]),
-	 (gpointer)                   0, NULL,
+	                              0, NULL,
 
 	 gettext (initial_value_names[1]),
-	 (gpointer)                   1, NULL,
+	                              1, NULL,
 
 	 gettext (initial_value_names[2]),
-	 (gpointer)                   2, NULL,
+	                              2, NULL,
 
 	 gettext (initial_value_names[3]),
-	 (gpointer)                   3, NULL,
+	                              3, NULL,
 
 	 gettext (initial_value_names[4]),
-	 (gpointer)                   4, NULL,
+	                              4, NULL,
 
 	 gettext (initial_value_names[5]),
-	 (gpointer)                   5, NULL,
+	                              5, NULL,
 
 	 gettext (initial_value_names[CML_INITIAL_RANDOM_INDEPENDENT]),
-	 (gpointer)                   CML_INITIAL_RANDOM_INDEPENDENT, NULL,
+	                              CML_INITIAL_RANDOM_INDEPENDENT, NULL,
 
 	 gettext (initial_value_names[CML_INITIAL_RANDOM_SHARED]),
-	 (gpointer)                   CML_INITIAL_RANDOM_SHARED, NULL,
+	                              CML_INITIAL_RANDOM_SHARED, NULL,
 
 	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED]),
-	 (gpointer)                   CML_INITIAL_RANDOM_FROM_SEED, NULL,
+	                              CML_INITIAL_RANDOM_FROM_SEED, NULL,
 
 	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED_SHARED]),
-	 (gpointer)                   CML_INITIAL_RANDOM_FROM_SEED_SHARED, NULL,
+	                              CML_INITIAL_RANDOM_FROM_SEED_SHARED, NULL,
 
 	 NULL);
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
@@ -1414,35 +1413,36 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE,
-                                          G_CALLBACK (gimp_menu_item_update),
-					  &copy_source, (gpointer) copy_source,
+      optionmenu = gimp_int_option_menu_new (FALSE,
+                                             G_CALLBACK (gimp_menu_item_update),
+					     &copy_source,
+					     copy_source,
 
-					  gettext (channel_names[0]),
-					  (gpointer)             0, NULL,
-					  gettext (channel_names[1]),
-					  (gpointer)             1, NULL,
-					  gettext (channel_names[2]),
-					  (gpointer)             2, NULL,
+					     gettext (channel_names[0]),
+					                            0, NULL,
+					     gettext (channel_names[1]),
+					                            1, NULL,
+					     gettext (channel_names[2]),
+					                            2, NULL,
 
-					  NULL);
+					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE,
-                                          G_CALLBACK (gimp_menu_item_update),
-					  &copy_destination,
-					  (gpointer) copy_destination,
+      optionmenu = gimp_int_option_menu_new (FALSE,
+                                             G_CALLBACK (gimp_menu_item_update),
+					     &copy_destination,
+					     copy_destination,
 
-					  gettext (channel_names[0]),
-					  (gpointer)             0, NULL,
-					  gettext (channel_names[1]),
-					  (gpointer)             1, NULL,
-					  gettext (channel_names[2]),
-					  (gpointer)             2, NULL,
+					     gettext (channel_names[0]),
+					                            0, NULL,
+					     gettext (channel_names[1]),
+					                            1, NULL,
+					     gettext (channel_names[2]),
+					                            2, NULL,
 
-					  NULL);
+					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
@@ -1467,40 +1467,40 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE,
-                                          G_CALLBACK (gimp_menu_item_update),
-					  &selective_load_source,
-					  (gpointer) selective_load_source,
+      optionmenu = gimp_int_option_menu_new (FALSE,
+                                             G_CALLBACK (gimp_menu_item_update),
+					     &selective_load_source,
+					     selective_load_source,
 
-					  _("NULL"),
-					  (gpointer) 0, NULL,
-					  gettext (channel_names[0]),
-					  (gpointer) 1, NULL,
-					  gettext (channel_names[1]),
-					  (gpointer) 2, NULL,
-					  gettext (channel_names[2]),
-					  (gpointer) 3, NULL,
+					     _("NULL"),
+					     0, NULL,
+					     gettext (channel_names[0]),
+					     1, NULL,
+					     gettext (channel_names[1]),
+					     2, NULL,
+					     gettext (channel_names[2]),
+					     3, NULL,
 
-					  NULL);
+					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel in File:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE,
-                                          G_CALLBACK (gimp_menu_item_update),
-					  &selective_load_destination,
-					  (gpointer) selective_load_destination,
+      optionmenu = gimp_int_option_menu_new (FALSE,
+                                             G_CALLBACK (gimp_menu_item_update),
+					     &selective_load_destination,
+					     selective_load_destination,
 
-					  _("NULL"),
-					  (gpointer) 0, NULL,
-					  gettext (channel_names[0]),
-					  (gpointer) 1, NULL,
-					  gettext (channel_names[1]),
-					  (gpointer) 2, NULL,
-					  gettext (channel_names[2]),
-					  (gpointer) 3, NULL,
+					     _("NULL"),
+					     0, NULL,
+					     gettext (channel_names[0]),
+					     1, NULL,
+					     gettext (channel_names[1]),
+					     2, NULL,
+					     gettext (channel_names[2]),
+					     3, NULL,
 
-					  NULL);
+					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
@@ -1546,49 +1546,49 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			   &param->function, (gpointer) param->function,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
+			      &param->function, param->function,
 
-			   gettext (function_names[CML_KEEP_VALUES]),
-			   (gpointer)              CML_KEEP_VALUES, NULL,
+			      gettext (function_names[CML_KEEP_VALUES]),
+			                              CML_KEEP_VALUES, NULL,
 
-			   gettext (function_names[CML_KEEP_FIRST]),
-			   (gpointer)              CML_KEEP_FIRST, NULL,
+			      gettext (function_names[CML_KEEP_FIRST]),
+			                              CML_KEEP_FIRST, NULL,
 
-			   gettext (function_names[CML_FILL]),
-			   (gpointer)              CML_FILL, NULL,
+			      gettext (function_names[CML_FILL]),
+			                              CML_FILL, NULL,
 
-			   gettext (function_names[CML_LOGIST]),
-			   (gpointer)              CML_LOGIST, NULL,
+			      gettext (function_names[CML_LOGIST]),
+			                              CML_LOGIST, NULL,
 
-			   gettext (function_names[CML_LOGIST_STEP]),
-			   (gpointer)              CML_LOGIST_STEP, NULL,
+			      gettext (function_names[CML_LOGIST_STEP]),
+			                              CML_LOGIST_STEP, NULL,
 
-			   gettext (function_names[CML_POWER]),
-			   (gpointer)              CML_POWER, NULL,
+			      gettext (function_names[CML_POWER]),
+			                              CML_POWER, NULL,
 
-			   gettext (function_names[CML_POWER_STEP]),
-			   (gpointer)              CML_POWER_STEP, NULL,
+			      gettext (function_names[CML_POWER_STEP]),
+			                              CML_POWER_STEP, NULL,
 
-			   gettext (function_names[CML_REV_POWER]),
-			   (gpointer)              CML_REV_POWER, NULL,
+			      gettext (function_names[CML_REV_POWER]),
+			                              CML_REV_POWER, NULL,
 
-			   gettext (function_names[CML_REV_POWER_STEP]),
-			   (gpointer)              CML_REV_POWER_STEP, NULL,
+			      gettext (function_names[CML_REV_POWER_STEP]),
+			                              CML_REV_POWER_STEP, NULL,
 
-			   gettext (function_names[CML_DELTA]),
-			   (gpointer)              CML_DELTA, NULL,
+			      gettext (function_names[CML_DELTA]),
+			                              CML_DELTA, NULL,
 
-			   gettext (function_names[CML_DELTA_STEP]),
-			   (gpointer)              CML_DELTA_STEP, NULL,
+			      gettext (function_names[CML_DELTA_STEP]),
+			                              CML_DELTA_STEP, NULL,
 
-			   gettext (function_names[CML_SIN_CURVE]),
-			   (gpointer)              CML_SIN_CURVE, NULL,
+			      gettext (function_names[CML_SIN_CURVE]),
+			                              CML_SIN_CURVE, NULL,
 
-			   gettext (function_names[CML_SIN_CURVE_STEP]),
-			   (gpointer)              CML_SIN_CURVE_STEP, NULL,
+			      gettext (function_names[CML_SIN_CURVE_STEP]),
+			                              CML_SIN_CURVE_STEP, NULL,
 
-			   NULL);
+			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->function);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
@@ -1597,55 +1597,55 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			   &param->composition, (gpointer) param->composition,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
+			      &param->composition, param->composition,
 
-			   gettext (composition_names[COMP_NONE]),
-			   (gpointer)                 COMP_NONE, NULL,
+			      gettext (composition_names[COMP_NONE]),
+			                                 COMP_NONE, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR]),
-			   (gpointer)                 COMP_MAX_LINEAR, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR]),
+			                                 COMP_MAX_LINEAR, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_P1]),
-			   (gpointer)                 COMP_MAX_LINEAR_P1, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_P1]),
+			                                 COMP_MAX_LINEAR_P1, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_M1]),
-			   (gpointer)                 COMP_MAX_LINEAR_M1, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_M1]),
+			                                 COMP_MAX_LINEAR_M1, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR]),
-			   (gpointer)                 COMP_MIN_LINEAR, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR]),
+			                                 COMP_MIN_LINEAR, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_P1]),
-			   (gpointer)                 COMP_MIN_LINEAR_P1, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_P1]),
+			                                 COMP_MIN_LINEAR_P1, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_M1]),
-			   (gpointer)                 COMP_MIN_LINEAR_M1, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_M1]),
+			                                 COMP_MIN_LINEAR_M1, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_P1L]),
-			   (gpointer)                 COMP_MAX_LINEAR_P1L, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_P1L]),
+			                                 COMP_MAX_LINEAR_P1L, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_P1U]),
-			   (gpointer)                 COMP_MAX_LINEAR_P1U, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_P1U]),
+			                                 COMP_MAX_LINEAR_P1U, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_M1L]),
-			   (gpointer)                 COMP_MAX_LINEAR_M1L, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_M1L]),
+			                                 COMP_MAX_LINEAR_M1L, NULL,
 
-			   gettext (composition_names[COMP_MAX_LINEAR_M1U]),
-			   (gpointer)                 COMP_MAX_LINEAR_M1U, NULL,
+			      gettext (composition_names[COMP_MAX_LINEAR_M1U]),
+			                                 COMP_MAX_LINEAR_M1U, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_P1L]),
-			   (gpointer)                 COMP_MIN_LINEAR_P1L, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_P1L]),
+			                                 COMP_MIN_LINEAR_P1L, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_P1U]),
-			   (gpointer)                 COMP_MIN_LINEAR_P1U, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_P1U]),
+			                                 COMP_MIN_LINEAR_P1U, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_M1L]),
-			   (gpointer)                 COMP_MIN_LINEAR_M1L, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_M1L]),
+			                                 COMP_MIN_LINEAR_M1L, NULL,
 
-			   gettext (composition_names[COMP_MIN_LINEAR_M1U]),
-			   (gpointer)                 COMP_MIN_LINEAR_M1U, NULL,
+			      gettext (composition_names[COMP_MIN_LINEAR_M1U]),
+			                                 COMP_MIN_LINEAR_M1U, NULL,
 
-			   NULL);
+			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->composition);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
@@ -1654,40 +1654,40 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			   &param->arrange, (gpointer) param->arrange,
+    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
+			      &param->arrange, param->arrange,
 
-			   gettext (arrange_names[STANDARD]),
-			   (gpointer)             STANDARD, NULL,
+			      gettext (arrange_names[STANDARD]),
+			                             STANDARD, NULL,
 
-			   gettext (arrange_names[AVERAGE]),
-			   (gpointer)             AVERAGE, NULL,
+			      gettext (arrange_names[AVERAGE]),
+			                             AVERAGE, NULL,
 
-			   gettext (arrange_names[ANTILOG]),
-			   (gpointer)             ANTILOG, NULL,
+			      gettext (arrange_names[ANTILOG]),
+			                             ANTILOG, NULL,
 
-			   gettext (arrange_names[RAND_POWER0]),
-			   (gpointer)             RAND_POWER0, NULL,
+			      gettext (arrange_names[RAND_POWER0]),
+			                             RAND_POWER0, NULL,
 
-			   gettext (arrange_names[RAND_POWER1]),
-			   (gpointer)             RAND_POWER1, NULL,
+			      gettext (arrange_names[RAND_POWER1]),
+			                             RAND_POWER1, NULL,
 
-			   gettext (arrange_names[RAND_POWER2]),
-			   (gpointer)             RAND_POWER2, NULL,
+			      gettext (arrange_names[RAND_POWER2]),
+			                             RAND_POWER2, NULL,
 
-			   gettext (arrange_names[MULTIPLY_RANDOM0]),
-			   (gpointer)             MULTIPLY_RANDOM0, NULL,
+			      gettext (arrange_names[MULTIPLY_RANDOM0]),
+			                             MULTIPLY_RANDOM0, NULL,
 
-			   gettext (arrange_names[MULTIPLY_RANDOM1]),
-			   (gpointer)             MULTIPLY_RANDOM1, NULL,
+			      gettext (arrange_names[MULTIPLY_RANDOM1]),
+			                             MULTIPLY_RANDOM1, NULL,
 
-			   gettext (arrange_names[MULTIPLY_GRADIENT]),
-			   (gpointer)             MULTIPLY_GRADIENT, NULL,
+			      gettext (arrange_names[MULTIPLY_GRADIENT]),
+			                             MULTIPLY_GRADIENT, NULL,
 
-			   gettext (arrange_names[RAND_AND_P]),
-			   (gpointer)             RAND_AND_P, NULL,
+			      gettext (arrange_names[RAND_AND_P]),
+			                             RAND_AND_P, NULL,
 
-			   NULL);
+			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
 				optionmenu, &param->arrange);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
@@ -1777,8 +1777,8 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   chank = g_new (gpointer, 2);
-  chank[0] = (gpointer) channel_id;
-  chank[1] = (gpointer) param;
+  chank[0] = GINT_TO_POINTER (channel_id);
+  chank[1] = param;
 
   button = gtk_button_new_with_label (_("Plot the Graph of the Settings"));
   gtk_table_attach_defaults (GTK_TABLE (table), button,
@@ -1866,14 +1866,14 @@ preview_update (void)
 
 static void
 function_graph_new (GtkWidget *widget,
-		    gpointer   data)
+		    gpointer  *data)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *abox;
   GtkWidget *preview;
-  gint	     channel_id = *(int *) data;
-  CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
+  gint	     channel_id = GPOINTER_TO_INT (data[0]);
+  CML_PARAM *param = data[1];
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,

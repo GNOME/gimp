@@ -45,13 +45,16 @@ void create_colorpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Color"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &pcvals.colortype, (gpointer) 0,
+  frame = gimp_int_radio_group_new (TRUE, _("Color"),
+				    G_CALLBACK (gimp_radio_button_update),
+				    &pcvals.colortype, 0,
 
-				 _("A_verage under brush"), 0, &colorradio[0],
-				 _("C_enter of brush"), 1, &colorradio[1],
-				 NULL);
+				    _("A_verage under brush"),
+				    0, &colorradio[0],
+				    _("C_enter of brush"),
+				    1, &colorradio[1],
+
+				    NULL);
 
   gimp_help_set_help_data 
     (colorradio[0], 

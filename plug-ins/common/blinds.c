@@ -297,14 +297,14 @@ blinds_dialog (void)
   gtk_widget_show (vbox);
 
   frame =
-    gimp_radio_group_new2 (TRUE, _("Orientation"),
-			   G_CALLBACK (blinds_radio_update),
-			   &bvals.orientation, (gpointer) bvals.orientation,
+    gimp_int_radio_group_new (TRUE, _("Orientation"),
+			      G_CALLBACK (blinds_radio_update),
+			      &bvals.orientation, bvals.orientation,
 
-			   _("_Horizontal"), (gpointer) HORIZONTAL, NULL,
-			   _("_Vertical"),   (gpointer) VERTICAL, NULL,
+			      _("_Horizontal"), HORIZONTAL, NULL,
+			      _("_Vertical"),   VERTICAL,   NULL,
 
-			   NULL);
+			      NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
