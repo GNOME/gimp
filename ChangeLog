@@ -1,3 +1,19 @@
+2003-12-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpxmlparser.[ch]: added gimp_xml_parser_parse_buffer().
+
+	* app/vectors/gimpvectors-export.[ch]: renamed gimp_vectors_export()
+	to gimp_vectors_export_file() and added a stub called
+	gimp_vectors_export_string().
+
+	* app/vectors/gimpvectors-import.[ch]: renamed gimp_vectors_import()
+	to gimp_vectors_import_file() and added gimp_vectors_import_buffer().
+
+	* app/gui/vectors-commands.c
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly.
+
+	* app/pdb/paths_cmds.c: regenerated.
+
 2003-12-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.[ch]: changed unused SVG dnd API to speak in

@@ -23,11 +23,17 @@
 #define __GIMP_VECTORS_IMPORT_H__
 
 
-gboolean  gimp_vectors_import (GimpImage    *image,
-                               const gchar  *filename,
-                               gboolean      merge,
-                               gboolean      scale,
-                               GError      **error);
+gboolean  gimp_vectors_import_file   (GimpImage    *image,
+                                      const gchar  *filename,
+                                      gboolean      merge,
+                                      gboolean      scale,
+                                      GError      **error);
+gboolean  gimp_vectors_import_buffer (GimpImage    *image,
+                                      const gchar  *buffer,
+                                      gint          len,
+                                      gboolean      merge,
+                                      gboolean      scale,
+                                      GError      **error);
 
 
 #endif /* __GIMP_VECTORS_IMPORT_H__ */

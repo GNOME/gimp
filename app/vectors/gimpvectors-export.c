@@ -47,7 +47,7 @@ static gchar * gimp_vectors_export_image_size  (const GimpImage   *image);
 
 
 /**
- * gimp_vectors_export:
+ * gimp_vectors_export_file:
  * @image: the #GimpImage from which to export vectors
  * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
  * @filename: the name of the file to write
@@ -58,10 +58,10 @@ static gchar * gimp_vectors_export_image_size  (const GimpImage   *image);
  * Return value: %TRUE on success, %FALSE if an error occured
  **/
 gboolean
-gimp_vectors_export (const GimpImage    *image,
-                     const GimpVectors  *vectors,
-                     const gchar        *filename,
-                     GError            **error)
+gimp_vectors_export_file (const GimpImage    *image,
+                          const GimpVectors  *vectors,
+                          const gchar        *filename,
+                          GError            **error)
 {
   FILE  *file;
   gchar *size;
@@ -114,6 +114,20 @@ gimp_vectors_export (const GimpImage    *image,
     }
 
   return TRUE;
+}
+
+gchar *
+gimp_vectors_export_string (const GimpImage    *image,
+                            const GimpVectors  *vectors,
+                            GError            **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  g_warning ("gimp_vectors_export_string: unimplemented");
+
+  return NULL;
 }
 
 static gchar *

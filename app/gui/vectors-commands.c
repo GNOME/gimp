@@ -644,7 +644,7 @@ vectors_import_response (GtkWidget *dialog,
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-      if (gimp_vectors_import (gimage, filename, FALSE, FALSE, &error))
+      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, &error))
         {
           gimp_image_flush (gimage);
         }
@@ -711,7 +711,7 @@ vectors_export_response (GtkWidget *dialog,
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-      if (! gimp_vectors_export (gimage, NULL, filename, &error))
+      if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
         {
           g_message (error->message);
           g_error_free (error);

@@ -646,7 +646,7 @@ HELP
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
-	code    => 'success = gimp_vectors_import (gimage, filename, merge, scale, NULL);'
+	code    => 'success = gimp_vectors_import_file (gimage, filename, merge, scale, NULL);'
     );
 }
 

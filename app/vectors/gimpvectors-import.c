@@ -87,6 +87,14 @@ typedef struct
 } SvgPath;
 
 
+static gboolean  gimp_vectors_import  (GimpImage            *image,
+                                       const gchar          *filename,
+                                       const gchar          *str,
+                                       gint                  len,
+                                       gboolean              merge,
+                                       gboolean              scale,
+                                       GError              **error);
+
 static void  svg_parser_start_element (GMarkupParseContext  *context,
                                        const gchar          *element_name,
                                        const gchar         **attribute_names,
@@ -145,7 +153,7 @@ static GList    * parse_path_data     (const gchar  *data);
 
 
 /**
- * gimp_vectors_import:
+ * gimp_vectors_import_file:
  * @image: the #GimpImage to add the paths to
  * @filename: name of a SVG file
  * @merge: should multiple paths be merged into a single #GimpVectors object
@@ -157,8 +165,52 @@ static GList    * parse_path_data     (const gchar  *data);
  * Return value: %TRUE on success, %FALSE if an error occured
  **/
 gboolean
+gimp_vectors_import_file (GimpImage    *image,
+                          const gchar  *filename,
+                          gboolean      merge,
+                          gboolean      scale,
+                          GError      **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return gimp_vectors_import (image, filename, NULL, 0, merge, scale, error);
+}
+
+/**
+ * gimp_vectors_import_string:
+ * @image:  the #GimpImage to add the paths to
+ * @buffer: a character buffer to parse
+ * @len:    number of bytes in @str or -1 if @str is %NUL-terminated
+ * @merge:  should multiple paths be merged into a single #GimpVectors object
+ * @scale:  should the SVG be scaled to fit the image dimensions
+ * @error:  location to store possible errors
+ *
+ * Imports one or more paths from a SVG file.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occured
+ **/
+gboolean
+gimp_vectors_import_buffer (GimpImage    *image,
+                            const gchar  *buffer,
+                            gint          len,
+                            gboolean      merge,
+                            gboolean      scale,
+                            GError      **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return gimp_vectors_import (image, NULL, buffer, len, merge, scale, error);
+}
+
+static gboolean
 gimp_vectors_import (GimpImage    *image,
                      const gchar  *filename,
+                     const gchar  *str,
+                     gint          len,
                      gboolean      merge,
                      gboolean      scale,
                      GError      **error)
@@ -168,10 +220,6 @@ gimp_vectors_import (GimpImage    *image,
   GList         *paths;
   SvgHandler    *base;
   gboolean       success = TRUE;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   parser.stack     = g_queue_new ();
   parser.image     = image;
@@ -188,7 +236,10 @@ gimp_vectors_import (GimpImage    *image,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-  success = gimp_xml_parser_parse_file (xml_parser, filename, error);
+  if (filename)
+    success = gimp_xml_parser_parse_file (xml_parser, filename, error);
+  else
+    success = gimp_xml_parser_parse_buffer (xml_parser, str, len, error);
 
   gimp_xml_parser_free (xml_parser);
 
@@ -236,7 +287,11 @@ gimp_vectors_import (GimpImage    *image,
         }
       else
         {
-          g_set_error (error, 0, 0, _("No paths found in '%s'"), filename);
+          if (filename)
+            g_set_error (error, 0, 0, _("No paths found in '%s'"), filename);
+          else
+            g_set_error (error, 0, 0, _("No paths found in the buffer"));
+
           success = FALSE;
         }
     }

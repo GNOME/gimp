@@ -31,6 +31,10 @@ gboolean        gimp_xml_parser_parse_file       (GimpXmlParser       *parser,
 gboolean        gimp_xml_parser_parse_io_channel (GimpXmlParser       *parser,
                                                   GIOChannel          *io,
                                                   GError             **error);
+gboolean        gimp_xml_parser_parse_buffer     (GimpXmlParser       *parser,
+                                                  const gchar         *buffer,
+                                                  gssize               len,
+                                                  GError             **error);
 void            gimp_xml_parser_free             (GimpXmlParser       *parser);
 
 

@@ -189,6 +189,45 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
     }
 }
 
+gboolean
+gimp_xml_parser_parse_buffer (GimpXmlParser  *parser,
+                              const gchar    *buffer,
+                              gssize          len,
+                              GError        **error)
+{
+  gchar    *encoding = NULL;
+  gchar    *conv     = NULL;
+  gboolean  success;
+
+  g_return_val_if_fail (parser != NULL, FALSE);
+  g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (len < 0)
+    len = strlen (buffer);
+
+  if (parse_encoding (buffer, len, &encoding))
+    {
+      if (g_ascii_strcasecmp (encoding, "UTF-8") &&
+          g_ascii_strcasecmp (encoding, "UTF8"))
+        {
+          conv = g_convert (buffer, len, "UTF-8", encoding, NULL, &len, error);
+
+          g_free (encoding);
+
+          if (! conv)
+            return FALSE;
+        }
+    }
+
+  success = g_markup_parse_context_parse (parser->context,
+                                          conv ? conv : buffer, len, error);
+
+  g_free (conv);
+
+  return success;
+}
+
 /**
  * gimp_xml_parser_free:
  * @parser: a #GimpXmlParser
