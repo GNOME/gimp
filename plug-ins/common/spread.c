@@ -30,10 +30,10 @@
 
 typedef struct
 {
-  gdouble spread_amount_x;
-  gdouble spread_amount_y;
+  gdouble  spread_amount_x;
+  gdouble  spread_amount_y;
+  gboolean preview;
 } SpreadValues;
-
 
 /* Declare local functions.
  */
@@ -63,10 +63,10 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static SpreadValues spvals =
 {
-  5,  /*  horizontal spread amount  */
-  5   /*  vertical spread amount    */
+  5,   /*  horizontal spread amount  */
+  5,   /*  vertical spread amount    */
+  TRUE /*  preview                   */
 };
-
 
 /***** Functions *****/
 
@@ -356,7 +356,7 @@ spread_dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new (drawable, &spvals.preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

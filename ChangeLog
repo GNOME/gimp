@@ -1,5 +1,13 @@
 2004-10-14  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/nlfilt.c: Ported to GimpDrawablePreview, the
+	previous preview was absolutely useless. Done some cleanups, too.
+
+	* plug-ins/common/spread.c: remember the preview state between
+	invocations.
+
+2004-10-14  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/emboss.c: use a GimpDrawablePreview instead of a
 	GimpAspectPreview, since this plug-in is somewhat edge-oriented and
 	this makes the code simpler ;)
