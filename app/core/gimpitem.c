@@ -332,19 +332,7 @@ gimp_item_real_convert (GimpItem  *item,
                         GType      new_type,
                         gboolean   add_alpha)
 {
-  GimpItem *new_item;
-
-  new_item = gimp_item_duplicate (item, new_type, add_alpha);
-
-  if (dest_image != item->gimage)
-    {
-      gimp_item_set_image (new_item, dest_image);
-
-      /*  force a unique name  */
-      gimp_object_name_changed (GIMP_OBJECT (new_item));
-    }
-
-  return new_item;
+  return gimp_item_duplicate (item, new_type, add_alpha);
 }
 
 static void
@@ -452,13 +440,25 @@ gimp_item_convert (GimpItem  *item,
                    GType      new_type,
                    gboolean   add_alpha)
 {
+  GimpItem *new_item;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (item->gimage), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
-  return GIMP_ITEM_GET_CLASS (item)->convert (item, dest_image,
-                                              new_type, add_alpha);
+  new_item =  GIMP_ITEM_GET_CLASS (item)->convert (item, dest_image,
+                                                   new_type, add_alpha);
+
+  if (dest_image != item->gimage)
+    {
+      gimp_item_set_image (new_item, dest_image);
+
+      /*  force a unique name  */
+      gimp_object_name_changed (GIMP_OBJECT (new_item));
+    }
+
+  return new_item;
 }
 
 void

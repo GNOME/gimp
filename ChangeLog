@@ -1,5 +1,12 @@
 2003-10-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.c (gimp_item_convert,gimp_item_real_convert):
+	set the item's new image *after* converting it because we need the
+	old image's colormap for conversions from and to INDEXED.
+	Fixes bug #123625.
+
+2003-10-02  Michael Natterer  <mitch@gimp.org>
+
 	Cleaned up the app init and exit stuff even more. Also reduces the
 	number of missing symbols for gimp-console. Added init and exit
 	debugging output (only for --verbose).
