@@ -83,6 +83,16 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
+(GimpTemplate "Toilet Paper (US, 300dpi)"
+    (stock-id "gimp-toilet-paper")
+    (width 1350)
+    (height 1350)
+    (unit inches)
+    (xresolution 300.000000)
+    (yresolution 300.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
 (GimpTemplate "CD Cover (300dpi)"
     (stock-id "gtk-cdrom")
     (width 1429)

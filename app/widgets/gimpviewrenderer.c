@@ -709,7 +709,7 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
                                             GtkWidget           *widget,
                                             const gchar         *stock_id)
 {
-  GdkPixbuf   *pixbuf;
+  GdkPixbuf   *pixbuf = NULL;
   GtkIconSize  icon_size;
 
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
@@ -729,10 +729,11 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
     }
 
   icon_size = gimp_get_icon_size (widget, stock_id, GTK_ICON_SIZE_INVALID,
-                                  renderer->width, renderer->height);
+				  renderer->width, renderer->height);
 
-  pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
-
+  if (icon_size)
+    pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
+      
   if (pixbuf)
     {
       if (gdk_pixbuf_get_width (pixbuf)  > renderer->width ||

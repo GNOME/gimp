@@ -307,13 +307,16 @@ gimp_get_icon_size (GtkWidget   *widget,
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
+  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
+
+  if (! icon_set)
+    return GTK_ICON_SIZE_INVALID;
+
   if (! gtk_icon_size_lookup (max_size, &max_width, &max_height))
     {
       max_width  = 1024;
       max_height = 1024;
     }
-
-  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
 
   gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
 

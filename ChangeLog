@@ -1,3 +1,10 @@
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.c (gimp_get_icon_size): return
+	GTK_ICON_SIZE_INVALID for non-existant icons.
+
+	* app/widgets/gimppreviewrenderer.c: handle GTK_ICON_SIZE_INVALID.
+
 2003-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-new-dialog.c: s/NewImageInfo/FileNewDialog/g,
