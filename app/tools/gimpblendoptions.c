@@ -30,9 +30,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpcontainerpopup.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimppropwidgets.h"
 
@@ -66,8 +63,6 @@ static void   gimp_blend_options_get_property    (GObject          *object,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
-static void   blend_options_gradient_clicked     (GtkWidget        *widget,
-                                                  GimpContext      *context);
 static void   blend_options_gradient_type_notify (GimpBlendOptions *options,
                                                   GParamSpec       *pspec,
                                                   GtkWidget        *repeat_menu);
@@ -235,27 +230,12 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *frame;
   GtkWidget *menu;
   GtkWidget *button;
-  GtkWidget *preview;
 
   config = G_OBJECT (tool_options);
 
   vbox = gimp_paint_options_gui (tool_options);
 
   table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
-
-  /*  the gradient preview  */
-  button = gtk_button_new ();
-  preview = gimp_prop_preview_new (config, "gradient", 32);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-  gtk_widget_show (preview);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Gradient:"), 1.0, 0.5,
-                             button, 2, TRUE);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (blend_options_gradient_clicked),
-                    tool_options);
 
   /*  the offset scale  */
   gimp_prop_scale_entry_new (config, "offset",
@@ -320,24 +300,6 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   return vbox;
-}
-
-static void
-blend_options_gradient_clicked (GtkWidget   *widget, 
-                                GimpContext *context)
-{
-  GtkWidget *toplevel;
-  GtkWidget *popup;
-
-  toplevel = gtk_widget_get_toplevel (widget);
-
-  popup = gimp_container_popup_new (context->gimp->gradient_factory->container,
-                                    context,
-                                    GIMP_DOCK (toplevel)->dialog_factory,
-                                    "gimp-gradient-list",
-                                    GIMP_STOCK_TOOL_BLEND,
-                                    _("Open the gradient selection dialog"));
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }
 
 static void

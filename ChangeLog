@@ -1,3 +1,15 @@
+2003-04-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/paint_options.[ch]: added
+	paint_options_container_scrolled() utility function which
+	wheel-scrolls a container. Use it for the brush and pattern
+	previews. Added a gradient preview.
+
+	* app/tools/gimpblendoptions.c: removed the gradient preview here.
+
+	* app/tools/gimptextoptions.c: use the new function to scroll
+	the font list.
+
 2003-04-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbucketfilloptions.c: removed the pattern preview...

@@ -28,7 +28,11 @@
 #include "config/gimpconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+#include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -67,10 +71,21 @@ static GtkWidget * gradient_options_gui   (GimpGradientOptions *gradient,
                                            GType                tool_type,
                                            GtkWidget           *incremental_toggle);
 
-static void paint_options_brush_clicked   (GtkWidget           *widget, 
-                                           GimpContext         *context);
-static void paint_options_pattern_clicked (GtkWidget           *widget, 
-                                           GimpContext         *context);
+static void     paint_options_brush_clicked     (GtkWidget      *widget,
+                                                 GimpContext    *context);
+static gboolean paint_options_brush_scrolled    (GtkWidget      *widget,
+                                                 GdkEventScroll *sevent,
+                                                GimpContext    *context);
+static void     paint_options_pattern_clicked   (GtkWidget      *widget,
+                                                 GimpContext    *context);
+static gboolean paint_options_pattern_scrolled  (GtkWidget      *widget,
+                                                 GdkEventScroll *sevent,
+                                                 GimpContext    *context);
+static void     paint_options_gradient_clicked  (GtkWidget      *widget,
+                                                 GimpContext    *context);
+static gboolean paint_options_gradient_scrolled (GtkWidget      *widget,
+                                                 GdkEventScroll *sevent,
+                                                 GimpContext    *context);
 
 
 GtkWidget *
@@ -142,6 +157,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
                         context);
+      g_signal_connect (button, "scroll_event",
+                        G_CALLBACK (paint_options_brush_scrolled),
+                        context);
     }
 
   /*  the pattern preview  */
@@ -162,6 +180,32 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_pattern_clicked),
+                        context);
+      g_signal_connect (button, "scroll_event",
+                        G_CALLBACK (paint_options_pattern_scrolled),
+                        context);
+    }
+
+  /*  the gradient preview  */
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
+    {
+      GtkWidget *button;
+      GtkWidget *preview;
+
+      button = gtk_button_new ();
+      preview = gimp_prop_preview_new (config, "gradient", 32);
+      gtk_container_add (GTK_CONTAINER (button), preview);
+      gtk_widget_show (preview);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 _("Gradient:"), 1.0, 0.5,
+                                 button, 2, TRUE);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (paint_options_gradient_clicked),
+                        context);
+      g_signal_connect (button, "scroll_event",
+                        G_CALLBACK (paint_options_gradient_scrolled),
                         context);
     }
 
@@ -431,6 +475,51 @@ gradient_options_gui (GimpGradientOptions *gradient,
   return frame;
 }
 
+void
+paint_options_container_scrolled (GimpContainer  *container,
+                                  GimpContext    *context,
+                                  GType           type,
+                                  GdkEventScroll *sevent)
+{
+  GimpObject *object;
+  gint        index;
+
+  object = gimp_context_get_by_type (context, type);
+
+  index = gimp_container_get_child_index (container, object);
+
+  if (index != -1)
+    {
+      gint n_children;
+      gint new_index = index;
+
+      n_children = gimp_container_num_children (container);
+
+      if (sevent->direction == GDK_SCROLL_UP)
+        {
+          if (index > 0)
+            new_index--;
+          else
+            new_index = n_children - 1;
+        }
+      else if (sevent->direction == GDK_SCROLL_DOWN)
+        {
+          if (index == (n_children - 1))
+            new_index = 0;
+          else
+            new_index++;
+        }
+
+      if (new_index != index)
+        {
+          object = gimp_container_get_child_by_index (container, new_index);
+
+          if (object)
+            gimp_context_set_by_type (context, type, object);
+        }
+    }
+}
+
 static void
 paint_options_brush_clicked (GtkWidget   *widget, 
                              GimpContext *context)
@@ -449,6 +538,17 @@ paint_options_brush_clicked (GtkWidget   *widget,
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }
 
+static gboolean
+paint_options_brush_scrolled (GtkWidget      *widget,
+                              GdkEventScroll *sevent,
+                              GimpContext    *context)
+{
+  paint_options_container_scrolled (context->gimp->brush_factory->container,
+                                    context, GIMP_TYPE_BRUSH, sevent);
+
+  return TRUE;
+}
+
 static void
 paint_options_pattern_clicked (GtkWidget   *widget, 
                                GimpContext *context)
@@ -465,4 +565,44 @@ paint_options_pattern_clicked (GtkWidget   *widget,
                                     GIMP_STOCK_TOOL_BUCKET_FILL,
                                     _("Open the pattern selection dialog"));
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
+}
+
+static gboolean
+paint_options_pattern_scrolled (GtkWidget      *widget,
+                                GdkEventScroll *sevent,
+                                GimpContext    *context)
+{
+  paint_options_container_scrolled (context->gimp->pattern_factory->container,
+                                    context, GIMP_TYPE_PATTERN, sevent);
+
+  return TRUE;
+}
+
+static void
+paint_options_gradient_clicked (GtkWidget   *widget, 
+                                GimpContext *context)
+{
+  GtkWidget *toplevel;
+  GtkWidget *popup;
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  popup = gimp_container_popup_new (context->gimp->gradient_factory->container,
+                                    context,
+                                    GIMP_DOCK (toplevel)->dialog_factory,
+                                    "gimp-gradient-list",
+                                    GIMP_STOCK_TOOL_BLEND,
+                                    _("Open the gradient selection dialog"));
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
+}
+
+static gboolean
+paint_options_gradient_scrolled (GtkWidget      *widget,
+                                 GdkEventScroll *sevent,
+                                 GimpContext    *context)
+{
+  paint_options_container_scrolled (context->gimp->gradient_factory->container,
+                                    context, GIMP_TYPE_GRADIENT, sevent);
+
+  return TRUE;
 }
