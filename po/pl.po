@@ -28,7 +28,7 @@ msgstr "Wersja %s stworzona przez"
 
 #: app/about_dialog.c:1
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Aby uzyskaæ wiêcej informacji, odwied¼ http://www.gimp.org/"
+msgstr "Wiêcej informacji znajdziesz na http://www.gimp.org/"
 
 #: app/airbrush.c:1 app/convolve.c:1 app/smudge.c:1
 msgid "Rate:"
@@ -358,7 +358,7 @@ msgstr "Tryb:"
 #: app/brush_select.c:1 app/palette.c:1 app/palette.c:1
 #: modules/colorsel_water.c:1
 msgid "New"
-msgstr "Nowa"
+msgstr "Nowy"
 
 #: app/brush_select.c:1 app/colormap_dialog.i.c:1
 #: app/gradient_select.c:1 app/palette.c:1 app/palette.c:1
@@ -776,7 +776,7 @@ msgstr "Zmniejszenie zaznaczenia o:"
 
 #: app/commands.c:1
 msgid "Shrink from image border"
-msgstr "Zmniejsz od granic obrazu"
+msgstr "Zmniejszenie od granic obrazu"
 
 #: app/commands.c:1
 msgid "Grow Selection"
@@ -3220,7 +3220,7 @@ msgstr "/Widok/Nowy widok"
 
 #: app/menus.c:1
 msgid "/View/Shrink Wrap"
-msgstr "/Widok/Zmniejsz otoczenie"
+msgstr "/Widok/Zacie¶nij otoczenie"
 
 #: app/menus.c:1
 msgid "/Image/Mode/RGB"
