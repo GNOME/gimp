@@ -1,3 +1,8 @@
+2002-12-14  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.c: made it compile after Mitch's
+	changes.
+
 2002-12-14  Michael Natterer  <mitch@gimp.org>
 
 	Changed menubar showing/hiding to work like rulers and statusbar:
@@ -63,7 +68,7 @@
 
 	* plug-ins/imagemap/imap_default_dialog.c: code clean-up
 
-2002-12-13 Sven Neumann <sven@gimp.org>
+2002-12-13 Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/drawable.pdb
 	* tools/pdbgen/pdb/selection.pdb: merged fix for bug #96284 from
