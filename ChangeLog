@@ -1,3 +1,10 @@
+2003-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c
+	(gimp_bezier_stroke_nearest_point_get): removed compiler warning.
+
+	* app/vectors/gimpvectors-export.c: small formatting change.
+
 2003-09-18  Simon Budig  <simon@gimp.org>
 
 	* app/tools/tools-enums.h: Renamed the modes of the vector tools:

@@ -595,7 +595,8 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
   GimpCoords  point;
   GimpCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start, *segment_end, *anchor;
+  GimpAnchor *segment_start, *segment_end = NULL;
+  GimpAnchor *anchor;
   gint        count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), - 1.0);

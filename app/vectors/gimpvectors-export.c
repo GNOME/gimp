@@ -253,15 +253,15 @@ gimp_vectors_export_path_data (const GimpVectors *vectors)
 
           for (i = 1; i < control_points->len; i++)
             {
+              if (i > 1 && i % 3 == 1)
+                g_string_append_printf (str, NEWLINE " ");
+
               anchor = &g_array_index (control_points, GimpAnchor, i);
               g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", anchor->position.x);
               g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", anchor->position.y);
               g_string_append_printf (str, " %s,%s", x_string, y_string);
-
-              if (i % 3 == 1)
-                g_string_append_printf (str, NEWLINE " ");
             }
 
           if (closed && control_points->len > 1)
