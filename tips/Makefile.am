@@ -10,6 +10,7 @@ tips_POFILES = \
 	cs.po		\
 	da.po		\
 	de.po		\
+	en_CA.po	\
 	es.po		\
 	fr.po		\
 	he.po		\
