@@ -68,18 +68,19 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpairbrush.h" "paint/gimpairbrushoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpAirbrush");
 
-  GIMP_AIRBRUSH_OPTIONS (options)->pressure = pressure;
+  options = gimp_paint_options_new (info);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_AIRBRUSH,
-                                options,
-                                drawable,
+  g_object_set (options,
+                "pressure", pressure,
+                NULL);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -107,16 +108,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpairbrush.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpAirbrush");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_AIRBRUSH,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -158,13 +158,17 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpclone.h" "paint/gimpcloneoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpClone");
 
-  GIMP_CLONE_OPTIONS (options)->clone_type = clone_type;
+  options = gimp_paint_options_new (info);
+
+  g_object_set (options,
+                "clone-type", clone_type,
+                NULL);
 
 #ifdef __GNUC__
 #warning FIXME: re-enable clone src_drawable
@@ -177,10 +181,7 @@ HELP
   core->src_y        = src_y;
 #endif
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_CLONE,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -209,16 +210,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpclone.h" "paint/gimpcloneoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpClone");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_CLONE,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -246,16 +246,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpconvolve.h" "paint/gimpconvolveoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpConvolve");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_CONVOLVE,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -284,21 +283,20 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpconvolve.h" "paint/gimpconvolveoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpConvolve");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "type", convolve_type,
                 "rate", pressure,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_CONVOLVE,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -324,16 +322,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimperaser.h" "paint/gimperaseroptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpEraser");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_ERASER,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -363,21 +360,20 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimperaser.h" "paint/gimperaseroptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpEraser");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "application-mode", method,
                 "hard",             hardness,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_ERASER,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -407,11 +403,13 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimperaser.h" "paint/gimperaseroptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpEraser");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "application-mode", method,
@@ -419,10 +417,7 @@ HELP
                 "anti-erase",       TRUE,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_ERASER,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -460,11 +455,13 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimppaintbrush.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPaintbrush");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "application-mode", method,
@@ -474,10 +471,7 @@ HELP
                 "gradient-length",  gradient_length,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_PAINTBRUSH,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -513,16 +507,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimppaintbrush.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPaintbrush");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_PAINTBRUSH,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -548,16 +541,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimppencil.h" "paint/gimppenciloptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpPencil");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_PENCIL,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -584,20 +576,19 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpsmudge.h" "paint/gimpsmudgeoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpSmudge");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "rate", pressure,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_SMUDGE,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -625,16 +616,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpsmudge.h" "paint/gimpsmudgeoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpSmudge");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_SMUDGE,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -666,11 +656,13 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpdodgeburn.h" "paint/gimpdodgeburnoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpDodgeBurn");
+
+  options = gimp_paint_options_new (info);
 
   g_object_set (options,
                 "type",     dodgeburn_type,
@@ -678,10 +670,7 @@ HELP
                 "exposure", exposure,
                 NULL);
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_DODGE_BURN,
-                                options,
-                                drawable,
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -708,16 +697,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paint/gimpdodgeburn.h" "paint/gimpdodgeburnoptions.h") ],
-	vars => [ "GimpPaintOptions *options" ],
+	vars => [ "GimpPaintInfo *info", "GimpPaintOptions *options" ],
 	code => <<'CODE'
 {
-  options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
+  info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, "GimpDodgeBurn");
 
-  success = paint_tools_stroke (gimp, context,
-                                GIMP_TYPE_DODGE_BURN,
-                                options,
-                                drawable,
+  options = gimp_paint_options_new (info);
+
+  success = paint_tools_stroke (gimp, context, options, drawable,
                                 num_strokes, strokes);
 }
 CODE
@@ -741,13 +729,13 @@ sub ink {
 }
 
 @headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h"
-              "paint/gimppaintcore-stroke.h" "core/gimp.h");
+              "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
+              "core/gimp.h" "core/gimpcontainer.h" "core/gimppaintinfo.h");
 
 $extra{app}->{code} = <<'CODE';
 static gboolean
 paint_tools_stroke (Gimp             *gimp,
                     GimpContext      *context,
-                    GType             core_type,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
                     gint              n_strokes,
@@ -766,7 +754,7 @@ paint_tools_stroke (Gimp             *gimp,
                                   FALSE);
   gimp_context_set_parent (GIMP_CONTEXT (options), context);
 
-  core = g_object_new (core_type, NULL);
+  core = g_object_new (options->paint_info->paint_type, NULL);
 
   coords = g_new (GimpCoords, n_strokes);
 

@@ -37,8 +37,6 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
 
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
@@ -583,7 +581,7 @@ gimp_vectors_stroke (GimpItem     *item,
       GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
       GimpPaintCore    *core;
 
-      core = g_object_new (GIMP_TOOL_OPTIONS (paint_options)->tool_info->paint_info->paint_type, NULL);
+      core = g_object_new (paint_options->paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_vectors (core, drawable,
                                                paint_options,

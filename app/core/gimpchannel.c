@@ -52,8 +52,6 @@
 #include "gimppaintinfo.h"
 #include "gimpprojection.h"
 #include "gimpstrokeoptions.h"
-#include "gimptoolinfo.h"
-#include "gimptooloptions.h"
 
 #include "gimp-intl.h"
 
@@ -627,7 +625,7 @@ gimp_channel_stroke (GimpItem     *item,
       GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
       GimpPaintCore    *core;
 
-      core = g_object_new (GIMP_TOOL_OPTIONS (paint_options)->tool_info->paint_info->paint_type, NULL);
+      core = g_object_new (paint_options->paint_info->paint_type, NULL);
 
       retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                 paint_options,

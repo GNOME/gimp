@@ -74,6 +74,8 @@ struct _GimpPaintOptions
 {
   GimpToolOptions           parent_instance;
 
+  GimpPaintInfo            *paint_info;
+
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
 
@@ -92,8 +94,7 @@ struct _GimpPaintOptionsClass
 
 GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
 
-GimpPaintOptions * gimp_paint_options_new      (Gimp             *gimp,
-                                                GType             options_type);
+GimpPaintOptions * gimp_paint_options_new      (GimpPaintInfo    *paint_info);
 
 gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                                                 GimpImage        *gimage,

@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "paint/gimppaintoptions.h"
+
 #include "gimp.h"
 #include "gimppaintinfo.h"
 
@@ -144,9 +146,7 @@ gimp_paint_info_new (Gimp        *gimp,
   paint_info->paint_options_type = paint_options_type;
   paint_info->blurb              = g_strdup (blurb);
 
-  paint_info->paint_options      = g_object_new (paint_info->paint_options_type,
-                                                 "gimp", gimp,
-                                                 NULL);
+  paint_info->paint_options      = gimp_paint_options_new (paint_info);
 
   return paint_info;
 }

@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpgradient.h"
+#include "core/gimppaintinfo.h"
 
 #include "gimppaintoptions.h"
 
@@ -57,6 +58,7 @@
 enum
 {
   PROP_0,
+  PROP_PAINT_INFO,
   PROP_APPLICATION_MODE,
   PROP_HARD,
   PROP_PRESSURE_OPACITY,
@@ -135,6 +137,13 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   object_class->set_property = gimp_paint_options_set_property;
   object_class->get_property = gimp_paint_options_get_property;
   object_class->notify       = gimp_paint_options_notify;
+
+  g_object_class_install_property (object_class, PROP_PAINT_INFO,
+                                   g_param_spec_object ("paint-info",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_PAINT_INFO,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", NULL,
@@ -216,6 +225,9 @@ gimp_paint_options_finalize (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
+  if (options->paint_info)
+    g_object_unref (options->paint_info);
+
   g_free (options->pressure_options);
   g_free (options->fade_options);
   g_free (options->gradient_options);
@@ -242,6 +254,10 @@ gimp_paint_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_PAINT_INFO:
+      options->paint_info = (GimpPaintInfo *) g_value_dup_object (value);
+      break;
+
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
@@ -316,6 +332,10 @@ gimp_paint_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_PAINT_INFO:
+      g_value_set_object (value, options->paint_info);
+      break;
+
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;
@@ -399,17 +419,15 @@ gimp_paint_options_notify (GObject    *object,
 }
 
 GimpPaintOptions *
-gimp_paint_options_new (Gimp  *gimp,
-                        GType  options_type)
+gimp_paint_options_new (GimpPaintInfo *paint_info)
 {
   GimpPaintOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (g_type_is_a (options_type, GIMP_TYPE_PAINT_OPTIONS),
-                        NULL);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
 
-  options = g_object_new (options_type,
-                          "gimp", gimp,
+  options = g_object_new (paint_info->paint_options_type,
+                          "gimp",       paint_info->gimp,
+                          "paint-info", paint_info,
                           NULL);
 
   return options;

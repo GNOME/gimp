@@ -1003,15 +1003,12 @@ gimp_item_stroke (GimpItem      *item,
         }
       else if (GIMP_IS_PAINT_INFO (stroke_desc))
         {
-          GimpImage        *gimage     = gimp_item_get_image (item);
           GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);
           GimpPaintOptions *paint_options;
 
           if (use_default_values)
             {
-              paint_options =
-                gimp_paint_options_new (gimage->gimp,
-                                        paint_info->paint_options_type);
+              paint_options = gimp_paint_options_new (paint_info);
 
               /*  undefine the paint-relevant context properties and get them
                *  from the passed context

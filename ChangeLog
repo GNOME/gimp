@@ -1,5 +1,27 @@
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.[ch]: added "GimpPaintInfo *paint_info"
+	member and construct property. Changed gimp_paint_options_new()
+	to take only a GimpPaintInfo parameter.
+
+	* app/core/gimpitem.c (gimp_item_stroke)
+	* app/core/gimppaintinfo.c (gimp_paint_info_new): changed accordingly.
+
+	* app/core/gimpchannel.c (gimp_channel_stroke)
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): use
+	paint_options->paint_info->paint_type directly instead of casting
+	to GimpToolOptions and using
+	tool_options->tool_info->paint_info->paint_type (eek). Fixes crash
+	when stroking via the PDB because newly created GimpToolOptions
+	instances have no "tool_info" pointer yet.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: changed all paint PDB wrappers
+	accordingly.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig.c (gimp_config_iface_duplicate): set
 	construct_param->foo, not construct_param*s*->foo, so we don't set
 	the first construct param again and crash.
