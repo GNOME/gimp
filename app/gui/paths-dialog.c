@@ -872,7 +872,7 @@ paths_dialog_update (GimpImage* gimage)
 
   if (gimage != new_path_list->gimage)
     {
-      g_warning("paths list: internal list error");
+      g_warning ("Paths list: internal list error");
     }
 
   plist = new_path_list->bz_paths;
@@ -1314,7 +1314,8 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
   if ((proc_rec = procedural_db_lookup (gimage->gimp,
 					"plug_in_sel2path_advanced")) == NULL)
     {
-      g_message ("paths_dialog_adavanced_to_path_callback(): selection to path (advanced) procedure lookup failed");
+      g_warning ("%s: selection to path (advanced) procedure lookup failed", 
+		 G_STRLOC);
       return;
     }
 
@@ -1350,7 +1351,8 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   if ((proc_rec = procedural_db_lookup (gimage->gimp,
 					"plug_in_sel2path")) == NULL)
     {
-      g_message ("paths_dialog_sel_to_path_callback(): selection to path procedure lookup failed");
+      g_warning ("%s: selection to path procedure lookup failed.",
+		 G_STRLOC);
       return;
     }
 
@@ -1510,7 +1512,7 @@ pathpoints_create (GimpBezierSelectTool *sel)
 	{
 	  /* The curve must loop back on itself */
 	  if(start_pnt != pts->next)
-	    g_warning("Curve of of sync");
+	    g_warning ("%s: Curve out of sync.", G_STRLOC);
 	  
 	  need_move = 1;
 	  pts = pts->next_curve;
@@ -1876,7 +1878,8 @@ file_ok_callback (GtkWidget *widget,
 
       if(!f)
 	{
-	  g_message(_("Unable to open file %s"),filename);
+	  g_message (_("Unable to open file '%s'\nError: %s."), 
+		     filename, g_strerror(errno));
 	  return;
 	}
       
@@ -1891,7 +1894,7 @@ file_ok_callback (GtkWidget *widget,
 
 	  if(!fgets(txt,512,f) || strlen(txt) < 7)
 	    {
-	      g_message(_("Failed to read from %s"),filename);
+	      g_message (_("Failed to read from '%s'"), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1906,14 +1909,14 @@ file_ok_callback (GtkWidget *widget,
 
 	  if(readfields != 4)
 	    {
-	      g_message(_("Failed to read path from %s"),filename);
+	      g_message (_("Failed to read path from '%s'"), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
 
 	  if(val <= 0)
 	    {
-	      g_message(_("No points specified in path file %s"),filename);
+	      g_message (_("No points specified in path file '%s'"), filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1924,7 +1927,8 @@ file_ok_callback (GtkWidget *widget,
 	      readfields = fscanf(f,"TYPE: %d X: %lg Y: %lg\n", &type, &x, &y);
 	      if(readfields != 3)
 		{
-		  g_message(_("Failed to read path points from %s"),filename);
+		  g_message (_("Failed to read path points from %s"), 
+			     filename);
 		  gtk_widget_hide (file_dlg);  
 		  return;
 		}
@@ -1937,14 +1941,16 @@ file_ok_callback (GtkWidget *widget,
 		case BEZIER_MOVE:
 		  if(this_path_count < 6)
 		    {
-		      g_warning("Invalid single point in path\n");
+		      g_warning ("%s: Invalid single point in path.",
+				 G_STRLOC);
 		      gtk_widget_hide (file_dlg);  
 		      return;
 		    }
 		  this_path_count = 0;
 		  break;
 		default:
-		  g_warning("Invalid point type passed\n");
+		  g_warning ("%s: Invalid point type passed.",
+			     G_STRLOC);
 		  gtk_widget_hide (file_dlg);  
 		  return;
 		}
@@ -1997,7 +2003,8 @@ file_ok_callback (GtkWidget *widget,
       f = fopen(filename, "wb");
       if (NULL == f) 
 	{
-	  g_message (_("open failed on %s: %s\n"), filename, g_strerror(errno));
+	  g_message (_("Opening '%s' failed:\n%s"), 
+		     filename, g_strerror(errno));
 	  return;
 	}
 
@@ -2019,7 +2026,7 @@ file_cancel_callback (GtkWidget *widget,
 static void
 make_file_dlg (gpointer data) 
 {
-  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
+  file_dlg = gtk_file_selection_new (_("Load and Save Bezier Curves"));
   gtk_window_set_wmclass (GTK_WINDOW (file_dlg), "load_save_path", "Gimp");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
@@ -2081,7 +2088,7 @@ paths_dialog_export_path_callback (GtkWidget *widget,
 
   gimp_help_set_help_data (file_dlg, NULL, "paths/dialogs/export_path.html");
 
-  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Store Path"));
+  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Save Path"));
   load_store = 0;
   gtk_widget_show (file_dlg);
 }
@@ -2523,7 +2530,7 @@ path_set_path_points (GimpImage *gimage,
       (pclosed && ((num_pnts/3) % 3)) ||
       (!pclosed && ((num_pnts/3) % 3) != 2))
     {
-      g_warning ("wrong number of points\n");
+      g_warning ("%s: Wrong number of points (%d).", G_STRLOC, num_pnts);
       return FALSE;
     }
 
@@ -2555,13 +2562,13 @@ path_set_path_points (GimpImage *gimage,
 	case BEZIER_MOVE:
 	  if (this_path_count < 6)
 	    {
-	      g_warning ("Invalid single point in path\n");
+	      g_warning ("%s: Invalid single point in path.", G_STRLOC);
 	      return FALSE;
 	    }
 	  this_path_count = 0;
 	  break;
 	default:
-	  g_warning ("Invalid point type passed\n");
+	  g_warning ("%s: Invalid point type passed.", G_STRLOC);
 	  return FALSE;
 	}
 
@@ -2657,7 +2664,7 @@ path_delete_path (GimpImage *gimage,
 
   if (!pname || !gimage)
     {
-      g_warning ("paths_delete_path: invalid path");
+      g_warning ("%s: invalid path.", G_STRLOC);
       return FALSE;
     }
 

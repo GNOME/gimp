@@ -672,7 +672,7 @@ palette_editor_color_area_events (GtkWidget     *widget,
 	      palette_editor_draw_entries (palette_editor, row, col);
 
 	      /*  Update the active color name  */
-	      g_print ("color name before: >>%s<<\n",
+	      g_print ("former color name: '%s'\n",
 		       palette_editor->color->name);
 
 	      g_signal_handler_block (G_OBJECT (palette_editor->color_name),
@@ -684,7 +684,7 @@ palette_editor_color_area_events (GtkWidget     *widget,
 	      g_signal_handler_unblock (G_OBJECT (palette_editor->color_name),
 					palette_editor->entry_sig_id);
 
-	      g_print ("color name after: >>%s<<\n",
+	      g_print ("new color name: '%s'\n",
 		       palette_editor->color->name);
 
 	      gtk_widget_set_sensitive (palette_editor->color_name, TRUE);

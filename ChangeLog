@@ -1,3 +1,10 @@
+2002-01-14  Rebecca Walter  <bex@gimp.org>
+
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/paths-dialog.c: more proofreading with help from 
+	CyBeR (Marco Wessel)
+
 2002-01-13  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: I'm dumb, use better sorting.

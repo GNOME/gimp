@@ -285,7 +285,7 @@ palette_import_import_callback (GtkWidget *widget,
   palette_name = (gchar *) gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
 
   if (! (palette_name && strlen (palette_name)))
-    palette_name = g_strdup (_("Unnamed"));
+    palette_name = g_strdup (_("Untitled"));
   else
     palette_name = g_strdup (palette_name);
 
