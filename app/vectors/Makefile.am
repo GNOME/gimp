@@ -19,6 +19,8 @@ libappvectors_a_SOURCES = \
 	gimpanchor.h		\
 	gimpbezierstroke.h	\
 	gimpbezierstroke.c	\
+	gimpcoordmath.h		\
+	gimpcoordmath.c		\
 	gimpstroke.h		\
 	gimpstroke.c		\
 	gimpvectors.c		\

@@ -54,6 +54,17 @@ GimpStroke * gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
                                                  gint              n_coords,
                                                  gboolean          closed);
 
+GimpStroke * gimp_bezier_stroke_new_moveto      (const GimpCoords *start);
+void         gimp_bezier_stroke_lineto          (GimpStroke       *bez_stroke,
+                                                 const GimpCoords *end);
+void         gimp_bezier_stroke_conicto         (GimpStroke       *bez_stroke,
+                                                 const GimpCoords *control,
+                                                 const GimpCoords *end);
+void         gimp_bezier_stroke_cubicto         (GimpStroke       *bez_stroke,
+                                                 const GimpCoords *control1,
+                                                 const GimpCoords *control2,
+                                                 const GimpCoords *end);
+
 GimpAnchor * gimp_bezier_stroke_extend     (GimpStroke           *stroke,
                                             const GimpCoords     *coords,
                                             GimpAnchor           *neighbor,
