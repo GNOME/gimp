@@ -145,11 +145,11 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_DODGE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_BURN));
           break;
         case GIMP_BURN:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_DODGE));
           break;
         default:
@@ -196,20 +196,14 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /* the type (dodge or burn) */
-  frame = gimp_radio_group_new2 (TRUE, _("Type (<Ctrl>)"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type,
-				 GINT_TO_POINTER (options->type),
-
-				 _("Dodge"),
-                                 GINT_TO_POINTER (GIMP_DODGE),
-				 &options->type_w[0],
-
-				 _("Burn"),
-                                 GINT_TO_POINTER (GIMP_BURN),
-				 &options->type_w[1],
-
-				 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_DODGE_BURN_TYPE,
+                                     gtk_label_new (_("Type (<Ctrl>)")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->type,
+                                     &options->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                               GINT_TO_POINTER (options->type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -259,7 +253,7 @@ gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
 			    options->exposure_d);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w),

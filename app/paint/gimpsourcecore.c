@@ -206,7 +206,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 	  dest_x = paint_core->cur_coords.x;
 	  dest_y = paint_core->cur_coords.y;
 
-          if (options->aligned == ALIGN_REGISTERED)
+          if (options->aligned == GIMP_CLONE_ALIGN_REGISTERED)
             {
 	      offset_x = 0;
 	      offset_y = 0;
@@ -238,7 +238,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 	  clone->src_y = paint_core->cur_coords.y;
 	  first = TRUE;
 	}
-      else if (options->aligned == ALIGN_NO)
+      else if (options->aligned == GIMP_CLONE_ALIGN_NO)
 	{
 	  first = TRUE;
 	  orig_src_x = clone->src_x;
@@ -257,7 +257,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       if (clone->finish_callback)
         clone->finish_callback (clone, clone->callback_data);
 
-      if (options->aligned == ALIGN_NO && !first)
+      if (options->aligned == GIMP_CLONE_ALIGN_NO && !first)
 	{
 	  clone->src_x = orig_src_x;
 	  clone->src_y = orig_src_y;
@@ -560,7 +560,7 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
 /*  paint options stuff  */
 
 #define CLONE_DEFAULT_TYPE     GIMP_IMAGE_CLONE
-#define CLONE_DEFAULT_ALIGNED  ALIGN_NO
+#define CLONE_DEFAULT_ALIGNED  GIMP_CLONE_ALIGN_NO
 
 GimpCloneOptions *
 gimp_clone_options_new (void)

@@ -4,7 +4,7 @@
 #include "config.h"
 #include <gtk/gtk.h>
 #include "widgets-enums.h"
-#include"libgimp/gimpintl.h"
+#include "libgimp/gimpintl.h"
 
 /* enumerations from "./widgets-enums.h" */
 

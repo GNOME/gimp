@@ -69,7 +69,7 @@ CLEANFILES = $(gen_sources)
 
 $(srcdir)/base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"base-enums.h\"\n#include\"libgimp/gimpintl.h\"" \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"base-enums.h\"\n#include \"libgimp/gimpintl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
 		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \

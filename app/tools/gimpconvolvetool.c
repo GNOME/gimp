@@ -39,6 +39,8 @@
 
 #include "paint/gimpconvolve.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpconvolvetool.h"
 #include "paint_options.h"
 
@@ -167,11 +169,11 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_BLUR_CONVOLVE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_SHARPEN_CONVOLVE));
           break;
         case GIMP_SHARPEN_CONVOLVE:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_BLUR_CONVOLVE));
           break;
         default:
@@ -215,20 +217,14 @@ convolve_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
-  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type (<Ctrl>)"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-				 _("Blur"),
-                                 GINT_TO_POINTER (GIMP_BLUR_CONVOLVE),
-				 &options->type_w[0],
-
-				 _("Sharpen"),
-                                 GINT_TO_POINTER (GIMP_SHARPEN_CONVOLVE),
-				 &options->type_w[1],
-
-				 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVOLVE_TYPE,
+                                     gtk_label_new (_("Convolve Type (<Ctrl>)")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->type,
+                                     &options->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                               GINT_TO_POINTER (options->type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -265,6 +261,6 @@ convolve_options_reset (GimpToolOptions *tool_options)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
 			    options->rate_d);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));
 }

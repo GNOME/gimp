@@ -4,6 +4,7 @@ noinst_LIBRARIES = libapptools.a
 
 libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	tools-enums.h			\
+	tools-enums.c			\
 	tools-types.h			\
 	tools.c				\
 	tools.h				\
@@ -137,3 +138,21 @@ INCLUDES = @STRIP_BEGIN@ \
 	$(PANGOFT2_CFLAGS)		\
 	-I$(includedir)			\
 @STRIP_END@
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-tec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/tools-enums.c: $(srcdir)/tools-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"tools-enums.h\"\n#include \"libgimp/gimpintl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/tools-enums.h > xgen-tec \
+	&& cp xgen-tec $(@F) \
+	&& rm -f xgen-tec

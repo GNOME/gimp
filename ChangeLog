@@ -1,5 +1,44 @@
 2002-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/base/Makefile.am
+	* app/base/base-enums.c
+	* app/core/Makefile.am
+	* app/core/core-enums.c
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-enums.c: purely cosmetic change.
+	
+	* app/paint/Makefile.am
+	* app/paint/paint-enums.[ch]: generate paint-enums.c with registered
+	enums. Skip GIMP_BRUSH_PRESSURE and GIMP_CUSTOM_CONVOLVE so they
+	don't get exported to libgimp and are not registered as enum values.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: removed special casing of
+	GimpBrushApplicationMode and GimpConvolveType since the forbidden
+	values are now skipped anyway.
+
+	* libgimp/gimpcompat.h: removed compat defines for the forbidden
+	enum values. They shouldn't have been used.
+
+	* app/tools/Makefile.am
+	* app/tools/tools-enums.[ch]: generate tools-enums.c with registered
+	enums.
+	
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.h
+	* app/paint/gimpdodgeburn.h
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/paint_options.c: changed accordingly. Added more enum
+	radio frames and enum option menus.
+
+2002-03-19  Sven Neumann  <sven@gimp.org>
+
 	* ChangeLog.plug-ins
 	* PLUGIN_CVS: removed these files, they have never been used.
 

@@ -4,6 +4,7 @@ noinst_LIBRARIES = libapppaint.a
 
 libapppaint_a_SOURCES = @STRIP_BEGIN@ \
 	paint-enums.h			\
+	paint-enums.c			\
 	paint-types.h			\
 	paint.c				\
 	paint.h				\
@@ -47,3 +48,21 @@ INCLUDES = @STRIP_BEGIN@ \
 	$(PANGOFT2_CFLAGS)		\
 	-I$(includedir)			\
 @STRIP_END@
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-pec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/paint-enums.c: $(srcdir)/paint-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"paint-enums.h\"\n#include \"libgimp/gimpintl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/paint-enums.h > xgen-pec \
+	&& cp xgen-pec $(@F) \
+	&& rm -f xgen-pec

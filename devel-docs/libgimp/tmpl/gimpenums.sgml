@@ -45,7 +45,6 @@ Enums and definitions.
 
 @GIMP_BRUSH_HARD: 
 @GIMP_BRUSH_SOFT: 
-@GIMP_BRUSH_PRESSURE: 
 
 <!-- ##### ENUM GimpBucketFillMode ##### -->
 <para>
@@ -135,7 +134,6 @@ Enums and definitions.
 
 @GIMP_BLUR_CONVOLVE: 
 @GIMP_SHARPEN_CONVOLVE: 
-@GIMP_CUSTOM_CONVOLVE: 
 
 <!-- ##### ENUM GimpDodgeBurnType ##### -->
 <para>

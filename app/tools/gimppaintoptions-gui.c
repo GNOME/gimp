@@ -524,28 +524,11 @@ gradient_options_init (GimpGradientOptions *gradient,
 
       /*  the gradient type  */
       gradient->gradient_type_w =
-	gimp_option_menu_new2 (FALSE,
-			       G_CALLBACK (gimp_menu_item_update),
-			       &gradient->gradient_type,
-			       (gpointer) gradient->gradient_type_d,
-
-			       _("Once Forward"),
-			       GINT_TO_POINTER (GIMP_GRADIENT_ONCE_FORWARD), 
-                               NULL,
-
-			       _("Once Backward"),
-			       GINT_TO_POINTER (GIMP_GRADIENT_ONCE_BACKWARD),
-                               NULL,
-
-			       _("Loop Sawtooth"),
-			       GINT_TO_POINTER (GIMP_GRADIENT_LOOP_SAWTOOTH),
-                               NULL,
-
-			       _("Loop Triangle"),
-			       GINT_TO_POINTER (GIMP_GRADIENT_LOOP_TRIANGLE), 
-                               NULL,
-
-			       NULL);
+        gimp_enum_option_menu_new (GIMP_TYPE_GRADIENT_PAINT_MODE,
+                                   G_CALLBACK (gimp_menu_item_update),
+                                   &gradient->gradient_type);
+      gimp_option_menu_set_history (GTK_OPTION_MENU (gradient->gradient_type_w),
+                                    GINT_TO_POINTER (gradient->gradient_type_d));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("Type:"), 1.0, 0.5,

@@ -46,8 +46,7 @@ typedef enum
 typedef enum
 {
   GIMP_BRUSH_HARD,
-  GIMP_BRUSH_SOFT,
-  GIMP_BRUSH_PRESSURE
+  GIMP_BRUSH_SOFT
 } GimpBrushApplicationMode;
 
 typedef enum
@@ -118,8 +117,7 @@ typedef enum
 typedef enum
 {
   GIMP_BLUR_CONVOLVE,
-  GIMP_SHARPEN_CONVOLVE,
-  GIMP_CUSTOM_CONVOLVE
+  GIMP_SHARPEN_CONVOLVE
 } GimpConvolveType;
 
 typedef enum

@@ -275,8 +275,7 @@ HELP
 	&drawable_arg,
 	{ name => 'pressure', type => '0 <= float <= 100',
 	  desc => 'The pressure: %%desc%%' },
-	{ name => 'convolve_type',
-	  type => 'enum GimpConvolveType (no GIMP_CUSTOM_CONVOLVE)',
+	{ name => 'convolve_type', type => 'enum GimpConvolveType',
 	  desc => 'Convolve type: { %%desc%% }' },
 	&stroke_arg
     );
@@ -352,8 +351,7 @@ HELP
     @inargs = (
 	&drawable_arg,
 	&stroke_arg,
-	{ name => 'hardness',
-	  type => 'enum GimpBrushApplicationMode (no GIMP_BRUSH_PRESSURE)',
+	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
 	  desc => '%%desc%%' },
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' }
@@ -396,8 +394,7 @@ HELP
     @inargs = (
 	&drawable_arg,
 	&stroke_arg,
-	{ name => 'hardness', 
-	  type => 'enum GimpBrushApplicationMode (no GIMP_BRUSH_PRESSURE)',
+	{ name => 'hardness', type => 'enum GimpBrushApplicationMode',
 	  desc => '%%desc%%' },
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' }

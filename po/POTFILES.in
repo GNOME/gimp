@@ -101,6 +101,7 @@ app/gui/tool-options-dialog.c
 app/gui/user-install-dialog.c
 app/gui/vectors-commands.c
 
+app/paint/paint-enums.c
 app/paint/gimpclone.c
 app/paint/gimppaintcore.c
 
@@ -112,6 +113,7 @@ app/pdb/procedural_db_cmds.c
 app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
 
+app/tools/tools-enums.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
 app/tools/gimpblendtool.c

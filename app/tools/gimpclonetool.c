@@ -33,6 +33,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpclonetool.h"
 #include "paint_options.h"
 
@@ -367,42 +369,26 @@ clone_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
-  frame = gimp_radio_group_new2 (TRUE, _("Source"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-				 _("Image Source"),
-                                 GINT_TO_POINTER (GIMP_IMAGE_CLONE),
-				 &options->type_w[0],
-
-				 _("Pattern Source"),
-                                 GINT_TO_POINTER (GIMP_PATTERN_CLONE),
-				 &options->type_w[1],
-
-				 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CLONE_TYPE,
+                                     gtk_label_new (_("Source")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->type,
+                                     &options->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                               GINT_TO_POINTER (options->type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->aligned,
-                                 GINT_TO_POINTER (options->aligned),
-
-				 _("Non Aligned"),
-                                 GINT_TO_POINTER (ALIGN_NO),
-				 &options->aligned_w[0],
-
-				 _("Aligned"),
-                                 GINT_TO_POINTER (ALIGN_YES),
-				 &options->aligned_w[1],
-
-				 _("Registered"),
-                                 GINT_TO_POINTER (ALIGN_REGISTERED),
-				 &options->aligned_w[2],
-
-				 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CLONE_ALIGN_MODE,
+                                     gtk_label_new (_("Alignment")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->aligned,
+                                     &options->aligned_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w),
+                               GINT_TO_POINTER (options->aligned));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -419,8 +405,8 @@ clone_options_reset (GimpToolOptions *tool_options)
 
   paint_options_reset (tool_options);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w),
                                GINT_TO_POINTER (options->aligned_d));
 }

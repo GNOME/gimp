@@ -32,49 +32,85 @@
 #endif
 
 
+/* 
+ * these enums that are registered with the type system
+ */
+
+#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
+
+GType gimp_clone_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_IMAGE_CLONE,   /*< desc="Image Source"   >*/
+  GIMP_PATTERN_CLONE  /*< desc="Pattern Source" >*/
+} GimpCloneType;
+
+
+#define GIMP_TYPE_CLONE_ALIGN_MODE (gimp_clone_align_mode_get_type ())
+
+GType gimp_clone_align_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_CLONE_ALIGN_NO,         /*< desc="Non Aligned" >*/
+  GIMP_CLONE_ALIGN_YES,        /*< desc="Aligned"     >*/
+  GIMP_CLONE_ALIGN_REGISTERED  /*< desc="Registered"  >*/
+} GimpCloneAlignMode;
+
+
+#define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
+
+GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DODGE,  /*< desc="Dodge" >*/
+  GIMP_BURN    /*< desc="Burn"  >*/
+} GimpDodgeBurnType;
+
+
+#define GIMP_TYPE_GRADIENT_PAINT_MODE (gimp_gradient_paint_mode_get_type ())
+
+GType gimp_gradient_paint_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GRADIENT_ONCE_FORWARD,   /*< desc="Once Forward"  >*/
+  GIMP_GRADIENT_ONCE_BACKWARD,  /*< desc="Once Backward" >*/
+  GIMP_GRADIENT_LOOP_SAWTOOTH,  /*< desc="Loop Sawtooth" >*/
+  GIMP_GRADIENT_LOOP_TRIANGLE   /*< desc="Loop Triangle" >*/
+} GimpGradientPaintMode;
+
+
+#define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
+
+GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BLUR_CONVOLVE,     /*< desc="Blur"    >*/
+  GIMP_SHARPEN_CONVOLVE,  /*< desc="Sharpen" >*/
+  GIMP_CUSTOM_CONVOLVE    /*< skip >*/
+} GimpConvolveType;
+
+
 /*
  * non-registered enums; register them if needed
  */
 
 typedef enum  /*< skip >*/
 {
-  GIMP_BRUSH_HARD,       /* pencil */
-  GIMP_BRUSH_SOFT,       /* paintbrush */
-  GIMP_BRUSH_PRESSURE    /* paintbrush with variable pressure */
+  GIMP_BRUSH_HARD,
+  GIMP_BRUSH_SOFT,
+  GIMP_BRUSH_PRESSURE  /*< skip >*/
 } GimpBrushApplicationMode;
 
 typedef enum  /*< skip >*/
 {
-  GIMP_PAINT_CONSTANT,   /* pencil, paintbrush, airbrush, clone */
-  GIMP_PAINT_INCREMENTAL /* convolve, smudge */
+  GIMP_PAINT_CONSTANT,
+  GIMP_PAINT_INCREMENTAL
 } GimpPaintApplicationMode;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_GRADIENT_ONCE_FORWARD,
-  GIMP_GRADIENT_ONCE_BACKWARD,
-  GIMP_GRADIENT_LOOP_SAWTOOTH,
-  GIMP_GRADIENT_LOOP_TRIANGLE
-} GimpGradientPaintMode;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_DODGE,
-  GIMP_BURN
-} GimpDodgeBurnType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_BLUR_CONVOLVE,
-  GIMP_SHARPEN_CONVOLVE,
-  GIMP_CUSTOM_CONVOLVE
-} GimpConvolveType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_IMAGE_CLONE,
-  GIMP_PATTERN_CLONE
-} GimpCloneType;
 
 
 #endif /* __PAINT_ENUMS_H__ */

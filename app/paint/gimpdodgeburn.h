@@ -53,7 +53,7 @@ struct _GimpDodgeBurnOptions
 
   GimpDodgeBurnType  type;
   GimpDodgeBurnType  type_d;
-  GtkWidget         *type_w[2];
+  GtkWidget         *type_w;
 
   GimpTransferMode   mode;     /*highlights, midtones, shadows*/
   GimpTransferMode   mode_d;

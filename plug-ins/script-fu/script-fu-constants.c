@@ -38,7 +38,6 @@ init_generated_constants (void)
 
   setvar (cintern ("BRUSH-HARD"), flocons (0), NIL);
   setvar (cintern ("BRUSH-SOFT"), flocons (1), NIL);
-  setvar (cintern ("BRUSH-PRESSURE"), flocons (2), NIL);
 
   setvar (cintern ("FG-BUCKET-FILL"), flocons (0), NIL);
   setvar (cintern ("BG-BUCKET-FILL"), flocons (1), NIL);
@@ -83,7 +82,6 @@ init_generated_constants (void)
 
   setvar (cintern ("BLUR-CONVOLVE"), flocons (0), NIL);
   setvar (cintern ("SHARPEN-CONVOLVE"), flocons (1), NIL);
-  setvar (cintern ("CUSTOM-CONVOLVE"), flocons (2), NIL);
 
   setvar (cintern ("DODGE"), flocons (0), NIL);
   setvar (cintern ("BURN"), flocons (1), NIL);

@@ -343,21 +343,19 @@ package Gimp::CodeGen::enums;
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
 	},
-    GimpBrushApplicationMode =>
+    GimpCloneType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT
-			  GIMP_BRUSH_PRESSURE) ],
-	  mapping => { GIMP_BRUSH_HARD => '0',
-		       GIMP_BRUSH_SOFT => '1',
-		       GIMP_BRUSH_PRESSURE => '2' }
+	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
+	  mapping => { GIMP_IMAGE_CLONE => '0',
+		       GIMP_PATTERN_CLONE => '1' }
 	},
-    GimpPaintApplicationMode =>
+    GimpDodgeBurnType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
-	  mapping => { GIMP_PAINT_CONSTANT => '0',
-		       GIMP_PAINT_INCREMENTAL => '1' }
+	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
+	  mapping => { GIMP_DODGE => '0',
+		       GIMP_BURN => '1' }
 	},
     GimpGradientPaintMode =>
 	{ contig => 1,
@@ -371,28 +369,26 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRADIENT_LOOP_SAWTOOTH => '2',
 		       GIMP_GRADIENT_LOOP_TRIANGLE => '3' }
 	},
-    GimpDodgeBurnType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
-	  mapping => { GIMP_DODGE => '0',
-		       GIMP_BURN => '1' }
-	},
     GimpConvolveType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE
-			  GIMP_CUSTOM_CONVOLVE) ],
+	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
-		       GIMP_SHARPEN_CONVOLVE => '1',
-		       GIMP_CUSTOM_CONVOLVE => '2' }
+		       GIMP_SHARPEN_CONVOLVE => '1' }
 	},
-    GimpCloneType =>
+    GimpBrushApplicationMode =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
-	  mapping => { GIMP_IMAGE_CLONE => '0',
-		       GIMP_PATTERN_CLONE => '1' }
+	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT) ],
+	  mapping => { GIMP_BRUSH_HARD => '0',
+		       GIMP_BRUSH_SOFT => '1' }
+	},
+    GimpPaintApplicationMode =>
+	{ contig => 1,
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
+	  mapping => { GIMP_PAINT_CONSTANT => '0',
+		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
     GimpRunMode =>
 	{ contig => 1,

@@ -396,7 +396,7 @@ gimp_dodgeburn_shadows_lut_func (gpointer  user_data,
 
 #define DODGEBURN_DEFAULT_EXPOSURE 50.0
 #define DODGEBURN_DEFAULT_TYPE     GIMP_DODGE
-#define DODGEBURN_DEFAULT_MODE     GIMP_HIGHLIGHTS
+#define DODGEBURN_DEFAULT_MODE     GIMP_MIDTONES
 
 GimpDodgeBurnOptions *
 gimp_dodgeburn_options_new (void)

@@ -40,6 +40,8 @@
 
 #include "gui/info-dialog.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpcroptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -70,17 +72,17 @@ struct _CropOptions
 {
   GimpToolOptions  tool_options;
 
-  gboolean     layer_only;
-  gboolean     layer_only_d;
-  GtkWidget   *layer_only_w;
+  gboolean      layer_only;
+  gboolean      layer_only_d;
+  GtkWidget    *layer_only_w;
 
-  gboolean     allow_enlarge;
-  gboolean     allow_enlarge_d;
-  GtkWidget   *allow_enlarge_w;
+  gboolean      allow_enlarge;
+  gboolean      allow_enlarge_d;
+  GtkWidget    *allow_enlarge_w;
 
-  CropType     type;
-  CropType     type_d;
-  GtkWidget   *type_w[2];
+  GimpCropType  type;
+  GimpCropType  type_d;
+  GtkWidget    *type_w;
 };
 
 
@@ -414,7 +416,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
     {
       if (crop->function == CROPPING)
 	{
-	  if (options->type == CROP_CROP)
+	  if (options->type == GIMP_CROP)
 	    crop_tool_crop_image (gdisp->gimage,
 				  crop->x1, crop->y1,
                                   crop->x2, crop->y2, 
@@ -691,13 +693,13 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
     {
       switch (options->type)
         {
-        case CROP_CROP:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (RESIZE_CROP));
+        case GIMP_CROP:
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                                       GINT_TO_POINTER (GIMP_RESIZE));
           break;
-        case RESIZE_CROP:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (CROP_CROP));
+        case GIMP_RESIZE:
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                                       GINT_TO_POINTER (GIMP_CROP));
           break;
         default:
           break;
@@ -768,7 +770,7 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
     }
 
   tool->cursor          = ctype;
-  tool->tool_cursor     = (options->type == CROP_CROP ? 
+  tool->tool_cursor     = (options->type == GIMP_CROP ? 
                            GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR);
   tool->cursor_modifier = cmodifier;
 
@@ -1341,26 +1343,20 @@ crop_options_new (GimpToolInfo *tool_info)
 
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = FALSE;
-  options->type          = options->type_d          = CROP_CROP;
+  options->type          = options->type_d          = GIMP_CROP;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-				 _("Crop"),
-                                 GINT_TO_POINTER (CROP_CROP),
-				 &options->type_w[0],
-
-				 _("Resize"),
-                                 GINT_TO_POINTER (RESIZE_CROP),
-				 &options->type_w[1],
-
-				 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CROP_TYPE,
+                                     gtk_label_new (_("Tool Toggle (<Ctrl>)")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->type,
+                                     &options->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                               GINT_TO_POINTER (options->type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1404,6 +1400,6 @@ crop_options_reset (GimpToolOptions *tool_options)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->allow_enlarge_w),
 				options->allow_enlarge_d);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));
 }

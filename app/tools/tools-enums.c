@@ -1,0 +1,158 @@
+
+/* Generated data (by gimp-mkenums) */
+
+#include "config.h"
+#include <glib-object.h>
+#include "tools-enums.h"
+#include "libgimp/gimpintl.h"
+
+/* enumerations from "./tools-enums.h" */
+
+static const GEnumValue gimp_crop_type_enum_values[] =
+{
+  { GIMP_CROP, N_("Crop"), "crop" },
+  { GIMP_RESIZE, N_("Resize"), "resize" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_crop_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpCropType", gimp_crop_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue select_ops_enum_values[] =
+{
+  { SELECTION_ADD, "SELECTION_ADD", "add" },
+  { SELECTION_SUBTRACT, "SELECTION_SUBTRACT", "subtract" },
+  { SELECTION_REPLACE, "SELECTION_REPLACE", "replace" },
+  { SELECTION_INTERSECT, "SELECTION_INTERSECT", "intersect" },
+  { SELECTION_MOVE_MASK, "SELECTION_MOVE_MASK", "move-mask" },
+  { SELECTION_MOVE, "SELECTION_MOVE", "move" },
+  { SELECTION_ANCHOR, "SELECTION_ANCHOR", "anchor" },
+  { 0, NULL, NULL }
+};
+
+GType
+select_ops_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("SelectOps", select_ops_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_tool_state_enum_values[] =
+{
+  { INACTIVE, "INACTIVE", "inactive" },
+  { ACTIVE, "ACTIVE", "active" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_tool_state_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpToolState", gimp_tool_state_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_tool_action_enum_values[] =
+{
+  { PAUSE, "PAUSE", "pause" },
+  { RESUME, "RESUME", "resume" },
+  { HALT, "HALT", "halt" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_tool_action_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpToolAction", gimp_tool_action_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_motion_mode_enum_values[] =
+{
+  { GIMP_MOTION_MODE_EXACT, "GIMP_MOTION_MODE_EXACT", "exact" },
+  { GIMP_MOTION_MODE_HINT, "GIMP_MOTION_MODE_HINT", "hint" },
+  { GIMP_MOTION_MODE_COMPRESS, "GIMP_MOTION_MODE_COMPRESS", "compress" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_motion_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpMotionMode", gimp_motion_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue transform_action_enum_values[] =
+{
+  { TRANSFORM_CREATING, "TRANSFORM_CREATING", "creating" },
+  { TRANSFORM_HANDLE_1, "TRANSFORM_HANDLE_1", "handle-1" },
+  { TRANSFORM_HANDLE_2, "TRANSFORM_HANDLE_2", "handle-2" },
+  { TRANSFORM_HANDLE_3, "TRANSFORM_HANDLE_3", "handle-3" },
+  { TRANSFORM_HANDLE_4, "TRANSFORM_HANDLE_4", "handle-4" },
+  { TRANSFORM_HANDLE_CENTER, "TRANSFORM_HANDLE_CENTER", "handle-center" },
+  { 0, NULL, NULL }
+};
+
+GType
+transform_action_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("TransformAction", transform_action_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue transform_state_enum_values[] =
+{
+  { TRANSFORM_INIT, "TRANSFORM_INIT", "init" },
+  { TRANSFORM_MOTION, "TRANSFORM_MOTION", "motion" },
+  { TRANSFORM_RECALC, "TRANSFORM_RECALC", "recalc" },
+  { TRANSFORM_FINISH, "TRANSFORM_FINISH", "finish" },
+  { 0, NULL, NULL }
+};
+
+GType
+transform_state_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("TransformState", transform_state_enum_values);
+
+  return enum_type;
+}
+
+
+/* Generated data ends here */
+

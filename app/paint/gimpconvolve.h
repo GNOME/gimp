@@ -54,7 +54,7 @@ struct _GimpConvolveOptions
 
   GimpConvolveType  type;
   GimpConvolveType  type_d;
-  GtkWidget        *type_w[2];
+  GtkWidget        *type_w;
 
   gdouble           rate;
   gdouble           rate_d;

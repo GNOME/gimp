@@ -24,14 +24,6 @@
 #include "gimppaintoptions.h"
 
 
-typedef enum /*< skip >*/ /*< pdb-skip >*/
-{
-  ALIGN_NO,
-  ALIGN_YES,
-  ALIGN_REGISTERED
-} AlignType;
-
-
 #define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
 #define GIMP_CLONE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CLONE, GimpClone))
 #define GIMP_CLONE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CLONE, GimpCloneClass))
@@ -75,15 +67,15 @@ typedef struct _GimpCloneOptions GimpCloneOptions;
 
 struct _GimpCloneOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions    paint_options;
 
-  GimpCloneType     type;
-  GimpCloneType     type_d;
-  GtkWidget        *type_w[2];  /* 2 radio buttons */
+  GimpCloneType       type;
+  GimpCloneType       type_d;
+  GtkWidget          *type_w;
 
-  AlignType         aligned;
-  AlignType         aligned_d;
-  GtkWidget        *aligned_w[3];  /* 3 radio buttons */
+  GimpCloneAlignMode  aligned;
+  GimpCloneAlignMode  aligned_d;
+  GtkWidget          *aligned_w;
 };
 
 
