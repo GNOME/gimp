@@ -102,6 +102,37 @@ gimp_xml_parser_parse_file (GimpXmlParser  *parser,
 }
 
 /**
+ * gimp_xml_parser_parse_fd:
+ * @parser: a #GimpXmlParser
+ * @fd:     a file descriptor
+ * @error: return location for possible errors
+ *
+ * This function creates a GIOChannel for @fd and calls
+ * gimp_xml_parser_parse_io_channel() for you.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
+gboolean
+gimp_xml_parser_parse_fd (GimpXmlParser  *parser,
+                          gint            fd,
+                          GError        **error)
+{
+  GIOChannel *io;
+  gboolean    success;
+
+  g_return_val_if_fail (parser != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  io = g_io_channel_unix_new (fd);
+
+  success = gimp_xml_parser_parse_io_channel (parser, io, error);
+
+  g_io_channel_unref (io);
+
+  return success;
+}
+
+/**
  * gimp_xml_parser_parse_io_channel:
  * @parser: a #GimpXmlParser
  * @io: a #GIOChannel

@@ -3,12 +3,16 @@
 noinst_LIBRARIES = libappfile.a
 
 libappfile_a_SOURCES = \
-	file-open.c	\
-	file-open.h	\
-	file-save.c	\
-	file-save.h	\
-	file-utils.c	\
-	file-utils.h
+	file-open.c		\
+	file-open.h		\
+	file-save.c		\
+	file-save.h		\
+	file-utils.c		\
+	file-utils.h		\
+	gimprecentitem.c	\
+	gimprecentitem.h	\
+	gimprecentlist.c	\
+	gimprecentlist.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-File\"	\

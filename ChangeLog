@@ -1,3 +1,18 @@
+2004-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpxmlparser.[ch]: added new convenience function
+	gimp_xml_parser_parse_fd().
+
+	* app/file/Makefile.am
+	* app/file/gimprecentitem.[ch]
+	* app/file/gimprecentlist.[ch]: added an implementation of the
+	recent-files spec as found on freedesktop.org. This code is taken
+	from libegg and has been edited to fit the GIMP needs.
+
+	* app/file/file-open.c
+	* app/file/file-save.c: update the ~/.recently-used file. Fixes
+	bug #131206.
+
 2004-09-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerbox.c (gimp_container_box_get_preview):

@@ -59,6 +59,7 @@
 
 #include "file-open.h"
 #include "file-utils.h"
+#include "gimprecentlist.h"
 
 #include "gimp-intl.h"
 
@@ -249,6 +250,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
           /* save a thumbnail of every opened image */
           gimp_imagefile_save_thumbnail (imagefile, gimage);
         }
+
+      gimp_recent_list_add_uri (uri, mime_type);
 
       /*  the display owns the image now  */
       g_object_unref (gimage);

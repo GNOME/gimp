@@ -59,6 +59,7 @@
 
 #include "file-save.h"
 #include "file-utils.h"
+#include "gimprecentlist.h"
 
 #include "gimp-intl.h"
 
@@ -220,6 +221,8 @@ file_save_as (GimpImage      *gimage,
 
           GIMP_OBJECT (gimage)->name = saved_uri;
 	}
+
+      gimp_recent_list_add_uri (uri, file_proc->mime_type);
     }
   else if (status != GIMP_PDB_CANCEL)
     {
