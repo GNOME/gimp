@@ -571,6 +571,7 @@
 
     <chapter id="app-widgets-docks">
       <title>Dock Windows &amp; Widgets</title>
+      <xi:include href="xml/gimpdocked.xml"/>
       <xi:include href="xml/gimpdock.xml"/>
       <xi:include href="xml/gimpimagedock.xml"/>
       <xi:include href="xml/gimptoolbox.xml"/>
@@ -587,6 +588,7 @@
       <xi:include href="xml/gimpcoloreditor.xml"/>
       <xi:include href="xml/gimpdevicestatus.xml"/>
       <xi:include href="xml/gimperrorconsole.xml"/>
+      <xi:include href="xml/gimpgrideditor.xml"/>
       <xi:include href="xml/gimpstrokeeditor.xml"/>
       <xi:include href="xml/gimptemplateeditor.xml"/>
       <xi:include href="xml/gimptooloptionseditor.xml"/>
@@ -702,6 +704,7 @@
       <xi:include href="xml/gimpdialogfactory.xml"/>
       <xi:include href="xml/gimpdnd.xml"/>
       <xi:include href="xml/gimphelp.xml"/>
+      <xi:include href="xml/gimpsessioninfo.xml"/>
       <xi:include href="xml/gimpwidgets-utils.xml"/>
     </chapter>
 

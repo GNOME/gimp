@@ -3692,6 +3692,8 @@ gimp_dock_add
 gimp_dock_remove
 gimp_dock_add_book
 gimp_dock_remove_book
+gimp_dock_set_aux_info
+gimp_dock_get_aux_info
 <SUBSECTION Standard>
 GimpDockClass
 GIMP_DOCK
@@ -3705,15 +3707,14 @@ GIMP_DOCK_GET_CLASS
 
 <SECTION>
 <FILE>gimpdockable</FILE>
-GimpDockableGetMenuFunc
-GimpDockableGetPreviewFunc
-GimpDockableSetContextFunc
 <TITLE>GimpDockable</TITLE>
 GimpDockable
 gimp_dockable_new
 gimp_dockable_get_menu
 gimp_dockable_get_tab_widget
 gimp_dockable_set_context
+gimp_dockable_set_aux_info
+gimp_dockable_get_aux_info
 gimp_dockable_detach
 <SUBSECTION Standard>
 GimpDockableClass
@@ -3724,6 +3725,24 @@ gimp_dockable_get_type
 GIMP_DOCKABLE_CLASS
 GIMP_IS_DOCKABLE_CLASS
 GIMP_DOCKABLE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdocked</FILE>
+<TITLE>GimpDocked</TITLE>
+GimpDocked
+GimpDockedInterface
+GIMP_DOCKED_GET_INTERFACE
+gimp_docked_set_aux_info
+gimp_docked_get_aux_info
+gimp_docked_get_preview
+gimp_docked_set_context
+gimp_docked_get_menu
+<SUBSECTION Standard>
+GIMP_DOCKED
+GIMP_IS_DOCKED
+GIMP_TYPE_DOCKED
+gimp_docked_interface_get_type
 </SECTION>
 
 <SECTION>
@@ -3882,6 +3901,22 @@ gimp_gradient_editor_get_type
 GIMP_GRADIENT_EDITOR_CLASS
 GIMP_IS_GRADIENT_EDITOR_CLASS
 GIMP_GRADIENT_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpgrideditor</FILE>
+<TITLE>GimpGridEditor</TITLE>
+GimpGridEditor
+gimp_grid_editor_new
+<SUBSECTION Standard>
+GimpGridEditorClass
+GIMP_GRID_EDITOR
+GIMP_IS_GRID_EDITOR
+GIMP_TYPE_GRID_EDITOR
+gimp_grid_editor_get_type
+GIMP_GRID_EDITOR_CLASS
+GIMP_IS_GRID_EDITOR_CLASS
+GIMP_GRID_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4292,6 +4327,22 @@ gimp_selection_editor_get_type
 GIMP_SELECTION_EDITOR_CLASS
 GIMP_IS_SELECTION_EDITOR_CLASS
 GIMP_SELECTION_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsessioninfo</FILE>
+<TITLE>GimpSessionInfo</TITLE>
+GimpSessionInfo
+GimpSessionInfoBook
+GimpSessionInfoDockable
+gimp_session_info_free
+gimp_session_info_book_free
+gimp_session_info_dockable_free
+gimp_session_info_save
+gimp_session_info_deserialize
+gimp_session_info_restore
+gimp_session_info_set_geometry
+gimp_session_info_get_geometry
 </SECTION>
 
 <SECTION>
@@ -5051,8 +5102,9 @@ gimp_config_build_plug_in_path
 
 <SECTION>
 <FILE>gimpconfig</FILE>
-GIMP_TYPE_CONFIG_INTERFACE
-GIMP_GET_CONFIG_INTERFACE
+GimpConfig
+GIMP_TYPE_CONFIG
+GIMP_CONFIG_GET_INTERFACE
 GimpConfigInterface
 GimpConfigForeachFunc
 gimp_config_interface_get_type
@@ -5068,6 +5120,9 @@ gimp_config_reset
 gimp_config_add_unknown_token
 gimp_config_lookup_unknown_token
 gimp_config_foreach_unknown_token
+<SUBSECTION Standard>
+GIMP_CONFIG
+GIMP_IS_CONFIG
 </SECTION>
 
 <SECTION>

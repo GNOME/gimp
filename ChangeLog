@@ -1,5 +1,9 @@
 2003-10-11  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.c: documentation fixes.
+
+2003-10-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdocked.[ch]
 	* app/widgets/widgets-types.h: renamed GimpDockedIface to
 	GimpDockedInterface.

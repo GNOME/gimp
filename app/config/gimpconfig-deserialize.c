@@ -54,13 +54,13 @@
  *  couldn't parse it.
  */
 
-static GTokenType  gimp_config_deserialize_unknown     (GimpConfig *object,
+static GTokenType  gimp_config_deserialize_unknown     (GimpConfig *config,
                                                         GScanner   *scanner);
-static GTokenType  gimp_config_deserialize_property    (GimpConfig *object,
+static GTokenType  gimp_config_deserialize_property    (GimpConfig *config,
                                                         GScanner   *scanner,
                                                         gint        nest_level);
 static GTokenType  gimp_config_deserialize_value       (GValue     *value,
-                                                        GimpConfig *object,
+                                                        GimpConfig *config,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_fundamental (GValue     *value,
@@ -82,12 +82,12 @@ static GTokenType  gimp_config_deserialize_matrix2     (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_object      (GValue     *value,
-                                                        GimpConfig *object,
+                                                        GimpConfig *config,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner,
                                                         gint        nest_level);
 static GTokenType  gimp_config_deserialize_value_array (GValue     *value,
-                                                        GimpConfig *object,
+                                                        GimpConfig *config,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
@@ -100,16 +100,16 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
 
 /**
  * gimp_config_deserialize_properties:
- * @object: a #GimpConfig.
+ * @config: a #GimpConfig.
  * @scanner: a #GScanner.
  * @nest_level:
  * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
  *
- * This function uses the @scanner to configure the properties of @object.
+ * This function uses the @scanner to configure the properties of @config.
  *
  * The store_unknown_tokens parameter is a special feature for #GimpRc.
  * If it set to %TRUE, unknown tokens (e.g. tokens that don't refer to
- * a property of @object) with string values are attached to @object as
+ * a property of @config) with string values are attached to @config as
  * unknown tokens. GimpConfig has a couple of functions to handle the
  * attached key/value pairs.
  *
@@ -214,7 +214,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
 }
 
 static GTokenType
-gimp_config_deserialize_unknown (GimpConfig *object,
+gimp_config_deserialize_unknown (GimpConfig *config,
                                  GScanner   *scanner)
 {
   gchar *key;
@@ -232,7 +232,7 @@ gimp_config_deserialize_unknown (GimpConfig *object,
       return G_TOKEN_NONE;
     }
 
-  gimp_config_add_unknown_token (object, key, scanner->value.v_string);
+  gimp_config_add_unknown_token (config, key, scanner->value.v_string);
   g_free (key);
 
   return G_TOKEN_RIGHT_PAREN;
@@ -325,7 +325,7 @@ gimp_config_deserialize_property (GimpConfig *config,
 
 static GTokenType
 gimp_config_deserialize_value (GValue     *value,
-                               GimpConfig    *object,
+                               GimpConfig *config,
                                GParamSpec *prop_spec,
                                GScanner   *scanner)
 {
@@ -356,7 +356,7 @@ gimp_config_deserialize_value (GValue     *value,
   else if (prop_spec->value_type == G_TYPE_VALUE_ARRAY)
     {
       return gimp_config_deserialize_value_array (value,
-                                                  object, prop_spec, scanner);
+                                                  config, prop_spec, scanner);
     }
 
   /*  This fallback will only work for value_types that
