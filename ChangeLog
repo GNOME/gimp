@@ -1,3 +1,11 @@
+2003-05-17  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/script-fu/scripts/alien-glow-button.scm
+	* plug-ins/script-fu/scripts/beveled-button.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm: 
+	Applied patch from Tor Lilliqvist <tml@iki.fi> which
+	fixes the same problem as that reported in bug #77572.
+
 2003-05-16  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/script-fu/scripts/pupi-button.scm: Applied
