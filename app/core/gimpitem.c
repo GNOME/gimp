@@ -71,7 +71,8 @@ static void       gimp_item_real_rename    (GimpItem      *item,
                                             const gchar   *undo_desc);
 static void       gimp_item_real_translate (GimpItem      *item,
                                             gint           offset_x,
-                                            gint           offset_y);
+                                            gint           offset_y,
+                                            gboolean       push_undo);
 static void       gimp_item_real_scale     (GimpItem      *item,
                                             gint           new_width,
                                             gint           new_height,
@@ -305,7 +306,8 @@ gimp_item_real_rename (GimpItem    *item,
 static void
 gimp_item_real_translate (GimpItem *item,
                           gint      offset_x,
-                          gint      offset_y)
+                          gint      offset_y,
+                          gboolean  push_undo)
 {
   item->offset_x += offset_x;
   item->offset_y += offset_y;
@@ -474,12 +476,7 @@ gimp_item_translate (GimpItem *item,
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
-  if (push_undo)
-    gimp_image_undo_push_item_displace (gimp_item_get_image (item),
-                                        item_class->translate_desc,
-                                        item);
-
-  item_class->translate (item, off_x, off_y);
+  item_class->translate (item, off_x, off_y, push_undo);
 }
 
 /**

@@ -619,8 +619,6 @@ layer_translate_invoker (Gimp     *gimp,
   gint32 offy;
   GimpImage *gimage;
   GimpLayer *floating_layer;
-  GimpLayer *tmp_layer;
-  GList *layer_list;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_LAYER (layer))
@@ -642,17 +640,55 @@ layer_translate_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  for (layer_list = GIMP_LIST (gimage->layers)->list;
-	       layer_list;
-	       layer_list = g_list_next (layer_list))
-	    {
-	      tmp_layer = (GimpLayer *) layer_list->data;
+	  gimp_item_translate (GIMP_ITEM (layer),
+			       offx,
+			       offy,
+			       TRUE);
 	
-	      if ((tmp_layer == layer) || gimp_item_get_linked (GIMP_ITEM (tmp_layer)))
-		gimp_item_translate (GIMP_ITEM (tmp_layer),
-				     offx,
-				     offy,
-				     TRUE);
+	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
+	    {
+	      GList    *list;
+	      GimpItem *item;
+	
+	      /*  translate all linked items as well  */
+	      for (list = GIMP_LIST (gimage->layers)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (item != (GimpItem *) layer && gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
+	
+	      for (list = GIMP_LIST (gimage->channels)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
+	
+	      for (list = GIMP_LIST (gimage->vectors)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
 	    }
     
 	  if (floating_layer)
@@ -754,8 +790,6 @@ layer_set_offsets_invoker (Gimp     *gimp,
   gint32 offy;
   GimpImage *gimage;
   GimpLayer *floating_layer;
-  GimpLayer *tmp_layer;
-  GList *layer_list;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_LAYER (layer))
@@ -777,17 +811,55 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  for (layer_list = GIMP_LIST (gimage->layers)->list;
-	       layer_list;
-	       layer_list = g_list_next (layer_list))
-	    {
-	      tmp_layer = (GimpLayer *) layer_list->data;
+	  gimp_item_translate (GIMP_ITEM (layer),
+			       offx - GIMP_ITEM (layer)->offset_x,
+			       offy - GIMP_ITEM (layer)->offset_y,
+			       TRUE);
 	
-	      if ((tmp_layer == layer) || gimp_item_get_linked (GIMP_ITEM (tmp_layer)))
-		gimp_item_translate (GIMP_ITEM (tmp_layer),
-				     offx - GIMP_ITEM (layer)->offset_x,
-				     offy - GIMP_ITEM (layer)->offset_y,
-				     TRUE);
+	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
+	    {
+	      GList    *list;
+	      GimpItem *item;
+	
+	      /*  translate all linked items as well  */
+	      for (list = GIMP_LIST (gimage->layers)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (item != (GimpItem *) layer && gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
+	
+	      for (list = GIMP_LIST (gimage->channels)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
+	
+	      for (list = GIMP_LIST (gimage->vectors)->list;
+		   list;
+		   list = g_list_next (list))
+		{
+		  item = (GimpItem *) list->data;
+	
+		  if (gimp_item_get_linked (item))
+		    gimp_item_translate (item,
+					 offx,
+					 offy,
+					 TRUE);
+		}
 	    }
     
 	  if (floating_layer)

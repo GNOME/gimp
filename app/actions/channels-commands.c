@@ -321,12 +321,10 @@ channels_new_channel_query (GimpImage   *gimage,
     {
       GimpChannel *new_channel;
       gint         width, height;
-      gint         off_x, off_y;
       GimpRGB      color;
 
       if (template)
         {
-          gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
           width  = gimp_item_width  (GIMP_ITEM (template));
           height = gimp_item_height (GIMP_ITEM (template));
           color  = template->color;
@@ -335,8 +333,6 @@ channels_new_channel_query (GimpImage   *gimage,
         {
           width  = gimp_image_get_width (gimage);
           height = gimp_image_get_height (gimage);
-          off_x  = 0;
-          off_y  = 0;
           gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
         }
 
@@ -349,12 +345,9 @@ channels_new_channel_query (GimpImage   *gimage,
                                       &color);
 
       if (template)
-        {
-          gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-                                      gimp_get_user_context (gimage->gimp),
-                                      GIMP_TRANSPARENT_FILL);
-          gimp_channel_translate (new_channel, off_x, off_y, FALSE);
-        }
+        gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                                    gimp_get_user_context (gimage->gimp),
+                                    GIMP_TRANSPARENT_FILL);
 
       gimp_image_add_channel (gimage, new_channel, -1);
 

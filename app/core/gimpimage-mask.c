@@ -575,11 +575,12 @@ gimp_image_mask_translate (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   if (push_undo)
-    gimp_image_mask_push_undo (gimage, _("Translate Selection"));
+    gimp_image_mask_push_undo (gimage, _("Move Selection"));
   else
     gimp_image_mask_invalidate (gimage);
 
-  gimp_channel_translate (gimp_image_get_mask (gimage), off_x, off_y, FALSE);
+  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                       off_x, off_y, FALSE);
 
   gimp_image_mask_changed (gimage);
 }

@@ -76,7 +76,8 @@ static void       gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *undo_desc);
 static void       gimp_layer_translate          (GimpItem           *item,
                                                  gint                offset_x,
-                                                 gint                offset_y);
+                                                 gint                offset_y,
+                                                 gboolean            push_undo);
 static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_width,
                                                  gint                new_height,
@@ -194,7 +195,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->resize                 = gimp_layer_resize;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
-  item_class->translate_desc         = _("Move Layer");
 
   klass->opacity_changed             = NULL;
   klass->mode_changed                = NULL;
@@ -350,12 +350,18 @@ gimp_layer_rename (GimpItem    *item,
 
 static void
 gimp_layer_translate (GimpItem *item,
-		      gint      off_x,
-		      gint      off_y)
+		      gint      offset_x,
+		      gint      offset_y,
+                      gboolean  push_undo)
 {
   GimpLayer *layer;
 
   layer = GIMP_LAYER (item);
+
+  if (push_undo)
+    gimp_image_undo_push_item_displace (gimp_item_get_image (item),
+                                        _("Move Layer"),
+                                        item);
 
   /*  update the old region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
@@ -363,7 +369,8 @@ gimp_layer_translate (GimpItem *item,
   /*  invalidate the selection boundary because of a layer modification  */
   gimp_layer_invalidate_boundary (layer);
 
-  GIMP_ITEM_CLASS (parent_class)->translate (item, off_x, off_y);
+  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
+                                             push_undo);
 
   /*  update the new region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);

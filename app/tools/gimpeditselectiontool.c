@@ -51,8 +51,6 @@
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
 
-#include "path_transform.h"
-
 #include "gimp-intl.h"
 
 
@@ -101,9 +99,6 @@ static GType   gimp_edit_selection_tool_get_type   (void) G_GNUC_CONST;
 static void    gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
 static void    gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
 
-static void    gimp_edit_selection_tool_control        (GimpTool        *tool,
-                                                        GimpToolAction   action,
-                                                        GimpDisplay     *gdisp);
 static void    gimp_edit_selection_tool_button_release (GimpTool        *tool,
                                                         GimpCoords      *coords,
                                                         guint32          time,
@@ -163,7 +158,6 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->control        = gimp_edit_selection_tool_control;
   tool_class->button_release = gimp_edit_selection_tool_button_release;
   tool_class->motion         = gimp_edit_selection_tool_motion;
 
@@ -310,43 +304,43 @@ init_edit_selection (GimpTool    *tool,
 
       case EDIT_LAYER_TRANSLATE:
       case EDIT_FLOATING_SEL_TRANSLATE:
-        {
-          GList     *layer_list;
-          GimpLayer *layer;
-          gint       x3, y3, x4, y4;
+        x1 = off_x;
+        y1 = off_y;
+        x2 = x1 + gimp_item_width  (GIMP_ITEM (active_drawable));
+        y2 = y1 + gimp_item_height (GIMP_ITEM (active_drawable));
 
-          x1 = off_x;
-          y1 = off_y;
+        if (gimp_item_get_linked (GIMP_ITEM (active_drawable)))
+          {
+            GList *list;
 
-          x2 = x1 + gimp_item_width  (GIMP_ITEM (active_drawable));
-          y2 = y1 + gimp_item_height (GIMP_ITEM (active_drawable));
+            /*  Expand the rectangle to include all linked layers as well  */
+            for (list = GIMP_LIST (gdisp->gimage->layers)->list;
+                 list;
+                 list = g_list_next (list))
+              {
+                GimpItem *item = list->data;
 
-          /*  Now, expand the rectangle to include all linked layers as well  */
-          for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
-               layer_list;
-               layer_list = g_list_next (layer_list))
-            {
-              layer = (GimpLayer *) layer_list->data;
+                if ((item != (GimpItem *) active_drawable) &&
+                    gimp_item_get_linked (item))
+                  {
+                    gint x3, y3, x4, y4;
 
-              if ((layer != (GimpLayer *) active_drawable) &&
-                  gimp_item_get_linked (GIMP_ITEM (layer)))
-                {
-                  gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
+                    gimp_item_offsets (item, &x3, &y3);
 
-                  x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
-                  y4 = y3 + gimp_item_height (GIMP_ITEM (layer));
+                    x4 = x3 + gimp_item_width  (item);
+                    y4 = y3 + gimp_item_height (item);
 
-                  if (x3 < x1)
-                    x1 = x3;
-                  if (y3 < y1)
-                    y1 = y3;
-                  if (x4 > x2)
-                    x2 = x4;
-                  if (y4 > y2)
-                    y2 = y4;
-                }
-            }
-        }
+                    if (x3 < x1)
+                      x1 = x3;
+                    if (y3 < y1)
+                      y1 = y3;
+                    if (x4 > x2)
+                      x2 = x4;
+                    if (y4 > y2)
+                      y2 = y4;
+                  }
+              }
+          }
         break;
       }
 
@@ -432,10 +426,42 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   if (edit_select->cumlx != 0 || edit_select->cumly != 0)
     {
-      path_transform_xy (gdisp->gimage,
-                         edit_select->cumlx, edit_select->cumly);
-
       layer = gimp_image_get_active_layer (gdisp->gimage);
+
+      if (! (state & GDK_BUTTON3_MASK)                   &&
+          edit_select->edit_type == EDIT_LAYER_TRANSLATE &&
+          gimp_item_get_linked (GIMP_ITEM (layer)))
+        {
+          GList    *list;
+          GimpItem *item;
+
+          /*  translate all linked channels and vectors as well  */
+          for (list = GIMP_LIST (gdisp->gimage->channels)->list;
+               list;
+               list = g_list_next (list))
+            {
+              item = (GimpItem *) list->data;
+
+              if (gimp_item_get_linked (item))
+                gimp_item_translate (item,
+                                     edit_select->cumlx,
+                                     edit_select->cumly,
+                                     TRUE);
+            }
+
+          for (list = GIMP_LIST (gdisp->gimage->vectors)->list;
+               list;
+               list = g_list_next (list))
+            {
+              item = (GimpItem *) list->data;
+
+              if (gimp_item_get_linked (item))
+                gimp_item_translate (item,
+                                     edit_select->cumlx,
+                                     edit_select->cumly,
+                                     TRUE);
+            }
+        }
 
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
     }
@@ -498,10 +524,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   /******************************************* adam's live move *******/
   /********************************************************************/
   {
-    gint       x, y;
-    GimpLayer *layer;
-    GimpLayer *floating_layer;
-    GList     *layer_list;
+    gint x, y;
 
     x = edit_select->x;
     y = edit_select->y;
@@ -526,34 +549,43 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    break;
 
 	  case EDIT_LAYER_TRANSLATE:
-	    floating_layer = gimp_image_floating_sel (gdisp->gimage);
+            {
+              GimpLayer *floating_layer;
+              GimpItem  *active_item;
 
-	    if (floating_layer)
-	      floating_sel_relax (floating_layer, TRUE);
+              floating_layer = gimp_image_floating_sel (gdisp->gimage);
+              active_item    = GIMP_ITEM (gdisp->gimage->active_layer);
 
-	    /*  translate the layer--and any "linked" layers as well  */
-	    for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
-		 layer_list;
-		 layer_list = g_list_next (layer_list))
-	      {
-		layer = (GimpLayer *) layer_list->data;
+              if (floating_layer)
+                floating_sel_relax (floating_layer, TRUE);
 
-		if (layer == gdisp->gimage->active_layer || 
-		    gimp_item_get_linked (GIMP_ITEM (layer)))
-		  {
-		    gimp_item_translate (GIMP_ITEM (layer), xoffset, yoffset,
-                                         TRUE);
-		  }
-	      }
+              gimp_item_translate (active_item, xoffset, yoffset, TRUE);
 
-	    if (floating_layer)
-	      floating_sel_rigor (floating_layer, TRUE);
+              if (gimp_item_get_linked (active_item))
+                {
+                  GList *list;
 
-	    if (edit_select->first_move)
-	      {
-		gimp_image_undo_freeze (gdisp->gimage);
-		edit_select->first_move = FALSE;
-	      }
+                  /*  translate all linked items as well  */
+                  for (list = GIMP_LIST (gdisp->gimage->layers)->list;
+                       list;
+                       list = g_list_next (list))
+                    {
+                      GimpItem *item = list->data;
+
+                      if (item != active_item && gimp_item_get_linked (item))
+                        gimp_item_translate (item, xoffset, yoffset, TRUE);
+                    }
+                }
+
+              if (floating_layer)
+                floating_sel_rigor (floating_layer, TRUE);
+
+              if (edit_select->first_move)
+                {
+                  gimp_image_undo_freeze (gdisp->gimage);
+                  edit_select->first_move = FALSE;
+                }
+            }
 	    break;
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
@@ -585,17 +617,19 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
             /* fall through */
 
 	  case EDIT_FLOATING_SEL_TRANSLATE:
-	    layer = gimp_image_get_active_layer (gdisp->gimage);
+            {
+              GimpLayer *layer = gimp_image_get_active_layer (gdisp->gimage);
 
-	    floating_sel_relax (layer, TRUE);
-	    gimp_item_translate (GIMP_ITEM (layer), xoffset, yoffset, TRUE);
-	    floating_sel_rigor (layer, TRUE);
+              floating_sel_relax (layer, TRUE);
+              gimp_item_translate (GIMP_ITEM (layer), xoffset, yoffset, TRUE);
+              floating_sel_rigor (layer, TRUE);
 
-	    if (edit_select->first_move)
-	      {
-		gimp_image_undo_freeze (gdisp->gimage);
-		edit_select->first_move = FALSE;
-	      }
+              if (edit_select->first_move)
+                {
+                  gimp_image_undo_freeze (gdisp->gimage);
+                  edit_select->first_move = FALSE;
+                }
+            }
 	    break;
 
 	  default:
@@ -660,12 +694,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpTool              *tool;
   GimpDisplay           *gdisp;
   Selection             *select;
-  GimpLayer             *layer;
-  GList                 *layer_list;
-  gboolean               floating_sel;
-  gint                   x1, y1, x2, y2;
-  gint                   x3, y3, x4, y4;
-  GdkSegment            *segs_copy;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
   tool        = GIMP_TOOL (draw_tool);
@@ -676,37 +704,40 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   switch (edit_select->edit_type)
     {
     case EDIT_MASK_TRANSLATE:
-      layer        = gimp_image_get_active_layer (gdisp->gimage);
-      floating_sel = gimp_layer_is_floating_sel (layer);
+      {
+        GimpLayer  *layer        = gimp_image_get_active_layer (gdisp->gimage);
+        gboolean    floating_sel = gimp_layer_is_floating_sel (layer);
+        GdkSegment *segs_copy;
 
-      if (! floating_sel)
-        {
-          segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
+        if (! floating_sel)
+          {
+            segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
 
-          selection_transform_segs (edit_select,
-                                    edit_select->segs_in,
-                                    segs_copy,
-                                    edit_select->num_segs_in);
+            selection_transform_segs (edit_select,
+                                      edit_select->segs_in,
+                                      segs_copy,
+                                      edit_select->num_segs_in);
 
-          /*  Draw the items  */
-          gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                             segs_copy, select->num_segs_in);
+            /*  Draw the items  */
+            gdk_draw_segments (draw_tool->win, draw_tool->gc,
+                               segs_copy, select->num_segs_in);
 
-          g_free (segs_copy);
-        }
+            g_free (segs_copy);
+          }
 
-      segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
+        segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
 
-      selection_transform_segs (edit_select,
-                                edit_select->segs_out,
-                                segs_copy,
-                                edit_select->num_segs_out);
+        selection_transform_segs (edit_select,
+                                  edit_select->segs_out,
+                                  segs_copy,
+                                  edit_select->num_segs_out);
 
-      /*  Draw the items  */
-      gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                         segs_copy, select->num_segs_out);
+        /*  Draw the items  */
+        gdk_draw_segments (draw_tool->win, draw_tool->gc,
+                           segs_copy, select->num_segs_out);
 
-      g_free (segs_copy);
+        g_free (segs_copy);
+      }
       break;
 
     case EDIT_MASK_TO_LAYER_TRANSLATE:
@@ -720,87 +751,78 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case EDIT_LAYER_TRANSLATE:
-      gimp_item_offsets (GIMP_ITEM (gdisp->gimage->active_layer), &x1, &y1);
+      {
+        GimpItem *active_item;
+        gint      x1, y1, x2, y2;
 
-      x2 = x1 + gimp_item_width  (GIMP_ITEM (gdisp->gimage->active_layer));
-      y2 = y1 + gimp_item_height (GIMP_ITEM (gdisp->gimage->active_layer));
+        active_item = GIMP_ITEM (gdisp->gimage->active_layer);
 
-      /*  Now, expand the rectangle to include all linked layers as well  */
-      for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
-           layer_list;
-           layer_list = g_list_next (layer_list))
-        {
-          layer = (GimpLayer *) layer_list->data;
+        gimp_item_offsets (active_item, &x1, &y1);
 
-          if ((layer != gdisp->gimage->active_layer) &&
-              gimp_item_get_linked (GIMP_ITEM (layer)))
-            {
-              gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
+        x2 = x1 + gimp_item_width  (active_item);
+        y2 = y1 + gimp_item_height (active_item);
 
-              x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
-              y4 = y3 + gimp_item_height (GIMP_ITEM (layer));
+        if (gimp_item_get_linked (active_item))
+          {
+            GList *list;
 
-              if (x3 < x1)
-                x1 = x3;
-              if (y3 < y1)
-                y1 = y3;
-              if (x4 > x2)
-                x2 = x4;
-              if (y4 > y2)
-                y2 = y4;
-            }
-        }
+            /*  Expand the rectangle to include all linked layers as well  */
+            for (list = GIMP_LIST (gdisp->gimage->layers)->list;
+                 list;
+                 list = g_list_next (list))
+              {
+                GimpItem *item = list->data;
 
-      gimp_draw_tool_draw_rectangle (draw_tool,
-                                     FALSE,
-                                     x1, y1,
-                                     x2 - x1, y2 - y1,
-                                     FALSE);
+                if (item != active_item && gimp_item_get_linked (item))
+                  {
+                    gint x3, y3, x4, y4;
+
+                    gimp_item_offsets (item, &x3, &y3);
+
+                    x4 = x3 + gimp_item_width  (item);
+                    y4 = y3 + gimp_item_height (item);
+
+                    if (x3 < x1)
+                      x1 = x3;
+                    if (y3 < y1)
+                      y1 = y3;
+                    if (x4 > x2)
+                      x2 = x4;
+                    if (y4 > y2)
+                      y2 = y4;
+                  }
+              }
+          }
+
+        gimp_draw_tool_draw_rectangle (draw_tool,
+                                       FALSE,
+                                       x1, y1,
+                                       x2 - x1, y2 - y1,
+                                       FALSE);
+      }
       break;
 
     case EDIT_FLOATING_SEL_TRANSLATE:
-      segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
+      {
+        GdkSegment *segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
 
-      /* The selection segs are in image space convert these 
-       * to display space.
-       * Takes care of offset/zoom etc etc.
-       */
+        /* The selection segs are in image space convert these 
+         * to display space.
+         * Takes care of offset/zoom etc etc.
+         */
+        selection_transform_segs (edit_select,
+                                  edit_select->segs_in,
+                                  segs_copy,
+                                  edit_select->num_segs_in);
 
-      selection_transform_segs (edit_select,
-                                edit_select->segs_in,
-                                segs_copy,
-                                edit_select->num_segs_in);
+        /*  Draw the items  */
+        gdk_draw_segments (draw_tool->win, draw_tool->gc,
+                           segs_copy, select->num_segs_in);
 
-      /*  Draw the items  */
-      gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                         segs_copy, select->num_segs_in);
-
-      g_free (segs_copy);
+        g_free (segs_copy);
+      }
       break;
     }
-}
-
-static void
-gimp_edit_selection_tool_control (GimpTool       *tool,
-				  GimpToolAction  action,
-				  GimpDisplay    *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      break;
-
-    default:
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 /* could move this function to a more central location
@@ -1063,9 +1085,6 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
     }
   else if (translate_layer)
     {
-      GimpLayer *floating_layer;
-      GList     *layer_list;
-
       switch (edit_type)
 	{
 	case EDIT_MASK_TRANSLATE:
@@ -1074,28 +1093,37 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	  break;
 
 	case EDIT_LAYER_TRANSLATE:
-	  floating_layer = gimp_image_floating_sel (gdisp->gimage);
+          {
+            GimpLayer *floating_layer;
+            GimpItem  *active_item;
 
-          if (floating_layer)
-	    floating_sel_relax (floating_layer, push_undo);
+            floating_layer = gimp_image_floating_sel (gdisp->gimage);
+            active_item    = GIMP_ITEM (gdisp->gimage->active_layer);
 
-	  /*  translate the layer -- and any "linked" layers as well  */
-	  for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
-	       layer_list; 
-	       layer_list = g_list_next (layer_list))
-	    {
-	      layer = (GimpLayer *) layer_list->data;
+            if (floating_layer)
+              floating_sel_relax (floating_layer, push_undo);
 
-	      if ((layer == gdisp->gimage->active_layer) || 
-		  gimp_item_get_linked (GIMP_ITEM (layer)))
-		{
-		  gimp_item_translate (GIMP_ITEM (layer), inc_x, inc_y,
-                                       push_undo);
-		}
-	    }
+            gimp_item_translate (active_item, inc_x, inc_y, push_undo);
 
-	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, push_undo);
+            if (gimp_item_get_linked (active_item))
+              {
+                GList *list;
+
+                /*  translate all linked items as well  */
+                for (list = GIMP_LIST (gdisp->gimage->layers)->list;
+                     list; 
+                     list = g_list_next (list))
+                  {
+                    GimpItem *item = list->data;
+
+                    if (item != active_item && gimp_item_get_linked (item))
+                      gimp_item_translate (item, inc_x, inc_y, push_undo);
+                  }
+              }
+
+            if (floating_layer)
+              floating_sel_rigor (floating_layer, push_undo);
+          }
 	  break;
 
 	case EDIT_FLOATING_SEL_TRANSLATE:

@@ -57,7 +57,8 @@ static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              gboolean          add_alpha);
 static void       gimp_vectors_translate    (GimpItem         *item,
                                              gint              offset_x,
-                                             gint              offset_y);
+                                             gint              offset_y,
+                                             gboolean          push_undo);
 static void       gimp_vectors_scale        (GimpItem         *item,
                                              gint              new_width,
                                              gint              new_height,
@@ -153,7 +154,6 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->resize              = gimp_vectors_resize;
   item_class->default_name        = _("Path");
   item_class->rename_desc         = _("Rename Path");
-  item_class->translate_desc      = _("Move Path");
 
   klass->freeze                   = NULL;
   klass->thaw                     = gimp_vectors_real_thaw;
@@ -238,15 +238,34 @@ gimp_vectors_duplicate (GimpItem *item,
 static void
 gimp_vectors_translate (GimpItem *item,
                         gint      offset_x,
-                        gint      offset_y)
+                        gint      offset_y,
+                        gboolean  push_undo)
 {
   GimpVectors *vectors;
+  GList       *list;
 
   vectors = GIMP_VECTORS (item);
 
   gimp_vectors_freeze (vectors);
 
-  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y);
+  if (push_undo)
+    gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+                                      _("Move Path"),
+                                      vectors);
+
+  for (list = vectors->strokes; list; list = g_list_next (list))
+    {
+      GimpStroke *stroke = list->data;
+      GList      *list2;
+
+      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
+        {
+          GimpAnchor *anchor = list2->data;
+
+          anchor->position.x += offset_x;
+          anchor->position.y += offset_y;
+        }
+    }
 
   gimp_vectors_thaw (vectors);
 }

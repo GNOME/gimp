@@ -1,5 +1,35 @@
 2003-05-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.[ch]: added "gboolean push_undo" to
+	GimpItem::translate() and don't push and undo in
+	gimp_item_translate().
+
+	* app/core/gimpchannel.[ch]: removed public function
+	gimp_channel_translate() and implement GimpItem::translate().
+
+	* app/core/gimpimage-mask.c
+	* app/core/gimplayer.c: changed accordingly.
+
+	* app/vectors/gimpvectors.c: actually translate the vectors
+	in translate().
+
+	* app/gui/channels-commands.c (channels_new_channel_query): removed
+	useless call to gimp_channel_translate().
+
+	* app/tools/gimpeditselectiontool.c
+	* tools/pdbgen/pdb/layer.pdb: when translating a linked layer,
+	also translate all linked channels and vectors. Cleanup.
+
+	Note that the "linked" behaviour has changed: before this change,
+	moving a layer moved all linked layers unconditionally. Now,
+	linked layers/channels/vectors are moved *only* if the moved layer
+	is also linked (the linked items behave as a group now and moving
+	something not in the group does not affect the group).
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+2003-05-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-crop.c (gimp_image_crop)
 	* app/core/gimpimage-resize.c (gimp_image_resize)
 	* app/core/gimpimage-scale.c (gimp_image_scale):

@@ -175,11 +175,6 @@ void            gimp_channel_shrink            (GimpChannel      *mask,
 						gboolean          edge_lock,
                                                 gboolean          push_undo);
 
-void            gimp_channel_translate         (GimpChannel      *mask,
-						gint              off_x,
-						gint              off_y,
-                                                gboolean          push_undo);
-
 void            gimp_channel_load              (GimpChannel      *mask,
 						GimpChannel      *channel,
                                                 gboolean          push_undo);

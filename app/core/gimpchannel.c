@@ -58,6 +58,10 @@ static gsize      gimp_channel_get_memsize (GimpObject       *object);
 static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
                                             GType             new_type,
                                             gboolean          add_alpha);
+static void       gimp_channel_translate   (GimpItem         *item,
+                                            gint              off_x,
+                                            gint              off_y,
+                                            gboolean          push_undo);
 static void       gimp_channel_scale       (GimpItem         *item,
                                             gint              new_width,
                                             gint              new_height,
@@ -129,6 +133,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   viewable_class->default_stock_id = "gimp-channel";
 
   item_class->duplicate            = gimp_channel_duplicate;
+  item_class->translate            = gimp_channel_translate;
   item_class->scale                = gimp_channel_scale;
   item_class->resize               = gimp_channel_resize;
   item_class->default_name         = _("Channel");
@@ -229,6 +234,104 @@ gimp_channel_duplicate (GimpItem *item,
   new_channel->y2           = channel->y2;
 
   return new_item;
+}
+
+static void
+gimp_channel_translate (GimpItem *item,
+			gint      off_x,
+			gint      off_y,
+                        gboolean  push_undo)
+{
+  GimpChannel *mask;
+  GimpChannel *tmp_mask = NULL;
+  gint         width, height;
+  PixelRegion  srcPR, destPR;
+  guchar       empty = TRANSPARENT_OPACITY;
+  gint         x1, y1, x2, y2;
+
+  mask = GIMP_CHANNEL (item);
+
+  gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
+  x1 = CLAMP ((x1 + off_x), 0, GIMP_ITEM (mask)->width);
+  y1 = CLAMP ((y1 + off_y), 0, GIMP_ITEM (mask)->height);
+  x2 = CLAMP ((x2 + off_x), 0, GIMP_ITEM (mask)->width);
+  y2 = CLAMP ((y2 + off_y), 0, GIMP_ITEM (mask)->height);
+
+  width  = x2 - x1;
+  height = y2 - y1;
+
+  if (push_undo)
+    {
+      gimp_channel_push_undo (mask, _("Move Channel"));
+
+      /*  update the old area  */
+      gimp_drawable_update (GIMP_DRAWABLE (item),
+                            x1, y1,
+                            x2 - x1, y2 - y1);
+    }
+
+  /*  make sure width and height are non-zero  */
+  if (width != 0 && height != 0)
+    {
+      /*  copy the portion of the mask we will keep to a
+       *  temporary buffer
+       */
+      tmp_mask = gimp_channel_new_mask (gimp_item_get_image (GIMP_ITEM (mask)),
+					width, height);
+
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
+			 x1 - off_x, y1 - off_y, width, height, FALSE);
+      pixel_region_init (&destPR, GIMP_DRAWABLE (tmp_mask)->tiles,
+			 0, 0, width, height, TRUE);
+      copy_region (&srcPR, &destPR);
+    }
+
+  /*  clear the mask  */
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
+		     0, 0,
+		     GIMP_ITEM (mask)->width,
+		     GIMP_ITEM (mask)->height, TRUE);
+  color_region (&srcPR, &empty);
+
+  if (width != 0 && height != 0)
+    {
+      /*  copy the temp mask back to the mask  */
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (tmp_mask)->tiles,
+			 0, 0, width, height, FALSE);
+      pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+			 x1, y1, width, height, TRUE);
+      copy_region (&srcPR, &destPR);
+
+      /*  free the temporary mask  */
+      g_object_unref (tmp_mask);
+    }
+
+  /*  calculate new bounds  */
+  if (width == 0 || height == 0)
+    {
+      mask->empty = TRUE;
+      mask->x1    = 0;
+      mask->y1    = 0;
+      mask->x2    = GIMP_ITEM (mask)->width;
+      mask->y2    = GIMP_ITEM (mask)->height;
+    }
+  else
+    {
+      mask->x1 = x1;
+      mask->y1 = y1;
+      mask->x2 = x2;
+      mask->y2 = y2;
+    }
+
+  if (push_undo)
+    {
+      /*  update the new area  */
+      gimp_drawable_update (GIMP_DRAWABLE (item),
+                            mask->x1, mask->y1,
+                            mask->x2 - mask->x1, mask->y2 - mask->y1);
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (item));
+    }
 }
 
 static void
@@ -1558,86 +1661,6 @@ gimp_channel_shrink (GimpChannel  *mask,
   thin_region (&bPR, radius_x, radius_y, edge_lock);
 
   mask->bounds_known = FALSE;
-}
-
-void
-gimp_channel_translate (GimpChannel *mask,
-			gint         off_x,
-			gint         off_y,
-                        gboolean     push_undo)
-{
-  GimpChannel *tmp_mask = NULL;
-  gint         width, height;
-  PixelRegion  srcPR, destPR;
-  guchar       empty = TRANSPARENT_OPACITY;
-  gint         x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Translate Channel"));
-
-  gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
-  x1 = CLAMP ((x1 + off_x), 0, GIMP_ITEM (mask)->width);
-  y1 = CLAMP ((y1 + off_y), 0, GIMP_ITEM (mask)->height);
-  x2 = CLAMP ((x2 + off_x), 0, GIMP_ITEM (mask)->width);
-  y2 = CLAMP ((y2 + off_y), 0, GIMP_ITEM (mask)->height);
-
-  width  = x2 - x1;
-  height = y2 - y1;
-
-  /*  make sure width and height are non-zero  */
-  if (width != 0 && height != 0)
-    {
-      /*  copy the portion of the mask we will keep to a
-       *  temporary buffer
-       */
-      tmp_mask = gimp_channel_new_mask (gimp_item_get_image (GIMP_ITEM (mask)),
-					width, height);
-
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
-			 x1 - off_x, y1 - off_y, width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (tmp_mask)->tiles,
-			 0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-    }
-
-  /*  clear the mask  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_ITEM (mask)->width,
-		     GIMP_ITEM (mask)->height, TRUE);
-  color_region (&srcPR, &empty);
-
-  if (width != 0 && height != 0)
-    {
-      /*  copy the temp mask back to the mask  */
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (tmp_mask)->tiles,
-			 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-			 x1, y1, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-
-      /*  free the temporary mask  */
-      g_object_unref (tmp_mask);
-    }
-
-  /*  calculate new bounds  */
-  if (width == 0 || height == 0)
-    {
-      mask->empty = TRUE;
-      mask->x1    = 0;
-      mask->y1    = 0;
-      mask->x2    = GIMP_ITEM (mask)->width;
-      mask->y2    = GIMP_ITEM (mask)->height;
-    }
-  else
-    {
-      mask->x1 = x1;
-      mask->y1 = y1;
-      mask->x2 = x2;
-      mask->y2 = y2;
-    }
 }
 
 void

@@ -67,7 +67,8 @@ struct _GimpItemClass
                             const gchar           *undo_desc);
   void       (* translate) (GimpItem              *item,
                             gint                   offset_x,
-                            gint                   offset_y);
+                            gint                   offset_y,
+                            gboolean               push_undo);
   void       (* scale)     (GimpItem              *item,
                             gint                   new_width,
                             gint                   new_height,
@@ -82,8 +83,6 @@ struct _GimpItemClass
 
   const gchar *default_name;
   const gchar *rename_desc;
-  const gchar *translate_desc;
-  const gchar *scale_desc;
 };
 
 
