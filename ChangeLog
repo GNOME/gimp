@@ -1,3 +1,8 @@
+2001-12-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): removed portuguese (pt) again until
+	all po files are added.
+
 2001-12-20  Duarte Loreto <happyguy_pt@hotmail.com>
 
         * configure.in: Added portuguese (pt) to ALL_LINGUAS
