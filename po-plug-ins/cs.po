@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
-"PO-Revision-Date: 2002-10-25 12:40GMT\n"
+"POT-Creation-Date: 2002-11-13 11:48+0100\n"
+"PO-Revision-Date: 2002-11-13 11:48GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "O programu"
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2965 plug-ins/common/sharpen.c:558
-#: plug-ins/common/sinus.c:2112 plug-ins/common/tileit.c:414
+#: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:414
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:947
 #: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2563
@@ -208,8 +208,8 @@ msgstr "Lambda"
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/sinus.c:1855
-#: plug-ins/common/sinus.c:1873
+#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/sinus.c:1861
+#: plug-ins/common/sinus.c:1879
 msgid "Colors"
 msgstr "Barvy"
 
@@ -697,7 +697,7 @@ msgstr "Směr X světelného zdroje v prostoru XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:840
 #: plug-ins/MapObject/mapobject_ui.c:1088
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/MapObject/mapobject_ui.c:1232 plug-ins/common/xbm.c:1244
+#: plug-ins/MapObject/mapobject_ui.c:1232 plug-ins/common/xbm.c:1254
 #: plug-ins/ifscompose/ifscompose.c:550
 msgid "Y:"
 msgstr "Y:"
@@ -1138,14 +1138,14 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
+#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:737
 #: plug-ins/common/xpm.c:332 plug-ins/common/xwd.c:436
 #: plug-ins/faxg3/faxg3.c:195 plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325
 #: plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3247
@@ -1192,7 +1192,7 @@ msgstr "%s: špatná barevná mapa"
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
 #: plug-ins/common/tiff.c:660 plug-ins/common/tile.c:279
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2144
-#: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:447
+#: plug-ins/common/xbm.c:875 plug-ins/faxg3/faxg3.c:447
 #: plug-ins/fits/fits.c:518 plug-ins/gfig/gfig.c:2832
 #: plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:373 plug-ins/twain/twain.c:744
 #: plug-ins/winsnap/winsnap.c:1235
@@ -1218,7 +1218,7 @@ msgstr "Nelze otevřít %s"
 #: plug-ins/common/png.c:851 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
+#: plug-ins/common/xbm.c:985 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1629
 #, c-format
@@ -2211,7 +2211,7 @@ msgid "_Vertical"
 msgstr "S_visle"
 
 #: plug-ins/common/blinds.c:393 plug-ins/common/fractaltrace.c:776
-#: plug-ins/common/papertile.c:382
+#: plug-ins/common/papertile.c:383
 msgid "_Transparent"
 msgstr "_Průhledné"
 
@@ -2236,7 +2236,7 @@ msgid "Blurring..."
 msgstr "Rozostřuje se..."
 
 #: plug-ins/common/blur.c:637 plug-ins/common/plasma.c:382
-#: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1803
+#: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1813
 #: plug-ins/common/snoise.c:545
 msgid "_Random Seed:"
 msgstr "_Hnízdo náhodných čísel:"
@@ -2695,7 +2695,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s předponou:"
 
 #: plug-ins/common/csource.c:692 plug-ins/common/mail.c:530
-#: plug-ins/common/tiff.c:1624 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:1624 plug-ins/common/xbm.c:1214
 msgid "Comment:"
 msgstr "Komentář:"
 
@@ -3318,7 +3318,7 @@ msgstr "R_eliéf"
 msgid "E_levation:"
 msgstr "_Zdvih:"
 
-#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2132
+#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2143
 msgid "Do _Preview"
 msgstr "Vytvořit _náhled"
 
@@ -4287,7 +4287,7 @@ msgstr "Ma_ximální hloubka:"
 msgid "Thresho_ld:"
 msgstr "Prá_h:"
 
-#: plug-ins/common/iwarp.c:1144 plug-ins/common/sinus.c:1844
+#: plug-ins/common/iwarp.c:1144 plug-ins/common/sinus.c:1850
 #: plug-ins/gflare/gflare.c:3111
 msgid "_Settings"
 msgstr "Na_stavení"
@@ -4977,51 +4977,55 @@ msgstr "_Vnutit"
 msgid "C_entering"
 msgstr "Vystř_edění"
 
-#: plug-ins/common/papertile.c:347
+#: plug-ins/common/papertile.c:348
 msgid "Movement"
 msgstr "Pohyb"
 
-#: plug-ins/common/papertile.c:361
+#: plug-ins/common/papertile.c:362
 msgid "_Max (%):"
 msgstr "_Max (%):"
 
-#: plug-ins/common/papertile.c:367
+#: plug-ins/common/papertile.c:368
 msgid "_Wrap Around"
 msgstr "O_balit okolí"
 
-#: plug-ins/common/papertile.c:377
+#: plug-ins/common/papertile.c:378
 msgid "Background Type"
 msgstr "Typ pozadí"
 
-#: plug-ins/common/papertile.c:384
+#: plug-ins/common/papertile.c:385
 msgid "I_nverted Image"
 msgstr "I_nvertovaný obrázek"
 
-#: plug-ins/common/papertile.c:386
+#: plug-ins/common/papertile.c:387
 msgid "Im_age"
 msgstr "_Obrázek"
 
-#: plug-ins/common/papertile.c:388
+#: plug-ins/common/papertile.c:389
 msgid "Fo_reground Color"
 msgstr "Ba_rva popředí"
 
-#: plug-ins/common/papertile.c:390
+#: plug-ins/common/papertile.c:391
 msgid "Bac_kground Color"
 msgstr "Barva _pozadí"
 
-#: plug-ins/common/papertile.c:399
+#: plug-ins/common/papertile.c:393
+msgid "S_elect here:"
+msgstr "Vyb_erte zde:"
+
+#: plug-ins/common/papertile.c:400
 msgid "Background Color"
 msgstr "Barva pozadí"
 
-#: plug-ins/common/papertile.c:547
+#: plug-ins/common/papertile.c:549
 msgid "Paper Tile..."
 msgstr "Papírová dlaždice..."
 
-#: plug-ins/common/papertile.c:832
+#: plug-ins/common/papertile.c:835
 msgid "September 31, 1999"
 msgstr "31. září 1999"
 
-#: plug-ins/common/papertile.c:833
+#: plug-ins/common/papertile.c:836
 msgid "<Image>/Filters/Map/Paper Tile..."
 msgstr "<Image>/Filtry/Mapování/Papírové dlaždice..."
 
@@ -5853,118 +5857,118 @@ msgstr "Posun s_visle"
 msgid "Shift _Amount:"
 msgstr "Mír_a posunu:"
 
-#: plug-ins/common/sinus.c:1159
+#: plug-ins/common/sinus.c:1163
 msgid "<Image>/Filters/Render/Sinus..."
 msgstr "<Image>/Filtry/Vyobrazení/Sinus..."
 
-#: plug-ins/common/sinus.c:1247
+#: plug-ins/common/sinus.c:1252
 msgid "Sinus: rendering..."
 msgstr "Sinus: Výpočty..."
 
 #. Create Main window with a vbox
 #. ==============================
-#: plug-ins/common/sinus.c:1691
+#: plug-ins/common/sinus.c:1697
 msgid "Sinus"
 msgstr "Sinus"
 
-#: plug-ins/common/sinus.c:1749
+#: plug-ins/common/sinus.c:1757
 msgid "Drawing Settings"
 msgstr "Volby kresby"
 
-#: plug-ins/common/sinus.c:1761
+#: plug-ins/common/sinus.c:1769
 msgid "_X Scale:"
 msgstr "Zvětšení _X:"
 
-#: plug-ins/common/sinus.c:1770
+#: plug-ins/common/sinus.c:1778
 msgid "_Y Scale:"
 msgstr "Zvětšení _Y:"
 
-#: plug-ins/common/sinus.c:1779
+#: plug-ins/common/sinus.c:1787
 msgid "Co_mplexity:"
 msgstr "Ko_mplexnost:"
 
-#: plug-ins/common/sinus.c:1789
+#: plug-ins/common/sinus.c:1797
 msgid "Calculation Settings"
 msgstr "Volby kalkulace"
 
-#: plug-ins/common/sinus.c:1818
+#: plug-ins/common/sinus.c:1824
 msgid "_Force Tiling?"
 msgstr "_Vnutit dlaždicování?"
 
-#: plug-ins/common/sinus.c:1832
+#: plug-ins/common/sinus.c:1838
 msgid "_Ideal"
 msgstr "_Ideální"
 
-#: plug-ins/common/sinus.c:1835
+#: plug-ins/common/sinus.c:1841
 msgid "_Distorted"
 msgstr "_Zkreslený"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:1866
+#: plug-ins/common/sinus.c:1872
 msgid "The colors are white and black."
 msgstr "Barvy jsou bílá a černá"
 
-#: plug-ins/common/sinus.c:1877
+#: plug-ins/common/sinus.c:1883
 msgid "Bl_ack & White"
 msgstr "Černá a bí_lá"
 
-#: plug-ins/common/sinus.c:1879
+#: plug-ins/common/sinus.c:1885
 msgid "_Foreground & Background"
 msgstr "P_opředí a pozadí"
 
-#: plug-ins/common/sinus.c:1881
+#: plug-ins/common/sinus.c:1887
 msgid "C_hoose here:"
 msgstr "Zvolte z_de:"
 
-#: plug-ins/common/sinus.c:1895
+#: plug-ins/common/sinus.c:1901
 msgid "First Color"
 msgstr "První barva"
 
-#: plug-ins/common/sinus.c:1905
+#: plug-ins/common/sinus.c:1911
 msgid "Second Color"
 msgstr "Druhá barva"
 
-#: plug-ins/common/sinus.c:1918
+#: plug-ins/common/sinus.c:1924
 msgid "Alpha Channels"
 msgstr "Alfa kanály"
 
-#: plug-ins/common/sinus.c:1930
+#: plug-ins/common/sinus.c:1936
 msgid "F_irst Color:"
 msgstr "_První barva:"
 
-#: plug-ins/common/sinus.c:1945
+#: plug-ins/common/sinus.c:1951
 msgid "S_econd Color:"
 msgstr "Dr_uhá barva:"
 
-#: plug-ins/common/sinus.c:1961 plug-ins/imagemap/imap_preferences.c:511
+#: plug-ins/common/sinus.c:1967 plug-ins/imagemap/imap_preferences.c:511
 msgid "Co_lors"
 msgstr "_Barvy"
 
-#: plug-ins/common/sinus.c:1970
+#: plug-ins/common/sinus.c:1976
 msgid "Blend Settings"
 msgstr "Nastavení mísení"
 
-#: plug-ins/common/sinus.c:1981
+#: plug-ins/common/sinus.c:1987
 msgid "Gradient"
 msgstr "Přechod"
 
-#: plug-ins/common/sinus.c:1985
+#: plug-ins/common/sinus.c:1991
 msgid "L_inear"
 msgstr "L_ineární"
 
-#: plug-ins/common/sinus.c:1986
+#: plug-ins/common/sinus.c:1992
 msgid "Bili_near"
 msgstr "Bili_neární"
 
-#: plug-ins/common/sinus.c:1987
+#: plug-ins/common/sinus.c:1993
 msgid "Sin_usoidal"
 msgstr "Sin_usoidní"
 
-#: plug-ins/common/sinus.c:1999
+#: plug-ins/common/sinus.c:2005
 msgid "_Exponent:"
 msgstr "_Exponent:"
 
-#: plug-ins/common/sinus.c:2009
+#: plug-ins/common/sinus.c:2015
 msgid "_Blend"
 msgstr "_Mísení"
 
@@ -5987,8 +5991,8 @@ msgid "_Height:"
 msgstr "_Výška:"
 
 #: plug-ins/common/smooth_palette.c:458
-msgid "_Search Time:"
-msgstr "Ča_s hledání:"
+msgid "_Search Depth:"
+msgstr "_Hloubka hledání:"
 
 #: plug-ins/common/snoise.c:186
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
@@ -7138,34 +7142,34 @@ msgstr "Interpretuje se %s:"
 msgid "Transferring image"
 msgstr "Přenáší se stránka"
 
-#: plug-ins/common/xbm.c:248
+#: plug-ins/common/xbm.c:251
 msgid "Created with The GIMP"
 msgstr "Vytvořeno v programu GIMP"
 
-#: plug-ins/common/xbm.c:730
+#: plug-ins/common/xbm.c:733
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: nelze otevřít \"%s\"\n"
 
-#: plug-ins/common/xbm.c:813
+#: plug-ins/common/xbm.c:816
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: nelze číst hlavičku (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:819
+#: plug-ins/common/xbm.c:822
 msgid "XBM: no image width specified\n"
 msgstr "XBM: nebyla zadána šířka obrázku\n"
 
-#: plug-ins/common/xbm.c:825
+#: plug-ins/common/xbm.c:828
 msgid "XBM: no image height specified\n"
 msgstr "XBM: nebyla zadána výška obrázku\n"
 
-#: plug-ins/common/xbm.c:831
+#: plug-ins/common/xbm.c:834
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: nebyla zadán typ dat obrázku\n"
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:964
+#: plug-ins/common/xbm.c:967
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7179,7 +7183,7 @@ msgstr ""
 "Převeďte jej nejdříve do černobílého (1bitového)\n"
 "indexovaného obrázku a zkuste znovu."
 
-#: plug-ins/common/xbm.c:975
+#: plug-ins/common/xbm.c:978
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -7187,48 +7191,48 @@ msgstr ""
 "Nelze zapsat masku kurzoru pro obrázek,\n"
 "který nemá alfa kanál."
 
-#: plug-ins/common/xbm.c:1004
+#: plug-ins/common/xbm.c:1007
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: nelze vytvořit \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1145
+#: plug-ins/common/xbm.c:1152
 msgid "Save as XBM"
 msgstr "Zapsat jako XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1162
+#: plug-ins/common/xbm.c:1169
 msgid "XBM Options"
 msgstr "Volby XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1173
+#: plug-ins/common/xbm.c:1180
 msgid "X10 Format Bitmap"
 msgstr "Bitová mapa formátu X10"
 
-#: plug-ins/common/xbm.c:1193
+#: plug-ins/common/xbm.c:1200
 msgid "Identifier Prefix:"
 msgstr "Předpona identifikátoru:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1212
+#: plug-ins/common/xbm.c:1222
 msgid "Write Hot Spot Values"
 msgstr "Zapsat hodnoty řídícího bodu"
 
-#: plug-ins/common/xbm.c:1234
+#: plug-ins/common/xbm.c:1244
 msgid "Hot Spot X:"
 msgstr "Řídící bod X:"
 
 #. mask file
-#: plug-ins/common/xbm.c:1251
+#: plug-ins/common/xbm.c:1261
 msgid "Mask File"
 msgstr "Soubor masky"
 
-#: plug-ins/common/xbm.c:1262
+#: plug-ins/common/xbm.c:1272
 msgid "Write Extra Mask File"
 msgstr "Zapsat zvlášť soubor masky"
 
-#: plug-ins/common/xbm.c:1275
+#: plug-ins/common/xbm.c:1285
 msgid "Mask File Extension:"
 msgstr "Přípona souboru masky:"
 
@@ -8286,7 +8290,7 @@ msgid "Save"
 msgstr "Zapsat"
 
 #: plug-ins/gfig/gfig.c:5272
-msgid "Save as..."
+msgid "Save As..."
 msgstr "Zapsat jako..."
 
 #: plug-ins/gfig/gfig.c:6155
@@ -8337,14 +8341,14 @@ msgid "gflare-path misconfigured - the following folders were not found:"
 msgstr "gflare-path špatně nastavena - následující adresáře nebyly nalezeny:"
 
 #: plug-ins/gflare/gflare.c:1411
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "neplatně formátovaný soubor P-záře: %s\n"
+msgstr "Selhalo otevření souboru P-záře '%s': %s"
 
 #: plug-ins/gflare/gflare.c:1419
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "'%s' není běžný soubor"
+msgstr "'%s' není platný soubor P-záře."
 
 #: plug-ins/gflare/gflare.c:1479
 #, c-format
@@ -8367,14 +8371,14 @@ msgstr ""
 "pak můžete uložit svou vlastní P-záři do tohoto adresáře."
 
 #: plug-ins/gflare/gflare.c:1628
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Zápis do souboru selhal\n"
+msgstr "Selhal zápis souboru P-záře '%s': %s"
 
 #: plug-ins/gflare/gflare.c:1830
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading GFlare folder '%s'"
-msgstr "chyba při čtení adresáře P-září \"%s\""
+msgstr "Chyba při čtení adresáře P-září '%s'"
 
 #: plug-ins/gflare/gflare.c:2530
 msgid "GFlare"
@@ -11232,6 +11236,9 @@ msgstr "Chyba: Nelze načíst soubor %s XJT vlastností"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
 
+#~ msgid "Save as..."
+#~ msgstr "Zapsat jako..."
+
 #~ msgid ""
 #~ "PNG: Couldn't simply reduce colors further.\n"
 #~ "Saving as opaque.\n"
@@ -11458,9 +11465,6 @@ msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
 
 #~ msgid "Open..."
 #~ msgstr "Otevřít..."
-
-#~ msgid "Save As..."
-#~ msgstr "Zapsat jako..."
 
 #~ msgid "Preferences..."
 #~ msgstr "Předvolby..."
@@ -13305,9 +13309,6 @@ msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
 
 #~ msgid "Char: %c, %d, 0x%02x"
 #~ msgstr "Znak: %c, %d, 0x%02x"
-
-#~ msgid "Selected char:"
-#~ msgstr "Vybraný znak:"
 
 #~ msgid "Insert the selected char at the cursor position"
 #~ msgstr "Vložit vybraný znak na pozici kurzoru"

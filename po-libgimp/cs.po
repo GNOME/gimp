@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
-"PO-Revision-Date: 2002-11-04 22:43GMT\n"
+"POT-Creation-Date: 2002-11-13 11:41+0100\n"
+"PO-Revision-Date: 2002-11-13 11:44GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -188,9 +188,8 @@ msgid "Module error"
 msgstr "Chyba modulu"
 
 #: libgimpmodule/gimpmodule.c:364
-#, fuzzy
 msgid "Loaded"
-msgstr "Načteno úspěšně"
+msgstr "Načteno"
 
 #: libgimpmodule/gimpmodule.c:365
 msgid "Load failed"
@@ -198,7 +197,7 @@ msgstr "Načtení selhalo"
 
 #: libgimpmodule/gimpmodule.c:366
 msgid "Not loaded"
-msgstr ""
+msgstr "Nenačteno"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -293,6 +292,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Klikněte na zaměřovač oka, a poté vyberte barvu kliknutím na tuto barvu kdekoli "
+"na vaší obrazovce"
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"
@@ -390,8 +391,7 @@ msgstr "Ča_s"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
-"Hnízdo náhodného generátoru z aktuálního času - zaručuje přiměřenou náhodnost"
+msgstr "Hnízdo náhodného generátoru z aktuálního času - zaručuje přiměřenou náhodnost"
 
 #: libgimpwidgets/gimpwidgets.c:1316
 msgid "Bytes"
@@ -482,3 +482,4 @@ msgstr "Tlak"
 
 #~ msgid "picas"
 #~ msgstr "pik"
+
