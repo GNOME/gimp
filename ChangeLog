@@ -1,3 +1,9 @@
+2000-10-09  Michael Natterer  <mitch@gimp.org>
+
+	* gimp_splash.ppm: A nicer one (this time without
+	version number) from our reporter in Gimpland,
+	Gerald Brosseau <os2user@contact.net>
+
 2000-10-09  Sven Neumann  <sven@gimp.org>
 
 	* gimp.m4: try to make it work again
