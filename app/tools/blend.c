@@ -891,6 +891,8 @@ gradient_calc_square_factor (double dist,
 
       if (rat < offset)
 	rat = 0.0;
+      else if (offset == 1)
+        rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
     } /* else */
@@ -923,6 +925,8 @@ gradient_calc_radial_factor (double dist,
 
       if (rat < offset)
 	rat = 0.0;
+      else if (offset == 1)
+        rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
     } /* else */
@@ -979,6 +983,8 @@ gradient_calc_bilinear_factor (double  dist,
 
       if (fabs(rat) < offset)
 	rat = 0.0;
+      else if (offset == 1)
+        rat = (rat>=1) ? 1 : 0;
       else
 	rat = (fabs(rat) - offset) / (1.0 - offset);
     } /* else */
