@@ -1,3 +1,8 @@
+1999-03-08  Jay Cox  <jaycox@earthlink.net>
+
+	* app/plug_in.c: use g_io_channel_close/unref pairs instead of close
+	in plug_in_open().
+
 1999-03-07  Tor Lillqvist  <tml@iki.fi>
 
 	Second batch of Win32 merging. This time also some Unix code is

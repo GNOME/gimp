@@ -1131,8 +1131,13 @@ plug_in_open (PlugIn *plug_in)
 
       if (plug_in->pid == 0)
 	{
-	  close(plug_in->my_read);
-	  close(plug_in->my_write);
+	  g_io_channel_close (plug_in->my_read);
+	  g_io_channel_unref (plug_in->my_read);
+	  plug_in->my_read  = NULL;
+	  g_io_channel_close (plug_in->my_write);
+	  g_io_channel_unref (plug_in->my_write);
+	  plug_in->my_write  = NULL;
+
           /* Execute the filter. The "_exit" call should never
            *  be reached, unless some strange error condition
            *  exists.
