@@ -632,10 +632,11 @@ create_printer_dialog (void)
                                   gimp_standard_help_func, "filters/print.html",
                                   GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                                  _("OK"), gimp_setup_ok_callback,
-                                  NULL, NULL, NULL, TRUE, FALSE,
-                                  _("Cancel"), gtk_widget_hide,
+                                  GTK_STOCK_CANCEL, gtk_widget_hide,
                                   NULL, 1, NULL, FALSE, TRUE,
+
+                                  GTK_STOCK_OK, gimp_setup_ok_callback,
+                                  NULL, NULL, NULL, TRUE, FALSE,
 
                                   NULL);
 
@@ -801,10 +802,11 @@ create_new_printer_dialog (void)
                      gimp_standard_help_func, "filters/print.html",
                      GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                     _("OK"), gimp_new_printer_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-                     _("Cancel"), gtk_widget_hide,
+                     GTK_STOCK_CANCEL, gtk_widget_hide,
                      NULL, 1, NULL, FALSE, TRUE,
+
+                     GTK_STOCK_OK, gimp_new_printer_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
 
@@ -838,7 +840,7 @@ create_about_dialog (void)
                      gimp_standard_help_func, "filters/print.html",
                      GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                     _("OK"), gtk_widget_hide,
+                     GTK_STOCK_CLOSE, gtk_widget_hide,
                      NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);
