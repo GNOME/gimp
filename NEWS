@@ -10,7 +10,11 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.23
 ==================================
+- New plug-in color selector using color-selector modules [Mitch]
+- GimpCanvas drawing abstraction [Sven]
+- Added DICOM file plug-in by Dov Grobgeld
 - Imported new WMF plug-in from libwmf2 [Sven, Mitch]
+- Allow to move image windows and docks between screens [Mitch, Sven] 
 - Fixed multi-head issues [Mitch]
 - Allow to merge visible paths [Simon]
 - Redone GimpDialog API [Mitch]
@@ -20,7 +24,8 @@ Overview of Changes in GIMP 1.3.23
 
 Other contributors:
   Ville Pätsi, Eric Pierce, Tor Lillqvist, Henrik Brix Andersen,
-  Manish Singh, Dom Lachowicz, Francis James Franklin, Dave Neary
+  Manish Singh, Dom Lachowicz, Francis James Franklin, Dave Neary,
+  Maurits Rijk
 
 
 Overview of Changes in GIMP 1.3.22
