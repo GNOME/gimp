@@ -10,6 +10,7 @@ tips_POFILES = \
 	da.po	\
 	de.po	\
 	pt.po	\
+	sk.po	\
 	sv.po
 
 EXTRA_DIST = \
