@@ -139,6 +139,8 @@ libappwidgets_a_sources = \
 	gimppropwidgets.h		\
 	gimpselectioneditor.c		\
 	gimpselectioneditor.h		\
+	gimptemplateeditor.c		\
+	gimptemplateeditor.h		\
 	gimptemplateview.c		\
 	gimptemplateview.h		\
 	gimptexteditor.c		\
