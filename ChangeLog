@@ -1,3 +1,9 @@
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_area):
+	take drawable offsets into account when masking the preview with
+	the selection mask.
+
 2004-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb (gimprc_query, gimprc_set): disallow

@@ -236,26 +236,32 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
     }
   else
     {
-      GimpPixelRgn  selection_rgn;
       GimpPixelRgn  drawable_rgn;
-      guchar       *sel;
+      GimpPixelRgn  selection_rgn;
       guchar       *src;
+      guchar       *sel;
+      gint          offset_x;
+      gint          offset_y;
       gint          selection_id;
 
       selection_id = gimp_image_get_selection (image_id);
+
+      gimp_drawable_offsets (drawable->drawable_id, &offset_x, &offset_y);
 
       gimp_pixel_rgn_init (&drawable_rgn, drawable,
                            x, y, width, height,
                            FALSE, FALSE);
       gimp_pixel_rgn_init (&selection_rgn, gimp_drawable_get (selection_id),
-                           x, y, width, height,
+                           x + offset_x, y + offset_y, width, height,
                            FALSE, FALSE);
 
-      sel = g_new (guchar, width * height);
       src = g_new (guchar, width * height * drawable->bpp);
+      sel = g_new (guchar, width * height);
 
-      gimp_pixel_rgn_get_rect (&drawable_rgn,  src, x, y, width, height);
-      gimp_pixel_rgn_get_rect (&selection_rgn, sel, x, y, width, height);
+      gimp_pixel_rgn_get_rect (&drawable_rgn,
+                               src, x, y, width, height);
+      gimp_pixel_rgn_get_rect (&selection_rgn,
+                               sel, x + offset_x, y + offset_y, width, height);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
                               x - gimp_preview->xoff - gimp_preview->xmin,
