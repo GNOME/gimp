@@ -443,7 +443,6 @@ gimp_matrix3_yshear (GimpMatrix3 *matrix,
   matrix->coeff[1][2] += amount * matrix->coeff[0][2];
 }
 
-
 /**
  * gimp_matrix3_affine:
  * @matrix: The input matrix.
@@ -487,7 +486,6 @@ gimp_matrix3_affine (GimpMatrix3 *matrix,
 
   gimp_matrix3_mult (&affine, matrix);
 }
-
 
 /**
  * gimp_matrix3_determinant:
@@ -567,39 +565,13 @@ gimp_matrix3_invert (GimpMatrix3 *matrix)
 
 /*  functions to test for matrix properties  */
 
-
-/**
- * gimp_matrix3_is_diagonal:
- * @matrix: The matrix that is to be tested.
- *
- * Checks if the given matrix is diagonal.
- *
- * Returns: TRUE if the matrix is diagonal.
- */
-gboolean
-gimp_matrix3_is_diagonal (const GimpMatrix3 *matrix)
-{
-  gint i, j;
-
-  for (i = 0; i < 3; i++)
-    {
-      for (j = 0; j < 3; j++)
-        {
-          if (i != j && fabs (matrix->coeff[i][j]) > EPSILON)
-            return FALSE;
-        }
-    }
-
-  return TRUE;
-}
-
 /**
  * gimp_matrix3_is_identity:
  * @matrix: The matrix that is to be tested.
  *
  * Checks if the given matrix is the identity matrix.
  *
- * Returns: TRUE if the matrix is the identity matrix.
+ * Returns: %TRUE if the matrix is the identity matrix, %FALSE otherwise
  */
 gboolean
 gimp_matrix3_is_identity (const GimpMatrix3 *matrix)
@@ -626,11 +598,49 @@ gimp_matrix3_is_identity (const GimpMatrix3 *matrix)
   return TRUE;
 }
 
-/*  Check if we'll need to interpolate when applying this matrix.
-    This function returns TRUE if all entries of the upper left
-    2x2 matrix are either 0 or 1
+/**
+ * gimp_matrix3_is_diagonal:
+ * @matrix: The matrix that is to be tested.
+ *
+ * Checks if the given matrix is diagonal.
+ *
+ * Returns: %TRUE if the matrix is diagonal, %FALSE otherwise
  */
+gboolean
+gimp_matrix3_is_diagonal (const GimpMatrix3 *matrix)
+{
+  gint i, j;
 
+  for (i = 0; i < 3; i++)
+    {
+      for (j = 0; j < 3; j++)
+        {
+          if (i != j && fabs (matrix->coeff[i][j]) > EPSILON)
+            return FALSE;
+        }
+    }
+
+  return TRUE;
+}
+
+/**
+ * gimp_matrix3_is_affine:
+ * @matrix: The matrix that is to be tested.
+ *
+ * Checks if the given matrix defines an affine transformation.
+ *
+ * Returns: %TRUE if the matrix defines an affine transformation,
+ *          %FALSE otherwise
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_matrix3_is_affine (const GimpMatrix3 *matrix)
+{
+  return (fabs (matrix->coeff[2][0]) < EPSILON &&
+          fabs (matrix->coeff[2][1]) < EPSILON &&
+          fabs (matrix->coeff[2][2] - 1.0) < EPSILON);
+}
 
 /**
  * gimp_matrix3_is_simple:
@@ -639,8 +649,8 @@ gimp_matrix3_is_identity (const GimpMatrix3 *matrix)
  * Checks if we'll need to interpolate when applying this matrix as
  * a transformation.
  *
- * Returns: TRUE if all entries of the upper left 2x2 matrix are either
- * 0 or 1
+ * Returns: %TRUE if all entries of the upper left 2x2 matrix are
+ *          either 0 or 1, %FALSE otherwise
  */
 gboolean
 gimp_matrix3_is_simple (const GimpMatrix3 *matrix)

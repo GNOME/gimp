@@ -35,8 +35,9 @@ gimp_matrix3_affine
 gimp_matrix3_transform_point
 gimp_matrix3_determinant
 gimp_matrix3_invert
-gimp_matrix3_is_diagonal
 gimp_matrix3_is_identity
+gimp_matrix3_is_diagonal
+gimp_matrix3_is_affine
 gimp_matrix3_is_simple
 gimp_matrix4_to_deg
 GIMP_TYPE_MATRIX2

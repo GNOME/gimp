@@ -232,25 +232,11 @@ gimp_transform_matrix_perspective (gint         x,
         matrix.coeff[1][2] = t_y1;
         matrix.coeff[2][0] = 0.0;
         matrix.coeff[2][1] = 0.0;
+        matrix.coeff[2][2] = 1.0;
       }
     else
       {
         gdouble det1, det2;
-
-        det1 = dx3 * dy2 - dy3 * dx2;
-        det2 = dx1 * dy2 - dy1 * dx2;
-
-        if (det1 == 0.0 && det2 == 0.0)
-          matrix.coeff[2][0] = 1.0;
-        else
-          matrix.coeff[2][0] = det1 / det2;
-
-        det1 = dx1 * dy3 - dy1 * dx3;
-
-        if (det1 == 0.0 && det2 == 0.0)
-          matrix.coeff[2][1] = 1.0;
-        else
-          matrix.coeff[2][1] = det1 / det2;
 
         matrix.coeff[0][0] = t_x2 - t_x1 + matrix.coeff[2][0] * t_x2;
         matrix.coeff[0][1] = t_x3 - t_x1 + matrix.coeff[2][1] * t_x3;
@@ -259,9 +245,18 @@ gimp_transform_matrix_perspective (gint         x,
         matrix.coeff[1][0] = t_y2 - t_y1 + matrix.coeff[2][0] * t_y2;
         matrix.coeff[1][1] = t_y3 - t_y1 + matrix.coeff[2][1] * t_y3;
         matrix.coeff[1][2] = t_y1;
-      }
 
-    matrix.coeff[2][2] = 1.0;
+        det1 = dx3 * dy2 - dy3 * dx2;
+        det2 = dx1 * dy2 - dy1 * dx2;
+
+        matrix.coeff[2][0] = (det2 == 0.0) ? 1.0 : det1 / det2;
+
+        det1 = dx1 * dy3 - dy1 * dx3;
+
+        matrix.coeff[2][1] = (det2 == 0.0) ? 1.0 : det1 / det2;
+
+        matrix.coeff[2][2] = 1.0;
+      }
   }
 
   gimp_matrix3_identity  (result);

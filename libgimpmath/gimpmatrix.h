@@ -90,8 +90,9 @@ void          gimp_matrix3_affine          (GimpMatrix3       *matrix,
 gdouble       gimp_matrix3_determinant     (const GimpMatrix3 *matrix);
 void          gimp_matrix3_invert          (GimpMatrix3       *matrix);
 
-gboolean      gimp_matrix3_is_diagonal     (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_identity     (const GimpMatrix3 *matrix);
+gboolean      gimp_matrix3_is_diagonal     (const GimpMatrix3 *matrix);
+gboolean      gimp_matrix3_is_affine       (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_simple       (const GimpMatrix3 *matrix);
 
 void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
