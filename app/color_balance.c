@@ -212,6 +212,12 @@ color_balance_initialize (GDisplay *gdisp)
 {
   gint i;
 
+  if (gimp_image_is_empty (gdisp->gimage))
+    {
+      g_message (_("The image has no drawables."));
+      return;
+    }
+
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
       g_message (_("Color balance operates only on RGB color drawables."));

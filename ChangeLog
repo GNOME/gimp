@@ -1,3 +1,17 @@
+2002-12-28  Garry R. Osgood <grosgood@rcn.com>
+
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/curves.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c: altered tool initializers *_initialize ()
+        to first query whether or not the image contains
+        drawables; tool initialization does not proceed for
+        empty images. Closes bug #86494 on gimp-1-2 branch only. See 
+	report at bugzilla.gnome.org for details. 
+
 2002-12-21  Garry R. Osgood <grosgood@rcn.com>
 	
 	* app/gimpimage.c: fixed a buglet introduced in 2002-12-19 

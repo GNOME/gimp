@@ -212,6 +212,12 @@ tools_free_threshold (Tool *tool)
 void
 threshold_initialize (GDisplay *gdisp)
 {
+  if (gimp_image_is_empty (gdisp->gimage))
+    {
+      g_message (_("The image has no drawables."));
+      return;
+    }
+
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message (_("Threshold does not operate on indexed drawables."));

@@ -155,6 +155,12 @@ tools_free_posterize (Tool *tool)
 void
 posterize_initialize (GDisplay *gdisp)
 {
+  if (gimp_image_is_empty (gdisp->gimage))
+    {
+      g_message (_("The image has no drawables."));
+      return;
+
+    }
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message (_("Posterize does not operate on indexed drawables."));
