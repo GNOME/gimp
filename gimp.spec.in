@@ -4,6 +4,7 @@
 %define prefix	 /usr
 %define sysconfdir	/etc
 %define debug_package %{nil}
+%define __os_install_post %{nil}
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
@@ -23,6 +24,13 @@ Requires:	libart_lgpl >= 2.0
 Requires:	fontconfig >= @FONTCONFIG_REQUIRED_VERSION@
 Requires:	gimp-print >= @GIMPPRINT_REQUIRED_VERSION@
 Requires:	gtkhtml2 >= @GTKHTML2_REQUIRED_VERSION@
+Requires:	librsvg2 >= 2.0
+BuildRequires:	gtk2-devel >= @GTK_REQUIRED_VERSION@
+BuildRequires:  fontconfig-devel >= @FONTCONFIG_REQUIRED_VERSION@
+BuildRequires:  libart_lgpl-devel >= 2.0
+BuildRequires:  gimp-print-devel >= @GIMPPRINT_REQUIRED_VERSION@
+BuildRequires:  librsvg2-devel >= 2.0
+BuildRequires:  gtkhtml2-devel >= @GTKHTML2_REQUIRED_VERSION@
 Source: 	ftp://ftp.gimp.org/pub/gimp/v%{subver}/%{name}-%{ver}.tar.bz2
 
 %description

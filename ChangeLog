@@ -1,3 +1,8 @@
+2003-09-28  Ville Pätsi <drc@gimp.org>
+
+	* gimp.spec.in: Removed post install processing to finally completely
+	disable stripping.
+
 2003-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpscanconvert.c (gimp_scan_convert_free)
