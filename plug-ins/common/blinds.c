@@ -55,6 +55,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
 
@@ -171,13 +172,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_blinds",
-			  "Adds a blinds effect to the image. Rather like putting the image on a set of window blinds and the closing or opening the blinds",
-			  "More here later",
+			  _("Adds a blinds effect to the image. Rather like putting the image on a set of window blinds and the closing or opening the blinds"),
+			  _("More here later"),
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  "<Image>/Filters/Distorts/Blinds...",
+			  N_("<Image>/Filters/Distorts/Blinds..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -206,6 +209,12 @@ run    (gchar    *name,
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
+
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
 
   blindsdrawable = 
     drawable = 
@@ -262,7 +271,7 @@ run    (gchar    *name,
 
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ("Adding Blinds ...");
+      gimp_progress_init ( _("Adding Blinds ..."));
 
       apply_blinds();
    
@@ -328,7 +337,7 @@ blinds_dialog ()
   cache_preview(); /* Get the preview image and store it also set has_alpha */
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Blinds");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Blinds"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) blinds_close_callback,
@@ -342,7 +351,7 @@ blinds_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) blinds_ok_callback,
@@ -351,7 +360,7 @@ blinds_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -361,7 +370,7 @@ blinds_dialog ()
 
   /* Start building the frame for the preview area */
 
-  frame = gtk_frame_new ("preview");
+  frame = gtk_frame_new ( _("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   table = gtk_table_new (5, 5, FALSE); 
@@ -380,7 +389,7 @@ blinds_dialog ()
   gtk_widget_show(table); 
   gtk_widget_show(bint.preview);
 
-  frame = gtk_frame_new ("Orientation");
+  frame = gtk_frame_new ( _("Orientation"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
@@ -388,7 +397,7 @@ blinds_dialog ()
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   
-  toggle = gtk_radio_button_new_with_label (orientation_group, "Horizontal");
+  toggle = gtk_radio_button_new_with_label (orientation_group, _("Horizontal"));
   orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -397,7 +406,7 @@ blinds_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group, "Vertical");
+  toggle = gtk_radio_button_new_with_label (orientation_group, _("Vertical"));
   orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -409,7 +418,7 @@ blinds_dialog ()
   gtk_widget_show (toggle_vbox);
   gtk_widget_show(frame);
   
-  frame = gtk_frame_new ("Background");
+  frame = gtk_frame_new ( _("Background"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
@@ -417,7 +426,7 @@ blinds_dialog ()
   gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   
-  toggle = gtk_check_button_new_with_label ("Transparent");
+  toggle = gtk_check_button_new_with_label ( _("Transparent"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) blinds_button_update,
@@ -435,7 +444,7 @@ blinds_dialog ()
   gtk_widget_show (toggle_vbox);
   gtk_widget_show(frame);
 
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   table = gtk_table_new (5, 5, FALSE);
@@ -443,7 +452,7 @@ blinds_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  label = gtk_label_new ("Displacement ");
+  label = gtk_label_new ( _("Displacement "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
   gtk_widget_show (label);
@@ -475,7 +484,7 @@ blinds_dialog ()
   gtk_widget_show(entry);
 
 
-  label = gtk_label_new ("Num Segments ");
+  label = gtk_label_new ( _("Num Segments "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);

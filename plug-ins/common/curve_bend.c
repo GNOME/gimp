@@ -31,26 +31,17 @@
 #include <string.h>
 #include <math.h>
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-/* internationalisation (nls-macros) is available since gimp 1.1.x */
-#if (( GIMP_MAJOR_VERSION > 0 ) && ( GIMP_MINOR_VERSION > 0))
-#include <libgimp/gimpintl.h>
-#endif
-
-#ifndef __GIMPINTL_H__
-/* for older gimp releases use dummys nls-macros */
-#define N_(x)  x
-#define _(x)   x
-#endif
+#include "libgimp/stdplugins-intl.h"
 
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_curve_bend"
 #define PLUG_IN_PRINT_NAME  "CurveBend"
 #define PLUG_IN_VERSION     "v1.01 (1999/09/13)"
-#define PLUG_IN_MENU_PATH   "<Image>/Filters/Distorts/CurveBend..."
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
@@ -711,7 +702,7 @@ static void query (void)
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
-                          PLUG_IN_MENU_PATH,
+                          N_("<Image>/Filters/Distorts/CurveBend..."),
                           PLUG_IN_IMAGE_TYPES,
                           PROC_PLUG_IN,
                           nargs,
@@ -761,6 +752,12 @@ run (char *name,                /* name of plugin */
   /*always return at least the status to the caller. */
   static GParam values[2];
 
+
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
 
    cd = NULL;
 
@@ -2197,7 +2194,7 @@ bender_load_callback (GtkWidget *w,
   if(cd->filesel != NULL)
      return;   /* filesel is already open */
   
-  filesel = gtk_file_selection_new ("Load Curve Points from file");
+  filesel = gtk_file_selection_new ( _("Load Curve Points from file"));
   cd->filesel = filesel;
   
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
@@ -2227,7 +2224,7 @@ bender_save_callback (GtkWidget *w,
   if(cd->filesel != NULL)
      return;   /* filesel is already open */
   
-  filesel = gtk_file_selection_new ("Save Curve Points to file");
+  filesel = gtk_file_selection_new ( _("Save Curve Points to file"));
   cd->filesel = filesel;
   
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
@@ -2531,7 +2528,7 @@ p_buildmenu (MenuItem            *items)
 
   while (items->label)
   {
-      menu_item = gtk_menu_item_new_with_label (items->label);
+      menu_item = gtk_menu_item_new_with_label ( gettext(items->label));
       gtk_container_add (GTK_CONTAINER (menu), menu_item);
 
       if (items->callback)
@@ -2561,7 +2558,7 @@ build_action_area (GtkDialog *      dlg,
 
   for (i = 0; i < num_actions; i++)
     {
-      button = gtk_button_new_with_label (actions[i].label);
+      button = gtk_button_new_with_label ( gettext(actions[i].label));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (dlg->action_area), button, TRUE, TRUE, 0);
 
@@ -3346,7 +3343,7 @@ p_vertical_bend(BenderDialog *cd, t_GDRW *src_gdrw, t_GDRW *dst_gdrw)
    l_progress_max = (1 + l_last_row - l_first_row) * (1 + l_last_col - l_first_col);
    l_progress_step = 1.0 / l_progress_max;
    l_progress = 0.0;
-   if(cd->show_progress) gimp_progress_init ("Curve Bend ...");
+   if(cd->show_progress) gimp_progress_init ( _("Curve Bend ..."));
 
    for(l_row = l_first_row; l_row <= l_last_row; l_row++)
    {

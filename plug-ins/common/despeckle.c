@@ -43,6 +43,17 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.19  1997/01/03 15:15:10  yasuhiro
+ *   1999-12-20  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+ *
+ *           * plug-ins/common/blinds.c
+ *           * plug-ins/common/curve_bend.c
+ *           * plug-ins/common/deinterlace.c
+ *           * plug-ins/common/despeckle.c
+ *           * po-plug-ins/POTFILES.in: Added gettext support
+ *
+ *   -- yasuhiro
+ *
  *   Revision 1.18  1999/11/23 23:49:42  neo
  *   added dots to all menu entries of interactive plug-ins and did the usual
  *   action area fixes on lots of them
@@ -156,6 +167,7 @@
  *   Revision 1.1  1997/06/07  00:01:15  mike
  *   Initial Revision.
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -163,7 +175,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Constants...
@@ -275,14 +287,15 @@ query(void)
   static int		nargs        = sizeof(args) / sizeof(args[0]),
 			nreturn_vals = 0;
 
+  INIT_I18N();
 
   gimp_install_procedure(PLUG_IN_NAME,
-      "Despeckle filter, typically used to \'despeckle\' a photographic image.",
-      "This plug-in selectively performs a median or adaptive box filter on an image.",
+      _("Despeckle filter, typically used to \'despeckle\' a photographic image."),
+      _("This plug-in selectively performs a median or adaptive box filter on an image."),
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Despeckle...",
+      N_("<Image>/Filters/Enhance/Despeckle..."),
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
@@ -338,6 +351,7 @@ run(char   *name,		/* I - Name of filter program. */
   switch (run_mode)
   {
     case RUN_INTERACTIVE :
+      INIT_I18N_UI();
        /*
         * Possibly retrieve data...
         */
@@ -357,6 +371,7 @@ run(char   *name,		/* I - Name of filter program. */
         * Make sure all the arguments are present...
         */
 
+      INIT_I18N();
         if (nparams < 4 || nparams > 7)
 	  status = STATUS_CALLING_ERROR;
 	else if (nparams == 4)
@@ -394,6 +409,7 @@ run(char   *name,		/* I - Name of filter program. */
         * Possibly retrieve data...
         */
 
+      INIT_I18N();
 	gimp_get_data(PLUG_IN_NAME, despeckle_vals);
 	break;
 
@@ -500,7 +516,7 @@ despeckle(void)
   * Let the user know what we're doing...
   */
 
-  gimp_progress_init("Despeckling...");
+  gimp_progress_init( _("Despeckling..."));
 
  /*
   * Setup for filter...
@@ -703,6 +719,7 @@ despeckle_dialog(void)
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
   guchar	*color_cube;	/* Preview color cube... */
+  gchar     *plugin_name;
 
 
  /*
@@ -730,7 +747,11 @@ despeckle_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Despeckle " PLUG_IN_VERSION);
+  plugin_name = g_new(gchar,
+                      strlen( _("Despeckle "))+strlen(PLUG_IN_VERSION)+1);
+  sprintf(plugin_name, "%s%s", _("Despeckle "), PLUG_IN_VERSION);
+  gtk_window_set_title(GTK_WINDOW(dialog), plugin_name);
+  g_free(plugin_name);
   gtk_window_set_wmclass(GTK_WINDOW(dialog), "despeckle", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
@@ -810,7 +831,7 @@ despeckle_dialog(void)
   gtk_table_attach(GTK_TABLE(table), ftable, 2, 3, 0, 1, 0, 0, 0, 0);
   gtk_widget_show(ftable);
 
-  button = gtk_check_button_new_with_label("Adaptive");
+  button = gtk_check_button_new_with_label( _("Adaptive"));
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
@@ -820,7 +841,7 @@ despeckle_dialog(void)
 		     NULL);
   gtk_widget_show(button);
 
-  button = gtk_check_button_new_with_label("Recursive");
+  button = gtk_check_button_new_with_label( _("Recursive"));
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
@@ -834,19 +855,19 @@ despeckle_dialog(void)
   * Box size (radius) control...
   */
 
-  dialog_create_ivalue("Radius", GTK_TABLE(table), 2, &despeckle_radius, 1, MAX_RADIUS);
+  dialog_create_ivalue( _("Radius"), GTK_TABLE(table), 2, &despeckle_radius, 1, MAX_RADIUS);
 
  /*
   * Black level control...
   */
 
-  dialog_create_ivalue("Black Level", GTK_TABLE(table), 3, &black_level, 0, 256);
+  dialog_create_ivalue( _("Black Level"), GTK_TABLE(table), 3, &black_level, 0, 256);
 
  /*
   * White level control...
   */
 
-  dialog_create_ivalue("White Level", GTK_TABLE(table), 4, &white_level, 0, 256);
+  dialog_create_ivalue( _("White Level"), GTK_TABLE(table), 4, &white_level, 0, 256);
 
  /*
   * OK, cancel buttons...
@@ -854,7 +875,7 @@ despeckle_dialog(void)
 
   gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 
-  button = gtk_button_new_with_label("OK");
+  button = gtk_button_new_with_label( _("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) dialog_ok_callback,
@@ -863,7 +884,7 @@ despeckle_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label("Cancel");
+  button = gtk_button_new_with_label( _("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) dialog_cancel_callback,

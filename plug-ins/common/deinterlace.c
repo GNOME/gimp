@@ -25,8 +25,10 @@
  */
 
 #include <stdlib.h>
+#include "config.h"
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
+#include "libgimp/stdplugins-intl.h"
 #include <plug-ins/megawidget/megawidget.h>
 
 
@@ -69,13 +71,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_deinterlace",
-			  "Deinterlace",
-			  "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
+			  _("Deinterlace"),
+			  _("Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this."),
 			  "Andrew Kieschnick",
 			  "Andrew Kieschnick",
 			  "1997",
-			  "<Image>/Filters/Enhance/Deinterlace...",
+			  N_("<Image>/Filters/Enhance/Deinterlace..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -102,12 +106,14 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data("plug_in_deinterlace", &DeinterlaceValue);
       if (! deinterlace_dialog())
 	status = STATUS_EXECUTION_ERROR;
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       if (nparams != 4)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
@@ -116,6 +122,7 @@ run (char    *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data("plug_in_deinterlace", &DeinterlaceValue);
       break;
 
@@ -128,7 +135,7 @@ run (char    *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("deinterlace");
+	  gimp_progress_init ( _("deinterlace"));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  deinterlace (drawable);
 
@@ -227,11 +234,14 @@ static gint deinterlace_dialog()
   GtkWidget *vbox;
   gint runp;
   struct mwRadioGroup modes[] = {
-    { "Keep Odd Fields", 0},
-    { "Keep Even Fields", 0},
+    { N_("Keep Odd Fields"), 0},
+    { N_("Keep Even Fields"), 0},
     { NULL, 0}};
   gchar **argv;
   gint argc;
+  gint i;
+  for (i = 0; i < 2; i++)
+    modes[i].name = gettext(modes[i].name);
 
   /* Set args */
   argc = 1;
@@ -241,14 +251,14 @@ static gint deinterlace_dialog()
   gtk_rc_parse(gimp_gtkrc());
   modes[DeinterlaceValue].var = 1;
 
-  dlg = mw_app_new("plug_in_deinterlace", "Deinterlace", &runp);
+  dlg = mw_app_new("plug_in_deinterlace", _("Deinterlace"), &runp);
 
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show(vbox);
 
-  mw_radio_group_new(vbox, "Mode", modes);
+  mw_radio_group_new(vbox, _("Mode"), modes);
 
   gtk_widget_show(dlg);
   gtk_main();
