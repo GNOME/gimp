@@ -1,3 +1,22 @@
+2002-03-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.[ch]: namespaceified and cleaned
+	up a lot. Removed the menu code.
+
+	* app/gui/menus.c: added a "<ColormapEditor>" item factory...
+
+	* app/gui/Makefile.am
+	* app/gui/colormap-editor-commands.[ch]: ...and callbacks for the
+	new factory.
+
+	* app/gui/menus.c: Cleaned up a lot. Removed most static variables.
+	Enabled the menu debugging code again. Moved all debug and test
+	entries to <Toolbox>/File/Debug. Added an "Open Recent" submenu
+	to <Image>/File because it was a one-liner after the cleanup...
+
+	* app/widgets/gimpeditor.c: create the icons in GTK_ICON_SIZE_MENU.
+	Need to make this configurable using a style property...
+
 2002-03-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/Makefile.am

@@ -39,20 +39,16 @@ struct _GimpColormapEditor
 {
   GimpEditor     parent_instance;
 
-  GimpImage     *image;
+  GimpImage     *gimage;
   gint           col_index;
   gint           dnd_col_index;
   GtkWidget     *palette;
-  GtkWidget     *image_menu;
-  GtkWidget     *popup_menu;
-  GtkOptionMenu *option_menu;
   gint           xn;
   gint           yn;
   gint           cellsize;
   GtkAdjustment *index_adjustment;
   GtkWidget     *index_spinbutton;
   GtkWidget     *color_entry;
-  GtkWidget     *add_item;
   ColorNotebook *color_notebook;
 };
 

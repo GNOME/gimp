@@ -177,7 +177,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 		      extended_callback,
 		      callback_data);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
