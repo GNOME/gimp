@@ -1,5 +1,10 @@
 2003-08-22  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpbezierstroke.c: OK, now valgrind is happy.
+
+2003-08-22  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpstroke.c
 	* app/vectors/gimpvectors-preview.c
 	* app/tools/gimptransformtool.c

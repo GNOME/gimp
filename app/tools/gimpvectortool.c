@@ -573,7 +573,8 @@ gimp_vector_tool_on_handle (GimpTool        *tool,
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  if (!vector_tool->vectors)
+  if (vector_tool->vectors == NULL
+      || vector_tool->vectors->strokes == NULL)
     {
       if (ret_anchor)
         *ret_anchor = NULL;
@@ -727,7 +728,8 @@ gimp_vector_tool_on_curve (GimpTool        *tool,
         }
     }
 
-  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
+  if (min_dist >= 0 &&
+      gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                 coord->x,
                                 coord->y,
                                 GIMP_HANDLE_CIRCLE,
@@ -764,7 +766,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
 {
   GimpVectorTool    *vector_tool;
   GimpVectorOptions *options;
-  GimpAnchor        *anchor;
+  GimpAnchor        *anchor = NULL;
   GimpVectorMode     edit_mode;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
