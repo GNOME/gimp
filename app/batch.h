@@ -24,8 +24,8 @@
 #endif
 
 
-void   batch_init (Gimp         *gimp,
-                   const gchar **batch_cmds);
+void   batch_run (Gimp         *gimp,
+                  const gchar **batch_cmds);
 
 
 #endif /* __BATCH_H__ */

@@ -64,15 +64,11 @@ static void       app_init_update_none    (const gchar *text1,
                                            const gchar *text2,
                                            gdouble      percentage);
 static gboolean   app_exit_after_callback (Gimp        *gimp,
-                                           gboolean     kill_it);
+                                           gboolean     kill_it,
+                                           GMainLoop   *loop);
 
 
 /*  private variables  */
-
-static  Gimp      *the_gimp = NULL;
-static  GMainLoop *loop     = NULL;
-
-
 
 /*  public functions  */
 
@@ -102,72 +98,74 @@ app_run (const gchar         *full_prog_name,
          gboolean             console_messages,
          GimpStackTraceMode   stack_trace_mode)
 {
-  GimpInitStatusFunc update_status_func = NULL;
+  GimpInitStatusFunc  update_status_func = NULL;
+  Gimp               *gimp;
+  GMainLoop          *loop;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new (full_prog_name,
-                       session_name,
-                       be_verbose,
-                       no_data,
-                       no_fonts,
-                       no_interface,
-                       use_shm,
-                       console_messages,
-                       stack_trace_mode);
+  gimp = gimp_new (full_prog_name,
+                   session_name,
+                   be_verbose,
+                   no_data,
+                   no_fonts,
+                   no_interface,
+                   use_shm,
+                   console_messages,
+                   stack_trace_mode);
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Base",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Paint-Funcs",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Config",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Core",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-PDB",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Plug-In",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-File",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-XCF",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Widgets",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Display",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Tools",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Text",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Vectors",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-GUI",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func, &the_gimp);
+		     gimp_message_log_func, &gimp);
 
   g_log_set_handler (NULL,
 		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		     gimp_error_log_func,   &the_gimp);
+		     gimp_error_log_func,   &gimp);
 
-  units_init (the_gimp);
+  units_init (gimp);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -193,37 +191,30 @@ app_run (const gchar         *full_prog_name,
 	}
     }
 
-  gimp_load_config (the_gimp, alternate_system_gimprc, alternate_gimprc);
+  gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
   /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (the_gimp->config), use_cpu_accel);
+  base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
 
   if (! no_interface)
-    update_status_func = gui_init (the_gimp, no_splash, no_splash_image);
+    update_status_func = gui_init (gimp, no_splash, no_splash_image);
 
   if (! update_status_func)
     update_status_func = app_init_update_none;
 
-  /*  connect our "exit" callbacks after gui_init() so they are
-   *  invoked after the GUI's "exit" callbacks
-   */
-  g_signal_connect_after (the_gimp, "exit",
-                          G_CALLBACK (app_exit_after_callback),
-                          NULL);
-
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
-  gimp_initialize (the_gimp, update_status_func);
+  gimp_initialize (gimp, update_status_func);
 
   /*  Load all data files
    */
-  gimp_restore (the_gimp, update_status_func);
+  gimp_restore (gimp, update_status_func);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
    */
-  gimp_rc_set_autosave (GIMP_RC (the_gimp->edit_config), TRUE);
+  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
   /*  Parse the rest of the command line arguments as images to load
    */
@@ -248,7 +239,7 @@ app_run (const gchar         *full_prog_name,
                 }
               else
                 {
-                  uri = file_utils_filename_to_uri (the_gimp->load_procs,
+                  uri = file_utils_filename_to_uri (gimp->load_procs,
                                                     gimp_argv[i], &error);
                 }
 
@@ -263,7 +254,7 @@ app_run (const gchar         *full_prog_name,
                   GimpImage         *gimage;
                   GimpPDBStatusType  status;
 
-                  gimage = file_open_with_display (the_gimp, uri,
+                  gimage = file_open_with_display (gimp, uri,
                                                    &status, &error);
 
                   if (! gimage && status != GIMP_PDB_CANCEL)
@@ -285,26 +276,32 @@ app_run (const gchar         *full_prog_name,
         }
     }
 
-  batch_init (the_gimp, batch_cmds);
+  batch_run (gimp, batch_cmds);
 
   if (no_interface)
-    {
-      loop = g_main_loop_new (NULL, FALSE);
+    loop = g_main_loop_new (NULL, FALSE);
+  else
+    loop = NULL;
 
-      gimp_threads_leave (the_gimp);
+  g_signal_connect_after (gimp, "exit",
+                          G_CALLBACK (app_exit_after_callback),
+                          loop);
+
+  if (loop)
+    {
+      gimp_threads_leave (gimp);
       g_main_loop_run (loop);
-      gimp_threads_enter (the_gimp);
+      gimp_threads_enter (gimp);
 
       g_main_loop_unref (loop);
     }
   else
     {
-      gui_post_init (the_gimp);
-
+      gui_post_init (gimp);
       gtk_main ();
     }
 
-  g_object_unref (the_gimp);
+  g_object_unref (gimp);
   base_exit ();
 }
 
@@ -319,8 +316,9 @@ app_init_update_none (const gchar *text1,
 }
 
 static gboolean
-app_exit_after_callback (Gimp     *gimp,
-                         gboolean  kill_it)
+app_exit_after_callback (Gimp      *gimp,
+                         gboolean   kill_it,
+                         GMainLoop *loop)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: app_exit_after_callback\n");

@@ -37,23 +37,30 @@
 #include "pdb/procedural_db.h"
 
 
-static void   batch_run_cmd      (Gimp        *gimp,
-                                  const gchar *cmd);
-static void   batch_perl_server  (Gimp        *gimp,
-                                  GimpRunMode  run_mode,
-                                  gint         flags,
-                                  gint         extra);
+static gboolean  batch_exit_after_callback (Gimp        *gimp,
+                                            gboolean     kill_it);
+static void      batch_run_cmd             (Gimp        *gimp,
+                                            const gchar *cmd);
+static void      batch_perl_server         (Gimp        *gimp,
+                                            GimpRunMode  run_mode,
+                                            gint         flags,
+                                            gint         extra);
 
 
 static ProcRecord *eval_proc = NULL;
 
 
 void
-batch_init (Gimp         *gimp,
-            const gchar **batch_cmds)
+batch_run (Gimp         *gimp,
+           const gchar **batch_cmds)
 {
   gboolean perl_server_already_running = FALSE;
+  gulong   exit_id;
   gint     i;
+
+  exit_id = g_signal_connect_after (gimp, "exit",
+                                    G_CALLBACK (batch_exit_after_callback),
+                                    NULL);
 
   if (batch_cmds[0] && strcmp (batch_cmds[0], "-") == 0)
     {
@@ -94,8 +101,21 @@ batch_init (Gimp         *gimp,
 
       batch_run_cmd (gimp, batch_cmds[i]);
     }
+
+  g_signal_handler_disconnect (gimp, exit_id);
 }
 
+static gboolean
+batch_exit_after_callback (Gimp      *gimp,
+                           gboolean   kill_it)
+{
+  if (gimp->be_verbose)
+    g_print ("EXIT: batch_exit_after_callback\n");
+
+  exit (EXIT_SUCCESS);
+
+  return TRUE;
+}
 
 static void
 batch_run_cmd (Gimp        *gimp,
