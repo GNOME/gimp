@@ -1,3 +1,10 @@
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpmessagebox.c: plugged a small memleak.
+
+	* libgimpwidgets/gimpcontroller.c: added a finalizer and free the
+	allocated strings.
+
 2005-04-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfig-utils.[ch]: added new function to reset

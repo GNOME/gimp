@@ -356,12 +356,13 @@ gimp_message_box_set_label_text (GimpMessageBox *box,
 
   if (format)
     {
-      gchar *text = gimp_any_to_utf8 (g_strdup_vprintf (format, args), -1,
-                                      "Cannot convert text to utf8.");
+      gchar *text = g_strdup_vprintf (format, args);
+      gchar *utf8 = gimp_any_to_utf8 (text, -1, "Cannot convert text to utf8.");
 
-      gtk_label_set_text (GTK_LABEL (label), text);
+      gtk_label_set_text (GTK_LABEL (label), utf8);
       gtk_widget_show (label);
 
+      g_free (utf8);
       g_free (text);
     }
   else
