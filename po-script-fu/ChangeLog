@@ -1,3 +1,7 @@
+2000-07-04  Sven Neumann  <sven@gimp.org>
+
+	* it.po: updates from Daniele Medri <madrid@linux.it>
+
 Fri Jun 23 16:18:18 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* Makefile.in.in: Fix of building in separate directory.

@@ -27,7 +27,7 @@ msgstr "Versione %s realizzata da"
 
 #: app/about_dialog.c:357
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Visitate http://www.gimp.org/ per maggiori informazioni"
+msgstr "Visitate http://www.gimp.org/ per informazioni"
 
 #: app/airbrush.c:141 app/convolve.c:154 app/smudge.c:117
 msgid "Rate:"
@@ -2704,9 +2704,8 @@ msgid "Keep Trans."
 msgstr "Trasparenza"
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Trasparenza"
+msgstr "Mantieni la trasparenza"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -4209,8 +4208,8 @@ msgstr ""
 "(%s)\n"
 "\n"
 "Il lancio del plugin potrebbe aver condizionato lo stato interno\n"
-"di GIMP. Dovreste salvare le immagini e riavviare il programma permaggior "
-"sicurezza."
+"di GIMP. Dovreste salvare le immagini e riavviare il programma per\n"
+"maggior sicurezza."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -4723,7 +4722,7 @@ msgstr "Directory di swap"
 
 #: app/preferences_dialog.c:2457 app/user_install.c:1125
 msgid "Select Swap Dir"
-msgstr "Selezionare directory di Swap"
+msgstr "Selezionare directory di swap"
 
 #: app/preferences_dialog.c:2493
 msgid "Brushes Directories"
@@ -5779,7 +5778,7 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"L'installazione Utente è saltata perchè l'opzione '--nointerface' è stata "
+"L'installazione utente è saltata perchè l'opzione '--nointerface' è stata "
 "riscontrata\n"
 
 #: app/user_install.c:102
@@ -5892,8 +5891,7 @@ msgstr ""
 "Questa è una sottodirectory utile per tenere\n"
 "i pennelli definiti dall'utente. Il file di base gimprc\n"
 "controlla questa directory oltre a quelle di sistema\n"
-"dove sono disposti i pennelli base presenti con la comune\n"
-"installazione di gimp."
+"per cercare i pennelli creati."
 
 #: app/user_install.c:211
 msgid ""
@@ -5907,7 +5905,7 @@ msgstr ""
 "i gradienti definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle di\n"
 "sistema dove sono disposti i gradienti base presenti\n"
-"con la comune installazione di gimp."
+"con la comune installazione di GIMP."
 
 #: app/user_install.c:219
 msgid ""
@@ -5940,7 +5938,7 @@ msgstr ""
 "i pattern definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle\n"
 "di sistema dove sono disposti i pattern base\n"
-"presenti con la comune installazione di gimp."
+"presenti con la comune installazione di GIMP."
 
 #: app/user_install.c:238
 msgid ""
@@ -5951,10 +5949,10 @@ msgid ""
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
 "Questa è una sottodirectory utile per tenere\n"
-"i Plug-in definiti dall'utente. Il file di base\n"
+"i plug-in definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle di\n"
-"sistema dove sono disposti i Plug-in base presenti\n"
-"con la comune installazione di gimp."
+"sistema dove sono disposti i plug-in base presenti\n"
+"con la comune installazione di GIMP."
 
 #: app/user_install.c:246
 msgid ""
@@ -5968,7 +5966,7 @@ msgstr ""
 "file utente o altri moduli non di sistema.\n"
 "Il file di base gimprc controlla questa sottodirectory\n"
 "oltre a quelle di sistema dove sono riposti di moduli base\n"
-"presenti con la comune installazione di Gimp."
+"presenti con la comune installazione di GIMP."
 
 #: app/user_install.c:254
 msgid ""
@@ -5977,7 +5975,7 @@ msgid ""
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
-"Questa directory viene utilizzata da Gimp per tenere \n"
+"Questa directory viene utilizzata da GIMP per tenere \n"
 "gli script creati ed installati dagli utenti. Il file di\n"
 "base gimprc controlla in questa sottodirectory oltre a\n"
 "quelle di sistema dove sono gli script basilari."
@@ -6094,11 +6092,11 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Benvenuto!\n"
-"GIMP Installazione Utente"
+"GIMP Installazione utente"
 
 #: app/user_install.c:686
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Click \"Continua\" per avviare l'installazione utente."
+msgstr "Cliccare \"Continua\" per avviare l'installazione utente."
 
 #: app/user_install.c:690
 msgid ""
@@ -6118,9 +6116,9 @@ msgid ""
 "(at your option) any later version."
 msgstr ""
 "Questo programma è free software; potete ridistribuirlo e/o modificarlo\n"
-"sotto le condizioni della GNU General Public License pubblicata dalla\n"
-"Free Software Foundation; sia la versione 2 della Licenza, o\n"
-"ogni successiva versione."
+"sotto le condizioni della  GNU General Public License  pubblicata dalla\n"
+"Free Software Foundation; sia la versione 2 della Licenza, o ogni\n"
+"successiva versione."
 
 #: app/user_install.c:704
 msgid ""
@@ -6129,10 +6127,10 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
-"Questo programma è distribuito con la speranza che possa essereutile, ma "
-"SENZA NESSUNA GARANZIA; senza le garanzie implicate\n"
-"nella DISTRIBUZIONE o SCOPI PARTICOLARI. Fate riferimento alla\n"
-"GNU General Public License per maggiori dettagli."
+"Questo programma è distribuito con la speranza che possa essere utile, ma\n"
+"SENZA NESSUNA GARANZIA; senza le garanzie implicate nella DISTRIBUZIONE o\n"
+"SCOPI PARTICOLARI. Fate riferimento alla GNU General Public License per\n"
+"maggiori dettagli."
 
 #: app/user_install.c:709
 msgid ""
@@ -6152,7 +6150,7 @@ msgstr "Directory Personale di GIMP"
 
 #: app/user_install.c:736
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Premere \"Continua\" per creare la tua directory personale di GIMP."
+msgstr "Cliccare \"Continua\" per creare la tua directory personale di GIMP."
 
 #: app/user_install.c:755
 #, c-format
@@ -6175,7 +6173,7 @@ msgstr ""
 
 #: app/user_install.c:845
 msgid "User Installation Log"
-msgstr "Log Installazione Utente"
+msgstr "Log installazione utente"
 
 #: app/user_install.c:851
 msgid "GIMP Performance Tuning"
@@ -6183,7 +6181,8 @@ msgstr "GIMP Prestazioni"
 
 #: app/user_install.c:852
 msgid "Click \"Continue\" to accept the settings above."
-msgstr "Premere \"Continua\" per accettare le configurazioni."
+msgstr "Cliccare \"Continua\" per accettare le configurazioni."
+
 
 #: app/user_install.c:855
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
@@ -6193,23 +6192,23 @@ msgstr ""
 
 #: app/user_install.c:864
 msgid "Monitor Resolution"
-msgstr "Risoluzione Monitor"
+msgstr "Risoluzione monitor"
 
 #: app/user_install.c:865
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Premere \"Continua\" per avviare The GIMP."
+msgstr "Cliccare \"Continua\" per avviare The GIMP."
 
 #: app/user_install.c:868
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
-"Per visualizzare le immagini nella loro naturale dimensione, GIMP "
-"necessitadi sapere la risoluzione del monitor."
+"Per visualizzare le immagini nella loro naturale dimensione, GIMP\n"
+"necessita sapere la risoluzione del monitor."
 
 #: app/user_install.c:877
 msgid "Aborting Installation..."
-msgstr "Installazione Annullata..."
+msgstr "Installazione annullata..."
 
 #: app/user_install.c:947
 msgid "does not exist.  Cannot install."
@@ -6225,10 +6224,9 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Avete riscontrato messaggi di errore nella finestra\n"
-"di console? In caso negativo l'installazione è stata\n"
-"portata a termine con successo! In caso contrario\n"
-"uscite e cercate le possibili ragioni..."
+"Avete riscontrato messaggi di errore nella finestra di console?\n"
+"In caso negativo l'installazione è stata  portata a termine con\n"
+"successo! In caso contrario uscite e cercate le possibili ragioni..."
 
 #: app/user_install.c:1053
 msgid ""
@@ -6243,7 +6241,7 @@ msgstr ""
 
 #: app/user_install.c:1065
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Premere \"Continua\" per completare l'installazione."
+msgstr "Cliccare \"Continua\" per completare l'installazione."
 
 #: app/user_install.c:1070
 msgid "Installation failed.  Contact system administrator."
@@ -6256,7 +6254,7 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP utilizza un ammontare di memoria limitata per gestire le immagini,\n"
-"chiamata \"Cache Immagine\". Dovreste modificarne la dimensione "
+"chiamata \"cache immagine\". Dovreste modificarne la dimensione "
 "considerando\n"
 "l'ammontare di memoria per gli altri processi attivi."
 
@@ -6271,18 +6269,18 @@ msgstr ""
 "Immagine\n"
 "verranno scritte in un file temporaneo. Questo file dovrebbe essere "
 "disposto\n"
-"nel filesystem con abbastanza spazio libero (almeno una centinaia di MB). Su "
+"nel filesystem con abbastanza spazio libero (almeno una centinaia di Mbyte). Su "
 "un\n"
 "sistema UNIX, potete utilizzare la directory temporanea di sistema\n"
 "(\"/tmp\" o \"/var/tmp\")."
 
 #: app/user_install.c:1130
 msgid "Swap Directory:"
-msgstr "Directory di Swap:"
+msgstr "Directory di swap:"
 
 #: app/user_install.c:1183
 msgid "Calibrate Monitor Resolution"
-msgstr "Calibratura Risoluzione Monitor"
+msgstr "Calibratura risoluzione monitor"
 
 #: app/user_install.c:1291
 msgid "Measure the rulers and enter their lengths below."
@@ -6307,7 +6305,7 @@ msgstr ""
 #: app/user_install.c:1359
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Rileva la Risoluzione dal Server X (Corrente %d x %d dpi)"
+msgstr "Rileva la Risoluzione dal Server X (corrente %d x %d dpi)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -7048,7 +7046,7 @@ msgstr "Storico colore"
 #~ msgstr "Impossibile scrivere \"%s\""
 
 #~ msgid "Error in temp buf caching: information swapped to disk was lost!"
-#~ msgstr "Errore: informazioni perse"
+#~ msgstr "Errore: informazioni perse!"
 
 #~ msgid "text_call_gdyntext: gDynText procedure lookup failed"
 #~ msgstr "text_call_gdyntext: procedura di richiamo GDynText fallita"

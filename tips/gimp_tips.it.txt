@@ -23,125 +23,101 @@
 
 # FIXME: re-write this welcome message:
 
-Benvenuto in GIMP!
-Sito ufficiale italiano: http://gimp.linux.it
-Per segnalare errori di traduzione scrivete a:
-Daniele Medri <madrid@linux.it>
+Benvenuto in GIMP! - Sito ufficiale italiano: http://gimp.linux.it
+Per inviare suggerimenti o collaborare alla localizzazione dell'applicazione
+in lingua italiana scrivete a: Daniele Medri <madrid@linux.it>
 
-Per accedere ai menù del programma posizionatevi
-sull'immagine e cliccate con il tasto destro.
-Ogni operazione eseguita può essere sempre
-annullata successivamente.
+Per accedere ai menù del programma posizionatevi sull'immagine e
+cliccate con il tasto destro. Ogni operazione eseguita può essere
+sempre annullata successivamente.
 
 # Tips for beginners start here
 #
 
-Gimp utilizza i livelli per organizzare meglio  le
-operazioni  da  compiere  sull'immagine. Utilizzare
-i livelli vuol dire acquisire maggiore
-controllo sulle operazioni dell'immagine.
+Gimp utilizza i livelli per organizzare meglio  le operazioni  da compiere
+sull'immagine. Utilizzare i livelli vuol dire acquisire maggiore controllo
+sulle operazioni dell'immagine.
 
-Quando tentate di salvare una immagine nel formato Gif,
-Xpm o altri formati con metodo di colore indicizzato, è
-necessario convertire le immagini attraverso la voce di
-menù Immagine e segliere l'indicizzazione.
+Quando tentate di salvare una immagine nel formato Gif, Xpm o altri formati
+con metodo di colore indicizzato, è necessario convertire le immagini attraverso
+la voce di menù Immagine e segliere l'indicizzazione.
 
-Cliccando due volte sulle icone del Pannello dei
-Comandi potete accedere alla finestra delle opzioni
-di ogni singolo strumento e cambiarne i parametri a
-seconda delle vostre personali esigenze.
+Cliccando due volte sulle icone della barra degli strumenti potete accedere
+alla finestra delle opzioni di ogni singolo strumento e cambiarne i parametri
+a seconda delle vostre personali esigenze.
 
-E' possibile cambiare il nome del livello cliccando
-due volte su quest'ultimo nella finestra dei
-Livelli.
+E' possibile cambiare il nome del livello cliccando due volte su quest'ultimo
+nella finestra dei livelli.
 
-Il livello chiamato "Sfondo" è speciale. Non potete
-aggiungere a quest'ultimo trasparenza o un livello
-di maschera. Per compiere queste operazioni è
-necessario cliccare con il tasto destro sul
-livello e selezionare "Aggiungi Canale Alpha".
+Il livello chiamato "Sfondo" è speciale. Non potete aggiungere a quest'ultimo
+trasparenza o un livello di maschera. Per compiere queste operazioni è necessario
+cliccare con il tasto destro sul livello e selezionare "Aggiungi canale alpha".
 
-Quando viene utilizzato uno strumento di disegno
-(matita, aerografo, pennello) e si preme il tasto
-Shift cliccando, verrà disegnata una linea
-dall'ultimo punto alla posizione del cursore
-corrente.
+Quando viene utilizzato uno strumento di disegno (matita, aerografo, pennello)
+e si preme il tasto Shift cliccando, verrà disegnata una linea dall'ultimo
+punto alla posizione del cursore corrente.
 
-La maggior parte dei plugin lavora sul livello
-corrente della immagine selezionata. In alcuni casi
-per applicare questi ultimi all'intera immagine è
-necessario unire i livelli con (Livelli->Unifica
-Livelli).
+La maggior parte dei plugin lavora sul livello corrente della immagine selezionata.
+In alcuni casi per applicare questi ultimi all'intera immagine è necessario unire i
+livelli con (Livelli->Incolla livelli visibili).
 
-Molti formati di file non supportano i livelli e
-per questa ragione viene salvato solamente il
-livello attivo. Utilizzando XCF, il formato nativo
-di Gimp, canali e guide sono salvati.
+Molti formati di file non supportano i livelli e per questa ragione viene salvato
+solamente il livello attivo. Utilizzando XCF, il formato nativo di GIMP, canali e
+guide sono salvati.
 
-Non tutti gli effetti possono essere applicati alle
-immagini. Una della cause potrebbe essere il metodo
-di colore utilizzato da quest'ultima. Cambiatelo in
+Non tutti gli effetti possono essere applicati alle immagini. Una della cause
+potrebbe essere il metodo di colore utilizzato da quest'ultima. Cambiatelo in
 RGB e aggiungete un canale alpha.
 
 # Tips for intermediate users start here
 #
 
-La maschera di selezione file ha il completamento
-automatico tramite il tasto Tab come in ogni shell
-di sistema. Digitate parte del nome e premete il
-tasto tabulatore per completare il nome.
+La maschera di selezione file ha il completamento automatico tramite il tasto Tab
+come in ogni shell di sistema. Digitate parte del nome e premete il tasto tabulatore
+per completare il nome.
 
-Per assegnare una scorciatoia di tasti ad una
-operazione, lasciate selezionata la voce di menu e
-premete la combinazione di tasti. Per elimare la
-scorciatoia, selezionate la voce del menù e premete
-il tasto Canc sulla vostra tastiera.
+Per assegnare una scorciatoia di tasti ad una operazione, lasciate selezionata la
+voce di menu e premete la combinazione di tasti. Per elimare la scorciatoia,
+selezionate la voce del menù e premete il tasto Canc sulla vostra tastiera.
 
-Se l'immagine è più grande dello schermo che la
-contiene è possibile utilizzare il tasto centrale
-per muovere la superficie di quest'ultima in base
-alle proprie preferenze.
+Se l'immagine è più grande dello schermo che la contiene è possibile utilizzare
+il tasto centrale per muovere la superficie di quest'ultima in base alle proprie
+preferenze.
 
-Cliccate e trascinate sui righelli per poter disporre di una
-guida sull'immagine. Potete rimuoverla trascinandola fuori
-dell'immagine con lo strumento Sposta.
+Cliccate e trascinate sui righelli per poter disporre di una guida sull'immagine.
+Potete rimuoverla trascinandola fuori dell'immagine con lo strumento Sposta.
 
-Gimp supporta la compressone gzip in tempo reale. Aggiungete
-l'estensione '.gz'(o '.bz2', se avete bzip2 installato) al
-nome del file e l'immagine verrà salvata in forma compressa.
-L'immagine potrà essere successivamente essere aperta anche
+Gimp supporta la compressone gzip in tempo reale. Aggiungete l'estensione '.gz'
+(o '.bz2', se avete bzip2 installato) al nome del file e l'immagine verrà salvata
+in forma compressa. L'immagine potrà essere successivamente essere aperta anche
 con la compressione applicata.
 
-I tasti Shift e Ctrl prima di fare una selezione permettono
-di aggiungere o sottrarre la corrente selezione invece di
-rimpiazzarla con quest'ultima.
+I tasti Shift e Ctrl prima di fare una selezione permettono di aggiungere o
+sottrarre la corrente selezione invece di rimpiazzarla con quest'ultima.
 
-Premendo Shift e Ctrl mentre create una selezione, potete
-ottenere un quadrato ed un cerchio perfetti, oppure avere
-questi ultimi centrati in un punto.
+Premendo Shift e Ctrl mentre create una selezione, potete ottenere un quadrato ed
+un cerchio perfetti, oppure avere questi ultimi centrati in un punto.
 
 # Tips for advanced users start here
 #
 
-Per gestire la soglia di una selezione fuzzy è sufficiente
-cliccare su quest'ultima e trascinare il mouse a destra o a
-sinistra rispettivamente per aumentare o diminuire il
-valore da considerare.
+Per gestire la soglia di una selezione fuzzy è sufficiente cliccare su quest'ultima
+e trascinare il mouse a destra o a sinistra rispettivamente per aumentare o diminuire
+il valore da considerare.
 
-Con Shift-clic sull'occhio di un livello selezionato nella
-relativa finestra vi permette di nascondere gli altri livelli
-visibili. Ripetendo l'operazione vengono visualizzati ancora
-tutti i livelli presenti.
+Con Shift-clic sull'occhio di un livello selezionato nella relativa finestra,
+potete nascondere gli altri livelli visibili. Ripetendo l'operazione vengono
+visualizzati ancora tutti i livelli presenti.
 
-Si può aggiustare e riposizionare la selezione premendo il
-tasto Alt e trascinando la selezione con il mouse.
+Si può aggiustare e riposizionare la selezione premendo il tasto Alt e trascinando
+la selezione con il mouse.
 
-Ogni volta che si dimensiona o distorce una immagine, i pixel
-vengono aggiunti con i metodi di interpolazione. Troppe distorsioni
-ripetute possono alterare notevolmente la qualità dell'immagine.
+Ogni volta che si dimensiona o distorce una immagine, i pixel vengono aggiunti
+con i metodi di interpolazione. Troppe distorsioni ripetute possono alterare
+notevolmente la qualità dell'immagine.
 
-Lo strumento Sfumino può essere usato per i ritocchi sui piccoli
-dettagli, ma elimina la texture dell'immagine. Per mantenere la
-grana dell'immagine, usare lo strumento Timbro.
+Lo strumento Sfumino può essere usato per i ritocchi sui piccoli dettagli ma elimina
+la texture dell'immagine. Per mantenere la grana dell'immagine, usare lo strumento
+clonatura.
 # (end of tips)
 

@@ -283,8 +283,9 @@ read_tips_file (gchar *filename)
   if (!fp)
     {
       store_tip (_("Your GIMP tips file appears to be missing!\n"
-		 "There should be a file called gimp_tips.txt in the\n"
-		 "GIMP data directory.  Please check your installation."));
+		   "There should be a file called gimp_tips.txt in\n"
+		   "the tips subdirectory of the GIMP data directory.\n"
+		   "Please check your installation."));
       return;
     }
 
