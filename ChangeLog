@@ -1,3 +1,9 @@
+Sat Jan 24 15:16:40 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/app_procs.c (make_initialization_status_window): Changed
+	resize policy of the init status window so it doesn't constantly
+	resize itself.
+
 Wed Jan 21 23:59:02 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Fixed up the change below to use the SetArg/GetArg stuff

@@ -160,6 +160,8 @@ make_initialization_status_window(void)
 			  GTK_WIN_POS_CENTER);
       
       gtk_widget_show(win_initstatus);
+
+      gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
     }
 }
 
