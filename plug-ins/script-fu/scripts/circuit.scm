@@ -93,7 +93,7 @@
     (gimp-selection-load active-selection)
     (plug-in-maze 1 image active-layer 5 5 TRUE 0 seed 57 1)
     (plug-in-oilify 1 image active-layer mask-size 0)
-    (plug-in-edge 1 image active-layer 2 1)
+    (plug-in-edge 1 image active-layer 2 1 0)
     (gimp-desaturate active-layer)
     
     (if (and

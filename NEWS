@@ -10,7 +10,7 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.19
 ==================================
-- Some work on a new gimp-help system [Mitch]
+- Migration towards new gimp-help system [Mitch]
 - Lots of path tool improvements [Simon]
 - Improved new composite functions and enabled them by default [Helvetix]
 - UTF-8 validate all strings coming in from the PDB [Yosh, Mitch]
@@ -20,7 +20,8 @@ Overview of Changes in GIMP 1.3.19
 
 Other contributors:
   Adam D. Moss, Tor Lillqvist, Jakub Steiner, Alan Horkan,
-  Avi Bercovich, S. Mukund, Maurits Rijk, Guillermo S. Romero
+  Avi Bercovich, S. Mukund, Maurits Rijk, Guillermo S. Romero,
+  Seth Burgess, Wolfgang Hofer, Sven Neumann
 
 
 Overview of Changes in GIMP 1.3.18

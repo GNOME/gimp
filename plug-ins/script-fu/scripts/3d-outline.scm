@@ -51,7 +51,7 @@
 
     (gimp-layer-set-visible pattern FALSE)
     (set! layer2 (car (gimp-image-merge-visible-layers img 1)))
-    (plug-in-edge 1 img layer2 2 1)
+    (plug-in-edge 1 img layer2 2 1 0)
     (set! layer3 (car (gimp-layer-copy layer2 TRUE)))
     (gimp-image-add-layer img layer3 2)
     (plug-in-gauss-iir 1 img layer2 bump-map-blur-radius TRUE TRUE)

@@ -1,5 +1,17 @@
 2003-08-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/edge.c: applied patch from Guillermo S. Romero
+	that moves the newly added PDB parameter to the end and documents
+	the former default value.
+
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/circuit.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/predator.scm: changed accordingly by
+	Guillermo S. Romero.
+
+2003-08-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am (EXTRA_DIST)
 	* libgimpbase/makefile.msc (EXTRA_DIST): removed gimpversion.h.in.
 

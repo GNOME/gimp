@@ -142,14 +142,16 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "amount", "Edge detection amount" },
-    { GIMP_PDB_INT32, "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }, 
-    { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
+    { GIMP_PDB_INT32, "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }
   };
 
   gchar *help_string =
     "Perform edge detection on the contents of the specified drawable."
     "AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in "
-    "(useful for tilable image).";
+    "(useful for tilable image). EDGEMODE sets the kind of matrix "
+    "transform applied to the pixels, SOBEL was the method used in older "
+    "versions.";
 
   gimp_install_procedure ("plug_in_edge",
                           "Perform edge detection on the contents of the specified drawable",
@@ -207,8 +209,8 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           evals.amount   = param[3].data.d_float;
-          evals.edgemode = param[4].data.d_int32;
-          evals.wrapmode = param[5].data.d_int32;
+          evals.wrapmode = param[4].data.d_int32;
+          evals.edgemode = param[5].data.d_int32;
         }
       break;
 
