@@ -702,6 +702,9 @@ gradient_list_get_gradient (GSList *list,
 {
   gradient_t *gradient;
 
+  if (name == NULL)
+    return NULL;
+
   for (; list; list = g_slist_next (list))
     {
       gradient = (gradient_t *) list->data;

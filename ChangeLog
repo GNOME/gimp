@@ -1,3 +1,15 @@
+2001-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpbrushlist.c
+	* app/gradient.c
+	* app/palette.c
+	* app/patterns.c: check for NULL pointers before doing strcmp on
+	default names. The default names for brushes, patterns, ... can 
+	be NULL if they were not set in a readable gimprc file.
+
+	* app/gimprc.c: warn the user if the systemwide gimprc couldn't be
+	read.
+
 2001-01-04  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/script-fu/scripts/title-header.scm (script-fu-title-header):
