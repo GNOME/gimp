@@ -347,6 +347,7 @@ run (gchar   *name,
 		default: status = STATUS_CALLING_ERROR; break;
 		}
 	    }
+	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */

@@ -1,3 +1,8 @@
+2000-04-02  Jay Cox  <jaycox@earthlink.net>
+
+	* plug-ins/common/tiff.c: Added a missing break statement so that
+	the compression argument in calls to file_tiff_save is honored.
+
 2000-04-02  Nick Lamb  <njl195@zepler.org.uk>
 	* plug-ins/common/png.c
 	The Gimp now does as good a job of saving indexed+a PNGs as it
