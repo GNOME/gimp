@@ -661,9 +661,9 @@ gimp_dnd_get_color_icon (GtkWidget     *widget,
   (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
 					     get_color_data);
 
-  bg.red   = 0xff * r;
-  bg.green = 0xff * g;
-  bg.blue  = 0xff * b;
+  bg.red   = r + (r << 8);
+  bg.green = g + (g << 8);
+  bg.blue  = b + (b << 8);
 
   gdk_color_alloc (gtk_widget_get_colormap (icon_widget), &bg);
   gdk_window_set_background (icon_widget->window, &bg);
@@ -686,9 +686,9 @@ gimp_dnd_get_color_data (GtkWidget     *widget,
 
   vals = g_new (guint16, 4);
 
-  vals[0] = r * 0x100;
-  vals[1] = g * 0x100;
-  vals[2] = b * 0x100;
+  vals[0] = r + (r << 8);
+  vals[1] = g + (g << 8);
+  vals[2] = b + (b << 8);
   vals[3] = 0xffff;
 
   *format = 16;
@@ -716,9 +716,9 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
 
   color_vals = (guint16 *) vals;
 
-  r = color_vals[0] / 0x100;
-  g = color_vals[1] / 0x100;
-  b = color_vals[2] / 0x100;
+  r = color_vals[0] >> 8;
+  g = color_vals[1] >> 8;
+  b = color_vals[2] >> 8;
 
   (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b,
 					     set_color_data);

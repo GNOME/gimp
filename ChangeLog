@@ -1,3 +1,9 @@
+Mon Jan 24 23:28:08 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpdnd.c: I think this time I got it right. Still the same
+	color after hours of dragging it between the gimp and the gtk+
+	color-selector... (gimp uses guchar, X guint16 and gtk+ double)
+
 Mon Jan 24 14:10:40 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* acconfig.h
