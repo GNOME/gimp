@@ -1116,13 +1116,14 @@ msgid "Make image transparent outside object"
 msgstr "Rób obraz przezroczysty na zewn±trz obiektu"
 
 #: plug-ins/MapObject/mapobject_ui.c:1
-#, fuzzy
 msgid "Tile Source Image"
-msgstr "Z obrazem ¼ród³owym"
+msgstr "U³o¿enie kafelkowe obrazu ¼ród³owego"
 
 #: plug-ins/MapObject/mapobject_ui.c:1
 msgid "Tile source image: useful for infinite planes"
 msgstr ""
+"U³o¿enie kafelkowe obrazu ¼ród³owego, przydatne przy nieograniczonych "
+"p³aszczyznach"
 
 #: plug-ins/MapObject/mapobject_ui.c:1
 msgid "Enable Tooltips"
@@ -1423,44 +1424,44 @@ msgstr "Zmienia intensywno¶æ kana³u niebieskiego"
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use sine-function for red component."
-msgstr "U¿yj funkcji sinus dla czerwonego komponentu."
+msgstr "Wykorzystuje funkcjê sinus dla sk³adowej czerwonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use cosine-function for red component."
-msgstr "U¿yj funkcji cosinus dla czerwonego komponentu."
+msgstr "Wykorzystuje funkcjê cosinus dla sk³adowej czerwonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Kana³ czerwony: U¿yj mapowania liniowego zamiast funkcji trygonometrycznej"
+"Wykorzystuje odwzorowanie liniowe zamiast funkcji trygonometrycznej dla sk³adowej czerwonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use sine-function for green component."
-msgstr "U¿yj funkcji sinus dla zielonego komponentu."
+msgstr "Wykorzystuje funkcjê sinus dla sk³adowej zielonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use cosine-function for green component."
-msgstr "U¿yj funkcji cosinus dla zielonego komponentu."
+msgstr "Wykorzystuje funkcjê cosinus dla sk³adowej zielonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Kana³ zielony: U¿yj mapowania liniowego zamiast funkcji trygonometrycznej"
+"Wykorzystuje odwzorowanie liniowe zamiast funkcji trygonometrycznej dla sk³adowej zielonej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use sine-function for blue component."
-msgstr "U¿yj funkcji sinus dla niebieskiego komponentu."
+msgstr "Wykorzystuje funkcjê sinus dla sk³adowej niebieskiej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "Use cosine-function for blue component."
-msgstr "U¿yj funkcji cosinus dla niebieskiego komponentu."
+msgstr "Wykorzystuje funkcjê cosinus dla sk³adowej niebieskiej." 
 
 #: plug-ins/common/AlienMap.c:1
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
-"Kana³ niebieski: U¿yj mapowania liniowego zamiast funkcji trygonometrycznej"
+"Wykorzystuje odwzorowanie liniowe zamiast funkcji trygonometrycznej dla sk³adowej niebieskiej."
 
 #: plug-ins/common/AlienMap.c:1
 msgid "About AlienMap"
@@ -1832,17 +1833,14 @@ msgid "Coupled-Map-Lattice Explorer"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Random Seed"
 msgstr "Losowe ziarno"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Fix Seed"
 msgstr "Sta³e ziarno"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
@@ -1891,7 +1889,6 @@ msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1 plug-ins/maze/maze_face.c:1
-#, fuzzy
 msgid "Seed:"
 msgstr "Ziarno:"
 
@@ -1952,9 +1949,8 @@ msgid "Function Type:"
 msgstr "Typ funkcji:"
 
 #: plug-ins/common/CML_explorer.c:1
-#, fuzzy
 msgid "Composition:"
-msgstr "Pozycja"
+msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1
 msgid "Misc Arrange:"
@@ -2363,9 +2359,8 @@ msgstr "<Image>/Filtry/Rozmywanie/Rozmycie..."
 #: plug-ins/common/blur.c:1 plug-ins/common/plasma.c:1
 #: plug-ins/common/randomize.c:1 plug-ins/common/sinus.c:1
 #: plug-ins/common/snoise.c:1 plug-ins/gflare/gflare.c:1
-#, fuzzy
 msgid "Random Seed:"
-msgstr "Losowy odcieñ:"
+msgstr "Losowe ziarno:"
 
 #: plug-ins/common/blur.c:1
 msgid "Randomization %:"
@@ -2377,7 +2372,7 @@ msgstr "Procent pikseli które bêd± filtrowane"
 
 #: plug-ins/common/blur.c:1 plug-ins/common/randomize.c:1
 msgid "Repeat:"
-msgstr "Powtórz:"
+msgstr "Powtórzenia:"
 
 #: plug-ins/common/blur.c:1 plug-ins/common/randomize.c:1
 msgid "Number of times to apply filter"
@@ -2404,9 +2399,8 @@ msgid "Thickness:"
 msgstr "Grubo¶æ:"
 
 #: plug-ins/common/borderaverage.c:1
-#, fuzzy
 msgid "Bucket Size:"
-msgstr "Rozmiar kratki:"
+msgstr "Rozmiar kube³ka:"
 
 #: plug-ins/common/borderaverage.c:1
 msgid "1 (nonsense?)"
@@ -2545,13 +2539,12 @@ msgid "Colorify Custom Color"
 msgstr ""
 
 #: plug-ins/common/colortoalpha.c:1
-#, fuzzy
 msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr "<Image>/Filtry/Kolory/Koloryzuj..."
+msgstr "<Image>/Filtry/Kolory/Zmiana koloru w alfê..."
 
 #: plug-ins/common/colortoalpha.c:1
 msgid "Color to Alpha"
-msgstr "Zmieñ kolor na alfa"
+msgstr "Zmiana koloru w alfê"
 
 #: plug-ins/common/colortoalpha.c:1 plug-ins/common/mapcolor.c:1
 #: plug-ins/gap/gap_decode_mpeg_main.c:1 plug-ins/gap/gap_decode_xanim.c:1
@@ -2563,7 +2556,7 @@ msgstr "Z:"
 
 #: plug-ins/common/colortoalpha.c:1
 msgid "Color to Alpha Color Picker"
-msgstr "Pobierz kolor: Zmieñ kolor na alfa"
+msgstr ""
 
 #: plug-ins/common/colortoalpha.c:1
 #, fuzzy
@@ -3232,7 +3225,7 @@ msgstr "O wtyczce"
 
 #: plug-ins/common/emboss.c:1
 msgid "<Image>/Filters/Distorts/Emboss..."
-msgstr "<Image>/Filtry/Zniekszta³cenia/Emboss..."
+msgstr "<Image>/Filtry/Zniekszta³cenia/Wyt³oczenie..."
 
 #: plug-ins/common/emboss.c:1 plug-ins/common/emboss.c:1
 #: plug-ins/common/emboss.c:1
@@ -3279,31 +3272,31 @@ msgstr "Wysoko¶æ:"
 
 #: plug-ins/common/exchange.c:1
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
-msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Zamiana kolorów..."
+msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Zmiana kolorów..."
 
 #: plug-ins/common/exchange.c:1
 msgid "Color Exchange..."
-msgstr "Zamiana kolorów..."
+msgstr "Zmiana kolorów..."
 
 #: plug-ins/common/exchange.c:1
 msgid "Color Exchange"
-msgstr "Zamiana kolorów"
+msgstr "Zmiana kolorów"
 
 #: plug-ins/common/exchange.c:1
 msgid "To Color"
-msgstr "Do koloru"
+msgstr "Kolor docelowy"
 
 #: plug-ins/common/exchange.c:1
 msgid "From Color"
-msgstr "Od koloru"
+msgstr "Kolor ¼ród³owy"
 
 #: plug-ins/common/exchange.c:1
 msgid "Color Exchange: To Color"
-msgstr "Przemieñ kolor: do koloru"
+msgstr "Zmiana koloru: koloru docelowy"
 
 #: plug-ins/common/exchange.c:1
 msgid "Color Exchange: From Color"
-msgstr "Przemieñ kolor: z koloru"
+msgstr "Zmiana koloru: kolor ¼ród³owy"
 
 #: plug-ins/common/exchange.c:1
 msgid "Red Threshold:"
@@ -3319,7 +3312,7 @@ msgstr "Próg niebieskiego:"
 
 #: plug-ins/common/exchange.c:1
 msgid "Lock Thresholds"
-msgstr "Zablokuj poziomy:"
+msgstr "Zablokowanie progów"
 
 #: plug-ins/common/film.c:1
 msgid "<Image>/Filters/Combine/Film..."
@@ -3434,7 +3427,7 @@ msgstr "wysoko¶æ liczby:"
 
 #: plug-ins/common/film.c:1
 msgid "Reset to Defaults"
-msgstr "Zresetuj do domy¶lnych"
+msgstr "Przywróæ domy¶lne"
 
 #: plug-ins/common/flarefx.c:1
 msgid "<Image>/Filters/Light Effects/FlareFX..."
@@ -3785,11 +3778,11 @@ msgstr "G-Kubista 1.10"
 
 #: plug-ins/common/gradmap.c:1
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Mapowanie gradientu"
+msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Odwzorowanie gradientu"
 
 #: plug-ins/common/gradmap.c:1
 msgid "Gradient Map..."
-msgstr "Mapowanie gradientu..."
+msgstr "Odwzorowywanie gradientu..."
 
 #: plug-ins/common/grid.c:1
 msgid "<Image>/Filters/Render/Pattern/Grid..."
@@ -4399,7 +4392,7 @@ msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Ustawianie FG-BG"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Color Range Mapping..."
+msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Odwzorowanie zakresu kolorów..."
 
 #: plug-ins/common/mapcolor.c:1 plug-ins/common/mapcolor.c:1
 msgid ""
@@ -4415,11 +4408,11 @@ msgstr "Regulacja koloru narzêdzia/t³a"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "Mapping colors"
-msgstr "Mapowanie kolorów"
+msgstr "Odwzorowanie kolorów"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "Map Color Range"
-msgstr "Mapuj zakres kolorów"
+msgstr "Odwzorowanie zakresu kolorów"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "Source color range"
@@ -4463,15 +4456,15 @@ msgstr "Zostaw kana³ minimalny"
 
 #: plug-ins/common/mblur.c:1
 msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr "<Image>/Filtry/Rozmywanie/Rozmycie 'w ruchu'..."
+msgstr "<Image>/Filtry/Rozmywanie/Rozmycie \"w ruchu\"..."
 
 #: plug-ins/common/mblur.c:1 plug-ins/common/unsharp.c:1
 msgid "Blurring..."
-msgstr "Rozmywam..."
+msgstr "Rozmywanie..."
 
 #: plug-ins/common/mblur.c:1
 msgid "Motion Blur"
-msgstr "Rozmycie 'w ruchu'"
+msgstr "Rozmycie \"w ruchu\""
 
 #: plug-ins/common/mblur.c:1
 msgid "Blur Type"
@@ -4480,7 +4473,7 @@ msgstr "Typ rozmycia"
 #: plug-ins/common/mblur.c:1 plug-ins/gimpressionist/orientation.c:1
 #: plug-ins/gimpressionist/size.c:1
 msgid "Radial"
-msgstr "Promieni¶cie"
+msgstr "Promienisty"
 
 #: plug-ins/common/mblur.c:1 plug-ins/imagemap/imap_popup.c:1
 msgid "Zoom"
@@ -5327,12 +5320,11 @@ msgstr "Obracanie..."
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Sample Colorize..."
+msgstr "<Image>/Filtry/Kolory/Odwzorowanie/Koloryzacja próbek..."
 
 #: plug-ins/common/sample_colorize.c:1
-#, fuzzy
 msgid "Sample Colorize"
-msgstr "Wybór koloru"
+msgstr "Koloryzacja próbek"
 
 #: plug-ins/common/sample_colorize.c:1 plug-ins/common/tileit.c:1
 #: plug-ins/dbbrowser/dbbrowser_utils.c:1
@@ -5365,12 +5357,12 @@ msgstr "** Od Odwróconego Gradientu **"
 #: plug-ins/common/sample_colorize.c:1
 #: plug-ins/common/sample_colorize.c:1
 msgid "Show Selection"
-msgstr "Poka¿ selekcje"
+msgstr "Widok zaznaczenia"
 
 #: plug-ins/common/sample_colorize.c:1
 #: plug-ins/common/sample_colorize.c:1
 msgid "Show Color"
-msgstr "Poka¿ kolor"
+msgstr "Wy¶wietlanie kolorów"
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "In Level:"
@@ -5382,19 +5374,19 @@ msgstr "Poziom wyj¶ciowy:"
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Hold Intensity"
-msgstr "Wstrzymaj Intensywno¶æ"
+msgstr "Utrzymanie Intensywno¶ci"
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Original Intensity"
-msgstr "Oryginalna Intensywno¶æ"
+msgstr "Oryginalna intensywno¶æ"
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Use Subcolors"
-msgstr "U¿yj 'pod kolorów'"
+msgstr "Wykorzystanie \"podkolorów\""
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Smooth Samplecolors"
-msgstr "Wyg³ad¼ próbki kolorów"
+msgstr "Wyg³adanie próbek kolorów"
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Sample Analyze..."
@@ -5402,7 +5394,7 @@ msgstr "Analizowanie próbek..."
 
 #: plug-ins/common/sample_colorize.c:1
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Odwzorowanie koloryzacji..."
 
 #: plug-ins/common/scatter_hsv.c:1
 msgid "<Image>/Filters/Noise/Scatter HSV..."
@@ -5439,15 +5431,15 @@ msgstr "Pobierz"
 
 #: plug-ins/common/screenshot.c:1
 msgid "Grab a Single Window"
-msgstr "Pobierz jedno okno"
+msgstr "Pobranie jednego okna"
 
 #: plug-ins/common/screenshot.c:1
 msgid "Include Decorations"
-msgstr "Zawieraj±c dekoracje"
+msgstr "Wraz z ozdobnikami"
 
 #: plug-ins/common/screenshot.c:1
 msgid "Grab the Whole Screen"
-msgstr "Pobierz ca³y ekran"
+msgstr "Pobranie ca³ego ekranu"
 
 #: plug-ins/common/screenshot.c:1 plug-ins/winsnap/winsnap.c:1
 msgid "after"
@@ -6985,7 +6977,7 @@ msgstr "Przegl±darka DB (init...)"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:1
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
 msgid "Search by Blurb"
-msgstr "Szukaj po opisie"
+msgstr "Wyszukiwanie po opisie"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:1
 #: plug-ins/gap/gap_dbbrowser_utils.c:1
@@ -8678,9 +8670,8 @@ msgid ""
 msgstr "Kasuj aktualny punkt kontrolny"
 
 #: plug-ins/gap/gap_mov_dialog.c:1
-#, fuzzy
 msgid "Reset Keyframes"
-msgstr "Zresetuj do domy¶lnych"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1
 #, fuzzy
@@ -10669,7 +10660,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:1
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "Okre¶la rozmiar wyt³oczenia stosowany przy ka¿dym poci±gniêciu pêdzla"
 
 #: plug-ins/gimpressionist/color.c:1
 msgid "Average under brush"
@@ -10738,48 +10729,45 @@ msgstr "Tryb malowania"
 
 #: plug-ins/gimpressionist/general.c:1 plug-ins/maze/maze_face.c:1
 msgid "Tileable"
-msgstr ""
+msgstr "Kafelkowe"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
+"Okre¶la, czy wynikowy obraz powinien uk³adaæ siê kafelkowo w sposób ci±g³y"
 
 #: plug-ins/gimpressionist/general.c:1
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "Cienie"
+msgstr "Rzucanie cienia"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "Dodaje efekt cienia do ka¿dego poci±gniêcia pêdzla"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "Okre¶la stopieæ \"wyciemnienia\" rzucanego cienia"
 
 #: plug-ins/gimpressionist/general.c:1
-#, fuzzy
 msgid "Shadow depth:"
-msgstr "Cienie:"
+msgstr "G³êboko¶æ cienia:"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "G³êboko¶æ rzucanego cienia, tj. jego odleg³o¶æ od obiektu"
 
 #: plug-ins/gimpressionist/general.c:1
-#, fuzzy
 msgid "Shadow blur:"
-msgstr "Cienie:"
+msgstr "Rozmycie cienia:"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "Okre¶la stopieñ rozmycia rzucanego cienia"
 
 #: plug-ins/gimpressionist/general.c:1
-#, fuzzy
 msgid "Deviation threshold:"
-msgstr "Próg zielonego:"
+msgstr "Próg odchylenia"
 
 #: plug-ins/gimpressionist/general.c:1
 msgid "A bailout-value for adaptive selections"
@@ -12656,7 +12644,7 @@ msgstr "Plik XJT zawiera nieznany typ ¶cie¿ki %d"
 #: plug-ins/xjt/xjt.c:1
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr "Ostrze¿enie: do pliku XJT zosta³ zapisany nieobs³ugiwany typ ¶cie¿ki %d"
+msgstr "Ostrze¿enie: do pliku XJT zosta³ zapisany nieobs³ugiwany typ ¶cie¿ki"
 
 #: plug-ins/xjt/xjt.c:1
 #, c-format
@@ -12666,7 +12654,7 @@ msgstr "Plik XJT zawiera nieznany typ jednostki %d"
 #: plug-ins/xjt/xjt.c:1
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr "Ostrze¿enie: do pliku XJT zosta³ zapisany nieobs³ugiwany typ jednostki %d"
+msgstr "Ostrze¿enie: do pliku XJT zosta³ zapisany nieobs³ugiwany typ jednostki"
 
 #: plug-ins/xjt/xjt.c:1
 msgid "Save as XJT"
