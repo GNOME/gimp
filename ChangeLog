@@ -1,5 +1,9 @@
 2004-03-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimptoolinfo.c: minor cleanup.
+
+2004-03-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_init): eek, the
 	separator crept back in while hacking GimpFileDialog. Removed it
 	again.

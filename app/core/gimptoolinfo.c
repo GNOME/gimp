@@ -56,19 +56,19 @@ gimp_tool_info_get_type (void)
       static const GTypeInfo tool_info_info =
       {
         sizeof (GimpToolInfoClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_tool_info_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpToolInfo),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_tool_info_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_tool_info_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpToolInfo),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_tool_info_init,
       };
 
       tool_info_type = g_type_register_static (GIMP_TYPE_DATA,
-					       "GimpToolInfo",
-					       &tool_info_info, 0);
+                                               "GimpToolInfo",
+                                               &tool_info_info, 0);
     }
 
   return tool_info_type;
@@ -77,11 +77,8 @@ gimp_tool_info_get_type (void)
 static void
 gimp_tool_info_class_init (GimpToolInfoClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -116,9 +113,7 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
 static void
 gimp_tool_info_finalize (GObject *object)
 {
-  GimpToolInfo *tool_info;
-
-  tool_info = GIMP_TOOL_INFO (object);
+  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
 
   if (tool_info->blurb)
     {
@@ -172,9 +167,7 @@ static gchar *
 gimp_tool_info_get_description (GimpViewable  *viewable,
                                 gchar        **tooltip)
 {
-  GimpToolInfo *tool_info;
-
-  tool_info = GIMP_TOOL_INFO (viewable);
+  GimpToolInfo *tool_info = GIMP_TOOL_INFO (viewable);
 
   if (tooltip)
     *tooltip = NULL;
