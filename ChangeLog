@@ -1,3 +1,9 @@
+2004-08-14  Manish Singh  <yosh@gimp.org>
+
+	* libgimpbase/gimpprotocol.c (_gp_params_read): make sure array
+	length values are not negative, to prevent bad calls to g_new.
+	Addresses bug #150154.
+
 2004-08-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help/Makefile.am: no need to link gimp-help-lookup with

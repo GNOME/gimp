@@ -1216,6 +1216,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_INT32ARRAY:
+	  (*params)[i-1].data.d_int32 = MAX(0, (*params)[i-1].data.d_int32);
 	  (*params)[i].data.d_int32array =
 	    g_new (gint32, (*params)[i-1].data.d_int32);
 	  if (! wire_read_int32 (channel,
@@ -1229,6 +1230,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_INT16ARRAY:
+	  (*params)[i-1].data.d_int32 = MAX(0, (*params)[i-1].data.d_int32);
 	  (*params)[i].data.d_int16array =
 	    g_new (gint16, (*params)[i-1].data.d_int32);
 	  if (! wire_read_int16 (channel,
@@ -1242,6 +1244,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_INT8ARRAY:
+	  (*params)[i-1].data.d_int32 = MAX(0, (*params)[i-1].data.d_int32);
 	  (*params)[i].data.d_int8array =
 	    g_new (gint8, (*params)[i-1].data.d_int32);
 	  if (! wire_read_int8 (channel,
@@ -1255,6 +1258,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_FLOATARRAY:
+	  (*params)[i-1].data.d_int32 = MAX(0, (*params)[i-1].data.d_int32);
 	  (*params)[i].data.d_floatarray =
 	    g_new (gdouble, (*params)[i-1].data.d_int32);
 	  if (! wire_read_double (channel,
@@ -1268,6 +1272,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GIMP_PDB_STRINGARRAY:
+	  (*params)[i-1].data.d_int32 = MAX(0, (*params)[i-1].data.d_int32);
 	  (*params)[i].data.d_stringarray =
 	    g_new0 (gchar*, (*params)[i-1].data.d_int32);
 	  if (! wire_read_string (channel,
