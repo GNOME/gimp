@@ -39,6 +39,8 @@ typedef struct _GimpImagefilePreviewClass  GimpImagefilePreviewClass;
 struct _GimpImagefilePreview
 {
   GimpPreview  parent_instance;
+  
+  GdkPixbuf   *no_preview_pixbuf;
 };
 
 struct _GimpImagefilePreviewClass

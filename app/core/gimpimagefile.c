@@ -49,26 +49,26 @@ typedef struct
 
 static const ThumbnailSize thumb_sizes[] = 
 {
-  { "48x48",   48  },
-  { "64x64",   64  },
-  { "96x96",   96  },
-  { "128x128", 128 },
-  { "144x144", 144 },
-  { "160x160", 160 },
-  { "192x192", 192 },
+  { "normal", 128  },
+  { "large",  256  }
 };
 
 
 static void      gimp_imagefile_class_init (GimpImagefileClass *klass);
-static void      gimp_imagefile_init       (GimpImagefile      *imagefile);
+static void      gimp_imagefile_init            (GimpImagefile *imagefile);
+static void      gimp_imagefile_name_changed    (GimpObject    *object);
+static void      gimp_imagefile_set_info        (GimpImagefile *imagefile,
+                                                 gint           width,
+                                                 gint           height,
+                                                 gint           size);
 static TempBuf * gimp_imagefile_get_new_preview (GimpViewable  *viewable,
                                                  gint            width,
                                                  gint            height);
 
 static TempBuf * gimp_imagefile_read_png_thumb  (GimpImagefile  *imagefile,
                                                  gint            size);
-static gchar   * gimp_imagefile_png_thumb_name  (const gchar    *dirname,
-                                                 const gchar    *basename,
+static gchar   * gimp_imagefile_png_thumb_name  (const gchar    *uri,
+                                                 gint            mtime,
                                                  gint            size);
 
 static TempBuf * gimp_imagefile_read_xv_thumb   (GimpImagefile  *imagefile);
@@ -76,6 +76,9 @@ static guchar  * readXVThumb                    (const gchar    *filename,
                                                  gint           *width,
                                                  gint           *height,
                                                  gchar         **imginfo);
+
+static gboolean gimp_image_file_test            (const gchar    *filename,
+                                                 gint           *mtime);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -112,20 +115,23 @@ gimp_imagefile_get_type (void)
 static void
 gimp_imagefile_class_init (GimpImagefileClass *klass)
 {
+  GimpObjectClass   *object_class;
   GimpViewableClass *viewable_class;
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class   = GIMP_OBJECT_CLASS (klass);
   viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
+  object_class->name_changed      = gimp_imagefile_name_changed;
   viewable_class->get_new_preview = gimp_imagefile_get_new_preview;
 }
 
 static void
 gimp_imagefile_init (GimpImagefile *imagefile)
 {
-  imagefile->width  = 0;
-  imagefile->height = 0;
+  imagefile->width  = -1;
+  imagefile->height = -1;
   imagefile->size   = -1;
 }
 
@@ -134,19 +140,21 @@ gimp_imagefile_new (const gchar *filename)
 {
   GimpImagefile *imagefile;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-
   imagefile = GIMP_IMAGEFILE (g_object_new (GIMP_TYPE_IMAGEFILE, NULL));
 
-  gimp_object_set_name (GIMP_OBJECT (imagefile), filename);
+  if (filename)
+    gimp_object_set_name (GIMP_OBJECT (imagefile), filename);
 
   return imagefile;
 }
 
-void
-gimp_imagefile_update_thumbnail (GimpImagefile *imagefile)
+static void
+gimp_imagefile_name_changed (GimpObject *object)
 {
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
 }
 
 static void
@@ -157,16 +165,17 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
 {
   gboolean changed;
 
-  changed = (imagefile->width != width || imagefile->height != height ||
-             imagefile->size != size);
+  changed = (imagefile->width  != width  || 
+             imagefile->height != height ||
+             imagefile->size   != size);
 
   imagefile->width  = width;
   imagefile->height = height;
   imagefile->size   = size;
 
   /* emit a name changed signal so the container view updates */
-  if (changed)
-    gimp_object_name_changed (GIMP_OBJECT (imagefile));
+/*    if (changed) */
+/*      gimp_object_name_changed (GIMP_OBJECT (imagefile)); */
 }
 
 static void
@@ -178,15 +187,15 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
   gint         img_height;
   gint         img_size;
 
-  option = gdk_pixbuf_get_option (pixbuf, "tEXt::OriginalWidth");
+  option = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Width");
   if (!option || sscanf (option, "%d", &img_width) != 1)
-    img_width = 0;
+    img_width = -1;
   
-  option = gdk_pixbuf_get_option (pixbuf, "tEXt::OriginalHeight");
+  option = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Image::Height");
   if (!option || sscanf (option, "%d", &img_height) != 1)
-    img_height = 0;
+    img_height = -1;
   
-  option = gdk_pixbuf_get_option (pixbuf, "tEXt::OriginalSize");
+  option = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::Size");
   if (!option || sscanf (option, "%d", &img_size) != 1)
     img_size = -1;
 
@@ -203,7 +212,8 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
 
   imagefile = GIMP_IMAGEFILE (viewable);
 
-  g_return_val_if_fail (GIMP_OBJECT (imagefile)->name != NULL, NULL);
+  if (! GIMP_OBJECT (imagefile)->name)
+    return NULL;
 
   temp_buf = gimp_imagefile_read_png_thumb (imagefile, MAX (width, height));
 
@@ -221,40 +231,37 @@ static TempBuf *
 gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
                                gint           size)
 {
-  TempBuf   *temp_buf;
-  GdkPixbuf *pixbuf;
-  gchar     *basename;
-  gchar     *dirname;
-  gchar     *fullname;
-  gchar     *thumbname;
-  gint       width;
-  gint       height;
-  gint       bytes;
-  gint       y;
-  guchar    *src;
-  guchar    *dest;
-  GError    *error;
-  
-  fullname = g_strconcat (GIMP_OBJECT (imagefile)->name, ".png", NULL);
+  TempBuf     *temp_buf  = NULL;
+  GdkPixbuf   *pixbuf    = NULL;
+  gchar       *uri       = NULL;
+  gchar       *thumbname = NULL;
+  const gchar *option;
+  gint         mtime;
+  gint         width;
+  gint         height;
+  gint         bytes;
+  gint         y;
+  guchar      *src;
+  guchar      *dest;
+  GError      *error = NULL;
 
-  dirname  = g_path_get_dirname (GIMP_OBJECT (imagefile)->name);
-  basename = g_path_get_basename (fullname);
-
-  thumbname = gimp_imagefile_png_thumb_name (dirname, 
-                                             basename, 
-                                             size);
-  g_free (dirname);
-  g_free (basename);
-
-  if (!thumbname)
-    thumbname = gimp_imagefile_png_thumb_name (g_get_home_dir(), 
-                                               fullname, 
-                                               size);
-  
-  g_free (fullname);
-
-  if (!thumbname)
+  /* check if the image file exists at all */
+  if (!gimp_image_file_test (GIMP_OBJECT (imagefile)->name, &mtime))
     return NULL;
+  
+  /* FIXME: convert filename to URI */
+  uri = g_filename_to_uri (GIMP_OBJECT (imagefile)->name, NULL, &error);
+
+  if (!uri)
+    {
+      g_warning ("%s: %s\n", G_GNUC_FUNCTION, error->message);
+      goto cleanup;
+    }
+
+  /* try to locate a thumbnail for this image */
+  thumbname = gimp_imagefile_png_thumb_name (uri, mtime, size);
+  if (!thumbname)
+    goto cleanup;
 
   pixbuf = gdk_pixbuf_new_from_file (thumbname, &error);  
 
@@ -262,12 +269,23 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     {
       g_message (_("Could not open thumbnail\nfile '%s':\n%s"),
                  thumbname, error->message);
-      g_free (thumbname);
-      g_error_free (error);
-      return NULL;
+      goto cleanup;
     }
   
   g_free (thumbname);
+  thumbname = NULL;
+
+  /* URI and mtime from the thumbnail need to match our file */
+ 
+  option = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::URI");
+  if (!option || strcmp (option, uri))
+    goto cleanup;
+
+  option = gdk_pixbuf_get_option (pixbuf, "tEXt::Thumb::MTime");
+  if (!option || sscanf (option, "%d", &y) != 1 || y != mtime)
+    goto cleanup;
+
+  /* now convert the pixbuf to a tempbuf */
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
@@ -285,52 +303,66 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
       src += gdk_pixbuf_get_rowstride (pixbuf);
     }
 
+  /* extract into about the original file from the pixbuf */
   gimp_imagefile_set_info_from_pixbuf (imagefile, pixbuf);
 
-  g_object_unref (pixbuf);
+ cleanup:
+  g_free (uri);
+  g_free (thumbname);
+  if (pixbuf)
+    g_object_unref (pixbuf);  
+  if (error)
+    g_error_free (error);
 
   return temp_buf;
 }
 
 static gchar *
-gimp_imagefile_png_thumb_name (const gchar *dirname,
-                               const gchar *basename,
+gimp_imagefile_png_thumb_name (const gchar *uri,
+                               gint         mtime,
                                gint         size)
 {
-  gchar *thumbname;
-  gint   i, n;
+  guchar  digest[16];
+  gchar   name[40];
+  gchar  *thumb_name;
+  gint    thumb_mtime;
+  gint    i, n;
+
+  gimp_md5_get_digest (uri, -1, digest);
+
+  for (i = 0; i < 16; i++)
+    g_snprintf (name + i, 3, "%02x", digest[i]);
+  g_snprintf (name + 16, 5, ".png");
 
   n = G_N_ELEMENTS (thumb_sizes);
-
   for (i = 0; i < n && thumb_sizes[i].size < size; i++)
     /* nothing */;
-  
-  n = i;
 
-  for (i = n; i < G_N_ELEMENTS (thumb_sizes); i++)
+  n = i;
+  for (; i < G_N_ELEMENTS (thumb_sizes); i++)
     {
-      thumbname = g_build_filename (dirname, 
-                                    ".thumbnails", 
-                                    thumb_sizes[i].dirname, 
-                                    basename, NULL);
+      thumb_name = g_build_filename (g_get_home_dir(), ".thumbnails",
+                                     thumb_sizes[i].dirname, 
+                                    name, NULL);
       
-      if (g_file_test (thumbname, G_FILE_TEST_EXISTS))
-        return thumbname;
+      if (gimp_image_file_test (thumb_name, &thumb_mtime) &&
+          mtime < thumb_mtime) 
+        return thumb_name;
       
-      g_free (thumbname);
+      g_free (thumb_name);
     }
   
   for (i = n - 1; i >= 0; i--)
     {
-      thumbname = g_build_filename (dirname, 
-                                    ".thumbnails", 
-                                    thumb_sizes[i].dirname, 
-                                    basename, NULL);
+      thumb_name = g_build_filename (g_get_home_dir(), ".thumbnails", 
+                                     thumb_sizes[i].dirname, 
+                                     name, NULL);
       
-      if (g_file_test (thumbname, G_FILE_TEST_EXISTS))
-        return thumbname;
+      if (gimp_image_file_test (thumb_name, &thumb_mtime) &&
+          mtime < thumb_mtime) 
+        return thumb_name;
       
-      g_free (thumbname);
+      g_free (thumb_name);
     }
 
   return NULL;
@@ -341,20 +373,23 @@ gimp_imagefile_png_thumb_name (const gchar *dirname,
 static TempBuf *
 gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
 {
-  gchar         *basename;
-  gchar         *dirname;
-  gchar         *thumbname;
-  struct stat    file_stat;
-  struct stat    thumb_stat;
-  gint           width;
-  gint           height;
-  gint           x, y;
-  gboolean       thumb_may_be_outdated = FALSE;
-  TempBuf       *temp_buf;
-  guchar        *raw_thumb;
-  guchar        *src;
-  guchar        *dest;
-  gchar         *image_info = NULL;
+  gchar     *basename;
+  gchar     *dirname;
+  gchar     *thumbname;
+  gint      file_mtime;
+  gint      thumb_mtime;
+  gint      width;
+  gint      height;
+  gint      x, y;
+  TempBuf  *temp_buf;
+  guchar   *src;
+  guchar   *dest;
+  guchar   *raw_thumb  = NULL;
+  gchar    *image_info = NULL;
+
+  /* check if the image file exists at all */
+  if (!gimp_image_file_test (GIMP_OBJECT (imagefile)->name, &file_mtime))
+    return NULL;
 
   dirname  = g_path_get_dirname (GIMP_OBJECT (imagefile)->name);
   basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
@@ -364,20 +399,12 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
   g_free (dirname);
   g_free (basename);
 
-  /*  If the file is newer than its thumbnail, the thumbnail may
-   *  be out of date.
-   */
-  if ((stat (thumbname, &thumb_stat) == 0) &&
-      (stat (GIMP_OBJECT (imagefile)->name, &file_stat ) == 0))
+  if (gimp_image_file_test (thumbname, &thumb_mtime) &&
+      thumb_mtime >= file_mtime)
     {
-      if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
-	{
-	  thumb_may_be_outdated = TRUE;
-	}
+      raw_thumb = readXVThumb (thumbname, &width, &height, &image_info);
     }
 
-  raw_thumb = readXVThumb (thumbname, &width, &height, &image_info);
- 
   g_free (thumbname);
 
   if (!raw_thumb)
@@ -503,4 +530,26 @@ readXVThumb (const gchar  *fnam,
   fclose (fp);
   
   return buf;
+}
+
+
+static gboolean
+gimp_image_file_test (const gchar *filename,
+                      gint        *mtime)
+{
+  struct stat s;
+
+#if 0      
+  g_print ("gimp_image_file_test (%s)\n", filename);
+#endif 
+
+  if (stat (filename, &s) == 0 && (S_ISREG (s.st_mode)))
+    {
+      if (mtime)
+        *mtime = s.st_mtime;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }

@@ -1,3 +1,19 @@
+2002-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c: implement thumbnail loading according
+	to the latest version of the Thumbnail Managing standard.
+	
+	* app/widgets/gimpimagefilepreview.[ch]: draw a GTK_DIALOG_QUESTION 
+	pixbuf when no preview is available. The implementation is a bit ugly
+	but we can improve this later when GimpPreview has been generalized
+	to accept pixbufs also.
+
+	* themes/Default/gtkrc: register the icons for GtkWidget instead of
+	GtkImage so they can be used from other widgets too.
+
+	* plug-ins/common/zealouscrop.c: merged fix for bug #71795 from
+	stable branch.
+
 2002-02-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/aa.c: code cleanup based on a patch from 

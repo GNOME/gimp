@@ -63,7 +63,7 @@ style "gimp-gtk-icons"
     }
 }
 
-class "GtkImage" style "gimp-gtk-icons"
+class "GtkWidget" style "gimp-gtk-icons"
 
 
 style "gimp-tiny-font-style"
