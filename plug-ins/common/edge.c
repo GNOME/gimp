@@ -691,6 +691,9 @@ edge_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Algorithm:"), 0.0, 0.5,
                              combo, 2, FALSE);
+  g_signal_connect_swapped (combo, "changed",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,

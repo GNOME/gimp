@@ -1,3 +1,9 @@
+2004-08-13  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/edge.c: update the preview when the user choose a
+	different algorithm from the combo box. This was one of the main
+	reasons to have a preview here, after all.
+
 2004-08-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/edge.c (edge_dialog): use a combo box instead of
