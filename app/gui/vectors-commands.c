@@ -122,18 +122,11 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
   GimpVectors *new_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  new_vectors = NULL;
-
-#ifdef __GNUC__
-#warning FIXME: need gimp_vectors_copy()
-#endif
-#if 0
   new_vectors = gimp_vectors_copy (active_vectors,
                                    G_TYPE_FROM_INSTANCE (active_vectors),
                                    TRUE);
   gimp_image_add_vectors (gimage, new_vectors, -1);
   gimp_image_flush (gimage);
-#endif
 }
 
 void
@@ -410,11 +403,9 @@ new_vectors_query_ok_callback (GtkWidget *widget,
 
   if ((gimage = options->gimage))
     {
-      new_vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+      new_vectors = gimp_vectors_new (gimage, vectors_name);
 
       gimp_image_add_vectors (gimage, new_vectors, -1);
-
-      gimp_object_set_name (GIMP_OBJECT (new_vectors), vectors_name);
 
       gimp_image_flush (gimage);
     }
@@ -440,12 +431,10 @@ vectors_new_vectors_query (GimpImage   *gimage,
     {
       GimpVectors *new_vectors;
 
-      new_vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+      new_vectors = gimp_vectors_new (gimage, _("Empty Vectors Copy"));
 
       gimp_image_add_vectors (gimage, new_vectors, -1);
 
-      gimp_object_set_name (GIMP_OBJECT (new_vectors),
-                            _("Empty Vectors Copy"));
       return;
     }
 

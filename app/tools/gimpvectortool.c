@@ -302,10 +302,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         {
           GimpVectors *vectors;
 
-          vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+          vectors = gimp_vectors_new (gdisp->gimage, _("Unnamed"));
 
           gimp_image_add_vectors (gdisp->gimage, vectors, -1);
-          gimp_object_set_name (GIMP_OBJECT (vectors), _("Unnamed"));
 
           vector_tool->vectors = g_object_ref (vectors);
         }

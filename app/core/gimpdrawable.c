@@ -226,11 +226,9 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  GIMP_ITEM (drawable)->ID = gimage->gimp->next_item_ID++;
-
-  g_hash_table_insert (gimage->gimp->item_table,
-		       GINT_TO_POINTER (GIMP_ITEM (drawable)->ID),
-		       drawable);
+  /*  if not already configured by gimp_item_copy()  */
+  if (! GIMP_ITEM (drawable)->ID)
+    gimp_item_configure (GIMP_ITEM (drawable), gimage, name);
 
   drawable->width     = width;
   drawable->height    = height;
@@ -248,10 +246,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   drawable->visible = TRUE;
 
-  gimp_item_set_image (GIMP_ITEM (drawable), gimage);
-
-  gimp_object_set_name (GIMP_OBJECT (drawable), name ? name : _("Unnamed"));
-
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
@@ -266,49 +260,18 @@ gimp_drawable_copy (GimpDrawable *drawable,
   GimpImageType  new_image_type;
   PixelRegion    srcPR;
   PixelRegion    destPR;
-  gchar         *new_name;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
-  /*  formulate the new name  */
-  {
-    const gchar *name;
-    gchar       *ext;
-    gint         number;
-    gint         len;
-
-    name = gimp_object_get_name (GIMP_OBJECT (drawable));
-
-    g_return_val_if_fail (name != NULL, NULL);
-
-    ext = strrchr (name, '#');
-    len = strlen (_("copy"));
-
-    if ((strlen (name) >= len &&
-         strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
-        (ext && (number = atoi (ext + 1)) > 0 && 
-         ((int)(log10 (number) + 1)) == strlen (ext + 1)))
-      {
-        /* don't have redundant "copy"s */
-        new_name = g_strdup (name);
-      }
-    else
-      {
-        new_name = g_strdup_printf (_("%s copy"), name);
-      }
-  }
+  new_drawable = GIMP_DRAWABLE (gimp_item_copy (GIMP_ITEM (drawable),
+                                                new_type,
+                                                add_alpha));
 
   if (add_alpha)
-    {
-      new_image_type = gimp_drawable_type_with_alpha (drawable);
-    }
+    new_image_type = gimp_drawable_type_with_alpha (drawable);
   else
-    {
-      new_image_type = drawable->type;
-    }
-
-  new_drawable = g_object_new (new_type, NULL);
+    new_image_type = gimp_drawable_type (drawable);
 
   gimp_drawable_configure (new_drawable,
                            gimp_item_get_image (GIMP_ITEM (drawable)),
@@ -317,34 +280,25 @@ gimp_drawable_copy (GimpDrawable *drawable,
                            gimp_drawable_width (drawable),
                            gimp_drawable_height (drawable),
                            new_image_type,
-                           new_name);
-  g_free (new_name);
+                           GIMP_OBJECT (new_drawable)->name);
 
-  new_drawable->visible  = drawable->visible;
+  new_drawable->visible = drawable->visible;
 
   pixel_region_init (&srcPR, drawable->tiles, 
                      0, 0, 
-                     drawable->width, 
-                     drawable->height, 
+                     gimp_drawable_width (drawable),
+                     gimp_drawable_height (drawable),
                      FALSE);
   pixel_region_init (&destPR, new_drawable->tiles,
                      0, 0, 
-                     drawable->width, 
-                     drawable->height, 
+                     gimp_drawable_width (new_drawable),
+                     gimp_drawable_height (new_drawable),
                      TRUE);
 
   if (new_image_type == drawable->type)
-    {
-      copy_region (&srcPR, &destPR);
-    }
+    copy_region (&srcPR, &destPR);
   else
-    {
-      add_alpha_region (&srcPR, &destPR);
-    }
-
-  g_object_unref (GIMP_ITEM (new_drawable)->parasites);
-  GIMP_ITEM (new_drawable)->parasites =
-    gimp_parasite_list_copy (GIMP_ITEM (drawable)->parasites);
+    add_alpha_region (&srcPR, &destPR);
 
   return new_drawable;
 }

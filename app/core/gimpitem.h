@@ -57,6 +57,13 @@ GType           gimp_item_get_type        (void) G_GNUC_CONST;
 
 void            gimp_item_removed         (GimpItem       *item);
 
+void            gimp_item_configure       (GimpItem       *item,
+                                           GimpImage      *gimage,
+                                           const gchar    *name);
+GimpItem      * gimp_item_copy            (GimpItem       *item,
+                                           GType           new_type,
+                                           gboolean        add_alpha);
+
 gint            gimp_item_get_ID          (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,
                                            gint            id);

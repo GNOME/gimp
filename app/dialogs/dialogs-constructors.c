@@ -703,17 +703,6 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   return dockable;
 }
 
-static GimpVectors *
-gimp_vectors_copy (const GimpVectors *vectors,
-                   GType              new_type,
-                   gboolean           add_alpha /* unused */)
-{
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
-
-  return NULL;
-}
-
 GtkWidget *
 dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 			       GimpContext       *context,

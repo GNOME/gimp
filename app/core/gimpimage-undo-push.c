@@ -52,6 +52,8 @@
 
 #include "paint/gimppaintcore.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptransformtool.h"
@@ -2710,7 +2712,9 @@ undo_push_vectors_mod (GimpImage   *gimage,
       new->free_func = undo_free_vectors_mod;
 
       vmu->vectors      = vectors;
-      vmu->undo_vectors = NULL; /* gimp_vectors_duplicate (vectors); */
+      vmu->undo_vectors = gimp_vectors_copy (vectors,
+                                             G_TYPE_FROM_INSTANCE (vectors),
+                                             FALSE);
 
       return TRUE;
     }
@@ -2731,11 +2735,13 @@ undo_pop_vectors_mod (GimpImage *gimage,
 
   temp = vmu->undo_vectors;
 
-  vmu->undo_vectors = NULL; /* gimp_vectors_duplicate (vmu->vectors); */
+  vmu->undo_vectors = gimp_vectors_copy (vmu->vectors,
+                                         G_TYPE_FROM_INSTANCE (vmu->vectors),
+                                         FALSE);
 
-  /* gimp_vectors_copy_strokes (temp, vmu->vectors); */
+  gimp_vectors_copy_strokes (temp, vmu->vectors);
 
-  /* g_object_unref (temp); */
+  g_object_unref (temp);
 
   return TRUE;
 }
@@ -2749,7 +2755,7 @@ undo_free_vectors_mod (UndoState state,
 
   vmu = (VectorsModUndo *) vmu_ptr;
 
-  /* g_object_unref (vmu->undo_vectors); */
+  g_object_unref (vmu->undo_vectors);
 
   g_free (vmu);
 }

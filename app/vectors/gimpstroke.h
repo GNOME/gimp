@@ -23,6 +23,9 @@
 #define __GIMP_STROKE_H__
 
 
+#include "core/gimpobject.h"
+
+
 #define GIMP_TYPE_STROKE            (gimp_stroke_get_type ())
 #define GIMP_STROKE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE, GimpStroke))
 #define GIMP_STROKE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE, GimpStrokeClass))
@@ -33,7 +36,7 @@
 
 struct _GimpStroke
 {
-  GObject     parent_instance;
+  GimpObject  parent_instance;
            
   GList      *anchors;
 
@@ -47,7 +50,7 @@ struct _GimpStroke
 
 struct _GimpStrokeClass
 {
-  GObjectClass  parent_class;
+  GimpObjectClass  parent_class;
 
   void          (* changed)              (GimpStroke        *stroke);
                                                             

@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include "glib-object.h"
@@ -34,16 +33,17 @@
 #include "gimpvectors-preview.h"
 
 
+static void    gimp_vectors_class_init  (GimpVectorsClass *klass);
+static void    gimp_vectors_init        (GimpVectors      *vectors);
+
+static void    gimp_vectors_finalize    (GObject          *object);
+
+static gsize   gimp_vectors_get_memsize (GimpObject       *object);
+
+
 /*  private variables  */
 
-
 static GimpItemClass *parent_class = NULL;
-
-
-static void     gimp_vectors_class_init (GimpVectorsClass *klass);
-static void     gimp_vectors_init       (GimpVectors      *vectors);
-
-static void     gimp_vectors_finalize   (GObject          *object);
 
 
 GType
@@ -87,26 +87,26 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize             = gimp_vectors_finalize;
+  object_class->finalize          = gimp_vectors_finalize;
 
-  /* gimp_object_class->get_memsize  = gimp_vectors_get_memsize; */
+  gimp_object_class->get_memsize  = gimp_vectors_get_memsize;
 
-  viewable_class->get_new_preview    = gimp_vectors_get_new_preview;
+  viewable_class->get_new_preview = gimp_vectors_get_new_preview;
 
-  klass->changed                     = NULL;
+  klass->changed                  = NULL;
 
-  klass->stroke_add                  = NULL;
-  klass->stroke_get		     = NULL;
-  klass->stroke_get_next	     = NULL;
-  klass->stroke_get_length	     = NULL;
+  klass->stroke_add               = NULL;
+  klass->stroke_get		  = NULL;
+  klass->stroke_get_next	  = NULL;
+  klass->stroke_get_length	  = NULL;
 
-  klass->anchor_get		     = NULL;
+  klass->anchor_get		  = NULL;
 
-  klass->get_length		     = NULL;
-  klass->get_distance		     = NULL;
-  klass->interpolate		     = NULL;
+  klass->get_length		  = NULL;
+  klass->get_distance		  = NULL;
+  klass->interpolate		  = NULL;
 
-  klass->make_bezier		     = NULL;
+  klass->make_bezier		  = NULL;
 }
 
 static void
@@ -118,7 +118,77 @@ gimp_vectors_init (GimpVectors *vectors)
 static void
 gimp_vectors_finalize (GObject *object)
 {
+#ifdef __GNUC__
+#warning FIXME: implement gimp_vectors_finalize()
+#endif
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_vectors_get_memsize (GimpObject *object)
+{
+  GimpVectors *vectors;
+  GimpStroke  *stroke;
+  gsize        memsize = 0;
+
+  vectors = GIMP_VECTORS (object);
+
+  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (stroke));
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+
+/*  public functions  */
+
+GimpVectors *
+gimp_vectors_new (GimpImage   *gimage,
+		  const gchar *name)
+{
+  GimpVectors *vectors;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+
+  gimp_item_configure (GIMP_ITEM (vectors), gimage, name);
+
+  return vectors;
+}
+
+GimpVectors *
+gimp_vectors_copy (const GimpVectors *vectors,
+                   GType              new_type,
+                   gboolean           add_alpha /* unused */)
+{
+  GimpVectors *new_vectors;
+
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
+
+  new_vectors = GIMP_VECTORS (gimp_item_copy (GIMP_ITEM (vectors),
+                                              new_type,
+                                              add_alpha));
+
+#ifdef __GNUC__
+#warning FIXME: implement gimp_vectors_copy()
+#endif
+
+  return new_vectors;
+}
+
+void
+gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
+                           GimpVectors       *dest_vectors)
+{
+  g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
+  g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
+
+#ifdef __GNUC__
+#warning FIXME: implement gimp_vectors_copy_strokes()
+#endif
 }
 
 

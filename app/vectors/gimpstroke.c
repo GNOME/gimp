@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include "glib-object.h"
@@ -30,18 +29,14 @@
 #include "gimpstroke.h"
 
 
-
-/*  private variables  */
-
-
-static GObjectClass *parent_class = NULL;
-
 /* Prototypes */
 
 static void         gimp_stroke_class_init           (GimpStrokeClass  *klass);
 static void         gimp_stroke_init                 (GimpStroke       *stroke);
 
 static void         gimp_stroke_finalize             (GObject          *object);
+
+static gsize        gimp_stroke_get_memsize          (GimpObject       *object);
 
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
@@ -55,6 +50,11 @@ static void gimp_stroke_real_anchor_move_absolute (GimpStroke       *stroke,
                                                    GimpAnchor       *anchor,
                                                    const GimpCoords *deltacoord,
                                                    const gint        type);
+
+
+/*  private variables  */
+
+static GObjectClass *parent_class = NULL;
 
 
 GType
@@ -77,7 +77,7 @@ gimp_stroke_get_type (void)
         (GInstanceInitFunc) gimp_stroke_init,
       };
 
-      stroke_type = g_type_register_static (G_TYPE_OBJECT,
+      stroke_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                             "GimpStroke", 
                                             &stroke_info, 0);
     }
@@ -88,36 +88,40 @@ gimp_stroke_get_type (void)
 static void
 gimp_stroke_class_init (GimpStrokeClass *klass)
 {
-  GObjectClass      *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
   object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize             = gimp_stroke_finalize;
+  object_class->finalize         = gimp_stroke_finalize;
 
-  klass->changed                     = NULL;
-  klass->removed                     = NULL;
+  gimp_object_class->get_memsize = gimp_stroke_get_memsize;
 
-  klass->anchor_get		     = gimp_stroke_real_anchor_get;
-  klass->anchor_get_next	     = gimp_stroke_real_anchor_get_next;
-  klass->anchor_move_relative	     = gimp_stroke_real_anchor_move_relative;
-  klass->anchor_move_absolute	     = gimp_stroke_real_anchor_move_absolute;
-  klass->anchor_delete		     = NULL;
+  klass->changed                 = NULL;
+  klass->removed                 = NULL;
 
-  klass->get_length		     = NULL;
-  klass->get_distance		     = NULL;
-  klass->interpolate		     = NULL;
+  klass->anchor_get              = gimp_stroke_real_anchor_get;
+  klass->anchor_get_next         = gimp_stroke_real_anchor_get_next;
+  klass->anchor_move_relative    = gimp_stroke_real_anchor_move_relative;
+  klass->anchor_move_absolute    = gimp_stroke_real_anchor_move_absolute;
+  klass->anchor_delete           = NULL;
 
-  klass->temp_anchor_get	     = NULL;
-  klass->temp_anchor_set	     = NULL;
-  klass->temp_anchor_fix	     = NULL;
+  klass->get_length              = NULL;
+  klass->get_distance            = NULL;
+  klass->interpolate             = NULL;
 
-  klass->make_bezier		     = NULL;
+  klass->temp_anchor_get         = NULL;
+  klass->temp_anchor_set         = NULL;
+  klass->temp_anchor_fix         = NULL;
 
-  klass->get_draw_anchors            = NULL;
-  klass->get_draw_controls           = NULL;
-  klass->get_draw_lines              = NULL;
+  klass->make_bezier             = NULL;
+
+  klass->get_draw_anchors        = NULL;
+  klass->get_draw_controls       = NULL;
+  klass->get_draw_lines          = NULL;
 }
 
 static void
@@ -130,8 +134,27 @@ gimp_stroke_init (GimpStroke *stroke)
 static void
 gimp_stroke_finalize (GObject *object)
 {
+#ifdef __GNUC__
+#warning FIXME: implement gimp_stroke_finalize()
+#endif
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+static gsize
+gimp_stroke_get_memsize (GimpObject *object)
+{
+  GimpStroke *stroke;
+  gsize       memsize = 0;
+
+  stroke = GIMP_STROKE (object);
+
+  memsize += g_list_length (stroke->anchors) * (sizeof (GList) +
+                                                sizeof (GimpAnchor));
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
 
 /* Calling the virtual functions */
 

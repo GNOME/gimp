@@ -1,3 +1,25 @@
+2003-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added gimp_item_configure() and
+	gimp_item_copy().
+
+	* app/core/gimpdrawable.c (gimp_drawable_configure,copy): use them.
+
+	* app/vectors/gimpvectors.[ch]: added gimp_vectors_new(),
+	gimp_vectors_copy() and gimp_vectors_copy_points(). Use the new
+	GimpItem functions just as GimpDrawable does. Added a
+	get_memsize() implementation.
+
+	* app/vectors/gimpstroke.[ch]: made it a GimpObject and added
+	a get_memsize() implementation.
+
+	* app/undo.c: implemented vectors undo as if the new GimpVectors
+	functions above worked.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpvectortool.c: use gimp_vectors_new,copy().
+
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable.[ch]: added offset_x and offset_y to

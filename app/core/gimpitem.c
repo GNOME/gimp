@@ -279,6 +279,79 @@ gimp_item_removed (GimpItem *item)
   g_signal_emit (item, gimp_item_signals[REMOVED], 0);
 }
 
+void
+gimp_item_configure (GimpItem    *item,
+                     GimpImage   *gimage,
+                     const gchar *name)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (item->ID == 0);
+  g_return_if_fail (item->gimage == 0);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  item->ID = gimage->gimp->next_item_ID++;
+
+  g_hash_table_insert (gimage->gimp->item_table,
+		       GINT_TO_POINTER (item->ID),
+		       item);
+
+  gimp_item_set_image (item, gimage);
+
+  gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
+}
+
+GimpItem *
+gimp_item_copy (GimpItem *item,
+                GType     new_type,
+                gboolean  add_alpha)
+{
+  GimpItem *new_item;
+  gchar    *new_name;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (item->gimage), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
+
+  /*  formulate the new name  */
+  {
+    const gchar *name;
+    gchar       *ext;
+    gint         number;
+    gint         len;
+
+    name = gimp_object_get_name (GIMP_OBJECT (item));
+
+    g_return_val_if_fail (name != NULL, NULL);
+
+    ext = strrchr (name, '#');
+    len = strlen (_("copy"));
+
+    if ((strlen (name) >= len &&
+         strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
+        (ext && (number = atoi (ext + 1)) > 0 && 
+         ((int)(log10 (number) + 1)) == strlen (ext + 1)))
+      {
+        /* don't have redundant "copy"s */
+        new_name = g_strdup (name);
+      }
+    else
+      {
+        new_name = g_strdup_printf (_("%s copy"), name);
+      }
+  }
+
+  new_item = g_object_new (new_type, NULL);
+
+  gimp_item_configure (new_item, gimp_item_get_image (item), new_name);
+
+  g_free (new_name);
+
+  g_object_unref (new_item->parasites);
+  new_item->parasites = gimp_parasite_list_copy (item->parasites);
+
+  return new_item;
+}
+
 gint
 gimp_item_get_ID (GimpItem *item)
 {
