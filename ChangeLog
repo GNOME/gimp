@@ -1,3 +1,9 @@
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_subsample_mask): use
+	g_new0() instead of g_malloc() followed by memset(). Some coding
+	style cleanups.
+
 2003-08-14  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped the version number to 1.3.19.

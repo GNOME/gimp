@@ -1107,7 +1107,7 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
   const gint *kernel;
   gint        i, j;
   gint        r, s;
-  gulong      *accum[KERNEL_HEIGHT];
+  gulong     *accum[KERNEL_HEIGHT];
   gint        offs;
   gint        kernel_sum;
 
@@ -1167,14 +1167,13 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
   dest = mask_buf_new (mask->width  + 2,
                        mask->height + 2);
 
+  /* Allocate and initialize the accum buffer */
   for (i = 0; i < KERNEL_HEIGHT ; i++)
-    { /* Allocate and initialize the accum buffer */
-      accum[i] = (gulong *)g_malloc(sizeof(gulong) * dest->width);
-      memset(accum[i], 0, sizeof(gulong) * dest->width);
-    }
+    accum[i] = g_new0 (gulong, dest->width);
 
- /* Investigate modifiying kernelgen to make the sum the same
-    for all kernels. That way kernal_sum becomes a constant*/
+  /* Investigate modifiying kernelgen to make the sum the same
+   *  for all kernels. That way kernal_sum becomes a constant
+   */
   kernel_sum = 0;
   for (i = 0; i < KERNEL_HEIGHT * KERNEL_WIDTH; i++)
     {
@@ -1205,22 +1204,25 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
       d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
 	*d++ = (accum[0][j] + 127) / kernel_sum;
-      rotate_pointers((void *)accum, KERNEL_HEIGHT);
-      memset(accum[KERNEL_HEIGHT - 1], 0, sizeof(gulong)*(dest->width));
 
+      rotate_pointers (accum, KERNEL_HEIGHT);
+
+      memset (accum[KERNEL_HEIGHT - 1], 0, sizeof (gulong) * dest->width);
     }
 
-  while (i +dest_offset_y < dest->height)
-    {  /* store the rest of the accum buffer into the dest mask */
+  /* store the rest of the accum buffer into the dest mask */
+  while (i + dest_offset_y < dest->height)
+    {
       d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
-	*d++ = (accum[0][j] + (kernel_sum/2)) / kernel_sum;
-      rotate_pointers((void *)accum, KERNEL_HEIGHT);
+	*d++ = (accum[0][j] + (kernel_sum / 2)) / kernel_sum;
+
+      rotate_pointers (accum, KERNEL_HEIGHT);
       i++;
     }
 
   for (i = 0; i < KERNEL_HEIGHT ; i++)
-    g_free(accum[i]);
+    g_free (accum[i]);
 
   return dest;
 }
