@@ -43,9 +43,12 @@
 #include "gimprc.h"
 
 
-static gint    dump_system_gimprc (void);
-static gint    dump_man_page      (void);
-static gchar * dump_get_comment   (GParamSpec *param_spec);
+static gint    dump_system_gimprc   (gint         fd);
+static gint    dump_man_page        (gint         fd);
+
+static gchar * dump_describe_param  (GParamSpec  *param_spec);
+static void    dump_with_linebreaks (gint         fd,
+				     const gchar *text);
 
 
 int
@@ -60,11 +63,11 @@ main (int   argc,
     {
       if (strcmp (argv[1], "--system-gimprc") == 0)
 	{
-	  return dump_system_gimprc ();
+	  return dump_system_gimprc (1);
 	}
       else if (strcmp (argv[1], "--man-page") == 0)
 	{
-	  return dump_man_page ();
+	  return dump_man_page (1);
 	}
       else if (strcmp (argv[1], "--version") == 0)
 	{
@@ -118,7 +121,7 @@ static const gchar *system_gimprc_header =
 "\n";
 
 static gint
-dump_system_gimprc (void)
+dump_system_gimprc (gint fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -129,7 +132,7 @@ dump_system_gimprc (void)
 
   str = g_string_new (system_gimprc_header);
 
-  write (1, str->str, str->len);
+  write (fd, str->str, str->len);
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);
   klass = G_OBJECT_GET_CLASS (rc);
@@ -146,7 +149,7 @@ dump_system_gimprc (void)
 
       g_string_assign (str, "");
 
-      comment = dump_get_comment (prop_spec);
+      comment = dump_describe_param (prop_spec);
       if (comment)
 	{
 	  gimp_config_serialize_comment (str, comment);
@@ -160,7 +163,7 @@ dump_system_gimprc (void)
 	{
 	  g_string_append (str, "\n");
 
-          write (1, str->str, str->len);
+          write (fd, str->str, str->len);
         }
     }
 
@@ -210,12 +213,55 @@ static const gchar *man_page_header =
 "Either spaces or tabs may be used to separate the name from the value.\n"
 ".PP\n"
 ".SH PROPERTIES\n"
-"Valid properties and their types are:\n"
+"Valid properties and their default values are:\n"
 "\n";
+
+static const gchar *man_page_path =
+".PP\n"
+".SH PATH EXPANSION\n"
+"Strings of type PATH are expanded in a manner similar to\n"
+".BR bash (1).\n"
+"Specifically: tilde (~) is expanded to the user's home directory. Note that\n"
+"the bash feature of being able to refer to other user's home directories\n"
+"by writing ~userid/ is not valid in this file.\n"
+"\n"
+"${variable} is expanded to the current value of an environment variable.\n"
+"There are a few variables that are pre-defined:\n"
+".TP\n"
+".I gimp_dir\n"
+"The personal gimp directory which is set to the value of the environment\n"
+"variable GIMP_DIRECTORY or to ~/.gimp-1.3.\n"
+".TP\n"
+".I gimp_data_dir\n"
+"Nase for paths to shareable data, which is set to the value of the\n"
+"environment variable GIMP_DATADIR or to a compiled-in default value.\n"
+".TP\n"
+".I gimp_plug_in_dir\n"
+"Base to paths for architecture-specific plugins and modules, which is set\n"
+"to the value of the environment variable GIMP_PLUGINDIR or to a\n"
+"compiled-in default value.\n"
+".TP\n"
+".I gimp_sysconf_dir\n"
+"Path to configuration files, which is set to the value of the environment\n"
+"variable GIMP_SYSCONFDIR or to a compiled-in default value.\n\n";
+
+static const gchar *man_page_footer =
+".SH FILES\n"
+".TP\n"
+".I ${prefix}/etc/gimp/1.3/gimprc\n"
+"System-wide configuration file\n"
+".TP\n"
+".I \\fB$HOME\\fP/.gimp-1.3/gimprc\n"
+"Per-user configuration file\n"
+"\n"
+".SH \"SEE ALSO\"\n"
+".BR gimp (1),\n"
+".BR gimptool (1),\n"
+".BR gimp-remote (1)\n";
 
 
 static gint
-dump_man_page (void)
+dump_man_page (gint fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -225,9 +271,9 @@ dump_man_page (void)
   guint          i;
 
   str = g_string_new (NULL);
-  g_string_printf (str, man_page_header, GIMP_VERSION);
 
-  write (1, str->str, str->len);
+  g_string_printf (str, man_page_header, GIMP_VERSION);
+  write (fd, str->str, str->len);
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);
   klass = G_OBJECT_GET_CLASS (rc);
@@ -237,21 +283,25 @@ dump_man_page (void)
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec = property_specs[i];
-      gchar      *comment;
+      gchar      *desc;
 
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_string_assign (str, "");
-
-      comment = dump_get_comment (prop_spec);
-      g_free (comment);
+      g_string_assign (str, ".TP\n");
 
       if (gimp_config_serialize_property (rc, prop_spec, str, TRUE))
 	{
 	  g_string_append (str, "\n");
 
-          write (1, str->str, str->len);
+          write (fd, str->str, str->len);
+
+	  desc = dump_describe_param (prop_spec);
+
+	  dump_with_linebreaks (fd, desc);
+	  write (fd, "\n", 1);
+
+	  g_free (desc);
         }
     }
 
@@ -261,12 +311,15 @@ dump_man_page (void)
 
   g_string_free (str, TRUE);
 
+  write (fd, man_page_path,   strlen (man_page_path));
+  write (fd, man_page_footer, strlen (man_page_footer));
+
   return EXIT_SUCCESS;
 }
 
 
 static gchar *
-dump_get_comment (GParamSpec *param_spec)
+dump_describe_param (GParamSpec *param_spec)
 {
   GType        type;
   const gchar *blurb;
@@ -277,7 +330,9 @@ dump_get_comment (GParamSpec *param_spec)
   if (!blurb)
     {
       g_warning ("FIXME: Property '%s' has no blurb.", param_spec->name);
-      blurb = param_spec->name;
+
+      blurb = g_strdup_printf ("The %s property has no description.",
+			       param_spec->name);
     }
 
   type = param_spec->value_type;
@@ -412,6 +467,40 @@ dump_get_comment (GParamSpec *param_spec)
   return g_strdup_printf ("%s  %s", blurb, values);
 }
 
+
+#define LINE_LENGTH 78
+
+static void
+dump_with_linebreaks (gint         fd,
+		      const gchar *text)
+{
+  const gchar *t;
+  gint         i, len, space;
+
+  len = strlen (text);
+
+  while (len > 0)
+    {
+      for (t = text, i = 0, space = 0;
+           *t != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
+           t++, i++)
+        {
+          if (g_ascii_isspace (*t))
+            space = i;
+        }
+
+      if (i > LINE_LENGTH && space && *t != '\n')
+        i = space;
+
+      write (fd, text, i);
+      write (fd, "\n", 1);
+
+      i++;
+
+      text += i;
+      len  -= i;
+    }
+}
 
 
 /*

@@ -438,6 +438,17 @@ gimp_config_serialize_unknown_tokens (GObject *object,
   return (write (fd, str->str, str->len) != -1);
 }
 
+
+#define LINE_LENGTH 75
+
+/**
+ * gimp_config_serialize_comment:
+ * @str: a #GString.
+ * @comment: the comment to serialize
+ * 
+ * Appends the @comment to @str and inserts linebreaks and hash-marks to
+ * format it as a comment.
+ **/
 void
 gimp_config_serialize_comment (GString     *str,
                                const gchar *comment)
@@ -450,14 +461,14 @@ gimp_config_serialize_comment (GString     *str,
   while (len > 0)
     {
       for (s = comment, i = 0, space = 0;
-           *s != '\n' && (i <= 76 || space == 0) && i < len;
+           *s != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
            s++, i++)
         {
           if (g_ascii_isspace (*s))
             space = i;
         }
 
-      if (i > 76 && space && *s != '\n')
+      if (i > LINE_LENGTH && space && *s != '\n')
         i = space;
 
       g_string_append_len (str, "# ", 2);

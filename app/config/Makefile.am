@@ -76,7 +76,7 @@ gimprc: gimpconfig-dump
 	./$< --system-gimprc > gimprc  2>/dev/null
 
 man: gimpconfig-dump
-	./$< --man-page > gimprc.5  2>/dev/null
+	./$< --man-page > gimprc-1.3.5  2>/dev/null
 
 
 #

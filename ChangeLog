@@ -1,3 +1,15 @@
+2003-01-13  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpconfig-serialize.c: more work on gimpconfig-dump.
+
+	* configure.in
+	* docs/Makefile.am
+	* docs/gimprc-1.3.5.in: removed ...
+	* docs/gimprc-1.3.5: ... and replaced with a new version generated
+	using gimpconfig-dump (although it's not perfect yet).
+
 2003-01-12  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/plugin-def.pl
