@@ -174,6 +174,7 @@ browser_dialog_open (void)
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_HOME));
 
+#if 0
   button = gtk_button_new_from_stock (GTK_STOCK_INDEX);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
@@ -181,6 +182,7 @@ browser_dialog_open (void)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_INDEX));
+#endif
 
   back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -350,7 +352,7 @@ button_callback (GtkWidget *widget,
   switch (GPOINTER_TO_INT (data))
     {
     case BUTTON_HOME:
-      browser_dialog_load ("contents.html", TRUE);
+      browser_dialog_load ("index.html", TRUE);
       break;
 
     case BUTTON_INDEX:
