@@ -1,3 +1,11 @@
+2004-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: renamed variable
+	"script_list" to "script_tree" because it's a GTree.
+
+	(script_fu_remove_script): g_list_free() the right list (don't
+	leak all lists of scripts at the tree leaves).
+
 2004-11-20  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2-pre2 release.

@@ -96,7 +96,7 @@ static gint       script_fu_menu_compare   (gconstpointer           a,
  *  Local variables
  */
 
-static GTree *script_list      = NULL;
+static GTree *script_tree      = NULL;
 static GList *script_menu_list = NULL;
 
 
@@ -110,15 +110,15 @@ script_fu_find_scripts (void)
   gchar *path_str;
 
   /*  Make sure to clear any existing scripts  */
-  if (script_list != NULL)
+  if (script_tree != NULL)
     {
-      g_tree_foreach (script_list,
+      g_tree_foreach (script_tree,
                       (GTraverseFunc) script_fu_remove_script,
                       NULL);
-      g_tree_destroy (script_list);
+      g_tree_destroy (script_tree);
     }
 
-  script_list = g_tree_new ((GCompareFunc) g_utf8_collate);
+  script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
 
   path_str = gimp_gimprc_query ("script-fu-path");
 
@@ -132,7 +132,7 @@ script_fu_find_scripts (void)
   g_free (path_str);
 
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
-  g_tree_foreach (script_list,
+  g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_install_script,
                   NULL);
 
@@ -564,9 +564,9 @@ script_fu_add_script (LISP a)
 
   {
     gchar *key  = gettext (script->menu_path);
-    GList *list = g_tree_lookup (script_list, key);
+    GList *list = g_tree_lookup (script_tree, key);
 
-    g_tree_insert (script_list, key, g_list_append (list, script));
+    g_tree_insert (script_tree, key, g_list_append (list, script));
   }
 
   return NIL;
@@ -711,7 +711,7 @@ script_fu_remove_script (gpointer  foo,
       script_fu_free_script (script);
     }
 
-  g_list_free (list);
+  g_list_free (scripts);
 
   return FALSE;
 }
@@ -905,7 +905,7 @@ script_fu_find_script (const gchar *pdb_name)
 {
   gconstpointer script = pdb_name;
 
-  g_tree_foreach (script_list,
+  g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_lookup_script,
                   &script);
 
