@@ -451,8 +451,8 @@ menus_tools_create (ToolInfo *tool_info)
 }
 
 void
-menus_set_sensitive (char *path,
-		     int   sensitive)
+menus_set_sensitive (gchar *path,
+		     gint   sensitive)
 {
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
@@ -472,9 +472,23 @@ menus_set_sensitive (char *path,
     g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s", path);
 }  
 
+/* The following function will enhance our localesystem because
+   we don't need to have our menuentries twice in our catalog */ 
+
 void
-menus_set_state (char *path,
-		 int   state)
+menus_set_sensitive_locale (gchar *prepath,
+			    gchar *path,
+			    gint   sensitive)
+{
+  gchar *menupath;
+  menupath=g_strdup_printf("%s%s",prepath,_(path));
+  menus_set_sensitive(menupath,sensitive);
+  g_free(menupath); 
+}
+
+void
+menus_set_state (gchar *path,
+		 gint   state)
 {
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
@@ -495,6 +509,17 @@ menus_set_state (char *path,
     }
   if (!ifactory || !widget)
     g_warning ("Unable to set state for menu which doesn't exist:\n%s\n", path);
+}
+
+void
+menus_set_state_locale (gchar *prepath,
+			gchar *path,
+			gint   state)
+{
+  gchar *menupath;
+  menupath=g_strdup_printf("%s%s",prepath,_(path));
+  menus_set_state(menupath,state);
+  g_free(menupath); 
 }
 
 void
