@@ -3710,7 +3710,7 @@ msgstr "/Édition/Coller Nommé"
 
 #: app/menus.c:107
 msgid "/Select/Toggle"
-msgstr "Sélection/(Dés)activer"
+msgstr "/Sélection/(Dés)activer"
 
 #: app/menus.c:108
 msgid "/Select/Invert"
@@ -4363,7 +4363,7 @@ msgstr "<Image>/Filtres/Répéter le dernier"
 
 #: app/plug_in.c:1282
 msgid "<Image>/Filters/Re-show last"
-msgstr "<Image>/Filtres/Re-montrer le dernier"
+msgstr "<Image>/Filtres/Remontrer le dernier"
 
 #: app/plug_in.c:1640 app/plug_in.c:1653 app/plug_in.c:1666 app/plug_in.c:1681
 #, c-format
@@ -5253,7 +5253,7 @@ msgstr "Transformer"
 
 #: app/tools.c:222
 msgid "/Tools/Transform"
-msgstr "Outils/Transformer"
+msgstr "/Outils/Transformer"
 
 #: app/tools.c:225
 msgid "Transform the layer or selection"
