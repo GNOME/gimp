@@ -1,3 +1,8 @@
+Tue Mar 30 22:17:43 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/fileops.c: Thumbnails save with checkerboard-alpha.
+	Saved thumbnail comments include the file size.
+
 Tue Mar 30 20:50:21 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/gif/gif.c:

@@ -989,6 +989,12 @@ file_save_thumbnail (GimpImage* gimage,
   gint w,h;
   GimpImageBaseType basetype;
   FILE* fp;
+  struct stat statbuf;
+
+  if (stat(full_source_filename, &statbuf) != 0)
+    {
+      return FALSE;
+    }
 
   if (gimp_image_preview_valid (gimage, Gray))
     {
@@ -1053,13 +1059,15 @@ file_save_thumbnail (GimpImage* gimage,
       basetype = gimp_image_base_type(gimage);
 
       fprintf(fp,
-	      "P7 332\n#IMGINFO:%dx%d %s\n"
+	      "P7 332\n#IMGINFO:%dx%d %s (%d %s)\n"
 	      "#END_OF_COMMENTS\n%d %d 255\n",
 	      gimage->width, gimage->height,
 	      (basetype == RGB) ? "RGB" :
 	      (basetype == GRAY) ? "Greyscale" :
 	      (basetype == INDEXED) ? "Indexed" :
 	      "(UNKNOWN COLOUR TYPE)",
+	      (int)statbuf.st_size,
+	      (statbuf.st_size == 1) ? "byte" : "bytes",
 	      w, h);
 
       switch (basetype)
@@ -1069,16 +1077,27 @@ file_save_thumbnail (GimpImage* gimage,
 	  for (i=0; i<h; i++)
 	    {
 	      /* Do a cheap unidirectional error-spread to look better */
-	      gint rerr=0, gerr=0, berr=0;
+	      gint rerr=0, gerr=0, berr=0, a;
 
 	      for (j=0; j<w; j++)
 		{
 		  gint32 r,g,b;
 
-		  r = *(tbd++) + rerr;
-		  g = *(tbd++) + gerr;
-		  b = *(tbd++) + berr;
-		  tbd++;
+		  if (128 & *(tbd + 3))
+		    {
+		      r = *(tbd++) + rerr;
+		      g = *(tbd++) + gerr;
+		      b = *(tbd++) + berr;
+		      tbd++;
+		    }
+		  else
+		    {
+		      a = (( (i^j) & 4 ) << 5) | 64; /* cute. */
+		      r = a + rerr;
+		      g = a + gerr;
+		      b = a + berr;
+		      tbd += 4;
+		    }
 
 		  r = CLAMP0255 (r);
 		  g = CLAMP0255 (g);
@@ -1096,14 +1115,18 @@ file_save_thumbnail (GimpImage* gimage,
 	  for (i=0; i<h; i++)
 	    {
 	      /* Do a cheap unidirectional error-spread to look better */
-	      gint b3err=0, b2err=0, v;
+	      gint b3err=0, b2err=0, v, a;
 
 	      for (j=0; j<w; j++)
 		{
 		  gint32 b3, b2;
+
 		  v = *(tbd++);
-		  tbd++;
-		  
+		  a = *(tbd++);
+
+		  if (!(128 & a))
+		    v = (( (i^j) & 4 ) << 5) | 64;
+
 		  b2 = v + b2err;
 		  b3 = v + b3err;
 
@@ -2031,8 +2054,9 @@ file_check_single_magic (char *offset,
 
       fileval = 0;
       if (numbytes == 5)    /* Check for file size ? */
-        {struct stat buf;
-
+        {
+	  struct stat buf;
+	  
           if (fstat (fileno (ifp), &buf) < 0) return (0);
           fileval = buf.st_size;
         }
