@@ -1,0 +1,9 @@
+Not in any order:
+
+- fix memory leaks (no significance in practice, but...)
+- gtkarg wrappers for data members
+- Pretty formatted comments from doc strings
+- HTML doc output
+- IDL output
+- Demarshallers
+- package-prefixless import headers
