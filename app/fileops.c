@@ -1343,7 +1343,6 @@ genbutton_callback (GtkWidget *widget,
   gimp_add_busy_cursors ();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
-
   /* new mult-file preview make: */  
   {
     GList *row = GTK_CLIST(fs->file_list)->row_list;
@@ -1377,15 +1376,6 @@ genbutton_callback (GtkWidget *widget,
 						 temp, NULL);
 		      }
 		    
-		    /* When doing multiple selections, the name
-		     * of the first item touched with the cursor will
-		     * become the text-field default - and we don't
-		     * want to load that twice.
-		     */
-		    if (strcmp (mfilename, filename) == 0)
-		      {
-			goto next_iter;
-		      }
 		    if ((gimage_to_be_thumbed = file_open_image (mfilename,
 								 temp,
 								 RUN_NONINTERACTIVE)))
@@ -1414,7 +1404,6 @@ genbutton_callback (GtkWidget *widget,
 		  }
 	      }
 	  }
-      next_iter:		
 	if (mfilename)
 	  {
 	    g_free (mfilename);
