@@ -964,11 +964,8 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
                               (gchar **) keys, values,
                               error);
 
-  for (i = 0; i < G_N_ELEMENTS (values); i++)
-    {
-      if (values[i])
-        g_free (values[i]);
-    }
+  for (i = 0; keys[i]; i++)
+    g_free (values[i]);
 
   if (success)
     {

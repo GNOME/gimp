@@ -1,3 +1,7 @@
+2004-05-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save_thumb): oops.
+
 2004-05-13  Michael Natterer  <mitch@gimp.org>
 
 	Added GimpViewable infrastructure which enables migrating from
