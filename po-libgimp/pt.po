@@ -1,0 +1,306 @@
+# libgimp's Portuguese Translation
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2002
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.4.1\n"
+"POT-Creation-Date: 2002-03-07 02:11+0000\n"
+"PO-Revision-Date: 2002-03-07 02:15+0000\n"
+"Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+msgid "can't handle layers"
+msgstr "incapaz gerir camadas"
+
+#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+msgid "Merge Visible Layers"
+msgstr "Juntar Camadas Visíveis"
+
+#: libgimp/gimpexport.c:179
+msgid "can't handle layer offsets, size or opacity"
+msgstr "incapaz de gerir deslocamento, tamanho ou opacidade das camadas"
+
+#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+msgid "can only handle layers as animation frames"
+msgstr "apenas é possível gerir camadas como molduras animadas"
+
+#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+msgid "Save as Animation"
+msgstr "Gravar como Animação"
+
+#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+msgid "Flatten Image"
+msgstr "Alisar Imagem"
+
+#: libgimp/gimpexport.c:215
+msgid "can't handle transparency"
+msgstr "incapaz de gerir transparência"
+
+#: libgimp/gimpexport.c:224
+msgid "can only handle RGB images"
+msgstr "apenas é possível gerir imagens RGB"
+
+#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+msgid "Convert to RGB"
+msgstr "Converter em RGB"
+
+#: libgimp/gimpexport.c:233
+msgid "can only handle grayscale images"
+msgstr "apenas é possível gerir imagens em escalas de cinza"
+
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+msgid "Convert to Grayscale"
+msgstr "Converter em Escalas Cinza"
+
+#: libgimp/gimpexport.c:242
+msgid "can only handle indexed images"
+msgstr "apenas é possível gerir imagens indexadas"
+
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Converter em Indexadas utilizando configurações de defeito\n"
+"(Faça-o manualmente para ajustar o resultado)"
+
+#: libgimp/gimpexport.c:252
+msgid "can only handle RGB or grayscale images"
+msgstr "apenas é possível gerir imagens RGB ou em escalas cinza"
+
+#: libgimp/gimpexport.c:261
+msgid "can only handle RGB or indexed images"
+msgstr "apenas é possível gerir imagens RGB ou indexadas"
+
+#: libgimp/gimpexport.c:271
+msgid "can only handle grayscale or indexed images"
+msgstr "apenas é possível gerir imagens em escalas cinza ou indexadas"
+
+#: libgimp/gimpexport.c:282
+msgid "needs an alpha channel"
+msgstr "necessita de canal alfa"
+
+#: libgimp/gimpexport.c:283
+msgid "Add Alpha Channel"
+msgstr "Adicionar Canal Alfa"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:356
+msgid "Confirm Save"
+msgstr "Confirmar Gravação"
+
+#: libgimp/gimpexport.c:360
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: libgimp/gimpexport.c:362
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: libgimp/gimpexport.c:376
+#, c-format
+msgid ""
+"You are about to save %s as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Está prestes a gravar %s como %s.\n"
+"Isto não irá gravar as camadas visíveis."
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:414
+msgid "Export File"
+msgstr "Exportar Ficheiro"
+
+#: libgimp/gimpexport.c:419
+msgid "Export"
+msgstr "Exportar"
+
+#: libgimp/gimpexport.c:421
+msgid "Ignore"
+msgstr "Ignorar"
+
+#: libgimp/gimpexport.c:438
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"A sua imagem deveria ser exportada antes de poder ser gravada pelas "
+"seguintes razões:"
+
+#. the footline
+#: libgimp/gimpexport.c:503
+msgid "The export conversion won't modify your original image."
+msgstr "A conversão de exportação não modificará a sua imagem original."
+
+#: libgimp/gimpexport.c:571
+msgid "a layer mask"
+msgstr "uma máscara de camada"
+
+#: libgimp/gimpexport.c:573
+msgid "a channel (saved selection)"
+msgstr "um canal (selecção gravada)"
+
+#: libgimp/gimpunit.c:56
+msgid "percent"
+msgstr "percentagem"
+
+#: libgimpwidgets/gimpcolorbutton.c:85
+msgid "/Foreground Color"
+msgstr "/Cor 1º Plano"
+
+#: libgimpwidgets/gimpcolorbutton.c:87
+msgid "/Background Color"
+msgstr "/Cor Fundo"
+
+#: libgimpwidgets/gimpcolorbutton.c:90
+msgid "/Black"
+msgstr "/Preto"
+
+#: libgimpwidgets/gimpcolorbutton.c:92
+msgid "/White"
+msgstr "/Branco"
+
+#: libgimpwidgets/gimpfileselection.c:352
+msgid "Select Folder"
+msgstr "Seleccionar Pasta"
+
+#: libgimpwidgets/gimpfileselection.c:366
+msgid "Select File"
+msgstr "Seleccionar Ficheiro"
+
+#: libgimpwidgets/gimpstock.c:88
+msgid "Anchor"
+msgstr "Âncora"
+
+#: libgimpwidgets/gimpstock.c:89
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr "Editar"
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr "Ligar"
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr "Colar como Novo"
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr "Colar Em"
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr "_Reiniciar"
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr "Visível"
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr "Transformar"
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr "Rodar"
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr "Escalar"
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr "Cortar Rente"
+
+#: libgimpwidgets/gimpunitmenu.c:265
+msgid "More..."
+msgstr "Mais..."
+
+#: libgimpwidgets/gimpunitmenu.c:526
+msgid "Unit Selection"
+msgstr "Selecção Unidade"
+
+#: libgimpwidgets/gimpunitmenu.c:571
+msgid "Unit"
+msgstr "Unidade"
+
+#: libgimpwidgets/gimpunitmenu.c:575
+msgid "Factor"
+msgstr "Factor"
+
+#: libgimpwidgets/gimpwidgets.c:801
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+"Se o botão \"Hora\" não estiver primido, utilize este valor para a semente "
+"da geração de números aleatórios - isto permite-lhe repetir uma dada "
+"operação \"aleatória\""
+
+#: libgimpwidgets/gimpwidgets.c:806
+msgid "Time"
+msgstr "Hora"
+
+#: libgimpwidgets/gimpwidgets.c:815
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+"Criar semente de geração aleatória de números a partir da hora actual - isto "
+"garante-lhe uma aleatoriedade razoável"
+
+#: libgimpwidgets/gimpwidgets.c:1129
+msgid "Bytes"
+msgstr "Bytes"
+
+#: libgimpwidgets/gimpwidgets.c:1130
+msgid "KiloBytes"
+msgstr "KiloBytes"
+
+#: libgimpwidgets/gimpwidgets.c:1131
+msgid "MegaBytes"
+msgstr "MegaBytes"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "pixel"
+#~ msgstr "pixel"
+
+#~ msgid "pixels"
+#~ msgstr "pixels"
+
+#~ msgid "inches"
+#~ msgstr "polegadas"
+
+#~ msgid "millimeter"
+#~ msgstr "milímetro"
+
+#~ msgid "millimeters"
+#~ msgstr "milímetros"
+
+#~ msgid "point"
+#~ msgstr "ponto"
+
+#~ msgid "points"
+#~ msgstr "pontos"
+
+#~ msgid "picas"
+#~ msgstr "picos"
