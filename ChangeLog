@@ -1,3 +1,12 @@
+Sun Jun  7 01:39:30 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/script-fu.c: fixed param passing for
+	INT8 and INT16 types. This used to fail on big endian machines
+
+	* plug-ins/maze/maze.c: properly handle INT8 and INT16 types.
+	With these two fixes, circuit.scm will no longer crash on
+	big endian machines
+
 Sat Jun  6 16:12:20 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated despeckle, png, sgi, and sharpen
