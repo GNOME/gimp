@@ -1,5 +1,13 @@
 2004-02-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_bucket_fill): when dropping a color on a text
+	layer, change the text color. This is a quick hack; we should make
+	filling a drawable a virtual method that can be overridden by the
+	text layer.
+
+2004-02-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (GIMP_DESKTOP_ICON): fixed icon names.
 
 2004-02-11  Sven Neumann  <sven@gimp.org>

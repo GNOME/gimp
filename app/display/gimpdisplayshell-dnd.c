@@ -33,6 +33,9 @@
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
 
+#include "text/gimptext.h"
+#include "text/gimptextlayer.h"
+
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-import.h"
 
@@ -166,6 +169,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
 {
   GimpImage    *gimage = shell->gdisp->gimage;
   GimpDrawable *drawable;
+  GimpText     *text;
 
   if (gimage->gimp->busy)
     return;
@@ -175,14 +179,27 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
   if (! drawable)
     return;
 
-  gimp_drawable_bucket_fill_full (drawable,
-                                  fill_mode,
-                                  GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                  FALSE /* no seed fill */,
-                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */,
-                                  color, pattern);
+  /* FIXME: there should be a virtual method for this that the
+     GimpTextLayer can override. */
 
-  gimp_image_flush (gimage);
+  if (GIMP_IS_TEXT_LAYER (drawable) &&
+      (text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable))) != NULL)
+    {
+      g_object_set (text, "color", color, NULL);
+      gimp_text_layer_flush (GIMP_TEXT_LAYER (drawable));
+    }
+  else
+    {
+      gimp_drawable_bucket_fill_full (drawable,
+                                      fill_mode,
+                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
+                                      FALSE,             /* no seed fill */
+                                      FALSE, 0.0, FALSE, /* fill params  */
+                                      0.0, 0.0,          /* ignored      */
+                                      color, pattern);
+
+      gimp_image_flush (gimage);
+    }
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp),
                             shell->gdisp);
