@@ -1,3 +1,9 @@
+2003-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: changed the hex entry to look
+	and feel like the hex entry in the GimpColorScales widget. Fixes
+	bug #122692.
+
 2003-09-19  Michael Natterer  <mitch@gimp.org>
 
 	Fix for bug #122695:

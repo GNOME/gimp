@@ -391,10 +391,10 @@ gimp_colormap_editor_new (GimpImage       *gimage,
 		    editor);
 
   editor->color_entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 7);
-  gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 7);
+  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
+  gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Hex Triplet:"), 1.0, 0.5,
+			     _("He_x Triplet:"), 1.0, 0.5,
 			     editor->color_entry, 1, TRUE);
 
   g_signal_connect (editor->color_entry, "activate",
@@ -695,7 +695,7 @@ gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
 
       col = &gimage->cmap[editor->col_index * 3];
 
-      string = g_strdup_printf ("#%02x%02x%02x", col[0], col[1], col[2]);
+      string = g_strdup_printf ("%02x%02x%02x", col[0], col[1], col[2]);
       gtk_entry_set_text (GTK_ENTRY (editor->color_entry), string);
       g_free (string);
 
@@ -837,7 +837,8 @@ gimp_colormap_adjustment_changed (GtkAdjustment      *adjustment,
 {
   if (GIMP_IMAGE_EDITOR (editor)->gimage)
     {
-      gimp_colormap_editor_set_index (editor, (gint) (adjustment->value + 0.5));
+      gimp_colormap_editor_set_index (editor,
+                                      (gint) (adjustment->value + 0.5));
 
       gimp_colormap_editor_update_entries (editor);
     }
@@ -858,7 +859,7 @@ gimp_colormap_hex_entry_activate (GtkEntry           *entry,
 
       s = gtk_entry_get_text (entry);
 
-      if (sscanf (s, "#%lx", &i))
+      if (sscanf (s, "%lx", &i))
         {
           GimpRGB color;
           guchar  r, g, b;
