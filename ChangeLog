@@ -1,3 +1,8 @@
+2004-06-13  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpiscissorstool.c: Minor tweaks to two macros.
+	Shouldn't change anything.
+
 2004-06-13  Jakub Steiner <jimmac@ximian.com>
 
 	* cursors/tool-zoom.png:

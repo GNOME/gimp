@@ -109,8 +109,8 @@
 #define  SEED_POINT        9
 
 /*  Functional defines  */
-#define  PIXEL_COST(x)     (x >> 8)
-#define  PIXEL_DIR(x)      (x & 0x000000ff)
+#define  PIXEL_COST(x)     ((x) >> 8)
+#define  PIXEL_DIR(x)      ((x) & 0x000000ff)
 
 
 struct _ICurve
