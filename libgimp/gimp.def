@@ -35,9 +35,6 @@ EXPORTS
 	gimp_clone_default
 	gimp_color_balance
 	gimp_color_picker
-	gimp_convert_grayscale
-	gimp_convert_indexed
-	gimp_convert_rgb
 	gimp_convolve
 	gimp_convolve_default
 	gimp_curves_explicit
@@ -54,7 +51,7 @@ EXPORTS
 	gimp_dodgeburn
 	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
-	gimp_drawable_bytes
+	gimp_drawable_bpp
 	gimp_drawable_delete
 	gimp_drawable_detach
 	gimp_drawable_fill
@@ -159,6 +156,9 @@ EXPORTS
 	gimp_image_attach_new_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
+	gimp_image_convert_grayscale
+	gimp_image_convert_indexed
+	gimp_image_convert_rgb
 	gimp_image_crop
 	gimp_image_delete
 	gimp_image_delete_guide
@@ -167,7 +167,6 @@ EXPORTS
 	gimp_image_flatten
 	gimp_image_flip
 	gimp_image_floating_sel_attached_to
-	gimp_image_floating_selection
 	gimp_image_free_shadow
 	gimp_image_get_active_channel
 	gimp_image_get_active_layer
@@ -177,6 +176,7 @@ EXPORTS
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
 	gimp_image_get_filename
+	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
 	gimp_image_get_layer_by_tattoo
@@ -221,6 +221,8 @@ EXPORTS
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_freeze
+	gimp_image_undo_group_end
+	gimp_image_undo_group_start
 	gimp_image_undo_is_enabled
 	gimp_image_undo_thaw
 	gimp_image_unset_active_channel
@@ -234,12 +236,12 @@ EXPORTS
 	gimp_layer_create_mask
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
+	gimp_layer_get_mask
 	gimp_layer_get_mode
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
 	gimp_layer_is_floating_sel
-	gimp_layer_mask
 	gimp_layer_new
 	gimp_layer_new_from_drawable
 	gimp_layer_resize
@@ -395,8 +397,6 @@ EXPORTS
 	gimp_tile_unref
 	gimp_tile_width
 	gimp_transform_2d
-	gimp_undo_push_group_end
-	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
 	gimp_version
 	gimp_wm_class

@@ -1,3 +1,7 @@
+2003-12-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.def: updated.
+
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.h
