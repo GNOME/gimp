@@ -625,7 +625,7 @@ gimp_container_add (GimpContainer *container,
 {
   GimpContainerHandler *handler;
   GList                *list;
-  guint                 handler_id;
+  gulong                handler_id;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
@@ -679,7 +679,7 @@ gimp_container_remove (GimpContainer *container,
 {
   GimpContainerHandler *handler;
   GList                *list;
-  guint                 handler_id;
+  gulong                handler_id;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
@@ -886,7 +886,7 @@ static void
 gimp_container_add_handler_foreach_func (GimpObject           *object,
 					 GimpContainerHandler *handler)
 {
-  guint  handler_id;
+  gulong handler_id;
 
   handler_id = g_signal_connect (G_OBJECT (object),
 				 handler->signame,
@@ -941,7 +941,7 @@ static void
 gimp_container_remove_handler_foreach_func (GimpObject           *object,
 					    GimpContainerHandler *handler)
 {
-  guint  handler_id;
+  gulong handler_id;
 
   handler_id =
     GPOINTER_TO_UINT (g_object_get_qdata (G_OBJECT (object),

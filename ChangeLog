@@ -1,3 +1,9 @@
+2002-07-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumbed version number to 1.3.8.
+
+	* app/core/gimpcontainer.c: use gulong for signal handler IDs.
+
 2002-07-09  Sven Neumann  <sven@gimp.org>
 
 	Merged bug-fixes from the stable branch:
