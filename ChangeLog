@@ -1,3 +1,8 @@
+2004-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c: restrict splash image to screen size to guard us
+	from insanely large splash images.
+
 2004-12-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_delete_event): invert logic so

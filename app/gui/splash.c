@@ -72,6 +72,7 @@ splash_create (void)
   GtkWidget      *frame;
   GtkWidget      *vbox;
   GdkPixbuf      *pixbuf;
+  GdkScreen      *screen;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
   GdkGCValues     values;
@@ -110,9 +111,6 @@ splash_create (void)
 
   splash = g_new0 (GimpSplash, 1);
 
-  splash->width  = gdk_pixbuf_get_width (pixbuf);
-  splash->height = gdk_pixbuf_get_height (pixbuf);
-
   splash->window =
     g_object_new (GTK_TYPE_WINDOW,
                   "type",            GTK_WINDOW_TOPLEVEL,
@@ -132,6 +130,13 @@ splash_create (void)
   g_signal_connect (splash->window, "map",
                     G_CALLBACK (splash_map),
                     NULL);
+
+  screen = gtk_widget_get_screen (splash->window);
+
+  splash->width  = MIN (gdk_pixbuf_get_width (pixbuf),
+                        gdk_screen_get_width (screen));
+  splash->height = MIN (gdk_pixbuf_get_height (pixbuf),
+                        gdk_screen_get_height (screen));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
