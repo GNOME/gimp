@@ -1,3 +1,9 @@
+Mon Jul 13 07:42:36 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/convert.c: July 6th's patch from Yasuhiro SHIRASAKI for
+	constraining custom-palette choices to <=256 colours broke
+	the automatic defaulting of 'Web' palette.  Fixed.
+
 Sun Jul 12 23:56:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_swap.c: #if 0'd some of mkj's last commit because it's

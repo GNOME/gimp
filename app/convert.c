@@ -517,12 +517,13 @@ convert_to_indexed (GimpImage *gimage)
 }
 
 static GtkWidget *
-build_palette_menu(int *default_palette){
+build_palette_menu(int *default_palette)
+{
   GtkWidget *menu;
   GtkWidget *menu_item;
   GSList *list;
   PaletteEntriesP entries;
-  int i;
+  int i, item;
 
 
   UserHasWebPal = FALSE;
@@ -540,9 +541,9 @@ build_palette_menu(int *default_palette){
 
   menu = gtk_menu_new();
 
-  for(i=0,list = palette_entries_list,*default_palette=-1;
+  for(i=0, item=0, list = palette_entries_list, *default_palette = -1;
       list;
-      i++,list = g_slist_next (list))
+      i++, list = g_slist_next (list))
     {
       entries = (PaletteEntriesP) list->data;
 
@@ -555,15 +556,20 @@ build_palette_menu(int *default_palette){
 	}
 
       /* We can't dither to > 256 colors */
-      if (entries->n_colors <= 256) {
-	menu_item = gtk_menu_item_new_with_label (entries->name);
-	gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			    (GtkSignalFunc) palette_entries_callback,
-			    (gpointer)entries);
-	gtk_container_add(GTK_CONTAINER(menu), menu_item);
-	gtk_widget_show(menu_item);
-	if (theCustomPalette == entries) *default_palette = i;
-      }
+      if (entries->n_colors <= 256)
+	{
+	  menu_item = gtk_menu_item_new_with_label (entries->name);
+	  gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			      (GtkSignalFunc) palette_entries_callback,
+			      (gpointer)entries);
+	  gtk_container_add(GTK_CONTAINER(menu), menu_item);
+	  gtk_widget_show(menu_item);
+	  if (theCustomPalette == entries)
+	    {
+	      *default_palette = item;
+	    }
+	  item++;
+	}
     }
 
    /* default to first one (only used if 'web' palette not avail.) */
