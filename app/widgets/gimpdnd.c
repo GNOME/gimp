@@ -939,7 +939,6 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
 			GtkSignalFunc  get_tool_func,
 			gpointer       get_tool_data)
 {
-  GdkPixmap *tool_pixmap;
   GtkWidget *tool_icon;
   ToolType   tool_type;
 
@@ -949,11 +948,7 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
 
-  tool_pixmap = create_tool_pixmap (widget, tool_type);
-
-  tool_icon = gtk_pixmap_new (tool_pixmap, NULL);
-
-  gdk_pixmap_unref (tool_pixmap);
+  tool_icon = gtk_pixmap_new (tool_get_pixmap (tool_type), NULL);
 
   return tool_icon;
 }

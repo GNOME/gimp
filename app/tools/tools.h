@@ -88,15 +88,16 @@ struct _ToolInfo
 {
   ToolOptions *tool_options;
 
-  gchar    *tool_name;
+  gchar     *tool_name;
 
-  gchar    *menu_path;  
-  gchar    *menu_accel; 
+  gchar     *menu_path;  
+  gchar     *menu_accel; 
 
-  gchar   **icon_data;
+  gchar    **icon_data;
+  GdkPixmap *icon_pixmap;
 
-  gchar    *tool_desc;
-  gchar    *private_tip;
+  gchar     *tool_desc;
+  gchar     *private_tip;
 
   ToolType  tool_id;
 
@@ -104,7 +105,7 @@ struct _ToolInfo
   ToolInfoFreeFunc free_func;
   ToolInfoInitFunc init_func;
 
-  GtkWidget   *tool_widget;
+  GtkWidget *tool_widget;
 
   GimpContext *tool_context;
 };
@@ -135,4 +136,11 @@ void     tool_options_dialog_free  (void);
 
 gchar  * tool_active_PDB_string    (void);
 
+/* don't unref this pixmap, it is static! */
+GdkPixmap * tool_get_pixmap        (ToolType     tool_type);
+
 #endif  /*  __TOOLS_H__  */
+
+
+
+

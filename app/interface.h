@@ -27,9 +27,6 @@ GtkWidget * create_pixmap_widget   (GdkWindow    *parent,
 				    gint          width,
 				    gint          height);
 
-GdkPixmap * create_tool_pixmap     (GtkWidget    *parent,
-				    ToolType      type);
-
 void        create_toolbox         (void);
 void	    toolbox_free           (void);
 

@@ -1,3 +1,15 @@
+Tue Feb  8 21:35:10 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c
+	* app/gimpdnd.c
+	* app/interface.c
+	* app/interface.h
+	* app/tools.c
+	* app/tools.h: create the pixmaps in the image_window and in the
+	toolbox static and reuse them everywhere. Added tool pixmaps to
+	the tool_options dialog as an extra goodie. Should help to 
+	visualize that these are tools.
+   
 2000-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/by_color_select.c: show our selection mode cursors (REPLACE,

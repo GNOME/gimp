@@ -50,6 +50,7 @@
 
 #include "libgimp/gimpintl.h"
 
+
 /*  local functions  */
 static void  tools_select_update   (GtkWidget      *widget,
 				    gpointer        data);
@@ -312,29 +313,32 @@ create_color_area (GtkWidget *parent)
   gtk_widget_show (frame);
 }
 
-GdkPixmap *
-create_tool_pixmap (GtkWidget *parent,
-		    ToolType   type)
+/* creates all icons */
+static void
+create_tool_pixmaps (GtkWidget *parent)
 {
-  /*
-   * FIXME this really should be dones without using the #defined tool names
-   * but it should work this way for now
-   */
-  if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
-    type = ROTATE;
+  ToolType type;
+  gint i;
 
-  if (tool_info[(int) type].icon_data)
-    return create_pixmap (parent->window, NULL,
-			  tool_info[(int) type].icon_data,
-			  22, 22);
-  else
-    return create_pixmap (parent->window, NULL,
-			  dialog_bits,
-			  22, 22);
+  g_return_if_fail (parent != NULL);
 
-  g_return_val_if_fail (FALSE, NULL);
+  for (i = 0; i < num_tools; i++)
+    {
+      type = i;
 
-  return NULL;	/* not reached */
+      if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
+	type = ROTATE;
+
+      if (tool_info[type].icon_data)
+	tool_info[i].icon_pixmap = create_pixmap (parent->window, NULL,
+						  tool_info[type].icon_data,
+						  22, 22);
+      
+      else
+	tool_info[i].icon_pixmap = create_pixmap (parent->window, NULL,
+						  dialog_bits,
+						  22, 22);
+    }
 }
 
 static void
@@ -350,6 +354,8 @@ create_tools (GtkWidget *parent)
   wbox = parent;
 
   gtk_widget_realize (gtk_widget_get_toplevel (wbox));
+  
+  create_tool_pixmaps (wbox);
 
   group = NULL;
 
@@ -371,7 +377,7 @@ create_tools (GtkWidget *parent)
 	  gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
 	  gtk_container_add (GTK_CONTAINER (button), alignment);
 
-	  pixmap = create_pixmap_widget (wbox->window, tool_info[j].icon_data, 22, 22);
+	  pixmap = gtk_pixmap_new (tool_get_pixmap ((ToolType)j), NULL);
 	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
 
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -499,23 +505,6 @@ create_pixmap (GdkWindow  *parent,
   return pixmap;
 }
 
-GtkWidget*
-create_pixmap_widget (GdkWindow  *parent,
-		      gchar     **data,
-		      gint        width,
-		      gint        height)
-{
-  GtkWidget *widget;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-
-  pixmap = create_pixmap (parent, &mask, data, width, height);
-  widget = gtk_pixmap_new (pixmap, mask);
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
-  
-  return (widget);
-}
 
 void
 create_toolbox (void)
@@ -623,6 +612,9 @@ toolbox_free (void)
   gtk_widget_destroy (toolbox_shell);
   for (i = 0; i < num_tools; i++)
     {
+      if (tool_info[i].icon_pixmap)
+	gdk_pixmap_unref (tool_info[i].icon_pixmap);
+      
       if (!tool_info[i].icon_data)
 	gtk_object_sink (GTK_OBJECT (tool_info[i].tool_widget));
     }
@@ -645,6 +637,13 @@ create_display_shell (GDisplay* gdisp,
 {
   static GtkWidget *image_popup_menu = NULL;
   static GtkAccelGroup *image_accel_group = NULL;
+
+  static GdkPixmap *qmasksel_pixmap   = NULL;
+  static GdkBitmap *qmasksel_mask     = NULL;
+  static GdkPixmap *qmasknosel_pixmap = NULL;
+  static GdkBitmap *qmasknosel_mask   = NULL;
+  static GdkPixmap *navbutton_pixmap  = NULL;
+  static GdkBitmap *navbutton_mask    = NULL;
   
   GtkWidget *vbox;
   GtkWidget *table;
@@ -851,48 +850,37 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskoff), 15, 15);
 
-  /* Draw pixmaps - note: you must realize the parent prior to doing the
+  /* Create pixmaps - note: you must realize the parent prior to doing the
      rest! */  
-  {
-    GdkPixmap *pxmp;
-    GdkBitmap *mask;
-    GtkStyle *style;
+  if (!qmasksel_pixmap)
+    {
+      GtkStyle *style;
+      
+      gtk_widget_realize (gdisp->shell);
+      style = gtk_widget_get_style (gdisp->shell);
+      
+      qmasksel_pixmap = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &qmasksel_mask,
+						      &style->bg[GTK_STATE_NORMAL],
+						      qmasksel_xpm);   
+      qmasknosel_pixmap = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &qmasknosel_mask,
+							&style->bg[GTK_STATE_NORMAL],
+							qmasknosel_xpm);   
+      navbutton_pixmap = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &navbutton_mask,
+						       &style->bg[GTK_STATE_NORMAL],
+						       navbutton_xpm);   
+    }
 
-    gtk_widget_realize (gdisp->shell);
-    style = gtk_widget_get_style (gdisp->shell);
-   
-    pxmp = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 qmasksel_xpm);   
+  pixmap = gtk_pixmap_new (qmasksel_pixmap, qmasksel_mask);
+  gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
+  gtk_widget_show (pixmap);
 
-    pixmap = gtk_pixmap_new (pxmp, mask);
-    gdk_pixmap_unref (pxmp);
-    gdk_bitmap_unref (mask);
-    
-    gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
-    gtk_widget_show (pixmap);
-  
-    pxmp = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 qmasknosel_xpm);   
-    pixmap = gtk_pixmap_new (pxmp, mask);
-    gdk_pixmap_unref (pxmp);
-    gdk_bitmap_unref (mask);
+  pixmap = gtk_pixmap_new (qmasknosel_pixmap, qmasknosel_mask);
+  gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
+  gtk_widget_show (pixmap);
 
-    gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
-    gtk_widget_show (pixmap);
-
-    /* nav button pixmap */
-    pxmp = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 navbutton_xpm);   
-    pixmap = gtk_pixmap_new (pxmp, mask);
-    gdk_pixmap_unref (pxmp);
-    gdk_bitmap_unref (mask);
-
-    gtk_container_add (GTK_CONTAINER (navhbox), pixmap); 
-    gtk_widget_show (pixmap); 
-  }
+  pixmap = gtk_pixmap_new (navbutton_pixmap, navbutton_mask);
+  gtk_container_add (GTK_CONTAINER (navhbox), pixmap); 
+  gtk_widget_show (pixmap);
  
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
