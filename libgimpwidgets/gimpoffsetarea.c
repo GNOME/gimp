@@ -41,12 +41,15 @@ enum
 
 
 static void      gimp_offset_area_class_init (GimpOffsetAreaClass *klass);
-static void      gimp_offset_area_init       (GimpOffsetArea      *offset_area);
+static void      gimp_offset_area_init       (GimpOffsetArea      *area);
 
-static void      gimp_offset_area_resize     (GimpOffsetArea      *offset_area);
-static gboolean  gimp_offset_area_event      (GtkWidget           *widget,
-                                              GdkEvent            *event);
-static void      gimp_offset_area_draw       (GimpOffsetArea      *offset_area);
+static void      gimp_offset_area_resize        (GimpOffsetArea   *area);
+static void      gimp_offset_area_size_allocate (GtkWidget        *widget,
+                                                 GtkAllocation    *allocation);
+static gboolean  gimp_offset_area_event         (GtkWidget        *widget,
+                                                 GdkEvent         *event);
+static gboolean  gimp_offset_area_expose_event  (GtkWidget        *widget,
+                                                 GdkEventExpose   *eevent);
 
 
 static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
@@ -57,11 +60,11 @@ static GtkDrawingAreaClass *parent_class = NULL;
 GType
 gimp_offset_area_get_type (void)
 {
-  static GType offset_area_type = 0;
+  static GType area_type = 0;
 
-  if (! offset_area_type)
+  if (! area_type)
     {
-      static const GTypeInfo offset_area_info =
+      static const GTypeInfo area_info =
       {
         sizeof (GimpOffsetAreaClass),
 	(GBaseInitFunc) NULL,
@@ -74,22 +77,18 @@ gimp_offset_area_get_type (void)
 	(GInstanceInitFunc) gimp_offset_area_init,
       };
 
-      offset_area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                                 "GimpOffsetArea",
-                                                 &offset_area_info, 0);
+      area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+                                          "GimpOffsetArea",
+                                          &area_info, 0);
     }
 
-  return offset_area_type;
+  return area_type;
 }
 
 static void
 gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -104,22 +103,24 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
-  widget_class->event = gimp_offset_area_event;
+  widget_class->event         = gimp_offset_area_event;
+  widget_class->expose_event  = gimp_offset_area_expose_event;
+  widget_class->size_allocate = gimp_offset_area_size_allocate;
 }
 
 static void
-gimp_offset_area_init (GimpOffsetArea *offset_area)
+gimp_offset_area_init (GimpOffsetArea *area)
 {
-  offset_area->orig_width      = 0;
-  offset_area->orig_height     = 0;
-  offset_area->width           = 0;
-  offset_area->height          = 0;
-  offset_area->offset_x        = 0;
-  offset_area->offset_y        = 0;
-  offset_area->display_ratio_x = 1.0;
-  offset_area->display_ratio_y = 1.0;
+  area->orig_width      = 0;
+  area->orig_height     = 0;
+  area->width           = 0;
+  area->height          = 0;
+  area->offset_x        = 0;
+  area->offset_y        = 0;
+  area->display_ratio_x = 1.0;
+  area->display_ratio_y = 1.0;
 
-  gtk_widget_add_events (GTK_WIDGET (offset_area),
+  gtk_widget_add_events (GTK_WIDGET (area),
                          GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 }
 
@@ -138,19 +139,43 @@ GtkWidget *
 gimp_offset_area_new (gint orig_width,
                       gint orig_height)
 {
-  GimpOffsetArea *offset_area;
+  GimpOffsetArea *area;
 
   g_return_val_if_fail (orig_width  > 0, NULL);
   g_return_val_if_fail (orig_height > 0, NULL);
 
-  offset_area = g_object_new (GIMP_TYPE_OFFSET_AREA, NULL);
+  area = g_object_new (GIMP_TYPE_OFFSET_AREA, NULL);
 
-  offset_area->orig_width  = offset_area->width  = orig_width;
-  offset_area->orig_height = offset_area->height = orig_height;
+  area->orig_width  = area->width  = orig_width;
+  area->orig_height = area->height = orig_height;
 
-  gimp_offset_area_resize (offset_area);
+  gimp_offset_area_resize (area);
 
-  return GTK_WIDGET (offset_area);
+  return GTK_WIDGET (area);
+}
+
+/**
+ * gimp_offset_area_set_pixbuf:
+ * @offset_area: a #GimpOffsetArea.
+ * @pixbuf: a #GdkPixbuf.
+ *
+ * Sets the pixbuf which represents the original image/drawable which
+ * is being offset.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_offset_area_set_pixbuf (GimpOffsetArea *area,
+                             GdkPixbuf      *pixbuf)
+{
+  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
+  g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
+
+  g_object_set_data_full (G_OBJECT (area), "pixbuf",
+                          gdk_pixbuf_copy (pixbuf),
+                          (GDestroyNotify) g_object_unref);
+
+  gtk_widget_queue_draw (GTK_WIDGET (area));
 }
 
 /**
@@ -164,49 +189,43 @@ gimp_offset_area_new (gint orig_width,
  * signal is emitted.
  **/
 void
-gimp_offset_area_set_size (GimpOffsetArea *offset_area,
+gimp_offset_area_set_size (GimpOffsetArea *area,
                            gint            width,
                            gint            height)
 {
   gint offset_x;
   gint offset_y;
 
-  g_return_if_fail (GIMP_IS_OFFSET_AREA (offset_area));
+  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
 
   g_return_if_fail (width > 0 && height > 0);
 
-  if (offset_area->width != width || offset_area->height != height)
+  if (area->width != width || area->height != height)
     {
-      offset_area->width  = width;
-      offset_area->height = height;
+      area->width  = width;
+      area->height = height;
 
-      if (offset_area->orig_width <= offset_area->width)
-        offset_x = CLAMP (offset_area->offset_x,
-                          0, offset_area->width - offset_area->orig_width);
+      if (area->orig_width <= area->width)
+        offset_x = CLAMP (area->offset_x, 0, area->width - area->orig_width);
       else
-        offset_x = CLAMP (offset_area->offset_x,
-                          offset_area->width - offset_area->orig_width, 0);
+        offset_x = CLAMP (area->offset_x, area->width - area->orig_width, 0);
 
-      if (offset_area->orig_height <= offset_area->height)
-        offset_y = CLAMP (offset_area->offset_y,
-                          0, offset_area->height - offset_area->orig_height);
+      if (area->orig_height <= area->height)
+        offset_y = CLAMP (area->offset_y, 0, area->height - area->orig_height);
       else
-        offset_y = CLAMP (offset_area->offset_y,
-                          offset_area->height - offset_area->orig_height, 0);
+        offset_y = CLAMP (area->offset_y, area->height - area->orig_height, 0);
 
-      offset_area->offset_x = offset_x;
-      offset_area->offset_y = offset_y;
+      area->offset_x = offset_x;
+      area->offset_y = offset_y;
 
-      gimp_offset_area_resize (offset_area);
-      gtk_widget_queue_draw (GTK_WIDGET (offset_area));
+      gimp_offset_area_resize (area);
+      gtk_widget_queue_draw (GTK_WIDGET (area));
 
-      if (offset_x != offset_area->offset_x ||
-          offset_y != offset_area->offset_y)
+      if (offset_x != area->offset_x || offset_y != area->offset_y)
         {
-          g_signal_emit (offset_area,
+          g_signal_emit (area,
                          gimp_offset_area_signals[OFFSETS_CHANGED], 0,
-                         offset_area->offset_x,
-                         offset_area->offset_y);
+                         area->offset_x, area->offset_y);
         }
     }
 }
@@ -221,58 +240,104 @@ gimp_offset_area_set_size (GimpOffsetArea *offset_area,
  * It does not emit the %offsets_changed signal.
  **/
 void
-gimp_offset_area_set_offsets (GimpOffsetArea *offset_area,
+gimp_offset_area_set_offsets (GimpOffsetArea *area,
                               gint            offset_x,
                               gint            offset_y)
 {
-  g_return_if_fail (GIMP_IS_OFFSET_AREA (offset_area));
+  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
 
-  if (offset_area->offset_x != offset_x || offset_area->offset_y != offset_y)
+  if (area->offset_x != offset_x || area->offset_y != offset_y)
     {
-      if (offset_area->orig_width <= offset_area->width)
-        offset_area->offset_x =
-          CLAMP (offset_x, 0, offset_area->width - offset_area->orig_width);
+      if (area->orig_width <= area->width)
+        area->offset_x = CLAMP (offset_x, 0, area->width - area->orig_width);
       else
-        offset_area->offset_x =
-          CLAMP (offset_x, offset_area->width - offset_area->orig_width, 0);
+        area->offset_x = CLAMP (offset_x, area->width - area->orig_width, 0);
 
-      if (offset_area->orig_height <= offset_area->height)
-        offset_area->offset_y =
-          CLAMP (offset_y, 0, offset_area->height - offset_area->orig_height);
+      if (area->orig_height <= area->height)
+        area->offset_y = CLAMP (offset_y, 0, area->height - area->orig_height);
       else
-        offset_area->offset_y =
-          CLAMP (offset_y, offset_area->height - offset_area->orig_height, 0);
+        area->offset_y = CLAMP (offset_y, area->height - area->orig_height, 0);
 
-      gtk_widget_queue_draw (GTK_WIDGET (offset_area));
+      gtk_widget_queue_draw (GTK_WIDGET (area));
     }
 }
 
 static void
-gimp_offset_area_resize (GimpOffsetArea *offset_area)
+gimp_offset_area_resize (GimpOffsetArea *area)
 {
   gint    width;
   gint    height;
   gdouble ratio;
 
-  if (offset_area->orig_width == 0 || offset_area->orig_height == 0)
+  if (area->orig_width == 0 || area->orig_height == 0)
     return;
 
-  if (offset_area->orig_width <= offset_area->width)
-    width = offset_area->width;
+  if (area->orig_width <= area->width)
+    width = area->width;
   else
-    width = offset_area->orig_width * 2 - offset_area->width;
+    width = area->orig_width * 2 - area->width;
 
-  if (offset_area->orig_height <= offset_area->height)
-    height = offset_area->height;
+  if (area->orig_height <= area->height)
+    height = area->height;
   else
-    height = offset_area->orig_height * 2 - offset_area->height;
+    height = area->orig_height * 2 - area->height;
 
   ratio = (gdouble) DRAWING_AREA_SIZE / (gdouble) MAX (width, height);
 
   width  = ratio * (gdouble) width;
   height = ratio * (gdouble) height;
 
-  gtk_widget_set_size_request (GTK_WIDGET (offset_area), width, height);
+  gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
+}
+
+static void
+gimp_offset_area_size_allocate (GtkWidget     *widget,
+                                GtkAllocation *allocation)
+{
+  GimpOffsetArea *area = GIMP_OFFSET_AREA (widget);
+  GdkPixbuf      *pixbuf;
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  area->display_ratio_x = ((gdouble) allocation->width /
+                           ((area->orig_width <= area->width) ?
+                            area->width :
+                            area->orig_width * 2 - area->width));
+
+  area->display_ratio_y = ((gdouble) allocation->height /
+                           ((area->orig_height <= area->height) ?
+                            area->height :
+                            area->orig_height * 2 - area->height));
+
+  pixbuf = g_object_get_data (G_OBJECT (area), "pixbuf");
+
+  if (pixbuf)
+    {
+      GdkPixbuf *copy;
+      gint       pixbuf_width;
+      gint       pixbuf_height;
+
+      pixbuf_width  = area->display_ratio_x * area->orig_width;
+      pixbuf_height = area->display_ratio_y * area->orig_height;
+
+      copy = g_object_get_data (G_OBJECT (area), "pixbuf-copy");
+
+      if (copy &&
+          (pixbuf_width  != gdk_pixbuf_get_width (copy) ||
+           pixbuf_height != gdk_pixbuf_get_height (copy)))
+        {
+          copy = NULL;
+        }
+
+      if (! copy)
+        {
+          copy = gdk_pixbuf_scale_simple (pixbuf, pixbuf_width, pixbuf_height,
+                                          GDK_INTERP_NEAREST);
+
+          g_object_set_data_full (G_OBJECT (area), "pixbuf-copy",
+                                  copy, (GDestroyNotify) g_object_unref);
+        }
+    }
 }
 
 static gboolean
@@ -284,59 +349,40 @@ gimp_offset_area_event (GtkWidget *widget,
   static gint start_x       = 0;
   static gint start_y       = 0;
 
-  GimpOffsetArea    *offset_area = GIMP_OFFSET_AREA (widget);
-  GdkEventConfigure *conf_event;
-  gint               offset_x;
-  gint               offset_y;
+  GimpOffsetArea *area = GIMP_OFFSET_AREA (widget);
+  gint            offset_x;
+  gint            offset_y;
 
-  if (offset_area->orig_width == 0 || offset_area->orig_height == 0)
+  if (area->orig_width == 0 || area->orig_height == 0)
     return FALSE;
 
   switch (event->type)
     {
-    case GDK_CONFIGURE:
-      conf_event = (GdkEventConfigure *) event;
-      offset_area->display_ratio_x = (gdouble) conf_event->width /
-        ((offset_area->orig_width <= offset_area->width) ?
-         offset_area->width :
-         offset_area->orig_width * 2 - offset_area->width);
-
-      offset_area->display_ratio_y = (gdouble) conf_event->height /
-        ((offset_area->orig_height <= offset_area->height) ?
-         offset_area->height :
-         offset_area->orig_height * 2 - offset_area->height);
-      break;
-
-    case GDK_EXPOSE:
-      gimp_offset_area_draw (offset_area);
-      break;
-
     case GDK_BUTTON_PRESS:
       gdk_pointer_grab (widget->window, FALSE,
 			(GDK_BUTTON1_MOTION_MASK |
 			 GDK_BUTTON_RELEASE_MASK),
 			NULL, NULL, event->button.time);
 
-      orig_offset_x = offset_area->offset_x;
-      orig_offset_y = offset_area->offset_y;
+      orig_offset_x = area->offset_x;
+      orig_offset_y = area->offset_y;
       start_x = event->button.x;
       start_y = event->button.y;
       break;
 
     case GDK_MOTION_NOTIFY:
-      offset_x = orig_offset_x +
-        (event->motion.x - start_x) / offset_area->display_ratio_x;
-      offset_y = orig_offset_y +
-        (event->motion.y - start_y) / offset_area->display_ratio_y;
+      offset_x = (orig_offset_x +
+                  (event->motion.x - start_x) / area->display_ratio_x);
+      offset_y = (orig_offset_y +
+                  (event->motion.y - start_y) / area->display_ratio_y);
 
-      if (offset_area->offset_x != offset_x ||
-          offset_area->offset_y != offset_y)
+      if (area->offset_x != offset_x || area->offset_y != offset_y)
         {
-          gimp_offset_area_set_offsets (offset_area, offset_x, offset_y);
-          g_signal_emit (offset_area,
+          gimp_offset_area_set_offsets (area, offset_x, offset_y);
+
+          g_signal_emit (area,
                          gimp_offset_area_signals[OFFSETS_CHANGED], 0,
-                         offset_area->offset_x,
-                         offset_area->offset_y);
+                         area->offset_x, area->offset_y);
         }
       break;
 
@@ -353,52 +399,62 @@ gimp_offset_area_event (GtkWidget *widget,
   return FALSE;
 }
 
-static void
-gimp_offset_area_draw (GimpOffsetArea *offset_area)
+static gboolean
+gimp_offset_area_expose_event (GtkWidget      *widget,
+                               GdkEventExpose *eevent)
 {
-  GtkWidget *widget = GTK_WIDGET (offset_area);
-  gint w, h;
-  gint x, y;
+  GimpOffsetArea *area = GIMP_OFFSET_AREA (widget);
+  GdkPixbuf      *pixbuf;
+  gint            w, h;
+  gint            x, y;
 
-  gdk_window_clear (widget->window);
+  x = (area->display_ratio_x *
+       ((area->orig_width <= area->width) ?
+        area->offset_x :
+        area->offset_x + area->orig_width - area->width));
 
-  x = offset_area->display_ratio_x *
-    ((offset_area->orig_width <= offset_area->width) ?
-     offset_area->offset_x :
-     offset_area->offset_x + offset_area->orig_width - offset_area->width);
+  y = (area->display_ratio_y *
+       ((area->orig_height <= area->height) ?
+        area->offset_y :
+        area->offset_y + area->orig_height - area->height));
 
-  y = offset_area->display_ratio_y *
-    ((offset_area->orig_height <= offset_area->height) ?
-     offset_area->offset_y :
-     offset_area->offset_y + offset_area->orig_height - offset_area->height);
+  w = area->display_ratio_x * area->orig_width;
+  h = area->display_ratio_y * area->orig_height;
 
-  w = offset_area->display_ratio_x * offset_area->orig_width;
-  h = offset_area->display_ratio_y * offset_area->orig_height;
+  pixbuf = g_object_get_data (G_OBJECT (widget), "pixbuf-copy");
 
-  gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
-                    GTK_SHADOW_OUT,
-                    NULL, widget, NULL,
-                    x, y, w, h);
-
-  if (offset_area->orig_width > offset_area->width ||
-      offset_area->orig_height > offset_area->height)
+  if (pixbuf)
     {
-      if (offset_area->orig_width > offset_area->width)
+      gdk_draw_pixbuf (widget->window, widget->style->black_gc,
+                       pixbuf, 0, 0, x, y, w, h, GDK_RGB_DITHER_NORMAL, 0, 0);
+      gdk_draw_rectangle (widget->window, widget->style->black_gc, FALSE,
+                          x, y, w - 1, h - 1);
+    }
+  else
+    {
+      gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
+                        GTK_SHADOW_OUT,
+                        NULL, widget, NULL,
+                        x, y, w, h);
+    }
+
+  if (area->orig_width > area->width || area->orig_height > area->height)
+    {
+       if (area->orig_width > area->width)
 	{
-	  x = offset_area->display_ratio_x *
-            (offset_area->orig_width - offset_area->width);
-	  w = offset_area->display_ratio_x * offset_area->width;
+	  x = area->display_ratio_x * (area->orig_width - area->width);
+	  w = area->display_ratio_x * area->width;
 	}
       else
 	{
 	  x = -1;
 	  w = widget->allocation.width + 2;
 	}
-      if (offset_area->orig_height > offset_area->height)
+
+      if (area->orig_height > area->height)
 	{
-	  y = offset_area->display_ratio_y *
-            (offset_area->orig_height - offset_area->height);
-	  h = offset_area->display_ratio_y * offset_area->height;
+	  y = area->display_ratio_y * (area->orig_height - area->height);
+	  h = area->display_ratio_y * area->height;
 	}
       else
 	{
@@ -406,7 +462,26 @@ gimp_offset_area_draw (GimpOffsetArea *offset_area)
 	  h = widget->allocation.height + 2;
 	}
 
-      gdk_draw_rectangle (widget->window, widget->style->black_gc, 0,
-			  x, y, w, h);
+      if (pixbuf)
+        {
+          GdkGC *gc = gdk_gc_new (widget->window);
+
+          gdk_gc_set_function (gc, GDK_INVERT);
+          gdk_gc_set_line_attributes (gc, 3,
+                                      GDK_LINE_SOLID, GDK_CAP_BUTT,
+                                      GDK_JOIN_ROUND);
+
+          gdk_draw_rectangle (widget->window, gc, FALSE,
+                              x + 1, y + 1, w - 3, h - 3);
+
+          gdk_gc_unref (gc);
+       }
+      else
+        {
+          gdk_draw_rectangle (widget->window, widget->style->black_gc, FALSE,
+                              x, y, w, h);
+        }
     }
+
+  return FALSE;
 }

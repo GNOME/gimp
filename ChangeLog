@@ -1,3 +1,12 @@
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpoffsetarea.[ch]: added new function
+	gimp_offset_area_set_pixbuf(). Started to clean up the
+	code a bit.
+
+	* app/gui/resize-dialog.c (resize_widget_new): use the new feature
+	and set a preview of the image. Fixes bug #78733.
+
 2004-05-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/info-dialog.c

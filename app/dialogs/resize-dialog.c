@@ -533,6 +533,17 @@ resize_widget_new (GimpViewable *viewable,
       gtk_container_add (GTK_CONTAINER (frame), private->offset_area);
       gtk_widget_show (private->offset_area);
 
+      {
+        GdkPixbuf *pixbuf;
+        gint       w, h;
+
+        gimp_viewable_get_preview_size (viewable, 200, FALSE, TRUE, &w, &h);
+
+        pixbuf = gimp_viewable_get_preview_pixbuf (viewable, w, h);
+        gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->offset_area),
+                                     pixbuf);
+      }
+
       g_signal_connect (private->offset_area, "offsets_changed",
 			G_CALLBACK (offset_area_offsets_changed),
 			resize);

@@ -72,6 +72,8 @@ GType       gimp_offset_area_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_offset_area_new         (gint            orig_width,
                                           gint            orig_height);
+void        gimp_offset_area_set_pixbuf  (GimpOffsetArea *offset_area,
+                                          GdkPixbuf      *pixbuf);
 
 void        gimp_offset_area_set_size    (GimpOffsetArea *offset_area,
                                           gint            width,
