@@ -108,6 +108,8 @@ libappwidgets_a_sources = \
 	gimpdialogfactory.h		\
 	gimpdnd.c			\
 	gimpdnd.h			\
+	gimpdnd-xds.c			\
+	gimpdnd-xds.h			\
 	gimpdock.c			\
 	gimpdock.h			\
 	gimpdockable.c			\

@@ -29,6 +29,9 @@
 #define GIMP_TARGET_NETSCAPE_URL \
         { "_NETSCAPE_URL", 0, GIMP_DND_TYPE_NETSCAPE_URL }
 
+#define GIMP_TARGET_XDS \
+        { "XdndDirectSave0", 0, GIMP_DND_TYPE_XDS }
+
 #define GIMP_TARGET_COLOR \
         { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
 
@@ -95,7 +98,7 @@
 void  gimp_dnd_init (Gimp *gimp);
 
 
-/*  uri list  dnd functions  */
+/*  uri list dnd functions  */
 
 typedef GList * (* GimpDndDragUriListFunc) (GtkWidget *widget,
                                             gpointer   data);
@@ -219,6 +222,14 @@ gboolean gimp_dnd_viewable_dest_remove    (GtkWidget               *widget,
                                            GType                    type);
 
 GimpViewable * gimp_dnd_get_drag_data     (GtkWidget               *widget);
+
+
+/*  Direct Save Protocol (XDS)  */
+
+void  gimp_dnd_xds_source_add    (GtkWidget               *widget,
+                                  GimpDndDragViewableFunc  get_image_func,
+                                  gpointer                 data);
+void  gimp_dnd_xds_source_remove (GtkWidget               *widget);
 
 
 #endif /* __GIMP_DND_H__ */

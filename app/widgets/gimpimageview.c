@@ -45,6 +45,9 @@ static void   gimp_image_view_init          (GimpImageView       *view);
 static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
+static const gchar * gimp_image_view_drag_xds (GtkWidget *widget,
+                                               gpointer   data);
+
 
 static GimpContainerEditorClass *parent_class = NULL;
 
@@ -132,6 +135,17 @@ gimp_image_view_new (GimpViewType     view_type,
   image_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
                                    "images-delete", NULL);
+
+  if (view_type == GIMP_VIEW_TYPE_LIST)
+    {
+      GtkWidget *dnd_widget;
+
+      dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
+
+      gimp_dnd_xds_source_add (dnd_widget,
+                               (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
+                               NULL);
+    }
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (image_view->raise_button),

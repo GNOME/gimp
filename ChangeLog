@@ -1,3 +1,15 @@
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdnd-xds.[ch]: new files.
+
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/widgets-enums.h: added a basic XDS (Direct Save
+	Protocol) implementation.
+
+	* app/widgets/gimpimageview.c: allow to save images by dragging
+	them from the Images dialog to an XDS capable file manager.
+
 2005-03-25  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/common/displace.c: Fixed off-by-one error in check for

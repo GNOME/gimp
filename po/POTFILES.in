@@ -321,6 +321,7 @@ app/widgets/gimpdataeditor.c
 app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
 app/widgets/gimpdnd.c
+app/widgets/gimpdnd-xds.c
 app/widgets/gimpdock.c
 app/widgets/gimpdockable.c
 app/widgets/gimpdocumentview.c
