@@ -635,16 +635,16 @@ vectors_edit_vectors_query (GimpVectors *vectors,
 /*******************************/
 
 static void
-vectors_import_ok_callback (GtkWidget *widget)
+vectors_import_response (GtkWidget *dialog,
+                         gint       response_id,
+                         GimpImage *gimage)
 {
-  GimpImage *gimage = g_object_get_data (G_OBJECT (widget), "gimp-image");
-
-  if (gimage)
+  if (response_id == GTK_RESPONSE_OK)
     {
       const gchar *filename;
       GError      *error = NULL;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
       if (gimp_vectors_import (gimage, filename, FALSE, FALSE, &error))
         {
@@ -655,12 +655,11 @@ vectors_import_ok_callback (GtkWidget *widget)
           g_message (error->message);
           g_error_free (error);
         }
-
-      g_object_weak_unref (G_OBJECT (gimage),
-                           (GWeakNotify) gtk_widget_destroy, widget);
     }
 
-  gtk_widget_destroy (widget);
+  g_object_weak_unref (G_OBJECT (gimage),
+                       (GWeakNotify) gtk_widget_destroy, dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -672,7 +671,6 @@ vectors_import_query (GimpImage *gimage,
   filesel =
     GTK_FILE_SELECTION (gtk_file_selection_new (_("Import Paths from SVG")));
 
-  g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
 
@@ -682,15 +680,15 @@ vectors_import_query (GimpImage *gimage,
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-import");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
 
-  g_signal_connect_swapped (filesel->ok_button, "clicked",
-                            G_CALLBACK (vectors_import_ok_callback),
-                            filesel);
-  g_signal_connect_swapped (filesel->cancel_button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            filesel);
+  g_signal_connect (filesel, "response",
+                    G_CALLBACK (vectors_import_response),
+                    gimage);
+  g_signal_connect (filesel, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
 
   /*  FIXME: add a proper file selector
       and controls for merge and scale options  */
@@ -704,28 +702,27 @@ vectors_import_query (GimpImage *gimage,
 /*******************************/
 
 static void
-vectors_export_ok_callback (GtkWidget *widget)
+vectors_export_response (GtkWidget *dialog,
+                         gint       response_id,
+                         GimpImage *gimage)
 {
-  GimpImage *gimage = g_object_get_data (G_OBJECT (widget), "gimp-image");
-
-  if (gimage)
+  if (response_id == GTK_RESPONSE_OK)
     {
       const gchar *filename;
       GError      *error = NULL;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
       if (! gimp_vectors_export (gimage, NULL, filename, &error))
         {
           g_message (error->message);
           g_error_free (error);
         }
-
-      g_object_weak_unref (G_OBJECT (gimage),
-                           (GWeakNotify) gtk_widget_destroy, widget);
     }
 
-  gtk_widget_destroy (widget);
+  g_object_weak_unref (G_OBJECT (gimage),
+                       (GWeakNotify) gtk_widget_destroy, dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -738,7 +735,6 @@ vectors_export_query (GimpImage   *gimage,
   filesel =
     GTK_FILE_SELECTION (gtk_file_selection_new (_("Export Path to SVG")));
 
-  g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
 
@@ -748,15 +744,15 @@ vectors_export_query (GimpImage   *gimage,
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
 
-  g_signal_connect_swapped (filesel->ok_button, "clicked",
-                            G_CALLBACK (vectors_export_ok_callback),
-                            filesel);
-  g_signal_connect_swapped (filesel->cancel_button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            filesel);
+  g_signal_connect (filesel, "response",
+                    G_CALLBACK (vectors_export_response),
+                    gimage);
+  g_signal_connect (filesel, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

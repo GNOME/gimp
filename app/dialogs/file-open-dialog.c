@@ -80,8 +80,9 @@ static gboolean    file_open_thumbnail_button_press (GtkWidget        *widget,
 static void        file_open_thumbnail_clicked      (GtkWidget        *widget,
                                                      GdkModifierType   state,
                                                      GtkWidget        *open_dialog);
-static void        file_open_ok_callback            (GtkWidget        *widget,
-                                                     GtkWidget        *open_dialog);
+static void        file_open_response_callback      (GtkWidget        *open_dialog,
+                                                     gint              response_id,
+                                                     Gimp             *gimp);
 static void        file_open_dialog_open_image      (GtkWidget        *open_dialog,
                                                      Gimp             *gimp,
                                                      const gchar      *uri,
@@ -183,8 +184,11 @@ file_open_dialog_create (Gimp            *gimp,
                                  "gimp-file-open-dialog",
                                  menu_factory, "<Load>",
                                  _("Open Image"), "gimp-file-open",
-                                 GIMP_HELP_FILE_OPEN,
-                                 G_CALLBACK (file_open_ok_callback));
+                                 GIMP_HELP_FILE_OPEN);
+
+  g_signal_connect (open_dialog, "response",
+                    G_CALLBACK (file_open_response_callback),
+                    gimp);
 
   fs = GTK_FILE_SELECTION (open_dialog);
 
@@ -589,19 +593,23 @@ file_open_thumbnail_clicked (GtkWidget       *widget,
 }
 
 static void
-file_open_ok_callback (GtkWidget *widget,
-		       GtkWidget *open_dialog)
+file_open_response_callback (GtkWidget *open_dialog,
+                             gint       response_id,
+                             Gimp      *gimp)
 {
   GtkFileSelection  *fs;
-  Gimp              *gimp;
   gchar            **selections;
   gchar             *uri;
   const gchar       *entered_filename;
   gint               i;
 
-  fs = GTK_FILE_SELECTION (open_dialog);
+  if (response_id != GTK_RESPONSE_OK)
+    {
+      file_dialog_hide (open_dialog);
+      return;
+    }
 
-  gimp = GIMP (g_object_get_data (G_OBJECT (open_dialog), "gimp"));
+  fs = GTK_FILE_SELECTION (open_dialog);
 
   selections = gtk_file_selection_get_selections (fs);
 

@@ -48,8 +48,7 @@ file_dialog_new (Gimp              *gimp,
                  const gchar       *menu_identifier,
                  const gchar       *title,
                  const gchar       *role,
-                 const gchar       *help_id,
-                 GCallback          ok_callback)
+                 const gchar       *help_id)
 {
   GtkWidget        *filesel;
   GtkFileSelection *fs;
@@ -62,7 +61,6 @@ file_dialog_new (Gimp              *gimp,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
-  g_return_val_if_fail (ok_callback != NULL, NULL);
 
   filesel = gtk_file_selection_new (title);
 
@@ -75,19 +73,12 @@ file_dialog_new (Gimp              *gimp,
 
   gimp_help_connect (filesel, gimp_standard_help_func, help_id, NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 4);
 
-  g_signal_connect_swapped (fs->cancel_button, "clicked",
-			    G_CALLBACK (file_dialog_hide),
-			    filesel);
   g_signal_connect (filesel, "delete_event",
-		    G_CALLBACK (file_dialog_hide),
+                    G_CALLBACK (gtk_true),
 		    NULL);
-
-  g_signal_connect (fs->ok_button, "clicked",
-		    G_CALLBACK (ok_callback),
-		    filesel);
 
   /*  The file type menu  */
   {

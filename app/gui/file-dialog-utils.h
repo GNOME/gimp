@@ -27,8 +27,7 @@ GtkWidget * file_dialog_new         (Gimp              *gimp,
                                      const gchar       *menu_identifier,
                                      const gchar       *title,
                                      const gchar       *role,
-                                     const gchar       *help_id,
-                                     GCallback          ok_callback);
+                                     const gchar       *help_id);
 
 void        file_dialog_show        (GtkWidget         *filesel,
                                      GtkWidget         *parent);

@@ -135,7 +135,9 @@ static void   curves_graph_expose             (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
 
 static void       file_dialog_create          (GimpCurvesTool   *c_tool);
-static void       file_dialog_ok_callback     (GimpCurvesTool   *c_tool);
+static void       file_dialog_response        (GtkWidget        *dialog,
+                                               gint              response_id,
+                                               GimpCurvesTool   *c_tool);
 
 static gboolean   curves_read_from_file       (GimpCurvesTool   *c_tool,
                                                FILE             *file);
@@ -1234,8 +1236,8 @@ file_dialog_create (GimpCurvesTool *c_tool)
   gtk_window_set_role (GTK_WINDOW (file_dlg), "gimp-load-save-curves");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 4);
 
   g_object_add_weak_pointer (G_OBJECT (file_dlg),
                              (gpointer) &c_tool->file_dialog);
@@ -1244,12 +1246,9 @@ file_dialog_create (GimpCurvesTool *c_tool)
                                 GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (c_tool)->shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect_swapped (file_dlg->ok_button, "clicked",
-                            G_CALLBACK (file_dialog_ok_callback),
-                            c_tool);
-  g_signal_connect_swapped (file_dlg->cancel_button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            file_dlg);
+  g_signal_connect (file_dlg, "response",
+                    G_CALLBACK (file_dialog_response),
+                    c_tool);
 
   temp = g_build_filename (gimp_directory (), "curves", ".", NULL);
   gtk_file_selection_set_filename (file_dlg, temp);
@@ -1260,38 +1259,41 @@ file_dialog_create (GimpCurvesTool *c_tool)
 }
 
 static void
-file_dialog_ok_callback (GimpCurvesTool *c_tool)
+file_dialog_response (GtkWidget      *dialog,
+                      gint            response_id,
+                      GimpCurvesTool *c_tool)
 {
-  FILE        *file = NULL;
-  const gchar *filename;
-
-  filename =
-    gtk_file_selection_get_filename (GTK_FILE_SELECTION (c_tool->file_dialog));
-
-  file = fopen (filename, c_tool->is_save ? "wt" : "rt");
-
-  if (! file)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      g_message (c_tool->is_save ?
-                 _("Could not open '%s' for writing: %s") :
-                 _("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
-      return;
+      const gchar *filename;
+      FILE        *file;
+
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+
+      file = fopen (filename, c_tool->is_save ? "wt" : "rt");
+
+      if (! file)
+        {
+          g_message (c_tool->is_save ?
+                     _("Could not open '%s' for writing: %s") :
+                     _("Could not open '%s' for reading: %s"),
+                     filename, g_strerror (errno));
+          return;
+        }
+
+      if (c_tool->is_save)
+        {
+          curves_write_to_file (c_tool, file);
+        }
+      else if (! curves_read_from_file (c_tool, file))
+        {
+          g_message ("Error in reading file '%s'.", filename);
+        }
+
+      fclose (file);
     }
 
-  if (c_tool->is_save)
-    {
-      curves_write_to_file (c_tool, file);
-    }
-  else if (! curves_read_from_file (c_tool, file))
-    {
-      g_message ("Error in reading file '%s'.", filename);
-    }
-
-  if (file)
-    fclose (file);
-
-  gtk_widget_destroy (c_tool->file_dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static gboolean

@@ -80,7 +80,8 @@ static void gimp_error_console_save_clicked     (GtkWidget        *button,
 static void gimp_error_console_save_ext_clicked (GtkWidget        *button,
                                                  GdkModifierType   state,
                                                  GimpErrorConsole *console);
-static void gimp_error_console_save_ok_clicked  (GtkWidget        *widget,
+static void gimp_error_console_save_response    (GtkWidget        *dialog,
+                                                 gint              response_id,
                                                  GimpErrorConsole *console);
 
 static gboolean gimp_error_console_write_file   (GtkTextBuffer    *text_buffer,
@@ -367,19 +368,11 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-save-errors");
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
 
-  g_signal_connect_swapped (filesel->cancel_button, "clicked",
-			    G_CALLBACK (gtk_widget_destroy),
-			    filesel);
-
-  g_signal_connect_swapped (filesel, "delete_event",
-			    G_CALLBACK (gtk_widget_destroy),
-			    filesel);
-
-  g_signal_connect (filesel->ok_button, "clicked",
-		    G_CALLBACK (gimp_error_console_save_ok_clicked),
+  g_signal_connect (filesel, "response",
+		    G_CALLBACK (gimp_error_console_save_response),
 		    console);
 
   gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
@@ -389,26 +382,26 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
 }
 
 static void
-gimp_error_console_save_ok_clicked (GtkWidget        *widget,
-                                    GimpErrorConsole *console)
+gimp_error_console_save_response (GtkWidget        *dialog,
+                                  gint              response_id,
+                                  GimpErrorConsole *console)
 {
-  GtkFileSelection *filesel;
-  const gchar      *filename;
-
-  filesel = GTK_FILE_SELECTION (console->filesel);
-
-  filename = gtk_file_selection_get_filename (filesel);
-
-  if (! gimp_error_console_write_file (console->text_buffer, filename,
-                                       console->save_selection))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      g_message (_("Error writing file '%s':\n%s"),
-		 filename, g_strerror (errno));
+      const gchar *filename;
+
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+
+      if (! gimp_error_console_write_file (console->text_buffer, filename,
+                                           console->save_selection))
+        {
+          g_message (_("Error writing file '%s':\n%s"),
+                     filename, g_strerror (errno));
+          return;
+        }
     }
-  else
-    {
-      gtk_widget_destroy (GTK_WIDGET (filesel));
-    }
+
+  gtk_widget_destroy (dialog);
 }
 
 static gboolean

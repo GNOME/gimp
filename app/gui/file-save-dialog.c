@@ -59,8 +59,9 @@
 
 static GtkWidget * file_save_dialog_create      (Gimp            *gimp,
                                                  GimpMenuFactory *menu_factory);
-static void        file_save_ok_callback        (GtkWidget       *widget,
-                                                 GtkWidget       *save_dialog);
+static void        file_save_response_callback  (GtkWidget       *save_dialog,
+                                                 gint             response_id,
+                                                 Gimp            *gimp);
 static void        file_save_overwrite          (GtkWidget       *save_dialog,
                                                  const gchar     *uri,
                                                  const gchar     *raw_filename);
@@ -202,23 +203,37 @@ static GtkWidget *
 file_save_dialog_create (Gimp            *gimp,
                          GimpMenuFactory *menu_factory)
 {
-  return file_dialog_new (gimp,
-                          global_dialog_factory,
-                          "gimp-file-save-dialog",
-                          menu_factory, "<Save>",
-                          _("Save Image"), "gimp-file-save",
-                          GIMP_HELP_FILE_SAVE,
-                          G_CALLBACK (file_save_ok_callback));
+  GtkWidget *save_dialog;
+
+  save_dialog = file_dialog_new (gimp,
+                                 global_dialog_factory,
+                                 "gimp-file-save-dialog",
+                                 menu_factory, "<Save>",
+                                 _("Save Image"), "gimp-file-save",
+                                 GIMP_HELP_FILE_SAVE);
+
+  g_signal_connect (save_dialog, "response",
+                    G_CALLBACK (file_save_response_callback),
+                    gimp);
+
+  return save_dialog;
 }
 
 static void
-file_save_ok_callback (GtkWidget *widget,
-		       GtkWidget *save_dialog)
+file_save_response_callback (GtkWidget *save_dialog,
+                             gint       response_id,
+                             Gimp      *gimp)
 {
   GtkFileSelection *fs;
   const gchar      *filename;
   const gchar      *raw_filename;
   gchar            *uri;
+
+  if (response_id != GTK_RESPONSE_OK)
+    {
+      file_dialog_hide (save_dialog);
+      return;
+    }
 
   fs = GTK_FILE_SELECTION (save_dialog);
 

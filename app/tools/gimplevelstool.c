@@ -137,7 +137,9 @@ static gint   levels_output_da_events              (GtkWidget      *widget,
 						    GimpLevelsTool *l_tool);
 
 static void      file_dialog_create                (GimpLevelsTool *l_tool);
-static void      file_dialog_ok_callback           (GimpLevelsTool *l_tool);
+static void      file_dialog_response              (GtkWidget      *dialog,
+                                                    gint            response_id,
+                                                    GimpLevelsTool *l_tool);
 
 static gboolean  levels_read_from_file             (GimpLevelsTool *l_tool,
                                                     FILE           *f);
@@ -1440,8 +1442,8 @@ file_dialog_create (GimpLevelsTool *l_tool)
   gtk_window_set_role (GTK_WINDOW (file_dlg), "gimp-load-save-levels");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 4);
 
   g_object_add_weak_pointer (G_OBJECT (file_dlg),
                              (gpointer) &l_tool->file_dialog);
@@ -1450,12 +1452,9 @@ file_dialog_create (GimpLevelsTool *l_tool)
                                 GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (l_tool)->shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect_swapped (file_dlg->ok_button, "clicked",
-                            G_CALLBACK (file_dialog_ok_callback),
-                            l_tool);
-  g_signal_connect_swapped (file_dlg->cancel_button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            file_dlg);
+  g_signal_connect (file_dlg, "response",
+                    G_CALLBACK (file_dialog_response),
+                    l_tool);
 
   temp = g_build_filename (gimp_directory (), "levels", ".", NULL);
   gtk_file_selection_set_filename (file_dlg, temp);
@@ -1466,38 +1465,41 @@ file_dialog_create (GimpLevelsTool *l_tool)
 }
 
 static void
-file_dialog_ok_callback (GimpLevelsTool *l_tool)
+file_dialog_response (GtkWidget      *dialog,
+                      gint            response_id,
+                      GimpLevelsTool *l_tool)
 {
-  FILE        *file = NULL;
-  const gchar *filename;
-
-  filename =
-    gtk_file_selection_get_filename (GTK_FILE_SELECTION (l_tool->file_dialog));
-
-  file = fopen (filename, l_tool->is_save ? "wt" : "rt");
-
-  if (! file)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      g_message (l_tool->is_save ?
-                 _("Could not open '%s' for writing: %s") :
-                 _("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
-      return;
+      const gchar *filename;
+      FILE        *file;
+
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+
+      file = fopen (filename, l_tool->is_save ? "wt" : "rt");
+
+      if (! file)
+        {
+          g_message (l_tool->is_save ?
+                     _("Could not open '%s' for writing: %s") :
+                     _("Could not open '%s' for reading: %s"),
+                     filename, g_strerror (errno));
+          return;
+        }
+
+      if (l_tool->is_save)
+        {
+          levels_write_to_file (l_tool, file);
+        }
+      else if (! levels_read_from_file (l_tool, file))
+        {
+          g_message (("Error in reading file '%s'."), filename);
+        }
+
+      fclose (file);
     }
 
-  if (l_tool->is_save)
-    {
-      levels_write_to_file (l_tool, file);
-    }
-  else if (! levels_read_from_file (l_tool, file))
-    {
-      g_message (("Error in reading file '%s'."), filename);
-    }
-
-  if (file)
-    fclose (file);
-
-  gtk_widget_destroy (l_tool->file_dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static gboolean

@@ -48,20 +48,22 @@ enum
 };
 
 
-static void      gimp_text_editor_class_init  (GimpTextEditorClass *klass);
-static void      gimp_text_editor_init        (GimpTextEditor      *editor);
-static void      gimp_text_editor_dispose     (GObject             *object);
+static void      gimp_text_editor_class_init    (GimpTextEditorClass *klass);
+static void      gimp_text_editor_init          (GimpTextEditor      *editor);
+static void      gimp_text_editor_dispose       (GObject             *object);
 
-static void      gimp_text_editor_dir_changed (GtkWidget      *widget,
-                                               GimpTextEditor *editor);
+static void      gimp_text_editor_dir_changed   (GtkWidget      *widget,
+                                                 GimpTextEditor *editor);
 
-static void      gimp_text_editor_load        (GtkWidget      *widget,
-                                               GimpTextEditor *editor);
-static void      gimp_text_editor_load_ok     (GimpTextEditor *editor);
-static gboolean  gimp_text_editor_load_file   (GtkTextBuffer  *buffer,
-					       const gchar    *filename);
-static void      gimp_text_editor_clear       (GtkWidget      *widget,
-                                               GimpTextEditor *editor);
+static void      gimp_text_editor_load          (GtkWidget      *widget,
+                                                 GimpTextEditor *editor);
+static void      gimp_text_editor_load_response (GtkWidget      *dialog,
+                                                 gint            response_id,
+                                                 GimpTextEditor *editor);
+static gboolean  gimp_text_editor_load_file     (GtkTextBuffer  *buffer,
+                                                 const gchar    *filename);
+static void      gimp_text_editor_clear         (GtkWidget      *widget,
+                                                 GimpTextEditor *editor);
 
 
 static GimpDialogClass *parent_class = NULL;
@@ -320,18 +322,15 @@ gimp_text_editor_load (GtkWidget      *widget,
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-text-load-file");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
 
   gtk_window_set_transient_for (GTK_WINDOW (filesel), GTK_WINDOW (editor));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (filesel), TRUE);
 
-  g_signal_connect_swapped (filesel->ok_button, "clicked",
-                            G_CALLBACK (gimp_text_editor_load_ok),
-                            editor);
-  g_signal_connect_swapped (filesel->cancel_button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            filesel);
+  g_signal_connect (filesel, "response",
+                    G_CALLBACK (gimp_text_editor_load_response),
+                    editor);
 
   editor->filesel = GTK_WIDGET (filesel);
   g_object_add_weak_pointer (G_OBJECT (filesel), (gpointer) &editor->filesel);
@@ -340,15 +339,21 @@ gimp_text_editor_load (GtkWidget      *widget,
 }
 
 static void
-gimp_text_editor_load_ok (GimpTextEditor *editor)
+gimp_text_editor_load_response (GtkWidget      *dialog,
+                                gint            response_id,
+                                GimpTextEditor *editor)
 {
-  const gchar *filename;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const gchar *filename;
 
-  filename =
-    gtk_file_selection_get_filename (GTK_FILE_SELECTION (editor->filesel));
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
 
-  if (gimp_text_editor_load_file (editor->buffer, filename))
-    gtk_widget_destroy (editor->filesel);
+      if (! gimp_text_editor_load_file (editor->buffer, filename))
+        return;
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 static gboolean
@@ -364,7 +369,7 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
 
   if (!file)
     {
-      g_message (_("Error opening file '%s': %s"),
+      g_message (_("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

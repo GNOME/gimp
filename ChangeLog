@@ -1,3 +1,21 @@
+2003-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradients-commands.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimptexteditor.c
+	* libgimpwidgets/gimpfileselection.c: don't access the "ok_button"
+	and "cancel_button" members of GtkFileSelection. Instead, connect
+	to GtkDialog::response(). Feels better and reduces code which
+	depends on the to-be-deprecated GtkFileSelection. Changed border
+	widths to match the 6px border width of other GIMP dialogs.
+	File selections in plug-ins will follow...
+
 2003-11-17  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/color_enhance.c
