@@ -1280,25 +1280,10 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
           break;
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
+        case GIMP_TRANSFORM_TYPE_PATH:
           gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
                                &tr_tool->x1, &tr_tool->y1,
                                &tr_tool->x2, &tr_tool->y2);
-          break;
-
-        case GIMP_TRANSFORM_TYPE_PATH:
-          {
-            GimpVectors *vectors;
-            gdouble      x1, y1, x2, y2;
-
-            vectors = gimp_image_get_active_vectors (gdisp->gimage);
-
-            gimp_vectors_bounds (vectors, &x1, &y1, &x2, &y2);
-
-            tr_tool->x1 = (gint) x1;
-            tr_tool->y1 = (gint) y1;
-            tr_tool->x2 = (gint) x2;
-            tr_tool->y2 = (gint) y2;
-          }
           break;
         }
     }

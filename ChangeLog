@@ -1,5 +1,9 @@
 2004-06-18  Philip Lafleur  <plafleur@cvs.gnome.org>
 
+	* app/tools/gimptransformtool.c: reverted my fix to bug #144570.
+
+2004-06-18  Philip Lafleur  <plafleur@cvs.gnome.org>
+
 	* app/tools/gimpfuzzyselecttool.c: Fix fuzzy select menu label.
 
 2004-06-18  Philip Lafleur  <plafleur@cvs.gnome.org>
