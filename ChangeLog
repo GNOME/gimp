@@ -1,3 +1,8 @@
+2003-04-06  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c (make_color_map): merged
+	fix for bug #103470 from HEAD.
+
 2003-04-03  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c: don't use MAXPATHLEN, spotted by Robert Millan
