@@ -154,6 +154,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *frame;
   GimpUnitStore *store;
   GtkShadowType  shadow_type;
+  gboolean       has_focus_on_click;
 
   box->spacing     = 2;
   box->homogeneous = FALSE;
@@ -188,8 +189,13 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
+  has_focus_on_click =
+    g_object_class_find_property (G_OBJECT_GET_CLASS (statusbar->unit_combo),
+                                  "focus-on-click") != NULL;
+
   GTK_WIDGET_UNSET_FLAGS (statusbar->unit_combo, GTK_CAN_FOCUS);
-  g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
+  if (has_focus_on_click)
+    g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
   gtk_container_add (GTK_CONTAINER (hbox), statusbar->unit_combo);
   gtk_widget_show (statusbar->unit_combo);
 
@@ -204,7 +210,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   statusbar->scale_combo = gimp_scale_combo_box_new ();
   GTK_WIDGET_UNSET_FLAGS (statusbar->scale_combo, GTK_CAN_FOCUS);
-  g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
+  if (has_focus_on_click)
+    g_object_set (statusbar->scale_combo, "focus-on-click", FALSE, NULL);
   gtk_container_add (GTK_CONTAINER (frame), statusbar->scale_combo);
   gtk_widget_show (statusbar->scale_combo);
 

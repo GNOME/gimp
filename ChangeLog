@@ -1,3 +1,9 @@
+2005-03-14  Manish Singh  <yosh@gimp.org>
+
+	* app/display/gimpstatusbar.c: Make sure "focus-on-click" property
+	exists before setting it on comboboxes (it didn't exist in GTK+ 2.4,
+	where the behavior was what we wanted anyway).
+
 2005-03-13  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
