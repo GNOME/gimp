@@ -100,14 +100,12 @@ typedef struct
 typedef struct
 {
   IfsColor  *color;
+  guchar     char_color[3];
   gchar     *name;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
-  GtkWidget *preview;
-  GtkWidget *dialog;
+  GtkWidget *button;
   gint       fixed_point;
-
-  gint       in_change_callback;
 } ColorMap;
 
 typedef struct
@@ -242,7 +240,6 @@ static void color_map_set_preview_color (GtkWidget *preview,
 static ColorMap *color_map_create (gchar *name,IfsColor *orig_color,
 				   IfsColor *data, gint fixed_point);
 static void color_map_clicked_callback (GtkWidget *widget,ColorMap *colormap);
-static void color_map_destroy_callback (GtkWidget *widget,ColorMap *colormap);
 static void color_map_color_changed_cb (GtkWidget *widget,
 					ColorMap *color_map);
 static void color_map_update           (ColorMap *color_map);
@@ -2031,58 +2028,53 @@ color_map_create (gchar    *name,
 		  gint      fixed_point)
 {
   GtkWidget *frame;
-  GtkWidget *label;
-  GtkWidget *button;
+  GtkWidget *arrow;
 
-  ColorMap *color_map = g_new(ColorMap,1);
+  ColorMap *color_map = g_new (ColorMap,1);
   color_map->name = name;
   color_map->color = data;
-  color_map->dialog = NULL;
   color_map->fixed_point = fixed_point;
 
-  color_map->in_change_callback = FALSE;
+  color_map->char_color[0] = (guchar)(data->vals[0] * 255.999);
+  color_map->char_color[1] = (guchar)(data->vals[1] * 255.999);
+  color_map->char_color[2] = (guchar)(data->vals[2] * 255.999);
 
-  color_map->hbox = gtk_hbox_new(FALSE,2);
+  color_map->hbox = gtk_hbox_new (FALSE,2);
 
-  frame = gtk_frame_new(NULL);
+  frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start(GTK_BOX(color_map->hbox),frame,FALSE,FALSE,0);
-  gtk_widget_show(frame);
+  gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  color_map->orig_preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(color_map->orig_preview),
-		   COLOR_SAMPLE_SIZE,COLOR_SAMPLE_SIZE);
-  gtk_container_add (GTK_CONTAINER(frame),color_map->orig_preview);
-  gtk_widget_show(color_map->orig_preview);
+  color_map->orig_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (color_map->orig_preview),
+		    COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
+  gtk_container_add (GTK_CONTAINER(frame), color_map->orig_preview);
+  gtk_widget_show (color_map->orig_preview);
 
   if (fixed_point)
     color_map_set_preview_color(color_map->orig_preview,data);
   else
     color_map_set_preview_color(color_map->orig_preview,orig_color);
 
-  label = gtk_label_new("=>");
-  gtk_box_pack_start(GTK_BOX(color_map->hbox),label,FALSE,FALSE,0);
-  gtk_widget_show(label);
+  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
+  gtk_widget_show (arrow);
 
-  button = gtk_button_new();
-  gtk_box_pack_start(GTK_BOX(color_map->hbox),button,FALSE,FALSE,0);
-  gtk_widget_show(button);
+  color_map->button = gimp_color_button_new (color_map->name,
+					     COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE,
+					     color_map->char_color, 3);
 
-  color_map->preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(color_map->preview),
-		   COLOR_SAMPLE_SIZE,COLOR_SAMPLE_SIZE);
-  gtk_container_add (GTK_CONTAINER(button),color_map->preview);
-  gtk_widget_show(color_map->preview);
+  gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button, 
+		      FALSE, FALSE, 0);
+  gtk_widget_show (color_map->button);
 
-  color_map_set_preview_color(color_map->preview,data);
-
-  gtk_signal_connect(GTK_OBJECT(button),"clicked",
+  gtk_signal_connect(GTK_OBJECT (color_map->button), "clicked",
 		     GTK_SIGNAL_FUNC (color_map_clicked_callback),
 		     color_map);
-
-  gtk_signal_connect(GTK_OBJECT(frame),"destroy",
-		     GTK_SIGNAL_FUNC (color_map_destroy_callback),
-		     color_map);
+  gtk_signal_connect (GTK_OBJECT (color_map->button), "color_changed",
+		      GTK_SIGNAL_FUNC (color_map_color_changed_cb),
+		      color_map);
 
   return color_map;
 }
@@ -2091,68 +2083,18 @@ static void
 color_map_clicked_callback (GtkWidget *widget,
 			    ColorMap  *color_map)
 {
-  GtkColorSelectionDialog *csd;
-
-  if (!color_map->dialog)
-    {
-      color_map->dialog = gtk_color_selection_dialog_new(color_map->name);
-      csd  = GTK_COLOR_SELECTION_DIALOG(color_map->dialog);
-      gtk_color_selection_set_update_policy(
-					 GTK_COLOR_SELECTION(csd->colorsel),
-					 GTK_UPDATE_DELAYED);
-
-      gtk_widget_destroy ( csd->help_button );
-      gtk_widget_destroy ( csd->cancel_button );
-
-      gtk_signal_connect_object( GTK_OBJECT(csd->ok_button),
-				 "clicked",
-				 (GtkSignalFunc)gtk_widget_hide,
-				 GTK_OBJECT(color_map->dialog));
-      gtk_signal_connect ( GTK_OBJECT(csd->colorsel),
-			   "color_changed",
-			   (GtkSignalFunc)color_map_color_changed_cb,
-			   color_map );
-
-      gtk_signal_connect ( GTK_OBJECT(csd->colorsel),
-			   "destroy",
-			   GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			   &color_map->dialog );
-
-      /* call here so the old color is set */
-      gtk_color_selection_set_color( GTK_COLOR_SELECTION(csd->colorsel),
-				     color_map->color->vals);
-    }
-  else
-    csd  = GTK_COLOR_SELECTION_DIALOG(color_map->dialog);
-
-  undo_begin();
-  undo_update(ifsD->current_element);
-
-  gtk_color_selection_set_color(GTK_COLOR_SELECTION(csd->colorsel),
-				color_map->color->vals);
-
-  gtk_window_position(GTK_WINDOW(color_map->dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show(color_map->dialog);
+  undo_begin ();
+  undo_update (ifsD->current_element);
 }
 
-static void
-color_map_destroy_callback (GtkWidget *widget,
-			    ColorMap  *color_map)
-{
-  if (color_map->dialog)
-    gtk_widget_destroy (color_map->dialog);
-}
 
 static void
 color_map_color_changed_cb (GtkWidget *widget,
 			    ColorMap  *color_map)
 {
-  color_map->in_change_callback = TRUE;
-
-  gtk_color_selection_get_color(
-    GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(color_map->dialog)
-       ->colorsel),
-    color_map->color->vals);
+  color_map->color->vals[0] = color_map->char_color[0] / 255.0;
+  color_map->color->vals[1] = color_map->char_color[1] / 255.0;
+  color_map->color->vals[2] = color_map->char_color[2] / 255.0;
 
   elements[ifsD->current_element]->v = ifsD->current_vals;
   elements[ifsD->current_element]->v.theta *= G_PI/180.0;
@@ -2162,24 +2104,18 @@ color_map_color_changed_cb (GtkWidget *widget,
 
   if (ifsD->auto_preview)
     ifs_compose_preview_callback(NULL,ifsD->preview);
-
-  color_map->in_change_callback = FALSE;
 }
 
 static void
 color_map_update (ColorMap *color_map)
 {
-  color_map_set_preview_color(color_map->preview,color_map->color);
-  if (color_map->fixed_point)
-    color_map_set_preview_color(color_map->orig_preview,color_map->color);
+  color_map->char_color[0] = (guchar)(color_map->color->vals[0] * 255.999);
+  color_map->char_color[1] = (guchar)(color_map->color->vals[1] * 255.999);
+  color_map->char_color[2] = (guchar)(color_map->color->vals[2] * 255.999);
+  gimp_color_button_update (GIMP_COLOR_BUTTON (color_map->button));
 
-  if (color_map->dialog && !color_map->in_change_callback)
-    {
-      gtk_color_selection_set_color(
-         GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG(color_map->dialog)
-	    ->colorsel),
-	 color_map->color->vals);
-    }
+  if (color_map->fixed_point)
+    color_map_set_preview_color(color_map->orig_preview, color_map->color);
 }
 
 static void
