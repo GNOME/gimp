@@ -1,3 +1,8 @@
+2004-01-07  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: AC_SUBST the EXIF vars, to workaround automake 1.6
+	brokenness.
+
 2004-01-07  Simon Budig  <simon@gimp.org>
 
 	* app/base/curves.c: copy the positions of the control points
