@@ -42,23 +42,17 @@ endif
 libgimpmoduleincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmodule
 
 AM_CPPFLAGS = \
-	-DPREFIX=\""$(prefix)"\"		\
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DLOCALEDIR=\""$(localedir)"\"		\
-	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpModule\"	\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS) \
-	$(GMODULE_CFLAGS) \
+	-I$(top_srcdir)		\
+	$(GLIB_CFLAGS)		\
+	$(GMODULE_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc	\
+	makefile.msc		\
 	gimpmodule.def
 
 lib_LTLIBRARIES = libgimpmodule-2.0.la
