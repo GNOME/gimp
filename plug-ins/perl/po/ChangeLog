@@ -1,3 +1,8 @@
+Sat Feb 19 23:39:03 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* update.sh: changed to _not_ update the .po files anymore
+        (as suggested by sven).
+
 Thu Feb 17 00:36:51 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
