@@ -1,3 +1,8 @@
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_preview.c (render_rgb_image): use the proper
+	image type and rowstride. Fixes bug #162592.
+
 2004-12-30  Manish Singh  <yosh@gimp.org>
 
 	* tools/Makefile.am
@@ -12,6 +17,9 @@
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped gimp_app_version and gimp_user_version to 2.3.
+
+	* app/Makefile.am
+	* tools/Makefile.am: changed to 2.3.
 
 2004-12-30  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 

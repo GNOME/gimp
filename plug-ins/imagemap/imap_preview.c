@@ -256,9 +256,9 @@ render_rgb_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
    }
    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                            0, 0, pwidth, pheight,
-                           gimp_drawable_type (srcrgn->drawable->drawable_id),
+                           GIMP_RGB_IMAGE,
                            dest_buffer,
-                           pwidth * bpp);
+                           pwidth * 3);
    g_free(src_col);
    g_free(src_row);
    g_free(dest_buffer);
