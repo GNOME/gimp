@@ -1,3 +1,7 @@
+2002-06-25  Mel Boyce  <syngin@gimp.org>
+  * plug-ins/helpbrowser/helpbrowser.c: Changed HTML for the "Document not
+  found" error to come in to line with GIMP-Help-2 style.
+
 2002-06-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/pix.c: changed a confusing comment, minor cleanup.

@@ -76,18 +76,22 @@ typedef struct
 
 /* please make sure the translation is a valid and complete HTML snippet */ 
 static const gchar *doc_not_found_format_string =
-N_("<html><head><title>Document not found</title></head>"
-   "<body bgcolor=\"#ffffff\">"
-   "<center>"
-   "<p>"
-   "%s"
-   "<h3>Couldn't find document</h3>"
+N_("<html><head><title>Document Not Found</title></head>"
+   "<body bgcolor=\"white\">"
+   "<div align=\"center\">"
+   "<div>%s</div>"
+   "<h3>Could not locate help documentation</h3>"
    "<tt>%s</tt>"
-   "</center>"
-   "<p>"
-   "<small>This either means that the help for this topic has not been "
-   "written yet or that something is wrong with your installation. "
-   "Please check carefully before you report this as a bug.</small>" 
+   "</div>"
+   "<br /><br />"
+   "<div align=\"justify\">"
+   "<small>"
+   "The requested document could not be found in your GIMP-Help path as "
+   "shown above. This means that the topic has not yet been written or your "
+   "installation is not complete. Ensure that your installation is complete "
+   "before reporting this error as a bug."
+   "</small>"
+   "</div>"
    "</body>"
    "</html>");
 
