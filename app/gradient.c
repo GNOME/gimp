@@ -2733,7 +2733,7 @@ control_button_press (gint  x,
 {
   grad_segment_t      *seg;
   control_drag_mode_t  handle;
-  double               xpos;
+  gdouble              xpos;
   gboolean             in_handle;
 
   /* See which button was pressed */
@@ -3027,8 +3027,8 @@ control_compress_left (grad_segment_t *range_l,
 		       double          pos)
 {
   grad_segment_t *seg;
-  double          lbound, rbound;
-  int             k;
+  gdouble         lbound, rbound;
+  gint            k;
 
   /* Check what we have to compress */
 
@@ -3125,9 +3125,13 @@ control_compress_range (grad_segment_t *range_l,
 
   do
     {
-      seg->left   = new_l + (seg->left - orig_l) * scale;
+      if (seg->prev)
+        seg->left = new_l + (seg->left - orig_l) * scale;
+
       seg->middle = new_l + (seg->middle - orig_l) * scale;
-      seg->right  = new_l + (seg->right - orig_l) * scale;
+
+      if (seg->next)
+        seg->right = new_l + (seg->right - orig_l) * scale;
 
       /* Next */
 
