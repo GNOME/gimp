@@ -244,21 +244,21 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       /*  fallthrough  */
 
     case GIMP_CANVAS_STYLE_XOR:
-      mask |= GDK_GC_FUNCTION;
-      values.function = GDK_INVERT;
-      /*  fallthrough  */
+      mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
+      values.function   = GDK_INVERT;
+      values.cap_style  = GDK_CAP_NOT_LAST;
+      values.join_style = GDK_JOIN_MITER;
+      break;
 
     case GIMP_CANVAS_STYLE_SELECTION_IN:
     case GIMP_CANVAS_STYLE_SELECTION_OUT:
     case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
     case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
     case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
-      mask |=
-        GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE | GDK_GC_FILL | GDK_GC_STIPPLE;
-      values.cap_style  = GDK_CAP_NOT_LAST;
-      values.join_style = GDK_JOIN_MITER;
-      values.fill       = GDK_OPAQUE_STIPPLED;
-      values.stipple    = canvas->stipple[0];
+      mask |= GDK_GC_CAP_STYLE | GDK_GC_FILL | GDK_GC_STIPPLE;
+      values.cap_style = GDK_CAP_NOT_LAST;
+      values.fill      = GDK_OPAQUE_STIPPLED;
+      values.stipple   = canvas->stipple[0];
       break;
 
     case GIMP_CANVAS_STYLE_CUSTOM:

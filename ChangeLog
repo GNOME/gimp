@@ -1,5 +1,10 @@
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpcanvas.c (gimp_canvas_gc_new): fixed my last
+	change here; of course only the guide GCs need a stipple pattern.
+
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
 	unset the GIOChannel's encoding before trying to find and parse
 	the XML header.
