@@ -339,7 +339,8 @@ parse_ms_tag_from_layer_name (const gchar *str)
   if ((length - offset) <= 2)
     return mng_data.default_delay;
 
-  if ((g_ascii_toupper (str[offset]) != 'M') || (g_ascii_toupper (str[offset + 1]) != 'S'))
+  if ((g_ascii_toupper (str[offset]) != 'M') ||
+      (g_ascii_toupper (str[offset + 1]) != 'S'))
     return mng_data.default_delay;
 
   return sum;
@@ -899,12 +900,16 @@ mng_save_image (const gchar *filename,
       frame_delay = parse_ms_tag_from_layer_name (layer_name);
 
       if ((ret = mng_putchunk_fram (handle, MNG_FALSE, frame_mode, 0, NULL,
-                                    2, 0, 2, 0, frame_delay, 0, 0,
+                                    MNG_CHANGEDELAY_DEFAULT,
+                                    MNG_CHANGETIMOUT_NO,
+                                    MNG_CHANGECLIPPING_DEFAULT,
+                                    MNG_CHANGESYNCID_NO,
+                                    frame_delay, 0, 0,
                                     layer_offset_x,
                                     layer_offset_x + layer_cols,
                                     layer_offset_y,
-                                    layer_offset_y + layer_rows, 0,
-                                    0)) != MNG_NOERROR)
+                                    layer_offset_y + layer_rows,
+                                    0, 0)) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_fram() in mng_save_image()");
           mng_cleanup (&handle);
@@ -913,7 +918,7 @@ mng_save_image (const gchar *filename,
           return 0;
         }
 
-      if ((layer_offset_x > 0) || (layer_offset_y > 0))
+      if ((layer_offset_x != 0) || (layer_offset_y != 0))
         if ((ret =
              mng_putchunk_defi (handle, 0, 0, 1, 1, layer_offset_x,
                                 layer_offset_y, 1, layer_offset_x,
