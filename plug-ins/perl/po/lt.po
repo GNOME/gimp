@@ -2,17 +2,16 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl VERSION\n"
-"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: GIMP 1.2\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"PO-Revision-Date: 2001-07-27 15:07+0200\n"
+"Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: examples/PDB:0
 msgid " (press Tab to complete)"
