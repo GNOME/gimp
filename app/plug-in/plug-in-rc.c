@@ -29,6 +29,8 @@
 
 #include "config/gimpscanner.h"
 
+#include "core/gimp.h"
+
 #include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-proc.h"
@@ -42,7 +44,8 @@
  *  or the GTokenType they would have expected but didn't get.
  */
 
-static GTokenType plug_in_def_deserialize        (GScanner      *scanner);
+static GTokenType plug_in_def_deserialize        (Gimp          *gimp,
+                                                  GScanner      *scanner);
 static GTokenType plug_in_proc_def_deserialize   (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
@@ -67,12 +70,14 @@ enum
 
 
 gboolean
-plug_in_rc_parse (const gchar *filename)
+plug_in_rc_parse (Gimp        *gimp,
+                  const gchar *filename)
 {
   GScanner   *scanner;
   GTokenType  token;
   GError     *error = NULL;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
   scanner = gimp_scanner_new (filename, &error);
@@ -109,7 +114,7 @@ plug_in_rc_parse (const gchar *filename)
           if (scanner->value.v_symbol == GINT_TO_POINTER (PLUG_IN_DEF))
             {
               g_scanner_set_scope (scanner, PLUG_IN_DEF);
-              token = plug_in_def_deserialize (scanner);
+              token = plug_in_def_deserialize (gimp, scanner);
               g_scanner_set_scope (scanner, 0);
             }
           break;
@@ -139,7 +144,8 @@ plug_in_rc_parse (const gchar *filename)
 }
 
 static GTokenType
-plug_in_def_deserialize (GScanner *scanner)
+plug_in_def_deserialize (Gimp     *gimp,
+                         GScanner *scanner)
 {
   gchar         *name;
   PlugInDef     *plug_in_def;
@@ -215,7 +221,7 @@ plug_in_def_deserialize (GScanner *scanner)
 
       if (gimp_scanner_parse_token (scanner, token))
         {
-          plug_ins_def_add_from_rc (plug_in_def);
+          plug_ins_def_add_from_rc (gimp, plug_in_def);
           return G_TOKEN_LEFT_PAREN;
         }
     }

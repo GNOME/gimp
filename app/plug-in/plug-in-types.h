@@ -44,6 +44,7 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 typedef struct _PlugIn        PlugIn;
 typedef struct _PlugInDef     PlugInDef;
 typedef struct _PlugInProcDef PlugInProcDef;
+typedef struct _PlugInShm     PlugInShm;
 
 
 #endif /* __PLUG_IN_TYPES_H__ */

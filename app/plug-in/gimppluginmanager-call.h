@@ -40,7 +40,4 @@ void       plug_in_repeat (Gimp       *gimp,
                            gboolean    with_interface);
 
 
-extern ProcRecord *last_plug_in;
-
-
 #endif /* __PLUG_IN_RUN_H__ */

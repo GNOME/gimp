@@ -77,15 +77,8 @@ struct _PlugInHelpPathDef
 
 static void            plug_ins_init_file       (GimpDatafileData *file_data);
 static void            plug_ins_add_to_db       (Gimp             *gimp);
-static PlugInProcDef * plug_ins_proc_def_insert (PlugInProcDef    *proc_def);
-
-
-GSList      *proc_defs          = NULL;
-
-static GSList   *plug_in_defs       = NULL;
-static GSList   *locale_domain_defs = NULL;
-static GSList   *help_path_defs     = NULL;
-static gboolean  write_pluginrc     = FALSE;
+static PlugInProcDef * plug_ins_proc_def_insert (Gimp             *gimp,
+                                                 PlugInProcDef    *proc_def);
 
 
 /*  public functions  */
@@ -114,7 +107,8 @@ plug_ins_init (Gimp               *gimp,
 
   gimp_datafiles_read_directories (path,
                                    G_FILE_TEST_IS_EXECUTABLE,
-				   plug_ins_init_file, &plug_in_defs);
+				   plug_ins_init_file,
+                                   &gimp->plug_in_defs);
 
   g_free (path);
 
@@ -139,21 +133,23 @@ plug_ins_init (Gimp               *gimp,
     }
 
   (* status_callback) (_("Resource configuration"), filename, -1);
-  plug_in_rc_parse (filename);
+  plug_in_rc_parse (gimp, filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   (* status_callback) (_("Querying new Plug-ins"), "", 0);
-  n_plugins = g_slist_length (plug_in_defs);
+  n_plugins = g_slist_length (gimp->plug_in_defs);
 
-  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
+  for (tmp = gimp->plug_in_defs, nth = 0;
+       tmp;
+       tmp = g_slist_next (tmp), nth++)
     {
       plug_in_def = tmp->data;
 
       if (plug_in_def->needs_query)
 	{
-	  write_pluginrc = TRUE;
+	  gimp->write_pluginrc = TRUE;
 
 	  if (gimp->be_verbose)
 	    g_print (_("querying plug-in: \"%s\"\n"), plug_in_def->prog);
@@ -167,7 +163,7 @@ plug_ins_init (Gimp               *gimp,
     }
 
   /* insert the proc defs */
-  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
+  for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
 
@@ -179,7 +175,7 @@ plug_ins_init (Gimp               *gimp,
 
  	  proc_def->mtime = plug_in_def->mtime;
 
-	  overridden_proc_def = plug_ins_proc_def_insert (proc_def);
+	  overridden_proc_def = plug_ins_proc_def_insert (gimp, proc_def);
 
           if (overridden_proc_def)
             {
@@ -191,7 +187,7 @@ plug_ins_init (Gimp               *gimp,
               /* search the plugin list to see if any plugins had references to 
                * the overridden_proc_def.
                */
-              for (tmp2 = plug_in_defs; tmp2; tmp2 = g_slist_next (tmp2))
+              for (tmp2 = gimp->plug_in_defs; tmp2; tmp2 = g_slist_next (tmp2))
                 {
                   PlugInDef *plug_in_def2;
 
@@ -208,12 +204,13 @@ plug_ins_init (Gimp               *gimp,
     }
 
   /* write the pluginrc file if necessary */
-  if (write_pluginrc)
+  if (gimp->write_pluginrc)
     {
       if (gimp->be_verbose)
 	g_print (_("writing \"%s\"\n"), filename);
 
-      plug_in_rc_write (plug_in_defs, filename);
+      plug_in_rc_write (gimp->plug_in_defs, filename);
+      gimp->write_pluginrc = FALSE;
     }
 
   g_free (filename);
@@ -226,7 +223,7 @@ plug_ins_init (Gimp               *gimp,
   gimp->save_procs = g_slist_reverse (gimp->save_procs);
 
   /* create help_path and locale_domain lists */
-  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
+  for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
 
@@ -240,8 +237,8 @@ plug_ins_init (Gimp               *gimp,
 	  locale_domain_def->locale_domain = g_strdup (plug_in_def->locale_domain);
           locale_domain_def->locale_path   = g_strdup (plug_in_def->locale_path);
 
-	  locale_domain_defs = g_slist_prepend (locale_domain_defs,
-                                                locale_domain_def);
+	  gimp->plug_in_locale_domains =
+            g_slist_prepend (gimp->plug_in_locale_domains, locale_domain_def);
 	}
 
       if (plug_in_def->help_path)
@@ -253,17 +250,20 @@ plug_ins_init (Gimp               *gimp,
 	  help_path_def->prog_name = g_strdup (plug_in_def->prog);
 	  help_path_def->help_path = g_strdup (plug_in_def->help_path);
 
-	  help_path_defs = g_slist_prepend (help_path_defs, help_path_def);
+	  gimp->plug_in_help_paths =
+            g_slist_prepend (gimp->plug_in_help_paths, help_path_def);
 	}
     }
 
   if (! gimp->no_interface)
-    plug_in_menus_init (gimp, plug_in_defs, STD_PLUGINS_DOMAIN);
+    plug_in_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
 
   /* initial the plug-ins */
   (* status_callback) (_("Initializing Plug-ins"), "", 0);
 
-  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
+  for (tmp = gimp->plug_in_defs, nth = 0;
+       tmp;
+       tmp = g_slist_next (tmp), nth++)
     {
       plug_in_def = tmp->data;
 
@@ -282,9 +282,11 @@ plug_ins_init (Gimp               *gimp,
 
   /* run the available extensions */
   (* status_callback) (_("Starting Extensions"), "", 0);
-  n_plugins = g_slist_length (proc_defs);
+  n_plugins = g_slist_length (gimp->plug_in_proc_defs);
 
-  for (tmp = proc_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
+  for (tmp = gimp->plug_in_proc_defs, nth = 0;
+       tmp;
+       tmp = g_slist_next (tmp), nth++)
     {
       proc_def = tmp->data;
 
@@ -302,15 +304,15 @@ plug_ins_init (Gimp               *gimp,
     }
 
   /* free up stuff */
-  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
+  for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
 
       plug_in_def_free (plug_in_def, FALSE);
     }
 
-  g_slist_free (plug_in_defs);
-  plug_in_defs = NULL;
+  g_slist_free (gimp->plug_in_defs);
+  gimp->plug_in_defs = NULL;
 }
 
 void
@@ -320,7 +322,7 @@ plug_ins_exit (Gimp *gimp)
 
   plug_in_exit (gimp);
 
-  for (list = locale_domain_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_locale_domains; list; list = g_slist_next (list))
     {
       PlugInLocaleDomainDef *locale_domain_def;
 
@@ -332,10 +334,10 @@ plug_ins_exit (Gimp *gimp)
       g_free (locale_domain_def);
     }
 
-  g_slist_free (locale_domain_defs);
-  locale_domain_defs = NULL;
+  g_slist_free (gimp->plug_in_locale_domains);
+  gimp->plug_in_locale_domains = NULL;
 
-  for (list = help_path_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_help_paths; list; list = g_slist_next (list))
     {
       PlugInHelpPathDef *help_path_def;
 
@@ -346,32 +348,37 @@ plug_ins_exit (Gimp *gimp)
       g_free (help_path_def);
     }
 
-  g_slist_free (help_path_defs);
-  help_path_defs = NULL;
+  g_slist_free (gimp->plug_in_help_paths);
+  gimp->plug_in_help_paths = NULL;
 }
 
 void
-plug_ins_add_internal (PlugInProcDef *proc_def)
+plug_ins_add_internal (Gimp          *gimp,
+                       PlugInProcDef *proc_def)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
 
-  proc_defs = g_slist_prepend (proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs,
+                                             proc_def);
 }
 
 PlugInProcDef *
-plug_ins_file_handler (gchar *name,
+plug_ins_file_handler (Gimp  *gimp,
+                       gchar *name,
                        gchar *extensions,
                        gchar *prefixes,
                        gchar *magics)
 {
   GSList *list;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  if (current_plug_in)
-    list = current_plug_in->plug_in_def->proc_defs;
+  if (gimp->current_plug_in)
+    list = gimp->current_plug_in->plug_in_def->proc_defs;
   else
-    list = proc_defs;
+    list = gimp->plug_in_proc_defs;
 
   for (; list; list = g_slist_next (list))
     {
@@ -422,11 +429,13 @@ plug_ins_file_handler (gchar *name,
 }
 
 void
-plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
+plug_ins_def_add_from_rc (Gimp      *gimp,
+                          PlugInDef *plug_in_def)
 {
   GSList *list;
   gchar  *basename1;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (plug_in_def != NULL);
   g_return_if_fail (plug_in_def->prog != NULL);
 
@@ -466,7 +475,7 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
   /*  Check if the entry mentioned in pluginrc matches an executable
    *  found in the plug_in_path.
    */
-  for (list = plug_in_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_defs; list; list = g_slist_next (list))
     {
       PlugInDef *ondisk_plug_in_def;
       gchar     *basename2;
@@ -502,7 +511,7 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
 
   g_free (basename1);
 
-  write_pluginrc = TRUE;
+  gimp->write_pluginrc = TRUE;
   g_print ("executable not found: \"%s\"\n", plug_in_def->prog);
   plug_in_def_free (plug_in_def, FALSE);
 }
@@ -531,7 +540,7 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
   procedural_db_register (gimp, &proc_def->db_info);
 
   /*  Add the definition to the global list  */
-  proc_defs = g_slist_append (proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_append (gimp->plug_in_proc_defs, proc_def);
 }
 
 void
@@ -551,7 +560,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
   procedural_db_unregister (gimp, proc_def->db_info.name);
 
   /*  Remove the definition from the global list  */
-  proc_defs = g_slist_remove (proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_remove (gimp->plug_in_proc_defs, proc_def);
 
   /*  Destroy the definition  */
   plug_in_proc_def_free (proc_def);
@@ -571,7 +580,7 @@ plug_ins_locale_domain (Gimp         *gimp,
   if (locale_path)
     *locale_path = gimp_locale_directory ();
 
-  for (list = locale_domain_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_locale_domains; list; list = g_slist_next (list))
     {
       locale_domain_def = (PlugInLocaleDomainDef *) list->data;
 
@@ -599,7 +608,7 @@ plug_ins_help_path (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (prog_name != NULL, NULL);
 
-  for (list = help_path_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_help_paths; list; list = g_slist_next (list))
     {
       help_path_def = (PlugInHelpPathDef *) list->data;
 
@@ -781,7 +790,7 @@ plug_ins_add_to_db (Gimp *gimp)
   PlugInProcDef *proc_def;
   GSList        *list;
 
-  for (list = proc_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
       proc_def = (PlugInProcDef *) list->data;
 
@@ -792,7 +801,7 @@ plug_ins_add_to_db (Gimp *gimp)
 	}
     }
 
-  for (list = proc_defs; list; list = list->next)
+  for (list = gimp->plug_in_proc_defs; list; list = list->next)
     {
       proc_def = (PlugInProcDef *) list->data;
 
@@ -834,12 +843,13 @@ plug_ins_add_to_db (Gimp *gimp)
 }
 
 static PlugInProcDef *
-plug_ins_proc_def_insert (PlugInProcDef *proc_def)
+plug_ins_proc_def_insert (Gimp          *gimp,
+                          PlugInProcDef *proc_def)
 {
   GSList *list;
   GSList *prev = NULL;
 
-  for (list = proc_defs; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
       PlugInProcDef *tmp_proc_def;
 
@@ -875,7 +885,7 @@ plug_ins_proc_def_insert (PlugInProcDef *proc_def)
 	  if (prev)
 	    prev->next = new;
 	  else
-	    proc_defs = new;
+	    gimp->plug_in_proc_defs = new;
 
 	  return NULL;
 	}
@@ -883,7 +893,7 @@ plug_ins_proc_def_insert (PlugInProcDef *proc_def)
       prev = list;
     }
 
-  proc_defs = g_slist_append (proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_append (gimp->plug_in_proc_defs, proc_def);
 
   return NULL;
 }

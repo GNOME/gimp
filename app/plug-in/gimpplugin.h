@@ -84,14 +84,12 @@ gboolean   plug_in_open           (PlugIn      *plug_in);
 void       plug_in_close          (PlugIn      *plug_in,
                                    gboolean     kill_it);
 
-void       plug_in_push           (PlugIn      *plug_in);
-void       plug_in_pop            (void);
+void       plug_in_push           (Gimp        *gimp,
+                                   PlugIn      *plug_in);
+void       plug_in_pop            (Gimp        *gimp);
 
 void       plug_in_main_loop      (PlugIn      *plug_in);
 void       plug_in_main_loop_quit (PlugIn      *plug_in);
-
-
-extern PlugIn *current_plug_in;
 
 
 #endif /* __PLUG_IN_H__ */

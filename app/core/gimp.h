@@ -78,8 +78,20 @@ struct _Gimp
   GimpModuleDB           *module_db;
   gboolean                write_modulerc;
 
-  GimpEnvironTable       *environ_table;
+  GSList                 *plug_in_defs;
+  gboolean                write_pluginrc;
 
+  GSList                 *plug_in_proc_defs;
+  GSList                 *plug_in_locale_domains;
+  GSList                 *plug_in_help_paths;
+
+  PlugIn                 *current_plug_in;
+  GSList                 *open_plug_ins;
+  GSList                 *plug_in_stack;
+  ProcRecord             *last_plug_in;
+
+  PlugInShm              *plug_in_shm;
+  GimpEnvironTable       *environ_table;
   GimpPlugInDebug        *plug_in_debug;
 
   GimpContainer          *images;

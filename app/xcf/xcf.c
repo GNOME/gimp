@@ -182,8 +182,8 @@ xcf_init (Gimp *gimp)
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
 
-  plug_ins_add_internal (&xcf_plug_in_save_proc);
-  plug_ins_add_internal (&xcf_plug_in_load_proc);
+  plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
+  plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);
 }
 
 void

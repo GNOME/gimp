@@ -337,14 +337,14 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
   proc_rec = procedural_db_lookup (plug_in->gimp, proc_run->name);
 
-  plug_in_push (plug_in);
+  plug_in_push (plug_in->gimp, plug_in);
 
   /*  Execute the procedure even if procedural_db_lookup() returned NULL,
    *  procedural_db_execute() will return appropriate error return_vals.
    */
   return_vals = procedural_db_execute (plug_in->gimp, proc_run->name, args);
 
-  plug_in_pop ();
+  plug_in_pop (plug_in->gimp);
 
   if (return_vals)
     {

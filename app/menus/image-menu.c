@@ -907,7 +907,7 @@ image_menu_setup (GimpItemFactory *factory)
     image_menu_background_changed (user_context, &bg, factory);
   }
 
-  plug_in_menus_create (factory, proc_defs);
+  plug_in_menus_create (factory, factory->gimp->plug_in_proc_defs);
 
   {
     static gchar *rotate_plugins[]      = { "Rotate 90 degrees",

@@ -81,12 +81,12 @@ progress_init_invoker (Gimp     *gimp,
 
   gdisplay = args[1].value.pdb_int;
 
-  if (current_plug_in && current_plug_in->open)
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
       success = TRUE;
 
       if (! gimp->no_interface)
-	plug_in_progress_start (current_plug_in, message, gdisplay);
+	plug_in_progress_start (gimp->current_plug_in, message, gdisplay);
     }
 
   return procedural_db_return_args (&progress_init_proc, success);
@@ -131,12 +131,12 @@ progress_update_invoker (Gimp     *gimp,
 
   percentage = args[0].value.pdb_float;
 
-  if (current_plug_in && current_plug_in->open)
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
       success = TRUE;
 
       if (! gimp->no_interface)
-	plug_in_progress_update (current_plug_in, percentage);
+	plug_in_progress_update (gimp->current_plug_in, percentage);
     }
 
   return procedural_db_return_args (&progress_update_proc, success);
@@ -237,11 +237,9 @@ plugins_query_invoker (Gimp     *gimp,
    * where we can store the strings.
    */
 
-  tmp = proc_defs;
-  while (tmp)
+  for (gimp->plug_in_proc_defs; tmp; tmp = g_slist_next (tmp))
     {
-      proc_def = tmp->data;
-      tmp = tmp->next;
+      proc_def = (PlugInProcDef *) tmp->data;
 
       if (proc_def->prog && proc_def->menu_path)
 	{
@@ -266,14 +264,12 @@ plugins_query_invoker (Gimp     *gimp,
   realname_strs = g_new (gchar *, num_plugins);
   time_ints     = g_new (gint   , num_plugins);
 
-  tmp = proc_defs;
-  while (tmp)
+  for (tmp = gimp->plug_in_proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       if (i > num_plugins)
 	g_error ("Internal error counting plugins");
 
-      proc_def = tmp->data;
-      tmp = tmp->next;
+      proc_def = (PlugInProcDef *) tmp->data;
 
       if (proc_def->prog && proc_def->menu_path)
 	{
@@ -427,11 +423,11 @@ plugin_domain_register_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (current_plug_in && current_plug_in->query)
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
 	{
-	  plug_in_def_set_locale_domain_name (current_plug_in->plug_in_def,
+	  plug_in_def_set_locale_domain_name (gimp->current_plug_in->plug_in_def,
 					      domain_name);
-	  plug_in_def_set_locale_domain_path (current_plug_in->plug_in_def,
+	  plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
 					      domain_path);
 	}
     }
@@ -482,9 +478,9 @@ plugin_help_register_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (current_plug_in && current_plug_in->query)
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
 	{
-	  plug_in_def_set_help_path (current_plug_in->plug_in_def, help_path);
+	  plug_in_def_set_help_path (gimp->current_plug_in->plug_in_def, help_path);
 	}
     }
 

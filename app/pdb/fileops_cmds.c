@@ -522,7 +522,7 @@ register_magic_load_handler_invoker (Gimp     *gimp,
 	  goto done;
 	}
     
-      file_proc = plug_ins_file_handler (name, extensions, prefixes, magics);
+      file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, magics);
     
       if (! file_proc)
 	{
@@ -670,7 +670,7 @@ register_save_handler_invoker (Gimp     *gimp,
 	  goto done;
 	}
     
-      file_proc = plug_ins_file_handler (name, extensions, prefixes, NULL);
+      file_proc = plug_ins_file_handler (gimp, name, extensions, prefixes, NULL);
     
       if (! file_proc)
 	{

@@ -53,11 +53,6 @@ static Argument * plug_in_get_return_vals (PlugIn     *plug_in,
                                            ProcRecord *proc_rec);
 
 
-/*  global variables  */
-
-ProcRecord *last_plug_in = NULL;
-
-
 /*  public functions  */
 
 Argument *
@@ -71,6 +66,10 @@ plug_in_run (Gimp       *gimp,
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (proc_rec != NULL, NULL);
+  g_return_val_if_fail (argc == 0 || args != NULL, NULL);
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
@@ -164,14 +163,16 @@ plug_in_repeat (Gimp    *gimp,
   Argument    *args;
   gint         i;
 
-  if (last_plug_in)
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->last_plug_in)
     {
       /* construct the procedures arguments */
       args = g_new (Argument, 3);
 
       /* initialize the first three argument types */
       for (i = 0; i < 3; i++)
-	args[i].arg_type = last_plug_in->args[i].arg_type;
+	args[i].arg_type = gimp->last_plug_in->args[i].arg_type;
 
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? 
@@ -180,7 +181,7 @@ plug_in_repeat (Gimp    *gimp,
       args[2].value.pdb_int = drawable_ID;
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, last_plug_in, args, 3, FALSE, TRUE, display_ID);
+      plug_in_run (gimp, gimp->last_plug_in, args, 3, FALSE, TRUE, display_ID);
 
       g_free (args);
     }

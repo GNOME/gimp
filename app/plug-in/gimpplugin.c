@@ -122,17 +122,6 @@ static gboolean   plug_in_recv_message  (GIOChannel   *channel,
 static void       plug_in_prep_for_exec (gpointer      data);
 
 
-/*  global variables  */
-
-PlugIn *current_plug_in = NULL;
-
-
-/*  private variables  */
-
-static GSList *open_plug_ins = NULL;
-static GSList *plug_in_stack = NULL;
-
-
 void
 plug_in_init (Gimp *gimp)
 {
@@ -167,7 +156,7 @@ plug_in_exit (Gimp *gimp)
   if (gimp->use_shm)
     plug_in_shm_exit (gimp);
 
-  list = open_plug_ins;
+  list = gimp->open_plug_ins;
   while (list)
     {
       PlugIn *plug_in;
@@ -499,7 +488,7 @@ plug_in_open (PlugIn *plug_in)
                                           plug_in_recv_message,
                                           plug_in);
 
-      open_plug_ins = g_slist_prepend (open_plug_ins, plug_in);
+      gimp->open_plug_ins = g_slist_prepend (gimp->open_plug_ins, plug_in);
     }
 
   plug_in->open = TRUE;
@@ -520,13 +509,16 @@ void
 plug_in_close (PlugIn   *plug_in,
 	       gboolean  kill_it)
 {
-  gint status;
+  Gimp *gimp;
+  gint  status;
 #ifndef G_OS_WIN32
   struct timeval tv;
 #endif
 
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (plug_in->open == TRUE);
+
+  gimp = plug_in->gimp;
 
   if (! plug_in->open)
     return;
@@ -650,7 +642,7 @@ plug_in_close (PlugIn   *plug_in,
   palette_select_dialogs_check ();
   pattern_select_dialogs_check ();
 
-  open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
+  gimp->open_plug_ins = g_slist_remove (gimp->open_plug_ins, plug_in);
 }
 
 static gboolean
@@ -799,35 +791,40 @@ plug_in_flush (GIOChannel *channel,
 }
 
 void
-plug_in_push (PlugIn *plug_in)
+plug_in_push (Gimp   *gimp,
+              PlugIn *plug_in)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (plug_in != NULL);
 
-  current_plug_in = plug_in;
+  gimp->current_plug_in = plug_in;
 
-  plug_in_stack = g_slist_prepend (plug_in_stack, current_plug_in);
+  gimp->plug_in_stack = g_slist_prepend (gimp->plug_in_stack,
+                                         gimp->current_plug_in);
 }
 
 void
-plug_in_pop (void)
+plug_in_pop (Gimp *gimp)
 {
   GSList *tmp;
 
-  if (current_plug_in)
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->current_plug_in)
     {
-      tmp = plug_in_stack;
-      plug_in_stack = plug_in_stack->next;
+      tmp = gimp->plug_in_stack;
+      gimp->plug_in_stack = gimp->plug_in_stack->next;
       tmp->next = NULL;
       g_slist_free (tmp);
     }
 
-  if (plug_in_stack)
+  if (gimp->plug_in_stack)
     {
-      current_plug_in = plug_in_stack->data;
+      gimp->current_plug_in = gimp->plug_in_stack->data;
     }
   else
     {
-      current_plug_in = NULL;
+      gimp->current_plug_in = NULL;
     }
 }
 

@@ -141,7 +141,7 @@ plug_in_run_cmd_callback (GtkWidget *widget,
   plug_in_run (gimp, proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
   if (proc_rec->proc_type == GIMP_PLUGIN)
-    last_plug_in = proc_rec;
+    gimp->last_plug_in = proc_rec;
 
   g_free (args);
 }

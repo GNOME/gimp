@@ -50,12 +50,15 @@
 #include "plug-in-shm.h"
 
 
-static gint    shm_ID     = -1;
-static guchar *shm_addr   = NULL;
+struct _PlugInShm
+{
+  gint    shm_ID;
+  guchar *shm_addr;
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
-static HANDLE  shm_handle;
+  HANDLE  shm_handle;
 #endif
+};
 
 
 void
@@ -69,28 +72,32 @@ plug_in_shm_init (Gimp *gimp)
 #ifdef HAVE_SHM_H
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  shm_ID = shmget (IPC_PRIVATE,
-                   TILE_WIDTH * TILE_HEIGHT * 4,
-                   IPC_CREAT | 0600);
+  gimp->plug_in_shm = g_new0 (PlugInShm, 1);
+  gimp->plug_in_shm->shm_ID = -1;
 
-  if (shm_ID == -1)
+  gimp->plug_in_shm->shm_ID = shmget (IPC_PRIVATE,
+                                      TILE_WIDTH * TILE_HEIGHT * 4,
+                                      IPC_CREAT | 0600);
+
+  if (gimp->plug_in_shm->shm_ID == -1)
     {
       g_message ("shmget() failed: Disabling shared memory tile transport.");
     }
   else
     {
-      shm_addr = (guchar *) shmat (shm_ID, NULL, 0);
+      gimp->plug_in_shm->shm_addr = (guchar *)
+        shmat (gimp->plug_in_shm->shm_ID, NULL, 0);
 
-      if (shm_addr == (guchar *) -1)
+      if (gimp->plug_in_shm->shm_addr == (guchar *) -1)
 	{
 	  g_message ("shmat() failed: Disabling shared memory tile transport.");
-	  shmctl (shm_ID, IPC_RMID, NULL);
-	  shm_ID = -1;
+	  shmctl (gimp->plug_in_shm->shm_ID, IPC_RMID, NULL);
+	  gimp->plug_in_shm->shm_ID = -1;
 	}
 
 #ifdef IPC_RMID_DEFERRED_RELEASE
-      if (shm_addr != (guchar *) -1)
-	shmctl (shm_ID, IPC_RMID, NULL);
+      if (gimp->plug_in_shm->shm_addr != (guchar *) -1)
+	shmctl (gimp->plug_in_shm->shm_ID, IPC_RMID, NULL);
 #endif
     }
 
@@ -106,6 +113,9 @@ plug_in_shm_init (Gimp *gimp)
   
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->plug_in_shm = g_new0 (PlugInShm, 1);
+  gimp->plug_in_shm->shm_ID = -1;
+
   /* Our shared memory id will be our process ID */
   pid = GetCurrentProcessId ();
   
@@ -113,20 +123,21 @@ plug_in_shm_init (Gimp *gimp)
   g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
   /* Create the file mapping into paging space */
-  shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
-				  PAGE_READWRITE, 0,
-				  tileByteSize, fileMapName);
+  gimp->plug_in_shm->shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
+                                                     PAGE_READWRITE, 0,
+                                                     tileByteSize, fileMapName);
   
-  if (shm_handle)
+  if (gimp->plug_in_shm->shm_handle)
     {
       /* Map the shared memory into our address space for use */
-      shm_addr = (guchar *) MapViewOfFile (shm_handle,
-                                           FILE_MAP_ALL_ACCESS,
-                                           0, 0, tileByteSize);
+      gimp->plug_in_shm->shm_addr = (guchar *)
+        MapViewOfFile (gimp->plug_in_shm->shm_handle,
+                       FILE_MAP_ALL_ACCESS,
+                       0, 0, tileByteSize);
       
       /* Verify that we mapped our view */
-      if (shm_addr)
-	shm_ID = pid;
+      if (gimp->plug_in_shm->shm_addr)
+	gimp->plug_in_shm->shm_ID = pid;
       else
         g_warning ("MapViewOfFile error: "
                    "%d... disabling shared memory transport",
@@ -147,39 +158,49 @@ void
 plug_in_shm_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (gimp->plug_in_shm != NULL);
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 
-  CloseHandle (shm_handle);
+  CloseHandle (gimp->plug_in_shm->shm_handle);
 
 #else /* ! (G_OS_WIN32 || G_WITH_CYGWIN) */
 
 #ifdef HAVE_SHM_H
 #ifndef	IPC_RMID_DEFERRED_RELEASE
-  if (shm_ID != -1)
+  if (gimp->plug_in_shm->shm_ID != -1)
     {
-      shmdt (shm_addr);
-      shmctl (shm_ID, IPC_RMID, NULL);
+      shmdt (gimp->plug_in_shm->shm_addr);
+      shmctl (gimp->plug_in_shm->shm_ID, IPC_RMID, NULL);
     }
 #else /* IPC_RMID_DEFERRED_RELEASE */
-  if (shm_ID != -1)
+  if (gimp->plug_in_shm->shm_ID != -1)
     {
-      shmdt (shm_addr);
+      shmdt (gimp->plug_in_shm->shm_addr);
     }
 #endif
 #endif /* HAVE_SHM_H */
 
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
+
+  g_free (gimp->plug_in_shm);
+  gimp->plug_in_shm = NULL;
 }
 
 gint
 plug_in_shm_get_ID (Gimp *gimp)
 {
-  return shm_ID;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
+  g_return_val_if_fail (gimp->plug_in_shm != NULL, -1);
+
+  return gimp->plug_in_shm->shm_ID;
 }
 
 guchar *
 plug_in_shm_get_addr (Gimp *gimp)
 {
-  return shm_addr;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (gimp->plug_in_shm != NULL, NULL);
+
+  return gimp->plug_in_shm->shm_addr;
 }

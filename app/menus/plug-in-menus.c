@@ -26,6 +26,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-proc.h"
@@ -284,7 +286,9 @@ plug_in_menus_update (GimpItemFactory *item_factory,
   if (! strcmp (factory_path, "<Image>"))
     is_image_factory = TRUE;
 
-  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (tmp = item_factory->gimp->plug_in_proc_defs;
+       tmp;
+       tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
 
@@ -325,8 +329,9 @@ plug_in_menus_update (GimpItemFactory *item_factory,
                                                sensitive);
             }
 
-          if (is_image_factory &&
-              last_plug_in && (last_plug_in == &proc_def->db_info))
+          if (is_image_factory                 &&
+              item_factory->gimp->last_plug_in &&
+              item_factory->gimp->last_plug_in == &proc_def->db_info)
             {
               gchar *basename;
               gchar *ellipses;
@@ -363,7 +368,7 @@ plug_in_menus_update (GimpItemFactory *item_factory,
 	}
     }
 
-  if (is_image_factory && ! last_plug_in)
+  if (is_image_factory && ! item_factory->gimp->last_plug_in)
     {
       gimp_item_factory_set_label (GTK_ITEM_FACTORY (item_factory),
                                    "/Filters/Repeat Last",

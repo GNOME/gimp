@@ -28,16 +28,19 @@ void              plug_ins_exit                 (Gimp          *gimp);
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void              plug_ins_add_internal         (PlugInProcDef *proc_def);
+void              plug_ins_add_internal         (Gimp          *gimp,
+                                                 PlugInProcDef *proc_def);
 
 /* Add in the file load/save handler fields procedure. */
-PlugInProcDef   * plug_ins_file_handler         (gchar         *name,
+PlugInProcDef   * plug_ins_file_handler         (Gimp          *gimp,
+                                                 gchar         *name,
                                                  gchar         *extensions,
                                                  gchar         *prefixes,
                                                  gchar         *magics);
 
 /* Add a plug-in definition. */
-void              plug_ins_def_add_from_rc      (PlugInDef     *plug_in_def);
+void              plug_ins_def_add_from_rc      (Gimp          *gimp,
+                                                 PlugInDef     *plug_in_def);
 
 /* Add/Remove temporary procedures. */
 void              plug_ins_temp_proc_def_add    (Gimp          *gimp,
@@ -59,9 +62,6 @@ const gchar     * plug_ins_help_path            (Gimp          *gimp,
 
 GSList          * plug_ins_extensions_parse     (gchar         *extensions);
 PlugInImageType   plug_ins_image_types_parse    (gchar         *image_types);
-
-
-extern GSList *proc_defs;
 
 
 #endif /* __PLUG_INS_H__ */

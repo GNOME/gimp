@@ -1,3 +1,31 @@
+2003-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.h: added lots of members for the complete
+	state of the plug-ins.
+
+	* app/plug-in/plug-in-types.h: added PlugInShm typedef.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-rc.[ch]
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-in-shm.c
+	* app/plug-in/plug-in.[ch]
+	* app/plug-in/plug-ins.[ch]: removed all global & static variables
+	and pass around more "Gimp" pointers.
+
+	* app/plug-in/plug-in-debug.c: use G_N_ELEMENTS().
+
+	* app/gui/image-menu.c
+	* app/gui/plug-in-commands.c
+	* app/gui/plug-in-menus.c
+	* app/gui/toolbox-menu.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2003-02-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/uniteditor.c: more code cleanup.

@@ -43,8 +43,6 @@ static const GDebugKey gimp_debug_wrap_keys[] = {
   {"run",   GIMP_DEBUG_WRAP_RUN},
   {"on",    GIMP_DEBUG_WRAP_DEFAULT}
 };
- 
-static const guint gimp_ndebug_wrap_keys = sizeof (gimp_debug_wrap_keys) / sizeof (GDebugKey);
 
 
 void
@@ -83,7 +81,7 @@ plug_in_debug_init (Gimp *gimp)
       dbg->name = g_strndup (wrap, debug_string - wrap);
       dbg->flags = g_parse_debug_string (debug_string + 1,
                                          gimp_debug_wrap_keys,
-                                         gimp_ndebug_wrap_keys);
+                                         G_N_ELEMENTS (gimp_debug_wrap_keys));
     }
   else
     {
