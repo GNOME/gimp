@@ -469,7 +469,7 @@ brushes_refresh_brush_invoker (Argument *args)
    */
 
   success = TRUE ;
-  brushes_init(TRUE);
+  brushes_init(FALSE);
   return procedural_db_return_args (&brushes_refresh_brush_proc, success);
 }
 
