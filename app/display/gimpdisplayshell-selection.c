@@ -392,9 +392,6 @@ selection_draw (Selection *select)
   if (select->hidden)
     return;
 
-  if (! GTK_WIDGET_REALIZED (canvas))
-    return;
-
 #ifdef USE_DRAWPOINTS
 
 #ifdef VERBOSE

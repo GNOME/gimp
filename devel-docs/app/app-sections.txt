@@ -1356,9 +1356,11 @@ GIMP_VIEWABLE_GET_CLASS
 <TITLE>GimpCanvas</TITLE>
 GimpCanvas
 GimpCanvasStyle
+GIMP_CANVAS_NUM_STIPPLES
 gimp_canvas_new
 gimp_canvas_draw_cursor
 gimp_canvas_draw_point
+gimp_canvas_draw_points
 gimp_canvas_draw_line
 gimp_canvas_draw_lines
 gimp_canvas_draw_rectangle
@@ -1367,8 +1369,10 @@ gimp_canvas_draw_polygon
 gimp_canvas_draw_segments
 gimp_canvas_draw_rgb
 gimp_canvas_set_clip_rect
-gimp_canvas_set_bg_color
+gimp_canvas_set_clip_region
 gimp_canvas_set_custom_gc
+gimp_canvas_set_stipple_index
+gimp_canvas_set_bg_color
 <SUBSECTION Standard>
 GimpCanvasClass
 GIMP_CANVAS
@@ -1641,7 +1645,7 @@ gimp_display_shell_scroll_clamp_offsets
 <FILE>gimpdisplayshell-selection</FILE>
 <TITLE>GimpDisplayShell-selection</TITLE>
 Selection
-gimp_display_shell_selection_create
+gimp_display_shell_selection_new
 gimp_display_shell_selection_free
 gimp_display_shell_selection_pause
 gimp_display_shell_selection_resume

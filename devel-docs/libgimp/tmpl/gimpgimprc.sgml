@@ -42,6 +42,14 @@ Interactions with settings from .gimprc.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_get_module_load_inhibit ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_monitor_resolution ##### -->
 <para>
 
@@ -49,6 +57,14 @@ Interactions with settings from .gimprc.
 
 @xres: 
 @yres: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_get_theme_dir ##### -->
+<para>
+
+</para>
+
 @Returns: 
 
 

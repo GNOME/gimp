@@ -1,14 +1,21 @@
-2003-11-11  Maurits Rijk  <lpeek.mrijk@consunet.nl
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpcanvas.c: added API docs for the less obvious
+	functions. Gracefully handle attempts to draw on the unrealized
+	widget.
+
+	* app/display/gimpdisplayshell-selection.c (selection_draw):
+	removed the redundant check for a realized canvas widget.
+
+2003-11-11  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gfig/gfig-preview.[ch]
 	* plug-ins/gfig/gfig-grid.[ch]: new files.
 	
 	* plug-ins/gfig/Makefile.am: changed accordingly.
-	* po-plug-ins/POTFILES.in: added new files for translation.
 
 	* plug-ins/gfig/gfig.[ch]: moved preview and grid code to their own
 	file.
-	
 
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 

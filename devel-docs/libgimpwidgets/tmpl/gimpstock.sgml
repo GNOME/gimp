@@ -73,6 +73,14 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_MOVE_TO_SCREEN ##### -->
+<para>
+<inlinegraphic fileref="stock-move-to-screen-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-move-to-screen-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_INVERT ##### -->
 <para>
 <inlinegraphic fileref="stock-invert-16.png" format="png"></inlinegraphic>

@@ -1,5 +1,18 @@
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am (IGNORE_HFILES): removed
+	gimpdisplayshell-marching-ants.h.
+	
+	* app/app-sections.txt
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpgimprc.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolorbutton.sgml
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml: updated.
+
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
 	* app/app-docs.sgml
 	* app/app-sections.txt
 	* app/app.types: updated.

@@ -267,7 +267,9 @@ gimp_fonts_set_popup
 gimp_gimprc_query
 gimp_gimprc_set
 gimp_get_default_comment
+gimp_get_module_load_inhibit
 gimp_get_monitor_resolution
+gimp_get_theme_dir
 </SECTION>
 
 <SECTION>

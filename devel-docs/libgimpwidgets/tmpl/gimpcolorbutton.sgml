@@ -64,6 +64,24 @@ color, the "color_changed" signal is emitted.
 @gcb: 
 
 
+<!-- ##### FUNCTION gimp_color_button_set_update ##### -->
+<para>
+
+</para>
+
+@button: 
+@continuous: 
+
+
+<!-- ##### FUNCTION gimp_color_button_get_update ##### -->
+<para>
+
+</para>
+
+@button: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_color_button_has_alpha ##### -->
 <para>
 

@@ -218,12 +218,14 @@ static GdkGC *
 gimp_canvas_gc_new (GimpCanvas      *canvas,
                     GimpCanvasStyle  style)
 {
-  GtkWidget       *widget = GTK_WIDGET (canvas);
   GdkGC           *gc;
   GdkGCValues      values;
   GdkGCValuesMask  mask = 0;
   GdkColor         fg;
   GdkColor         bg;
+
+  if (! GTK_WIDGET_REALIZED (canvas))
+    return NULL;
 
   switch (style)
     {
@@ -262,11 +264,10 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
     case GIMP_CANVAS_STYLE_CUSTOM:
     default:
-      g_assert_not_reached ();
-      break;
+      return NULL;
     }
 
-  gc = gdk_gc_new_with_values (widget->window, &values, mask);
+  gc = gdk_gc_new_with_values (GTK_WIDGET (canvas)->window, &values, mask);
 
   switch (style)
     {
@@ -341,9 +342,34 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   return gc;
 }
 
+static inline gboolean
+gimp_canvas_ensure_style (GimpCanvas      *canvas,
+                          GimpCanvasStyle  style)
+{
+  return (canvas->gc[style] != NULL ||
+          (canvas->gc[style] = gimp_canvas_gc_new (canvas, style)) != NULL);
+}
+
 
 /*  public functions  */
 
+/**
+ * gimp_canvas_new:
+ *
+ * Creates a new #GimpCanvas widget and sets it's widget name to
+ * "gimp-canvas".
+ *
+ * The #GimpCanvas widget is a #GdkDrawingArea abstraction. It manages
+ * a set of graphic contexts for drawing on a GIMP display. If you
+ * draw using a #GimpCanvasStyle, #GimpCanvas makes sure that the
+ * associated #GdkGC is created. All drawing on the canvas needs to
+ * happen by means of the #GimpCanvas drawing functions. Besides from
+ * not needing a #GdkGC pointer, the #GimpCanvas drawing functions
+ * look and work like their #GdkDrawable counterparts. #GimpCanvas
+ * gracefully handles attempts to draw on the unrealized widget.
+ *
+ * Return value: a new #GimpCanvas widget
+ **/
 GtkWidget *
 gimp_canvas_new (void)
 {
@@ -357,16 +383,11 @@ gimp_canvas_draw_cursor (GimpCanvas *canvas,
                          gint        x,
                          gint        y)
 {
-  GtkWidget        *widget = GTK_WIDGET (canvas);
-  GimpCanvasStyle  style;
+  GtkWidget *widget = GTK_WIDGET (canvas);
 
-  for (style  = GIMP_CANVAS_STYLE_BLACK;
-       style <= GIMP_CANVAS_STYLE_WHITE;
-       style++)
-    {
-      if (! canvas->gc[style])
-        canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-    }
+  if (! (gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_BLACK) &&
+         gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_WHITE)) )
+    return;
 
   gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
                  x - 7, y - 1, x + 7, y - 1);
@@ -388,12 +409,11 @@ gimp_canvas_draw_point (GimpCanvas      *canvas,
                         gint             x,
                         gint             y)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_point (widget->window, canvas->gc[style], x, y);
+  gdk_draw_point (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                  x, y);
 }
 
 void
@@ -402,12 +422,11 @@ gimp_canvas_draw_points (GimpCanvas      *canvas,
                          GdkPoint        *points,
                          gint             num_points)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_points (widget->window, canvas->gc[style], points, num_points);
+  gdk_draw_points (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                   points, num_points);
 }
 
 void
@@ -418,12 +437,11 @@ gimp_canvas_draw_line (GimpCanvas      *canvas,
                        gint             x2,
                        gint             y2)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_line (widget->window, canvas->gc[style], x1, y1, x2, y2);
+  gdk_draw_line (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                 x1, y1, x2, y2);
 }
 
 void
@@ -432,12 +450,11 @@ gimp_canvas_draw_lines (GimpCanvas      *canvas,
                         GdkPoint        *points,
                         gint             num_points)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_lines (widget->window, canvas->gc[style], points, num_points);
+  gdk_draw_lines (GTK_WIDGET (canvas)->window, canvas->gc[style],
+                  points, num_points);
 }
 
 void
@@ -449,12 +466,10 @@ gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
                             gint             width,
                             gint             height)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_rectangle (widget->window, canvas->gc[style],
+  gdk_draw_rectangle (GTK_WIDGET (canvas)->window, canvas->gc[style],
                       filled, x, y, width, height);
 }
 
@@ -469,12 +484,10 @@ gimp_canvas_draw_arc (GimpCanvas      *canvas,
                       gint             angle1,
                       gint             angle2)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_arc (widget->window, canvas->gc[style],
+  gdk_draw_arc (GTK_WIDGET (canvas)->window, canvas->gc[style],
                 filled, x, y, width, height, angle1, angle2);
 }
 
@@ -485,12 +498,10 @@ gimp_canvas_draw_polygon (GimpCanvas      *canvas,
                           GdkPoint        *points,
                           gint             num_points)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_polygon (widget->window, canvas->gc[style],
+  gdk_draw_polygon (GTK_WIDGET (canvas)->window, canvas->gc[style],
                     filled, points, num_points);
 }
 
@@ -500,12 +511,10 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
                            GdkSegment      *segments,
                            gint             num_segments)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_segments (widget->window, canvas->gc[style],
+  gdk_draw_segments (GTK_WIDGET (canvas)->window, canvas->gc[style],
                      segments, num_segments);
 }
 
@@ -521,12 +530,10 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
                       gint             xdith,
                       gint             ydith)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-
-  gdk_draw_rgb_image_dithalign (widget->window, canvas->gc[style],
+  gdk_draw_rgb_image_dithalign (GTK_WIDGET (canvas)->window, canvas->gc[style],
                                 x, y, width, height,
                                 GDK_RGB_DITHER_MAX,
                                 rgb_buf, rowstride, xdith, ydith);
@@ -564,28 +571,53 @@ gimp_canvas_set_clip_region (GimpCanvas      *canvas,
   gdk_gc_set_clip_region (canvas->gc[style], region);
 }
 
+/**
+ * gimp_canvas_set_stipple_index:
+ * @canvas: a #GimpCanvas widget
+ * @style:  the #GimpCanvasStyle to alter
+ * @index:  the new stipple index
+ *
+ * Some styles of the #GimpCanvas do a stipple fill. #GimpCanvas has a
+ * set of %GIMP_CANVAS_NUM_STIPPLES stipple bitmaps. This functions
+ * allows you to change the bitmap being used. This can be used to
+ * implement a marching ants effect. An older implementation used to
+ * use this feature and so it is included since it might be useful in
+ * the future. All stipple bitmaps but the default one are created on
+ * the fly.
+ */
 void
 gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
                                GimpCanvasStyle  style,
                                guint            index)
 {
-  if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+  if (! gimp_canvas_ensure_style (canvas, style))
+    return;
 
   index = index % GIMP_CANVAS_NUM_STIPPLES;
 
   if (! canvas->stipple[index])
     {
-      GtkWidget *widget = GTK_WIDGET (canvas);
-
       canvas->stipple[index] =
-        gdk_bitmap_create_from_data (widget->window,
+        gdk_bitmap_create_from_data (GTK_WIDGET (canvas)->window,
                                      (const gchar *) stipples[index], 8, 8);
     }
 
   gdk_gc_set_stipple (canvas->gc[style], canvas->stipple[index]);
 }
 
+/**
+ * gimp_canvas_set_custom_gc:
+ * @canvas: a #GimpCanvas widget
+ * @gc:     a #GdkGC;
+ *
+ * The #GimpCanvas widget has an extra style for a custom #GdkGC. This
+ * function allows you to set the @gc for the %GIMP_CANVAS_STYLE_CUSTOM.
+ * Drawing with the custom style only works if you set a #GdkGC
+ * earlier.  Since the custom #GdkGC can under certain circumstances
+ * be destroyed by #GimpCanvas, you should always set the custom gc
+ * before calling a #GimpCanvas drawing function with
+ * %GIMP_CANVAS_STYLE_CUSTOM.
+ **/
 void
 gimp_canvas_set_custom_gc (GimpCanvas *canvas,
                            GdkGC      *gc)

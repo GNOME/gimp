@@ -67,3 +67,12 @@ dialog-related stuff.
 @args: 
 
 
+<!-- ##### FUNCTION gimp_dialog_run ##### -->
+<para>
+
+</para>
+
+@dialog: 
+@Returns: 
+
+

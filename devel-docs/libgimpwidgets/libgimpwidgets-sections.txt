@@ -46,6 +46,8 @@ GimpColorButton
 gimp_color_button_new
 gimp_color_button_set_color
 gimp_color_button_get_color
+gimp_color_button_set_update
+gimp_color_button_get_update
 gimp_color_button_has_alpha
 gimp_color_button_set_type
 <SUBSECTION Standard>
@@ -268,6 +270,7 @@ GimpDialog
 gimp_dialog_new
 gimp_dialog_new_valist
 gimp_dialog_add_buttons_valist
+gimp_dialog_run
 <SUBSECTION Standard>
 GIMP_TYPE_DIALOG
 GIMP_DIALOG
@@ -319,6 +322,7 @@ GIMP_STOCK_RESET
 GIMP_STOCK_CLOSE
 GIMP_STOCK_MENU_LEFT
 GIMP_STOCK_MENU_RIGHT
+GIMP_STOCK_MOVE_TO_SCREEN
 GIMP_STOCK_INVERT
 GIMP_STOCK_LAYER_TO_IMAGESIZE
 GIMP_STOCK_MERGE_DOWN
