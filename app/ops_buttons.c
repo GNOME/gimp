@@ -93,7 +93,7 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
 	}
 
       if (tool_tips != NULL)
-	gtk_tooltips_set_tip (tool_tips, button, ops_button->tooltip, NULL);
+	gtk_tooltips_set_tip (tool_tips, button, gettext (ops_button->tooltip), NULL);
 
       gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0); 
 

@@ -111,9 +111,9 @@ bucket_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
-  gchar* fill_mode_label[3] = { _("FG Color Fill"), 
-				_("BG Color Fill"),
-				_("Pattern Fill") };
+  gchar* fill_mode_label[3] = { N_("FG Color Fill"), 
+				N_("BG Color Fill"),
+				N_("Pattern Fill") };
   gint   fill_mode_value[3] = { FG_BUCKET_FILL, 
 				BG_BUCKET_FILL, 
 				PATTERN_BUCKET_FILL };

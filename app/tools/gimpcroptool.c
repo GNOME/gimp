@@ -40,8 +40,6 @@
 #define RESIZING_LEFT   2
 #define RESIZING_RIGHT  3
 #define CROPPING        4
-#define REFRAMING       5
-
 
 /*  speed of key movement  */
 #define ARROW_VELOCITY 25
@@ -120,7 +118,7 @@ static void crop_adjust_guides      (GImage *, int, int, int, int);
 /*  Crop dialog functions  */
 static void crop_info_update        (Tool *);
 static void crop_info_create        (Tool *);
-static void crop_ok_callback        (GtkWidget *, gpointer);
+static void crop_crop_callback      (GtkWidget *, gpointer);
 static void crop_resize_callback    (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
@@ -165,7 +163,7 @@ crop_options_new (void)
   CropOptions *options;
   GtkWidget *vbox;
   GtkWidget *frame;
-  gchar* type_label[2] = { _("Crop"), _("Resize") };
+  gchar* type_label[2] = { N_("Crop"), N_("Resize") };
   gint   type_value[2] = { CROP_CROP, RESIZE_CROP };
   
   /*  the new crop tool options structure  */
@@ -175,7 +173,7 @@ crop_options_new (void)
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = TRUE;
-  options->type          = options->type_d          = CROP_CROP;
+  options->type          = options->type_d          = RESIZE_CROP;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -255,12 +253,7 @@ crop_button_press (Tool           *tool,
       /*  If the pointer is in the rectangular region, crop or resize it!  */
       else if (bevent->x > crop->x1 && bevent->x < crop->x2 &&
 	       bevent->y > crop->y1 && bevent->y < crop->y2)
-	{
-	  if ( crop_options->type == CROP_CROP )
-	    crop->function = CROPPING;
-	  else
-	    crop->function = REFRAMING;
-	}
+	crop->function = CROPPING;
       /*  otherwise, the new function will be creating, since we want to start anew  */
       else
 	crop->function = CREATING;
@@ -307,30 +300,27 @@ crop_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), crop->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
 
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      switch (crop->function)
+      if (crop->function == CROPPING)
 	{
-	case CROPPING:
-	  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
-		      crop_options->layer_only, TRUE);
-	  break;
-	case REFRAMING:
-	  crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
-		      crop_options->layer_only, FALSE);
-	  break;
-	default: 
-	  crop_info_update (tool);
-	  return;
-	}
-    }
+	  if (crop_options->type == CROP_CROP)
+	    crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
+			crop_options->layer_only, TRUE);
+	  else
+	    crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2, 
+			crop_options->layer_only, FALSE);
 
-  /*  Finish the tool  */
-  draw_core_stop (crop->core, tool);
-  info_dialog_popdown (crop_info);
-  tool->state = INACTIVE;
+	  /*  Finish the tool  */
+	  draw_core_stop (crop->core, tool);
+	  info_dialog_popdown (crop_info);
+	  tool->state = INACTIVE;
+	}
+      else
+	crop_info_update (tool);
+    }
 }
 
 static void
@@ -398,7 +388,7 @@ crop_motion (Tool           *tool,
 
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
-  if (crop->function == CROPPING || crop->function == REFRAMING)
+  if (crop->function == CROPPING)
     return;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &curx, &cury, TRUE, FALSE);
@@ -651,26 +641,19 @@ crop_modifier_key_func (Tool        *tool,
 			GdkEventKey *kevent,
 			gpointer     gdisp_ptr)
 {
-  GDisplay * gdisp;
-
-  gdisp = (GDisplay *) gdisp_ptr;
-  
-  if (tool->state == ACTIVE && tool->gdisp_ptr == gdisp_ptr)
+  switch (kevent->keyval)
     {
-      switch (kevent->keyval)
-	{
-	case GDK_Alt_L: case GDK_Alt_R:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), !crop_options->allow_enlarge);
-	  break;
-	case GDK_Shift_L: case GDK_Shift_R:
-	  if (crop_options->type == CROP_CROP)
-	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
-	  else
-	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
-	  break;
-	case GDK_Control_L: case GDK_Control_R:
-	  break;
-	}
+    case GDK_Alt_L: case GDK_Alt_R:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), !crop_options->allow_enlarge);
+      break;
+    case GDK_Shift_L: case GDK_Shift_R:
+      if (crop_options->type == CROP_CROP)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
+      else
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
+      break;
+    case GDK_Control_L: case GDK_Control_R:
+      break;
     }
 }
 
@@ -1007,11 +990,10 @@ crop_start (Tool *tool,
 /*  Crop dialog functions                              */
 /*******************************************************/
 
-static ActionAreaItem action_items[4] =
+static ActionAreaItem action_items[3] =
 {
-  { N_("Crop"), crop_ok_callback, NULL, NULL },
+  { N_("Crop"), crop_crop_callback, NULL, NULL },
   { N_("Resize"), crop_resize_callback, NULL, NULL },
-  /*  { N_("Selection"), crop_selection_callback, NULL, NULL },  */
   { N_("Close"), crop_close_callback, NULL, NULL },
 };
 
@@ -1132,8 +1114,8 @@ crop_info_update (Tool *tool)
 }
 
 static void
-crop_ok_callback (GtkWidget *w,
-		  gpointer   client_data)
+crop_crop_callback (GtkWidget *w,
+		    gpointer   client_data)
 {
   Tool * tool;
   Crop * crop;

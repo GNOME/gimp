@@ -170,7 +170,7 @@ tool_options_radio_buttons_new (gchar*      label,
   for (i=0; i<num; i++)
     {
       button_widget[i] = gtk_radio_button_new_with_label (group,
-							  button_label[i]);
+							  gettext (button_label[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button_widget[i]));
       gtk_box_pack_start (GTK_BOX (vbox), button_widget[i], FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button_widget[i]), "toggled",

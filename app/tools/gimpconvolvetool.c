@@ -126,7 +126,7 @@ convolve_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
-  gchar* type_label[2] = { _("Blur"), _("Sharpen") };
+  gchar* type_label[2] = { N_("Blur"), N_("Sharpen") };
   gint   type_value[2] = { BLUR_CONVOLVE, SHARPEN_CONVOLVE };
 
   /*  the new convolve tool options structure  */

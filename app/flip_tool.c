@@ -67,7 +67,7 @@ flip_options_new (void)
 
   GtkWidget *vbox;
   GtkWidget *frame;
-  gchar* type_label[2] = { _("Horizontal"), _("Vertical") };
+  gchar* type_label[2] = { N_("Horizontal"), N_("Vertical") };
   gint   type_value[2] = { FLIP_HORZ, FLIP_VERT };
  
   /*  the new flip tool options structure  */

@@ -1,3 +1,12 @@
+Wed Apr 28 20:53:18 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/bucket_fill.c
+	* app/convolve.c
+	* app/crop.c
+	* app/flip_tool.c
+	* app/ops_buttons.c
+	* app/tool_options.c: some code cleanup and i18n fixes
+
 Wed Apr 28 16:28:08 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/gimprc.c: Add <sys/types.h>, Open text files with "rt".
