@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-04-14 21:21+0200\n"
-"PO-Revision-Date: 2000-04-11 10:46+02:00\n"
+"POT-Creation-Date: 2000-04-17 22:47+0200\n"
+"PO-Revision-Date: 2000-04-17 22:51+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Om"
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:622
-#: plug-ins/common/bumpmap.c:806 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/bumpmap.c:868 plug-ins/common/checkerboard.c:359
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:423
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
@@ -127,7 +127,7 @@ msgstr "Ok"
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
 #: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
-#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:808
+#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:870
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
@@ -440,17 +440,17 @@ msgstr "Om AlienMap2"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1399 plug-ins/common/CML_explorer.c:1214
-#: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
-#: plug-ins/common/curve_bend.c:1523 plug-ins/common/destripe.c:597
-#: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:313
-#: plug-ins/common/fractaltrace.c:759 plug-ins/common/iwarp.c:1173
-#: plug-ins/common/mapcolor.c:596 plug-ins/common/nlfilt.c:586
-#: plug-ins/common/polar.c:964 plug-ins/common/ps.c:2869
-#: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
-#: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:949
-#: plug-ins/gfig/gfig.c:3981 plug-ins/gflare/gflare.c:2518
-#: plug-ins/gflare/gflare.c:3526 plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/blinds.c:362 plug-ins/common/curve_bend.c:1523
+#: plug-ins/common/destripe.c:597 plug-ins/common/emboss.c:762
+#: plug-ins/common/exchange.c:313 plug-ins/common/fractaltrace.c:759
+#: plug-ins/common/iwarp.c:1173 plug-ins/common/mapcolor.c:596
+#: plug-ins/common/nlfilt.c:586 plug-ins/common/polar.c:964
+#: plug-ins/common/ps.c:2869 plug-ins/common/sharpen.c:567
+#: plug-ins/common/spheredesigner.c:2258 plug-ins/common/tileit.c:426
+#: plug-ins/common/waves.c:593 plug-ins/common/whirlpinch.c:847
+#: plug-ins/flame/flame.c:949 plug-ins/gfig/gfig.c:3981
+#: plug-ins/gflare/gflare.c:2518 plug-ins/gflare/gflare.c:3526
+#: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -992,7 +992,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:962 plug-ins/common/emboss.c:602
+#: plug-ins/common/bumpmap.c:1061 plug-ins/common/emboss.c:602
 #: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Dybde:"
@@ -1121,7 +1121,7 @@ msgid "Intensity Levels"
 msgstr "Intensitetsnivå"
 
 #: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:998
+#: plug-ins/common/bumpmap.c:1101
 msgid "Ambient:"
 msgstr ""
 
@@ -2093,7 +2093,7 @@ msgstr "Justér synlige lag"
 #.
 #: plug-ins/common/align_layers.c:431 plug-ins/common/apply_lens.c:415
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:640
-#: plug-ins/common/bumpmap.c:903 plug-ins/common/checkerboard.c:371
+#: plug-ins/common/bumpmap.c:1002 plug-ins/common/checkerboard.c:371
 #: plug-ins/common/cubism.c:328 plug-ins/common/despeckle.c:747
 #: plug-ins/common/destripe.c:658 plug-ins/common/edge.c:668
 #: plug-ins/common/emboss.c:572 plug-ins/common/engrave.c:246
@@ -2205,7 +2205,7 @@ msgstr ""
 #: plug-ins/gap/gap_navigator_dialog.c:2852
 #: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
-#: plug-ins/helpbrowser/helpbrowser.c:790
+#: plug-ins/helpbrowser/helpbrowser.c:800
 #: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:81
 msgid "Close"
@@ -2333,18 +2333,16 @@ msgid "Transparent"
 msgstr "Gjennomsiktig"
 
 #: plug-ins/common/blinds.c:435
-#, fuzzy
 msgid "Displacement:"
-msgstr "Prosent"
+msgstr "Forskyvning:"
 
 #: plug-ins/common/blinds.c:444
 msgid "Num Segments:"
 msgstr "Antall segmenter:"
 
 #: plug-ins/common/blur.c:204
-#, fuzzy
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr "<Image>/Filter/Farger/Alien Map"
+msgstr "<Image>/Filter/Blur/Blur..."
 
 #: plug-ins/common/blur.c:657 plug-ins/common/plasma.c:324
 #: plug-ins/common/randomize.c:745 plug-ins/common/snoise.c:556
@@ -2368,66 +2366,70 @@ msgstr "Gjenta:"
 msgid "Number of times to apply filter"
 msgstr "Antall ganger filteret skal påføres"
 
-#: plug-ins/common/bumpmap.c:339
-#, fuzzy
+#: plug-ins/common/bumpmap.c:363
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filter/Farger/Alien Map"
+msgstr "<Image>/Filter/Map/Bump map..."
 
-#: plug-ins/common/bumpmap.c:474
+#: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
-msgstr ""
+msgstr "Bump-mapping..."
 
-#: plug-ins/common/bumpmap.c:801
+#: plug-ins/common/bumpmap.c:863
 msgid "Bump Map"
 msgstr "\"Bump map\""
 
-#: plug-ins/common/bumpmap.c:864
+#: plug-ins/common/bumpmap.c:954
 msgid "Map Type"
 msgstr "Type map"
 
-#: plug-ins/common/bumpmap.c:868
+#: plug-ins/common/bumpmap.c:958
 msgid "Linear Map"
 msgstr "Lineært kart"
 
-#: plug-ins/common/bumpmap.c:869
+#: plug-ins/common/bumpmap.c:959
 msgid "Spherical Map"
 msgstr "Sfærisk kart"
 
-#: plug-ins/common/bumpmap.c:870
+#: plug-ins/common/bumpmap.c:960
 msgid "Sinuosidal Map"
 msgstr "Sinuslignende kart"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:884
+#: plug-ins/common/bumpmap.c:973
 msgid "Compensate for Darkening"
 msgstr "Kompenser for formørking"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:894
+#: plug-ins/common/bumpmap.c:983
 msgid "Invert Bumpmap"
 msgstr "Inverter \"Bumpmap\""
 
-#: plug-ins/common/bumpmap.c:925
+#. Tile bumpmap
+#: plug-ins/common/bumpmap.c:993
+msgid "Tile Bumpmap"
+msgstr "Flis-bumpmap"
+
+#: plug-ins/common/bumpmap.c:1024
 msgid "Bump Map:"
 msgstr "Bump map:"
 
-#: plug-ins/common/bumpmap.c:944 plug-ins/common/emboss.c:584
+#: plug-ins/common/bumpmap.c:1043 plug-ins/common/emboss.c:584
 msgid "Azimuth:"
 msgstr "Azimuth:"
 
-#: plug-ins/common/bumpmap.c:953 plug-ins/common/emboss.c:593
+#: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:593
 msgid "Elevation:"
 msgstr "Forhøyelse:"
 
-#: plug-ins/common/bumpmap.c:971 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1072 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "X-avstand:"
 
-#: plug-ins/common/bumpmap.c:980 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1082 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Y-avstand:"
 
-#: plug-ins/common/bumpmap.c:989
+#: plug-ins/common/bumpmap.c:1092
 msgid "Waterlevel:"
 msgstr "Vannnivå:"
 
@@ -11610,23 +11612,23 @@ msgstr ""
 msgid "<Untitled>"
 msgstr "Enhet"
 
-#: plug-ins/helpbrowser/helpbrowser.c:729
+#: plug-ins/helpbrowser/helpbrowser.c:739
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
 "Couldn't find my root html directory."
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:752
+#: plug-ins/helpbrowser/helpbrowser.c:762
 msgid "GIMP Help Browser"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:767
+#: plug-ins/helpbrowser/helpbrowser.c:777
 #, fuzzy
 msgid "Back"
 msgstr "Sort:"
 
-#: plug-ins/helpbrowser/helpbrowser.c:776
+#: plug-ins/helpbrowser/helpbrowser.c:786
 msgid "Forward"
 msgstr ""
 
@@ -13366,15 +13368,3 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
 msgstr "Feil, fil %s med egenskaper for XJT er tom"
-
-#, fuzzy
-#~ msgid "Maze Options"
-#~ msgstr "Alternativer for lagring"
-
-#, fuzzy
-#~ msgid "Time"
-#~ msgstr "Sinus"
-
-#, fuzzy
-#~ msgid "Algorithm:"
-#~ msgstr "Logaritmisk"

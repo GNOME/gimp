@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 2000-04-11 10:38+0200\n"
-"PO-Revision-Date: 2000-04-06 11:04+02:00\n"
+"POT-Creation-Date: 2000-04-17 22:38+0200\n"
+"PO-Revision-Date: 2000-04-17 22:40+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Trykk:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:531
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:568
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -118,9 +118,9 @@ msgstr "Avslutt"
 #: app/channels_dialog.c:2504 app/channels_dialog.c:2667
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:370 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:316 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1022
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1035
 #: app/layers_dialog.c:3438 app/layers_dialog.c:3620 app/layers_dialog.c:3712
 #: app/layers_dialog.c:3964 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:201 app/preferences_dialog.c:1434 app/qmask.c:281
@@ -316,15 +316,15 @@ msgid "Brush Editor"
 msgstr "Penseleditor"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
+#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:690
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:370 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:316 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:359 app/tips_dialog.c:153 app/tools.c:1088
+#: app/preferences_dialog.c:359 app/tips_dialog.c:157 app/tools.c:1088
 #: app/undo_history.c:752
 msgid "Close"
 msgstr "Lukk"
@@ -342,59 +342,59 @@ msgstr "Hardhet:"
 msgid "Aspect Ratio:"
 msgstr "Aspektrate:"
 
-#: app/brush_edit.c:312 app/measure.c:282 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. The shell
-#: app/brush_select.c:269
+#: app/brush_select.c:272
 msgid "Brush Selection"
 msgstr "Valg av pensel"
 
-#: app/brush_select.c:276 app/gradient.c:799 app/module_db.c:321
+#: app/brush_select.c:279 app/gradient.c:799 app/module_db.c:321
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Oppdater"
 
-#: app/brush_select.c:404
+#: app/brush_select.c:407
 msgid "No Brushes available"
 msgstr "Ingen pensler tilgjengelig"
 
-#: app/brush_select.c:445 app/layers_dialog.c:412 app/tool_options.c:504
+#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:504
 msgid "Opacity:"
 msgstr "Ugjennomsiktighet:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:364 app/tool_options.c:528
+#: app/brush_select.c:456 app/layers_dialog.c:364 app/tool_options.c:528
 msgid "Mode:"
 msgstr "Modus:"
 
-#: app/brush_select.c:464 app/palette.c:1176 app/palette.c:2239
+#: app/brush_select.c:467 app/palette.c:1176 app/palette.c:2239
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Ny"
 
-#: app/brush_select.c:470 app/colormap_dialog.i.c:136
+#: app/brush_select.c:473 app/colormap_dialog.i.c:136
 #: app/gradient_select.c:151 app/palette.c:1183 app/palette.c:2086
 #: app/palette_select.c:64
 msgid "Edit"
 msgstr "Rediger"
 
-#: app/brush_select.c:476 app/global_edit.c:770 app/gradient.c:1769
+#: app/brush_select.c:479 app/global_edit.c:770 app/gradient.c:1769
 #: app/palette.c:1193 app/palette.c:1826 app/palette.c:2250
 msgid "Delete"
 msgstr "Slett"
 
-#: app/brush_select.c:507
+#: app/brush_select.c:510
 msgid "Spacing:"
 msgstr "Mellomrom:"
 
 #. this should never happen
-#: app/brush_select.c:1791
+#: app/brush_select.c:1850
 msgid "Sorry, this brush can't be edited."
 msgstr "Beklager, denne penselen kan ikke redigeres."
 
 #. this should never happen
-#: app/brush_select.c:1820
+#: app/brush_select.c:1879
 msgid "Sorry, this brush can't be deleted."
 msgstr "Beklager, denne penselen kan ikke slettes."
 
@@ -1078,7 +1078,7 @@ msgid "Exposure:"
 msgstr "Eksponering:"
 
 #. the type (dodge or burn)
-#: app/dodgeburn.c:161 app/ink.c:421
+#: app/dodgeburn.c:161 app/ink.c:385
 msgid "Type"
 msgstr "Type"
 
@@ -1376,7 +1376,7 @@ msgstr "Tilgjengelige filtre"
 msgid "Active Filters"
 msgstr "Aktive filtre"
 
-#: app/gdisplay_ops.c:362
+#: app/gdisplay_ops.c:308
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1510,7 +1510,7 @@ msgstr "uten navn"
 msgid "Layer type %d not supported."
 msgstr "Lagtype %d ikke støttet."
 
-#: app/gimphelp.c:126
+#: app/gimphelp.c:128
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1615,7 +1615,7 @@ msgstr "Fremgang"
 msgid "Please wait..."
 msgstr "Vennligst vent..."
 
-#: app/gimprc.c:415 app/plug_in.c:304
+#: app/gimprc.c:415 app/plug_in.c:306
 msgid "Resource configuration"
 msgstr "Resurskonfigurasjon"
 
@@ -1686,7 +1686,7 @@ msgstr "GIMP melding"
 msgid "pixel"
 msgstr "piksel"
 
-#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:511
+#: app/gimpunit.c:59 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
 msgid "pixels"
 msgstr "piksler"
 
@@ -2361,37 +2361,30 @@ msgstr "Indeksert farge"
 msgid "colors"
 msgstr "farger"
 
-#. size slider
-#: app/ink.c:296
+#. adjust sliders
+#: app/ink.c:291
+msgid "Adjustment"
+msgstr "Justering"
+
+#: app/ink.c:308 app/ink.c:346
 msgid "Size:"
 msgstr "Størrelse:"
 
-#. sens slider
-#: app/ink.c:314 app/ink.c:338 app/ink.c:368
-msgid "Sensitivity:"
-msgstr "Følsomhet:"
+#. sens sliders
+#: app/ink.c:329
+msgid "Sensitivity"
+msgstr "Følsomhet"
 
-#. tilt sens slider
-#: app/ink.c:332
-msgid "Tilt"
-msgstr "Snu"
+#: app/ink.c:359
+msgid "Tilt:"
+msgstr "Vending:"
 
-#. velocity sens slider
-#: app/ink.c:362
-msgid "Speed"
-msgstr "Hastighet"
-
-#. angle adjust slider
-#: app/ink.c:392
-msgid "Angle"
-msgstr "Vinkel"
-
-#: app/ink.c:398
-msgid "Adjust:"
-msgstr "Juster:"
+#: app/ink.c:372
+msgid "Speed:"
+msgstr "Hastighet:"
 
 #. Brush shape widget
-#: app/ink.c:485
+#: app/ink.c:454
 msgid "Shape"
 msgstr "Form"
 
@@ -2869,19 +2862,19 @@ msgstr "  --system-gimprc <gimprc> Bruk en alternativ system gimprc fil.\n"
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsollvinduet vil lukkes om ti sekunder)\n"
 
-#: app/measure.c:118 app/measure.c:279
+#: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
 msgstr "Måleverktøy"
 
-#: app/measure.c:127
+#: app/measure.c:130
 msgid "Use Info Window"
 msgstr "Bruk infovindu"
 
-#: app/measure.c:281
+#: app/measure.c:316
 msgid "Distance:"
 msgstr "Avstand:"
 
-#: app/measure.c:454 app/measure.c:459 app/measure.c:467 app/measure.c:495
+#: app/measure.c:504 app/measure.c:509 app/measure.c:517 app/measure.c:545
 msgid "degrees"
 msgstr "grader"
 
@@ -4075,29 +4068,29 @@ msgstr "Matrise:"
 msgid "Perspective..."
 msgstr "Perspektiv..."
 
-#: app/plug_in.c:311
+#: app/plug_in.c:313
 msgid "Plug-ins"
 msgstr "Tillegg"
 
-#: app/plug_in.c:323
+#: app/plug_in.c:325
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "spør tillegg: \"%s\"\n"
 
-#: app/plug_in.c:361
+#: app/plug_in.c:363
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "skriver \"%s\"\n"
 
-#: app/plug_in.c:376
+#: app/plug_in.c:378
 msgid "Starting extensions: "
 msgstr "Starter utvidelser: "
 
-#: app/plug_in.c:377
+#: app/plug_in.c:379
 msgid "Extensions"
 msgstr "Utvidelser"
 
-#: app/plug_in.c:775
+#: app/plug_in.c:777
 #, c-format
 msgid "Unable to locate plug-in: \"%s\""
 msgstr "Kunne ikke finne tillegg: \"%s\""
@@ -4883,27 +4876,27 @@ msgstr "Terskel opererer ikke på indekserte tegnede objekter."
 msgid "Threshold Range:"
 msgstr "Terskelområde:"
 
-#: app/tips_dialog.c:69
+#: app/tips_dialog.c:70
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.txt"
 
-#: app/tips_dialog.c:81
+#: app/tips_dialog.c:82
 msgid "GIMP Tip of the Day"
 msgstr "GIMP Dagens tips"
 
-#: app/tips_dialog.c:138
+#: app/tips_dialog.c:142
 msgid "Show tip next time"
 msgstr "Vis tips neste gang"
 
-#: app/tips_dialog.c:168
+#: app/tips_dialog.c:172
 msgid "Previous Tip"
 msgstr "Forrige tips"
 
-#: app/tips_dialog.c:176
+#: app/tips_dialog.c:180
 msgid "Next Tip"
 msgstr "Neste tips"
 
-#: app/tips_dialog.c:278
+#: app/tips_dialog.c:282
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in the\n"
@@ -5014,8 +5007,8 @@ msgid "Opacity"
 msgstr "Ugjennomsiktighet"
 
 #: app/tool_options.c:730
-msgid "Pressure"
-msgstr "Trykk"
+msgid "Hardness"
+msgstr "Hardhet"
 
 #: app/tool_options.c:750
 msgid "Rate"
