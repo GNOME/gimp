@@ -1303,12 +1303,9 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
                                         GimpDialogFactory *factory,
                                         gpointer           data)
 {
-  GdkCursor *cursor;
-  GList     *list;
-
-  cursor = gimp_cursor_new (GDK_WATCH,
-			    GIMP_TOOL_CURSOR_NONE,
-			    GIMP_CURSOR_MODIFIER_NONE);
+  GdkDisplay *display = NULL;
+  GdkCursor  *cursor  = NULL;
+  GList      *list;
 
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {
@@ -1316,11 +1313,27 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
 	  GTK_WIDGET_TOPLEVEL (list->data) &&
 	  GTK_WIDGET_VISIBLE (list->data))
 	{
-	  gdk_window_set_cursor (GTK_WIDGET (list->data)->window, cursor);
+          GtkWidget *widget = GTK_WIDGET (list->data);
+
+          if (!display || display != gtk_widget_get_display (widget))
+            {
+              display = gtk_widget_get_display (widget);
+
+              if (cursor)
+                gdk_cursor_unref (cursor);
+
+              cursor = gimp_cursor_new (display,
+                                        GDK_WATCH,
+                                        GIMP_TOOL_CURSOR_NONE,
+                                        GIMP_CURSOR_MODIFIER_NONE);
+            }
+
+	  gdk_window_set_cursor (widget->window, cursor);
 	}
     }
 
-  gdk_cursor_unref (cursor);
+  if (cursor)
+    gdk_cursor_unref (cursor);
 }
 
 static void

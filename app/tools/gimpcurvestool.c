@@ -1019,15 +1019,12 @@ curves_graph_events (GtkWidget      *widget,
 
       if (new_cursor != cursor_type)
 	{
-	  GdkCursor *cursor;
-
 	  cursor_type = new_cursor;
 
-	  cursor = gimp_cursor_new (cursor_type,
-				    GIMP_TOOL_CURSOR_NONE,
-				    GIMP_CURSOR_MODIFIER_NONE);
-	  gdk_window_set_cursor (c_tool->graph->window, cursor);
-	  gdk_cursor_unref (cursor);
+          gimp_cursor_set (c_tool->graph,
+                           cursor_type,
+                           GIMP_TOOL_CURSOR_NONE,
+                           GIMP_CURSOR_MODIFIER_NONE);
 	}
 
       curves_update (c_tool, XRANGE_TOP);

@@ -420,7 +420,8 @@ create_cursor_bitmaps (GimpBitmapCursor *bmcursor)
 }
 
 GdkCursor *
-gimp_cursor_new (GimpCursorType      cursor_type,
+gimp_cursor_new (GdkDisplay         *display,
+                 GimpCursorType      cursor_type,
 		 GimpToolCursorType  tool_cursor,
 		 GimpCursorModifier  modifier)
 {
@@ -437,10 +438,11 @@ gimp_cursor_new (GimpCursorType      cursor_type,
   static GdkGC     *gc = NULL;
   static GdkColor   fg, bg;
 
+  g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY, NULL);
 
   if (cursor_type <= GDK_LAST_CURSOR)
-    return gdk_cursor_new_for_display (gdk_display_get_default (), cursor_type);
+    return gdk_cursor_new_for_display (display, cursor_type);
 
   g_return_val_if_fail (cursor_type >= GIMP_MOUSE_CURSOR, NULL);
 
@@ -562,4 +564,23 @@ gimp_cursor_new (GimpCursorType      cursor_type,
   g_object_unref (mask);
 
   return cursor;
+}
+
+void
+gimp_cursor_set (GtkWidget          *widget,
+                 GimpCursorType      cursor_type,
+                 GimpToolCursorType  tool_cursor,
+                 GimpCursorModifier  modifier)
+{
+  GdkCursor *cursor;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (GTK_WIDGET_REALIZED (widget));
+
+  cursor = gimp_cursor_new (gtk_widget_get_display (widget),
+                            cursor_type,
+                            tool_cursor,
+                            modifier);
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }

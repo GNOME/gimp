@@ -1,3 +1,13 @@
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcursor.[ch] (gimp_cursor_new): added a
+	GdkDisplay parameter and added the convenience function
+	gimp_cursor_set().
+
+	* app/display/gimpdisplayshell-cursor.c
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpdialogfactory.c: changed accordingly.
+
 2003-11-01  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimppalette.c (gimp_palette_load): plug a memleak

@@ -78,16 +78,13 @@ gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
       (shell->using_override_cursor &&
        shell->override_cursor != cursor_type))
     {
-      GdkCursor *cursor;
-
       shell->override_cursor       = cursor_type;
       shell->using_override_cursor = TRUE;
 
-      cursor = gimp_cursor_new (cursor_type,
-				GIMP_TOOL_CURSOR_NONE,
-				GIMP_CURSOR_MODIFIER_NONE);
-      gdk_window_set_cursor (shell->canvas->window, cursor);
-      gdk_cursor_unref (cursor);
+      gimp_cursor_set (shell->canvas,
+                       cursor_type,
+                       GIMP_TOOL_CURSOR_NONE,
+                       GIMP_CURSOR_MODIFIER_NONE);
     }
 }
 
@@ -110,7 +107,7 @@ gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 
 void
 gimp_display_shell_update_cursor (GimpDisplayShell *shell,
-                                  gint              x, 
+                                  gint              x,
                                   gint              y)
 {
   GimpImage *gimage;
@@ -158,8 +155,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
       t_y >= gimage->height)
     {
       info_window_update_extended (shell->gdisp, -1, -1);
-    } 
-  else 
+    }
+  else
     {
       info_window_update_extended (shell->gdisp, t_x, t_y);
     }
@@ -202,16 +199,10 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
       shell->cursor_modifier != modifier    ||
       always_install)
     {
-      GdkCursor *cursor;
-
       shell->current_cursor  = cursor_type;
       shell->tool_cursor     = tool_cursor;
       shell->cursor_modifier = modifier;
 
-      cursor = gimp_cursor_new (cursor_type,
-				tool_cursor,
-				modifier);
-      gdk_window_set_cursor (shell->canvas->window, cursor);
-      gdk_cursor_unref (cursor);
+      gimp_cursor_set (shell->canvas, cursor_type, tool_cursor, modifier);
     }
 }
