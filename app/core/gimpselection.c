@@ -348,7 +348,7 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
 			  GIMP_ITEM (layer)->height);
 
   /*  invalidate the preview  */
-  drawable->preview_valid = FALSE;  
+  drawable->preview_valid = FALSE;
 }
 
 static gboolean
@@ -622,7 +622,7 @@ gimp_selection_load (GimpChannel *selection,
   g_return_if_fail (src_item->width  == dest_item->width);
   g_return_if_fail (src_item->height == dest_item->height);
 
-  gimp_channel_push_undo (selection, _("Selection from Channel"));
+  gimp_channel_push_undo (selection, _("Channel to Selection"));
 
   /*  copy the channel to the mask  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,

@@ -30,23 +30,19 @@
 /*  public functionss */
 
 void
-images_raise_displays_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
+images_raise_views_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
 {
-  GimpImageView *view;
-
-  view = GIMP_IMAGE_VIEW (data);
+  GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->raise_button));
 }
 
 void
-images_new_display_cmd_callback (GtkWidget *widget,
-                                 gpointer   data)
+images_new_view_cmd_callback (GtkWidget *widget,
+                              gpointer   data)
 {
-  GimpImageView *view;
-
-  view = GIMP_IMAGE_VIEW (data);
+  GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->new_button));
 }
@@ -55,9 +51,7 @@ void
 images_delete_image_cmd_callback (GtkWidget *widget,
                                   gpointer   data)
 {
-  GimpImageView *view;
-
-  view = GIMP_IMAGE_VIEW (data);
+  GimpImageView *view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
 }

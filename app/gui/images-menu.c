@@ -39,12 +39,12 @@
 
 GimpItemFactoryEntry images_menu_entries[] =
 {
-  { { N_("/_Raise Displays"), "",
-      images_raise_displays_cmd_callback, 0,
+  { { N_("/_Raise Views"), "",
+      images_raise_views_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GOTO_TOP },
     NULL, NULL, NULL },
-  { { N_("/_New Display"), "",
-      images_new_display_cmd_callback, 0,
+  { { N_("/_New View"), "",
+      images_new_view_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL, NULL, NULL },
   { { N_("/_Delete Image"), "",
@@ -70,8 +70,8 @@ images_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Raise Displays", image);
-  SET_SENSITIVE ("/New Display",    image);
+  SET_SENSITIVE ("/Raise Viewss", image);
+  SET_SENSITIVE ("/New View",    image);
   SET_SENSITIVE ("/Delete Image",   image && image->disp_count == 0);
 
 #undef SET_SENSITIVE

@@ -1,3 +1,12 @@
+2003-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpselection.c
+	* app/gui/images-menus.c
+	* app/gui/session.c: string fixes.
+
+	* app/gui/images-commands.[ch]: changed the function names
+	accordingly..
+	
 2003-09-12  Christian Neumair  <chris@gnome-de.org>
 
 	* app/gui/dialogs-menu.c: added missing ngettext calls to MENU_BRANCH
