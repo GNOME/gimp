@@ -3,6 +3,7 @@
 presetsdatadir = $(gimpdatadir)/gimpressionist/Presets
 
 presetsdata_DATA = \
+	ApplyCanvas	\
 	Ballpark	\
 	Canvas		\
 	Crosshatch	\

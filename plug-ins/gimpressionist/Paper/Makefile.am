@@ -10,7 +10,8 @@ paperdata_DATA = \
 	defaultpaper.pgm	\
 	marble.pgm		\
 	marble2.pgm		\
-	stone.pgm
+	stone.pgm		\
+	struc.pgm
 
 EXTRA_DIST = $(paperdata_DATA)
 

@@ -1,3 +1,14 @@
+2000-12-14  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/gimpressionist/brush.c: Fix to avoid a warning when
+	closing window.
+
+	* plug-ins/gimpressionist/Paper/struc.pgm
+	* plug-ins/gimpressionist/Paper/Makefile.am
+	* plug-ins/gimpressionist/Presets/ApplyCanvas
+	* plug-ins/gimpressionist/Presets/Makefile.am: Added a paper and
+	preset on request from Bex, to simulate "Apply Canvas".
+
 2000-12-14  Sven Neumann  <sven@gimp.org>
 
 	* app/layers_dialog.c

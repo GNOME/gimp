@@ -60,7 +60,8 @@ void brushdmenuselect(gint32 id, gpointer data)
 
   if(brushfile) {
     unselectall(brushlist);
-    gtk_widget_set_sensitive (presetsavebutton, FALSE);
+    if(GTK_IS_WIDGET(presetsavebutton))
+      gtk_widget_set_sensitive(GTK_WIDGET(presetsavebutton), FALSE);
   }
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), 1.0);
@@ -335,7 +336,8 @@ void selectbrush(GtkWidget *wg, GtkWidget *p)
 void selectbrushfile(GtkWidget *wg, GtkWidget *p)
 {
   brushfile = 1;
-  gtk_widget_set_sensitive (presetsavebutton, TRUE);
+  if(GTK_IS_WIDGET(presetsavebutton))
+    gtk_widget_set_sensitive(GTK_WIDGET(presetsavebutton), TRUE);
   selectbrush(wg,p);
 }
 
