@@ -15,13 +15,13 @@
 # emboss = rilievo
 # canvas = tele  
 # feather = sfumata
-# 
 # undo history = cronologia annullamenti
+# stroke = delineare
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"POT-Creation-Date: 2004-05-22 02:00+0200\n"
+"POT-Creation-Date: 2004-05-22 23:13+0200\n"
 "PO-Revision-Date: 2004-05-17 10:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
@@ -1176,11 +1176,11 @@ msgstr "Ri_flessione selezione"
 
 #: app/actions/gradient-editor-actions.c:502
 msgid "_Replicate Selection..."
-msgstr "D_uplica della selezione..."
+msgstr "D_uplica selezione..."
 
 #: app/actions/gradient-editor-actions.c:504
 msgid "Split Segments at _Midpoints"
-msgstr "Suddivisione seg_menti in metà"
+msgstr "Dividi i seg_menti a metà"
 
 #: app/actions/gradient-editor-actions.c:506
 msgid "Split Segments _Uniformly..."
@@ -1224,7 +1224,7 @@ msgstr "Duplica il segmento gradiente"
 
 #: app/actions/gradient-editor-commands.c:488
 msgid "Replicate Selection"
-msgstr "Duplica della selezione"
+msgstr "Duplica la selezione"
 
 #: app/actions/gradient-editor-commands.c:489
 msgid "Replicate Gradient Selection"
@@ -1926,7 +1926,7 @@ msgstr "_Rumore"
 
 #: app/actions/plug-in-actions.c:67
 msgid "Edge-De_tect"
-msgstr "Rileva _bordi"
+msgstr "Rileva mar_gini"
 
 #: app/actions/plug-in-actions.c:68
 msgid "En_hance"
@@ -2116,11 +2116,11 @@ msgstr "Salva la selezione nel canale"
 
 #: app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr "_Disegna selezione"
+msgstr "_Delinea selezione"
 
 #: app/actions/select-actions.c:111
 msgid "Stroke selection"
-msgstr "Disegna selezione"
+msgstr "Delinea selezione"
 
 #: app/actions/select-actions.c:116
 msgid "To _Path"
@@ -2174,7 +2174,7 @@ msgstr "Selezione bordo di"
 #: app/actions/select-commands.c:308 app/actions/vectors-commands.c:309
 #: app/gui/stroke-dialog.c:293
 msgid "There is no active layer or channel to stroke to."
-msgstr "Non c'è un livello o un canale attivo su cui disegnare"
+msgstr "Non c'è un livello o un canale attivo su cui delineare."
 
 #: app/actions/templates-actions.c:41
 msgid "Templates Menu"
@@ -2322,7 +2322,7 @@ msgstr "S_trumenti"
 
 #: app/actions/tools-actions.c:50
 msgid "_Selection Tools"
-msgstr "Strumenti _selezione"
+msgstr "Strumenti di _selezione"
 
 #: app/actions/tools-actions.c:51
 msgid "_Paint Tools"
@@ -2330,7 +2330,7 @@ msgstr "Strumento di _disegno"
 
 #: app/actions/tools-actions.c:52
 msgid "_Transform Tools"
-msgstr "Strumenti _trasformazione"
+msgstr "Strumenti di _trasformazione"
 
 #: app/actions/tools-actions.c:53
 msgid "_Color Tools"
@@ -2519,7 +2519,7 @@ msgstr "Mostra s_elezione"
 
 #: app/actions/view-actions.c:125 app/gui/preferences-dialog.c:850
 msgid "Show _Layer Boundary"
-msgstr "Mostra i bordi di _livello"
+msgstr "Mostra il contorno del _livello"
 
 #: app/actions/view-actions.c:131 app/gui/preferences-dialog.c:853
 msgid "Show _Guides"
@@ -3125,7 +3125,7 @@ msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Se abilitata, il bordo dei livelli è visibile. Questo comportamento può "
+"Se abilitata, il contorno del livello è visibile. Questo comportamento può "
 "essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:291
@@ -4091,7 +4091,7 @@ msgstr "Trasforma canale"
 
 #: app/core/gimpchannel.c:265
 msgid "Stroke Channel"
-msgstr "Disegna canale"
+msgstr "Delinea canale"
 
 #: app/core/gimpchannel.c:287
 msgid "Feather Channel"
@@ -4127,7 +4127,7 @@ msgstr "Riduci canale"
 
 #: app/core/gimpchannel.c:596
 msgid "Cannot stroke empty channel."
-msgstr "Impossibile disegnare un canale vuoto."
+msgstr "Impossibile delineare un canale vuoto."
 
 #: app/core/gimpchannel.c:1510
 msgid "Set Channel Color"
@@ -4231,7 +4231,7 @@ msgstr "Impostazione disegnabile"
 
 #: app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
-msgstr "Disegna tratto"
+msgstr "Disegna il delineato"
 
 #. Start a transform undo group
 #: app/core/gimpdrawable-transform.c:921 app/tools/gimpfliptool.c:84
@@ -4802,7 +4802,7 @@ msgstr "Assottiglia la selezione"
 
 #: app/core/gimpselection.c:205
 msgid "Select None"
-msgstr "Selezione nulla"
+msgstr "Seleziona nulla"
 
 #: app/core/gimpselection.c:206
 msgid "Select All"
@@ -4943,7 +4943,7 @@ msgstr "/Colore a scacchi _scuro"
 
 #: app/display/gimpdisplayshell.c:816
 msgid "/Select _Custom Color..."
-msgstr "/Selezione _colore personalizzato..."
+msgstr "/Seleziona _colore personalizzato..."
 
 #: app/display/gimpdisplayshell.c:820
 msgid "/As in _Preferences"
@@ -5649,7 +5649,7 @@ msgstr "Sposta per (x/_2),(y/2)"
 #. The edge behaviour frame
 #: app/gui/offset-dialog.c:203
 msgid "Edge Behaviour"
-msgstr "Comportamento dei bordi"
+msgstr "Comportamento dei margini"
 
 #: app/gui/offset-dialog.c:207
 msgid "_Wrap Around"
@@ -6263,7 +6263,7 @@ msgstr "Cartella di scambio:"
 
 #: app/gui/preferences-dialog.c:2031 app/gui/user-install-dialog.c:1171
 msgid "Select Swap Dir"
-msgstr "Selezionare cartella di scambio"
+msgstr "Seleziona cartella di scambio"
 
 #: app/gui/preferences-dialog.c:2064
 msgid "Brush Folders"
@@ -6275,19 +6275,19 @@ msgstr "Seleziona cartelle dei pennelli"
 
 #: app/gui/preferences-dialog.c:2068
 msgid "Pattern Folders"
-msgstr "Cartelle riempimenti"
+msgstr "Cartelle motivi"
 
 #: app/gui/preferences-dialog.c:2070
 msgid "Select Pattern Folders"
-msgstr "Seleziona cartelle dei riempimenti"
+msgstr "Seleziona cartelle dei motivi"
 
 #: app/gui/preferences-dialog.c:2072
 msgid "Palette Folders"
-msgstr "Cartelle delle palette"
+msgstr "Cartelle delle tavolozze"
 
 #: app/gui/preferences-dialog.c:2074
 msgid "Select Palette Folders"
-msgstr "Seleziona cartelle delle palette"
+msgstr "Seleziona cartelle delle tavolozze"
 
 #: app/gui/preferences-dialog.c:2076
 msgid "Gradient Folders"
@@ -6376,11 +6376,11 @@ msgstr "Dimensione in pixel"
 
 #: app/gui/resize-dialog.c:228
 msgid "Layer Boundary Size"
-msgstr "Dimensione margine del livello"
+msgstr "Dimensione contorno del livello"
 
 #: app/gui/resize-dialog.c:229
 msgid "Set Layer Boundary Size"
-msgstr "Configura margine del livello"
+msgstr "Configura contorno del livello"
 
 #: app/gui/resize-dialog.c:235
 msgid "Canvas Size"
@@ -8118,7 +8118,7 @@ msgstr "Salva livelli"
 
 #: app/tools/gimplevelstool.c:282
 msgid "Levels for indexed layers cannot be adjusted."
-msgstr "I livelli per i livelli a colori indicizzati non sono modificabili."
+msgstr "Per i livelli a colori indicizzati i livelli non sono modificabili."
 
 #: app/tools/gimplevelstool.c:351
 msgid "Pick Black Point"
@@ -8205,7 +8205,7 @@ msgstr "Distanza:"
 
 #: app/tools/gimpmoveoptions.c:179
 msgid "Pick a Layer or Guide to Move"
-msgstr "Prendi un livello o un tracciato da spostare"
+msgstr "Prendi un livello o una guida da spostare"
 
 #: app/tools/gimpmoveoptions.c:180
 msgid "Move the Current Layer"
@@ -8237,7 +8237,7 @@ msgstr "_Pennello"
 
 #: app/tools/gimppaintoptions-gui.c:145
 msgid "Open the brush selection dialog"
-msgstr "Aprire la finestra di selezione pennello"
+msgstr "Apri la finestra di selezione pennello"
 
 #: app/tools/gimppaintoptions-gui.c:148
 msgid "Brush:"
@@ -8245,7 +8245,7 @@ msgstr "Pennello:"
 
 #: app/tools/gimppaintoptions-gui.c:162
 msgid "Open the pattern selection dialog"
-msgstr "Aprire la finestra di selezione pattern"
+msgstr "Apri la finestra di selezione pattern"
 
 #: app/tools/gimppaintoptions-gui.c:165
 msgid "Pattern:"
@@ -8253,7 +8253,7 @@ msgstr "Pattern:"
 
 #: app/tools/gimppaintoptions-gui.c:186
 msgid "Open the gradient selection dialog"
-msgstr "Aprire la finestra di selezione gradiente"
+msgstr "Apri la finestra di selezione gradiente"
 
 #: app/tools/gimppaintoptions-gui.c:196
 msgid "Reverse"
@@ -8265,7 +8265,7 @@ msgstr "Gradiente:"
 
 #: app/tools/gimppaintoptions-gui.c:236
 msgid "Hard Edge"
-msgstr "Passaggio deciso"
+msgstr "Margine netto"
 
 #: app/tools/gimppaintoptions-gui.c:293
 msgid "Pressure Sensitivity"
@@ -8293,7 +8293,7 @@ msgstr "Lunghezza:"
 
 #: app/tools/gimppaintoptions-gui.c:455
 msgid "Use Color from Gradient"
-msgstr "Usa colore dal gradiente"
+msgstr "Usa colore del gradiente"
 
 #: app/tools/gimppenciltool.c:53
 msgid "Paint hard edged pixels"
@@ -8349,7 +8349,7 @@ msgstr "_Livelli di posterizzazione:"
 
 #: app/tools/gimprectselecttool.c:99
 msgid "Select rectangular regions"
-msgstr "Selezione rettangolare"
+msgstr "Seleziona regioni rettangolari"
 
 #: app/tools/gimprectselecttool.c:100
 msgid "_Rect Select"
@@ -8421,7 +8421,7 @@ msgstr "Fattore di scala Y:"
 
 #: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
-msgstr "Spigoli morbidi"
+msgstr "Margini morbidi"
 
 #: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
@@ -8441,15 +8441,15 @@ msgstr "Antialiasing"
 
 #: app/tools/gimpselectionoptions.c:426
 msgid "Feather Edges"
-msgstr "Spigoli sfumati"
+msgstr "Margini sfumati"
 
 #: app/tools/gimpselectionoptions.c:461
 msgid "Show Interactive Boundary"
-msgstr "Mostra bordo interattivo"
+msgstr "Mostra contorno interattivo"
 
 #: app/tools/gimpselectionoptions.c:485
 msgid "Select Transparent Areas"
-msgstr "Selezione aree trasparenti"
+msgstr "Seleziona aree trasparenti"
 
 #: app/tools/gimpselectionoptions.c:530
 msgid "Auto Shrink Selection"
@@ -8473,7 +8473,7 @@ msgstr "Informazioni sulle cesoie"
 
 #: app/tools/gimpsheartool.c:161
 msgid "Shearing..."
-msgstr "Ritagliatura..."
+msgstr "Ritaglio..."
 
 #: app/tools/gimpsheartool.c:168
 msgid "Shear Magnitude X:"
@@ -8496,7 +8496,7 @@ msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Il suggerimento altera la rappresentazione del carattere per produrre un "
-"bitmap chiaro a piccole ampiezze"
+"bitmap chiaro a piccole dimensioni"
 
 #: app/tools/gimptextoptions.c:153
 msgid ""
@@ -8512,11 +8512,11 @@ msgstr "Indentazione della prima riga"
 
 #: app/tools/gimptextoptions.c:183
 msgid "Modify line spacing"
-msgstr "Modifica della spaziatura righe"
+msgstr "Modifica la spaziatura righe"
 
 #: app/tools/gimptextoptions.c:426
 msgid "Open the font selection dialog"
-msgstr "Aprire la finestra della selezione caratteri"
+msgstr "Apri la finestra della selezione caratteri"
 
 #: app/tools/gimptextoptions.c:429
 msgid "_Font:"
@@ -8536,7 +8536,7 @@ msgstr "Forza l'auto suggeritore"
 
 #: app/tools/gimptextoptions.c:466
 msgid "Text Color"
-msgstr "Color del testo"
+msgstr "Colore del testo"
 
 #: app/tools/gimptextoptions.c:471
 msgid "Color:"
@@ -8586,7 +8586,7 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Il luvello selezionato è un livello di teso ma è stato modificato usando "
+"Il livello selezionato è un livello di testo ma è stato modificato usando "
 "altri strumenti. Modificando il livello con lo strumento di testo verranno "
 "perse queste modifiche.\n"
 "\n"
@@ -8652,13 +8652,13 @@ msgid ""
 "the aspect ratio"
 msgstr ""
 "Attiva sia \"Mantieni l'altezza\" che\n"
-"\"Mantieni l'ampiezza\" per mantenere il\n"
+"\"Mantieni la larghezza\" per mantenere\n"
 "la proporzione di aspetto"
 
 #: app/tools/gimptransformoptions.c:432
 #, c-format
 msgid "Keep Width  %s"
-msgstr "Mantieni l'ampiezza  %s"
+msgstr "Mantieni la larghezza  %s"
 
 #: app/tools/gimptransformtool.c:242
 msgid "Transforming..."
@@ -8667,8 +8667,8 @@ msgstr "Trasformazione..."
 #: app/tools/gimptransformtool.c:336
 msgid "Transformations do not work on layers that contain layer masks."
 msgstr ""
-"Le trasformazioni non possono avvenire su livelli che contengono livelli "
-"maschere."
+"Le trasformazioni non possono avvenire su livelli che contengono maschere di "
+"livello."
 
 #: app/tools/gimpvectoroptions.c:113
 msgid "restrict editing to polygonals"
@@ -8745,7 +8745,7 @@ msgstr "Trascina tracciato"
 
 #: app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
-msgstr "Converti spigolo"
+msgstr "Converti margine"
 
 #: app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
@@ -8777,15 +8777,15 @@ msgstr "Fare clic per creare una nuova àncora. (provare con MAIUSC)"
 
 #: app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around."
-msgstr "Fare clic e trascinare per spostare intorno l'àncora."
+msgstr "Fare clic e trascinare per spostare l'àncora."
 
 #: app/tools/gimpvectortool.c:1173
 msgid "Click-Drag to move the anchors around."
-msgstr "Fare clic e trascinare per spostare intorno le àncore."
+msgstr "Fare clic e trascinare per spostare le àncore."
 
 #: app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around. (try SHIFT)"
-msgstr "Fare clic e trascinare per spostare intorno l'àncora. (provare MAIUSC)"
+msgstr "Fare clic e trascinare per spostare l'àncora. (prova MAIUSC)"
 
 #: app/tools/gimpvectortool.c:1179
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
@@ -8795,11 +8795,11 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Fare clic e trascinare per spostare intorno l'àncora. (provare MAIUSC)"
+msgstr "Fare clic e trascinare per spostare l'àncora. (prova MAIUSC)"
 
 #: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
-msgstr "Fare clic e trascinare per spostare il tracciato intorno."
+msgstr "Fare clic e trascinare per spostare il tracciato."
 
 #: app/tools/gimpvectortool.c:1190
 msgid "Click to insert an anchor on the path. (try SHIFT)"
@@ -8811,7 +8811,7 @@ msgstr "Fare clic per cancellare quest'àncora."
 
 #: app/tools/gimpvectortool.c:1196
 msgid "Click to connect this anchor with the selected endpoint."
-msgstr "Fare clic per connettere quest'àncora con il punto finale selezionata."
+msgstr "Fare clic per connettere quest'àncora con il punto finale selezionato."
 
 #: app/tools/gimpvectortool.c:1200
 msgid "Click to open up the path."
@@ -8819,7 +8819,7 @@ msgstr "Fare clic per aprire il percorso."
 
 #: app/tools/gimpvectortool.c:1203
 msgid "Click to make this node angular."
-msgstr "Fare clic per trasformarlo in nodo angolare."
+msgstr "Fare clic per render angolare questo nodo."
 
 #: app/tools/gimpvectortool.c:1844
 msgid "There is no active layer or channel to stroke to"
@@ -8890,7 +8890,7 @@ msgstr "Spaziatura:"
 
 #: app/widgets/gimpbrushfactoryview.c:117
 msgid "Percentage of width of brush"
-msgstr "Percentuale di ampiezza del pennello"
+msgstr "Percentuale di larghezza del pennello"
 
 #: app/widgets/gimpchanneltreeview.c:121
 #, c-format
