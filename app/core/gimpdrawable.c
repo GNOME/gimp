@@ -449,6 +449,10 @@ gimp_drawable_resize (GimpItem    *item,
   gint          copy_x, copy_y;
   gint          copy_width, copy_height;
 
+  /*  if the size doesn't change, this is a nop  */
+  if (item->width == new_width && item->height == new_height)
+    return;
+
   new_offset_x = item->offset_x - offset_x;
   new_offset_y = item->offset_y - offset_y;
 

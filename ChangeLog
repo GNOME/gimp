@@ -1,3 +1,13 @@
+2004-11-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable.c (gimp_drawable_resize): do nothing if
+	the size doesn't change. This keeps text layers from being
+	modified when an image is cropped and the layer is entirely inside
+	the cropped area.
+
+	* menus/image-menu.xml.in: put the Quit item back for now. We
+	should think about this again in the next development cycle.
+
 2004-11-21  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: Fixed incorrect

@@ -31,6 +31,7 @@
       <placeholder name="Send" />
       <separator />
       <menuitem action="view-close" />
+      <menuitem action="file-quit" />
     </menu>
 
 <!-- Context
