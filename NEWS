@@ -19,6 +19,11 @@ Bugs fixed in GIMP 2.2.2
 - flush the display when plug-in dialogs are disposed (bug #163084)
 - fixed build problem on amd64 with gcc-4.0 (bug #163041)
 - fixed problem in locales that are rendered right-to-left (bug #162663)
+- fixed bug in Frosty Logo Script-Fu (bug #132145)
+- raise the toolbox when it is selected from the Tools menu (bug #163381)
+- improved usability of Keyboard Shortcuts editor (bug #163385)
+- fixed gradient selection widget in libgimpui (bug #163427)
+- workaround a problem in the MMX code (bug #162778)
 
 
 Bugs fixed in GIMP 2.2.1
