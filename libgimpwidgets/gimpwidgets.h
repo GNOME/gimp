@@ -165,6 +165,10 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    const gchar        *tooltip,
 				    const gchar        *help_data);
 
+void   gimp_scale_entry_set_sensitive (GtkObject       *adjustment,
+                                       gboolean         sensitive);
+
+
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
         (g_object_get_data (G_OBJECT (hbox), "spinbutton"))
 #define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \

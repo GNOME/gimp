@@ -790,6 +790,36 @@ gimp_scale_entry_new (GtkTable    *table,
   return return_adj;
 }
 
+/**
+ * gimp_scale_entry_set_sensitive:
+ * @adjustment: a #GtkAdjustment returned by gimp_scale_entry_new()
+ * @sensitive:  a boolean value with the same semantics as the @sensitive
+ *              parameter of gtk_widget_set_sensitive()
+ * 
+ * Sets the sensitivity of the scale_entry's #GtkLabel, #GtkHScale and
+ * #GtkSpinbutton.
+ **/
+void
+gimp_scale_entry_set_sensitive (GtkObject *adjustment,
+                                gboolean   sensitive)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment));
+
+  widget = GIMP_SCALE_ENTRY_LABEL (adjustment);
+  if (widget)
+    gtk_widget_set_sensitive (widget, sensitive);
+
+  widget = GIMP_SCALE_ENTRY_SCALE (adjustment);
+  if (widget)
+    gtk_widget_set_sensitive (widget, sensitive);
+
+  widget = GIMP_SCALE_ENTRY_SPINBUTTON (adjustment);
+  if (widget)
+    gtk_widget_set_sensitive (widget, sensitive);
+}
+
 static void
 gimp_random_seed_toggle_update (GtkWidget *widget,
 				gpointer   data)
