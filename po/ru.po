@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.25\n"
-"POT-Creation-Date: 2000-10-30 21:56-0800\n"
-"PO-Revision-Date: 2000-10-19 23:19+04:00\n"
+"POT-Creation-Date: 2000-11-14 18:57+0300\n"
+"PO-Revision-Date: 2000-11-14 18:58+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Версия %s создана для Вас"
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr " Посетите http://www.gimp.org/ "
 
-#: app/airbrush.c:141 app/convolve.c:154 app/smudge.c:117
+#: app/airbrush.c:141 app/convolve.c:166 app/smudge.c:117
 msgid "Rate:"
 msgstr "Скорость:"
 
@@ -60,45 +60,45 @@ msgstr "создана для Вас"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
-#: app/app_procs.c:489 app/gimprc.c:452
+#: app/app_procs.c:490 app/app_procs.c:498 app/gimprc.c:452
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "синтаксический анализ \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:551
+#: app/app_procs.c:562
 msgid "Looking for data files"
 msgstr "Поиск файлов данных"
 
-#: app/app_procs.c:551
+#: app/app_procs.c:562
 msgid "Parasites"
 msgstr "Паразиты (FIX?)"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2515
+#: app/app_procs.c:564 app/internal_procs.c:71 app/preferences_dialog.c:2515
 msgid "Brushes"
 msgstr "Кисти"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2523
+#: app/app_procs.c:566 app/internal_procs.c:140 app/preferences_dialog.c:2523
 msgid "Patterns"
 msgstr "Шаблоны"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:557 app/preferences_dialog.c:2527
+#: app/app_procs.c:568 app/preferences_dialog.c:2527
 msgid "Palettes"
 msgstr "Палитры"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2531
+#: app/app_procs.c:570 app/internal_procs.c:104 app/preferences_dialog.c:2531
 msgid "Gradients"
 msgstr "Градиенты"
 
-#: app/app_procs.c:749
+#: app/app_procs.c:760
 msgid "Really Quit?"
 msgstr "Хотите выйти?"
 
-#: app/app_procs.c:753
+#: app/app_procs.c:764
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -108,19 +108,19 @@ msgstr ""
 "\n"
 " Выйти из GIMP?"
 
-#: app/app_procs.c:754
+#: app/app_procs.c:765
 msgid "Quit"
 msgstr "Выход"
 
 #. the cancel button
-#: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
+#: app/app_procs.c:765 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
 #: app/curves.c:567 app/file_new_dialog.c:210 app/file_new_dialog.c:360
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
 #: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:379
-#: app/interface.c:1039 app/layers_dialog.c:3487 app/layers_dialog.c:3669
+#: app/interface.c:1041 app/layers_dialog.c:3487 app/layers_dialog.c:3669
 #: app/layers_dialog.c:3764 app/layers_dialog.c:4024 app/levels.c:346
 #: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1465
 #: app/qmask.c:278 app/resize.c:220 app/resize.c:1393
@@ -308,7 +308,7 @@ msgstr "Контрастность:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
-#: app/fileops.c:404 app/hue_saturation.c:567 app/levels.c:575
+#: app/fileops.c:411 app/hue_saturation.c:567 app/levels.c:575
 #: app/palette.c:3216 app/posterize.c:244 app/threshold.c:353
 msgid "Preview"
 msgstr "Просмотр"
@@ -910,15 +910,15 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Выбрать свою палитру"
 
-#: app/convolve.c:171
+#: app/convolve.c:183
 msgid "Convolve Type"
 msgstr "Тип размывания"
 
-#: app/convolve.c:175
+#: app/convolve.c:187
 msgid "Blur"
 msgstr "Размывание"
 
-#: app/convolve.c:177
+#: app/convolve.c:189
 msgid "Sharpen"
 msgstr "Резкость"
 
@@ -1221,16 +1221,16 @@ msgstr "пикселей/%a"
 msgid "Image Type"
 msgstr "Тип изображения"
 
-#: app/fileops.c:252 app/fileops.c:298
+#: app/fileops.c:259 app/fileops.c:305
 msgid "Load Image"
 msgstr "Загрузить изображение"
 
 #. format-chooser frame
-#: app/fileops.c:313
+#: app/fileops.c:320
 msgid "Determine File Type"
 msgstr "Определять тип файла"
 
-#: app/fileops.c:386
+#: app/fileops.c:393
 msgid ""
 "Generate\n"
 "Preview"
@@ -1238,11 +1238,11 @@ msgstr ""
 "Cоздавать изображение\n"
 "предпросмотра"
 
-#: app/fileops.c:405
+#: app/fileops.c:412
 msgid "No Selection."
 msgstr "Нет выделения."
 
-#: app/fileops.c:453 app/fileops.c:1722
+#: app/fileops.c:460 app/fileops.c:1749
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1251,19 +1251,19 @@ msgstr ""
 "Не удалось сохранить.\n"
 "%s"
 
-#: app/fileops.c:478 app/fileops.c:510
+#: app/fileops.c:485 app/fileops.c:517
 msgid "Save Image"
 msgstr "Сохранить изображение"
 
-#: app/fileops.c:527
+#: app/fileops.c:534
 msgid "Save Options"
 msgstr "Параметры сохранения"
 
-#: app/fileops.c:536
+#: app/fileops.c:543
 msgid "Determine File Type:"
 msgstr "Определять тип файла:"
 
-#: app/fileops.c:596
+#: app/fileops.c:606
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1271,20 +1271,34 @@ msgstr ""
 "Невозможно восстановить.\n"
 "Нет связанного с этим изображением имени файла."
 
-#: app/fileops.c:603
-msgid "Revert"
-msgstr "Восстановить"
-
-#: app/fileops.c:614
+#: app/fileops.c:617
 #, c-format
 msgid ""
-"Revert failed.\n"
-"%s"
+"Reverting %s to\n"
+"%s\n"
+"\n"
+"(You will loose all your changes\n"
+"including all undo information)"
 msgstr ""
-"Не удалось восстановить.\n"
-"%s"
+"Возврат %s в\n"
+"%s\n"
+"\n"
+"(Вы потеряете все ваши изменения\n"
+"включая информацию об откате)"
 
-#: app/fileops.c:711
+#: app/fileops.c:624
+msgid "Revert Image?"
+msgstr "Вернуть изображение"
+
+#: app/fileops.c:629 app/fileops.c:1848
+msgid "Yes"
+msgstr "Да"
+
+#: app/fileops.c:629 app/fileops.c:1848
+msgid "No"
+msgstr "Нет"
+
+#: app/fileops.c:738
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1293,7 +1307,7 @@ msgstr ""
 "Не удалось %s.\n"
 "%s: Неизвестный тип файла."
 
-#: app/fileops.c:728
+#: app/fileops.c:755
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1302,7 +1316,7 @@ msgstr ""
 "Не удалось %s.\n"
 "%s - необычный файл."
 
-#: app/fileops.c:749
+#: app/fileops.c:776
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1311,11 +1325,11 @@ msgstr ""
 "Не удалось %s.\n"
 "%s: Недостаточно прав."
 
-#: app/fileops.c:798
+#: app/fileops.c:825
 msgid "Open"
 msgstr "Открыть"
 
-#: app/fileops.c:1105
+#: app/fileops.c:1132
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1324,7 +1338,7 @@ msgstr ""
 "Сохранение не удалось.\n"
 "%s: Неизвестный тип файла."
 
-#: app/fileops.c:1120
+#: app/fileops.c:1147
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1333,7 +1347,7 @@ msgstr ""
 "Сохранение не удалось.\n"
 "%s - не обычный файл."
 
-#: app/fileops.c:1139
+#: app/fileops.c:1166
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1342,35 +1356,35 @@ msgstr ""
 "Сохранение не удалось.\n"
 "%s: Недостаточно прав."
 
-#: app/fileops.c:1389
+#: app/fileops.c:1416
 msgid "(This thumbnail may be out of date)"
 msgstr "(Это изображение может быть устаревшим)"
 
-#: app/fileops.c:1390
+#: app/fileops.c:1417
 msgid "(No Information)"
 msgstr "(Нет информации)"
 
-#: app/fileops.c:1400
+#: app/fileops.c:1427
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Сохранение миниатюры отключено)"
 
-#: app/fileops.c:1404
+#: app/fileops.c:1431
 msgid "(Could not write thumbnail file)"
 msgstr "(Не удалось записать файл эскиза)"
 
-#: app/fileops.c:1408
+#: app/fileops.c:1435
 msgid "(Thumbnail file not written)"
 msgstr "(Файл миниатюры не записан)"
 
-#: app/fileops.c:1425
+#: app/fileops.c:1452
 msgid "No preview available"
 msgstr "Предпросмотр не доступен"
 
-#: app/fileops.c:1532
+#: app/fileops.c:1559
 msgid "(could not make preview)"
 msgstr "(невозможно выполнить предпросмотр)"
 
-#: app/fileops.c:1606 app/fileops.c:1648
+#: app/fileops.c:1633 app/fileops.c:1675
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1379,22 +1393,27 @@ msgstr ""
 "Не удалось открыть.\n"
 "%s"
 
-#: app/fileops.c:1814
+#: app/fileops.c:1841
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s существует, переписать?"
 
-#: app/fileops.c:1816
+#: app/fileops.c:1843
 msgid "File Exists!"
 msgstr "Файл существует!"
 
-#: app/fileops.c:1821
-msgid "Yes"
-msgstr "Да"
+#: app/fileops.c:1902
+msgid "Revert"
+msgstr "Восстановить"
 
-#: app/fileops.c:1821
-msgid "No"
-msgstr "Нет"
+#: app/fileops.c:1913
+#, c-format
+msgid ""
+"Revert failed.\n"
+"%s"
+msgstr ""
+"Не удалось восстановить.\n"
+"%s"
 
 #: app/flip_tool.c:79
 msgid "Flip Tool"
@@ -1542,7 +1561,7 @@ msgstr "Файл кистей GIMP вероятно оборван."
 msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Неизвестная версия формата кистей #%d в \"%s\"\n"
 
-#: app/gimpbrushlist.c:195 app/gimpbrushlist.c:206
+#: app/gimpbrushlist.c:196 app/gimpbrushlist.c:207
 #, c-format
 msgid ""
 "Warning: Failed to load brush\n"
@@ -1551,7 +1570,7 @@ msgstr ""
 "Внимание: не удалось загрузить кисть\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:217
+#: app/gimpbrushlist.c:218
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
@@ -1560,7 +1579,7 @@ msgstr ""
 "Внимание: не удалось загрузить кисть-картинку\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:228
+#: app/gimpbrushlist.c:229
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
@@ -1577,7 +1596,7 @@ msgstr "Кисть-переход должна содержать хотя бы одну кисть."
 msgid "Failed to load one of the brushes in the brush pipe."
 msgstr "Не удалось загрузить одну из кистей в кисти-переходе."
 
-#: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
+#: app/gimpbrushpipe.c:486 app/gimpbrushpipe.c:494
 msgid "Failed to load pixmap brush."
 msgstr "Не удалось загрузить кисть-картинку."
 
@@ -5033,17 +5052,17 @@ msgstr "Рамка:"
 msgid "Use Dynamic Text"
 msgstr "Использовать динамический текст"
 
-#: app/text_tool.c:609
+#: app/text_tool.c:608
 #, c-format
 msgid "Font '%s' not found."
 msgstr "Шрифт '%s' не найден."
 
-#: app/text_tool.c:628
+#: app/text_tool.c:630
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Шрифт '%s' не найден.%s"
 
-#: app/text_tool.c:631
+#: app/text_tool.c:633
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5053,7 +5072,7 @@ msgstr ""
 "Если у вас нет масштабируемых шрифтов, попробуйте отключить сглаживание в "
 "параметрах инструмента."
 
-#: app/text_tool.c:742
+#: app/text_tool.c:746
 msgid "Text Layer"
 msgstr "Слой текста"
 
