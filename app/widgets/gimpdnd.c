@@ -222,8 +222,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_URI_LIST,
 
-    "gimp_dnd_set_file_func",
-    "gimp_dnd_set_file_data",
+    "gimp-dnd-set-file-func",
+    "gimp-dnd-set-file-data",
 
     NULL,
     NULL,
@@ -233,8 +233,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_TEXT_PLAIN,
 
-    "gimp_dnd_set_file_func",
-    "gimp_dnd_set_file_data",
+    "gimp-dnd-set-file-func",
+    "gimp-dnd-set-file-data",
 
     NULL,
     NULL,
@@ -244,8 +244,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_NETSCAPE_URL,
 
-    "gimp_dnd_set_file_func",
-    "gimp_dnd_set_file_data",
+    "gimp-dnd-set-file-func",
+    "gimp-dnd-set-file-data",
 
     NULL,
     NULL,
@@ -255,8 +255,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_COLOR,
 
-    "gimp_dnd_set_color_func",
-    "gimp_dnd_set_color_data",
+    "gimp-dnd-set-color-func",
+    "gimp-dnd-set-color-data",
 
     gimp_dnd_get_color_icon,
     gimp_dnd_get_color_data,
@@ -266,8 +266,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_IMAGE,
 
-    "gimp_dnd_set_image_func",
-    "gimp_dnd_set_image_data",
+    "gimp-dnd-set-image-func",
+    "gimp-dnd-set-image-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_image_data,
@@ -277,8 +277,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_LAYER,
 
-    "gimp_dnd_set_layer_func",
-    "gimp_dnd_set_layer_data",
+    "gimp-dnd-set-layer-func",
+    "gimp-dnd-set-layer-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
@@ -288,8 +288,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_CHANNEL,
 
-    "gimp_dnd_set_channel_func",
-    "gimp_dnd_set_channel_data",
+    "gimp-dnd-set-channel-func",
+    "gimp-dnd-set-channel-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
@@ -299,8 +299,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_LAYER_MASK,
 
-    "gimp_dnd_set_layer_mask_func",
-    "gimp_dnd_set_layer_mask_data",
+    "gimp-dnd-set-layer-mask-func",
+    "gimp-dnd-set-layer-mask-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
@@ -321,8 +321,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_VECTORS,
 
-    "gimp_dnd_set_vectors_func",
-    "gimp_dnd_set_vectors_data",
+    "gimp-dnd-set-vectors-func",
+    "gimp-dnd-set-vectors-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
@@ -332,8 +332,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_BRUSH,
 
-    "gimp_dnd_set_brush_func",
-    "gimp_dnd_set_brush_data",
+    "gimp-dnd-set-brush-func",
+    "gimp-dnd-set-brush-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -343,8 +343,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_PATTERN,
 
-    "gimp_dnd_set_pattern_func",
-    "gimp_dnd_set_pattern_data",
+    "gimp-dnd-set-pattern-func",
+    "gimp-dnd-set-pattern-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -354,8 +354,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_GRADIENT,
 
-    "gimp_dnd_set_gradient_func",
-    "gimp_dnd_set_gradient_data",
+    "gimp-dnd-set-gradient-func",
+    "gimp-dnd-set-gradient-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -365,8 +365,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_PALETTE,
 
-    "gimp_dnd_set_palette_func",
-    "gimp_dnd_set_palette_data",
+    "gimp-dnd-set-palette-func",
+    "gimp-dnd-set-palette-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -376,8 +376,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_FONT,
 
-    "gimp_dnd_set_font_func",
-    "gimp_dnd_set_font_data",
+    "gimp-dnd-set-font-func",
+    "gimp-dnd-set-font-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -387,8 +387,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_BUFFER,
 
-    "gimp_dnd_set_buffer_func",
-    "gimp_dnd_set_buffer_data",
+    "gimp-dnd-set-buffer-func",
+    "gimp-dnd-set-buffer-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -398,8 +398,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_IMAGEFILE,
 
-    "gimp_dnd_set_imagefile_func",
-    "gimp_dnd_set_imagefile_data",
+    "gimp-dnd-set-imagefile-func",
+    "gimp-dnd-set-imagefile-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -409,8 +409,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_TEMPLATE,
 
-    "gimp_dnd_set_template_func",
-    "gimp_dnd_set_template_data",
+    "gimp-dnd-set-template-func",
+    "gimp-dnd-set-template-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -420,8 +420,8 @@ static GimpDndDataDef dnd_data_defs[] =
   {
     GIMP_TARGET_TOOL,
 
-    "gimp_dnd_set_tool_func",
-    "gimp_dnd_set_tool_data",
+    "gimp-dnd-set-tool-func",
+    "gimp-dnd-set-tool-data",
 
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
@@ -468,16 +468,16 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
   gpointer     get_data_data;
   GtkWidget   *icon_widget;
 
-  data_type = (GimpDndType) g_object_get_data (G_OBJECT (widget),
-                                               "gimp-dnd-get-data-type");
+  data_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-dnd-get-data-type"));
 
   if (! data_type)
     return;
 
-  get_data_func = (GCallback) g_object_get_data (G_OBJECT (widget),
-                                                 "gimp-dnd-get-data-func");
-  get_data_data = (gpointer) g_object_get_data (G_OBJECT (widget),
-                                                "gimp-dnd-get-data-data");
+  get_data_func = g_object_get_data (G_OBJECT (widget),
+                                     "gimp-dnd-get-data-func");
+  get_data_data = g_object_get_data (G_OBJECT (widget),
+                                     "gimp-dnd-get-data-data");
 
   if (! get_data_func)
     return;
@@ -502,10 +502,8 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
       gtk_container_add (GTK_CONTAINER (frame), icon_widget);
       gtk_widget_show (icon_widget);
 
-      g_object_set_data_full (G_OBJECT (widget),
-                              "gimp-dnd-data-widget",
-                              window,
-                              (GDestroyNotify) gtk_widget_destroy);
+      g_object_set_data_full (G_OBJECT (widget), "gimp-dnd-data-widget",
+                              window, (GDestroyNotify) gtk_widget_destroy);
 
       gtk_drag_set_icon_widget (context, window,
 				DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
@@ -534,19 +532,18 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
   guchar      *vals;
   gint         length;
 
-  data_type =
-    (GimpDndType) g_object_get_data (G_OBJECT (widget),
-                                     "gimp-dnd-get-data-type");
+  data_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-dnd-get-data-type"));
 
   if (! data_type)
     return;
 
-  get_data_func =
-    (GCallback) g_object_get_data (G_OBJECT (widget),
-                                       "gimp-dnd-get-data-func");
-  get_data_data =
-    (gpointer) g_object_get_data (G_OBJECT (widget),
-                                  "gimp-dnd-get-data-data");
+  g_assert (data_type == info);
+
+  get_data_func = g_object_get_data (G_OBJECT (widget),
+                                     "gimp-dnd-get-data-func");
+  get_data_data = g_object_get_data (G_OBJECT (widget),
+                                     "gimp-dnd-get-data-data");
 
   if (! get_data_func)
     return;
@@ -648,7 +645,7 @@ gimp_dnd_data_source_set (GimpDndType  data_type,
     }
 
   g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-type",
-                     (gpointer) data_type);
+                     GINT_TO_POINTER (data_type));
   g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-func",
                      get_data_func);
   g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-data",
@@ -946,8 +943,8 @@ gimp_dnd_open_files (GtkWidget *widget,
     {
       const gchar *dnd_crap = list->data;
       gchar       *filename;
-      gchar       *uri = NULL;
-      GError *error = NULL;
+      gchar       *uri   = NULL;
+      GError      *error = NULL;
 
       if (!dnd_crap)
         continue;
@@ -1204,7 +1201,7 @@ gimp_dnd_data_type_get_by_g_type (GType type)
   else if (g_type_is_a (type, GIMP_TYPE_BRUSH))
     {
       dnd_type = GIMP_DND_TYPE_BRUSH;
-  }
+    }
   else if (g_type_is_a (type, GIMP_TYPE_PATTERN))
     {
       dnd_type = GIMP_DND_TYPE_PATTERN;
@@ -1508,7 +1505,6 @@ gimp_dnd_set_item_data (GtkWidget *widget,
     }
 
   id = (gchar *) vals;
-
   ID = atoi (id);
 
   if (! ID)
@@ -1791,7 +1787,7 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid buffer data!");
+      g_warning ("Received invalid imagefile data!");
       return;
     }
 
@@ -1824,7 +1820,7 @@ gimp_dnd_set_template_data (GtkWidget *widget,
 
   if ((format != 8) || (length < 1))
     {
-      g_warning ("Received invalid buffer data!");
+      g_warning ("Received invalid template data!");
       return;
     }
 
