@@ -1,3 +1,12 @@
+2000-04-02  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* plug-ins/common/png.c:
+
+	<voice type=quartic>This was BROKEN!</voice>
+
+	I reverted the png change since, while it worked fine for RGBA and 
+	INDEXEDA it totally shred RGB and INDEXED images to pieces.. :(
+
 Sun Apr  2 16:55:47 BST 2000
 	
 	* app/bezier_select.c
