@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-05-13 01:47+02:00\n"
+"Project-Id-Version: script-fu 1.1.24\n"
+"POT-Creation-Date: 2000-06-23 11:46+0200\n"
+"PO-Revision-Date: 2000-06-22 21:25+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr "Skriptargumenter"
 #: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1267
 msgid "Script-Fu Color Selection"
@@ -212,109 +212,88 @@ msgid "<Image>/Script-Fu/Alchemy/Weave..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/3D-omriss..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Fremmed glød..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Fremmed neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Grunnleggende I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Grunnleggende II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Nedblendet..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Bovination..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Kritt..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Hugg bort..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Krom..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Tegneserie..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Kjølig metall..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Frossen..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Glossy..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Glødende het..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Gradient bevel..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Neon..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Partikkelspor..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Stjerneskudd..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Image>/Script-Fu/Alpha til logo/Starscape..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Alpha til logo/Tekstur..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
@@ -381,27 +360,24 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "Script-Fu skrifttypevalg"
+msgstr "<Image>/Script-Fu/Utvalg/Nødutvalg..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Utvalg/Rund..."
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "Script-Fu filvalg"
+msgstr "<Image>/Script-Fu/Utvalg/Til bilde"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
@@ -436,159 +412,128 @@ msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Knapper/Rund knapp..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Knapper/Enkel opphevet knapp..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/3D-omriss..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Fremmed glød..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Fremmed neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Grunnleggende I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Grunnleggende II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Nedblendet..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Bovination..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Carved..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Kritt..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Hugg ut..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Krom..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Tegneserie..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Kjølig metall..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Krystall..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Frossen..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Glossy..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Glødende het..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Opphevet gradient..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Neon..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Nyhetstekst..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Partikkelspor..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/SOTA krom..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Hurtigtekst..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Stjerneskudd..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Starscape..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Tekstsirkel..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Tekstur..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Web titteltopptekst..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #, fuzzy
@@ -932,16 +877,15 @@ msgstr "Basisradius (piksler)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "Oppførsel"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "Høyde på forhøyning (skarphet)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Bevel Width"
 msgstr "Kantbredde"
 
@@ -2333,7 +2277,3 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
-
-#, fuzzy
-#~ msgid "Background Gradient"
-#~ msgstr "Bakgrunnsbilde"
