@@ -54,7 +54,7 @@ sub format_code_frag {
     else {
 	$code =~ s/^/' ' x ($indent ? 4 : 2)/meg;
     }
-    $code =~ s/^ {8}/\t/mg;
+    while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
     $code .= "\n";
 
     $code;

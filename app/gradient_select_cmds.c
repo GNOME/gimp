@@ -238,7 +238,7 @@ gradients_set_popup_invoker (Argument *args)
 	      active = tmp->data;
     
 	      if (!strcmp (gradient_name, active->name))
-	        break; /* We found the one we want */
+		break; /* We found the one we want */
     
 	      pos++;
 	      tmp = tmp->next;
@@ -320,10 +320,10 @@ gradients_get_gradient_data_invoker (Argument *args)
 	      grad = list->data;
     
 	      if (!strcmp (grad->name, name))
-	        {
-	          success = TRUE;
-	          break;      /* We found it! */
-	        }
+		{
+		  success = TRUE;
+		  break;      /* We found it! */
+		}
     
 	      list = list->next;
 	    }

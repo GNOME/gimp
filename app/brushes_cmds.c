@@ -515,10 +515,10 @@ brushes_get_brush_data_invoker (Argument *args)
 	      brushp = (GimpBrushP) list->data;
     
 	      if (!strcmp (brushp->name, name))
-	        {
-	          success = TRUE;
-	          break;
-	        }
+		{
+		  success = TRUE;
+		  break;
+		}
     
 	      list = list->next;
 	    }

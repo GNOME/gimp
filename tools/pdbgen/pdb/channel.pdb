@@ -72,6 +72,10 @@ sub channel_set_prop_proc {
 	  desc => "The new channel $desc" }
     );
 
+    if ($type =~ /float/) {
+	$inargs[1]->{desc} .= ' (%%desc%%)';
+    }
+
     $invoke{code} = $func ? "channel_set_$prop (channel, $prop);"
 			  : "channel->$prop = $prop;";
 
@@ -162,10 +166,8 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = (
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel to copy' }
-    );
+    @inargs = ( &channel_arg );
+    $inargs[0]->{desc} .= ' to copy';
 
     @outargs = (
 	{ name => 'channel_copy', type => 'channel', init => 1,
@@ -185,10 +187,8 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = (
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel to delete' }
-    );
+    @inargs = ( &channel_arg );
+    $inargs[0]->{desc} .= ' to delete';
 
     %invoke = ( code => 'channel_delete (channel);' );
 }

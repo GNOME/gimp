@@ -1,0 +1,557 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub layer_arg () {{
+    name => 'layer',
+    type => 'layer',
+    desc => 'The layer'
+}}
+
+sub layer_change_invoke {
+    my ($undo, $code) = @_;
+    my $indent = 6;
+
+    chomp $code;
+    $code =~ s/\t/' ' x 8/eg;
+
+    if ($code =~ /^\s*{\s*\n.*\n\s*}\s*$/s) {
+        $code =~ s/^\s*{\s*\n//s;
+        $code =~ s/\n\s*}\s*$//s;
+	$indent = 4;
+    }
+    
+    $code =~ s/^/' ' x $indent/meg;
+    $code =~ s/^ {6}//s;
+    while ($code =~ /^\t* {8}/m) { $code =~ s/^(\t*) {8}/$1\t/mg }
+
+    %invoke = (
+	headers => [ qw("undo.h" "floating_sel.h") ],
+	vars => [ 'GimpImage *gimage', 'Layer *floating_layer' ],
+	code => <<CODE
+{
+  if ((gimage = GIMP_DRAWABLE(layer)->gimage))
+    {
+      floating_layer = gimage_floating_sel (gimage);
+
+      undo_push_group_start (gimage, ${undo}_UNDO);
+
+      if (floating_layer)
+	floating_sel_relax (floating_layer, TRUE);
+
+      $code
+
+      if (floating_layer)
+	floating_sel_rigor (floating_layer, TRUE);
+
+      undo_push_group_end (gimage);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_dim_proc {
+    my ($op, $morehelp, @args) = @_;
+
+    $blurb = ucfirst($op) . ' the layer to the specified extents.';
+
+    my $ops = $op =~ /e$/ ? "${op}s" : "${op}es";
+    $help = <<HELP;
+This procedure $ops the layer so that it's new width and height are equal to
+the supplied parameters. $morehelp This operation only works if the layer has
+been added to an image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+	{ name => 'new_width', type => '0 < int32',
+	  desc => 'New layer width: (%%desc%%)' },
+	{ name => 'new_height', type => '0 < int32',
+	  desc => 'New layer height: (%%desc%%)' },
+    );
+    push @inargs, @args;
+
+    my $args = "";
+    foreach (@args) {
+	$args .= ', ' if $args;
+	$args .= $_->{name};
+    }
+
+    &layer_change_invoke("LAYER_@{[ uc($op) ]}",
+			 "layer_$op (layer, new_width, new_height, $args);");
+}
+
+sub layer_get_prop_proc {
+    my ($prop, $type, $desc, $func) = @_;
+
+    $blurb = "Get the $desc of the specified layer.";
+
+    $help = "This procedure returns the specified layer's $desc.";
+
+    &std_pdb_misc;
+
+    @inargs = ( &layer_arg );
+
+    @outargs = (
+	{ name => $prop, type => $type,
+	  desc => "The layer $desc", no_declare => 1 }
+    );
+
+    my $alias = $func ? "layer_get_$prop (layer)" : "layer->$prop";
+    $alias = "g_strdup ($alias)" if $type eq 'string';
+    $outargs[0]->{alias} .= "$alias";
+
+    if ($type eq 'color') {
+	$outargs[0]->{init} = 1;
+	delete @{$outargs[0]}{qw(alias no_declare)};
+
+	$invoke{headers} = [ qw("gimpimage.h") ];
+
+	$invoke{code} = "{\n  color = g_new (guchar, 3);\n";
+	foreach (map { "${_}_PIX" } qw(RED GREEN BLUE)) {
+	    $invoke{code} .= "  $prop\[$_] = layer->col[$_];\n";
+	}
+	$invoke{code} .= "}\n";
+    }
+}
+
+sub layer_set_prop_proc {
+    my ($prop, $type, $desc, $func) = @_;
+
+    $blurb = "Set the $desc of the specified layer.";
+
+    $help = "This procedure sets the specified layer's $desc.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+	{ name => $prop, type => $type,
+	  desc => "The new layer $desc" }
+    );
+
+    if ($type =~ /float/) {
+	$inargs[1]->{desc} .= ' (%%desc%%)';
+    }
+
+    $invoke{code} = $func ? "layer_set_$prop (layer, $prop);"
+			  : "layer->$prop = $prop;";
+
+    if ($type eq 'color') {
+	%invoke = (
+	    vars => [ 'int i' ],
+	    code => <<CODE
+for (i = 0; i < 3; i++)
+  layer->col[i] = $prop\[i];
+CODE
+	);
+    }
+}
+
+sub layer_accessors {
+    my ($prop, $type, $desc, $func, $setting, $extra) = @_;
+    my (@extra, %extra); my $once = 0;
+
+     my $change = "s/ ($desc)/'s \$1 setting/";
+    (my $common = "\n; foreach (\$blurb, \$help) { $change }") =~ s/'s//;
+
+    my %modify = (
+	get => "$common \$outargs[0]->{desc} =~ $change;",
+	set => "$common \$inargs[1]->{desc}  =~ $change;",
+    );
+
+    ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
+    %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
+
+    foreach (keys %extra) {
+	my $proc = "layer_${_}_$prop";
+
+	push @procs, $proc;
+
+	eval <<SUB;
+sub @{[ scalar caller ]}::$proc {
+    \&layer_${_}_prop_proc('$prop', '$type', '$desc', $func);
+    $extra{$_}
+    @{[ $setting ? $modify{$_} : "" ]}
+}
+SUB
+    }
+}
+
+sub layer_new {
+    $blurb = 'Create a new layer.';
+
+    $help = <<'HELP';
+This procedure creates a new layer with the specified width, height, and type.
+Name, opacity, and mode are also supplied parameters. The new layer still needs
+to be added to the image, as this is not automatic. Add the new layer with the
+'gimp_image_add_layer' command. Other attributes such as layer mask modes, and
+offsets should be set with explicit procedure calls.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'width', type => '0 < int32',
+	  desc => 'The layer width: (%%desc%%)' },
+	{ name => 'height', type => '0 < int32',
+	  desc => 'The layer height: (%%desc%%)' },
+	{ name => 'type', type => 'enum GimpImageType',
+	  desc => 'The layer type: { %%desc%% }' },
+	{ name => 'name', type => 'string',
+	  desc => 'The layer name' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The layer opacity: (%%desc%%)', alias => 'opacity_arg' },
+	{ name => 'mode', type => &std_layer_mode_enum,
+	  desc => 'The layer combination mode: { %%desc%% }' }
+    );
+    $inargs[0]->{desc} .= ' to which to add the layer';
+
+    @outargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The newly created layer', init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'int opacity' ],
+	code => <<'CODE'
+{
+  opacity = (int) ((opacity_arg * 255) / 100);
+  layer = layer_new (gimage, width, height, type, name, opacity, mode);
+  success = layer != NULL;
+}
+CODE
+    );
+}
+
+sub layer_copy {
+    $blurb = 'Copy a layer.';
+
+    $help = <<'HELP';
+This procedure copies the specified layer and returns the copy. The newly
+copied layer is for use within the original layer's image. It should not be
+subsequently added to any other image. The copied layer can optionally have an
+added alpha channel. This is useful if the background layer in an image is
+being copied and added to the same image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+	{ name => 'add_alpha', type => 'boolean',
+	  desc => 'Add an alpha channel to the copied layer' }
+    );
+    $inargs[0]->{desc} .= ' to copy';
+
+    @outargs = (
+	{ name => 'layer_copy', type => 'layer', init => 1,
+	  desc => 'The newly copied layer', alias => 'copy' }
+    );
+
+    %invoke = (
+	code => 'success = (copy = layer_copy (layer, add_alpha)) != NULL;'
+    );
+}
+
+sub layer_create_mask {
+    $blurb = 'Create a layer mask for the specified specified layer.';
+
+    $help = <<'HELP';
+This procedure creates a layer mask for the specified layer. Layer masks serve
+as an additional alpha channel for a layer. Three different types of masks are
+allowed initially: completely white masks (which will leave the layer fully
+visible), completely black masks (which will give the layer complete
+transparency, and the layer's already existing alpha channel (which will leave
+the layer fully visible, but which may be more useful than a white mask). The
+layer mask still needs to be added to the layer. This can be done with a call
+to 'gimage_add_layer_mask'.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&layer_arg,
+ 	{ name => 'mask_type', type => 'enum AddMaskType',
+	  desc => 'The type of mask: { %%desc%% }' }
+    );
+    $inargs[0]->{desc} .= ' to which to add the mask';
+
+    @outargs = (
+	{ name => 'mask', type => 'channel',
+	  desc => 'The newly created mask', init => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+success = (mask = layer_create_mask (layer, mask_type)) != NULL;
+CODE
+    );
+}
+
+sub layer_scale {
+    my $arg = { name => 'local_origin', type => 'boolean',
+		desc => 'Use a local origin (as opposed to the image origin)' };
+
+    &layer_dim_proc('scale', <<'HELP', $arg);
+The "local_origin" parameter specifies whether to scale from the center of the
+layer, or from the image origin.
+HELP
+}
+
+sub layer_resize {
+    my @args;
+    foreach (qw(x y)) {
+	push @args, { name => "off$_", type => 'int32',
+		      desc => "$_ offset between upper left corner of old and
+			       new layers: (new - old)" }
+    }
+
+    &layer_dim_proc('resize', <<'HELP', @args);
+Offsets are also provided which describe the position of the previous layer's
+content.
+HELP
+}
+
+sub layer_delete {
+    $blurb = 'Delete a layer.';
+
+    $help = <<'HELP';
+This procedure deletes the specified layer. This does not need to be done if
+a gimage containing this layer was already deleted.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &layer_arg );
+    $inargs[0]->{desc} .= ' to delete';
+
+    %invoke = ( code => 'layer_delete (layer);' );
+}
+
+sub layer_translate {
+    $blurb = 'Translate the layer by the specified offsets.';
+
+    $help = <<'HELP';
+This procedure translates the layer by the amounts specified in the x and y
+arguments. These can be negative, and are considered offsets from the current
+position. This command only works if the layer has been added to an image. All
+additional layers contained in the image which have the linked flag set to TRUE
+w ill also be translated by the specified offsets.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &layer_arg );
+    foreach (qw(x y)) {
+	push @inargs, { name => "off$_", type => 'int32',
+			desc => "Offset in $_ direction" }
+    }
+
+    &layer_change_invoke('LINKED_LAYER', <<'CODE');
+{
+  layer_list = gimage->layers;
+  while (layer_list)
+    {
+      tmp_layer = (Layer *) layer_list->data;
+      if ((tmp_layer == layer) || tmp_layer->linked)
+	layer_translate (tmp_layer, offx, offy);
+      layer_list = layer_list->next;
+    }
+}
+CODE
+    push @{$invoke{vars}}, 'Layer *tmp_layer', 'GSList *layer_list';
+}
+
+sub layer_add_alpha {
+    $blurb = <<'BLURB';
+Add an alpha channel to the layer if it doesn't already have one.
+BLURB
+
+    $help = <<'HELP';
+This procedure adds an additional component to the specified layer if it does
+not already possess an alpha channel. An alpha channel makes it possible to
+move a layer from the bottom of the layer stack and to clear and erase to
+transparency, instead of the background color. This transforms images of type
+RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &layer_arg );
+
+    %invoke = ( code => 'layer_add_alpha (layer);' );
+}
+
+sub layer_set_offsets {
+    &layer_translate;
+
+    $blurb = 'Set the layer offsets.';
+
+    $help = <<'HELP';
+This procedure sets the offsets for the specified layer. The offsets are
+relative to the image origin and can be any values. This operation is valid
+only on layers which have been added to an image.
+HELP
+
+    foreach (qw(x y)) {
+	$invoke{code} =~
+	    s/, (off$_)/,\n\t\t\t    ($1 - GIMP_DRAWABLE (layer)->offset_$_)/;
+    }
+}
+
+sub layer_mask {
+    $blurb = "Get the specified layer's mask if it exists.";
+
+    $help = <<'HELP';
+This procedure returns the specified layer's mask. If there is no layer mask,
+the procedure fails.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &layer_arg );
+
+    @outargs = (
+	{ name => 'mask', type => 'channel',
+	  desc => 'The layer mask',
+	  alias => 'layer->mask', no_declare => 1 }
+    );
+
+    %invoke = ( code => 'success = layer->mask ? TRUE : FALSE;' );
+}
+
+sub layer_is_floating_sel {
+    $blurb = 'Is the specified layer a floating selection?';
+
+    $help = <<'HELP';
+This procedure returns whether the layer is a floating selection. Floating
+selections are special cases of layers which are attached to a specific
+drawable.
+HELP
+
+    &std_pdb_misc;
+    
+    @inargs = ( &layer_arg );
+
+    @outargs = (
+	{ name => 'is_floating_sel', type => 'boolean',
+	  desc => 'Non-zero if the layer is a floating selection',
+	  alias => 'layer_is_floating_sel (layer)', no_declare => 1 }
+    );
+}
+
+&layer_accessors('name', 'string', 'name', 1, 0,
+		 [ undef, '$inargs[1]->{no_success} = 1' ]);
+
+&layer_accessors('visible', 'boolean', 'visibility', 0, 0,
+		 [ '$outargs[0]->{alias} =~ s/(layer)/GIMP_DRAWABLE ($1)/',
+		   '$invoke{code} =~ s/(layer)/GIMP_DRAWABLE ($1)/' ]);
+
+&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 0, 1);
+
+&layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 1,
+		 [ <<'CODE1', <<'CODE2' ]);
+    $help .= <<'HELP';
+ If the value is non-zero, then the layer mask for this layer is currently
+being composited with the layer's alpha channel.
+HELP
+CODE1
+    $help .= <<'HELP';
+ This controls whether the layer's mask is currently affecting the alpha
+channel. If there is no layer mask, this function will return an error.
+HELP
+CODE2
+
+&layer_accessors('show_mask', 'boolean', 'show mask', 0, 1,
+		 [ <<'CODE1', <<'CODE2' ]);
+    $help .= <<'HELP';
+ If the value is non-zero, then the layer mask for this layer is currently
+being shown instead of the layer.
+HELP
+CODE1
+    $help .= <<'HELP';
+ This controls whether the layer or it's mask is visible. Non-zero values
+indicate that the mask should be visible. If the layer has no mask, then this
+function returns an error.
+HELP
+CODE2
+
+&layer_accessors('edit_mask', 'boolean', 'show mask', 0, 1,
+		 [ <<'CODE1', <<'CODE2' ]);
+    $help .= <<'HELP';
+ If the value is non-zero, then the layer mask for this layer is currently
+active, and not the layer.
+HELP
+CODE1
+    $help .= <<'HELP';
+ This controls whether the layer or it's mask is currently active for editing.
+If the specified layer has no layer mask, then this procedure will return an
+error.
+HELP
+CODE2
+
+&layer_accessors('opacity', '0 <= float <= 100', 'opacity', 0, 0,
+		 [ '$outargs[0]->{alias} =
+		        "(layer->opacity * 100.0) / 255.0"',
+		   '$invoke{code} =~
+			s%(opacity);$%(int) (($1 * 255) / 100);%' ]);
+
+&layer_accessors('mode', &std_layer_mode_enum, 'combination mode', 0, 0);
+
+&layer_accessors('linked', 'int32', 'linked state', 0, 0,
+		 <<'CODE');
+    $author = $copyright = 'Wolfgang Hofer';
+    $date = '1998';
+
+    if (scalar @outargs) {
+	$outargs[0]->{desc} .= ' (for moves)'
+    }
+CODE
+
+&layer_accessors('tattoo', 'tattoo', 'tattoo', 1, 0,
+		 <<'CODE');
+    $blurb = 'Returns the tattoo associated with the specified layer.';
+
+    $help = <<'HELP';
+This procedure returns the tattoo associated with the specified layer. A tattoo
+is a unique and permanent identifier attached to a layer that can be used to
+uniquely identify a layer within an image even between sessions
+HELP
+
+    $author = $copyright = 'Jay Cox';
+    $date = '1998';
+CODE
+
+@headers = qw("layer.h" "layer_pvt.h");
+
+$#procs--;
+unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
+		   layer_resize layer_delete layer_translate layer_add_alpha
+		   layer_set_offsets layer_mask layer_is_floating_sel);
+%exports = (app => [@procs]);
+
+$desc = 'Layer';
+
+1;

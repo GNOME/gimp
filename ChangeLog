@@ -1,3 +1,16 @@
+Sat Apr 24 13:28:13 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/layer_cmds.[ch]: pdbgened, header file removed
+
+	* app/internal_procs.c: use pdbgen register for layer funcs
+
+	* app/*_cmds.c: various pdbgen formatting fixes
+
+	* app/Makefile.am: removed layer_cmds.h
+
+	* app/layer.c
+	* app/layerF.h: changed AddMaskType enum to capitals
+
 Sat Apr 24 11:30:34 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/plug_in.c (plug_in_open): Add OS/2 patches. Setting pipes

@@ -166,7 +166,7 @@ path_get_points_invoker (Argument *args)
 	      pptr = pl->data;
     
 	      if (!strcmp (pname, pptr->name->str))
-	        break; /* Found the path */
+		break; /* Found the path */
     
 	      pl = pl->next;
 	      pptr = NULL;
@@ -179,24 +179,24 @@ path_get_points_invoker (Argument *args)
     
 	      points_list = pptr->path_details;
 	      if (points_list)
-	        {
-	          num_pdetails = g_slist_length (points_list) * 3;
+		{
+		  num_pdetails = g_slist_length (points_list) * 3;
     
-	          pnts = g_new (gdouble, num_pdetails);
+		  pnts = g_new (gdouble, num_pdetails);
     
-	          /* fill points and types in */
-	          while (points_list)
-	            {
-	              PATHPOINTP ppoint = points_list->data;
-	              pnts[pcount] = ppoint->x;
-	              pnts[pcount + 1] = ppoint->y;
-	              pnts[pcount + 2] = (gfloat) ppoint->type; /* Bit of fiddle but should be understandable why it was done */
-	              pcount += 3;
-	              points_list = points_list->next;
-	            }
-	        }        
+		  /* fill points and types in */
+		  while (points_list)
+		    {
+		      PATHPOINTP ppoint = points_list->data;
+		      pnts[pcount] = ppoint->x;
+		      pnts[pcount + 1] = ppoint->y;
+		      pnts[pcount + 2] = (gfloat) ppoint->type; /* Bit of fiddle but should be understandable why it was done */
+		      pcount += 3;
+		      points_list = points_list->next;
+		    }
+		}        
 	      else
-	        success = FALSE;
+		success = FALSE;
 	    }
 	  else
 	    success = FALSE;
@@ -422,7 +422,7 @@ path_set_points_invoker (Argument *args)
 	success = FALSE;
     
       if (success && !paths_set_path_points (gimage, pname, ptype, pclosed,
-	                                     numpoints, pnts))
+					     numpoints, pnts))
 	success = FALSE;
     }
 
@@ -494,8 +494,8 @@ path_stroke_current_invoker (Argument *args)
       if (plist && plist->bz_paths && plist->last_selected_row >= 0)
 	{
 	  if ((pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
-	                                        plist->last_selected_row)))
-	          
+						plist->last_selected_row)))
+		  
 	    paths_stroke (gimage, plist, pptr); /* Found the path to stroke.. */
 	  else
 	    success = FALSE;
@@ -559,9 +559,9 @@ path_get_point_at_dist_invoker (Argument *args)
       if (plist && plist->bz_paths && plist->last_selected_row >= 0)
 	{
 	  pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
-	                                   plist->last_selected_row);
+					   plist->last_selected_row);
 	  success = paths_distance (pptr, distance, &x_point, &y_point,
-	                            &gradient);
+				    &gradient);
 	}
       else
 	success = FALSE;
@@ -661,7 +661,7 @@ path_get_tattoo_invoker (Argument *args)
 	      pptr = pl->data;
     
 	      if (!strcmp (pname, pptr->name->str))
-	        break; /* Found the path */
+		break; /* Found the path */
     
 	      pl = pl->next;
 	      pptr = NULL;

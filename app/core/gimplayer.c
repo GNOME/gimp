@@ -493,13 +493,13 @@ layer_create_mask (layer, add_mask_type)
 
   switch (add_mask_type)
     {
-    case WhiteMask:
+    case ADD_WHITE_MASK:
       color_region (&maskPR, &white_mask);
       break;
-    case BlackMask:
+    case ADD_BLACK_MASK:
       color_region (&maskPR, &black_mask);
       break;
-    case AlphaMask:
+    case ADD_ALPHA_MASK:
       /*  Extract the layer's alpha channel  */
       if (layer_has_alpha (layer))
 	{

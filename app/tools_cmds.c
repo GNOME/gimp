@@ -376,7 +376,7 @@ bucket_fill_invoker (Argument *args)
     {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
       bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
-	           threshold, sample_merged, x, y);
+		   threshold, sample_merged, x, y);
     }
 
   return procedural_db_return_args (&bucket_fill_proc, success);
@@ -482,7 +482,7 @@ by_color_select_invoker (Argument *args)
     {
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
       by_color_select (gimage, drawable, color, threshold, operation,
-	               antialias, feather, feather_radius, sample_merged);
+		       antialias, feather, feather_radius, sample_merged);
     }
 
   return procedural_db_return_args (&by_color_select_proc, success);
@@ -586,7 +586,7 @@ clone_invoker (Argument *args)
 
   if (success)
     success = clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
-	                     num_strokes, strokes);
+			     num_strokes, strokes);
 
   return procedural_db_return_args (&clone_proc, success);
 }
@@ -689,8 +689,8 @@ color_picker_invoker (Argument *args)
     
       if (success)
 	success = pick_color (gimage, drawable, (int) x, (int) y,
-	                      sample_merged, sample_average, average_radius,
-	                      save_color);
+			      sample_merged, sample_average, average_radius,
+			      save_color);
       if (success)
 	{
 	  color = g_new (guchar, 3);
@@ -896,7 +896,7 @@ crop_invoker (Argument *args)
 	success = FALSE;
       else
 	crop_image (gimage, offx, offy, offx + new_width, offy + new_height,
-	            FALSE, TRUE);
+		    FALSE, TRUE);
     }
 
   return procedural_db_return_args (&crop_proc, success);
@@ -989,7 +989,7 @@ ellipse_select_invoker (Argument *args)
 
   if (success)
     ellipse_select (gimage, (int) x, (int) y, (int) width, (int) height,
-	            operation, antialias, feather, feather_radius);
+		    operation, antialias, feather, feather_radius);
 
   return procedural_db_return_args (&ellipse_select_proc, success);
 }
@@ -1282,7 +1282,7 @@ free_select_invoker (Argument *args)
 
   if (success)
     free_select (gimage, num_segs, (FreeSelectPoint *) segs, operation,
-	         antialias, feather, feather_radius);
+		 antialias, feather, feather_radius);
 
   return procedural_db_return_args (&free_select_proc, success);
 }
@@ -1387,7 +1387,7 @@ fuzzy_select_invoker (Argument *args)
       gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
     
       new = find_contiguous_region (gimage, drawable, antialias, threshold,
-	                            x, y, sample_merged);
+				    x, y, sample_merged);
       old_fuzzy_mask = fuzzy_mask;
       fuzzy_mask = new;
     
@@ -1503,7 +1503,7 @@ paintbrush_invoker (Argument *args)
 
   if (success)
     success = paintbrush_non_gui (drawable, num_strokes, strokes, fade_out,
-	                          method, gradient_length);
+				  method, gradient_length);
 
   return procedural_db_return_args (&paintbrush_proc, success);
 }
@@ -1689,8 +1689,8 @@ perspective_invoker (Argument *args)
     
       /* Perspective the buffer */
       new_tiles = perspective_tool_perspective (gimage, drawable, NULL,
-	                                        float_tiles, interpolation,
-	                                        matrix);
+						float_tiles, interpolation,
+						matrix);
     
       /* Free the cut/copied buffer */
       tile_manager_destroy (float_tiles);
@@ -1834,7 +1834,7 @@ rect_select_invoker (Argument *args)
 
   if (success)
     rect_select (gimage, (int) x, (int) y, (int) width, (int) height,
-	         operation, feather, feather_radius);
+		 operation, feather, feather_radius);
 
   return procedural_db_return_args (&rect_select_proc, success);
 }
@@ -1943,7 +1943,7 @@ rotate_invoker (Argument *args)
     
       /* Rotate the buffer */
       new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle,
-	                              float_tiles, interpolation, matrix);
+				      float_tiles, interpolation, matrix);
     
       /* Free the cut/copied buffer */
       tile_manager_destroy (float_tiles);
@@ -2057,10 +2057,10 @@ scale_invoker (Argument *args)
 	  scalex = scaley = 1.0;
 	  if (float_tiles->width)
 	    scalex = (trans_info[X1] - trans_info[X0]) /
-	             (double) float_tiles->width;
+		     (double) float_tiles->width;
 	  if (float_tiles->height)
 	    scaley = (trans_info[Y1] - trans_info[Y0]) /
-	             (double) float_tiles->height;
+		     (double) float_tiles->height;
     
 	  /* Assemble the transformation matrix */
 	  gimp_matrix_identity  (matrix);
@@ -2070,7 +2070,7 @@ scale_invoker (Argument *args)
     
 	  /* Scale the buffer */
 	  new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
-	                                float_tiles, interpolation, matrix);
+					float_tiles, interpolation, matrix);
     
 	  /* Free the cut/copied buffer */
 	  tile_manager_destroy (float_tiles);
@@ -2209,7 +2209,7 @@ shear_invoker (Argument *args)
     
       /* Shear the buffer */
       new_tiles = shear_tool_shear (gimage, drawable, NULL, float_tiles,
-	                            interpolation, matrix);
+				    interpolation, matrix);
     
       /* Free the cut/copied buffer */
       tile_manager_destroy (float_tiles);

@@ -657,7 +657,7 @@ static ProcArg channel_set_opacity_inargs[] =
   {
     PDB_FLOAT,
     "opacity",
-    "The new channel opacity"
+    "The new channel opacity (0 <= opacity <= 100)"
   }
 };
 

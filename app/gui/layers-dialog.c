@@ -3473,7 +3473,7 @@ fill_white_callback (GtkWidget *w,
   AddMaskOptions *options;
 
   options = (AddMaskOptions *) client_data;
-  options->add_mask_type = WhiteMask;
+  options->add_mask_type = ADD_WHITE_MASK;
 }
 
 static void
@@ -3483,7 +3483,7 @@ fill_black_callback (GtkWidget *w,
   AddMaskOptions *options;
 
   options = (AddMaskOptions *) client_data;
-  options->add_mask_type = BlackMask;
+  options->add_mask_type = ADD_BLACK_MASK;
 }
 
 static void
@@ -3493,7 +3493,7 @@ fill_alpha_callback (GtkWidget *w,
   AddMaskOptions *options;
 
   options = (AddMaskOptions *) client_data;
-  options->add_mask_type = AlphaMask;
+  options->add_mask_type = ADD_ALPHA_MASK;
 }
 
 static void
@@ -3528,7 +3528,7 @@ layers_dialog_add_mask_query (Layer *layer)
   /*  the new options structure  */
   options = (AddMaskOptions *) g_malloc (sizeof (AddMaskOptions));
   options->layer = layer;
-  options->add_mask_type = WhiteMask;
+  options->add_mask_type = ADD_WHITE_MASK;
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();

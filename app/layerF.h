@@ -1,11 +1,11 @@
 #ifndef __LAYER_F_H__
 #define __LAYER_F_H__
 
-typedef enum
+typedef enum  /*< chop=ADD_ >*/
 {
-  WhiteMask,
-  BlackMask,
-  AlphaMask
+  ADD_WHITE_MASK,
+  ADD_BLACK_MASK,
+  ADD_ALPHA_MASK
 } AddMaskType;
 
 typedef struct _GimpLayer      GimpLayer;

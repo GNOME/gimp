@@ -243,7 +243,6 @@ gimp_SOURCES = \
 	layerF.h		\
 	layer_pvt.h		\
 	layer_cmds.c		\
-	layer_cmds.h		\
 	layer_select.c		\
 	layer_select.h		\
 	layers_dialog.c		\

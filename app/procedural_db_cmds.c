@@ -238,7 +238,7 @@ procedural_db_print_entry (gpointer key,
   g_string_free (buf, TRUE);
 }
 
-/* This really doesn't belong here, but it depends on your generated type_str
+/* This really doesn't belong here, but it depends on our generated type_str
  * array.
  */
 const char *

@@ -22,7 +22,6 @@
 #include "app_procs.h"
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
-#include "layer_cmds.h"
 #include "internal_procs.h"
 #include "procedural_db.h"
 
@@ -52,6 +51,7 @@ void register_pattern_select_procs  (void);
 void register_parasite_procs        (void);
 void register_drawable_procs        (void);
 void register_procedural_db_procs   (void);
+void register_layer_procs           (void);
 
 void
 internal_procs_init (void)
@@ -178,36 +178,8 @@ internal_procs_init (void)
 			 pcount/total_pcount);
 
   /*  Layer procedures  */
-  procedural_db_register (&layer_new_proc); pcount++;
-  procedural_db_register (&layer_copy_proc); pcount++;
-  procedural_db_register (&layer_create_mask_proc); pcount++;
-  procedural_db_register (&layer_scale_proc); pcount++;
-  procedural_db_register (&layer_resize_proc); pcount++;
-  procedural_db_register (&layer_delete_proc); pcount++;
-  procedural_db_register (&layer_translate_proc); pcount++;
-  procedural_db_register (&layer_add_alpha_proc); pcount++;
-  procedural_db_register (&layer_get_name_proc); pcount++;
-  procedural_db_register (&layer_set_name_proc); pcount++;
-  procedural_db_register (&layer_get_visible_proc); pcount++;
-  procedural_db_register (&layer_set_visible_proc); pcount++;
-  procedural_db_register (&layer_get_preserve_trans_proc); pcount++;
-  procedural_db_register (&layer_set_preserve_trans_proc); pcount++;
-  procedural_db_register (&layer_get_apply_mask_proc); pcount++;
-  procedural_db_register (&layer_set_apply_mask_proc); pcount++;
-  procedural_db_register (&layer_get_show_mask_proc); pcount++;
-  procedural_db_register (&layer_set_show_mask_proc); pcount++;
-  procedural_db_register (&layer_get_edit_mask_proc); pcount++;
-  procedural_db_register (&layer_set_edit_mask_proc); pcount++;
-  procedural_db_register (&layer_get_opacity_proc); pcount++;
-  procedural_db_register (&layer_set_opacity_proc); pcount++;
-  procedural_db_register (&layer_get_mode_proc); pcount++;
-  procedural_db_register (&layer_set_mode_proc); pcount++;
-  procedural_db_register (&layer_set_offsets_proc); pcount++;
-  procedural_db_register (&layer_mask_proc); pcount++;
-  procedural_db_register (&layer_is_floating_sel_proc); pcount++;
-  procedural_db_register (&layer_get_tattoo_proc); pcount++;
-  procedural_db_register (&layer_get_linked_proc); pcount++;
-  procedural_db_register (&layer_set_linked_proc); pcount++;
+  register_layer_procs ();
+  pcount += 30;
 
   app_init_update_status(NULL, _("Channel procedures"),
 			 pcount/total_pcount);

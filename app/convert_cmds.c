@@ -222,7 +222,7 @@ convert_indexed_palette_invoker (Argument *args)
 	    {
 	    case MAKE_PALETTE:
 	      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
-	        success = FALSE;
+		success = FALSE;
 	      break;
     
 	    case REUSE_PALETTE:
@@ -232,22 +232,22 @@ convert_indexed_palette_invoker (Argument *args)
     
 	    case CUSTOM_PALETTE:
 	      if (!palette_entries_list)
-	        palette_init_palettes (FALSE);
+		palette_init_palettes (FALSE);
     
 	      for (list = palette_entries_list; list; list = list->next)
-	        {
-	          entries = (PaletteEntriesP) list->data;
-	          if (!strcmp (palette_name, entries->name))
-	            {
-	              the_palette = entries;
-	              break;
-	            }
-	        }
+		{
+		  entries = (PaletteEntriesP) list->data;
+		  if (!strcmp (palette_name, entries->name))
+		    {
+		      the_palette = entries;
+		      break;
+		    }
+		}
     
 	      if (the_palette == NULL)
-	        success = FALSE;
+		success = FALSE;
 	      else
-	        theCustomPalette = the_palette;
+		theCustomPalette = the_palette;
     
 	      break;
     

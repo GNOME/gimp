@@ -155,10 +155,10 @@ text_fontname_invoker (Argument *args)
   if (success)
     {
       real_fontname = text_xlfd_insert_size (fontname, size, size_type,
-	                                     antialias);
+					     antialias);
     
       text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
-	                        border, antialias);
+				border, antialias);
     
       if (text_layer == NULL)
 	success = FALSE;
@@ -289,8 +289,8 @@ text_get_extents_fontname_invoker (Argument *args)
       real_fontname = text_xlfd_insert_size (fontname, size, size_type, FALSE);
     
       success = text_get_extents (real_fontname, text,
-	                          &width, &height,
-	                          &ascent, &descent);
+				  &width, &height,
+				  &ascent, &descent);
     
       g_free (real_fontname);
     }
@@ -428,13 +428,13 @@ text_invoker (Argument *args)
   argv[9].arg_type = PDB_STRING;
   argv[9].value.pdb_pointer =
     text_xlfd_create (foundry,
-	              family,
-	              weight,
-	              slant,
-	              set_width,
-	              spacing,
-	              registry,
-	              encoding);
+		      family,
+		      weight,
+		      slant,
+		      set_width,
+		      spacing,
+		      registry,
+		      encoding);
 
   return text_fontname_invoker (argv);
 }
@@ -610,13 +610,13 @@ text_get_extents_invoker (Argument *args)
   argv[3].arg_type = PDB_STRING;
   argv[3].value.pdb_pointer =
     text_xlfd_create (foundry,
-	              family,
-	              weight,
-	              slant,
-	              set_width,
-	              spacing,
-	              registry,
-	              encoding);
+		      family,
+		      weight,
+		      slant,
+		      set_width,
+		      spacing,
+		      registry,
+		      encoding);
 
   return text_get_extents_fontname_invoker (argv);
 }

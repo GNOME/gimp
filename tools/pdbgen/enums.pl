@@ -349,6 +349,17 @@ package Gimp::CodeGen::enums;
 		       CYAN_HUES => '4',
 		       BLUE_HUES => '5',
 		       MAGENTA_HUES => '6' }
+	},
+    AddMaskType =>
+	{ contig => 1,
+	  header => 'layerF.h',
+	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK) ],
+	  mapping => { ADD_WHITE_MASK => '0',
+		       ADD_BLACK_MASK => '1',
+		       ADD_ALPHA_MASK => '2' },
+	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
+		       ADD_BLACK_MASK => 'BLACK_MASK',
+		       ADD_ALPHA_MASK => 'ALPHA_MASK' }
 	}
 );
 

@@ -98,19 +98,19 @@ brightness_contrast_invoker (Argument *args)
 	  gimage = gimp_drawable_gimage (drawable);
     
 	  lut = brightness_contrast_lut_new (brightness / 255.0,
-	                                     contrast / 127.0,
-	                                     gimp_drawable_bytes (drawable));
+					     contrast / 127.0,
+					     gimp_drawable_bytes (drawable));
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
@@ -229,19 +229,19 @@ levels_invoker (Argument *args)
     
 	  /* setup the lut */
 	  lut = levels_lut_new (gamma, low_input, high_input,
-	                        low_output, high_output,
-	                        gimp_drawable_bytes (drawable));
+				low_output, high_output,
+				gimp_drawable_bytes (drawable));
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free(lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
@@ -340,12 +340,12 @@ posterize_invoker (Argument *args)
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
@@ -575,8 +575,8 @@ curves_spline_invoker (Argument *args)
 	  for (i = 0; i < 5; i++)
 	    for (j = 0; j < 17; j++)
 	      {
-	        cd.points[i][j][0] = -1;
-	        cd.points[i][j][1] = -1;
+		cd.points[i][j][0] = -1;
+		cd.points[i][j][1] = -1;
 	      }
     
 	  cd.drawable = drawable;
@@ -595,12 +595,12 @@ curves_spline_invoker (Argument *args)
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free (cd.lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
@@ -698,17 +698,17 @@ curves_explicit_invoker (Argument *args)
     
 	  cd.lut = gimp_lut_new ();
 	  gimp_lut_setup (cd.lut, (GimpLutFunc) curves_lut_func,
-	                  (void *) &cd, gimp_drawable_bytes(drawable));
+			  (void *) &cd, gimp_drawable_bytes(drawable));
 	  
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_lut_free (cd.lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
@@ -821,9 +821,9 @@ color_balance_invoker (Argument *args)
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
 	       pr = pixel_regions_process (pr))
@@ -931,11 +931,11 @@ histogram_invoker (Argument *args)
 	  htd.drawable = drawable;
 	  htd.color = gimp_drawable_color (drawable);
 	  htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
-	                                        HISTOGRAM_HEIGHT);
+						HISTOGRAM_HEIGHT);
     
 	  gtk_signal_connect (GTK_OBJECT (htd.histogram), "rangechanged",
-	                      (GtkSignalFunc) histogram_tool_histogram_range,
-	                      (void*) &htd);
+			      (GtkSignalFunc) histogram_tool_histogram_range,
+			      (void*) &htd);
     
 	  /* The information collection should occur only within selection bounds */
 	  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
@@ -943,12 +943,12 @@ histogram_invoker (Argument *args)
     
 	  /* Configure the src from the drawable data */
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
     
 	  /*  Configure the mask from the gimage's selection mask */
 	  mask = gimage_get_mask (drawable_gimage (GIMP_DRAWABLE (drawable)));
 	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
-	                     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     
 	  /* Apply the image transformation to the pixels */
 	  htd.hist = gimp_histogram_new ();
@@ -959,7 +959,7 @@ histogram_invoker (Argument *args)
     
 	  /* Calculate the statistics */
 	  histogram_tool_histogram_range (htd.histogram, start_range, end_range,
-	                                  &htd);
+					  &htd);
 	}
     }
 
@@ -1111,9 +1111,9 @@ hue_saturation_invoker (Argument *args)
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
 	       pr = pixel_regions_process (pr))
@@ -1209,12 +1209,12 @@ threshold_invoker (Argument *args)
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
     
 	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-	                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
 	  pixel_regions_process_parallel ((p_func) threshold_2, (void*) &td, 2,
-	                                  &srcPR, &destPR);
+					  &srcPR, &destPR);
     
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

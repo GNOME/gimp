@@ -240,10 +240,10 @@ patterns_get_pattern_data_invoker (Argument *args)
 	      patternp = (GPatternP) list->data;
     
 	      if (!strcmp (patternp->name, name))
-	        {
-	          success = TRUE;
-	          break;
-	        }
+		{
+		  success = TRUE;
+		  break;
+		}
     
 	      list = list->next;
 	    }
@@ -254,7 +254,7 @@ patterns_get_pattern_data_invoker (Argument *args)
       if (success)
 	{
 	  length = patternp->mask->height * patternp->mask->width *
-	           patternp->mask->bytes;
+		   patternp->mask->bytes;
 	  mask_data = g_new (gint8, length);
 	  g_memmove (mask_data, temp_buf_data (patternp->mask), length);
 	}

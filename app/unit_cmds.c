@@ -126,7 +126,7 @@ unit_new_invoker (Argument *args)
 
   if (success)
     unit = gimp_unit_new (identifier, factor, digits, symbol, abbreviation,
-	                  singular, plural);
+			  singular, plural);
 
   return_args = procedural_db_return_args (&unit_new_proc, success);
 

@@ -92,7 +92,7 @@ brushes_popup_invoker (Argument *args)
 	{
 	  if (brush && strlen (brush))
 	    newdialog = brush_select_new (title, brush, opacity, spacing,
-	                                  paint_mode);
+					  paint_mode);
 	  else
 	    newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
     
@@ -269,11 +269,11 @@ brushes_set_popup_invoker (Argument *args)
     
 	      bsp->spacing_data->value = bsp->spacing_value;
 	      gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data),
-	                               "value_changed");
+				       "value_changed");
     
 	      bsp->opacity_data->value = bsp->opacity_value * 100.0;
 	      gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data),
-	                               "value_changed");
+				       "value_changed");
 	      
 	      gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), bsp->paint_mode);
     
