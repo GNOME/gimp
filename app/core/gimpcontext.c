@@ -952,7 +952,6 @@ gimp_context_serialize_property (GObject      *object,
 {
   GimpContext *context;
   GimpObject  *serialize_obj;
-  gchar       *escaped;
 
   context = GIMP_CONTEXT (object);
 
@@ -970,11 +969,18 @@ gimp_context_serialize_property (GObject      *object,
       return FALSE;
     }
 
-  escaped = g_strescape (gimp_object_get_name (serialize_obj), NULL);
+  if (serialize_obj)
+    {
+      gchar *escaped;
 
-  g_string_append_printf (string, "\"%s\"", escaped);
-
-  g_free (escaped);
+      escaped = g_strescape (gimp_object_get_name (serialize_obj), NULL);
+      g_string_append_printf (string, "\"%s\"", escaped);
+      g_free (escaped);
+    }
+  else
+    {
+      g_string_append_printf (string, "NULL");
+    }
 
   return TRUE;
 }
@@ -1025,7 +1031,11 @@ gimp_context_deserialize_property (GObject    *object,
       return FALSE;
     }
 
-  if (gimp_scanner_parse_string (scanner, &object_name))
+  if (gimp_scanner_parse_identifier (scanner, "NULL"))
+    {
+      g_value_set_object (value, NULL);
+    }
+  else if (gimp_scanner_parse_string (scanner, &object_name))
     {
       GimpObject *deserialize_obj;
 

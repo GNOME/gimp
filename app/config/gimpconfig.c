@@ -49,6 +49,7 @@ static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
 static gboolean  gimp_config_iface_serialize    (GObject  *object,
                                                  gint      fd,
+                                                 gint      indent_level,
                                                  gpointer  data);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner,
@@ -101,9 +102,10 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 static gboolean
 gimp_config_iface_serialize (GObject  *object,
                              gint      fd,
+                             gint      indent_level,
                              gpointer  data)
 {
-  return gimp_config_serialize_properties (object, fd);
+  return gimp_config_serialize_properties (object, fd, indent_level);
 }
 
 static gboolean
@@ -221,7 +223,7 @@ gimp_config_serialize (GObject      *object,
                write (fd, "\n", 1)                 != -1);
 
   if (success)
-    success = gimp_config_iface->serialize (object, fd, data);
+    success = gimp_config_iface->serialize (object, fd, 0, data);
 
   if (success && footer)
     success = (write (fd, "\n", 1)                 != -1  &&
@@ -331,6 +333,19 @@ gimp_config_error_quark (void)
     q = g_quark_from_static_string ("gimp-config-error-quark");
 
   return q;
+}
+
+void
+gimp_config_string_indent (GString *string,
+                           gint     indent_level)
+{
+  gint indent;
+
+  g_return_if_fail (string != NULL);
+  g_return_if_fail (indent_level > 0);
+
+  for (indent = 0; indent < indent_level; indent++)
+    g_string_append (string, "    ");
 }
 
 static void

@@ -40,6 +40,7 @@ static void       gimp_rc_config_iface_init (gpointer  iface,
                                              gpointer  iface_data);
 static gboolean   gimp_rc_serialize         (GObject  *object,
                                              gint      fd,
+                                             gint      indent_level,
                                              gpointer  data);
 static gboolean   gimp_rc_deserialize       (GObject  *object,
                                              GScanner *scanner,
@@ -99,6 +100,7 @@ gimp_rc_config_iface_init (gpointer  iface,
 static gboolean
 gimp_rc_serialize (GObject *object,
                    gint     fd,
+                   gint     indent_level,
                    gpointer data)
 {
   gboolean success;
@@ -106,12 +108,13 @@ gimp_rc_serialize (GObject *object,
   if (data && GIMP_IS_RC (data))
     success = gimp_config_serialize_changed_properties (object,
                                                         G_OBJECT (data),
-                                                        fd);
+                                                        fd,
+                                                        indent_level);
   else
-    success = gimp_config_serialize_properties (object, fd);
+    success = gimp_config_serialize_properties (object, fd, indent_level);
 
   if (success)
-    success = gimp_config_serialize_unknown_tokens (object, fd);
+    success = gimp_config_serialize_unknown_tokens (object, fd, indent_level);
 
   return success;
 }

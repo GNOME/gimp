@@ -61,13 +61,15 @@ static void       serialize_unknown_token        (const gchar  *key,
  **/
 gboolean
 gimp_config_serialize_properties (GObject *object,
-                                  gint     fd)
+                                  gint     fd,
+                                  gint     indent_level)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
   GString       *str;
+  gboolean       property_written = FALSE;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   
@@ -89,11 +91,19 @@ gimp_config_serialize_properties (GObject *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_string_printf (str, "(%s ", prop_spec->name);
-      
+      if (property_written)
+        g_string_assign (str, "\n");
+      else
+        g_string_assign (str, "");
+
+      gimp_config_string_indent (str, indent_level);
+
+      g_string_append_printf (str, "(%s ", prop_spec->name);
+
       if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
         {
-          g_string_append (str, ")\n");
+          g_string_append (str, ")");
+          property_written = TRUE;
 
           if (write (fd, str->str, str->len) == -1)
             return FALSE;
@@ -126,13 +136,15 @@ gimp_config_serialize_properties (GObject *object,
 gboolean
 gimp_config_serialize_changed_properties (GObject *new,
                                           GObject *old,
-                                          gint    fd)
+                                          gint     fd,
+                                          gint     indent_level)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
   GString       *str;
+  gboolean       property_written = FALSE;
 
   g_return_val_if_fail (G_IS_OBJECT (new), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (old), FALSE);
@@ -167,12 +179,20 @@ gimp_config_serialize_changed_properties (GObject *new,
 
       if (!gimp_config_values_equal (&new_value, &old_value))
         {
-          g_string_printf (str, "(%s ", prop_spec->name);
+          if (property_written)
+            g_string_assign (str, "\n");
+          else
+            g_string_assign (str, "");
+
+          gimp_config_string_indent (str, indent_level);
+
+          g_string_append_printf (str, "(%s ", prop_spec->name);
       
           if (gimp_config_serialize_value (&new_value, str, TRUE))
             {
               g_string_append (str, ")\n");
-              
+              property_written = TRUE;
+            
               if (write (fd, str->str, str->len) == -1)
                 return FALSE;
             }
@@ -316,7 +336,8 @@ gimp_config_serialize_value (const GValue *value,
  **/
 gboolean
 gimp_config_serialize_unknown_tokens (GObject *object,
-                                      gint     fd)
+                                      gint     fd,
+                                      gint     indent_level)
 {
   GString *str;
 

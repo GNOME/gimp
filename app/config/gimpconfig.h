@@ -42,6 +42,7 @@ struct _GimpConfigInterface
 
   gboolean   (* serialize)            (GObject      *object,
                                        gint          fd,
+                                       gint          indent_level,
                                        gpointer      data);
   gboolean   (* deserialize)          (GObject      *object,
                                        GScanner     *scanner,
@@ -96,7 +97,10 @@ void          gimp_config_foreach_unknown_token (GObject      *object,
 
 #define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
 
-GQuark        gimp_config_error_quark (void) G_GNUC_CONST;
+GQuark        gimp_config_error_quark   (void) G_GNUC_CONST;
+
+void          gimp_config_string_indent (GString *string,
+                                         gint     indent_level);
 
 
 #endif  /* __GIMP_CONFIG_H__ */

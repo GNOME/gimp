@@ -40,6 +40,7 @@ static void     gimp_document_list_config_iface_init (gpointer  iface,
                                                       gpointer  iface_data);
 static gboolean gimp_document_list_serialize         (GObject  *list,
                                                       gint      fd,
+                                                      gint      indent_level,
                                                       gpointer  data);
 static gboolean gimp_document_list_deserialize       (GObject  *list,
                                                       GScanner *scanner,
@@ -100,6 +101,7 @@ gimp_document_list_config_iface_init (gpointer  iface,
 static gboolean
 gimp_document_list_serialize (GObject *document_list,
                               gint     fd,
+                              gint     indent_level,
                               gpointer data)
 {
   GList   *list;

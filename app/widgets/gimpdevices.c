@@ -31,11 +31,13 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
+#include "core/gimplist.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
+
+#include "config/gimpconfig.h"
 
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"
@@ -50,7 +52,7 @@ typedef struct _GimpDeviceManager GimpDeviceManager;
 
 struct _GimpDeviceManager
 {
-  GList                  *device_info_list;
+  GimpContainer          *device_info_list;
   GdkDevice              *current_device;
   GimpDeviceChangeNotify  change_notify;
 };
@@ -82,8 +84,10 @@ gimp_devices_init (Gimp                   *gimp,
                           GIMP_DEVICE_MANAGER_DATA_KEY, manager,
                           (GDestroyNotify) g_free);
 
-  manager->current_device = gdk_device_get_core_pointer ();
-  manager->change_notify  = change_notify;
+  manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO,
+                                             GIMP_CONTAINER_POLICY_STRONG);
+  manager->current_device   = gdk_device_get_core_pointer ();
+  manager->change_notify    = change_notify;
 
   /*  create device info structures for present devices */
   for (list = gdk_devices_list (); list; list = g_list_next (list))
@@ -91,9 +95,8 @@ gimp_devices_init (Gimp                   *gimp,
       device = (GdkDevice *) list->data;
 
       device_info = gimp_device_info_new (gimp, device->name);
-
-      manager->device_info_list = g_list_append (manager->device_info_list,
-                                                 device_info);
+      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
+      g_object_unref (G_OBJECT (device_info));
 
       gimp_device_info_set_from_device (device_info, device);
     }
@@ -110,9 +113,7 @@ gimp_devices_exit (Gimp *gimp)
 
   g_return_if_fail (manager != NULL);
 
-  g_list_foreach (manager->device_info_list, (GFunc) g_object_unref, NULL);
-  g_list_free (manager->device_info_list);
-
+  g_object_unref (G_OBJECT (manager->device_info_list));
   g_object_set_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY, NULL);
 }
 
@@ -164,14 +165,61 @@ gimp_devices_save (Gimp *gimp)
 
   if (fp)
     {
-      g_list_foreach (manager->device_info_list,
-                      (GFunc) gimp_device_info_save, fp);
+      gimp_container_foreach (manager->device_info_list,
+                              (GFunc) gimp_device_info_save, fp);
       fclose (fp);
     }
   else
     {
       g_warning ("%s: could not open \"%s\" for writing: %s",
                  G_STRLOC, filename, g_strerror (errno));
+    }
+
+  g_free (filename);
+}
+
+void
+gimp_devices_restore_test (Gimp *gimp)
+{
+  GimpDeviceManager *manager;
+  gchar             *filename;
+  GError            *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  manager = gimp_device_manager_get (gimp);
+
+  g_return_if_fail (manager != NULL);
+
+  filename = gimp_personal_rc_file ("test-devicerc");
+
+  g_free (filename);
+}
+
+void
+gimp_devices_save_test (Gimp *gimp)
+{
+  GimpDeviceManager *manager;
+  gchar             *filename;
+  GError            *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  manager = gimp_device_manager_get (gimp);
+
+  g_return_if_fail (manager != NULL);
+
+  filename = gimp_personal_rc_file ("test-devicerc");
+
+  if (! gimp_config_serialize (G_OBJECT (manager->device_info_list),
+                               filename,
+                               "# test-devicerc",
+                               "# end test-devicerc",
+                               NULL,
+                               &error))
+    {
+      g_message ("Could not write test-devicerc: %s", error->message);
+      g_clear_error (&error);
     }
 
   g_free (filename);
@@ -295,7 +343,6 @@ gimp_devices_rc_update (Gimp               *gimp,
 {
   GimpDeviceManager *manager;
   GimpDeviceInfo    *device_info = NULL;
-  GList             *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
@@ -305,21 +352,14 @@ gimp_devices_rc_update (Gimp               *gimp,
   g_return_if_fail (manager != NULL);
 
   /*  Find device if we have it  */
-  for (list = manager->device_info_list; list; list = g_list_next (list))
-    {
-      if (! strcmp (GIMP_OBJECT (list->data)->name, name))
-        {
-          device_info = GIMP_DEVICE_INFO (list->data);
-          break;
-        }
-    }
+  device_info = (GimpDeviceInfo *)
+    gimp_container_get_child_by_name (manager->device_info_list, name);
 
   if (! device_info)
     {
       device_info = gimp_device_info_new (gimp, name);
-
-      manager->device_info_list = g_list_append (manager->device_info_list,
-                                                 device_info);
+      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
+      g_object_unref (G_OBJECT (device_info));
     }
   else if (! device_info->device)
     {

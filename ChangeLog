@@ -1,5 +1,32 @@
 2002-05-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfig-serialize.[ch]: added "gint indent_level"
+	to all serialization functions. Added gimp_config_string_indent()
+	which indents a GString.
+
+	* app/config/gimprc.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c: changed accordingly.
+
+	* app/core/gimpcontext.c: don't crash when serializing NULL object
+	properties.
+
+	* app/config/gimpscanner.[ch]: added gimp_scanner_parse_identifier().
+
+	* app/core/gimpcontainer.c: implement GimpConfigInterface.
+	Container serialization works, deserialization is not implemented yet.
+
+	* app/widgets/gimpdevices.[ch]: made
+	GimpDeviceManager->device_info_list a GimpList, not GList, added
+	testing functions for (de)serializing it.
+
+	* app/gui/menus.c
+	* app/gui/test-commands.[ch]: call the new test functions from
+	the <Toolbox>/File/Debug menu.
+
+2002-05-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: copied some code from
 	gtk+/gtk/gtkmenubar.c:window_key_press_handler() which pops up the
 	<Image> menu on F10 (or whatever is configured in GtkSettings).

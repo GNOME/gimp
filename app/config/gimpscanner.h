@@ -29,6 +29,8 @@ void       gimp_scanner_destroy                  (GScanner    *scanner);
 
 gboolean   gimp_scanner_parse_token              (GScanner    *scanner,
                                                   GTokenType   token);
+gboolean   gimp_scanner_parse_identifier         (GScanner    *scanner,
+                                                  const gchar *identifier);
 gboolean   gimp_scanner_parse_string             (GScanner    *scanner,
                                                   gchar      **dest);
 gboolean   gimp_scanner_parse_string_no_validate (GScanner    *scanner,

@@ -22,6 +22,9 @@
 #include "config.h"
 
 #include <string.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <glib-object.h>
 
@@ -29,6 +32,8 @@
 
 #include "gimpcontainer.h"
 #include "gimpmarshal.h"
+
+#include "config/gimpconfig.h"
 
 
 /* #define DEBUG_CONTAINER */
@@ -70,21 +75,30 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_container_class_init          (GimpContainerClass *klass);
-static void   gimp_container_init                (GimpContainer      *container);
+static void   gimp_container_class_init          (GimpContainerClass  *klass);
+static void   gimp_container_init                (GimpContainer       *container);
+static void   gimp_container_config_iface_init   (GimpConfigInterface *config_iface);
 
-static void   gimp_container_dispose             (GObject            *object);
+static void       gimp_container_dispose         (GObject            *object);
 
-static void   gimp_container_set_property        (GObject            *object,
+static void       gimp_container_set_property    (GObject            *object,
                                                   guint               property_id,
                                                   const GValue       *value,
                                                   GParamSpec         *pspec);
-static void   gimp_container_get_property        (GObject            *object,
+static void       gimp_container_get_property    (GObject            *object,
                                                   guint               property_id,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static gsize  gimp_container_get_memsize         (GimpObject         *object);
+static gsize      gimp_container_get_memsize     (GimpObject         *object);
+
+static gboolean   gimp_container_serialize       (GObject            *object,
+                                                  gint                fd,
+                                                  gint                indent_level,
+                                                  gpointer            data);
+static gboolean   gimp_container_deserialize     (GObject            *object,
+                                                  GScanner           *scanner,
+                                                  gpointer            data);
 
 static void   gimp_container_disconnect_callback (GimpObject         *object,
 						  gpointer            data);
@@ -135,10 +149,20 @@ gimp_container_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_container_init,
       };
+      static const GInterfaceInfo config_iface_info = 
+      {
+        (GInterfaceInitFunc) gimp_container_config_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       container_type = g_type_register_static (GIMP_TYPE_OBJECT,
 					       "GimpContainer", 
                                                &container_info, 0);
+
+      g_type_add_interface_static (container_type,
+                                   GIMP_TYPE_CONFIG_INTERFACE,
+                                   &config_iface_info);
     }
 
   return container_type;
@@ -249,6 +273,13 @@ gimp_container_init (GimpContainer *container)
 }
 
 static void
+gimp_container_config_iface_init (GimpConfigInterface *config_iface)
+{
+  config_iface->serialize   = gimp_container_serialize;
+  config_iface->deserialize = gimp_container_deserialize;
+}
+
+static void
 gimp_container_dispose (GObject *object)
 {
   GimpContainer *container;
@@ -341,6 +372,107 @@ gimp_container_get_memsize (GimpObject *object)
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+typedef struct
+{
+  gint     fd;
+  gint     indent_level;
+  gpointer data;
+  gboolean success;
+} SerializeData;
+
+static void
+gimp_container_serialize_foreach (GObject       *object,
+                                  SerializeData *serialize_data)
+{
+  GimpConfigInterface *config_iface;
+  GString             *str;
+  const gchar         *name;
+
+  config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+
+  if (! config_iface)
+    serialize_data->success = FALSE;
+
+  if (! serialize_data->success)
+    return;
+
+  str = g_string_new (NULL);
+
+  gimp_config_string_indent (str, serialize_data->indent_level);
+
+  g_string_append_printf (str, "(%s ",
+                          g_type_name (G_TYPE_FROM_INSTANCE (object)));
+
+  name = gimp_object_get_name (GIMP_OBJECT (object));
+
+  if (name)
+    {
+      gchar *escaped;
+
+      escaped = g_strescape (name, NULL);
+      g_string_append_printf (str, "\"%s\"\n", escaped);
+      g_free (escaped);
+    }
+  else
+    {
+      g_string_append_printf (str, "NULL\n");
+    }
+
+  if (write (serialize_data->fd, str->str, str->len) == -1)
+    {
+      serialize_data->success = FALSE;
+      return;
+    }
+
+  serialize_data->success = config_iface->serialize (object,
+                                                     serialize_data->fd,
+                                                     serialize_data->indent_level + 1,
+                                                     serialize_data->data);
+
+  if (! serialize_data->success)
+    return;
+
+  g_string_assign (str, ")\n");
+
+  if (write (serialize_data->fd, str->str, str->len) == -1)
+    serialize_data->success = FALSE;
+}
+
+static gboolean
+gimp_container_serialize (GObject  *object,
+                          gint      fd,
+                          gint      indent_level,
+                          gpointer  data)
+{
+  GimpContainer *container;
+  SerializeData  serialize_data;
+
+  container = GIMP_CONTAINER (object);
+
+  serialize_data.fd           = fd;
+  serialize_data.indent_level = indent_level;
+  serialize_data.data         = data;
+  serialize_data.success      = TRUE;
+
+  gimp_container_foreach (container,
+                          (GFunc) gimp_container_serialize_foreach,
+                          &serialize_data);
+
+  return serialize_data.success;
+}
+
+static gboolean
+gimp_container_deserialize (GObject  *object,
+                            GScanner *scanner,
+                            gpointer  data)
+{
+  GimpContainer *container;
+
+  container = GIMP_CONTAINER (object);
+
+  return TRUE;
 }
 
 static void

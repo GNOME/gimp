@@ -88,6 +88,21 @@ gimp_scanner_parse_token (GScanner   *scanner,
 }
 
 gboolean
+gimp_scanner_parse_identifier (GScanner    *scanner,
+                               const gchar *identifier)
+{
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
+    return FALSE;
+
+  g_scanner_get_next_token (scanner);
+
+  if (strcmp (scanner->value.v_identifier, identifier))
+    return FALSE;
+
+  return TRUE;
+}
+
+gboolean
 gimp_scanner_parse_string (GScanner  *scanner,
                            gchar    **dest)
 {

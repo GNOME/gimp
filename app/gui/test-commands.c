@@ -43,6 +43,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpimagedock.h"
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdrawablelistview.h"
@@ -338,4 +339,26 @@ test_deserialize_context_cmd_callback (GtkWidget *widget,
     }
 
   g_free (filename);
+}
+
+void
+test_serialize_devicerc_cmd_callback (GtkWidget *widget,
+                                      gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
+  gimp_devices_save_test (gimp);
+}
+
+void
+test_deserialize_devicerc_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
+  gimp_devices_restore_test (gimp);
 }
