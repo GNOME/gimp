@@ -1134,7 +1134,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label(_("Show tool tips"));
-      gtk_toggle_button_set_activd (GTK_TOGGLE_BUTTON (button),
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				    show_tool_tips);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
