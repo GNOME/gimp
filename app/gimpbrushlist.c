@@ -44,6 +44,8 @@
 #include "gimpbrushlistP.h"
 #include "general.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  global variables  */
 GimpBrushList    *brush_list     = NULL;
 
@@ -145,6 +147,8 @@ brushes_init (int no_data)
 
       datafiles_read_directories (brush_path,
 				  (datafile_loader_t) brushes_brush_load, 0);
+      datafiles_read_directories (brush_vbr_path,
+				  (datafile_loader_t) brushes_brush_load, 0);
 
       brush_select_thaw_all ();
     }
@@ -162,7 +166,7 @@ brushes_get_standard_brush (void)
 
       gimp_brush_set_name (standard_brush, "Standard");
 
-      /*  set ref_cout to 2 --> never swap the standard brush  */
+      /*  set ref_count to 2 --> never swap the standard brush  */
       gtk_object_ref (GTK_OBJECT (standard_brush));
       gtk_object_ref (GTK_OBJECT (standard_brush));
     }
@@ -180,7 +184,7 @@ brushes_brush_load (gchar *filename)
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, brush);
       else
-	g_message ("Warning: failed to load brush \"%s\"", filename);
+	g_message (_("Warning: Failed to load brush\n\"%s\""), filename);
     }
   else if (strcmp (&filename[strlen(filename) - 4], ".vbr") == 0)
     {
@@ -189,7 +193,7 @@ brushes_brush_load (gchar *filename)
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
-	g_message ("Warning: failed to load brush \"%s\"", filename);
+	g_message (_("Warning: Failed to load brush\n\"%s\""), filename);
     }
   else if (strcmp (&filename[strlen (filename) - 4], ".gpb") == 0)
     {
@@ -198,7 +202,7 @@ brushes_brush_load (gchar *filename)
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
-	g_message("Warning: failed to load pixmap brush \"%s\"", filename);
+	g_message (_("Warning: Failed to load pixmap brush\n\"%s\""), filename);
     }
   else if (strcmp (&filename[strlen (filename) - 4], ".gih") == 0)
     {
@@ -207,7 +211,7 @@ brushes_brush_load (gchar *filename)
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
-	g_message("Warning: failed to load pixmap pipe \"%s\"", filename);
+	g_message (_("Warning: Failed to load pixmap pipe\n\"%s\""), filename);
     }
 }
 
@@ -265,7 +269,7 @@ brushes_free (void)
 			  filename = g_strconcat (path, G_DIR_SEPARATOR_S,
 						  b->name, ".vbr", NULL);
 			  while ((tmp_fp = fopen (filename, "r")))
-			    { /* make sure we don't overite an existing brush */
+			    { /* make sure we don't overwrite an existing brush */
 			      fclose (tmp_fp);
 			      g_free (filename);
 			      filename = g_strdup_printf ("%s%s%s_%d.vbr", path,
