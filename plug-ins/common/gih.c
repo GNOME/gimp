@@ -68,8 +68,8 @@
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpparasiteio.h>
 
-#include "app/brush_header.h"
-#include "app/pattern_header.h"
+#include "app/gimpbrush-header.h"
+#include "app/gimppattern-header.h"
 
 #include "libgimp/stdplugins-intl.h"
 

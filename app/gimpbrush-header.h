@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BRUSH_HEADER_H__
-#define __BRUSH_HEADER_H__
+#ifndef __GIMP_BRUSH_HEADER_H__
+#define __GIMP_BRUSH_HEADER_H__
 
 #define GBRUSH_FILE_VERSION    2
 #define GBRUSH_MAGIC    (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
@@ -41,4 +41,4 @@ struct _BrushHeader
  *  comes the brush data--width * height * bytes bytes of it...
  */
 
-#endif  /*  ! __BRUSH_HEADER_H__  */
+#endif  /*  __GIMP_BRUSH_HEADER_H__  */

@@ -2,11 +2,9 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/desaturate.c
 app/devices.c
 app/disp_callbacks.c
 app/docindex.c
-app/equalize.c
 app/errorconsole.c
 app/file-open.c
 app/file-save.c
@@ -28,7 +26,6 @@ app/gimpunit.c
 app/global_edit.c
 app/image_new.c
 app/interface.c
-app/invert.c
 app/lc_dialog.c
 app/main.c
 app/module_db.c

@@ -23,7 +23,7 @@
 #include "apptypes.h"
 
 #include "drawable.h"
-#include "equalize.h"
+#include "gimpdrawable-equalize.h"
 #include "gimpimage.h"
 #include "gimplut.h"
 #include "lut_funcs.h"
@@ -31,30 +31,10 @@
 #include "pixel_processor.h"
 #include "pixel_region.h"
 
-#include "libgimp/gimpintl.h"
-
 
 void
-image_equalize (GimpImage *gimage)
-{
-  GimpDrawable *drawable;
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Equalize does not operate on indexed drawables."));
-      return;
-    }
-
-  equalize (gimage, drawable, TRUE);
-}
-
-
-void
-equalize (GimpImage    *gimage,
-    	  GimpDrawable *drawable,
-	  gboolean      mask_only)
+gimp_drawable_equalize (GimpDrawable *drawable,
+			gboolean      mask_only)
 {
   PixelRegion    srcPR, destPR;
   guchar        *mask;
@@ -63,6 +43,9 @@ equalize (GimpImage    *gimage,
   gint           x1, y1, x2, y2;
   GimpHistogram *hist;
   GimpLut       *lut;
+
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   mask = NULL;
 

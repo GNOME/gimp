@@ -36,6 +36,7 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpdrawable-invert.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -45,7 +46,6 @@
 #include "temp_buf.h"
 #include "tile_manager.h"
 #include "tile.h"
-#include "invert.h"
 
 #include "libgimp/gimpparasite.h"
 
@@ -615,7 +615,8 @@ gimp_layer_create_mask (GimpLayer   *layer,
 			  GIMP_DRAWABLE (layer)->height, 
 			  FALSE);
        copy_region (&layerPR, &maskPR);
-       invert(GIMP_DRAWABLE(mask));
+
+       gimp_drawable_invert (GIMP_DRAWABLE (mask));
        break;
     }
 

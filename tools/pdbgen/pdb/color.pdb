@@ -238,11 +238,11 @@ HELP
     @inargs = ( &drawable_arg );
 
     %invoke = (
-	headers => [ qw("desaturate.h") ],
+	headers => [ qw("gimpdrawable-desaturate.h") ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_rgb (drawable))
-    desaturate (drawable);
+    gimp_drawable_desaturate (drawable);
   else
     success = FALSE;
 }
@@ -272,11 +272,11 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("equalize.h") ],
+	headers => [ qw("gimpdrawable-equalize.h") ],
 	code => <<'CODE'
 {
   if (! gimp_drawable_is_indexed (drawable))
-    equalize (gimp_drawable_gimage (drawable), drawable, mask_only);
+    gimp_drawable_equalize (drawable, mask_only);
   else
     success = FALSE;
 }
@@ -298,11 +298,11 @@ HELP
     @inargs = ( &drawable_arg );
 
     %invoke = (
-	headers => [ qw("invert.h") ],
+	headers => [ qw("gimpdrawable-invert.h") ],
 	code => <<'CODE'
 {
   if (! gimp_drawable_is_indexed (drawable))
-    invert (drawable);
+    gimp_drawable_invert (drawable);
   else
     success = FALSE;
 }

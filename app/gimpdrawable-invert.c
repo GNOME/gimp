@@ -18,55 +18,20 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "apptypes.h"
 
 #include "drawable.h"
-#include "gimpimage.h"
+#include "gimpdrawable-invert.h"
 #include "gimplut.h"
-#include "invert.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
 
-#include "pdb/procedural_db.h"
-
-#include "libgimp/gimpintl.h"
-
 
 void
-image_invert (GimpImage *gimage)
-{
-  GimpDrawable *drawable;
-  Argument     *return_vals;
-  gint          nreturn_vals;
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Invert does not operate on indexed drawables."));
-      return;
-    }
-
-  return_vals =
-    procedural_db_run_proc ("gimp_invert",
-			    &nreturn_vals,
-			    PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
-			    PDB_END);
-
-  if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-    g_message (_("Invert operation failed."));
-
-  procedural_db_destroy_args (return_vals, nreturn_vals);
-}
-
-
-/*  Inverter  */
-
-void
-invert (GimpDrawable *drawable)
+gimp_drawable_invert (GimpDrawable *drawable)
 {
   PixelRegion  srcPR, destPR;
   gint         x1, y1, x2, y2;

@@ -65,6 +65,10 @@ gimp_SOURCES = \
 ##
 	disp_callbacks.c	\
 	disp_callbacks.h	\
+	gdisplay.c		\
+	gdisplay.h		\
+	gdisplay_ops.c		\
+	gdisplay_ops.h		\
 	gximage.c		\
 	gximage.h		\
 	image_render.c		\
@@ -81,10 +85,6 @@ gimp_SOURCES = \
 ##
 ## stuff that needs to be split up in core / ui files
 ##
-	gdisplay.c		\
-	gdisplay.h		\
-	gdisplay_ops.c		\
-	gdisplay_ops.h		\
 	global_edit.c		\
 	global_edit.h		\
 	image_map.c		\
@@ -94,7 +94,78 @@ gimp_SOURCES = \
 	user_install.c		\
 	user_install.h		\
 ##
-## core stuff
+## base stuff that does not depend on anything else in app/
+##
+	gimpcontainer.c		\
+	gimpcontainer.h		\
+	gimpdata.c		\
+	gimpdata.h		\
+	gimpdatafactory.c	\
+	gimpdatafactory.h	\
+	gimpdatalist.c		\
+	gimpdatalist.h		\
+	gimplist.c		\
+	gimplist.h		\
+	gimpobject.c		\
+	gimpobject.h		\
+	gimpviewable.c		\
+	gimpviewable.h		\
+##
+## the core object system
+##
+	gimpbrush.c			\
+	gimpbrush.h			\
+	gimpbrush-header.h		\
+	gimpbrushgenerated.c		\
+	gimpbrushgenerated.h		\
+	gimpbrushpipe.c			\
+	gimpbrushpipe.h			\
+	gimpchannel.c			\
+	gimpchannel.h			\
+	gimpcontext.c			\
+	gimpcontext.h			\
+	gimpdrawable.c			\
+	gimpdrawable.h			\
+	gimpdrawable-desaturate.c	\
+	gimpdrawable-desaturate.h	\
+	gimpdrawable-equalize.c		\
+	gimpdrawable-equalize.h		\
+	gimpdrawable-invert.c		\
+	gimpdrawable-invert.h		\
+	gimpdrawable-offset.c		\
+	gimpdrawable-offset.h		\
+	gimpdrawable-preview.c		\
+	gimpdrawable-preview.h		\
+	gimpgradient.c			\
+	gimpgradient.h			\
+	gimpimage.c			\
+	gimpimage.h			\
+	gimpimage-convert.c		\
+	gimpimage-convert.h		\
+	gimpimage-duplicate.c		\
+	gimpimage-duplicate.h		\
+	gimpimage-undo.c		\
+	gimpimage-undo.h		\
+	gimplayer.c			\
+	gimplayer.h			\
+	gimplayermask.c			\
+	gimplayermask.h			\
+	gimpmarshal.c			\
+	gimpmarshal.h			\
+	gimppattern.c			\
+	gimppattern.h			\
+	gimppattern-header.h		\
+	gimppalette.c			\
+	gimppalette.h			\
+	gimppalette-import.c		\
+	gimppalette-import.h		\
+	gimpundo.c			\
+	gimpundo.h			\
+	gimpundostack.c			\
+	gimpundostack.h			\
+##
+## stuff that needs to be sorted into yet undecided subsystems, split up,
+## removed or otherwise tortured
 ##
 	app_procs.c		\
 	app_procs.h		\
@@ -108,7 +179,6 @@ gimp_SOURCES = \
 	batch.h			\
 	boundary.c		\
 	boundary.h		\
-	brush_header.h		\
 	brush_scale.c		\
 	brush_scale.h		\
 	color_transfer.c	\
@@ -117,14 +187,10 @@ gimp_SOURCES = \
 	context_manager.h	\
 	datafiles.c		\
 	datafiles.h		\
-	desaturate.c		\
-	desaturate.h		\
 	drawable.c		\
 	drawable.h		\
 	errors.c		\
 	errors.h		\
-	equalize.c		\
-	equalize.h		\
 	file-open.c		\
 	file-open.h		\
 	file-save.c		\
@@ -140,79 +206,21 @@ gimp_SOURCES = \
 	gimage.h		\
 	gimage_mask.c		\
 	gimage_mask.h		\
-	gimpbrush.c		\
-	gimpbrush.h		\
-	gimpbrushgenerated.c	\
-	gimpbrushgenerated.h	\
-	gimpbrushpipe.c		\
-	gimpbrushpipe.h		\
-	gimpchannel.c		\
-	gimpchannel.h		\
-	gimpcontainer.c		\
-	gimpcontainer.h		\
-	gimpcontext.c		\
-	gimpcontext.h		\
-	gimpdata.c		\
-	gimpdata.h		\
-	gimpdatafactory.c	\
-	gimpdatafactory.h	\
-	gimpdatalist.c		\
-	gimpdatalist.h		\
-	gimpdrawable.c		\
-	gimpdrawable.h		\
-	gimpdrawable-offset.c	\
-	gimpdrawable-offset.h	\
-	gimpdrawable-preview.c	\
-	gimpdrawable-preview.h	\
-	gimpgradient.c		\
-	gimpgradient.h		\
 	gimphelp.c		\
 	gimphelp.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
-	gimpimage.c		\
-	gimpimage.h		\
-	gimpimage-convert.c	\
-	gimpimage-convert.h	\
-	gimpimage-duplicate.c	\
-	gimpimage-duplicate.h	\
-	gimpimage-undo.c	\
-	gimpimage-undo.h	\
-	gimplayer.c		\
-	gimplayer.h		\
-	gimplayermask.c		\
-	gimplayermask.h		\
-	gimplist.c		\
-	gimplist.h		\
 	gimplut.c		\
 	gimplut.h		\
-	gimpmarshal.c		\
-	gimpmarshal.h		\
-	gimpobject.c		\
-	gimpobject.h		\
-	gimppattern.c		\
-	gimppattern.h		\
-	gimppalette.c		\
-	gimppalette.h		\
-	gimppalette-import.c	\
-	gimppalette-import.h	\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	gimprc.c		\
 	gimprc.h		\
-	gimpundo.c		\
-	gimpundo.h		\
-	gimpundostack.c		\
-	gimpundostack.h		\
 	gimpunit.c		\
-	gimpviewable.c		\
-	gimpviewable.h		\
 	image_new.c		\
 	image_new.h		\
-	invert.c		\
-	invert.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h		\
 	lut_funcs.c		\
@@ -228,7 +236,6 @@ gimp_SOURCES = \
 	path_curves.c		\
 	path_bezier.h		\
 	path_bezier.c		\
-	pattern_header.h	\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\

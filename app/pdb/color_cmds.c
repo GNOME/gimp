@@ -26,14 +26,14 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "desaturate.h"
 #include "drawable.h"
-#include "equalize.h"
+#include "gimpdrawable-desaturate.h"
+#include "gimpdrawable-equalize.h"
+#include "gimpdrawable-invert.h"
 #include "gimpdrawable.h"
 #include "gimphistogram.h"
 #include "gimpimage.h"
 #include "gimplut.h"
-#include "invert.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
@@ -410,7 +410,7 @@ desaturate_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_is_rgb (drawable))
-	desaturate (drawable);
+	gimp_drawable_desaturate (drawable);
       else
 	success = FALSE;
     }
@@ -459,7 +459,7 @@ equalize_invoker (Argument *args)
   if (success)
     {
       if (! gimp_drawable_is_indexed (drawable))
-	equalize (gimp_drawable_gimage (drawable), drawable, mask_only);
+	gimp_drawable_equalize (drawable, mask_only);
       else
 	success = FALSE;
     }
@@ -510,7 +510,7 @@ invert_invoker (Argument *args)
   if (success)
     {
       if (! gimp_drawable_is_indexed (drawable))
-	invert (drawable);
+	gimp_drawable_invert (drawable);
       else
 	success = FALSE;
     }

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PATTERN_HEADER_H__
-#define __PATTERN_HEADER_H__
+#ifndef __GIMP_PATTERN_HEADER_H__
+#define __GIMP_PATTERN_HEADER_H__
 
 #define GPATTERN_FILE_VERSION    1
 #define GPATTERN_MAGIC    (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
@@ -40,4 +40,4 @@ struct _PatternHeader
  *  comes the pattern data--width * height * bytes bytes of it...
  */
 
-#endif  /*  __PATTERN_HEADER_H__  */
+#endif  /*  __GIMP_PATTERN_HEADER_H__  */

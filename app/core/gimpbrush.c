@@ -43,9 +43,9 @@
 
 #include "apptypes.h"
 
-#include "brush_header.h"
 #include "brush_scale.h"
 #include "gimpbrush.h"
+#include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"
 #include "gimprc.h"
 #include "temp_buf.h"

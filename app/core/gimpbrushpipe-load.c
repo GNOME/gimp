@@ -46,10 +46,10 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "brush_header.h"
-#include "pattern_header.h"
 #include "gimpbrush.h"
+#include "gimpbrush-header.h"
 #include "gimpbrushpipe.h"
+#include "gimppattern-header.h"
 #include "gimprc.h"
 
 /*  this needs to go away  */

@@ -16,12 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DESATURATE_H__
-#define __DESATURATE_H__
+#ifndef __GIMP_DRAWABLE_DESATURATE_H__
+#define __GIMP_DRAWABLE_DESATURATE_H__
 
 
 void   image_desaturate (GimpImage    *gimage);
-void   desaturate       (GimpDrawable *drawable);
+
+void   gimp_drawable_desaturate (GimpDrawable *drawable);
 
 
-#endif  /*  __DESATURATE_H__  */
+#endif  /*  __GIMP_DRAWABLE_DESATURATE_H__  */

@@ -16,14 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __EQUALIZE_H__
-#define __EQUALIZE_H__
+#ifndef __GIMP_DRAWABLE_EQUALIZE_H__
+#define __GIMP_DRAWABLE_EQUALIZE_H__
 
 
-void   image_equalize (GimpImage    *gimage);
-void   equalize       (GimpImage    *gimage,
-		       GimpDrawable *drawable,
-		       gboolean      mask_only);
+void   gimp_drawable_equalize (GimpDrawable *drawable,
+			       gboolean      mask_only);
 
 
-#endif  /*  __INVERT_H__  */
+#endif  /*  __GIMP_DRAWABLE_EQUALIZE_H__  */

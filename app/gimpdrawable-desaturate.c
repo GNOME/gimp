@@ -24,35 +24,14 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "appenv.h"
 #include "drawable.h"
-#include "desaturate.h"
+#include "gimpdrawable-desaturate.h"
 #include "gimpimage.h"
 #include "pixel_region.h"
 
-#include "libgimp/gimpintl.h"
-
 
 void
-image_desaturate (GimpImage *gimage)
-{
-  GimpDrawable *drawable;
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (! gimp_drawable_is_rgb (drawable))
-    {
-      g_message (_("Desaturate operates only on RGB color drawables."));
-      return;
-    }
-  desaturate (drawable);
-}
-
-
-/*  Desaturater  */
-
-void
-desaturate (GimpDrawable *drawable)
+gimp_drawable_desaturate (GimpDrawable *drawable)
 {
   PixelRegion  srcPR, destPR;
   guchar      *src, *s;
@@ -63,8 +42,8 @@ desaturate (GimpDrawable *drawable)
   gpointer     pr;
   gint         x1, y1, x2, y2;
 
-  if (!drawable) 
-    return;
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   has_alpha = gimp_drawable_has_alpha (drawable);
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -113,5 +92,6 @@ desaturate (GimpDrawable *drawable)
     }
 
   gimp_drawable_merge_shadow (drawable, TRUE);
+
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

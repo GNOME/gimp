@@ -1,3 +1,33 @@
+2001-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/brush_header.h
+	* app/pattern_header.h
+	* app/desaturate.[ch]
+	* app/equalize.[ch]
+	* app/invert.[ch]: removed.
+
+	* app/gimpbrush-header.h
+	* app/gimppattern-header.h
+	* app/gimpdrawable-desaturate.[ch]
+	* app/gimpdrawable-equalize.[ch]
+	* app/gimpdrawable-invert.[ch]: new files.
+
+	* app/gui/commands.c: put some stuff from desaturate, equalize and
+	invert here. While it's ok to check the drawable type in the
+	callback, this is the wrong place for PDB wrappers.
+
+	* app/gimpbrush.c
+	* app/gimpbrushpipe.c
+	* app/gimplayer.c
+	* app/gimppattern.c
+	* app/pdb/color_cmds.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/pat.c
+	* po/POTFILES.in
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
 2001-04-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdrawable-offset.[ch]: renamed ChannelOffsetType to

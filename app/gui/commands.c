@@ -43,8 +43,6 @@
 
 #include "app_procs.h"
 #include "context_manager.h"
-#include "desaturate.h"
-#include "equalize.h"
 #include "file-open.h"
 #include "file-save.h"
 #include "floating_sel.h"
@@ -53,6 +51,9 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-desaturate.h"
+#include "gimpdrawable-equalize.h"
+#include "gimpdrawable-invert.h"
 #include "gimphelp.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
@@ -62,7 +63,6 @@
 #include "global_edit.h"
 #include "image_render.h"
 #include "nav_window.h"
-#include "invert.h"
 #include "lc_dialog.h"
 #include "layers_dialogP.h"
 #include "plug_in.h"
@@ -778,10 +778,20 @@ void
 image_desaturate_cmd_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
+  GimpDrawable *drawable;
   return_if_no_display (gdisp);
 
-  image_desaturate (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (! gimp_drawable_is_rgb (drawable))
+    {
+      g_message (_("Desaturate operates only on RGB color drawables."));
+      return;
+    }
+
+  gimp_drawable_desaturate (drawable);
+
   gdisplays_flush ();
 }
 
@@ -789,10 +799,31 @@ void
 image_invert_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
+  GimpDrawable *drawable;
+  Argument     *return_vals;
+  gint          nreturn_vals;
   return_if_no_display (gdisp);
 
-  image_invert (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (gimp_drawable_is_indexed (drawable))
+    {
+      g_message (_("Invert does not operate on indexed drawables."));
+      return;
+    }
+
+  return_vals =
+    procedural_db_run_proc ("gimp_invert",
+			    &nreturn_vals,
+			    PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+			    PDB_END);
+
+  if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+    g_message (_("Invert operation failed."));
+
+  procedural_db_destroy_args (return_vals, nreturn_vals);
+
   gdisplays_flush ();
 }
 
@@ -800,10 +831,20 @@ void
 image_equalize_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
+  GimpDrawable *drawable;
   return_if_no_display (gdisp);
 
-  image_equalize (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (gimp_drawable_is_indexed (drawable))
+    {
+      g_message (_("Equalize does not operate on indexed drawables."));
+      return;
+    }
+
+  gimp_drawable_equalize (drawable, TRUE);
+
   gdisplays_flush ();
 }
 

@@ -16,12 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __INVERT_H__
-#define __INVERT_H__
+#ifndef __GIMP_DRAWABLE_INVERT_H__
+#define __GIMP_DRAWABLE_INVERT_H__
 
 
-void  image_invert (GimpImage    *gimage);
-void  invert       (GimpDrawable *drawable);
+void   gimp_drawable_invert (GimpDrawable *drawable);
 
 
-#endif  /*  __INVERT_H__  */
+#endif  /*  __GIMP_DRAWABLE_INVERT_H__  */
