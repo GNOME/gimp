@@ -164,6 +164,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimp_matrix_identity(gimage->transform);
   gimage->xresolution = 72.0;  /* maybe should be rc-supplied default? */
   gimage->yresolution = 72.0;
+  gimage->unit = UNIT_PIXEL;
   gimage->save_proc= NULL;
 }
 
@@ -326,6 +327,21 @@ gimp_image_get_resolution (GimpImage *gimage,
   *xresolution = gimage->xresolution;
   *yresolution = gimage->yresolution;
 }
+
+
+void
+gimp_image_set_unit (GimpImage *gimage,
+		     GUnit unit)
+{
+  gimage->unit = unit;
+}
+
+GUnit
+gimp_image_get_unit (GimpImage *gimage)
+{
+  return gimage->unit;
+}
+
 
 void
 gimp_image_set_save_proc (GimpImage *gimage, PlugInProcDef *proc)

@@ -358,6 +358,7 @@ make_initialization_status_window(void)
       if (no_splash == FALSE)
 	{
 	  GtkWidget *vbox;
+	  GtkWidget *logo_hbox;
 	  GtkStyle *style;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
@@ -376,6 +377,9 @@ make_initialization_status_window(void)
 
 	  vbox = gtk_vbox_new(FALSE, 4);
 	  gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
+	  
+	  logo_hbox = gtk_hbox_new (FALSE, 0);
+	  gtk_box_pack_start (GTK_BOX(vbox), logo_hbox, FALSE, TRUE, 0);
 
 	  logo_area = gtk_drawing_area_new ();
 
@@ -384,7 +388,7 @@ make_initialization_status_window(void)
 	  logo_area_width = ( logo_width > LOGO_WIDTH_MIN ) ? logo_width : LOGO_WIDTH_MIN;
 	  logo_area_height = ( logo_height > LOGO_HEIGHT_MIN ) ? logo_height : LOGO_HEIGHT_MIN;
 	  gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_area_width, logo_area_height);
-	  gtk_box_pack_start_defaults(GTK_BOX(vbox), logo_area);
+	  gtk_box_pack_start (GTK_BOX(logo_hbox), logo_area, TRUE, FALSE, 0);
 
 	  label1 = gtk_label_new("");
 	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
@@ -395,6 +399,7 @@ make_initialization_status_window(void)
 	  gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
 
 	  gtk_widget_show(vbox);
+	  gtk_widget_show(logo_hbox);
 	  gtk_widget_show(logo_area);
 	  gtk_widget_show(label1);
 	  gtk_widget_show(label2);

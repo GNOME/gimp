@@ -52,6 +52,8 @@ gimage_foreach (GFunc func, gpointer user_data);
 #define gimage_set_filename gimp_image_set_filename
 #define gimage_set_resolution gimp_image_set_resolution
 #define gimage_get_resolution gimp_image_get_resolution
+#define gimage_set_unit gimp_image_set_unit
+#define gimage_get_unit gimp_image_get_unit
 #define gimage_set_save_proc gimp_image_set_save_proc
 #define gimage_get_save_proc gimp_image_get_save_proc
 #define gimage_resize gimp_image_resize

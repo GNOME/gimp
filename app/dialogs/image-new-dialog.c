@@ -485,6 +485,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->dlg), _("New Image"));
   gtk_window_set_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
+	gtk_window_set_policy(GTK_WINDOW (vals->dlg), FALSE, FALSE, FALSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (vals->dlg), "delete_event",
@@ -619,7 +620,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   if (vals->unit != 1.0)
     gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 1);
   gtk_table_attach (GTK_TABLE (table), optionmenu , 2, 3, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show(optionmenu);
 
   /* resolution frame */
@@ -697,7 +698,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   button = gtk_radio_button_new_with_label (NULL, _("RGB"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) file_new_toggle_callback,
@@ -708,7 +709,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   button = gtk_radio_button_new_with_label (group, _("Grayscale"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) file_new_toggle_callback,

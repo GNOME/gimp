@@ -24,6 +24,7 @@ struct _GimpImage
   int width, height;		      /*  width and height attributes  */
   float xresolution;                  /*  image x-res, in dpi          */
   float yresolution;                  /*  image y-res, in dpi          */
+  GUnit unit;                         /*  image unit                   */
   int base_type;                      /*  base gimp_image type         */
 
   unsigned char * cmap;               /*  colormap--for indexed        */

@@ -29,14 +29,28 @@ build_action_area (GtkDialog *      dlg,
 {
   GtkWidget *button;
   int i;
+	GList* children;
+	GtkWidget* hbbox;
 
   gtk_container_border_width (GTK_CONTAINER (dlg->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (dlg->action_area), FALSE);
+	children = gtk_container_children (GTK_CONTAINER (dlg->action_area));
+	if (children == NULL) {
+		/* add a right packed hbbox */
+		hbbox = gtk_hbutton_box_new();
+		gtk_button_box_set_spacing(GTK_BUTTON_BOX (hbbox), 4);
+		gtk_box_pack_end(GTK_BOX (dlg->action_area), hbbox, FALSE, FALSE, 0);
+		gtk_widget_show(hbbox);
+	} else {
+		/* get the hbbox */
+		hbbox = (GtkWidget*)(g_list_first(children)->data);
+	}
 
   for (i = 0; i < num_actions; i++)
     {
       button = gtk_button_new_with_label (gettext(actions[i].label));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (dlg->action_area), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
       if (actions[i].callback)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",

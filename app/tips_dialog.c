@@ -30,10 +30,14 @@ tips_dialog_create ()
   GtkWidget *vbox;
   GtkWidget *hbox1;
   GtkWidget *hbox2;
+  GtkWidget *bbox;
+  GtkWidget *vbox_bbox2;
+  GtkWidget *bbox2;
   GtkWidget *preview;
   GtkWidget *button_close;
   GtkWidget *button_next;
   GtkWidget *button_prev;
+  GtkWidget *vbox_check;
   GtkWidget *button_check;
   guchar *   temp;
   guchar *   src;
@@ -81,6 +85,18 @@ tips_dialog_create ()
       gtk_container_set_border_width (GTK_CONTAINER (hbox2), 10);
       gtk_box_pack_end (GTK_BOX (vbox), hbox2, FALSE, TRUE, 0);
       gtk_widget_show (hbox2);
+      
+      bbox = gtk_hbutton_box_new ();
+      gtk_box_pack_end (GTK_BOX (hbox2), bbox, FALSE, FALSE, 0);
+      gtk_widget_show (bbox);
+
+      vbox_bbox2 = gtk_vbox_new (FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (hbox2), vbox_bbox2, FALSE, FALSE, 15);
+      gtk_widget_show (vbox_bbox2);
+
+      bbox2 = gtk_hbox_new (TRUE, 5); 
+      gtk_box_pack_end (GTK_BOX (vbox_bbox2), bbox2, TRUE, FALSE, 0);
+      gtk_widget_show(bbox2);
 
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (preview), wilber_width, wilber_height);
@@ -106,25 +122,33 @@ tips_dialog_create ()
       gtk_box_pack_start (GTK_BOX (hbox1), tips_label, TRUE, TRUE, 3);
       gtk_widget_show (tips_label);
 
-      button_close = gtk_button_new_with_label (_("Close"));
-      gtk_signal_connect (GTK_OBJECT (button_close), "clicked",
-			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
-      gtk_box_pack_end (GTK_BOX (hbox2), button_close, FALSE, TRUE, 0);
-      gtk_widget_show (button_close);
-
-      button_next = gtk_button_new_with_label (_("Next Tip"));
-      gtk_signal_connect (GTK_OBJECT (button_next), "clicked",
-			  GTK_SIGNAL_FUNC (tips_show_next),
-			  (gpointer) "next");
-      gtk_box_pack_end (GTK_BOX (hbox2), button_next, FALSE, TRUE, 0);
-      gtk_widget_show (button_next);
-
-      button_prev = gtk_button_new_with_label (_("Prev. Tip"));
+      button_prev = gtk_button_new_with_label (_("Previous Tip"));
+      GTK_WIDGET_UNSET_FLAGS (button_prev, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button_prev), "clicked",
 			  GTK_SIGNAL_FUNC (tips_show_next),
 			  (gpointer) "prev");
-      gtk_box_pack_end (GTK_BOX (hbox2), button_prev, FALSE, TRUE, 0);
+      gtk_container_add (GTK_CONTAINER (bbox2), button_prev);
       gtk_widget_show (button_prev);
+
+      button_next = gtk_button_new_with_label (_("Next Tip"));
+      GTK_WIDGET_UNSET_FLAGS (button_next, GTK_RECEIVES_DEFAULT);
+      gtk_signal_connect (GTK_OBJECT (button_next), "clicked",
+			  GTK_SIGNAL_FUNC (tips_show_next),
+			  (gpointer) "next");
+      gtk_container_add (GTK_CONTAINER (bbox2), button_next);
+      gtk_widget_show (button_next);
+
+      button_close = gtk_button_new_with_label (_("Close"));
+      GTK_WIDGET_SET_FLAGS (button_close, GTK_CAN_DEFAULT);
+      gtk_window_set_default (GTK_WINDOW (tips_dialog), button_close);
+      gtk_signal_connect (GTK_OBJECT (button_close), "clicked",
+			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
+      gtk_container_add (GTK_CONTAINER (bbox), button_close);
+      gtk_widget_show (button_close);
+
+      vbox_check = gtk_vbox_new (FALSE, 0); 
+      gtk_box_pack_start (GTK_BOX (hbox2), vbox_check, FALSE, TRUE, 0);
+      gtk_widget_show (vbox_check);
 
       button_check = gtk_check_button_new_with_label (_("Show tip next time"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_check),
@@ -132,7 +156,7 @@ tips_dialog_create ()
       gtk_signal_connect (GTK_OBJECT (button_check), "toggled",
 			  GTK_SIGNAL_FUNC (tips_toggle_update),
 			  (gpointer) &show_tips);
-      gtk_box_pack_start (GTK_BOX (hbox2), button_check, FALSE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox_check), button_check, TRUE, FALSE, 0);
       gtk_widget_show (button_check);
 
       old_show_tips = show_tips;

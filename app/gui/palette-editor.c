@@ -49,6 +49,9 @@
 #include "palette_select.h"
 #include "dialog_handler.h"
 
+#include "tools/zoom_in.xpm"
+#include "tools/zoom_out.xpm"
+
 #include "libgimp/gimpintl.h"
 
 #define ENTRY_WIDTH  12
@@ -2136,10 +2139,7 @@ redraw_palette(PaletteP palette)
   if (n_entries % palette->columns)
     nrows += 1;
 
-  vsize = nrows*(SPACING + (gint)(ENTRY_HEIGHT*palette->zoom_factor))+1;
-
-  if(vsize < PREVIEW_HEIGHT)
-    vsize = PREVIEW_HEIGHT;
+  vsize = nrows*(SPACING + (gint)(ENTRY_HEIGHT*palette->zoom_factor))+SPACING;
 
   parent = palette->color_area->parent;
   gtk_widget_ref(palette->color_area);
@@ -2147,7 +2147,7 @@ redraw_palette(PaletteP palette)
 
   new_pre_width = (gint)(ENTRY_WIDTH*palette->zoom_factor);
   new_pre_width = (new_pre_width+SPACING)*palette->columns+SPACING;
-  
+
   gtk_preview_size(GTK_PREVIEW(palette->color_area),
 		  new_pre_width, /*PREVIEW_WIDTH,*/
 		   vsize); 
@@ -2234,6 +2234,7 @@ create_palette_dialog (gint vert)
   GtkWidget *dialog_vbox3;
   GtkWidget *hbox3;
   GtkWidget *hbox4;
+  GtkWidget *hbox5;
   GtkWidget *vbox4;
   GtkWidget *palette_scrolledwindow;
   GtkWidget *palette_region;
@@ -2253,10 +2254,14 @@ create_palette_dialog (gint vert)
   GtkWidget *close_button;
   GtkWidget *refresh_button;
   GtkWidget *clist_scrolledwindow;
-  GtkWidget *plus_button;
-  GtkWidget *minus_button;
   PaletteP palette;
   GdkColormap *colormap;
+  GtkWidget* button_plus;
+  GtkWidget* button_minus;
+  GtkWidget* pixmapwid;
+  GdkPixmap* pixmap;
+  GdkBitmap* mask;
+  GtkStyle* style;
   
   palette = g_malloc (sizeof (_Palette));
 
@@ -2358,18 +2363,38 @@ create_palette_dialog (gint vert)
 					      palette);
 
   /* + and - buttons */
-  plus_button = gtk_button_new_with_label ("+");
-  minus_button = gtk_button_new_with_label ("-");
-  gtk_box_pack_start (GTK_BOX (hbox4), minus_button, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox4), plus_button, TRUE, TRUE, 0);
-  gtk_widget_show(plus_button);
-  gtk_widget_show(minus_button);
-  gtk_signal_connect (GTK_OBJECT (plus_button), "clicked",
-		      (GtkSignalFunc) palette_zoomin,
-		      (gpointer) palette);
-  gtk_signal_connect (GTK_OBJECT (minus_button), "clicked",
-		      (GtkSignalFunc) palette_zoomout,
-		      (gpointer) palette);
+  style = gtk_widget_get_style(palette_dialog);
+  gtk_widget_realize(palette_dialog);
+
+  button_plus = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button_plus, GTK_RECEIVES_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button_plus), "clicked",
+		      GTK_SIGNAL_FUNC (palette_zoomin), (gpointer) palette);
+  gtk_box_pack_start (GTK_BOX (hbox4), button_plus, FALSE, FALSE, 0);
+
+  button_minus = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button_minus, GTK_RECEIVES_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button_minus), "clicked",
+		      GTK_SIGNAL_FUNC (palette_zoomout), (gpointer) palette);
+  gtk_box_pack_start (GTK_BOX (hbox4), button_minus, FALSE, FALSE, 0);
+
+  pixmap = gdk_pixmap_create_from_xpm_d(palette_dialog->window, &mask,
+					&style->bg[GTK_STATE_NORMAL], 
+					zoom_in_xpm);
+  pixmapwid = gtk_pixmap_new(pixmap, mask);
+  gtk_container_add (GTK_CONTAINER (button_plus), pixmapwid);
+  gtk_widget_show (pixmapwid);
+
+  pixmap = gdk_pixmap_create_from_xpm_d(palette_dialog->window, &mask,
+					&style->bg[GTK_STATE_NORMAL], 
+					zoom_out_xpm);
+  pixmapwid = gtk_pixmap_new(pixmap, mask);
+  gtk_container_add (GTK_CONTAINER (button_minus), pixmapwid);
+  gtk_widget_show (pixmapwid);
+  
+  gtk_widget_show (button_plus);
+  gtk_widget_show (button_minus);
+
   
   /* clist preview of palettes */
   clist_scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
@@ -2438,6 +2463,7 @@ create_palette_dialog (gint vert)
       gtk_button_box_set_child_ipadding (GTK_BUTTON_BOX (vbuttonbox2), 17, 0);
       
       new_palette = gtk_button_new_with_label (_("New"));
+      GTK_WIDGET_UNSET_FLAGS (new_palette, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (new_palette), "clicked",
 			  (GtkSignalFunc) palette_new_entries_callback,
 			  (gpointer) palette);
@@ -2446,6 +2472,7 @@ create_palette_dialog (gint vert)
       gtk_container_add (GTK_CONTAINER (vbuttonbox2), new_palette);
       
       delete_palette = gtk_button_new_with_label (_("Delete"));
+      GTK_WIDGET_UNSET_FLAGS (delete_palette, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (delete_palette), "clicked",
 			  (GtkSignalFunc) palette_delete_entries_callback,
 			  (gpointer) palette);
@@ -2453,6 +2480,7 @@ create_palette_dialog (gint vert)
       gtk_container_add (GTK_CONTAINER (vbuttonbox2), delete_palette);
       
       save_palettes = gtk_button_new_with_label (_("Save"));
+      GTK_WIDGET_UNSET_FLAGS (save_palettes, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (save_palettes), "clicked",
 			  (GtkSignalFunc) palette_save_palettes_callback,
 			  (gpointer) NULL);
@@ -2460,6 +2488,7 @@ create_palette_dialog (gint vert)
       gtk_container_add (GTK_CONTAINER (vbuttonbox2), save_palettes);
       
       import_palette = gtk_button_new_with_label (_("Import"));
+      GTK_WIDGET_UNSET_FLAGS (import_palette, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (import_palette), "clicked",
 			  (GtkSignalFunc) palette_import_dialog_callback,
 			  (gpointer) palette);
@@ -2467,6 +2496,7 @@ create_palette_dialog (gint vert)
       gtk_container_add (GTK_CONTAINER (vbuttonbox2), import_palette);
       
       merge_palette = gtk_button_new_with_label (_("Merge"));
+      GTK_WIDGET_UNSET_FLAGS (merge_palette, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (merge_palette), "clicked",
 			  (GtkSignalFunc) palette_merge_dialog_callback,
 			  (gpointer) palette);
@@ -2483,46 +2513,44 @@ create_palette_dialog (gint vert)
   gtk_widget_show (alignment2);
   gtk_box_pack_start (GTK_BOX (dialog_action_area3), alignment2, TRUE, TRUE, 0);
   
+  hbox5 = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (alignment2), hbox5);
+  gtk_widget_show (hbox5);
+
   hbuttonbox3 = gtk_hbutton_box_new ();
   gtk_object_set_data (GTK_OBJECT (palette_dialog), "hbuttonbox3", hbuttonbox3);
   gtk_widget_show (hbuttonbox3);
-  gtk_container_add (GTK_CONTAINER (alignment2), hbuttonbox3);
-  gtk_widget_set_usize (hbuttonbox3, 153, 37);
-  gtk_container_border_width (GTK_CONTAINER (hbuttonbox3), 8);
-  gtk_button_box_set_child_size (GTK_BUTTON_BOX (hbuttonbox3), 85, 26);
-  gtk_button_box_set_child_ipadding (GTK_BUTTON_BOX (hbuttonbox3), 4, 0);
+  gtk_box_pack_end (GTK_BOX(hbox5), hbuttonbox3, FALSE, FALSE, 0);
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbuttonbox3), 4);
 
-  close_button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect(GTK_OBJECT(close_button), "clicked", 
-		     GTK_SIGNAL_FUNC(palette_close_callback), (gpointer)palette);
-
-  gtk_widget_show (close_button);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox3), close_button);
-  gtk_container_border_width (GTK_CONTAINER (close_button), 4);
-  GTK_WIDGET_SET_FLAGS (close_button, GTK_CAN_DEFAULT);
-  gtk_widget_grab_default (close_button);
   gtk_signal_connect (GTK_OBJECT (palette->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (palette_dialog_delete_callback),
 		      palette);
 
+  close_button = gtk_button_new_with_label (_("Close"));
+  GTK_WIDGET_SET_FLAGS (close_button, GTK_CAN_DEFAULT);
+  gtk_window_set_default (GTK_WINDOW (palette->shell), close_button);
+  gtk_signal_connect(GTK_OBJECT(close_button), "clicked", 
+		     GTK_SIGNAL_FUNC(palette_close_callback), (gpointer)palette);
+
   if(!vert)
     {
-      refresh_button = gtk_button_new_with_label (_("refresh"));
+      refresh_button = gtk_button_new_with_label (_("Refresh"));
       gtk_signal_connect(GTK_OBJECT(refresh_button), "clicked", 
 			 GTK_SIGNAL_FUNC(palette_refresh_callback), (gpointer)palette);
-      gtk_widget_show (refresh_button);
-      gtk_container_add (GTK_CONTAINER (hbuttonbox3), refresh_button);
-      gtk_container_border_width (GTK_CONTAINER (refresh_button), 9);
     }
   else
     {
       refresh_button = gtk_button_new_with_label (_("Edit"));
       gtk_signal_connect(GTK_OBJECT(refresh_button), "clicked", 
 			 GTK_SIGNAL_FUNC(palette_edit_palette_callback), (gpointer)palette);
-      gtk_widget_show (refresh_button);
-      gtk_container_add (GTK_CONTAINER (hbuttonbox3), refresh_button);
-      gtk_container_border_width (GTK_CONTAINER (refresh_button), 9);
     }
+
+  GTK_WIDGET_SET_FLAGS (refresh_button, GTK_CAN_DEFAULT);
+  gtk_container_add (GTK_CONTAINER (hbuttonbox3), refresh_button);
+  gtk_widget_show (refresh_button);
+  gtk_container_add (GTK_CONTAINER (hbuttonbox3), close_button);
+  gtk_widget_show (close_button);
 
   gtk_widget_realize(palette->shell);
   palette->gc = gdk_gc_new(palette->shell->window);

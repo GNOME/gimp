@@ -1,3 +1,45 @@
+Sat Feb 20 16:12:33 CST 1999 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/tips_dialog.c: Add default to Cancel button, remove
+	  unset GTK_RECEIVES_DEFAULT from prev/next buttons (they
+	  are like toolbar buttons), changed abreviated prev to
+	  previous, prev/next button are now same size, cancel button
+	  is in a button box.  Added vboxes where necessary to prevent
+	  prev/next and check button from filling vertically.
+
+	* app/app_procs.c: when splashscreen dialog is larger than the 
+	  logo, (due to huge font), center logo.
+
+	* app/file_new_dialog.c: patch from Marco Lamb <lm@geocities.com>
+	  disallows resizing, changes vertical expanding of widgets to 
+	  not occur
+
+	* app/palette.c: patch from Marco Lamb <lm@geocities.com>.  Makes
+	  +/- buttons for zoom pixmaps (eventually, these can be replaced
+	  with a magnifying glass with a little +/- I think), so that they
+	  no longer expand as they did before.  I modified his patch so it
+	  did not create a misused toolbar.  I did some other stuff here too,
+	  moved Close button to the left, made it the window's default,
+	  and unset GTK_RECEIVES_DEFAULT off of the non-bottom buttons.
+
+	* app/actionarea.c: another patch from Marco Lamb <lm@geocities.com>.
+	  This one changes buttons to be put in a button box which is right
+	  justified.  If we decide later that spread is better, we can 
+	  change this easy enough.
+
+	* app/tools/zoom_in.xpm, app/tools/zoom_out.xpm: + and - graphics.
+
+	* libgimp/gimpunit.h
+	  libgimp/gimpunit.c: New files from Michael Natterer 
+          <mitschel@cs.tu-berlin.de>, gimp_unit_* routines.
+
+	* app/gimage.h
+	  app/gimpimage.h
+	  app/gimpimage.c
+	  app/gimpimageP.h
+	  app/xcf.c: Patches from Michael Natterer <mitschel@cs.tu-berlin.de>,
+	  which keep a unit assocated with an image. 
+
 1999-02-21  Tor Lillqvist  <tml@iki.fi>
 
 	First batch of changes to merge the Win32 version. This will be

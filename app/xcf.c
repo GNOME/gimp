@@ -38,6 +38,7 @@
 #include <libgimp/parasiteP.h>
 #include <libgimp/parasite.h>
 #include "parasitelist.h"
+#include <libgimp/gimpunit.h>
 
 /* #define SWAP_FROM_FILE */
 
@@ -65,7 +66,8 @@ typedef enum
   PROP_GUIDES = 18,
   PROP_RESOLUTION = 19,
   PROP_TATTOO = 20,
-  PROP_PARASITES = 21
+  PROP_PARASITES = 21,
+  PROP_UNIT = 22
 } PropType;
 
 typedef enum
@@ -608,6 +610,8 @@ xcf_save_image_props (XcfInfo *info,
   if (parasite_list_length(gimage->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, gimage->parasites);
 
+  xcf_save_prop (info, PROP_UNIT, gimage->unit);
+
   xcf_save_prop (info, PROP_END);
 }
 
@@ -966,6 +970,19 @@ xcf_save_prop (XcfInfo  *info,
 	  xcf_write_int32 (info->fp, &length, 1);
 	  fseek(info->fp, 0, SEEK_END);
 	}
+      }
+      break;
+    case PROP_UNIT:
+      {
+	guint32 unit;
+
+	unit = va_arg (args, guint32);
+
+	size = 4;
+
+	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	info->cp += xcf_write_int32 (info->fp, &size, 1);
+	info->cp += xcf_write_int32 (info->fp, &unit, 1);
       }
       break;
     }
@@ -1595,6 +1612,21 @@ xcf_load_image_props (XcfInfo *info,
 	   }
 	   if (info->cp - base != prop_size)
 	     g_message(_("Error detected while loading an image's parasites"));
+	 }
+	 break;
+	 case PROP_UNIT:
+	 {
+	   guint32 unit;
+
+	   info->cp += xcf_read_int32 (info->fp, &unit, 1);
+	   
+	   if ( (unit < 0) || (unit >= gimp_unit_get_number_of_units()) )
+	     {
+	       g_message(_("Warning, unit out of range in XCF file, falling back to pixels"));
+	       unit = UNIT_PIXEL;
+	     }
+
+	   gimage->unit = unit;
 	 }
 	 break;
 	default:
