@@ -1,3 +1,9 @@
+2004-02-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_io_channel):
+	unset the GIOChannel's encoding before trying to find and parse
+	the XML header.
+
 2004-02-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpdrawable.c (gimp_drawable_get): warn and return NULL
