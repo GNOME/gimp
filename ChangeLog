@@ -1,3 +1,9 @@
+Wed Apr 15 01:58:12 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/gdisplay.c: made a change to gdisplays_update_area to
+	update _all_ gdisplays that point at the gimage ID.  This
+	(should) fix the paint on the second layer of a second view bug.
+
 Tue Apr 14 16:15:52 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/iscissors.c: partially applied gimp-monniaux-980413-0,

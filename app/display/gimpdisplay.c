@@ -1194,7 +1194,7 @@ gdisplays_update_area (int ID,
   GDisplay *gdisp;
   GSList *list = display_list;
   int x1, y1, x2, y2;
-  int count = 0;
+  /*  int count = 0; */
 
   /*  traverse the linked list of displays  */
   while (list)
@@ -1205,6 +1205,13 @@ gdisplays_update_area (int ID,
 	  /*  We only need to update the first instance that
 	      we find of this gimage ID.  Otherwise, we would
 	      be reconverting the same region unnecessarily.   */
+
+	  /* Um.. I don't think so. If you only do this to the first
+	     instance, you don't update other gdisplays pointing to this
+	     gimage.  I'm going to comment this out to show how it was in
+	     case we need to change it back.  msw 4/15/1998
+	  */
+	  /*
 	  if (! count)
 	    gdisplay_add_update_area (gdisp, x, y, w, h);
 	  else
@@ -1213,9 +1220,13 @@ gdisplays_update_area (int ID,
 	      gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
 	      gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
 	    }
-	  count++;
-	}
+	  */
 
+	  gdisplay_add_update_area (gdisp, x, y, w, h);
+	  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
+	  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
+	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+	}
       list = g_slist_next (list);
     }
 }
