@@ -57,9 +57,16 @@ static void gimp_bezier_stroke_anchor_move_absolute (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor,
                                                      const GimpCoords  *coord,
                                                      GimpAnchorFeatureType feature);
-static void gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
-                                               GimpAnchor            *anchor,
-                                               GimpAnchorFeatureType  feature);
+static void gimp_bezier_stroke_anchor_convert   (GimpStroke            *stroke,
+                                                 GimpAnchor            *anchor,
+                                                 GimpAnchorFeatureType  feature);
+static gboolean gimp_bezier_stroke_anchor_is_insertable
+                                                    (GimpStroke        *stroke,
+                                                     GimpAnchor        *predec,
+                                                     gdouble            position);
+static GimpAnchor * gimp_bezier_stroke_anchor_insert (GimpStroke       *stroke,
+                                                      GimpAnchor       *predec,
+                                                      gdouble           position);
 static gboolean gimp_bezier_stroke_is_extendable    (GimpStroke *stroke,
                                                      GimpAnchor *neighbor);
 static GArray *   gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
@@ -151,6 +158,8 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_relative = gimp_bezier_stroke_anchor_move_relative;
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
+  stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
+  stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
   stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
   stroke_class->extend               = gimp_bezier_stroke_extend;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
@@ -220,6 +229,115 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
 
   return stroke;
 }
+
+static gboolean
+gimp_bezier_stroke_anchor_is_insertable (GimpStroke *stroke,
+                                         GimpAnchor *predec,
+                                         gdouble     position)
+{
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+
+  return (g_list_find (stroke->anchors, predec) != NULL);
+}
+
+
+static GimpAnchor *
+gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
+                                  GimpAnchor *predec,
+                                  gdouble     position)
+{
+  GList *segment_start, *list, *list2;
+  GimpCoords subdivided[8];
+  GimpCoords beziercoords[4];
+  gint i;
+
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
+  g_return_val_if_fail (predec->type == GIMP_ANCHOR_ANCHOR, NULL);
+
+  segment_start = g_list_find (stroke->anchors, predec);
+
+  if (! segment_start)
+    return NULL;
+
+  list = segment_start;
+
+  for (i=0; i <= 3; i++)
+    {
+      beziercoords[i] = ((GimpAnchor *) list->data)->position;
+      list = g_list_next (list);
+      if (!list)
+        list = stroke->anchors;
+    }
+
+  subdivided[0] = beziercoords[0];
+  subdivided[6] = beziercoords[3];
+
+  gimp_bezier_coords_mix (1-position, &(beziercoords[0]),
+                          position,   &(beziercoords[1]),
+                          &(subdivided[1]));
+
+  gimp_bezier_coords_mix (1-position, &(beziercoords[1]),
+                          position,   &(beziercoords[2]),
+                          &(subdivided[7]));
+
+  gimp_bezier_coords_mix (1-position, &(beziercoords[2]),
+                          position,   &(beziercoords[3]),
+                          &(subdivided[5]));
+
+  gimp_bezier_coords_mix (1-position, &(subdivided[1]),
+                          position,   &(subdivided[7]),
+                          &(subdivided[2]));
+
+  gimp_bezier_coords_mix (1-position, &(subdivided[7]),
+                          position,   &(subdivided[5]),
+                          &(subdivided[4]));
+
+  gimp_bezier_coords_mix (1-position, &(subdivided[2]),
+                          position,   &(subdivided[4]),
+                          &(subdivided[3]));
+
+  /* subdivided 0-6 contains the bezier segement subdivided at <position> */
+
+  list = segment_start;
+
+  for (i=0; i <= 6; i++)
+    {
+      if (i >= 2 && i <= 4)
+        {
+          list2 = g_list_append (NULL, 
+                                 gimp_anchor_new ((i == 3 ?
+                                                    GIMP_ANCHOR_ANCHOR:
+                                                    GIMP_ANCHOR_CONTROL),
+                                                  &(subdivided[i])));
+          /* insert it *before* list manually. */
+          list2->next = list;
+          list2->prev = list->prev;
+          if (list->prev)
+            list->prev->next = list2;
+          list->prev = list2;
+          
+          list = list2;
+
+          if (i == 3)
+            segment_start = list;
+
+        }
+      else
+        {
+          ((GimpAnchor *) list->data)->position = subdivided[i];
+        }
+
+      list = g_list_next (list);
+      if (!list)
+        list = stroke->anchors;
+
+    }
+  
+  stroke->anchors = g_list_first (stroke->anchors);
+
+  return ((GimpAnchor *) segment_start->data);
+}
+
 
 static gdouble
 gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
@@ -332,10 +450,16 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
   GimpCoords point1, point2;
   gdouble pos1, pos2;
 
-  if (!depth || gimp_bezier_coords_is_straight (beziercoords, precision))
+  gimp_bezier_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
+  gimp_bezier_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
+
+  if (!depth || (gimp_bezier_coords_is_straight (beziercoords, precision)
+                 && gimp_bezier_coords_length2 (&point1) < precision 
+                 && gimp_bezier_coords_length2 (&point2) < precision))
     {
       GimpCoords line, dcoord;
       gdouble length2, scalar;
+      gint i;
       
       gimp_bezier_coords_difference (&(beziercoords[3]),
                                      &(beziercoords[0]),
@@ -349,7 +473,23 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
       scalar = gimp_bezier_coords_scalarprod (&line, &dcoord) / length2;
 
       scalar = CLAMP (scalar, 0.0, 1.0);
-      *ret_pos = scalar;
+
+      /* lines look the same as bezier curves where the handles
+       * sit on the anchors, however, they are parametrized
+       * differently. Hence we have to do some weird approximation.  */
+
+      pos1 = pos2 = 0.5;
+
+      for (i=0; i <= 15; i++)
+        {
+          pos2 *= 0.5;
+          if (3*pos1*pos1*(1-pos1) + pos1*pos1*pos1 < scalar)
+            pos1 += pos2;
+          else
+            pos1 -= pos2;
+        }
+
+      *ret_pos = pos1;
 
       gimp_bezier_coords_mix (1.0, &(beziercoords[0]),
                               scalar, &line,

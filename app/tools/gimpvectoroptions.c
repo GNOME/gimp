@@ -169,8 +169,8 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   /*  tool toggle  */
   frame = gimp_prop_boolean_radio_frame_new (config, "vectors-edit-mode",
                                              _("Edit Mode"),
-                                             _("Extend Stroke/Move Nodes"),
-                                             _("Insert/Delete Nodes"));
+                                             _("Insert/Delete Nodes"),
+                                             _("Extend Stroke/Move Nodes"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

@@ -1,3 +1,17 @@
+2003-08-20  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]: Add hooks for insertion of points
+	(and testing if insertion is possible)
+
+	* app/vectors/gimpbezierstroke.c: Implement it for BezierStrokes
+
+	* app/tools/gimpvectoroptions.c: Adjusted Options-GUI.
+	
+	* app/tools/gimpvectortool.[ch]: Detect if the pointer is over
+	the curve. Make it possible to insert points in the curve.
+	Select the "Insert/Delete Nodes" mode in the tool options and
+	click on the curve.
+	
 2003-08-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask-select.c
