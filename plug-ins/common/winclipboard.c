@@ -469,7 +469,7 @@ CB_PasteImage (gboolean interactive,
   
   if (0 == fmt) 
     {
-      g_message ("Unsupported format or Clipboard empty!");
+      g_message (_("Unsupported format or Clipboard empty!"));
       bRet = FALSE;
     }
   
@@ -480,7 +480,7 @@ CB_PasteImage (gboolean interactive,
       
       if (NULL == hDIB)
 	{
-	  g_message ("Can't get Clipboard data");
+	  g_message (_("Can't get Clipboard data."));
 	  bRet = FALSE;
 	}
     }

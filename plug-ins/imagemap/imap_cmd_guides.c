@@ -129,7 +129,7 @@ make_guides_dialog()
    GtkWidget *label;
    GtkWidget *hbox;
    
-   dialog = data->dialog = make_default_dialog("Create Guides");
+   dialog = data->dialog = make_default_dialog(_("Create Guides"));
    default_dialog_set_ok_cb(dialog, guides_ok_cb, data);
    
    label = gtk_label_new(

@@ -18,12 +18,17 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
+#include "config.h"
+
 #include <stdlib.h>
+
 #include "global.h"
 #include "sel2path.h"
 #include "bitmap.h"
 #include "edge.h"
 #include "pxl-outline.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static pixel_outline_type find_one_outline (edge_type,
 			  		    unsigned, unsigned, bitmap_type *);
@@ -75,7 +80,7 @@ find_outline_pixels ()
 
 /*   printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked)); */
 
-  gimp_progress_init ("Selection to path...");
+  gimp_progress_init (_("Selection to Path..."));
 
   O_LIST_LENGTH (outline_list) = 0;
   outline_list.data = NULL;

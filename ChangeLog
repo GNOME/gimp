@@ -1,3 +1,11 @@
+2001-07-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/winclipboard.c
+	* plug-ins/gap/gap_filter_foreach.c
+	* plug-ins/imagemap/imap_cmd_guides.c
+	* plug-ins/sel2path/pxl-outline.c: marked missing strings for 
+	translation (patch from "Iccii" <iccii@hotmail.com>).
+
 2001-07-22  Hans Breuer  <hans@breuer.org>
 
 	* app/*/makefile.msc : 

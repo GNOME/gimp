@@ -118,7 +118,7 @@ static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_fla
   gint              l_argc;
   static t_arr_arg  l_argv[1];
   int               l_continue;
-  char              l_skip_txt[20];
+  char              l_skip_txt[32];
   
     
 
@@ -133,7 +133,7 @@ static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_fla
     l_but_argv[0].but_val  = 0;
     l_but_argv[1].but_txt  = _("Cancel");
     l_but_argv[1].but_val  = -1;
-    g_snprintf(l_skip_txt, sizeof(l_skip_txt), "Skip %d", (int)layer_idx);
+    g_snprintf(l_skip_txt, sizeof(l_skip_txt), _("Skip %d"), (int)layer_idx);
     l_but_argv[2].but_txt  = l_skip_txt;
     l_but_argv[2].but_val  = 1;
 
