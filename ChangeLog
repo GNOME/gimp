@@ -1,3 +1,7 @@
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
+	* gimp.m4 (AM_PATH_GIMP): use gimptool-1.2, not gimptool (bug #139024).
+
 2004-02-10  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gif.c: Attempt to use the palette colour closest

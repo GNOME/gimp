@@ -7,7 +7,7 @@ dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
 AC_DEFUN([AM_PATH_GIMP],
 [dnl 
-dnl Get the cflags and libraries from the gimptool script
+dnl Get the cflags and libraries from the gimptool-1.2 script
 dnl
 AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX  Prefix where GIMP is installed (optional)],
             gimptool_prefix="$withval", gimptool_prefix="")
@@ -19,18 +19,18 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run
   if test x$gimptool_exec_prefix != x ; then
      gimptool_args="$gimptool_args --exec-prefix=$gimptool_exec_prefix"
      if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_exec_prefix/bin/gimptool
+        GIMPTOOL=$gimptool_exec_prefix/bin/gimptool-1.2
      fi
   fi
   if test x$gimptool_prefix != x ; then
      gimptool_args="$gimptool_args --prefix=$gimptool_prefix"
      if test x${GIMPTOOL+set} != xset ; then
-        GIMPTOOL=$gimptool_prefix/bin/gimptool
+        GIMPTOOL=$gimptool_prefix/bin/gimptool-1.2
      fi
   fi
 
-  AC_PATH_PROG(GIMPTOOL, gimptool, no)
-  min_gimp_version=ifelse([$1], ,1.0.0,$1)
+  AC_PATH_PROG(GIMPTOOL, gimptool-1.2, no)
+  min_gimp_version=ifelse([$1], ,1.2.0,$1)
   AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
   no_gimp=""
   if test "$GIMPTOOL" = "no" ; then
@@ -121,11 +121,11 @@ int main ()
     }
   else
     {
-      printf("\n*** 'gimptool --version' returned %d.%d.%d, but the minimum version\n", $gimptool_major_version, $gimptool_minor_version, $gimptool_micro_version);
+      printf("\n*** 'gimptool-1.2 --version' returned %d.%d.%d, but the minimum version\n", $gimptool_major_version, $gimptool_minor_version, $gimptool_micro_version);
       printf("*** of GIMP required is %d.%d.%d. If gimptool is correct, then it is\n", major, minor, micro);
       printf("*** best to upgrade to the required version.\n");
       printf("*** If gimptool was wrong, set the environment variable GIMPTOOL\n");
-      printf("*** to point to the correct copy of gimptool, and remove the file\n");
+      printf("*** to point to the correct copy of gimptool-1.2, and remove the file\n");
       printf("*** config.cache before re-running configure\n");
       return 1;
     }
@@ -142,10 +142,10 @@ int main ()
   else
      AC_MSG_RESULT(no)
      if test "$GIMPTOOL" = "no" ; then
-       echo "*** The gimptool script installed by GIMP could not be found"
+       echo "*** The gimptool script installed by GIMP could not be found."
        echo "*** If GIMP was installed in PREFIX, make sure PREFIX/bin is in"
        echo "*** your path, or set the GIMPTOOL environment variable to the"
-       echo "*** full path to gimptool."
+       echo "*** full path to gimptool-1.2."
      else
        if test -f conf.gimptest ; then
         :
