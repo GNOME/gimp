@@ -1,5 +1,10 @@
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-undo.c: resurrected some bit-rotting debug
+	code. Might become useful one day.
+
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: when automake 1.8 is being used, require at least
 	version 1.8.3. Earlier versions of the automake-1.8 series don't
 	handle gimp-console correctly.
