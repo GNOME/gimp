@@ -716,7 +716,7 @@ transform_core_new (int type,
   tool->button_press_func = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;
   tool->motion_func = transform_core_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = transform_core_cursor_update;
   tool->control_func = transform_core_control;

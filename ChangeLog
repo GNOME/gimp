@@ -1,3 +1,18 @@
+Thu Jun 17 22:26:38 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/crop.c: default to the old-fashioned behaviour (crop and 
+	dont_enlarge)
+
+	* app/disp_callbacks.c
+	* app/paint_core.c
+	* app/scale_tool.c
+	* app/transform_core.c: implemented horizontal and vertical lines
+	for the paint_tools using CTRL and MOD1. Changed the Scale tool to
+	use the same modifiers. Complain if you don't like this!
+	
+	Now if I knew why MOD1 behaves differently than the other modifiers, 
+	setting the cursor coordinates to 0,0 every time :-(
+
 1999-06-17  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/Makefile.am

@@ -434,9 +434,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      gdk_input_window_get_pointer (canvas->window, current_device, 
-				     &tx, &ty, NULL, NULL, NULL, NULL);
+					    &tx, &ty, NULL, NULL, NULL, NULL);
+	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
 	  break;
@@ -459,9 +459,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      gdk_input_window_get_pointer (canvas->window, current_device, 
 					    &tx, &ty, NULL, NULL, NULL, NULL);
+	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
 	  break;

@@ -194,7 +194,7 @@ paint_core_button_press (Tool           *tool,
   /*  If shift is down and this is not the first paint
    *  stroke, then draw a line from the last coords to the pointer
    */
-  else if ((bevent->state & COMMON_MODIFIERS_MASK) == GDK_SHIFT_MASK)
+  else if (bevent->state & GDK_SHIFT_MASK)
     {
       draw_line = TRUE;
       paint_core->startx = paint_core->lastx;
@@ -202,6 +202,27 @@ paint_core_button_press (Tool           *tool,
       paint_core->startpressure = paint_core->lastpressure;
       paint_core->startxtilt = paint_core->lastxtilt;
       paint_core->startytilt = paint_core->lastytilt;
+
+      /* restrict to horizontal/vertical lines, if modifiers are pressed */
+      if (bevent->state & GDK_MOD1_MASK)
+	{
+	  if (bevent->state & GDK_CONTROL_MASK)
+	    {
+	      double dx, dy;
+	      
+	      dx = paint_core->curx - paint_core->lastx;
+	      dy = paint_core->cury - paint_core->lasty;
+	      
+	      paint_core->curx = paint_core->lastx + 
+		((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	      paint_core->cury = paint_core->lasty + 
+		((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	    }
+	  else
+	    paint_core->curx = paint_core->lastx;
+	}
+      else if (bevent->state & GDK_CONTROL_MASK)
+	paint_core->cury = paint_core->lasty;
     }
 
   tool->state = ACTIVE;
@@ -341,8 +362,7 @@ paint_core_cursor_update (Tool           *tool,
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
     {
       /* If shift is down and this is not the first paint stroke, draw a line */
-      if (gdisp_ptr == tool->gdisp_ptr && 
-	       (mevent->state & COMMON_MODIFIERS_MASK) == GDK_SHIFT_MASK)
+      if (gdisp_ptr == tool->gdisp_ptr && (mevent->state & GDK_SHIFT_MASK))
 	{
 	  ctype = GDK_PENCIL;
 	  /*  Get the current coordinates */ 
@@ -351,6 +371,27 @@ paint_core_cursor_update (Tool           *tool,
 					 (double) mevent->y,
 					 &paint_core->curx, 
 					 &paint_core->cury, TRUE);
+
+	  /* restrict to horizontal/vertical lines, if modifiers are pressed */
+	  if (mevent->state & GDK_MOD1_MASK)
+	    {
+	      if (mevent->state & GDK_CONTROL_MASK)
+		{
+		  double dx, dy;
+
+		  dx = paint_core->curx - paint_core->lastx;
+		  dy = paint_core->cury - paint_core->lasty;
+
+		  paint_core->curx = paint_core->lastx + 
+		    ((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+		  paint_core->cury = paint_core->lasty + 
+		    ((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+		}
+	      else
+		paint_core->curx = paint_core->lastx;
+	    }
+	  else if (mevent->state & GDK_CONTROL_MASK)
+	    paint_core->cury = paint_core->lasty;
 
 	  if (paint_core->core->gc == NULL)
 	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);

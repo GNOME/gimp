@@ -365,11 +365,11 @@ scale_tool_motion (Tool *tool,
       return;
     }
 
-  /*  if just the control key is down, affect only the height  */
-  if (transform_core->state & GDK_CONTROL_MASK && ! (transform_core->state & GDK_SHIFT_MASK))
+  /*  if just the mod1 key is down, affect only the height  */
+  if (transform_core->state & GDK_MOD1_MASK && ! (transform_core->state & GDK_CONTROL_MASK))
     diff_x = 0;
-  /*  if just the shift key is down, affect only the width  */
-  else if (transform_core->state & GDK_SHIFT_MASK && ! (transform_core->state & GDK_CONTROL_MASK))
+  /*  if just the control key is down, affect only the width  */
+  else if (transform_core->state & GDK_CONTROL_MASK && ! (transform_core->state & GDK_MOD1_MASK))
     diff_y = 0;
 
   *x1 += diff_x;
@@ -393,8 +393,8 @@ scale_tool_motion (Tool *tool,
       if (*y1 <= *y2) *y1 = *y2 + 1;
     }
 
-  /*  if both the control key & shift keys are down, keep the aspect ratio intact  */
-  if (transform_core->state & GDK_CONTROL_MASK && transform_core->state & GDK_SHIFT_MASK)
+  /*  if both the control key & mod1 keys are down, keep the aspect ratio intact  */
+  if (transform_core->state & GDK_CONTROL_MASK && transform_core->state & GDK_MOD1_MASK)
     {
       ratio = (double) (transform_core->x2 - transform_core->x1) /
         (double) (transform_core->y2 - transform_core->y1);

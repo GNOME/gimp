@@ -175,8 +175,8 @@ crop_options_new (void)
 		     N_("Crop & Resize Options"),
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
-  options->allow_enlarge = options->allow_enlarge_d = TRUE;
-  options->type          = options->type_d          = RESIZE_CROP;
+  options->allow_enlarge = options->allow_enlarge_d = FALSE;
+  options->type          = options->type_d          = CROP_CROP;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
