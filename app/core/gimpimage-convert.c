@@ -2209,9 +2209,9 @@ compute_color_gray (QuantizeObj *quantobj,
 /* Compute representative color for a box, put it in colormap[icolor] */
 {
   int i, min, max;
-  long count;
-  long total;
-  long gtotal;
+  guint64 count;
+  guint64 total;
+  guint64 gtotal;
 
   min = boxp->Rmin;
   max = boxp->Rmax;
@@ -2231,9 +2231,9 @@ compute_color_gray (QuantizeObj *quantobj,
 
   if (total != 0)
     {
-      quantobj->cmap[icolor].red = (gtotal + (total >> 1)) / total;
-      quantobj->cmap[icolor].green = quantobj->cmap[icolor].red;
-      quantobj->cmap[icolor].blue = quantobj->cmap[icolor].red;
+      quantobj->cmap[icolor].red =
+        quantobj->cmap[icolor].green =
+        quantobj->cmap[icolor].blue = (gtotal + (total >> 1)) / total;
     }
    else /* The only situation where total==0 is if the image was null or
 	*  all-transparent.  In that case we just put a dummy value in
@@ -2762,8 +2762,7 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
 
   for (i = 0; i < quantobj->actual_number_of_colors; i++)
     {
-      dist = pixel - cmap[i].red;
-      dist *= dist;
+      dist = ABS(pixel - cmap[i].red);
 
       if (dist < mindist)
 	{
