@@ -38,3 +38,4 @@ static GimpBaseConfig  static_base_config =
 
 
 GimpBaseConfig *base_config = &static_base_config;
+gboolean        use_mmx     = FALSE;

@@ -34,7 +34,7 @@
 
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
-#endif   /*  WAIT_ANY  */
+#endif
 
 #include <gtk/gtk.h>
 
@@ -48,16 +48,12 @@
 
 #include "libgimp/gimpintl.h"
 
+
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
 static void     gimp_sigfatal_handler (gint sig_num);
 static void     gimp_sigchld_handler  (gint sig_num);
-#endif
-
-/* TODO: this should probably go into a header file */
-#ifdef HAVE_ASM_MMX
-unsigned long   intel_cpu_features    (void);
 #endif
 
 
@@ -80,7 +76,6 @@ gchar          **batch_cmds              = NULL;
 gchar              *prog_name       = NULL;  /* our executable name */
 MessageHandlerType  message_handler = CONSOLE;
 gboolean            double_speed    = FALSE;
-gboolean            use_mmx         = FALSE;
 
 
 /*
@@ -139,11 +134,6 @@ main (int    argc,
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
 #endif
-
-#ifdef HAVE_ASM_MMX
-  use_mmx = (intel_cpu_features() & (1 << 23)) ? 1 : 0;
-  fprintf(stderr, "MMX : %s\n", use_mmx ? "yes" : "no");
-#endif  
 
   batch_cmds    = g_new (char *, argc);
   batch_cmds[0] = NULL;

@@ -57,7 +57,9 @@ floating_sel_attach (GimpLayer    *layer,
       floating_sel = gimage->floating_sel;
       floating_sel_anchor (gimp_image_floating_sel (gimage));
 
-      /*  if we were pasting to the old floating selection, paste now to the drawable  */
+      /*  if we were pasting to the old floating selection, paste now
+       *  to the drawable
+       */
       if (drawable == GIMP_DRAWABLE (floating_sel))
 	drawable = gimp_image_active_drawable (gimage);
     }
@@ -70,9 +72,10 @@ floating_sel_attach (GimpLayer    *layer,
 		      GIMP_DRAWABLE (layer)->height,
 		      gimp_drawable_bytes (drawable));
 
-  /*  because setting the sensitivity in the layers_dialog lock call redraws the
-   *  previews, we need to lock the dialogs before the floating sel is actually added.
-   *  however, they won't lock unless we set the gimage's floating sel pointer
+  /*  because setting the sensitivity in the layers_dialog lock call
+   *  redraws the previews, we need to lock the dialogs before the
+   *  floating sel is actually added.  however, they won't lock unless
+   *  we set the gimage's floating sel pointer
    */
   gimage->floating_sel = layer;
 
@@ -115,9 +118,11 @@ floating_sel_anchor (GimpLayer *layer)
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
+
   if (! gimp_layer_is_floating_sel (layer))
     {
-      g_message (_("Cannot anchor this layer because\nit is not a floating selection."));
+      g_message (_("Cannot anchor this layer because\n"
+		   "it is not a floating selection."));
       return;
     }
 
@@ -191,8 +196,8 @@ floating_sel_to_layer (GimpLayer *layer)
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       g_message (_("Cannot create a new layer from the floating\n"
-		 "selection because it belongs to a\n"
-		 "layer mask or channel."));
+		   "selection because it belongs to a\n"
+		   "layer mask or channel."));
       return;
     }
 
@@ -207,11 +212,6 @@ floating_sel_to_layer (GimpLayer *layer)
   gimp_drawable_offsets (layer->fs.drawable, &off_x, &off_y);
   width  = gimp_drawable_width (layer->fs.drawable);
   height = gimp_drawable_height (layer->fs.drawable);
-
-  /*  update the fs drawable--this updates the gimage composite preview
-   *  as well as the underlying drawable's
-   */
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 
   /*  allocate the undo structure  */
   fsu = g_new (FStoLayerUndo, 1);
@@ -228,22 +228,11 @@ floating_sel_to_layer (GimpLayer *layer)
   gimage->floating_sel = NULL;
   gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE);
 
-  /*  if the floating selection exceeds the attached layer's extents,
-      update the new layer  */
-
-  /*  I don't think that the preview is ever valid as is, since the layer
-      will be added on top of the others.  Revert this if I'm wrong.
-      msw@gimp.org
-  */
-
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0,
 			GIMP_DRAWABLE (layer)->width,
 			GIMP_DRAWABLE (layer)->height);
   
-  /* This may be undesirable when invoked non-interactively... we'll see. */
-  /*reinit_layer_idlerender (gimage, layer);*/
-
   gimp_image_floating_selection_changed (gimage);
 }
 

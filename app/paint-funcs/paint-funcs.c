@@ -140,11 +140,9 @@ static void     apply_layer_mode_replace (guchar   *src1,
 					  gboolean *affect);
 static void     rotate_pointers          (gpointer *p, 
 					  guint32   n);
-/* MMX stuff */
-extern gboolean use_mmx;
+
 
 #ifdef HAVE_ASM_MMX
-extern int use_mmx;
 
 #define MMX_PIXEL_OP(x) \
 void \
@@ -168,11 +166,13 @@ x( \
     } \
   /*fprintf(stderr, "non-MMX: %s(%d, %d, %d, %d)\n", #op, \
     bytes1, bytes2, has_alpha1, has_alpha2);*/
-#else
+
+#else /* ! HAVE_ASM_MMX */
 
 #define MMX_PIXEL_OP_3A_1A(op)
 #define USE_MMX_PIXEL_OP_3A_1A(op)
-#endif
+
+#endif /* HAVE_ASM_MMX */
 
 
 void

@@ -3443,8 +3443,6 @@ gimp_image_merge_layers (GimpImage *gimage,
 			gimp_drawable_width (GIMP_DRAWABLE (merge_layer)), 
 			gimp_drawable_height (GIMP_DRAWABLE (merge_layer)));
 
-  /*reinit_layer_idlerender (gimage, merge_layer);*/
-
   return merge_layer;
 }
 

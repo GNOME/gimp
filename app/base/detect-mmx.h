@@ -16,28 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __APPENV_H__
-#define __APPENV_H__
+#ifndef __DETECT_MMX_H__
+#define __DETECT_MMX_H__
 
 
-/*  command line options  */
-extern gboolean         no_interface;
-extern gboolean         no_splash;
-extern gboolean         no_splash_image;
-extern gboolean         no_data;
-extern gboolean         be_verbose;
-extern gboolean         use_debug_handler;
-extern gboolean         console_messages;
-extern gboolean         restore_session;
-extern StackTraceMode   stack_trace_mode;
-extern gchar           *alternate_gimprc;
-extern gchar           *alternate_system_gimprc;
-extern gchar          **batch_cmds;
-
-/*  other global variables  */
-extern gchar              *prog_name;
-extern MessageHandlerType  message_handler;
-extern gboolean            double_speed;
+#ifdef HAVE_ASM_MMX
+gulong  intel_cpu_features (void);
+#endif
 
 
-#endif /*  __APPENV_H__  */
+#endif  /* __DETECT_MMX__ */

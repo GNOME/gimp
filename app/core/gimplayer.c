@@ -419,14 +419,14 @@ gimp_layer_new_from_tiles (GimpImage        *gimage,
    */
 
   /*  If no image or no tile manager, return NULL  */
-  if (!gimage || !tiles )
+  if (!gimage || !tiles)
     return NULL;
   
   /*  the layer_type needs to have alpha */
   g_return_val_if_fail (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type), NULL);
 
    /*  Create the new layer  */
-  new_layer = gimp_layer_new (0,
+  new_layer = gimp_layer_new (gimage,
 			      tile_manager_width (tiles),
 			      tile_manager_height (tiles),
 			      layer_type,

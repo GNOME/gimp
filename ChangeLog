@@ -1,3 +1,28 @@
+2001-07-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/appenv.h
+	* app/main.c: removed "use_mmx" and the MMX detection.
+
+	* app/base/Makefile.am: build the MMX detection unconditionally
+	as it's already #ifdef'ed in the source.
+
+	* app/base/detect-mmx.h: added a header for detect-mmx.S
+
+	* app/base/base-config.[ch]: added the "use_mmx" boolean.
+
+	* app/base/base.c: call intel_cpu_features() here.
+
+	* app/paint-funcs/paint-funcs.c: #include "base/base-config.h".
+
+	* app/floating_sel.c
+	* app/core/gimpimage.c: removed commented out cruft.
+
+	* app/core/gimplayer.c: gimp_layer_new_from_tiles(): pass the
+	gimage instead of NULL to gimp_layer_new() because layers have to
+	be created in an image context now
+	(checked gimp_layer_new_from_tile()'s callers if this is
+	semantically correct).
+
 2001-07-12  Dave Neary  <dneary@eircom.net>
 
 	* po/POTFILES.in: One line fix to fix dependency problem.

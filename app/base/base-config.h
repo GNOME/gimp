@@ -34,6 +34,7 @@ struct _GimpBaseConfig
 
 
 extern GimpBaseConfig *base_config;
+extern gboolean        use_mmx;
 
 
 #endif  /*  __BASE_CONFIG_H__  */

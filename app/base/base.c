@@ -40,6 +40,7 @@
 
 #include "base.h"
 #include "base-config.h"
+#include "detect-mmx.h"
 #include "temp-buf.h"
 #include "tile-swap.h"
 
@@ -55,6 +56,11 @@ void
 base_init (void)
 {
   gchar *path;
+
+#ifdef HAVE_ASM_MMX
+  use_mmx = (intel_cpu_features() & (1 << 23)) ? 1 : 0;
+  g_print ("using MMX: %s\n", use_mmx ? "yes" : "no");
+#endif  
 
   toast_old_temp_files ();
 

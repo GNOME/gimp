@@ -2,13 +2,6 @@
 
 noinst_LIBRARIES = libappbase.a
 
-if HAVE_ASM_MMX
-mmx_sources = \
-	detect-mmx.S
-else
-mmx_sources =
-endif
-
 libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	base.c			\
 	base.h			\
@@ -19,6 +12,8 @@ libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	boundary.h		\
 	brush-scale.c		\
 	brush-scale.h		\
+	detect-mmx.S		\
+	detect-mmx.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\
@@ -45,12 +40,10 @@ libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	tile-manager-crop.h	\
 	tile-swap.c		\
 	tile-swap.h		\
-	$(mmx_sources)		\
 @STRIP_END@
 
 EXTRA_DIST = \
-	makefile.msc		\
-	detect-mmx.S
+	makefile.msc
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
