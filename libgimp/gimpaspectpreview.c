@@ -149,15 +149,54 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
                                  const guchar *buffer,
                                  gint          rowstride)
 {
-  GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
+  GimpDrawable *drawable     = GIMP_ASPECT_PREVIEW (preview)->drawable;
+  gint32        image_id;
 
-  if (drawable)
-    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
-                            0, 0,
-                            preview->width, preview->height,
-                            gimp_drawable_type (drawable->drawable_id),
-                            buffer,
-                            rowstride);
+  image_id = gimp_drawable_get_image (drawable->drawable_id);
+
+  if (gimp_selection_is_empty (image_id))
+    {
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                              0, 0,
+                              preview->width, preview->height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buffer,
+                              rowstride);
+    }
+  else
+    {
+      guchar *sel;
+      guchar *src;
+      gint    selection_id;
+      gint    width, height, bpp;
+
+      selection_id = gimp_image_get_selection (image_id);
+      bpp = gimp_drawable_bpp (drawable->drawable_id);
+
+      width  = preview->width;
+      height = preview->height;
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bpp);
+      bpp = 1;
+      sel = gimp_drawable_get_thumbnail_data (selection_id,
+                                              &width, &height, &bpp);
+
+/*      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                              0, 0,
+                              preview->width, preview->height,
+                              GIMP_GRAY_IMAGE,
+                              sel,
+                              preview->width);*/
+      gimp_preview_area_mask (GIMP_PREVIEW_AREA (preview->area),
+                              0, 0, preview->width, preview->height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              src, width * drawable->bpp,
+                              buffer, rowstride,
+                              sel, width);
+
+      g_free (sel);
+      g_free (src);
+    }
 }
 
 GtkWidget *

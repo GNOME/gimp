@@ -1,5 +1,11 @@
 2004-10-04  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimpaspectpreview.c: (gimp_aspect_preview_draw_buffer) only
+	apply the effect inside the current selection. This, together with my
+	previous commit fixes bug #132194.
+
+2004-10-04  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/channel_mixer.c: Ported to GimpAspectPreview. This
 	addresses but not totally fixes bug #132194.
 
