@@ -1,10 +1,11 @@
-# Norwegian (Nynorsk) KDE translation.
+# Norwegian (nynorsk) translation of gimp.
 # Copyright (C) 2000 Gaute Hvoslef Kvalnes.
 # Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>, 2000.
-#
+# Kjartan Maraas  <kmaraas@gnome.org>, 2001.
+
 msgid ""
 msgstr ""
-"Project-Id-Version: KDE PIM/abbrowser\n"
+"Project-Id-Version: gimp 1.2.2\n"
 "POT-Creation-Date: 2001-05-22 12:56+0200\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -14,14 +15,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:137
-#, fuzzy
 msgid "About the GIMP"
-msgstr "Om &Qt"
+msgstr "Om GIMP"
 
 #. this is a font, provide only one single font definition
 #: app/about_dialog.c:199
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:209
 #, c-format
@@ -45,7 +45,7 @@ msgstr "Professor"
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:272
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
 msgid "The GIMP"
@@ -54,7 +54,7 @@ msgstr ""
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:290
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
@@ -89,15 +89,13 @@ msgstr "Pensel"
 
 #. initialize the list of gimp brushes
 #: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
-#, fuzzy
 msgid "Patterns"
-msgstr "MÃ¸nster"
+msgstr "Mønster"
 
 #. initialize the list of gimp patterns
 #: app/app_procs.c:575 app/preferences_dialog.c:2547
-#, fuzzy
 msgid "Palettes"
-msgstr "&Palett"
+msgstr "Palettar"
 
 #. initialize the list of gimp palettes
 #: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
@@ -182,7 +180,7 @@ msgstr "Overgang"
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
-msgstr "LineÃ¦r"
+msgstr "Lineær"
 
 #: app/blend.c:326
 msgid "Bi-Linear"
@@ -239,17 +237,15 @@ msgstr "Ingen"
 #: app/blend.c:348
 #, fuzzy
 msgid "Sawtooth Wave"
-msgstr "Sagtann-bÃ¸lgje"
+msgstr "Sagtann-bølgje"
 
 #: app/blend.c:349
-#, fuzzy
 msgid "Triangular Wave"
-msgstr "TriangulÂµr bÃ¸lgje"
+msgstr "Triangulær bølgje"
 
 #: app/blend.c:353
-#, fuzzy
 msgid "Repeat:"
-msgstr "&Repeter:"
+msgstr "Repeter:"
 
 #: app/blend.c:372
 msgid "Adaptive Supersampling"
@@ -334,12 +330,12 @@ msgstr "Kontrast"
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
-msgstr "FÃ¸rehandsvising"
+msgstr "Førehandsvising"
 
 #: app/brush_edit.c:227
 #, fuzzy
 msgid "Brush Editor"
-msgstr "&PenselverktÃ¸y"
+msgstr "&Penselverktøy"
 
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
@@ -367,7 +363,7 @@ msgstr "Kontrast:"
 #: app/brush_edit.c:317
 #, fuzzy
 msgid "Aspect Ratio:"
-msgstr " HÃ¸ve "
+msgstr " Høve "
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:322 app/rotate_tool.c:93
 msgid "Angle:"
@@ -453,7 +449,7 @@ msgstr "Einsfarga fyll"
 
 #: app/bucket_fill.c:169
 msgid "Pattern Fill"
-msgstr "MÃ¸nstra fyll"
+msgstr "Mønstra fyll"
 
 #: app/bucket_fill.c:248
 #, fuzzy
@@ -489,7 +485,7 @@ msgstr "Legg til"
 
 #: app/by_color_select.c:792 app/layers_dialog.c:386 app/tool_options.c:931
 msgid "Subtract"
-msgstr "Trekk frÃ¥"
+msgstr "Trekk frå"
 
 #: app/by_color_select.c:793
 #, fuzzy
@@ -593,9 +589,8 @@ msgid ""
 msgstr ""
 
 #: app/channels_dialog.c:255
-#, fuzzy
 msgid "Delete Channel"
-msgstr "BlÃ¥ kanal:"
+msgstr "Slett kanal"
 
 #: app/channels_dialog.c:1211
 #, fuzzy
@@ -610,12 +605,12 @@ msgstr "Raud"
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
 #: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
 msgid "Green"
-msgstr "GrÃ¸n"
+msgstr "Grøn"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
 #: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
 msgid "Blue"
-msgstr "BlÃ¥"
+msgstr "Blå"
 
 #: app/channels_dialog.c:1452
 #, fuzzy
@@ -738,7 +733,7 @@ msgstr "Gul"
 #: app/color_balance.c:442
 #, fuzzy
 msgid "Preserve Luminosity"
-msgstr "Ta vare pÃ¥ lÃ¸yve"
+msgstr "Ta vare på løyve"
 
 #: app/color_notebook.c:120
 #, fuzzy
@@ -766,19 +761,16 @@ msgid "Update Active Color"
 msgstr "Oppdater fargar"
 
 #: app/color_picker.c:261 app/color_picker.c:270
-#, fuzzy
 msgid "Red:"
-msgstr "&Raud:"
+msgstr "Raud:"
 
 #: app/color_picker.c:262 app/color_picker.c:271
-#, fuzzy
 msgid "Green:"
-msgstr "&GrÃ¸n:"
+msgstr "Grøn:"
 
 #: app/color_picker.c:263 app/color_picker.c:272
-#, fuzzy
 msgid "Blue:"
-msgstr "B&lÃ¥:"
+msgstr "Blå:"
 
 #: app/color_picker.c:264 app/color_picker.c:273 app/color_picker.c:279
 #, fuzzy
@@ -813,35 +805,31 @@ msgstr "Intensitet:"
 #: app/info_window.c:428 app/info_window.c:429 app/info_window.c:430
 #: app/info_window.c:431 app/info_window.c:453
 msgid "N/A"
-msgstr ""
+msgstr "I/T"
 
 #: app/color_select.c:242
-#, fuzzy
 msgid "H"
-msgstr "Hz"
+msgstr "H"
 
 #: app/color_select.c:243
 msgid "S"
 msgstr "S"
 
 #: app/color_select.c:244
-#, fuzzy
 msgid "V"
-msgstr "KV"
+msgstr "V"
 
 #: app/color_select.c:245 app/hue_saturation.c:361
 msgid "R"
 msgstr "L"
 
 #: app/color_select.c:246 app/hue_saturation.c:363
-#, fuzzy
 msgid "G"
-msgstr "GÃ¥"
+msgstr "G"
 
 #: app/color_select.c:247 app/hue_saturation.c:365
-#, fuzzy
 msgid "B"
-msgstr "MB"
+msgstr "B"
 
 #: app/color_select.c:251 app/layers_dialog.c:389 app/paint_funcs.c:99
 #: app/tool_options.c:934
@@ -866,9 +854,8 @@ msgstr "Indeksering ferdig."
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:206 app/lc_dialog.c:149
-#, fuzzy
 msgid "Image:"
-msgstr "Bilete"
+msgstr "Bilete:"
 
 #: app/colormap_dialog.i.c:979 app/lc_dialog.c:658
 msgid "none"
@@ -877,12 +864,12 @@ msgstr "ingen"
 #: app/commands.c:340
 #, fuzzy
 msgid "Feather Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/commands.c:343
 #, fuzzy
 msgid "Feather Selection by:"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/commands.c:376
 #, fuzzy
@@ -902,7 +889,7 @@ msgstr "Vis sidekantar"
 #: app/commands.c:410
 #, fuzzy
 msgid "Grow Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/commands.c:413
 #, fuzzy
@@ -912,12 +899,12 @@ msgstr "Utval:"
 #: app/commands.c:433
 #, fuzzy
 msgid "Border Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/commands.c:436
 #, fuzzy
 msgid "Border Selection by:"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -995,7 +982,7 @@ msgstr "Bruk &nettverkstransparens"
 #: app/convert.c:766
 #, fuzzy
 msgid "[ Warning ]"
-msgstr "Ã…tvaring"
+msgstr "Åtvaring"
 
 #: app/convert.c:776
 msgid ""
@@ -1018,7 +1005,7 @@ msgstr "Kodetype"
 #: app/convolve.c:191
 #, fuzzy
 msgid "Blur"
-msgstr "BlÃ¥"
+msgstr "Blå"
 
 #: app/convolve.c:193
 #, fuzzy
@@ -1044,7 +1031,7 @@ msgstr ""
 #: app/crop.c:217 app/flip_tool.c:92 app/magnify.c:138
 #, fuzzy
 msgid "Tool Toggle"
-msgstr "VerktÃ¸ytips"
+msgstr "Verktøytips"
 
 #: app/crop.c:221 app/crop.c:1070
 msgid "Crop"
@@ -1085,7 +1072,7 @@ msgstr "Breidd:"
 #: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
-msgstr "HÃ¸gd:"
+msgstr "Høgd:"
 
 #: app/crop.c:1121
 #, fuzzy
@@ -1157,7 +1144,7 @@ msgstr ""
 #: app/paths_dialog.c:1908
 #, fuzzy, c-format
 msgid "Unable to open file %s"
-msgstr "Kan ikkje dÃ¸ypa om fil."
+msgstr "Kan ikkje døypa om fil."
 
 #: app/desaturate.c:43
 msgid "Desaturate operates only on RGB color drawables."
@@ -1186,7 +1173,7 @@ msgstr ""
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "SÃ¸ker etter valt tekst i hjelpetekstane"
+msgstr "Søker etter valt tekst i hjelpetekstane"
 
 #: app/docindex.c:125
 msgid ""
@@ -1197,7 +1184,7 @@ msgstr ""
 #: app/docindex.c:129
 #, fuzzy
 msgid "Remove the selected entry from the index"
-msgstr "Fjern det valte programmet frÃ¥ lista"
+msgstr "Fjern det valte programmet frå lista"
 
 #: app/docindex.c:770
 #, fuzzy
@@ -1252,7 +1239,7 @@ msgstr "Vanskeleg 1"
 #: app/eraser.c:122 app/paint_funcs.c:106
 #, fuzzy
 msgid "Anti Erase"
-msgstr "SnÃ¸ggsletting"
+msgstr "Snøggsletting"
 
 #: app/errorconsole.c:173
 #, fuzzy, c-format
@@ -1327,7 +1314,7 @@ msgstr "Pikslar"
 #: app/file_new_dialog.c:529 app/resize.c:598
 #, fuzzy
 msgid "Resolution X:"
-msgstr "OpplÃ¸ysing"
+msgstr "Oppløysing"
 
 #: app/file_new_dialog.c:550 app/resize.c:619
 #, fuzzy
@@ -1356,7 +1343,7 @@ msgstr "Lag ny filtype"
 msgid ""
 "Generate\n"
 "Preview"
-msgstr "Aktiver fÃ¸rehandsvising"
+msgstr "Aktiver førehandsvising"
 
 #: app/fileops.c:416
 #, fuzzy
@@ -1487,7 +1474,7 @@ msgstr "Miniatyrvisar"
 #: app/fileops.c:1459
 #, fuzzy
 msgid "No preview available"
-msgstr "Orsak, fÃ¸rehandsvising er ikkje tilgjengeleg."
+msgstr "Orsak, førehandsvising er ikkje tilgjengeleg."
 
 #: app/fileops.c:1568
 #, fuzzy
@@ -1513,7 +1500,7 @@ msgstr "Fil-liste"
 
 #: app/fileops.c:1956
 msgid "Revert"
-msgstr "GÃ¥ tilbake"
+msgstr "Gå tilbake"
 
 #: app/fileops.c:1970
 #, fuzzy, c-format
@@ -1562,12 +1549,12 @@ msgstr "GB"
 #: app/gdisplay.c:240
 #, fuzzy
 msgid "grayscale-empty"
-msgstr "GrÃ¥tonar"
+msgstr "Gråtonar"
 
 #: app/gdisplay.c:240
 #, fuzzy
 msgid "grayscale"
-msgstr "GrÃ¥tonar"
+msgstr "Gråtonar"
 
 #: app/gdisplay.c:243
 #, fuzzy
@@ -1688,7 +1675,7 @@ msgstr "utan namn"
 #: app/gimpdrawable.c:769
 #, fuzzy, c-format
 msgid "Layer type %d not supported."
-msgstr "SprÃ¥ket er ikkje stÃ¸tta."
+msgstr "Språket er ikkje støtta."
 
 #: app/gimphelp.c:191
 #, fuzzy
@@ -1718,7 +1705,7 @@ msgstr ""
 #: app/gimpimage.c:2378
 #, fuzzy
 msgid "Layer is already on top"
-msgstr "Sist lest pÃ¥:"
+msgstr "Sist lest på:"
 
 #: app/gimpimage.c:2384
 msgid "Can't raise Layer without alpha"
@@ -1727,7 +1714,7 @@ msgstr ""
 #: app/gimpimage.c:2412
 #, fuzzy
 msgid "Layer is already on bottom"
-msgstr "%1 er alt oppfÃ¸rt i tilgangslista."
+msgstr "%1 er alt oppført i tilgangslista."
 
 #: app/gimpimage.c:2467
 msgid "BG has no alpha, layer was placed above"
@@ -1805,7 +1792,7 @@ msgstr ""
 #: app/gimprc.c:1452
 #, fuzzy
 msgid "error parsing pluginrc"
-msgstr "feil ved kÃ¸yring av gpg"
+msgstr "feil ved køyring av gpg"
 
 #: app/gimprc.c:2927
 #, fuzzy, c-format
@@ -1837,7 +1824,7 @@ msgstr "Repeterer %1 gongar"
 #: app/gimpui.c:100
 #, fuzzy
 msgid "Message repeated once"
-msgstr "Min meldingsutsjÃ¥nad"
+msgstr "Min meldingsutsjånad"
 
 #: app/gimpui.c:114
 msgid ""
@@ -1936,7 +1923,7 @@ msgstr "Noverande namn:"
 #: app/global_edit.c:873 app/global_edit.c:905
 #, fuzzy
 msgid "Enter a name for this buffer"
-msgstr "Oppgi eit namn pÃ¥ profilen."
+msgstr "Oppgi eit namn på profilen."
 
 #: app/global_edit.c:902
 #, fuzzy
@@ -2011,7 +1998,7 @@ msgstr "Gradvis overgang"
 #: app/gradient.c:1011 app/gradient.c:1879
 #, fuzzy
 msgid "Delete Gradient"
-msgstr "Fjern oppfÃ¸ring"
+msgstr "Fjern oppføring"
 
 #: app/gradient.c:1019
 #, fuzzy
@@ -2027,7 +2014,7 @@ msgstr "Lagra som"
 #: app/gradient.c:1045
 #, fuzzy
 msgid "Zoom all"
-msgstr "ForstÃ¸rr"
+msgstr "Forstørr"
 
 #: app/gradient.c:1096
 #, fuzzy
@@ -2046,7 +2033,7 @@ msgstr "Gradvis overgang"
 #: app/gradient.c:1667
 #, fuzzy
 msgid "Enter a name for the new gradient"
-msgstr "Oppgi eit namn pÃ¥ profilen."
+msgstr "Oppgi eit namn på profilen."
 
 #: app/gradient.c:1668
 msgid "untitled"
@@ -2060,24 +2047,24 @@ msgstr "Gradvis overgang"
 #: app/gradient.c:1728
 #, fuzzy
 msgid "Enter a name for the copied gradient"
-msgstr "Oppgi eit namn pÃ¥ profilen."
+msgstr "Oppgi eit namn på profilen."
 
 #: app/gradient.c:1811
 #, fuzzy
 msgid "Rename gradient"
-msgstr "Endra namn pÃ¥ identitet"
+msgstr "Endra namn på identitet"
 
 #: app/gradient.c:1814
 #, fuzzy
 msgid "Enter a new name for the gradient"
-msgstr "Oppgi eit nytt namn pÃ¥ gruppa."
+msgstr "Oppgi eit nytt namn på gruppa."
 
 #: app/gradient.c:1874 app/palette.c:1816
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
-msgstr "Er du sikker pÃ¥ at du vil sletta denne overfÃ¸ringa?"
+msgstr "Er du sikker på at du vil sletta denne overføringa?"
 
 #: app/gradient.c:2102
 #, c-format
@@ -2193,7 +2180,7 @@ msgstr ""
 #: app/gradient.c:3839
 #, fuzzy
 msgid "Delete segment"
-msgstr "Fjern oppfÃ¸ring"
+msgstr "Fjern oppføring"
 
 #: app/gradient.c:3841
 msgid "Re-center segment's midpoint"
@@ -2279,7 +2266,7 @@ msgstr "Stad"
 #: app/gradient.c:4956
 #, fuzzy
 msgid "Please select the number of uniform parts"
-msgstr "Velg type stÃ¸y."
+msgstr "Velg type støy."
 
 #: app/gradient.c:4962
 #, fuzzy
@@ -2307,7 +2294,7 @@ msgstr "Lag kopi"
 #: app/gradient.c:5516
 #, fuzzy
 msgid "Please select the number of times"
-msgstr "Velg type stÃ¸y."
+msgstr "Velg type støy."
 
 #: app/gradient.c:5521
 #, fuzzy
@@ -2323,7 +2310,7 @@ msgstr "Vil du verkeleg sletta dei valte elementa?"
 #: app/gradient_select.c:152
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #. The shell and main vbox
 #: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
@@ -2425,7 +2412,7 @@ msgstr ""
 #: app/image_new.c:69 app/info_window.c:71 app/info_window.c:540
 #: app/preferences_dialog.c:1654
 msgid "Grayscale"
-msgstr "GrÃ¥tonar"
+msgstr "Gråtonar"
 
 #: app/image_new.c:75 app/layers_dialog.c:3662
 msgid "Foreground"
@@ -2545,7 +2532,7 @@ msgstr "Dimensjonar"
 #: app/info_window.c:284
 #, fuzzy
 msgid "Resolution:"
-msgstr "OpplÃ¸ysing"
+msgstr "Oppløysing"
 
 #: app/info_window.c:286
 #, fuzzy
@@ -2745,7 +2732,7 @@ msgstr "Stiar"
 #: app/internal_procs.c:137
 #, fuzzy
 msgid "Pattern UI"
-msgstr "MÃ¸nster"
+msgstr "Mønster"
 
 #: app/internal_procs.c:143
 #, fuzzy
@@ -2770,7 +2757,7 @@ msgstr "Brukarprosessar"
 #: app/internal_procs.c:155
 #, fuzzy
 msgid "Tool procedures"
-msgstr "&VerktÃ¸yeigenskapar ..."
+msgstr "&Verktøyeigenskapar ..."
 
 #: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
@@ -2833,7 +2820,7 @@ msgstr "Ankertaggar"
 #: app/layers_dialog.c:292
 #, fuzzy
 msgid "Delete Layer"
-msgstr "Fjern oppfÃ¸ring"
+msgstr "Fjern oppføring"
 
 #: app/layers_dialog.c:378 app/paint_funcs.c:88 app/tool_options.c:922
 msgid "Normal"
@@ -2841,7 +2828,7 @@ msgstr "Normal"
 
 #: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:923
 msgid "Dissolve"
-msgstr "OpplÃ¸ys"
+msgstr "Oppløys"
 
 #: app/layers_dialog.c:380 app/paint_funcs.c:91 app/tool_options.c:925
 #, fuzzy
@@ -2869,19 +2856,17 @@ msgid "Addition"
 msgstr "Legg til"
 
 #: app/layers_dialog.c:387 app/paint_funcs.c:97 app/tool_options.c:932
-#, fuzzy
 msgid "Darken Only"
-msgstr "Gjer berre mÃ¸rkare"
+msgstr "Gjer berre mørkare"
 
 #: app/layers_dialog.c:388 app/paint_funcs.c:98 app/tool_options.c:933
-#, fuzzy
 msgid "Lighten Only"
 msgstr "Gjer berre lysare"
 
 #: app/layers_dialog.c:403
 #, fuzzy
 msgid "Keep Trans."
-msgstr "Ta vare pÃ¥ overfÃ¸ring"
+msgstr "Ta vare på overføring"
 
 #: app/layers_dialog.c:412
 #, fuzzy
@@ -2946,7 +2931,7 @@ msgstr ""
 #: app/layers_dialog.c:3857
 #, fuzzy
 msgid "Black (Full Transparency)"
-msgstr "ViskelÃ¦r (gjennomsiktig)"
+msgstr "Viskelær (gjennomsiktig)"
 
 #: app/layers_dialog.c:3859
 #, fuzzy
@@ -2979,7 +2964,7 @@ msgstr ""
 #: app/layers_dialog.c:4126
 #, fuzzy
 msgid "Clipped to image"
-msgstr "Tid gÃ¥tt:"
+msgstr "Tid gått:"
 
 #: app/layers_dialog.c:4128
 #, fuzzy
@@ -3007,7 +2992,7 @@ msgstr "Kanalar"
 #: app/levels.c:200 app/levels.c:341 app/tools.c:1194
 #, fuzzy
 msgid "Levels"
-msgstr "NivÃ¥"
+msgstr "Nivå"
 
 #: app/levels.c:244
 msgid "Levels for indexed drawables cannot be adjusted."
@@ -3030,7 +3015,7 @@ msgstr "Ut-fil:"
 #: app/levels.c:1088
 #, fuzzy
 msgid "Load Levels"
-msgstr "&Last nivÃ¥ ..."
+msgstr "&Last nivå ..."
 
 #: app/levels.c:1103
 #, fuzzy
@@ -3040,12 +3025,12 @@ msgstr "Lagra som"
 #: app/levels.c:1432
 #, fuzzy
 msgid "Load/Save Levels"
-msgstr "&Last nivÃ¥ ..."
+msgstr "&Last nivå ..."
 
 #: app/magnify.c:117
 #, fuzzy
 msgid "Magnify Tool"
-msgstr "HovudverktÃ¸ylinje"
+msgstr "Hovudverktøylinje"
 
 #: app/magnify.c:127
 #, fuzzy
@@ -3172,7 +3157,7 @@ msgstr ""
 #: app/measure.c:126 app/measure.c:319
 #, fuzzy
 msgid "Measure Tool"
-msgstr "KlasseverktÃ¸y"
+msgstr "Klasseverktøy"
 
 #: app/measure.c:135
 #, fuzzy
@@ -3184,9 +3169,8 @@ msgid "Distance:"
 msgstr "Avstand:"
 
 #: app/measure.c:512 app/measure.c:517 app/measure.c:525 app/measure.c:553
-#, fuzzy
 msgid "degrees"
-msgstr "grÃ¸n"
+msgstr "grader"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
@@ -3231,7 +3215,7 @@ msgstr ""
 #: app/menus.c:131
 #, fuzzy
 msgid "/File/Dialogs/Patterns..."
-msgstr "FilnamnmÃ¸nster"
+msgstr "Filnamnmønster"
 
 #: app/menus.c:133
 msgid "/File/Dialogs/Gradients..."
@@ -3426,7 +3410,7 @@ msgstr "Velg ..."
 #: app/menus.c:290
 #, fuzzy
 msgid "/Select/Sharpen"
-msgstr "Merk omrÃ¥de"
+msgstr "Merk område"
 
 #: app/menus.c:292
 #, fuzzy
@@ -3451,7 +3435,7 @@ msgstr ""
 #: app/menus.c:306
 #, fuzzy
 msgid "/View/Zoom In"
-msgstr "ForstÃ¸rr"
+msgstr "Forstørr"
 
 #: app/menus.c:308
 #, fuzzy
@@ -3521,12 +3505,12 @@ msgstr ""
 #: app/menus.c:348
 #, fuzzy
 msgid "/View/Toggle Statusbar"
-msgstr "&Statuslinje av/pÃ¥"
+msgstr "&Statuslinje av/på"
 
 #: app/menus.c:350
 #, fuzzy
 msgid "/View/Toggle Guides"
-msgstr "SlÃ¥ av/pÃ¥ &rutenett"
+msgstr "Slå av/på &rutenett"
 
 #: app/menus.c:352
 #, fuzzy
@@ -3550,7 +3534,7 @@ msgstr ""
 #: app/menus.c:366
 #, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "GrÃ¥tonar"
+msgstr "Gråtonar"
 
 #: app/menus.c:368
 msgid "/Image/Mode/Indexed..."
@@ -3667,7 +3651,7 @@ msgstr "A&lfa-kanal:"
 #: app/menus.c:467
 #, fuzzy
 msgid "/Layers/Alpha to Selection"
-msgstr "&Snu om pÃ¥ merking"
+msgstr "&Snu om på merking"
 
 #. <Image>/Tools
 #: app/menus.c:475
@@ -3810,7 +3794,7 @@ msgstr "&Filter"
 #: app/menus.c:569
 #, fuzzy
 msgid "/Filters/Animation"
-msgstr "&GÃ¸ymeanimasjon"
+msgstr "&Gøymeanimasjon"
 
 #: app/menus.c:571
 #, fuzzy
@@ -3867,7 +3851,7 @@ msgstr "Ankertaggar"
 #: app/menus.c:633
 #, fuzzy
 msgid "/Delete Layer"
-msgstr "Fjern oppfÃ¸ring"
+msgstr "Fjern oppføring"
 
 #: app/menus.c:638
 msgid "/Layer Boundary Size..."
@@ -3905,12 +3889,12 @@ msgstr "Legg til lag"
 #: app/menus.c:658
 #, fuzzy
 msgid "/Apply Layer Mask"
-msgstr "TilfÃ¸y stilar"
+msgstr "Tilføy stilar"
 
 #: app/menus.c:660
 #, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "Slett overfÃ¸ring"
+msgstr "Slett overføring"
 
 #: app/menus.c:662
 #, fuzzy
@@ -3925,7 +3909,7 @@ msgstr "A&lfa-kanal:"
 #: app/menus.c:669
 #, fuzzy
 msgid "/Alpha to Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/menus.c:674
 #, fuzzy
@@ -3955,7 +3939,7 @@ msgstr "Oppdater side"
 #: app/menus.c:696
 #, fuzzy
 msgid "/Channel to Selection"
-msgstr "&Snu om pÃ¥ merking"
+msgstr "&Snu om på merking"
 
 #: app/menus.c:698
 #, fuzzy
@@ -3970,12 +3954,12 @@ msgstr "Val av spor"
 #: app/menus.c:702
 #, fuzzy
 msgid "/Intersect with Selection"
-msgstr "&Snu om pÃ¥ merking"
+msgstr "&Snu om på merking"
 
 #: app/menus.c:707
 #, fuzzy
 msgid "/Delete Channel"
-msgstr "BlÃ¥ kanal:"
+msgstr "Blå kanal:"
 
 #: app/menus.c:712
 #, fuzzy
@@ -3985,7 +3969,7 @@ msgstr "Rediger organisasjonsinfo"
 #: app/menus.c:723
 #, fuzzy
 msgid "/New Path"
-msgstr "Nytt mÃ¸nster"
+msgstr "Nytt mønster"
 
 #: app/menus.c:725
 #, fuzzy
@@ -3995,7 +3979,7 @@ msgstr "Oppdater side"
 #: app/menus.c:727
 #, fuzzy
 msgid "/Path to Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/menus.c:729
 #, fuzzy
@@ -4060,7 +4044,7 @@ msgstr "Feil ved lasting"
 #: app/module_db.c:69
 #, fuzzy
 msgid "Unload requested"
-msgstr "Snakking fÃ¸respurd ..."
+msgstr "Snakking førespurd ..."
 
 #: app/module_db.c:70
 msgid "Unloaded OK"
@@ -4148,7 +4132,7 @@ msgstr "Animasjon ved oppstart"
 #: app/move.c:500
 #, fuzzy
 msgid "Move Tool"
-msgstr "&FlytteverktÃ¸y"
+msgstr "&Flytteverktøy"
 
 #. create the info dialog
 #: app/nav_window.c:1308
@@ -4177,7 +4161,7 @@ msgstr "Subtraksjon"
 
 #: app/paint_funcs.c:104
 msgid "Erase"
-msgstr "ViskelÃ¦r"
+msgstr "Viskelær"
 
 #: app/paintbrush.c:224
 #, fuzzy
@@ -4278,12 +4262,12 @@ msgstr "Udefinert"
 #: app/palette.c:1763
 #, fuzzy
 msgid "New Palette"
-msgstr "Nytt mÃ¸nster"
+msgstr "Nytt mønster"
 
 #: app/palette.c:1766
 #, fuzzy
 msgid "Enter a name for new palette"
-msgstr "Oppgi eit namn pÃ¥ profilen."
+msgstr "Oppgi eit namn på profilen."
 
 #: app/palette.c:1820
 #, fuzzy
@@ -4298,7 +4282,7 @@ msgstr "&Palett"
 #: app/palette.c:1902
 #, fuzzy
 msgid "Enter a name for merged palette"
-msgstr "Oppgi eit namn pÃ¥ profilen."
+msgstr "Oppgi eit namn på profilen."
 
 #: app/palette.c:2048
 #, fuzzy
@@ -4381,7 +4365,7 @@ msgstr "Fleirval"
 #: app/paths_dialog.c:167
 #, fuzzy
 msgid "New Path"
-msgstr "Nytt mÃ¸nster"
+msgstr "Nytt mønster"
 
 #: app/paths_dialog.c:171
 #, fuzzy
@@ -4391,7 +4375,7 @@ msgstr "Oppdater side"
 #: app/paths_dialog.c:175
 #, fuzzy
 msgid "Path to Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/paths_dialog.c:179
 #, fuzzy
@@ -4440,7 +4424,7 @@ msgstr " attributtar"
 #: app/paths_dialog.c:992
 #, fuzzy
 msgid "Enter a new name for the path"
-msgstr "Oppgi eit nytt namn pÃ¥ gruppa."
+msgstr "Oppgi eit nytt namn på gruppa."
 
 #: app/paths_dialog.c:1923
 #, fuzzy, c-format
@@ -4645,7 +4629,7 @@ msgstr ""
 #, fuzzy
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr ""
-"KDE mÃ¥ startast om att for at endringa i peikarstorleik kan aktiverast"
+"KDE må startast om att for at endringa i peikarstorleik kan aktiverast"
 
 #: app/preferences_dialog.c:1044
 #, c-format
@@ -4676,7 +4660,7 @@ msgstr "Breidd"
 
 #: app/preferences_dialog.c:1554
 msgid "Height"
-msgstr "HÃ¸gd"
+msgstr "Høgd"
 
 #: app/preferences_dialog.c:1584
 msgid "Default Image Resolution and Resolution Unit"
@@ -4695,7 +4679,7 @@ msgstr "Standard bandstorleik:"
 #: app/preferences_dialog.c:1670
 #, fuzzy
 msgid "Maximum Image Size:"
-msgstr "HÃ¸gste storleik pÃ¥ fÃ¸respurnad"
+msgstr "Høgste storleik på førespurnad"
 
 #: app/preferences_dialog.c:1675 app/preferences_dialog.c:1677
 #, fuzzy
@@ -4728,7 +4712,7 @@ msgstr ""
 #: app/preferences_dialog.c:1736
 #, fuzzy
 msgid "Dark Checks"
-msgstr "MÃ¸rke felt"
+msgstr "Mørke felt"
 
 #: app/preferences_dialog.c:1737
 #, fuzzy
@@ -4778,7 +4762,7 @@ msgstr "Vis"
 #: app/preferences_dialog.c:1780
 #, fuzzy
 msgid "Minimum Number of Colors:"
-msgstr "Tal pÃ¥ fargar:"
+msgstr "Tal på fargar:"
 
 #: app/preferences_dialog.c:1783
 #, fuzzy
@@ -4802,12 +4786,12 @@ msgstr "&Enorm"
 #: app/preferences_dialog.c:1849
 #, fuzzy
 msgid "Preview Size:"
-msgstr "FÃ¸rehandsvis i"
+msgstr "Førehandsvis i"
 
 #: app/preferences_dialog.c:1862
 #, fuzzy
 msgid "Nav Preview Size:"
-msgstr "FÃ¸rehandsvis i"
+msgstr "Førehandsvis i"
 
 #: app/preferences_dialog.c:1872
 #, fuzzy
@@ -4816,9 +4800,8 @@ msgstr "Nyleg brukte dokument"
 
 #. Indicators
 #: app/preferences_dialog.c:1876
-#, fuzzy
 msgid "Toolbox"
-msgstr "VerktÃ¸ylinje"
+msgstr "Verktøyskrin"
 
 #: app/preferences_dialog.c:1879
 msgid "Display Brush, Pattern and Gradient Indicators"
@@ -4840,13 +4823,12 @@ msgid "Info Window Follows Mouse"
 msgstr "Infovindauge"
 
 #: app/preferences_dialog.c:1910 app/preferences_dialog.c:1912
-#, fuzzy
 msgid "Help System"
-msgstr "Basesystem"
+msgstr "Hjelpsystem"
 
 #: app/preferences_dialog.c:1922
 msgid "Show Tool Tips"
-msgstr "Vis verktÃ¸ytips"
+msgstr "Vis verktøytips"
 
 #: app/preferences_dialog.c:1932
 msgid "Context Sensitive Help with \"F1\""
@@ -4870,7 +4852,7 @@ msgstr "Name=Netscape"
 #: app/preferences_dialog.c:1958
 #, fuzzy
 msgid "Help Browser to Use:"
-msgstr "GÃ¥ til ..."
+msgstr "Gå til ..."
 
 #: app/preferences_dialog.c:1963 app/preferences_dialog.c:1965
 #, fuzzy
@@ -4879,7 +4861,7 @@ msgstr "Snakkevindauge"
 
 #: app/preferences_dialog.c:1973
 msgid "Appearance"
-msgstr "UtsjÃ¥nad"
+msgstr "Utsjånad"
 
 #: app/preferences_dialog.c:1975
 msgid "Use \"Dot for Dot\" by default"
@@ -4993,7 +4975,7 @@ msgstr "Terskel:"
 
 #: app/preferences_dialog.c:2166 app/preferences_dialog.c:2168
 msgid "Environment"
-msgstr "MiljÃ¸"
+msgstr "Miljø"
 
 #: app/preferences_dialog.c:2176
 #, fuzzy
@@ -5017,7 +4999,7 @@ msgstr "Mellomlager&storleik:"
 #: app/preferences_dialog.c:2229
 #, fuzzy
 msgid "Number of Processors to Use:"
-msgstr "Tal pÃ¥ aktive prosessorar"
+msgstr "Tal på aktive prosessorar"
 
 #: app/preferences_dialog.c:2233 app/transform_tool.c:220
 msgid "Scaling"
@@ -5063,13 +5045,12 @@ msgid "\"File > Save\" Saves the Image:"
 msgstr ""
 
 #: app/preferences_dialog.c:2303
-#, fuzzy
 msgid "Session Management"
-msgstr "Namn pÃ¥ Ã¸kt"
+msgstr "Handsaming av økter"
 
 #: app/preferences_dialog.c:2305
 msgid "Session"
-msgstr "Ã˜kt"
+msgstr "Økt"
 
 #: app/preferences_dialog.c:2313
 #, fuzzy
@@ -5099,14 +5080,12 @@ msgid "Save Device Status on Exit"
 msgstr "Autolagra innstillingar ved avslutting"
 
 #: app/preferences_dialog.c:2359 app/preferences_dialog.c:2361
-#, fuzzy
 msgid "Monitor"
-msgstr "Ny monitor"
+msgstr "Skjerm"
 
 #: app/preferences_dialog.c:2369
-#, fuzzy
 msgid "Get Monitor Resolution"
-msgstr "Verts&opplÃ¸ysing"
+msgstr "Hent oppløysing for skjerm"
 
 #: app/preferences_dialog.c:2377
 #, c-format
@@ -5373,7 +5352,7 @@ msgstr ""
 #: app/resize.c:1391
 #, fuzzy
 msgid "Layer Too Small"
-msgstr "S&vÃ¦rt liten"
+msgstr "S&vært liten"
 
 #: app/resize.c:1395
 msgid ""
@@ -5426,7 +5405,7 @@ msgstr "Dato no"
 #: app/scale_tool.c:106
 #, fuzzy
 msgid "Scale Ratio X:"
-msgstr " HÃ¸ve "
+msgstr " Høve "
 
 #: app/scale_tool.c:509
 #, fuzzy
@@ -5445,13 +5424,13 @@ msgstr ""
 #: app/shear_tool.c:350
 #, fuzzy
 msgid "Shearing..."
-msgstr "SÃ¸ker ..."
+msgstr "Søker ..."
 
 #. Create the shell
 #: app/text_tool.c:156 app/text_tool.c:405
 #, fuzzy
 msgid "Text Tool"
-msgstr "Tekst-verktÃ¸ylinje"
+msgstr "Tekst-verktøylinje"
 
 #: app/text_tool.c:167 app/tool_options.c:239
 msgid "Antialiasing"
@@ -5520,7 +5499,7 @@ msgstr "Alltid vis denne dialogen ved oppstart"
 #: app/tips_dialog.c:178
 #, fuzzy
 msgid "Previous Tip"
-msgstr "FÃ¸rre"
+msgstr "Førre"
 
 #: app/tips_dialog.c:186
 msgid "Next Tip"
@@ -5542,7 +5521,7 @@ msgstr "Dett trekket er ikkje mogleg.\n"
 #: app/tool_options.c:150
 #, fuzzy
 msgid "Rectangular Selection"
-msgstr "&RektangulÃ¦rt utval"
+msgstr "&Rektangulært utval"
 
 #: app/tool_options.c:152
 #, fuzzy
@@ -5552,7 +5531,7 @@ msgstr "&Vertikal merking"
 #: app/tool_options.c:154
 #, fuzzy
 msgid "Free-Hand Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: app/tool_options.c:156
 #, fuzzy
@@ -5576,7 +5555,7 @@ msgstr "Kopier utval"
 #: app/tool_options.c:195
 #, fuzzy
 msgid "Feather"
-msgstr "StÃ¸rre enn"
+msgstr "Større enn"
 
 #: app/tool_options.c:316
 msgid "Fixed Size / Aspect Ratio"
@@ -5608,17 +5587,17 @@ msgstr "Skrivarar"
 #: app/tool_options.c:482 app/tools.c:713
 #, fuzzy
 msgid "Eraser"
-msgstr "ViskelÃ¦r"
+msgstr "Viskelær"
 
 #: app/tool_options.c:484 app/tools.c:741
 #, fuzzy
 msgid "Airbrush"
-msgstr "Spr&ayboksverktÃ¸y"
+msgstr "Spr&ayboksverktøy"
 
 #: app/tool_options.c:486
 #, fuzzy
 msgid "Clone Tool"
-msgstr "KlasseverktÃ¸y"
+msgstr "Klasseverktøy"
 
 #: app/tool_options.c:488
 #, fuzzy
@@ -5628,7 +5607,7 @@ msgstr "Konverterar"
 #: app/tool_options.c:490
 #, fuzzy
 msgid "Ink Tool"
-msgstr "IkonverktÃ¸y"
+msgstr "Ikonverktøy"
 
 #: app/tool_options.c:492 app/tools.c:853 app/tools.c:859
 msgid "Dodge or Burn"
@@ -5637,12 +5616,12 @@ msgstr ""
 #: app/tool_options.c:494
 #, fuzzy
 msgid "Smudge Tool"
-msgstr "Slett oppfÃ¸ringar"
+msgstr "Slett oppføringar"
 
 #: app/tool_options.c:609
 #, fuzzy
 msgid "Incremental"
-msgstr "&Inkrementelt sÃ¸k"
+msgstr "&Inkrementelt søk"
 
 #: app/tool_options.c:715
 #, fuzzy
@@ -5666,7 +5645,7 @@ msgstr "Roter"
 #: app/tools.c:153
 #, fuzzy
 msgid "Rect Select"
-msgstr "Merk omrÃ¥de"
+msgstr "Merk område"
 
 #: app/tools.c:154
 msgid "/Tools/Select Tools/Rect Select"
@@ -5675,7 +5654,7 @@ msgstr ""
 #: app/tools.c:159
 #, fuzzy
 msgid "Select rectangular regions"
-msgstr "Vel mÃ¥l"
+msgstr "Vel mål"
 
 #: app/tools.c:181
 #, fuzzy
@@ -5689,12 +5668,12 @@ msgstr ""
 #: app/tools.c:187
 #, fuzzy
 msgid "Select elliptical regions"
-msgstr "Vel mÃ¥l"
+msgstr "Vel mål"
 
 #: app/tools.c:209
 #, fuzzy
 msgid "Free Select"
-msgstr "Merk omrÃ¥de"
+msgstr "Merk område"
 
 #: app/tools.c:210
 msgid "/Tools/Select Tools/Free Select"
@@ -5721,7 +5700,7 @@ msgstr "Vel ikontype"
 #: app/tools.c:265
 #, fuzzy
 msgid "Bezier Select"
-msgstr "Merk omrÃ¥de"
+msgstr "Merk område"
 
 #: app/tools.c:266
 msgid "/Tools/Select Tools/Bezier Select"
@@ -5765,7 +5744,7 @@ msgstr ""
 #: app/tools.c:355
 #, fuzzy
 msgid "Zoom in & out"
-msgstr "ForstÃ¸rr"
+msgstr "Forstørr"
 
 #: app/tools.c:378
 msgid "/Tools/Transform Tools/Crop & Resize"
@@ -5810,7 +5789,7 @@ msgstr "Tekst"
 #: app/tools.c:546
 #, fuzzy
 msgid "/Tools/Text"
-msgstr "VerktÃ¸y"
+msgstr "Verktøy"
 
 #: app/tools.c:551
 msgid "Add text to the image"
@@ -5944,7 +5923,7 @@ msgstr ""
 #: app/tools.c:945
 #, fuzzy
 msgid "Measure distances and angles"
-msgstr "MÃ¥l avstand"
+msgstr "Mål avstand"
 
 #: app/tools.c:998
 #, fuzzy
@@ -6076,7 +6055,7 @@ msgstr "Eigenskapar"
 #: app/transform_tool.c:239
 #, fuzzy
 msgid "Tool Paradigm"
-msgstr "VerktÃ¸ylinje"
+msgstr "Verktøylinje"
 
 #: app/transform_tool.c:241
 #, fuzzy
@@ -6163,7 +6142,7 @@ msgstr "Flytt lag"
 #: app/undo.c:2914
 #, fuzzy
 msgid "delete layer"
-msgstr "BlÃ¥ spelar"
+msgstr "Blå spelar"
 
 #: app/undo.c:2915
 #, fuzzy
@@ -6201,7 +6180,7 @@ msgstr "Raud kanal:"
 #: app/undo.c:2921
 #, fuzzy
 msgid "delete channel"
-msgstr "SlÃ¥ saman kanalar"
+msgstr "Slå saman kanalar"
 
 #: app/undo.c:2922
 #, fuzzy
@@ -6222,7 +6201,7 @@ msgstr "Bilete"
 #: app/undo.c:2925
 #, fuzzy
 msgid "FS rigor"
-msgstr "FÃ¸rre"
+msgstr "Førre"
 
 #: app/undo.c:2926
 msgid "FS relax"
@@ -6287,7 +6266,7 @@ msgstr "Spelarnamn"
 #: app/undo.c:2938
 #, fuzzy
 msgid "FS anchor"
-msgstr "SÃ¸k etter:"
+msgstr "Søk etter:"
 
 #: app/undo.c:2939
 #, fuzzy
@@ -6327,7 +6306,7 @@ msgstr "Fjern element"
 #: app/undo.c:2946
 #, fuzzy
 msgid "resolution change"
-msgstr "Forbetra opplÃ¸ysing:"
+msgstr "Forbetra oppløysing:"
 
 #: app/undo.c:2947
 #, fuzzy
@@ -6571,7 +6550,7 @@ msgstr "Fortset"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/user_install.c:591
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
 #: app/user_install.c:688
 msgid ""
@@ -6599,8 +6578,8 @@ msgid ""
 "(at your option) any later version."
 msgstr ""
 "Dette programmet er gratis. Du kan vidaredistribuera\n"
-"og/eller endra det i fÃ¸lge vilkÃ¥ra i versjon 2 eller\n"
-"(ditt val) ein vilkÃ¥rleg nyare versjon av GNU General \n"
+"og/eller endra det i følge vilkåra i versjon 2 eller\n"
+"(ditt val) ein vilkårleg nyare versjon av GNU General \n"
 "Public License, utgjeve av Free Software Foundation."
 
 #: app/user_install.c:708
@@ -6612,12 +6591,12 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 "Dette programmet er gratis programvare - du kan vidaredistribuera det "
-"og/eller endra det i fÃ¸lge vilkÃ¥ra i versjon 2 av GNU General Public "
+"og/eller endra det i følge vilkåra i versjon 2 av GNU General Public "
 "License, publisert av Free Software Foundation.\n"
 "\n"
-"Dette programmet er gitt ut i hÃ¥p om at det kan vera nyttig, men UTAN NOKON "
-"GARANTI - til og med utan den underforstÃ¥tte garanti om SALGBARHEIT eller "
-"at det PASSAR FOR EIT BESTEMT FÃ˜REMÃ…L. SjÃ¥ GNU General Public License for "
+"Dette programmet er gitt ut i håp om at det kan vera nyttig, men UTAN NOKON "
+"GARANTI - til og med utan den underforståtte garanti om SALGBARHEIT eller "
+"at det PASSAR FOR EIT BESTEMT FØREMÅL. Sjå GNU General Public License for "
 "fleire detaljar."
 
 #: app/user_install.c:713
@@ -6670,9 +6649,8 @@ msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
 
 #: app/user_install.c:868
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "OpplÃ¸ysing"
+msgstr "Oppløysing for skjerm"
 
 #: app/user_install.c:869
 msgid "Click \"Continue\" to start The GIMP."
@@ -6687,7 +6665,7 @@ msgstr ""
 #: app/user_install.c:881
 #, fuzzy
 msgid "Aborting Installation..."
-msgstr "Avbryt overfÃ¸ring...\n"
+msgstr "Avbryt overføring...\n"
 
 #: app/user_install.c:951
 #, fuzzy
@@ -6723,7 +6701,7 @@ msgstr ""
 #, fuzzy
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
-"Du har ikkje lov til Ã¥ ringa ut med kppp.\n"
+"Du har ikkje lov til å ringa ut med kppp.\n"
 "Kontakt systemadministratoren."
 
 #: app/user_install.c:1097
@@ -6764,7 +6742,7 @@ msgstr ""
 #: app/user_install.c:1205
 #, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Verts&opplÃ¸ysing"
+msgstr "Verts&oppløysing"
 
 #: app/user_install.c:1242
 msgid ""
@@ -6775,7 +6753,7 @@ msgstr ""
 #: app/xcf.c:384
 #, fuzzy, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Feil: Tenarversjonen er ikkje stÃ¸tta, %1"
+msgstr "Feil: Tenarversjonen er ikkje støtta, %1"
 
 #: app/xcf.c:1816
 msgid ""
@@ -6809,4 +6787,4 @@ msgstr "Vatn"
 #: modules/colorsel_water.c:640
 #, fuzzy
 msgid "Color History"
-msgstr "TÃ¸m historie"
+msgstr "Tøm historie"

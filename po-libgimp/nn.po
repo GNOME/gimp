@@ -14,38 +14,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: libgimp/gimpcolorbutton.c:121
-#, fuzzy
 msgid "/Use Foreground Color"
-msgstr "&Framgrunnsfarge"
+msgstr "/Bruk framgrunnsfarge"
 
 #: libgimp/gimpcolorbutton.c:122
-#, fuzzy
 msgid "/Use Background Color"
-msgstr "Bakgrunnsfarge"
+msgstr "/Bruk bakgrunnsfarge"
 
 #: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
-#, fuzzy
 msgid "can't handle layers"
-msgstr "kan ikkje snakka med klauncher"
+msgstr "kan ikkje handtera med lag"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
-#, fuzzy
 msgid "Merge Visible Layers"
-msgstr "Kopla saman &synlege lag"
+msgstr "Kopla saman synlege lag"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
 msgstr ""
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
-#, fuzzy
 msgid "Save as Animation"
-msgstr "Bruk animering"
+msgstr "Lagre som animering"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-#, fuzzy
 msgid "Flatten Image"
-msgstr "Opna bilete"
+msgstr "Flat ut bilete"
 
 #: libgimp/gimpexport.c:196
 #, fuzzy
@@ -57,18 +51,16 @@ msgid "can only handle RGB images"
 msgstr ""
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
-#, fuzzy
 msgid "Convert to RGB"
-msgstr "Konverter LF til CRLF"
+msgstr "Konverter til RGB"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
 msgstr ""
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
-#, fuzzy
 msgid "Convert to Grayscale"
-msgstr "Konverterar til grÃ¥tonar ..."
+msgstr "Konverterar til gråtonar"
 
 #: libgimp/gimpexport.c:223
 #, fuzzy

@@ -1,11 +1,11 @@
-# Norwegian (Nynorsk) KDE translation.
+# Norwegian (nynorsk) translation of gimp.
 # Copyright (C) 2000 Gaute Hvoslef Kvalnes.
 # Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>, 2000.
 # Kjartan Maraas <kmaraas@gnome.org>, 2001.
 
 msgid ""
 msgstr ""
-"Project-Id-Version: KDE PIM/abbrowser\n"
+"Project-Id-Version: gimp 1.2.1\n"
 "POT-Creation-Date: 2001-01-30 12:44+0100\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -37,18 +37,17 @@ msgstr "Resultat"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:286
-#, fuzzy
 msgid "Current Command"
-msgstr "KÃ¸yr kommando"
+msgstr "Noverande kommando"
 
 #: plug-ins/script-fu/script-fu-console.c:307
 msgid "Browse..."
-msgstr "Bla gjennom ..."
+msgstr "Bla gjennom..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
 #, fuzzy
 msgid "Unable to open SIOD output pipe"
-msgstr "Kan ikkje opna %1 for Ã¥ leggja til."
+msgstr "Kan ikkje opna %1 for å leggja til."
 
 #: plug-ins/script-fu/script-fu-console.c:583
 #, fuzzy
@@ -784,7 +783,7 @@ msgstr "Vinkel"
 #: plug-ins/gap/sel-to-anim-img.scm:0
 #, fuzzy
 msgid "Anim-Filter for all Copies"
-msgstr "Samme botntekst pÃ¥ alle sider"
+msgstr "Samme botntekst på alle sider"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #, fuzzy
@@ -856,7 +855,7 @@ msgstr "Bakgrunnsbilete"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
 msgid "Bar Height"
-msgstr "MarghÃ¸gd"
+msgstr "Marghøgd"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
@@ -875,7 +874,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
 msgid "Behaviour"
-msgstr "Ã…tferd"
+msgstr "Åtferd"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -961,7 +960,7 @@ msgstr "Kantfarge"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Border Size (pixels)"
-msgstr "Dobbelt sÃ¥ store punkt"
+msgstr "Dobbelt så store punkt"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1010,12 +1009,11 @@ msgstr "Lagra arkiv som"
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #, fuzzy
 msgid "Cell Size (pixels)"
-msgstr "Dobbelt sÃ¥ store punkt"
+msgstr "Dobbelt så store punkt"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
-#, fuzzy
 msgid "Chalk Color"
-msgstr "PrÃ¸vefarge"
+msgstr "Krittfarge"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
@@ -1033,7 +1031,7 @@ msgstr "B&alanse:"
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
 msgid "Chrome Factor"
-msgstr "ForstÃ¸rringsfaktor"
+msgstr "Forstørringsfaktor"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1050,7 +1048,7 @@ msgstr "Metting"
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #, fuzzy
 msgid "Chrome White Areas"
-msgstr "KombinasjonslinjeomrÃ¥de"
+msgstr "Kombinasjonslinjeområde"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
@@ -1230,7 +1228,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 #, fuzzy
 msgid "Effect Size (pixels)"
-msgstr "Dobbelt sÃ¥ store punkt"
+msgstr "Dobbelt så store punkt"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1257,14 +1255,13 @@ msgstr "End"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Ending Blend"
-msgstr "Redigering pÃ¥slÃ¥tt"
+msgstr "Redigering påslått"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#, fuzzy
 msgid "Environment Map"
-msgstr "MiljÃ¸"
+msgstr "Miljøkart"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
@@ -1272,22 +1269,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr "ViskelÃ¦r"
+msgstr "Slett"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Erase/Fill"
-msgstr "ViskelÃ¦r"
+msgstr "Slett/Fyll"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Even"
-msgstr "Hending"
+msgstr "Lik"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Even/Odd"
-msgstr "Utvida"
+msgstr "Lik/Ulik"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #, fuzzy
@@ -1312,7 +1306,7 @@ msgstr "Gateway"
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
 msgid "Fade From %"
-msgstr "Melding frÃ¥ %s"
+msgstr "Melding frå %s"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
@@ -1336,7 +1330,7 @@ msgstr "Vinkel"
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
 msgid "Fill BG with Pattern"
-msgstr "Fyll-mÃ¸nster:"
+msgstr "Fyll-mønster:"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 #, fuzzy
@@ -1473,7 +1467,7 @@ msgstr "Ramme"
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
 msgid "From Top-Left to Bottom-Right"
-msgstr "Venstre til hÃ¸gre"
+msgstr "Venstre til høgre"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1485,12 +1479,12 @@ msgstr "Venstre til hÃ¸gre"
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 #, fuzzy
 msgid "Glow Color"
-msgstr "FÃ¥ fargar"
+msgstr "Få fargar"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #, fuzzy
 msgid "Glow Radius"
-msgstr "GlÃ¸dande ballar"
+msgstr "Glødande ballar"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
@@ -1536,7 +1530,7 @@ msgstr "Rutenett"
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr "HÃ¸gd"
+msgstr "Høgd"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1581,9 +1575,8 @@ msgstr "II"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "Image Height"
-msgstr "BiletehÃ¸gd:"
+msgstr "Biletehøgd"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -1651,12 +1644,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Keep Selection"
-msgstr "OmrÃ¥deval"
+msgstr "Områdeval"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 #, fuzzy
 msgid "Land Height"
-msgstr "MarghÃ¸gd"
+msgstr "Marghøgd"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1676,12 +1669,12 @@ msgstr "Repeter"
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Lower Color (Active)"
-msgstr "FÃ¥ fargar"
+msgstr "Få fargar"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Lower Color"
-msgstr "FÃ¥ fargar"
+msgstr "Få fargar"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #, fuzzy
@@ -1733,46 +1726,46 @@ msgstr "Ikkje straum: "
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Number of Bands"
-msgstr "Tal pÃ¥ maur:"
+msgstr "Tal på maur:"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Number of Colors"
-msgstr "Tal pÃ¥ fargekart"
+msgstr "Tal på fargekart"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 #, fuzzy
 msgid "Number of Copies"
-msgstr "Tal pÃ¥ kopiar:"
+msgstr "Tal på kopiar:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 #, fuzzy
 msgid "Number of Frames"
-msgstr "Tal pÃ¥ forsÃ¸k\n"
+msgstr "Tal på forsøk\n"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Number of Lines"
-msgstr "Tal pÃ¥ rÃ¸yr"
+msgstr "Tal på røyr"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
 msgid "Number of Times to Whirl"
-msgstr "Tal pÃ¥ repetisjonar"
+msgstr "Tal på repetisjonar"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Number of X Tiles"
-msgstr "Tal pÃ¥ rÃ¸yr"
+msgstr "Tal på røyr"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 #, fuzzy
 msgid "Number of Y Tiles"
-msgstr "Tal pÃ¥ rÃ¸yr"
+msgstr "Tal på røyr"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -1880,17 +1873,17 @@ msgstr "Padding"
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Outline)"
-msgstr "MÃ¸nsterfilnamn:"
+msgstr "Mønsterfilnamn:"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Overlay)"
-msgstr "MÃ¸nstra fyll"
+msgstr "Mønstra fyll"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Pattern (Text)"
-msgstr "MÃ¸nster"
+msgstr "Mønster"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1901,7 +1894,7 @@ msgstr "MÃ¸nster"
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr "MÃ¸nster"
+msgstr "Mønster"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -1990,12 +1983,12 @@ msgstr "Linjebreidd:"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr "HÃ¸gre"
+msgstr "Høgre"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #, fuzzy
 msgid "Rippling Strength"
-msgstr "NÃ¸kkelstyrke:"
+msgstr "Nøkkelstyrke:"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -2006,7 +1999,7 @@ msgstr "Avrunding:"
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
 msgid "Round Ratio"
-msgstr " HÃ¸ve "
+msgstr " Høve "
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
@@ -2188,12 +2181,12 @@ msgstr "Start"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Starting Blend"
-msgstr "Startar frÃ¥kopla"
+msgstr "Startar fråkopla"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #, fuzzy
 msgid "Supersample"
-msgstr "PrÃ¸ve"
+msgstr "Prøve"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -2219,7 +2212,7 @@ msgstr "Tekstfarge"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
 msgid "Text Pattern"
-msgstr "Nytt mÃ¸nster"
+msgstr "Nytt mønster"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2271,7 +2264,7 @@ msgstr "Tjukkleik:"
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Thread Density"
-msgstr "TrÃ¥dar"
+msgstr "Trådar"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
@@ -2302,7 +2295,7 @@ msgstr "Gjennomsiktig, lys bakgrunn"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 #, fuzzy
 msgid "Turn from Left to Right"
-msgstr "Venstre til hÃ¸gre"
+msgstr "Venstre til høgre"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2341,7 +2334,7 @@ msgstr "&Overskriv merka tekst"
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
 msgid "Use Pattern Overlay"
-msgstr "Sett inn mÃ¸nster"
+msgstr "Sett inn mønster"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
@@ -2378,7 +2371,7 @@ msgstr "Vinkel"
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
 msgid "Width of Bands"
-msgstr "Breidd pÃ¥ magisk vindauge:"
+msgstr "Breidd på magisk vindauge:"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 #, fuzzy
