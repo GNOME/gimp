@@ -1,3 +1,9 @@
+Fri Sep  3 21:52:09 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* data/patterns/corkboard.pat: replaced by the version
+        famrom@idecnet.com sent me.
+	* app/tool_options.c: fix typoo.
+
 1999-09-04  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/script-fu/interp_sliba.c (lreadstring): Fix own braino:
