@@ -39,7 +39,6 @@ bootstrap Gimp::Lib $VERSION;
 
 sub gimp_progress_init {
    push @_,-1 if @_<2;
-   print "proggress_init yeah @_\n";
    eval { gimp_call_procedure "gimp_progress_init",@_ };
    gimp_call_procedure "gimp_progress_init",shift if $@;
 }

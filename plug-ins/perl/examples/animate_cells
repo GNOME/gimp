@@ -33,8 +33,8 @@ sub perl_fu_animate_cells {
   my $back = shift @ids;
 
   if (@ids < 2) {
-    gimp_message("animate_cells: Too few cells (layers) in image.");
     gimp_image_delete($image) if $makecopy;
+    die "animate_cells: too few cells (layers) in image\n";
     return;
   }
 
@@ -81,7 +81,7 @@ register
   "Perform cell animation from a single, layered image",
   "Use this plugin to animate a series of layers in the same way that\
 	a physical animation process would use cells.",
-  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-12",
+  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-15",
   "<Image>/Filters/Animation/Animate Cells",
   "*",
   [

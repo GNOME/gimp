@@ -10,7 +10,7 @@ my($gtk,$gtk_10,$gtk_11);
 sub _check_gtk {
    return if defined $gtk;
 
-   eval { require Gtk }; $gtk = $@ eq "";
+   eval { require Gtk }; $gtk = $@ eq "" && $Gtk::VERSION>=0.3;
 
    if ($gtk) {
       $gtk_10 = (Gtk->major_version==1 && Gtk->minor_version==0);

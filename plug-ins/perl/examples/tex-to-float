@@ -162,12 +162,12 @@ sub tex_string_to_float {
 # register the script
 register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes a TeX string as input and creates a floating layer of the rendered string in the current layer in the foreground color.",
     "Dov Grobgeld <dov\@imagic.weizmann.ac.il>", "Dov Grobgeld",
-    "1999-02-26",
+    "1999-03-16",
     "<Image>/Filters/Render/TeX String", 
     "*",
     [
-     [PF_STRING,  "Input file",     "TeX macro file to input",   ""],
-     [PF_STRING,  "TeX String",     "Enter TeX String",   ""],
+     [PF_STRING,  "Input file",     "TeX macro file to input"],
+     [PF_STRING,  "TeX String",     "Enter TeX String"],
      [PF_VALUE,   "DPI",     "Resolution to render the text in",   "72"],
      [PF_VALUE,   "Magstep",     "TeX magstep",   "2"],
      [PF_VALUE,   "Anti-aliasing",     "Anti-aliasing factor",   "4"],

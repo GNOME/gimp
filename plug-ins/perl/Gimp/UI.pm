@@ -1,7 +1,7 @@
 package Gimp::UI;
 
 use Carp;
-use Gimp;
+use Gimp qw();
 use Gtk;
 
 $gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;

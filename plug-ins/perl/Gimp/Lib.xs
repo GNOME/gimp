@@ -342,22 +342,27 @@ dump_params (int nparams, GParam *args, GParamDef *params)
 	  case PARAM_PARASITE:
 	    {
 	      gint32 found = 0;
-	      
-	      trace_printf ("[%s, ", args[i].data.d_parasite.name);
-	      if (args[i].data.d_parasite.flags & PARASITE_PERSISTENT)
-	        {
-	          trace_printf ("PARASITE_PERSISTENT");
-	          found |= PARASITE_PERSISTENT;
-	        }
-	      
-	      if (args[i].data.d_parasite.flags & ~found)
-	        {
-	          if (found)
-	            trace_printf ("|");
-	          trace_printf ("%d", args[i].data.d_parasite.flags & ~found);
-	        }
-	      
-	      trace_printf (", %d bytes data]", args[i].data.d_parasite.size);
+
+              if (args[i].data.d_parasite.name)
+                {
+                 trace_printf ("[%s, ", args[i].data.d_parasite.name);
+                 if (args[i].data.d_parasite.flags & PARASITE_PERSISTENT)
+                   {
+                     trace_printf ("PARASITE_PERSISTENT");
+                     found |= PARASITE_PERSISTENT;
+                   }
+                 
+                 if (args[i].data.d_parasite.flags & ~found)
+                   {
+                     if (found)
+                       trace_printf ("|");
+                     trace_printf ("%d", args[i].data.d_parasite.flags & ~found);
+                   }
+                 
+                 trace_printf (", %d bytes data]", args[i].data.d_parasite.size);
+               }
+              else
+                trace_printf ("[undefined]");
 	    }
 	    break;
 #endif
@@ -622,13 +627,17 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 
 #if GIMP_PARASITE
       case PARAM_PARASITE:
-	{
-	  AV *av = newAV ();
-	  av_push (av, neuSVpv (arg->data.d_parasite.name));
-	  av_push (av, newSViv (arg->data.d_parasite.flags));
-	  av_push (av, newSVpv (arg->data.d_parasite.data, arg->data.d_parasite.size));
-	  sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
-	}
+        if (arg->data.d_parasite.name)
+          {
+            AV *av = newAV ();
+            av_push (av, neuSVpv (arg->data.d_parasite.name ? arg->data.d_parasite.name : ""));
+            av_push (av, newSViv (arg->data.d_parasite.flags));
+            av_push (av, newSVpv (arg->data.d_parasite.data, arg->data.d_parasite.size));
+            sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
+          }
+        else
+          sv = newSVsv (&PL_sv_undef);
+
 	break;
 #endif
       

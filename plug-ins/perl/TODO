@@ -19,6 +19,8 @@ bugs
   
 important issues
 
+[PF_FILE]  * PF_FILE
+  * --use-interp=perl|script-fu
   * change set_usize to something else..
   * Gimp::IO (?)
   * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??

@@ -4,9 +4,8 @@ use strict 'vars';
 use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK @EXPORT_FAIL %EXPORT_TAGS
             @scripts @_params $run_mode %pf_type2string @image_params);
-use Gimp qw(:param);
+use Gimp qw();
 use Gimp::Data;
-use File::Basename;
 use base qw(Exporter);
 
 require Exporter;
@@ -70,28 +69,29 @@ module after the C<Gimp> module.
 
 =cut
 
-sub PF_INT8	() { PARAM_INT8		};
-sub PF_INT16	() { PARAM_INT16	};
-sub PF_INT32	() { PARAM_INT32	};
-sub PF_FLOAT	() { PARAM_FLOAT	};
-sub PF_STRING	() { PARAM_STRING	};
-sub PF_COLOR	() { PARAM_COLOR	};
-sub PF_COLOUR	() { PARAM_COLOR	};
-sub PF_IMAGE	() { PARAM_IMAGE	};
-sub PF_LAYER	() { PARAM_LAYER	};
-sub PF_CHANNEL	() { PARAM_CHANNEL	};
-sub PF_DRAWABLE	() { PARAM_DRAWABLE	};
+sub PF_INT8	() { Gimp::PARAM_INT8	};
+sub PF_INT16	() { Gimp::PARAM_INT16	};
+sub PF_INT32	() { Gimp::PARAM_INT32	};
+sub PF_FLOAT	() { Gimp::PARAM_FLOAT	};
+sub PF_STRING	() { Gimp::PARAM_STRING	};
+sub PF_COLOR	() { Gimp::PARAM_COLOR	};
+sub PF_COLOUR	() { Gimp::PARAM_COLOR	};
+sub PF_IMAGE	() { Gimp::PARAM_IMAGE	};
+sub PF_LAYER	() { Gimp::PARAM_LAYER	};
+sub PF_CHANNEL	() { Gimp::PARAM_CHANNEL};
+sub PF_DRAWABLE	() { Gimp::PARAM_DRAWABLE};
 
-sub PF_TOGGLE	() { PARAM_END+1	};
-sub PF_SLIDER	() { PARAM_END+2	};
-sub PF_FONT	() { PARAM_END+3	};
-sub PF_SPINNER	() { PARAM_END+4	};
-sub PF_ADJUSTMENT(){ PARAM_END+5	}; # compatibility fix for script-fu _ONLY_
-sub PF_BRUSH	() { PARAM_END+6	};
-sub PF_PATTERN	() { PARAM_END+7	};
-sub PF_GRADIENT	() { PARAM_END+8	};
-sub PF_RADIO	() { PARAM_END+9	};
-sub PF_CUSTOM	() { PARAM_END+10	};
+sub PF_TOGGLE	() { Gimp::PARAM_END+1	};
+sub PF_SLIDER	() { Gimp::PARAM_END+2	};
+sub PF_FONT	() { Gimp::PARAM_END+3	};
+sub PF_SPINNER	() { Gimp::PARAM_END+4	};
+sub PF_ADJUSTMENT(){ Gimp::PARAM_END+5	}; # compatibility fix for script-fu _ONLY_
+sub PF_BRUSH	() { Gimp::PARAM_END+6	};
+sub PF_PATTERN	() { Gimp::PARAM_END+7	};
+sub PF_GRADIENT	() { Gimp::PARAM_END+8	};
+sub PF_RADIO	() { Gimp::PARAM_END+9	};
+sub PF_CUSTOM	() { Gimp::PARAM_END+10	};
+sub PF_FILE	() { Gimp::PARAM_END+11	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
@@ -116,17 +116,17 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_ADJUSTMENT	=> 'integer',
          &PF_RADIO	=> 'string',
          &PF_CUSTOM	=> 'string',
+         &PF_FILE	=> 'string',
          &PF_IMAGE	=> 'NYI',
          &PF_LAYER	=> 'NYI',
          &PF_CHANNEL	=> 'NYI',
          &PF_DRAWABLE	=> 'NYI',
 );
 
-@_params=qw(PF_INT8 PF_INT16 PF_INT32 PF_FLOAT PF_VALUE
-            PF_STRING PF_COLOR PF_COLOUR PF_TOGGLE PF_IMAGE
-            PF_DRAWABLE PF_FONT PF_LAYER PF_CHANNEL PF_BOOL
-            PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
-            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM);
+@_params=qw(PF_INT8 PF_INT16 PF_INT32 PF_FLOAT PF_VALUE PF_STRING PF_COLOR
+            PF_COLOUR PF_TOGGLE PF_IMAGE PF_DRAWABLE PF_FONT PF_LAYER
+            PF_CHANNEL PF_BOOL PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
+            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM PF_FILE);
 
 @EXPORT = (qw(register main),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
@@ -196,7 +196,7 @@ sub help_window(\$$$) {
    $$helpwin->show_all();
 }
 
-sub interact($$$@) {
+sub interact($$$$@) {
    local $^W=0;
    my($function)=shift;
    my($blurb)=shift;
@@ -213,9 +213,15 @@ sub interact($$$@) {
       require Gtk; import Gtk;
       init Gtk; # gross hack...
    };
+   
    if ($@) {
-      Gimp::logger(message => 'the gtk perl module is required to run in interactive mode', function => $function);
-      die "The Gtk perl module is required to run this function ($function) in interactive mode!\n";
+      my @res = map {
+         die "the gtk perl module is required to run\nthis plug-in in interactive mode\n" unless defined $_->[3];
+         $_->[3];
+      } @types;
+      Gimp::logger(message => "the gtk perl module is required to open a dialog\nwindow, running with default values",
+                   fatal => 1, function => $function);
+      return (1,@res);
    }
 
    parse Gtk::Rc Gimp->gtkrc;
@@ -247,11 +253,12 @@ sub interact($$$@) {
         my($value)=shift;
         
         local *new_PF_STRING = sub {
-           $a=new Gtk::Entry;
-           set_usize $a 0,25;
-           push(@setvals,sub{set_text $a defined $_[0] ? $_[0] : ""});
-           #select_region $a 0,1;
-           push(@getvals,sub{get_text $a});
+           my $e = new Gtk::Entry;
+           set_usize $e 0,25;
+           push(@setvals,sub{set_text $e defined $_[0] ? $_[0] : ""});
+           #select_region $e 0,1;
+           push(@getvals,sub{get_text $e});
+           $a=$e;
         };
 
         if($type == PF_ADJUSTMENT) { # support for scm2perl
@@ -437,6 +444,18 @@ sub interact($$$@) {
            push(@setvals,$widget[1]);
            push(@getvals,$widget[2]);
            
+        } elsif($type == PF_FILE) {
+           &new_PF_STRING;
+           my $s = $a;
+           $a = new Gtk::HBox 0,5;
+           $a->add ($s);
+           my $b = new Gtk::Button "Browse";
+           $a->add ($b);
+           my $f = new Gtk::FileSelection $desc;
+           $b->signal_connect (clicked => sub { $f->set_filename ($s->get_text); $f->show_all });
+           $f->ok_button    ->signal_connect (clicked => sub { $f->hide; $s->set_text ($f->get_filename) });
+           $f->cancel_button->signal_connect (clicked => sub { $f->hide });
+           
         } else {
            $label="Unsupported argumenttype $type";
            push(@setvals,sub{});
@@ -538,6 +557,7 @@ sub string2pf($$) {
       || $type==PF_PATTERN
       || $type==PF_BRUSH
       || $type==PF_CUSTOM
+      || $type==PF_FILE
       || $type==PF_RADIO	# for now! #d#
       || $type==PF_GRADIENT) {
       $s;
@@ -654,16 +674,17 @@ sub query {
       Gimp->gimp_install_procedure($function,$blurb,$help,$author,$copyright,$date,
                                    $menupath,$imagetypes,$type,
                                    [map {
-                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_TOGGLE;
-                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_SLIDER;
-                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_SPINNER;
-                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_ADJUSTMENT;
-                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_RADIO;
-                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_FONT;
-                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_BRUSH;
-                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_PATTERN;
-                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_GRADIENT;
-                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_CUSTOM;
+                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_TOGGLE;
+                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_SLIDER;
+                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_SPINNER;
+                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_ADJUSTMENT;
+                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_RADIO;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_PATTERN;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_GRADIENT;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
                                       $_;
                                    } @$params],
                                    $results);
@@ -865,6 +886,11 @@ While the values can be of any type (as long as it fits into a scalar),
 you should be prepared to get a string when the script is started from the
 commandline or via the PDB.
 
+=item PF_FILE
+
+This represents a file system object. It usually is a file, but can be
+anything (directory, link). It might not even exist at all.
+
 =back
 
 =cut
@@ -896,7 +922,7 @@ sub register($$$$$$$$$;@) {
          if $function =~ y/-//;
 
       if ($menupath=~/^<Image>\//) {
-         @_ >= 2 or die "<Image> plug-in called without an image and drawable!\n";
+         @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";
          @pre = (shift,shift);
       } elsif ($menupath=~/^<Toolbox>\//) {
          # valid ;)
@@ -926,7 +952,7 @@ sub register($$$$$$$$$;@) {
          }
       } elsif ($run_mode == &Gimp::RUN_FULLINTERACTIVE) {
          my($res);
-         ($res,@_)=interact($function,$blurb,$help,[@image_params,@{$params}],[@pre,@_]);
+         ($res,@_)=interact($function,$blurb,$help,[@image_params,@$params],[@pre,@_]);
          undef @pre;
          return unless $res;
       } elsif ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
@@ -970,6 +996,7 @@ sub register($$$$$$$$$;@) {
       }
       Gimp->displays_flush;
       
+      Gimp::set_trace ($old_trace);
       wantarray ? @imgs : $imgs[0];
    };
    push(@scripts,[$function,$blurb,$help,$author,$copyright,$date,

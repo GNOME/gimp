@@ -43,7 +43,8 @@ $VERSION = 1.071;
 	SHARPEN		SQUARE		STATUS_CALLING_ERROR		STATUS_EXECUTION_ERROR
 	STATUS_PASS_THROUGH		STATUS_SUCCESS	SUBTRACT_MODE	TRANS_IMAGE_FILL
 	VALUE_MODE	DIVIDE_MODE	PARASITE_PERSISTANT		WHITE_IMAGE_FILL
-        SPIRAL_CLOCKWISE		SPIRAL_ANTICLOCKWISE
+        SPIRAL_CLOCKWISE		SPIRAL_ANTICLOCKWISE		PARASITE_ATTACH_PARENT
+        PARASITE_PARENT_PERSISTENT	PARASITE_GRANDPARENT_PERSISTENT	PARASITE_ATTACH_GRANDPARENT
 	
 	TRACE_NONE	TRACE_CALL	TRACE_TYPE	TRACE_NAME	TRACE_DESC
 	TRACE_ALL
@@ -528,9 +529,16 @@ package Gimp::Parasite;
 
 sub is_type($$)		{ $_[0]->[0] eq $_[1] }
 sub is_persistant($)	{ $_[0]->[1] & PARASITE_PERSISTANT }
-sub is_error($)		{ $_[0]->is_type("error") }
-sub error($)		{ ["error", 0, ""] }
+sub is_error($)		{ !defined $_[0] }
+sub has_flag($$)	{ $_[0]->[1] & $_[1] }
+sub error($)		{ undef }
 sub copy($)		{ [@{$_[0]}] }
+sub name($)		{ $_[0]->[0] }
+sub flags($)		{ $_[0]->[1] }
+sub data($)		{ $_[0]->[2] }
+sub compare($$)		{ $_[0]->[0] eq $_[1]->[0] and
+			  $_[0]->[1] eq $_[1]->[1] and 
+			  $_[0]->[2] eq $_[1]->[2] }
 
 package Gimp; # for __DATA__
 

@@ -435,7 +435,7 @@ register
 	construct a single, existing image, sort of like the
 	Filters/Artistic/Mosaic plugin, but with images as the
 	tiles.",
-  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-13",
+  "Aaron Sherman", "Aaron Sherman (c)", "1999-03-15",
   "<Image>/Filters/Map/Image Tile",
   "*",
   [
@@ -447,7 +447,7 @@ register
    [PF_INT32, "Number of sample cells per tile (X)", "X cells", 4],
    [PF_INT32, "Number of sample cells per tile (Y)", "Y cells", 4],
    [PF_INT32, "Duplicates (0[lots] - 100[none])", "Duplicates", 5],
-   [PF_STRING, "Sub-image directories (space speparated)", "Directories","."],
+   [PF_STRING, "Sub-image directories (space speparated)", "Directories"],
    [PF_TOGGLE, "Delete cached image samples?", "", 0]
   ],
   \&perl_fu_image_tile;
