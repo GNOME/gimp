@@ -1,3 +1,7 @@
+2003-09-08  Ville Pätsi  <drc@gimp.org>
+
+	* gimp.spec.in: Remove all references to *gck*
+
 2003-09-08  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.20 release.
