@@ -14,7 +14,7 @@ Overview of Changes in GIMP 1.3.14
 - Better resampling for the transform tools [OEyvind Kolaas]
 - Added MNG save plug-in [S. Mukund]
 - Added framework for image templates [Mitch]
-- Vector tool improvements [Nomis]
+- Vector tool improvements [Simon]
 - Improved look and feel if layer previews are disabled [Mitch, Sven, Jimmac]
 - Keyboard navigation for grid views [Sven]
 - List and grid views for fonts [Mitch, Sven]
