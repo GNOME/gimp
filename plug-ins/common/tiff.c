@@ -1272,6 +1272,7 @@ static gint save_image (char   *filename,
     rowsperstrip = 1;
 
   /* Set TIFF parameters. */
+  TIFFSetField (tif, TIFFTAG_SUBFILETYPE, 0);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);

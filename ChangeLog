@@ -1,3 +1,9 @@
+Mon Jan 31 02:55:00 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Images we save are full size (duh)
+	Applied to fix #5000 after some discussion and thought, this
+	is really Quark's bug, but who am I to argue?
+
 Mon Jan 31 01:42:54 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.c: get serious...
