@@ -237,7 +237,7 @@ flatbuf_data (
     {
       return NULL;
     }
-  return f->data + ((y * f->width) + x) * tag_bytes (f->tag);
+  return (guchar*)f->data + ((y * f->width) + x) * tag_bytes (f->tag);
 }
 
 
