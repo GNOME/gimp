@@ -7,6 +7,44 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
+Bugs fixed in GIMP 2.0pre2
+==========================
+- 130828: Compile error with gcc 2.95 (Adrian Bunk)
+- 35335: Curve tool doesn't conserve black (Simon Budig)
+- 130866: Remove multiple PNG entries in file type dropdown (Henrik Brix 
+  Andersen)
+- 106991: Add mnemonics for all menu items (finished by Mitch Natterer)
+- 130869: Add smaller image templates (Dave Neary)
+- 130916: Handle multiline texts better (Mitch Natterer)
+- 120424: Add dirty flag to default image title (Henrik Brix Andersen)
+- 130912: Fix rounding errors in JPEG plug-in (keith@goatman.me.uk)
+- 131016: Add support for layer offsets in multipage tiff loading (Pablo 
+  d'Angelo)
+- 124073: Modify behaviour of zoom tool to avoid funny fractions (Dave Neary, 
+  Simon Budig)
+- 131088: fix select-to-pattern script-fu (Mitch Natterer)
+- 82478: Fix zoom handling in fractal explorer (Pedro Gimeno)
+- 115793: Make thumbnail preview of indexed images match display (Pedro Gimeno)
+- 130471: Handle RGBA images correctly in the CEL plug-in (Dov Grobgeld)
+- 131109: Remove EMX specific code (Sven Neumann)
+- 130118: Handle GIMP2_DIRECTORY with non-UTF-8 characters correctly (Tor 
+  Lillqvist, Sven Neumann)
+- 82465: Make preview match image when image is greyscale (Sven Neumann)
+- 92586: Force SF_IMAGE value to reflect the selected image (Sven Neumann)
+- 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch 
+  Natterer)
+- 131215: Only call bind_textdomain_codeset when available (Reinhard Geissler)
+- 125141: Resolve API issues with GimpPixelFetcher and GimpRegionIterator 
+  (David Odin, Maurits Rijk)
+- 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch Natterer)
+- 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch 
+  Natterer)
+- 128112: Use a better error message if help files are not present (Dave Neary)
+
+Other contributions:
+  David Odin, Manish Singh, Simon Budig, Mitch Natterer, Sven Neumann, Tor 
+  Lillqvist, Henrik Brix Andersen
+
 Overview of Changes in GIMP 2.0pre1
 ===================================
 - Persistent user preferences for PNG save [Yosh]
