@@ -1003,6 +1003,8 @@ file_overwrite_yes_callback (GtkWidget *w,
 
   overwrite_box = (OverwriteBox *) client_data;
 
+  gtk_widget_destroy (overwrite_box->obox);
+
   if (((gimage = gimage_get_ID (image_ID)) != NULL) &&
       file_save (image_ID, overwrite_box->full_filename, overwrite_box->raw_filename))
     {
@@ -1023,7 +1025,6 @@ file_overwrite_yes_callback (GtkWidget *w,
       g_string_free (s, TRUE);
     }
 
-  gtk_widget_destroy (overwrite_box->obox);
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);

@@ -1,3 +1,8 @@
+Wed May 13 23:58:20 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/fileops.c (file_overwrite_yes_callback): destroy the
+	Overwrite dialog's window before running the save.
+
 Wed May 13 17:31:27 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/frac.c: stubbed out nonworking code
@@ -5,9 +10,9 @@ Wed May 13 17:31:27 PDT 1998 Manish Singh <yosh@gimp.org>
 	* updated print plugin
 
 Wed May 13 00:03:18 MEST 1998 Sven Neumann <sven@gimp.org>
-	
+
 	* added nine new scripts from Chris Gutteridge
-	(asc2img.scm, camo.scm, coffee.scm, distress_selection.scm, 
+	(asc2img.scm, camo.scm, coffee.scm, distress_selection.scm,
 	 fuzzyborder.scm, old_photo.scm, rendermap.scm
 	 spinning_globe.scm, tileblur.scm)
 
@@ -43,12 +48,12 @@ Mon May 11 16:59:18 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Mon May 11 23:28:20 MEST 1998 Sven Neumanns <sven@gimp.org>
 
-	* added two new scripts from Hrvoje Horvat 
+	* added two new scripts from Hrvoje Horvat
 	(glossy.scm, 3d-outline.scm)
 
 Mon May 11 21:40:25 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* updated print plug-in	
+	* updated print plug-in
 
 Fri May  8 20:51:24 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -87,7 +92,7 @@ Mon May  4 04:12:54 PDT 1998 Manish Singh <yosh@gimp.org>
 	* gimptool.in: do some arg check for --build
 
 	* app/fileops.c: handle file overwrite dialog too
-	
+
 Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/fileops.c: make fileselectors insensitive during
