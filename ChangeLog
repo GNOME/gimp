@@ -1,3 +1,8 @@
+2004-09-30  Daniel Egger  <degger@fhm.edu>
+
+	* README: Applied proofreading patch from Jonathan Levi
+	<drjlevi@netonecom.net>.
+
 2004-09-30  Michael Natterer  <mitch@gimp.org>
 
 	Cleaned up the DB Browser and Plugin Details code and GUI.  It's

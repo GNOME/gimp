@@ -32,7 +32,7 @@ The automated plug-in registry is located at:
 
 	http://registry.gimp.org/
 
-There you can get the latest versions of plug-ins using a convenient
+There you can get the latest versions of plug-ins, using a convenient
 forms-based interface.
 
 The latest version of The GIMP can be found at:
@@ -48,7 +48,7 @@ discussion.  There is more info at
 
 	https://lists.xcf.berkeley.edu/mailman/listinfo/<listname>
 
-substituting <listname> for "gimp-announce", "gimp-user", "gimp-win-users"
+with <listname> replaced by "gimp-announce", "gimp-user", "gimp-win-users"
 or "gimp-developer" (without the quotes, of course) depending on the list
 you want to subscribe to.  Links to the mailing list archives can be
 found at the same addresses as given above.
@@ -61,14 +61,13 @@ people will only want to be subscribed to gimp-user. If you want to
 help develop The GIMP, the gimp-developer mailing list is a good
 starting point.
 
-There is also a mailing list dedicated to users of the Win32 port
-"gimpwin-users".  To subscribe, send an empty message to
+There is also a mailing list, "gimpwin-users", dedicated to users of the Win32 port.  To subscribe, send an empty message to
 
 	gimpwin-users-subscribe@egroups.com
 
 You can also use the web interface at
 http://www.egroups.com/group/gimpwin-users/. Note that as this mailing
-list is hosted on egroups.com; the messages from the list contain
+list is hosted on egroups.com, the messages from the list contain
 relatively unintrusive and easily ignored advertisements at the
 end. But if you are absolutely allergic to ads, don't subscribe.
 
@@ -89,7 +88,7 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally GIMP reads ~/.gimp-2.0/gtkrc so
+http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.0/gtkrc so
 you can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
