@@ -61,7 +61,7 @@ resize_display (GDisplay *gdisp,
 		gboolean  redisplay)
 {
   /* freeze the active tool */
-  tool_manager_control_active (PAUSE, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
 
   if (resize_window)
     gdisplay_shrink_wrap (gdisp);
@@ -78,7 +78,7 @@ resize_display (GDisplay *gdisp,
     }
 
   /* re-enable the active tool */
-  tool_manager_control_active (RESUME, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
 }
 
 
@@ -86,7 +86,7 @@ void
 shrink_wrap_display (GDisplay *gdisp)
 {
   /* freeze the active tool */
-  tool_manager_control_active (PAUSE, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
 
   gdisplay_shrink_wrap (gdisp);
 
@@ -97,7 +97,7 @@ shrink_wrap_display (GDisplay *gdisp)
   gdisplays_flush ();
 
   /* re-enable the active tool */
-  tool_manager_control_active (RESUME, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
 }
 
 

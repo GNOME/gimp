@@ -37,6 +37,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -425,13 +426,15 @@ brightness_contrast_preview (BrightnessContrastDialog *bcd)
       return;
     }
 
-  active_tool->preserve = TRUE;
+  tool_manager_get_active (the_gimp)->preserve = TRUE;
+
   brightness_contrast_lut_setup (bcd->lut, bcd->brightness / 255.0,
 				 bcd->contrast / 127.0,
 				 gimp_drawable_bytes (bcd->drawable));
   image_map_apply (bcd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) bcd->lut);
-  active_tool->preserve = FALSE;
+
+  tool_manager_get_active (the_gimp)->preserve = FALSE;
 }
 
 static void
@@ -456,10 +459,13 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   BrightnessContrastDialog *bcd;
+  GimpTool                 *active_tool;
 
   bcd = (BrightnessContrastDialog *) data;
 
   gimp_dialog_hide (bcd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
 
@@ -488,10 +494,13 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   BrightnessContrastDialog *bcd;
+  GimpTool                 *active_tool;
 
   bcd = (BrightnessContrastDialog *) data;
 
   gimp_dialog_hide (bcd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (bcd->image_map)
     {
@@ -512,6 +521,7 @@ brightness_contrast_preview_update (GtkWidget *widget,
 				    gpointer   data)
 {
   BrightnessContrastDialog *bcd;
+  GimpTool                 *active_tool;
 
   bcd = (BrightnessContrastDialog *) data;
 
@@ -525,6 +535,8 @@ brightness_contrast_preview_update (GtkWidget *widget,
       bcd->preview = FALSE;
       if (bcd->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (bcd->image_map);
 	  active_tool->preserve = FALSE;

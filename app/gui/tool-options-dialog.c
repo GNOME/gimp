@@ -283,9 +283,12 @@ tool_options_dialog_reset_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GimpToolInfo *tool_info;
+  GimpTool     *active_tool;
   GtkWidget    *shell;
 
   shell = (GtkWidget *) data;
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (! active_tool)
     return;

@@ -411,15 +411,18 @@ gdisplay_format_title (GDisplay *gdisp,
 static void
 gdisplay_delete (GDisplay *gdisp)
 {
+  GimpTool *active_tool;
+
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
 
   /*  stop any active tool  */
-  tool_manager_control_active (HALT, (void *) gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
+
+  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   /*  clear out the pointer to this gdisp from the active tool  */
-  if (active_tool &&
-      active_tool->gdisp == gdisp)
+  if (active_tool && active_tool->gdisp == gdisp)
     {
       active_tool->drawable = NULL;
       active_tool->gdisp    = NULL;
@@ -708,7 +711,7 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
   if (list)
     {
       /*  stop the currently active tool  */
-      tool_manager_control_active (PAUSE, (void *) gdisp);
+      tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
 
       while (list)
 	{
@@ -733,7 +736,7 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
       selection_start (gdisp->select, TRUE);
 
       /* start the currently active tool */
-      tool_manager_control_active (RESUME, (void *) gdisp);
+      tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
     }  
 }
 

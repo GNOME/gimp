@@ -26,10 +26,11 @@
 
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
-
 #include "gimptool.h"
 #include "tool_manager.h"
+
+#include "app_procs.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -469,7 +470,7 @@ gimp_tool_real_oper_update (GimpTool       *tool,
 void
 gimp_tool_help_func (const gchar *help_data)
 {
-  gimp_standard_help_func (tool_manager_active_get_help_data ());
+  gimp_standard_help_func (tool_manager_active_get_help_data (the_gimp));
 }
 
 

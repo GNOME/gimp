@@ -51,17 +51,18 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "errors.h"
-#include "floating_sel.h"
-#include "gdisplay.h"
-#include "plug_in.h"
-#include "undo.h"
-
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
 #include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+
+#include "app_procs.h"
+#include "errors.h"
+#include "floating_sel.h"
+#include "gdisplay.h"
+#include "plug_in.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -508,7 +509,11 @@ static void
 text_dialog_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
+  GimpTool *active_tool;
+
   gimp_dialog_hide (data);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (active_tool && GIMP_IS_TEXT_TOOL (active_tool))
     {

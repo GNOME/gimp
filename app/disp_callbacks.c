@@ -176,6 +176,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
 {
   GDisplay        *gdisp;
+  GimpTool        *active_tool;
   GdkEventExpose  *eevent;
   GdkEventMotion  *mevent;
   GdkEventButton  *bevent;
@@ -192,6 +193,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
   if (!canvas->window)
     return FALSE;
+
+  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   /*  If this is the first event...  */
   if (!gdisp->select)
@@ -294,9 +297,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 						GTK_SIGNAL_FUNC (gtk_true),
 						NULL);
 
-/* FIXME!!! This code is ugly, and active_tool shouldn't be referenced
- * directly
- */
+	  /* FIXME!!! This code is ugly */
 
 	  if (active_tool && (GIMP_IS_MOVE_TOOL (active_tool) ||
 			      ! gimp_image_is_empty (gdisp->gimage)))
@@ -322,6 +323,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		{
 		  tool_manager_initialize_tool (gdisp->gimage->gimp,
 						active_tool, gdisp);
+
+		  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 		}
 
 	      /* otherwise set it's drawable if it has none */
@@ -681,19 +684,32 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
+  gdisp = (GDisplay *) data;
+
   if (gimp_busy)
     return TRUE;
 
   if (event->button == 1)
     {
-      gdisp = data;
+      GimpToolInfo *tool_info;
+      GimpTool     *active_tool;
 
-      gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-			     tool_manager_get_info_by_type (gdisp->gimage->gimp, 
-							    GIMP_TYPE_MOVE_TOOL));
+      tool_info = tool_manager_get_info_by_type (gdisp->gimage->gimp,
+						 GIMP_TYPE_MOVE_TOOL);
 
-      gimp_move_tool_start_hguide (active_tool, gdisp);
-      gtk_grab_add (gdisp->canvas);
+      if (tool_info)
+	{
+	  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+				 tool_info);
+
+	  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+
+	  if (active_tool)
+	    {
+	      gimp_move_tool_start_hguide (active_tool, gdisp);
+	      gtk_grab_add (gdisp->canvas);
+	    }
+	}
     }
 
   return FALSE;
@@ -706,19 +722,32 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
+  gdisp = (GDisplay *) data;
+
   if (gimp_busy)
     return TRUE;
 
   if (event->button == 1)
     {
-      gdisp = data;
+      GimpToolInfo *tool_info;
+      GimpTool     *active_tool;
 
-      gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
-			     tool_manager_get_info_by_type (gdisp->gimage->gimp,
-							    GIMP_TYPE_MOVE_TOOL));
+      tool_info = tool_manager_get_info_by_type (gdisp->gimage->gimp,
+						 GIMP_TYPE_MOVE_TOOL);
 
-      gimp_move_tool_start_vguide (active_tool, gdisp);
-      gtk_grab_add (gdisp->canvas);
+      if (tool_info)
+	{
+	  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+				 tool_info);
+
+	  active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+
+	  if (active_tool)
+	    {
+	      gimp_move_tool_start_vguide (active_tool, gdisp);
+	      gtk_grab_add (gdisp->canvas);
+	    }
+	}
     }
 
   return FALSE;

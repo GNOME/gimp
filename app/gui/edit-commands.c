@@ -92,7 +92,7 @@ edit_cut_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   /*  stop any active tool  */
-  tool_manager_control_active (HALT, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
   if (gimp_edit_cut (gdisp->gimage,
 		     gimp_image_active_drawable (gdisp->gimage)))
@@ -122,7 +122,7 @@ edit_paste_cmd_callback (GtkWidget *widget,
   if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
-      tool_manager_control_active (HALT, gdisp);
+      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
@@ -145,7 +145,7 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
   if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
-      tool_manager_control_active (HALT, gdisp);
+      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
@@ -168,7 +168,7 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
   if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
-      tool_manager_control_active (HALT, gdisp);
+      tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
       gimp_edit_paste_as_new (gdisp->gimage->gimp,
 			      gdisp->gimage,
@@ -186,7 +186,7 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp);
 
   /*  stop any active tool  */
-  tool_manager_control_active (HALT, gdisp);
+  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,

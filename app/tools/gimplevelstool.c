@@ -46,6 +46,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -385,6 +386,10 @@ levels_dialog_hide (void)
 void
 levels_free (void)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (levels_dialog)
     {
       if (levels_dialog->image_map)
@@ -961,6 +966,10 @@ levels_update (LevelsDialog *ld,
 static void
 levels_preview (LevelsDialog *ld)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (!ld->image_map)
     {
       g_warning ("levels_preview: No Image Map");
@@ -1083,6 +1092,9 @@ levels_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   LevelsDialog *ld;
+  GimpTool     *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   ld = (LevelsDialog *) data;
 
@@ -1115,10 +1127,13 @@ levels_cancel_callback (GtkWidget *widget,
 			gpointer   data)
 {
   LevelsDialog *ld;
+  GimpTool     *active_tool;
 
   ld = (LevelsDialog *) data;
 
   gimp_dialog_hide (ld->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (ld->image_map)
     {
@@ -1198,6 +1213,7 @@ levels_preview_update (GtkWidget *widget,
 		       gpointer   data)
 {
   LevelsDialog *ld;
+  GimpTool     *active_tool;
 
   ld = (LevelsDialog *) data;
 
@@ -1211,6 +1227,8 @@ levels_preview_update (GtkWidget *widget,
       ld->preview = FALSE;
       if (ld->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (ld->image_map);
 	  active_tool->preserve = FALSE;

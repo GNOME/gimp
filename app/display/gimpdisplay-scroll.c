@@ -22,8 +22,9 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
 #include "tools/tools-types.h"
+
+#include "core/gimpimage.h"
 
 #include "widgets/gimpcursor.h"
 
@@ -154,8 +155,8 @@ scroll_display (GDisplay *gdisp,
       gdisp->offset_x = old_x;
       gdisp->offset_y = old_y;
 
-      /*  stop the currently active tool  */
-      tool_manager_control_active (PAUSE, (void *) gdisp);
+      /*  freeze the active tool  */
+      tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
 
       /*  set the offsets back to the new values  */
       gdisp->offset_x += x_offset;
@@ -169,8 +170,8 @@ scroll_display (GDisplay *gdisp,
 		       (gdisp->disp_width - abs (x_offset)),
 		       (gdisp->disp_height - abs (y_offset)));
 
-      /*  resume the currently active tool  */
-      tool_manager_control_active (RESUME, (void *) gdisp);
+      /*  re-enable the active tool  */
+      tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);
 
       /*  scale the image into the exposed regions  */
       if (x_offset)

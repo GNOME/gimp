@@ -38,6 +38,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 
@@ -470,11 +471,14 @@ histogram_tool_close_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   HistogramToolDialog *htd;
+  GimpTool            *active_tool;
 
   htd = (HistogramToolDialog *) data;
 
   gimp_dialog_hide (htd->shell);
-       
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   active_tool->gdisp    = NULL;
   active_tool->drawable = NULL;
 }

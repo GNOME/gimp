@@ -40,6 +40,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -482,11 +483,15 @@ threshold_update (ThresholdDialog *td,
 static void
 threshold_preview (ThresholdDialog *td)
 {
+  GimpTool *active_tool;
+
   if (!td->image_map)
     {
       g_warning ("threshold_preview(): No image map");
       return;
     }
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
   image_map_apply (td->image_map, threshold, td);
@@ -515,11 +520,14 @@ threshold_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   ThresholdDialog *td;
+  GimpTool        *active_tool;
 
   td = (ThresholdDialog *) data;
 
   gimp_dialog_hide (td->shell);
-  
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   active_tool->preserve = TRUE;
 
   if (!td->preview)
@@ -541,10 +549,13 @@ threshold_cancel_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ThresholdDialog *td;
+  GimpTool        *active_tool;
 
   td = (ThresholdDialog *) data;
 
   gimp_dialog_hide (td->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (td->image_map)
     {
@@ -565,6 +576,7 @@ threshold_preview_update (GtkWidget *widget,
 			  gpointer   data)
 {
   ThresholdDialog *td;
+  GimpTool        *active_tool;
 
   td = (ThresholdDialog *) data;
 
@@ -578,6 +590,8 @@ threshold_preview_update (GtkWidget *widget,
       td->preview = FALSE;
       if (td->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (td->image_map);
 	  active_tool->preserve = FALSE;

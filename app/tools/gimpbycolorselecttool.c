@@ -684,10 +684,10 @@ by_color_select_cursor_update (GimpTool       *tool,
 
 static void
 by_color_select_update_op_state (GimpByColorSelectTool *by_col_sel,
-				 gint           state,  
-				 GDisplay      *gdisp)
+				 gint                   state,  
+				 GDisplay              *gdisp)
 {
-  if (active_tool->state == ACTIVE)
+  if (tool_manager_get_active (gdisp->gimage->gimp)->state == ACTIVE)
     return;
 
   if ((state & GDK_SHIFT_MASK) &&

@@ -87,6 +87,7 @@ tools_select_cmd_callback (GtkWidget *widget,
 {
   GtkType       tool_type;
   GimpToolInfo *tool_info;
+  GimpTool     *active_tool;
   GDisplay     *gdisp;
 
   tool_type = (GtkType) action;
@@ -99,6 +100,8 @@ tools_select_cmd_callback (GtkWidget *widget,
 #ifdef __GNUC__
 #warning FIXME (let the tool manager to this stuff)
 #endif
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   /*  Paranoia  */
   active_tool->drawable = NULL;

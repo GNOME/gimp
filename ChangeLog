@@ -1,5 +1,40 @@
 2001-07-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.[ch]: put all tool_manager variables into
+	a struct which is attached to a "Gimp". Pass a Gimp* to all
+	tool_manager functions.
+
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/scale.c
+	* app/scroll.c
+	* app/undo.c
+	* app/gui/convert-dialog.c
+	* app/gui/edit-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/tools-commands.c: changed accordingly.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptool.c
+	* app/tools/gimptransformtool.c: mostly bad hacks for tool dialogs
+	which exist without a real context. Needs some more review.
+
+2001-07-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpimage-crop.[ch]: new files for gimp_image_crop()
 	and gimp_image_crop_auto_shrink() (should share large portions of

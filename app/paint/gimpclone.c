@@ -278,7 +278,8 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
   GimpDrawTool *draw_tool;
   GimpContext  *context;
 
-  gdisp = (GDisplay *) active_tool->gdisp;
+  gdisp = (GDisplay *) tool_manager_get_active (drawable->gimage->gimp)->gdisp;
+
   draw_tool = GIMP_DRAW_TOOL (paint_tool);
 
   context = gimp_get_current_context (gdisp->gimage->gimp);

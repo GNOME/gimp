@@ -38,6 +38,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -621,6 +622,10 @@ color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
 static void
 color_balance_preview (ColorBalanceDialog *cbd)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (!cbd->image_map)
     {
       g_message ("color_balance_preview(): No image map");
@@ -656,11 +661,14 @@ color_balance_ok_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorBalanceDialog *cbd;
+  GimpTool           *active_tool;
 
   cbd = (ColorBalanceDialog *) data;
 
   gimp_dialog_hide (cbd->shell);
   
+  active_tool = tool_manager_get_active (the_gimp);
+
   active_tool->preserve = TRUE;
 
   if (!cbd->preview)
@@ -682,10 +690,13 @@ color_balance_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorBalanceDialog *cbd;
+  GimpTool           *active_tool;
 
   cbd = (ColorBalanceDialog *) data;
 
   gimp_dialog_hide (cbd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (cbd->image_map)
     {
@@ -738,6 +749,7 @@ color_balance_preview_update (GtkWidget *widget,
 			      gpointer   data)
 {
   ColorBalanceDialog *cbd;
+  GimpTool           *active_tool;
 
   cbd = (ColorBalanceDialog *) data;
 
@@ -751,6 +763,8 @@ color_balance_preview_update (GtkWidget *widget,
       cbd->preview = FALSE;
       if (cbd->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (cbd->image_map);
 	  active_tool->preserve = FALSE;

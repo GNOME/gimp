@@ -38,6 +38,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -399,6 +400,10 @@ hue_saturation_dialog_hide (void)
 void
 hue_saturation_free (void)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (hue_saturation_dialog)
     {
       if (hue_saturation_dialog->image_map)
@@ -725,6 +730,10 @@ hue_saturation_update (HueSaturationDialog *hsd,
 static void
 hue_saturation_preview (HueSaturationDialog *hsd)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (!hsd->image_map)
     {
       g_warning ("hue_saturation_preview(): No image map");
@@ -759,10 +768,13 @@ hue_saturation_ok_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   HueSaturationDialog *hsd;
+  GimpTool            *active_tool;
 
   hsd = (HueSaturationDialog *) data;
 
   gimp_dialog_hide (hsd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
 
@@ -785,10 +797,13 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 				gpointer   data)
 {
   HueSaturationDialog *hsd;
+  GimpTool            *active_tool;
 
   hsd = (HueSaturationDialog *) data;
 
   gimp_dialog_hide (hsd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (hsd->image_map)
     {
@@ -825,6 +840,7 @@ hue_saturation_preview_update (GtkWidget *widget,
 			       gpointer   data)
 {
   HueSaturationDialog *hsd;
+  GimpTool            *active_tool;
 
   hsd = (HueSaturationDialog *) data;
 
@@ -838,6 +854,8 @@ hue_saturation_preview_update (GtkWidget *widget,
       hsd->preview = FALSE;
       if (hsd->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (hsd->image_map);
 	  active_tool->preserve = FALSE;

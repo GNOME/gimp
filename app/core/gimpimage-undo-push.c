@@ -1272,11 +1272,14 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
+  GimpTool          *active_tool;
   GimpTransformTool *tt;
   TransformUndo     *tu;
   TileManager       *temp;
   gdouble            d;
   gint               i;
+
+  active_tool = tool_manager_get_active (gimage->gimp);
 
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)
@@ -1363,9 +1366,12 @@ undo_pop_paint (GimpImage *gimage,
 		UndoType   type,
 		gpointer   pu_ptr)
 {
+  GimpTool      *active_tool;
   GimpPaintTool *pt;
   PaintUndo     *pu;
   gdouble        tmp;
+
+  active_tool = tool_manager_get_active (gimage->gimp);
 
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)

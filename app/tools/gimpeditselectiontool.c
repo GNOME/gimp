@@ -294,7 +294,8 @@ init_edit_selection (GimpTool       *tool,
 
   gtk_object_ref (GTK_OBJECT (edit_select));
 
-  tool_manager_push_tool (GIMP_TOOL (edit_select));
+  tool_manager_push_tool (gdisp->gimage->gimp,
+			  GIMP_TOOL (edit_select));
 
   /*  pause the current selection  */
   gdisplay_selection_visibility (gdisp, SELECTION_PAUSE);
@@ -335,9 +336,9 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
   /*  Stop and free the selection core  */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (edit_select));
 
-  tool_manager_pop_tool ();
+  tool_manager_pop_tool (gdisp->gimage->gimp);
 
-  active_tool->state = INACTIVE;
+  tool_manager_get_active (gdisp->gimage->gimp)->state = INACTIVE;
 
   /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.

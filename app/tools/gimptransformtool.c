@@ -999,7 +999,9 @@ gimp_transform_tool_grid_density_changed (void)
   GimpTransformTool *tr_tool;
   GimpDrawTool      *dr_tool;
 
-  tr_tool = GIMP_TRANSFORM_TOOL ( /* EEEEEEEK!!! */ active_tool);
+  /* EEEK!!! */ 
+  tr_tool = GIMP_TRANSFORM_TOOL (tool_manager_get_active (the_gimp));
+
   dr_tool = GIMP_DRAW_TOOL (tr_tool);
 
   if (tr_tool->function == TRANSFORM_CREATING)
@@ -1018,7 +1020,8 @@ gimp_transform_tool_showpath_changed (gint type /* a truly undescriptive name */
 {
   GimpTransformTool *tr_tool;
 
-  tr_tool = GIMP_TRANSFORM_TOOL ( /* EEEEEEEK!!! */ active_tool);
+  /* EEEEEEEK!!! */ 
+  tr_tool = GIMP_TRANSFORM_TOOL (tool_manager_get_active (the_gimp));
 
   if (tr_tool->function == TRANSFORM_CREATING)
     return;
@@ -1045,7 +1048,10 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
     }
 
   if (gimp_transform_tool_show_grid ())
-    gimp_transform_tool_setup_grid (GIMP_TRANSFORM_TOOL ( /* EEEEEEK!!! */ active_tool));
+    {
+      /* EEEEEEK!!! */ 
+      gimp_transform_tool_setup_grid (GIMP_TRANSFORM_TOOL (tool_manager_get_active (the_gimp)));
+    }
 }
 
 static void
@@ -1208,7 +1214,8 @@ gimp_transform_tool_do (GimpImage        *gimage,
   y2 = y1 + tile_manager_height (float_tiles);
 
   /*  Find the bounding coordinates  */
-  if (alpha == 0 || (active_tool && gimp_transform_tool_clip ()))
+  if (alpha == 0 || (tool_manager_get_active (gimage->gimp) &&
+		     gimp_transform_tool_clip ()))
     {
       tx1 = x1;
       ty1 = y1;
@@ -1217,7 +1224,10 @@ gimp_transform_tool_do (GimpImage        *gimage,
     }
   else
     {
-      gdouble dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
+      gdouble dx1, dy1;
+      gdouble dx2, dy2;
+      gdouble dx3, dy3;
+      gdouble dx4, dy4;
 
       gimp_matrix3_transform_point (matrix, x1, y1, &dx1, &dy1);
       gimp_matrix3_transform_point (matrix, x2, y1, &dx2, &dy2);
@@ -1230,6 +1240,7 @@ gimp_transform_tool_do (GimpImage        *gimage,
       ty1 = MIN (dy1, dy2);
       ty1 = MIN (ty1, dy3);
       ty1 = MIN (ty1, dy4);
+
       tx2 = MAX (dx1, dx2);
       tx2 = MAX (tx2, dx3);
       tx2 = MAX (tx2, dx4);

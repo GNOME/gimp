@@ -37,11 +37,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "drawable.h"
-#include "errors.h"
-#include "gdisplay.h"
-#include "undo.h"
-
 #include "pdb/procedural_db.h"
 
 #include "gui/paths-dialog.h"
@@ -51,6 +46,12 @@
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "app_procs.h"
+#include "drawable.h"
+#include "errors.h"
+#include "gdisplay.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -428,7 +429,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 			       &halfwidth, &dummy, TRUE, 0);
   halfwidth -= x;
 
-  curTool  =  active_tool;
+  curTool  =  tool_manager_get_active (gdisp->gimage->gimp);
   curSel   =  bezier_sel;
   curGdisp =  (GDisplay *) gdisp;
   curCore  =  (GimpDrawTool *)bezier_sel;
@@ -923,7 +924,8 @@ bezier_select_load (GDisplay              *gdisp,
   gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp), 
 			 tool_manager_get_info_by_type
 			 (gdisp->gimage->gimp, GIMP_TYPE_BEZIER_SELECT_TOOL));
-  tool            = active_tool;
+
+  tool            = tool_manager_get_active (gdisp->gimage->gimp);
   tool->state     = ACTIVE;
   tool->gdisp     = gdisp;
   bezier_sel =  (GimpBezierSelectTool *) tool;
@@ -1598,11 +1600,12 @@ bezier_select_button_press (GimpTool           *tool,
 			       &halfwidth, &dummy, TRUE, 0);
   halfwidth -= x;
 
-  curTool = active_tool;
-  curSel = (GimpBezierSelectTool *) curTool;
+  curTool  = tool_manager_get_active (gdisp->gimage->gimp);
+  curSel   = (GimpBezierSelectTool *) curTool;
   curGdisp = (GDisplay *) gdisp;
-  active_tool->gdisp = gdisp;
-  curCore = (GimpDrawTool *) bezier_sel;
+
+  curTool->gdisp = gdisp;
+  curCore        = (GimpDrawTool *) bezier_sel;
 
   switch (bezier_sel->state)
     {
@@ -3121,9 +3124,13 @@ bezier_insert_in_list (GSList *list,
 gboolean 
 bezier_tool_selected (void)
 {
-  return (active_tool &&
-	  GIMP_IS_BEZIER_SELECT_TOOL (active_tool) &&
-	  active_tool->state == ACTIVE);
+  GimpTool *tool;
+
+  tool = tool_manager_get_active (the_gimp);
+
+  return (tool                              &&
+	  GIMP_IS_BEZIER_SELECT_TOOL (tool) &&
+	  tool->state == ACTIVE);
 }
 
 void
@@ -3131,21 +3138,24 @@ bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
 				      GimpBezierSelectTool *bsel)
 {
   GimpBezierSelectPoint *pts;
-  gint         i;
-  GimpTool        *tool;
+  gint                   i;
+  GimpTool              *tool;
   GimpBezierSelectPoint *bpnt = NULL;
-  gint         need_move = 0;
+  gint                   need_move = 0;
 
 /*   g_print ("bezier_paste_bezierselect_to_current::\n"); */
 /*   printSel(bsel); */
 
+  tool = tool_manager_get_active (gdisp->gimage->gimp);
+
   /*  If the tool was being used before clear it */
-  if (active_tool &&
-      GIMP_IS_BEZIER_SELECT_TOOL (active_tool) &&
-      active_tool->state == ACTIVE)
+  if (tool                              &&
+      GIMP_IS_BEZIER_SELECT_TOOL (tool) &&
+      tool->state == ACTIVE)
     {
-      GimpBezierSelectTool *bezier_sel =  (GimpBezierSelectTool *) active_tool;
-      if(bezier_sel)
+      GimpBezierSelectTool *bezier_sel = (GimpBezierSelectTool *) tool;
+
+      if (bezier_sel)
 	{
 	  gimp_draw_tool_stop ((GimpDrawTool *) curSel);
 	  bezier_select_reset (bezier_sel);
@@ -3155,11 +3165,12 @@ bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
   gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
 			 tool_manager_get_info_by_type
 			 (gdisp->gimage->gimp, GIMP_TYPE_BEZIER_SELECT_TOOL));
-  active_tool->paused_count = 0;
-  active_tool->gdisp        = gdisp;
-  active_tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
 
-  tool = active_tool;
+  tool = tool_manager_get_active (gdisp->gimage->gimp);
+
+  tool->paused_count = 0;
+  tool->gdisp        = gdisp;
+  tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
 
   bezier_select_reset (curSel);
 

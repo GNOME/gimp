@@ -43,6 +43,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -390,9 +391,9 @@ gimp_curves_tool_button_press (GimpTool       *tool,
 
   if (drawable != tool->drawable)
     {
-      active_tool->preserve = TRUE;
+      tool->preserve = TRUE;
       image_map_abort (curves_dialog->image_map);
-      active_tool->preserve = FALSE;
+      tool->preserve = FALSE;
 
       tool->drawable = drawable;
 
@@ -608,10 +609,14 @@ curves_dialog_hide (void)
 void
 curves_free (void)
 {
+  GimpTool *active_tool;
+
   if (curves_dialog)
     {
       if (curves_dialog->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_abort (curves_dialog->image_map);
 	  active_tool->preserve = FALSE;
@@ -1227,11 +1232,15 @@ curves_calculate_curve (CurvesDialog *cd)
 static void
 curves_preview (CurvesDialog *cd)
 {
+  GimpTool *active_tool;
+
   if (!cd->image_map)
     {
       g_message ("curves_preview(): No image map");
       return;
     }
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
   image_map_apply (cd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
@@ -1361,10 +1370,13 @@ curves_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   CurvesDialog *cd;
+  GimpTool     *active_tool;
 
   cd = (CurvesDialog *) data;
 
   gimp_dialog_hide (cd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;  /* We're about to dirty... */
 
@@ -1388,10 +1400,13 @@ curves_cancel_callback (GtkWidget *widget,
 			gpointer   data)
 {
   CurvesDialog *cd;
+  GimpTool     *active_tool;
 
   cd = (CurvesDialog *) data;
 
   gimp_dialog_hide (cd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (cd->image_map)
     {
@@ -1442,6 +1457,7 @@ curves_preview_update (GtkWidget *widget,
 		       gpointer   data)
 {
   CurvesDialog *cd;
+  GimpTool     *active_tool;
 
   cd = (CurvesDialog *) data;
   
@@ -1455,6 +1471,8 @@ curves_preview_update (GtkWidget *widget,
       cd->preview = FALSE;
       if (cd->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (cd->image_map);
 	  active_tool->preserve = FALSE;

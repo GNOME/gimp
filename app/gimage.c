@@ -95,6 +95,10 @@ gimage_new (Gimp             *gimp,
 static void
 gimage_dirty_handler (GimpImage *gimage)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (gimage->gimp);
+
   if (active_tool && ! active_tool->preserve)
     {
       GDisplay* gdisp = active_tool->gdisp;

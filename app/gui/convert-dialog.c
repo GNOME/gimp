@@ -502,6 +502,7 @@ indexed_ok_callback (GtkWidget *widget,
   IndexedDialog      *dialog;
   ConvertPaletteType  palette_type;
   ConvertDitherType   dither_type;
+  GimpTool           *active_tool;
 
   dialog = (IndexedDialog *) data;
 
@@ -528,8 +529,10 @@ indexed_ok_callback (GtkWidget *widget,
   /* Close the dialogs when open because they're useless for indexed
    *  images and could crash the GIMP when used nevertheless
    */
+  active_tool = tool_manager_get_active (dialog->gimage->gimp);
+
   if (active_tool)
-    tool_manager_control_active (HALT, active_tool->gdisp);
+    tool_manager_control_active (dialog->gimage->gimp, HALT, active_tool->gdisp);
   
   /*  Convert the image to indexed color  */
   gimp_image_convert (dialog->gimage, INDEXED, dialog->num_cols,

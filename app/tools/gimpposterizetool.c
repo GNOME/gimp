@@ -36,6 +36,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -341,6 +342,10 @@ posterize_dialog_new (void)
 static void
 posterize_preview (PosterizeDialog *pd)
 {
+  GimpTool *active_tool;
+
+  active_tool = tool_manager_get_active (the_gimp);
+
   if (!pd->image_map)
     {
       g_warning ("posterize_preview(): No image map");
@@ -370,10 +375,13 @@ posterize_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   PosterizeDialog *pd;
+  GimpTool        *active_tool;
 
   pd = (PosterizeDialog *) data;
 
   gimp_dialog_hide (pd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   active_tool->preserve = TRUE;
 
@@ -401,10 +409,13 @@ posterize_cancel_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   PosterizeDialog *pd;
+  GimpTool        *active_tool;
 
   pd = (PosterizeDialog *) data;
 
   gimp_dialog_hide (pd->shell);
+
+  active_tool = tool_manager_get_active (the_gimp);
 
   if (pd->image_map)
     {
@@ -425,6 +436,7 @@ posterize_preview_update (GtkWidget *widget,
 			  gpointer   data)
 {
   PosterizeDialog *pd;
+  GimpTool        *active_tool;
 
   pd = (PosterizeDialog *) data;
 
@@ -438,6 +450,8 @@ posterize_preview_update (GtkWidget *widget,
       pd->preview = FALSE;
       if (pd->image_map)
 	{
+	  active_tool = tool_manager_get_active (the_gimp);
+
 	  active_tool->preserve = TRUE;
 	  image_map_clear (pd->image_map);
 	  active_tool->preserve = FALSE;

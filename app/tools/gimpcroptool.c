@@ -977,8 +977,9 @@ crop_crop_callback (GtkWidget *widget,
   GimpCropTool *crop;
 
   /* XXX active_tool is bad */
-  tool  = active_tool;
-  crop = GIMP_CROP_TOOL(tool);
+  tool = tool_manager_get_active (the_gimp);
+
+  crop = GIMP_CROP_TOOL (tool);
 
   crop_tool_crop_image (tool->gdisp->gimage,
 			crop->tx1, crop->ty1,
@@ -998,8 +999,9 @@ crop_resize_callback (GtkWidget *widget,
   GimpCropTool *crop;
   
   /* XXX active_tool is bad */
-  tool  = active_tool;
-  crop = GIMP_CROP_TOOL(tool);
+  tool = tool_manager_get_active (the_gimp);
+
+  crop = GIMP_CROP_TOOL (tool);
 
   crop_tool_crop_image (tool->gdisp->gimage,
 			crop->tx1, crop->ty1,
@@ -1020,9 +1022,10 @@ crop_close_callback (GtkWidget *widget,
   GimpDrawTool *draw;
 
   /* XXX active_tool is bad */
-  tool = active_tool;
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  tool = tool_manager_get_active (the_gimp);
+
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
   
   if (tool->state == ACTIVE)
     gimp_draw_tool_stop (draw);
@@ -1045,9 +1048,10 @@ crop_selection_callback (GtkWidget *widget,
   GDisplay     *gdisp;
 
   /* XXX active_tool is bad */
-  tool  = active_tool;
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  tool = tool_manager_get_active (the_gimp);
+
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
   
   gdisp = tool->gdisp;
 
@@ -1091,9 +1095,10 @@ crop_automatic_callback (GtkWidget *widget,
   gint             shrunk_y2;
   
   /* FIXME: active_tool is bad */
-  tool  = active_tool;
-  crop  = GIMP_CROP_TOOL(tool);
-  draw  = GIMP_DRAW_TOOL(tool);
+  tool = tool_manager_get_active (the_gimp);
+
+  crop  = GIMP_CROP_TOOL (tool);
+  draw  = GIMP_DRAW_TOOL (tool);
   gdisp = tool->gdisp;
 
   if (crop_options->layer_only)
@@ -1153,7 +1158,7 @@ crop_orig_changed (GtkWidget *widget,
   gint          oy;
 
   /* XXX active_tool is bad */
-  tool = active_tool;
+  tool = tool_manager_get_active (the_gimp);
 
   if (tool && GIMP_IS_CROP_TOOL(tool))
     {
@@ -1189,12 +1194,12 @@ crop_size_changed (GtkWidget *widget,
   gint          sy;
 
   /* XXX active_tool is bad */
-  tool = active_tool;
+  tool = tool_manager_get_active (the_gimp);
 
-  if (tool && GIMP_IS_CROP_TOOL(tool))
+  if (tool && GIMP_IS_CROP_TOOL (tool))
     {
-      crop = GIMP_CROP_TOOL(tool);
-      draw = GIMP_DRAW_TOOL(tool);
+      crop = GIMP_CROP_TOOL (tool);
+      draw = GIMP_DRAW_TOOL (tool);
 
       sx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
       sy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
