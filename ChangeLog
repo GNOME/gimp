@@ -1,3 +1,9 @@
+2005-03-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.[ch]: improve cursor handling and
+	other aspects of ui for rectangle tools.
+
 2005-03-14  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* app/paint-funcs/paint-funcs.c

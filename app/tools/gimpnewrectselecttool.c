@@ -146,9 +146,12 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
 static void
 gimp_new_rect_select_tool_init (GimpNewRectSelectTool *new_rect_select_tool)
 {
-  GimpTool *tool = GIMP_TOOL (new_rect_select_tool);
+  GimpTool          *tool      = GIMP_TOOL (new_rect_select_tool);
+  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (new_rect_select_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
+
+  rectangle->selection_tool = TRUE;
 }
 
 static void
@@ -166,32 +169,7 @@ gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
                                          GdkModifierType  state,
                                          GimpDisplay     *gdisp)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  GimpCursorType         cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier     modifier    = GIMP_CURSOR_MODIFIER_NONE;
-
-  if (tool->gdisp == gdisp)
-    {
-      switch (rectangle->function)
-        {
-        case RECT_MOVING:
-          modifier = GIMP_CURSOR_MODIFIER_MOVE;
-          break;
-
-        case RECT_RESIZING_LEFT:
-        case RECT_RESIZING_RIGHT:
-          modifier = GIMP_CURSOR_MODIFIER_RESIZE;
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  gimp_tool_control_set_cursor (tool->control, cursor);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_CROP);
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -203,6 +203,7 @@ gimp_rectangle_tool_init (GimpRectangleTool *rectangle)
   gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
 
+  rectangle->selection_tool   = FALSE;
   rectangle->controls         = NULL;
   rectangle->dimensions_entry = NULL;
 }
@@ -349,8 +350,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       rectangle_tool_start (rectangle);
     }
 
-  rectangle->lastx = rectangle->startx = ROUND (coords->x);
-  rectangle->lasty = rectangle->starty = ROUND (coords->y);
+  rectangle->pressx = rectangle->lastx = rectangle->startx = ROUND (coords->x);
+  rectangle->pressy = rectangle->lasty = rectangle->starty = ROUND (coords->y);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -362,7 +363,7 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleTool     *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpRectangleOptions  *options;
 
   options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
@@ -372,18 +373,19 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
 
   if (! (state & GDK_BUTTON3_MASK))
     {
-      if (rectangle->function == RECT_CREATING)
+      if ( (rectangle->lastx == rectangle->pressx) &&
+           (rectangle->lasty == rectangle->pressy))
         {
-          if ( (rectangle->lastx == rectangle->startx) &&
-               (rectangle->lasty == rectangle->starty))
+          if (rectangle->function == RECT_CREATING)
             {
-              rectangle_response (NULL, GTK_RESPONSE_CANCEL, rectangle);
+              rectangle_selection_callback (NULL, rectangle);
+            }
+          else if (rectangle->function == RECT_MOVING)
+            {
+              rectangle_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
             }
         }
-      else if (rectangle->function == RECT_EXECUTING)
-        {
-          rectangle_response (NULL, GIMP_RECTANGLE_MODE_EXECUTE, rectangle);
-        }
+
       rectangle_info_update (rectangle);
     }
 }
@@ -453,7 +455,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   switch (rectangle->function)
     {
     case RECT_CREATING:
-      rectangle->change_aspect_ratio = TRUE;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
@@ -543,8 +544,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
     case RECT_MOVING:
       if (fixed_width &&
-          rectangle->x1 + inc_x >= 0 &&
-          rectangle->x2 + inc_x <= max_x)
+          (rectangle->x1 + inc_x < 0 ||
+           rectangle->x2 + inc_x > max_x))
         {
           x1 = rectangle->x1;
           x2 = rectangle->x2;
@@ -650,8 +651,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
     case RECT_MOVING:
       if (fixed_height &&
-          rectangle->y1 + inc_y >= 0 &&
-          rectangle->y2 + inc_y <= max_y)
+          (rectangle->y1 + inc_y < 0 ||
+          rectangle->y2 + inc_y > max_y))
         {
           y1 = rectangle->y1;
           y2 = rectangle->y2;
@@ -1036,30 +1037,49 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *gdisp)
 {
-  GimpRectangleTool     *rectangle = GIMP_RECTANGLE_TOOL (tool);
+  GimpRectangleTool     *rectangle   = GIMP_RECTANGLE_TOOL (tool);
   GimpRectangleOptions  *options;
-  GimpCursorType         cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier     modifier  = GIMP_CURSOR_MODIFIER_NONE;
+  GimpCursorType         cursor      = GDK_CROSSHAIR;
+  GimpCursorModifier     modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpToolCursorType     tool_cursor;
+
+  tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
 
   options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
 
-  if (tool->gdisp == gdisp)
+  if (tool->gdisp == gdisp && ! (state & GDK_BUTTON1_MASK))
     {
       switch (rectangle->function)
         {
-        case RECT_MOVING:
-          modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        case RECT_CREATING:
+          cursor = GDK_CROSSHAIR;
           break;
-
+        case RECT_MOVING:
+          cursor = GDK_FLEUR;
+          break;
         case RECT_RESIZING_UPPER_LEFT:
+          cursor = GDK_TOP_LEFT_CORNER;
+          break;
         case RECT_RESIZING_UPPER_RIGHT:
+          cursor = GDK_TOP_RIGHT_CORNER;
+          break;
         case RECT_RESIZING_LOWER_LEFT:
+          cursor = GDK_BOTTOM_LEFT_CORNER;
+          break;
         case RECT_RESIZING_LOWER_RIGHT:
+          cursor = GDK_BOTTOM_RIGHT_CORNER;
+          break;
         case RECT_RESIZING_LEFT:
+          cursor = GDK_LEFT_SIDE;
+          break;
         case RECT_RESIZING_RIGHT:
+          cursor = GDK_RIGHT_SIDE;
+          break;
         case RECT_RESIZING_TOP:
+          cursor = GDK_TOP_SIDE;
+          break;
         case RECT_RESIZING_BOTTOM:
-          modifier = GIMP_CURSOR_MODIFIER_RESIZE;
+          cursor = GDK_BOTTOM_SIDE;
           break;
 
         default:
@@ -1068,11 +1088,13 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
     }
 
   gimp_tool_control_set_cursor (tool->control, cursor);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_CROP);
+  gimp_tool_control_set_tool_cursor (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+  gimp_tool_set_cursor (tool, gdisp,
+                        gimp_tool_control_get_cursor (tool->control),
+                        gimp_tool_control_get_tool_cursor (tool->control),
+                        gimp_tool_control_get_cursor_modifier (tool->control));
 }
 
 static void
@@ -1095,31 +1117,6 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw)
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rectangle->dx2, rectangle->dy2,
                          rectangle->dx2, rectangle->dy1);
-
-  gimp_draw_tool_draw_handle (draw,
-                              GIMP_HANDLE_FILLED_SQUARE,
-                              rectangle->x1, rectangle->y1,
-                              rectangle->dcw, rectangle->dch,
-                              GTK_ANCHOR_NORTH_WEST,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw,
-                              GIMP_HANDLE_FILLED_SQUARE,
-                              rectangle->x2, rectangle->y1,
-                              rectangle->dcw, rectangle->dch,
-                              GTK_ANCHOR_NORTH_EAST,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw,
-                              GIMP_HANDLE_FILLED_SQUARE,
-                              rectangle->x1, rectangle->y2,
-                              rectangle->dcw, rectangle->dch,
-                              GTK_ANCHOR_SOUTH_WEST,
-                              FALSE);
-  gimp_draw_tool_draw_handle (draw,
-                              GIMP_HANDLE_FILLED_SQUARE,
-                              rectangle->x2, rectangle->y2,
-                              rectangle->dcw, rectangle->dch,
-                              GTK_ANCHOR_SOUTH_EAST,
-                              FALSE);
 }
 
 static void
@@ -1166,17 +1163,6 @@ rectangle_recalc (GimpRectangleTool *rectangle)
 
 #undef SRW
 #undef SRH
-
-  if ((rectangle->y2 - rectangle->y1) != 0)
-    {
-      if (rectangle->change_aspect_ratio)
-        rectangle->aspect_ratio = ((gdouble) (rectangle->x2 - rectangle->x1) /
-                                     (gdouble) (rectangle->y2 - rectangle->y1));
-    }
-  else
-    {
-      rectangle->aspect_ratio = 0.0;
-    }
 
   rectangle_info_update (rectangle);
 }
@@ -1267,11 +1253,6 @@ rectangle_selection_callback (GtkWidget         *widget,
       rectangle->x2 = gdisp->gimage->width;
       rectangle->y2 = gdisp->gimage->height;
     }
-
-  /* force change of aspect ratio */
-  if ((rectangle->y2 - rectangle->y1) != 0)
-    rectangle->aspect_ratio = ((gdouble) (rectangle->x2 - rectangle->x1) /
-                          (gdouble) (rectangle->y2 - rectangle->y1));
 
   rectangle_recalc (rectangle);
 

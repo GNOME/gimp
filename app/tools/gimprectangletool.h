@@ -63,31 +63,29 @@ struct _GimpRectangleTool
   GtkWidget    *controls;
   GtkWidget    *dimensions_entry;
 
+  gboolean      selection_tool;  /* is this a selection tool? */
+
   gint          startx;     /*  starting x coord            */
   gint          starty;     /*  starting y coord            */
 
   gint          lastx;      /*  previous x coord            */
   gint          lasty;      /*  previous y coord            */
 
+  gint          pressx;     /*  x where button pressed      */
+  gint          pressy;     /*  y where button pressed      */
+
   gint          x1, y1;     /*  upper left hand coordinate  */
   gint          x2, y2;     /*  lower right hand coords     */
 
-  guint         function;   /*  moving or resizing          */
+  guint         function;
 
   gint          dx1, dy1;   /*  display coords              */
   gint          dx2, dy2;   /*                              */
 
-  gint          dcw, dch;   /*  width and height of corners */
+  gint          dcw, dch;   /*  width and height of edges   */
 
   gdouble       orig_vals[2];
   gdouble       size_vals[2];
-  gdouble	aspect_ratio;
-  gboolean	change_aspect_ratio; /* Boolean for the rectangle_info_update function */
-  				     /* aspect_ratio should not be changed whith   */
-  				     /* rectangle_info_update when it is called from      */
-				     /* rectangle_aspect_changed, due to the inaccurate*/
-  				     /* decimal precision                         */
-
 };
 
 struct _GimpRectangleToolClass
