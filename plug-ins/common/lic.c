@@ -960,10 +960,11 @@ compute_image (void)
   if (new_image_id != -1)
     {
       gimp_display_new (new_image_id);
-      gimp_displays_flush ();
       gimp_drawable_detach (output_drawable);
       gimp_image_undo_enable (new_image_id);
     }
+
+  gimp_displays_flush ();
 }
 
 /**************************/
@@ -1049,6 +1050,10 @@ create_main_dialog (void)
 				licvals.create_new_image == TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+                      &licvals.create_new_image);
 
   frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
 				 gimp_radio_button_update,

@@ -1,3 +1,8 @@
+2003-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/lic.c (create_main_dialog): honor the
+	"Create New Image" toggle. Fixes bug #113610.
+
 2003-05-23  Raphael Quinet  <quinet@gamers.org>
 
 	* app/paint_core.[ch]: applied a patch (backported from HEAD) from
