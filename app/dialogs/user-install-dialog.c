@@ -176,6 +176,12 @@ tree_items[] =
     TREE_ITEM_DONT, NULL
   },
   {
+    FALSE, "templaterc",
+    N_("This file holds a collection of standard media sizes that\n"
+       "serve as image templates."),
+    TREE_ITEM_FROM_SYSCONF_DIR, "templaterc"
+  },
+  {
     FALSE, "unitrc",
     N_("The unitrc is used to store your user units database.\n"
        "You can define additional units and use them just\n"
@@ -183,11 +189,6 @@ tree_items[] =
        "points and picas.  This file is overwritten each time\n"
        "you quit the GIMP."),
     TREE_ITEM_FROM_SYSCONF_DIR, NULL
-  },
-  {
-    TRUE, "themes",
-    N_("This folder is searched for user-installed themes."),
-    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "brushes",
@@ -254,6 +255,16 @@ tree_items[] =
        "scripts.  The GIMP checks this folder in addition to\n"
        "the systemwide GIMP scripts folder when searching for\n"
        "scripts."),
+    TREE_ITEM_MKDIR_ONLY, NULL
+  },
+  {
+    TRUE, "templates",
+    N_("This folder is searched for image templates."),
+    TREE_ITEM_MKDIR_ONLY, NULL
+  },
+  {
+    TRUE, "themes",
+    N_("This folder is searched for user-installed themes."),
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {

@@ -1,0 +1,51 @@
+# GIMP templates
+# 
+# A collection of image templates.
+
+(GimpTemplate "A4 300dpi"
+    (width 2480)
+    (height 3508)
+    (unit millimeters)
+    (xresolution 300.000000)
+    (yresolution 300.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "A5 300dpi"
+    (width 1754)
+    (height 2480)
+    (unit millimeters)
+    (xresolution 300.000000)
+    (yresolution 300.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "Letter 300dpi"
+    (width 2550)
+    (height 3300)
+    (unit inches)
+    (xresolution 300.000000)
+    (yresolution 300.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "Web Banner Common 468x60"
+    (width 468)
+    (height 60)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+(GimpTemplate "Web Banner Huge 728x90"
+    (width 728)
+    (height 90)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill))
+
+# end of templates

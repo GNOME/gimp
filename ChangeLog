@@ -1,3 +1,11 @@
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	* etc/Makefile.am
+	* etc/templaterc: added a short templaterc.
+
+	* app/gui/user-install-dialog.c: copy templaterc to ~/.gimp-1.3
+	and create a templates directory on user installation.
+
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpnavigationpreview.c

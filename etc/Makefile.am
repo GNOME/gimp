@@ -3,6 +3,7 @@
 gimpsysconf_DATA = \
 	gimprc		\
 	gtkrc_user	\
+	templaterc	\
 	unitrc		\
 	ps-menurc
 
