@@ -1,3 +1,8 @@
+2004-07-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/dog.c (dog): removed #ifdef'ed code that isn't
+	any longer needed.
+
 2004-07-02  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimptransformoptions.[ch]:
@@ -223,7 +228,7 @@
 	Geert Jordaens that implements the gimp-path-get-point-at-dist
 	PDB function (fixes bug #138754).
 
-	* app/pdb/paths_cmds.c: regenerated
+	* app/pdb/paths_cmds.c: regenerated.
 
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 

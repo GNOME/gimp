@@ -7,6 +7,39 @@ release, GIMP 2.2, will emerge out of this.
 
 
 
+Overview of Changes in GIMP 2.1.2
+=================================
+
+- Further improvements to the new input controllers; added a keyboard
+  controller.
+
+- Show image preview in GFig plug-in.
+
+- Added Difference of Gaussians edge detection plug-in.
+
+- Added more possibilities for drag'n'drop:
+   * layers dialog accepts URI, color and pattern drops
+   * path dialog takes and offers DND of SVG data
+
+- Implemented PDB function gimp-path-get-point-at-dist.
+
+- Allow to use the color picker to edit palettes (as in gimp-1.2).
+
+- Improved gimpressionist plug-in.
+
+- Allow to cut'n'paste image data between GIMP and other applications
+  (for example Abiword) using the system clipboard.
+
+- Lots of bug fizes and other goodies. Check the ChangeLog for details.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Philip Lafleur, William Skaggs,
+   Geert Jordaens, Simon Budig, Roman Joost, Michael Schumacher,
+   Shlomi Fish
+
+
 Overview of Changes in GIMP 2.1.1
 =================================
 

@@ -463,11 +463,6 @@ dog (GimpDrawable *drawable,
   gauss_rle (drawable1, inner, 0, show_progress);
   gauss_rle (drawable2, outer, 1, show_progress);
 
-#if 0
-  _gimp_tile_cache_flush_drawable (drawable1);
-  _gimp_tile_cache_flush_drawable (drawable2);
-#endif
-
   compute_difference (drawable, drawable1, drawable2, &maxval);
 
   gimp_drawable_detach (drawable1);
@@ -486,9 +481,6 @@ dog (GimpDrawable *drawable,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable_id, TRUE);
       gimp_drawable_update (drawable_id, x1, y1, width, height);
-#if 0
-      _gimp_tile_cache_flush_drawable (drawable);
-#endif
     }
 
   if (dogvals.invert)
