@@ -1,3 +1,9 @@
+Sun Sep  5 12:44:21 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c
+	* app/gimpcontextpreview.c
+	* app/indicator_area.c: made dnd work for brushes and patterns.
+
 Sat Sep  5 03:46:11 CET 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/spheredesigner.c: Added configurable
@@ -18,14 +24,12 @@ Sat Sep  4 23:21:10 BST 1999 Andy Thomas <alt@gimp.org>
 
 Sat Sep  4 20:45:02 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 
-	-Fix of cut&paste error in pp/paint_core.c
+	* app/paint_core.c: Fix of cut&paste error.
 
 Sat Sep  4 19:56:55 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 	
-	* app/paint_core.c
-
-	- Fixed a missing "ifdef" reported by SHIRASAKI Yasuhiro 
-
+	* app/paint_core.c: Fixed a missing "ifdef" reported by 
+	SHIRASAKI Yasuhiro.
 
 Sat Sep  4 16:58:36 MEST 1999  Sven Neumann <sven@gimp.org>
 
