@@ -2,6 +2,16 @@
 
 \usepackage{times}
 
+\let\slash=/
+\catcode`\/=\active
+\def/{\futurelet\next\slashswitch}
+\def\slashswitch{\ifx\next/\let\next=\udblslash\else\let\next=\uslash\fi
+\next}
+\def\uslash{\slash\penalty\exhyphenpenalty}
+\def\udblslash/{\slash\slash\penalty\exhyphenpenalty}
+\def\url{\begingroup\tt}
+\def\endurl{\endgroup}
+
 \def\gimp{{\sc gimp}}
 \def\gnu{{\sc gnu}}
 \def\gpl{{\sc gpl}}
@@ -17,7 +27,8 @@
 
 \part{Introduction}
 
-The {\bf G}NU\footnote{Please see http://www.gnu.org for information
+The {\bf G}NU\footnote{Please see \url http://www.gnu.org \endurl for
+information 
 on the \gnu\ Project.} {\bf I}mage {\bf M}anipulation {\bf P}rogram
 (\gimp) is a powerful tool for the preparation and manipulation of
 digital images.  The \gimp\ provides the user with a wide variety of
@@ -66,7 +77,8 @@ time.
 
 Finally, the most impressive feature of the \gimp\ is that it is
 available under the terms of the GNU General Public License
-(\gpl).\footnote{Please see \FIXME{http://what?} for the full text of
+(\gpl).\footnote{Please see \url http://www.gnu.org/copyleft/gpl.html
+\endurl for the full text of
 the \gpl.}  The entire source code is freely available and
 distributed.  This openness has fostered a very active development
 community and large user base, out of which a superior product has
@@ -132,7 +144,7 @@ even more flexible gradients.
 The gradient rendering engine supports adaptive supersampling with
 customizable threshold and recursion depth parameters.  Using adaptive
 supersampling means that even the most complex custom gradients will
-be rendered without artifacts or ``jaggies''.
+be rendered without artifacts or ``jaggies.''
 
 \FIXME{drawing or screenshot?}
 
