@@ -1,6 +1,6 @@
 Revision history for Gimp-Perl extension.
 
-1.094
+1.094 Fri Jun 25 01:21:17 CEST 1999
 	- finally(?) fixed the runmode confusion by making these constants
           magic. Also hopefully fixed the error message.
 	- enable embedded pod sections in standard register arguments.
