@@ -442,6 +442,7 @@ gsel_new_selection(gchar * title,
   GSList     *list;
   GtkWidget  *vbox;
   GtkWidget  *hbox;
+  GtkWidget *scrolled_win;
   GdkColormap *colormap;
   int select_pos;
 
@@ -470,7 +471,8 @@ gsel_new_selection(gchar * title,
 		      gsp);
 
   /* clist preview of gradients */
-  
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+
   gsp->clist = gtk_clist_new(2);
   gtk_clist_set_border(GTK_CLIST(gsp->clist), GTK_SHADOW_IN);
   
@@ -481,15 +483,18 @@ gsel_new_selection(gchar * title,
   gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 1, "Name");
   gtk_clist_column_titles_show(GTK_CLIST(gsp->clist));
   
-  gtk_clist_set_policy(GTK_CLIST(gsp->clist), GTK_POLICY_AUTOMATIC, 
-		       GTK_POLICY_AUTOMATIC);
-
   hbox = gtk_hbox_new(FALSE, 8);
   gtk_container_border_width(GTK_CONTAINER(hbox), 0);
   gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show(hbox);
 
-  gtk_box_pack_start(GTK_BOX(hbox), gsp->clist, TRUE, TRUE, 0); 
+  gtk_box_pack_start(GTK_BOX(hbox), scrolled_win, TRUE, TRUE, 0); 
+  gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+					GTK_POLICY_AUTOMATIC,
+					GTK_POLICY_ALWAYS);
+
+  gtk_widget_show(scrolled_win);
   gtk_widget_show(gsp->clist);
   gtk_widget_set_usize (gsp->clist, 200, 250);
 

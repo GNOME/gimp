@@ -1,3 +1,13 @@
+Thu Nov  5 21:55:46 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/gradient.c 
+	* app/gradient_select.c
+
+	Changes due to gtk+ updates. Clist have been changed recently
+	in gtk which required changes to source code. These changes 
+	have only been tested with the gtk version that introduced these 
+	changes. (so lets get all those updates going...)
+
 Wed Nov  4 11:24:55 EST 1998   Adrian Likins <adrian@gimp.org>
 
 	* MAINTAINERS: added a list of current maintainers

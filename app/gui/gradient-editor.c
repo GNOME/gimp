@@ -584,6 +584,7 @@ grad_create_gradient_editor_init(gint need_show)
 	GtkWidget *button;
 	GtkWidget *frame;
 	GtkWidget *separator;
+	GtkWidget *scrolled_win;
 	GdkColormap *colormap;
 	int        i;
 	int select_pos;
@@ -671,6 +672,8 @@ grad_create_gradient_editor_init(gint need_show)
 
 	/* clist preview of gradients */
 
+	scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+
 	g_editor->clist = gtk_clist_new(2);
 	gtk_clist_set_border(GTK_CLIST(g_editor->clist), GTK_SHADOW_IN);
 
@@ -681,10 +684,13 @@ grad_create_gradient_editor_init(gint need_show)
 	gtk_clist_set_column_title(GTK_CLIST(g_editor->clist), 1, "Name");
 	gtk_clist_column_titles_show(GTK_CLIST(g_editor->clist));
 
-	gtk_clist_set_policy(GTK_CLIST(g_editor->clist), GTK_POLICY_AUTOMATIC, 
-        				       GTK_POLICY_AUTOMATIC);
-	
- 	gtk_box_pack_start(GTK_BOX(hbox), g_editor->clist, TRUE, TRUE, 0); 
+ 	gtk_box_pack_start(GTK_BOX(hbox), scrolled_win, TRUE, TRUE, 0); 
+	gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+					GTK_POLICY_AUTOMATIC,
+					GTK_POLICY_ALWAYS);
+
+	gtk_widget_show(scrolled_win);
  	gtk_widget_show(g_editor->clist);
 
 	colormap = gtk_widget_get_colormap(g_editor->clist);
