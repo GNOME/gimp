@@ -114,6 +114,7 @@ struct _GimpTransformToolClass
                                    GimpDisplay       *gdisp);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
+                                   gboolean           mask_empty,
                                    GimpDisplay       *gdisp);
 };
 

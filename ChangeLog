@@ -1,3 +1,23 @@
+2004-12-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptransformtool.c: applied patch from Sven Neumann
+	which removes code that prevents layers with mask from being
+	transformed.
+
+	* app/tools/gimptransformtool.[ch]: added "gboolean mask_empty"
+	parameter to GimpTransformTool::transform(). Needed because the
+	selection gets cleared by cutting from the drawable and we need
+	the selection's state before that cutting.
+
+	(gimp_transform_tool_doit): pass "mask_empty" to
+	GimpTransformTool::transform():
+
+	* app/tools/gimptransformtool.c (gimp_transform_tool_real_transform)
+	* app/tools/gimpfliptool.c (gimp_flip_tool_transform): when
+	transforming a layer with mask and there is no selection,
+	transform the mask just as if it was a linked item.
+	Fixes bug #143837 and bug #159697.
+
 2004-12-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-transform-utils.c (gimp_transform_matrix_flip_free):

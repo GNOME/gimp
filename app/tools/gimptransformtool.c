@@ -39,6 +39,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
@@ -122,6 +123,7 @@ static void     gimp_transform_tool_draw           (GimpDrawTool      *draw_tool
 static TileManager *
                 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                     GimpItem          *item,
+                                                    gboolean           mask_empty,
                                                     GimpDisplay       *gdisp);
 
 static void     gimp_transform_tool_halt           (GimpTransformTool *tr_tool);
@@ -348,20 +350,11 @@ gimp_transform_tool_initialize (GimpTool    *tool,
 
   if (gdisp != tool->gdisp)
     {
-      GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
-      gint          i;
-
-      if (GIMP_IS_LAYER (drawable) &&
-          gimp_layer_get_mask (GIMP_LAYER (drawable)))
-        {
-          g_message (_("Transformations do not work on "
-                       "layers that contain layer masks."));
-          return FALSE;
-        }
+      gint i;
 
       /*  Set the pointer to the active display  */
       tool->gdisp    = gdisp;
-      tool->drawable = drawable;
+      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->info_dialog)
@@ -662,27 +655,14 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
-          {
-            GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
-
-            if (drawable)
-              {
-                if (GIMP_IS_LAYER (drawable) &&
-                    gimp_layer_get_mask (GIMP_LAYER (drawable)))
-                  {
-                    cursor = GIMP_CURSOR_BAD;
-                  }
-                else if (gimp_image_coords_in_active_drawable (gdisp->gimage,
-                                                               coords))
-                  {
-                    if (gimp_channel_is_empty (selection) ||
-                        gimp_channel_value (selection, coords->x, coords->y))
-                      {
-                        cursor = GIMP_CURSOR_MOUSE;
-                      }
-                  }
-              }
-          }
+          if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
+            {
+              if (gimp_channel_is_empty (selection) ||
+                  gimp_channel_value (selection, coords->x, coords->y))
+                {
+                  cursor = GIMP_CURSOR_MOUSE;
+                }
+            }
           break;
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
@@ -866,6 +846,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
+                                    gboolean           mask_empty,
                                     GimpDisplay       *gdisp)
 {
   GimpTool             *tool = GIMP_TOOL (tr_tool);
@@ -892,6 +873,22 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->recursion_level,
                                 options->clip,
                                 progress);
+
+  if (GIMP_IS_LAYER (active_item) &&
+      gimp_layer_get_mask (GIMP_LAYER (active_item)) &&
+      mask_empty)
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (active_item));
+
+      gimp_item_transform (GIMP_ITEM (mask), context,
+                           &tr_tool->transform,
+                           options->direction,
+                           options->interpolation,
+                           options->supersample,
+                           options->recursion_level,
+                           options->clip,
+                           progress);
+    }
 
   switch (options->type)
     {
@@ -940,8 +937,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
-                          GimpDisplay        *gdisp)
+gimp_transform_tool_doit (GimpTransformTool *tr_tool,
+                          GimpDisplay       *gdisp)
 {
   GimpTool             *tool        = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options;
@@ -949,6 +946,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
   gboolean              new_layer;
+  gboolean              mask_empty;
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
   context = GIMP_CONTEXT (options);
@@ -970,6 +968,8 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
   if (! active_item)
     return;
+
+  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage));
 
   if (gimp_display_shell_get_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell)))
     {
@@ -1025,6 +1025,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
    */
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
+                                                                  mask_empty,
                                                                   gdisp);
 
   gimp_transform_tool_prepare (tr_tool, gdisp);
@@ -1039,7 +1040,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
           /*  paste the new transformed image to the gimage...also implement
            *  undo...
            */
-          /*  FIXME: we should check if the drawable is still valid  */
           gimp_drawable_transform_paste (tool->drawable,
                                          new_tiles,
                                          new_layer);
@@ -1050,11 +1050,10 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
      case GIMP_TRANSFORM_TYPE_SELECTION:
       if (new_tiles)
         {
-          GimpDrawable *drawable = GIMP_DRAWABLE (active_item);
+          gimp_channel_push_undo (GIMP_CHANNEL (active_item), NULL);
 
-          gimp_channel_push_undo (gimp_image_get_mask (gdisp->gimage), NULL);
-
-          gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
+          gimp_drawable_set_tiles (GIMP_DRAWABLE (active_item),
+                                   FALSE, NULL, new_tiles);
           tile_manager_unref (new_tiles);
         }
 

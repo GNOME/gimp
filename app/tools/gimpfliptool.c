@@ -18,10 +18,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -29,14 +26,14 @@
 
 #include "base/tile-manager.h"
 
-#include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -55,16 +52,17 @@ static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool)
 static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
                                                    GdkModifierType    key,
                                                    gboolean           press,
-						   GdkModifierType    state,
-						   GimpDisplay       *gdisp);
+                                                   GdkModifierType    state,
+                                                   GimpDisplay       *gdisp);
 static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
                                                    GimpCoords        *coords,
-						   GdkModifierType    state,
-						   GimpDisplay       *gdisp);
+                                                   GdkModifierType    state,
+                                                   GimpDisplay       *gdisp);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
-						   GimpDisplay       *gdisp);
+                                                   gboolean           mask_empty,
+                                                   GimpDisplay       *gdisp);
 
 
 static GimpTransformToolClass *parent_class = NULL;
@@ -99,18 +97,18 @@ gimp_flip_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpFlipToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_flip_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpFlipTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_flip_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_flip_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpFlipTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_flip_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpFlipTool",
+                                          "GimpFlipTool",
                                           &tool_info, 0);
     }
 
@@ -123,11 +121,8 @@ gimp_flip_tool_get_type (void)
 static void
 gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 {
-  GimpToolClass          *tool_class;
-  GimpTransformToolClass *trans_class;
-
-  tool_class   = GIMP_TOOL_CLASS (klass);
-  trans_class  = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
+  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -140,11 +135,8 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 static void
 gimp_flip_tool_init (GimpFlipTool *flip_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
-
-  tool           = GIMP_TOOL (flip_tool);
-  transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
+  GimpTool          *tool           = GIMP_TOOL (flip_tool);
+  GimpTransformTool *transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
   gimp_tool_control_set_cursor             (tool->control,
@@ -163,12 +155,10 @@ static void
 gimp_flip_tool_modifier_key (GimpTool        *tool,
                              GdkModifierType  key,
                              gboolean         press,
-			     GdkModifierType  state,
-			     GimpDisplay     *gdisp)
+                             GdkModifierType  state,
+                             GimpDisplay     *gdisp)
 {
-  GimpFlipOptions *options;
-
-  options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
+  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_CONTROL_MASK)
     {
@@ -188,15 +178,15 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
 
         default:
           break;
-	}
+        }
     }
 }
 
 static void
 gimp_flip_tool_cursor_update (GimpTool        *tool,
                               GimpCoords      *coords,
-			      GdkModifierType  state,
-			      GimpDisplay     *gdisp)
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
   GimpFlipOptions *options;
   gboolean         bad_cursor = TRUE;
@@ -235,7 +225,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
-			  GimpDisplay       *gdisp)
+                          gboolean           mask_empty,
+                          GimpDisplay       *gdisp)
 {
   GimpTransformOptions *tr_options;
   GimpFlipOptions      *options;
@@ -266,6 +257,16 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_flip (active_item, context, options->flip_type, axis,
                            FALSE);
+
+  if (GIMP_IS_LAYER (active_item) &&
+      gimp_layer_get_mask (GIMP_LAYER (active_item)) &&
+      mask_empty)
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (active_item));
+
+      gimp_item_flip (GIMP_ITEM (mask), context,
+                      options->flip_type, axis, FALSE);
+    }
 
   switch (tr_options->type)
     {
