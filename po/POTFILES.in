@@ -351,6 +351,7 @@ app/widgets/gimptoolbox-image-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooloptionseditor.c
+app/widgets/gimpuimanager.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
 app/widgets/gimpviewablebox.c
