@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 21:01+0100\n"
-"PO-Revision-Date: 2004-03-12 19:09+0800\n"
+"POT-Creation-Date: 2004-11-17 09:47+0800\n"
+"PO-Revision-Date: 2004-11-17 11:00+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
-msgstr "画笔选择"
+msgstr "笔刷选择"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "浏览(_B)..."
 
@@ -186,15 +186,19 @@ msgstr ""
 msgid "Font Selection"
 msgstr "字体选择"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:104
 msgid "Gradient Selection"
 msgstr "渐变选择"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "无"
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
+msgid "(Empty)"
+msgstr "(空)"
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppalettemenu.c:91
+msgid "Palette Selection"
+msgstr "色板选择"
+
+#: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "图案选择"
 
@@ -202,182 +206,255 @@ msgstr "图案选择"
 msgid "percent"
 msgstr "百分点"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
-msgstr "(无效的 UTF-8 字符串)"
+#: libgimpbase/gimpbaseenums.c:23
+msgid "Small"
+msgstr "小"
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:24
+msgid "Medium"
+msgstr "中"
+
+#: libgimpbase/gimpbaseenums.c:25
+msgid "Large"
+msgstr "大"
+
+#: libgimpbase/gimpbaseenums.c:57
+msgid "Light Checks"
+msgstr "浅色方格"
+
+#: libgimpbase/gimpbaseenums.c:58
+msgid "Mid-Tone Checks"
+msgstr "中等色调方格"
+
+#: libgimpbase/gimpbaseenums.c:59
+msgid "Dark Checks"
+msgstr "深色方格"
+
+#: libgimpbase/gimpbaseenums.c:60
+msgid "White Only"
+msgstr "仅白色"
+
+#: libgimpbase/gimpbaseenums.c:61
+msgid "Gray Only"
+msgstr "仅灰色"
+
+#: libgimpbase/gimpbaseenums.c:62
+msgid "Black Only"
+msgstr "仅黑色"
+
+#: libgimpbase/gimpbaseenums.c:91
+msgid "RGB color"
+msgstr "RGB 颜色"
+
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
+msgid "Grayscale"
+msgstr "灰度"
+
+#: libgimpbase/gimpbaseenums.c:93
+msgid "Indexed color"
+msgstr "索引颜色"
+
+#: libgimpbase/gimpbaseenums.c:125
+msgid "RGB"
+msgstr "RGB"
+
+#: libgimpbase/gimpbaseenums.c:126
+msgid "RGB-alpha"
+msgstr "RGB-alpha"
+
+#: libgimpbase/gimpbaseenums.c:128
+msgid "Grayscale-alpha"
+msgstr "灰度-alpha"
+
+#: libgimpbase/gimpbaseenums.c:129
+msgid "Indexed"
+msgstr "索引"
+
+#: libgimpbase/gimpbaseenums.c:130
+msgid "Indexed-alpha"
+msgstr "索引-alpha"
+
+#: libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d 字节"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "(无效的 UTF-8 字符串)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "正在加载模块：“%s”\n"
 
-#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
-#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
-#: libgimpmodule/gimpmodule.c:450
+#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
+#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
+#: libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "模块“%s”加载错误：%s"
 
-#: libgimpmodule/gimpmodule.c:283
+#: libgimpmodule/gimpmodule.c:282
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "正在跳过模块：“%s”\n"
 
-#: libgimpmodule/gimpmodule.c:424
+#: libgimpmodule/gimpmodule.c:422
 msgid "Module error"
 msgstr "模块错误"
 
-#: libgimpmodule/gimpmodule.c:425
+#: libgimpmodule/gimpmodule.c:423
 msgid "Loaded"
 msgstr "已加载"
 
-#: libgimpmodule/gimpmodule.c:426
+#: libgimpmodule/gimpmodule.c:424
 msgid "Load failed"
 msgstr "加载失败"
 
-#: libgimpmodule/gimpmodule.c:427
+#: libgimpmodule/gimpmodule.c:425
 msgid "Not loaded"
 msgstr "未加载"
 
-#: libgimpthumb/gimpthumb-utils.c:196
+#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/前景色(_F)"
+#: libgimpthumb/gimpthumbnail.c:917
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "无法为“%s”创建缩略图：%s"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/背景色(_B)"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "前景色(_F)"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/黑(_K)"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "背景色(_B)"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/白(_W)"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "黑(_K)"
 
-#: libgimpwidgets/gimpcolorscales.c:142
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "白(_W)"
+
+#: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr "缩放"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "色(_H)"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "饱(_S)"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "亮(_V)"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "红(_R)"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "绿(_G)"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "蓝(_B)"
 
-#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "A(_A)"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "色调"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
+#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "饱和度"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "亮度"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "红色"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "绿色"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "蓝色"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Alpha"
 
-#: libgimpwidgets/gimpcolorscales.c:254
-msgid "Hexadecimal color notation as used in HTML"
-msgstr "HTML 中所使用的十六进制颜色表示"
+#: libgimpwidgets/gimpcolorscales.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "HTML 和 CSS 中所使用的十六进制颜色格式"
 
-#: libgimpwidgets/gimpcolorscales.c:268
-msgid "He_x Triplet:"
-msgstr "十六进制值(_X)："
+#: libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr "HTML 格式(_N)："
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -387,24 +464,24 @@ msgstr "当前："
 msgid "Old:"
 msgstr "旧的："
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "选择文件"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "KiloBytes"
+#: libgimpwidgets/gimpmemsizeentry.c:232
+msgid "Kilobytes"
 msgstr "千字节"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
-msgid "MegaBytes"
+#: libgimpwidgets/gimpmemsizeentry.c:233
+msgid "Megabytes"
 msgstr "兆字节"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
-msgid "GigaBytes"
+#: libgimpwidgets/gimpmemsizeentry.c:234
+msgid "Gigabytes"
 msgstr "G 字节"
 
 #: libgimpwidgets/gimppatheditor.c:243
@@ -415,191 +492,212 @@ msgstr "可写"
 msgid "Folder"
 msgstr "文件夹"
 
-#: libgimpwidgets/gimppickbutton.c:141
+#: libgimpwidgets/gimppickbutton.c:138
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选取该颜色。"
+
+#: libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr "方格大小"
+
+#: libgimpwidgets/gimppreviewarea.c:133
+msgid "Check Style"
+msgstr "方格风格"
+
+#. toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:240
+msgid "_Preview"
+msgstr "预览(_P)"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "固定"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "复制(_D)"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "已链接"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "粘贴为新图像"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "粘贴进入"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
+msgid "_Stroke"
+msgstr "勾画(_S)"
+
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "字母间距(_E)"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "改变大小(_R)"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "缩放(_S)"
 
-#: libgimpwidgets/gimpstock.c:263
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "剪裁"
 
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "旋转(_R)"
 
-#: libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "切变(_S)"
 
-#: libgimpwidgets/gimpunitmenu.c:304
+#: libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
 msgstr "更多..."
 
-#: libgimpwidgets/gimpunitmenu.c:614
+#: libgimpwidgets/gimpunitmenu.c:612
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: libgimpwidgets/gimpunitmenu.c:657
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "单位"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:1001
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr "使用这个值作为随机数生成种子 - 这将允许您重复一个指定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr "新种子(_N)"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:1018
 msgid "Seed random number generator with a generated random number"
 msgstr "以生成的随机数作为随机数生成器的种子"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr "随机(_R)"
 
-#: modules/cdisplay_colorblind.c:124
-msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "色彩缺失模拟滤镜(Brettel-Vienot-Mollon 算法)"
-
-#: modules/cdisplay_colorblind.c:190
-msgid "Color Deficient Vision"
-msgstr "视觉色彩缺失"
-
-#: modules/cdisplay_colorblind.c:464
-msgid "Color _Deficiency Type:"
-msgstr "色彩缺失类型(_D)："
-
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr "红色盲(对红色不敏感)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "绿色盲(对绿色不敏感)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "蓝色盲(对蓝色不敏感)"
 
-#: modules/cdisplay_gamma.c:90
+#: modules/cdisplay_colorblind.c:153
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "色彩缺失模拟滤镜(Brettel-Vienot-Mollon 算法)"
+
+#: modules/cdisplay_colorblind.c:242
+msgid "Color Deficient Vision"
+msgstr "视觉色彩缺失"
+
+#: modules/cdisplay_colorblind.c:540
+msgid "Color _Deficiency Type:"
+msgstr "色彩缺失类型(_D)："
+
+#: modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
 msgstr "Gamma 颜色显示滤镜"
 
-#: modules/cdisplay_gamma.c:156
+#: modules/cdisplay_gamma.c:178
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:311
+#: modules/cdisplay_gamma.c:352
 msgid "_Gamma:"
 msgstr "Gamma(_G)："
 
-#: modules/cdisplay_highcontrast.c:90
+#: modules/cdisplay_highcontrast.c:105
 msgid "High Contrast color display filter"
 msgstr "高对比度颜色显示滤镜"
 
-#: modules/cdisplay_highcontrast.c:156
+#: modules/cdisplay_highcontrast.c:178
 msgid "Contrast"
 msgstr "对比度"
 
-#: modules/cdisplay_highcontrast.c:308
+#: modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
 msgstr "对比循环(_Y)："
 
-#: modules/cdisplay_proof.c:102
-msgid "Color proof filter using ICC color profile"
-msgstr "使用 ICC 颜色配置文件的颜色校对滤镜"
-
-#: modules/cdisplay_proof.c:166
-msgid "Color Proof"
-msgstr "颜色校对"
-
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr "感官"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr "相对色度"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr "绝对色度"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:138
+msgid "Color proof filter using ICC color profile"
+msgstr "使用 ICC 颜色配置文件的颜色校对滤镜"
+
+#: modules/cdisplay_proof.c:238
+msgid "Color Proof"
+msgstr "颜色校对"
+
+#: modules/cdisplay_proof.c:457
 msgid "_Intent:"
 msgstr "目标(_I)："
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
 msgstr "选择 ICC 颜色配置文件"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:463
 msgid "_Profile:"
 msgstr "配置文件(_P)："
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
 msgstr "黑点补偿(_B)"
 
@@ -607,62 +705,72 @@ msgstr "黑点补偿(_B)"
 msgid "CMYK color selector"
 msgstr "CMYK 颜色选择器"
 
-#: modules/colorsel_cmyk.c:132
+#: modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:149
+#: modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr "青(_C)"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr "品(_M)"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr "黄(_Y)"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr "黑(_K)"
 
-#: modules/colorsel_cmyk.c:156
+#: modules/colorsel_cmyk.c:154
 msgid "Cyan"
 msgstr "青色"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr "品红"
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr "黄色"
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:157
 msgid "Black"
 msgstr "黑色"
 
-#: modules/colorsel_cmyk.c:193
-msgid "Black Pullout (%):"
-msgstr "黑色量(%)："
+#: modules/colorsel_cmyk.c:191
+msgid "Black _Pullout:"
+msgstr "黑色量(_P)："
 
-#: modules/colorsel_triangle.c:110
+#: modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "彩色墨水中黑色所占的百分比。"
+
+#: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr "画家风格的三角颜色选择器"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:170
 msgid "Triangle"
 msgstr "三角"
 
-#: modules/colorsel_water.c:104
+#: modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "水彩风格的颜色选择器"
 
-#: modules/colorsel_water.c:176
+#: modules/colorsel_water.c:154
 msgid "Watercolor"
 msgstr "水彩"
 
-#: modules/colorsel_water.c:251
+#: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "压力"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "十六进制值(_X)："
+
+#~ msgid "None"
+#~ msgstr "无"
