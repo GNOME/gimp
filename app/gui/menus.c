@@ -551,12 +551,12 @@ menus_activate_callback (GtkWidget *widget,
       if (entry->callback == ignore[i])
 	return;
     if (active_tool->gdisp_ptr == NULL)
-      active_tool_control (DESTROY, active_tool->gdisp_ptr);
+      active_tool_control (RECREATE, active_tool->gdisp_ptr);
     else {
         GDisplay *gdisp;
         gdisp = gdisplay_active ();
 	if (gdisp == NULL || ((GDisplay*)active_tool->gdisp_ptr)->gimage == gdisp->gimage)
-          active_tool_control (DESTROY, active_tool->gdisp_ptr);
+          active_tool_control (RECREATE, active_tool->gdisp_ptr);
     }
   }
 }
