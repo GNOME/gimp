@@ -51,6 +51,7 @@ typedef enum
 typedef struct _TipsParser TipsParser;
 struct _TipsParser
 {
+  const gchar           *filename;
   TipsParserState        state;
   TipsParserState        last_known_state;
   const gchar           *locale;
@@ -131,24 +132,27 @@ gimp_tips_from_file (const gchar  *filename,
   GMarkupParseContext *context;
   TipsParser          *parser;
   const gchar         *tips_locale;
-  FILE   *fp;
-  gsize   bytes;
-  gchar   buf[4096];
-  GList  *tips        = NULL;
-  GError *parse_error = NULL;
+  FILE                *fp;
+  gsize                bytes;
+  gchar                buf[4096];
+  GList               *tips    = NULL;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fp = fopen (filename, "r");
   if (!fp)
     {
       g_set_error (error, 0, 0,
-                   _("Your GIMP tips file appears to be missing!\n"
-                     "There should be a file called '%s'.\n"
+                   _("Your GIMP tips file appears to be missing! "
+                     "There should be a file called '%s'. "
                      "Please check your installation."), filename);
       return NULL;
     }
 
   parser = g_new0 (TipsParser, 1);
-  parser->value  = g_string_new (NULL);
+  parser->filename = filename;
+  parser->value    = g_string_new (NULL);
 
   /* This is a special string to specify the language identifier to
      look for in the gimp-tips.xml file. Please translate the C in it
@@ -169,28 +173,14 @@ gimp_tips_from_file (const gchar  *filename,
   context = g_markup_parse_context_new (&markup_parser, 0, parser, NULL);
 
   while ((bytes = fread (buf, sizeof (gchar), sizeof (buf), fp)) > 0 &&
-         g_markup_parse_context_parse (context, buf, bytes, &parse_error))
+         g_markup_parse_context_parse (context, buf, bytes, error))
     ;
 
-  /* FIXME */
-  if (parse_error)
-    g_clear_error (&parse_error);
-
-  g_markup_parse_context_end_parse (context, &parse_error);
-
-  /* FIXME */
-  if (parse_error)
-    g_clear_error (&parse_error);
+  if (error == NULL || *error == NULL)
+    g_markup_parse_context_end_parse (context, error);
 
   fclose (fp);
   g_markup_parse_context_free (context);
-
-  if (parser->state != TIPS_START)
-    {
-      g_set_error (error, 0, 0,
-                   _("Your GIMP tips file could not be parsed correctly!\n"
-                     "Please check your installation."));
-    }
 
   tips = g_list_reverse (parser->tips);
 
@@ -345,7 +335,7 @@ tips_parser_error (GMarkupParseContext *context,
                    GError              *error,
                    gpointer             user_data)
 {
-  g_warning (error->message);
+  g_warning ("%s: %s", parser->filename, error->message);
 }
 
 static void

@@ -83,7 +83,8 @@ tips_dialog_create (void)
 
       if (error)
         {
-          tips = g_list_prepend (tips, gimp_tip_new (NULL, error->message));
+          tips = g_list_prepend (tips, 
+                                 gimp_tip_new (_("The GIMP tips file could not be parsed correctly!"), error->message));
           g_error_free (error);
         }
     }
