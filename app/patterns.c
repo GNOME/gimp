@@ -209,7 +209,7 @@ load_pattern (gchar *filename)
 	}
     }
   /*  Check for correct version  */
-  if (header.version != FILE_VERSION)
+  if (header.version != GPATTERN_FILE_VERSION)
     {
       g_message (_("Unknown GIMP version #%d in \"%s\"\n"), header.version,
 		 filename);

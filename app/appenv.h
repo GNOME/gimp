@@ -43,7 +43,10 @@
 #define MAXIMUM(x,y)   MAX(x,y)
 
 #ifndef G_PI			/* G_PI will be in GLib eventually */
-#define G_PI 3.14159265358979323846
+#define G_PI    3.14159265358979323846
+#endif
+#ifndef G_PI_2			/* As will G_PI_2 */
+#define G_PI_2  1.57079632679489661923
 #endif
 #ifndef G_PI_4			/* As will G_PI_4 */
 #define G_PI_4  0.78539816339744830962

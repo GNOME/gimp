@@ -20,8 +20,8 @@
 
 typedef struct _BrushHeader BrushHeader;
 
-#define FILE_VERSION   2
-#define GBRUSH_MAGIC   (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
+#define GBRUSH_FILE_VERSION    2
+#define GBRUSH_MAGIC    (('G' << 24) + ('I' << 16) + ('M' << 8) + ('P' << 0))
 #define sz_BrushHeader (sizeof (BrushHeader))
 
 /*  All field entries are MSB  */

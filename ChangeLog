@@ -1,3 +1,17 @@
+Sun Aug 15 20:42:04 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/appenv.h: added a G_PI_2
+
+	* app/brush_header.h
+	* app/pattern_header.h: prefixed each FILE_VERSION with
+	G{BRUSH,PATTERN} to avoid namespace collision
+
+	* app/patterns.c: reflect above change
+
+	* app/iscissors.[ch]: merged in Austin's iscissors rewrite.. still
+	unfinished, but it's not like the old one did anything useful
+	anyway ;)
+
 Sun Aug 15 23:10:21 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: sqeezed out the last bugs out of the current

@@ -18,7 +18,6 @@
 #ifndef __ISCISSORS_H__
 #define __ISCISSORS_H__
 
-void          iscissors_dialog       (void);
 Tool *        tools_new_iscissors    (void);
 void          tools_free_iscissors   (Tool *);
 

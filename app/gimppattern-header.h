@@ -20,8 +20,8 @@
 
 typedef struct _PatternHeader PatternHeader;
 
-#define FILE_VERSION   1
-#define GPATTERN_MAGIC   (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
+#define GPATTERN_FILE_VERSION    1
+#define GPATTERN_MAGIC    (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
 #define sz_PatternHeader (sizeof (PatternHeader))
 
 /*  All field entries are MSB  */
