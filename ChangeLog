@@ -1,5 +1,8 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrushgenerated.c: changed minimum brush radius from
+	1.0 to 0.1.
+
 	* app/widgets/gimpbrusheditor.c: allow a smaller brush radius to
 	be set in the brush editor. Fixes bug #157508.
 

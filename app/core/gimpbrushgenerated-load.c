@@ -134,7 +134,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                                       G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL, NULL,
-                                                        1.0, 1000.0, 5.0,
+                                                        0.1, 1000.0, 5.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_SPIKES,
