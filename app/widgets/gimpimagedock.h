@@ -49,6 +49,8 @@ struct _GimpImageDock
   GtkWidget     *option_menu;
   GtkWidget     *menu;
   GtkWidget     *auto_button;
+
+  guint          update_title_idle_id;
 };
 
 struct _GimpImageDockClass

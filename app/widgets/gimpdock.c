@@ -146,7 +146,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_DOCKBOOK);  
+		  GIMP_TYPE_DOCKBOOK);
 
   dock_signals[BOOK_REMOVED] =
     g_signal_new ("book_removed",
@@ -156,7 +156,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_DOCKBOOK);  
+		  GIMP_TYPE_DOCKBOOK);
 
   object_class->destroy   = gimp_dock_destroy;
 
@@ -214,8 +214,7 @@ gimp_dock_destroy (GtkObject *object)
       dock->context = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class))
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -314,9 +313,7 @@ gimp_dock_construct (GimpDock          *dock,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   dock->dialog_factory = dialog_factory;
-  dock->context        = context;
-
-  g_object_ref (dock->context);
+  dock->context        = g_object_ref (context);
 
   return TRUE;
 }
@@ -331,7 +328,6 @@ gimp_dock_add (GimpDock     *dock,
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
   g_return_if_fail (dockable->dockbook == NULL);
 
   dockbook = GIMP_DOCKBOOK (dock->dockbooks->data);
@@ -345,9 +341,7 @@ gimp_dock_remove (GimpDock     *dock,
 {
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
   g_return_if_fail (dockable->dockbook != NULL);
-  g_return_if_fail (dockable->dockbook->dock != NULL);
   g_return_if_fail (dockable->dockbook->dock == dock);
 
   gimp_dockbook_remove (dockable->dockbook, dockable);
@@ -362,7 +356,6 @@ gimp_dock_add_book (GimpDock     *dock,
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-
   g_return_if_fail (dockbook->dock == NULL);
 
   old_length = g_list_length (dock->dockbooks);

@@ -1,5 +1,17 @@
 2003-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockbook.[ch]: added "dockable_added",
+	"dockable_removed" and "dockable_reordered" signals and emit them.
+
+	* app/widgets/gimpimagedock.[ch]: implement GimpDock::book_added()
+	and GimpDock::book_removed(). Connect to the above signals and
+	update the window title as proposed in bug #111971. Idle-update
+	the title so subsequent changes are compressed. Fixes bug #111971.
+
+	* app/widgets/gimpdock.c: cleanup.
+
+2003-05-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/dialogs.c
 	* app/tools/gimphistogramtool.c
 	* app/tools/gimpmeasuretool.c: register their dialogs too.

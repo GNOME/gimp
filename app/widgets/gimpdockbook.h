@@ -47,6 +47,13 @@ struct _GimpDockbook
 struct _GimpDockbookClass
 {
   GtkNotebookClass parent_class;
+
+  void (* dockable_added)     (GimpDockbook *dockbook,
+                               GimpDockable *dockable);
+  void (* dockable_removed)   (GimpDockbook *dockbook,
+                               GimpDockable *dockable);
+  void (* dockable_reordered) (GimpDockbook *dockbook,
+                               GimpDockable *dockable);
 };
 
 

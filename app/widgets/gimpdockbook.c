@@ -30,6 +30,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
@@ -46,6 +47,15 @@
 #define DND_WIDGET_ICON_SIZE   GTK_ICON_SIZE_DND
 #define MENU_WIDGET_ICON_SIZE  GTK_ICON_SIZE_MENU
 #define MENU_WIDGET_SPACING    4
+
+
+enum
+{
+  DOCKABLE_ADDED,
+  DOCKABLE_REMOVED,
+  DOCKABLE_REORDERED,
+  LAST_SIGNAL
+};
 
 
 static void        gimp_dockbook_class_init       (GimpDockbookClass *klass);
@@ -86,6 +96,8 @@ static gboolean    gimp_dockbook_tab_drag_drop    (GtkWidget      *widget,
 
 
 static GtkNotebookClass *parent_class = NULL;
+
+static guint  dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTargetEntry dialog_target_table[] =
 {
@@ -132,10 +144,44 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize  = gimp_dockbook_finalize;
+  dockbook_signals[DOCKABLE_ADDED] =
+    g_signal_new ("dockable_added",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDockbookClass, dockable_added),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_DOCKABLE);
 
-  widget_class->style_set = gimp_dockbook_style_set;
-  widget_class->drag_drop = gimp_dockbook_drag_drop;
+  dockbook_signals[DOCKABLE_REMOVED] =
+    g_signal_new ("dockable_removed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDockbookClass, dockable_removed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_DOCKABLE);
+
+  dockbook_signals[DOCKABLE_REORDERED] =
+    g_signal_new ("dockable_reordered",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDockbookClass, dockable_reordered),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_DOCKABLE);
+
+  object_class->finalize    = gimp_dockbook_finalize;
+
+  widget_class->style_set   = gimp_dockbook_style_set;
+  widget_class->drag_drop   = gimp_dockbook_drag_drop;
+
+  klass->dockable_added     = NULL;
+  klass->dockable_removed   = NULL;
+  klass->dockable_reordered = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("tab_border",
@@ -391,6 +437,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   dockable->dockbook = dockbook;
 
   gimp_dockable_set_context (dockable, dockbook->dock->context);
+
+  g_signal_emit (dockbook, dockbook_signals[DOCKABLE_ADDED], 0, dockable);
 }
 
 void
@@ -401,9 +449,9 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  g_return_if_fail (dockable->dockbook != NULL);
   g_return_if_fail (dockable->dockbook == dockbook);
+
+  g_object_ref (dockable);
 
   dockable->dockbook = NULL;
 
@@ -411,12 +459,14 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 
   gtk_container_remove (GTK_CONTAINER (dockbook), GTK_WIDGET (dockable));
 
+  g_signal_emit (dockbook, dockbook_signals[DOCKABLE_REMOVED], 0, dockable);
+
+  g_object_unref (dockable);
+
   children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
   if (! g_list_length (children))
-    {
-      gimp_dock_remove_book (dockbook->dock, dockbook);
-    }
+    gimp_dock_remove_book (dockbook->dock, dockbook);
 
   g_list_free (children);
 }
@@ -751,6 +801,10 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 	      gtk_notebook_reorder_child (GTK_NOTEBOOK (src_dockable->dockbook),
 					  GTK_WIDGET (src_dockable),
 					  dest_index);
+
+              g_signal_emit (src_dockable->dockbook,
+                             dockbook_signals[DOCKABLE_REORDERED], 0,
+                             src_dockable);
 
 	      return TRUE;
 	    }
