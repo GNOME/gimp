@@ -1,5 +1,9 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): bugfix.
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainermenuimpl.c: marked missing string for
 	translation (spotted by Branko Collin).
 

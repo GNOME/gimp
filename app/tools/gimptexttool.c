@@ -445,12 +445,9 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
   if (layer && GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
     {
-      GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpImage       *image;
       GimpToolOptions *options = GIMP_TOOL (text_tool)->tool_info->tool_options;
       gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer)->text);
-
-      gimp_size_entry_set_resolution (GIMP_TEXT_OPTIONS (options)->size_entry,
-                                      0, image->yresolution, FALSE);
 
       if (text_tool->layer == layer)
         return;
@@ -465,6 +462,10 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
       text_tool->layer = layer;
 
+      image = gimp_item_get_image (GIMP_ITEM (layer))
+      gimp_size_entry_set_resolution (GIMP_TEXT_OPTIONS (options)->size_entry,
+                                      0, image->yresolution, FALSE);
+
       g_signal_connect_object (image, "active_layer_changed",
                                G_CALLBACK (gimp_text_tool_layer_changed),
                                text_tool, 0);
@@ -475,8 +476,9 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
       if (text_tool->layer)
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+          GimpImage *image;
 
+          image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
           g_signal_handlers_disconnect_by_func (image,
                                                 gimp_text_tool_layer_changed,
                                                 text_tool);
