@@ -43,7 +43,7 @@
 	 (min-val (min R G B))
 	 (delta (- max-val min-val))
 	 (hue 0))
-    (if (= max 0) 0
+    (if (= delta 0) 0
 	(begin
 	  (cond ((= max-val R) (set! hue (/ (- G B) (* 1.0 delta))))
 		((= max-val G) (set! hue (+ 2 (/ (- B R) (* 1.0 delta)))))

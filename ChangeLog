@@ -1,3 +1,8 @@
+2004-10-14  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/neon.scm: Fixed minor error in script.
+	(Related to bug #153900 and compatability with Tiny-Fu)
+
 2004-10-14  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/neon.c: fixed the handling of drawable with alpha.
