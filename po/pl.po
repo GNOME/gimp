@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-04-18 22:00+0200\n"
 "PO-Revision-Date: 2004-03-22 10:58+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1335,14 +1335,12 @@ msgid "Move Item"
 msgstr "Przesunięcie elementu"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Skalowanie obrazu"
+msgstr "Skalowanie elementu"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "Zmiana wymiarów obrazu"
+msgstr "Zmiana wymiarów elementu"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
@@ -1367,9 +1365,8 @@ msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Oderwane zaznaczenie"
+msgstr "Usunięcie oderwanego zaznaczenia"
 
 # FIXME
 # 1. app/core/core-enums.c:1 app/core/gimpedit.c:1: "Wklejenie"
@@ -1470,9 +1467,8 @@ msgid "Set Preserve Trans"
 msgstr "Ustawienie zachowania przezroczystości"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Tylko po zmodyfikowaniu"
+msgstr "Zmodyfikowany tekst"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -2497,7 +2493,7 @@ msgstr "Pionowa rozdzielczość obrazu."
 msgid "pixel"
 msgstr "piksel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "piksele"
@@ -6391,7 +6387,7 @@ msgstr "/Z_modyfikuj szablon..."
 msgid "/_Delete Template"
 msgstr "/_Usuń szablon"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Zapisywanie \"%s\"\n"
@@ -7485,12 +7481,12 @@ msgstr "Odpytywanie nowych wtyczek"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Odpytywanie wtyczki: \"%s\"\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Inicjowanie wtyczek"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Inicjowanie wtyczki: \"%s\"\n"
@@ -8180,8 +8176,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Zmiany odcienia i nasycenia kolorów są możliwe tylko na warstwach RGB."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
-msgstr "Łączni_e"
+msgid "M_aster"
+msgstr "Łączn_ie"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -8236,7 +8232,7 @@ msgstr "Dopasowanie"
 msgid "Size:"
 msgstr "Rozmiar:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Kąt:"
@@ -8390,11 +8386,11 @@ msgid "Add Guides"
 msgstr "Dodanie prowadnic"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Odległość:"
 
