@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 3.0.8
+ * PSD Plugin version 3.0.9
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -34,6 +34,11 @@
 
 /*
  * Revision history:
+ *
+ *  2003-10-05 / v3.0.9 / Morten Eriksen
+ *       Fixed memory corruption bug: too little memory was allocated
+ *       for the bitmap image buffer if (imgwidth % 8 != 0) for
+ *       monocolor PSD images.
  *
  *  2003.08.31 / v3.0.8 / applied (modified) patch from Andy Wallis
  *       Fix for handling of layer masks. See bug #68538.
@@ -2146,8 +2151,8 @@ load_image (const gchar *name)
       if (PSDheader.compression == 1)
 	{
 	  nguchars = PSDheader.columns * PSDheader.rows;
-	  temp = g_malloc(PSDheader.imgdatalen);
-	  xfread(fd, temp, PSDheader.imgdatalen, "image data");
+	  temp = g_malloc (PSDheader.imgdatalen);
+	  xfread (fd, temp, PSDheader.imgdatalen, "image data");
 	  if (!cmyk)
 	    {
 	      gimp_progress_update ((double)1.00);
@@ -2156,10 +2161,15 @@ load_image (const gchar *name)
 		{
 		  guchar *monobuf;
 
-		  monobuf= g_malloc(PSDheader.columns * PSDheader.rows >> 3);
-		  decode(PSDheader.imgdatalen,nguchars>>3,temp,monobuf,step);
-		  bitmap2gray(monobuf,dest,PSDheader.columns,PSDheader.rows);
-		  g_free((gpointer)monobuf);
+		  monobuf =
+                    g_malloc (((PSDheader.columns + 7) >> 3) * PSDheader.rows);
+
+		  decode (PSDheader.imgdatalen,
+                          nguchars >> 3, temp,monobuf, step);
+		  bitmap2gray (monobuf, dest,
+                               PSDheader.columns, PSDheader.rows);
+
+		  g_free (monobuf);
 		}
 	      else
 		{
@@ -2168,16 +2178,17 @@ load_image (const gchar *name)
 	    }
 	  else
 	    {
-	      gimp_progress_update ((double)1.00);
+	      gimp_progress_update (1.0);
 
-	      cmykbuf = g_malloc(step * nguchars);
-	      decode(PSDheader.imgdatalen, nguchars, temp, cmykbuf, step);
+	      cmykbuf = g_malloc (step * nguchars);
+	      decode (PSDheader.imgdatalen, nguchars, temp, cmykbuf, step);
 
-	      cmyk2rgb(cmykbuf, dest, PSDheader.columns, PSDheader.rows,
-		       step > 4);
-	      g_free(cmykbuf);
+	      cmyk2rgb (cmykbuf, dest, PSDheader.columns, PSDheader.rows,
+                        step > 4);
+	      g_free (cmykbuf);
 	    }
-	  g_free(temp);
+
+	  g_free (temp);
 	}
       else
 	{
