@@ -401,10 +401,7 @@ sub on_net  (&) { register_callback "net"  , $_[0] }
 
 sub main {
    $caller=caller;
-   #d# #D# # BIG BUG LURKING SOMEWHERE
-   # just calling exit() will be too much for bigexitbug.pl
-   #&{"$interface_pkg\::gimp_main"};
-   xs_exit(&{"$interface_pkg\::gimp_main"});
+   &{"$interface_pkg\::gimp_main"};
 }
 
 # same as main, but callbacks are ignored

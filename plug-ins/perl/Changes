@@ -1,9 +1,9 @@
 Revision history for Gimp-Perl extension.
 
 1.11  Tue Aug  3 03:23:23 CEST 1999
-	NOTYET - EXPERIMENTALLY re-enabled the return path from main. It works
-        NOTYET   with perl 5.005_58, but I remember problems with other versions.
-        NOTYET  This re-enables END handlers etc.
+	- EXPERIMENTALLY re-enabled the return path from main. It works
+          with perl 5.005_60, but I remember problems with other versions.
+          This re-enables END handlers etc.
 	- updated seths scripts, added remove_guides...
         - examples/glowing_steel was missing from the MANIFEST!!
         - data types for RADIO, SPINNER etc.. are guessed better now.

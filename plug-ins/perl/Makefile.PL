@@ -12,7 +12,7 @@ $|=1;
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
-      logulator miff magick guide_remove guides_to_selection burst map_to_gradient
+      logulator miff gimpmagick guide_remove guides_to_selection burst map_to_gradient
       fire povray
    );
 @shebang = (map("examples/$_",@examples),

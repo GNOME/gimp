@@ -855,7 +855,7 @@ sub print_switches {
 }
 
 sub main {
-   $old_trace = Gimp::set_trace (0);#d#
+   $old_trace = Gimp::set_trace (0);
    if ($Gimp::help) {
       my $this=this_script;
       print <<EOF;
@@ -868,7 +868,7 @@ EOF
    } else {
       Gimp::main;
    }
-};
+}
 
 1;
 __END__
