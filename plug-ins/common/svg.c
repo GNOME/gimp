@@ -122,7 +122,7 @@ run (gchar      *name,
 }
 
 /*
- * 'load_image()' - Load a PNG image into a new image window.
+ * 'load_image()' - Load a SVG image into a new image window.
  */
 
 static gint32
