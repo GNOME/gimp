@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# THIS IS OUTDATED AND WILL NOT RUN WITH CURRENT GIMP VERSIONS!
+
 # this test-plugin will create a simple button, and does automatically
 # save it as an indexed gif in /tmp/x.gif
 

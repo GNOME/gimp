@@ -192,18 +192,21 @@ sub N_($) { shift }
 
 my @init_functions;
 
+my $gtk_init = 1;
+
 sub gtk_init() {
-   require Gtk;
-
-   Gtk->init;
-   Gtk::Rc->parse (Gimp->gtkrc);
-   Gtk::Gdk->set_use_xshm (Gimp->use_xshm);
-   Gtk::Preview->set_gamma (Gimp->gamma);
-   Gtk::Preview->set_install_cmap (Gimp->install_cmap);
-   Gtk::Preview->set_color_cube (Gimp->color_cube);
-   Gtk::Widget->set_default_visual (Gtk::Preview->get_visual);
-   Gtk::Widget->set_default_colormap (Gtk::Preview->get_cmap);
-
+   if ($gtk_init) {
+      require Gtk;
+      Gtk->init;
+      Gtk::Rc->parse (Gimp->gtkrc);
+      Gtk::Gdk->set_use_xshm (Gimp->use_xshm);
+      Gtk::Preview->set_gamma (Gimp->gamma);
+      Gtk::Preview->set_install_cmap (Gimp->install_cmap);
+      Gtk::Preview->set_color_cube (Gimp->color_cube);
+      Gtk::Widget->set_default_visual (Gtk::Preview->get_visual);
+      Gtk::Widget->set_default_colormap (Gtk::Preview->get_cmap);
+      $gtk_init = 0;
+   }
    &{shift @init_functions} while @init_functions;
 }
 
@@ -299,7 +302,6 @@ if (@ARGV) {
 }
 
 my @log;
-my $caller;
 
 sub format_msg {
    $_=shift;
@@ -377,39 +379,49 @@ unless($no_SIG) {
 
 my %callback;
 
-sub call_callback {
-   my $req = shift;
+sub cbchain($) {
    my $cb = shift;
-   return () if $caller eq "Gimp";
-   if ($callback{$cb}) {
-      for(@{$callback{$cb}}) {
-         &$_;
-      }
-   } elsif (UNIVERSAL::can($caller,$cb)) {
-      &{"$caller\::$cb"};
-   } else {
-      die_msg __"required callback '$cb' not found\n" if $req;
-   }
+   $callback{$cb} ? @{$callback{$cb}} : ();
 }
 
 sub callback {
    my $type = shift;
+   my @cb;
    if ($type eq "-run") {
       local $function = shift;
       local $in_run = 1;
       _initialized_callback;
-      call_callback 1,$function,@_;
+      @cb = (
+         @{$callback{run}},
+         @{$callback{lib}},
+         @{$callback{$function}},
+      );
+      die_msg __"required callback 'run' not found\n" unless @cb;
+      for (@cb) { &$_ }
    } elsif ($type eq "-net") {
       local $in_net = 1;
       _initialized_callback;
-      call_callback 1,"net";
+      @cb = (
+         @{$callback{run}},
+         @{$callback{net}},
+         @{$callback{$function}},
+      );
+      die_msg __"required callback 'net' not found\n" unless @cb;
+      for (@cb) { &$_ }
    } elsif ($type eq "-query") {
       local $in_query = 1;
       _initialized_callback;
-      call_callback 1,"query";
+      @cb = (
+         @{$callback{query}},
+      );
+      die_msg __"required callback 'query' not found\n" unless @cb;
+      for (@cb) { &$_ }
    } elsif ($type eq "-quit") {
       local $in_quit = 1;
-      call_callback 0,"quit";
+      @cb = (
+         @{$callback{quiet}},
+      );
+      for (@cb) { &$_ }
    }
 }
 
@@ -419,9 +431,10 @@ sub register_callback($$) {
 
 sub on_query(&) { register_callback "query", $_[0] }
 sub on_net  (&) { register_callback "net"  , $_[0] }
+sub on_lib  (&) { register_callback "lib"  , $_[0] }
+sub on_run  (&) { register_callback "run"  , $_[0] }
 
 sub main {
-   $caller=caller;
    &{"$interface_pkg\::gimp_main"};
 }
 
@@ -725,6 +738,9 @@ If you need to do cleanups before exiting you should use the C<quit>
 callback (which is not yet available if you use Gimp::Fu).
 
 =head1 CALLBACKS
+
+THIS SECTION IS OUTDATED AND WILL BE REWORKED SOON. USE Gimp::Fu or READ
+THE SOURCE :(
 
 If you use the plain Gimp module (as opposed to Gimp::Fu), your program
 should only call one function: C<main>. Everything else is going to be

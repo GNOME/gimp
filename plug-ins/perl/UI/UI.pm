@@ -239,7 +239,7 @@ sub set_preview {
 }
 
 sub new {
-   new Gtk::Widget @_;
+   Gtk::Object::new @_;
 }
 
 package Gimp::UI::BrushSelect;
@@ -282,7 +282,7 @@ sub set_preview {
 }
 
 sub new {
-   new Gtk::Widget @_;
+   Gtk::Object::new @_;
 }
 
 package Gimp::UI::GradientSelect;
@@ -309,7 +309,7 @@ sub new {
    unless (defined %gradients) {
       undef @gradients{Gimp->gradients_get_list};
    }
-   new Gtk::Widget @_;
+   Gtk::Object::new @_;
 }
 
 package Gimp::UI::ColorSelectButton;
@@ -427,8 +427,7 @@ sub cb_color_button {
 }
 
 sub new {
-    my $pkg = shift;
-    new Gtk::Widget $pkg, @_;
+    Gtk::Object::new @_;
 }
 
 1;

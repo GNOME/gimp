@@ -4,11 +4,11 @@
 
 use Gimp;
 
-sub query {
+Gimp::on_lib {
    print STDERR "$0: this script is not intended to be run from within the gimp!\n";
-}
+};
 
-sub net {
+Gimp::on_net {
   # simple benchmark ;)
 
   $img=new Gimp::Image(600,300,RGB);
@@ -25,9 +25,8 @@ sub net {
      $bg->edit_fill;
      Display->displays_flush ();
   }
-
 #  Gimp::Net::server_quit;  # kill the gimp-perl-server-extension (ugly name)
-}
+};
 
 exit main;
 

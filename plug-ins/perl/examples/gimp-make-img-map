@@ -1,4 +1,7 @@
 #!/usr/local/bin/perl
+
+# THIS IS OUTDATED AND WILL NOT RUN WITH CURRENT GIMP VERSIONS!
+
 ######################################################################
 #  This program is an automatic way of scaling and tiling lots of
 #  images in order to create an index image.

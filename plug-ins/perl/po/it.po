@@ -11,6 +11,10 @@ msgstr ""
 "Date: mer set  8 02:12:22 CEST 1999\n"
 "From: Marco Munari <mar@chiara.dei.unipd.it>\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Starburst"
+msgstr "<Image>/Filters/"
+
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr "attendendo il perl-server durante la connessione socket, si riceve @r\n"
 
@@ -20,12 +24,12 @@ msgstr "troppi"
 msgid "$s: not an integer\n"
 msgstr "$s: non e` un intero\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Blended"
+msgstr "<Image>/Filters/"
+
 msgid "<Image>/Filters/Render/Fit Text"
 msgstr "<Image>/Filters/Render/Riempito da Testo"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "Help for "
 msgstr "Aiuto per "
@@ -58,12 +62,24 @@ msgstr "incapace di leggere '$fn': $!"
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr "<Toolbox>/Xtns/Render/Povray/Texture"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Cool Metal"
+msgstr "<Image>/Filters/"
+
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
 msgstr "<Toolbox>/Xtns/Render/Povray/Preferenze"
 
 #, fuzzy
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr "non riesco a leggere il file temporaneo $tmp: $!"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filters/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Alien Glow"
+msgstr "<Image>/Filters/"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
@@ -105,8 +121,16 @@ msgstr "<Image>/Guide/Griglia di Guide"
 msgid "dunno how to return param type %d"
 msgstr "impossibile passare tipo di argomento %d"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Chip Away"
+msgstr "<Image>/Filters/"
+
 msgid "<Image>/Filters/Colors/Colour To Alpha"
 msgstr "<Image>/Filters/Colors/Colore ad Alfa"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Bovination"
+msgstr "<Image>/Filters/"
 
 msgid "Image Types"
 msgstr "Tipo Immagine"
@@ -121,6 +145,10 @@ msgstr ""
 
 msgid "More..."
 msgstr "Altro..."
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Particle Trace"
+msgstr "<Image>/Filters/"
 
 msgid "interface=... tag is no longer supported\n"
 msgstr "interface=... non e` piu` supportato\n"
@@ -144,10 +172,6 @@ msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
 
 msgid "Restore values to the previous ones"
 msgstr "Ripristina i valori a quelli precedenti"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr "<Image>/Filters/Animation/Applica Espressione Perl"
@@ -178,14 +202,6 @@ msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
 msgstr "registro chiamato con troppy o sbagliati argomenti\n"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr "Errore Interno: Gimp::Net #101."
@@ -226,10 +242,6 @@ msgstr ""
 msgid "Internal error: stashname too long, please report!"
 msgstr "Errore interno: stashname troppo lungo!"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "<Image>/Filters/Render/TeX String"
 msgstr "<Image>/Filters/Render/Stringa TeX"
 
@@ -256,14 +268,6 @@ msgstr ""
 msgid "Close"
 msgstr "Chiudi"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "unable to open $rgb_db_path"
 msgstr "non riesco ad aprire $rgb_db_path"
 
@@ -276,6 +280,10 @@ msgstr "<Image>/Filters/Colors/Mappa a Gradiente"
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Filters/Render/Aggiungi Glow"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Basic I"
+msgstr "<Image>/Filters/"
+
 msgid "function name contains dashes instead of underscores"
 msgstr "nome di funzione contiene cancelletti ('#') anziche` '_'"
 
@@ -285,10 +293,6 @@ msgid ""
 msgstr ""
 "$function: nome di argumento '$p->[1]' contiene caratteri illegal, solo 0-9, a-z "
 "and _ allowed"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
@@ -335,10 +339,6 @@ msgstr ""
 "Atteso un INT32 ma ottenuto '%s'. Forse intendevate %s e avete dimenticato 'use "
 "strict'"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "[undefined]"
 msgstr "[non definito]"
 
@@ -347,22 +347,22 @@ msgstr "[non definito]"
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Guide/Rimuovi Guide"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "WARNING: shared locking requested but not implemented"
 msgstr "ATTENZIONE: richiesta condivisa di lock, ma non implementata"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Filters/"
 
 msgid "%s: procedural database execution failed"
 msgstr "%s: fallimento di esecuzione database procedurale"
 
-msgid "<Image>/Filters/"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/3D Outline"
 msgstr "<Image>/Filters/"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgid "<Image>/Filters/"
+msgstr "<Image>/Filters/"
 
 msgid ", authorization required"
 msgstr ", autorizzazione richiesta"
@@ -380,12 +380,12 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Xtns/Perl/Server"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "accepted unix connection"
 msgstr "connessione unix accettata"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Image>/Filters/"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr "gimp_tile_get_data non e` ancora implementata\n"
@@ -467,8 +467,8 @@ msgstr ""
 "quando vuoti)!"
 
 #, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Filters/"
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: switch illegale, provare $0 --help\n"
@@ -479,15 +479,15 @@ msgstr "Incapace di convertire un riferimento a tipo '%s'"
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "<Image>/Filters/Render/Random Blends"
 msgstr "<Image>/Filters/Render/Sfumature Casuali"
 
 msgid "<Image>/Filters/Map/Pixelmap"
 msgstr "<Image>/Filters/Map/Pixelmap"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Starscape"
+msgstr "<Image>/Filters/"
 
 msgid "gimp procedure '%s' not found"
 msgstr "procedura di gimp '%s' non trovata"
@@ -513,6 +513,10 @@ msgstr "Scorciatoie"
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filters/Render/Terral Text"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Filters/"
+
 msgid "<Toolbox>/Xtns/PDB Explorer"
 msgstr "<Toolbox>/Xtns/Esploratore PDB"
 
@@ -530,10 +534,6 @@ msgstr ""
 "%s: fallimento di esecuzione database procedurale su argomenti individuali di "
 "ingresso"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "NAME"
 msgstr "NOME"
 
@@ -543,6 +543,10 @@ msgstr ""
 
 msgid "<Image>/Filters/Map/Xach Blocks"
 msgstr "<Image>/Filters/Map/Xach Blocks"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Frosty"
+msgstr "<Image>/Filters/"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr "Avviso: canonicalize_colour non ha ricevuto nessun valore!"
@@ -567,12 +571,12 @@ msgstr "<Image>/Filters/Edge-Detect/2x2 Individuazione Contorni"
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Layers/Centra Livello"
 
-#, fuzzy
-msgid "<Image>/Filters/Logulator"
-msgstr "<Image>/Filters/"
-
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "ora chiudo connessione %d (%d richiesto in %g secondi)"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Basic II"
+msgstr "<Image>/Filters/"
 
 msgid "Reset all values to their default"
 msgstr "Reimposta a valori standard"
@@ -601,10 +605,6 @@ msgstr ""
 
 msgid "too many arguments"
 msgstr "troppi argomenti"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
@@ -669,17 +669,21 @@ msgstr "colore specificato di tipo illegale"
 msgid "get current background colour from the gimp"
 msgstr "ottiene il corrente colore di sfondo da gimp"
 
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
+
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
 "cortesia riportare"
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
-
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Glowing Hot"
+msgstr "<Image>/Filters/"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr "ora accetto connessioni alla porta $Gimp::Net::default_tcp_port"
@@ -712,25 +716,21 @@ msgstr ""
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Filters/Blur/2x2 Sfocatura"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "<Image>/Layers/Layer to Image Size"
 msgstr "<Image>/Layers/Porta a Grandezza Immagine"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr "conversione a tipo $pf_type2string{$type} non e` ancora implementata\n"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 # msgid "dunno how to pass arg type %d"
 # msgstr "come passare il tipo di argomenti %d"
 # ?dunno
 msgid "interface '$interface_type' unsupported."
 msgstr "interfaccia '$interface_type' non supportata.'"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Neon"
+msgstr "<Image>/Filters/"
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filters/Enhance/2x2 Rafforza Contrasto"
@@ -775,10 +775,6 @@ msgstr "%s argomenti per funzione '%s'"
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "only blessed scalars accepted here"
 msgstr "qui si accettano solo scalari"
 
@@ -809,6 +805,14 @@ msgstr "Salva"
 msgid "<Toolbox>/Xtns/Perl/Control Center"
 msgstr "<Toolbox>/Xtns/Perl/Centro di controllo"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Filters/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Textured"
+msgstr "<Image>/Filters/"
+
 msgid "Function Info"
 msgstr "Info Funzione"
 
@@ -828,22 +832,22 @@ msgstr "autorizzazuione negata: $r[1]\n"
 msgid "use'ing Gimp::PDL is no longer necessary, please remove it!\n"
 msgstr "l'uso di Gimp:PDL non e` piu` necessario, rimuovetelo pure!\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Glossy"
+msgstr "<Image>/Filters/"
+
 msgid "Previous"
 msgstr "Precedente"
 
 msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr "<Image>/Filters/Map/Xach Shadows"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "Command"
 msgstr "Comando"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Chalk"
+msgstr "<Image>/Filters/"
 
 msgid "<Image>/Filters/Misc/Burst"
 msgstr "<Image>/Filters/Misc/Burst"
@@ -862,10 +866,6 @@ msgstr "DESCRIZIONE"
 
 msgid "Accelerator"
 msgstr "Acceleratore"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "Cancel"
 msgstr "Cancella"
@@ -901,10 +901,6 @@ msgstr "<Toolbox>/Xtns/Logo per Homepage"
 
 msgid "Date/Version"
 msgstr "Data/Versione"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/Filters/Animazione/Animazione Celle"
@@ -956,6 +952,10 @@ msgstr "<Toolbox>/Xtns/Parasite Editor"
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr "perl-arrayref richiesto come tipo di dati per gimp-array"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Comic Book"
+msgstr "<Image>/Filters/"
+
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
 
@@ -965,12 +965,16 @@ msgstr "Tipo di argomento non supportato $type"
 msgid "<Image>/Image/Colors/Alpha2Color"
 msgstr "<Image>/Immagine/Colori/Alfa a Colore"
 
-msgid "<Image>/Filters/Misc/Magick"
-msgstr "<Image>/Filters/Misc/Magick"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Gradient Bevel"
+msgstr "<Image>/Filters/"
 
 #, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgid "<Image>/Filters/Logulator/Chrome"
+msgstr "<Image>/Filters/"
+
+msgid "<Image>/Filters/Misc/Magick"
+msgstr "<Image>/Filters/Misc/Magick"
 
 # msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 # msgstr ""
@@ -1007,10 +1011,6 @@ msgstr "<Toolbox>/Xtns/"
 msgid "plug-in returned %d more values than expected"
 msgstr "plug-in restituisce %d valori in piu` rispetto alle attese"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ non e` un tag valido per importare il pacchetto $pkg"
 
@@ -1032,12 +1032,112 @@ msgstr "PDB Explorer - edizione olof (versione alpha)"
 msgid "not enough"
 msgstr "non abbastanza"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
 msgid "accepting connections on $unix_path"
 msgstr "ricezione connessioni su $unix_path"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
+#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 #~ msgid "<Toolbox>/Xtns/Animation/Seth Spin"
 #~ msgstr "<Toolbox>/Xtns/Animation/Seth Spin"

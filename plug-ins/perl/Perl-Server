@@ -14,7 +14,6 @@ use Socket;
 use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
             $auth @authorized $exclusive $rm $saved_rm %stats);
-# the '' might be required (i.e. no ()). why??
 use Gimp qw(__ N_);
 use Gimp::Net ();
 
@@ -300,10 +299,12 @@ sub extension_perl_server {
   }
 }
 
-sub query {
+Gimp::register_callback extension_perl_server => \&extension_perl_server;
+
+Gimp::on_query {
    Gimp->install_procedure("extension_perl_server", "Start the Gimp-Perl Server",
                            "This is the server for plug-ins written using the Gimp::Net module",
-                           "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1998-07-22",
+                           "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-12-02",
                            N_"<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"],
@@ -331,22 +332,7 @@ sub query {
                             [&Gimp::PARAM_STRING, "arg_num", "The name of the argument that this constant is used for"],
                             [&Gimp::PARAM_INT32,  "default_value", "The default value for this constant"],
                            ],[]);
-}
+};
 
-sub quit {
-}
-
-exit &Gimp::main;
-
-
-
-
-
-
-
-
-
-
-
-
+exit Gimp::main;
 

@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+# THIS IS OUTDATED AND WILL NOT RUN WITH CURRENT GIMP VERSIONS!
 # Send to me by Jason van Zyl <jason@bookshelf.ca>
 # see the accompanying file image_list
 

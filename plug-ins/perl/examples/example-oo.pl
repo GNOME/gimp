@@ -22,16 +22,16 @@ sub plug_in_example_oo {
   new Display($img);
 }
 
-sub net {
+Gimp::on_run {
   plug_in_example_oo;
-}
+};
 
-sub query {
+Gimp::on_query {
   gimp_install_procedure("plug_in_example_oo", "a test plug-in in perl",
                          "try it out", "Marc Lehmann", "Marc Lehmann", "1998-04-27",
                          N_"<Toolbox>/Xtns/Perl Example Plug-in", "*", PROC_EXTENSION,
                          [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
-}
+};
 
 exit main;
 

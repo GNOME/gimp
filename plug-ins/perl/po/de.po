@@ -13,6 +13,10 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Starburst"
+msgstr "<Image>/Filter/"
+
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
@@ -22,11 +26,12 @@ msgstr "zu viele"
 msgid "$s: not an integer\n"
 msgstr "$s: kein integer\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Blended"
+msgstr "<Image>/Filter/"
+
 msgid "<Image>/Filters/Render/Fit Text"
 msgstr "<Image>/Filter/Render/Text Einpassen"
-
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
 
 msgid "Help for "
 msgstr "Hilfe für "
@@ -58,11 +63,23 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr "<Toolbox>/Xtn/Render/Povray/Textur"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Cool Metal"
+msgstr "<Image>/Filter/"
+
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
 msgstr "<Toolbox>/Xtn/Erzeuge/Povray/Einstellungen"
 
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Alien Glow"
+msgstr "<Image>/Filter/"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
@@ -100,8 +117,16 @@ msgstr ""
 msgid "dunno how to return param type %d"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Chip Away"
+msgstr "<Image>/Filter/"
+
 msgid "<Image>/Filters/Colors/Colour To Alpha"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Bovination"
+msgstr "<Image>/Filter/"
 
 msgid "Image Types"
 msgstr "Bildtypen"
@@ -114,6 +139,10 @@ msgstr "Konnte den Gimp-Server nicht finden. Läuft der Perl-Server nicht?"
 
 msgid "More..."
 msgstr "Mehr..."
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Particle Trace"
+msgstr "<Image>/Filter/"
 
 msgid "interface=... tag is no longer supported\n"
 msgstr ""
@@ -135,10 +164,6 @@ msgstr "Konnte Gimp::Drawable nicht in Gimp::GDrawable konvertieren (id %d)"
 
 msgid "Restore values to the previous ones"
 msgstr "Parameter auf vorherige Werte zurücksetzen"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr ""
@@ -166,14 +191,6 @@ msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
 msgstr "'register' mit zu vielen oder falschen Argumenten aufgerufen\n"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr ""
@@ -204,9 +221,6 @@ msgstr ""
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-
 #, fuzzy
 msgid "<Image>/Filters/Render/TeX String"
 msgstr "<Image>/Filter/"
@@ -232,14 +246,6 @@ msgstr ""
 msgid "Close"
 msgstr "Schließen"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
 msgid "unable to open $rgb_db_path"
 msgstr "Konnte $rgb_db_path nicht öffnen"
 
@@ -253,6 +259,10 @@ msgstr ""
 msgid "<Image>/Filters/Render/Add Glow"
 msgstr "<Image>/Filter/Render/Add Glow"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Basic I"
+msgstr "<Image>/Filter/"
+
 msgid "function name contains dashes instead of underscores"
 msgstr "Funktionsname enthält Minuszeichen anstatt Unterstrichen"
 
@@ -260,10 +270,6 @@ msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
 "and _ allowed"
 msgstr ""
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
@@ -308,32 +314,28 @@ msgid ""
 "strict'"
 msgstr ""
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
 msgid "[undefined]"
 msgstr "[undefiniert]"
 
 msgid "<Image>/Guides/Remove Guides"
 msgstr ""
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Filter/"
 
 msgid "%s: procedural database execution failed"
 msgstr "%s: PDB-Aufruf fehlgeschlagen"
 
-msgid "<Image>/Filters/"
+#, fuzzy
+msgid "<Image>/Filters/Logulator/3D Outline"
 msgstr "<Image>/Filter/"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+msgid "<Image>/Filters/"
+msgstr "<Image>/Filter/"
 
 msgid ", authorization required"
 msgstr ", Autorisierung notwendig"
@@ -351,12 +353,12 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Xtn/Perl/Server"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
 msgid "accepted unix connection"
 msgstr "Unix-Verbindung angenommen"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Image>/Filter/"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr ""
@@ -427,8 +429,8 @@ msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
 #, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Filter/"
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: Unbekannter Schlater, wie wär's mit $0 --help stattdessen?\n"
@@ -441,15 +443,15 @@ msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 msgstr "<Toolbox>/Xtn/Erzeuge/Logo/Feuerlogo"
 
 #, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
 msgid "<Image>/Filters/Render/Random Blends"
 msgstr "<Image>/Filter/"
 
 #, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Filter/"
 
 msgid "gimp procedure '%s' not found"
@@ -476,6 +478,10 @@ msgstr "Abkürzungen"
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filter/Render/Terraltext"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Filter/"
+
 msgid "<Toolbox>/Xtns/PDB Explorer"
 msgstr "<Toolbox>/Xtn/PDB-Buch"
 
@@ -491,10 +497,6 @@ msgstr "Anfrage ohne Autorisierung empfangen, Verbindung abgebrochen"
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr "%s: PDB-Aufruf fehlgeschlagen wegen ungültiger Argumente"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
 msgid "NAME"
 msgstr ""
 
@@ -503,6 +505,10 @@ msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Frosty"
 msgstr "<Image>/Filter/"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
@@ -525,12 +531,12 @@ msgstr ""
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Filter/"
 
-#, fuzzy
-msgid "<Image>/Filters/Logulator"
-msgstr "<Image>/Filter/"
-
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "Schließe Verbindung %d (%d Anfragen in %g Sekunden)"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Basic II"
+msgstr "<Image>/Filter/"
 
 msgid "Reset all values to their default"
 msgstr "Auf Standardwerte zurücksetzen"
@@ -551,10 +557,6 @@ msgstr ""
 
 msgid "too many arguments"
 msgstr "Zu viele Argumente"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr "Ungültige Dimension: pdl hat die Dimension %d, höchstens %d erlaubt"
@@ -615,15 +617,19 @@ msgstr "Die Farbangabe hat einen falschen Typ"
 msgid "get current background colour from the gimp"
 msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
 
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
+
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
-
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Glowing Hot"
+msgstr "<Image>/Filter/"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
@@ -658,22 +664,18 @@ msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr ""
 
 #, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
 msgid "<Image>/Layers/Layer to Image Size"
 msgstr "<Image>/Filter/"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
 msgid "interface '$interface_type' unsupported."
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Neon"
+msgstr "<Image>/Filter/"
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr ""
@@ -719,10 +721,6 @@ msgstr "%s Argumente für die Funktion '%s'"
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
 msgid "only blessed scalars accepted here"
 msgstr "Objekt (nicht Referenz oder Skalar) benötigt"
 
@@ -748,6 +746,14 @@ msgstr "Speichern"
 msgid "<Toolbox>/Xtns/Perl/Control Center"
 msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Textured"
+msgstr "<Image>/Filter/"
+
 msgid "Function Info"
 msgstr "Mehr Info"
 
@@ -765,6 +771,10 @@ msgstr "Autorisierung fehlgeschlagen: $r[1]\n"
 msgid "use'ing Gimp::PDL is no longer necessary, please remove it!\n"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Glossy"
+msgstr "<Image>/Filter/"
+
 msgid "Previous"
 msgstr "Vorherige"
 
@@ -772,16 +782,12 @@ msgstr "Vorherige"
 msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr "<Image>/Filter/"
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-msgstr "<Toolbox>/Xtn/Perl/Server"
-
 msgid "Command"
 msgstr "Befehl"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Chalk"
+msgstr "<Image>/Filter/"
 
 msgid "<Image>/Filters/Misc/Burst"
 msgstr "<Image>/Filter/Verschiedenes/Ausbruch"
@@ -796,10 +802,6 @@ msgstr "BESCHREIBUNG"
 
 msgid "Accelerator"
 msgstr "Tastenkombination"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -832,10 +834,6 @@ msgstr "<Toolbox>/Xtn/Homepagelogo"
 
 msgid "Date/Version"
 msgstr "Datum/Version"
-
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr ""
@@ -886,6 +884,10 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Comic Book"
+msgstr "<Image>/Filter/"
+
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
 
@@ -895,11 +897,16 @@ msgstr ""
 msgid "<Image>/Image/Colors/Alpha2Color"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Gradient Bevel"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Chrome"
+msgstr "<Image>/Filter/"
+
 msgid "<Image>/Filters/Misc/Magick"
 msgstr ""
-
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
 
 msgid "Color"
 msgstr "Farbe"
@@ -935,10 +942,6 @@ msgstr "<Toolbox>/Xtn/"
 msgid "plug-in returned %d more values than expected"
 msgstr ""
 
-#, fuzzy
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ ist kein gültiger Import-Tag für $pkg"
 
@@ -960,11 +963,108 @@ msgstr "PDB-Buch - Edition 'Olof' (immer noch Alpha)"
 msgid "not enough"
 msgstr "nicht genügend"
 
-msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
-msgstr "<Toolbox>/Xtn/Erzeuge/Logo/3D Outline"
-
 msgid "accepting connections on $unix_path"
 msgstr "Akzeptiere Verbindungen auf $unix_path"
+
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
+#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
+#~ msgstr "<Toolbox>/Xtn/Erzeuge/Logo/3D Outline"
 
 #~ msgid "<Toolbox>/Xtns/Animation/Seth Spin"
 #~ msgstr "<Toolbox>/Xtn/Animation/Seth's Dreher"

@@ -33,16 +33,18 @@ olof
 
 bugs
 
-  * put libs last, ignore gtk-config brokenness
+  * document on_xxx functions and regiter_callback
+  * fix Gimp::Feature::missing => on_query-dir!
+[DONE]  * put libs last, ignore gtk-config brokenness
   * update logulator
-  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
+[KILL]  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
 [DONE]  * rate-limiting for gimp_message BEFORE 1.2
   * on-query => remove gimp::fu parasite(?)
   * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-  * perl_require_pv with _59?
+[KILL]  * perl_require_pv with _59?
   * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
   * document Gimp:PDL!!!
