@@ -432,6 +432,7 @@ create_display_shell (GDisplay *gdisp,
 				    gdisp->iconsize,
 				    1);
   gdisp->icon_needs_update = 1;
+  gdisp->icon_idle_id = gtk_idle_add (gdisplay_update_icon_invoker, gdisp);
 
   /*  create the GtkPixmaps  */
   pixmap = gtk_pixmap_new (qmasksel_pixmap, qmasksel_mask);

@@ -735,10 +735,6 @@ gdisplay_origin_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      /* this does not belong here, It should be placed in an idle-loop! */
-      gdisplay_update_icon (gdisp);
-      /* gdisplay_update_icon   should be placed in an idle-loop!!!!  */
-
       gtk_menu_popup (GTK_MENU (gdisp->popup),
 		      NULL, NULL,
 		      gdisplay_origin_menu_position, widget,

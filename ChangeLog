@@ -1,4 +1,11 @@
 2001-02-21  Simon Budig   <simon@gimp.org>
+
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/interface.c: Moved the Icon preview stuff to the idle-loop.
+
+2001-02-21  Simon Budig   <simon@gimp.org>
 	
 	* app/interface.c: Fixed stupid bug with the icon preview when
 	creating the second preview. Please note that it still crashes

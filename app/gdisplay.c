@@ -431,6 +431,9 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->nav_popup)
     nav_popup_free (gdisp->nav_popup);
 
+  if (gdisp->icon_idle_id > 0)
+    gtk_idle_remove (gdisp->icon_idle_id);
+
   gdk_pixmap_unref (gdisp->icon);
   gdk_pixmap_unref (gdisp->iconmask);
 
@@ -741,6 +744,11 @@ gdisplay_flush_whenever (GDisplay *gdisp,
   /* update the gdisplay's qmask buttons */
   qmask_buttons_update (gdisp);
 
+  /* Schedule the update for the window icon */
+  gdisp->icon_needs_update = 1;
+  if (gdisp->icon_idle_id == 0)
+    gdisp->icon_idle_id = gtk_idle_add (gdisplay_update_icon_invoker, gdisp);
+
   /*  ensure the consistency of the tear-off menus  */
   if (!now && gimp_context_get_display (gimp_context_get_user ()) == gdisp)
     gdisplay_set_menu_sensitivity (gdisp);
@@ -897,6 +905,21 @@ gdisplay_update_icon (GDisplay *gdisp)
   
   temp_buf_free (icondata);
 }
+
+gint
+gdisplay_update_icon_invoker (gpointer data)
+{
+  GDisplay *gdisp;
+
+  /* need to test for valid gdisplay here */
+  gdisp = (GDisplay *) data;
+  gdisplay_update_icon (gdisp);
+
+  gdisp->icon_idle_id = 0;
+  /* Our work is done, don't request further execution */
+  return 0;
+}
+
 
 void
 gdisplay_draw_guides (GDisplay *gdisp)
@@ -2544,7 +2567,6 @@ gdisplay_cleandirty_handler (GimpImage *gimage,
   GDisplay *gdisp = data;
 
   gdisplay_update_title (gdisp);
-  gdisp->icon_needs_update = 1;
 }
 
 void
