@@ -1,5 +1,3 @@
-/usr/src/redhat/SOURCES/gimp.wmconfig
-[marc@germ marc]$ cat /usr/src/redhat/SOURCES/gimp.wmconfig
 gimp name "The GIMP"
 gimp description "GNU Image Manipulation Program"
 gimp icon "wilbur.xpm"
