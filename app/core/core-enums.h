@@ -76,6 +76,20 @@ typedef enum
 } GimpChannelType;
 
 
+#define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
+
+GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_NO_DITHER,          /*< desc="No Color Dithering"         >*/
+  GIMP_FS_DITHER,          /*< desc="Floyd-Steinberg Color Dithering (Normal)" >*/
+  GIMP_FSLOWBLEED_DITHER,  /*< desc="Floyd-Steinberg Color Dithering (Reduced Color Bleeding)" >*/
+  GIMP_FIXED_DITHER,       /*< desc="Positioned Color Dithering" >*/
+  GIMP_NODESTRUCT_DITHER   /*< skip >*/
+} GimpConvertDitherType;
+
+
 #define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
 
 GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
@@ -196,15 +210,6 @@ typedef enum  /*< skip >*/
   GIMP_MONO_PALETTE,
   GIMP_CUSTOM_PALETTE
 } GimpConvertPaletteType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_NO_DITHER,
-  GIMP_FS_DITHER,
-  GIMP_FSLOWBLEED_DITHER,
-  GIMP_FIXED_DITHER,
-  GIMP_NODESTRUCT_DITHER  /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
-} GimpConvertDitherType;
 
 typedef enum  /*< skip >*/
 {

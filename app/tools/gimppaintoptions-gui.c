@@ -31,6 +31,7 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 

@@ -1,3 +1,11 @@
+2002-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: registered GimpConvertDitherType.
+	
+	* app/gui/convert-dialog.c: simplified a lot by using enums.
+
+	* app/tools/paint_options.c: include gimpenummenu.h.
+
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -72,6 +72,27 @@ gimp_channel_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_convert_dither_type_enum_values[] =
+{
+  { GIMP_NO_DITHER, N_("No Color Dithering"), "no-dither" },
+  { GIMP_FS_DITHER, N_("Floyd-Steinberg Color Dithering (Normal)"), "fs-dither" },
+  { GIMP_FSLOWBLEED_DITHER, N_("Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"), "fslowbleed-dither" },
+  { GIMP_FIXED_DITHER, N_("Positioned Color Dithering"), "fixed-dither" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_convert_dither_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpConvertDitherType", gimp_convert_dither_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_gradient_type_enum_values[] =
 {
   { GIMP_LINEAR, N_("Linear"), "linear" },
