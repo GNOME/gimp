@@ -1,5 +1,12 @@
 2004-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): added
+	runtime check for GTK+ >= 2.4.0 and make sure the menubar's accels
+	can be invoked even if the menubar is invisible (workaround for
+	bug #137151).
+
+2004-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/color-notebook.c (color_notebook_new)
 	* app/tools/gimpcroptool.c (crop_info_create)
 	* app/tools/gimptransformtool.c (gimp_transform_tool_dialog):

@@ -657,6 +657,14 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   if (shell->options->show_menubar)
     gtk_widget_show (menubar);
 
+  /*  make sure we can activate accels even if the menubar is invisible
+   *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
+   */
+  if (! gtk_check_version (2, 4, 0))
+    g_signal_connect (menubar, "can-activate-accel",
+                      G_CALLBACK (gtk_true),
+                      NULL);
+
   /*  active display callback  */
   g_signal_connect (menubar, "button_press_event",
                     G_CALLBACK (gimp_display_shell_events),
