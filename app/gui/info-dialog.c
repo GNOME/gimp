@@ -43,14 +43,14 @@ info_field_new (InfoDialog    *idialog,
 {
   GtkWidget *label;
   InfoField *field;
-  int        row;
+  gint       row;
 
-  field = (InfoField *) g_malloc (sizeof (InfoField));
+  field = g_new (InfoField, 1);
 
   row = idialog->nfields + 1;
   gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
 
-  label = gtk_label_new (gettext (title));
+  label = gtk_label_new (title);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (idialog->info_table), label,
 		    0, 1, row - 1, row,
@@ -149,13 +149,13 @@ info_dialog_new (char *title)
   GtkWidget  *vbox;
   GtkWidget  *info_table;
 
-  idialog = (InfoDialog *) g_malloc (sizeof (InfoDialog));
+  idialog = g_new (InfoDialog, 1);
   idialog->field_list = NULL;
   idialog->nfields = 0;
 
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (shell), gettext(title));
+  gtk_window_set_title (GTK_WINDOW (shell), title);
   session_set_window_geometry (shell, &info_dialog_session_info, FALSE );
 
   gtk_signal_connect (GTK_OBJECT (shell), "delete_event",

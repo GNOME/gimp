@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "actionarea.h"
 #include "color_picker.h"
@@ -42,46 +40,45 @@ struct _ColorPickerOptions
 {
   ToolOptions  tool_options;
 
-  int          sample_merged;
-  int          sample_merged_d;
+  gint         sample_merged;
+  gint         sample_merged_d;
   GtkWidget   *sample_merged_w;
   
-  int          sample_average;
-  int          sample_average_d;
+  gint         sample_average;
+  gint         sample_average_d;
   GtkWidget   *sample_average_w;
   
-  double       average_radius;
-  double       average_radius_d;
+  gdouble      average_radius;
+  gdouble      average_radius_d;
   GtkObject   *average_radius_w;
 };
 
-typedef struct _ColourPickerTool ColourPickerTool;
-struct _ColourPickerTool
+typedef struct _ColorPickerTool ColorPickerTool;
+struct _ColorPickerTool
 {
-  DrawCore *   core;       /*  Core select object          */
+  DrawCore *core;       /*  Core select object          */
 
-  int          centerx;    /*  starting x coord            */
-  int          centery;    /*  starting y coord            */
+  gint      centerx;    /*  starting x coord            */
+  gint      centery;    /*  starting y coord            */
 };
 
 /*  the color picker tool options  */
 static ColorPickerOptions * color_picker_options = NULL;
 
 /*  the color value  */
-int col_value[5] = { 0, 0, 0, 0, 0 };
+gint col_value[5] = { 0, 0, 0, 0, 0 };
 
 /*  the color picker dialog  */
-static GimpDrawable * active_drawable;
-static int            update_type;
-static int            sample_type;
+static gint           update_type;
+static gint           sample_type;
 static InfoDialog *   color_picker_info = NULL;
-static char           red_buf   [MAX_INFO_BUF];
-static char           green_buf [MAX_INFO_BUF];
-static char           blue_buf  [MAX_INFO_BUF];
-static char           alpha_buf [MAX_INFO_BUF];
-static char           index_buf [MAX_INFO_BUF];
-static char           gray_buf  [MAX_INFO_BUF];
-static char           hex_buf   [MAX_INFO_BUF];
+static gchar          red_buf   [MAX_INFO_BUF];
+static gchar          green_buf [MAX_INFO_BUF];
+static gchar          blue_buf  [MAX_INFO_BUF];
+static gchar          alpha_buf [MAX_INFO_BUF];
+static gchar          index_buf [MAX_INFO_BUF];
+static gchar          gray_buf  [MAX_INFO_BUF];
+static gchar          hex_buf   [MAX_INFO_BUF];
 
 
 /*  local function prototypes  */
@@ -93,7 +90,7 @@ static void   color_picker_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   color_picker_control        (Tool *, ToolAction,       gpointer);
 
 static void   color_picker_info_window_close_callback (GtkWidget *, gpointer);
-static void   color_picker_info_update                (Tool *, int);
+static void   color_picker_info_update                (Tool *, gboolean);
 
 
 /*  functions  */
@@ -123,7 +120,7 @@ color_picker_options_new (void)
   GtkWidget *scale;
 
   /*  the new color picker tool options structure  */
-  options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
+  options = g_new (ColorPickerOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     _("Color Picker Options"),
 		     color_picker_options_reset);
@@ -201,8 +198,8 @@ color_picker_button_press (Tool           *tool,
 			   gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
-  ColourPickerTool *cp_tool;
-  int x, y;
+  ColorPickerTool *cp_tool;
+  gint x, y;
 
   static ActionAreaItem action_items[] =
   {
@@ -210,23 +207,20 @@ color_picker_button_press (Tool           *tool,
   };
 
   gdisp = (GDisplay *) gdisp_ptr;
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
-  /*  If this is the first invocation of the tool, or a different gdisplay,
-   *  create (or recreate) the info dialog...
-   */
-  if (tool->state == INACTIVE || gdisp_ptr != tool->gdisp_ptr ||
-      active_drawable != gimage_active_drawable (gdisp->gimage))
+  /*  Make the tool active and set it's gdisplay & drawable  */
+  tool->gdisp_ptr = gdisp;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  tool->state = ACTIVE;
+
+  /*  create the info dialog if it doesn't exist  */
+  if (! color_picker_info)
     {
-      /*  if the dialog exists, free it  */
-      if (color_picker_info)
-	info_dialog_free (color_picker_info);
-
       color_picker_info = info_dialog_new (_("Color Picker"));
-      active_drawable = gimage_active_drawable (gdisp->gimage);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (drawable_type (active_drawable))
+      switch (drawable_type (tool->drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
 	  info_dialog_add_label (color_picker_info, _("Red:"), red_buf);
@@ -271,38 +265,36 @@ color_picker_button_press (Tool           *tool,
 		     GDK_BUTTON_RELEASE_MASK),
 		    NULL, NULL, bevent->time);
 
-  /*  Make the tool active and set the gdisplay which owns it  */
-  tool->gdisp_ptr = gdisp_ptr;
-  tool->state = ACTIVE;
-
   /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
 
   /*  if the shift key is down, create a new color.
    *  otherwise, modify the current color.
    */
   if (bevent->state & GDK_SHIFT_MASK)
     {
-      color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
-						  color_picker_options->sample_merged,
-						  color_picker_options->sample_average,
-						  color_picker_options->average_radius,
-						  COLOR_NEW));
+      color_picker_info_update (tool,
+				pick_color (gdisp->gimage, tool->drawable, x, y,
+					    color_picker_options->sample_merged,
+					    color_picker_options->sample_average,
+					    color_picker_options->average_radius,
+					    COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
   else
     {
-      color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
-						  color_picker_options->sample_merged,
-						  color_picker_options->sample_average,
-						  color_picker_options->average_radius,
-						  COLOR_UPDATE));
+      color_picker_info_update (tool,
+				pick_color (gdisp->gimage, tool->drawable, x, y,
+					    color_picker_options->sample_merged,
+					    color_picker_options->sample_average,
+					    color_picker_options->average_radius,
+					    COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
 
-  /*  Start drawing the colourpicker tool  */
+  /*  Start drawing the colorpicker tool  */
   draw_core_start (cp_tool->core, gdisp->canvas->window, tool);
-
 }
 
 static void
@@ -311,22 +303,24 @@ color_picker_button_release (Tool           *tool,
 			     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
-  ColourPickerTool *cp_tool;
-  int x, y;
+  ColorPickerTool *cp_tool;
+  gint x, y;
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
   gdisp = (GDisplay *) gdisp_ptr;
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
   /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
 
-  color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
-					      color_picker_options->sample_merged,
-					      color_picker_options->sample_average,
-					      color_picker_options->average_radius,
-					      update_type));
+  color_picker_info_update (tool,
+			    pick_color (gdisp->gimage, tool->drawable, x, y,
+					color_picker_options->sample_merged,
+					color_picker_options->sample_average,
+					color_picker_options->average_radius,
+					update_type));
 
   draw_core_stop (cp_tool->core, tool);
   tool->state = INACTIVE;
@@ -338,25 +332,30 @@ color_picker_motion (Tool           *tool,
 		     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
-  ColourPickerTool *cp_tool;
+  ColorPickerTool *cp_tool;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
   /*  undraw the current tool  */
   draw_core_pause (cp_tool->core, tool);
 
   /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &cp_tool->centerx, &cp_tool->centery, FALSE, TRUE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &cp_tool->centerx, &cp_tool->centery,
+			       FALSE, TRUE);
 
-  color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
-					      color_picker_options->sample_merged,
-					      color_picker_options->sample_average,
-					      color_picker_options->average_radius,
-					      update_type));
+  color_picker_info_update (tool,
+			    pick_color (gdisp->gimage, tool->drawable, x, y,
+					color_picker_options->sample_merged,
+					color_picker_options->sample_average,
+					color_picker_options->average_radius,
+					update_type));
+
   /*  redraw the current tool  */
   draw_core_resume (cp_tool->core, tool);
 }
@@ -371,7 +370,9 @@ color_picker_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
+
   if (gimage_pick_correlate_layer (gdisp->gimage, x, y))
     gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR);
   else
@@ -383,9 +384,9 @@ color_picker_control (Tool       *tool,
 		      ToolAction  action,
 		      gpointer    gdisp_ptr)
 {
-  ColourPickerTool * cp_tool;
+  ColorPickerTool * cp_tool;
 
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
   switch (action)
     {
@@ -408,20 +409,20 @@ color_picker_control (Tool       *tool,
 
 typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
 
-int
-pick_color (GimpImage *gimage,
+gboolean
+pick_color (GimpImage    *gimage,
 	    GimpDrawable *drawable,
-	    int      x,
-	    int      y,
-	    gboolean sample_merged,
-	    gboolean sample_average,
-	    double   average_radius,
-	    int      final)
+	    gint          x,
+	    gint          y,
+	    gboolean      sample_merged,
+	    gboolean      sample_average,
+	    gdouble       average_radius,
+	    gint          final)
 {
   guchar *color;
-  int offx, offy;
-  int has_alpha;
-  int is_indexed;
+  gint offx, offy;
+  gint has_alpha;
+  gint is_indexed;
   GetColorFunc get_color_func;
   GtkObject *get_color_obj;
 
@@ -456,11 +457,11 @@ pick_color (GimpImage *gimage,
 
   if (sample_average)
     {
-      int i, j;
-      int count = 0;
-      int color_avg[4] = { 0, 0, 0, 0 };
+      gint i, j;
+      gint count = 0;
+      gint color_avg[4] = { 0, 0, 0, 0 };
       guchar *tmp_color;
-      int radius = (int) average_radius;
+      gint radius = (gint) average_radius;
 
       for (i = x - radius; i <= x + radius; i++)
 	for (j = y - radius; j <= y + radius; j++)
@@ -496,70 +497,70 @@ pick_color (GimpImage *gimage,
 
   palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
 			    col_value [BLUE_PIX], final);
-  g_free(color);
+  g_free (color);
   return TRUE;
 }
 
 static void
-colourpicker_draw (Tool *tool)
+colorpicker_draw (Tool *tool)
 {
   GDisplay * gdisp;
-  ColourPickerTool * cp_tool;
-  int tx, ty;
-  int radiusx,radiusy;
-  int cx,cy;
+  ColorPickerTool * cp_tool;
+  gint tx, ty;
+  gint radiusx, radiusy;
+  gint cx, cy;
 
   if(!color_picker_options->sample_average)
     return;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
   gdisplay_transform_coords (gdisp, cp_tool->centerx, cp_tool->centery,
-			     &tx, &ty, 1);
+			     &tx, &ty, TRUE);
 
-  radiusx = SCALEX(gdisp,color_picker_options->average_radius);
-  radiusy = SCALEY(gdisp,color_picker_options->average_radius);
-  cx = SCALEX(gdisp,1);
-  cy = SCALEY(gdisp,1);
+  radiusx = SCALEX (gdisp, color_picker_options->average_radius);
+  radiusy = SCALEY (gdisp, color_picker_options->average_radius);
+  cx = SCALEX (gdisp, 1);
+  cy = SCALEY (gdisp, 1);
 
   /*  Draw the circle around the collecting area */
-  gdk_draw_rectangle(cp_tool->core->win, cp_tool->core->gc, 0,
-		     tx - radiusx, 
-		     ty - radiusy,
-		     2*radiusx+cx, 2*radiusy+cy);
+  gdk_draw_rectangle (cp_tool->core->win, cp_tool->core->gc, 0,
+		      tx - radiusx, 
+		      ty - radiusy,
+		      2 * radiusx + cx, 2 * radiusy + cy);
 
   if(radiusx > 1 && radiusy > 1)
     {
-      gdk_draw_rectangle(cp_tool->core->win, cp_tool->core->gc, 0,
-			 tx - radiusx+2, 
-			 ty - radiusy+2,
-			 2*radiusx+cx-4, 2*radiusy+cy-4);
+      gdk_draw_rectangle (cp_tool->core->win, cp_tool->core->gc, 0,
+			  tx - radiusx + 2, 
+			  ty - radiusy + 2,
+			  2 * radiusx + cx - 4, 2 * radiusy + cy - 4);
     }
 }
 
 static void
-color_picker_info_update (Tool *tool,
-			  int   valid)
+color_picker_info_update (Tool     *tool,
+			  gboolean  valid)
 {
   if (!valid)
     {
-      g_snprintf (red_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (red_buf,   MAX_INFO_BUF, _("N/A"));
       g_snprintf (green_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (blue_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (blue_buf,  MAX_INFO_BUF, _("N/A"));
       g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
       g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (gray_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (hex_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (gray_buf,  MAX_INFO_BUF, _("N/A"));
+      g_snprintf (hex_buf,   MAX_INFO_BUF, _("N/A"));
     }
   else
     {
       switch (sample_type)
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  g_snprintf (red_buf, MAX_INFO_BUF, "%d", col_value [RED_PIX]);
+	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
 	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
-	  g_snprintf (blue_buf, MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
+	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
 	  if (sample_type == RGBA_GIMAGE)
 	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
@@ -576,10 +577,10 @@ color_picker_info_update (Tool *tool,
 	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
 	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (red_buf, MAX_INFO_BUF, "%d", col_value [RED_PIX]);
+	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
 	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
-	  g_snprintf (blue_buf, MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
-	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
+	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
+	  g_snprintf (hex_buf,   MAX_INFO_BUF, "#%.2x%.2x%.2x",
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],
 		      col_value [BLUE_PIX]);
@@ -603,11 +604,18 @@ color_picker_info_update (Tool *tool,
   info_dialog_popup (color_picker_info);
 }
 
+static void
+color_picker_info_window_close_callback (GtkWidget *widget,
+					 gpointer   client_data)
+{
+  info_dialog_popdown ((InfoDialog *) client_data);
+}
+
 Tool *
 tools_new_color_picker ()
 {
   Tool * tool;
-  ColourPickerTool * private;
+  ColorPickerTool * private;
 
   /*  The tool options  */
   if (! color_picker_options)
@@ -617,9 +625,11 @@ tools_new_color_picker ()
     }
 
   tool = tools_new_tool (COLOR_PICKER);
-  private = (ColourPickerTool *) g_malloc(sizeof(ColourPickerTool));
+  private = g_new (ColorPickerTool, 1);
 
-  private->core = draw_core_new (colourpicker_draw);
+  private->core = draw_core_new (colorpicker_draw);
+
+  tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
 
   tool->private = (void *) private;
 
@@ -635,9 +645,9 @@ tools_new_color_picker ()
 void
 tools_free_color_picker (Tool *tool)
 {
-  ColourPickerTool * cp_tool;
+  ColorPickerTool * cp_tool;
 
-  cp_tool = (ColourPickerTool *) tool->private;
+  cp_tool = (ColorPickerTool *) tool->private;
 
   if (tool->state == ACTIVE)
     draw_core_stop (cp_tool->core, tool);
@@ -651,11 +661,4 @@ tools_free_color_picker (Tool *tool)
     }
 
   g_free (cp_tool);
-}
-
-static void
-color_picker_info_window_close_callback (GtkWidget *widget,
-					 gpointer   client_data)
-{
-  info_dialog_popdown ((InfoDialog *) client_data);
 }

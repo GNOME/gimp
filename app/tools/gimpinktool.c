@@ -622,13 +622,7 @@ brush_widget_button_press (GtkWidget      *widget,
     {
       brush_widget->state = TRUE;
 
-      /*  theoretically, this should work. Dunno why it doesn't --Michael
-      gdk_pointer_grab (brush_widget->widget->window, TRUE,
-			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK |
-			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, event->time);
-      */
+      gtk_grab_add (brush_widget->widget);
     }
 }
 
@@ -639,9 +633,7 @@ brush_widget_button_release (GtkWidget      *widget,
 {
   brush_widget->state = FALSE;
 
-  /*
-  gdk_pointer_ungrab (event->time);
-  */
+  gtk_grab_remove (brush_widget->widget);
 }
 
 static void

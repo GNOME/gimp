@@ -1,3 +1,32 @@
+1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/color_picker.[ch]: set the "preserve" flag to FALSE. This
+	way the tool doesn't have to detect drawable changes by itself.
+	Misc stuff like below.
+
+	* app/gradient.c: heavily changed the beast:
+
+	- Reviewed the whole ui code and indented it.
+	- Standard ui for all sub-dialogs.
+	- Handle the wm delete event of the sub-dialogs.
+	- "+" and "-" pixmaps instead of "zoom in" and "zoom out".
+	- Made the gradient preview resizable again.
+	- i18n fixes.
+	- Removed some code duplication in the sub-dialogs' cancel/delete
+	  callbacks.
+	- Grouped functions together and commented the groups and their
+	  prototypes.
+	- Didn't change any core functionality (just the ui).
+	- Please don't kill me, but I couldn't resist to indent most
+	  functions ;-)
+
+	* app/info_dialog.c: no need to call gettext() on a string which
+	was passed to a function (it's the job of the caller).
+
+	* app/ink.c: grab the pointer in the blob preview.
+
+	* app/palette.c: standardized the ui of the dialog and all it's
+	sub-dialogs, function header indentation, namespace cleanup.
 
 Fri Jul 23 00:01:05 BST 1999 Andy Thomas <alt@gimp.org>
 

@@ -22,12 +22,18 @@
 #include "gimpdrawableF.h"
 #include "tools.h"
 
-int         pick_color (GimpImage *, GimpDrawable *, int , int,
-			gboolean, gboolean, double, int);
+gboolean   pick_color              (GimpImage    *gimage,
+				    GimpDrawable *drawable,
+				    gint          x,
+				    gint          y,
+				    gboolean      sample_merged,
+				    gboolean      sample_average,
+				    double        average_radius,
+				    gint          final);
 
-Tool *      tools_new_color_picker   (void);
-void        tools_free_color_picker  (Tool *);
+Tool     * tools_new_color_picker  (void);
+void       tools_free_color_picker (Tool *tool);
 
-extern int col_value[5];
+extern gint col_value[5];
 
 #endif  /*  __COLOR_PICKER_H__  */
