@@ -192,6 +192,8 @@ force_uninstall_from_perldirs ::
 force_uninstall_from_sitedirs ::
 	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(SITEARCHEXP)','auto','$(FULLEXT)','.packlist')."
 
+tags: .
+	ctags --lang=c `find . -name '*.xs' -print`
 ";
 }
 
