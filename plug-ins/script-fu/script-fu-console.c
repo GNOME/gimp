@@ -35,7 +35,8 @@
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-#include "libgimp/gimpintl.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "siod.h"
 #include "script-fu-console.h"
@@ -179,14 +180,14 @@ script_fu_console_interface ()
   gchar **argv;
   gint argc;
 
-  INIT_LOCALE("script-fu")
-
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("script-fu");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
+
+  INIT_I18N_UI();
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));

@@ -435,41 +435,4 @@ HEADER
 	close CFILE;
 	&write_file($cfile);
     }
-
-    my $hfile = "$destdir/gimpenums.h$FILE_EXT";
-    open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";
-    print HFILE $lgpl;
-    my $guard = "__GIMP_ENUMS_H__";
-    print HFILE <<HEADER;
-#ifndef $guard
-#define $guard
-
-
-HEADER
-
-    foreach (sort keys %enums) {
-	print HFILE "typedef enum\n{\n";
-
-	my $enum = $enums{$_}; my $body = "";
-	foreach $symbol (@{$enum->{symbols}}) {
-	    my $sym = $symbol;
-	    $sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
-	    $body .= "  $sym";
-	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
-	    $body .= ",\n";
-	}
-
-	$body =~ s/,\n$//s;
-	$body .= "\n} ";
-	$body .= "Gimp" if !/^Gimp/;
-	$body .= "$_;\n\n";
-	print HFILE $body
-    }
-
-    print HFILE <<HEADER;
-
-#endif /* $guard */
-HEADER
-    close HFILE;
-    &write_file($hfile);
 }

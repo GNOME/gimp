@@ -31,7 +31,7 @@
 #define RESUME_PAINT    3
 #define FINISH_PAINT    4
 
-typedef enum
+typedef enum /*< skip >*/
 {
   TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001 /* Set for tools that don't mind
 					   * if the brush changes while

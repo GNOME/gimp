@@ -45,6 +45,8 @@ extern "C" {
 #define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
 #define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
 
+#define GIMP_HAVE_NEW_ENUMS				1-1-10
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

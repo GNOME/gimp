@@ -1,6 +1,8 @@
 #ifndef __GIMPINTL_H__
 #define __GIMPINTL_H__
 
+#include <locale.h>
+
 /* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com> *
  * Heavily modified by Daniel Egger <Daniel.Egger@t-online.de>       *
  * So be sure to hit me instead of him if something is wrong here    */ 
@@ -31,9 +33,10 @@
 #    define N_(String) (String)
 #endif
 
-#define INIT_LOCALE( domain )			\
+#  define INIT_LOCALE( domain )			\
 	gtk_set_locale ();			\
 	setlocale (LC_NUMERIC, "C");		\
 	bindtextdomain (domain, LOCALEDIR);	\
-	textdomain (domain);								
-#endif
+	textdomain (domain);
+
+#endif /* __GIMPINTL_H__ */

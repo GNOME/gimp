@@ -336,12 +336,6 @@ package Gimp::CodeGen::enums;
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
 	},
-    ToolFlags =>
-	{ contig => 0,
-	  header => 'paint_core.h',
-	  symbols => [ qw(TOOL_CAN_HANDLE_CHANGING_BRUSH) ],
-	  mapping => { TOOL_CAN_HANDLE_CHANGING_BRUSH => '0x0001' }
-	},
     RunModeType =>
 	{ contig => 1,
 	  header => 'plug_in.h',
@@ -398,13 +392,16 @@ package Gimp::CodeGen::enums;
     PDBProcType =>
 	{ contig => 1,
 	  header => 'procedural_db.h',
-	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION) ],
+	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
+			  PDB_TEMPORARY) ],
 	  mapping => { PDB_INTERNAL => '0',
 		       PDB_PLUGIN => '1',
-		       PDB_EXTENSION => '2' },
+		       PDB_EXTENSION => '2',
+		       PDB_TEMPORARY => '3' },
 	  nicks   => { PDB_INTERNAL => 'INTERNAL',
 		       PDB_PLUGIN => 'PLUGIN',
-		       PDB_EXTENSION => 'EXTENSION' }
+		       PDB_EXTENSION => 'EXTENSION',
+		       PDB_TEMPORARY => 'TEMPORARY' }
 	},
     SizeType =>
 	{ contig => 1,

@@ -1,3 +1,39 @@
+Fri Sep 24 18:36:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/main.c: moved the gtk_set_locale call to after it's
+	been inited
+
+	* app/paint_core.h: set skip for ToolFlags
+
+	* app/procedural_db.h: don't skip PDB_TEMPORARY in PDBProcType
+
+	* libgimp/Makefile.am: don't install stdplugins-intl.h, that's
+	only for disted plugins
+
+	* libgimp/gimpenums.h: is now autogenned
+
+	* libgimp/gimpfeatures.h.in: #define for new enums
+
+	* libgimp/gimpintl.h: #include <locale.h>
+
+	* libgimp/stdplugins-intl.h: add include guards
+
+	* plug-ins/AlienMap2/Makefile.am: add INTLLIBS
+
+	* plug-ins/gflare/Makefile.am: removed unused libgimpui
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c: use stdplugins-intl.h
+
+	* plug-ins/sel2path/Makefile.am: removed unused libgck.la
+
+	* tools/pdbgen/Makefile.am: removed script-fu.pl, added enumcode.pl
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/enumcode.pl: enumcode.pl now autogenned gimpenums.h
+	as well as the script-fu stuff
+
 Sat Sep 25 01:21:03 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/eraser.c: reenabled the line-preview for the eraser tool

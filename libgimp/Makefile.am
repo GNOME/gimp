@@ -63,34 +63,35 @@ endif
 	@:
 
 libgimp_la_SOURCES = \
-	gimp.c		\
-	gimpchannel.c	\
-	gimpdisplay.c	\
-	gimpdrawable.c	\
-	gimpenv.c	\
-	gimpgradient.c	\
-	gimpimage.c	\
-	gimplayer.c	\
-	gimpmatrix.c	\
-	gimpmatrix.h	\
-	gimppalette.c	\
-	gimpparasite.c	\
-	gimppixelrgn.c	\
-	gimpprotocol.c	\
-	gimpprotocol.h	\
-	gimptile.c	\
-	gimpunit.c	\
-	gimpunit.h	\
-	gimpwire.c	\
-	gimpwire.h	\
-	gserialize.c	\
-	gserialize.h	\
-	parasite.c	\
-	parasite.h	\
-	parasiteF.h	\
-	parasiteP.h	\
-	parasiteio.c	\
-	parasiteio.h
+	gimp.c			\
+	gimpchannel.c		\
+	gimpdisplay.c		\
+	gimpdrawable.c		\
+	gimpenv.c		\
+	gimpgradient.c		\
+	gimpimage.c		\
+	gimplayer.c		\
+	gimpmatrix.c		\
+	gimpmatrix.h		\
+	gimppalette.c		\
+	gimpparasite.c		\
+	gimppixelrgn.c		\
+	gimpprotocol.c		\
+	gimpprotocol.h		\
+	gimptile.c		\
+	gimpunit.c		\
+	gimpunit.h		\
+	gimpwire.c		\
+	gimpwire.h		\
+	gserialize.c		\
+	gserialize.h		\
+	parasite.c		\
+	parasite.h		\
+	parasiteF.h		\
+	parasiteP.h		\
+	parasiteio.c		\
+	parasiteio.h		\
+	stdplugins-intl.h
 
 libgimpui_la_SOURCES = \
 	gimpmenu.c		\
@@ -127,8 +128,7 @@ gimpinclude_HEADERS = \
 	parasite.h		\
 	parasiteF.h		\
 	parasiteP.h		\
-	parasiteio.h		\
-	stdplugins-intl.h
+	parasiteio.h
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

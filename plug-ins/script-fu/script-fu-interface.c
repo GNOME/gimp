@@ -35,7 +35,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include "libgimp/gimpfileselection.h"
-#include "libgimp/gimpintl.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "siod.h"
 #include "script-fu-scripts.h"
@@ -1107,10 +1108,10 @@ script_fu_interface (SFScript *script)
       argv = g_new (gchar *, 1);
       argv[0] = g_strdup ("script-fu");
 
-      INIT_LOCALE("script-fu")
-      
       gtk_init (&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());
+
+      INIT_I18N_UI();
       
       gdk_set_use_xshm (gimp_use_xshm ());
   

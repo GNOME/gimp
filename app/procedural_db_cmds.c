@@ -524,7 +524,7 @@ static ProcArg procedural_db_proc_info_outargs[] =
   {
     PDB_INT32,
     "proc_type",
-    "The procedure type: { INTERNAL (0), PLUGIN (1), EXTENSION (2) }"
+    "The procedure type: { INTERNAL (0), PLUGIN (1), EXTENSION (2), TEMPORARY (3) }"
   },
   {
     PDB_INT32,

@@ -66,7 +66,7 @@ typedef enum /*< chop=PDB_ >*/
   PDB_INTERNAL,
   PDB_PLUGIN,
   PDB_EXTENSION,
-  PDB_TEMPORARY  /*< skip >*/
+  PDB_TEMPORARY
 } PDBProcType;
 
 

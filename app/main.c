@@ -118,13 +118,10 @@ main (int argc, char **argv)
   /* Initialize variables */
   prog_name = argv[0];
 
-  /* Initialize i18n support */
-
-  INIT_LOCALE("gimp");
-
   gtk_init (&argc, &argv);
 
-  setlocale(LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
+  /* Initialize i18n support */
+  INIT_LOCALE("gimp");
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
