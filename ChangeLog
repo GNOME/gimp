@@ -1,3 +1,11 @@
+2001-07-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/detect_mmx.S: removed.
+
+	* app/base/Makefile.am
+	* app/base/detect-mmx.S: added.
+
 2001-07-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

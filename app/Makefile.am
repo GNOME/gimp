@@ -12,13 +12,6 @@ regex_sources = \
 	regexrepl.h
 endif
 
-if HAVE_ASM_MMX
-mmx_sources = \
-	detect_mmx.S
-else
-mmx_sources =
-endif
-
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = @STRIP_BEGIN@ \
@@ -135,7 +128,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	libgimp_glue.c		\
 	libgimp_glue.h		\
 	$(regex_sources)	\
-	$(mmx_sources)		\
 @STRIP_END@
 
 EXTRA_DIST = \
@@ -147,7 +139,6 @@ EXTRA_DIST = \
 	wilber.ico			\
 	arch/i386/mmx/detect_mmx.S	\
 	arch/i386/mmx/paint_funcs_mmx.S	\
-	detect_mmx.S			\
 	regexrepl.c 			\
 	regexrepl.h
 
