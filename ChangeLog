@@ -1,5 +1,9 @@
 2002-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.c: removed unneeded #includes.
+
+2002-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpdialog.c: removed the "feature" of creating
 	dialogs without action area by passing "_delete_event_" as button
 	text. Also changed the delete_event() implementation: don't

@@ -33,28 +33,23 @@
 
 #include "libgimptool/gimptoolcontrol.h"
 
-#include "gui/brush-select.h"
-
 #include "display/gimpdisplay.h"
 
-#include "gimptoolcontrol.h"
-#include "gimprectselecttool.h"
-#include "paint_options.h"
-#include "tool_manager.h"
-#include "tool_options.h"
-#include "tools.h"
-
 #include "gimpairbrushtool.h"
-#include "gimppaintbrushtool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
+#include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
+#include "gimprectselecttool.h"
 #include "gimpsmudgetool.h"
+#include "gimptoolcontrol.h"
+#include "tool_manager.h"
+#include "tool_options.h"
+#include "tools.h"
 
 #include "app_procs.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
