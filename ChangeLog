@@ -1,5 +1,15 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.c (gimp_config_file_copy): copy the
+	file permissions also.
+
+	* app/dialogs/user-install-dialog.c: added code to migrate user
+	settings from ~/.gimp-2.0. It copies all files (except GIMP swap
+	files) and all subdirectories (except tmp) with all files. It
+	doesn't recurse into subdirectories.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpguiconfig.c: disabled the image area by default
 	to reduce some clutter.
 

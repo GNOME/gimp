@@ -24,10 +24,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "config-types.h"
 
@@ -533,9 +539,11 @@ gimp_config_file_copy (const gchar  *source,
                        const gchar  *dest,
                        GError      **error)
 {
-  gchar  buffer[4096];
-  FILE  *sfile, *dfile;
-  gint   nbytes;
+  gchar        buffer[8192];
+  FILE        *sfile;
+  FILE        *dfile;
+  struct stat  stat_buf;
+  gint         nbytes;
 
   sfile = fopen (source, "rb");
   if (sfile == NULL)
@@ -587,6 +595,11 @@ gimp_config_file_copy (const gchar  *source,
                    _("Error while writing '%s': %s"),
                    gimp_filename_to_utf8 (dest), g_strerror (errno));
       return FALSE;
+    }
+
+  if (stat (source, &stat_buf) == 0)
+    {
+      chmod (dest, stat_buf.st_mode);
     }
 
   return TRUE;
