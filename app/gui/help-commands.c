@@ -73,6 +73,9 @@ typedef struct {
   GtkWidget *dlg;
   GtkWidget *height_entry;
   GtkWidget *width_entry;
+  GtkWidget *height_units_entry;
+  GtkWidget *width_units_entry;
+  GtkWidget *resolution_entry;
   int width;
   int height;
   int type;
@@ -91,12 +94,18 @@ static void file_new_ok_callback (GtkWidget *, gpointer);
 static void file_new_cancel_callback (GtkWidget *, gpointer);
 static gint file_new_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void file_new_toggle_callback (GtkWidget *, gpointer);
+static void file_new_width_update_callback (GtkWidget *, gpointer);
+static void file_new_height_update_callback (GtkWidget *, gpointer);
+static void file_new_width_units_update_callback (GtkWidget *, gpointer);
+static void file_new_height_units_update_callback (GtkWidget *, gpointer);
+static void file_new_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_width = 256;
 static   int          last_height = 256;
 static   int          last_type = RGB;
 static   int          last_fill_type = BACKGROUND_FILL;
+static   float          resolution = 72;
 
 /*  preferences local functions  */
 static void file_prefs_ok_callback (GtkWidget *, GtkWidget *);
@@ -262,6 +271,140 @@ file_new_toggle_callback (GtkWidget *widget,
     }
 }
 
+static void
+file_new_width_update_callback (GtkWidget *widget,
+				gpointer data)
+{
+
+  /* uh. like do something here  */
+  gchar *newvalue;
+  NewImageValues *vals;
+  int new_width;
+  float temp;
+  char buffer[12];
+  
+  vals = data;
+  
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
+  new_width = atoi(newvalue);
+
+  temp = (float) new_width / (float) resolution;
+  sprintf (buffer, "%.2f", temp);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_entry), vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry), vals);
+
+}
+static void
+file_new_height_update_callback (GtkWidget *widget,
+				gpointer data)
+{
+
+  /* uh. like do something here  */
+  gchar *newvalue;
+  NewImageValues *vals;
+  int new_height;
+  float temp;
+  char buffer[12];
+  
+  vals = data;
+  
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_entry));
+  new_height = atoi(newvalue);
+
+  temp = (float) new_height / (float) resolution;
+  sprintf (buffer, "%.2f", temp);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry), vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_entry), vals);
+
+}
+
+static void
+file_new_width_units_update_callback (GtkWidget *widget,
+				      gpointer data)
+{
+
+  gchar *newvalue;
+  NewImageValues *vals;
+  float new_width_units;
+  float temp;
+  char buffer[12];
+
+  vals = data;
+  
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_units_entry));
+  new_width_units = atof(newvalue);
+
+  temp = (((float) new_width_units) * ((float) resolution));
+  sprintf (buffer,  "%d", (int)temp);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_entry), vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_entry), vals);
+
+}
+
+static void
+file_new_height_units_update_callback (GtkWidget *widget,
+				      gpointer data)
+{
+  gchar *newvalue;
+  NewImageValues *vals;
+  float new_height_units;
+  float temp;
+  char buffer[12];
+
+  vals = data;
+  
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_units_entry));
+  new_height_units = atof(newvalue);
+
+  temp = (((float) new_height_units) * ((float) resolution));
+  sprintf (buffer,  "%d", (int)temp);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_entry), vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_entry), vals);
+}
+
+static void
+file_new_resolution_callback (GtkWidget *widget,
+			      gpointer data)
+{
+
+  gchar *newvalue;
+  NewImageValues *vals;
+  float new_resolution;
+  float temp_units;
+  float temp_pixels;
+  char buffer[12];
+  
+  vals = data;
+
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->resolution_entry));
+  resolution = atof(newvalue);
+
+  /* a bit of a kludge to keep height/width from going to zero */
+  if(resolution <= 1)
+    resolution = 1;
+
+
+  /* figure the new height */
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_units_entry));
+  temp_units = atof(newvalue);
+  temp_pixels  = (float) resolution * (float)temp_units;
+  sprintf (buffer, "%d", (int) temp_pixels);
+  gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
+
+  /* figure the new width */
+  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_units_entry));
+  temp_units = atof(newvalue);
+  temp_pixels = (float) resolution * (float) temp_units;
+  sprintf(buffer, "%d", (int) temp_pixels);
+  gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
+
+  
+}
+  
 void
 file_new_cmd_callback (GtkWidget *widget,
 		       gpointer   client_data)
@@ -271,11 +414,19 @@ file_new_cmd_callback (GtkWidget *widget,
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *radio_box;
+  GtkWidget *units_box;
+  GtkWidget *menu;
+  GtkWidget *menuitem;
+  GtkWidget *optionmenu;
   GSList *group;
   char buffer[32];
+  float temp;
+
+
 
   if(!new_dialog_run)
     {
@@ -350,43 +501,151 @@ file_new_cmd_callback (GtkWidget *widget,
 		      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new ("Width:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+  label = gtk_label_new ("Width");
+  /*  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5); */
+  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new ("Height:");
+  label = gtk_label_new ("Height");
+  /*  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5); */
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new ("Pixels:");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
-
+  
+  label = gtk_label_new ("Units:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+  
+  
+  
   vals->width_entry = gtk_entry_new ();
   gtk_widget_set_usize (vals->width_entry, 75, 0);
   sprintf (buffer, "%d", vals->width);
   gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), vals->width_entry, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), vals->width_entry, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->width_entry), "changed",
+		      (GtkSignalFunc) file_new_width_update_callback, vals);
+
   gtk_widget_show (vals->width_entry);
 
   vals->height_entry = gtk_entry_new ();
   gtk_widget_set_usize (vals->height_entry, 75, 0);
   sprintf (buffer, "%d", vals->height);
   gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), vals->height_entry, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), vals->height_entry, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->height_entry), "changed",
+		      (GtkSignalFunc) file_new_height_update_callback, vals);
   gtk_widget_show (vals->height_entry);
 
+  vals->width_units_entry = gtk_entry_new ();
+  gtk_widget_set_usize (vals->width_units_entry, 75, 0);
+  temp = (float) vals->width / resolution;
+  sprintf (buffer, "%.2f", temp);
+  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (vals->width_units_entry), "changed",
+		      (GtkSignalFunc) file_new_width_units_update_callback, vals);
+  gtk_table_attach (GTK_TABLE (table), vals->width_units_entry , 1, 2, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (vals->width_units_entry);
+
+  vals->height_units_entry = gtk_entry_new ();
+  gtk_widget_set_usize (vals->height_units_entry, 75, 0);
+  temp = (float) vals->height / resolution; 
+  sprintf (buffer, "%.2f", temp);
+  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (vals->height_units_entry), "changed",
+		      (GtkSignalFunc) file_new_height_units_update_callback, vals);
+  gtk_table_attach (GTK_TABLE (table), vals->height_units_entry , 2, 3, 2, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (vals->height_units_entry);
+
+  /* code for picking units and resolution
+     idealy  [ resolution: [ 72  ] pixels per [inch - ] ]
+  */
+
+  frame = gtk_frame_new ("Resolution and Units");
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 1);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add(GTK_CONTAINER (frame), hbox);
+  gtk_widget_show(hbox);
+
+  /*
+  label = gtk_label_new ("Resolution:");
+  gtk_box_pack_start (GTK_BOX (hbox), label , TRUE, TRUE, 0);
+  gtk_widget_show (label);
+  */
+
+  vals->resolution_entry = gtk_entry_new ();
+  gtk_widget_set_usize (vals->resolution_entry, 76, 0);
+  sprintf(buffer, "%.2f", resolution);
+  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
+  gtk_box_pack_start (GTK_BOX (hbox), vals->resolution_entry , TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_entry), "changed",
+		      (GtkSignalFunc) file_new_resolution_callback,
+		      vals);
+  gtk_widget_show (vals->resolution_entry);
+ 
+  label =gtk_label_new (" pixels per  ");
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  menu = gtk_menu_new();
+
+  /* This units stuff doesnt do anything yet. I'm not real sure if it
+     it should do anything yet, excpet for maybe set some default resolutions
+     and change the image default rulers. But the rulers stuff probabaly
+     needs some gtk acking first to really be useful.
+  */
+
+  /* probabaly should be more general here */
+  menuitem = gtk_menu_item_new_with_label ("Inch");
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+  /*  this sorta might work */
+  /*
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+		      (GtkSignalFunc) file_new_units_inch_menu_callback,
+		      NULL);
+  */
+  gtk_widget_show(menuitem);
+  menuitem = gtk_menu_item_new_with_label ("Cm");
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_widget_show(menuitem);
+  menuitem = gtk_menu_item_new_with_label ("parsec");
+  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_widget_show(menuitem);
+
+  optionmenu = gtk_option_menu_new();
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
+  gtk_widget_show(optionmenu);
+
+  hbox =gtk_hbox_new(FALSE, 1);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show(hbox);
 
   frame = gtk_frame_new ("Image Type");
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -418,7 +677,7 @@ file_new_cmd_callback (GtkWidget *widget,
 
 
   frame = gtk_frame_new ("Fill Type");
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -461,6 +720,8 @@ file_new_cmd_callback (GtkWidget *widget,
 
   gtk_widget_show (vals->dlg);
 }
+
+
 
 void
 file_open_cmd_callback (GtkWidget *widget,

@@ -1,3 +1,11 @@
+
+Sun Jun  7 00:19:22 EDT 1998  Adrian Likins <adrian@gimp.org>
+
+	* app/commands.c: Reworked the file_new dialog to
+	be a little more useful. Added entries for a height
+	and width in the unit of your choice, and a resolution.
+	Not everythings hooked up yet, but its getting there.
+
 Sun Jun  7 00:22:01 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/interface.c: Register private tips for all the tools -
