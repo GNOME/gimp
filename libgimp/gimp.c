@@ -103,8 +103,10 @@ static gboolean   gimp_plugin_io_error_handler (GIOChannel     *channel,
 
 static gboolean   gimp_write                   (GIOChannel     *channel,
 						guint8         *buf,
-						gulong          count);
-static gboolean   gimp_flush                   (GIOChannel     *channel);
+						gulong          count,
+                                                gpointer        user_data);
+static gboolean   gimp_flush                   (GIOChannel     *channel,
+                                                gpointer        user_data);
 static void       gimp_loop                    (void);
 static void       gimp_config                  (GPConfig       *config);
 static void       gimp_proc_run                (GPProcRun      *proc_run);
@@ -283,7 +285,7 @@ gimp_main (int   argc,
   if (strcmp (argv[4], "-query") == 0)
     {
       if (PLUG_IN_INFO.init_proc)
-        gp_has_init_write(_writechannel);
+        gp_has_init_write (_writechannel, NULL);
         
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
@@ -327,7 +329,7 @@ gimp_close (void)
 #endif
 #endif
 
-  gp_quit_write (_writechannel);
+  gp_quit_write (_writechannel, NULL);
 }
 
 void
@@ -384,7 +386,7 @@ gimp_install_procedure (gchar        *name,
   proc_install.params       = (GPParamDef *) params;
   proc_install.return_vals  = (GPParamDef *) return_vals;
 
-  if (!gp_proc_install_write (_writechannel, &proc_install))
+  if (! gp_proc_install_write (_writechannel, &proc_install, NULL))
     gimp_quit ();
 }
 
@@ -425,7 +427,7 @@ gimp_uninstall_temp_proc (gchar *name)
   gboolean found;
   proc_uninstall.name = name;
 
-  if (!gp_proc_uninstall_write (_writechannel, &proc_uninstall))
+  if (! gp_proc_uninstall_write (_writechannel, &proc_uninstall, NULL))
     gimp_quit ();
   
   found = g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
@@ -612,7 +614,7 @@ gimp_run_procedure (gchar *name,
 
   va_end (args);
 
-  if (!gp_proc_run_write (_writechannel, &proc_run))
+  if (! gp_proc_run_write (_writechannel, &proc_run, NULL))
     gimp_quit ();
 
   gimp_read_expect_msg (&msg, GP_PROC_RETURN);
@@ -646,7 +648,7 @@ gimp_read_expect_msg (WireMessage *msg,
 {
   while (TRUE)
     {
-      if (!wire_read_msg (_readchannel, msg))
+      if (! wire_read_msg (_readchannel, msg, NULL))
 	gimp_quit ();
       
       if (msg->type != type)
@@ -680,10 +682,10 @@ gimp_run_procedure2 (gchar     *name,
   proc_run.nparams = nparams;
   proc_run.params  = (GPParam *) params;
 
-  if (!gp_proc_run_write (_writechannel, &proc_run))
+  if (! gp_proc_run_write (_writechannel, &proc_run, NULL))
     gimp_quit ();
 
-  gimp_read_expect_msg(&msg,GP_PROC_RETURN);
+  gimp_read_expect_msg (&msg, GP_PROC_RETURN);
   
   proc_return = msg.data;
   *nreturn_vals = proc_return->nparams;
@@ -790,7 +792,7 @@ gimp_single_message (void)
   WireMessage msg;
 
   /* Run a temp function */
-  if (!wire_read_msg (_readchannel, &msg))
+  if (! wire_read_msg (_readchannel, &msg, NULL))
     gimp_quit ();
 
   gimp_process_message (&msg);
@@ -849,7 +851,7 @@ void
 gimp_extension_ack (void)
 {
   /*  Send an extension initialization acknowledgement  */
-  if (! gp_extension_ack_write (_writechannel))
+  if (! gp_extension_ack_write (_writechannel, NULL))
     gimp_quit ();
 }
 
@@ -945,7 +947,8 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
 static gboolean
 gimp_write (GIOChannel *channel, 
 	    guint8     *buf, 
-	    gulong      count)
+	    gulong      count,
+            gpointer    user_data)
 {
   gulong bytes;
 
@@ -956,7 +959,7 @@ gimp_write (GIOChannel *channel,
 	  bytes = WRITE_BUFFER_SIZE - write_buffer_index;
 	  memcpy (&write_buffer[write_buffer_index], buf, bytes);
 	  write_buffer_index += bytes;
-	  if (!wire_flush (channel))
+	  if (! wire_flush (channel, NULL))
 	    return FALSE;
 	}
       else
@@ -974,7 +977,8 @@ gimp_write (GIOChannel *channel,
 }
 
 static gboolean
-gimp_flush (GIOChannel *channel)
+gimp_flush (GIOChannel *channel,
+            gpointer    user_data)
 {
   GIOStatus  status;
   GError    *error = NULL;
@@ -1030,7 +1034,7 @@ gimp_loop (void)
 
   while (TRUE)
     {
-      if (!wire_read_msg (_readchannel, &msg))
+      if (! wire_read_msg (_readchannel, &msg, NULL))
         {
 	  gimp_close ();
           return;
@@ -1154,9 +1158,9 @@ gimp_config (GPConfig *config)
 static void
 gimp_proc_run (GPProcRun *proc_run)
 {
-  GPProcReturn proc_return;
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GPProcReturn  proc_return;
+  GimpParam    *return_vals;
+  gint          nreturn_vals;
 
   if (PLUG_IN_INFO.run_proc)
     {
@@ -1170,7 +1174,7 @@ gimp_proc_run (GPProcRun *proc_run)
       proc_return.nparams = nreturn_vals;
       proc_return.params = (GPParam*) return_vals;
 
-      if (!gp_proc_return_write (_writechannel, &proc_return))
+      if (! gp_proc_return_write (_writechannel, &proc_return, NULL))
 	gimp_quit ();
     }
 }
@@ -1198,7 +1202,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 /*       proc_return.nparams = nreturn_vals; */
 /*       proc_return.params = (GPParam*) return_vals; */
 
-/*       if (!gp_temp_proc_return_write (_writechannel, &proc_return)) */
+/*       if (! gp_temp_proc_return_write (_writechannel, &proc_return, NULL)) */
 /* 	gimp_quit (); */
     }
 }

@@ -28,14 +28,18 @@ G_BEGIN_DECLS
 typedef struct _WireMessage  WireMessage;
 
 typedef void     (* WireReadFunc)    (GIOChannel  *channel,
-				      WireMessage *msg);
+				      WireMessage *msg,
+                                      gpointer     user_data);
 typedef void     (* WireWriteFunc)   (GIOChannel  *channel,
-				      WireMessage *msg);
+				      WireMessage *msg,
+                                      gpointer     user_data);
 typedef void     (* WireDestroyFunc) (WireMessage *msg);
 typedef gboolean (* WireIOFunc)      (GIOChannel  *channel,
 				      guint8      *buf,
-				      gulong       count);
-typedef gboolean (* WireFlushFunc)   (GIOChannel  *channel);
+				      gulong       count,
+                                      gpointer     user_data);
+typedef gboolean (* WireFlushFunc)   (GIOChannel  *channel,
+                                      gpointer     user_data);
 
 
 struct _WireMessage
@@ -56,52 +60,67 @@ void      wire_set_flusher  (WireFlushFunc    flush_func);
 
 gboolean  wire_read         (GIOChannel	     *channel,
 			     guint8          *buf,
-			     gsize            count);
+			     gsize            count,
+                             gpointer         user_data);
 gboolean  wire_write        (GIOChannel      *channel,
 			     guint8          *buf,
-			     gsize            count);
-gboolean  wire_flush        (GIOChannel	     *channel);
+			     gsize            count,
+                             gpointer         user_data);
+gboolean  wire_flush        (GIOChannel	     *channel,
+                             gpointer         user_data);
 
 gboolean  wire_error        (void);
 void      wire_clear_error  (void);
 
 gboolean  wire_read_msg     (GIOChannel	     *channel,
-			     WireMessage     *msg);
+			     WireMessage     *msg,
+                             gpointer         user_data);
 gboolean  wire_write_msg    (GIOChannel	     *channel,
-			     WireMessage     *msg);
+			     WireMessage     *msg,
+                             gpointer         user_data);
 
 void      wire_destroy      (WireMessage     *msg);
 
 gboolean  wire_read_int32   (GIOChannel      *channel,
 			     guint32         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_read_int16   (GIOChannel	     *channel,
 			     guint16         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_read_int8    (GIOChannel      *channel,
 			     guint8          *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_read_double  (GIOChannel      *channel,
 			     gdouble         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_read_string  (GIOChannel      *channel,
 			     gchar          **data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_write_int32  (GIOChannel      *channel,
 			     guint32         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_write_int16  (GIOChannel      *channel,
 			     guint16         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_write_int8   (GIOChannel      *channel,
 			     guint8          *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_write_double (GIOChannel      *channel,
 			     gdouble         *data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 gboolean  wire_write_string (GIOChannel      *channel,
 			     gchar          **data,
-			     gint             count);
+			     gint             count,
+                             gpointer         user_data);
 
 
 G_END_DECLS

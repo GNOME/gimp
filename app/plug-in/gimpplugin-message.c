@@ -131,8 +131,10 @@ struct _PlugInHelpPathDef
 
 static gboolean plug_in_write             (GIOChannel	     *channel,
 					   guint8            *buf,
-				           gulong             count);
-static gboolean plug_in_flush             (GIOChannel        *channel);
+				           gulong             count,
+                                           gpointer           user_data);
+static gboolean plug_in_flush             (GIOChannel        *channel,
+                                           gpointer           user_data);
 static void     plug_in_push              (PlugIn            *plug_in);
 static void     plug_in_pop               (void);
 static gboolean plug_in_recv_message	  (GIOChannel	     *channel,
@@ -169,8 +171,6 @@ static GSList     *open_plug_ins    = NULL;
 static GSList     *blocked_plug_ins = NULL;
 
 static GSList     *plug_in_stack              = NULL;
-static gint        current_write_buffer_index = 0;
-static gchar      *current_write_buffer       = NULL;
 static Argument   *current_return_vals        = NULL;
 static gint        current_return_nvals       = 0;
 
@@ -327,7 +327,7 @@ plug_in_call_query (Gimp      *gimp,
 
 	  while (plug_in->open)
 	    {
-	      if (! wire_read_msg (plug_in->my_read, &msg))
+	      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
@@ -365,7 +365,7 @@ plug_in_call_init (Gimp      *gimp,
 
 	  while (plug_in->open)
 	    {
-	      if (! wire_read_msg (plug_in->my_read, &msg))
+	      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
                 {
                   plug_in_close (plug_in, TRUE);
                 }
@@ -676,7 +676,7 @@ plug_in_close (PlugIn   *plug_in,
   if (kill_it && plug_in->pid)
     {
       plug_in_push (plug_in);
-      gp_quit_write (plug_in->my_write);
+      gp_quit_write (plug_in->my_write, plug_in);
       plug_in_pop ();
 
       /*  give the plug-in some time (10 ms)  */
@@ -872,9 +872,9 @@ plug_in_run (Gimp       *gimp,
 	  proc_run.nparams = argc;
 	  proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
-	  if (! gp_config_write (plug_in->my_write, &config)     ||
-	      ! gp_proc_run_write (plug_in->my_write, &proc_run) ||
-	      ! wire_flush (plug_in->my_write))
+	  if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
+	      ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
+	      ! wire_flush (plug_in->my_write, plug_in))
 	    {
 	      return_vals = procedural_db_return_args (proc_rec, FALSE);
 	      goto done;
@@ -965,7 +965,7 @@ plug_in_recv_message (GIOChannel   *channel,
 
       memset (&msg, 0, sizeof (WireMessage));
 
-      if (! wire_read_msg (plug_in->my_read, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  plug_in_close (plug_in, TRUE);
 	}
@@ -1085,14 +1085,14 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
       tile_data.data        = NULL;
 
-      if (! gp_tile_data_write (plug_in->my_write, &tile_data))
+      if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
 
-      if (! wire_read_msg (plug_in->my_read, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1140,7 +1140,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_release (tile, TRUE);
 
       wire_destroy (&msg);
-      if (! gp_tile_ack_write (plug_in->my_write))
+      if (! gp_tile_ack_write (plug_in->my_write, plug_in))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1186,7 +1186,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       else
 	tile_data.data = tile_data_pointer (tile, 0, 0);
 
-      if (! gp_tile_data_write (plug_in->my_write, &tile_data))
+      if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
 	{
 	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1195,7 +1195,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       tile_release (tile, FALSE);
 
-      if (! wire_read_msg (plug_in->my_read, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg, plug_in))
 	{
 	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1255,7 +1255,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
 	  proc_return.params = plug_in_args_to_params (return_vals, 1, FALSE);
 	}
 
-      if (! gp_proc_return_write (plug_in->my_write, &proc_return))
+      if (! gp_proc_return_write (plug_in->my_write, &proc_return, plug_in))
 	{
 	  g_warning ("plug_in_handle_proc_run: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1284,7 +1284,7 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
   PlugInBlocked *blocked;
   GSList        *tmp;
 
-  if (current_plug_in->recurse)
+  if (plug_in->recurse)
     {
       current_return_vals = plug_in_params_to_args (proc_return->params,
 						    proc_return->nparams,
@@ -1305,7 +1305,8 @@ plug_in_handle_proc_return (PlugIn       *plug_in,
 	      plug_in_push (blocked->plug_in);
 
 	      if (! gp_proc_return_write (blocked->plug_in->my_write,
-                                          proc_return))
+                                          proc_return,
+                                          blocked->plug_in))
 		{
 		  g_message ("plug_in_handle_proc_run: ERROR");
 		  plug_in_close (blocked->plug_in, TRUE);
@@ -1658,25 +1659,31 @@ plug_in_handle_has_init (PlugIn *plug_in)
 static gboolean
 plug_in_write (GIOChannel *channel,
 	       guint8      *buf,
-	       gulong       count)
+	       gulong       count,
+               gpointer     user_data)
 {
-  gulong bytes;
+  PlugIn *plug_in;
+  gulong  bytes;
+
+  plug_in = (PlugIn *) user_data;
 
   while (count > 0)
     {
-      if ((current_write_buffer_index + count) >= WRITE_BUFFER_SIZE)
+      if ((plug_in->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
 	{
-	  bytes = WRITE_BUFFER_SIZE - current_write_buffer_index;
-	  memcpy (&current_write_buffer[current_write_buffer_index], buf, bytes);
-	  current_write_buffer_index += bytes;
-	  if (! wire_flush (channel))
+	  bytes = WRITE_BUFFER_SIZE - plug_in->write_buffer_index;
+	  memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+                  buf, bytes);
+	  plug_in->write_buffer_index += bytes;
+	  if (! wire_flush (channel, plug_in))
 	    return FALSE;
 	}
       else
 	{
 	  bytes = count;
-	  memcpy (&current_write_buffer[current_write_buffer_index], buf, bytes);
-	  current_write_buffer_index += bytes;
+	  memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+                  buf, bytes);
+	  plug_in->write_buffer_index += bytes;
 	}
 
       buf += bytes;
@@ -1687,24 +1694,28 @@ plug_in_write (GIOChannel *channel,
 }
 
 static gboolean
-plug_in_flush (GIOChannel *channel)
+plug_in_flush (GIOChannel *channel,
+               gpointer    user_data)
 {
+  PlugIn    *plug_in;
   GIOStatus  status;
   GError    *error = NULL;
   gint       count;
   guint      bytes;
 
-  if (current_write_buffer_index > 0)
+  plug_in = (PlugIn *) user_data;
+
+  if (plug_in->write_buffer_index > 0)
     {
       count = 0;
-      while (count != current_write_buffer_index)
+      while (count != plug_in->write_buffer_index)
         {
 	  do
 	    {
 	      bytes = 0;
 	      status = g_io_channel_write_chars (channel,
-						 &current_write_buffer[count],
-						 (current_write_buffer_index - count),
+						 &plug_in->write_buffer[count],
+						 (plug_in->write_buffer_index - count),
 						 &bytes,
 						 &error);
 	    }
@@ -1730,7 +1741,7 @@ plug_in_flush (GIOChannel *channel)
           count += bytes;
         }
 
-      current_write_buffer_index = 0;
+      plug_in->write_buffer_index = 0;
     }
 
   return TRUE;
@@ -1744,9 +1755,6 @@ plug_in_push (PlugIn *plug_in)
   current_plug_in = plug_in;
 
   plug_in_stack = g_slist_prepend (plug_in_stack, current_plug_in);
-
-  current_write_buffer_index = current_plug_in->write_buffer_index;
-  current_write_buffer       = current_plug_in->write_buffer;
 }
 
 static void
@@ -1756,8 +1764,6 @@ plug_in_pop (void)
 
   if (current_plug_in)
     {
-      current_plug_in->write_buffer_index = current_write_buffer_index;
-
       tmp = plug_in_stack;
       plug_in_stack = plug_in_stack->next;
       tmp->next = NULL;
@@ -1766,15 +1772,11 @@ plug_in_pop (void)
 
   if (plug_in_stack)
     {
-      current_plug_in            = plug_in_stack->data;
-      current_write_buffer_index = current_plug_in->write_buffer_index;
-      current_write_buffer       = current_plug_in->write_buffer;
+      current_plug_in = plug_in_stack->data;
     }
   else
     {
-      current_plug_in            = NULL;
-      current_write_buffer_index = 0;
-      current_write_buffer        = NULL;
+      current_plug_in = NULL;
     }
 }
 
@@ -1807,8 +1809,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
       proc_run.nparams = argc;
       proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
-      if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run) ||
-	  ! wire_flush (plug_in->my_write))
+      if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
+	  ! wire_flush (plug_in->my_write, plug_in))
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 	  goto done;

@@ -1,3 +1,19 @@
+2002-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpprotocol.[ch]
+	* libgimpbase/gimpwire.[ch]: pass "gpointer user_data" to all
+	functions, which in gets turn passed to the registered reader,
+	writer, and flusher funcs.
+
+	* libgimp/gimp.c
+	* libgimp/gimptile.c: pass NULL as user_data. We have only one
+	pipe on the plug-in side.
+
+	* app/plug-in/plug-in.c: pass the PlugIn as user_data. As a
+	consequence, got rid of more global variables. The global
+	"current_plug_in" and the plug_in_push()/pop() madness are still
+	there. Will reeplace them by some less ugly hack later...
+
 2002-05-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: don't allow to close the splash screen. Fixes

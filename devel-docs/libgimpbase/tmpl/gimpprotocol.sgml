@@ -148,6 +148,7 @@ The communication protocol between GIMP and it's plug-ins.
 </para>
 
 @channel: 
+@user_data: 
 @Returns: 
 
 
@@ -157,6 +158,7 @@ The communication protocol between GIMP and it's plug-ins.
 </para>
 
 @channel: 
+@user_data: 
 @Returns: 
 
 
@@ -167,6 +169,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @config: 
+@user_data: 
 @Returns: 
 
 
@@ -177,6 +180,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @tile_req: 
+@user_data: 
 @Returns: 
 
 
@@ -186,6 +190,7 @@ The communication protocol between GIMP and it's plug-ins.
 </para>
 
 @channel: 
+@user_data: 
 @Returns: 
 
 
@@ -196,6 +201,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @tile_data: 
+@user_data: 
 @Returns: 
 
 
@@ -206,6 +212,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_run: 
+@user_data: 
 @Returns: 
 
 
@@ -216,6 +223,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_return: 
+@user_data: 
 @Returns: 
 
 
@@ -226,6 +234,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_run: 
+@user_data: 
 @Returns: 
 
 
@@ -236,6 +245,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_return: 
+@user_data: 
 @Returns: 
 
 
@@ -246,6 +256,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_install: 
+@user_data: 
 @Returns: 
 
 
@@ -256,6 +267,7 @@ The communication protocol between GIMP and it's plug-ins.
 
 @channel: 
 @proc_uninstall: 
+@user_data: 
 @Returns: 
 
 
@@ -265,6 +277,7 @@ The communication protocol between GIMP and it's plug-ins.
 </para>
 
 @channel: 
+@user_data: 
 @Returns: 
 
 
