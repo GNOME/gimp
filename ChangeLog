@@ -1,3 +1,8 @@
+2000-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* plug-ins/print/RELNOTES: gimp-print version 4.0.1
+
 2000-11-03  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c (app_init): parse the users gtkrc as found in

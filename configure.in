@@ -536,8 +536,8 @@ if test $ac_cv_path_SENDMAIL != ":"; then
 fi
 
 dnl This is for the print plug-in
-GIMP_PRINT_VERSION="4.0.0"
-GIMP_PRINT_RELEASE_DATE="28\ Oct\ 2000"
+GIMP_PRINT_VERSION="4.0.1"
+GIMP_PRINT_RELEASE_DATE="04\ Nov\ 2000"
 
 lp_path=":"
 AC_ARG_ENABLE(lp_path, [  --with-lp=DIR           set lp command location],

@@ -17,6 +17,8 @@ Gimp-Print 4.0.1 contains the following fixes over Gimp-Print 4.0.0:
 
 3) The INSTALL file referred to an old version of gimp-print.
 
+4) A man page for escputil is provided.
+
 
 Gimp-Print 4.0 is a major release of the Gimp Print plugin and
 associated stp GhostScript driver and CUPS driver.  Among the new
