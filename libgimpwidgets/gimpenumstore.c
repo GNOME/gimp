@@ -146,7 +146,8 @@ gimp_enum_store_new (GType enum_type)
  * @maximum: the maximum value to include
  *
  * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
- * to limit the enum values to a certain range.
+ * to limit the enum values to a certain range. Values smaller than
+ * @minimum or larger than @maximum are not added to the store.
  *
  * Return value: a new #GimpEnumStore.
  *
@@ -186,7 +187,8 @@ gimp_enum_store_new_with_range (GType  enum_type,
  * @...:       a list of enum values (exactly @n_values)
  *
  * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
- * to list the enum values that should be added to the store.
+ * to expliticely list the enum values that should be added to the
+ * store.
  *
  * Return value: a new #GimpEnumStore.
  *
@@ -257,8 +259,9 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
  * @stock_prefix: a prefix to create icon stock ID from enum values
  *
  * Creates a stock ID for each enum value in the @store by appending
- * the value's nick to the given @stock_prefix inserting a hyphen
- * between them.
+ * the value's nick to the given @stock_prefix, separated by a hyphen.
+ *
+ * See also: gimp_enum_combo_box_set_stock_prefix().
  *
  * Since: GIMP 2.4
  **/

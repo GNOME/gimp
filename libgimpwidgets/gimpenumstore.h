@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpintstore.c
+ * gimpenumstore.h
  * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or

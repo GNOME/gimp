@@ -1,5 +1,10 @@
 2005-01-24  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpenumcombobox.c
+	* libgimpwidgets/gimpenumstore.[ch]: improved API docs.
+
+2005-01-24  Michael Natterer  <mitch@gimp.org>
+
 	Enabled closing docks with Ctrl-W:
 
 	* app/actions/Makefile.am

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumcombobox.h
+ * gimpenumcombobox.c
  * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -66,7 +66,9 @@ gimp_enum_combo_box_get_type (void)
  *
  * Creates a #GtkComboBox readily filled with all enum values from a
  * given @enum_type. The enum needs to be registered to the type
- * system and should have translatable value names.
+ * system. It should also have %GimpEnumDesc descriptions registered
+ * that contain translatable value names. This is the case for the
+ * enums used in the GIMP PDB functions.
  *
  * This is just a convenience function. If you need more control over
  * the enum values that appear in the combo_box, you can create your
@@ -100,8 +102,9 @@ gimp_enum_combo_box_new (GType enum_type)
  * @combo_box:    a #GimpEnumComboBox
  * @stock_prefix: a prefix to create icon stock ID from enum values
  *
- * Attempts to create and set icons for all items in the
- * @combo_box. See gimp_enum_store_set_icons() for more info.
+ * Attempts to create stock icons for all items in the @combo_box. See
+ * gimp_enum_store_set_icons() to find out what to use for
+ * @stock_prefix.
  *
  * Since: GIMP 2.4
  **/
