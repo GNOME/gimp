@@ -65,17 +65,17 @@ typedef struct
   gboolean      abort_me;
 } PreviewPersistent;
 
-static gboolean *abort_me = NULL;
+static void  make_preview        (void);
 
+static void  save_restart_update (GtkAdjustment *adjustment,
+                                  GtkWidget     *toggle);
 
-static void      make_preview        (void);
-
-static void      save_restart_update (GtkAdjustment    *adjustment,
-                                      GtkWidget        *toggle);
 
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
 static GtkWidget *preview_size          = NULL;
+static gboolean  *abort_me              = NULL;
+
 
 /*
  * sg - This is the best I can do, I'm afraid... I think it will fail
@@ -663,19 +663,7 @@ save_dialog (void)
   GtkWidget     *spinbutton;
   GtkObject     *scale_data;
   GtkWidget     *label;
-
-  GtkWidget     *progressive;
-  GtkWidget     *baseline;
-  GtkWidget     *restart;
-
-#ifdef HAVE_EXIF
-  GtkWidget     *exif_toggle;
-  GtkWidget     *thumbnail_toggle;
-#endif /* HAVE_EXIF */
-
-  GtkWidget     *preview;
   GtkWidget     *combo;
-
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
   GtkWidget     *scrolled_window;
@@ -727,19 +715,18 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
   gtk_widget_show (preview_size);
 
-  preview =
+  toggle =
     gtk_check_button_new_with_mnemonic (_("Show _Preview in image window"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
-  gtk_widget_show (preview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.preview);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (preview, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.preview);
-  g_signal_connect (preview, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
-
 
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
   expander = gtk_expander_new_with_mnemonic (text);
@@ -796,24 +783,22 @@ save_dialog (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  restart = gtk_check_button_new_with_label (_("Use restart markers"));
-  gtk_table_attach (GTK_TABLE (table), restart, 2, 4, 1, 2,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (restart);
+  toggle = gtk_check_button_new_with_label (_("Use restart markers"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 2, 4, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
 
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);
 
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (save_restart_update),
-                    restart);
-  g_signal_connect_swapped (restart, "toggled",
+                    toggle);
+  g_signal_connect_swapped (toggle, "toggled",
                             G_CALLBACK (save_restart_update),
                             scale_data);
 
   toggle = gtk_check_button_new_with_label (_("Optimize"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -825,65 +810,67 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
-  progressive = gtk_check_button_new_with_label (_("Progressive"));
-  gtk_table_attach (GTK_TABLE (table), progressive, 0, 1, 1, 2,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (progressive);
+  toggle = gtk_check_button_new_with_label (_("Progressive"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (progressive, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.progressive);
-  g_signal_connect (progressive, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (progressive),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.progressive);
 
 #ifndef HAVE_PROGRESSIVE_JPEG
-  gtk_widget_set_sensitive (progressive, FALSE);
+  gtk_widget_set_sensitive (toggle, FALSE);
 #endif
 
-  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG"));
-  gtk_table_attach (GTK_TABLE (table), baseline, 0, 1, 2, 3,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (baseline);
+  toggle = gtk_check_button_new_with_label (_("Force baseline JPEG"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (baseline, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.baseline);
-  g_signal_connect (baseline, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (make_preview),
                     NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.baseline);
 
 #ifdef HAVE_EXIF
-  exif_toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
-  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 1, 3, 4,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (exif_toggle);
+  toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (exif_toggle, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_exif);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (exif_toggle),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.save_exif && exif_data);
 
-  gtk_widget_set_sensitive (exif_toggle, exif_data != NULL);
+  gtk_widget_set_sensitive (toggle, exif_data != NULL);
 
-  thumbnail_toggle = gtk_check_button_new_with_label (_("Save thumbnail"));
-  gtk_table_attach (GTK_TABLE (table), thumbnail_toggle, 0, 1, 4, 5,
-                    GTK_FILL, 0, 0, 0);
-  gtk_widget_show (thumbnail_toggle);
+  toggle = gtk_check_button_new_with_label (_("Save thumbnail"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (thumbnail_toggle, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_thumbnail);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (thumbnail_toggle),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.save_thumbnail);
 #endif /* HAVE_EXIF */
 
@@ -1221,5 +1208,3 @@ create_thumbnail (gint32    image_ID,
 }
 
 #endif /* HAVE_EXIF */
-
-
