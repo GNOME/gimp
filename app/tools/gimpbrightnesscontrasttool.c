@@ -77,7 +77,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-brightness-contrast-tool",
                 _("Brightness-Contrast"),
                 _("Adjust brightness and contrast"),

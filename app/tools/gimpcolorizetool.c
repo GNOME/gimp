@@ -88,7 +88,7 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_COLORIZE_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-colorize-tool",
                 _("Colorize"),
                 _("Colorize the image"),

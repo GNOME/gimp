@@ -49,7 +49,7 @@ typedef GtkWidget * (* GimpToolOptionsGUIFunc) (GimpToolOptions *tool_options);
 typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
                                            GType                     tool_option_type,
                                            GimpToolOptionsGUIFunc    options_gui_func,
-                                           gboolean                  tool_context,
+                                           GimpContextPropMask       context_props,
                                            const gchar              *identifier,
                                            const gchar              *blurb,
                                            const gchar              *help,

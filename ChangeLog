@@ -1,3 +1,33 @@
+2003-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.h: removed enum GimpContextPropType and
+	enum GimpContextPropMask.
+
+	* app/core/core-enums.[ch]: added them here.
+
+	* app/core/gimptoolinfo.[ch]: replaced "gboolean tool_context"
+	member by "GimpContextPropMask context_props" so each tool can
+	specify exactly which context properties it wants to have
+	persistently remembered.
+
+	* app/tools/tools-types.h: changed typedef GimpToolRegisterCallback
+	accordingly.
+
+	* app/tools/tool_manager.[ch] (tool_manager_register_tool): ditto.
+
+	Removed the "global_tool_context" and initialize all tool info
+	objects from the user_context after creation. Removed the
+	PAINT_OPTIONS_MASK #define and use the new context_props stored in
+	tool_info insted.
+
+	* app/tools/gimppainttool.h: #define the common properties of the
+	paint tools as GIMP_PAINT_TOOL_OPTIONS_MASK (which is OPACITY |
+	PAINT_MODE | BRUSH).
+
+	* app/tools/[all tools].c (gimp_*_tool_register): replaced the
+	"use_context" boolean by the actual mask of context properties the
+	tools need.
+
 2003-06-27  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.py: Missing self. reference. Fixes #115714.

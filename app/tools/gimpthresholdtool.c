@@ -83,7 +83,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_THRESHOLD_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-threshold-tool",
                 _("Threshold"),
                 _("Reduce image to two colors using a threshold"),

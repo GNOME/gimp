@@ -116,7 +116,7 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_HISTOGRAM_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-histogram-tool",
                 _("Histogram"),
                 _("View image histogram"),

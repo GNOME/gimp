@@ -102,7 +102,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_HUE_SATURATION_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),
                 _("Adjust hue and saturation"),

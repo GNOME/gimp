@@ -51,22 +51,12 @@
 #include "gimp-intl.h"
 
 
-#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK    | \
-                           GIMP_CONTEXT_PAINT_MODE_MASK | \
-                           GIMP_CONTEXT_BRUSH_MASK      | \
-                           GIMP_CONTEXT_PATTERN_MASK    | \
-                           GIMP_CONTEXT_GRADIENT_MASK   | \
-                           GIMP_CONTEXT_FONT_MASK
-
-
 typedef struct _GimpToolManager GimpToolManager;
 
 struct _GimpToolManager
 {
   GimpTool    *active_tool;
   GSList      *tool_stack;
-
-  GimpContext *global_tool_context;
 
   GQuark       image_dirty_handler_id;
   GQuark       image_undo_start_handler_id;
@@ -101,7 +91,6 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager->active_tool                 = NULL;
   tool_manager->tool_stack                  = NULL;
-  tool_manager->global_tool_context         = NULL;
   tool_manager->image_dirty_handler_id      = 0;
   tool_manager->image_undo_start_handler_id = 0;
 
@@ -123,17 +112,6 @@ tool_manager_init (Gimp *gimp)
 		    G_CALLBACK (tool_manager_tool_changed),
 		    tool_manager);
 
-  /*  Create a context to store the paint options of the
-   *  global paint options mode
-   */
-  tool_manager->global_tool_context = gimp_context_new (gimp,
-                                                        "Global Tool Context",
-                                                        user_context);
-
-  /*  TODO: add foreground, background, brush, pattern, gradient  */
-  gimp_context_define_properties (tool_manager->global_tool_context,
-				  PAINT_OPTIONS_MASK, FALSE);
-
   /* register internal tools */
   tools_init (gimp);
 
@@ -145,7 +123,7 @@ tool_manager_init (Gimp *gimp)
 
       tool_info = tool_manager->active_tool->tool_info;
 
-      if (tool_info->use_context)
+      if (tool_info->context_props)
         gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
                                  gimp_get_user_context (gimp));
     }
@@ -162,8 +140,6 @@ tool_manager_exit (Gimp *gimp)
 
   tool_manager = tool_manager_get (gimp);
   tool_manager_set (gimp, NULL);
-
-  g_object_unref (tool_manager->global_tool_context);
 
   gimp_container_remove_handler (gimp->images,
 				 tool_manager->image_dirty_handler_id);
@@ -521,7 +497,7 @@ void
 tool_manager_register_tool (GType                   tool_type,
                             GType                   tool_options_type,
                             GimpToolOptionsGUIFunc  options_gui_func,
-			    gboolean                tool_context,
+			    GimpContextPropMask     context_props,
 			    const gchar            *identifier,
 			    const gchar            *blurb,
 			    const gchar            *help,
@@ -587,7 +563,7 @@ tool_manager_register_tool (GType                   tool_type,
   tool_info = gimp_tool_info_new (gimp,
 				  tool_type,
                                   tool_options_type,
-				  tool_context,
+				  context_props,
 				  identifier,
 				  blurb,
 				  help,
@@ -609,12 +585,12 @@ tool_manager_register_tool (GType                   tool_type,
                                           "tool-info", tool_info,
                                           NULL);
 
-  if (tool_info->use_context)
+  if (tool_info->context_props)
     {
-      GIMP_CONTEXT (tool_info->tool_options)->defined_props =
-        tool_manager->global_tool_context->defined_props;
+      gimp_context_define_properties (GIMP_CONTEXT (tool_info->tool_options),
+                                      tool_info->context_props, FALSE);
 
-      gimp_context_copy_properties (tool_manager->global_tool_context,
+      gimp_context_copy_properties (gimp_get_user_context (gimp),
                                     GIMP_CONTEXT (tool_info->tool_options),
                                     GIMP_CONTEXT_ALL_PROPS_MASK);
     }
@@ -727,7 +703,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
   /*  disconnect the old tool's context  */
   if (tool_manager->active_tool            &&
       tool_manager->active_tool->tool_info &&
-      tool_manager->active_tool->tool_info->use_context)
+      tool_manager->active_tool->tool_info->context_props)
     {
       GimpToolInfo *old_tool_info;
 
@@ -737,11 +713,11 @@ tool_manager_tool_changed (GimpContext  *user_context,
     }
 
   /*  connect the new tool's context  */
-  if (tool_info->use_context)
+  if (tool_info->context_props)
     {
       gimp_context_copy_properties (GIMP_CONTEXT (tool_info->tool_options),
                                     user_context,
-                                    PAINT_OPTIONS_MASK);
+                                    tool_info->context_props);
       gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
                                user_context);
     }

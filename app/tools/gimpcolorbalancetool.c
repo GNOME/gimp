@@ -89,7 +89,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
                 G_TYPE_NONE, NULL,
-                FALSE,
+                0,
                 "gimp-color-balance-tool",
                 _("Color Balance"),
                 _("Adjust color balance"),

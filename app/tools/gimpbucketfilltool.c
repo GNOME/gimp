@@ -81,7 +81,9 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_BUCKET_FILL_TOOL,
                 GIMP_TYPE_BUCKET_FILL_OPTIONS,
                 gimp_bucket_fill_options_gui,
-                TRUE,
+                GIMP_CONTEXT_OPACITY_MASK    |
+                GIMP_CONTEXT_PAINT_MODE_MASK |
+                GIMP_CONTEXT_PATTERN_MASK,
                 "gimp-bucket-fill-tool",
                 _("Bucket Fill"),
                 _("Fill with a color or pattern"),

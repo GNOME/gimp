@@ -91,8 +91,11 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 static void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
+  tool_info->gimp              = NULL;
+
   tool_info->tool_type         = G_TYPE_NONE;
   tool_info->tool_options_type = G_TYPE_NONE;
+  tool_info->context_props     = 0;
 
   tool_info->blurb             = NULL;
   tool_info->help              = NULL;
@@ -104,7 +107,6 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->help_data         = NULL;
 
   tool_info->in_toolbox        = TRUE;
-  tool_info->use_context       = FALSE;
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = NULL;
 }
@@ -173,19 +175,19 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 }
 
 GimpToolInfo *
-gimp_tool_info_new (Gimp         *gimp,
-		    GType         tool_type,
-                    GType         tool_options_type,
-                    gboolean      tool_context,
-		    const gchar  *identifier,
-		    const gchar  *blurb,
-		    const gchar  *help,
-		    const gchar  *menu_path,
-		    const gchar  *menu_accel,
-		    const gchar  *help_domain,
-		    const gchar  *help_data,
-                    const gchar  *paint_core_name,
-		    const gchar  *stock_id)
+gimp_tool_info_new (Gimp                *gimp,
+		    GType                tool_type,
+                    GType                tool_options_type,
+                    GimpContextPropMask  context_props,
+		    const gchar         *identifier,
+		    const gchar         *blurb,
+		    const gchar         *help,
+		    const gchar         *menu_path,
+		    const gchar         *menu_accel,
+		    const gchar         *help_domain,
+		    const gchar         *help_data,
+                    const gchar         *paint_core_name,
+		    const gchar         *stock_id)
 {
   GimpPaintInfo *paint_info;
   GimpToolInfo  *tool_info;
@@ -210,13 +212,13 @@ gimp_tool_info_new (Gimp         *gimp,
 
   viewable = GIMP_VIEWABLE (tool_info);
 
-  tool_info->use_context       = tool_context;
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = paint_info;
 
   tool_info->gimp              = gimp;
   tool_info->tool_type         = tool_type;
   tool_info->tool_options_type = tool_options_type;
+  tool_info->context_props     = context_props;
 
   tool_info->blurb             = g_strdup (blurb);
   tool_info->help              = g_strdup (help);
