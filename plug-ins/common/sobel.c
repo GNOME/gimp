@@ -16,23 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 /* This plugin by thorsten@arch.usyd.edu.au           */
 /* Based on S&P's Gauss and Blur filters              */
 
-
-/* updated 11/04/97:
-   don't use rint;
-   if gamma-channel: set to white if at least one colour channel is >15 */
-
-/* Update 3/10/97:
-   #ifdef Max and Min,
-   save old values
-   correct 'cancel' behaviour */
-
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
@@ -288,12 +276,8 @@ sobel_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  if (y < 0)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, 0, w);
-  else if (y >= pixel_rgn->h)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, pixel_rgn->h - 1, w);
-  else
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
+  y = CLAMP (y, 0, pixel_rgn->h - 1);
+  gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
 
   /*  Fill in edge pixels  */
   for (b = 0; b < pixel_rgn->bpp; b++)
@@ -303,8 +287,7 @@ sobel_prepare_row (GimpPixelRgn *pixel_rgn,
     }
 }
 
-#define SIGN(a) (((a) > 0) ? 1 : -1)
-#define RMS(a,b) (sqrt (pow ((a),2) + pow ((b), 2)))
+#define RMS(a, b) (sqrt ((a) * (a) + (b) * (b)))
 
 static void
 sobel (GimpDrawable *drawable,
@@ -325,13 +308,6 @@ sobel (GimpDrawable *drawable,
   gint    x1, y1, x2, y2;
   gint    alpha;
   gint    counter;
-
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init (_("Sobel Edge Detecting..."));

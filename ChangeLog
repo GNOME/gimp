@@ -9,6 +9,13 @@
 
 2004-05-06  Maurits Rijk  <m.rijk@chello.nl>
 
+	* plug-ins/common/sobel.c: replaced RMS macro by smarter one,
+	resulting in a doubling in speed for this plug-in.
+
+	* plug-ins/fp/fp.c: include stdlib for free, malloc and abs.
+
+2004-05-06  Maurits Rijk  <m.rijk@chello.nl>
+
 	* plug-ins/fp/fp_gdk.c
 	* plug-ins/fp/fp_gtk.c
 	* plug-ins/fp/fp_misc.c
