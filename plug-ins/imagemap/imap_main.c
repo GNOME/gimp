@@ -1302,6 +1302,12 @@ factory_select_all(void)
 }
 
 static Command_t*
+factory_deselect_all(void)
+{
+   return unselect_all_command_new(_shapes, NULL);
+}
+
+static Command_t*
 factory_clear(void)
 {
    return clear_command_new(_shapes);
@@ -1470,6 +1476,7 @@ dialog(GimpDrawable *drawable)
    menu_set_copy_command(menu, factory_copy);
    menu_set_paste_command(menu, factory_paste);
    menu_set_select_all_command(menu, factory_select_all);
+   menu_set_deselect_all_command(menu, factory_deselect_all);
    menu_set_clear_command(menu, factory_clear);
    menu_set_edit_erea_info_command(menu, factory_edit);
    menu_set_area_list_command(menu, factory_toggle_area_list);

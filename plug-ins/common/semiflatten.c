@@ -45,9 +45,8 @@ static void      run    (gchar   *name,
 			 GimpParam **return_vals);
 
 static void      semiflatten            (GimpDrawable    *drawable);
-static void      semiflatten_render_row (const guchar *src_row,
-					 guchar       *dest_row,
-					 gint          row,
+static void      semiflatten_render_row (const guchar *src,
+					 guchar       *dest,
 					 gint          row_width,
 					 gint          bytes);
 
@@ -139,11 +138,9 @@ run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-
 static void
-semiflatten_render_row (const guchar *src_row,
-			guchar       *dest_row,
-			gint          row,
+semiflatten_render_row (const guchar *src,
+			guchar       *dest,
 			gint          row_width,
 			gint          bytes)
 {
@@ -151,22 +148,15 @@ semiflatten_render_row (const guchar *src_row,
 
   for (col = 0; col < row_width ; col++)
     {
-      dest_row[col*bytes+0] =
-	(src_row[col*bytes+0]*src_row[col*bytes+3])/255 +
-	(bgred*(255-src_row[col*bytes+3]))/255;
+      dest[0] = (src[0] * src[3]) / 255 + (bgred * (255 - src[3])) / 255;
+      dest[1] = (src[1] * src[3]) / 255 + (bggreen * (255 - src[3])) / 255;
+      dest[2] = (src[2] * src[3]) / 255 + (bgblue * (255 - src[3])) / 255;
+      dest[3] = (src[3] == 0) ? 0 : 255;
 
-      dest_row[col*bytes+1] =
-	(src_row[col*bytes+1]*src_row[col*bytes+3])/255 +
-	(bggreen*(255-src_row[col*bytes+3]))/255;
-
-      dest_row[col*bytes+2] =
-	(src_row[col*bytes+2]*src_row[col*bytes+3])/255 +
-	(bgblue*(255-src_row[col*bytes+3]))/255;
-
-      dest_row[col*bytes+3] = (src_row[col*bytes+3] == 0) ? 0 : 255;
+      src += bytes;
+      dest += bytes;
     }
 }
-
 
 static void
 semiflatten (GimpDrawable *drawable)
@@ -184,12 +174,6 @@ semiflatten (GimpDrawable *drawable)
   gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /* Get the size of the input image. (This will/must be the same
@@ -209,16 +193,14 @@ semiflatten (GimpDrawable *drawable)
 
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, x2 - x1);
 
       semiflatten_render_row (src_row,
 			      dest_row,
-			      row,
 			      (x2 - x1),
 			      bytes);
 
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, x2 - x1);
 
       if ((row % 10) == 0)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
@@ -229,6 +211,6 @@ semiflatten (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (src_row);
-  free (dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 }

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,53 +131,62 @@ do_file_save_as_dialog(void)
 
 typedef struct {
    DefaultDialog_t *dialog;
-   GtkWidget *error;
-   GtkWidget *filename;
-} FileErrorDialog_t;
+   GtkWidget *label;
+} Alert_t;
 
-static FileErrorDialog_t*
-create_file_error_dialog()
+Alert_t*
+create_alert(const gchar *stock_id)
 {
-   FileErrorDialog_t *file_dialog = g_new(FileErrorDialog_t, 1);
+   Alert_t *alert = g_new(Alert_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *table, *hbox;
+   GtkWidget *hbox;
    GtkWidget *image;
 
-   file_dialog->dialog = dialog = make_default_dialog(_("Error"));
+   alert->dialog = dialog = make_default_dialog("");
    default_dialog_hide_apply_button(dialog);
    default_dialog_hide_cancel_button(dialog);
 
-   hbox = gtk_hbox_new(FALSE, 10);
+   hbox = gtk_hbox_new(FALSE, 12);
+   gtk_container_set_border_width(GTK_CONTAINER(hbox), 6);
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), hbox, 
 		      TRUE, TRUE, 10);
    gtk_widget_show(hbox);
 
-   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, 
-				     GTK_ICON_SIZE_DIALOG);
-   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-   gtk_widget_show (image);
+   image = gtk_image_new_from_stock(stock_id, GTK_ICON_SIZE_DIALOG);
+   gtk_container_add(GTK_CONTAINER(hbox), image);
+   gtk_widget_show(image);
 
-   table = gtk_table_new(2, 1, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
-   gtk_widget_show(table);
+   alert->label = gtk_label_new("");
+   gtk_misc_set_alignment(GTK_MISC(alert->label), 0.0, 0.0);
+   gtk_container_add(GTK_CONTAINER(hbox), alert->label);
+   gtk_widget_show(alert->label);
 
-   file_dialog->error = create_label_in_table(table, 0, 0, "");
-   file_dialog->filename = create_label_in_table(table, 1, 0, "");
+   return alert;
+}
 
-   return file_dialog;
+void
+alert_set_text(Alert_t *alert, const char *primary_text, 
+	       const char *secondary_text)
+{
+   gchar *text;
+
+   text = 
+      g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
+		      primary_text, secondary_text);
+   gtk_label_set_markup(GTK_LABEL(alert->label), text);
+
+   g_free(text);
 }
 
 void
 do_file_error_dialog(const char *error, const char *filename)
 {
-   static FileErrorDialog_t *dialog;
-   
-   if (!dialog)
-      dialog = create_file_error_dialog();
+   static Alert_t *alert;
 
-   gtk_label_set_text(GTK_LABEL(dialog->error), error);
-   gtk_label_set_text(GTK_LABEL(dialog->filename), filename);
+   if (!alert)
+      alert = create_alert(GTK_STOCK_DIALOG_ERROR);
 
-   default_dialog_show(dialog->dialog);
+   alert_set_text(alert, error, filename);
+
+   default_dialog_show(alert->dialog);
 }

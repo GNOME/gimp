@@ -1,3 +1,17 @@
+2002-09-06  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/semiflatten.c: minor code cleanup (matching
+	g_new/g_free pairs iso g_new/free, etc.)
+
+2002-09-05  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_default_dialog.c (make_default_dialog): more 
+	changes for GNOME HIG compliance
+
+	* plug-ins/imagemap/imap_main.c (dialog)
+	* plug-ins/imagemap/imap_menu.c: Moved a few menu items to make it
+	compliant to the GNOME Human Interface Guidelines.
+
 2002-09-05  Manish Singh  <yosh@gimp.org>
 
 	* acinclude.m4: emptied

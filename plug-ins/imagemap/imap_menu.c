@@ -83,11 +83,12 @@ menu_set_zoom_sensitivity(gint factor)
 void
 menu_shapes_selected(gint count)
 {
-   gint sensitive = (count > 0);
+   gboolean sensitive = (count > 0);
    gtk_widget_set_sensitive(_menu.cut, sensitive);
    gtk_widget_set_sensitive(_menu.copy, sensitive);
    gtk_widget_set_sensitive(_menu.clear, sensitive);
    gtk_widget_set_sensitive(_menu.edit, sensitive);
+   gtk_widget_set_sensitive(_menu.deselect_all, sensitive);
 }
 
 static void
@@ -182,18 +183,17 @@ menu_grid(GtkWidget *widget, gpointer data)
 static void
 make_file_menu(GtkWidget *menu_bar)
 {
-   GtkWidget 	*file_menu = make_menu_bar_item(menu_bar, _("_File"));
+   GtkWidget *file_menu = make_menu_bar_item(menu_bar, _("_File"));
+   GtkWidget *item;
 
    _menu.file_menu = file_menu;
    make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
 			&_menu.cmd_open);
    make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command, 
 			&_menu.cmd_save);
-   make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
-			&_menu.cmd_save_as);
-   make_separator(file_menu);
-   make_item_with_image(file_menu, GTK_STOCK_PREFERENCES, menu_command,
-			&_menu.cmd_preferences);
+   item = make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
+			       &_menu.cmd_save_as);
+   add_accelerator(item, 'S', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
    make_separator(file_menu);
    make_item_with_image(file_menu, GTK_STOCK_CLOSE, menu_command,
 			&_menu.cmd_close);
@@ -231,7 +231,7 @@ command_list_changed(Command_t *command, gpointer data)
    _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
 				       menu_command, &_menu.cmd_redo);
    g_free (scratch);
-   add_accelerator(_menu.redo, 'R', GDK_CONTROL_MASK);
+   add_accelerator(_menu.redo, 'Z', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(_menu.redo, (command != NULL));
 
    icon = gtk_image_new_from_stock(GTK_STOCK_REDO, GTK_ICON_SIZE_MENU);
@@ -267,17 +267,24 @@ make_edit_menu(GtkWidget *menu_bar)
 				     &_menu.cmd_copy);
    paste = make_item_with_image(edit_menu, GTK_STOCK_PASTE, menu_command,
 				&_menu.cmd_paste);
-   add_accelerator(paste, 'V', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(paste, FALSE);
-   item = make_item_with_label(edit_menu, _("Select _All"), menu_command,
-			       &_menu.cmd_select_all);
-   add_accelerator(item, 'A', GDK_CONTROL_MASK);
-   make_separator(edit_menu);
    _menu.clear = make_item_with_image(edit_menu, GTK_STOCK_CLEAR, menu_command,
 				      &_menu.cmd_clear);
    add_accelerator(_menu.clear, 'K', GDK_CONTROL_MASK);
+   make_separator(edit_menu);
+   item = make_item_with_label(edit_menu, _("Select _All"), menu_command,
+			       &_menu.cmd_select_all);
+   add_accelerator(item, 'A', GDK_CONTROL_MASK);
+   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _All"), 
+					     menu_command, 
+					     &_menu.cmd_deselect_all);
+   add_accelerator(_menu.deselect_all, 'A', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
+   make_separator(edit_menu);
    _menu.edit = make_item_with_label(edit_menu, _("Edit Area Info..."),
 				     menu_command, &_menu.cmd_edit_area_info);
+   make_separator(edit_menu);
+   make_item_with_image(edit_menu, GTK_STOCK_PREFERENCES, menu_command,
+			&_menu.cmd_preferences);
 
    paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);
    paste_buffer_add_remove_cb(paste_buffer_removed, (gpointer) paste);
@@ -374,16 +381,16 @@ make_mapping_menu(GtkWidget *menu_bar)
 }
 
 static void
-make_goodies_menu(GtkWidget *menu_bar)
+make_tools_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *goodies_menu = make_menu_bar_item(menu_bar, _("_Goodies"));
-   _menu.grid = make_check_item(goodies_menu, _("Grid"), menu_grid, NULL);
-   make_item_with_label(goodies_menu, _("Grid Settings..."), menu_command,
+   GtkWidget *tools_menu = make_menu_bar_item(menu_bar, _("_Tools"));
+   _menu.grid = make_check_item(tools_menu, _("Grid"), menu_grid, NULL);
+   make_item_with_label(tools_menu, _("Grid Settings..."), menu_command,
 			&_menu.cmd_grid_settings);
-   make_separator(goodies_menu);
-   make_item_with_label(goodies_menu, _("Use GIMP Guides..."), menu_command,
+   make_separator(tools_menu);
+   make_item_with_label(tools_menu, _("Use GIMP Guides..."), menu_command,
 			&_menu.cmd_use_gimp_guides);
-   make_item_with_label(goodies_menu, _("Create Guides..."), menu_command,
+   make_item_with_label(tools_menu, _("Create Guides..."), menu_command,
 			&_menu.cmd_create_guides);
 }
 
@@ -411,7 +418,7 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
    make_edit_menu(menu_bar);
    make_view_menu(menu_bar);
    make_mapping_menu(menu_bar);
-   make_goodies_menu(menu_bar);
+   make_tools_menu(menu_bar);
    make_help_menu(menu_bar);
 
    menu_shapes_selected(0);

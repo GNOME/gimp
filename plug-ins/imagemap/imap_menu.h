@@ -36,6 +36,7 @@ typedef struct {
    GtkWidget *copy;
    GtkWidget *clear;
    GtkWidget *edit;
+   GtkWidget *deselect_all;
    GtkWidget *arrow;
    GtkWidget *fuzzy_select;
    GtkWidget *rectangle;
@@ -63,6 +64,7 @@ typedef struct {
    CommandFactory_t cmd_copy;
    CommandFactory_t cmd_paste;
    CommandFactory_t cmd_select_all;
+   CommandFactory_t cmd_deselect_all;
    CommandFactory_t cmd_clear;
    CommandFactory_t cmd_edit_area_info;
 
@@ -106,6 +108,8 @@ typedef struct {
 	((menu)->cmd_paste = (command))
 #define menu_set_select_all_command(menu, command) \
 	((menu)->cmd_select_all = (command))
+#define menu_set_deselect_all_command(menu, command) \
+	((menu)->cmd_deselect_all = (command))
 #define menu_set_clear_command(menu, command) \
 	((menu)->cmd_clear = (command))
 #define menu_set_edit_erea_info_command(menu, command) \

@@ -103,17 +103,19 @@ make_default_dialog(const gchar *title)
    data->apply_cb = NULL;
    data->cancel_cb = NULL;
    data->dialog = dialog = gtk_dialog_new();
-   gtk_window_set_title(GTK_WINDOW(dialog), title);
+
+   if (title)
+      gtk_window_set_title(GTK_WINDOW(dialog), title);
 
    g_signal_connect(G_OBJECT(dialog), "delete_event",
                     G_CALLBACK(dialog_destroy), (gpointer) data);
 
    /*  Action area  */
    gtk_container_set_border_width(GTK_CONTAINER(
-      GTK_DIALOG(dialog)->action_area), 2);
+      GTK_DIALOG(dialog)->action_area), 12);
    gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
    hbbox = gtk_hbutton_box_new();
-   gtk_box_set_spacing(GTK_BOX(hbbox), 4);
+   gtk_box_set_spacing(GTK_BOX(hbbox), 6);
    gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), hbbox, FALSE, 
 		    FALSE, 0);
    gtk_widget_show (hbbox);
