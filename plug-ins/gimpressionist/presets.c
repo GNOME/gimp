@@ -648,11 +648,9 @@ void create_presetpage(GtkNotebook *notebook)
 
   /* list = gtk_list_new (); */ /* Moved up */
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
-#if GTK_MINOR_VERSION > 0
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win), list);
-#else
-  gtk_container_add (GTK_CONTAINER (scrolled_win), list);
-#endif
+
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+                                         list);
   gtk_widget_show (list);
 
   gtk_signal_connect (GTK_OBJECT(list), "selection_changed",

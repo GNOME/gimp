@@ -33,10 +33,10 @@
 
 #define DEFAULT_WIDTH 300
 
-static GtkWidget   *win_initstatus    = NULL;
-static GtkWidget   *label1            = NULL;
-static GtkWidget   *label2            = NULL;
-static GtkWidget   *progress          = NULL;
+static GtkWidget *win_initstatus = NULL;
+static GtkWidget *label1         = NULL;
+static GtkWidget *label2         = NULL;
+static GtkWidget *progress       = NULL;
 
 
 /*  public functions  */
@@ -55,6 +55,9 @@ splash_create (gboolean show_image)
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
+
+  g_signal_connect (G_OBJECT (win_initstatus), "delete_event",
+                    G_CALLBACK (gtk_true), NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);

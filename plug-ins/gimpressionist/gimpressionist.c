@@ -342,24 +342,24 @@ void showabout(void)
     gdk_window_raise(window->window);
     return;
   }
-  window = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(window), _("The GIMPressionist!"));
-  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(window), "destroy",
-		     GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		     &window);
-  gtk_quit_add_destroy (1, GTK_OBJECT(window));
-  gtk_signal_connect(GTK_OBJECT(window), "delete_event",
-		     GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
-		     &window);
-      
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_OK);
+  window = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  g_signal_connect (G_OBJECT (window), "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &window);
+  gtk_quit_add_destroy (1, GTK_OBJECT (window));
+  g_signal_connect (G_OBJECT (window), "delete_event",
+                    G_CALLBACK (gtk_widget_hide_on_delete),
+                    &window);
+
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
   GTK_WIDGET_SET_FLAGS(tmpw, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT(tmpw), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_hide),
-			     GTK_OBJECT(window));
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->action_area),
-		     tmpw, TRUE, TRUE, 0);
+  g_signal_connect_swapped (G_OBJECT(tmpw), "clicked",
+                            G_CALLBACK (gtk_widget_hide),
+                            window);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(window)->action_area),
+                      tmpw, TRUE, TRUE, 0);
   gtk_widget_grab_default(tmpw);
   gtk_widget_show(tmpw);
 
@@ -434,9 +434,9 @@ int create_dialog(void)
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      (GtkSignalFunc)dialog_close_callback,
-		      NULL);
+  g_signal_connect (G_OBJECT (window), "destroy",
+                    G_CALLBACK (dialog_close_callback),
+                    NULL);
 
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
   gtk_container_set_border_width (GTK_CONTAINER (window), 5);
@@ -473,28 +473,28 @@ int create_dialog(void)
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
   
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_OK);
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-		     (GtkSignalFunc)dialog_ok_callback, window);
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked",
+		    G_CALLBACK (dialog_cancel_callback), window);
+  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
+  gtk_widget_show(tmpw);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Quit the program"), NULL);
+
+  tmpw = gtk_button_new_with_label (_("About..."));
+  g_signal_connect (G_OBJECT(tmpw), "clicked",
+                    G_CALLBACK (showabout), window);
+  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
+  gtk_widget_show (tmpw);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Show some information about program"), NULL);
+
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_OK);
+  g_signal_connect (G_OBJECT(tmpw), "clicked",
+                    G_CALLBACK (dialog_ok_callback), window);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
   GTK_WIDGET_SET_FLAGS (tmpw, GTK_CAN_DEFAULT);
   gtk_widget_grab_default (tmpw);
   gtk_widget_show(tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Run with the selected settings"), NULL);
-
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_CANCEL);
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-		     (GtkSignalFunc)dialog_cancel_callback, window);
-  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Quit the program"), NULL);
-
-  tmpw = gtk_button_new_with_label( _("About..."));
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-		     (GtkSignalFunc)showabout, window);
-  gtk_box_pack_start (GTK_BOX (box3), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Show some information about program"), NULL);
 
   gtk_widget_show(window);
 

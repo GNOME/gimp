@@ -1,3 +1,17 @@
+2002-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c: don't allow to close the splash screen. Fixes
+	bug #81962.
+
+	* plug-ins/gimpressionist/gimpressionist.c: changed button order.
+	As mentioned in bug #81963 the UI of this plug-in needs some more
+	work.
+
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/presets.c: fixed handling of scrolled
+	windows.
+
 2002-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.c: Pass PlugIn, not Gimp pointers to all
