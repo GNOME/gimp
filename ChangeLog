@@ -1,3 +1,9 @@
+2003-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/color-notebook.c (color_notebook_new): added a default
+	role used for color selectors not handled by the GimpDialogFactory.
+	Fixes bug #126783.
+
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpeditor.[ch] (gimp_editor_set_box_style): new

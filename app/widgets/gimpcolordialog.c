@@ -102,6 +102,7 @@ color_notebook_new (GimpViewable          *viewable,
   GtkWidget     *table;
   GtkWidget     *button;
   GtkWidget     *arrow;
+  const gchar   *role;
   gint           i;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
@@ -118,9 +119,11 @@ color_notebook_new (GimpViewable          *viewable,
   cnp->client_data   = client_data;
   cnp->wants_updates = wants_updates;
 
+  role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
+
   if (desc)
     {
-      cnp->shell = gimp_viewable_dialog_new (viewable, title, dialog_identifier,
+      cnp->shell = gimp_viewable_dialog_new (viewable, title, role,
                                              stock_id, desc,
                                              parent,
                                              color_notebook_help_func, NULL,
@@ -130,7 +133,7 @@ color_notebook_new (GimpViewable          *viewable,
     }
   else
     {
-      cnp->shell = gimp_dialog_new (title, dialog_identifier,
+      cnp->shell = gimp_dialog_new (title, role,
                                     parent, 0,
                                     color_notebook_help_func, NULL,
                                     NULL);
