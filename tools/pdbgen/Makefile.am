@@ -19,6 +19,7 @@ pdb_sources = \
 	pdb/gradient.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/guides.pdb		\
+	pdb/interface.pdb	\
 	pdb/layer.pdb		\
 	pdb/misc.pdb		\
 	pdb/palette.pdb		\
@@ -26,6 +27,7 @@ pdb_sources = \
 	pdb/paths.pdb		\
 	pdb/pattern_select.pdb	\
 	pdb/patterns.pdb	\
+	pdb/plug_in.pdb		\
 	pdb/procedural_db.pdb	\
 	pdb/text_tool.pdb	\
 	pdb/tools.pdb		\
@@ -45,27 +47,28 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	$(top_srcdir)/app/convert.h		\
-	$(top_srcdir)/app/channel_ops.h		\
-	$(top_srcdir)/app/text_tool.h		\
-	$(top_srcdir)/app/gimpdrawable.h	\
-	$(top_srcdir)/app/gimpimage.h		\
-	$(top_srcdir)/app/procedural_db.h	\
-	$(top_srcdir)/app/paint_funcs.h		\
+	$(top_srcdir)/app/appenv.h		\
 	$(top_srcdir)/app/blend.h		\
 	$(top_srcdir)/app/bucket_fill.h		\
-	$(top_srcdir)/app/clone.h		\
-	$(top_srcdir)/app/convolve.h		\
 	$(top_srcdir)/app/channel.h		\
-	$(top_srcdir)/app/eraser.h		\
-	$(top_srcdir)/app/paint_core.h		\
-	$(top_srcdir)/app/lut_funcs.h		\
-	$(top_srcdir)/app/shear_tool.h		\
+	$(top_srcdir)/app/channel_ops.h		\
+	$(top_srcdir)/app/clone.h		\
 	$(top_srcdir)/app/color_balance.h	\
+	$(top_srcdir)/app/convert.h		\
+	$(top_srcdir)/app/convolve.h		\
+	$(top_srcdir)/app/eraser.h		\
+	$(top_srcdir)/app/gimpdrawable.h	\
+	$(top_srcdir)/app/gimpimage.h		\
 	$(top_srcdir)/app/hue_saturation.h	\
+	$(top_srcdir)/app/layer.h		\
 	$(top_srcdir)/app/layerF.h		\
-	$(top_srcdir)/app/layer.h	\
-	$(top_srcdir)/app/plug_in.h
+	$(top_srcdir)/app/lut_funcs.h		\
+	$(top_srcdir)/app/paint_core.h		\
+	$(top_srcdir)/app/paint_funcs.h		\
+	$(top_srcdir)/app/plug_in.h		\
+	$(top_srcdir)/app/procedural_db.h	\
+	$(top_srcdir)/app/shear_tool.h		\
+	$(top_srcdir)/app/text_tool.h
 
 pdb_scripts = \
 	$(srcdir)/pdbgen.pl	\
@@ -77,7 +80,7 @@ pdb_scripts = \
 
 $(srcdir)/enums.pl: stamp-enums
 	@:
-stamp-enums: $(srcdir)/enumgen.pl $(enum_headers)
+stamp-enums: $(srcdir)/enumgen.pl $(enum_headers) Makefile.am
 	(srcdir=$(srcdir) && $(PERL) enumgen.pl $(enum_headers)) \
 	&& echo timestamp > stamp-enums
 

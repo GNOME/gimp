@@ -102,8 +102,6 @@
 #include "libgimp/gimpintl.h"
 
 
-
-
 typedef struct _PlugInBlocked  PlugInBlocked;
 
 struct _PlugInBlocked
@@ -160,28 +158,16 @@ static void      plug_in_args_destroy   (Argument  *args,
   					 int        nargs,
   					 int        full_destroy);
 
-static Argument* progress_init_invoker   (Argument *args);
-static Argument* progress_update_invoker (Argument *args);
 
-static Argument* message_invoker         (Argument *args);
-
-static Argument* message_handler_get_invoker (Argument *args);
-static Argument* message_handler_set_invoker (Argument *args);
-
-static Argument* plugin_temp_PDB_name_invoker (Argument *args);
-
-static Argument* plugins_query_invoker (Argument *args);
-
-
+PlugIn *current_plug_in = NULL;
+GSList *proc_defs = NULL;
 
 static GSList *plug_in_defs = NULL;
 static GSList *gimprc_proc_defs = NULL;
-static GSList *proc_defs = NULL;
 static GSList *open_plug_ins = NULL;
 static GSList *blocked_plug_ins = NULL;
 
 static GSList *plug_in_stack = NULL;
-static PlugIn *current_plug_in = NULL;
 static GIOChannel *current_readchannel = NULL;
 static GIOChannel *current_writechannel = NULL;
 static int current_write_buffer_index = 0;
@@ -200,240 +186,9 @@ static HANDLE shm_handle;
 
 static int write_pluginrc = FALSE;
 
-static ProcArg progress_init_args[] =
-{
-  { PDB_STRING,
-    "message",
-    "Message to use in the progress dialog." },
-  { PDB_INT32,
-    "gdisplay",
-    "GDisplay to update progressbar in, or -1 for a seperate window" }
-};
-
-static ProcRecord progress_init_proc =
-{
-  "gimp_progress_init",
-  "Initializes the progress bar for the current plug-in",
-  "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  2,
-  progress_init_args,
-  0,
-  NULL,
-  { { progress_init_invoker } },
-};
-
-static ProcArg progress_update_args[] =
-{
-  { PDB_FLOAT,
-    "percentage",
-    "Percentage of progress completed" }
-};
-
-static ProcRecord progress_update_proc =
-{
-  "gimp_progress_update",
-  "Updates the progress bar for the current plug-in",
-  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  1,
-  progress_update_args,
-  0,
-  NULL,
-  { { progress_update_invoker } },
-};
-
-
-static ProcArg message_args[] =
-{
-  { PDB_STRING,
-    "message",
-    "Message to display in the dialog." }
-};
-
-static ProcRecord message_proc =
-{
-  "gimp_message",
-  "Displays a dialog box with a message",
-  "Displays a dialog box with a message. Useful for status or error reporting.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-  1,
-  message_args,
-  0,
-  NULL,
-  { { message_invoker } },
-};
-
-
-static ProcArg message_handler_get_out_args[] =
-{
-  { PDB_INT32,
-    "handler",
-    "the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
-};
-
-static ProcRecord message_handler_get_proc =
-{
-  "gimp_message_handler_get",
-  "Returns the current state of where warning messages are displayed.",
-  "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
-  "Manish Singh",
-  "Manish Singh",
-  "1998",
-  PDB_INTERNAL,
-  0,
-  NULL,
-  1,
-  message_handler_get_out_args,
-  { { message_handler_get_invoker } },
-};
-
-static ProcArg message_handler_set_args[] =
-{
-  { PDB_INT32,
-    "handler",
-    "the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
-};
-
-static ProcRecord message_handler_set_proc =
-{
-  "gimp_message_handler_set",
-  "Controls where warning messages are displayed.",
-  "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
-  "Manish Singh",
-  "Manish Singh",
-  "1998",
-  PDB_INTERNAL,
-  1,
-  message_handler_set_args,
-  0,
-  NULL,
-  { { message_handler_set_invoker } },
-};
-
-static ProcArg plugin_temp_PDB_name_out_args[] =
-{
-  { PDB_STRING,
-    "Temp name",
-    "A unique temporary name for a temporary PDB entry name",
-  },
-};
-
-static ProcRecord plugin_temp_PDB_name_proc =
-{
-  "gimp_temp_PDB_name",
-  "Generates a unique temporary PDB name",
-  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-  0,
-  NULL,
-  1,
-  plugin_temp_PDB_name_out_args,
-  { { plugin_temp_PDB_name_invoker } },
-};
-
-/* The number keeps getting repeated here because in is required 
- * by the PDB interface for *ARRAY types.
- */
-static ProcArg plugins_query_out_args[] =
-{
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_STRINGARRAY,
-    "menu_path",
-    "the menu path of the plugin"
-  },
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_STRINGARRAY,
-    "plugin_accelerator",
-    "String representing keyboard accelerator (could be empty string)"
-  },
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_STRINGARRAY,
-    "plugin_location",
-    "Location of the plugin program" 
-  },
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_STRINGARRAY,
-    "plugin_image_type",
-    "Type of image that this plugin will work on"
-  },
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_INT32ARRAY,
-    "plugin_install_time",
-    "Time that the plugin was installed"
-  },
-  { PDB_INT32,
-    "num_plugins",
-    "the number of plugins"
-  },
-  { PDB_STRINGARRAY,
-    "plugin_real_name",
-    "The internal name of the plugin"
-  }
-};
-
-static ProcArg plugins_query_in_args[] =
-{
-  { PDB_STRING,
-    "search_string",
-    "If not an empty string then use this as a search pattern" 
-  }
-};
-
-
-ProcRecord plugin_query_proc =
-{
-  "gimp_plugins_query",
-  "Queries the plugin database for its contents",
-  "This procedure queries the contents of the plugin database",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1999",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(plugins_query_in_args) / sizeof(plugins_query_in_args[0]),
-  plugins_query_in_args,
-
-  /*  Output arguments  */
-  sizeof(plugins_query_out_args) / sizeof(plugins_query_out_args[0]),
-  plugins_query_out_args,
-
-  /*  Exec method  */
-  { { plugins_query_invoker } },
-};
-
-
 
 void
-plug_in_init ()
+plug_in_init (void)
 {
   extern int use_shm;
   char *filename;
@@ -441,22 +196,6 @@ plug_in_init ()
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
   gfloat nplugins, nth;
-
-  /* initialize the progress init and update procedure db calls. */
-  procedural_db_register (&progress_init_proc);
-  procedural_db_register (&progress_update_proc);
-
-  /* initialize the message box procedural db calls */
-  procedural_db_register (&message_proc);
-  procedural_db_register (&message_handler_get_proc);
-  procedural_db_register (&message_handler_set_proc);
-
-  /* initialize the temp name PDB interafce */
-  procedural_db_register (&plugin_temp_PDB_name_proc);
-
-  /* initialize the plugin browser */
-  procedural_db_register (&plugin_query_proc);
-  
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -659,9 +398,8 @@ plug_in_init ()
 }
 
 
-
 void
-plug_in_kill ()
+plug_in_kill (void)
 {
   GSList *tmp;
   PlugIn *plug_in;
@@ -1618,7 +1356,7 @@ plug_in_handle_message (WireMessage *msg)
 }
 
 static void
-plug_in_handle_quit ()
+plug_in_handle_quit (void)
 {
   plug_in_close (current_plug_in, FALSE);
 }
@@ -2190,7 +1928,7 @@ plug_in_push (PlugIn *plug_in)
 }
 
 static void
-plug_in_pop ()
+plug_in_pop (void)
 {
   GSList *tmp;
 
@@ -2438,7 +2176,7 @@ plug_in_query (char      *filename,
 }
 
 static void
-plug_in_add_to_db ()
+plug_in_add_to_db (void)
 {
   PlugInProcDef *proc_def;
   Argument args[4];
@@ -2492,7 +2230,7 @@ plug_in_add_to_db ()
 }
 
 static void
-plug_in_make_menu ()
+plug_in_make_menu (void)
 {
   GtkMenuEntry entry;
   PlugInProcDef *proc_def;
@@ -3412,7 +3150,7 @@ plug_in_progress_cancel (GtkWidget *widget,
   plug_in_destroy (plug_in);
 }
 
-static void
+void
 plug_in_progress_init (PlugIn *plug_in,
 		       char   *message,
 		       gint   gdisp_ID)
@@ -3433,7 +3171,7 @@ plug_in_progress_init (PlugIn *plug_in,
 					plug_in_progress_cancel, plug_in);
 }
 
-static void
+void
 plug_in_progress_update (PlugIn *plug_in,
 			 double  percentage)
 {
@@ -3442,210 +3180,3 @@ plug_in_progress_update (PlugIn *plug_in,
   
   progress_update (plug_in->progress, percentage);
 }
-
-static Argument*
-progress_init_invoker (Argument *args)
-{
-  int success = FALSE;
-
-  if (current_plug_in && current_plug_in->open)
-    {
-      success = TRUE;
-      if (no_interface == FALSE)
-	plug_in_progress_init (current_plug_in, args[0].value.pdb_pointer,
-			       args[1].value.pdb_int);
-    }
-
-  return procedural_db_return_args (&progress_init_proc, success);
-}
-
-static Argument*
-progress_update_invoker (Argument *args)
-{
-  int success = FALSE;
-
-  if (current_plug_in && current_plug_in->open)
-    {
-      success = TRUE;
-      if (no_interface == FALSE)
-	plug_in_progress_update (current_plug_in, args[0].value.pdb_float);
-    }
-
-  return procedural_db_return_args (&progress_update_proc, success);
-}
-
-static Argument*
-message_invoker (Argument *args)
-{
-  g_message (args[0].value.pdb_pointer, NULL, NULL);
-  return procedural_db_return_args (&message_proc, TRUE);
-}
-
-static Argument*
-message_handler_get_invoker (Argument *args)
-{
-  Argument *return_args;
-
-  return_args = procedural_db_return_args (&message_handler_get_proc, TRUE);
-  return_args[1].value.pdb_int = message_handler;
-  return return_args;
-}
-
-static Argument*
-message_handler_set_invoker (Argument *args)
-{
-  int success = TRUE;
- 
-  if ((args[0].value.pdb_int >= MESSAGE_BOX) &&
-      (args[0].value.pdb_int <= CONSOLE))
-    message_handler = args[0].value.pdb_int;
-  else
-    success = FALSE;
- 
-  return procedural_db_return_args (&message_handler_set_proc, success);
-}
-
-static Argument*
-plugin_temp_PDB_name_invoker (Argument *args)
-{
-  Argument *return_args;
-  static gint proc_number = 0;
-  static gchar *proc_name = "temp_plugin_number_%d";
-  static gchar temp_area[20+10]; /* 10 should allow enough plugins! */
-
-  return_args = procedural_db_return_args (&plugin_temp_PDB_name_proc, TRUE);
-  sprintf(temp_area,proc_name,proc_number++);
-  return_args[1].value.pdb_pointer = g_strdup(temp_area);
-  return return_args;
-}
-
-static int
-match_strings (regex_t * preg,
-               char *    a)
-{
-  int ret = regexec (preg, a, 0, NULL, 0);
-  return ret;
-}
-
-static Argument*
-plugins_query_invoker (Argument *args)
-{
-  Argument *return_args;
-  PlugInProcDef *proc_def;
-  gchar * search_str;
-  GSList *tmp;
-  gint i = 0;
-  guint num_plugins = 0;
-  gchar * *menu_strs;
-  gchar * *accel_strs;
-  gchar * *prog_strs;
-  gchar * *types_strs;
-  gchar * *realname_strs;
-  gint  *time_ints;
-  regex_t sregex;
-
-  /* Get the search string */
-  search_str = args[0].value.pdb_pointer;
-
-  if(search_str && strlen(search_str) > 0)
-    {
-      regcomp(&sregex,search_str,REG_ICASE);
-    }
-  else
-    search_str = NULL;
-
-  /* count number of plugin entries */
-  /* then allocate 4 arrays of correct size where we can store the
-   * strings.
-   */
-
-  tmp = proc_defs;
-  while (tmp)
-    {
-      proc_def = tmp->data;
-      tmp = tmp->next;
-      if (proc_def->prog && proc_def->menu_path)
-	{
-	  gchar * name = strrchr (proc_def->menu_path, '/');
-	  
-	  if (name)
-	    name = name + 1;
-	  else
-	    name = proc_def->menu_path;
-
-	  if(search_str && match_strings(&sregex,name))
-	    continue;
-
-	  num_plugins++;
-	}
-    }
-
-  return_args = procedural_db_return_args (&plugin_query_proc, TRUE);
-
-  menu_strs = g_new(gchar *,num_plugins);
-  accel_strs = g_new(gchar *,num_plugins);
-  prog_strs = g_new(gchar *,num_plugins);
-  types_strs = g_new(gchar *,num_plugins);
-  realname_strs = g_new(gchar *,num_plugins);
-  time_ints = g_new(gint ,num_plugins);
-
-  return_args[1].value.pdb_int = num_plugins;
-  return_args[2].value.pdb_pointer = menu_strs;
-
-  return_args[3].value.pdb_int = num_plugins;
-  return_args[4].value.pdb_pointer = accel_strs;
-
-  return_args[5].value.pdb_int = num_plugins;
-  return_args[6].value.pdb_pointer = prog_strs;
-
-  return_args[7].value.pdb_int = num_plugins;
-  return_args[8].value.pdb_pointer = types_strs;
-
-  return_args[9].value.pdb_int = num_plugins;
-  return_args[10].value.pdb_pointer = time_ints;
-
-  return_args[11].value.pdb_int = num_plugins;
-  return_args[12].value.pdb_pointer = realname_strs;
-
-  tmp = proc_defs;
-  while (tmp)
-    {
-
-      if(i > num_plugins)
-	g_error (_("Internal error counting plugins"));
-
-      proc_def = tmp->data;
-      tmp = tmp->next;
-
-      if (proc_def->prog && proc_def->menu_path)
-	{
-	  ProcRecord *pr = &proc_def->db_info;
-
-	  gchar * name = strrchr (proc_def->menu_path, '/');
-	  
-	  if (name)
-	    name = name + 1;
-	  else
-	    name = proc_def->menu_path;
-	  
-	  if(search_str && match_strings(&sregex,name))
-	    continue;
-
-	  menu_strs[i] = g_strdup(proc_def->menu_path);
-	  accel_strs[i] = g_strdup(proc_def->accelerator);
-	  prog_strs[i] = g_strdup(proc_def->prog);
-	  types_strs[i] = g_strdup(proc_def->image_types);
-	  time_ints[i] = proc_def->mtime;
-	  realname_strs[i] = g_strdup(pr->name);
-
-	  i++;
-	}
-    }
-
-  /* This I hope frees up internal stuff */
-  if(search_str)
-    free (sregex.buffer);
-  
-  return return_args;
-}
-

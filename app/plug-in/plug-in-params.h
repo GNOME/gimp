@@ -183,4 +183,10 @@ void plug_in_add_internal (PlugInProcDef* proc_def);
 GSList* plug_in_extensions_parse  (char     *extensions);
 int     plug_in_image_types_parse (char     *image_types);
 
+void plug_in_progress_init   (PlugIn *plug_in, char *message, gint gdisp_ID);
+void plug_in_progress_update (PlugIn *plug_in, double percentage);
+
+extern PlugIn *current_plug_in;
+extern GSList *proc_defs;
+
 #endif /* __PLUG_IN_H__ */

@@ -232,6 +232,7 @@ gimp_SOURCES = \
 	install.h		\
 	interface.c		\
 	interface.h		\
+	interface_cmds.c	\
 	internal_procs.c	\
 	internal_procs.h	\
 	invert.c		\
@@ -306,6 +307,7 @@ gimp_SOURCES = \
 	pixmaps2.h		\
 	plug_in.c		\
 	plug_in.h		\
+	plug_in_cmds.c		\
 	posterize.c		\
 	posterize.h		\
 	preferences_dialog.c	\

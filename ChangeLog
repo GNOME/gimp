@@ -1,3 +1,23 @@
+Mon May  3 12:04:47 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/plug_in.pdb
+	* tools/pdbgen/interface.pdb: new files
+
+	* tools/pdbgen/app.pl: add no_id_lookup option
+
+	* tools/pdbgen/Makefile.am: added new pdb files, plug_in.h
+
+	* tools/pdbgen/enums.pl: plug_in.h enums
+
+	* app/plug_in.[ch]: removed PDB stuff, exported current_plug_in,
+	proc_defs, and plug_in_progress_{init,update}
+
+	* app/interface_cmds.c
+	* app/plug_in_cmds.c
+	* app/internal_procs.c: pdbgenned files
+
+	* app/Makefile.am: new files: interface_cmds.c, plug_in_cmds.c
+
 Sun May  2 14:56:52 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimpimage.h: guide types used to start at 1, so make them
