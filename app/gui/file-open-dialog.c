@@ -118,7 +118,7 @@ file_open_dialog_menu_init (void)
 
       basename = g_path_get_basename (file_proc->prog);
 
-      lowercase_basename = g_ascii_strdown (basename);
+      lowercase_basename = g_ascii_strdown (basename, -1);
 
       g_free (basename);
 

@@ -112,7 +112,7 @@ file_save_dialog_menu_init (void)
 
       g_free (basename);
 
-      lowercase_page = g_ascii_strdown (page);
+      lowercase_page = g_ascii_strdown (page, -1);
 
       g_free (page);
 

@@ -723,9 +723,8 @@ static void
 mesg_body_callback (GtkTextBuffer *buffer,
 		    gpointer       data)
 {
-  GtkTextIter   start_iter;
-  GtkTextIter   end_iter;
-  gchar        *text;
+  GtkTextIter start_iter;
+  GtkTextIter end_iter;
 
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
   gtk_text_iter_backward_char (&end_iter);

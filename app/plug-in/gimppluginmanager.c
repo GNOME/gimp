@@ -2594,7 +2594,7 @@ plug_in_make_menu_entry (gpointer         foo,
 
   g_free (basename);
 
-  lowercase_page = g_ascii_strdown (help_page);
+  lowercase_page = g_ascii_strdown (help_page, -1);
 
   g_free (help_page);
 

@@ -1907,7 +1907,7 @@ load_image (char *filename)
 	     * they will be mapped back to typical Windows
 	     * fonts, sigh...
 	     */
-	    name = g_ascii_strdown (name);
+	    name = g_ascii_strdown (name, -1);
 
 	    if (strcmp (name, "system") == 0
 		|| strcmp (name, "fixedsys") == 0)

@@ -475,7 +475,7 @@ save_image (Config *config,
       s_null =    "(char*) 0";
     }
 
-  macro_name = g_ascii_strup (config->prefixed_name);
+  macro_name = g_ascii_strup (config->prefixed_name, -1);
 
   basename = g_path_get_basename (config->file_name);
 
