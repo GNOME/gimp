@@ -1,3 +1,14 @@
+
+Tue Jun 13 22:38:22 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* app/edit_selection.c
+
+	Fixed problem with selection outline. The outline drawing did not 
+	take acount of the display offset so that if you moved a selection
+	to the edge of an image that cause the image to scroll in the viewing
+	window the section outline was drawn incorrectly.
+
+
 2000-06-13  Jay Cox  <jaycox@gimp.org>
 
 	* tools/pdbgen/pdb/help.pdb, app/help_cmds.c:

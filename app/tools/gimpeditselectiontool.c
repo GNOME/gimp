@@ -47,6 +47,7 @@ struct _EditSelection
 {
   gint                origx, origy;      /*  last x and y coords             */
   gint                cumlx, cumly;      /*  cumulative changes to x and yed */
+  gint                offset_x,offset_y; /*  Offset of display at start sel  */
   gint                x, y;              /*  current x and y coords          */
 
   gint                x1, y1;            /*  bounding box of selection mask  */
@@ -131,6 +132,9 @@ init_edit_selection (Tool           *tool,
 
   edit_select.cumlx = 0;
   edit_select.cumly = 0;
+
+  edit_select.offset_x = gdisp->offset_x;
+  edit_select.offset_y = gdisp->offset_y;
 
   /*  Make a check to see if it should be a floating selection translation  */
   if (edit_type == MaskToLayerTranslate && gimage_floating_sel (gdisp->gimage))
@@ -571,8 +575,9 @@ edit_selection_draw (Tool *tool)
       break;
 
     case FloatingSelTranslate:
-      diff_x = SCALEX (gdisp, edit_select.cumlx);
-      diff_y = SCALEY (gdisp, edit_select.cumly);
+      diff_x = SCALEX (gdisp, edit_select.cumlx) - gdisp->offset_x + edit_select.offset_x;
+      diff_y = SCALEY (gdisp, edit_select.cumly) - gdisp->offset_y + edit_select.offset_y;
+
 
      seg = select->segs_in;
       for (i = 0; i < select->num_segs_in; i++)
