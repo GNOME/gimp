@@ -171,7 +171,7 @@ sub MY::install {
    my $install = $self->SUPER::install(@_);
    ($install =~ s/\b(un)?install\b/really-$1install/g) or return $install;
    '
-install ::
+install :: install-po
 	@for dir in \
 	   $(INSTALLPRIVLIB) \
 	   $(INSTALLARCHLIB) \
@@ -192,6 +192,9 @@ install ::
 	$(MAKE) really-install install-plugins'."
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
+install-po:
+	cd po && \$(MAKE) install-po
+        
 ".$install;
 }
 
@@ -261,7 +264,7 @@ setver:
 }
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
-@DIRS= qw/Gimp Net UI/;
+@DIRS= qw/Gimp Net UI po/;
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
 # temporarily disabled because of politics

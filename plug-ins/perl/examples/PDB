@@ -172,7 +172,9 @@ sub set_current_function {
          $imagetypes_label->set($imagetypes);
          $last_modified_label->set(strftime("%Y-%m-%d %H:%M:%S (%Z)", localtime ($mtime)));
       };
-   }
+      warn $@ if $@;
+   };
+   warn $@ if $@;
 }
 
 sub set_clist {

@@ -9,6 +9,10 @@ Revision history for Gimp-Perl extension.
         - updated to new commandline options.
         - updated enums.pl (And therefore, enumerations).
         - applied 5.004 compatibility patch by artie@kmfms.com.
+        - applied glow_steel gradient patch by Michael Fowler
+          <michael@shoebox.net>.
+        - removed gimp_proc_db_proc_info from xs code in favour
+          of the PDB call.
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

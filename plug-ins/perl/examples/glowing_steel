@@ -153,6 +153,8 @@ sub perl_fu_brushed_metal {
   my $drawable = shift;
   my $length = shift;
   my $angle = shift;
+  my $use_gradient = shift;
+  my $gradient = shift;
 
   gimp_undo_push_group_start($image);
 
@@ -182,8 +184,11 @@ sub perl_fu_brushed_metal {
   gimp_selection_none($image);
   
   # Render the actual effect into our temporary layer
-  plug_in_solid_noise($image, $templ, 0, 0, time(),
-		      1, 1.5, 2.5);
+  plug_in_solid_noise($image, $templ, 0, 0, time(), 1, 1.5, 2.5);
+
+  perl_fu_map_to_gradient($image, $templ, $gradient)
+    if $use_gradient && defined($gradient) && $gradient ne '';
+
   gimp_brightness_contrast($templ, 50, 0);
   plug_in_noisify($image, $templ, 0, 0.3, 0.3, 0.3, 0);
   plug_in_mblur($image, $templ, 0, $length, $angle);
@@ -282,8 +287,10 @@ register
   N_"<Image>/Filters/Render/Brushed Metal...",
   "*",
   [
-   [PF_SLIDER, "stroke_length", "Length", 25, [1, 100, 1]],
-   [PF_SLIDER, "angle", "Angle (0-359)", 135, [0, 359, 1]]
+   [PF_SLIDER,   "stroke_length", "Length", 25, [1, 100, 1]],
+   [PF_SLIDER,   "angle", "Angle (0-359)", 135, [0, 359, 1]],
+   [PF_BOOL,     "use_gradient", "use the gradient specified below?", 0],
+   [PF_GRADIENT, "gradient", "Default"],
   ],
   \&perl_fu_brushed_metal;
 

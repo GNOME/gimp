@@ -1,24 +1,3 @@
-2000-09-28  Rodrigo Sancho Senosiain  <ruy_ikari@bigfoot.com>
-
-	* es.po: updated spanish translation.
-
-Wed Sep 27 22:35:38 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* cs.po: Updated translation.
-
-Sat Sep  2 23:39:24 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* cs.po: Updated translation.
-
-2000-08-27  Sven Neumann  <sven@gimp.org>
-
-	Moved all po-files over to this place and migrated to
-	standard build process.
-
-Fri Aug 25 11:14:07 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
-
-	* cs.po: Updated translation.
-
 2000-06-04  Valek Filippov  <frob@df.ru>
 
 	* ru.po: Updated russian translation.

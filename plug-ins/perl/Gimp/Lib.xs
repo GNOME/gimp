@@ -1425,6 +1425,8 @@ _gimp_procedure_available(proc_name)
 	OUTPUT:
 	RETVAL
 
+#if 0
+
 # checks wether a gimp procedure exists
 void
 gimp_procedural_db_proc_info(proc_name)
@@ -1460,6 +1462,8 @@ gimp_procedural_db_proc_info(proc_name)
 		    PUSHs (newSV_paramdefs (return_vals, nreturn_vals));destroy_paramdefs (return_vals, nreturn_vals);
 		  }
 	}
+
+#endif
 
 void
 gimp_call_procedure (proc_name, ...)
