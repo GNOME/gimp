@@ -1,5 +1,10 @@
 2000-03-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_mpege.c: no need to abbreviate Image to Img here
+
+2000-03-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/iwarp.c: applied gimp-simon-20000325-1 provided
 	by Simon Budig <Simon.Budig@unix-ag.org> which fixes bug #6224.
 

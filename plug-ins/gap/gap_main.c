@@ -544,7 +544,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-			 N_("<Image>/Video/Split Img to Frames..."),
+			 N_("<Image>/Video/Split Image to Frames..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_split, nreturn_split,

@@ -161,7 +161,7 @@ int p_mpege_info(t_anim_info *ainfo_ptr, char *errlist, t_gap_mpeg_encoder encod
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
-  argv[l_idx].label_txt = _("    or 'Split Img to Frames' from the Video Menu)");
+  argv[l_idx].label_txt = _("    or 'Split Image to Frames' from the Video Menu)");
 
   l_idx++;
   p_init_arr_arg(&argv[l_idx], WGT_LABEL_LEFT);
