@@ -565,6 +565,7 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
+"Б╕льш яскрав╕ кольори зам╕нювати на менш яскрав╕ та навпаки"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:754 plug-ins/common/AlienMap.c:1489
@@ -850,7 +851,7 @@ msgstr "Пор╕г:"
 
 #: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
+msgstr "Зупинятись коли р╕зняця п╕ксел╕в менша за ╖хн╕ значення"
 
 #: plug-ins/Lighting/lighting_ui.c:557 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
@@ -967,7 +968,7 @@ msgstr "Осв╕тлення:"
 
 #: plug-ins/Lighting/lighting_ui.c:754 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "Степ╕нь замальовування власним кольором там куди не потрапляють прям╕ промен╕"
 
 #: plug-ins/Lighting/lighting_ui.c:766 plug-ins/Lighting/lighting_ui.c:805
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
@@ -976,7 +977,7 @@ msgstr "Дифуз╕я:"
 
 #: plug-ins/Lighting/lighting_ui.c:779 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "╤нтенсивн╕сть початкового кольору при осв╕тленн╕ джерелом св╕тла"
 
 #: plug-ins/Lighting/lighting_ui.c:787 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
@@ -984,7 +985,7 @@ msgstr "Рефлекс╕я"
 
 #: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "П╕двищення значень змушу╓ об'╓кт в╕дбивати б╕льше св╕тла (зда╓ться св╕тл╕шим)"
 
 #: plug-ins/Lighting/lighting_ui.c:830 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
@@ -992,20 +993,20 @@ msgstr "В╕дбивання:"
 
 #: plug-ins/Lighting/lighting_ui.c:843 plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
-msgstr ""
+msgstr "Керу╓ ╕нтенсивн╕стю виблиск╕в"
 
 #: plug-ins/Lighting/lighting_ui.c:855 plug-ins/MapObject/mapobject_ui.c:987
 #: plug-ins/common/jigsaw.c:2598
 msgid "Highlight:"
-msgstr ""
+msgstr "Виблиски:"
 
 #: plug-ins/Lighting/lighting_ui.c:868 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
-msgstr ""
+msgstr "П╕двищення значень робить виблиски р╕зк╕шими"
 
 #: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
-msgstr "Установки рель╓фного перетворення"
+msgstr "Параметри рель╓фного перетворення"
 
 #: plug-ins/Lighting/lighting_ui.c:907
 msgid "Enable Bump Mapping"
@@ -2231,9 +2232,8 @@ msgid "Bottom Edge"
 msgstr "Нижн╕й край"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "По вертикал╕:"
+msgstr "Вертикальна основа:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -4282,23 +4282,23 @@ msgstr "Викривлен╕"
 
 #: plug-ins/common/jigsaw.c:2628
 msgid "Each piece has straight sides"
-msgstr ""
+msgstr "Кожен шматок ма╓ прям╕ сторони"
 
 #: plug-ins/common/jigsaw.c:2629
 msgid "Each piece has curved sides"
-msgstr ""
+msgstr "Кожен шматок ма╓ викривлен╕ сторони"
 
 #: plug-ins/common/jigsaw.c:2637
 msgid "Disable Tooltips"
-msgstr ""
+msgstr "Вимкнути п╕дказки"
 
 #: plug-ins/common/jigsaw.c:2645
 msgid "Toggle Tooltips on/off"
-msgstr ""
+msgstr "Ув╕мкнути/вимкнути п╕дказки"
 
 #: plug-ins/common/jpeg.c:417
 msgid "Export Preview"
-msgstr ""
+msgstr "Перегляд файлу для експорту"
 
 #: plug-ins/common/jpeg.c:740
 #, c-format
@@ -4421,7 +4421,7 @@ msgstr "Оператор ефекту"
 
 #: plug-ins/common/lic.c:1071
 msgid "Derivative"
-msgstr ""
+msgstr "Пох╕дна"
 
 #: plug-ins/common/lic.c:1072 plug-ins/common/sinus.c:1984
 msgid "Gradient"
@@ -4429,7 +4429,7 @@ msgstr "Град╕╓нт"
 
 #: plug-ins/common/lic.c:1078
 msgid "Convolve"
-msgstr ""
+msgstr "Звертання"
 
 #: plug-ins/common/lic.c:1083
 msgid "With White Noise"
@@ -4511,19 +4511,19 @@ msgstr ""
 
 #: plug-ins/common/mapcolor.c:139
 msgid "First Source Color"
-msgstr ""
+msgstr "Перший початковий кол╕р"
 
 #: plug-ins/common/mapcolor.c:140
 msgid "Second Source Color"
-msgstr ""
+msgstr "Другий початковий кол╕р"
 
 #: plug-ins/common/mapcolor.c:141
 msgid "First Destination Color"
-msgstr ""
+msgstr "Перший ц╕льовий кол╕р"
 
 #: plug-ins/common/mapcolor.c:142
 msgid "Second Destination Color"
-msgstr ""
+msgstr "Другий ц╕льовий кол╕р"
 
 #: plug-ins/common/mapcolor.c:346
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
@@ -4539,26 +4539,28 @@ msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
+"В╕дображення кольор╕в / П╕дб╕р переднього плану ╕ тла:\n"
+"Не можна використовувати на с╕рих чи ╕ндексованих зображеннях"
 
 #: plug-ins/common/mapcolor.c:434
 msgid "Adjusting Foreground/Background"
-msgstr ""
+msgstr "П╕дб╕р переднього плану ╕ тла"
 
 #: plug-ins/common/mapcolor.c:482
 msgid "Mapping colors"
-msgstr ""
+msgstr "В╕дображення кольор╕в"
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
-msgstr ""
+msgstr "В╕дображення д╕апазону кольор╕в"
 
 #: plug-ins/common/mapcolor.c:604
 msgid "Source color range"
-msgstr ""
+msgstr "Початковий д╕апазон кольор╕в"
 
 #: plug-ins/common/mapcolor.c:605
 msgid "Destination color range"
-msgstr ""
+msgstr "Ц╕льовий д╕апазон кольор╕в"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:662
 #: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2111
@@ -4634,27 +4636,27 @@ msgstr "Завантаження ф╕льму MPEG..."
 
 #: plug-ins/common/newsprint.c:167
 msgid "Round"
-msgstr ""
+msgstr "Коло"
 
 #: plug-ins/common/newsprint.c:176
 msgid "Line"
-msgstr ""
+msgstr "Л╕н╕я"
 
 #: plug-ins/common/newsprint.c:185
 msgid "Diamond"
-msgstr ""
+msgstr "Ромб"
 
 #: plug-ins/common/newsprint.c:193
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS-квадрат (Евкл╕дова точка)"
 
 #: plug-ins/common/newsprint.c:202
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS-ромб"
 
 #: plug-ins/common/newsprint.c:462 plug-ins/common/newsprint.c:1359
 msgid "Intensity"
-msgstr ""
+msgstr "╤нтенсивн╕сть"
 
 #: plug-ins/common/newsprint.c:566
 msgid "<Image>/Filters/Distorts/Newsprint..."
@@ -4662,11 +4664,11 @@ msgstr "<Image>/Ф╕льтри/Спотворення/Газета..."
 
 #: plug-ins/common/newsprint.c:666
 msgid "Newsprintifing..."
-msgstr ""
+msgstr "Газетне перетворення..."
 
 #: plug-ins/common/newsprint.c:1051
 msgid "Spot Function:"
-msgstr ""
+msgstr "Крапельна функц╕я..."
 
 #: plug-ins/common/newsprint.c:1206
 msgid "Newsprint"
@@ -4675,7 +4677,7 @@ msgstr "Газета"
 #. resolution settings
 #: plug-ins/common/newsprint.c:1229
 msgid "Resolution"
-msgstr ""
+msgstr "Розд╕льна здатн╕сть"
 
 #: plug-ins/common/newsprint.c:1253
 msgid "Input SPI:"
@@ -4717,11 +4719,11 @@ msgstr "<Image>/Ф╕льтри/Покращення/Нел╕н╕йний ф╕льтр..."
 
 #: plug-ins/common/nlfilt.c:263 plug-ins/common/nlfilt.c:343
 msgid "NL Filter"
-msgstr ""
+msgstr "Нел╕н╕йний ф╕льтр"
 
 #: plug-ins/common/nlfilt.c:373
 msgid "Filter"
-msgstr ""
+msgstr "Ф╕льтр"
 
 #: plug-ins/common/nlfilt.c:377
 msgid "Alpha Trimmed Mean"
@@ -4733,7 +4735,7 @@ msgstr ""
 
 #: plug-ins/common/nlfilt.c:381
 msgid "Edge Enhancement"
-msgstr ""
+msgstr "П╕дсилення гран╕"
 
 #: plug-ins/common/noisify.c:141
 msgid "<Image>/Filters/Noise/Noisify..."
@@ -4749,11 +4751,11 @@ msgstr "Зашумлення"
 
 #: plug-ins/common/noisify.c:536
 msgid "Independent"
-msgstr ""
+msgstr "Незалежне"
 
 #: plug-ins/common/noisify.c:549 plug-ins/common/noisify.c:563
 msgid "Gray:"
-msgstr ""
+msgstr "С╕рий:"
 
 #: plug-ins/common/noisify.c:671
 #, c-format
@@ -4782,20 +4784,20 @@ msgstr "Наднова"
 
 #: plug-ins/common/nova.c:493
 msgid "SuperNova Color Picker"
-msgstr ""
+msgstr "Виб╕р ькольору Надново╖"
 
 #: plug-ins/common/nova.c:516
 msgid "Spokes:"
-msgstr ""
+msgstr "Плями:"
 
 #: plug-ins/common/nova.c:528 plug-ins/common/sparkle.c:453
 msgid "Random Hue:"
-msgstr ""
+msgstr "Випадковий в╕дт╕нок:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:596
 msgid "Center of SuperNova"
-msgstr ""
+msgstr "Центр Надново╖"
 
 #: plug-ins/common/oilify.c:119
 msgid "<Image>/Filters/Artistic/Oilify..."
@@ -4819,11 +4821,11 @@ msgstr "Розм╕р маски:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
-msgstr ""
+msgstr "Розр╕з паперу"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
-msgstr ""
+msgstr "Д╕лення"
 
 #: plug-ins/common/papertile.c:305 plug-ins/gimpressionist/size.c:120
 #: plug-ins/gimpressionist/sizemap.c:451
@@ -4832,31 +4834,31 @@ msgstr "Розм╕р:"
 
 #: plug-ins/common/papertile.c:311
 msgid "Fractional Pixels"
-msgstr ""
+msgstr "Дробов╕ п╕ксел╕"
 
 #: plug-ins/common/papertile.c:318
 msgid "Ignore"
-msgstr ""
+msgstr "╤╜норувати"
 
 #: plug-ins/common/papertile.c:320
 msgid "Force"
-msgstr ""
+msgstr "П╕дсилювати"
 
 #: plug-ins/common/papertile.c:333
 msgid "Centering"
-msgstr ""
+msgstr "Центрування"
 
 #: plug-ins/common/papertile.c:346
 msgid "Movement"
-msgstr ""
+msgstr "Рух"
 
 #: plug-ins/common/papertile.c:360
 msgid "Max (%):"
-msgstr ""
+msgstr "Максимум (%):"
 
 #: plug-ins/common/papertile.c:366
 msgid "Wrap Around"
-msgstr ""
+msgstr "Завертання"
 
 #: plug-ins/common/papertile.c:375
 msgid "Background Type"
@@ -5223,11 +5225,11 @@ msgstr "PS: неможливо ╕нтерпретувати файл"
 
 #: plug-ins/common/ps.c:976
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "Збереження PostScript не може обробляти зображення з альфа-каналами"
 
 #: plug-ins/common/ps.c:987
 msgid "PS: cannot operate on unknown image types"
-msgstr ""
+msgstr "PS: неможливо працювати з нев╕домими типами зображення"
 
 #: plug-ins/common/ps.c:996
 msgid "PS: can't open file for writing"
@@ -7196,19 +7198,19 @@ msgstr "Авторськ╕ права:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:642
 msgid "DB Browser (by name - please wait)"
-msgstr ""
+msgstr "Перегляд бази даних (за назвою - зачекайте)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:666
 msgid "DB Browser (by blurb - please wait)"
-msgstr ""
+msgstr "Перегляд бази даних (за анотац╕╓ю - зачекайте)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:676
 msgid "DB Browser (please wait)"
-msgstr ""
+msgstr "Перегляд бази даних (зачекайте)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:742
 msgid "DB Browser"
-msgstr "Перегляд БД"
+msgstr "Перегляд бази даних"
 
 #: plug-ins/fits/fits.c:362
 msgid "Error during open of FITS file"
@@ -12377,9 +12379,8 @@ msgid "Print Color Adjust"
 msgstr "П╕дб╕р кольору друку"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
-msgstr "Скасувати"
+msgstr "Типово"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
@@ -12430,14 +12431,12 @@ msgid "cm"
 msgstr "см"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Рамка:"
+msgstr "Права межа:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Нижн╕й край"
+msgstr "Нижня межа:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12445,16 +12444,15 @@ msgstr "Портрет"
 
 #: plug-ins/print/gimp_main_window.c:458
 msgid "Landscape"
-msgstr "Ландшафт"
+msgstr "Альбом"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Верхом донизу"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Ландшафт"
+msgstr "Пейзаж"
 
 #.
 #. *  Printer settings frame...
@@ -12483,9 +12481,8 @@ msgstr "Тип чорнила:"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Масштабування:"
+msgstr "Масштабування"
 
 #: plug-ins/print/gimp_main_window.c:567 plug-ins/print/gimp_main_window.c:576
 msgid "Scaling:"
@@ -12507,9 +12504,8 @@ msgstr "Встановити масштаб зображення"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:656
-#, fuzzy
 msgid "Image Settings"
-msgstr "Установки в╕дт╕нка"
+msgstr "Парамери зображення"
 
 #: plug-ins/print/gimp_main_window.c:676
 msgid "Line Art"
@@ -12554,9 +12550,8 @@ msgstr "Налаштування"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:840
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Принтер:"
+msgstr "Модель принтера:"
 
 #.
 #. * PPD file...
@@ -12595,14 +12590,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Файл/Друкувати..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Файл/Друкувати..."
+msgstr "<Image>/Файл/Друкувати (GTK)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Файл/Друкувати..."
+msgstr "<Image>/Файл/Друкувати (GIMP)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -12763,7 +12756,7 @@ msgstr "Передача даних TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Розш./Переглядач WWW/В╕дкрити URL..."
+msgstr "<Toolbox>/Розш./Перегляд WWW/В╕дкрити URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
@@ -12873,21 +12866,3 @@ msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Помилка: файл властивостей XJT %s порожн╕й"
-
-#~ msgid "Output Level:"
-#~ msgstr "Р╕вень виводу:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "Нормальний масштаб"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "Експериментальний л╕н╕йний масштаб"
-
-#~ msgid "Image Type"
-#~ msgstr "Тип зображення"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "Установки масштабування та кольор╕в"
-
-#~ msgid "Driver:"
-#~ msgstr "Драйвер:"
