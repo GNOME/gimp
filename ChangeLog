@@ -1,3 +1,8 @@
+2004-02-08  Hans Breuer  <hans@breuer.org>
+
+	* plug-ins/common/nova.c : access dest[alpha] only if (has_alpha);
+	remove stray semicolon, fixes bug #132503	
+
 2004-02-08  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in-rc.c (plug_in_rc_parse): return FALSE if the

@@ -1006,7 +1006,7 @@ nova (GimpDrawable *drawable,
                        break;
                      }
 
-                   if (has_alpha);
+                   if (has_alpha)
                      dest[alpha] = new_alpha * 255.0;
 
                    src += src_rgn.bpp;
