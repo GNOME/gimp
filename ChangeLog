@@ -1,5 +1,11 @@
 2003-02-17  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_size_allocate):
+	calculate the size of the handle (the small triangles) from the
+	scale's requisition, not from its allocation. Spotted by drc.
+
+2003-02-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c: s/"Add Mask to Layer"/"Add Layer Mask"/
 	to match an already existing string,
 
