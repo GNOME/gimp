@@ -1,3 +1,8 @@
+2003-04-27  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint-funcs/paint-funcs.c (shrink_line): Mostly rewritten to
+	improve accuracy. Fixes bug #104693.
+
 2003-04-25  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint-funcs/paint-funcs.c: Some reformattings to improve

@@ -2864,19 +2864,19 @@ shrink_line (gdouble               *dest,
 	     gint                   width,
 	     GimpInterpolationType  interp)
 {
-  gint x, b;
-  gdouble *source, *destp;
-  register gdouble accum;
-  register guint max;
-  register gdouble mant, tmp;
-  register const gdouble step = old_width / (gdouble) width;
-  register const gdouble inv_step = 1.0 / step;
-  gdouble position;
+  gint          x;
+  gint          b;
+  gdouble      *srcp;
+  gdouble      *destp;
+  gdouble       accum;
+  gdouble       slice;
+  const gdouble avg_ratio = (gdouble) width / old_width;
+  gint          srcpos;
 
 #if 0
   g_printerr ("shrink_line bytes=%d old_width=%d width=%d interp=%d "
-              "step=%f inv_step=%f\n",
-              bytes, old_width, width, interp, step, inv_step);
+              "avg_ratio=%f\n",
+              bytes, old_width, width, interp, avg_ratio);
 #endif
 
 
@@ -2884,52 +2884,49 @@ shrink_line (gdouble               *dest,
     {
       /* This algorithm calculates the weighted average of pixel data that
          each output pixel must receive, taking into account that it always
-         scales down, i.e. there are more than one input pixels per each
+         scales down, i.e. there's always more than one input pixel per each
          output pixel.
-
-         source and destp are the data pointers, position is the index to
-         the split point, mant is the partial pixel data, tmp is where the
-         output value is calculated, accum is used to accumulate only whole
-         pixels, max is the number of whole pixels (if any).
       */
 
-      /* Both input and output data are interleaved.  Calculate the pointer
-         to each.  */
-      source = &src[b];
+      srcp = &src[b];
       destp = &dest[b];
 
-      position = -1;
+      srcpos = 0;
 
-      /*  Load the first partial pixel data with one whole input pixel.  */
-      mant = *source;
+      /* Initialize accum to the first pixel slice.  As there is no partial
+         pixel at start, that value is 0.  */
+      accum = 0.0;
 
       for (x = 0; x < width; x++)
         {
-          source += bytes;
-          accum = 0;
-          max = (int) (position + step) - (int) position;
-          max--;
-
-          /* Get all possible whole pixels.  */
-          while (max)
+          /* Accumulate whole pixels.  */
+          while (srcpos < old_width)
             {
-              accum += *source;
-              source += bytes;
-              max--;
+              accum += *srcp;
+              srcp += bytes;
+
+              srcpos += width;
             }
 
-          tmp = accum + mant;      /* Add up all the whole pixels and the
-                                      previous partial pixel.  */
-          mant = (position + step) - (int) (position + step);
-          mant *= *source;         /* Calculate the last partial pixel.  */
+          srcpos -= old_width;
 
-          tmp += mant;             /* Add the last chunk to final result.  */
-          tmp *= inv_step;         /* Scale the pixel down (average.) */
-          mant = *source - mant;   /* Take the remaining pixel data.  */
-          *destp = tmp;            /* Store the final result.  */
-          destp += bytes;          /* Advance to the next output pixel.  */
-          position += step;        /* Advance to the next pixel position.  */
+          /* We've accumulated a whole pixel where just a slice of it was
+             needed.  Subtract it now.  */
+          slice = (srcpos == 0) ? 0.0 : (srcp[-bytes] * srcpos) / width;
+          accum -= slice;
+
+          *destp = accum * avg_ratio;
+          destp += bytes;
+
+          /* That slice is the initial value for the next round.  */
+          accum = slice;
         }
+
+#if 0
+      /* Sanity check: srcp should point to the next-to-last position.  */
+      if (!(srcp - src - b == old_width * bytes))
+        g_warning ("Assertion (srcp - src - b == old_width * bytes) failed.");
+#endif
     }
 }
 
@@ -3565,7 +3562,7 @@ fatten_region (PixelRegion *src,
     {
       max[x][0] = 0;         /* buf[0][x] is always 0 */
       max[x][1] = buf[1][x]; /* MAX (buf[1][x], max[x][0]) always = buf[1][x]*/
-      for (j = 2; j < yradius+1; j++)
+      for (j = 2; j < yradius + 1; j++)
 	max[x][j] = MAX(buf[j][x], max[x][j-1]);
     }
 
@@ -3942,7 +3939,7 @@ border_region (PixelRegion *src,
       density[ x] += yradius;
       density[-x]  = density[x];
     }
-  for (x = 0; x < (xradius+1); x++) /* compute density[][] */
+  for (x = 0; x < (xradius + 1); x++) /* compute density[][] */
     {
       register gdouble tmpx, tmpy, dist;
       guchar a;
