@@ -252,7 +252,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   gimp_help_set_help_data (scales->hex_entry,
                            _("Hexadecimal color notation as used in HTML"),
                            NULL);
-  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 7);
+  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 8);
   gtk_entry_set_max_length (GTK_ENTRY (scales->hex_entry), 6);
   gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (scales->hex_entry);
@@ -545,8 +545,12 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
 	      gimp_color_scales_update_scales (scales, -1);
 
               gimp_color_selector_color_changed (selector);
+
+              return FALSE;
 	    }
         }
+
+      gtk_entry_set_text (GTK_ENTRY (widget), buffer);
       break;
 
     default:

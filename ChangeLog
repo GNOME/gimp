@@ -1,5 +1,11 @@
 2003-04-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorscales.c: set the hex entry's width to 8
+	chars (works around bug #109594). Set the hex entry to its old
+	value if the user typed in unparseable garbage.
+
+2003-04-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagefile.c: reverted my last "fix" and fixed the
 	real bug: "tEXt::Thumb::Size" is optional, so don't fail if it's
 	not present. Plugged some memleaks.
