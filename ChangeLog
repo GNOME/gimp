@@ -1,5 +1,7 @@
 2003-11-30  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* configure.in: backed out inadvertant changes.
+
 	* app/composite/gimp-composite.c:
 	* app/composite/gimp-composite.h:
 	* app/main.c:
