@@ -34,20 +34,21 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_progress_box_class_init (GimpProgressBoxClass *klass);
-static void    gimp_progress_box_init       (GimpProgressBox      *box);
-static void    gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_progress_box_class_init (GimpProgressBoxClass *klass);
+static void     gimp_progress_box_init       (GimpProgressBox      *box);
+static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface);
 
 static GimpProgress *
-               gimp_progress_box_progress_start     (GimpProgress *progress,
-                                                     const gchar  *message,
-                                                     gboolean      cancelable);
-static void    gimp_progress_box_progress_end       (GimpProgress *progress);
-static void    gimp_progress_box_progress_set_text  (GimpProgress *progress,
-                                                     const gchar  *message);
-static void    gimp_progress_box_progress_set_value (GimpProgress *progress,
-                                                     gdouble       percentage);
-static gdouble gimp_progress_box_progress_get_value (GimpProgress *progress);
+                gimp_progress_box_progress_start     (GimpProgress *progress,
+                                                      const gchar  *message,
+                                                      gboolean      cancelable);
+static void     gimp_progress_box_progress_end       (GimpProgress *progress);
+static gboolean gimp_progress_box_progress_is_active (GimpProgress *progress);
+static void     gimp_progress_box_progress_set_text  (GimpProgress *progress,
+                                                      const gchar  *message);
+static void     gimp_progress_box_progress_set_value (GimpProgress *progress,
+                                                      gdouble       percentage);
+static gdouble  gimp_progress_box_progress_get_value (GimpProgress *progress);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -107,6 +108,7 @@ gimp_progress_box_progress_iface_init (GimpProgressInterface *progress_iface)
 {
   progress_iface->start     = gimp_progress_box_progress_start;
   progress_iface->end       = gimp_progress_box_progress_end;
+  progress_iface->is_active = gimp_progress_box_progress_is_active;
   progress_iface->set_text  = gimp_progress_box_progress_set_text;
   progress_iface->set_value = gimp_progress_box_progress_set_value;
   progress_iface->get_value = gimp_progress_box_progress_get_value;
@@ -150,6 +152,14 @@ gimp_progress_box_progress_end (GimpProgress *progress)
       box->active     = FALSE;
       box->cancelable = FALSE;
     }
+}
+
+static gboolean
+gimp_progress_box_progress_is_active (GimpProgress *progress)
+{
+  GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
+
+  return box->active;
 }
 
 static void

@@ -67,8 +67,8 @@ struct _PlugIn
   gint          n_return_vals;
 
   GimpProgress *progress;         /*  Progress dialog                         */
-  gboolean      progress_active;  /*  Is the progress currently used          */
   gboolean      progress_created; /*  Was the progress created by the plug-in */
+  gulong        progress_cancel_id;
 
   PlugInDef    *plug_in_def;      /*  Valid only during query() and init()    */
 };

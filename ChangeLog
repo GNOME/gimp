@@ -1,5 +1,24 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpprogress.[ch]: added virtual function
+	gboolean GimpProgressInterface::is_active().
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpstatusbar.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpprogressbox.c
+	* app/widgets/gimpprogressdialog.c
+	* app/widgets/gimpthumbbox.c: implement it.
+
+	* app/plug-in/plug-in.h: removed "gboolean progress_active" and
+	added "gulong progress_cancel_id" instead.
+
+	* app/plug-in/plug-in-progress.c: changed accordingly. Make sure
+	we correctly handle the "cancel" connections of progress instances
+	passed from other plug-ins.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-message.c
 	* app/plug-in/plug-in-run.c (plug_in_temp_run)
 	* libgimp/gimp.c (gimp_temp_proc_run): removed ENABLE_TEMP_RETURN

@@ -40,6 +40,7 @@ struct _GimpProgressInterface
                                 const gchar  *message,
                                 gboolean      cancelable);
   void           (* end)       (GimpProgress *progress);
+  gboolean       (* is_active) (GimpProgress *progress);
 
   void           (* set_text)  (GimpProgress *progress,
                                 const gchar  *message);
@@ -58,6 +59,7 @@ GimpProgress * gimp_progress_start              (GimpProgress *progress,
                                                  const gchar  *message,
                                                  gboolean      cancelable);
 void           gimp_progress_end                (GimpProgress *progress);
+gboolean       gimp_progress_is_active          (GimpProgress *progress);
 
 void           gimp_progress_set_text           (GimpProgress *progress,
                                                  const gchar  *message);

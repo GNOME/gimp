@@ -59,25 +59,21 @@ plug_in_progress_start (PlugIn      *plug_in,
 
   if (plug_in->progress)
     {
-      if (plug_in->progress_active)
-        {
-          gimp_progress_set_text (plug_in->progress, message);
-          gimp_progress_set_value (plug_in->progress, 0.0);
+      if (! plug_in->progress_cancel_id)
+        plug_in->progress_cancel_id =
+          g_signal_connect (plug_in->progress, "cancel",
+                            G_CALLBACK (plug_in_progress_cancel),
+                            plug_in);
 
-          return;
-        }
-
-      if (! gimp_progress_start (plug_in->progress, message, TRUE))
+      if (gimp_progress_is_active (plug_in->progress))
         {
           gimp_progress_set_text (plug_in->progress, message);
           gimp_progress_set_value (plug_in->progress, 0.0);
         }
-
-      g_signal_connect (plug_in->progress, "cancel",
-                        G_CALLBACK (plug_in_progress_cancel),
-                        plug_in);
-
-      plug_in->progress_active = TRUE;
+      else
+        {
+          gimp_progress_start (plug_in->progress, message, TRUE);
+        }
     }
 }
 
@@ -87,10 +83,14 @@ plug_in_progress_update (PlugIn  *plug_in,
 {
   g_return_if_fail (plug_in != NULL);
 
-  if (! (plug_in->progress && plug_in->progress_active))
-    plug_in_progress_start (plug_in, NULL, -1);
+  if (! plug_in->progress                           ||
+      ! gimp_progress_is_active (plug_in->progress) ||
+      ! plug_in->progress_cancel_id)
+    {
+      plug_in_progress_start (plug_in, NULL, -1);
+    }
 
-  if (plug_in->progress && plug_in->progress_active)
+  if (plug_in->progress && gimp_progress_is_active (plug_in->progress))
     gimp_progress_set_value (plug_in->progress, percentage);
 }
 
@@ -101,15 +101,15 @@ plug_in_progress_end (PlugIn *plug_in)
 
   if (plug_in->progress)
     {
-      if (plug_in->progress_active)
+      if (plug_in->progress_cancel_id)
         {
-          g_signal_handlers_disconnect_by_func (plug_in->progress,
-                                                plug_in_progress_cancel,
-                                                plug_in);
-          gimp_progress_end (plug_in->progress);
-
-          plug_in->progress_active = FALSE;
+          g_signal_handler_disconnect (plug_in->progress,
+                                       plug_in->progress_cancel_id);
+          plug_in->progress_cancel_id = 0;
         }
+
+      if (gimp_progress_is_active (plug_in->progress))
+        gimp_progress_end (plug_in->progress);
 
       if (plug_in->progress_created)
         {

@@ -35,23 +35,24 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_progress_dialog_class_init (GimpProgressDialogClass *klass);
-static void    gimp_progress_dialog_init       (GimpProgressDialog      *dialog);
-static void    gimp_progress_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_progress_dialog_class_init (GimpProgressDialogClass *klass);
+static void     gimp_progress_dialog_init       (GimpProgressDialog      *dialog);
+static void     gimp_progress_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static void    gimp_progress_dialog_response           (GtkDialog    *dialog,
-                                                        gint          response_id);
+static void     gimp_progress_dialog_response           (GtkDialog    *dialog,
+                                                         gint          response_id);
 
 static GimpProgress *
-               gimp_progress_dialog_progress_start     (GimpProgress *progress,
-                                                        const gchar  *message,
-                                                        gboolean      cancelable);
-static void    gimp_progress_dialog_progress_end       (GimpProgress *progress);
-static void    gimp_progress_dialog_progress_set_text  (GimpProgress *progress,
-                                                        const gchar  *message);
-static void    gimp_progress_dialog_progress_set_value (GimpProgress *progress,
-                                                        gdouble       percentage);
-static gdouble gimp_progress_dialog_progress_get_value (GimpProgress *progress);
+                gimp_progress_dialog_progress_start     (GimpProgress *progress,
+                                                         const gchar  *message,
+                                                         gboolean      cancelable);
+static void     gimp_progress_dialog_progress_end       (GimpProgress *progress);
+static gboolean gimp_progress_dialog_progress_is_active (GimpProgress *progress);
+static void     gimp_progress_dialog_progress_set_text  (GimpProgress *progress,
+                                                         const gchar  *message);
+static void     gimp_progress_dialog_progress_set_value (GimpProgress *progress,
+                                                         gdouble       percentage);
+static gdouble  gimp_progress_dialog_progress_get_value (GimpProgress *progress);
 
 
 static GimpDialogClass *parent_class = NULL;
@@ -124,6 +125,7 @@ gimp_progress_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
 {
   progress_iface->start     = gimp_progress_dialog_progress_start;
   progress_iface->end       = gimp_progress_dialog_progress_end;
+  progress_iface->is_active = gimp_progress_dialog_progress_is_active;
   progress_iface->set_text  = gimp_progress_dialog_progress_set_text;
   progress_iface->set_value = gimp_progress_dialog_progress_set_value;
   progress_iface->get_value = gimp_progress_dialog_progress_get_value;
@@ -173,6 +175,14 @@ gimp_progress_dialog_progress_end (GimpProgress *progress)
 
       gtk_widget_hide (GTK_WIDGET (dialog));
     }
+}
+
+static gboolean
+gimp_progress_dialog_progress_is_active (GimpProgress *progress)
+{
+  GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
+
+  return gimp_progress_is_active (GIMP_PROGRESS (dialog->box));
 }
 
 static void

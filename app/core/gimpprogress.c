@@ -126,6 +126,21 @@ gimp_progress_end (GimpProgress *progress)
     progress_iface->end (progress);
 }
 
+gboolean
+gimp_progress_is_active (GimpProgress *progress)
+{
+  GimpProgressInterface *progress_iface;
+
+  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), FALSE);
+
+  progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
+
+  if (progress_iface->is_active)
+    return progress_iface->is_active (progress);
+
+  return FALSE;
+}
+
 void
 gimp_progress_set_text (GimpProgress *progress,
                         const gchar  *message)

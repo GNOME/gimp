@@ -45,25 +45,26 @@
 
 /*  local function prototypes  */
 
-static void   gimp_thumb_box_class_init (GimpThumbBoxClass *klass);
-static void   gimp_thumb_box_init       (GimpThumbBox      *box);
-static void   gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface);
+static void     gimp_thumb_box_class_init (GimpThumbBoxClass *klass);
+static void     gimp_thumb_box_init       (GimpThumbBox      *box);
+static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static void   gimp_thumb_box_finalize   (GObject           *object);
+static void     gimp_thumb_box_finalize   (GObject           *object);
 
-static void   gimp_thumb_box_style_set  (GtkWidget         *widget,
-                                         GtkStyle          *prev_style);
+static void     gimp_thumb_box_style_set  (GtkWidget         *widget,
+                                           GtkStyle          *prev_style);
 
 static GimpProgress *
-               gimp_thumb_box_progress_start     (GimpProgress      *progress,
-                                                  const gchar       *message,
-                                                  gboolean           cancelable);
-static void    gimp_thumb_box_progress_end       (GimpProgress      *progress);
-static void    gimp_thumb_box_progress_set_value (GimpProgress      *progress,
-                                                  gdouble            percentage);
-static gdouble gimp_thumb_box_progress_get_value (GimpProgress      *progress);
+                gimp_thumb_box_progress_start     (GimpProgress      *progress,
+                                                   const gchar       *message,
+                                                   gboolean           cancelable);
+static void     gimp_thumb_box_progress_end       (GimpProgress      *progress);
+static gboolean gimp_thumb_box_progress_is_active (GimpProgress      *progress);
+static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
+                                                   gdouble            percentage);
+static gdouble  gimp_thumb_box_progress_get_value (GimpProgress      *progress);
 
-static gboolean  gimp_thumb_box_ebox_button_press (GtkWidget         *widget,
+static gboolean gimp_thumb_box_ebox_button_press  (GtkWidget         *widget,
                                                    GdkEventButton    *bevent,
                                                    GimpThumbBox      *box);
 static void gimp_thumb_box_thumbnail_clicked      (GtkWidget         *widget,
@@ -146,6 +147,7 @@ gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface)
 {
   progress_iface->start     = gimp_thumb_box_progress_start;
   progress_iface->end       = gimp_thumb_box_progress_end;
+  progress_iface->is_active = gimp_thumb_box_progress_is_active;
   progress_iface->set_value = gimp_thumb_box_progress_set_value;
   progress_iface->get_value = gimp_thumb_box_progress_get_value;
 }
@@ -222,6 +224,14 @@ gimp_thumb_box_progress_end (GimpProgress *progress)
 
       thumb_box->progress_active = FALSE;
     }
+}
+
+static gboolean
+gimp_thumb_box_progress_is_active (GimpProgress *progress)
+{
+  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+
+  return thumb_box->progress_active;
 }
 
 static void
