@@ -1,5 +1,10 @@
 2004-10-02  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/illusion.c: use a GimpAspectPreview so the preview
+	is now resizable.
+
+2004-10-02  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/apply_lens.c: added a preview.  This plug-in still
 	need some work.
 

@@ -49,15 +49,17 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      filter                  (GimpDrawable *drawable);
-static void      filter_preview          (void);
-static gboolean  dialog                  (GimpDrawable *drawable);
+static void      illusion         (GimpDrawable *drawable);
+static void      illusion_preview (GimpPreview  *preview,
+                                   GimpDrawable *drawable);
+static gboolean  illusion_dialog  (GimpDrawable *drawable);
 
 typedef struct
 {
-  gint32 division;
-  gint   type1;
-  gint   type2;
+  gint32   division;
+  gboolean type1;
+  gboolean type2;
+  gboolean preview;
 } IllValues;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -70,18 +72,11 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static IllValues parameters =
 {
-  8, /* division */
-  1, /* type 1 */
-  0  /* type 2 */
+  8,     /* division */
+  TRUE,  /* type 1 */
+  FALSE, /* type 2 */
+  TRUE   /* preview */
 };
-
-#define PREVIEW_SIZE 128
-static GtkWidget    *preview;
-static gint          preview_width, preview_height, preview_bpp;
-static guchar       *preview_cache;
-
-static GimpDrawable *drawable;
-
 
 MAIN ()
 
@@ -123,23 +118,23 @@ run (const gchar      *name,
   static GimpParam   returnv[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
 
+  /* get the drawable info */
   run_mode = params[0].data.d_int32;
   drawable = gimp_drawable_get (params[2].data.d_drawable);
 
   *nreturn_vals = 1;
   *return_vals  = returnv;
 
-  /* get the drawable info */
-
   /* switch the run mode */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &parameters);
-      if (! dialog(drawable))
+      if (! illusion_dialog (drawable))
         return;
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (IllValues));
       break;
@@ -154,13 +149,13 @@ run (const gchar      *name,
           parameters.division = params[3].data.d_int32;
           if (params[4].data.d_int32 == 0)
             {
-              parameters.type1 = 1;
-              parameters.type2 = 0;
+              parameters.type1 = TRUE;
+              parameters.type2 = FALSE;
             }
           else
             {
-              parameters.type1 = 0;
-              parameters.type2 = 1;
+              parameters.type1 = FALSE;
+              parameters.type2 = TRUE;
             }
         }
       break;
@@ -177,7 +172,7 @@ run (const gchar      *name,
         {
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
           gimp_progress_init (_("Illusion..."));
-          filter (drawable);
+          illusion (drawable);
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
         }
@@ -203,17 +198,17 @@ typedef struct {
 } IllusionParam_t;
 
 static void
-illusion_func (gint x,
-               gint y,
+illusion_func (gint          x,
+               gint          y,
                const guchar *src,
-               guchar *dest,
-               gint bpp,
-               gpointer data)
+               guchar       *dest,
+               gint          bpp,
+               gpointer      data)
 {
   IllusionParam_t *param = (IllusionParam_t*) data;
-  gint      xx, yy, b;
-  gdouble   radius, cx, cy, angle;
-  guchar    pixel[4];
+  gint             xx, yy, b;
+  gdouble          radius, cx, cy, angle;
+  guchar           pixel[4];
 
   cy = ((gdouble) y - param->center_y) / param->scale;
   cx = ((gdouble) x - param->center_x) / param->scale;
@@ -256,7 +251,7 @@ illusion_func (gint x,
 }
 
 static void
-filter (GimpDrawable *drawable)
+illusion (GimpDrawable *drawable)
 {
   IllusionParam_t  param;
   GimpRgnIterator *iter;
@@ -284,14 +279,16 @@ filter (GimpDrawable *drawable)
 }
 
 static void
-filter_preview (void)
+illusion_preview (GimpPreview  *preview,
+                  GimpDrawable *drawable)
 {
   guchar  **pixels;
   guchar   *destpixels;
+  guchar   *preview_cache;
 
-  gint      image_width;
-  gint      image_height;
-  gint      image_bpp;
+  gint      width;
+  gint      height;
+  gint      bpp;
   gdouble   center_x;
   gdouble   center_y;
 
@@ -300,30 +297,33 @@ filter_preview (void)
   gint      yy = 0;
   gdouble   scale, radius, cx, cy, angle, offset;
 
-  image_width  = preview_width;
-  image_height = preview_height;
-  image_bpp    = preview_bpp;
-  center_x     = (gdouble)image_width  / 2;
-  center_y     = (gdouble)image_height / 2;
+  gimp_preview_get_size (preview, &width, &height);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &width,
+                                                    &height,
+                                                    &bpp);
+  center_x      = (gdouble)width  / 2.0;
+  center_y      = (gdouble)height / 2.0;
 
-  pixels     = g_new (guchar *, image_height);
-  destpixels = g_new (guchar, image_height *image_width * image_bpp);
+  pixels     = g_new (guchar *, height);
+  destpixels = g_new (guchar, height * width * bpp);
 
-  for (y = 0; y < image_height; y++)
+  for (y = 0; y < height; y++)
     {
-      pixels[y]     = g_new (guchar, preview_width * preview_bpp);
+      pixels[y]     = g_new (guchar, width * bpp);
       memcpy (pixels[y],
-              preview_cache + preview_width * preview_bpp * y,
-              preview_width * preview_bpp);
+              preview_cache + width * bpp * y,
+              width * bpp);
     }
 
-  scale  = sqrt (image_width * image_width + image_height * image_height) / 2;
+  scale  = sqrt (width * width + height * height) / 2;
   offset = (gint) (scale / 2);
 
-  for (y = 0; y < image_height; y++)
+  for (y = 0; y < height; y++)
     {
       cy = ((gdouble)y - center_y) / scale;
-      for (x = 0; x < image_width; x++)
+      for (x = 0; x < width; x++)
         {
           cx = ((gdouble)x - center_x) / scale;
           angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
@@ -341,51 +341,48 @@ filter_preview (void)
               yy = y - offset * cos (angle);
             }
 
-          xx = CLAMP (xx, 0, image_width - 1);
-          yy = CLAMP (yy, 0, image_height - 1);
+          xx = CLAMP (xx, 0, width - 1);
+          yy = CLAMP (yy, 0, height - 1);
 
-          if (image_bpp == 2 || image_bpp == 4)
+          if (bpp == 2 || bpp == 4)
             {
-              gdouble alpha1 = pixels[y][x * image_bpp + image_bpp - 1];
-              gdouble alpha2 = pixels[yy][xx * image_bpp + image_bpp - 1];
+              gdouble alpha1 = pixels[y][x * bpp + bpp - 1];
+              gdouble alpha2 = pixels[yy][xx * bpp + bpp - 1];
               gdouble alpha = (1 - radius) * alpha1 + radius * alpha2;
 
-              for (b = 0; alpha > 0 && b < image_bpp - 1; b++)
+              for (b = 0; alpha > 0 && b < bpp - 1; b++)
                 {
-                  destpixels[(y * image_width + x) * image_bpp+b] =
-                    ((1-radius) * alpha1 * pixels[y][x * image_bpp + b]
-                     + radius * alpha2 * pixels[yy][xx * image_bpp + b])/alpha;
+                  destpixels[(y * width + x) * bpp+b] =
+                    ((1-radius) * alpha1 * pixels[y][x * bpp + b]
+                     + radius * alpha2 * pixels[yy][xx * bpp + b])/alpha;
                 }
-              destpixels[(y * image_width + x) * image_bpp + image_bpp-1] = alpha;
+              destpixels[(y * width + x) * bpp + bpp-1] = alpha;
             }
           else
             {
-              for (b = 0; b < image_bpp; b++)
-                destpixels[(y * image_width + x) * image_bpp+b] =
-                  (1-radius) * pixels[y][x * image_bpp + b]
-                  + radius * pixels[yy][xx * image_bpp + b];
+              for (b = 0; b < bpp; b++)
+                destpixels[(y * width + x) * bpp+b] =
+                  (1-radius) * pixels[y][x * bpp + b]
+                  + radius * pixels[yy][xx * bpp + b];
             }
         }
     }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, image_width, image_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          destpixels,
-                          image_width * image_bpp);
+  gimp_preview_draw_buffer (preview, destpixels, width * bpp);
 
-  for (y = 0; y < image_height; y++)
+  for (y = 0; y < height; y++)
     g_free (pixels[y]);
   g_free (pixels);
 
   g_free (destpixels);
+  g_free (preview_cache);
 }
 
 static gboolean
-dialog (GimpDrawable *mangle)
+illusion_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -395,38 +392,30 @@ dialog (GimpDrawable *mangle)
 
   gimp_ui_init ("illusion", TRUE);
 
-  dlg = gimp_dialog_new (_("Illusion"), "illusion",
-                         NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("Illusion"), "illusion",
+                            NULL, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  preview = gimp_aspect_preview_new (drawable, &parameters.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (illusion_preview), drawable);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, parameters.division,
@@ -438,9 +427,9 @@ dialog (GimpDrawable *mangle)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &parameters.division);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (filter_preview),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   radio = gtk_radio_button_new_with_mnemonic (group, _("Mode _1"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
@@ -451,9 +440,9 @@ dialog (GimpDrawable *mangle)
   g_signal_connect (radio, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &parameters.type1);
-  g_signal_connect (radio, "toggled",
-                    G_CALLBACK (filter_preview),
-                    NULL);
+  g_signal_connect_swapped (radio, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type1);
 
@@ -466,19 +455,17 @@ dialog (GimpDrawable *mangle)
   g_signal_connect (radio, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &parameters.type2);
-  g_signal_connect (radio, "toggled",
-                    G_CALLBACK (filter_preview),
-                    NULL);
+  g_signal_connect_swapped (radio, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), parameters.type2);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  filter_preview();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
