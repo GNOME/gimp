@@ -1,3 +1,21 @@
+1999-10-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontext.[ch]: added the possibility to store the current
+	tool, FG/BG color, brush, pattern and gradient, but don't use
+	these attributes yet.
+
+	Before replacing the get/set color/brush/... functions with
+	context functions, I'll have to change the "parent context"
+	implementation to something where the children catch the parent's
+	color/brush/..._changed signals.
+	Finally, updating the indicator_area, device_status, tool_options
+	etc. will be done by connecting to their own context's "*_changed"
+	signals, which will be much cleaner than calling the update
+	functions from various places.
+
+	(I think this is a "consistency fix", please let me know if you
+	consider it a new feature).
+
 Sun Oct 17 00:55:38 CEST 1999  Marc Lehmann <marc@gimp.org>
 
         * (221 files): Corrected ~20 pdb function names by choosing the
