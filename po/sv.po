@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.8\n"
-"POT-Creation-Date: 1999-08-25 22:08+0200\n"
+"POT-Creation-Date: 1999-08-27 01:10+0200\n"
 "PO-Revision-Date: 1999-08-22 03:56+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -446,7 +446,7 @@ msgstr "Aspektratio:"
 msgid "Angle:"
 msgstr "Vinkel:"
 
-#: app/brush_select.c:138 app/gradient.c:674 app/module_db.c:307
+#: app/brush_select.c:138 app/gradient.c:674 app/module_db.c:303
 #: app/palette.c:2011 app/pattern_select.c:86
 msgid "Refresh"
 msgstr "Uppdatera"
@@ -990,6 +990,17 @@ msgstr "Använd Floyd-Steinberg dithering"
 msgid " [ Warning ] "
 msgstr " [ Varning ] "
 
+#: app/convert.c:525
+msgid ""
+"You are attempting to convert an image with alpha/layers from RGB/GRAY to "
+"INDEXED.\n"
+"You should not generate a palette of more than 255 colors if you intend to "
+"create a transparent or animated GIF file from this image."
+msgstr ""
+"Du försöker konvertera en bild med alfa/lager från RGB/GRÅ till INDEXERAD.\n"
+"Du ska inte generera en palett på mer än 255 färger om du vill skapa en "
+"transparent eller animerad GIF-fil från denna bild."
+
 #: app/convolve.c:135
 msgid "Blur"
 msgstr "Gör suddigare"
@@ -1339,7 +1350,7 @@ msgstr "%.1f MB"
 msgid "Image Size: %s"
 msgstr "Bildstorlek: %s"
 
-#: app/file_new_dialog.c:489 app/gdisplay.c:207 app/preferences_dialog.c:1631
+#: app/file_new_dialog.c:489 app/gdisplay.c:210 app/preferences_dialog.c:1631
 msgid "RGB"
 msgstr "RGB"
 
@@ -1426,11 +1437,11 @@ msgstr "Spara misslyckades: "
 msgid "/File/Open"
 msgstr "/Arkiv/Öppna"
 
-#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1621 app/menus.c:100
+#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1624 app/menus.c:100
 msgid "/File/Save"
 msgstr "/Arkiv/Spara"
 
-#: app/fileops.c:1550 app/fileops.c:1566 app/gdisplay.c:1622 app/menus.c:101
+#: app/fileops.c:1550 app/fileops.c:1566 app/gdisplay.c:1625 app/menus.c:101
 msgid "/File/Save as"
 msgstr "/Arkiv/Spara som"
 
@@ -1491,261 +1502,261 @@ msgstr "add_point(): Kunde ej omallokera punkt-arrayen i free_select."
 msgid "Cannot properly scanline convert polygon!\n"
 msgstr "Kan ej korrekt scanline-konvertera polygon!\n"
 
-#: app/gdisplay.c:207
+#: app/gdisplay.c:210
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/gdisplay.c:210
+#: app/gdisplay.c:213
 msgid "grayscale-empty"
 msgstr "gråskala-tom"
 
-#: app/gdisplay.c:210
+#: app/gdisplay.c:213
 msgid "grayscale"
 msgstr "gråskala"
 
-#: app/gdisplay.c:213
+#: app/gdisplay.c:216
 msgid "indexed-empty"
 msgstr "indexerad-tom"
 
-#: app/gdisplay.c:213
+#: app/gdisplay.c:216
 msgid "indexed"
 msgstr "indexerad"
 
-#: app/gdisplay.c:1623 app/menus.c:102
+#: app/gdisplay.c:1626 app/menus.c:102
 msgid "/File/Revert"
 msgstr "/Arkiv/Återta bild"
 
-#: app/gdisplay.c:1624 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
+#: app/gdisplay.c:1627 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
 #: app/gdisplay_ops.c:365 app/menus.c:106
 msgid "/File/Close"
 msgstr "/Arkiv/Stäng"
 
-#: app/gdisplay.c:1626
+#: app/gdisplay.c:1629
 msgid "/Edit"
 msgstr "/Redigera"
 
-#: app/gdisplay.c:1629 app/menus.c:111
+#: app/gdisplay.c:1632 app/menus.c:111
 msgid "/Edit/Cut"
 msgstr "/Redigera/Klipp ut"
 
-#: app/gdisplay.c:1630 app/menus.c:112
+#: app/gdisplay.c:1633 app/menus.c:112
 msgid "/Edit/Copy"
 msgstr "/Redigera/Kopiera"
 
-#: app/gdisplay.c:1631 app/menus.c:113
+#: app/gdisplay.c:1634 app/menus.c:113
 msgid "/Edit/Paste"
 msgstr "/Redigera/Klistra in"
 
-#: app/gdisplay.c:1632 app/menus.c:114
+#: app/gdisplay.c:1635 app/menus.c:114
 msgid "/Edit/Paste Into"
 msgstr "/Redigera/Klistra in i"
 
-#: app/gdisplay.c:1633 app/menus.c:115
+#: app/gdisplay.c:1636 app/menus.c:115
 msgid "/Edit/Paste As New"
 msgstr "/Redigera/Klistra in som ny"
 
-#: app/gdisplay.c:1634 app/menus.c:117
+#: app/gdisplay.c:1637 app/menus.c:117
 msgid "/Edit/Clear"
 msgstr "/Redigera/Rensa"
 
-#: app/gdisplay.c:1635 app/menus.c:118
+#: app/gdisplay.c:1638 app/menus.c:118
 msgid "/Edit/Fill"
 msgstr "/Redigera/Fyll"
 
-#: app/gdisplay.c:1636 app/menus.c:119
+#: app/gdisplay.c:1639 app/menus.c:119
 msgid "/Edit/Stroke"
 msgstr "/Redigera/Stryk"
 
-#: app/gdisplay.c:1637 app/menus.c:123
+#: app/gdisplay.c:1640 app/menus.c:123
 msgid "/Edit/Cut Named"
 msgstr "/Redigera/Klipp ut namngiven"
 
-#: app/gdisplay.c:1638 app/menus.c:124
+#: app/gdisplay.c:1641 app/menus.c:124
 msgid "/Edit/Copy Named"
 msgstr "/Redigera/Kopiera namngiven"
 
-#: app/gdisplay.c:1639 app/menus.c:125
+#: app/gdisplay.c:1642 app/menus.c:125
 msgid "/Edit/Paste Named"
 msgstr "/Redigera/Klistra in namngiven"
 
-#: app/gdisplay.c:1642
+#: app/gdisplay.c:1645
 msgid "/Select"
 msgstr "/Välj"
 
-#: app/gdisplay.c:1643 app/menus.c:140
+#: app/gdisplay.c:1646 app/menus.c:140
 msgid "/Select/Save To Channel"
 msgstr "/Markera/Spara till kanal"
 
-#: app/gdisplay.c:1645
+#: app/gdisplay.c:1648
 msgid "/View"
 msgstr "/Visa"
 
-#: app/gdisplay.c:1648 app/menus.c:159
+#: app/gdisplay.c:1651 app/menus.c:159
 msgid "/View/Toggle Selection"
 msgstr "/Visa/Visa markering"
 
-#: app/gdisplay.c:1649 app/menus.c:160
+#: app/gdisplay.c:1652 app/menus.c:160
 msgid "/View/Toggle Rulers"
 msgstr "/Visa/Visa linjaler"
 
-#: app/gdisplay.c:1651 app/menus.c:162
+#: app/gdisplay.c:1654 app/menus.c:162
 msgid "/View/Toggle Guides"
 msgstr "/Visa/Visa hjälplinjer"
 
-#: app/gdisplay.c:1652 app/menus.c:163
+#: app/gdisplay.c:1655 app/menus.c:163
 msgid "/View/Snap To Guides"
 msgstr "/Visa/Snäpp mot hjälplinjer"
 
-#: app/gdisplay.c:1653 app/menus.c:161
+#: app/gdisplay.c:1656 app/menus.c:161
 msgid "/View/Toggle Statusbar"
 msgstr "/Visa/Visa statusrad"
 
-#: app/gdisplay.c:1655 app/menus.c:154
+#: app/gdisplay.c:1658 app/menus.c:154
 msgid "/View/Dot for dot"
 msgstr "/Visa/Punkt för punkt"
 
-#: app/gdisplay.c:1658
+#: app/gdisplay.c:1661
 msgid "/Image"
 msgstr "/Bild"
 
-#: app/gdisplay.c:1659 app/gdisplay.c:1669
+#: app/gdisplay.c:1662 app/gdisplay.c:1672
 msgid "/Image/Colors"
 msgstr "/Bild/Färger"
 
-#: app/gdisplay.c:1660
+#: app/gdisplay.c:1663
 msgid "/Image/Channel Ops"
 msgstr "/Bild/Kanaler"
 
-#: app/gdisplay.c:1661
+#: app/gdisplay.c:1664
 msgid "/Image/Alpha"
 msgstr "/Bild/Alfa"
 
-#: app/gdisplay.c:1664 app/menus.c:182
+#: app/gdisplay.c:1667 app/menus.c:182
 msgid "/Image/RGB"
 msgstr "/Bild/RGB"
 
-#: app/gdisplay.c:1665 app/menus.c:183
+#: app/gdisplay.c:1668 app/menus.c:183
 msgid "/Image/Grayscale"
 msgstr "/Bild/Gråskala"
 
-#: app/gdisplay.c:1666 app/menus.c:184
+#: app/gdisplay.c:1669 app/menus.c:184
 msgid "/Image/Indexed"
 msgstr "/Bild/Indexerad"
 
-#: app/gdisplay.c:1667 app/tools.c:641
+#: app/gdisplay.c:1670 app/tools.c:641
 msgid "/Image/Histogram"
 msgstr "/Bild/Histogram"
 
-#: app/gdisplay.c:1670 app/tools.c:596
+#: app/gdisplay.c:1673 app/tools.c:596
 msgid "/Image/Colors/Threshold"
 msgstr "/Bild/Färger/Tröskelvärde"
 
 # FIXME
-#: app/gdisplay.c:1671 app/tools.c:581
+#: app/gdisplay.c:1674 app/tools.c:581
 msgid "/Image/Colors/Posterize"
 msgstr "/Bild/Färger/Posterize"
 
-#: app/gdisplay.c:1672 app/menus.c:171
+#: app/gdisplay.c:1675 app/menus.c:171
 msgid "/Image/Colors/Equalize"
 msgstr "/Bild/Färger/Jämna ut"
 
-#: app/gdisplay.c:1673 app/menus.c:172
+#: app/gdisplay.c:1676 app/menus.c:172
 msgid "/Image/Colors/Invert"
 msgstr "/Bild/Färger/Invertera"
 
-#: app/gdisplay.c:1674 app/tools.c:536
+#: app/gdisplay.c:1677 app/tools.c:536
 msgid "/Image/Colors/Color Balance"
 msgstr "/Bild/Färger/Färgbalans"
 
-#: app/gdisplay.c:1675 app/tools.c:551
+#: app/gdisplay.c:1678 app/tools.c:551
 msgid "/Image/Colors/Brightness-Contrast"
 msgstr "/Bild/Färger/Ljusstyrka-Kontrast"
 
-#: app/gdisplay.c:1677 app/tools.c:566
+#: app/gdisplay.c:1680 app/tools.c:566
 msgid "/Image/Colors/Hue-Saturation"
 msgstr "/Bild/Färger/Nyans-Mättnad"
 
-#: app/gdisplay.c:1678 app/tools.c:611
+#: app/gdisplay.c:1681 app/tools.c:611
 msgid "/Image/Colors/Curves"
 msgstr "/Bild/Färger/Kurvor"
 
-#: app/gdisplay.c:1679 app/tools.c:626
+#: app/gdisplay.c:1682 app/tools.c:626
 msgid "/Image/Colors/Levels"
 msgstr "/Bild/Färger/Nivåer"
 
-#: app/gdisplay.c:1680 app/menus.c:174
+#: app/gdisplay.c:1683 app/menus.c:174
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bild/Färger/Avfärga"
 
-#: app/gdisplay.c:1682 app/menus.c:179
+#: app/gdisplay.c:1685 app/menus.c:179
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bild/Alfa/Lägg till alfa-kanal"
 
-#: app/gdisplay.c:1685 app/menus.c:177
+#: app/gdisplay.c:1688 app/menus.c:177
 msgid "/Image/Channel Ops/Offset"
 msgstr "/Bild/Kanaler/Offset"
 
-#: app/gdisplay.c:1688
+#: app/gdisplay.c:1691
 msgid "/Layers/Stack"
 msgstr "/Lager/Stack"
 
-#: app/gdisplay.c:1691 app/menus.c:193
+#: app/gdisplay.c:1694 app/menus.c:193
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Lager/Stack/Föregående lager"
 
-#: app/gdisplay.c:1693 app/menus.c:194
+#: app/gdisplay.c:1696 app/menus.c:194
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Lager/Stack/Nästa lager"
 
-#: app/gdisplay.c:1695 app/menus.c:195
+#: app/gdisplay.c:1698 app/menus.c:195
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Lager/Stack/Höj lager"
 
-#: app/gdisplay.c:1697 app/menus.c:196
+#: app/gdisplay.c:1700 app/menus.c:196
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Lager/Stack/Sänk lager"
 
-#: app/gdisplay.c:1699 app/menus.c:197
+#: app/gdisplay.c:1702 app/menus.c:197
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Lager/Stack/Lager till toppen"
 
-#: app/gdisplay.c:1701 app/menus.c:198
+#: app/gdisplay.c:1704 app/menus.c:198
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Lager/Stack/Lager till botten"
 
-#: app/gdisplay.c:1705 app/menus.c:200
+#: app/gdisplay.c:1708 app/menus.c:200
 msgid "/Layers/Anchor Layer"
 msgstr "/Lager/Ankra lager"
 
-#: app/gdisplay.c:1706 app/menus.c:201
+#: app/gdisplay.c:1709 app/menus.c:201
 msgid "/Layers/Merge Visible Layers"
 msgstr "/Lager/Sammanfoga synliga lager"
 
-#: app/gdisplay.c:1707 app/menus.c:202
+#: app/gdisplay.c:1710 app/menus.c:202
 msgid "/Layers/Flatten Image"
 msgstr "/Lager/Platta till bilden"
 
-#: app/gdisplay.c:1708 app/menus.c:203
+#: app/gdisplay.c:1711 app/menus.c:203
 msgid "/Layers/Alpha To Selection"
 msgstr "/Lager/Alfa-kanal till markering"
 
-#: app/gdisplay.c:1709 app/menus.c:204
+#: app/gdisplay.c:1712 app/menus.c:204
 msgid "/Layers/Mask To Selection"
 msgstr "/Lager/Mask till markering"
 
-#: app/gdisplay.c:1710 app/menus.c:205
+#: app/gdisplay.c:1713 app/menus.c:205
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Lager/Lägg till alfa-kanal"
 
-#: app/gdisplay.c:1713
+#: app/gdisplay.c:1716
 msgid "/Filters"
 msgstr "/Filter"
 
-#: app/gdisplay.c:1715
+#: app/gdisplay.c:1718
 msgid "/Script-Fu"
 msgstr "/Script-Fu"
 
-#: app/gdisplay.c:2135
+#: app/gdisplay.c:2138
 msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() anropad rekursivt."
 
@@ -4285,83 +4296,83 @@ msgstr ""
 msgid "Module DB"
 msgstr "Modul DB"
 
-#: app/module_db.c:555
+#: app/module_db.c:551
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "laddar modul: \"%s\"\n"
 
-#: app/module_db.c:562
+#: app/module_db.c:558
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "hoppar över modul: \"%s\"\n"
 
-#: app/module_db.c:586
+#: app/module_db.c:582
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "fel vid laddning av modul: %s: %s"
 
-#: app/module_db.c:604
+#: app/module_db.c:600
 msgid "missing module_init() symbol"
 msgstr "module_init() symbolen saknas"
 
-#: app/module_db.c:607
+#: app/module_db.c:603
 #, c-format
 msgid "%s: module_init() symbol not found"
 msgstr "%s: module_init() symbolen hittades ej"
 
-#: app/module_db.c:760
+#: app/module_db.c:756
 msgid "<No modules>"
 msgstr "<Inga moduler>"
 
-#: app/module_db.c:773 app/module_db.c:782
+#: app/module_db.c:769 app/module_db.c:778
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:773
+#: app/module_db.c:769
 msgid "only in memory"
 msgstr "endast i minnet"
 
-#: app/module_db.c:782
+#: app/module_db.c:778
 msgid "nowhere (click 'refresh')"
 msgstr "ingenstans (tryck på 'uppdatera')"
 
-#: app/module_db.c:812
+#: app/module_db.c:808
 msgid "Load"
 msgstr "Ladda"
 
-#: app/module_db.c:821
+#: app/module_db.c:817
 msgid "Unload"
 msgstr "Ladda ur"
 
-#: app/module_db.c:834
+#: app/module_db.c:830
 msgid "Purpose: "
 msgstr "Syfte: "
 
-#: app/module_db.c:835
+#: app/module_db.c:831
 msgid "Author: "
 msgstr "Författare: "
 
-#: app/module_db.c:836
+#: app/module_db.c:832
 msgid "Version: "
 msgstr "Version: "
 
-#: app/module_db.c:837
+#: app/module_db.c:833
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: app/module_db.c:838
+#: app/module_db.c:834
 msgid "Date: "
 msgstr "Datum: "
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "Location: "
 msgstr "Placering: "
 
-#: app/module_db.c:840
+#: app/module_db.c:836
 msgid "State: "
 msgstr "Tillstånd: "
 
-#: app/module_db.c:859
+#: app/module_db.c:855
 msgid "Autoload during startup"
 msgstr "Ladda automatiskt vid start"
 
@@ -4631,6 +4642,11 @@ msgstr "paths_ops_button_set_sensitive:: ogiltig knapp specifierad"
 #: app/paths_dialog.c:251
 msgid "point_ops_button_set_sensitive:: invalid button specified"
 msgstr "point_ops_button_set_sensitive:: ogiltig knapp specifierad"
+
+#: app/paths_dialog.c:417
+#, c-format
+msgid "Path %d"
+msgstr "Slinga %d"
 
 #: app/paths_dialog.c:1121
 msgid "paths list: internal list error"
