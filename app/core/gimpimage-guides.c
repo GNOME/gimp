@@ -43,7 +43,7 @@ gimp_image_add_hguide (GimpImage *gimage,
   GimpGuide *guide;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (position >= 0 && position < gimage->height, NULL);
+  g_return_val_if_fail (position >= 0 && position <= gimage->height, NULL);
 
   guide = g_new0 (GimpGuide, 1);
 
@@ -70,7 +70,7 @@ gimp_image_add_vguide (GimpImage *gimage,
   GimpGuide *guide;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (position >= 0 && position < gimage->width, NULL);
+  g_return_val_if_fail (position >= 0 && position <= gimage->width, NULL);
 
   guide = g_new0 (GimpGuide, 1);
 
@@ -120,9 +120,9 @@ gimp_image_add_guide (GimpImage *gimage,
   g_return_if_fail (position >= 0);
 
   if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-    g_return_if_fail (position < gimage->height);
+    g_return_if_fail (position <= gimage->height);
   else
-    g_return_if_fail (position < gimage->width);
+    g_return_if_fail (position <= gimage->width);
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
 
@@ -162,9 +162,9 @@ gimp_image_move_guide (GimpImage *gimage,
   g_return_if_fail (position >= 0);
 
   if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-    g_return_if_fail (position < gimage->height);
+    g_return_if_fail (position <= gimage->height);
   else
-    g_return_if_fail (position < gimage->width);
+    g_return_if_fail (position <= gimage->width);
 
   if (push_undo)
     gimp_image_undo_push_image_guide (gimage, _("Move Guide"), guide);

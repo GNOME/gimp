@@ -1,3 +1,16 @@
+2003-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-guides.c
+	* tools/pdbgen/pdb/guides.pdb: fixed to accept guide->position ==
+	image->width/height. Guides live *between* pixels, so they must be
+	able to exist right of/below the image's rightmost/bottom pixel.
+
+	* app/core/gimpimage-crop.c (gimp_image_crop_adjust_guides): 
+	fixed guide iteration to not crash when the current guide is
+	removed from the image (fixes bug #109533).
+
+	* app/pdb/guides_cmds.c: regenerated.
+
 2003-03-29  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/script-fu/interp_slib.c

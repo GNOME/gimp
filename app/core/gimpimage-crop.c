@@ -395,15 +395,15 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
 			       gint       y2)
 
 {
-  GList     *glist;
-  GimpGuide *guide;
-  gboolean   remove_guide;
+  GList *list;
 
-  for (glist = gimage->guides; glist; glist = g_list_next (glist))
+  list = gimage->guides;
+  while (list)
     {
-      guide = (GimpGuide *) glist->data;
+      GimpGuide *guide        = list->data;
+      gboolean   remove_guide = FALSE;
 
-      remove_guide = FALSE;
+      list = g_list_next (list);
 
       switch (guide->orientation)
 	{
@@ -424,14 +424,22 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
       if (remove_guide)
 	{
           gimp_image_remove_guide (gimage, guide, TRUE);
-          guide = NULL;
 	}
       else
 	{
-	  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-            gimp_image_move_guide (gimage, guide, guide->position - y1, TRUE);
-	  else
-            gimp_image_move_guide (gimage, guide, guide->position - x1, TRUE);
+          switch (guide->orientation)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              gimp_image_move_guide (gimage, guide, guide->position - y1, TRUE);
+              break;
+
+            case GIMP_ORIENTATION_VERTICAL:
+              gimp_image_move_guide (gimage, guide, guide->position - x1, TRUE);
+              break;
+
+            default:
+              break;
+            }
 	}
     }
 }

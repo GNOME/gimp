@@ -73,7 +73,7 @@ image_add_hguide_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (offset < gimage->height)
+      if (offset <= gimage->height)
 	{
 	  guide = gimp_image_add_hguide (gimage, offset, TRUE);
 	  guide_ID = guide->guide_ID;
@@ -150,7 +150,7 @@ image_add_vguide_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (offset < gimage->width)
+      if (offset <= gimage->width)
 	{
 	  guide = gimp_image_add_vguide (gimage, offset, TRUE);
 	  guide_ID = guide->guide_ID;

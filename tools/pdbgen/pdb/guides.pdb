@@ -52,7 +52,7 @@ HELP
 	vars => [ 'GimpGuide *guide' ],
 	code => <<CODE
 {
-  if (offset < gimage->$max)
+  if (offset <= gimage->$max)
     {
       guide = gimp_image_add_${func}guide (gimage, offset, TRUE);
       guide_ID = guide->guide_ID;
