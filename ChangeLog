@@ -1,3 +1,10 @@
+2001-07-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/jpeg.c: removed "Baseline JPEG" toggle button from
+	the GUI because it allowed to trigger a bug in libjpeg that caused a 
+	crash (bug #57727). The non-interactive version still has the baseline
+	option so scripts don't have to change.
+
 2001-07-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added lt (Lithuanian) to ALL_LINGUAS.

@@ -1571,7 +1571,7 @@ save_dialog (void)
   GtkObject *scale_data;
 
   GtkWidget *progressive;
-  GtkWidget *baseline;
+  /*   GtkWidget *baseline;  */
   GtkWidget *restart;
 
   GtkWidget *preview;
@@ -1644,7 +1644,7 @@ save_dialog (void)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (9, 3, FALSE);
+  table = gtk_table_new (8, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -1765,18 +1765,23 @@ save_dialog (void)
   gtk_widget_set_sensitive (progressive, FALSE);
 #endif
   
-  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (Readable by all decoders)"));
-  gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
-		    GTK_FILL, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &jsvals.baseline);
-  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      GTK_SIGNAL_FUNC (make_preview),
-		      NULL);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
-				jsvals.baseline);
-  gtk_widget_show (baseline);
+  /* 
+   * Commented out since it triggers a bug in libjpeg if
+   * used with low quality setting (bug #57727).
+   *
+   * baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (Readable by all decoders)"));
+   * gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
+   * 		    GTK_FILL, 0, 0, 0);
+   * gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
+   * 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+   * 		      &jsvals.baseline);
+   * gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
+   *		      GTK_SIGNAL_FUNC (make_preview),
+   *		      NULL);
+   * gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
+   *				jsvals.baseline);
+   * gtk_widget_show (baseline);
+   */
 
   /* Subsampling */
   menu = 
@@ -1788,7 +1793,7 @@ save_dialog (void)
 			   "1x1,1x1,1x1",  GINT_TO_POINTER (2), NULL,
 			   NULL);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 7, 
+  gimp_table_attach_aligned (GTK_TABLE (table), 1, 6, 
 			     _("Subsampling:"),
 			     1.0, 0.5,
 			     menu, 1, FALSE);
@@ -1803,7 +1808,7 @@ save_dialog (void)
 			   _("Floating-Point"), GINT_TO_POINTER (2), NULL,
 			   NULL);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 8, 
+  gimp_table_attach_aligned (GTK_TABLE (table), 1, 7, 
 			     _("DCT method (Speed/quality tradeoff):"),
 			     1.0, 0.5,
 			     menu, 1, FALSE);
