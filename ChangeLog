@@ -1,3 +1,10 @@
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c: made "item-type" and
+	"signal-name" CONSTRUCT_ONLY properties. Configure the DND dests
+	in gimp_item_tree_view_constructor(), not in
+	gimp_item_tree_view_new().
+
 2003-12-21  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-export.[ch]: removed the GError parameter

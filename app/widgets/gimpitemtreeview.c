@@ -55,6 +55,13 @@
 
 enum
 {
+  PROP_0,
+  PROP_ITEM_TYPE,
+  PROP_SIGNAL_NAME
+};
+
+enum
+{
   SET_IMAGE,
   LAST_SIGNAL
 };
@@ -72,6 +79,14 @@ static void  gimp_item_tree_view_set_docked_context (GimpDocked        *docked,
 static GObject * gimp_item_tree_view_constructor    (GType              type,
                                                      guint              n_params,
                                                      GObjectConstructParam *params);
+static void   gimp_item_tree_view_set_property      (GObject           *object,
+                                                     guint              property_id,
+                                                     const GValue      *value,
+                                                     GParamSpec        *pspec);
+static void   gimp_item_tree_view_get_property      (GObject           *object,
+                                                     guint              property_id,
+                                                     GValue            *value,
+                                                     GParamSpec        *pspec);
 static void   gimp_item_tree_view_destroy           (GtkObject         *object);
 
 static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
@@ -229,6 +244,8 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 		  GIMP_TYPE_OBJECT);
 
   object_class->constructor           = gimp_item_tree_view_constructor;
+  object_class->set_property          = gimp_item_tree_view_set_property;
+  object_class->get_property          = gimp_item_tree_view_get_property;
 
   gtk_object_class->destroy           = gimp_item_tree_view_destroy;
 
@@ -266,6 +283,21 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lower_help_id                = NULL;
   klass->lower_to_bottom_desc         = NULL;
   klass->lower_to_bottom_help_id      = NULL;
+
+  g_object_class_install_property (object_class,
+				   PROP_ITEM_TYPE,
+				   g_param_spec_pointer ("item-type",
+                                                         NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class,
+				   PROP_SIGNAL_NAME,
+				   g_param_spec_string ("signal-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -470,15 +502,80 @@ gimp_item_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_item_tree_view_chain_clicked),
                     item_view);
 
+  gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
+                                  GTK_DEST_DEFAULT_ALL,
+                                  item_view->item_type,
+                                  GDK_ACTION_MOVE | GDK_ACTION_COPY);
+
+  /*  connect "drop to new" manually as it makes a difference whether
+   *  it was clicked or dropped
+   */
+  gimp_dnd_viewable_dest_add (item_view->new_button,
+			      item_view->item_type,
+			      gimp_item_tree_view_new_dropped,
+			      item_view);
+
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+				  GTK_BUTTON (item_view->edit_button),
+				  item_view->item_type);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+				  GTK_BUTTON (item_view->duplicate_button),
+				  item_view->item_type);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
+				  GTK_BUTTON (item_view->delete_button),
+				  item_view->item_type);
+
   return object;
+}
+
+static void
+gimp_item_tree_view_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_ITEM_TYPE:
+      view->item_type = (GType) g_value_get_pointer (value);
+      break;
+    case PROP_SIGNAL_NAME:
+      view->signal_name = g_value_dup_string (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_item_tree_view_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_ITEM_TYPE:
+      g_value_set_pointer (value, (gpointer) view->item_type);
+      break;
+    case PROP_SIGNAL_NAME:
+      g_value_set_string (value, view->signal_name);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
 gimp_item_tree_view_destroy (GtkObject *object)
 {
-  GimpItemTreeView *view;
-
-  view = GIMP_ITEM_TREE_VIEW (object);
+  GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
 
   if (view->gimage)
     gimp_item_tree_view_set_image (view, NULL);
@@ -507,6 +604,7 @@ gimp_item_tree_view_new (gint                  preview_size,
   GimpItemTreeView      *item_view;
   GimpContainerView     *view;
   GimpContainerTreeView *tree_view;
+  GType                  view_type;
 
   g_return_val_if_fail (preview_size >  0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
@@ -523,15 +621,15 @@ gimp_item_tree_view_new (gint                  preview_size,
 
   if (item_type == GIMP_TYPE_LAYER)
     {
-      item_view = g_object_new (GIMP_TYPE_LAYER_TREE_VIEW, NULL);
+      view_type = GIMP_TYPE_LAYER_TREE_VIEW;
     }
   else if (item_type == GIMP_TYPE_CHANNEL)
     {
-      item_view = g_object_new (GIMP_TYPE_CHANNEL_TREE_VIEW, NULL);
+      view_type = GIMP_TYPE_CHANNEL_TREE_VIEW;
     }
   else if (item_type == GIMP_TYPE_VECTORS)
     {
-      item_view = g_object_new (GIMP_TYPE_VECTORS_TREE_VIEW, NULL);
+      view_type = GIMP_TYPE_VECTORS_TREE_VIEW;
     }
   else
     {
@@ -540,6 +638,11 @@ gimp_item_tree_view_new (gint                  preview_size,
       return NULL;
     }
 
+  item_view = g_object_new (view_type,
+                            "item-type",   item_type,
+                            "signal-name", signal_name,
+                            NULL);
+
   view      = GIMP_CONTAINER_VIEW (item_view);
   tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
 
@@ -547,39 +650,14 @@ gimp_item_tree_view_new (gint                  preview_size,
                                  NULL, NULL,
                                  preview_size, preview_border_width, TRUE);
 
-  view->dnd_widget   = NULL;
+  view->dnd_widget = NULL;
 
-  gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
-                                  GTK_DEST_DEFAULT_ALL,
-                                  item_type,
-                                  GDK_ACTION_MOVE | GDK_ACTION_COPY);
-
-  item_view->item_type          = item_type;
-  item_view->signal_name        = g_strdup (signal_name);
   item_view->edit_item_func     = edit_item_func;
   item_view->new_item_func      = new_item_func;
   item_view->activate_item_func = activate_item_func;
 
   gimp_editor_create_menu (GIMP_EDITOR (item_view),
                            menu_factory, menu_identifier, item_view);
-
-  /*  connect "drop to new" manually as it makes a difference whether
-   *  it was clicked or dropped
-   */
-  gimp_dnd_viewable_dest_add (item_view->new_button,
-			      item_type,
-			      gimp_item_tree_view_new_dropped,
-			      view);
-
-  gimp_container_view_enable_dnd (view,
-				  GTK_BUTTON (item_view->edit_button),
-				  item_type);
-  gimp_container_view_enable_dnd (view,
-				  GTK_BUTTON (item_view->duplicate_button),
-				  item_type);
-  gimp_container_view_enable_dnd (view,
-				  GTK_BUTTON (item_view->delete_button),
-				  item_type);
 
   gimp_item_tree_view_set_image (item_view, gimage);
 
