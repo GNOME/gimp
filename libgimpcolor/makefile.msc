@@ -1,5 +1,3 @@
-## WARNING: Outdated.
-
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
@@ -7,8 +5,10 @@
 # should be in your PATH. As these DLLs are for the GIMP and its plug-ins
 # only, it probably is best to keep them in the GIMP's bin directory.
 BIN = C:\install\gimp\bin
+TOP = ..\..
+!include ..\..\build\win32\make.msc
 
-GIMP_VER = 1.2
+GIMP_VER = 1.3
 
 # The name of the directory in your %HOME% where the GIMP's personal settings
 # and stuff is saved.
@@ -18,173 +18,26 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 # Nothing much configurable below
 
-!IFNDEF DEBUG
-# Full optimization:
-OPTIMIZE = -Ox -MD
-LINKDEBUG =
-!ELSE
-# Debugging:
-OPTIMIZE = -Zi -MDd
-LINKDEBUG = /debug
-!ENDIF
-
-# cl -? describes the options
-CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
-
-LDFLAGS = /link $(LINKDEBUG)
-INSTALL = copy
-
-GTK_VER = 1.3
-GLIB_VER = 1.3
-
-GTK = ..\..\gtk+
-GLIB = ..\..\glib
-INTL = ..\..\intl
-
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\" -DG_LOG_DOMAIN=\"LibGimp\"
+INCLUDES = -I.. 
+# DEFINES = -DG_LOG_DOMAIN=\"LibGimpColor\"
+DEPCFLAGS = $(GLIB_CFLAGS)
+DEPLIBS = $(GLIB_LIBS)
 
 all : \
 	..\config.h \
-	gimpi.lib \
-	gimp-$(GIMP_VER).dll \
-	gimpui-$(GIMP_VER).dll
+	gimpcolor-$(GIMP_VER).dll
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
 install : all
-	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
-	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
+	$(INSTALL) gimpcolor-$(GIMP_VER).dll $(BIN)
 
-PDB_WRAPPERS_O = \
-	gimpbrushes_pdb.obj \
-	gimpbrushselect_pdb.obj \
-	gimpchannel_pdb.obj \
-	gimpchannelops_pdb.obj \
-	gimpcolor_pdb.obj \
-	gimpconvert_pdb.obj \
-	gimpdisplay_pdb.obj \
-	gimpdrawable_pdb.obj \
-	gimpedit_pdb.obj \
-	gimpfileops_pdb.obj \
-	gimpfloatingsel_pdb.obj \
-	gimpgimprc_pdb.obj \
-	gimpgradients_pdb.obj \
-	gimpgradientselect_pdb.obj \
-	gimpguides_pdb.obj \
-	gimphelp_pdb.obj \
-	gimpimage_pdb.obj \
-	gimplayer_pdb.obj \
-	gimpmessage_pdb.obj \
-	gimppalette_pdb.obj \
-	gimpparasite_pdb.obj \
-	gimppatterns_pdb.obj \
-	gimppatternselect_pdb.obj \
-	gimpplugin_pdb.obj \
-	gimpproceduraldb_pdb.obj \
-	gimpselection_pdb.obj \
-	gimptexttool_pdb.obj \
-	gimptools_pdb.obj \
-	gimpundo_pdb.obj \
-	gimpunit_pdb.obj
+OBJECTS = \
+        gimpcolorspace.obj \
+        gimphsv.obj \
+        gimprgb.obj
 
-gimpi_OBJECTS = \
-	gimpenv.obj \
-	gimpchainbutton.obj \
-	gimpcolorbutton.obj \
-	gimpcolorspace.obj \
-	gimpdialog.obj \
-	gimpfileselection.obj \
-	gimphelpui.obj \
-	gimpmatrix.obj \
-	gimpparasite.obj \
-	gimpparasiteio.obj \
-	gimppatheditor.obj \
-	gimppixmap.obj \
-	gimpprotocol.obj \
-	gimpquerybox.obj \
-	gimpsizeentry.obj \
-	gimpunitmenu.obj \
-	gimputils.c \
-	gimpvector.obj \
-	gimpwidgets.obj \
-	gimpwire.obj
+gimpcolor-$(GIMP_VER).dll : $(OBJECTS) gimpcolor.def
+	$(CC) $(CFLAGS) -LD -Fegimpcolor-$(GIMP_VER).dll $(OBJECTS) $(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpcolor.def
 
-gimpi.lib : $(gimpi_OBJECTS)
-	lib /out:gimpi.lib $(gimpi_OBJECTS)
-
-gimp_OBJECTS = \
-	gimp.obj \
-	$(PDB_WRAPPERS_O) \
-	gimpchannel.obj \
-	gimpcolorspace.obj \
-	gimpdrawable.obj \
-	gimpenv.obj \
-	gimpgradientselect.obj \
-	gimphelp.obj \
-	gimpimage.obj \
-	gimplayer.obj \
-	gimpmatrix.obj \
-	gimpparasite.obj \
-	gimpparasiteio.obj \
-	gimppixelrgn.obj \
-	gimpproceduraldb.obj \
-	gimpprotocol.obj \
-	gimpselection.obj \
-	gimptile.obj \
-	gimpunit.obj \
-	gimpvector.obj \
-	gimpwire.obj
-
-gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
-
-# Pass -DLIBGIMP_COMPILATION when compiling gimp.c
-
-gimp.obj : gimp.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
-
-gimpui_OBJECTS = \
-	gimpmenu.obj \
-	gimpbrushmenu.obj \
-	gimpchainbutton.obj \
-	gimpcolorbutton.obj \
-	gimpdialog.obj \
-	gimpexport.obj \
-	gimpfileselection.obj \
-	gimphelpui.obj \
-	gimpgradientmenu.obj \
-	gimppatheditor.obj \
-	gimppatternmenu.obj \
-	gimppixmap.obj \
-	gimpquerybox.obj \
-	gimpsizeentry.obj \
-	gimpui.obj \
-	gimpunitmenu.obj \
-	gimpwidgets.obj
-
-gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
-
-gimpmenu.obj : gimpmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpmenu.c
-
-gimpbrushmenu.obj : gimpbrushmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpbrushmenu.c
-
-gimpgradientmenu.obj : gimpgradientmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpgradientmenu.c
-
-gimppatternmenu.obj : gimppatternmenu.c
-	$(CC) $(CFLAGS) -GD -c gimppatternmenu.c
-
-# General rule for compiling, used by the objects that don't go into
-# gimp-$(GIMP_VER).dll. 
-.c.obj:
-	$(CC) $(CFLAGS) -c $<
-clean:
-	del *.exe
-	del *.obj
-	del *.exp
-	del *.err
-	del *.map

@@ -33,12 +33,13 @@
 #include <unistd.h>
 #endif
 
+#include <gtk/gtk.h>
+#include <gdk/gdktypes.h>
+
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
  
-#include <gtk/gtk.h>
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -56,6 +57,7 @@
 #include "fileops.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
+#include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimprc.h"

@@ -29,7 +29,9 @@
 #endif
 #include <fcntl.h>
 
-#ifdef G_OS_WIN32
+#include <gtk/gtk.h>
+
+#ifdef G_OS_WIN32 /* gets defined by glib.h */
 #include <io.h>
 #endif
 
@@ -37,14 +39,12 @@
 #define _O_BINARY 0
 #endif
 
-#include <gtk/gtk.h>
-
-
 #include <stdio.h>
 
 #include "apptypes.h"
 
 #include "brush_header.h"
+#include "brush_scale.h"
 #include "gimpbrush.h"
 #include "gimprc.h"
 #include "temp_buf.h"

@@ -21,7 +21,7 @@
 
 
 #include "pdb/procedural_db.h"
-
+#include <time.h> /* time_t */
 
 #define WRITE_BUFFER_SIZE  512
 

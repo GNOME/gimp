@@ -20,6 +20,7 @@
 
 #include <glib.h>
 
+#include <stdio.h> /* SEEK_SET */
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>

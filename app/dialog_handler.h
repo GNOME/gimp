@@ -20,8 +20,10 @@
 #ifndef __DIALOG_HANDLER_H__
 #define __DIALOG_HANDLER_H__
 
-
+#include <gmodule.h>
+G_MODULE_EXPORT
 void   dialog_register          (GtkWidget *dialog);
+G_MODULE_EXPORT
 void   dialog_unregister        (GtkWidget *dialog);
 
 void   dialog_register_toolbox  (GtkWidget *dialog);

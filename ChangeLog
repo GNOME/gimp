@@ -1,3 +1,46 @@
+2001-02-07  Hans Breuer <Hans@Breuer.org>
+
+	* */makefile.msc : Gimp 1.3 for win32 (msc) builds and runs at 
+	this short moment, it's a fast moving target nowadays :-)
+
+	* app/app_procs.c
+	* app/gimpbrush.c
+	* app/gimpbrushpipe.c
+	* app/gimppattern.c : make sure G_OS_WIN32 is defined (by glib.h 
+	inclusion) before actually using it
+
+	* app/plug_in.h 
+	* app/datafiles.h : <time.h> for time_t
+
+	* app/tile_swap.c : include <stdio.h> for SEEK_SET
+
+	* app/gimpcontainer.c : use G_GNUC_FUNCTION instead of 
+	__FUNCTION__ to allow compiling without gcc
+
+	* app/dialog_handler.h : don't use conditional prototypes
+	for gmodule exported function but include <gmodule.h> and
+	use G_MODULE_EXPORT in prototype, too.
+
+	* app/gimpobject.h : added typedef for GimpObject
+
+	* libgimp/gimp.def : more exported symbols
+
+	* libgimp/gimpcolorselector.h : #include <gmodule.h> for
+	G_MODULE_EXPORT,  sane prototypes.
+
+	* libgimp/gimpui.def : symbol export update, splitted to
+	gimpwidgets.def
+
+	* libgimpcolor/gimpcolor.def
+	* libgimpmath/gimpmath.def
+	* libgimpwidgets/gimpwidgets.def : updated
+
+	* libgimpwidgets/libgimp-glue.c : new file which supports
+	real dynamic linking on win32, against exported symbols from
+	the application or libgimp. This allows to resolve the
+	double dependency for currently 11 functions
+
+
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -389,3 +389,5 @@ EXPORTS
 	wire_write_int8
 	wire_write_msg
 	wire_write_string
+gimp_bilinear
+gimp_bilinear_rgba

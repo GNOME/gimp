@@ -255,7 +255,7 @@ gimp_container_add (GimpContainer *container,
   if (gimp_container_have (container, object))
     {
       g_warning ("%s(): container already contains object %p",
-		 __FUNCTION__, object);
+		 G_GNUC_FUNCTION, object);
       return FALSE;
     }
 
@@ -311,7 +311,7 @@ gimp_container_remove (GimpContainer *container,
   if (! gimp_container_have (container, object))
     {
       g_warning ("%s(): container does not contains object %p",
-		 __FUNCTION__, object);
+		 G_GNUC_FUNCTION, object);
       return FALSE;
     }
 

@@ -22,6 +22,7 @@
 #ifndef __DATAFILES_H__
 #define __DATAFILES_H__
 
+#include <time.h>
 
 typedef enum
 {

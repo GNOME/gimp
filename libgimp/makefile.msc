@@ -1,5 +1,3 @@
-## WARNING: Outdated.
-
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
@@ -8,7 +6,10 @@
 # only, it probably is best to keep them in the GIMP's bin directory.
 BIN = C:\install\gimp\bin
 
-GIMP_VER = 1.2
+TOP = ..\..
+!INCLUDE $(TOP)\build\win32\make.msc 
+
+GIMP_VER = 1.3
 
 # The name of the directory in your %HOME% where the GIMP's personal settings
 # and stuff is saved.
@@ -18,30 +19,12 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 # Nothing much configurable below
 
-!IFNDEF DEBUG
-# Full optimization:
-OPTIMIZE = -Ox -MD
-LINKDEBUG =
-!ELSE
-# Debugging:
-OPTIMIZE = -Zi -MDd
-LINKDEBUG = /debug
-!ENDIF
+INCLUDES = -I.. 
+DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
+DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK_CFLAGS) 
+DEPLIBS = $(GLIB_LIBS) $(INTL_LIBS) 
 
-# cl -? describes the options
-CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
-
-LDFLAGS = /link $(LINKDEBUG)
-INSTALL = copy
-
-GTK_VER = 1.3
-GLIB_VER = 1.3
-
-GTK = ..\..\gtk+
-GLIB = ..\..\glib
-INTL = ..\..\intl
-
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\" -DG_LOG_DOMAIN=\"LibGimp\"
+# CFLAGS = $(GLIB_CFLAGS) 
 
 all : \
 	..\config.h \
@@ -76,8 +59,10 @@ PDB_WRAPPERS_O = \
 	gimpimage_pdb.obj \
 	gimplayer_pdb.obj \
 	gimpmessage_pdb.obj \
+	gimpmisc_pdb.obj \
 	gimppalette_pdb.obj \
 	gimpparasite_pdb.obj \
+	gimppaths_pdb.obj \
 	gimppatterns_pdb.obj \
 	gimppatternselect_pdb.obj \
 	gimpplugin_pdb.obj \
@@ -86,14 +71,16 @@ PDB_WRAPPERS_O = \
 	gimptexttool_pdb.obj \
 	gimptools_pdb.obj \
 	gimpundo_pdb.obj \
-	gimpunit_pdb.obj
+	gimpunit_pdb.obj \
 
+# used by libgimp and core (?)
 gimpi_OBJECTS = \
 	gimpenv.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \
-	gimputils.c \
+	gimputils.obj \
+#	gimpsignal.obj \
 	gimpwire.obj
 
 gimpi.lib : $(gimpi_OBJECTS)
@@ -102,26 +89,25 @@ gimpi.lib : $(gimpi_OBJECTS)
 gimp_OBJECTS = \
 	gimp.obj \
 	$(PDB_WRAPPERS_O) \
+	$(gimpi_OBJECTS) \
+	gimpadaptivesupersample.obj \
+	gimpbilinear.obj \
 	gimpchannel.obj \
-	gimpcolorspace.obj \
 	gimpdrawable.obj \
-	gimpenv.obj \
 	gimpgradientselect.obj \
 	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
-	gimpparasite.obj \
-	gimpparasiteio.obj \
 	gimppixelrgn.obj \
 	gimpproceduraldb.obj \
-	gimpprotocol.obj \
 	gimpselection.obj \
 	gimptile.obj \
 	gimpunit.obj \
-	gimpwire.obj
+
+#?	gimpprotocol.obj \
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(DEPLIBS) ..\libgimpcolor\gimpcolor-$(GIMP_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
 
 # Pass -DLIBGIMP_COMPILATION when compiling gimp.c
 
@@ -129,16 +115,22 @@ gimp.obj : gimp.c
 	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
 
 gimpui_OBJECTS = \
-	gimpmenu.obj \
+	gimpui.obj \
+	gimpadaptivesupersample.obj \
 	gimpbrushmenu.obj \
-	gimpexport.obj \
 	gimpgradientmenu.obj \
-	gimppatheditor.obj \
+	gimpmenu.obj \
 	gimppatternmenu.obj \
-	gimpui.obj
+	gimpexport.obj \
+#	gimppatheditor.obj \
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) \
+	gimp-$(GIMP_VER).lib ..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(GTK_LIBS) $(INTL_LIBS) $(DEPLIBS) $(LDFLAGS) /def:gimpui.def
+
+# gimpwidgets only for gimp_dialog_new
 
 gimpmenu.obj : gimpmenu.c
 	$(CC) $(CFLAGS) -GD -c gimpmenu.c
@@ -156,7 +148,8 @@ gimppatternmenu.obj : gimppatternmenu.c
 # gimp-$(GIMP_VER).dll. 
 .c.obj:
 	$(CC) $(CFLAGS) -c $<
-clean:
+
+clean::
 	del *.exe
 	del *.obj
 	del *.exp

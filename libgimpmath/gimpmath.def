@@ -14,25 +14,42 @@ EXPORTS
 	gimp_matrix3_xshear
 	gimp_matrix3_yshear
 	gimp_matrix4_to_deg
+	gimp_vector_2d_to_3d
+	gimp_vector_2d_to_3d
+	gimp_vector_3d_to_2d
+	gimp_vector_3d_to_2d
+	gimp_vector2_add
 	gimp_vector2_add
 	gimp_vector2_cross_product
 	gimp_vector2_inner_product
+	gimp_vector2_inner_product
+	gimp_vector2_length
 	gimp_vector2_length
 	gimp_vector2_mul
 	gimp_vector2_neg
 	gimp_vector2_normalize
 	gimp_vector2_rotate
 	gimp_vector2_set
+	gimp_vector2_set
+	gimp_vector2_sub
 	gimp_vector2_sub
 	gimp_vector3_add
+	gimp_vector3_add
+	gimp_vector3_cross_product
 	gimp_vector3_cross_product
 	gimp_vector3_inner_product
+	gimp_vector3_inner_product
 	gimp_vector3_length
+	gimp_vector3_length
+	gimp_vector3_mul
 	gimp_vector3_mul
 	gimp_vector3_neg
 	gimp_vector3_normalize
+	gimp_vector3_normalize
+	gimp_vector3_rotate
 	gimp_vector3_rotate
 	gimp_vector3_set
+	gimp_vector3_set
 	gimp_vector3_sub
-	gimp_vector_2d_to_3d
-	gimp_vector_3d_to_2d
+	gimp_vector3_sub
+

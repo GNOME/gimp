@@ -1,10 +1,49 @@
 EXPORTS
-	gimp_hls_to_rgb
+	gimp_hls_to_rgb_int
+	gimp_hsv_clamp
 	gimp_hsv_to_rgb
-	gimp_hsv_to_rgb4
+	gimp_hsv_to_rgb
 	gimp_hsv_to_rgb_double
-	gimp_rgb_to_hls
+	gimp_hsv_to_rgb_double
+	gimp_hsv_to_rgb_int
+	gimp_hsv_to_rgb_int
+	gimp_hsv_to_rgb4
+	gimp_hsv_to_rgb4
+	gimp_hsva_set
+	gimp_rgb_add
+	gimp_rgb_clamp
+	gimp_rgb_clamp
+	gimp_rgb_composite
+	gimp_rgb_distance
+	gimp_rgb_get_uchar
+	gimp_rgb_get_uchar
+	gimp_rgb_intensity
+	gimp_rgb_intensity_uchar
+	gimp_rgb_multiply
+	gimp_rgb_set
+	gimp_rgb_set
+	gimp_rgb_set_alpha
+	gimp_rgb_set_alpha
+	gimp_rgb_set_uchar
+	gimp_rgb_set_uchar
+	gimp_rgb_subtract
+	gimp_rgb_to_hls_int
 	gimp_rgb_to_hsv
-	gimp_rgb_to_hsv4
+	gimp_rgb_to_hsv
 	gimp_rgb_to_hsv_double
-	gimp_rgb_to_l
+	gimp_rgb_to_hsv_double
+	gimp_rgb_to_hsv_int
+	gimp_rgb_to_hsv_int
+	gimp_rgb_to_hsv4
+	gimp_rgb_to_hsv4
+	gimp_rgb_to_l_int
+	gimp_rgba_distance
+	gimp_rgba_distance
+	gimp_rgba_get_uchar
+	gimp_rgba_get_uchar
+	gimp_rgba_set
+	gimp_rgba_set
+	gimp_rgba_set_uchar
+	gimp_rgba_set_uchar
+	gimp_rgba_subtract
+

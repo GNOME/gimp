@@ -31,15 +31,15 @@
 #endif
 #include <fcntl.h>
 
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif
 
 #include <gtk/gtk.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
 
 #include "libgimpmath/gimpmath.h"
 

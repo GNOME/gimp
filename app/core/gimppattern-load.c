@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,6 +30,8 @@
 #endif
 #include <fcntl.h>
 
+#include <gtk/gtk.h>
+
 #ifdef G_OS_WIN32
 #include <io.h>
 #endif
@@ -36,10 +39,6 @@
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif
-
-#include <gtk/gtk.h>
-
-#include <stdio.h>
 
 #include "apptypes.h"
 

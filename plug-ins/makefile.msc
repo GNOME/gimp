@@ -1,5 +1,3 @@
-## WARNING: Outdated.
-
 # Makefile to build the GIMP plug-ins with Microsoft nmake and compiler
 
 # I don't want to use many hand-written makefiles, so this is quite complex.
@@ -15,6 +13,13 @@ GIMP = C:\install\gimp
 
 BIN = $(GIMP)\plug-ins
 
+!IFNDEF GIMPTOP
+GIMPTOP = ..
+!ENDIF
+
+TOP = ..\$(GIMPTOP)
+!INCLUDE $(TOP)\build\win32\make.msc
+
 !IFNDEF LIBRARY
 !IFNDEF PLUGIN
 !IFNDEF MODULE
@@ -26,14 +31,18 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
+COMMON1 = AlienMap AlienMap2 CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
+COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
+COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate 
+COMMON6 = waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
+
+# not any longer supported ?
+DROPPED = gpb
 
 # These have own subdirectories each
-SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain webbrowser winsnap
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -54,7 +63,7 @@ install : libs-install common-plugins-install separate-plugins-install data-inst
 unofficial:
 	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=install
 
-clean : libs-clean common-plugins-clean separate-plugins-clean
+clean :: libs-clean common-plugins-clean separate-plugins-clean
 
 libs-all :
 	@nmake -nologo -f makefile.msc sub-libs TARGET=all
@@ -67,7 +76,7 @@ libs-clean :
 
 sub-libs:
 	cd libgck\gck
-	nmake -nologo -f ..\..\makefile.msc TOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj" $(TARGET)
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj" $(TARGET)
 	cd ..\..
 
 
@@ -89,10 +98,11 @@ sub-common-plugins :
 	for %d in ($(COMMON3)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON4)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 	for %d in ($(COMMON5)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON6)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 
 sub-one-common :
 	@cd common
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 
@@ -111,20 +121,20 @@ sub-separate-plugins :
 	for %d in ($(SEPARATE)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=$(TARGET)
 # We must handle script-fu separately because of the dash, sigh
 	@cd script-fu
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 	@cd ..
 # Also GAP is special
 	@cd gap
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
 	@cd ..
 	@cd gap
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
 	@cd ..
 
 
 sub-one-separate :
 	cd $(DIR)
-	nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+	nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 data-install : gimpressionist-data-install guash-data-install
@@ -176,6 +186,8 @@ OBJECTS = \
 	lighting_preview.obj \
 	lighting_shade.obj \
 	lighting_ui.obj
+EXTRACFLAGS = -I$(PLUGINDIR)\libgck
+EXTRALIBS = $(PLUGINDIR)\libgck\gck\gck.lib
 !ENDIF
 
 !IFDEF EXTRA_MapObject
@@ -187,6 +199,8 @@ OBJECTS = \
 	mapobject_preview.obj \
 	mapobject_shade.obj \
 	mapobject_ui.obj
+EXTRACFLAGS = -I$(PLUGINDIR)\libgck
+EXTRALIBS = $(PLUGINDIR)\libgck\gck\gck.lib
 OPTIMIZE =
 !ENDIF
 
@@ -273,7 +287,8 @@ OBJECTS = \
 	font_selection.obj \
 	gdyntext.obj \
 	gdyntext_ui.obj \
-	message_window.obj
+	message_window.obj \
+	gdyntextcompat.obj
 !ENDIF
 
 !IFDEF EXTRA_gflare
@@ -425,7 +440,7 @@ OBJECTS = \
 	script-fu-console.obj \
 	script-fu-constants.obj \
 	script-fu-scripts.obj \
-	regex.obj \
+	regexrepl.obj \
 	..\dbbrowser\dbbrowser_utils.obj
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
@@ -545,26 +560,9 @@ HAVE_RESOURCE = YES
 EXTRALIBS = user32.lib gdi32.lib
 !endif
 
-GIMP_VER = 1.2
-GTK_VER = 1.3
-GLIB_VER = 1.3
+GIMP_VER = 1.3
 
-GTK = $(TOP)\..\gtk+
-GLIB = $(TOP)\..\glib
-INTL = $(TOP)\..\intl
-
-# Location of libpng sources
-PNG = $(TOP)\..\libpng-1.0.3
-# Location of tiff-3.4 sources
-TIFF = $(TOP)\..\tiff-v3.4\libtiff
-# Location of jpeg-6b sources
-JPEG = $(TOP)\..\jpeg-6b
-# and zlib
-ZLIB = $(TOP)\..\zlib-1.1.3
-# and libmpeg
-MPEG = $(TOP)\..\mpeg_lib-1.3.0
-
-PLUGINDIR = $(TOP)\plug-ins
+PLUGINDIR = $(GIMPTOP)\plug-ins
 
 !IFNDEF OPTIMIZE
 !IFNDEF DEBUG
@@ -584,9 +582,9 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GLIB_CFLAGS) $(GTK_CFLAGS) -I$(INTL)
 
-LDFLAGS = /link /subsystem:windows /machine:ix86 $(LINKDEBUG)
+LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
 !IFDEF PLUGIN
 
@@ -611,7 +609,11 @@ RESOURCE = ..\..\app\gimp.res
 !ENDIF
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) \
+	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
+	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib ..\..\libgimpmath\gimpmath-$(GIMP_VER).lib \
+	..\..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc
 	rc -r -fo $(PLUGIN).res $(PLUGIN).rc
@@ -653,13 +655,15 @@ OBJECTS = $(MODULE).obj
 !ENDIF
 
 $(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
-	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:$(MODULE).def
+	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) \
+	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
+	$(GTK_LIBS) $(GLIB_LIBS) /def:$(MODULE).def
 !ENDIF
 
 .c.obj :
 	$(CC) $(CFLAGS) -c $<
 
-clean :
+clean ::
 	erase *.obj
 	erase *.lib
 	erase *.exp
