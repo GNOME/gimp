@@ -4,7 +4,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,11 @@
  */
 
 #include "imap_csim_parse.h"
+
+#ifdef FLEX_SCANNER
+#define YY_NO_UNPUT
+#endif /* FLEX_SCANNER */
+
 %}
 
 %option noyywrap

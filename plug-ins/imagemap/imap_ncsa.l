@@ -23,6 +23,11 @@
  */
 
 #include "imap_ncsa_parse.h"
+
+#ifdef FLEX_SCANNER
+#define YY_NO_UNPUT
+#endif /* FLEX_SCANNER */
+
 %}
 
 %option noyywrap

@@ -1,3 +1,10 @@
+2000-04-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_cern.l
+	* plug-ins/imagemap/imap_csim.l
+	* plug-ins/imagemap/imap_ncsa.l: applied a patch from the
+	imagemap author Maurits Rijk <lpeek.mrijk@consunet.nl>.
+
 2000-04-11  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpenv.c (gimp_path_get_user_writable_dir): The stat()
