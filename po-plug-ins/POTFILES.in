@@ -29,7 +29,9 @@ plug-ins/common/cubism.c
 plug-ins/common/decompose.c
 plug-ins/common/depthmerge.c
 plug-ins/common/destripe.c
+plug-ins/common/displace.c
 plug-ins/common/film.c
+plug-ins/flame/flame.c
 plug-ins/common/gif.c
 plug-ins/common/gifload.c
 plug-ins/common/grid.c
@@ -134,12 +136,14 @@ plug-ins/print/print-escp2.c
 plug-ins/print/print-pcl.c
 plug-ins/print/print-ps.c
 plug-ins/print/print.c
+plug-ins/common/sample_colorize.c
 plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sinus/sinus.c
+plug-ins/common/spheredesigner.c
 plug-ins/struc/struc.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c

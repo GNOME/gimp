@@ -40,6 +40,7 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #ifndef SRAND_FUNC
 #define SRAND_FUNC srand
@@ -240,15 +241,15 @@ struct textures_t {
 };
 
 struct textures_t textures[] = {
-  {0,"Solid", SOLID},
-  {1,"Checker",CHECKER},
-  {2,"Marble",MARBLE},
-  {3,"Lizard",LIZARD},
-  {4,"Phong",PHONG},
-  {5,"Noise",PERLIN},
-  {6,"Wood",WOOD},
-  {7,"Spiral",SPIRAL},
-  {8,"Spots",SPOTS},
+  {0,N_("Solid"), SOLID},
+  {1,N_("Checker"),CHECKER},
+  {2,N_("Marble"),MARBLE},
+  {3,N_("Lizard"),LIZARD},
+  {4,N_("Phong"),PHONG},
+  {5,N_("Noise"),PERLIN},
+  {6,N_("Wood"),WOOD},
+  {7,N_("Spiral"),SPIRAL},
+  {8,N_("Spots"),SPOTS},
   {0,NULL,0}
 };
 
@@ -1566,16 +1567,16 @@ char *mklabel(texture *t)
 {
   struct textures_t *l;
   static char tmps[100];
-  if(t->majtype == 0) strcpy(tmps, "Texture");
-  else if(t->majtype == 1) strcpy(tmps, "Bumpmap");
-  else if(t->majtype == 2) strcpy(tmps, "Light");
-  else strcpy(tmps, "(unknown!?)");
+  if(t->majtype == 0) strcpy(tmps, _("Texture"));
+  else if(t->majtype == 1) strcpy(tmps, _("Bumpmap"));
+  else if(t->majtype == 2) strcpy(tmps, _("Light"));
+  else strcpy(tmps, _("(unknown!?)"));
   if((t->majtype == 0) || (t->majtype == 1)) {
     strcat(tmps, " / ");
     l = textures;
     while(l->s) {
       if(t->type == l->n) {
-	strcat(tmps, l->s);
+	strcat(tmps, gettext(l->s));
 	break;
     }
       l++;
@@ -1843,11 +1844,11 @@ void fileselect(int action)
 {
   static GtkWidget *windows[2] = {NULL,NULL};
 
-  char *titles[] = { "Open file", "Save file" };
+  char *titles[] = { N_("Open file"), N_("Save file") };
   void *handlers[] = { loadpreset_ok, savepreset_ok };
 
   if(!windows[action]) {
-    windows[action] = gtk_file_selection_new(titles[action]);
+    windows[action] = gtk_file_selection_new( gettext(titles[action]));
     gtk_window_position (GTK_WINDOW (windows[action]), GTK_WIN_POS_MOUSE);
     
     gtk_signal_connect (GTK_OBJECT (windows[action]), "destroy",
@@ -2004,7 +2005,7 @@ void mktexturemenu(GtkWidget *texturemenu_menu)
 
   t = textures;
   while(t->s) {
-    item = gtk_menu_item_new_with_label (t->s);
+    item = gtk_menu_item_new_with_label ( gettext(t->s));
     gtk_widget_show(item);
     gtk_menu_append (GTK_MENU (texturemenu_menu), item);
     gtk_signal_connect (GTK_OBJECT(item), "activate",
@@ -2101,7 +2102,7 @@ void selectcolor1(vector *col)
     return;
   }
 
-  window = gtk_color_selection_dialog_new("Color Selection Dialog");
+  window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
   
   gtk_color_selection_set_opacity (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
@@ -2139,7 +2140,7 @@ void selectcolor2(vector *col)
     return;
   }
 
-  window = gtk_color_selection_dialog_new("Color Selection Dialog");
+  window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
 
   gtk_color_selection_set_opacity (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
@@ -2226,7 +2227,7 @@ GtkWidget* makewindow (void)
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (window), "window", window);
   gtk_container_border_width (GTK_CONTAINER (window), 5);
-  gtk_window_set_title (GTK_WINDOW (window), "SphereDesigner");
+  gtk_window_set_title (GTK_WINDOW (window), _("SphereDesigner"));
   gtk_window_set_policy (GTK_WINDOW (window), FALSE, TRUE, FALSE);
 
   table1 = gtk_table_new (4, 3, FALSE);
@@ -2236,7 +2237,7 @@ GtkWidget* makewindow (void)
   gtk_table_set_row_spacings (GTK_TABLE (table1), 5);
   gtk_table_set_col_spacings (GTK_TABLE (table1), 5);
 
-  frame2 = gtk_frame_new ("Preview");
+  frame2 = gtk_frame_new ( _("Preview"));
   gtk_object_set_data (GTK_OBJECT (window), "frame2", frame2);
   gtk_widget_show (frame2);
   gtk_table_attach (GTK_TABLE (table1), frame2, 0, 1, 0, 1,
@@ -2250,7 +2251,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect (GTK_OBJECT (drawarea), "expose_event",
                       (GtkSignalFunc) expose_event, NULL);
 
-  updatebutton = gtk_button_new_with_label ("Update");
+  updatebutton = gtk_button_new_with_label ( _("Update"));
   gtk_object_set_data (GTK_OBJECT (window), "updatebutton", updatebutton);
   gtk_widget_show (updatebutton);
   gtk_table_attach (GTK_TABLE (table1), updatebutton, 0, 1, 1, 2,
@@ -2259,7 +2260,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect (GTK_OBJECT(updatebutton), "clicked", GTK_SIGNAL_FUNC(restartrender), NULL);
 
 
-  frame3 = gtk_frame_new ("Textures");
+  frame3 = gtk_frame_new ( _("Textures"));
   gtk_object_set_data (GTK_OBJECT (window), "frame3", frame3);
   gtk_widget_show (frame3);
   gtk_table_attach (GTK_TABLE (table1), frame3, 1, 2, 0, 2,
@@ -2284,21 +2285,21 @@ GtkWidget* makewindow (void)
   gtk_table_attach (GTK_TABLE (table1), hbox1, 1, 2, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
-  addbutton = gtk_button_new_with_label ("Add");
+  addbutton = gtk_button_new_with_label ( _("Add"));
   gtk_object_set_data (GTK_OBJECT (window), "addbutton", addbutton);
   gtk_widget_show (addbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), addbutton, TRUE, TRUE, 0);
   gtk_signal_connect_object (GTK_OBJECT (addbutton), "clicked",
                              GTK_SIGNAL_FUNC (addtexture), NULL);
 
-  dupbutton = gtk_button_new_with_label ("Dup");
+  dupbutton = gtk_button_new_with_label ( _("Dup"));
   gtk_object_set_data (GTK_OBJECT (window), "dupbutton", dupbutton);
   gtk_widget_show (dupbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), dupbutton, TRUE, TRUE, 0);
   gtk_signal_connect_object (GTK_OBJECT (dupbutton), "clicked",
                              GTK_SIGNAL_FUNC (duptexture), NULL);
 
-  delbutton = gtk_button_new_with_label ("Del");
+  delbutton = gtk_button_new_with_label ( _("Del"));
   gtk_object_set_data (GTK_OBJECT (window), "delbutton", delbutton);
   gtk_widget_show (delbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), delbutton, TRUE, TRUE, 0);
@@ -2311,14 +2312,14 @@ GtkWidget* makewindow (void)
   gtk_table_attach (GTK_TABLE (table1), hbox1, 0, 1, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
-  loadbutton = gtk_button_new_with_label ("Load");
+  loadbutton = gtk_button_new_with_label ( _("Load"));
   gtk_object_set_data (GTK_OBJECT (window), "loadbutton", loadbutton);
   gtk_widget_show (loadbutton);
   gtk_box_pack_start (GTK_BOX (hbox1), loadbutton, TRUE, TRUE, 0);
   gtk_signal_connect_object (GTK_OBJECT (loadbutton), "clicked",
                              GTK_SIGNAL_FUNC (loadpreset), NULL);
 
-  savebutton = gtk_button_new_with_label ("Save");
+  savebutton = gtk_button_new_with_label ( _("Save"));
   gtk_object_set_data (GTK_OBJECT (window), "savebutton", savebutton);
   gtk_widget_show (savebutton);
   gtk_box_pack_start (GTK_BOX (hbox1), savebutton, TRUE, TRUE, 0);
@@ -2332,28 +2333,28 @@ GtkWidget* makewindow (void)
   gtk_table_attach (GTK_TABLE (table1), hbox2, 0, 2, 3, 4,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
-  okbutton = gtk_button_new_with_label ("OK");
+  okbutton = gtk_button_new_with_label ( _("OK"));
   gtk_object_set_data (GTK_OBJECT (window), "okbutton", okbutton);
   gtk_widget_show (okbutton);
   gtk_box_pack_start (GTK_BOX (hbox2), okbutton, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (okbutton), "clicked",
 		      GTK_SIGNAL_FUNC (sphere_ok), window);
 
-  cancelbutton = gtk_button_new_with_label ("Cancel");
+  cancelbutton = gtk_button_new_with_label ( _("Cancel"));
   gtk_object_set_data (GTK_OBJECT (window), "cancelbutton", cancelbutton);
   gtk_widget_show (cancelbutton);
   gtk_box_pack_start (GTK_BOX (hbox2), cancelbutton, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (cancelbutton), "clicked",
 		      GTK_SIGNAL_FUNC (sphere_cancel), window);
   
-  resetbutton = gtk_button_new_with_label ("Reset");
+  resetbutton = gtk_button_new_with_label ( _("Reset"));
   gtk_object_set_data (GTK_OBJECT (window), "resetbutton", cancelbutton);
   gtk_widget_show (resetbutton);
   gtk_box_pack_start (GTK_BOX (hbox2), resetbutton, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (resetbutton), "clicked",
 		      GTK_SIGNAL_FUNC (sphere_reset), window);
 
-  frame4 = gtk_frame_new ("Texture Properties");
+  frame4 = gtk_frame_new ( _("Texture Properties"));
   gtk_object_set_data (GTK_OBJECT (window), "frame4", frame4);
   gtk_widget_show (frame4);
   gtk_table_attach (GTK_TABLE (table1), frame4, 2, 3, 0, 3,
@@ -2365,21 +2366,21 @@ GtkWidget* makewindow (void)
   gtk_container_add (GTK_CONTAINER (frame4), table2);
   gtk_container_border_width (GTK_CONTAINER (table2), 5);
 
-  label2 = gtk_label_new ("Type:");
+  label2 = gtk_label_new ( _("Type:"));
   gtk_object_set_data (GTK_OBJECT (window), "label2", label2);
   gtk_widget_show (label2);
   gtk_table_attach (GTK_TABLE (table2), label2, 0, 1, 0, 1,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
 
-  label3 = gtk_label_new ("Texture:");
+  label3 = gtk_label_new ( _("Texture:"));
   gtk_object_set_data (GTK_OBJECT (window), "label3", label3);
   gtk_widget_show (label3);
   gtk_table_attach (GTK_TABLE (table2), label3, 0, 1, 1, 2,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label3), 0, 0.5);
 
-  label4 = gtk_label_new ("Colors:");
+  label4 = gtk_label_new ( _("Colors:"));
   gtk_object_set_data (GTK_OBJECT (window), "label4", label4);
   gtk_widget_show (label4);
   gtk_table_attach (GTK_TABLE (table2), label4, 0, 1, 2, 3,
@@ -2416,7 +2417,7 @@ GtkWidget* makewindow (void)
   gtk_widget_show(tmpw);
   drawcolor2(tmpw);
 
-  label5 = gtk_label_new ("Scale:");
+  label5 = gtk_label_new ( _("Scale:"));
   gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 3, 4,
@@ -2433,7 +2434,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(scalescale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label5 = gtk_label_new ("Turbulence:");
+  label5 = gtk_label_new ( _("Turbulence:"));
   gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
   gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 4, 5,
@@ -2450,7 +2451,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(turbulencescale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Scale X:");
+  label6 = gtk_label_new ( _("Scale X:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 0, 1,
@@ -2467,7 +2468,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(scalexscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Scale Y:");
+  label6 = gtk_label_new ( _("Scale Y:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 1, 2,
@@ -2484,7 +2485,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(scaleyscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Scale Z:");
+  label6 = gtk_label_new ( _("Scale Z:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 2, 3,
@@ -2503,7 +2504,7 @@ GtkWidget* makewindow (void)
 
 
 
-  label6 = gtk_label_new ("Rotate X:");
+  label6 = gtk_label_new ( _("Rotate X:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 3, 4,
@@ -2520,7 +2521,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(rotxscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Rotate Y:");
+  label6 = gtk_label_new ( _("Rotate Y:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 4, 5,
@@ -2537,7 +2538,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(rotyscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Rotate Z:");
+  label6 = gtk_label_new ( _("Rotate Z:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 2, 3, 5, 6,
@@ -2554,7 +2555,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(rotzscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Pos X:");
+  label6 = gtk_label_new ( _("Pos X:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 0, 1,
@@ -2571,7 +2572,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(posxscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Pos Y:");
+  label6 = gtk_label_new ( _("Pos Y:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 1, 2,
@@ -2588,7 +2589,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(posyscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label6 = gtk_label_new ("Pos Z:");
+  label6 = gtk_label_new ( _("Pos Z:"));
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
   gtk_widget_show (label6);
   gtk_table_attach (GTK_TABLE (table2), label6, 5, 6, 2, 3,
@@ -2611,19 +2612,19 @@ GtkWidget* makewindow (void)
   gtk_table_attach (GTK_TABLE (table2), typemenu, 1, 2, 0, 1,
                     (GtkAttachOptions) GTK_EXPAND, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   typemenu_menu = gtk_menu_new ();
-  item = gtk_menu_item_new_with_label ("Texture");
+  item = gtk_menu_item_new_with_label ( _("Texture"));
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT(item), "activate",
 		      GTK_SIGNAL_FUNC(selecttype), NULL);
   gtk_menu_append (GTK_MENU (typemenu_menu), item);
 
-  item = gtk_menu_item_new_with_label ("Bump");
+  item = gtk_menu_item_new_with_label ( _("Bump"));
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT(item), "activate",
 		      GTK_SIGNAL_FUNC(selecttype), (long *)1);
   gtk_menu_append (GTK_MENU (typemenu_menu), item);
 
-  item = gtk_menu_item_new_with_label ("Light");
+  item = gtk_menu_item_new_with_label ( _("Light"));
   gtk_widget_show (item);
   gtk_signal_connect (GTK_OBJECT(item), "activate",
 		      GTK_SIGNAL_FUNC(selecttype), (long *)2);
@@ -2642,7 +2643,7 @@ GtkWidget* makewindow (void)
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (texturemenu), texturemenu_menu);
 
-  label7 = gtk_label_new ("Amount:");
+  label7 = gtk_label_new ( _("Amount:"));
   gtk_object_set_data (GTK_OBJECT (window), "label7", label7);
   gtk_widget_show (label7);
   gtk_table_attach (GTK_TABLE (table2), label7, 0, 1, 5, 6,
@@ -2659,7 +2660,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(amountscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label8 = gtk_label_new ("Exp:");
+  label8 = gtk_label_new ( _("Exp:"));
   gtk_object_set_data (GTK_OBJECT (window), "label8", label8);
   gtk_widget_show (label8);
   gtk_table_attach (GTK_TABLE (table2), label8, 0, 1, 6, 7,
@@ -2676,7 +2677,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(expscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  label1 = gtk_label_new ("by Vidar Madsen\nSeptember 1999");
+  label1 = gtk_label_new ( _("by Vidar Madsen\nSeptember 1999"));
   gtk_object_set_data (GTK_OBJECT (window), "label1", label1);
   gtk_widget_show (label1);
   gtk_table_attach (GTK_TABLE (table1), label1, 2, 4, 3, 4,
@@ -2796,7 +2797,7 @@ void realrender(GDrawable *drawable)
   tx = x2 - x1;
   ty = y2 - y1;
 
-  gimp_progress_init ("Rendering...");
+  gimp_progress_init ( _("Rendering..."));
 
   for(y = 0; y < ty; y++) {
     dest = buffer;
@@ -2839,13 +2840,14 @@ static void query (void)
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+  INIT_I18N();
   gimp_install_procedure ("plug_in_spheredesigner",
-                          "Renders textures spheres",
-                          "This plugin can be used to create textured and/or bumpmapped spheres, and uses a small lightweight raytracer to perform the task with good quality",
+                          _("Renders textures spheres"),
+                          _("This plugin can be used to create textured and/or bumpmapped spheres, and uses a small lightweight raytracer to perform the task with good quality"),
 			  "Vidar Madsen",
                           "Vidar Madsen",
                           "1999",
-                          "<Image>/Filters/Render/SphereDesigner...",
+                          N_("<Image>/Filters/Render/SphereDesigner..."),
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -2898,6 +2900,7 @@ static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, G
 
   switch(run_mode) {
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     s.com.numtexture = 0;
     gimp_get_data(PLUG_IN_NAME, &s);
     if(!sphere_main(drawable)) {
@@ -2906,6 +2909,7 @@ static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, G
     }
     break;
   case RUN_WITH_LAST_VALS:
+    INIT_I18N();
     s.com.numtexture = 0;
     gimp_get_data(PLUG_IN_NAME, &s);
     if(s.com.numtexture == 0) {

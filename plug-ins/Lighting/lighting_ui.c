@@ -207,7 +207,7 @@ void togglebump_update(GtkWidget *button)
       bump_page_pos = g_list_length(options_note_book->children);
 
       bump_page = create_bump_page();
-      bump_label = gtk_label_new("Bump");
+      bump_label = gtk_label_new( _("Bump"));
       gtk_notebook_append_page(options_note_book,bump_page,bump_label);
     }
   else
@@ -235,7 +235,7 @@ void toggleenvironment_update(GtkWidget *button)
       env_page_pos = g_list_length(options_note_book->children);
 
       env_page = create_environment_page();
-      env_label = gtk_label_new("Env");
+      env_label = gtk_label_new( _("Env"));
 
       gtk_notebook_append_page(options_note_book,env_page,env_label);
     }
@@ -663,6 +663,11 @@ GtkWidget *create_light_page(void)
 {
   GtkWidget *page,*frame,*vbox;
   GtkWidget *widget1,*widget2,*widget3;
+  int i;
+
+  for (i = 0; light_labels[i] != NULL; i++)
+    light_labels[i] = g_strdup(gettext(light_labels[i]));
+
 
   page=gtk_vbox_new(FALSE,0);
   
@@ -879,9 +884,13 @@ GtkWidget *create_bump_page(void)
 {
   GtkWidget *page,*widget1,*widget2,*imagewid;
   GtkWidget *frame,*vbox,*label;
+  int i;
 
   /* Bump mapping page */
   /* ================= */
+
+  for (i = 0; curvetype_labels[i] != NULL; i++)
+    curvetype_labels[i] = g_strdup(gettext(curvetype_labels[i]));
   
   page=gtk_vbox_new(FALSE,0);
 
@@ -905,7 +914,7 @@ GtkWidget *create_bump_page(void)
   gtk_option_menu_set_menu(GTK_OPTION_MENU(widget2), widget1);
 
   gck_auto_show(TRUE);
-  widget1=gck_option_menu_new("Curve:",imagewid,TRUE,TRUE,0,curvetype_labels,
+  widget1=gck_option_menu_new(_("Curve:"),imagewid,TRUE,TRUE,0,curvetype_labels,
     (GtkSignalFunc)mapmenu2_callback,NULL);
   gtk_option_menu_set_history(GTK_OPTION_MENU(widget1),mapvals.bumpmaptype);
   gck_auto_show(FALSE);

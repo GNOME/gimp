@@ -90,6 +90,7 @@ app/paint_funcs.c
 app/paintbrush.c
 app/palette.c
 app/palette_select.c
+app/path_tool.c
 app/paths_dialog.c
 app/pattern_select.c
 app/patterns.c

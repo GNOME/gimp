@@ -166,7 +166,7 @@ static void query(void)
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
-  INIT_I18N_UI();
+  INIT_I18N();
 
   gimp_install_procedure ("plug_in_lighting",
 			  _("Apply various lighting effects to an image"),
@@ -192,9 +192,13 @@ static void run(gchar   *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
-  INIT_I18N();
-
   run_mode = param[0].data.d_int32;
+
+  if (run_mode == RUN_INTERACTIVE) {
+    INIT_I18N_UI();
+  } else {
+    INIT_I18N();
+  }
 
   *nreturn_vals = 1;
   *return_vals = values;

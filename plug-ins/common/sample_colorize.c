@@ -39,10 +39,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-/* internationalisation (nls-macros) is available since gimp 1.1.x */
-#if (( GIMP_MAJOR_VERSION > 0 ) && ( GIMP_MINOR_VERSION > 0))
-#include <libgimp/gimpintl.h>
-#endif
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifndef __GIMPINTL_H__
 /* for older gimp releases use dummys nls-macros */
@@ -297,13 +295,14 @@ query()
     " (the image with the dst_drawable is converted to RGB if necessary)"
     " The sample_drawable should be of type RGB or RGBA";
 
+  INIT_I18N();
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Colorize the contents of the specified drawable similar to sample drawable",
+			  _("Colorize the contents of the specified drawable similar to sample drawable"),
 			  help_string,
 			  "Wolfgang Hofer",
 			  "hof@hotbot.com",
 			  "07/1999",
-			  "<Image>/Filters/Colors/Map/Sample Colorize...",
+			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -365,6 +364,7 @@ run (gchar   *name,
       
       if (run_mode == RUN_INTERACTIVE)
       {
+         INIT_I18N_UI();
          p_smp_dialog();
          p_free_colors();
          gimp_set_data (PLUG_IN_NAME, &g_values, sizeof (t_values));
@@ -373,6 +373,7 @@ run (gchar   *name,
       {
         if(run_mode == RUN_NONINTERACTIVE)
         {
+          INIT_I18N();
           if(nparams == NUMBER_IN_ARGS)
           {
             g_values.sample_id     = param[3].data.d_drawable;

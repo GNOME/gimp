@@ -19,6 +19,7 @@ flame_SOURCES = \
 	rect.h
 
 INCLUDES = \
+	-DLOCALEDIR=\""$(localedir)"\" \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)

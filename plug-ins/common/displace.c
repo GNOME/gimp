@@ -49,7 +49,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 
@@ -185,13 +185,14 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
   gimp_install_procedure ("plug_in_displace",
-			  "Displace the contents of the specified drawable",
-			  "Displaces the contents of the specified drawable by the amounts specified by 'amount_x' and 'amount_y' multiplied by the intensity of corresponding pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must be of type GRAY_IMAGE for this operation to succeed.",
+			  _("Displace the contents of the specified drawable"),
+			  _("Displaces the contents of the specified drawable by the amounts specified by 'amount_x' and 'amount_y' multiplied by the intensity of corresponding pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must be of type GRAY_IMAGE for this operation to succeed."),
 			  "Stephen Robert Norris & (ported to 1.0 by) Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",
-			  "<Image>/Filters/Map/Displace...",
+              N_("<Image>/Filters/Map/Displace..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -225,6 +226,7 @@ run (gchar  *name,
     {
     case RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
+      INIT_I18N_UI();
       gimp_get_data ("plug_in_displace", &dvals);
 
       /*  First acquire information with a dialog  */
@@ -233,6 +235,7 @@ run (gchar  *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
 	status = STATUS_CALLING_ERROR;
@@ -259,7 +262,7 @@ run (gchar  *name,
 
   if (status == STATUS_SUCCESS && (dvals.do_x || dvals.do_y))
     {
-      gimp_progress_init ("Displacing...");
+      gimp_progress_init (_("Displacing..."));
 
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -314,7 +317,7 @@ displace_dialog (GDrawable *drawable)
   gtk_init (&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Displace");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Displace"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) displace_close_callback,
@@ -328,7 +331,7 @@ displace_dialog (GDrawable *drawable)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) displace_ok_callback,
@@ -337,7 +340,7 @@ displace_dialog (GDrawable *drawable)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -346,7 +349,7 @@ displace_dialog (GDrawable *drawable)
   gtk_widget_show (button);
 
   /*  The main table  */
-  frame = gtk_frame_new ("Displace Options");
+  frame = gtk_frame_new ( _("Displace Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -361,7 +364,7 @@ displace_dialog (GDrawable *drawable)
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 10);
 
   /*  on_x, on_y  */
-  toggle = gtk_check_button_new_with_label ("X Displacement: ");
+  toggle = gtk_check_button_new_with_label ( _("X Displacement: "));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_x_toggle_update,
@@ -369,7 +372,7 @@ displace_dialog (GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Y Displacement: ");
+  toggle = gtk_check_button_new_with_label ( _("Y Displacement: "));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_y_toggle_update,
@@ -425,11 +428,11 @@ displace_dialog (GDrawable *drawable)
   gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 5);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 
-  label = gtk_label_new ("On Edges: ");
+  label = gtk_label_new ( _("On Edges: "));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  toggle = gtk_radio_button_new_with_label (group, "Wrap");
+  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -438,7 +441,7 @@ displace_dialog (GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Smear");
+  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -447,7 +450,7 @@ displace_dialog (GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Black");
+  toggle = gtk_radio_button_new_with_label (group, _("Black"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

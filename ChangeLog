@@ -1,3 +1,18 @@
+1999-12-13  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* po/POTFILES.in: Added missing app/path_tool.c.
+
+	* plug-ins/common/displace.c
+	* plug-ins/flame/flame.c
+	* plug-ins/flame/Makefile.am
+	* plug-ins/common/spheredesigner.c
+	* po-plug-ins/POTFILES.in: Added gettext support.
+
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_ui.c: More _() tagging.
+
+	* plug-ins/common/sample_colorize.c: Added missing INIT_I18N*().
+
 Fri Dec 10 23:55:10 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/iscissors.c: fix problem with layers with non-zero offset.

@@ -33,6 +33,8 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
+#include <floatingpoint.h>
 
 #include "megawidget.h"
 
@@ -122,13 +124,14 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
   gimp_install_procedure("plug_in_flame",
-			 "cosmic recursive fractal flames",
-			 "use Smooth Palette to make colormaps",
+			 _("cosmic recursive fractal flames"),
+			 _("use Smooth Palette to make colormaps"),
 			 "Scott Draves",
 			 "Scott Draves",
 			 "1997",
-			 "<Image>/Filters/Render/Nature/Flame...",
+			 N_("<Image>/Filters/Render/Nature/Flame..."),
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -168,6 +171,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
+  fpsetmask(0);
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -178,6 +182,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   if (run_mode == RUN_NONINTERACTIVE) {
     status = STATUS_CALLING_ERROR;
   } else {
+    INIT_I18N_UI();
     gimp_get_data("plug_in_flame", &config);
     /* XXX i tried using the init routine, but it didn't work. */
     mw_update_cb = my_mw_update_cb;
@@ -198,7 +203,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   if (status == STATUS_SUCCESS) {
 
     if (gimp_drawable_is_rgb(drawable->id)) {
-      gimp_progress_init("Drawing Flame...");
+      gimp_progress_init( _("Drawing Flame..."));
       gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 
       doit(drawable);
@@ -266,7 +271,7 @@ static void doit(GDrawable * drawable)
   bytes = drawable->bpp;
 
   if (3 != bytes && 4 != bytes) {
-    fprintf(stderr, "only works with three or four channels, not %d.\n", bytes);
+    fprintf(stderr, _("only works with three or four channels, not %d.\n"), bytes);
     return;
   }
 
@@ -383,7 +388,7 @@ static void file_cancel_callback(GtkWidget * widget, gpointer data) {
 
 static void
 make_file_dlg() {
-  file_dlg = gtk_file_selection_new ("Load/Store Flame");
+  file_dlg = gtk_file_selection_new ( _("Load/Store Flame"));
   gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT (file_dlg),
 		     "delete_event",
@@ -516,7 +521,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
 
     edit_dlg = gtk_dialog_new();
   
-    gtk_window_set_title(GTK_WINDOW(edit_dlg), "Edit Flame");
+    gtk_window_set_title(GTK_WINDOW(edit_dlg), _("Edit Flame"));
     gtk_window_position(GTK_WINDOW(edit_dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(edit_dlg), "destroy",
 		       (GtkSignalFunc) edit_close_callback, NULL);
@@ -524,7 +529,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
     gtk_signal_connect(GTK_OBJECT(edit_dlg), "delete_event",
 		       (GtkSignalFunc) gtk_widget_hide_on_delete, NULL);
 
-    button = gtk_button_new_with_label("Ok");
+    button = gtk_button_new_with_label( _("OK"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc) edit_ok_callback, 0);
@@ -533,7 +538,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
     gtk_widget_grab_default(button);
     gtk_widget_show(button);
 
-    button = gtk_button_new_with_label("Cancel");
+    button = gtk_button_new_with_label( _("Cancel"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc) edit_cancel_callback, 0);
@@ -542,7 +547,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
     gtk_widget_grab_default(button);
     gtk_widget_show(button);
 
-    frame = gtk_frame_new("Directions");
+    frame = gtk_frame_new( _("Directions"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width(GTK_CONTAINER(frame), 10);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(edit_dlg)->vbox),
@@ -570,7 +575,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
 	gtk_widget_show (button);
       }
 
-    frame = gtk_frame_new("Controls");
+    frame = gtk_frame_new( _("Controls"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width(GTK_CONTAINER(frame), 10);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(edit_dlg)->vbox),
@@ -586,7 +591,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
 		       table, TRUE, FALSE, 10);
     gtk_widget_show(table);
     
-    mw_fscale_entry_new(table, "Speed", 0.05, 0.5, 0.01, 0.1,
+    mw_fscale_entry_new(table, _("Speed"), 0.05, 0.5, 0.01, 0.1,
 			0.0, 0, 1, 1, 2, &pick_speed);
 
     box = gtk_hbox_new (TRUE, 5);
@@ -594,7 +599,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
 		       box, TRUE, FALSE, 10);
     gtk_widget_show(box);
 
-    button = gtk_button_new_with_label("Randomize");
+    button = gtk_button_new_with_label( _("Randomize"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 			      (GtkSignalFunc) randomize_callback,
@@ -607,15 +612,15 @@ edit_callback(GtkWidget * widget, gpointer data) {
 	char *name;
 	int value;
       } menu_items[] = {
-	{"Same", variation_same },
-	{"Random", variation_random },
-	{"Linear", 0},
-	{"Sinusoidal", 1},
-	{"Spherical", 2},
-	{"Swirl", 3},
-	{"Horseshoe", 4},
-	{"Polar", 5},
-	{"Bent", 6},
+	{ N_("Same"), variation_same },
+	{ N_("Random"), variation_random },
+	{ N_("Linear"), 0},
+	{ N_("Sinusoidal"), 1},
+	{ N_("Spherical"), 2},
+	{ N_("Swirl"), 3},
+	{ N_("Horseshoe"), 4},
+	{ N_("Polar"), 5},
+	{ N_("Bent"), 6},
 	{ NULL, 0},
       };
       GtkWidget *hbox;
@@ -627,7 +632,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
       gtk_box_pack_start(GTK_BOX(box), hbox, TRUE, FALSE, 10);
       gtk_widget_show(hbox);
 
-      w = gtk_label_new("Variation:");
+      w = gtk_label_new( _("Variation:"));
       gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
       gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
       gtk_widget_show(w);
@@ -638,7 +643,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
       menu = gtk_menu_new ();
       while (menu_items[i].name) {
 	GtkWidget *menu_item;
-	menu_item = gtk_menu_item_new_with_label(menu_items[i].name);
+	menu_item = gtk_menu_item_new_with_label( gettext(menu_items[i].name));
 	gtk_container_add (GTK_CONTAINER (menu), menu_item);
 	gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 			    (GtkSignalFunc) menu_cb,
@@ -665,7 +670,7 @@ static void load_callback(GtkWidget * widget, gpointer data) {
     if (GTK_WIDGET_VISIBLE(file_dlg))
       return;
   }
-  gtk_window_set_title(GTK_WINDOW (file_dlg), "Load Flame");
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Flame"));
   load_store = 1;
   gtk_widget_show (file_dlg);
 }
@@ -677,7 +682,7 @@ static void store_callback(GtkWidget * widget, gpointer data) {
     if (GTK_WIDGET_VISIBLE(file_dlg))
       return;
   }
-  gtk_window_set_title(GTK_WINDOW (file_dlg), "Store Flame");
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Store Flame"));
   load_store = 0;
   gtk_widget_show (file_dlg);
 }
@@ -800,7 +805,7 @@ static gint dialog() {
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Flame");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Flame"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) close_callback, NULL);
@@ -813,7 +818,7 @@ static gint dialog() {
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -822,7 +827,7 @@ static gint dialog() {
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -830,7 +835,7 @@ static gint dialog() {
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  frame = gtk_frame_new("Rendering");
+  frame = gtk_frame_new( _("Rendering"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -852,18 +857,17 @@ static gint dialog() {
   row = 1;
 
   /* this zoom - gamma should redraw flame preview */
-  mw_fscale_entry_new(table, "Brightness", 0, 5, 1, 1, 0,
+  mw_fscale_entry_new(table, _("Brightness"), 0, 5, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.brightness); row++;
-  mw_fscale_entry_new(table, "Contrast", 0, 5, 1, 1, 0,
+  mw_fscale_entry_new(table, _("Contrast"), 0, 5, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.contrast); row++;
-  mw_fscale_entry_new(table, "Gamma", 1, 5, 1, 1, 0,
+  mw_fscale_entry_new(table, _("Gamma"), 1, 5, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.gamma); row++;
-  mw_fscale_entry_new(table, "Sample Density", 0.1, 20, 1, 5, 0,
+  mw_fscale_entry_new(table, _("Sample Density"), 0.1, 20, 1, 5, 0,
                       0, 1, row, row+1, &config.cp.sample_density); row++;
-  mw_iscale_entry_new(table, "Spatial Oversample", 1, 4, 1, 1, 0,
+  mw_iscale_entry_new(table, _("Spatial Oversample"), 1, 4, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.spatial_oversample); row++;
-
-  mw_fscale_entry_new(table, "Spatial Filter Radius", 0, 4, 1, 1, 0,
+  mw_fscale_entry_new(table, _("Spatial Filter Radius"), 0, 4, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.spatial_filter_radius); row++;
 
 {
@@ -877,7 +881,7 @@ static gint dialog() {
     gtk_box_pack_start(GTK_BOX(box), hbox, FALSE, FALSE, 10);
     gtk_widget_show(hbox);
 
-    w = gtk_label_new("Colormap:");
+    w = gtk_label_new( _("Colormap:"));
     gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), w, TRUE, TRUE, 10);
     gtk_widget_show(w);
@@ -888,7 +892,7 @@ static gint dialog() {
 
     config.cmap_drawable = save_drawable;
 #if 0
-    menuitem = gtk_menu_item_new_with_label("Black");
+    menuitem = gtk_menu_item_new_with_label( _("Black"));
     gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
 		       (GtkSignalFunc) gradient_cb,
 		       (gpointer) black_drawable);
@@ -918,7 +922,7 @@ static gint dialog() {
     }
 
 
-    menuitem = gtk_menu_item_new_with_label("Custom Gradient");
+    menuitem = gtk_menu_item_new_with_label( _("Custom Gradient"));
     gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
 		       (GtkSignalFunc) gradient_cb,
 		       (gpointer) gradient_drawable);
@@ -938,7 +942,7 @@ static gint dialog() {
     set_cmap_preview();
   }
 
-  frame = gtk_frame_new("Camera");
+  frame = gtk_frame_new( _("Camera"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -954,11 +958,11 @@ static gint dialog() {
 
   row = 1;
   
-  mw_fscale_entry_new(table, "Zoom", -4, 4, 1, 1, 0,
+  mw_fscale_entry_new(table, _("Zoom"), -4, 4, 1, 1, 0,
                       0, 1, row, row+1, &config.cp.zoom); row++;
-  mw_fscale_entry_new(table, "X", -2, 2, 0.5, 0.5, 0,
+  mw_fscale_entry_new(table, _("X"), -2, 2, 0.5, 0.5, 0,
                       0, 1, row, row+1, &config.cp.center[0]); row++;
-  mw_fscale_entry_new(table, "Y", -2, 2, 0.5, 0.5, 0,
+  mw_fscale_entry_new(table, _("Y"), -2, 2, 0.5, 0.5, 0,
                       0, 1, row, row+1, &config.cp.center[1]); row++;
   
 
@@ -980,7 +984,7 @@ static gint dialog() {
 		     box, FALSE, FALSE, 0);
   gtk_widget_show(box);
   
-  frame = gtk_frame_new("Preview");
+  frame = gtk_frame_new( _("Preview"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_container_add(GTK_CONTAINER(frame), flame_preview);
@@ -995,7 +999,7 @@ static gint dialog() {
     gtk_box_pack_start(GTK_BOX(box), vbox, TRUE, FALSE, 0);
     gtk_widget_show(vbox);
   
-    button = gtk_button_new_with_label("Shape Edit");
+    button = gtk_button_new_with_label( _("Shape Edit"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 			      (GtkSignalFunc) edit_callback,
@@ -1004,7 +1008,7 @@ static gint dialog() {
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, FALSE, 10);
     gtk_widget_show(button);
 
-    button = gtk_button_new_with_label("Load");
+    button = gtk_button_new_with_label( _("Load"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 			      (GtkSignalFunc) load_callback,
@@ -1013,7 +1017,7 @@ static gint dialog() {
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, FALSE, 10);
     gtk_widget_show(button);
 
-    button = gtk_button_new_with_label("Store");
+    button = gtk_button_new_with_label( _("Store"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 			      (GtkSignalFunc) store_callback,
