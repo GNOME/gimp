@@ -243,6 +243,7 @@ gimp_devices_check_change (Gimp     *gimp,
 {
   GimpDeviceManager *manager;
   GdkDevice         *device;
+  GtkWidget         *source;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
@@ -250,6 +251,16 @@ gimp_devices_check_change (Gimp     *gimp,
   manager = gimp_device_manager_get (gimp);
 
   g_return_val_if_fail (manager != NULL, FALSE);
+
+  /* It is possible that the event was propagated from a widget that does not
+     want extension events and therefore always sends core pointer events.
+     This can cause a false switch to the core pointer device. */
+
+  source = gtk_get_event_widget (event);
+
+  if (source &&
+      gtk_widget_get_extension_events (source) == GDK_EXTENSION_EVENTS_NONE)
+    return FALSE;
 
   switch (event->type)
     {

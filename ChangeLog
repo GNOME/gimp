@@ -1,3 +1,10 @@
+2004-07-11  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/widgets/gimpdevices.c (gimp_devices_check_change): Applied
+	a patch from Robert Robert Ã–gren, moved here from
+	toolbox_check_device() - Only change devices if the event came from
+	a widget that accepts extension events. Fixes bug #115774.
+
 2004-07-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-utils.[ch] (gimp_parameters_append)
