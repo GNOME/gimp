@@ -1,3 +1,11 @@
+2000-12-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: re-added it to CVS.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/plugin-defs.pl: properly exclude it from the build
+	and the distribution.
+
 2000-12-15  Vidar Madsen  <vidar@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: Removed from CVS, until
