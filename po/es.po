@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-12 15:27-0300\n"
+"POT-Creation-Date: 2003-08-28 11:59+0200\n"
+"PO-Revision-Date: 2003-08-28 14:54-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -122,8 +122,7 @@ msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
 #: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
 #: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
@@ -148,8 +147,7 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 # //R Posiblemente estará mal
 # Creo que ahora está un poco mejor. FVD
 #: app/main.c:402
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activar los manejadores de señales no fatales de "
 "depuración.\n"
@@ -160,8 +158,7 @@ msgstr "  --display <pantalla>      Usar la pantalla X designada.\n"
 
 #: app/main.c:404
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
 #: app/main.c:405
 msgid ""
@@ -453,8 +450,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:142
 msgid "Sets the text to appear in image window titles."
-msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:145
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -477,10 +473,9 @@ msgstr ""
 "pseudo-color."
 
 #: app/config/gimprc-blurbs.h:155
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
-"Establece el nivel de interpolación utilizado para el redimensionado y otras "
+"Establece el nivel de interpolación utilizado para el re-dimensionado y otras "
 "transformaciones."
 
 #: app/config/gimprc-blurbs.h:159
@@ -566,7 +561,7 @@ msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 msgstr ""
-"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
+"Cuando se encuentre activado, la ventana de la imagen se re-dimensionará "
 "automáticamente a sí misma cuando cambie el tamaño físico de la imagen."
 
 # También me parece necesaria la coma. FVD
@@ -575,7 +570,7 @@ msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
 msgstr ""
-"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
+"Cuando se encuentre activado, la ventana de la imagen se re-dimensionará "
 "automáticamente a sí misma cuando se aumenten o achiquen las imágenes."
 
 #: app/config/gimprc-blurbs.h:237
@@ -585,8 +580,7 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:240
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y las brochas actuales entre "
 "distintas sesiones de El GIMP."
@@ -602,6 +596,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
+"Cuando está habilitado todas la herramientas de pintura mostrarán una vista previa del contorno "
+"de la brocha actual."
 
 #: app/config/gimprc-blurbs.h:254
 msgid ""
@@ -715,8 +711,7 @@ msgid "When enabled, menus can be torn off."
 msgstr "Cuando se encuentre activado los menús podrán ser separados. "
 
 #: app/config/gimprc-blurbs.h:309
-msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
 msgstr ""
 "Cuando está activado puede cambiar las combinaciones de teclas de los "
 "elementos del menú  al vuelo."
@@ -727,8 +722,7 @@ msgstr "Guardar las combinaciones de teclas modificadas al salir de El GIMP."
 
 #: app/config/gimprc-blurbs.h:315
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
-"Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
+msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
 
 # "si es", no "si sea". FVD
 #: app/config/gimprc-blurbs.h:318
@@ -773,8 +767,7 @@ msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
 #: app/config/gimprc-blurbs.h:344
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:347
 msgid ""
@@ -1155,19 +1148,19 @@ msgstr "Elemento enlazado"
 msgid "Drawable Visibility"
 msgstr "Visibilidad del dibujable"
 
-#: app/core/core-enums.c:507 app/core/gimplayer.c:428 app/core/gimplayer.c:430
+#: app/core/core-enums.c:507 app/core/gimplayer.c:528 app/core/gimplayer.c:530
 #: app/gui/layers-commands.c:1008 app/gui/resize-dialog.c:194
 #: app/pdb/layer_cmds.c:405
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
 #: app/core/core-enums.c:508 app/core/gimpimage-crop.c:118
-#: app/core/gimplayer.c:466 app/core/gimplayer.c:468
+#: app/core/gimplayer.c:566 app/core/gimplayer.c:568
 #: app/gui/layers-commands.c:1102 app/pdb/layer_cmds.c:500
 msgid "Resize Layer"
 msgstr "Redimensionar la capa"
 
-#: app/core/core-enums.c:509 app/core/gimplayer.c:1079
+#: app/core/core-enums.c:509 app/core/gimplayer.c:1088
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara de capa"
 
@@ -1212,7 +1205,7 @@ msgstr "Transformar"
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:791
+#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:832
 msgid "Attach Parasite"
 msgstr "Adjuntar parásito"
 
@@ -1260,11 +1253,11 @@ msgstr "Definir el elemento como enlazado"
 
 #: app/core/core-enums.c:536 app/gui/layers-commands.c:612
 #: app/gui/layers-commands.c:644 app/gui/layers-commands.c:676
-#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:198
+#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:197
 msgid "New Layer"
 msgstr "Nueva capa"
 
-#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:204
+#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:203
 msgid "Delete Layer"
 msgstr "Borrar la capa"
 
@@ -1273,7 +1266,7 @@ msgstr "Borrar la capa"
 msgid "Layer Mod"
 msgstr "Modif. capa"
 
-#: app/core/core-enums.c:539 app/core/gimplayer.c:876
+#: app/core/core-enums.c:539 app/core/gimplayer.c:885
 #: app/gui/layers-commands.c:926
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
@@ -1462,7 +1455,7 @@ msgstr "Cadena UTF-8 inválida en el archivo de brocha «%s»"
 
 #: app/core/gimpbrush.c:609 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
-#: app/core/gimpitem.c:385 app/core/gimppalette.c:441
+#: app/core/gimpitem.c:411 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
 #: app/tools/gimpvectortool.c:367
 msgid "Unnamed"
@@ -1493,8 +1486,7 @@ msgstr "Error fatal de análisis: «%s» no es un archivo de brocha de El GIMP"
 #: app/core/gimpbrushgenerated.c:398
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr ""
-"Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
+msgstr "Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
 
 #: app/core/gimpbrushpipe.c:384 app/core/gimpbrushpipe.c:404
 #: app/core/gimpbrushpipe.c:494
@@ -1597,11 +1589,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:385 app/core/gimpdatafactory.c:388
-#: app/core/gimpitem.c:268 app/core/gimpitem.c:271
+#: app/core/gimpitem.c:273 app/core/gimpitem.c:276
 msgid "copy"
 msgstr "copiar"
 
-#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:280
+#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:285
 #, c-format
 msgid "%s copy"
 msgstr "%s copia"
@@ -1673,7 +1665,7 @@ msgstr "Transformación"
 msgid "Paste Transform"
 msgstr "Pegar la transformación"
 
-#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:560
+#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:660
 msgid "Transform Layer"
 msgstr "Transformar la capa"
 
@@ -1714,8 +1706,7 @@ msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 #: app/core/gimpgradient.c:364
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
-msgstr ""
-"Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
+msgstr "Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
 
 #: app/core/gimpgradient.c:384
 #, c-format
@@ -1788,14 +1779,13 @@ msgstr "Selección elíptica"
 
 #. no undo
 #: app/core/gimpimage-mask-select.c:339
-#, fuzzy
 msgid "Alpha to Selection"
-msgstr "/Alfa a _selección"
+msgstr "Alfa a selección"
 
 #: app/core/gimpimage-mask-select.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "%s Channel to Selection"
-msgstr "Canal a selección"
+msgstr "canal %s a selección"
 
 #: app/core/gimpimage-mask-select.c:426 app/tools/gimpfuzzyselecttool.c:100
 msgid "Fuzzy Select"
@@ -1949,7 +1939,7 @@ msgstr "Quitar una capa"
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada más alto."
 
-#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:206
+#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:205
 msgid "Raise Layer"
 msgstr "Elevar la capa"
 
@@ -1957,7 +1947,7 @@ msgstr "Elevar la capa"
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:210
+#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:209
 msgid "Lower Layer"
 msgstr "Bajar la capa"
 
@@ -1969,7 +1959,7 @@ msgstr "La capa ya se encuentra en lo más alto."
 msgid "Cannot raise a layer without alpha."
 msgstr "No se puede elevar una capa sin alfa."
 
-#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:208
+#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:207
 msgid "Raise Layer to Top"
 msgstr "Elevar la capa hasta lo más alto"
 
@@ -1977,7 +1967,7 @@ msgstr "Elevar la capa hasta lo más alto"
 msgid "Layer is already on the bottom."
 msgstr "La capa ya se encuentra en la parte más baja."
 
-#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:212
+#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:211
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta la parte más baja"
 
@@ -2026,7 +2016,7 @@ msgstr "Quitar la ruta"
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:132
+#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:131
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
@@ -2034,7 +2024,7 @@ msgstr "Elevar la ruta"
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:136
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:135
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
@@ -2096,11 +2086,11 @@ msgstr "Ha fallado la apertura del archivo de miniatura «%s»: %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ha fallado la creación de la carpeta de miniaturas «%s»"
 
-#: app/core/gimpitem.c:801
+#: app/core/gimpitem.c:842
 msgid "Attach Parasite to Item"
 msgstr "Adjuntar una parásito al elemento"
 
-#: app/core/gimpitem.c:840 app/core/gimpitem.c:847
+#: app/core/gimpitem.c:881 app/core/gimpitem.c:888
 msgid "Remove Parasite from Item"
 msgstr "Quitar el parásito del elemento"
 
@@ -2122,56 +2112,56 @@ msgstr ""
 "selección flotante porque ésta pertenece a una \n"
 "máscara de capa o canal."
 
-#: app/core/gimplayer.c:218 app/pdb/internal_procs.c:131
+#: app/core/gimplayer.c:222 app/pdb/internal_procs.c:131
 msgid "Layer"
 msgstr "Capa"
 
-#: app/core/gimplayer.c:219
+#: app/core/gimplayer.c:223
 msgid "Rename Layer"
 msgstr "Renombrar la capa"
 
-#: app/core/gimplayer.c:387 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
+#: app/core/gimplayer.c:487 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
 #: app/tools/gimpeditselectiontool.c:244 app/tools/gimpeditselectiontool.c:996
 msgid "Move Layer"
 msgstr "Mover la capa"
 
-#: app/core/gimplayer.c:498 app/gui/drawable-commands.c:157
+#: app/core/gimplayer.c:598 app/gui/drawable-commands.c:157
 msgid "Flip Layer"
 msgstr "Voltear la capa"
 
-#: app/core/gimplayer.c:527 app/gui/drawable-commands.c:191
+#: app/core/gimplayer.c:627 app/gui/drawable-commands.c:191
 msgid "Rotate Layer"
 msgstr "Rotar la capa"
 
-#: app/core/gimplayer.c:836
+#: app/core/gimplayer.c:845
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"No se puede añadir una máscara a la capa dado que no es parte de una imagen."
+msgstr "No se puede añadir una máscara a la capa dado que no es parte de una imagen."
 
-#: app/core/gimplayer.c:843
+#: app/core/gimplayer.c:852
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No se puede añadir una máscara de capa dado que la capa ya posee una."
 
-#: app/core/gimplayer.c:850
+#: app/core/gimplayer.c:859
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "No se puede añadir una máscara de capa a una capa sin canal alfa."
 
-#: app/core/gimplayer.c:860
+#: app/core/gimplayer.c:869
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No se puede añadir una máscara de capa de dimensiones distintas a la capa "
 "especificada."
 
-#: app/core/gimplayer.c:903
+#: app/core/gimplayer.c:912
 #, c-format
 msgid "%s mask"
 msgstr "máscara %s"
 
-#: app/core/gimplayer.c:1176
+#. Push the layer on the undo stack
+#: app/core/gimplayer.c:1188
 msgid "Add Alpha Channel"
 msgstr "Añadir un canal alfa"
 
-#: app/core/gimplayer.c:1208
+#: app/core/gimplayer.c:1218
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
@@ -2289,8 +2279,7 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 #: app/core/gimppattern.c:424
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr ""
-"Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
+msgstr "Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2415,11 +2404,11 @@ msgstr ""
 "Se han realizado cambios a %s.\n"
 "¿Desea cerrarlo de todos modos?"
 
-#: app/display/gimpdisplayshell-dnd.c:65
+#: app/display/gimpdisplayshell-dnd.c:77
 msgid "Drop New Layer"
 msgstr "Soltar la capa nueva"
 
-#: app/display/gimpdisplayshell-dnd.c:100
+#: app/display/gimpdisplayshell-dnd.c:120
 msgid "Drop New Path"
 msgstr "Borrar la ruta nueva"
 
@@ -2583,12 +2572,12 @@ msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Visite http://www.gimp.org/ para obtener mayor información"
 
 #: app/gui/brush-select.c:183 app/tools/gimppaintoptions-gui.c:117
-#: app/widgets/gimplayertreeview.c:286
+#: app/widgets/gimplayertreeview.c:285
 msgid "Opacity:"
 msgstr "Opacidad:"
 
 #: app/gui/brush-select.c:200 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:279
+#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:278
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -3140,9 +3129,8 @@ msgid "/Tab Style/_Icon"
 msgstr "/Estilo de solapa/_Icono"
 
 #: app/gui/dialogs-menu.c:154
-#, fuzzy
 msgid "/Tab Style/Current _Status"
-msgstr "/Estilo de solapa/_Texto"
+msgstr "/Estilo de solapa/E_stado actual"
 
 #: app/gui/dialogs-menu.c:155
 msgid "/Tab Style/_Text"
@@ -3153,9 +3141,8 @@ msgid "/Tab Style/I_con & Text"
 msgstr "Estilo de solapa/I_cono y texto"
 
 #: app/gui/dialogs-menu.c:157
-#, fuzzy
 msgid "/Tab Style/St_atus & Text"
-msgstr "Estilo de solapa/I_cono y texto"
+msgstr "Estilo de solapa/Est_ado y texto"
 
 #: app/gui/dialogs-menu.c:159
 msgid "/View as _List"
@@ -3312,9 +3299,8 @@ msgstr ""
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
-#, fuzzy
 msgid "Determine File _Type:"
-msgstr "Determinar el tipo de archivo:"
+msgstr "Determinar el _tipo de archivo:"
 
 #: app/gui/file-new-dialog.c:97 app/gui/preferences-dialog.c:1013
 #: app/gui/preferences-dialog.c:1016
@@ -3523,8 +3509,7 @@ msgstr "/Cargar co_lor izquierdo desde/Color de frente"
 
 #: app/gui/gradient-editor-menu.c:70
 msgid "/Load Left Color From/_Left Neighbor's Right Endpoint"
-msgstr ""
-"/Cargar color izquierdo desde/Punto fina_l derecho del vecino izquierdo"
+msgstr "/Cargar color izquierdo desde/Punto fina_l derecho del vecino izquierdo"
 
 #: app/gui/gradient-editor-menu.c:74
 msgid "/Load Left Color From/_Right Endpoint"
@@ -3948,9 +3933,8 @@ msgid "/Edit/_Redo"
 msgstr "/Editar/_Rehacer"
 
 #: app/gui/image-menu.c:168
-#, fuzzy
 msgid "/Edit/Undo _History..."
-msgstr "/Diálogos/H_istórico de deshacer..."
+msgstr "/Editar/H_istórico de deshacer..."
 
 #: app/gui/image-menu.c:176
 msgid "/Edit/Cu_t"
@@ -4067,9 +4051,8 @@ msgid "/Select/Save to _Channel"
 msgstr "/Seleccionar/Guardar en c_anal"
 
 #: app/gui/image-menu.c:323
-#, fuzzy
 msgid "/Select/To _Path"
-msgstr "/Se_lección a ruta"
+msgstr "/Seleccionar/A _ruta"
 
 #. <Image>/View
 #: app/gui/image-menu.c:331
@@ -4418,19 +4401,16 @@ msgid "/Layer/Mask/_Mask to Selection"
 msgstr "/Capa/Máscara/_Máscara a selección"
 
 #: app/gui/image-menu.c:762
-#, fuzzy
 msgid "/Layer/Mask/_Add to Selection"
-msgstr "/Capa/Máscara/_Máscara a selección"
+msgstr "/Capa/Máscara/_Agregar a la selección"
 
 #: app/gui/image-menu.c:767
-#, fuzzy
 msgid "/Layer/Mask/_Subtract from Selection"
-msgstr "/_Sustraer de selección"
+msgstr "/Capa/Máscara/_Sustraer de selección"
 
 #: app/gui/image-menu.c:772
-#, fuzzy
 msgid "/Layer/Mask/_Intersect with Selection"
-msgstr "/_Intersectar con selección"
+msgstr "/Capa/Máscara/_Intersectar con selección"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:780
@@ -4446,19 +4426,16 @@ msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "/Capa/Transparencia/Al_fa a selección"
 
 #: app/gui/image-menu.c:794
-#, fuzzy
 msgid "/Layer/Transparency/A_dd to Selection"
-msgstr "/Capa/Transparencia/Al_fa a selección"
+msgstr "/Capa/Transparencia/A_gregar a la selección"
 
 #: app/gui/image-menu.c:799
-#, fuzzy
 msgid "/Layer/Transparency/_Subtract from Selection"
-msgstr "/Capa/Transparencia/Al_fa a selección"
+msgstr "/Capa/Transparencia/_Substraer de la selección"
 
 #: app/gui/image-menu.c:804
-#, fuzzy
 msgid "/Layer/Transparency/_Intersect with Selection"
-msgstr "/Capa/Transparencia/Al_fa a selección"
+msgstr "/Capa/Transparencia/_Intersectar con la selección"
 
 #. <Image>/Layer/Transform
 #: app/gui/image-menu.c:814
@@ -4933,9 +4910,8 @@ msgid "Crop Layer"
 msgstr "Recortar la capa"
 
 #: app/gui/layers-commands.c:432
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Capa/Máscara/_Máscara a selección"
+msgstr "Capa máscara a selección"
 
 #: app/gui/layers-commands.c:618
 msgid "Empty Layer Copy"
@@ -4970,7 +4946,7 @@ msgstr "Tipo de relleno de la capa"
 msgid "Layer Attributes"
 msgstr "Atributos de la capa"
 
-#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:202
+#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:201
 msgid "Edit Layer Attributes"
 msgstr "Editar atributos de capa"
 
@@ -5598,7 +5574,7 @@ msgstr "Retroalimentación de movimiento del puntero"
 
 #: app/gui/preferences-dialog.c:1429
 msgid "Show _Brush Outline"
-msgstr ""
+msgstr "Mostrar el contorno de la _brocha"
 
 #: app/gui/preferences-dialog.c:1432
 msgid "Perfect-but-Slow _Pointer Tracking"
@@ -6658,8 +6634,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Presione «Continuar» para aceptar los ajustes de arriba."
 
 #: app/gui/user-install-dialog.c:941
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para obtener un rendimiento óptimo de El GIMP podrían tener que ajustarse "
 "algunas opciones.</b>"
@@ -6764,8 +6739,7 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1316
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr ""
-"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1336
 msgid ""
@@ -6797,7 +6771,7 @@ msgid "Empty Vectors Copy"
 msgstr "Copia de vectores vacíos"
 
 #: app/gui/vectors-commands.c:457 app/gui/vectors-commands.c:503
-#: app/widgets/gimpvectorstreeview.c:124
+#: app/widgets/gimpvectorstreeview.c:123
 msgid "New Path"
 msgstr "Nueva ruta"
 
@@ -6814,7 +6788,7 @@ msgstr "Nombre de la ruta:"
 msgid "Path Attributes"
 msgstr "Atributos de la ruta"
 
-#: app/gui/vectors-commands.c:574 app/widgets/gimpvectorstreeview.c:128
+#: app/gui/vectors-commands.c:574 app/widgets/gimpvectorstreeview.c:127
 msgid "Edit Path Attributes"
 msgstr "Editar atributos de la ruta"
 
@@ -7252,8 +7226,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
 #: app/text/gimptext.c:168
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "El «hinting» altera el contorno de la tipografía para producir un mapa de "
 "bits preciso en tamaños pequeños"
@@ -7315,11 +7288,11 @@ msgstr "Transformar la ruta activa"
 
 #: app/tools/tools-enums.c:73
 msgid "Extend Stroke/Move Nodes"
-msgstr ""
+msgstr "Extender el trazo/Mover nodos"
 
 #: app/tools/tools-enums.c:74
 msgid "Insert/Delete Nodes"
-msgstr ""
+msgstr "Insertar/Borrar nodos"
 
 #: app/tools/tools-enums.c:92
 msgid "Don't Show Grid"
@@ -8366,8 +8339,7 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
-"Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
@@ -8375,8 +8347,7 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-"Utilizar todas las capas visibles cuando se está achicando la selección"
+msgstr "Utilizar todas las capas visibles cuando se está achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:306
 msgid "Antialiasing"
@@ -8572,48 +8543,46 @@ msgstr ""
 "en capas que contienen máscaras de capa."
 
 #: app/tools/gimpvectortool.c:128
-#, fuzzy
 msgid "Create and edit paths"
-msgstr "Cree y edite imágenes o fotografías"
+msgstr "Crear y editar rutas"
 
 #: app/tools/gimpvectortool.c:129
-#, fuzzy
 msgid "/Tools/_Paths"
-msgstr "/Herramientas/Ruta"
+msgstr "/Herramientas/_Rutas"
 
 #: app/tools/tool_manager.c:189
 msgid "This tool has no options."
 msgstr "Esta herramienta no tiene opciones."
 
-#: app/vectors/gimpvectors.c:201
+#: app/vectors/gimpvectors.c:206
 msgid "Path"
 msgstr "Ruta"
 
-#: app/vectors/gimpvectors.c:202
+#: app/vectors/gimpvectors.c:207
 msgid "Rename Path"
 msgstr "Renombrar la ruta"
 
-#: app/vectors/gimpvectors.c:303
+#: app/vectors/gimpvectors.c:333
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: app/vectors/gimpvectors.c:332
+#: app/vectors/gimpvectors.c:362
 msgid "Scale Path"
 msgstr "Escalar la ruta"
 
-#: app/vectors/gimpvectors.c:367
+#: app/vectors/gimpvectors.c:397
 msgid "Resize Path"
 msgstr "Redimensionar la ruta"
 
-#: app/vectors/gimpvectors.c:397
+#: app/vectors/gimpvectors.c:427
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: app/vectors/gimpvectors.c:443
+#: app/vectors/gimpvectors.c:473
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: app/vectors/gimpvectors.c:474
+#: app/vectors/gimpvectors.c:504
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
@@ -8642,14 +8611,12 @@ msgid "Icon"
 msgstr "Icono"
 
 #: app/widgets/widgets-enums.c:72
-#, fuzzy
 msgid "Current Status"
-msgstr "Anchura actual:"
+msgstr "Estado actual"
 
 #: app/widgets/widgets-enums.c:74
-#, fuzzy
 msgid "Description"
-msgstr "Opciones de tramado"
+msgstr "Descripción"
 
 #: app/widgets/widgets-enums.c:75
 msgid "Icon & Text"
@@ -8661,11 +8628,11 @@ msgstr "Icono y desc"
 
 #: app/widgets/widgets-enums.c:77
 msgid "Status & Text"
-msgstr ""
+msgstr "Estado y texto"
 
 #: app/widgets/widgets-enums.c:78
 msgid "Status & Desc"
-msgstr ""
+msgstr "Estado y descripción"
 
 #: app/widgets/widgets-enums.c:96
 msgid "View as List"
@@ -9046,7 +9013,7 @@ msgstr "Borrar esta imagen"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:266
+#: app/widgets/gimpitemtreeview.c:265
 #, c-format
 msgid ""
 "%s\n"
@@ -9055,7 +9022,7 @@ msgstr ""
 "%s\n"
 "%s  a la cima"
 
-#: app/widgets/gimpitemtreeview.c:280
+#: app/widgets/gimpitemtreeview.c:279
 #, c-format
 msgid ""
 "%s\n"
@@ -9064,24 +9031,24 @@ msgstr ""
 "%s\n"
 "%s  al fondo"
 
-#: app/widgets/gimplayertreeview.c:200
+#: app/widgets/gimplayertreeview.c:199
 msgid "Duplicate Layer"
 msgstr "Duplicar la capa"
 
-#: app/widgets/gimplayertreeview.c:214
+#: app/widgets/gimplayertreeview.c:213
 msgid "Reorder Layer"
 msgstr "Reordenar la capa"
 
-#: app/widgets/gimplayertreeview.c:267
+#: app/widgets/gimplayertreeview.c:266
 msgid "Keep Trans."
 msgstr "Mantener trans."
 
-#: app/widgets/gimplayertreeview.c:276
+#: app/widgets/gimplayertreeview.c:275
 msgid "Keep Transparency"
 msgstr "Mantener transparencia"
 
 # era un verbo. FVD
-#: app/widgets/gimplayertreeview.c:299
+#: app/widgets/gimplayertreeview.c:298
 msgid "Anchor Floating Layer"
 msgstr "Anclar capa flotante"
 
@@ -9122,7 +9089,7 @@ msgstr "Este campo de entrada de texto está limitado a %d caracteres"
 msgid "Save Selection to Channel"
 msgstr "Guardar la selección en el canal"
 
-#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:171
+#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:170
 #, c-format
 msgid ""
 "Selection to Path\n"
@@ -9247,27 +9214,27 @@ msgstr "Rehacer"
 msgid "[ Base Image ]"
 msgstr "[ Imagen Base ]"
 
-#: app/widgets/gimpvectorstreeview.c:126
+#: app/widgets/gimpvectorstreeview.c:125
 msgid "Duplicate Path"
 msgstr "Duplicar ruta"
 
-#: app/widgets/gimpvectorstreeview.c:130
+#: app/widgets/gimpvectorstreeview.c:129
 msgid "Delete Path"
 msgstr "Borrar ruta"
 
-#: app/widgets/gimpvectorstreeview.c:134
+#: app/widgets/gimpvectorstreeview.c:133
 msgid "Raise Path to Top"
 msgstr "Elevar la ruta hasta el principio"
 
-#: app/widgets/gimpvectorstreeview.c:138
+#: app/widgets/gimpvectorstreeview.c:137
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta hasta el final"
 
-#: app/widgets/gimpvectorstreeview.c:140
+#: app/widgets/gimpvectorstreeview.c:139
 msgid "Reorder Path"
 msgstr "Reordenar la ruta"
 
-#: app/widgets/gimpvectorstreeview.c:151
+#: app/widgets/gimpvectorstreeview.c:150
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -9280,7 +9247,7 @@ msgstr ""
 "%s  Extraer\n"
 "%s%s%s  Intersectar"
 
-#: app/widgets/gimpvectorstreeview.c:187
+#: app/widgets/gimpvectorstreeview.c:186
 msgid "Stroke Path"
 msgstr "Trazar ruta"
 
@@ -9437,8 +9404,7 @@ msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 #: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
-"Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
+msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
 
 #: app/xcf/xcf.c:325
 #, c-format
@@ -9917,3 +9883,4 @@ msgstr "El GIMP (inestable)"
 
 #~ msgid "Reset"
 #~ msgstr "Restaurar"
+
