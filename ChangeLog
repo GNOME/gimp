@@ -1,3 +1,34 @@
+2000-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/crop.c: s/"Only"/"only"/
+
+	* app/iscissors.c: one more cursor_update fix. This time I don't
+	claim that it's _really_ correct.
+
+	* app/tool_options.c: don't add a separator after
+	opacity/paint_mode if a paint pressure options box follows.
+
+	* cursors/bad.xbm
+	* cursors/bad_mask.xbm: made it FAT (no need to use thin lines
+	which show as much as possible of the image below because the
+	cursor indicates that no operation is possible).
+
+	* libgimp/gimpprotocol.[ch]: s/int/gboolean/ where appopriate,
+	indentation paranoia.
+
+	_gp_*_read(): free the already allocated parts of the message if
+	reading a subsequent part fails. These cleanups will probably occur
+	shortly before the process crashes, but at least they make the
+	search for real leaks easier.
+
+	* plug-ins/common/uniteditor.c: some more tooltips.
+
+	* plug-ins/common/xbm.c: store the image comment in the
+	"gimp-comment" parasite and the hot spot in the new "hot-spot"
+	parasite. Added ui for entering the hot spot.
+
+	* docs/parasites.txt: documented the new "hot-spot" parasite.
+
 Fri Mar  3 15:08:41 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.18 release

@@ -19,7 +19,6 @@
 #ifndef __GIMP_PROTOCOL_H__
 #define __GIMP_PROTOCOL_H__
 
-
 #include <glib.h>
 
 /* Increment every time the protocol changes
@@ -27,7 +26,8 @@
 #define GP_VERSION 0x0003
 
 
-enum {
+enum
+{
   GP_QUIT,
   GP_CONFIG,
   GP_TILE_REQ,
@@ -44,16 +44,16 @@ enum {
 };
 
 
-typedef struct _GPConfig       GPConfig;
-typedef struct _GPTileReq      GPTileReq;
-typedef struct _GPTileAck      GPTileAck;
-typedef struct _GPTileData     GPTileData;
-typedef struct _GPParam        GPParam;
-typedef struct _GPParamDef     GPParamDef;
-typedef struct _GPProcRun      GPProcRun;
-typedef struct _GPProcReturn   GPProcReturn;
-typedef struct _GPProcInstall  GPProcInstall;
-typedef struct _GPProcUninstall  GPProcUninstall;
+typedef struct _GPConfig        GPConfig;
+typedef struct _GPTileReq       GPTileReq;
+typedef struct _GPTileAck       GPTileAck;
+typedef struct _GPTileData      GPTileData;
+typedef struct _GPParam         GPParam;
+typedef struct _GPParamDef      GPParamDef;
+typedef struct _GPProcRun       GPProcRun;
+typedef struct _GPProcReturn    GPProcReturn;
+typedef struct _GPProcInstall   GPProcInstall;
+typedef struct _GPProcUninstall GPProcUninstall;
 
 
 struct _GPConfig
@@ -61,54 +61,57 @@ struct _GPConfig
   guint32 version;
   guint32 tile_width;
   guint32 tile_height;
-  gint32 shm_ID;
+  gint32  shm_ID;
   gdouble gamma;
-  gint8 install_cmap;
-  gint8 use_xshm;
-  guint8 color_cube[4];
-  gint32 gdisp_ID;
+  gint8   install_cmap;
+  gint8   use_xshm;
+  guint8  color_cube[4];
+  gint32  gdisp_ID;
 };
 
 struct _GPTileReq
 {
-  gint32 drawable_ID;
+  gint32  drawable_ID;
   guint32 tile_num;
   guint32 shadow;
 };
 
 struct _GPTileData
 {
-  gint32 drawable_ID;
-  guint32 tile_num;
-  guint32 shadow;
-  guint32 bpp;
-  guint32 width;
-  guint32 height;
-  guint32 use_shm;
-  guchar *data;
+  gint32   drawable_ID;
+  guint32  tile_num;
+  guint32  shadow;
+  guint32  bpp;
+  guint32  width;
+  guint32  height;
+  guint32  use_shm;
+  guchar  *data;
 };
 
 struct _GPParam
 {
   guint32 type;
 
-  union {
-    gint32 d_int32;
-    gint16 d_int16;
-    gint8 d_int8;
-    gdouble d_float;
-    gchar *d_string;
-    gint32 *d_int32array;
-    gint16 *d_int16array;
-    gint8 *d_int8array;
-    gdouble *d_floatarray;
-    gchar **d_stringarray;
-    struct {
+  union
+  {
+    gint32    d_int32;
+    gint16    d_int16;
+    gint8     d_int8;
+    gdouble   d_float;
+    gchar    *d_string;
+    gint32   *d_int32array;
+    gint16   *d_int16array;
+    gint8    *d_int8array;
+    gdouble  *d_floatarray;
+    gchar   **d_stringarray;
+    struct
+    {
       guint8 red;
       guint8 green;
       guint8 blue;
     } d_color;
-    struct {
+    struct
+    {
       gint32 x;
       gint32 y;
       gint32 width;
@@ -124,10 +127,10 @@ struct _GPParam
     gint32 d_path;
     struct
     {
-      char *name;
-      guint32 flags;
-      guint32 size;
-      void *data;
+      gchar    *name;
+      guint32   flags;
+      guint32   size;
+      gpointer  data;
     } d_parasite;
     gint32 d_status;
   } data;
@@ -135,71 +138,72 @@ struct _GPParam
 
 struct _GPParamDef
 {
-  guint32 type;
-  char *name;
-  char *description;
+  guint32  type;
+  gchar   *name;
+  gchar   *description;
 };
 
 struct _GPProcRun
 {
-  char *name;
-  guint32 nparams;
+  gchar   *name;
+  guint32  nparams;
   GPParam *params;
 };
 
 struct _GPProcReturn
 {
-  char *name;
-  guint32 nparams;
+  gchar   *name;
+  guint32  nparams;
   GPParam *params;
 };
 
 struct _GPProcInstall
 {
-  char *name;
-  char *blurb;
-  char *help;
-  char *author;
-  char *copyright;
-  char *date;
-  char *menu_path;
-  char *image_types;
-  guint32 type;
-  guint32 nparams;
-  guint32 nreturn_vals;
+  gchar      *name;
+  gchar      *blurb;
+  gchar      *help;
+  gchar      *author;
+  gchar      *copyright;
+  gchar      *date;
+  gchar      *menu_path;
+  gchar      *image_types;
+  guint32     type;
+  guint32     nparams;
+  guint32     nreturn_vals;
   GPParamDef *params;
   GPParamDef *return_vals;
 };
 
 struct _GPProcUninstall
 {
-  char *name;
+  gchar *name;
 };
 
 
-void gp_init                   (void);
-int  gp_quit_write             (GIOChannel    *channel);
-int  gp_config_write           (GIOChannel    *channel,
-				GPConfig      *config);
-int  gp_tile_req_write         (GIOChannel    *channel,
-				GPTileReq     *tile_req);
-int  gp_tile_ack_write         (GIOChannel    *channel);
-int  gp_tile_data_write        (GIOChannel    *channel,
-				GPTileData    *tile_data);
-int  gp_proc_run_write         (GIOChannel    *channel,
-				GPProcRun     *proc_run);
-int  gp_proc_return_write      (GIOChannel    *channel,
-				GPProcReturn  *proc_return);
-int  gp_temp_proc_run_write    (GIOChannel    *channel,
-				GPProcRun     *proc_run);
-int  gp_temp_proc_return_write (GIOChannel    *channel,
-				GPProcReturn  *proc_return);
-int  gp_proc_install_write     (GIOChannel    *channel,
-				GPProcInstall *proc_install);
-int  gp_proc_uninstall_write   (GIOChannel    *channel,
-				GPProcUninstall *proc_uninstall);
-int  gp_extension_ack_write    (GIOChannel    *channel);
-int  gp_request_wakeups_write  (GIOChannel    *channel);
+void      gp_init                   (void);
+
+gboolean  gp_quit_write             (GIOChannel      *channel);
+gboolean  gp_config_write           (GIOChannel      *channel,
+				     GPConfig        *config);
+gboolean  gp_tile_req_write         (GIOChannel      *channel,
+				     GPTileReq       *tile_req);
+gboolean  gp_tile_ack_write         (GIOChannel      *channel);
+gboolean  gp_tile_data_write        (GIOChannel      *channel,
+				     GPTileData      *tile_data);
+gboolean  gp_proc_run_write         (GIOChannel      *channel,
+				     GPProcRun       *proc_run);
+gboolean  gp_proc_return_write      (GIOChannel      *channel,
+				     GPProcReturn    *proc_return);
+gboolean  gp_temp_proc_run_write    (GIOChannel      *channel,
+				     GPProcRun       *proc_run);
+gboolean  gp_temp_proc_return_write (GIOChannel      *channel,
+				     GPProcReturn    *proc_return);
+gboolean  gp_proc_install_write     (GIOChannel      *channel,
+				     GPProcInstall   *proc_install);
+gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
+				     GPProcUninstall *proc_uninstall);
+gboolean  gp_extension_ack_write    (GIOChannel      *channel);
+gboolean  gp_request_wakeups_write  (GIOChannel      *channel);
 
 
 #endif /* __GIMP_PROTOCOL_H__ */

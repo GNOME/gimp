@@ -967,7 +967,7 @@ iscissors_modifier_update (Tool        *tool,
 	op = SELECTION_REPLACE;
       else if (op == SELECTION_SUB)
 	op = SELECTION_INTERSECT;
-      else
+      else if (op == SELECTION_INTERSECT)
 	op = SELECTION_SUB;
       break;
 
@@ -978,7 +978,7 @@ iscissors_modifier_update (Tool        *tool,
 	op = SELECTION_INTERSECT;
       else if (op == SELECTION_SUB)
 	op = SELECTION_REPLACE;
-      else
+      else if (op == SELECTION_INTERSECT)
 	op = SELECTION_ADD;
       break;
     }

@@ -472,14 +472,13 @@ paint_options_init (PaintOptions         *options,
 		     reset_func);
 
   /*  initialize the paint options structure  */
-  options->global        = NULL;
-  options->opacity_w     = NULL;
-  options->paint_mode_w  = NULL;
-  options->context       = tool_context;
-  options->incremental_w = NULL;
+  options->global           = NULL;
+  options->opacity_w        = NULL;
+  options->paint_mode_w     = NULL;
+  options->context          = tool_context;
+  options->incremental_w    = NULL;
   options->incremental = options->incremental_d = FALSE;
-
-  options->pressure_options = paint_pressure_options_new (tool_type);
+  options->pressure_options = NULL;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -551,20 +550,20 @@ paint_options_init (PaintOptions         *options,
     {
     case BUCKET_FILL:
     case BLEND:
-    case CLONE:
-    case CONVOLVE:
     case INK:
-    case DODGEBURN:
-    case SMUDGE:
-/*      case XINPUT_AIRBRUSH: */
+      /* case XINPUT_AIRBRUSH: */
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
       break;
-    case AIRBRUSH:
-    case ERASER:
-    case PAINTBRUSH:
     case PENCIL:
+    case PAINTBRUSH:
+    case ERASER:
+    case AIRBRUSH:
+    case CLONE:
+    case CONVOLVE:
+    case DODGEBURN:
+    case SMUDGE:
       break;
     default:
       break;
@@ -601,6 +600,8 @@ paint_options_init (PaintOptions         *options,
     default:
       break;
     }
+
+  options->pressure_options = paint_pressure_options_new (tool_type);
 
   if (options->pressure_options->frame)
     {
@@ -662,7 +663,7 @@ paint_pressure_options_new (ToolType tool_type)
   GtkWidget *hbox = NULL;
 
   pressure = g_new (PaintPressureOptions, 1);
-    
+
   pressure->opacity  = pressure->opacity_d  = TRUE;
   pressure->pressure = pressure->pressure_d = TRUE;
   pressure->rate     = pressure->rate_d     = FALSE;

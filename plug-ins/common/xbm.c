@@ -66,6 +66,7 @@ typedef struct _XBMSaveVals
 {
   gchar comment[MAX_COMMENT + 1];
   gint  x10_format;
+  gint  use_hot;
   gint  x_hot;
   gint  y_hot;
   gchar prefix[MAX_PREFIX + 1];
@@ -75,8 +76,9 @@ static XBMSaveVals xsvals =
 {
   "###",		/* comment */
   DEFAULT_X10_FORMAT,	/* x10_format */
-  -1,			/* x_hot */
-  -1,			/* y_hot */
+  FALSE,
+  0,			/* x_hot */
+  0,			/* y_hot */
   DEFAULT_PREFIX,	/* prefix */
 };
 
@@ -229,6 +231,7 @@ run (gchar   *name,
   GStatusType   status = STATUS_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
+  Parasite     *parasite;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   INIT_I18N_UI();
@@ -287,13 +290,49 @@ run (gchar   *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_xbm_save", &xsvals);
 
 	  /* Always override the prefix with the filename. */
 	  init_prefix (param[3].data.d_string);
+	  break;
+	default:
+	  break;
+	}
 
-	  /*  First acquire information with a dialog  */
+      /* Get the parasites */
+      parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+
+      if (parasite)
+	{
+	  strncpy (xsvals.comment, parasite->data,
+		   MIN (parasite->size, MAX_COMMENT));
+	  xsvals.comment[MIN (parasite->size, MAX_COMMENT) + 1] = 0;
+
+	  parasite_free (parasite);
+	}
+
+      parasite = gimp_image_parasite_find (image_ID, "hot-spot");
+
+      if (parasite)
+	{
+	  gint x, y;
+
+	  if (sscanf (parasite->data, "%i %i", &x, &y) == 2)
+	    {
+	      xsvals.use_hot = TRUE;
+	      xsvals.x_hot = x;
+	      xsvals.y_hot = y;
+	    }
+
+	  parasite_free (parasite);
+	}
+
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	  /*  Acquire information with a dialog  */
 	  if (! save_dialog (drawable_ID))
 	    status = STATUS_CANCEL;
 	  break;
@@ -323,6 +362,7 @@ run (gchar   *name,
 	      if (nparams > i)
 		{
 		  /* They've asked for a hotspot. */
+		  xsvals.use_hot = TRUE;
 		  xsvals.x_hot = param[i - 1].data.d_int32;
 		  xsvals.y_hot = param[i].data.d_int32;
 		}
@@ -342,11 +382,6 @@ run (gchar   *name,
 	      if (nparams > i)
 		status = STATUS_CALLING_ERROR;
 	    }
-	  break;
-
-	case RUN_WITH_LAST_VALS:
-	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_xbm_save", &xsvals);
 	  break;
 
 	default:
@@ -395,6 +430,80 @@ getval (gint c,
     if (c == digits[val])
       return (val < 16) ? val : (val - 6);
   return -1;
+}
+
+
+/* Get a comment */
+static gchar *
+fgetcomment (FILE *fp)
+{
+  GString *str = NULL;
+  gint comment, c;
+
+  comment = 0;
+  do
+    {
+      c = fgetc (fp);
+      if (comment)
+	{
+	  if (c == '*')
+	    {
+	      /* In a comment, with potential to leave. */
+	      comment = 1;
+	    }
+	  else if (comment == 1 && c == '/')
+	    {
+	      gchar *retval;
+
+	      /* Leaving a comment. */
+	      comment = 0;
+
+	      retval = g_strstrip (g_strdup (str->str));
+	      g_string_free (str, TRUE);
+	      return retval;
+	    }
+	  else
+	    {
+	      /* In a comment, with no potential to leave. */
+	      comment = 2;
+	      g_string_append_c (str, c);
+	    }
+	}
+      else
+	{
+	  /* Not in a comment. */
+	  if (c == '/')
+	    {
+	      /* Potential to enter a comment. */
+	      c = fgetc (fp);
+	      if (c == '*')
+		{
+		  /* Entered a comment, with no potential to leave. */
+		  comment = 2;
+		  str = g_string_new (NULL);
+		}
+	      else
+		{
+		  /* put everything back and return */
+		  ungetc (c, fp);
+		  c = '/';
+		  ungetc (c, fp);
+		  return NULL;
+		}
+	    }
+	  else if (isspace (c))
+	    {
+	      /* Skip leading whitespace */
+	      continue;
+	    }
+	}
+    }
+  while (comment && c != EOF);
+
+  if (str)
+    g_string_free (str, TRUE);
+
+  return NULL;
 }
 
 
@@ -531,11 +640,14 @@ load_image (gchar *filename)
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   guchar *data;
-  int width, height, intbits;
-  int c, i, j, k;
-  int tileheight, rowoffset;
+  gint width, height, intbits;
+  gint x_hot = 0;
+  gint y_hot = 0;
+  gint c, i, j, k;
+  gint tileheight, rowoffset;
 
-  char *name_buf;
+  gchar *name_buf;
+  gchar *comment;
 
   guchar cmap[] =
   {
@@ -554,12 +666,13 @@ load_image (gchar *filename)
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
+  comment = fgetcomment (fp);
+
   /* Loosely parse the header */
   intbits = height = width = 0;
   c = ' ';
   do
     {
-
       if (isspace (c))
 	{
 	  if (match (fp, "char"))
@@ -602,6 +715,24 @@ load_image (gchar *filename)
 		  continue;
 		}
 	    }
+	  else if (match (fp, "x_hot"))
+	    {
+	      c = fgetc (fp);
+	      if (isspace (c))
+		{
+		  x_hot = get_int (fp);
+		  continue;
+		}
+	    }
+	  else if (match (fp, "y_hot"))
+	    {
+	      c = fgetc (fp);
+	      if (isspace (c))
+		{
+		  y_hot = get_int (fp);
+		  continue;
+		}
+	    }
 	}
 
       c = cpp_fgetc (fp);
@@ -634,6 +765,34 @@ load_image (gchar *filename)
 
   image_ID = gimp_image_new (width, height, INDEXED);
   gimp_image_set_filename (image_ID, filename);
+
+  if (comment)
+    {
+      Parasite *parasite;
+
+      parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
+			       strlen (comment) + 1, (gpointer) comment);
+      gimp_image_parasite_attach (image_ID, parasite);
+      parasite_free (parasite);
+
+      g_free (comment);
+    }
+
+  x_hot = CLAMP (x_hot, 0, width);
+  y_hot = CLAMP (y_hot, 0, height);
+
+  if (x_hot > 0 || y_hot > 0)
+    {
+      Parasite *parasite;
+      gchar *str;
+
+      str = g_strdup_printf ("%d %d", x_hot, y_hot);
+      parasite = parasite_new ("hot-spot", PARASITE_PERSISTENT,
+			       strlen (str) + 1, (gpointer) str);
+      g_free (str);
+      gimp_image_parasite_attach (image_ID, parasite);
+      parasite_free (parasite);
+    }
 
   /* Set a black-and-white colormap. */
   gimp_image_set_cmap (image_ID, cmap, 2);
@@ -832,7 +991,7 @@ save_image (gchar  *filename,
   fprintf (fp, "#define %s_height %d\n", prefix, height);
 
   /* Write out the hotspot, if any. */
-  if (xsvals.x_hot >= 0 && xsvals.y_hot >= 0)
+  if (xsvals.use_hot)
     {
       fprintf (fp, "#define %s_x_hot %d\n", prefix, xsvals.x_hot);
       fprintf (fp, "#define %s_y_hot %d\n", prefix, xsvals.y_hot);
@@ -964,6 +1123,8 @@ save_dialog (gint32 drawable_ID)
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
 
   dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
 			 gimp_plugin_help_func, "filters/xbm.html",
@@ -1027,6 +1188,44 @@ save_dialog (gint32 drawable_ID)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (comment_entry_callback),
                       NULL);
+
+  /* hotspot toggle */
+  toggle = gtk_check_button_new_with_label (_("Write Hot Spot Values"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &xsvals.use_hot);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.use_hot);
+  gtk_widget_show (toggle);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", table);
+  gtk_widget_set_sensitive (table, xsvals.use_hot);
+
+  spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
+				     gimp_drawable_width (drawable_ID) - 1,
+				     1, 1, 1, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &xsvals.x_hot);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Hot Spot X:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
+
+  spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
+				     gimp_drawable_height (drawable_ID) - 1,
+				     1, 1, 1, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &xsvals.y_hot);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Y:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
 
   /* Done. */
   gtk_widget_show (vbox);

@@ -5477,7 +5477,7 @@ msgstr "Auswahl nach Farbe"
 
 #: app/tool_options.c:189
 msgid "Feather"
-msgstr "Weichzeichnen"
+msgstr "Ausblenden"
 
 #: app/tool_options.c:297
 msgid "Fixed Size / Aspect Ratio"

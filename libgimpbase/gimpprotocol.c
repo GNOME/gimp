@@ -16,60 +16,107 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */                                                                             
+#include <stdio.h>
+
 #include "gimpenums.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"
 #include "parasite.h"
 #include "parasiteP.h"
-#include <stdio.h>
 
 
-static void _gp_quit_read                (GIOChannel *channel, WireMessage *msg);
-static void _gp_quit_write               (GIOChannel *channel, WireMessage *msg);
-static void _gp_quit_destroy             (WireMessage *msg);
-static void _gp_config_read              (GIOChannel *channel, WireMessage *msg);
-static void _gp_config_write             (GIOChannel *channel, WireMessage *msg);
-static void _gp_config_destroy           (WireMessage *msg);
-static void _gp_tile_req_read            (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_req_write           (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_req_destroy         (WireMessage *msg);
-static void _gp_tile_ack_read            (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_ack_write           (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_ack_destroy         (WireMessage *msg);
-static void _gp_tile_data_read           (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_data_write          (GIOChannel *channel, WireMessage *msg);
-static void _gp_tile_data_destroy        (WireMessage *msg);
-static void _gp_proc_run_read            (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_run_write           (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_run_destroy         (WireMessage *msg);
-static void _gp_proc_return_read         (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_return_write        (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_return_destroy      (WireMessage *msg);
-static void _gp_temp_proc_run_read       (GIOChannel *channel, WireMessage *msg);
-static void _gp_temp_proc_run_write      (GIOChannel *channel, WireMessage *msg);
-static void _gp_temp_proc_run_destroy    (WireMessage *msg);
-static void _gp_temp_proc_return_read    (GIOChannel *channel, WireMessage *msg);
-static void _gp_temp_proc_return_write   (GIOChannel *channel, WireMessage *msg);
-static void _gp_temp_proc_return_destroy (WireMessage *msg);
-static void _gp_proc_install_read        (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_install_write       (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_install_destroy     (WireMessage *msg);
-static void _gp_proc_uninstall_read      (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_uninstall_write     (GIOChannel *channel, WireMessage *msg);
-static void _gp_proc_uninstall_destroy   (WireMessage *msg);
-static void _gp_extension_ack_read       (GIOChannel *channel, WireMessage *msg);
-static void _gp_extension_ack_write      (GIOChannel *channel, WireMessage *msg);
-static void _gp_extension_ack_destroy    (WireMessage *msg);
-static void _gp_request_wakeups_read     (GIOChannel *channel, WireMessage *msg);
-static void _gp_request_wakeups_write    (GIOChannel *channel, WireMessage *msg);
-static void _gp_request_wakeups_destroy  (WireMessage *msg);
-static void _gp_params_read              (GIOChannel *channel, GPParam **params, guint *nparams);
-static void _gp_params_write             (GIOChannel *channel, GPParam *params, int nparams);
-       void _gp_params_destroy           (GPParam *params, int nparams);
+static void _gp_quit_read                (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_quit_write               (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_quit_destroy             (WireMessage  *msg);
+
+static void _gp_config_read              (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_config_write             (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_config_destroy           (WireMessage  *msg);
+
+static void _gp_tile_req_read            (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_req_write           (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_req_destroy         (WireMessage  *msg);
+
+static void _gp_tile_ack_read            (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_ack_write           (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_ack_destroy         (WireMessage  *msg);
+
+static void _gp_tile_data_read           (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_data_write          (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_tile_data_destroy        (WireMessage  *msg);
+
+static void _gp_proc_run_read            (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_run_write           (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_run_destroy         (WireMessage  *msg);
+
+static void _gp_proc_return_read         (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_return_write        (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_return_destroy      (WireMessage  *msg);
+
+static void _gp_temp_proc_run_read       (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_temp_proc_run_write      (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_temp_proc_run_destroy    (WireMessage  *msg);
+
+static void _gp_temp_proc_return_read    (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_temp_proc_return_write   (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_temp_proc_return_destroy (WireMessage  *msg);
+
+static void _gp_proc_install_read        (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_install_write       (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_install_destroy     (WireMessage  *msg);
+
+static void _gp_proc_uninstall_read      (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_uninstall_write     (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_proc_uninstall_destroy   (WireMessage  *msg);
+
+static void _gp_extension_ack_read       (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_extension_ack_write      (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_extension_ack_destroy    (WireMessage  *msg);
+
+static void _gp_request_wakeups_read     (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_request_wakeups_write    (GIOChannel   *channel,
+					  WireMessage  *msg);
+static void _gp_request_wakeups_destroy  (WireMessage  *msg);
+
+static void _gp_params_read              (GIOChannel   *channel,
+					  GPParam     **params,
+					  guint        *nparams);
+static void _gp_params_write             (GIOChannel   *channel,
+					  GPParam      *params,
+					  gint          nparams);
+
+/* used by gimp.c:gimp_destroy_params() */
+void        _gp_params_destroy           (GPParam      *params,
+					  gint          nparams);
 
 
 void
-gp_init ()
+gp_init (void)
 {
   wire_register (GP_QUIT,
 		 _gp_quit_read,
@@ -125,7 +172,7 @@ gp_init ()
 		 _gp_request_wakeups_destroy);
 }
 
-int
+gboolean
 gp_quit_write (GIOChannel *channel)
 {
   WireMessage msg;
@@ -140,7 +187,7 @@ gp_quit_write (GIOChannel *channel)
   return TRUE;
 }
 
-int
+gboolean
 gp_config_write (GIOChannel *channel,
 		 GPConfig   *config)
 {
@@ -156,7 +203,7 @@ gp_config_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_tile_req_write (GIOChannel *channel,
 		   GPTileReq  *tile_req)
 {
@@ -172,7 +219,7 @@ gp_tile_req_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_tile_ack_write (GIOChannel *channel)
 {
   WireMessage msg;
@@ -187,7 +234,7 @@ gp_tile_ack_write (GIOChannel *channel)
   return TRUE;
 }
 
-int
+gboolean
 gp_tile_data_write (GIOChannel *channel,
 		    GPTileData *tile_data)
 {
@@ -203,7 +250,7 @@ gp_tile_data_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_proc_run_write (GIOChannel *channel,
 		   GPProcRun  *proc_run)
 {
@@ -219,7 +266,7 @@ gp_proc_run_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_proc_return_write (GIOChannel   *channel,
 		      GPProcReturn *proc_return)
 {
@@ -235,7 +282,7 @@ gp_proc_return_write (GIOChannel   *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_temp_proc_run_write (GIOChannel *channel,
 			GPProcRun  *proc_run)
 {
@@ -251,7 +298,7 @@ gp_temp_proc_run_write (GIOChannel *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_temp_proc_return_write (GIOChannel   *channel,
 			   GPProcReturn *proc_return)
 {
@@ -267,7 +314,7 @@ gp_temp_proc_return_write (GIOChannel   *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_proc_install_write (GIOChannel    *channel,
 		       GPProcInstall *proc_install)
 {
@@ -283,7 +330,7 @@ gp_proc_install_write (GIOChannel    *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_proc_uninstall_write (GIOChannel      *channel,
 			 GPProcUninstall *proc_uninstall)
 {
@@ -299,7 +346,7 @@ gp_proc_uninstall_write (GIOChannel      *channel,
   return TRUE;
 }
 
-int
+gboolean
 gp_extension_ack_write (GIOChannel *channel)
 {
   WireMessage msg;
@@ -314,7 +361,7 @@ gp_extension_ack_write (GIOChannel *channel)
   return TRUE;
 }
 
-int
+gboolean
 gp_request_wakeups_write (GIOChannel *channel)
 {
   WireMessage msg;
@@ -329,13 +376,17 @@ gp_request_wakeups_write (GIOChannel *channel)
   return TRUE;
 }
 
+/*  quit  */
+
 static void
-_gp_quit_read (GIOChannel *channel, WireMessage *msg)
+_gp_quit_read (GIOChannel  *channel,
+	       WireMessage *msg)
 {
 }
 
 static void
-_gp_quit_write (GIOChannel *channel, WireMessage *msg)
+_gp_quit_write (GIOChannel  *channel,
+		WireMessage *msg)
 {
 }
 
@@ -344,34 +395,43 @@ _gp_quit_destroy (WireMessage *msg)
 {
 }
 
+/*  config  */
+
 static void
-_gp_config_read (GIOChannel *channel, WireMessage *msg)
+_gp_config_read (GIOChannel  *channel,
+		 WireMessage *msg)
 {
   GPConfig *config;
 
   config = g_new (GPConfig, 1);
+
   if (!wire_read_int32 (channel, &config->version, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &config->tile_width, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &config->tile_height, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, (guint32*) &config->shm_ID, 1))
-    return;
+    goto cleanup;
   if (!wire_read_double (channel, &config->gamma, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int8 (channel, (guint8*) &config->install_cmap, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int8 (channel, (guint8*) config->color_cube, 3))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, (guint32*) &config->gdisp_ID, 1))
-    return;
+    goto cleanup;
 
   msg->data = config;
+  return;
+
+ cleanup:
+  g_free (config);
 }
 
 static void
-_gp_config_write (GIOChannel *channel, WireMessage *msg)
+_gp_config_write (GIOChannel  *channel,
+		  WireMessage *msg)
 {
   GPConfig *config;
 
@@ -400,24 +460,33 @@ _gp_config_destroy (WireMessage *msg)
   g_free (msg->data);
 }
 
+/*  tile_req  */
+
 static void
-_gp_tile_req_read (GIOChannel *channel, WireMessage *msg)
+_gp_tile_req_read (GIOChannel  *channel,
+		   WireMessage *msg)
 {
   GPTileReq *tile_req;
 
   tile_req = g_new (GPTileReq, 1);
+
   if (!wire_read_int32 (channel, (guint32*) &tile_req->drawable_ID, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_req->tile_num, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_req->shadow, 1))
-    return;
+    goto cleanup;
 
   msg->data = tile_req;
+  return;
+
+ cleanup:
+  g_free (tile_req);
 }
 
 static void
-_gp_tile_req_write (GIOChannel *channel, WireMessage *msg)
+_gp_tile_req_write (GIOChannel  *channel,
+		    WireMessage *msg)
 {
   GPTileReq *tile_req;
 
@@ -436,13 +505,17 @@ _gp_tile_req_destroy (WireMessage *msg)
   g_free (msg->data);
 }
 
+/*  tile_ack  */
+
 static void
-_gp_tile_ack_read (GIOChannel *channel, WireMessage *msg)
+_gp_tile_ack_read (GIOChannel  *channel,
+		   WireMessage *msg)
 {
 }
 
 static void
-_gp_tile_ack_write (GIOChannel *channel, WireMessage *msg)
+_gp_tile_ack_write (GIOChannel  *channel,
+		    WireMessage *msg)
 {
 }
 
@@ -451,42 +524,52 @@ _gp_tile_ack_destroy (WireMessage *msg)
 {
 }
 
+/*  tile_data  */
+
 static void
-_gp_tile_data_read (GIOChannel *channel, WireMessage *msg)
+_gp_tile_data_read (GIOChannel  *channel,
+		    WireMessage *msg)
 {
   GPTileData *tile_data;
   guint length;
 
-  tile_data = g_new (GPTileData, 1);
+  tile_data = g_new0 (GPTileData, 1);
+
   if (!wire_read_int32 (channel, (guint32*) &tile_data->drawable_ID, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->tile_num, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->shadow, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->bpp, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->width, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->height, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &tile_data->use_shm, 1))
-    return;
-  tile_data->data = NULL;
+    goto cleanup;
 
   if (!tile_data->use_shm)
     {
       length = tile_data->width * tile_data->height * tile_data->bpp;
       tile_data->data = g_new (guchar, length);
+
       if (!wire_read_int8 (channel, (guint8*) tile_data->data, length))
-	return;
+	goto cleanup;
     }
 
   msg->data = tile_data;
+  return;
+
+ cleanup:
+  g_free (tile_data->data);
+  g_free (tile_data);
 }
 
 static void
-_gp_tile_data_write (GIOChannel *channel, WireMessage *msg)
+_gp_tile_data_write (GIOChannel  *channel,
+		     WireMessage *msg)
 {
   GPTileData *tile_data;
   guint length;
@@ -526,24 +609,31 @@ _gp_tile_data_destroy (WireMessage *msg)
   g_free (tile_data);
 }
 
+/*  proc_run  */
+
 static void
-_gp_proc_run_read (GIOChannel *channel, WireMessage *msg)
+_gp_proc_run_read (GIOChannel  *channel,
+		   WireMessage *msg)
 {
   GPProcRun *proc_run;
 
   proc_run = g_new (GPProcRun, 1);
+
   if (!wire_read_string (channel, &proc_run->name, 1))
-    {
-      g_free (proc_run);
-      return;
-    }
+    goto cleanup;
+
   _gp_params_read (channel, &proc_run->params, (guint*) &proc_run->nparams);
 
   msg->data = proc_run;
+  return;
+
+ cleanup:
+  g_free (proc_run);
 }
 
 static void
-_gp_proc_run_write (GIOChannel *channel, WireMessage *msg)
+_gp_proc_run_write (GIOChannel  *channel,
+		    WireMessage *msg)
 {
   GPProcRun *proc_run;
 
@@ -551,6 +641,7 @@ _gp_proc_run_write (GIOChannel *channel, WireMessage *msg)
 
   if (!wire_write_string (channel, &proc_run->name, 1))
     return;
+
   _gp_params_write (channel, proc_run->params, proc_run->nparams);
 }
 
@@ -566,21 +657,31 @@ _gp_proc_run_destroy (WireMessage *msg)
   g_free (proc_run);
 }
 
+/*  proc_return  */
+
 static void
-_gp_proc_return_read (GIOChannel *channel, WireMessage *msg)
+_gp_proc_return_read (GIOChannel  *channel,
+		      WireMessage *msg)
 {
   GPProcReturn *proc_return;
 
   proc_return = g_new (GPProcReturn, 1);
+
   if (!wire_read_string (channel, &proc_return->name, 1))
-    return;
+    goto cleanup;
+
   _gp_params_read (channel, &proc_return->params, (guint*) &proc_return->nparams);
 
   msg->data = proc_return;
+  return;
+
+ cleanup:
+  g_free (proc_return);
 }
 
 static void
-_gp_proc_return_write (GIOChannel *channel, WireMessage *msg)
+_gp_proc_return_write (GIOChannel  *channel,
+		       WireMessage *msg)
 {
   GPProcReturn *proc_return;
 
@@ -603,14 +704,18 @@ _gp_proc_return_destroy (WireMessage *msg)
   g_free (proc_return);
 }
 
+/*  temp_proc_run  */
+
 static void
-_gp_temp_proc_run_read (GIOChannel *channel, WireMessage *msg)
+_gp_temp_proc_run_read (GIOChannel  *channel,
+			WireMessage *msg)
 {
   _gp_proc_run_read (channel, msg);
 }
 
 static void
-_gp_temp_proc_run_write (GIOChannel *channel, WireMessage *msg)
+_gp_temp_proc_run_write (GIOChannel  *channel,
+			 WireMessage *msg)
 {
   _gp_proc_run_write (channel, msg);
 }
@@ -621,14 +726,18 @@ _gp_temp_proc_run_destroy (WireMessage *msg)
   _gp_proc_run_destroy (msg);
 }
 
+/*  temp_proc_return  */
+
 static void
-_gp_temp_proc_return_read (GIOChannel *channel, WireMessage *msg)
+_gp_temp_proc_return_read (GIOChannel  *channel,
+			   WireMessage *msg)
 {
   _gp_proc_return_read (channel, msg);
 }
 
 static void
-_gp_temp_proc_return_write (GIOChannel *channel, WireMessage *msg)
+_gp_temp_proc_return_write (GIOChannel  *channel,
+			    WireMessage *msg)
 {
   _gp_proc_return_write (channel, msg);
 }
@@ -639,69 +748,115 @@ _gp_temp_proc_return_destroy (WireMessage *msg)
   _gp_proc_return_destroy (msg);
 }
 
+/*  proc_install  */
+
 static void
-_gp_proc_install_read (GIOChannel *channel, WireMessage *msg)
+_gp_proc_install_read (GIOChannel  *channel,
+		       WireMessage *msg)
 {
   GPProcInstall *proc_install;
-  int i;
+  gint i;
 
-  proc_install = g_new (GPProcInstall, 1);
+  proc_install = g_new0 (GPProcInstall, 1);
 
   if (!wire_read_string (channel, &proc_install->name, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->blurb, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->help, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->author, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->copyright, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->date, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->menu_path, 1))
-    return;
+    goto cleanup;
   if (!wire_read_string (channel, &proc_install->image_types, 1))
-    return;
+    goto cleanup;
 
   if (!wire_read_int32 (channel, &proc_install->type, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &proc_install->nparams, 1))
-    return;
+    goto cleanup;
   if (!wire_read_int32 (channel, &proc_install->nreturn_vals, 1))
-    return;
+    goto cleanup;
 
-  proc_install->params = g_new (GPParamDef, proc_install->nparams);
-  proc_install->return_vals = g_new (GPParamDef, proc_install->nreturn_vals);
+  proc_install->params = g_new0 (GPParamDef, proc_install->nparams);
 
   for (i = 0; i < proc_install->nparams; i++)
     {
       if (!wire_read_int32 (channel, (guint32*) &proc_install->params[i].type, 1))
-	return;
+	goto cleanup;
       if (!wire_read_string (channel, &proc_install->params[i].name, 1))
-	return;
+	goto cleanup;
       if (!wire_read_string (channel, &proc_install->params[i].description, 1))
-	return;
+	goto cleanup;
     }
+
+  proc_install->return_vals = g_new0 (GPParamDef, proc_install->nreturn_vals);
 
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       if (!wire_read_int32 (channel, (guint32*) &proc_install->return_vals[i].type, 1))
-	return;
+	goto cleanup;
       if (!wire_read_string (channel, &proc_install->return_vals[i].name, 1))
-	return;
+	goto cleanup;
       if (!wire_read_string (channel, &proc_install->return_vals[i].description, 1))
-	return;
+	goto cleanup;
     }
 
   msg->data = proc_install;
+  return;
+
+ cleanup:
+  g_free (proc_install->name);
+  g_free (proc_install->blurb);
+  g_free (proc_install->help);
+  g_free (proc_install->author);
+  g_free (proc_install->copyright);
+  g_free (proc_install->date);
+  g_free (proc_install->menu_path);
+  g_free (proc_install->image_types);
+
+  if (proc_install->params)
+    {
+      for (i = 0; i < proc_install->nparams; i++)
+	{
+	  if (!proc_install->params[i].name)
+	    break;
+
+	  g_free (proc_install->params[i].name);
+	  g_free (proc_install->params[i].description);
+	}
+
+      g_free (proc_install->params);
+    }
+
+  if (proc_install->return_vals)
+    {
+      for (i = 0; i < proc_install->nreturn_vals; i++)
+	{
+	  if (!proc_install->return_vals[i].name)
+	    break;
+
+	  g_free (proc_install->return_vals[i].name);
+	  g_free (proc_install->return_vals[i].description);
+	}
+
+      g_free (proc_install->return_vals);
+    }
+
+  g_free (proc_install);
 }
 
 static void
-_gp_proc_install_write (GIOChannel *channel, WireMessage *msg)
+_gp_proc_install_write (GIOChannel  *channel,
+			WireMessage *msg)
 {
   GPProcInstall *proc_install;
-  int i;
+  gint i;
 
   proc_install = msg->data;
 
@@ -754,7 +909,7 @@ static void
 _gp_proc_install_destroy (WireMessage *msg)
 {
   GPProcInstall *proc_install;
-  int i;
+  gint i;
 
   proc_install = msg->data;
 
@@ -784,17 +939,24 @@ _gp_proc_install_destroy (WireMessage *msg)
   g_free (proc_install);
 }
 
+/*  proc_uninstall  */
+
 static void
-_gp_proc_uninstall_read (GIOChannel *channel, WireMessage *msg)
+_gp_proc_uninstall_read (GIOChannel  *channel,
+			 WireMessage *msg)
 {
   GPProcUninstall *proc_uninstall;
 
   proc_uninstall = g_new (GPProcUninstall, 1);
 
   if (!wire_read_string (channel, &proc_uninstall->name, 1))
-    return;
+    goto cleanup;
 
   msg->data = proc_uninstall;
+  return;
+
+ cleanup:
+  g_free (proc_uninstall);
 }
 
 static void
@@ -819,10 +981,52 @@ _gp_proc_uninstall_destroy (WireMessage *msg)
   g_free (proc_uninstall);
 }
 
+/*  extension_ack  */
+
 static void
-_gp_params_read (GIOChannel *channel, GPParam **params, guint *nparams)
+_gp_extension_ack_read (GIOChannel  *channel,
+			WireMessage *msg)
 {
-  int i;
+}
+
+static void
+_gp_extension_ack_write (GIOChannel  *channel,
+			 WireMessage *msg)
+{
+}
+
+static void
+_gp_extension_ack_destroy (WireMessage *msg)
+{
+}
+
+/*  request_wakeups  */
+
+static void
+_gp_request_wakeups_read (GIOChannel  *channel,
+			  WireMessage *msg)
+{
+}
+
+static void
+_gp_request_wakeups_write (GIOChannel  *channel,
+			   WireMessage *msg)
+{
+}
+
+static void
+_gp_request_wakeups_destroy (WireMessage *msg)
+{
+}
+
+/*  params  */
+
+static void
+_gp_params_read (GIOChannel  *channel,
+		 GPParam    **params,
+		 guint       *nparams)
+{
+  gint i, j;
 
   if (!wire_read_int32 (channel, (guint32*) nparams, 1))
     return;
@@ -838,143 +1042,195 @@ _gp_params_read (GIOChannel *channel, GPParam **params, guint *nparams)
   for (i = 0; i < *nparams; i++)
     {
       if (!wire_read_int32 (channel, (guint32*) &(*params)[i].type, 1))
-	return;
+	goto cleanup;
 
       switch ((*params)[i].type)
 	{
 	case PARAM_INT32:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_int32, 1))
-	    return;
+	    goto cleanup;
 	  break;
+
 	case PARAM_INT16:
 	  if (!wire_read_int16 (channel, (guint16*) &(*params)[i].data.d_int16, 1))
-	    return;
+	    goto cleanup;
 	  break;
+
 	case PARAM_INT8:
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_int8, 1))
-	    return;
+	    goto cleanup;
 	  break;
+
         case PARAM_FLOAT:
 	  if (!wire_read_double (channel, &(*params)[i].data.d_float, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_STRING:
 	  if (!wire_read_string (channel, &(*params)[i].data.d_string, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_INT32ARRAY:
-	  (*params)[i].data.d_int32array = g_new (gint32, (*params)[i-1].data.d_int32);
+	  (*params)[i].data.d_int32array =
+	    g_new (gint32, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int32 (channel, (guint32*) (*params)[i].data.d_int32array,
 				(*params)[i-1].data.d_int32))
-	    return;
+	    {
+	      g_free ((*params)[i].data.d_int32array);
+	      goto cleanup;
+	    }
           break;
+
         case PARAM_INT16ARRAY:
-	  (*params)[i].data.d_int16array = g_new (gint16, (*params)[i-1].data.d_int32);
+	  (*params)[i].data.d_int16array =
+	    g_new (gint16, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int16 (channel, (guint16*) (*params)[i].data.d_int16array,
 				(*params)[i-1].data.d_int32))
-	    return;
+	    {
+	      g_free ((*params)[i].data.d_int16array);
+	      goto cleanup;
+	    }
           break;
+
         case PARAM_INT8ARRAY:
-	  (*params)[i].data.d_int8array = g_new (gint8, (*params)[i-1].data.d_int32);
+	  (*params)[i].data.d_int8array =
+	    g_new (gint8, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int8 (channel, (guint8*) (*params)[i].data.d_int8array,
 			       (*params)[i-1].data.d_int32))
-	    return;
+	    {
+	      g_free ((*params)[i].data.d_int8array);
+	      goto cleanup;
+	    }
           break;
+
         case PARAM_FLOATARRAY:
-	  (*params)[i].data.d_floatarray = g_new (gdouble, (*params)[i-1].data.d_int32);
+	  (*params)[i].data.d_floatarray =
+	    g_new (gdouble, (*params)[i-1].data.d_int32);
 	  if (!wire_read_double (channel, (*params)[i].data.d_floatarray,
 				 (*params)[i-1].data.d_int32))
-	    return;
+	    {
+	      g_free ((*params)[i].data.d_floatarray);
+	      goto cleanup;
+	    }
           break;
+
         case PARAM_STRINGARRAY:
-	  (*params)[i].data.d_stringarray = g_new (gchar*, (*params)[i-1].data.d_int32);
+	  (*params)[i].data.d_stringarray =
+	    g_new0 (gchar*, (*params)[i-1].data.d_int32);
 	  if (!wire_read_string (channel, (*params)[i].data.d_stringarray,
 				 (*params)[i-1].data.d_int32))
-	    return;
+	    {
+	      for (j = 0; j < (*params)[i-1].data.d_int32; j++)
+		g_free (((*params)[i].data.d_stringarray)[j]);
+	      g_free ((*params)[i].data.d_stringarray);
+	      goto cleanup;
+	    }
           break;
+
         case PARAM_COLOR:
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_color.red, 1))
-	    return;
+	    goto cleanup;
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_color.green, 1))
-	    return;
+	    goto cleanup;
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_color.blue, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_REGION:
           break;
+
         case PARAM_DISPLAY:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_display, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_IMAGE:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_image, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_LAYER:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_layer, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_CHANNEL:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_channel, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_DRAWABLE:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_drawable, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_SELECTION:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_selection, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_BOUNDARY:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_boundary, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_PATH:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_path, 1))
-	    return;
+	    goto cleanup;
           break;
+
         case PARAM_PARASITE:
-	{
 	  if (!wire_read_string (channel, &(*params)[i].data.d_parasite.name, 1))
-	    return;
+	    goto cleanup;
 	  if ((*params)[i].data.d_parasite.name == NULL)
-	  { /* we have a null parasite */
-	    (*params)[i].data.d_parasite.data = NULL;
-	    break;
-	  }
-	  if (!wire_read_int32 (channel, &((*params)[i].data.d_parasite.flags), 1))
-	    return;
-	  if (!wire_read_int32 (channel, &((*params)[i].data.d_parasite.size), 1))
-	    return;
-	  if ((*params)[i].data.d_parasite.size > 0)
-	  {
-	    (*params)[i].data.d_parasite.data = g_malloc((*params)[i].data.d_parasite.size);
-	    if (!wire_read_int8 (channel, (*params)[i].data.d_parasite.data,
-				 (*params)[i].data.d_parasite.size))
 	    {
-	      g_free((*params)[i].data.d_parasite.data);
+	      /* we have a null parasite */
 	      (*params)[i].data.d_parasite.data = NULL;
-	      return;
+	      break;
 	    }
-	  }
+	  if (!wire_read_int32 (channel, &((*params)[i].data.d_parasite.flags), 1))
+	    goto cleanup;
+	  if (!wire_read_int32 (channel, &((*params)[i].data.d_parasite.size), 1))
+	    goto cleanup;
+	  if ((*params)[i].data.d_parasite.size > 0)
+	    {
+	      (*params)[i].data.d_parasite.data = g_malloc ((*params)[i].data.d_parasite.size);
+	      if (!wire_read_int8 (channel, (*params)[i].data.d_parasite.data,
+				   (*params)[i].data.d_parasite.size))
+		{
+		  g_free ((*params)[i].data.d_parasite.data);
+		  goto cleanup;
+		}
+	    }
 	  else
 	    (*params)[i].data.d_parasite.data = NULL;
-	} break;
+	  break;
+
         case PARAM_STATUS:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_status, 1))
-	    return;
+	    goto cleanup;
           break;
+
 	case PARAM_END:
 	  break;
 	}
     }
+
+  return;
+
+ cleanup:
+  *nparams = 0;
+  g_free (*params);
+  *params = NULL;
 }
 
 static void
-_gp_params_write (GIOChannel *channel, GPParam *params, int nparams)
+_gp_params_write (GIOChannel *channel,
+		  GPParam    *params,
+		  gint        nparams)
 {
-  int i;
+  gint i;
 
   if (!wire_write_int32 (channel, (guint32*) &nparams, 1))
     return;
@@ -990,47 +1246,57 @@ _gp_params_write (GIOChannel *channel, GPParam *params, int nparams)
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_int32, 1))
 	    return;
 	  break;
+
 	case PARAM_INT16:
 	  if (!wire_write_int16 (channel, (guint16*) &params[i].data.d_int16, 1))
 	    return;
 	  break;
+
 	case PARAM_INT8:
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_int8, 1))
 	    return;
 	  break;
+
         case PARAM_FLOAT:
 	  if (!wire_write_double (channel, &params[i].data.d_float, 1))
 	    return;
           break;
+
         case PARAM_STRING:
 	  if (!wire_write_string (channel, &params[i].data.d_string, 1))
 	    return;
           break;
+
         case PARAM_INT32ARRAY:
 	  if (!wire_write_int32 (channel, (guint32*) params[i].data.d_int32array,
 				 params[i-1].data.d_int32))
 	    return;
           break;
+
         case PARAM_INT16ARRAY:
 	  if (!wire_write_int16 (channel, (guint16*) params[i].data.d_int16array,
 				 params[i-1].data.d_int32))
 	    return;
           break;
+
         case PARAM_INT8ARRAY:
 	  if (!wire_write_int8 (channel, (guint8*) params[i].data.d_int8array,
 				params[i-1].data.d_int32))
 	    return;
           break;
+
         case PARAM_FLOATARRAY:
 	  if (!wire_write_double (channel, params[i].data.d_floatarray,
 				  params[i-1].data.d_int32))
 	    return;
           break;
+
         case PARAM_STRINGARRAY:
 	  if (!wire_write_string (channel, params[i].data.d_stringarray,
 				  params[i-1].data.d_int32))
 	    return;
           break;
+
         case PARAM_COLOR:
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_color.red, 1))
 	    return;
@@ -1039,105 +1305,90 @@ _gp_params_write (GIOChannel *channel, GPParam *params, int nparams)
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_color.blue, 1))
 	    return;
           break;
+
         case PARAM_REGION:
           break;
+
         case PARAM_DISPLAY:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_display, 1))
 	    return;
           break;
+
         case PARAM_IMAGE:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_image, 1))
 	    return;
           break;
+
         case PARAM_LAYER:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_layer, 1))
 	    return;
           break;
+
         case PARAM_CHANNEL:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_channel, 1))
 	    return;
           break;
+
         case PARAM_DRAWABLE:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_drawable, 1))
 	    return;
           break;
+
         case PARAM_SELECTION:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_selection, 1))
 	    return;
           break;
+
         case PARAM_BOUNDARY:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_boundary, 1))
 	    return;
           break;
+
         case PARAM_PATH:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_path, 1))
 	    return;
           break;
+
         case PARAM_PARASITE:
-	{
-	  Parasite *p = (Parasite *)&params[i].data.d_parasite;
-	  if (p->name == NULL)
-	  { /* write a null string to signifly a null parasite */
-	    wire_write_string (channel,  &p->name, 1);
-	    break;
-	  }
-	  if (!wire_write_string (channel, &p->name, 1))
-	    return;
-	  if (!wire_write_int32 (channel, &p->flags, 1))
-	    return;
-	  if (!wire_write_int32 (channel, &p->size, 1))
-	    return;
-	  if (p->size > 0)
 	  {
-	    if (!wire_write_int8 (channel, p->data, p->size))
+	    Parasite *p = (Parasite *)&params[i].data.d_parasite;
+	    if (p->name == NULL)
+	      {
+		/* write a null string to signifly a null parasite */
+		wire_write_string (channel,  &p->name, 1);
+		break;
+	      }
+	    if (!wire_write_string (channel, &p->name, 1))
 	      return;
+	    if (!wire_write_int32 (channel, &p->flags, 1))
+	      return;
+	    if (!wire_write_int32 (channel, &p->size, 1))
+	      return;
+	    if (p->size > 0)
+	      {
+		if (!wire_write_int8 (channel, p->data, p->size))
+		  return;
+	      }
 	  }
-	} break;
+	  break;
+
         case PARAM_STATUS:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_status, 1))
 	    return;
           break;
+
 	case PARAM_END:
 	  break;
 	}
     }
 }
 
-static void
-_gp_extension_ack_read (GIOChannel *channel, WireMessage *msg)
-{
-}
-
-static void
-_gp_extension_ack_write (GIOChannel *channel, WireMessage *msg)
-{
-}
-
-static void
-_gp_extension_ack_destroy (WireMessage *msg)
-{
-}
-
-static void
-_gp_request_wakeups_read (GIOChannel *channel, WireMessage *msg)
-{
-}
-
-static void
-_gp_request_wakeups_write (GIOChannel *channel, WireMessage *msg)
-{
-}
-
-static void
-_gp_request_wakeups_destroy (WireMessage *msg)
-{
-}
-
 void
-_gp_params_destroy (GPParam *params, int nparams)
+_gp_params_destroy (GPParam *params,
+		    gint     nparams)
 {
-  int count;
-  int i, j;
+  gint count;
+  gint i, j;
 
   for (i = 0; i < nparams; i++)
     {
@@ -1163,18 +1414,23 @@ _gp_params_destroy (GPParam *params, int nparams)
 	case PARAM_STRING:
 	  g_free (params[i].data.d_string);
 	  break;
+
 	case PARAM_INT32ARRAY:
 	  g_free (params[i].data.d_int32array);
 	  break;
+
 	case PARAM_INT16ARRAY:
 	  g_free (params[i].data.d_int16array);
 	  break;
+
 	case PARAM_INT8ARRAY:
 	  g_free (params[i].data.d_int8array);
 	  break;
+
 	case PARAM_FLOATARRAY:
 	  g_free (params[i].data.d_floatarray);
 	  break;
+
 	case PARAM_STRINGARRAY:
 	  if ((i > 0) && (params[i-1].type == PARAM_INT32))
 	    {
@@ -1184,15 +1440,18 @@ _gp_params_destroy (GPParam *params, int nparams)
 	      g_free (params[i].data.d_stringarray);
 	    }
 	  break;
+
 	case PARAM_PARASITE:
 	  if (params[i].data.d_parasite.name)
 	    g_free(params[i].data.d_parasite.name);
 	  if (params[i].data.d_parasite.data)
 	    g_free(params[i].data.d_parasite.data);
 	  break;
+
 	case PARAM_END:
 	  break;
 	}
     }
+
   g_free (params);
 }

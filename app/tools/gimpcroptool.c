@@ -186,7 +186,7 @@ crop_options_new (void)
 
   /*  layer toggle  */
   options->layer_only_w =
-    gtk_check_button_new_with_label(_("Current Layer Only"));
+    gtk_check_button_new_with_label(_("Current Layer only"));
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->layer_only_w), "toggled",

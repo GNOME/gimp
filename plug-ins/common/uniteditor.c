@@ -117,6 +117,21 @@ static GdkColor   color;
 static GimpUnit   current_unit = GIMP_UNIT_INCH;
 static gint       current_row  = 0;
 
+enum
+{
+  SAVE,
+  IDENTIFIER,
+  FACTOR,
+  DIGITS,
+  SYMBOL,
+  ABBREVIATION,
+  SINGULAR,
+  PLURAL,
+  NUM_FIELDS
+};
+
+static gchar *help_strings[NUM_FIELDS];
+
 static void
 new_unit_ok_callback (GtkWidget *widget,
 		      gpointer   data)
@@ -178,6 +193,8 @@ new_unit (GimpUnit template)
 			     _("ID:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
+  gimp_help_set_help_data (entry, help_strings[IDENTIFIER], NULL);
+
   spinbutton = gimp_spin_button_new (&factor_adj,
 				     (template != GIMP_UNIT_PIXEL) ?
 				     gimp_unit_get_factor (template) : 1.0,
@@ -188,6 +205,8 @@ new_unit (GimpUnit template)
 			     _("Factor:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
+  gimp_help_set_help_data (spinbutton, help_strings[FACTOR], NULL);
+
   spinbutton = gimp_spin_button_new (&digits_adj,
 				     (template != GIMP_UNIT_PIXEL) ?
 				     gimp_unit_get_digits (template) : 2.0,
@@ -196,6 +215,8 @@ new_unit (GimpUnit template)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Digits:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  gimp_help_set_help_data (spinbutton, help_strings[DIGITS], NULL);
 
   entry = symbol_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -208,6 +229,8 @@ new_unit (GimpUnit template)
 			     _("Symbol:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
+  gimp_help_set_help_data (entry, help_strings[SYMBOL], NULL);
+
   entry = abbreviation_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
@@ -218,6 +241,8 @@ new_unit (GimpUnit template)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Abbreviation:"), 1.0, 0.5,
 			     entry, 1, FALSE);
+
+  gimp_help_set_help_data (entry, help_strings[ABBREVIATION], NULL);
 
   entry = singular_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -230,6 +255,8 @@ new_unit (GimpUnit template)
 			     _("Singular:"), 1.0, 0.5,
 			     entry, 1, FALSE);
 
+  gimp_help_set_help_data (entry, help_strings[SINGULAR], NULL);
+
   entry = plural_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
@@ -240,6 +267,8 @@ new_unit (GimpUnit template)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
 			     _("Plural:"), 1.0, 0.5,
 			     entry, 1, FALSE);
+
+  gimp_help_set_help_data (entry, help_strings[PLURAL], NULL);
 
   gtk_widget_show (dialog);
 
@@ -478,7 +507,8 @@ unit_editor_dialog (void)
   GtkWidget *button;
   GtkStyle  *style;
 
-  gchar  *titles[8];
+  gchar  *titles[NUM_FIELDS];
+  gint    i;
 
   gchar **argv;
   gint    argc;
@@ -509,6 +539,25 @@ unit_editor_dialog (void)
 
   gimp_help_init ();
 
+  help_strings[SAVE]         = _("A unit definition will only be saved before "
+				 "GIMP exits if this column is checked.");
+  help_strings[IDENTIFIER]   = _("This string will be used to identify a "
+				 "unit in GIMP's configuration files.");
+  help_strings[FACTOR]       = _("How man units make up an inch.");
+  help_strings[DIGITS]       = _("This field is a hint for numerical input "
+				 "fields. It specifies how many decimal digits "
+				 "the input field should provide to get "
+				 "approximately the same accuracy as an "
+				 "\"inch\" input field with two decimal "
+				 "digits.");
+  help_strings[SYMBOL]       = _("The unit's symbol if it has one (e.g. \"'\" "
+				 "for inches). Use the unit's abbreviation if "
+				 "it doesn't have a symbol.");
+  help_strings[ABBREVIATION] = _("The unit's abbreviation (e.g. \"cm\" for "
+				 "centimeters).");
+  help_strings[SINGULAR]     = _("The unit's singular form.");
+  help_strings[PLURAL]       = _("The unit's plural form.");
+
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -523,19 +572,26 @@ unit_editor_dialog (void)
   gtk_container_add (GTK_CONTAINER (main_vbox), scrolled_win);
   gtk_widget_show (scrolled_win);
 
-  titles[0] = _("Saved");
-  titles[1] = _("ID");
-  titles[2] = _("Factor");
-  titles[3] = _("Digits");
-  titles[4] = _("Symbol");
-  titles[5] = _("Abbr.");
-  titles[6] = _("Singular");
-  titles[7] = _("Plural");
+  titles[SAVE]         = _("Saved");
+  titles[IDENTIFIER]   = _("ID");
+  titles[FACTOR]       = _("Factor");
+  titles[DIGITS]       = _("Digits");
+  titles[SYMBOL]       = _("Symbol");
+  titles[ABBREVIATION] = _("Abbr.");
+  titles[SINGULAR]     = _("Singular");
+  titles[PLURAL]       = _("Plural");
 
-  clist = gtk_clist_new_with_titles (8, titles);
+  clist = gtk_clist_new_with_titles (NUM_FIELDS, titles);
   gtk_clist_set_shadow_type (GTK_CLIST (clist), GTK_SHADOW_IN);
   gtk_clist_set_selection_mode (GTK_CLIST (clist), GTK_SELECTION_BROWSE);
   gtk_clist_column_titles_passive (GTK_CLIST (clist));
+
+  /*  eek, passive column titles don't show a tooltip, so the next 3 lines
+   *  are useless...
+   */
+  for (i = 0; i < NUM_FIELDS; i++)
+    gimp_help_set_help_data (gtk_clist_get_column_widget (GTK_CLIST (clist), i),
+			     help_strings[i], NULL);
 
   gtk_widget_realize (main_dialog);
   style = gtk_widget_get_style (main_dialog);

@@ -37,7 +37,7 @@ Global data follows no strict rules.
         human-readable text, preferably in utf8 encoding.  A trailing \0
         might be included and is not part of the comment.
 
-gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
+"gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
 	This is all very preliminary:
 
 	A string, containing parameters describing how an brush pipe
@@ -115,6 +115,12 @@ gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
         data (Data::Dumper) or a serialized data stream created by
         Storable::nfreeze.
 
+"hot-spot" (IMAGE, PERSISTENT)
+	Use this parasite to store an image's "hot spot". Currently
+	used by the XBM plugin to store mouse cursor hot spots.
+
+	Example: a hot spot at coordinates (5,5) is stored as "5 5"
+
 
 ------------------------------------------------------------------
 
@@ -180,6 +186,3 @@ non-persistant data might be fine as well):
   data += length;
   if (tlength != size)
     gdeserialize the next one, etc.
-
-
-
