@@ -1,3 +1,17 @@
+2003-03-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel.[ch]: added gimp_channel_new_from_component()
+	which creates a new GimpChannel from an image's color component.
+
+	* app/gui/channels-commands.[ch]: added
+	channels_duplicate_component_cmd_callback().
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.[ch]: added code to extract a color
+	component from a PixelRegion (untested!).
+
+	* plug-ins/common/checkerboard.c: cosmetics.
+
 2003-03-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_create_thumbnail),

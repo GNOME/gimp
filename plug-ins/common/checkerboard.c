@@ -55,16 +55,17 @@ static void      run    (gchar          *name,
 			 gint           *nreturn_vals,
 			 GimpParam     **return_vals);
 
-static void      do_checkerboard_pattern (GimpDrawable  *drawable);
-static gint      inblock (gint           pos,
-			  gint           size);
+static void      do_checkerboard_pattern    (GimpDrawable *drawable);
+static gint      inblock                    (gint          pos,
+                                             gint          size);
 
-static gboolean	 do_checkerboard_dialog (gint32        image_ID,
-					 GimpDrawable *drawable);
-static void      check_ok_callback (GtkWidget *widget,
-				    gpointer   data);
+static gboolean	 do_checkerboard_dialog     (gint32        image_ID,
+                                             GimpDrawable *drawable);
+static void      check_ok_callback          (GtkWidget    *widget,
+                                             gpointer      data);
+static void      check_size_update_callback (GtkWidget    *widget,
+                                             gpointer       data);
 
-static void      check_size_update_callback(GtkWidget * widget, gpointer data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -206,7 +207,7 @@ do_checkerboard_pattern (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  progress = 0;
+  progress     = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
   /* Get the foreground and background colors */
@@ -237,12 +238,12 @@ do_checkerboard_pattern (GimpDrawable *drawable)
     }
 
 
-  if (cvals.size == 0)
-  {
-    /* make size 1 to prevent division by zero */
-    cvals.size = 1;
-  }
- 
+  if (cvals.size < 1)
+    {
+      /* make size 1 to prevent division by zero */
+      cvals.size = 1;
+    }
+
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -262,8 +263,8 @@ do_checkerboard_pattern (GimpDrawable *drawable)
 	      if (cvals.mode)
 		{
 		  /* Psychobilly Mode */
-		  val =
-		    (inblock (x, cvals.size) == inblock (y, cvals.size)) ? 0 : 1;
+		  val = ((inblock (x, cvals.size) == inblock (y, cvals.size))
+                         ? 0 : 1);
 		}
 	      else
 		{
@@ -271,11 +272,13 @@ do_checkerboard_pattern (GimpDrawable *drawable)
 		   * Determine base factor (even or odd) of block
 		   * this x/y position is in.
 		   */
-		  xp = x/cvals.size;
-		  yp = y/cvals.size;
+		  xp = x / cvals.size;
+		  yp = y / cvals.size;
+
 		  /* if both even or odd, color sqr */
 		  val = ( (xp&1) == (yp&1) ) ? 0 : 1;
 		}
+
 	      for (bp = 0; bp < dest_rgn.bpp; bp++)
 		dest[bp] = val ? fg[bp] : bg[bp];
 
@@ -300,8 +303,8 @@ static gint
 inblock (gint pos, 
 	 gint size)
 {
-  static gint *in = NULL;		/* initialized first time */
-  gint len;
+  static gint *in = NULL;	/* initialized first time */
+  gint         len;
 
   /* avoid a FP exception */
   if (size == 1)

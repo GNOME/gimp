@@ -46,5 +46,8 @@ void   channels_new_channel_query                       (GimpImage   *gimage,
                                                          gboolean     interactive);
 void   channels_edit_channel_query                      (GimpChannel *channel);
 
+void   channels_duplicate_component_cmd_callback        (GtkWidget   *widget,
+                                                         gpointer     data);
+
 
 #endif /* __CHANNELS_COMMANDS_H__ */

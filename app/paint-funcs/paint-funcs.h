@@ -340,6 +340,10 @@ void  combine_mask_and_region             (PixelRegion *, PixelRegion *, guint);
 /*  Copy a gray image to an intensity-alpha region  */
 void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
 
+/*  Copy a component (indexed by pixel) to a 1-byte region  */
+void  copy_component                      (PixelRegion *src,
+                                           PixelRegion *dest,
+                                           guint        pixel);
 
 void  initial_region                      (PixelRegion *, PixelRegion *,
 					   PixelRegion *, guchar *,

@@ -4182,6 +4182,32 @@ copy_gray_to_region (PixelRegion *src,
     }
 }
 
+void
+copy_component (PixelRegion *src,
+                PixelRegion *dest,
+                guint        pixel)
+{
+  gint    h;
+  guchar *s;
+  guchar *d;
+  void   *pr;
+
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      s = src->data;
+      d = dest->data;
+      h = src->h;
+
+      while (h --)
+	{
+          component_pixels (s, d, src->w, src->bytes, pixel);
+          s += src->rowstride;
+          d += dest->rowstride;
+        }
+    }
+}  
 
 struct initial_regions_struct
 {

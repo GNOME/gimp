@@ -39,6 +39,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpimage.h"
+#include "gimpimage-projection.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
@@ -268,6 +269,58 @@ gimp_channel_new (GimpImage     *gimage,
   /*  selection mask variables  */
   channel->x2          = width;
   channel->y2          = height;
+
+  return channel;
+}
+
+GimpChannel *
+gimp_channel_new_from_component (GimpImage       *gimage,
+                                 GimpChannelType  type,
+                                 const gchar     *name,
+                                 const GimpRGB   *color)
+{
+  GimpChannel *channel;
+  TileManager *projection;
+  PixelRegion  src;
+  PixelRegion  dest;
+  gint         width;
+  gint         height;
+  gint         pixel = -1;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+
+  switch (type)
+    {
+    case GIMP_RED_CHANNEL:      pixel = RED_PIX;     break;
+    case GIMP_GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
+    case GIMP_BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
+    case GIMP_GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
+    case GIMP_INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
+    case GIMP_ALPHA_CHANNEL:
+      switch (gimp_image_base_type (gimage))
+	{
+	case GIMP_RGB:     pixel = ALPHA_PIX;   break;
+	case GIMP_GRAY:    pixel = ALPHA_G_PIX; break;
+	case GIMP_INDEXED: pixel = ALPHA_I_PIX; break;
+	}
+      break;
+    }
+
+  g_return_val_if_fail (pixel != -1, NULL);
+
+  projection = gimp_image_projection (gimage);
+  width  = tile_manager_width  (projection);
+  height = tile_manager_height (projection);
+
+  channel = gimp_channel_new (gimage, width, height, name, color);
+
+  pixel_region_init (&src, projection,
+                     0, 0, width, height, FALSE);
+  pixel_region_init (&dest, GIMP_DRAWABLE (channel)->tiles,
+                     0, 0, width, height, TRUE);
+
+  copy_component (&src, &dest, pixel);
 
   return channel;
 }

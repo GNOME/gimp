@@ -70,36 +70,41 @@ struct _GimpChannelClass
 
 /*  function declarations  */
 
-GType           gimp_channel_get_type          (void) G_GNUC_CONST;
+GType           gimp_channel_get_type           (void) G_GNUC_CONST;
 
-GimpChannel   * gimp_channel_new               (GimpImage         *gimage,
-						gint               width,
-						gint               height,
-						const gchar       *name,
-						const GimpRGB     *color);
+GimpChannel   * gimp_channel_new                (GimpImage         *gimage,
+                                                 gint               width,
+                                                 gint               height,
+                                                 const gchar       *name,
+                                                 const GimpRGB     *color);
 
-gdouble         gimp_channel_get_opacity       (const GimpChannel *channel);
-void            gimp_channel_set_opacity       (GimpChannel       *channel,
-						gdouble            opacity);
+GimpChannel   * gimp_channel_new_from_component (GimpImage         *gimage,
+                                                 GimpChannelType    type,
+                                                 const gchar       *name,
+                                                 const GimpRGB     *color);
 
-void            gimp_channel_get_color         (const GimpChannel *channel,
-                                                GimpRGB           *color);
-void 		gimp_channel_set_color         (GimpChannel       *channel, 
-						const GimpRGB     *color);
+gdouble         gimp_channel_get_opacity        (const GimpChannel *channel);
+void            gimp_channel_set_opacity        (GimpChannel       *channel,
+                                                 gdouble            opacity);
 
-gboolean        gimp_channel_get_show_masked   (GimpChannel       *channel);
-void            gimp_channel_set_show_masked   (GimpChannel       *channel,
-                                                gboolean           show_masked);
+void            gimp_channel_get_color          (const GimpChannel *channel,
+                                                 GimpRGB           *color);
+void 		gimp_channel_set_color          (GimpChannel       *channel, 
+                                                 const GimpRGB     *color);
 
-void            gimp_channel_scale             (GimpChannel       *channel, 
-						gint               new_width, 
-						gint               new_height,
-                                                GimpInterpolationType  interpolation_type);
-void            gimp_channel_resize            (GimpChannel       *channel, 
-						gint               new_width,
-						gint               new_height,
-						gint               offx,
-						gint               offy);
+gboolean        gimp_channel_get_show_masked    (GimpChannel       *channel);
+void            gimp_channel_set_show_masked    (GimpChannel       *channel,
+                                                 gboolean           show_masked);
+
+void            gimp_channel_scale              (GimpChannel       *channel, 
+                                                 gint               new_width, 
+                                                 gint               new_height,
+                                                 GimpInterpolationType  interpolation_type);
+void            gimp_channel_resize             (GimpChannel       *channel, 
+                                                 gint               new_width,
+                                                 gint               new_height,
+                                                 gint               offx,
+                                                 gint               offy);
 
 
 /*  selection mask functions  */

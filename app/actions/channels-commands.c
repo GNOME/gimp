@@ -541,6 +541,25 @@ channels_edit_channel_query (GimpChannel *channel)
   gtk_widget_show (options->query_box);
 }
 
+void
+channels_duplicate_component_cmd_callback (GtkWidget *widget,
+                                           gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpChannel *channel;
+  GimpRGB      color;
+  return_if_no_image (gimage, data);
+
+  gimp_rgba_set (&color, 0, 0, 0, 0.5);
+
+  /*  FIXME: hardcoded component  */
+  channel = gimp_channel_new_from_component (gimage, GIMP_RED_CHANNEL,
+                                             "Component Copy",
+                                             &color);
+
+  gimp_image_add_channel (gimage, channel, -1);
+  gimp_image_flush (gimage);
+}
 
 /*  private functions  */
 

@@ -1562,6 +1562,25 @@ initial_inten_a_pixels (const guchar   *src,
     }
 }
 
+inline void
+component_pixels (const guchar *src,
+                  guchar       *dest,
+                  guint         length,
+                  guint         bytes,
+                  guint         pixel)
+{
+  src += pixel;
+
+  while (length --)
+    {
+      *dest = *src;
+      
+      src += bytes;
+      dest++;
+    }
+}
+
+
 static void
 layer_normal_mode (struct apply_layer_mode_struct *alms)
 {
