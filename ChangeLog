@@ -1,3 +1,9 @@
+2005-03-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpimage-convert.c:  when converting grayscale
+	to mono, treat the palette as gray rather than rgb, giving
+	more than tenfold speedup.  Fixes bug #170801.
+
 2005-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerview.c: make "preview-size" and

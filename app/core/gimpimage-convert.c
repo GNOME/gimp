@@ -4057,7 +4057,6 @@ initialize_median_cut (GimpImageBaseType       type,
         }
 
       if (palette_type == GIMP_WEB_PALETTE  ||
-          palette_type == GIMP_MONO_PALETTE ||
           palette_type == GIMP_CUSTOM_PALETTE)
         {
           switch (dither_type)
