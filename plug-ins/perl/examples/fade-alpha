@@ -945,7 +945,7 @@ sub create_window
   $frm->set_border_width(6);
   $frm->show;
 
-  $box1->pack_start($frm, 0, 0, 0);
+  $box1->pack_start($frm, 1, 1, 0);
   $btnTable = new Gtk::Table(3,3,1);
   $btnTable->set_border_width(6);
   $frm->add($btnTable);
@@ -961,10 +961,21 @@ sub create_window
 	   $btn->show;
 	   $btnTable->attach_defaults($btn, $i, $i+1, $j, $j+1); 
 	   add_pixmap($window, $btn, $i*3+$j);
-	   if (Gimp->get_data($plugin)*1 == $i*3+$j)
-	     {
-	       $btn->clicked;
+	   
+	   if (Gimp->get_data($plugin) ne "")
+	     { # if run before, get last data
+	       if (Gimp->get_data($plugin) == $i*3+$j)
+	         {
+	           $btn->clicked;
+	         }
 	     }
+	   else 
+	     { # first run of plug-in, set first button
+	       if ($i==0 && $j==0)
+	         {
+		   $btn->clicked;
+		 }
+             }
 	}
     }
 
