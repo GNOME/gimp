@@ -1,3 +1,9 @@
+2000-01-03  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp1_1_splash.ppm: Ok. The y2k came. And the fuss is over. Time
+	for a new splash. Did you get your Wilber & Sons Artist Kit for 
+	christmas? :) Go compile it now!
+
 Sun Jan  2 21:46:46 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/plug_in.c: Redid my latest change here, since it didn't solve
