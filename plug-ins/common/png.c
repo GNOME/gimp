@@ -857,6 +857,16 @@ save_image (gchar  *filename,	        /* I - File to save to */
         return 0;
   };
 
+  
+  if (info->valid & PNG_INFO_PLTE) {
+    if (info->num_palette <= 2)
+      info->bit_depth= 1;
+    else if (info->num_palette <= 4)
+      info->bit_depth= 2;
+    else if (info->num_palette <= 16)
+      info->bit_depth= 4;
+    /* otherwise the default is fine */
+  }
 
   if (info->valid & PNG_INFO_tRNS) {
     /* It's not really a VERY evil hack, right? -- ruth */
@@ -872,7 +882,14 @@ save_image (gchar  *filename,	        /* I - File to save to */
   if (pngvals.interlaced)
     num_passes = png_set_interlace_handling(pp);
   else
-     num_passes = 1;
+    num_passes = 1;
+
+ /*
+  * Convert unpacked pixels to packed if necessary
+  */
+
+  if (info->color_type == PNG_COLOR_TYPE_PALETTE && info->bit_depth < 8)
+    png_set_packing(pp);
 
  /*
   * Allocate memory for "tile_height" rows and save the image...
