@@ -977,7 +977,7 @@ script_fu_about (SFScript *script)
       sf_interface->about_dialog = dialog =
         gimp_dialog_new (sf_interface->title, "script-fu-about",
                          sf_interface->dialog, 0,
-                         NULL, NULL,
+                         gimp_standard_help_func, NULL,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
