@@ -1,5 +1,13 @@
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_constructor): disable search for tree
+	views so that treeview typeahead doesn't collide with global
+	accelerators. Fixes bug #169339 and would suck less if bug #170435
+	got fixed.
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-utils.[ch]: changed all transform
 	utilities to modify the passed transform matrix instead of
 	creating a new one.
