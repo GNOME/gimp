@@ -90,6 +90,18 @@ context_opacity_cmd_callback (GtkAction *action,
 }
 
 void
+context_tool_select_cmd_callback (GtkAction *action,
+                                  gint       value,
+                                  gpointer   data)
+{
+  GimpContext *context;
+  return_if_no_context (context, data);
+
+  context_select_object (context, context->gimp->tool_info_list,
+                         (GimpContextSelectType) value);
+}
+
+void
 context_brush_select_cmd_callback (GtkAction *action,
                                    gint       value,
                                    gpointer   data)

@@ -91,6 +91,26 @@ static GimpEnumActionEntry context_opacity_actions[] =
     NULL }
 };
 
+static GimpEnumActionEntry context_tool_select_actions[] =
+{
+  { "context-tool-first", GTK_STOCK_GOTO_FIRST,
+    "First Tool", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-tool-last", GTK_STOCK_GOTO_LAST,
+    "Last Tool", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-tool-previous", GTK_STOCK_GO_BACK,
+    "Previous Tool", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-tool-next", GTK_STOCK_GO_FORWARD,
+    "Next Tool", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
 static GimpEnumActionEntry context_brush_select_actions[] =
 {
   { "context-brush-first", GTK_STOCK_GOTO_FIRST,
@@ -316,6 +336,10 @@ context_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (context_opacity_actions),
                                       G_CALLBACK (context_opacity_cmd_callback));
 
+  gimp_action_group_add_enum_actions (group,
+                                      context_tool_select_actions,
+                                      G_N_ELEMENTS (context_tool_select_actions),
+                                      G_CALLBACK (context_tool_select_cmd_callback));
   gimp_action_group_add_enum_actions (group,
                                       context_brush_select_actions,
                                       G_N_ELEMENTS (context_brush_select_actions),

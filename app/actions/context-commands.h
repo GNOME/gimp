@@ -40,6 +40,9 @@ void   context_opacity_cmd_callback         (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
 
+void   context_tool_select_cmd_callback     (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
 void   context_brush_select_cmd_callback    (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
