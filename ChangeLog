@@ -1,3 +1,14 @@
+2001-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mail.c: don't strip last character off when 
+	retrieving text from a GtkTextBuffer. There used to be a bug in GTK+
+	that made this necessary. It has been fixed in the meantime.
+
+	* plug-ins/gimpressionist/size.c: merged string fix from stable branch.
+
 2001-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch]
