@@ -1,3 +1,13 @@
+################################
+#
+# Seriously out-of-date. Only Unix-style build supported now for gcc on Win32.
+#
+################################
+
+
+
+
+
 ## Makefile for building gimp.exe with gcc on Win32.
 ## You should use GNU make running on cygwin.
 ## Use: make -f makefile.mingw
@@ -42,7 +52,7 @@ gimpim_OBJECTS =				\
 
 libgimpim.a : $(gimpim_OBJECTS)
 	ar cr libgimpim.a $(gimpim_OBJECTS)
-	
+
 gimp_OBJECTS =					\
 	about_dialog.o				\
 	airbrush.o				\
