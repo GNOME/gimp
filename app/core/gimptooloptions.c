@@ -166,6 +166,7 @@ selection_options_init (SelectionOptions     *options,
   options->feather_radius = options->feather_radius_d = 10.0;
   options->antialias      = options->antialias_d      = TRUE;
   options->sample_merged  = options->sample_merged_d  = FALSE;
+  options->threshold                                  = default_threshold;
   options->fixed_size     = options->fixed_size_d     = FALSE;
   options->fixed_height   = options->fixed_height_d   = 1;
   options->fixed_width    = options->fixed_width_d    = 1;
@@ -175,6 +176,7 @@ selection_options_init (SelectionOptions     *options,
   options->feather_radius_w = NULL;
   options->antialias_w      = NULL;
   options->sample_merged_w  = NULL;
+  options->threshold_w      = NULL;
   options->fixed_size_w     = NULL;
   options->fixed_height_w   = NULL;
   options->fixed_width_w    = NULL;
@@ -258,17 +260,12 @@ selection_options_init (SelectionOptions     *options,
       break;
     }
 
-  /*  the sample merged option  */
-  switch (tool_type)
+  /*  selection tools which operate on contiguous regions  */
+  if (tool_type == FUZZY_SELECT)
     {
-    case RECT_SELECT:
-    case ELLIPSE_SELECT:
-    case FREE_SELECT:
-    case BEZIER_SELECT:
-    case ISCISSORS:
-      break;
-    case FUZZY_SELECT:
-    case BY_COLOR_SELECT:
+      GtkWidget *hbox;
+
+      /*  the sample merged toggle  */
       options->sample_merged_w =
 	gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w,
@@ -279,9 +276,27 @@ selection_options_init (SelectionOptions     *options,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
       gtk_widget_show (options->sample_merged_w);
-      break;
-    default:
-      break;
+
+      /*  the threshold scale  */
+      hbox = gtk_hbox_new (FALSE, 1);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+  
+      label = gtk_label_new (_("Threshold:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 1);
+      gtk_widget_show (label);
+
+      options->threshold_w = 
+	gtk_adjustment_new (default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
+      scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
+      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+      gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+      gtk_signal_connect (GTK_OBJECT (options->threshold_w), "value_changed",
+			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+			  &options->threshold);
+      gtk_widget_show (scale);
     }
 
   /*  widgets for fixed size select  */
@@ -388,12 +403,19 @@ selection_options_reset (SelectionOptions *options)
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->feather_radius_w),
 				options->feather_radius_d);
     }
+
   if (options->antialias_w)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				  options->antialias_d);
+
   if (options->sample_merged_w)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				  options->sample_merged_d);
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				    options->sample_merged_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
+				default_threshold);
+    }
+
   if (options->fixed_size_w)
     {
       GtkWidget *spinbutton;

@@ -58,17 +58,8 @@ struct _FuzzySelect
 };
 
 
-typedef struct _FuzzySelectOptions FuzzySelectOptions;
-struct _FuzzySelectOptions
-{
-  SelectionOptions  selection_options;
-  gdouble           threshold;
-  /* gdouble        threshold_d; (from gimprc) */
-  GtkObject        *threshold_w;
-};
-  
 /*  the fuzzy selection tool options  */
-static FuzzySelectOptions  *fuzzy_options = NULL;
+static SelectionOptions  *fuzzy_options = NULL;
 
 /*  XSegments which make up the fuzzy selection boundary  */
 static GdkSegment *segs     = NULL;
@@ -449,12 +440,12 @@ fuzzy_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      drawable = ((((SelectionOptions *)fuzzy_options)->sample_merged) ?
+      drawable = (fuzzy_options->sample_merged ?
 		  NULL : gimage_active_drawable (gdisp->gimage));
 
       fuzzy_select (gdisp->gimage, drawable, fuzzy_sel->op,
-		    ((SelectionOptions *)fuzzy_options)->feather, 
-		    ((SelectionOptions *)fuzzy_options)->feather_radius);
+		    fuzzy_options->feather, 
+		    fuzzy_options->feather_radius);
       gdisplays_flush ();
     }
 
@@ -539,16 +530,15 @@ fuzzy_select_calculate (Tool *tool,
 
   gimp_add_busy_cursors ();
 
-  use_offsets =
-    (((SelectionOptions *) fuzzy_options)->sample_merged) ? FALSE : TRUE;
+  use_offsets = fuzzy_options->sample_merged ? FALSE : TRUE;
 
   gdisplay_untransform_coords (gdisp, fuzzy_sel->x,
 			       fuzzy_sel->y, &x, &y, FALSE, use_offsets);
 
   new = find_contiguous_region (gdisp->gimage, drawable, 
-				((SelectionOptions *)fuzzy_options)->antialias,
+				fuzzy_options->antialias,
 				fuzzy_options->threshold, x, y, 
-				((SelectionOptions *)fuzzy_options)->sample_merged);
+				fuzzy_options->sample_merged);
 
   if (fuzzy_mask)
     channel_delete (fuzzy_mask);
@@ -557,14 +547,14 @@ fuzzy_select_calculate (Tool *tool,
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(fuzzy_mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE(fuzzy_mask)), 
-		     drawable_height (GIMP_DRAWABLE(fuzzy_mask)), 
+  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (fuzzy_mask)), 0, 0, 
+		     drawable_width (GIMP_DRAWABLE (fuzzy_mask)), 
+		     drawable_height (GIMP_DRAWABLE (fuzzy_mask)), 
 		     FALSE);
   bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
 			      0, 0,
-			      drawable_width (GIMP_DRAWABLE(fuzzy_mask)),
-			      drawable_height (GIMP_DRAWABLE(fuzzy_mask)));
+			      drawable_width (GIMP_DRAWABLE (fuzzy_mask)),
+			      drawable_height (GIMP_DRAWABLE (fuzzy_mask)));
 
   segs = g_new (GdkSegment, *nsegs);
 
@@ -626,56 +616,7 @@ fuzzy_select_control (Tool       *tool,
 static void
 fuzzy_select_options_reset (void)
 {
-  FuzzySelectOptions *options = fuzzy_options;
-  
-  selection_options_reset ((SelectionOptions *)options);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    default_threshold);
-}
-
-static FuzzySelectOptions *
-fuzzy_select_options_new (void)
-{
-  FuzzySelectOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *scale;
-
-  options = g_new (FuzzySelectOptions, 1);
-  selection_options_init ((SelectionOptions *) options,
-			  FUZZY_SELECT, 
-			  fuzzy_select_options_reset);
-  options->threshold = default_threshold;
-  
-  /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
-
-  /*  the threshold scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  
-  label = gtk_label_new (_("Threshold:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 1);
-  gtk_widget_show (label);
-
-  options->threshold_w = 
-    gtk_adjustment_new (default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->threshold_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->threshold);
-  gtk_widget_show (scale);
-
-  gtk_widget_show (hbox);
-
-  return options;
+  selection_options_reset (fuzzy_options);
 }
 
 Tool *
@@ -687,7 +628,8 @@ tools_new_fuzzy_select (void)
   /*  The tool options  */
   if (! fuzzy_options)
     {
-      fuzzy_options = fuzzy_select_options_new ();
+      fuzzy_options = selection_options_new (FUZZY_SELECT,
+					     fuzzy_select_options_reset);
       tools_register (FUZZY_SELECT, (ToolOptions *) fuzzy_options);
     }
 

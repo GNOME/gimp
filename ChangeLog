@@ -1,5 +1,16 @@
 2000-04-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/fuzzy_select.c
+	* app/selection_options.h
+	* app/tool_options.c: moved the "Threshold" scale from the fuzzy
+	select options to the selection options structure, so none of the
+	selection tools needs it's own tools options structure.
+
+	* app/bucket_fill.c: moved "Threshold" after "Sample Merged" as in
+	the fuzzy select options.
+
+2000-04-20  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpfileselection.[ch]: using the GimpPixmap here was a
 	bad idea because showing/hiding the pixmap widgets is no solution
 	(somebody may call gtk_widget_show_all() and we suddenly see both

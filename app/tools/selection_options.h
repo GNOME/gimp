@@ -49,6 +49,10 @@ struct _SelectionOptions
   gboolean     sample_merged_d;
   GtkWidget   *sample_merged_w;
 
+  gdouble      threshold;
+  /* gdouble   threshold_d; (from gimprc) */
+  GtkObject   *threshold_w;
+
   /*  used by rect., ellipse selection  */
   gboolean     fixed_size;
   gboolean     fixed_size_d;

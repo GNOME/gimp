@@ -52,13 +52,13 @@ struct _BucketOptions
 {
   PaintOptions    paint_options;
 
-  gdouble         threshold;
-  /* gdouble      threshold_d; (from gimprc) */
-  GtkObject      *threshold_w;
-
   gboolean        sample_merged;
   gboolean        sample_merged_d;
   GtkWidget      *sample_merged_w;
+
+  gdouble         threshold;
+  /* gdouble      threshold_d; (from gimprc) */
+  GtkObject      *threshold_w;
 
   BucketFillMode  fill_mode;
   BucketFillMode  fill_mode_d;
@@ -121,6 +121,15 @@ bucket_options_new (void)
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
+  /*  the sample merged toggle  */
+  options->sample_merged_w =
+    gtk_check_button_new_with_label (_("Sample Merged"));
+  gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &options->sample_merged);
+  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->sample_merged_w);
+
   /*  the threshold scale  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -142,15 +151,6 @@ bucket_options_new (void)
   gtk_widget_show (scale);
 
   gtk_widget_show (hbox);
-
-  /*  the sample merged toggle  */
-  options->sample_merged_w =
-    gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->sample_merged);
-  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->sample_merged_w);
 
   /*  fill type  */
   frame =
