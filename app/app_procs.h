@@ -19,11 +19,12 @@
 #define __APP_PROCS_H__
 
 /* Function declarations */
-void gimp_init (int, char **);
-void app_init (void);
-void app_exit (int);
-void app_exit_finish (void);
-int app_exit_finish_done (void);
-void app_init_update_status(char *label1val, char *label2val, float pct_progress);
+void	gimp_init (int, char **);
+gint32  gimp_shmem_init (int p, key_t k, int s, long o, int xs, int ys);
+void	app_init (void);
+void	app_exit (int);
+void	app_exit_finish (void);
+int		app_exit_finish_done (void);
+void	app_init_update_status(char *label1val, char *label2val, float pct_progress);
 
 #endif /* APP_PROCS_H */

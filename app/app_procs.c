@@ -645,3 +645,285 @@ quit_invoker (Argument *args)
 
   return return_args;
 }
+
+/*
+** Shared memory initialization & setup routine.
+*/
+gint32
+gimp_shmem_init( int precision, key_t shmid, int chans, long offset, 
+					int xSize, int ySize )
+{
+	Argument	*return_vals;
+	int			 nreturn_vals;
+	int			 r;
+	gint32 		layer_ID;
+	gint32 		display_ID;
+	gint32 		drawable;
+	gint32		image_ID;
+	gint		type;
+
+	/*printf( "gimp_shmem_init: entering.\n" );*/
+
+	/* 
+	** Initialize the application 
+	*/
+	app_init ();
+
+	/* 
+	** Setup the shared memory segments 
+	*/
+
+	/*printf( "gimp_shmem_init: past app_init.\n" );*/
+
+  	return_vals = procedural_db_run_proc ("shmseg_attach",
+						&nreturn_vals,
+						PDB_INT32, shmid,
+						PDB_INT32, offset,
+						PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "SHM Attach operation failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past attach.\n" );*/
+
+	switch( precision )
+	{
+	case PRECISION_U8:
+		switch( chans )
+		{
+		case 1:
+			type = GRAY;
+			break;
+
+		case 3:
+		case 4:
+			type = RGB;
+			break;
+		}
+		break;
+
+	case PRECISION_U16:
+		switch( chans )
+		{
+		case 1:
+			type = U16_GRAY;
+			break;
+
+		case 3:
+		case 4:
+			type = U16_RGB;
+			break;
+		}
+		break;
+
+	case PRECISION_FLOAT:
+		switch( chans )
+		{
+		case 1:
+			type = FLOAT_GRAY;
+			break;
+
+		case 3:
+		case 4:
+			type = FLOAT_RGB;
+			break;
+		}
+		break;
+	}
+
+	return_vals = procedural_db_run_proc ("gimp_image_new",
+					&nreturn_vals,
+					PDB_INT32, xSize,
+					PDB_INT32, ySize,
+					PDB_INT32, type,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	image_ID = return_vals[1].value.pdb_int;
+
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "New of image failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past gimage_new_proc.\n" );*/
+
+	switch( precision )
+	{
+	case PRECISION_U8:
+		switch( chans )
+		{
+		case 1:
+			drawable = GRAY_GIMAGE;
+			break;
+
+		case 3:
+			drawable = RGB_GIMAGE;
+			break;
+
+		case 4:
+			drawable = RGBA_GIMAGE;
+			break;
+		}
+		break;
+
+	case PRECISION_U16:
+		switch( chans )
+		{
+		case 1:
+			drawable = U16_GRAY_GIMAGE;
+			break;
+
+		case 3:
+			drawable = U16_RGB_GIMAGE;
+			break;
+
+		case 4:
+			drawable = U16_RGBA_GIMAGE;
+			break;
+		}
+		break;
+
+	case PRECISION_FLOAT:
+		switch( chans )
+		{
+		case 1:
+			drawable = FLOAT_GRAY_GIMAGE;
+			break;
+
+		case 3:
+			drawable = FLOAT_RGB_GIMAGE;
+			break;
+
+		case 4:
+			drawable = FLOAT_RGBA_GIMAGE;
+			break;
+		}
+		break;
+	}
+	/*
+	** HACK Alert!  In layer_cmds.c, "layer_new_invoker" is sensitive
+	** to any bits set in the upper byte of the drawable word.  If any
+	** are set, it sets the storage type to STORAGE_SHM instead of
+	** STORAGE_FLAT (the default)
+	*/
+	drawable += 256;
+
+	return_vals = procedural_db_run_proc ("gimp_layer_new",
+					&nreturn_vals,
+					PDB_IMAGE, image_ID,
+					PDB_INT32, xSize,
+					PDB_INT32, ySize,
+					PDB_INT32, drawable,
+					PDB_STRING, "Chalice Shmem Image",
+					PDB_FLOAT, 100.,
+					PDB_INT32, NORMAL_MODE,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	layer_ID = return_vals[1].value.pdb_int;
+
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "New of layer failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past layer_new_proc.\n" );*/
+
+	/*
+	** Disable the undo while we add the layer
+	*/
+	return_vals = procedural_db_run_proc ("gimp_image_disable_undo",
+					&nreturn_vals,
+					PDB_IMAGE, image_ID,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "Disable of undo failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past gimage_disable_undo_proc.\n" );*/
+
+	/*
+	** Add the layer
+	*/
+	return_vals = procedural_db_run_proc ("gimp_image_add_layer",
+					&nreturn_vals,
+					PDB_IMAGE, image_ID,
+					PDB_LAYER, layer_ID,
+					PDB_INT32, 0,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "Layer add failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*
+	** Re-enable the undo 
+	*/
+	return_vals = procedural_db_run_proc ("gimp_image_enable_undo",
+					&nreturn_vals,
+					PDB_IMAGE, image_ID,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "Re-enable of undo failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past gimage_enable_undo_proc.\n" );*/
+
+	/*
+	** Setup the displayable image
+	*/
+	return_vals = procedural_db_run_proc ("gimp_display_new",
+					&nreturn_vals,
+					PDB_IMAGE, image_ID,
+					PDB_END );
+
+	r = return_vals[0].value.pdb_int;
+	display_ID = return_vals[1].value.pdb_int;
+
+	procedural_db_destroy_args( return_vals, nreturn_vals );
+
+	if( r != PDB_SUCCESS )
+	{
+		message_box( "Display new failed.", NULL, NULL );
+		return -1;
+	}
+
+	/*printf( "gimp_shmem_init: past gdisplay_new_proc.\n" );*/
+
+	/*
+	** Refresh
+	*/
+	gdisplays_flush();
+
+	return image_ID;
+}
