@@ -85,7 +85,8 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
     {
       gimp_set_busy (gimage->gimp);
 
-      layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
+      layer = gimp_image_merge_layers (gimage, merge_list, merge_type,
+                                       _("Merge Visible Layers"));
       g_slist_free (merge_list);
 
       gimp_unset_busy (gimage->gimp);
@@ -133,7 +134,8 @@ gimp_image_flatten (GimpImage *gimage)
 	merge_list = g_slist_append (merge_list, layer);
     }
 
-  layer = gimp_image_merge_layers (gimage, merge_list, GIMP_FLATTEN_IMAGE);
+  layer = gimp_image_merge_layers (gimage, merge_list, GIMP_FLATTEN_IMAGE,
+                                   _("Flatten Image"));
   g_slist_free (merge_list);
 
   gimp_image_alpha_changed (gimage);
@@ -181,7 +183,8 @@ gimp_image_merge_down (GimpImage     *gimage,
 
       gimp_set_busy (gimage->gimp);
 
-      layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
+      layer = gimp_image_merge_layers (gimage, merge_list, merge_type,
+                                       _("Merge Down"));
       g_slist_free (merge_list);
 
       gimp_unset_busy (gimage->gimp);
@@ -198,7 +201,8 @@ gimp_image_merge_down (GimpImage     *gimage,
 GimpLayer *
 gimp_image_merge_layers (GimpImage     *gimage, 
 			 GSList        *merge_list, 
-			 GimpMergeType  merge_type)
+			 GimpMergeType  merge_type,
+                         const gchar   *undo_desc)
 {
   GList           *list;
   GSList          *reverse_list = NULL;
@@ -296,7 +300,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
   /*  Start a merge undo group. */
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                               _("Merge Layers"));
+                               undo_desc);
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 

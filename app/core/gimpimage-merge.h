@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ GimpLayer  * gimp_image_merge_down           (GimpImage     *gimage,
 GimpLayer  * gimp_image_flatten              (GimpImage     *gimage);
 GimpLayer  * gimp_image_merge_layers         (GimpImage     *gimage,
                                               GSList        *merge_list,
-                                              GimpMergeType  merge_type);
+                                              GimpMergeType  merge_type,
+                                              const gchar   *undo_desc);
 
 
 #endif /* __GIMP_IMAGE_MERGE_H__ */

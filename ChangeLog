@@ -1,3 +1,9 @@
+2003-02-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-merge.[ch]: added "const gchar *undo_desc" to
+	gimp_image_merge_layers() so the undo steps say "Merge Down",
+	"Flatten Image" etc. instead of always "Merge Layers".
+
 2003-02-15  Larry Ewing  <lewing@ximian.com>
 
 	* app/tools/gimpinkoptions.c (gimp_ink_options_gui): add a new
