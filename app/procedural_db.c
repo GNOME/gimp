@@ -48,10 +48,23 @@ procedural_db_init (void)
 }
 
 void
+procedural_db_free_entry (gpointer key,
+			  gpointer value,
+			  gpointer user_data)
+{
+  if (value)
+    g_list_free (value);
+}
+
+void
 procedural_db_free (void)
 {
   if (procedural_ht)
-    g_hash_table_destroy (procedural_ht);
+    {
+      g_hash_table_foreach (procedural_ht, procedural_db_free_entry, NULL);
+      g_hash_table_destroy (procedural_ht);
+    }
+  
   procedural_ht = NULL;
 }
 
@@ -119,6 +132,16 @@ procedural_db_execute (gchar    *name,
 
   list = g_hash_table_lookup (procedural_ht, (gpointer) name);
 
+  if (list == NULL)
+    {
+      g_message (_("PDB calling error %s not found"), name);
+      
+      return_args = (Argument *) g_malloc (sizeof (Argument));
+      return_args->arg_type = PDB_STATUS;
+      return_args->value.pdb_int = PDB_CALLING_ERROR;
+      return return_args;
+    }
+  
   while (list)
     {
       if ((procedure = (ProcRecord *) list->data) == NULL)

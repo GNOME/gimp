@@ -1,3 +1,15 @@
+Wed Oct 27 22:39:56 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/drawable_cmds.c
+	* tools/pdbgen/pdb/drawable.pdb: The PDB procedures 
+	gimp_drawable_is_[layer|channel|channel_mask] were not renamed,
+	but changed all over the place. This made the rotate plug-ins
+	fail.
+
+	* app/procedural_db.c: Spit out a warning if a procedure wasn't 
+	found in the PDB. Actually free the hash_table entries on
+	procedural_db_free().
+
 Wed Oct 27 13:37:54 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * gimp_parasite_find users where not updated to the new syntax
