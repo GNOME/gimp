@@ -255,8 +255,8 @@ brushes_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
-	  GimpObject *object = gimp_list_get_child_by_name (global_brush_list,
-							    brush_name);
+	  GimpObject *object =
+	    gimp_container_get_child_by_name (global_brush_list, brush_name);
     
 	  if (object)
 	    {

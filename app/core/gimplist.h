@@ -49,12 +49,5 @@ GtkType      gimp_list_get_type           (void);
 GimpList   * gimp_list_new                (GtkType              children_type,
 					   GimpContainerPolicy  policy);
 
-GimpObject * gimp_list_get_child_by_name  (const GimpList      *list,
-					   const gchar         *name);
-GimpObject * gimp_list_get_child_by_index (const GimpList      *list,
-					   gint                 index);
-gint         gimp_list_get_child_index    (const GimpList      *list,
-					   const GimpObject    *object);
-
 
 #endif  /* __GIMP_LIST_H__ */

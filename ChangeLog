@@ -1,5 +1,36 @@
 2001-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontainer.[ch]
+	* app/gimplist.[ch]: made the "get_by_name" and the "by_index"
+	access functions methods of the GimpContainerClass. The semantic
+	of this index is somewhat unclear if we have e.g. a hash table
+	implementation but the container needs to have an order for the
+	ContainerView. Finally, the ordering will be a feature of the
+	ContainerView.
+
+	* app/gimpmarshal.[ch]: marshallers needed for the new methods.
+
+	* app/brushes.[ch]
+	* app/patterns.[ch]: the public global brush and pattern lists
+	are GimpContainers now (they are really GimpLists of course).
+
+	* app/brush_select.c
+	* app/devices.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontext.c
+	* app/gimpdnd.c
+	* app/pattern_select.c
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb: changed accordingly.
+
+2001-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/apptypes.h: some new files and data types:
 

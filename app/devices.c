@@ -468,8 +468,9 @@ devices_rc_update (gchar        *name,
     {
       GimpBrush *brush;
 
-      brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
-							 brush_name);
+      brush = (GimpBrush *)
+	gimp_container_get_child_by_name (GIMP_CONTAINER (global_brush_list),
+					  brush_name);
 
       if (brush)
 	{
@@ -486,8 +487,9 @@ devices_rc_update (gchar        *name,
     {
       GimpPattern *pattern;
 
-      pattern = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
-							     pattern_name);
+      pattern = (GimpPattern *)
+	gimp_container_get_child_by_name (GIMP_CONTAINER (global_pattern_list),
+					  pattern_name);
 
       if (pattern)
 	{

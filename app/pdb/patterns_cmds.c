@@ -119,7 +119,9 @@ patterns_set_pattern_invoker (Argument *args)
     {
       success = FALSE;
     
-      for (list = global_pattern_list->list; list; list = g_list_next (list))
+      for (list = GIMP_LIST (global_pattern_list)->list;
+	   list;
+	   list = g_list_next (list))
 	{
 	  pattern = (GimpPattern *) list->data;
     
@@ -169,9 +171,9 @@ patterns_list_invoker (Argument *args)
   GList *list = NULL;
   gint i = 0;
 
-  patterns = g_new (gchar *, GIMP_CONTAINER (global_pattern_list)->num_children);
+  patterns = g_new (gchar *, global_pattern_list->num_children);
 
-  success = ((list = global_pattern_list->list) != NULL);
+  success = ((list = GIMP_LIST (global_pattern_list)->list) != NULL);
 
   while (list)
     {
@@ -183,7 +185,7 @@ patterns_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = GIMP_CONTAINER (global_pattern_list)->num_children;
+      return_args[1].value.pdb_int = global_pattern_list->num_children;
       return_args[2].value.pdb_pointer = patterns;
     }
 
@@ -242,7 +244,9 @@ patterns_get_pattern_data_invoker (Argument *args)
     
 	  success = FALSE;
     
-	  for (list = global_pattern_list->list; list; list = g_list_next (list))
+	  for (list = GIMP_LIST (global_pattern_list)->list;
+	       list;
+	       list = g_list_next (list))
 	    {
 	      pattern = (GimpPattern *) list->data;
     

@@ -35,6 +35,21 @@ void   gimp_marshal_NONE__DOUBLE             (GtkObject     *object,
 					      gpointer       func_data,
 					      GtkArg        *args);
 
+void   gimp_marshal_INT__POINTER             (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
+
+void   gimp_marshal_POINTER__INT             (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
+
+void   gimp_marshal_POINTER__POINTER         (GtkObject     *object,
+					      GtkSignalFunc  func,
+					      gpointer       func_data,
+					      GtkArg        *args);
+
 void   gimp_marshal_POINTER__INT_INT         (GtkObject     *object,
 					      GtkSignalFunc  func,
 					      gpointer       func_data,

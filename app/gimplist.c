@@ -26,18 +26,24 @@
 #include "gimplist.h"
 
 
-static void       gimp_list_class_init (GimpListClass *klass);
-static void       gimp_list_init       (GimpList      *list);
-static void       gimp_list_destroy    (GtkObject     *object);
-static void       gimp_list_add        (GimpContainer *container,
-				        GimpObject    *object);
-static void       gimp_list_remove     (GimpContainer *container,
-				        GimpObject    *object);
-static gboolean   gimp_list_have       (GimpContainer *container,
-				        GimpObject    *object);
-static void       gimp_list_foreach    (GimpContainer *container,
-				        GFunc          func,
-				        gpointer       user_data);
+static void         gimp_list_class_init         (GimpListClass *klass);
+static void         gimp_list_init               (GimpList      *list);
+static void         gimp_list_destroy            (GtkObject     *object);
+static void         gimp_list_add                (GimpContainer *container,
+						  GimpObject    *object);
+static void         gimp_list_remove             (GimpContainer *container,
+						  GimpObject    *object);
+static gboolean     gimp_list_have               (GimpContainer *container,
+						  GimpObject    *object);
+static void         gimp_list_foreach            (GimpContainer *container,
+						  GFunc          func,
+						  gpointer       user_data);
+static GimpObject * gimp_list_get_child_by_name  (GimpContainer *container,
+						  gchar         *name);
+static GimpObject * gimp_list_get_child_by_index (GimpContainer *container,
+						  gint           index);
+static gint         gimp_list_get_child_index    (GimpContainer *container,
+						  GimpObject    *object);
 
 
 static GimpContainerClass *parent_class = NULL;
@@ -81,10 +87,13 @@ gimp_list_class_init (GimpListClass *klass)
 
   object_class->destroy = gimp_list_destroy;
 
-  container_class->add     = gimp_list_add;
-  container_class->remove  = gimp_list_remove;
-  container_class->have    = gimp_list_have;
-  container_class->foreach = gimp_list_foreach;
+  container_class->add                = gimp_list_add;
+  container_class->remove             = gimp_list_remove;
+  container_class->have               = gimp_list_have;
+  container_class->foreach            = gimp_list_foreach;
+  container_class->get_child_by_name  = gimp_list_get_child_by_name;
+  container_class->get_child_by_index = gimp_list_get_child_by_index;
+  container_class->get_child_index    = gimp_list_get_child_index;
 }
 
 static void
@@ -173,16 +182,15 @@ gimp_list_new (GtkType              children_type,
   return list;
 }
 
-GimpObject *
-gimp_list_get_child_by_name (const GimpList *list,
-			     const gchar    *name)
+static GimpObject *
+gimp_list_get_child_by_name (GimpContainer *container,
+			     gchar         *name)
 {
+  GimpList   *list;
   GimpObject *object;
   GList      *glist;
 
-  g_return_val_if_fail (list != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  list = GIMP_LIST (container);
 
   for (glist = list->list; glist; glist = g_list_next (glist))
     {
@@ -195,14 +203,14 @@ gimp_list_get_child_by_name (const GimpList *list,
   return NULL;
 }
 
-GimpObject *
-gimp_list_get_child_by_index (const GimpList *list,
-			      gint            index)
+static GimpObject *
+gimp_list_get_child_by_index (GimpContainer *container,
+			      gint           index)
 {
-  GList *glist;
+  GimpList *list;
+  GList    *glist;
 
-  g_return_val_if_fail (list != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
+  list = GIMP_LIST (container);
 
   glist = g_list_nth (list->list, index);
 
@@ -212,14 +220,13 @@ gimp_list_get_child_by_index (const GimpList *list,
   return NULL;
 }
 
-gint
-gimp_list_get_child_index (const GimpList   *list,
-			   const GimpObject *object)
+static gint
+gimp_list_get_child_index (GimpContainer *container,
+			   GimpObject    *object)
 {
-  g_return_val_if_fail (list != NULL, 0);
-  g_return_val_if_fail (GIMP_IS_LIST (list), 0);
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (GIMP_IS_OBJECT (list), 0);
+  GimpList *list;
+
+  list = GIMP_LIST (container);
 
   return g_list_index (list->list, (gpointer) object);
 }

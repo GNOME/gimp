@@ -31,10 +31,10 @@
 #include "fileops.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
+#include "gimpcontainer.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
-#include "gimplist.h"
 #include "gimppattern.h"
 #include "gimprc.h"
 #include "gradient.h"
@@ -661,7 +661,8 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     brush = brushes_get_standard_brush ();
   else
-    brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list, name);
+    brush = (GimpBrush *) gimp_container_get_child_by_name (global_brush_list,
+							    name);
 
   if (brush)
     (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);
@@ -761,8 +762,8 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     pattern = patterns_get_standard_pattern ();
   else
-    pattern = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
-							   name);
+    pattern = (GimpPattern *) gimp_container_get_child_by_name (global_pattern_list,
+								name);
 
   if (pattern)
     (* (GimpDndDropPatternFunc) set_pattern_func) (widget, pattern,

@@ -310,8 +310,9 @@ brush_select_new (gchar   *title,
 
   if (title && init_name && strlen (init_name))
     {
-      active = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
-							  init_name);
+      active = (GimpBrush *)
+	gimp_container_get_child_by_name (GIMP_CONTAINER (global_brush_list),
+					  init_name);
     }
   else
     {
@@ -836,7 +837,8 @@ brush_select_select (BrushSelect *bsp,
   gint row, col;
   gint scroll_offset = 0;
 
-  index = gimp_list_get_child_index (global_brush_list, GIMP_OBJECT (brush)); 
+  index = gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
+					  GIMP_OBJECT (brush)); 
 
   if (index < 0)
     return;
@@ -886,7 +888,8 @@ brush_select_brush_dirty_callback (GimpBrush   *brush,
   if (!bsp || bsp->freeze)
     return;
 
-  index  = gimp_list_get_child_index (global_brush_list, GIMP_OBJECT (brush));
+  index  = gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
+					   GIMP_OBJECT (brush));
   redraw = (brush != gimp_context_get_brush (bsp->context));
 
   clear_brush (bsp, brush,
@@ -1568,8 +1571,9 @@ brush_select_events (GtkWidget   *widget,
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
       
       /*  Get the brush and check if it is editable  */
-      brush = GIMP_BRUSH (gimp_list_get_child_by_index (global_brush_list,
-							index));
+      brush = (GimpBrush *)
+	gimp_container_get_child_by_index (GIMP_CONTAINER (global_brush_list),
+					   index);
       if (GIMP_IS_BRUSH_GENERATED (brush))
 	brush_select_edit_brush_callback (NULL, bsp);
       break;
@@ -1581,8 +1585,9 @@ brush_select_events (GtkWidget   *widget,
       row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
 
-      brush = (GimpBrush *) gimp_list_get_child_by_index (global_brush_list,
-							  index);
+      brush = (GimpBrush *)
+	gimp_container_get_child_by_index (GIMP_CONTAINER (global_brush_list),
+					   index);
 
       if (brush)
 	bsp->dnd_brush = brush;
@@ -1709,10 +1714,13 @@ brush_select_scroll_update (GtkAdjustment *adjustment,
 
       if (active)
 	{
-	  index = gimp_list_get_child_index (global_brush_list,
-					     GIMP_OBJECT (active));
+	  index =
+	    gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
+					    GIMP_OBJECT (active));
+
 	  if (index < 0)
 	    return;
+
 	  row = index / bsp->NUM_BRUSH_COLUMNS;
 	  col = index - row * bsp->NUM_BRUSH_COLUMNS;
 

@@ -20,7 +20,7 @@
 #define __PATTERNS_H__
 
 
-extern GimpList *global_pattern_list;
+extern GimpContainer *global_pattern_list;
 
 
 void          patterns_init                 (gboolean  no_data);

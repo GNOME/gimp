@@ -222,8 +222,8 @@ gimp_container_list_view_add (GimpContainerListView *list_view,
 {
   gint index;
 
-  index = gimp_list_get_child_index (GIMP_LIST (container),
-				     GIMP_OBJECT (viewable));
+  index = gimp_container_get_child_index (container,
+					  GIMP_OBJECT (viewable));
 
   gimp_container_list_view_insert (list_view, viewable, index);
 }

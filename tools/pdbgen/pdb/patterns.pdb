@@ -94,7 +94,9 @@ HELP
 {
   success = FALSE;
 
-  for (list = global_pattern_list->list; list; list = g_list_next (list))
+  for (list = GIMP_LIST (global_pattern_list)->list;
+       list;
+       list = g_list_next (list))
     {
       pattern = (GimpPattern *) list->data;
 
@@ -126,16 +128,16 @@ HELP
 	  alias => 'patterns',
 	  array => { name => 'num_patterns',
 		     desc => 'The number of patterns in the pattern list',
-		     alias => 'GIMP_CONTAINER (global_pattern_list)->num_children', no_declare => 1 } }
+		     alias => 'global_pattern_list->num_children', no_declare => 1 } }
     );
 
     %invoke = (
 	vars => [ 'GList *list = NULL', 'gint i = 0' ],
 	code => <<'CODE'
 {
-  patterns = g_new (gchar *, GIMP_CONTAINER (global_pattern_list)->num_children);
+  patterns = g_new (gchar *, global_pattern_list->num_children);
 
-  success = ((list = global_pattern_list->list) != NULL);
+  success = ((list = GIMP_LIST (global_pattern_list)->list) != NULL);
 
   while (list)
     {
@@ -190,7 +192,9 @@ HELP
 
       success = FALSE;
 
-      for (list = global_pattern_list->list; list; list = g_list_next (list))
+      for (list = GIMP_LIST (global_pattern_list)->list;
+           list;
+           list = g_list_next (list))
 	{
 	  pattern = (GimpPattern *) list->data;
 

@@ -30,8 +30,8 @@
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimprc.h"
@@ -1490,8 +1490,9 @@ gimp_context_refresh_brush (GimpContext *context,
   if (! context->brush_name)
     context->brush_name = g_strdup (default_brush);
 
-  if ((brush = (GimpBrush *) gimp_list_get_child_by_name (global_brush_list,
-							  context->brush_name)))
+  if ((brush = (GimpBrush *)
+       gimp_container_get_child_by_name (global_brush_list,
+					 context->brush_name)))
     {
       gimp_context_real_set_brush (context, brush);
       return;
@@ -1499,8 +1500,8 @@ gimp_context_refresh_brush (GimpContext *context,
 
   if (gimp_container_num_children (GIMP_CONTAINER (global_brush_list)))
     gimp_context_real_set_brush 
-      (context, GIMP_BRUSH (gimp_list_get_child_by_index (global_brush_list,
-							  0)));
+      (context, GIMP_BRUSH (gimp_container_get_child_by_index (global_brush_list,
+							       0)));
   else
     gimp_context_real_set_brush (context, brushes_get_standard_brush ());
 }
@@ -1675,9 +1676,9 @@ gimp_context_refresh_pattern (GimpContext *context,
   if (! context->pattern_name)
     context->pattern_name = g_strdup (default_pattern);
 
-  if ((pattern =
-       (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
-						    context->pattern_name)))
+  if ((pattern = (GimpPattern *)
+       gimp_container_get_child_by_name (global_pattern_list,
+					 context->pattern_name)))
     {
       gimp_context_real_set_pattern (context, pattern);
       return;
@@ -1685,8 +1686,9 @@ gimp_context_refresh_pattern (GimpContext *context,
 
   if (gimp_container_num_children (GIMP_CONTAINER (global_pattern_list)))
     gimp_context_real_set_pattern
-      (context, GIMP_PATTERN (gimp_list_get_child_by_index (global_pattern_list,
-							    0)));
+      (context,
+       GIMP_PATTERN (gimp_container_get_child_by_index (global_pattern_list,
+							0)));
   else
     gimp_context_real_set_pattern (context, patterns_get_standard_pattern ());
 }

@@ -43,7 +43,7 @@
 
 
 /*  global variables  */
-GimpList *global_brush_list = NULL;
+GimpContainer *global_brush_list = NULL;
 
 
 /*  local function prototypes  */
@@ -57,7 +57,7 @@ brushes_init (gboolean no_data)
   if (global_brush_list)
     brushes_free ();
   else
-    global_brush_list = GIMP_LIST (gimp_data_list_new (GIMP_TYPE_BRUSH));
+    global_brush_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_BRUSH));
 
   if (brush_path != NULL && !no_data)
     {
@@ -122,8 +122,7 @@ brushes_brush_load (const gchar *filename)
     }
 
   if (brush != NULL)
-    gimp_container_add (GIMP_CONTAINER (global_brush_list),
-			GIMP_OBJECT (brush));
+    gimp_container_add (global_brush_list, GIMP_OBJECT (brush));
 }
 
 void
@@ -148,8 +147,7 @@ brushes_free (void)
       if (GIMP_IS_BRUSH_GENERATED (brush) && vbr_dir)
 	gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush), vbr_dir);
 
-      gimp_container_remove (GIMP_CONTAINER (global_brush_list),
-			     GIMP_OBJECT (brush));
+      gimp_container_remove (global_brush_list, GIMP_OBJECT (brush));
     }
 
   brush_select_thaw_all ();

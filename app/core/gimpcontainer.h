@@ -56,41 +56,54 @@ struct _GimpContainerClass
 {
   GimpObjectClass  parent_class;
 
-  void     (* add)     (GimpContainer *container,
-			GimpObject    *object);
-  void     (* remove)  (GimpContainer *container,
-			GimpObject    *object);
-  gboolean (* have)    (GimpContainer *container,
-			GimpObject    *object);
-  void     (* foreach) (GimpContainer *container,
-			GFunc          func,
-			gpointer       user_data);
+  void         (* add)                (GimpContainer *container,
+				       GimpObject    *object);
+  void         (* remove)             (GimpContainer *container,
+				       GimpObject    *object);
+  gboolean     (* have)               (GimpContainer *container,
+				       GimpObject    *object);
+  void         (* foreach)            (GimpContainer *container,
+				       GFunc          func,
+				       gpointer       user_data);
+  GimpObject * (* get_child_by_name)  (GimpContainer *container,
+				       gchar         *name);
+  GimpObject * (* get_child_by_index) (GimpContainer *container,
+				       gint           index);
+  gint         (* get_child_index)    (GimpContainer *container,
+				       GimpObject    *object);
 };
 
 
-GtkType         gimp_container_get_type       (void);
+GtkType      gimp_container_get_type           (void);
 
-GtkType         gimp_container_children_type  (const GimpContainer *container);
-GimpContainerPolicy gimp_container_policy     (const GimpContainer *container);
-gint            gimp_container_num_children   (const GimpContainer *container);
+GtkType      gimp_container_children_type      (const GimpContainer *container);
+GimpContainerPolicy gimp_container_policy      (const GimpContainer *container);
+gint         gimp_container_num_children       (const GimpContainer *container);
 
-gboolean        gimp_container_add            (GimpContainer       *container,
-					       GimpObject          *object);
-gboolean        gimp_container_remove         (GimpContainer       *container,
-					       GimpObject          *object);
+gboolean     gimp_container_add                (GimpContainer       *container,
+						GimpObject          *object);
+gboolean     gimp_container_remove             (GimpContainer       *container,
+						GimpObject          *object);
 
-gboolean        gimp_container_have           (GimpContainer       *container,
-					       GimpObject          *object);
-void            gimp_container_foreach        (GimpContainer       *container,
-					       GFunc                func,
-					       gpointer             user_data);
+gboolean     gimp_container_have               (GimpContainer       *container,
+						GimpObject          *object);
+void         gimp_container_foreach            (GimpContainer       *container,
+						GFunc                func,
+						gpointer             user_data);
 
-GQuark          gimp_container_add_handler    (GimpContainer       *container,
-					       const gchar         *signame,
-					       GtkSignalFunc        handler,
-					       gpointer             user_data);
-void            gimp_container_remove_handler (GimpContainer       *container,
-					       GQuark               id);
+GimpObject * gimp_container_get_child_by_name  (const GimpContainer *container,
+						const gchar         *name);
+GimpObject * gimp_container_get_child_by_index (const GimpContainer *container,
+						gint                 index);
+gint         gimp_container_get_child_index    (const GimpContainer *container,
+						const GimpObject    *object);
+
+GQuark       gimp_container_add_handler        (GimpContainer       *container,
+						const gchar         *signame,
+						GtkSignalFunc        handler,
+						gpointer             user_data);
+void         gimp_container_remove_handler     (GimpContainer       *container,
+						GQuark               id);
 
 
 #endif  /* __GIMP_CONTAINER_H__ */

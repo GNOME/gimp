@@ -28,6 +28,7 @@
 
 #include "appenv.h"
 #include "dialog_handler.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimplist.h"
@@ -230,8 +231,9 @@ pattern_select_new (gchar *title,
 
   if (title && initial_pattern && strlen (initial_pattern))
     {
-      active = (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
-							    initial_pattern);
+      active = (GimpPattern *)
+	gimp_container_get_child_by_name (global_pattern_list,
+					  initial_pattern);
     }
   else
     {
@@ -550,7 +552,8 @@ pattern_select_select (PatternSelect *psp,
   gint row, col;
   gint scroll_offset = 0;
 
-  index = gimp_list_get_child_index (global_pattern_list, GIMP_OBJECT (pattern));
+  index = gimp_container_get_child_index (global_pattern_list,
+					  GIMP_OBJECT (pattern));
 
   if (index < 0)
     return;
@@ -589,8 +592,8 @@ pattern_select_pattern_dirty_callback (GimpPattern   *pattern,
   if (!psp || psp->freeze)
     return;
 
-  index  = gimp_list_get_child_index (global_pattern_list,
-				      GIMP_OBJECT (pattern));
+  index  = gimp_container_get_child_index (global_pattern_list,
+					   GIMP_OBJECT (pattern));
   redraw = (pattern != gimp_context_get_pattern (psp->context));
 
   display_pattern (psp, pattern,
@@ -829,7 +832,7 @@ display_pattern (PatternSelect *psp,
 static void
 display_patterns (PatternSelect *psp)
 {
-  GList       *list = global_pattern_list->list;
+  GList       *list = GIMP_LIST (global_pattern_list)->list;
   gint         row, col;
   GimpPattern *pattern;
 
@@ -1048,8 +1051,8 @@ pattern_select_events (GtkWidget     *widget,
       index = row * psp->NUM_PATTERN_COLUMNS + col;
 
       pattern =
-	(GimpPattern *) gimp_list_get_child_by_index (global_pattern_list,
-						      index);
+	(GimpPattern *) gimp_container_get_child_by_index (global_pattern_list,
+							   index);
 
       if (pattern)
 	psp->dnd_pattern = pattern;
@@ -1139,8 +1142,8 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
 
       if (active)
 	{
-	  index = gimp_list_get_child_index (global_pattern_list,
-					     GIMP_OBJECT (active));
+	  index = gimp_container_get_child_index (global_pattern_list,
+						  GIMP_OBJECT (active));
 
 	  if (index < 0)
 	    return;

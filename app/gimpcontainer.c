@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "gimpcontainer.h"
+#include "gimpmarshal.h"
 
 
 typedef struct _GimpContainerHandler
@@ -41,6 +42,9 @@ enum
   REMOVE,
   HAVE,
   FOREACH,
+  GET_CHILD_BY_NAME,
+  GET_CHILD_BY_INDEX,
+  GET_CHILD_INDEX,
   LAST_SIGNAL
 };
 
@@ -143,14 +147,47 @@ gimp_container_class_init (GimpContainerClass* klass)
                     GTK_TYPE_POINTER,
 		    GTK_TYPE_POINTER);
 
+  container_signals[GET_CHILD_BY_NAME] =
+    gtk_signal_new ("get_child_by_name",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       get_child_by_name),
+                    gimp_marshal_POINTER__POINTER,
+                    GIMP_TYPE_OBJECT, 1,
+                    GTK_TYPE_POINTER);
+
+  container_signals[GET_CHILD_BY_INDEX] =
+    gtk_signal_new ("get_child_by_index",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       get_child_by_index),
+                    gimp_marshal_POINTER__INT,
+                    GIMP_TYPE_OBJECT, 1,
+                    GTK_TYPE_INT);
+
+  container_signals[GET_CHILD_INDEX] =
+    gtk_signal_new ("get_child_index",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       get_child_index),
+                    gtk_marshal_INT__POINTER,
+                    GTK_TYPE_INT, 1,
+                    GIMP_TYPE_OBJECT);
+
   gtk_object_class_add_signals (object_class, container_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_container_destroy;
 
-  klass->add     = NULL;
-  klass->remove  = NULL;
-  klass->have    = NULL;
-  klass->foreach = NULL;
+  klass->add                = NULL;
+  klass->remove             = NULL;
+  klass->have               = NULL;
+  klass->foreach            = NULL;
+  klass->get_child_by_name  = NULL;
+  klass->get_child_by_index = NULL;
+  klass->get_child_index    = NULL;
 }
 
 static void
@@ -349,6 +386,55 @@ gimp_container_foreach (GimpContainer  *container,
   if (container->num_children > 0)
     gtk_signal_emit (GTK_OBJECT (container), container_signals[FOREACH],
 		     func, user_data);
+}
+
+GimpObject *
+gimp_container_get_child_by_name (const GimpContainer *container,
+				  const gchar         *name)
+{
+  GimpObject *object = NULL;
+
+  g_return_val_if_fail (container != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[GET_CHILD_BY_NAME],
+		   name, &object);
+
+  return object;
+}
+
+GimpObject *
+gimp_container_get_child_by_index (const GimpContainer *container,
+				   gint                 index)
+{
+  GimpObject *object = NULL;
+
+  g_return_val_if_fail (container != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (index >= 0 && index < container->num_children, NULL);
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[GET_CHILD_BY_INDEX],
+		   index, &object);
+
+  return object;
+}
+
+gint
+gimp_container_get_child_index (const GimpContainer *container,
+				const GimpObject    *object)
+{
+  gint index = -1;
+
+  g_return_val_if_fail (container != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), -1);
+  g_return_val_if_fail (object != NULL, -1);
+  g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type), -1);
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[GET_CHILD_INDEX],
+		   object, &index);
+
+  return index;
 }
 
 static void

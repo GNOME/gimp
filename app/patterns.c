@@ -42,7 +42,7 @@ static void   patterns_load_pattern (const gchar *filename);
 
 
 /*  global variables  */
-GimpList *global_pattern_list = NULL;
+GimpContainer *global_pattern_list = NULL;
 
 
 /*  static variables  */
@@ -57,7 +57,7 @@ patterns_init (gboolean no_data)
   if (global_pattern_list)
     patterns_free ();
   else
-    global_pattern_list = GIMP_LIST (gimp_data_list_new (GIMP_TYPE_PATTERN));
+    global_pattern_list = GIMP_CONTAINER (gimp_data_list_new (GIMP_TYPE_PATTERN));
 
   if (pattern_path != NULL && !no_data)
     {
@@ -79,10 +79,11 @@ patterns_free (void)
 
   pattern_select_freeze_all ();
 
-  while (global_pattern_list->list)
+  while (GIMP_LIST (global_pattern_list)->list)
     {
-      gimp_container_remove (GIMP_CONTAINER (global_pattern_list),
-			     GIMP_OBJECT (global_pattern_list->list->data));
+      gimp_container_remove
+	(global_pattern_list,
+	 GIMP_OBJECT (GIMP_LIST (global_pattern_list)->list->data));
     }
 
   pattern_select_thaw_all ();
@@ -134,6 +135,5 @@ patterns_load_pattern (const gchar *filename)
     g_message (_("Warning: Failed to load pattern\n\"%s\""), filename);
 
   if (pattern != NULL)
-    gimp_container_add (GIMP_CONTAINER (global_pattern_list),
-                        GIMP_OBJECT (pattern));
+    gimp_container_add (global_pattern_list, GIMP_OBJECT (pattern));
 }

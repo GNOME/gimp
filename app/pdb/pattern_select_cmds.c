@@ -218,8 +218,8 @@ patterns_set_popup_invoker (Argument *args)
 	  (psp = pattern_get_patternselect (name)))
 	{
 	  GimpPattern *active =
-	    (GimpPattern *) gimp_list_get_child_by_name (global_pattern_list,
-							 pattern_name);
+	    (GimpPattern *) gimp_container_get_child_by_name (global_pattern_list,
+							      pattern_name);
     
 	  if (active)
 	    {
