@@ -111,7 +111,6 @@ gimp_display_shell_events (GtkWidget        *widget,
                            GimpDisplayShell *shell)
 {
   Gimp        *gimp;
-  GdkEventKey *kevent;
   gboolean     set_display = FALSE;
 
   /*  are we in destruction?  */
@@ -124,74 +123,83 @@ gimp_display_shell_events (GtkWidget        *widget,
     {
     case GDK_KEY_PRESS:
     case GDK_KEY_RELEASE:
-      if (gimp->busy)
-        return TRUE;
+      {
+        GdkEventKey *kevent = (GdkEventKey *) event;
 
-      kevent = (GdkEventKey *) event;
-
-      /*  do not process any key events while BUTTON1 is down. We do this
-       *  so tools keep the modifier state they were in when BUTTON1 was
-       *  pressed and to prevent accelerators from being invoked.
-       */
-      if (kevent->state & GDK_BUTTON1_MASK)
-        {
-          if (event->type == GDK_KEY_PRESS)
-            {
-              if (kevent->keyval == GDK_space && shell->space_release_pending)
-                {
-                  shell->space_pressed         = TRUE;
-                  shell->space_release_pending = FALSE;
-                }
-            }
-          else
-            {
-              if (kevent->keyval == GDK_space && shell->space_pressed)
-                {
-                  shell->space_pressed         = FALSE;
-                  shell->space_release_pending = TRUE;
-                }
-            }
-
+        if (gimp->busy)
           return TRUE;
-        }
 
-      switch (kevent->keyval)
-        {
-        case GDK_Left:      case GDK_Right:
-        case GDK_Up:        case GDK_Down:
-        case GDK_space:
-        case GDK_Tab:
-        case GDK_ISO_Left_Tab:
-        case GDK_Alt_L:     case GDK_Alt_R:
-        case GDK_Shift_L:   case GDK_Shift_R:
-        case GDK_Control_L: case GDK_Control_R:
-          break;
+        /*  do not process any key events while BUTTON1 is down. We do this
+         *  so tools keep the modifier state they were in when BUTTON1 was
+         *  pressed and to prevent accelerators from being invoked.
+         */
+        if (kevent->state & GDK_BUTTON1_MASK)
+          {
+            if (event->type == GDK_KEY_PRESS)
+              {
+                if (kevent->keyval == GDK_space && shell->space_release_pending)
+                  {
+                    shell->space_pressed         = TRUE;
+                    shell->space_release_pending = FALSE;
+                  }
+              }
+            else
+              {
+                if (kevent->keyval == GDK_space && shell->space_pressed)
+                  {
+                    shell->space_pressed         = FALSE;
+                    shell->space_release_pending = TRUE;
+                  }
+              }
 
-	case GDK_Escape:
-          gimp_display_shell_set_fullscreen (shell, FALSE);
-	  break;
-
-        default:
-          if (shell->space_pressed)
             return TRUE;
-          break;
-       }
+          }
 
-      set_display = TRUE;
-      break;
+        switch (kevent->keyval)
+          {
+          case GDK_Left:      case GDK_Right:
+          case GDK_Up:        case GDK_Down:
+          case GDK_space:
+          case GDK_Tab:
+          case GDK_ISO_Left_Tab:
+          case GDK_Alt_L:     case GDK_Alt_R:
+          case GDK_Shift_L:   case GDK_Shift_R:
+          case GDK_Control_L: case GDK_Control_R:
+            break;
+
+          case GDK_Escape:
+            gimp_display_shell_set_fullscreen (shell, FALSE);
+            break;
+
+          default:
+            if (shell->space_pressed)
+              return TRUE;
+            break;
+          }
+
+        set_display = TRUE;
+        break;
+      }
 
     case GDK_BUTTON_PRESS:
     case GDK_SCROLL:
       set_display = TRUE;
       break;
 
+    case GDK_FOCUS_CHANGE:
+      {
+        GdkEventFocus *fevent = (GdkEventFocus *) event;
+
+        if (fevent->in && GIMP_DISPLAY_CONFIG (gimp->config)->activate_on_focus)
+          set_display = TRUE;
+      }
+      break;
+
     case GDK_WINDOW_STATE:
       {
-	GdkEventWindowState *sevent;
+	GdkEventWindowState *sevent = (GdkEventWindowState *) event;
         GimpDisplayOptions  *options;
         gboolean             fullscreen;
-
-	sevent = (GdkEventWindowState *) event;
 
 	shell->window_state = sevent->new_window_state;
 
@@ -478,9 +486,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     {
     case GDK_ENTER_NOTIFY:
       {
-        GdkEventCrossing *cevent;
-
-        cevent = (GdkEventCrossing *) event;
+        GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
@@ -495,9 +501,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_LEAVE_NOTIFY:
       {
-        GdkEventCrossing *cevent;
-
-        cevent = (GdkEventCrossing *) event;
+        GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
@@ -528,9 +532,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_FOCUS_CHANGE:
       {
-        GdkEventFocus *fevent;
-
-        fevent = (GdkEventFocus *) event;
+        GdkEventFocus *fevent = (GdkEventFocus *) event;
 
         if (fevent->in)
           {
@@ -577,11 +579,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_BUTTON_PRESS:
       {
-        GdkEventButton *bevent;
+        GdkEventButton *bevent = (GdkEventButton *) event;
         GdkEventMask    event_mask;
         GimpTool       *active_tool;
-
-        bevent = (GdkEventButton *) event;
 
         if (! GTK_WIDGET_HAS_FOCUS (canvas))
           {
@@ -708,10 +708,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_BUTTON_RELEASE:
       {
-        GdkEventButton *bevent;
+        GdkEventButton *bevent = (GdkEventButton *) event;
         GimpTool       *active_tool;
-
-        bevent = (GdkEventButton *) event;
 
         active_tool = tool_manager_get_active (gimp);
 
@@ -811,10 +809,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_SCROLL:
       {
-        GdkEventScroll     *sevent;
+        GdkEventScroll     *sevent = (GdkEventScroll *) event;
         GdkScrollDirection  direction;
-
-        sevent = (GdkEventScroll *) event;
 
         direction = sevent->direction;
 
@@ -884,11 +880,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_MOTION_NOTIFY:
       {
-        GdkEventMotion *mevent;
+        GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
         GimpTool       *active_tool;
-
-        mevent = (GdkEventMotion *) event;
 
         if (gimp->busy)
           return TRUE;
@@ -1034,9 +1028,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_KEY_PRESS:
       {
-        GdkEventKey *kevent;
-
-        kevent = (GdkEventKey *) event;
+        GdkEventKey *kevent = (GdkEventKey *) event;
 
         tool_manager_focus_display_active (gimp, gdisp);
 
@@ -1056,9 +1048,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case GDK_space:
             {
-              GimpTool *active_tool;
-
-              active_tool = tool_manager_get_active (gimp);
+              GimpTool *active_tool = tool_manager_get_active (gimp);
 
               if (! shell->space_pressed && ! GIMP_IS_MOVE_TOOL (active_tool))
                 {
@@ -1146,9 +1136,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_KEY_RELEASE:
       {
-        GdkEventKey *kevent;
-
-        kevent = (GdkEventKey *) event;
+        GdkEventKey *kevent = (GdkEventKey *) event;
 
         tool_manager_focus_display_active (gimp, gdisp);
 
@@ -1213,9 +1201,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   if (GIMP_DISPLAY_CONFIG (gimp->config)->cursor_updating)
     {
-      GimpTool *active_tool;
-
-      active_tool = tool_manager_get_active (gimp);
+      GimpTool *active_tool = tool_manager_get_active (gimp);
 
       if (active_tool)
         {
@@ -1261,9 +1247,7 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = shell->gdisp;
+  GimpDisplay *gdisp = shell->gdisp;
 
   if (gdisp->gimage->gimp->busy)
     return TRUE;
@@ -1307,9 +1291,7 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = shell->gdisp;
+  GimpDisplay *gdisp = shell->gdisp;
 
   if (gdisp->gimage->gimp->busy)
     return TRUE;

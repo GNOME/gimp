@@ -58,6 +58,7 @@ struct _GimpDisplayConfig
   GimpPreviewSize     nav_preview_size;
   GimpDisplayOptions *default_view;
   GimpDisplayOptions *default_fullscreen_view;
+  gboolean            activate_on_focus;
 };
 
 struct _GimpDisplayConfigClass

@@ -9,6 +9,11 @@
  *  be marked for translation.
  */
 
+#define ACTIVATE_ON_FOCUS_BLURB \
+N_("When enabled, an image will become the active image when its image " \
+   "window receives the focus. This is useful for window managers using " \
+   "\"click to focus\".")
+
 #define BRUSH_PATH_BLURB \
 "Sets the brush search path."
 

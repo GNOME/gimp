@@ -1,3 +1,14 @@
+2003-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h: added a new gimprc option
+	"activate-on-focus" that allows to configure GIMP to activate an
+	image when the image window receives the focus. Useful for window
+	managers using click-to-focus. Defaults to TRUE on OS_WIN32.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: implemented the new behaviour.
+
 2003-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.[ch]: changed drag source stuff to allow

@@ -296,7 +296,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_POINTER_MOTION_HINT_MASK |
                                               GDK_BUTTON_PRESS_MASK        |
                                               GDK_KEY_PRESS_MASK           |
-                                              GDK_KEY_RELEASE_MASK));
+                                              GDK_KEY_RELEASE_MASK         |
+                                              GDK_FOCUS_CHANGE_MASK        |
+                                              GDK_SCROLL_MASK));
 
   /*  active display callback  */
   g_signal_connect (shell, "button_press_event",

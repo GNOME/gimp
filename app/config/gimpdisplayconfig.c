@@ -65,6 +65,12 @@ static void  gimp_display_config_fullscreen_notify (GObject    *object,
 #define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t, %L) %z%%"
 #define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
 
+#ifdef OS_WIN32
+#  define DEFAULT_ACTIVATE_ON_FOCUS  TRUE
+#else
+#  define DEFAULT_ACTIVATE_ON_FOCUS  FALSE
+#endif
+
 
 enum
 {
@@ -86,7 +92,8 @@ enum
   PROP_MONITOR_RES_FROM_GDK,
   PROP_NAV_PREVIEW_SIZE,
   PROP_DEFAULT_VIEW,
-  PROP_DEFAULT_FULLSCREEN_VIEW
+  PROP_DEFAULT_FULLSCREEN_VIEW,
+  PROP_ACTIVATE_ON_FOCUS
 };
 
 static GObjectClass *parent_class = NULL;
@@ -227,6 +234,11 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    DEFAULT_FULLSCREEN_VIEW_BLURB,
                                    GIMP_TYPE_DISPLAY_OPTIONS,
                                    GIMP_PARAM_AGGREGATE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
+                                    "activate-on-focus",
+                                    ACTIVATE_ON_FOCUS_BLURB,
+                                    DEFAULT_ACTIVATE_ON_FOCUS,
+                                    0);
 }
 
 static void
@@ -332,7 +344,11 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_DEFAULT_FULLSCREEN_VIEW:
       if (g_value_get_object (value))
         gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (display_config->default_fullscreen_view), 0);
+                          GIMP_CONFIG (display_config->default_fullscreen_view),
+                          0);
+      break;
+    case PROP_ACTIVATE_ON_FOCUS:
+      display_config->activate_on_focus = g_value_get_boolean (value);
       break;
 
     default:
@@ -404,6 +420,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_FULLSCREEN_VIEW:
       g_value_set_object (value, display_config->default_fullscreen_view);
+      break;
+    case PROP_ACTIVATE_ON_FOCUS:
+      g_value_set_boolean (value, display_config->activate_on_focus);
       break;
 
     default:

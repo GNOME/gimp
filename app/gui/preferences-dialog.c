@@ -1428,6 +1428,10 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
 
+  prefs_check_button_add (object, "activate-on-focus",
+                          _("Activate the Focused Image"),
+                          GTK_BOX (vbox2));
+
   /*  Zoom & Resize Behavior  */
   vbox2 = prefs_frame_new (_("Zoom & Resize Behavior"),
                            GTK_CONTAINER (vbox), FALSE);
