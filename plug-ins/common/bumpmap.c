@@ -1480,9 +1480,14 @@ static void
 dialog_bumpmap_callback (GtkWidget   *widget,
                          GimpPreview *preview)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 &bmvals.bumpmap_id);
+  gint32  drawable_id;
 
-  dialog_new_bumpmap (FALSE);
-  gimp_preview_invalidate (preview);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &drawable_id);
+
+  if (bmvals.bumpmap_id != drawable_id)
+    {
+      bmvals.bumpmap_id = drawable_id;
+      dialog_new_bumpmap (TRUE);
+      gimp_preview_invalidate (preview);
+    }
 }

@@ -1,3 +1,8 @@
+2004-12-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/bumpmap.c (dialog_bumpmap_callback): more changes
+	to restore the gimp-2.0 behaviour.
+
 2004-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-preview.[ch]: added new function
