@@ -38,7 +38,12 @@ struct _PlugIn
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */
+
+#if GLIB_CHECK_VERSION(2,3,5)
+  GPid          pid;              /*  Plug-in's process id                    */
+#else
   pid_t         pid;              /*  Plug-in's process id                    */
+#endif
 
   gchar        *name;             /*  Plug-in's name                          */
   gchar        *prog;             /*  Plug-in's full path name                */
