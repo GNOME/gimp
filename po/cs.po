@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-08 23:50+0200\n"
-"PO-Revision-Date: 2000-05-09 11:24+02:00\n"
+"POT-Creation-Date: 2000-05-11 22:40+0200\n"
+"PO-Revision-Date: 2000-05-11 22:45+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -997,11 +997,11 @@ msgstr "Naèíst køivky"
 msgid "Save Curves"
 msgstr "Zapsat køivky"
 
-#: app/curves.c:1569
+#: app/curves.c:1578
 msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
-#: app/curves.c:1614 app/curves.c:1632 app/levels.c:1429 app/levels.c:1447
+#: app/curves.c:1623 app/curves.c:1641 app/levels.c:1429 app/levels.c:1447
 #: app/paths_dialog.c:1902
 #, c-format
 msgid "Unable to open file %s"
@@ -1333,16 +1333,7 @@ msgstr "Náhled není k dispozici"
 msgid "(could not make preview)"
 msgstr "(nelze vytvoøit náhled)"
 
-#: app/fileops.c:1618
-#, c-format
-msgid ""
-"Open failed\n"
-"%s"
-msgstr ""
-"Otevøení selhalo\n"
-"%s"
-
-#: app/fileops.c:1698
+#: app/fileops.c:1618 app/fileops.c:1698
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1703,26 +1694,26 @@ msgstr "  øádek %d sloupec %d\n"
 msgid "  unexpected token: %s\n"
 msgstr "  neoèekávaný symbol: %s\n"
 
-#: app/gimprc.c:1423
+#: app/gimprc.c:1428
 msgid "error parsing pluginrc"
 msgstr "chyba pøi analýze pluginrc"
 
-#: app/gimprc.c:2805
+#: app/gimprc.c:2810
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Nelze otevøít %s; %s"
 
-#: app/gimprc.c:2824
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Nelze pøejmenovat %s na %s.old; %s"
 
-#: app/gimprc.c:2830
+#: app/gimprc.c:2835
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Nelze znovu otevøít %s\n"
 
-#: app/gimprc.c:2842
+#: app/gimprc.c:2847
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Nelze zapisovat do %s; %s"
@@ -2846,62 +2837,62 @@ msgstr "Pøiblí¾it"
 msgid "Zoom out"
 msgstr "Vzdálit"
 
-#: app/main.c:279
+#: app/main.c:280
 msgid "GIMP version"
 msgstr "GIMP verze"
 
-#: app/main.c:283
+#: app/main.c:284
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
 
-#: app/main.c:284
+#: app/main.c:285
 msgid "Valid options are:\n"
 msgstr "Platné pøepínaèe jsou:\n"
 
-#: app/main.c:285
+#: app/main.c:286
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
 
-#: app/main.c:286
+#: app/main.c:287
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vypí¹e informace o verzi.\n"
 
-#: app/main.c:287
+#: app/main.c:288
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
 
-#: app/main.c:288
+#: app/main.c:289
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
 
-#: app/main.c:289
+#: app/main.c:290
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
 
-#: app/main.c:290
+#: app/main.c:291
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
 
-#: app/main.c:291
+#: app/main.c:292
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr "  --no-data                Neète vzorky, pøechody, palety, stopy.\n"
 
-#: app/main.c:292
+#: app/main.c:293
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
 
-#: app/main.c:293
+#: app/main.c:294
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
 
-#: app/main.c:295
+#: app/main.c:296
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2909,11 +2900,11 @@ msgstr ""
 "  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
 "zásuvnými moduly.\n"
 
-#: app/main.c:296
+#: app/main.c:297
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
 
-#: app/main.c:297
+#: app/main.c:298
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2921,20 +2912,20 @@ msgstr ""
 "  --console-messages       Zobrazí varování na konzoli namísto dialogového "
 "okna.\n"
 
-#: app/main.c:298
+#: app/main.c:299
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <displej>      Pou¾ije zvolený X displej.\n"
 
-#: app/main.c:300
+#: app/main.c:301
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
 
-#: app/main.c:317
+#: app/main.c:318
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
@@ -4157,23 +4148,32 @@ msgstr "Zásuvné moduly"
 msgid "query plug-in: \"%s\"\n"
 msgstr "dotaz na zásuvný modul: \"%s\"\n"
 
-#: app/plug_in.c:371
+#: app/plug_in.c:369
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "zapisuje se \"%s\"\n"
 
-#: app/plug_in.c:386
+#: app/plug_in.c:384
 msgid "Starting extensions: "
 msgstr "Spou¹tí se roz¹íøení: "
 
-#: app/plug_in.c:387
+#: app/plug_in.c:385
 msgid "Extensions"
 msgstr "Roz¹íøení"
 
-#: app/plug_in.c:785
+#: app/plug_in.c:781
 #, c-format
 msgid "Unable to locate plug-in: \"%s\""
 msgstr "Nepodaøilo se nalézt zásuvný modul: \"%s\""
+
+#: app/plug_in.c:1439
+#, c-format
+msgid ""
+"Plug-In crashed: %s\n"
+"(%s)"
+msgstr ""
+"Modul zhavaroval: %s\n"
+"(%s)"
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
