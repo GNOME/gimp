@@ -65,10 +65,10 @@ gimp_brush_class_init (GimpBrushClass *klass)
   object_class->destroy =  gimp_brush_destroy;
 
   gimp_brush_signals[DIRTY] =
-    gimp_signal_new ("dirty", 0, type, 0, gimp_sigtype_void);
+    gimp_signal_new ("dirty",  GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
 
   gimp_brush_signals[RENAME] =
-    gimp_signal_new ("rename", 0, type, 0, gimp_sigtype_void);
+    gimp_signal_new ("rename", GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
 
   gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
 }

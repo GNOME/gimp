@@ -5049,11 +5049,7 @@ combine_regions (PixelRegion   *src1,
 {
   int h;
   int has_alpha1, has_alpha2;
-  int mode_affect;
-  unsigned char * s, * s1, * s2;
-  unsigned char * d, * m;
   unsigned char * buf;
-  void * pr;
   struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */
@@ -5350,9 +5346,7 @@ rgb_to_l (int red,
 	  int green,
 	  int blue)
 {
-  float h, l, s;
   int min, max;
-  int delta;
 
   if (red > green)
     {

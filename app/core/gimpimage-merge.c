@@ -116,17 +116,23 @@ gimp_image_class_init (GimpImageClass *klass)
   object_class->destroy =  gimp_image_destroy;
 
   gimp_image_signals[DIRTY] =
-	  gimp_signal_new ("dirty", 0, type, 0, gimp_sigtype_void);
+	  gimp_signal_new ("dirty", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   gimp_image_signals[REPAINT] =
-	  gimp_signal_new ("repaint", 0, type, 0, gimp_sigtype_int_int_int_int);
+	  gimp_signal_new ("repaint", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_int_int_int_int);
   gimp_image_signals[RENAME] =
-	  gimp_signal_new ("rename", 0, type, 0, gimp_sigtype_void);
+	  gimp_signal_new ("rename", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   gimp_image_signals[RESIZE] =
-	  gimp_signal_new ("resize", 0, type, 0, gimp_sigtype_void);
+	  gimp_signal_new ("resize", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   gimp_image_signals[RESTRUCTURE] =
-	  gimp_signal_new ("restructure", 0, type, 0, gimp_sigtype_void);
+	  gimp_signal_new ("restructure", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   gimp_image_signals[COLORMAP_CHANGED] =
-	  gimp_signal_new ("colormap_changed", 0, type, 0, gimp_sigtype_int);
+	  gimp_signal_new ("colormap_changed", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_int);
   
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 }

@@ -24,7 +24,8 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogram.h"
+#include "histogramwidget.h"
+#include "gimphistogram.h"
 #include "histogram_tool.h"
 #include "image_map.h"
 #include "interface.h"
@@ -46,10 +47,12 @@ typedef struct _HistogramToolDialog HistogramToolDialog;
 
 struct _HistogramToolDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *info_labels[7];
-  GtkWidget   *channel_menu;
-  Histogram   *histogram;
+  GtkWidget       *shell;
+  GtkWidget       *info_labels[7];
+  GtkWidget       *channel_menu;
+  HistogramWidget *histogram;
+
+  GimpHistogram   *hist;
 
   double       mean;
   double       std_dev;
@@ -83,8 +86,8 @@ static void                   histogram_tool_blue_callback    (GtkWidget *, gpoi
 static void *histogram_tool_options = NULL;
 static HistogramToolDialog *histogram_tool_dialog = NULL;
 
-static void       histogram_tool_histogram_info  (PixelRegion *, PixelRegion *, HistogramValues, void *);
-static void       histogram_tool_histogram_range (int, int, HistogramValues, void *);
+static void       histogram_tool_histogram_range (HistogramWidget *, int, int,
+						  void *);
 static void       histogram_tool_dialog_update   (HistogramToolDialog *, int, int);
 
 static Argument * histogram_invoker (Argument *args);
@@ -104,139 +107,32 @@ static char * histogram_info_names[7] =
 /*  histogram_tool machinery  */
 
 static void
-histogram_tool_histogram_info (PixelRegion     *srcPR,
-			       PixelRegion     *maskPR,
-			       HistogramValues  values,
-			       void            *user_data)
-{
-  HistogramToolDialog *htd;
-  unsigned char *src, *s;
-  unsigned char *mask, *m;
-  int w, h;
-  int value, red, green, blue;
-
-  mask = NULL;
-  m    = NULL;
-
-  htd = (HistogramToolDialog *) user_data;
-
-  h = srcPR->h;
-  src = srcPR->data;
-
-  if (maskPR)
-    mask = maskPR->data;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-
-      if (maskPR)
-	m = mask;
-
-      while (w--)
-	{
-	  if (htd->color)
-	    {
-	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
-	      value = MAX (value, s[BLUE_PIX]);
-	      red   = s[RED_PIX];
-	      green = s[GREEN_PIX];
-	      blue  = s[BLUE_PIX];
-
-	      if (maskPR)
-		{
-		  values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-		  values[HISTOGRAM_RED][red]     += (double) *m / 255.0;
-		  values[HISTOGRAM_GREEN][green] += (double) *m / 255.0;
-		  values[HISTOGRAM_BLUE][blue]   += (double) *m / 255.0;
-		}
-	      else
-		{
-		  values[HISTOGRAM_VALUE][value] += 1.0;
-		  values[HISTOGRAM_RED][red]     += 1.0;
-		  values[HISTOGRAM_GREEN][green] += 1.0;
-		  values[HISTOGRAM_BLUE][blue]   += 1.0;
-		}
-	    }
-	  else
-	    {
-	      value = s[GRAY_PIX];
-	      if (maskPR)
-		values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-	      else
-		values[HISTOGRAM_VALUE][value] += 1.0;
-	    }
-
-	  s += srcPR->bytes;
-
-	  if (maskPR)
-	    m += maskPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-
-      if (maskPR)
-	mask += maskPR->rowstride;
-    }
-}
-
-static void
-histogram_tool_histogram_range (int              start,
+histogram_tool_histogram_range (HistogramWidget *w,
+				int              start,
 				int              end,
-				HistogramValues  values,
 				void            *user_data)
 {
   HistogramToolDialog *htd;
   double pixels;
-  double mean;
-  double std_dev;
-  int median;
   double count;
-  double percentile;
-  double tmp;
-  int i;
 
   htd = (HistogramToolDialog *) user_data;
 
-  count = 0.0;
-  pixels = 0.0;
-  for (i = 0; i < 256; i++)
-    {
-      pixels += values[htd->channel][i];
+  if (htd == NULL || htd->hist == NULL
+      || gimp_histogram_nchannels(htd->hist) <= 0)
+    return;
 
-      if (i >= start && i <= end)
-	count += values[htd->channel][i];
-    }
+  pixels = gimp_histogram_get_count(htd->hist, 0, 255);
+  count = gimp_histogram_get_count(htd->hist, start, end);
 
-  mean = 0.0;
-  tmp = 0.0;
-  median = -1;
-  for (i = start; i <= end; i++)
-    {
-      mean += i * values[htd->channel][i];
-      tmp += values[htd->channel][i];
-      if (median == -1 && tmp > count / 2)
-	median = i;
-    }
-  if (count)
-    mean /= count;
 
-  std_dev = 0.0;
-  for (i = start; i <= end; i++)
-    std_dev += values[htd->channel][i] * (i - mean) * (i - mean);
-
-  if (count)
-    std_dev = sqrt (std_dev / count);
-
-  percentile = count / pixels;
-
-  htd->mean = mean;
-  htd->std_dev = std_dev;
-  htd->median = median;
+  htd->mean = gimp_histogram_get_mean(htd->hist, htd->channel, start, end);
+  htd->std_dev = gimp_histogram_get_std_dev(htd->hist, htd->channel,
+					    start, end);
+  htd->median = gimp_histogram_get_median(htd->hist, htd->channel, start, end);
   htd->pixels = pixels;
   htd->count = count;
-  htd->percentile = percentile;
+  htd->percentile = count / pixels;
 
   if (htd->shell)
     histogram_tool_dialog_update (htd, start, end);
@@ -383,6 +279,7 @@ tools_free_histogram_tool (Tool *tool)
 void
 histogram_tool_initialize (GDisplay *gdisp)
 {
+  PixelRegion PR;
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message ("Histogram does not operate on indexed drawables.");
@@ -404,11 +301,16 @@ histogram_tool_initialize (GDisplay *gdisp)
   else
     gtk_widget_hide (histogram_tool_dialog->channel_menu);
 
-  histogram_update (histogram_tool_dialog->histogram,
-		    histogram_tool_dialog->drawable,
-		    histogram_tool_histogram_info,
-		    (void *) histogram_tool_dialog);
-  histogram_range (histogram_tool_dialog->histogram, 0, 255);
+  /* calculate the histogram */
+  pixel_region_init(&PR, drawable_data (histogram_tool_dialog->drawable), 0, 0,
+		    drawable_width(histogram_tool_dialog->drawable),
+		    drawable_height(histogram_tool_dialog->drawable),
+		    FALSE);
+  gimp_histogram_calculate(histogram_tool_dialog->hist, &PR, NULL);
+
+  histogram_widget_update (histogram_tool_dialog->histogram,
+			   histogram_tool_dialog->hist);
+  histogram_widget_range (histogram_tool_dialog->histogram, 0, 255);
 }
 
 
@@ -451,6 +353,8 @@ histogram_tool_new_dialog ()
 
   for (i = 0; i < 4; i++)
     color_option_items [i].user_data = (gpointer) htd;
+  
+  htd->hist = gimp_histogram_new();
 
   /*  The shell and main vbox  */
   htd->shell = gtk_dialog_new ();
@@ -490,10 +394,14 @@ histogram_tool_new_dialog ()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
 
-  htd->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
-				     histogram_tool_histogram_range, (void *) htd);
-  gtk_container_add (GTK_CONTAINER (frame), htd->histogram->histogram_widget);
-  gtk_widget_show (htd->histogram->histogram_widget);
+  htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+
+  gtk_signal_connect (GTK_OBJECT (htd->histogram), "rangechanged",
+		      (GtkSignalFunc) histogram_tool_histogram_range,
+		      (void*)htd);
+
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
+  gtk_widget_show (GTK_WIDGET(htd->histogram));
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
@@ -563,7 +471,7 @@ histogram_tool_value_callback (GtkWidget *w,
   if (htd->channel != HISTOGRAM_VALUE)
     {
       htd->channel = HISTOGRAM_VALUE;
-      histogram_channel (htd->histogram, htd->channel);
+      histogram_widget_channel (htd->histogram, htd->channel);
     }
 }
 
@@ -578,7 +486,7 @@ histogram_tool_red_callback (GtkWidget *w,
   if (htd->channel != HISTOGRAM_RED)
     {
       htd->channel = HISTOGRAM_RED;
-      histogram_channel (htd->histogram, htd->channel);
+      histogram_widget_channel (htd->histogram, htd->channel);
     }
 }
 
@@ -593,7 +501,7 @@ histogram_tool_green_callback (GtkWidget *w,
   if (htd->channel != HISTOGRAM_GREEN)
     {
       htd->channel = HISTOGRAM_GREEN;
-      histogram_channel (htd->histogram, htd->channel);
+      histogram_widget_channel (htd->histogram, htd->channel);
     }
 }
 
@@ -608,7 +516,7 @@ histogram_tool_blue_callback (GtkWidget *w,
   if (htd->channel != HISTOGRAM_BLUE)
     {
       htd->channel = HISTOGRAM_BLUE;
-      histogram_channel (htd->histogram, htd->channel);
+      histogram_widget_channel (htd->histogram, htd->channel);
     }
 }
 
@@ -764,8 +672,12 @@ histogram_invoker (Argument *args)
       htd.channel = channel;
       htd.drawable = drawable;
       htd.color = drawable_color (drawable);
-      htd.histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
-					histogram_tool_histogram_range, (void *) &htd);
+      htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
+					    HISTOGRAM_HEIGHT);
+
+      gtk_signal_connect (GTK_OBJECT (htd.histogram), "rangechanged",
+			  (GtkSignalFunc) histogram_tool_histogram_range,
+			  (void*)&htd);
 
       /*  The information collection should occur only within selection bounds  */
       no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
@@ -781,16 +693,15 @@ histogram_invoker (Argument *args)
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
       /*  Apply the image transformation to the pixels  */
+      htd.hist = gimp_histogram_new ();
       if (no_mask)
-	for (pr = pixel_regions_register (1, &srcPR); pr != NULL; pr = pixel_regions_process (pr))
-	  histogram_tool_histogram_info (&srcPR, NULL, *(histogram_values (htd.histogram)), &htd);
+	gimp_histogram_calculate(htd.hist, &srcPR, NULL);
       else
-	for (pr = pixel_regions_register (2, &srcPR, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-	  histogram_tool_histogram_info (&srcPR, &maskPR, *(histogram_values (htd.histogram)), &htd);
+	gimp_histogram_calculate(htd.hist, &srcPR, &maskPR);
 
       /*  calculate the statistics  */
-      histogram_tool_histogram_range (low_range, high_range,
-				      *(histogram_values (htd.histogram)), &htd);
+      histogram_tool_histogram_range (htd.histogram, low_range, high_range,
+				      &htd);
 
       return_args = procedural_db_return_args (&histogram_proc, success);
 

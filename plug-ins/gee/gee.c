@@ -578,7 +578,7 @@ render_frame(void)
 	}
 #endif
 
-      //      memcpy(preview_data1, seed_data, 256*256*3);
+      /*      memcpy(preview_data1, seed_data, 256*256*3); */
 
       if (frame != 0)
 	{
@@ -592,7 +592,7 @@ render_frame(void)
 		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
 		}
 	    }
-	  else// if (0)
+	  else/* if (0) */
 	    {
 	      gint pixwords = pixels/sizeof(gint32);
 	      gint32* seedwords = (gint32*) seed_data;

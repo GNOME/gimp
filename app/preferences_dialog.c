@@ -1408,6 +1408,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+#ifdef ENABLE_MP
       label = gtk_label_new (_("Number of processors to use:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -1427,6 +1428,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &num_processors);
       gtk_widget_show (num_processors_spinbutton);
+#endif /* ENABLE_MP */
 
 
       button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));

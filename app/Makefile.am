@@ -194,6 +194,8 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
+	gimphistogram.c		\
+	gimphistogram.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -202,8 +204,8 @@ gimp_SOURCES = \
 	gradient.h		\
 	gximage.c		\
 	gximage.h		\
-	histogram.c		\
-	histogram.h		\
+	histogramwidget.c	\
+	histogramwidget.h	\
 	histogram_tool.c	\
 	histogram_tool.h	\
 	hue_saturation.c	\

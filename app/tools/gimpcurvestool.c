@@ -26,7 +26,7 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogram.h"
+#include "gimphistogram.h"
 #include "image_map.h"
 #include "interface.h"
 #include "curves.h"

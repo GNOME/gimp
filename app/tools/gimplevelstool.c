@@ -25,7 +25,8 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogram.h"
+#include "histogramwidget.h"
+#include "gimphistogram.h"
 #include "image_map.h"
 #include "interface.h"
 #include "levels.h"
@@ -80,7 +81,8 @@ struct _LevelsDialog
   GtkWidget *    input_levels_da[2];
   GtkWidget *    output_levels_da[2];
   GtkWidget *    channel_menu;
-  Histogram *    histogram;
+  HistogramWidget *histogram;
+  GimpHistogram   *hist;
 
   GimpDrawable * drawable;
   ImageMap       image_map;
@@ -134,8 +136,8 @@ static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, 
 static void *levels_options = NULL;
 static LevelsDialog *levels_dialog = NULL;
 
-static void       levels_histogram_info (PixelRegion *, PixelRegion *, HistogramValues, void *);
-static void       levels_histogram_range (int, int, HistogramValues, void *);
+static void       levels_histogram_range (HistogramWidget *, int, int,
+					  void *);
 static Argument * levels_invoker (Argument *);
 
 /*  levels machinery  */
@@ -146,8 +148,6 @@ levels_lut_func(LevelsDialog *ld,
 {
   double inten;
   int j;
-  double input, output;
-
 
   if (nchannels == 1)
     j = 0;
@@ -192,105 +192,16 @@ levels_lut_func(LevelsDialog *ld,
 }
 
 static void
-levels_histogram_info (PixelRegion     *srcPR,
-		       PixelRegion     *maskPR,
-		       HistogramValues  values,
-		       void            *user_data)
-{
-  LevelsDialog *ld;
-  unsigned char *src, *s;
-  unsigned char *mask, *m;
-  int w, h;
-  int value, red, green, blue;
-  int has_alpha, alpha;
-
-  mask = NULL;
-  m    = NULL;
-
-  ld = (LevelsDialog *) user_data;
-
-  h = srcPR->h;
-  src = srcPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
-
-  if (maskPR)
-    mask = maskPR->data;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-
-      if (maskPR)
-	m = mask;
-
-      while (w--)
-	{
-	  if (ld->color)
-	    {
-	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
-	      value = MAX (value, s[BLUE_PIX]);
-	      red = s[RED_PIX];
-	      green = s[GREEN_PIX];
-	      blue = s[BLUE_PIX];
-	      alpha = s[ALPHA_PIX];
-	      if (maskPR)
-		{
-		  values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-		  values[HISTOGRAM_RED][red]     += (double) *m / 255.0;
-		  values[HISTOGRAM_GREEN][green] += (double) *m / 255.0;
-		  values[HISTOGRAM_BLUE][blue]   += (double) *m / 255.0;
-		}
-	      else
-		{
-		  values[HISTOGRAM_VALUE][value] += 1.0;
-		  values[HISTOGRAM_RED][red]     += 1.0;
-		  values[HISTOGRAM_GREEN][green] += 1.0;
-		  values[HISTOGRAM_BLUE][blue]   += 1.0;
-		}
-	    }
-	  else
-	    {
-	      value = s[GRAY_PIX];
-	      if (maskPR)
-		values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-	      else
-		values[HISTOGRAM_VALUE][value] += 1.0;
-	    }
-
-	  if (has_alpha)
-	    {
-	      if (maskPR)
-		values[HISTOGRAM_ALPHA][s[alpha]] += (double) *m / 255.0;
-	      else
-		values[HISTOGRAM_ALPHA][s[alpha]] += 1.0;
-	    }
-
-	  s += srcPR->bytes;
-
-	  if (maskPR)
-	    m += maskPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-
-      if (maskPR)
-	mask += maskPR->rowstride;
-    }
-}
-
-static void
-levels_histogram_range (int              start,
+levels_histogram_range (HistogramWidget *h,
+			int              start,
 			int              end,
-			HistogramValues  values,
 			void            *user_data)
 {
   LevelsDialog *ld;
 
   ld = (LevelsDialog *) user_data;
 
-  histogram_range (ld->histogram, -1, -1);
+  histogram_widget_range (ld->histogram, -1, -1);
 }
 
 /*  levels action functions  */
@@ -468,11 +379,10 @@ levels_initialize (GDisplay *gdisp)
   levels_update (levels_dialog, LOW_INPUT | GAMMA | HIGH_INPUT | LOW_OUTPUT | HIGH_OUTPUT | DRAW);
   levels_update (levels_dialog, INPUT_LEVELS | OUTPUT_LEVELS);
 
-  histogram_update (levels_dialog->histogram,
-		    levels_dialog->drawable,
-		    levels_histogram_info,
-		    (void *) levels_dialog);
-  histogram_range (levels_dialog->histogram, -1, -1);
+  gimp_histogram_calculate_drawable (levels_dialog->hist,
+				     levels_dialog->drawable);
+  histogram_widget_update(levels_dialog->histogram, levels_dialog->hist);
+  histogram_widget_range (levels_dialog->histogram, -1, -1);
 }
 
 void
@@ -520,7 +430,8 @@ levels_new_dialog ()
   ld = g_malloc (sizeof (LevelsDialog));
   ld->preview = TRUE;
 
-  ld->lut = gimp_lut_new();
+  ld->lut  = gimp_lut_new();
+  ld->hist = gimp_histogram_new();
 
   for (i = 0; i < 5; i++)
     color_option_items [i].user_data = (gpointer) ld;
@@ -589,6 +500,7 @@ levels_new_dialog ()
   gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), "255");
   gtk_widget_set_usize (ld->high_input_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->high_input_text, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (ld->high_input_text), "changed",
 		      (GtkSignalFunc) levels_high_input_text_update,
 		      ld);
@@ -602,11 +514,13 @@ levels_new_dialog ()
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+  ld->histogram = histogram_widget_new(HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
 
-  ld->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
-				    levels_histogram_range, (void *) ld);
-  gtk_container_add (GTK_CONTAINER (frame), ld->histogram->histogram_widget);
-  gtk_widget_show (ld->histogram->histogram_widget);
+  gtk_signal_connect (GTK_OBJECT (ld->histogram), "rangechanged",
+		      (GtkSignalFunc) levels_histogram_range,
+		      (void*)ld);
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(ld->histogram));
+  gtk_widget_show (GTK_WIDGET(ld->histogram));
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
@@ -912,7 +826,7 @@ levels_value_callback (GtkWidget *w,
   if (ld->channel != HISTOGRAM_VALUE)
     {
       ld->channel = HISTOGRAM_VALUE;
-      histogram_channel (ld->histogram, ld->channel);
+      histogram_widget_channel (ld->histogram, ld->channel);
       levels_update (ld, ALL);
     }
 }
@@ -928,7 +842,7 @@ levels_red_callback (GtkWidget *w,
   if (ld->channel != HISTOGRAM_RED)
     {
       ld->channel = HISTOGRAM_RED;
-      histogram_channel (ld->histogram, ld->channel);
+      histogram_widget_channel (ld->histogram, ld->channel);
       levels_update (ld, ALL);
     }
 }
@@ -944,7 +858,7 @@ levels_green_callback (GtkWidget *w,
   if (ld->channel != HISTOGRAM_GREEN)
     {
       ld->channel = HISTOGRAM_GREEN;
-      histogram_channel (ld->histogram, ld->channel);
+      histogram_widget_channel (ld->histogram, ld->channel);
       levels_update (ld, ALL);
     }
 }
@@ -960,7 +874,7 @@ levels_blue_callback (GtkWidget *w,
   if (ld->channel != HISTOGRAM_BLUE)
     {
       ld->channel = HISTOGRAM_BLUE;
-      histogram_channel (ld->histogram, ld->channel);
+      histogram_widget_channel (ld->histogram, ld->channel);
       levels_update (ld, ALL);
     }
 }
@@ -976,14 +890,14 @@ levels_alpha_callback (GtkWidget *w,
   if (ld->channel != HISTOGRAM_ALPHA)
     {
       ld->channel = HISTOGRAM_ALPHA;
-      histogram_channel (ld->histogram, ld->channel);
+      histogram_widget_channel (ld->histogram, ld->channel);
       levels_update (ld, ALL);
     }
 }
 
 static void
 levels_adjust_channel (LevelsDialog    *ld,
-		       HistogramValues *values,
+		       GimpHistogram   *hist,
 		       int              channel)
 {
   int i;
@@ -993,9 +907,8 @@ levels_adjust_channel (LevelsDialog    *ld,
   ld->low_output[channel]  = 0;
   ld->high_output[channel] = 255;
 
-  count = 0.0;
-  for (i = 0; i < 256; i++)
-    count += (*values)[channel][i];
+  
+  count = gimp_histogram_get_count(hist, 0, 255);
 
   if (count == 0.0)
     {
@@ -1008,10 +921,12 @@ levels_adjust_channel (LevelsDialog    *ld,
       new_count = 0.0;
       for (i = 0; i < 255; i++)
 	{
-	  new_count += (*values)[channel][i];
+	  new_count += gimp_histogram_get_value(hist, channel, i);
 	  percentage = new_count / count;
-	  next_percentage = (new_count + (*values)[channel][i + 1]) / count;
-
+	  next_percentage = (new_count + gimp_histogram_get_value(hist,
+								  channel,
+								  i + 1)) /
+	    count;
 	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
 	    {
 	      ld->low_input[channel] = i + 1;
@@ -1022,10 +937,11 @@ levels_adjust_channel (LevelsDialog    *ld,
       new_count = 0.0;
       for (i = 255; i > 0; i--)
 	{
-	  new_count += (*values)[channel][i];
+	  new_count += gimp_histogram_get_value(hist, channel, i);
 	  percentage = new_count / count;
-	  next_percentage = (new_count + (*values)[channel][i - 1]) / count;
-
+	  next_percentage = (new_count + gimp_histogram_get_value(hist,
+								  channel,
+							      i - 1)) / count;
 	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
 	    {
 	      ld->high_input[channel] = i - 1;
@@ -1040,11 +956,9 @@ levels_auto_levels_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
   LevelsDialog *ld;
-  HistogramValues *values;
   int channel;
 
   ld = (LevelsDialog *) client_data;
-  values = histogram_values (ld->histogram);
 
   if (ld->color)
     {
@@ -1056,10 +970,10 @@ levels_auto_levels_callback (GtkWidget *widget,
       ld->high_output[HISTOGRAM_VALUE] = 255;
 
       for (channel = 0; channel < 3; channel ++)
-	levels_adjust_channel (ld, values, channel + 1);
+	levels_adjust_channel (ld, ld->hist, channel + 1);
     }
   else
-    levels_adjust_channel (ld, values, HISTOGRAM_VALUE);
+    levels_adjust_channel (ld, ld->hist, HISTOGRAM_VALUE);
 
   levels_update (ld, ALL);
   if (ld->preview)
@@ -1497,7 +1411,6 @@ levels_invoker (Argument *args)
   PixelRegion srcPR, destPR;
   int success = TRUE;
   LevelsDialog ld;
-  GImage *gimage;
   GimpDrawable *drawable;
   int channel;
   int low_input;
@@ -1509,7 +1422,6 @@ levels_invoker (Argument *args)
   double fp_value;
   int x1, y1, x2, y2;
   int i;
-  void *pr;
 
   drawable = NULL;
   low_input   = 0;
@@ -1525,8 +1437,6 @@ levels_invoker (Argument *args)
       drawable = drawable_get_ID (int_value);
       if (drawable == NULL)                                        
         success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)

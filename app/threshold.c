@@ -23,7 +23,7 @@
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
-#include "histogram.h"
+#include "histogramwidget.h"
 #include "image_map.h"
 #include "interface.h"
 #include "threshold.h"
@@ -48,7 +48,8 @@ struct _ThresholdDialog
   GtkWidget   *shell;
   GtkWidget   *low_threshold_text;
   GtkWidget   *high_threshold_text;
-  Histogram   *histogram;
+  HistogramWidget *histogram;
+  GimpHistogram   *hist;
 
   GimpDrawable *drawable;
   ImageMap     image_map;
@@ -81,11 +82,21 @@ static void *threshold_options = NULL;
 static ThresholdDialog *threshold_dialog = NULL;
 
 static void       threshold (PixelRegion *, PixelRegion *, void *);
-static void       threshold_histogram_info (PixelRegion *, PixelRegion *, HistogramValues, void *);
-static void       threshold_histogram_range (int, int, HistogramValues, void *);
+static void       threshold_histogram_range (HistogramWidget *, int, int,
+					     void*);
 static Argument * threshold_invoker (Argument *);
 
 /*  threshold machinery  */
+
+static void
+threshold_2 (void        *user_data,
+	     PixelRegion *srcPR,
+	     PixelRegion *destPR)
+{
+  /* this function just re-orders the arguments so we can use 
+     pixel_regions_process_paralell */
+  threshold(srcPR, destPR, user_data);
+}
 
 static void
 threshold (PixelRegion *srcPR,
@@ -140,68 +151,9 @@ threshold (PixelRegion *srcPR,
 }
 
 static void
-threshold_histogram_info (PixelRegion     *srcPR,
-			  PixelRegion     *maskPR,
-			  HistogramValues  values,
-			  void            *user_data)
-{
-  ThresholdDialog *td;
-  unsigned char *src, *s;
-  unsigned char *mask, *m;
-  int w, h;
-  int value;
-
-  mask = NULL;
-  m    = NULL;
-
-  td = (ThresholdDialog *) user_data;
-
-  h = srcPR->h;
-  src = srcPR->data;
-
-  if (maskPR)
-    mask = maskPR->data;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-
-      if (maskPR)
-	m = mask;
-
-      while (w--)
-	{
-	  if (td->color)
-	    {
-	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
-	      value = MAX (value, s[BLUE_PIX]);
-	    }
-	  else
-	    value = s[GRAY_PIX];
-
-	  if (maskPR)
-	    values[HISTOGRAM_VALUE][value] += (double) *m / 255.0;
-	  else
-	    values[HISTOGRAM_VALUE][value] += 1.0;
-
-	  s += srcPR->bytes;
-
-	  if (maskPR)
-	    m += maskPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-
-      if (maskPR)
-	mask += maskPR->rowstride;
-    }
-}
-
-static void
-threshold_histogram_range (int              start,
+threshold_histogram_range (HistogramWidget *w,
+			   int              start,
 			   int              end,
-			   HistogramValues  values,
 			   void            *user_data)
 {
   ThresholdDialog *td;
@@ -355,13 +307,15 @@ threshold_initialize (GDisplay *gdisp)
   threshold_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   threshold_dialog->color = drawable_color (threshold_dialog->drawable);
   threshold_dialog->image_map = image_map_create (gdisp, threshold_dialog->drawable);
-  histogram_update (threshold_dialog->histogram,
-		    threshold_dialog->drawable,
-		    threshold_histogram_info,
-		    (void *) threshold_dialog);
-  histogram_range (threshold_dialog->histogram,
-		   threshold_dialog->low_threshold,
-		   threshold_dialog->high_threshold);
+
+  gimp_histogram_calculate_drawable(threshold_dialog->hist,
+				    threshold_dialog->drawable);
+  
+  histogram_widget_update (threshold_dialog->histogram,
+			   threshold_dialog->hist);
+  histogram_widget_range (threshold_dialog->histogram,
+			  threshold_dialog->low_threshold,
+			  threshold_dialog->high_threshold);
   if (threshold_dialog->preview)
     threshold_preview (threshold_dialog);
 }
@@ -392,6 +346,7 @@ threshold_new_dialog ()
   td->preview = TRUE;
   td->low_threshold = 127;
   td->high_threshold = 255;
+  td->hist = gimp_histogram_new();
 
   /*  The shell and main vbox  */
   td->shell = gtk_dialog_new ();
@@ -444,10 +399,13 @@ threshold_new_dialog ()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
 
-  td->histogram = histogram_create (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT,
-				    threshold_histogram_range, (void *) td);
-  gtk_container_add (GTK_CONTAINER (frame), td->histogram->histogram_widget);
-  gtk_widget_show (td->histogram->histogram_widget);
+  td->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+
+  gtk_signal_connect (GTK_OBJECT (td->histogram), "rangechanged",
+		      (GtkSignalFunc) threshold_histogram_range,
+		      (void*)td);
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(td->histogram));
+  gtk_widget_show (GTK_WIDGET(td->histogram));
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
@@ -478,7 +436,7 @@ threshold_new_dialog ()
   /* This code is so far removed from the histogram creation because the
      function histogram_range requires a non-NULL drawable, and that
      doesn't happen until after the top-level dialog is shown. */
-  histogram_range (td->histogram, td->low_threshold, td->high_threshold);
+  histogram_widget_range (td->histogram, td->low_threshold, td->high_threshold);
   return td;
 }
 
@@ -576,9 +534,9 @@ threshold_low_threshold_text_update (GtkWidget *w,
   if (value != td->low_threshold)
     {
       td->low_threshold = value;
-      histogram_range (td->histogram,
-		       td->low_threshold,
-		       td->high_threshold);
+      histogram_widget_range (td->histogram,
+			      td->low_threshold,
+			      td->high_threshold);
       if (td->preview)
 	threshold_preview (td);
     }
@@ -599,9 +557,9 @@ threshold_high_threshold_text_update (GtkWidget *w,
   if (value != td->high_threshold)
     {
       td->high_threshold = value;
-      histogram_range (td->histogram,
-		       td->low_threshold,
-		       td->high_threshold);
+      histogram_widget_range (td->histogram,
+			      td->low_threshold,
+			      td->high_threshold);
       if (td->preview)
 	threshold_preview (td);
     }
@@ -715,8 +673,8 @@ threshold_invoker (args)
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	threshold (&srcPR, &destPR, (void *) &td);
+      pixel_regions_process_parallel((p_func)threshold_2, (void*) &td,
+				     2, &srcPR, &destPR);
 
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

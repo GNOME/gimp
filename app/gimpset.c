@@ -66,9 +66,9 @@ gimp_set_class_init (GimpSetClass* klass)
 	object_class->destroy = gimp_set_destroy;
 	
 	gimp_set_signals[ADD]=
-		gimp_signal_new ("add", 0, type, 0, gimp_sigtype_pointer);
+		gimp_signal_new ("add", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
 	gimp_set_signals[REMOVE]=
-		gimp_signal_new ("remove", 0, type, 0, gimp_sigtype_pointer);
+		gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
 	gtk_object_class_add_signals (object_class,
 				      gimp_set_signals,
 				      LAST_SIGNAL);

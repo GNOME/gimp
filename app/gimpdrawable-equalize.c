@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -23,12 +24,22 @@
 #include "equalize.h"
 #include "interface.h"
 #include "gimage.h"
+#include "gimplut.h"
+#include "gimphistogram.h"
 
 #include "libgimp/gimpintl.h"
 
+struct hist_lut_struct
+{
+  GimpHistogram *histogram;
+  int part[5][257];
+};
+
+static float      equalize_lut_func(struct hist_lut_struct *hlut, 
+				    int nchannels, int channel, float value);
 static void       equalize (GImage *, GimpDrawable *, int);
-static void       eq_histogram (double [3][256], unsigned char [3][256], int, double);
 static Argument * equalize_invoker (Argument *);
+static GimpLut  * eq_histogram_lut (GimpHistogram *hist, int bytes);
 
 
 void
@@ -59,8 +70,6 @@ equalize(gimage, drawable, mask_only)
 {
   Channel *sel_mask;
   PixelRegion srcPR, destPR, maskPR, *sel_maskPR;
-  double hist[3][256];
-  unsigned char lut[3][256];
   unsigned char *src, *s;
   unsigned char *dest, *d;
   unsigned char *mask, *m;
@@ -68,106 +77,35 @@ equalize(gimage, drawable, mask_only)
   int h, j, b;
   int has_alpha;
   int alpha, bytes;
-  int off_x, off_y;
   int x1, y1, x2, y2;
-  double count;
   void *pr;
+  GimpHistogram *hist;
+  GimpLut *lut;
 
   mask = NULL;
 
-  sel_mask = gimage_get_mask (gimage);
-  drawable_offsets (drawable, &off_x, &off_y);
   bytes = drawable_bytes (drawable);
   has_alpha = drawable_has_alpha (drawable);
   alpha = has_alpha ? (bytes - 1) : bytes;
-  count = 0.0;
 
-  /*  Determine the histogram from the drawable data and the attendant mask  */
-  no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  sel_maskPR = (no_mask) ? NULL : &maskPR;
-  if (sel_maskPR)
-    pixel_region_init (sel_maskPR, drawable_data (GIMP_DRAWABLE (sel_mask)), x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+  hist = gimp_histogram_new();
+  gimp_histogram_calculate_drawable(hist, drawable);
 
-  /* Initialize histogram */
-  for (b = 0; b < alpha; b++)
-    for (j = 0; j < 256; j++)
-      hist[b][j] = 0.0;
-
-  for (pr = pixel_regions_register (2, &srcPR, sel_maskPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      if (sel_maskPR)
-	mask = sel_maskPR->data;
-      h = srcPR.h;
-
-      while (h--)
-	{
-	  s = src;
-	  m = mask;
-
-	  for (j = 0; j < srcPR.w; j++)
-	    {
-	      if (sel_maskPR)
-		{
-		  for (b = 0; b < alpha; b++)
-		    hist[b][s[b]] += (double) *m / 255.0;
-		  count += (double) *m / 255.0;
-		}
-	      else
-		{
-		  for (b = 0; b < alpha; b++)
-		    hist[b][s[b]] += 1.0;
-		  count += 1.0;
-		}
-
-	      s += bytes;
-
-	      if (sel_maskPR)
-		m ++;
-	    }
-
-	  src += srcPR.rowstride;
-
-	  if (sel_maskPR)
-	    mask += sel_maskPR->rowstride;
-	}
-    }
 
   /* Build equalization LUT */
-  eq_histogram (hist, lut, alpha, count);
+  lut = eq_histogram_lut (hist, bytes);
 
   /*  Apply the histogram  */
+  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
   pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
   pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-      h = srcPR.h;
+  pixel_regions_process_parallel((p_func)gimp_lut_process, lut, 
+				 2, &srcPR, &destPR);
 
-      while (h--)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (j = 0; j < srcPR.w; j++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		d[b] = lut[b][s[b]];
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      s += bytes;
-	      d += bytes;
-	    }
-
-	  src += srcPR.rowstride;
-	  dest += destPR.rowstride;
-	}
-    }
+  gimp_lut_free(lut);
+  gimp_histogram_free(hist);
 
   drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -176,58 +114,64 @@ equalize(gimage, drawable, mask_only)
 
 /*****/
 
-static void
-eq_histogram (hist, lut, bytes, count)
-     double hist[3][256];
-     unsigned char lut[3][256];
-     int bytes;
-     double count;
+static GimpLut *
+eq_histogram_lut (GimpHistogram *hist, int bytes)
 {
   int    i, k, j;
-  int    part[3][257]; /* Partition */
+  struct hist_lut_struct hlut;
   double pixels_per_value;
   double desired;
-
-  /* Calculate partial sums */
-  for (k = 0; k < bytes; k++)
-    for (i = 1; i < 256; i++)
-      hist[k][i] += hist[k][i - 1];
+  GimpLut *lut;
+  double sum, dif;
 
   /* Find partition points */
-  pixels_per_value = count / 256.0;
+  pixels_per_value = gimp_histogram_get_count(hist, 0, 255) / 256.0;
 
   for (k = 0; k < bytes; k++)
     {
       /* First and last points in partition */
-      part[k][0]   = 0;
-      part[k][256] = 256;
-
+      hlut.part[k][0]   = 0;
+      hlut.part[k][256] = 256;
+      
       /* Find intermediate points */
       j = 0;
+      sum = gimp_histogram_get_channel(hist, k, 0) + 
+	    gimp_histogram_get_channel(hist, k, 1);
       for (i = 1; i < 256; i++)
 	{
 	  desired = i * pixels_per_value;
-	  while (hist[k][j + 1] <= desired)
+	  while (sum <= desired)
+	  {
 	    j++;
+	    sum += gimp_histogram_get_channel(hist, k, j + 1);
+	  }
 
 	  /* Nearest sum */
-	  if ((desired - hist[k][j]) < (hist[k][j + 1] - desired))
-	    part[k][i] = j;
+	  dif = sum - gimp_histogram_get_channel(hist, k, j);
+	  if ((sum - desired) > (dif / 2.0))
+	    hlut.part[k][i] = j;
 	  else
-	    part[k][i] = j + 1;
+	    hlut.part[k][i] = j + 1;
 	}
     }
 
-  /* Create equalization LUT */
-  for (k = 0; k < bytes; k++)
-    for (j = 0; j < 256; j++)
-      {
-	i = 0;
-	while (part[k][i + 1] <= j)
-	  i++;
+  lut = gimp_lut_new();
 
-	lut[k][j] = i;
-      }
+  gimp_lut_setup(lut, (GimpLutFunc) equalize_lut_func,
+		 (void *) &hlut, bytes);
+
+  return lut;
+}
+
+static float
+equalize_lut_func(struct hist_lut_struct *hlut, 
+		  int nchannels, int channel, float value)
+{
+  int i = 0, j;
+  j = (int)(value * 255.0 + 0.5);
+  while (hlut->part[channel][i + 1] <= j)
+    i++;
+  return i / 255.0;
 }
 
 
