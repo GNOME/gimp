@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- fixed sunos/solaris socketpair "protocol not implemented" problem.
+
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".
 	- startet implementing Gimp::Module, for embedding perl directly into

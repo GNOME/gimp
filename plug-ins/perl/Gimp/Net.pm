@@ -142,6 +142,7 @@ sub start_server {
    $server_fh=local *FH;
    my $gimp_fh=local *FH;
    socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,AF_UNIX
+      or socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,PF_UNSPEC
       or croak "unable to create socketpair for gimp communications: $!";
    $gimp_pid = fork;
    if ($gimp_pid > 0) {
