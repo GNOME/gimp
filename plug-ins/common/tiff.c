@@ -1,5 +1,6 @@
 /* tiff loading and saving for the GIMP
  *  -Peter Mattis
+ *
  * The TIFF loading code has been completely revamped by Nick Lamb
  * njl195@zepler.org.uk -- 18 May 1998
  * And it now gains support for tiles (and doubtless a zillion bugs)
@@ -63,12 +64,12 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query   (void);
-static void   run     (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void   query     (void);
+static void   run       (const gchar      *name,
+		         gint              nparams,
+		         const GimpParam  *param,
+		         gint             *nreturn_vals,
+		         GimpParam       **return_vals);
 
 static gint32 load_image    (const gchar  *filename);
 
@@ -78,13 +79,13 @@ static void   load_lines    (TIFF         *tif,
 			     channel_data *channel,
 			     gushort       bps,
 			     gushort       photomet,
-			     gint          alpha,
+			     gboolean      alpha,
 			     gint          extra);
 static void   load_tiles    (TIFF         *tif,
 			     channel_data *channel,
 			     gushort       bps,
 			     gushort       photomet,
-			     gint          alpha,
+			     gboolean      alpha,
 			     gint          extra);
 
 static void   read_separate (guchar       *source,
@@ -95,7 +96,7 @@ static void   read_separate (guchar       *source,
 			     gint          startrow,
 			     gint          rows,
 			     gint          cols,
-                             gint          alpha,
+                             gboolean      alpha,
 			     gint          extra,
 			     gint          sample);
 static void   read_16bit    (guchar       *source,
@@ -105,7 +106,7 @@ static void   read_16bit    (guchar       *source,
 			     gint          startrow,
 			     gint          rows,
 			     gint          cols,
-			     gint          alpha,
+			     gboolean      alpha,
 			     gint          extra,
 			     gint          align);
 static void   read_8bit     (guchar       *source,
@@ -115,7 +116,7 @@ static void   read_8bit     (guchar       *source,
 			     gint          startrow,
 			     gint          rows,
 			     gint          cols,
-			     gint          alpha,
+			     gboolean      alpha,
 			     gint          extra,
 			     gint          align);
 static void   read_default  (guchar       *source,
@@ -126,7 +127,7 @@ static void   read_default  (guchar       *source,
 			     gint          startrow,
 			     gint          rows,
 			     gint          cols,
-			     gint          alpha,
+			     gboolean      alpha,
 			     gint          extra,
 			     gint          align);
 
@@ -189,7 +190,7 @@ query (void)
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
-                          "1995-1996,1998-2000",
+                          "1995-1996,1998-2003",
                           "<Load>/Tiff",
 			  NULL,
                           GIMP_PLUGIN,
@@ -204,7 +205,7 @@ query (void)
 			  "from the 'gimp-comment' parasite.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
-                          "1995-1996,2000",
+                          "1995-1996,2000-2003",
                           "<Save>/Tiff",
 			  "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
@@ -393,33 +394,36 @@ tiff_error (const gchar *module,
 static gint32
 load_image (const gchar *filename)
 {
-  TIFF    *tif;
-  gushort  bps, spp, photomet;
-  guint16 orientation;
-  gint     cols, rows, alpha;
-  gint     image, image_type = GIMP_RGB;
-  gint     layer, layer_type = GIMP_RGB_IMAGE;
-  gushort  extra, *extra_types;
-  channel_data *channel= NULL;
+  TIFF         *tif;
+  gushort       bps, spp, photomet;
+  guint16       orientation;
+  gint          cols, rows;
+  gboolean      alpha;
+  gint          image = 0, image_type = GIMP_RGB;
+  gint          layer, layer_type     = GIMP_RGB_IMAGE;
+  gushort       extra, *extra_types;
+  channel_data *channel = NULL;
 
-  gushort *redmap, *greenmap, *bluemap;
-  GimpRGB  color;
-  guchar   cmap[768];
+  gushort      *redmap, *greenmap, *bluemap;
+  GimpRGB       color;
+  guchar        cmap[768];
 
-  gint     i, j;
-  gboolean worst_case = FALSE;
-  gchar   *name;
+  gint          i, j;
+  gint          ilayer;
+  gboolean      worst_case = FALSE;
+  gchar        *name;
 
-  TiffSaveVals save_vals;
+  TiffSaveVals  save_vals;
   GimpParasite *parasite;
-  guint16  tmp;
-#ifdef TIFFTAG_ICCPROFILE
-  uint32   profile_size;
-  guchar  *icc_profile;
-#endif
+  guint16       tmp;
 
-  gboolean flip_horizontal = FALSE;
-  gboolean flip_vertical = FALSE;
+  gboolean      flip_horizontal = FALSE;
+  gboolean      flip_vertical   = FALSE;
+
+#ifdef TIFFTAG_ICCPROFILE
+  uint32        profile_size;
+  guchar       *icc_profile;
+#endif
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
@@ -438,313 +442,345 @@ load_image (const gchar *filename)
   gimp_progress_init (name);
   g_free (name);
 
-  TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
-
-  if (bps > 8 && bps != 16)
-    worst_case = TRUE; /* Wrong sample width => RGBA */
-
-  TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
-
-  if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
-    extra = 0;
-
-  if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
+  /* We will loop through the all pages in case of multipage TIFF
+     and load every page as a separate layer. */
+  ilayer = 0;
+  do
     {
-      g_message ("Could not get image width from '%s'", filename);
-      gimp_quit ();
-    }
+      TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
-  if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
-    {
-      g_message ("Could not get image length from '%s'", filename);
-      gimp_quit ();
-    }
+      if (bps > 8 && bps != 16)
+        worst_case = TRUE; /* Wrong sample width => RGBA */
 
-  if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
-    {
-      g_message ("Could not get photometric from '%s'. Assuming min-is-black",
-                 filename);
-      /* old AppleScan software misses out the photometric tag (and
-       * incidentally assumes min-is-white, but xv assumes min-is-black,
-       * so we follow xv's lead.  It's not much hardship to invert the
-       * image later). */
-      photomet = PHOTOMETRIC_MINISBLACK;
-    }
+      TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
 
-  /* test if the extrasample represents an associated alpha channel... */
-  if (extra > 0 && (extra_types[0] == EXTRASAMPLE_ASSOCALPHA))
-    {
-      alpha = 1;
-      --extra;
-    }
-  else
-    {
-      alpha = 0;
-    }
+      if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
+        extra = 0;
 
-  if (photomet == PHOTOMETRIC_RGB && spp > 3 + extra)
-    {
-      alpha= 1;
-      extra= spp - 4;
-    }
-  else if (photomet != PHOTOMETRIC_RGB && spp > 1 + extra)
-    {
-      alpha= 1;
-      extra= spp - 2;
-    }
+      if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
+        {
+          g_message ("Could not get image width from '%s'", filename);
+          gimp_quit ();
+        }
 
-  switch (photomet)
-    {
-    case PHOTOMETRIC_MINISBLACK:
-    case PHOTOMETRIC_MINISWHITE:
-      image_type = GIMP_GRAY;
-      layer_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
-      break;
+      if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
+        {
+          g_message ("Could not get image length from '%s'", filename);
+          gimp_quit ();
+        }
 
-    case PHOTOMETRIC_RGB:
-      image_type = GIMP_RGB;
-      layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
-      break;
+      if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
+        {
+          g_message ("Could not get photometric from '%s'. "
+                     "Assuming min-is-black",
+                     filename);
+          /* old AppleScan software misses out the photometric tag (and
+           * incidentally assumes min-is-white, but xv assumes min-is-black,
+           * so we follow xv's lead.  It's not much hardship to invert the
+           * image later). */
+          photomet = PHOTOMETRIC_MINISBLACK;
+        }
 
-    case PHOTOMETRIC_PALETTE:
-      image_type = GIMP_INDEXED;
-      layer_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
-      break;
+      /* test if the extrasample represents an associated alpha channel... */
+      if (extra > 0 && (extra_types[0] == EXTRASAMPLE_ASSOCALPHA))
+        {
+          alpha = TRUE;
+          --extra;
+        }
+      else
+        {
+          alpha = FALSE;
+        }
 
-    default:
-      worst_case = TRUE;
-      break;
-    }
+      if (photomet == PHOTOMETRIC_RGB && spp > 3 + extra)
+        {
+          alpha = TRUE;
+          extra = spp - 4;
+        }
+      else if (photomet != PHOTOMETRIC_RGB && spp > 1 + extra)
+        {
+          alpha = TRUE;
+          extra = spp - 2;
+        }
 
-  if (worst_case)
-    {
-      image_type = GIMP_RGB;
-      layer_type = GIMP_RGBA_IMAGE;
-    }
+      switch (photomet)
+        {
+        case PHOTOMETRIC_MINISBLACK:
+        case PHOTOMETRIC_MINISWHITE:
+          image_type = GIMP_GRAY;
+          layer_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+          break;
 
-  if ((image = gimp_image_new (cols, rows, image_type)) == -1)
-    {
-      g_message ("Could not create a new image");
-      gimp_quit ();
-    }
+        case PHOTOMETRIC_RGB:
+          image_type = GIMP_RGB;
+          layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          break;
 
-  gimp_image_set_filename (image, filename);
+        case PHOTOMETRIC_PALETTE:
+          image_type = GIMP_INDEXED;
+          layer_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+          break;
 
-  /* attach a parasite containing an ICC profile - if found in the TIFF file */
+        default:
+          worst_case = TRUE;
+          break;
+        }
+
+      if (worst_case)
+        {
+          image_type = GIMP_RGB;
+          layer_type = GIMP_RGBA_IMAGE;
+        }
+
+      if (!image)
+        {
+          if ((image = gimp_image_new (cols, rows, image_type)) == -1)
+            {
+              g_message ("Could not create a new image");
+              gimp_quit ();
+            }
+
+          gimp_image_undo_disable (image);
+          gimp_image_set_filename (image, filename);
+        }
+
+
+      /* attach a parasite containing an ICC profile - if found in the TIFF */
 
 #ifdef TIFFTAG_ICCPROFILE
-  /* If TIFFTAG_ICCPROFILE is defined we are dealing with a libtiff version
-   * that can handle ICC profiles. Otherwise just ignore this section. */
-  if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
-    {
-      parasite = gimp_parasite_new ("icc-profile", 0,
-                                    profile_size, icc_profile);
-      gimp_image_parasite_attach (image, parasite);
-      gimp_parasite_free (parasite);
-    }
+      /* If TIFFTAG_ICCPROFILE is defined we are dealing with a libtiff version
+       * that can handle ICC profiles. Otherwise just ignore this section. */
+      if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
+        {
+          parasite = gimp_parasite_new ("icc-profile", 0,
+                                        profile_size, icc_profile);
+          gimp_image_parasite_attach (image, parasite);
+          gimp_parasite_free (parasite);
+        }
 #endif
 
-  /* attach a parasite containing the compression */
-  if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
-    save_vals.compression = COMPRESSION_NONE;
-  else
-    save_vals.compression = tmp;
+      /* attach a parasite containing the compression */
+      if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
+        save_vals.compression = COMPRESSION_NONE;
+      else
+        save_vals.compression = tmp;
 
-  parasite = gimp_parasite_new ("tiff-save-options", 0,
-				sizeof (save_vals), &save_vals);
-  gimp_image_parasite_attach (image, parasite);
-  gimp_parasite_free (parasite);
+      parasite = gimp_parasite_new ("tiff-save-options", 0,
+                                    sizeof (save_vals), &save_vals);
+      gimp_image_parasite_attach (image, parasite);
+      gimp_parasite_free (parasite);
 
-  /* Attach a parasite containing the image description.  Pretend to
-   * be a gimp comment so other plugins will use this description as
-   * an image comment where appropriate. */
-  {
-    const gchar *img_desc;
-
-    if (TIFFGetField (tif, TIFFTAG_IMAGEDESCRIPTION, &img_desc) &&
-        g_utf8_validate (img_desc, -1, NULL))
+      /* Attach a parasite containing the image description.  Pretend to
+       * be a gimp comment so other plugins will use this description as
+       * an image comment where appropriate. */
       {
-        parasite = gimp_parasite_new ("gimp-comment",
-                                      GIMP_PARASITE_PERSISTENT,
-                                      strlen (img_desc) + 1, img_desc);
-        gimp_image_parasite_attach (image, parasite);
-        gimp_parasite_free (parasite);
-      }
-  }
+        const gchar *img_desc;
 
-  /* any resolution info in the file? */
-  {
-    gfloat   xres = 72.0, yres = 72.0;
-    gushort  read_unit;
-    GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
-
-    if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres))
-      {
-        if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres))
+        if (TIFFGetField (tif, TIFFTAG_IMAGEDESCRIPTION, &img_desc) &&
+            g_utf8_validate (img_desc, -1, NULL))
           {
+            parasite = gimp_parasite_new ("gimp-comment",
+                                          GIMP_PARASITE_PERSISTENT,
+                                          strlen (img_desc) + 1, img_desc);
+            gimp_image_parasite_attach (image, parasite);
+            gimp_parasite_free (parasite);
+          }
+      }
 
-            if (TIFFGetFieldDefaulted (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit))
+      /* any resolution info in the file? */
+      {
+        gfloat   xres = 72.0, yres = 72.0;
+        gushort  read_unit;
+        GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
+
+        if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres))
+          {
+            if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres))
               {
-                switch (read_unit)
+
+                if (TIFFGetFieldDefaulted (tif, TIFFTAG_RESOLUTIONUNIT,
+                                           &read_unit))
                   {
-                  case RESUNIT_NONE:
-                    /* ImageMagick writes files with this silly resunit */
-                    g_message ("Warning: resolution units meaningless");
-                    break;
+                    switch (read_unit)
+                      {
+                      case RESUNIT_NONE:
+                        /* ImageMagick writes files with this silly resunit */
+                        g_message ("Warning: resolution units meaningless");
+                        break;
 
-                  case RESUNIT_INCH:
-                    unit = GIMP_UNIT_INCH;
-                    break;
+                      case RESUNIT_INCH:
+                        unit = GIMP_UNIT_INCH;
+                        break;
 
-                  case RESUNIT_CENTIMETER:
-                    xres *= 2.54;
-                    yres *= 2.54;
-                    unit = GIMP_UNIT_MM; /* this is our default metric unit */
-                    break;
+                      case RESUNIT_CENTIMETER:
+                        xres *= 2.54;
+                        yres *= 2.54;
+                        unit = GIMP_UNIT_MM; /* this is our default metric unit */
+                        break;
 
-                  default:
-                    g_message ("File error: unknown resolution unit type %d, "
-                               "assuming dpi", read_unit);
-                    break;
+                      default:
+                        g_message ("File error: unknown resolution "
+                                   "unit type %d, assuming dpi", read_unit);
+                        break;
+                      }
+                  }
+                else
+                  { /* no res unit tag */
+                    /* old AppleScan software produces these */
+                    g_message ("Warning: resolution specified without "
+                               "any units tag, assuming dpi");
                   }
               }
             else
-              { /* no res unit tag */
-                /* old AppleScan software produces these */
-                g_message ("Warning: resolution specified without "
-                           "any units tag, assuming dpi");
+              { /* xres but no yres */
+                g_message ("Warning: no y resolution info, assuming same as x");
+                yres = xres;
+              }
+
+            /* now set the new image's resolution info */
+
+            /* If it is invalid, instead of forcing 72dpi, do not set the
+               resolution at all. Gimp will then use the default set by
+               the user */
+            if (read_unit != RESUNIT_NONE)
+              {
+                gimp_image_set_resolution (image, xres, yres);
+                if (unit != GIMP_UNIT_PIXEL)
+                  gimp_image_set_unit (image, unit);
               }
           }
-        else
-          { /* xres but no yres */
-            g_message ("Warning: no y resolution info, assuming same as x");
-            yres = xres;
-          }
 
-        /* now set the new image's resolution info */
+        /* no x res tag => we assume we have no resolution info, so we
+         * don't care.  Older versions of this plugin used to write files
+         * with no resolution tags at all. */
 
-        /* If it is invalid, instead of forcing 72dpi, do not set the resolution
-           at all. Gimp will then use the default set by the user */
-        if (read_unit != RESUNIT_NONE)
-          {
-            gimp_image_set_resolution (image, xres, yres);
-            if (unit != GIMP_UNIT_PIXEL)
-              gimp_image_set_unit (image, unit);
-          }
+        /* TODO: haven't caught the case where yres tag is present, but
+           not xres.  This is left as an exercise for the reader - they
+           should feel free to shoot the author of the broken program
+           that produced the damaged TIFF file in the first place. */
       }
 
-    /* no x res tag => we assume we have no resolution info, so we
-     * don't care.  Older versions of this plugin used to write files
-     * with no resolution tags at all. */
-
-    /* TODO: haven't caught the case where yres tag is present, but
-       not xres.  This is left as an exercise for the reader - they
-       should feel free to shoot the author of the broken program
-       that produced the damaged TIFF file in the first place. */
-  }
-
-  /* Install colormap for INDEXED images only */
-  if (image_type == GIMP_INDEXED)
-    {
-      if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap))
-	{
-	  g_message ("Could not get colormaps from '%s'", filename);
-	  gimp_quit ();
-	}
-
-      for (i = 0, j = 0; i < (1 << bps); i++)
-	{
-	  cmap[j++] = redmap[i] >> 8;
-	  cmap[j++] = greenmap[i] >> 8;
-	  cmap[j++] = bluemap[i] >> 8;
-	}
-      gimp_image_set_cmap (image, cmap, (1 << bps));
-    }
-
-  /* Allocate channel_data for all channels, even the background layer */
-  channel = g_new (channel_data, extra + 1);
-  layer = gimp_layer_new (image, _("Background"),
-			  cols, rows, layer_type, 100, GIMP_NORMAL_MODE);
-  channel[0].ID= layer;
-  gimp_image_add_layer (image, layer, 0);
-  channel[0].drawable= gimp_drawable_get(layer);
-
-  if (extra > 0 && !worst_case)
-    {
-      /* Add alpha channels as appropriate */
-      for (i = 1; i <= extra; ++i)
+      /* Install colormap for INDEXED images only */
+      if (image_type == GIMP_INDEXED)
         {
-          channel[i].ID= gimp_channel_new (image, _("TIFF Channel"), cols, rows,
-                                           100.0, &color);
-          gimp_image_add_channel(image, channel[i].ID, 0);
-          channel[i].drawable= gimp_drawable_get (channel[i].ID);
-        }
-    }
+          if (!TIFFGetField (tif, TIFFTAG_COLORMAP,
+                             &redmap, &greenmap, &bluemap))
+            {
+              g_message ("Could not get colormaps from '%s'", filename);
+              gimp_quit ();
+            }
 
-  if (bps == 16)
-    g_message (_("Warning:\n"
-		 "The image you are loading has 16 bits per channel. GIMP "
-		 "can only handle 8 bit, so it will be converted for you. "
-		 "Information will be lost because of this conversion."));
-
-  if (worst_case)
-    {
-      load_rgba (tif, channel);
-    }
-  else if (TIFFIsTiled(tif))
-    {
-      load_tiles (tif, channel, bps, photomet, alpha, extra);
-    }
-  else
-    { /* Load scanlines in tile_height chunks */
-      load_lines (tif, channel, bps, photomet, alpha, extra);
-    }
-
-  if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
-    {
-      switch (orientation)
-        {
-        case ORIENTATION_TOPLEFT:
-          flip_horizontal = FALSE;
-          flip_vertical   = FALSE;
-          break;
-        case ORIENTATION_TOPRIGHT:
-          flip_horizontal = TRUE;
-          flip_vertical   = FALSE;
-          break;
-        case ORIENTATION_BOTRIGHT:
-          flip_horizontal = TRUE;
-          flip_vertical   = TRUE;
-          break;
-        case ORIENTATION_BOTLEFT:
-          flip_horizontal = FALSE;
-          flip_vertical   = TRUE;
-          break;
-        default:
-          flip_horizontal = FALSE;
-          flip_vertical   = FALSE;
-          g_warning ("Orientation %d not handled yet!", orientation);
-          break;
+          for (i = 0, j = 0; i < (1 << bps); i++)
+            {
+              cmap[j++] = redmap[i] >> 8;
+              cmap[j++] = greenmap[i] >> 8;
+              cmap[j++] = bluemap[i] >> 8;
+            }
+          gimp_image_set_cmap (image, cmap, (1 << bps));
         }
 
-      if (flip_horizontal || flip_vertical)
-        gimp_image_undo_disable (image);
+      /* Allocate channel_data for all channels, even the background layer */
+      channel = g_new0 (channel_data, extra + 1);
 
-      if (flip_horizontal)
-        gimp_flip (layer, GIMP_ORIENTATION_HORIZONTAL);
+      if (ilayer == 0)
+        name = g_strdup (_("Background"));
+      else
+        name = g_strdup_printf (_("Page %d"), ilayer);
 
-      if (flip_vertical)
-        gimp_flip (layer, GIMP_ORIENTATION_VERTICAL);
+      layer = gimp_layer_new (image, name,
+                              cols, rows, layer_type, 100, GIMP_NORMAL_MODE);
+      g_free (name);
 
-      if (flip_horizontal || flip_vertical)
-        gimp_image_undo_enable (image);
+      channel[0].ID       = layer;
+      channel[0].drawable = gimp_drawable_get (layer);
+
+      if (extra > 0 && !worst_case)
+        {
+          /* Add alpha channels as appropriate */
+          for (i = 1; i <= extra; ++i)
+            {
+              channel[i].ID = gimp_channel_new (image, _("TIFF Channel"),
+                                                cols, rows,
+                                                100.0, &color);
+              gimp_image_add_channel (image, channel[i].ID, 0);
+              channel[i].drawable = gimp_drawable_get (channel[i].ID);
+            }
+        }
+
+      if (bps == 16)
+        g_message (_("Warning:\n"
+                     "The image you are loading has 16 bits per channel. GIMP "
+                     "can only handle 8 bit, so it will be converted for you. "
+                     "Information will be lost because of this conversion."));
+
+      if (worst_case)
+        {
+          load_rgba (tif, channel);
+        }
+      else if (TIFFIsTiled(tif))
+        {
+          load_tiles (tif, channel, bps, photomet, alpha, extra);
+        }
+      else
+        { /* Load scanlines in tile_height chunks */
+          load_lines (tif, channel, bps, photomet, alpha, extra);
+        }
+
+      if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
+        {
+          switch (orientation)
+            {
+            case ORIENTATION_TOPLEFT:
+              flip_horizontal = FALSE;
+              flip_vertical   = FALSE;
+              break;
+            case ORIENTATION_TOPRIGHT:
+              flip_horizontal = TRUE;
+              flip_vertical   = FALSE;
+              break;
+            case ORIENTATION_BOTRIGHT:
+              flip_horizontal = TRUE;
+              flip_vertical   = TRUE;
+              break;
+            case ORIENTATION_BOTLEFT:
+              flip_horizontal = FALSE;
+              flip_vertical   = TRUE;
+              break;
+            default:
+              flip_horizontal = FALSE;
+              flip_vertical   = FALSE;
+              g_warning ("Orientation %d not handled yet!", orientation);
+              break;
+            }
+
+          if (flip_horizontal)
+            gimp_flip (layer, GIMP_ORIENTATION_HORIZONTAL);
+
+          if (flip_vertical)
+            gimp_flip (layer, GIMP_ORIENTATION_VERTICAL);
+        }
+
+      gimp_drawable_flush (channel[0].drawable);
+      gimp_drawable_detach (channel[0].drawable);
+
+      for (i = 1; !worst_case && i < extra; ++i)
+        {
+          gimp_drawable_flush (channel[i].drawable);
+          gimp_drawable_detach (channel[i].drawable);
+        }
+
+      g_free (channel);
+      channel = NULL;
+
+      if (ilayer > 0 && !alpha)
+        gimp_layer_add_alpha (layer);
+
+      gimp_image_add_layer (image, layer, -1);
+      ilayer++;
     }
+  while (TIFFReadDirectory (tif));
 
-  for (i = 0; !worst_case && i < extra; ++i)
-    {
-      gimp_drawable_flush (channel[i].drawable);
-      gimp_drawable_detach (channel[i].drawable);
-    }
+  gimp_image_undo_enable (image);
 
   return image;
 }
@@ -780,12 +816,12 @@ load_rgba (TIFF         *tif,
 }
 
 static void
-load_tiles (TIFF           *tif,
-            channel_data   *channel,
-            unsigned short  bps,
-            unsigned short  photomet,
-            int             alpha,
-            int             extra)
+load_tiles (TIFF         *tif,
+            channel_data *channel,
+            gushort       bps,
+            gushort       photomet,
+            gboolean      alpha,
+            gint          extra)
 {
   uint16  planar= PLANARCONFIG_CONTIG;
   uint32  imageWidth, imageLength;
@@ -849,12 +885,12 @@ load_tiles (TIFF           *tif,
 }
 
 static void
-load_lines (TIFF           *tif,
-            channel_data   *channel,
-	    unsigned short  bps,
-            unsigned short  photomet,
-	    int             alpha,
-            int             extra)
+load_lines (TIFF         *tif,
+            channel_data *channel,
+	    gushort       bps,
+            gushort       photomet,
+	    gboolean      alpha,
+            gint          extra)
 {
   uint16  planar= PLANARCONFIG_CONTIG;
   uint32  imageLength, lineSize, cols, rows;
@@ -940,7 +976,7 @@ read_16bit (guchar       *source,
 	    gint          startcol,
 	    gint          rows,
 	    gint          cols,
-	    gint          alpha,
+	    gboolean      alpha,
             gint          extra,
             gint          align)
 {
@@ -1086,7 +1122,7 @@ read_8bit (guchar       *source,
 	   gint          startcol,
 	   gint          rows,
 	   gint          cols,
-	   gint          alpha,
+	   gboolean      alpha,
 	   gint          extra,
 	   gint          align)
 {
@@ -1150,7 +1186,8 @@ read_8bit (guchar       *source,
 
             case PHOTOMETRIC_PALETTE:
               *dest++= *source++;
-              if (alpha) *dest++= *source++;
+              if (alpha)
+                *dest++= *source++;
               break;
 
             case PHOTOMETRIC_RGB:
@@ -1238,7 +1275,7 @@ read_default (guchar       *source,
 	      gint          startcol,
 	      gint          rows,
 	      gint          cols,
-	      gint          alpha,
+	      gboolean      alpha,
 	      gint          extra,
               gint          align)
 {
@@ -1390,7 +1427,7 @@ read_separate (guchar       *source,
 	       gint          startcol,
 	       gint          rows,
 	       gint          cols,
-               gint          alpha,
+               gboolean      alpha,
 	       gint          extra,
 	       gint          sample)
 {
@@ -1471,7 +1508,7 @@ save_image (const gchar *filename,
   glong          rowsperstrip;
   gushort        compression;
   gushort        extra_samples[1];
-  gint           alpha;
+  gboolean       alpha;
   gshort         predictor;
   gshort         photometric;
   gshort         samplesperpixel;
@@ -1481,9 +1518,9 @@ save_image (const gchar *filename,
   guchar        *cmap;
   gint           colors;
   gint           success;
-  GimpDrawable     *drawable;
+  GimpDrawable  *drawable;
   GimpImageType  drawable_type;
-  GimpPixelRgn      pixel_rgn;
+  GimpPixelRgn   pixel_rgn;
   gint           tile_height;
   gint           y, yend;
   gchar         *name;
@@ -1527,41 +1564,41 @@ save_image (const gchar *filename,
   switch (drawable_type)
     {
     case GIMP_RGB_IMAGE:
-      predictor = 2;
+      predictor       = 2;
       samplesperpixel = 3;
-      bitspersample = 8;
-      photometric = PHOTOMETRIC_RGB;
-      bytesperrow = cols * 3;
-      alpha = 0;
+      bitspersample   = 8;
+      photometric     = PHOTOMETRIC_RGB;
+      bytesperrow     = cols * 3;
+      alpha           = FALSE;
       break;
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
-      bitspersample = 8;
-      photometric = PHOTOMETRIC_MINISBLACK;
-      bytesperrow = cols;
-      alpha = 0;
+      bitspersample   = 8;
+      photometric     = PHOTOMETRIC_MINISBLACK;
+      bytesperrow     = cols;
+      alpha           = FALSE;
       break;
     case GIMP_RGBA_IMAGE:
-      predictor = 2;
+      predictor       = 2;
       samplesperpixel = 4;
-      bitspersample = 8;
-      photometric = PHOTOMETRIC_RGB;
-      bytesperrow = cols * 4;
-      alpha = 1;
+      bitspersample   = 8;
+      photometric     = PHOTOMETRIC_RGB;
+      bytesperrow     = cols * 4;
+      alpha           = TRUE;
       break;
     case GIMP_GRAYA_IMAGE:
       samplesperpixel = 2;
-      bitspersample = 8;
-      photometric = PHOTOMETRIC_MINISBLACK;
-      bytesperrow = cols * 2;
-      alpha = 1;
+      bitspersample   = 8;
+      photometric     = PHOTOMETRIC_MINISBLACK;
+      bytesperrow     = cols * 2;
+      alpha           = TRUE;
       break;
     case GIMP_INDEXED_IMAGE:
       samplesperpixel = 1;
-      bitspersample = 8;
-      photometric = PHOTOMETRIC_PALETTE;
-      bytesperrow = cols;
-      alpha = 0;
+      bitspersample   = 8;
+      photometric     = PHOTOMETRIC_PALETTE;
+      bytesperrow     = cols;
+      alpha           = FALSE;
 
       cmap = gimp_image_get_cmap (image, &colors);
 
@@ -1585,13 +1622,15 @@ save_image (const gchar *filename,
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
   TIFFSetField (tif, TIFFTAG_COMPRESSION, compression);
   if ((compression == COMPRESSION_LZW || compression == COMPRESSION_DEFLATE)
-     && (predictor != 0)) {
-    TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
-  }
-  if (alpha) {
+     && (predictor != 0))
+    {
+      TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
+    }
+  if (alpha)
+    {
       extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
-  }
+    }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
   TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
@@ -1834,12 +1873,8 @@ static void
 comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  const gchar *text;
-
-  text = gtk_entry_get_text (GTK_ENTRY (widget));
+  const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
 
   g_free (image_comment);
   image_comment = g_strdup (text);
-
-  /* g_print ("COMMENT: %s\n", image_comment); */
 }

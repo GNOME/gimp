@@ -1,3 +1,9 @@
+2003-12-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c: applied a modified version of a patch
+	submitted by Andrey Kiselev. Implements loading of TIFF files with
+	multiple pages (bug #66886).
+
 2003-12-02  Jakub Steiner <jimmac@ximian.com>
 
 	* data/patterns/Makefile.am
