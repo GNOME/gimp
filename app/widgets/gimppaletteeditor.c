@@ -49,8 +49,8 @@
 #include "palette_select.h"
 #include "dialog_handler.h"
 
-#include "tools/zoom_in.xpm"
-#include "tools/zoom_out.xpm"
+#include "pixmaps/zoom_in.xpm"
+#include "pixmaps/zoom_out.xpm"
 
 #include "libgimp/gimpintl.h"
 

@@ -15,7 +15,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	chain.xpm		\
 	gimpfeatures.h.in	\
 	makefile.msc		\
 	gimp.def		\

@@ -37,13 +37,13 @@
 #include "paint_funcs.h"
 #include "palette.h"
 
-#include "tools/eye.xbm"
-#include "tools/channel.xbm"
-#include "tools/new.xpm"
-#include "tools/raise.xpm"
-#include "tools/lower.xpm"
-#include "tools/duplicate.xpm"
-#include "tools/delete.xpm"
+#include "pixmaps/eye.xbm"
+#include "pixmaps/channel.xbm"
+#include "pixmaps/new.xpm"
+#include "pixmaps/raise.xpm"
+#include "pixmaps/lower.xpm"
+#include "pixmaps/duplicate.xpm"
+#include "pixmaps/delete.xpm"
 
 #include "libgimp/gimpintl.h"
 

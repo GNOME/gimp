@@ -48,17 +48,17 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "tools/eye.xbm"
-#include "tools/linked.xbm"
-#include "tools/layer.xbm"
-#include "tools/mask.xbm"
+#include "pixmaps/eye.xbm"
+#include "pixmaps/linked.xbm"
+#include "pixmaps/layer.xbm"
+#include "pixmaps/mask.xbm"
 
-#include "tools/new.xpm"
-#include "tools/raise.xpm"
-#include "tools/lower.xpm"
-#include "tools/duplicate.xpm"
-#include "tools/delete.xpm"
-#include "tools/anchor.xpm"
+#include "pixmaps/new.xpm"
+#include "pixmaps/raise.xpm"
+#include "pixmaps/lower.xpm"
+#include "pixmaps/duplicate.xpm"
+#include "pixmaps/delete.xpm"
+#include "pixmaps/anchor.xpm"
 
 #include "layer_pvt.h"
 

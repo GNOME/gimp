@@ -18,7 +18,8 @@
  */
 
 #include "gimpchainbutton.h"
-#include "chain.xpm"
+
+#include "pixmaps/chain.xpm"
 
 static char **gimp_chain_xpm[] = {
   chain_hor_xpm,

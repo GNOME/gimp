@@ -53,16 +53,16 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "tools/new.xpm"
-#include "tools/duplicate.xpm"
-#include "tools/delete.xpm"
-#include "tools/pennorm.xpm"
-#include "tools/penadd.xpm"
-#include "tools/pendel.xpm"
-#include "tools/penedit.xpm"
-#include "tools/penstroke.xpm"
-#include "tools/ptoselection.xpm"
-#include "tools/path.xbm"
+#include "pixmaps/new.xpm"
+#include "pixmaps/duplicate.xpm"
+#include "pixmaps/delete.xpm"
+#include "pixmaps/pennorm.xpm"
+#include "pixmaps/penadd.xpm"
+#include "pixmaps/pendel.xpm"
+#include "pixmaps/penedit.xpm"
+#include "pixmaps/penstroke.xpm"
+#include "pixmaps/ptoselection.xpm"
+#include "pixmaps/path.xbm"
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 

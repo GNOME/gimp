@@ -1,4 +1,22 @@
+1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+        Moved all pixmaps and bitmaps from app/ and libgimp/ to pixmaps/
+
+	* app/tools/*
+	* libgimp/chain.xpm: removed these files
+
+	* pixmaps/*.[xpm|xbm]: new directory containing all pixmaps
+
+	* app/Makefile.am
+	* libgimp/Makefile.am
+	* Makefile.am: changed list of EXTRA_DIST files accordingly
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/paths_dialog.c
+	* app/palette.c
+	* libgimp/gimpchainbutton.c: adjusted some #include's
+	
 Fri Mar 12 21:30:57 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

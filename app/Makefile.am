@@ -356,26 +356,6 @@ gimp_SOURCES = \
 	xcf.h
 
 EXTRA_DIST = \
-	tools/anchor.xpm	\
-	tools/channel.xbm	\
-	tools/delete.xpm	\
-	tools/duplicate.xpm	\
-	tools/eye.xbm		\
-	tools/layer.xbm		\
-	tools/linked.xbm	\
-	tools/lower.xpm		\
-	tools/mask.xbm		\
-	tools/new.xpm		\
-	tools/raise.xpm		\
-	tools/paths.xbm		\
-	tools/penadd.xpm	\
-	tools/pendel.xpm	\
-	tools/penedit.xpm	\
-	tools/pennorm.xpm	\
-	tools/penstroke.xpm	\
-	tools/ptoselection.xpm	\
-	tools/zoom_in.xpm	\
-	tools/zoom_out.xpm	\
 	makefile.msc		\
 	gimp.def		\
 	gimp.rc			\
