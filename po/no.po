@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-09-04 22:32+0200\n"
+"POT-Creation-Date: 2000-10-15 12:01+0200\n"
+"PO-Revision-Date: 2000-10-15 12:04+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -500,7 +500,7 @@ msgstr "Forskyvning X:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1203,7 +1203,7 @@ msgid "New Image"
 msgstr "Nytt bilde"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "Piksler"
 
@@ -1574,11 +1574,8 @@ msgid "Brush pipes should have at least one brush."
 msgstr "Rør av pensler må ha minst en pensel."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"Klarte ikke å laste en av\n"
-"penselene i penselrøret."
+msgstr "Klarte ikke å laste en av penselene i penselrøret."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
@@ -4154,24 +4151,24 @@ msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Ukjent GIMP versjon #%d i \"%s\"\n"
+msgstr "Ukjent GIMP mønster versjon #%d i \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Feil i GIMP mønsterfil...avbryter."
+msgstr "Feil i GIMP mønsterfil \"%s\""
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "GIMP mønsterfil ser ut til å være kuttet."
+msgstr "GIMP mønsterfil \"%s\" ser ut til å være avkuttet."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Feil under åpning av fil: %s\n"
+msgstr "Feil under lesing av mønster \"%s\""
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4626,7 +4623,7 @@ msgstr "Konservativt minnebruk"
 msgid "Levels of Undo:"
 msgstr "Angrenivåer:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Størrelse på flisbuffer:"
 
@@ -4719,7 +4716,7 @@ msgstr "Hent oppløsning for monitor"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Den er nå %d x %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "Kalibrer"
 
@@ -4747,7 +4744,7 @@ msgstr "Velg temp-katalog"
 msgid "Swap Dir:"
 msgstr "Swap-katalog:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Velg swap-katalog"
 
@@ -6255,7 +6252,7 @@ msgstr " eksisterer ikke.  Kan ikke installere."
 msgid "has invalid permissions.  Cannot install."
 msgstr "har ugyldige rettigheter. Kan ikke installere."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6265,7 +6262,7 @@ msgstr ""
 "Hvis ikke var installasjonen vellykket! \n"
 "Ellers, avslutt og prøv å finne den mulige grunnen..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6275,26 +6272,25 @@ msgstr ""
 "Hvis ikke var installasjonen vellykket! \n"
 "Ellers, avslutt og prøv å finne den mulige grunnen..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Klikk \"Fortsett\" for å fullføre GIMP installasjonen."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installasjonen feilet.  Kontakt systemadministratoren."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP bruker en begrenset mengde med minne for å lagre bildedata, den "
-"såkalte\n"
-"\"Tile cachen\". Du bør justere størrelsen på denne så den passer i minnet.\n"
+"GIMP bruker en begrenset mengde med minne for å lagre bildedata, såkalt\n"
+"\"Tile cache\". Du bør justere størrelsen på denne så den passer i minnet.\n"
 "Ta i betraktning mengden minne som brukes av andre prosesser."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6306,11 +6302,11 @@ msgstr ""
 "tilstrekkelig plass (flere hundre MB). På et UNIX system, vil du \n"
 "kanskje bruke systemets temp katalog. (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Swap-katalog:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6318,20 +6314,20 @@ msgstr ""
 "GIMP kan hente denne informasjonen fra ditt vindussystem.\n"
 "Dette gir likevel vanligvis ikke brukbare verdier."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Hent oppløsning fra vindussystemet (Den er nå %d x %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du sette monitoroppløsninen manuelt."
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Oppløsning for skjerm X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6401,6 +6397,3 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "Lasting av mønster feilet"
