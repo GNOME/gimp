@@ -125,7 +125,7 @@ gimp_measure_tool_register (void)
                               FALSE,
 			      "gimp:measure_tool",
 			      _("Measure Tool"),
-			      _("Measure angles and legnths"),
+			      _("Measure angles and lengths"),
 			      N_("/Tools/Measure"), NULL,
 			      NULL, "tools/measure.html",
 			      (const gchar **) measure_bits);
