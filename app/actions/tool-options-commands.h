@@ -29,6 +29,9 @@ void   tool_options_save_new_cmd_callback     (GtkWidget *widget,
 void   tool_options_restore_from_cmd_callback (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
+void   tool_options_rename_saved_cmd_callback (GtkWidget *widget,
+                                               gpointer   data,
+                                               guint      action);
 void   tool_options_delete_saved_cmd_callback (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);

@@ -272,7 +272,7 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
   if (menu)
     gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
                     gimp_tool_options_editor_menu_pos, button,
-                    1, GDK_CURRENT_TIME);
+                    0, GDK_CURRENT_TIME);
 }
 
 static void

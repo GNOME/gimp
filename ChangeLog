@@ -1,5 +1,20 @@
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/tool-options-menu.c: added a "Rename Saved Options"
+	submenu and factored on-the-fly submenu creation out to a utility
+	function.
+
+	* app/gui/tool-options-commands.[ch]: added rename callback.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_TOOL_OPTIONS_RENAME.
+
+	* app/widgets/gimptooloptionseditor.c
+	(gimp_tool_options_editor_menu_popup): pass "button = 0" to
+	gtk_menu_popup() because we show the menu on button_release, not
+	on button_press.
+
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpscanconvert.[ch]: removed "width", "height" and
 	"antialias" from the GimpScanConvert struct and from
 	gimp_scan_convert_new(). Removed gimp_scan_convert_to_channel().

@@ -46,9 +46,12 @@
 
 /*  local function prototypes  */
 
-static void   tool_options_save_callback (GtkWidget   *widget,
-                                          const gchar *name,
-                                          gpointer     data);
+static void   tool_options_save_callback   (GtkWidget   *widget,
+                                            const gchar *name,
+                                            gpointer     data);
+static void   tool_options_rename_callback (GtkWidget   *widget,
+                                            const gchar *name,
+                                            gpointer     data);
 
 
 /*  public functions  */
@@ -98,6 +101,24 @@ tool_options_restore_from_cmd_callback (GtkWidget *widget,
 
   gimp_config_copy_properties (G_OBJECT (options),
                                G_OBJECT (options->tool_info->tool_options));
+}
+
+void
+tool_options_rename_saved_cmd_callback (GtkWidget *widget,
+                                        gpointer   data,
+                                        guint      action)
+{
+  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
+  GtkWidget       *qbox;
+
+  qbox = gimp_query_string_box (_("Rename Save Tool Options"),
+				gimp_standard_help_func,
+				GIMP_HELP_TOOL_OPTIONS_DIALOG,
+				_("Enter a new name for the saved options"),
+				GIMP_OBJECT (options)->name,
+				NULL, NULL,
+				tool_options_rename_callback, options);
+  gtk_widget_show (qbox);
 }
 
 void
@@ -156,4 +177,19 @@ tool_options_save_callback (GtkWidget   *widget,
 
   gimp_container_insert (tool_info->options_presets, GIMP_OBJECT (copy), -1);
   g_object_unref (copy);
+}
+
+static void
+tool_options_rename_callback (GtkWidget   *widget,
+                              const gchar *name,
+                              gpointer     data)
+{
+  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
+
+  if (! name || ! strlen (name))
+    name = _("Saved Options");
+
+  gimp_object_set_name (GIMP_OBJECT (options), name);
+  gimp_list_uniquefy_name (GIMP_LIST (options->tool_info->options_presets),
+                           GIMP_OBJECT (options), TRUE);
 }
