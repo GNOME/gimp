@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.25\n"
 "POT-Creation-Date: 2000-08-13 16:04+0900\n"
-"PO-Revision-Date: 2000-08-13 16:04+09:00\n"
+"PO-Revision-Date: 2000-08-20 00:41+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -793,7 +793,7 @@ msgstr "なし"
 
 #: app/commands.c:332
 msgid "Feather Selection"
-msgstr "領域選択をぼかす"
+msgstr "選択領域をぼかす"
 
 #: app/commands.c:335
 msgid "Feather Selection by:"
@@ -1498,7 +1498,7 @@ msgstr "選択領域が空なのでカット/コピーは行えません."
 
 #: app/gimage_mask.c:346
 msgid "Float Selection: No selection to float."
-msgstr "フローティング選択: フロート化するための選択領域がありません."
+msgstr "フローティング選択領域: フロート化するための選択領域がありません."
 
 #: app/gimage_mask.c:358
 msgid "Floated Layer"
@@ -2710,7 +2710,7 @@ msgstr "空レイヤーコピー"
 
 #: app/layers_dialog.c:2169 app/layers_dialog.c:3326 app/layers_dialog.c:3693
 msgid "Floating Selection"
-msgstr "フローティング選択"
+msgstr "フローティング選択領域"
 
 #: app/layers_dialog.c:3476
 msgid "New Layer Options"
