@@ -27,8 +27,8 @@ INCLUDES = \
 
 LDADD = \
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

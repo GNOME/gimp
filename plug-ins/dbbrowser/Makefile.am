@@ -43,8 +43,8 @@ INCLUDES = \
 LDADD = \
 	libgimpprocbrowser.la	\
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

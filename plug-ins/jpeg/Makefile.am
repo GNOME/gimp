@@ -44,8 +44,8 @@ jpeg_SOURCES = \
 
 jpeg_LDADD = \
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

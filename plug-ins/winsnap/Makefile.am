@@ -32,8 +32,8 @@ INCLUDES = \
 LDADD = \
 	winsnap-win32res.o	\
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

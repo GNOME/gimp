@@ -53,8 +53,8 @@ endif
 LDADD = \
 	$(libgimpprocbrowser)	\
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

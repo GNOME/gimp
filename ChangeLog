@@ -1,5 +1,10 @@
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	added dependencies in wrong spot, fixed.  Same list of
+	files as for previous commit.
+	
+2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/Makefile.am
 	* plug-ins/FractalExplorer/Makefile.am
 	* plug-ins/Lighting/Makefile.am

@@ -46,8 +46,8 @@ gimpprocbrowsermodule_la_LDFLAGS = -module -avoid-version
 gimpprocbrowsermodule_la_LIBADD = \
 	$(libgimpprocbrowser)	\
 	$(libgimpui)		\
-	$(libgimpconfig)	\
 	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
