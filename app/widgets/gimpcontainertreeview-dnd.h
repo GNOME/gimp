@@ -39,15 +39,26 @@ gboolean gimp_container_tree_view_drag_drop   (GtkWidget             *widget,
                                                gint                   y,
                                                guint                  time,
                                                GimpContainerTreeView *view);
+void     gimp_container_tree_view_drag_data_received
+                                              (GtkWidget             *widget,
+                                               GdkDragContext        *context,
+                                               gint                   x,
+                                               gint                   y,
+                                               GtkSelectionData      *selection_data,
+                                               guint                  info,
+                                               guint                  time,
+                                               GimpContainerTreeView *view);
 
 gboolean
 gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
+                                             GimpDndType              src_type,
                                              GimpViewable            *src_viewable,
                                              GimpViewable            *dest_viewable,
                                              GtkTreeViewDropPosition  drop_pos,
-                                             GdkDragAction           *drag_action);
+                                             GtkTreeViewDropPosition *return_drop_pos,
+                                             GdkDragAction           *return_drag_action);
 void
-gimp_container_tree_view_real_drop          (GimpContainerTreeView   *tree_view,
+gimp_container_tree_view_real_drop_viewable (GimpContainerTreeView   *tree_view,
                                              GimpViewable            *src_viewable,
                                              GimpViewable            *dest_viewable,
                                              GtkTreeViewDropPosition  drop_pos);

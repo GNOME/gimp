@@ -155,7 +155,10 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   widget_class->popup_menu  = gimp_container_tree_view_popup_menu;
 
   klass->drop_possible      = gimp_container_tree_view_real_drop_possible;
-  klass->drop               = gimp_container_tree_view_real_drop;
+  klass->drop_viewable      = gimp_container_tree_view_real_drop_viewable;
+  klass->drop_color         = NULL;
+  klass->drop_files         = NULL;
+  klass->drop_svg           = NULL;
 }
 
 static void
@@ -273,6 +276,9 @@ gimp_container_tree_view_constructor (GType                  type,
                     tree_view);
   g_signal_connect (tree_view->view, "drag_drop",
                     G_CALLBACK (gimp_container_tree_view_drag_drop),
+                    tree_view);
+  g_signal_connect (tree_view->view, "drag_data_received",
+                    G_CALLBACK (gimp_container_tree_view_drag_data_received),
                     tree_view);
 
   return object;

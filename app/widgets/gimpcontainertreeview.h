@@ -73,12 +73,27 @@ struct _GimpContainerTreeViewClass
   GimpContainerBoxClass  parent_class;
 
   gboolean (* drop_possible) (GimpContainerTreeView   *tree_view,
+                              GimpDndType              src_type,
                               GimpViewable            *src_viewable,
                               GimpViewable            *dest_viewable,
                               GtkTreeViewDropPosition  drop_pos,
-                              GdkDragAction           *drag_action);
-  void     (* drop)          (GimpContainerTreeView   *tree_view,
+                              GtkTreeViewDropPosition *return_drop_pos,
+                              GdkDragAction           *return_drag_action);
+  void     (* drop_viewable) (GimpContainerTreeView   *tree_view,
                               GimpViewable            *src_viewable,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos);
+  void     (* drop_color)    (GimpContainerTreeView   *tree_view,
+                              const GimpRGB           *src_color,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos);
+  void     (* drop_files)    (GimpContainerTreeView   *tree_view,
+                              GList                   *files,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos);
+  void     (* drop_svg)      (GimpContainerTreeView   *tree_view,
+                              const gchar             *svg_data,
+                              gint                     svg_data_length,
                               GimpViewable            *dest_viewable,
                               GtkTreeViewDropPosition  drop_pos);
 };

@@ -1,5 +1,27 @@
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
+	Allow all sorts of things to be dropped on or in between the
+	items of a GimpContainerTreeView:
+
+	* app/widgets/gimpcontainertreeview.[ch]: added more parameters to
+	GimpContainerTreeView::drop_possible() to specify where ecactly
+	the drop should take place (between or into items) and to support
+	dropping all sorts of things.
+
+	Renamed ::drop() to ::drop_viewable() and added ::drop_color(),
+	::drop_files() and ::drop_svg(), which cover all possible drop
+	types.
+
+	* app/widgets/gimpcontainertreeview-dnd.[ch]: changed accordingly.
+	Dispatch all kinds of drops to the resp. virtual functions.
+
+	* app/widgets/gimpitemtreeview.c: changed accordingly.
+
+	* app/widgets/gimplayertreeview.c: allow to drop URIs, colors
+	and patterns to the layers dialog. Fixes bugs #119506 and #139246.
+
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.[ch] (file_open_layer): new utility function
 	which opens an image, flattens it if needed and returns the only
 	layer, converted for a passed destination image.

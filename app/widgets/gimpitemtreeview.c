@@ -112,11 +112,13 @@ static void   gimp_item_tree_view_context_item      (GimpContainerView *view,
                                                      gpointer           insert_data);
 
 static gboolean gimp_item_tree_view_drop_possible   (GimpContainerTreeView *view,
+                                                     GimpDndType        src_type,
                                                      GimpViewable      *src_viewable,
                                                      GimpViewable      *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos,
-                                                     GdkDragAction     *drag_action);
-static void     gimp_item_tree_view_drop            (GimpContainerTreeView *view,
+                                                     GtkTreeViewDropPosition *return_drop_pos,
+                                                     GdkDragAction     *return_drag_action);
+static void     gimp_item_tree_view_drop_viewable   (GimpContainerTreeView *view,
                                                      GimpViewable      *src_viewable,
                                                      GimpViewable      *dest_viewable,
                                                      GtkTreeViewDropPosition  drop_pos);
@@ -266,7 +268,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   gtk_object_class->destroy      = gimp_item_tree_view_destroy;
 
   tree_view_class->drop_possible = gimp_item_tree_view_drop_possible;
-  tree_view_class->drop          = gimp_item_tree_view_drop;
+  tree_view_class->drop_viewable = gimp_item_tree_view_drop_viewable;
 
   klass->set_image               = gimp_item_tree_view_real_set_image;
 
@@ -530,7 +532,7 @@ gimp_item_tree_view_constructor (GType                  type,
   gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (item_view), NULL);
 
   gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
-                                  GTK_DEST_DEFAULT_ALL,
+                                  GTK_DEST_DEFAULT_HIGHLIGHT,
                                   item_view->item_type,
                                   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
@@ -893,32 +895,40 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
 
 static gboolean
 gimp_item_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
+                                   GimpDndType              src_type,
                                    GimpViewable            *src_viewable,
                                    GimpViewable            *dest_viewable,
                                    GtkTreeViewDropPosition  drop_pos,
-                                   GdkDragAction           *drag_action)
+                                   GtkTreeViewDropPosition *return_drop_pos,
+                                   GdkDragAction           *return_drag_action)
 {
-  if (gimp_item_get_image (GIMP_ITEM (src_viewable)) !=
+  if (GIMP_IS_ITEM (src_viewable) &&
+      gimp_item_get_image (GIMP_ITEM (src_viewable)) !=
       gimp_item_get_image (GIMP_ITEM (dest_viewable)))
     {
-      if (drag_action)
-        *drag_action = GDK_ACTION_COPY;
+      if (return_drop_pos)
+        *return_drop_pos = drop_pos;
+
+      if (return_drag_action)
+        *return_drag_action = GDK_ACTION_COPY;
 
       return TRUE;
     }
 
   return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,
+                                                                       src_type,
                                                                        src_viewable,
                                                                        dest_viewable,
                                                                        drop_pos,
-                                                                       drag_action);
+                                                                       return_drop_pos,
+                                                                       return_drag_action);
 }
 
 static void
-gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
-                          GimpViewable            *src_viewable,
-                          GimpViewable            *dest_viewable,
-                          GtkTreeViewDropPosition  drop_pos)
+gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
+                                   GimpViewable            *src_viewable,
+                                   GimpViewable            *dest_viewable,
+                                   GtkTreeViewDropPosition  drop_pos)
 {
   GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (tree_view);
   GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);

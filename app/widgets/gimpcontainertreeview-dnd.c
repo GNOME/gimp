@@ -33,6 +33,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimppreviewrenderer.h"
+#include "gimpselectiondata.h"
 
 
 static gboolean
@@ -42,26 +43,53 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                                       gint                      y,
                                       guint                     time,
                                       GtkTreePath             **return_path,
+                                      GdkAtom                  *return_atom,
+                                      GimpDndType              *return_src_type,
                                       GimpViewable            **return_src,
                                       GimpViewable            **return_dest,
                                       GtkTreeViewDropPosition  *return_pos)
 {
-  GtkWidget    *src_widget;
-  GimpViewable *src_viewable;
-  GtkTreePath  *path;
+  GimpViewable  *src_viewable = NULL;
+  GtkTreePath   *path;
+  GtkTargetList *target_list;
+  GdkAtom        target_atom;
+  GimpDndType    src_type;
 
   if (! gimp_container_view_get_reorderable (GIMP_CONTAINER_VIEW (tree_view)))
     return FALSE;
 
-  src_widget = gtk_drag_get_source_widget (context);
-
-  if (! src_widget)
+  target_list = gtk_drag_dest_get_target_list (GTK_WIDGET (tree_view->view));
+  target_atom = gtk_drag_dest_find_target (GTK_WIDGET (tree_view->view),
+                                           context, target_list);
+  if (! gtk_target_list_find (target_list, target_atom, &src_type))
     return FALSE;
 
-  src_viewable = gimp_dnd_get_drag_data (src_widget);
+  switch (src_type)
+    {
+    case GIMP_DND_TYPE_URI_LIST:
+    case GIMP_DND_TYPE_TEXT_PLAIN:
+    case GIMP_DND_TYPE_NETSCAPE_URL:
+    case GIMP_DND_TYPE_COLOR:
+    case GIMP_DND_TYPE_SVG:
+    case GIMP_DND_TYPE_SVG_XML:
+      break;
 
-  if (! GIMP_IS_VIEWABLE (src_viewable))
-    return FALSE;
+    default:
+      {
+        GtkWidget *src_widget;
+
+        src_widget = gtk_drag_get_source_widget (context);
+
+        if (! src_widget)
+          return FALSE;
+
+        src_viewable = gimp_dnd_get_drag_data (src_widget);
+
+        if (! GIMP_IS_VIEWABLE (src_viewable))
+          return FALSE;
+      }
+      break;
+    }
 
   if (gtk_tree_view_get_path_at_pos (tree_view->view, x, y,
                                      &path, NULL, NULL, NULL))
@@ -81,19 +109,25 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
       dest_viewable = renderer->viewable;
 
+      g_object_unref (renderer);
+
       gtk_tree_view_get_cell_area (tree_view->view, path, NULL, &cell_area);
 
       if (y >= (cell_area.y + cell_area.height / 2))
-        drop_pos = GTK_TREE_VIEW_DROP_AFTER;
+        {
+          drop_pos = GTK_TREE_VIEW_DROP_AFTER;
+        }
       else
-        drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
-
-      g_object_unref (renderer);
+        {
+          drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
+        }
 
       if (GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view)->drop_possible (tree_view,
+                                                                         src_type,
                                                                          src_viewable,
                                                                          dest_viewable,
                                                                          drop_pos,
+                                                                         &drop_pos,
                                                                          &drag_action))
         {
           gdk_drag_status (context, drag_action, time);
@@ -102,6 +136,9 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
             *return_path = path;
           else
             gtk_tree_path_free (path);
+
+          if (return_atom)
+            *return_atom = target_atom;
 
           if (return_src)
             *return_src = src_viewable;
@@ -225,7 +262,8 @@ gimp_container_tree_view_drag_motion (GtkWidget             *widget,
 
   if (gimp_container_tree_view_drop_status (tree_view,
                                             context, x, y, time,
-                                            &path, NULL, NULL, &drop_pos))
+                                            &path, NULL, NULL, NULL, NULL,
+                                            &drop_pos))
     {
       gtk_tree_view_set_drag_dest_row (tree_view->view, path, drop_pos);
       gtk_tree_path_free (path);
@@ -246,8 +284,10 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
                                     guint                  time,
                                     GimpContainerTreeView *tree_view)
 {
+  GimpDndType              src_type;
   GimpViewable            *src_viewable;
   GimpViewable            *dest_viewable;
+  GdkAtom                  target;
   GtkTreeViewDropPosition  drop_pos;
 
   if (tree_view->scroll_timeout_id)
@@ -258,42 +298,149 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
 
   if (gimp_container_tree_view_drop_status (tree_view,
                                             context, x, y, time,
-                                            NULL, &src_viewable, &dest_viewable,
-                                            &drop_pos))
+                                            NULL, &target, &src_type,
+                                            &src_viewable,
+                                            &dest_viewable, &drop_pos))
     {
-      GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view)->drop (tree_view,
-                                                            src_viewable,
-                                                            dest_viewable,
-                                                            drop_pos);
+      GimpContainerTreeViewClass *tree_view_class;
+
+      tree_view_class = GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view);
+
+      if (src_viewable)
+        tree_view_class->drop_viewable (tree_view,
+                                        src_viewable,
+                                        dest_viewable,
+                                        drop_pos);
+      else
+        gtk_drag_get_data (widget, context, target, time);
 
       return TRUE;
     }
 
-  return TRUE;
+  return FALSE;
+}
+
+void
+gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
+                                             GdkDragContext        *context,
+                                             gint                   x,
+                                             gint                   y,
+                                             GtkSelectionData      *selection_data,
+                                             guint                  info,
+                                             guint                  time,
+                                             GimpContainerTreeView *tree_view)
+{
+  GimpViewable            *dest_viewable;
+  GtkTreeViewDropPosition  drop_pos;
+  gboolean                 success = FALSE;
+
+  if (gimp_container_tree_view_drop_status (tree_view,
+                                            context, x, y, time,
+                                            NULL, NULL, NULL, NULL,
+                                            &dest_viewable, &drop_pos))
+    {
+      GimpContainerTreeViewClass *tree_view_class;
+
+      tree_view_class = GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view);
+
+      switch (info)
+        {
+        case GIMP_DND_TYPE_URI_LIST:
+        case GIMP_DND_TYPE_TEXT_PLAIN:
+        case GIMP_DND_TYPE_NETSCAPE_URL:
+          if (tree_view_class->drop_files)
+            {
+              GList *uri_list;
+
+              uri_list = gimp_selection_data_get_uris (selection_data);
+
+              if (uri_list)
+                {
+                  tree_view_class->drop_files (tree_view, uri_list,
+                                               dest_viewable, drop_pos);
+
+                  g_list_foreach (uri_list, (GFunc) g_free, NULL);
+                  g_list_free (uri_list);
+
+                  success = TRUE;
+                }
+            }
+          break;
+
+        case GIMP_DND_TYPE_COLOR:
+          if (tree_view_class->drop_color)
+            {
+              GimpRGB color;
+
+              if (gimp_selection_data_get_color (selection_data, &color))
+                {
+                  tree_view_class->drop_color (tree_view, &color,
+                                               dest_viewable, drop_pos);
+
+                  success = TRUE;
+                }
+            }
+          break;
+
+        case GIMP_DND_TYPE_SVG:
+        case GIMP_DND_TYPE_SVG_XML:
+          if (tree_view_class->drop_svg)
+            {
+              gchar *svg_data;
+              gint   svg_data_length;
+
+              svg_data = gimp_selection_data_get_svg (selection_data,
+                                                      &svg_data_length);
+
+              if (svg_data)
+                {
+                  tree_view_class->drop_svg (tree_view,
+                                             svg_data, svg_data_length,
+                                             dest_viewable, drop_pos);
+
+                  g_free (svg_data);
+
+                  success = TRUE;
+                }
+            }
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  gtk_drag_finish (context, success, FALSE, time);
 }
 
 gboolean
 gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
+                                             GimpDndType              src_type,
                                              GimpViewable            *src_viewable,
                                              GimpViewable            *dest_viewable,
                                              GtkTreeViewDropPosition  drop_pos,
-                                             GdkDragAction           *drag_action)
+                                             GtkTreeViewDropPosition *return_drop_pos,
+                                             GdkDragAction           *return_drag_action)
 {
-  GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
-  GimpContainer     *container = gimp_container_view_get_container (view);
-  gint               src_index;
-  gint               dest_index;
+  GimpContainerView *view       = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainer     *container  = gimp_container_view_get_container (view);
+  gint               src_index  = -1;
+  gint               dest_index = -1;
 
-  if (src_viewable == dest_viewable)
-    return FALSE;
+  if (src_viewable && g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
+                                   container->children_type))
+    {
+      if (src_viewable == dest_viewable)
+        return FALSE;
 
-  src_index  = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (src_viewable));
-  dest_index = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (dest_viewable));
+      src_index  = gimp_container_get_child_index (container,
+                                                   GIMP_OBJECT (src_viewable));
+      dest_index = gimp_container_get_child_index (container,
+                                                   GIMP_OBJECT (dest_viewable));
 
-  if (src_index == -1 || dest_index == -1)
-    return FALSE;
+      if (src_index == -1 || dest_index == -1)
+        return FALSE;
+    }
 
   if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE)
     {
@@ -306,17 +453,26 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
         return FALSE;
     }
 
-  if (drag_action)
-    *drag_action = GDK_ACTION_MOVE;
+  if (return_drop_pos)
+    *return_drop_pos = drop_pos;
+
+  if (return_drag_action)
+    {
+      if (src_viewable && g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
+                                       container->children_type))
+        *return_drag_action = GDK_ACTION_MOVE;
+      else
+        *return_drag_action = GDK_ACTION_COPY;
+    }
 
   return TRUE;
 }
 
 void
-gimp_container_tree_view_real_drop (GimpContainerTreeView   *tree_view,
-                                    GimpViewable            *src_viewable,
-                                    GimpViewable            *dest_viewable,
-                                    GtkTreeViewDropPosition  drop_pos)
+gimp_container_tree_view_real_drop_viewable (GimpContainerTreeView   *tree_view,
+                                             GimpViewable            *src_viewable,
+                                             GimpViewable            *dest_viewable,
+                                             GtkTreeViewDropPosition  drop_pos)
 {
   GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
   GimpContainer     *container = gimp_container_view_get_container (view);
