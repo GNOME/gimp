@@ -1,5 +1,11 @@
 2005-01-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c (pressure_options_gui): added a
+	toggle to control whether pressure affects opacity of the Airbrush
+	tool (bug #164237).
+
+2005-01-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpdisplayconfig.[ch]
 	* app/dialogs/preferences-dialog.c: also list the default image
 	title and statusbar formats.

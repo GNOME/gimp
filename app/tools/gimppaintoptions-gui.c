@@ -227,11 +227,10 @@ pressure_options_gui (GimpPressureOptions *pressure,
     }
 
   /*  the opacity toggle  */
-  if (tool_type == GIMP_TYPE_CLONE_TOOL      ||
-      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
-      tool_type == GIMP_TYPE_ERASER_TOOL     ||
-      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
-      tool_type == GIMP_TYPE_PENCIL_TOOL)
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
+      tool_type == GIMP_TYPE_ERASER_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-opacity",
                                            _("Opacity"));
@@ -265,13 +264,13 @@ pressure_options_gui (GimpPressureOptions *pressure,
     }
 
   /*  the size toggle  */
-  if ((g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-       tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-       tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
-       tool_type == GIMP_TYPE_ERASER_TOOL)
-      &&
-      ! g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
+  if (
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-size",
                                            _("Size"));
@@ -280,7 +279,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
     }
 
   /* the inverse size toggle */
-  if (g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
     {
       button = gimp_prop_check_button_new (config, "pressure-inverse-size",
                                            _("Size"));
