@@ -553,6 +553,7 @@ static void
 file_prefs_clear_window_positions_callback (GtkWidget *widget,
 					    gpointer data)
 {
+  g_list_free (session_geometry_updates);
   session_geometry_updates = NULL;
 }
 
