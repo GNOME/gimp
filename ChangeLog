@@ -1,3 +1,9 @@
+Sat Feb 27 23:25:55 EST 1999 Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/script-fu/scripts/xach-effect.scm: removed
+	some old dead code that was keeping it from working. 
+	Now xach's name is untarnished again.
+
 Sat Feb 27 18:07:53 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/scale.c: use image's units, not the ruler units, when
