@@ -558,12 +558,13 @@ pygimp_gradients_set_gradient(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
 {
-    int num, i, j;
+    int num, reverse = FALSE;
+    int i, j;
     double *samp;
     PyObject *ret;
-    if (!PyArg_ParseTuple(args, "i:gradients_sample_uniform", &num))
+    if (!PyArg_ParseTuple(args, "i|i:gradients_sample_uniform", &num, &reverse))
 	return NULL;
-    samp = gimp_gradients_sample_uniform(num);
+    samp = gimp_gradients_sample_uniform(num, reverse);
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)
 	PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
@@ -575,10 +576,11 @@ pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
 {
-    int num, i, j;
+    int num, reverse = FALSE;
+    int i, j;
     double *pos, *samp;
     PyObject *ret, *item;
-    if (!PyArg_ParseTuple(args, "O:gradients_sample_custom", &ret))
+    if (!PyArg_ParseTuple(args, "O|i:gradients_sample_custom", &ret, &reverse))
 	return NULL;
     if (!PySequence_Check(ret)) {
 	PyErr_SetString(PyExc_TypeError,
@@ -597,7 +599,7 @@ pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
 	}
 	pos[i] = PyFloat_AsDouble(item);
     }
-    samp = gimp_gradients_sample_custom(num, pos);
+    samp = gimp_gradients_sample_custom(num, pos, reverse);
     g_free(pos);
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)

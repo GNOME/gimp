@@ -1,3 +1,8 @@
+2003-08-18  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c: updated for new gradient sample API,
+	"reverse" is an optional parameter which defaults to FALSE.
+
 2003-08-18  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/dialogs-menu.c: please the compiler.
