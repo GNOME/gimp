@@ -1,3 +1,7 @@
+Sat Apr 22 16:48:33 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* gimp.m4: $GIMP_DATA_DIR and $GIMP_PLUGIN_DIR support
+
 Sat Apr 22 12:37:24 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.20 release (1.2pre)
