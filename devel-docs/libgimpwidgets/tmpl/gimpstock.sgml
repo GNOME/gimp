@@ -6,10 +6,10 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-GIMP registers a set of menu/toolbar items and corresponding icons in addition
-to the standard GTK+ stock items. These can be used just like GTK+ stock
-items. GIMP also overrides a few of the GTK+ icons (namely the ones in dialog
-size).
+GIMP registers a set of menu/toolbar items and corresponding icons in
+addition to the standard GTK+ stock items. These can be used just like
+GTK+ stock items. GIMP also overrides a few of the GTK+ icons (namely
+the ones in dialog size).
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -59,9 +59,16 @@ size).
 
 
 
-<!-- ##### MACRO GIMP_STOCK_MENU ##### -->
+<!-- ##### MACRO GIMP_STOCK_MENU_LEFT ##### -->
 <para>
-<inlinegraphic fileref="stock-menu-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_MENU_RIGHT ##### -->
+<para>
+<inlinegraphic fileref="stock-menu-right-12.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -1147,6 +1154,3 @@ size).
 <para>
 <inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
 </para>
-
-
-

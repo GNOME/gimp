@@ -180,7 +180,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_QMASK_ON             "gimp-qmask-on"
 
 #define GIMP_STOCK_CLOSE                "gimp-close"
-#define GIMP_STOCK_MENU                 "gimp-menu"
+#define GIMP_STOCK_MENU_LEFT            "gimp-menu-left"
+#define GIMP_STOCK_MENU_RIGHT           "gimp-menu-right"
 #define GIMP_STOCK_DEFAULT_COLORS       "gimp-default-colors"
 #define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
 

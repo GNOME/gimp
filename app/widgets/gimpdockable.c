@@ -158,7 +158,7 @@ gimp_dockable_init (GimpDockable *dockable)
   gtk_widget_set_parent (dockable->menu_button, GTK_WIDGET (dockable));
   gtk_button_set_relief (GTK_BUTTON (dockable->menu_button), GTK_RELIEF_NONE);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_MENU, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockable->menu_button), image);
   gtk_widget_show (image);
 

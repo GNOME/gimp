@@ -40,15 +40,22 @@ static GtkIconFactory *gimp_stock_factory = NULL;
 
 
 static void
-icon_set_from_inline (GtkIconSet   *set,
-                      const guchar *inline_data,
-                      GtkIconSize   size,
-                      gboolean      fallback)
+icon_set_from_inline (GtkIconSet       *set,
+                      const guchar     *inline_data,
+                      GtkIconSize       size,
+                      GtkTextDirection  direction,
+                      gboolean          fallback)
 {
   GtkIconSource *source;
   GdkPixbuf     *pixbuf;
 
   source = gtk_icon_source_new ();
+
+  if (direction != GTK_TEXT_DIR_NONE)
+    {
+      gtk_icon_source_set_direction (source, direction);
+      gtk_icon_source_set_direction_wildcarded (source, FALSE);
+    }
 
   gtk_icon_source_set_size (source, size);
   gtk_icon_source_set_size_wildcarded (source, FALSE);
@@ -75,6 +82,7 @@ icon_set_from_inline (GtkIconSet   *set,
 static void
 add_sized_with_same_fallback (GtkIconFactory *factory,
 			      const guchar   *inline_data,
+			      const guchar   *inline_data_rtl,
 			      GtkIconSize     size,
 			      const gchar    *stock_id)
 {
@@ -92,7 +100,11 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
       fallback = TRUE;
     }
 
-  icon_set_from_inline (set, inline_data, size, fallback);
+  icon_set_from_inline (set, inline_data, size, GTK_TEXT_DIR_NONE, fallback);
+
+  if (inline_data_rtl)
+    icon_set_from_inline (set,
+                          inline_data_rtl, size, GTK_TEXT_DIR_RTL, fallback);
 }
 
 
@@ -452,7 +464,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_LANDSCAPE,                stock_landscape_16                },
 
   { GIMP_STOCK_CLOSE,                    stock_close_12                    },
-  { GIMP_STOCK_MENU,                     stock_menu_12                     },
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
 
@@ -562,6 +573,19 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_TEXTURE,              stock_texture_64              }
 };
 
+static struct
+{
+  const gchar   *stock_id;
+  gconstpointer  inline_data_ltr;
+  gconstpointer  inline_data_rtl;
+}
+gimp_stock_direction_pixbufs[] =
+{
+  { GIMP_STOCK_MENU_LEFT,  stock_menu_left_12,  stock_menu_right_12 },
+  { GIMP_STOCK_MENU_RIGHT, stock_menu_right_12, stock_menu_left_12  }
+};
+
+
 void
 gimp_stock_init (void)
 {
@@ -578,6 +602,7 @@ gimp_stock_init (void)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
 				    gimp_stock_dialog_pixbufs[i].inline_data,
+                                    NULL,
 				    GTK_ICON_SIZE_DIALOG,
 				    gimp_stock_dialog_pixbufs[i].stock_id);
     }
@@ -586,6 +611,7 @@ gimp_stock_init (void)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
 				    gimp_stock_dnd_pixbufs[i].inline_data,
+                                    NULL,
 				    GTK_ICON_SIZE_DND,
 				    gimp_stock_dnd_pixbufs[i].stock_id);
     }
@@ -594,6 +620,7 @@ gimp_stock_init (void)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
 				    gimp_stock_button_pixbufs[i].inline_data,
+                                    NULL,
 				    GTK_ICON_SIZE_BUTTON,
 				    gimp_stock_button_pixbufs[i].stock_id);
     }
@@ -602,8 +629,18 @@ gimp_stock_init (void)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
 				    gimp_stock_menu_pixbufs[i].inline_data,
+                                    NULL,
 				    GTK_ICON_SIZE_MENU,
 				    gimp_stock_menu_pixbufs[i].stock_id);
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_direction_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+                                    gimp_stock_direction_pixbufs[i].inline_data_ltr,
+                                    gimp_stock_direction_pixbufs[i].inline_data_rtl,
+                                    GTK_ICON_SIZE_MENU,
+                                    gimp_stock_direction_pixbufs[i].stock_id);
     }
 
   gtk_icon_factory_add_default (gimp_stock_factory);

@@ -1,5 +1,23 @@
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-menu-12.png: removed...
+
+	* themes/Default/images/stock-menu-left-12.png
+	* themes/Default/images/stock-menu-right-12.png: and added again
+	together with a flipped version.
+
+	* libgimpwidgets/gimpstock.[ch]: register GIMP_STOCK_MENU_LEFT and
+	GIMP_STOCK_MENU_RIGHT instead of GIMP_STOCK_MENU and swap the
+	images for RTL layout.
+
+	* app/widgets/gimpdockable.c: use GIMP_STOCK_MENU_LEFT here.
+
+	* app/display/gimpdisplayshell.c: replaced the arrow in the
+	display origin with the GIMP_STOCK_MENU_RIGHT icon.
+
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/svg.c: show the pixel size specified by the SVG
 	file and inform the user if it failed to provide one.
 

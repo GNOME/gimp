@@ -62,7 +62,8 @@ STOCK_MENU_IMAGES = \
 	stock-layer-to-imagesize-16.png			\
 	stock-layers-16.png				\
 	stock-list-16.png				\
-	stock-menu-12.png				\
+	stock-menu-left-12.png				\
+	stock-menu-right-12.png				\
 	stock-merge-down-16.png				\
 	stock-navigation-16.png				\
 	stock-path-16.png				\

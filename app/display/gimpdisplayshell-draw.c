@@ -489,7 +489,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   GtkWidget         *right_vbox;
   GtkWidget         *lower_hbox;
   GtkWidget         *inner_table;
-  GtkWidget         *arrow;
   GtkWidget         *image;
   GtkWidget         *menubar;
   GdkScreen         *screen;
@@ -708,19 +707,16 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   /*  the menu popup button  */
   shell->origin = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (shell->origin, GTK_CAN_FOCUS);
-  gtk_widget_set_events (GTK_WIDGET (shell->origin),
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (shell->origin), image);
+  gtk_widget_show (image);
 
   g_signal_connect (shell->origin, "button_press_event",
                     G_CALLBACK (gimp_display_shell_origin_button_press),
                     shell);
 
   gimp_help_set_help_data (shell->origin, NULL, "#origin_button");
-
-  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-  gtk_container_set_border_width (GTK_CONTAINER (shell->origin), 0);
-  gtk_container_add (GTK_CONTAINER (shell->origin), arrow);
-  gtk_widget_show (arrow);
 
   /* EEK */
   shell->canvas = gtk_drawing_area_new ();
