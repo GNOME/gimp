@@ -895,6 +895,7 @@ browser_info_update (ModuleInfo   *mod,
       break;
 
     case ST_UNLOAD_REQUESTED:
+      gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
       break;
 

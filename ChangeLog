@@ -1,3 +1,7 @@
+2001-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/module_db.c: ported bugfix for #55050 from stable branch.
+
 2001-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/.cvsignore
