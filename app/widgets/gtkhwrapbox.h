@@ -23,7 +23,7 @@
 #define __GTK_HWRAP_BOX_H__
 
 
-#include <gle/gtkwrapbox.h>
+#include "gtkwrapbox.h"
 
 
 #ifdef __cplusplus

@@ -19,8 +19,14 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpmath/gimpmath.h"
+
 #include "gtkhwrapbox.h"
-#include <math.h>
 
 
 /* --- prototypes --- */
@@ -121,53 +127,6 @@ get_child_requisition (GtkWrapBox     *wbox,
     }
   else
     gtk_widget_get_child_requisition (child, child_requisition);
-}
-
-static void
-_gtk_hwrap_box_size_request (GtkWidget      *widget,
-			     GtkRequisition *requisition)
-{
-  GtkHWrapBox *this = GTK_HWRAP_BOX (widget);
-  GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
-  GtkWrapBoxChild *child;
-  guint area = 0;
-  
-  g_return_if_fail (requisition != NULL);
-  
-  /*<h2v-off>*/
-  requisition->width = 0;
-  requisition->height = 0;
-  this->max_child_width = 0;
-  this->max_child_height = 0;
-  
-  for (child = wbox->children; child; child = child->next)
-    if (GTK_WIDGET_VISIBLE (child->widget))
-      {
-	GtkRequisition child_requisition;
-	
-	gtk_widget_size_request (child->widget, &child_requisition);
-	
-	area += child_requisition.width * child_requisition.height;
-	this->max_child_width = MAX (this->max_child_width, child_requisition.width);
-	this->max_child_height = MAX (this->max_child_height, child_requisition.height);
-      }
-  if (wbox->homogeneous)
-    area = this->max_child_width * this->max_child_height * wbox->n_children;
-  
-  if (area)
-    {
-      requisition->width = sqrt (area * wbox->aspect_ratio);
-      requisition->height = area / requisition->width;
-    }
-  else
-    {
-      requisition->width = 0;
-      requisition->height = 0;
-    }
-  
-  requisition->width += GTK_CONTAINER (wbox)->border_width * 2;
-  requisition->height += GTK_CONTAINER (wbox)->border_width * 2;
-  /*<h2v-on>*/
 }
 
 static gfloat

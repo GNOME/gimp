@@ -1,5 +1,12 @@
 2001-08-29  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gtkhwrapbox.[ch]
+	* app/widgets/gtkvwrapbox.[ch]
+	* app/widgets/gtkwrapbox.[ch]: make it compile even if you don't 
+	have gle installed ;-)
+
+2001-08-29  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added comment how to handle version numbers when
 	making releases so I don't get it wrong once again. 
 	Removed leftover GIMP_CONTRIBUTORS.
