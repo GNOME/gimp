@@ -1,4 +1,7 @@
 2003-08-10  Ville Pätsi  <drc@gimp.org>
+	* gimp.spec.in: Revert package name change. Causes too much trouble.
+
+2003-08-10  Ville Pätsi  <drc@gimp.org>
 	* gimp.spec.in: Changed package name from gimp to gimp1.3, to 
 	  keep combatibility with GIMP 1.2 packages.
 

@@ -5,7 +5,7 @@
 %define sysconfdir	/etc
 
 Summary: The GNU Image Manipulation Program
-Name: 		gimp1.3
+Name: 		gimp
 Version: 	%{ver}
 Release: 	1
 Copyright: 	GPL, LGPL
