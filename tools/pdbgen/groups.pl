@@ -27,6 +27,7 @@
     plug_in
     procedural_db
     selection
+    selection_tools
     text_tool
     tools
     undo

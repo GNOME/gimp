@@ -36,6 +36,7 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	plug_in_cmds.c		\
 	procedural_db_cmds.c	\
 	selection_cmds.c	\
+	selection_tools_cmds.c	\
 	text_tool_cmds.c	\
 	tools_cmds.c		\
 	undo_cmds.c		\

@@ -57,6 +57,7 @@ void register_patterns_procs        (Gimp *gimp);
 void register_plug_in_procs         (Gimp *gimp);
 void register_procedural_db_procs   (Gimp *gimp);
 void register_selection_procs       (Gimp *gimp);
+void register_selection_tools_procs (Gimp *gimp);
 void register_text_tool_procs       (Gimp *gimp);
 void register_tools_procs           (Gimp *gimp);
 void register_undo_procs            (Gimp *gimp);
@@ -152,10 +153,13 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Image mask"), 0.801);
   register_selection_procs (gimp);
 
-  (* status_callback) (NULL, _("Text procedures"), 0.856);
+  (* status_callback) (NULL, _("Selection Tool procedures"), 0.856);
+  register_selection_tools_procs (gimp);
+
+  (* status_callback) (NULL, _("Text procedures"), 0.871);
   register_text_tool_procs (gimp);
 
-  (* status_callback) (NULL, _("Tool procedures"), 0.868);
+  (* status_callback) (NULL, _("Tool procedures"), 0.883);
   register_tools_procs (gimp);
 
   (* status_callback) (NULL, _("Undo"), 0.957);

@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimppattern.h"
 
@@ -45,8 +46,6 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "gimpbucketfilltool.h"
-#include "gimpfuzzyselecttool.h"
-#include "gimptool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 
@@ -92,16 +91,16 @@ static void            bucket_options_reset         (GimpToolOptions *tool_optio
 
 static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
 						     GdkEventButton  *bevent,
-						     GDisplay        *gdisp);
+						     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
 						     GdkEventButton  *bevent,
-						     GDisplay        *gdisp);
+						     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
 						     GdkEventMotion  *mevent,
-						     GDisplay        *gdisp);
+						     GimpDisplay     *gdisp);
 static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
 						     GdkEventKey     *kevent,
-						     GDisplay        *gdisp);
+						     GimpDisplay     *gdisp);
 
 static void   bucket_fill_line_color                (guchar          *,
 						     guchar          *,
@@ -301,7 +300,7 @@ bucket_options_new (void)
 static void
 gimp_bucket_fill_tool_button_press (GimpTool       *tool,
 				    GdkEventButton *bevent,
-				    GDisplay       *gdisp)
+				    GimpDisplay    *gdisp)
 {
   GimpBucketFillTool *bucket_tool;
   gboolean            use_offsets;
@@ -329,7 +328,7 @@ gimp_bucket_fill_tool_button_press (GimpTool       *tool,
 static void
 gimp_bucket_fill_tool_button_release (GimpTool       *tool,
 				      GdkEventButton *bevent,
-				      GDisplay       *gdisp)
+				      GimpDisplay    *gdisp)
 {
   GimpBucketFillTool *bucket_tool;
   Argument           *return_vals;
@@ -375,7 +374,7 @@ gimp_bucket_fill_tool_button_release (GimpTool       *tool,
 static void
 gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
 				     GdkEventMotion *mevent,
-				     GDisplay       *gdisp)
+				     GimpDisplay    *gdisp)
 {
   GimpLayer          *layer;
   GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
@@ -427,7 +426,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
 static void
 gimp_bucket_fill_tool_modifier_key (GimpTool    *tool,
 				    GdkEventKey *kevent,
-				    GDisplay    *gdisp)
+				    GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -533,8 +532,12 @@ bucket_fill (GimpImage      *gimage,
    */
   if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
     {
-      mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
-				     (int) x, (int) y, sample_merged);
+      mask = gimp_image_contiguous_region_by_seed (gimage, drawable,
+                                                   sample_merged,
+                                                   TRUE,
+                                                   (gint) threshold,
+                                                   (gint) x,
+                                                   (gint) y);
 
       gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 

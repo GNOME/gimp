@@ -137,7 +137,7 @@ app_init (gint    gimp_argc,
       get_standard_colormaps ();
 
       if (! no_splash)
-	splash_create ();
+	splash_create (! no_splash_image);
     }
 
   /*  initialize lowlevel stuff  */

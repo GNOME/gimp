@@ -31,6 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
@@ -130,51 +131,6 @@ gimp_rect_select_tool_get_type (void)
     }
 
   return tool_type;
-}
-
-void
-rect_select (GimpImage *gimage,
-	     gint       x,
-	     gint       y,
-	     gint       w,
-	     gint       h,
-	     SelectOps  op,
-	     gboolean   feather,
-	     gdouble    feather_radius)
-{
-  GimpChannel *new_mask;
-
-  /*  if applicable, replace the current selection  */
-  if (op == SELECTION_REPLACE)
-    gimage_mask_clear (gimage);
-  else
-    gimage_mask_undo (gimage);
-
-  /*  if feathering for rect, make a new mask with the
-   *  rectangle and feather that with the old mask
-   */
-  if (feather)
-    {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
-      gimp_channel_feather (new_mask, gimp_image_get_mask (gimage),
-			    feather_radius,
-			    feather_radius,
-			    op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
-    }
-  else if (op == SELECTION_INTERSECT)
-    {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
-				 op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
-    }
-  else
-    {
-      gimp_channel_combine_rect (gimp_image_get_mask (gimage), op, x, y, w, h);
-    }
 }
 
 
@@ -616,11 +572,12 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
   sel_options = (SelectionOptions *)
     tool_manager_get_info_by_tool (the_gimp, tool)->tool_options;
 
-  rect_select (tool->gdisp->gimage,
-               x, y, w, h,
-               sel_tool->op,
-               sel_options->feather,
-               sel_options->feather_radius);
+  gimp_image_mask_select_rectangle (tool->gdisp->gimage,
+                                    x, y, w, h,
+                                    sel_tool->op,
+                                    sel_options->feather,
+                                    sel_options->feather_radius,
+                                    sel_options->feather_radius);
 }
 
 void

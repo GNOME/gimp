@@ -49,18 +49,9 @@ struct _GimpFreeSelectToolClass
 };
 
 
-void       gimp_free_select_tool_register (Gimp             *gimp);
+void    gimp_free_select_tool_register (Gimp *gimp);
 
-GType      gimp_free_select_tool_get_type (void);
-
-
-void       free_select                    (GimpImage        *gimage,
-                                           gint              n_points,
-                                           GimpVector2      *points,
-                                           SelectOps         op,
-                                           gboolean          antialias,
-                                           gboolean          feather,
-                                           gdouble           feather_radius);
+GType   gimp_free_select_tool_get_type (void);
 
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */

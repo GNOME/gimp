@@ -36,8 +36,6 @@
 #include "gimppreview.h"
 #include "gimpconstrainedhwrapbox.h"
 
-#include "colormaps.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -120,12 +118,6 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
   container_view_class->clear_items      = gimp_container_grid_view_clear_items;
   container_view_class->set_preview_size = gimp_container_grid_view_set_preview_size;
 
-  klass->white_style = gtk_style_copy (gtk_widget_get_default_style ());
-  klass->white_style->bg[GTK_STATE_NORMAL].red   = 0xffff;
-  klass->white_style->bg[GTK_STATE_NORMAL].green = 0xffff;
-  klass->white_style->bg[GTK_STATE_NORMAL].blue  = 0xffff;
-  klass->white_style->bg[GTK_STATE_NORMAL].pixel = g_white_pixel;
-
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
 }
@@ -158,10 +150,6 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
     (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
      grid_view->wrap_box);
   gtk_widget_show (grid_view->wrap_box);
-
-  gtk_widget_set_style
-    (grid_view->wrap_box->parent,
-     GIMP_CONTAINER_GRID_VIEW_GET_CLASS (grid_view)->white_style);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (grid_view->wrap_box->parent),

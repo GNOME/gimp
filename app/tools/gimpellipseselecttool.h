@@ -45,20 +45,9 @@ struct _GimpEllipseSelectToolClass
 };
 
 
-void       gimp_ellipse_select_tool_register (Gimp      *gimp);
+void    gimp_ellipse_select_tool_register (Gimp *gimp);
 
-GType      gimp_ellipse_select_tool_get_type (void);
-
-
-void       ellipse_select                    (GimpImage *gimage,
-                                              gint       x,
-                                              gint       y,
-                                              gint       w,
-                                              gint       h,
-                                              SelectOps  op,
-                                              gboolean   antialias,
-                                              gboolean   feather,
-                                              gdouble    feather_radius);
+GType   gimp_ellipse_select_tool_get_type (void);
 
 
 #endif  /*  __GIMP_ELLIPSE_SELECT_TOOL_H__  */

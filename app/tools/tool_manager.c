@@ -282,9 +282,9 @@ tool_manager_pop_tool (Gimp *gimp)
 
 
 void
-tool_manager_initialize_tool (Gimp     *gimp,
-			      GimpTool *tool, /* FIXME: remove tool param */
-			      GDisplay *gdisp)
+tool_manager_initialize_tool (Gimp        *gimp,
+			      GimpTool    *tool, /* FIXME: remove tool param */
+			      GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
@@ -328,9 +328,9 @@ tool_manager_initialize_tool (Gimp     *gimp,
 }
 
 void
-tool_manager_control_active (Gimp       *gimp,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+tool_manager_control_active (Gimp        *gimp,
+			     ToolAction   action,
+			     GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
 
@@ -665,7 +665,7 @@ tool_manager_image_dirty (GimpImage *gimage,
 
   if (tool_manager->active_tool && ! tool_manager->active_tool->preserve)
     {
-      GDisplay *gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
 
       if (gdisp)
 	{

@@ -1174,35 +1174,27 @@ gimp_channel_combine_mask (GimpChannel *mask,
 }
 
 void
-gimp_channel_feather (GimpChannel *input,
-		      GimpChannel *output,
+gimp_channel_feather (GimpChannel *mask,
 		      gdouble      radius_x,
 		      gdouble      radius_y,
-		      ChannelOps   op,
-		      gint         off_x,
-		      gint         off_y)
+                      gboolean     push_undo)
 {
-  gint        x1, y1, x2, y2;
   PixelRegion srcPR;
 
-  g_return_if_fail (GIMP_IS_CHANNEL (input));
-  g_return_if_fail (GIMP_IS_CHANNEL (output));
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+  g_return_if_fail (push_undo && gimp_drawable_gimage (GIMP_DRAWABLE (mask)));
 
-  x1 = CLAMP (off_x, 0, GIMP_DRAWABLE (output)->width);
-  y1 = CLAMP (off_y, 0, GIMP_DRAWABLE (output)->height);
-  x2 = CLAMP (off_x + GIMP_DRAWABLE (input)->width, 0,
-	      GIMP_DRAWABLE (output)->width);
-  y2 = CLAMP (off_y + GIMP_DRAWABLE (input)->height, 0,
-	      GIMP_DRAWABLE (output)->height);
+  if (push_undo)
+    gimp_channel_push_undo (mask);
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (input)->tiles,
-		     (x1 - off_x), (y1 - off_y), (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
+		     0, 0,
+                     gimp_drawable_width (GIMP_DRAWABLE (mask)),
+                     gimp_drawable_height (GIMP_DRAWABLE (mask)),
+                     FALSE);
   gaussian_blur_region (&srcPR, radius_x, radius_y);
 
-  if (input != output) 
-    gimp_channel_combine_mask (output, input, op, 0, 0);
-
-  output->bounds_known = FALSE;
+  mask->bounds_known = FALSE;
 }
 
 void

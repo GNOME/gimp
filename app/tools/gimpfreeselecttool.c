@@ -32,7 +32,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimpscanconvert.h"
+#include "core/gimpimage-mask-select.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -49,9 +49,7 @@
 #include "libgimp/gimpintl.h"
 
 
-#define DEFAULT_MAX_INC  1024
-#define SUPERSAMPLE      3
-#define SUPERSAMPLE2     9
+#define DEFAULT_MAX_INC 1024
 
 
 static void   gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass);
@@ -60,26 +58,19 @@ static void   gimp_free_select_tool_finalize       (GObject        *object);
 
 static void   gimp_free_select_tool_button_press   (GimpTool       *tool,
                                                     GdkEventButton *bevent,
-                                                    GDisplay       *gdisp);
+                                                    GimpDisplay    *gdisp);
 static void   gimp_free_select_tool_button_release (GimpTool       *tool,
                                                     GdkEventButton *bevent,
-                                                    GDisplay       *gdisp);
+                                                    GimpDisplay    *gdisp);
 static void   gimp_free_select_tool_motion         (GimpTool       *tool,
                                                     GdkEventMotion *mevent,
-                                                    GDisplay       *gdisp);
+                                                    GimpDisplay    *gdisp);
 
 static void   gimp_free_select_tool_draw           (GimpDrawTool   *draw_tool);
 
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gint                x,
                                                     gint                y);
-
-static GimpChannel *                  scan_convert (GimpImage      *gimage,
-						    gint            n_points,
-						    GimpVector2    *points,
-						    gint            width,
-						    gint            height,
-						    gboolean        antialias);
 
 
 static GimpSelectionToolClass *parent_class = NULL;
@@ -130,43 +121,6 @@ gimp_free_select_tool_get_type (void)
 
   return tool_type;
 }
-
-void
-free_select (GimpImage   *gimage,
-	     gint         n_points,
-	     GimpVector2 *points,
-	     SelectOps    op,
-	     gboolean     antialias,
-	     gboolean     feather,
-	     gdouble      feather_radius)
-{
-  GimpChannel *mask;
-
-  /*  if applicable, replace the current selection  */
-  /*  or insure that a floating selection is anchored down...  */
-  if (op == SELECTION_REPLACE)
-    gimage_mask_clear (gimage);
-  else
-    gimage_mask_undo (gimage);
-
-  mask = scan_convert (gimage, n_points, points,
-		       gimage->width, gimage->height, antialias);
-
-  if (mask)
-    {
-      if (feather)
-	gimp_channel_feather (mask, gimp_image_get_mask (gimage),
-			      feather_radius,
-			      feather_radius,
-			      op, 0, 0);
-      else
-	gimp_channel_combine_mask (gimp_image_get_mask (gimage),
-				   mask, op, 0, 0);
-
-      g_object_unref (G_OBJECT (mask));
-    }
-}
-
 
 /*  private functions  */
 
@@ -237,7 +191,7 @@ gimp_free_select_tool_finalize (GObject *object)
 static void
 gimp_free_select_tool_button_press (GimpTool       *tool,
                                     GdkEventButton *bevent,
-                                    GDisplay       *gdisp)
+                                    GimpDisplay    *gdisp)
 {
   GimpFreeSelectTool *free_sel;
 
@@ -275,7 +229,7 @@ gimp_free_select_tool_button_press (GimpTool       *tool,
 static void
 gimp_free_select_tool_button_release (GimpTool       *tool,
                                       GdkEventButton *bevent,
-                                      GDisplay       *gdisp)
+                                      GimpDisplay    *gdisp)
 {
   GimpFreeSelectTool *free_sel;
   GimpVector2        *points;
@@ -318,12 +272,13 @@ gimp_free_select_tool_button_release (GimpTool       *tool,
                                          FALSE);
 	}
 
-      free_select (gdisp->gimage,
-                   free_sel->num_points, points,
-                   GIMP_SELECTION_TOOL (tool)->op,
-		   free_options->antialias,
-                   free_options->feather,
-		   free_options->feather_radius);
+      gimp_image_mask_select_polygon (gdisp->gimage,
+                                      free_sel->num_points, points,
+                                      GIMP_SELECTION_TOOL (tool)->op,
+                                      free_options->antialias,
+                                      free_options->feather,
+                                      free_options->feather_radius,
+                                      free_options->feather_radius);
 
       g_free (points);
 
@@ -334,7 +289,7 @@ gimp_free_select_tool_button_release (GimpTool       *tool,
 static void
 gimp_free_select_tool_motion (GimpTool       *tool,
                               GdkEventMotion *mevent,
-                              GDisplay       *gdisp)
+                              GimpDisplay    *gdisp)
 {
   GimpFreeSelectTool *free_sel;
   GimpSelectionTool  *sel_tool;
@@ -409,25 +364,4 @@ gimp_free_select_tool_add_point (GimpFreeSelectTool *free_sel,
   free_sel->points[free_sel->num_points].y = y;
 
   free_sel->num_points++;
-}
-
-static GimpChannel *
-scan_convert (GimpImage   *gimage,
-	      gint         n_points,
-	      GimpVector2 *points,
-	      gint         width,
-	      gint         height,
-	      gboolean     antialias)
-{
-  GimpChannel     *mask;
-  GimpScanConvert *sc;
-
-  sc = gimp_scan_convert_new (width, height, antialias ? SUPERSAMPLE : 1);
-
-  gimp_scan_convert_add_points (sc, n_points, points);
-  mask = gimp_scan_convert_to_channel (sc, gimage);
-
-  gimp_scan_convert_free (sc);
-
-  return mask;
 }

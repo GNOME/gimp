@@ -55,7 +55,6 @@
 #include "gimpconvolvetool.h"
 #include "gimppainttool.h"
 
-#include "app_procs.h"
 #include "devices.h"
 #include "gimprc.h"
 #include "undo.h"
@@ -880,7 +879,7 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 
   GimpContext *context;
 
-  context = gimp_get_current_context (the_gimp);
+  context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
 
   paint_tool->curx = x;
   paint_tool->cury = y;
@@ -1113,29 +1112,27 @@ gimp_paint_tool_cleanup (void)
 
 void
 gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *paint_tool,
+                                         GimpGradient      *gradient,
 					 gdouble            gradient_length,
 					 GimpRGB           *color,
 					 GradientPaintMode  mode)
 {
-  GimpContext *context;
-  gdouble      y;
-  gdouble      distance;  /* distance in current brush stroke */
-
-  context = gimp_get_current_context (the_gimp);
+  gdouble distance;  /* distance in current brush stroke */
+  gdouble y;
 
   distance = paint_tool->pixel_dist;
-  y = ((double) distance / gradient_length);
+  y        = (gdouble) distance / gradient_length;
 
   /* for the once modes, set y close to 1.0 after the first chunk */
-  if ( (mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && y >= 1.0 )
+  if ((mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && y >= 1.0)
     y = 0.9999999;
 
-  if ( (((int)y & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
-    y = 1.0 - (y - (int)y);
+  if ((((gint) y & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
+    y = 1.0 - (y - (gint) y);
   else
-    y = y - (int)y;
+    y = y - (gint) y;
 
-  gimp_gradient_get_color_at (gimp_context_get_gradient (context), y, color);
+  gimp_gradient_get_color_at (gradient, y, color);
 }
 
 

@@ -145,10 +145,11 @@ void    gimp_paint_tool_finish          (GimpPaintTool    *tool,
 					 GimpDrawable        *drawable);
 void    gimp_paint_tool_cleanup         (void);
 
-void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool         *tool,
-						 gdouble               gradient_length,
-						 GimpRGB              *color,
-						 GradientPaintMode     mode);
+void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *tool,
+                                                 GimpGradient      *gradient,
+						 gdouble            gradient_length,
+						 GimpRGB           *color,
+						 GradientPaintMode  mode);
 
 /*  paint tool painting functions  */
 TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool     *tool,

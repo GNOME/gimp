@@ -53,6 +53,7 @@ PDB_WRAPPERS_C = \
 	gimpplugin_pdb.c		\
 	gimpproceduraldb_pdb.c		\
 	gimpselection_pdb.c		\
+	gimpselectiontools_pdb.c	\
 	gimptexttool_pdb.c		\
 	gimptools_pdb.c			\
 	gimpundo_pdb.c			\
@@ -87,6 +88,7 @@ PDB_WRAPPERS_H = \
 	gimpplugin_pdb.h		\
 	gimpproceduraldb_pdb.h		\
 	gimpselection_pdb.h		\
+	gimpselectiontools_pdb.h	\
 	gimptexttool_pdb.h		\
 	gimptools_pdb.h			\
 	gimpundo_pdb.h			\

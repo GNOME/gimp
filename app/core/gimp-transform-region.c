@@ -95,11 +95,11 @@ enum
 
 /*  forward function declarations  */
 static void      gimp_transform_tool_bounds    (GimpTransformTool      *tool,
-                                                GDisplay               *gdisp);
+                                                GimpDisplay            *gdisp);
 static void      gimp_transform_tool_recalc    (GimpTransformTool      *tool,
-					        GDisplay               *gdisp);
+					        GimpDisplay            *gdisp);
 static void      gimp_transform_tool_doit      (GimpTransformTool      *tool,
-					        GDisplay               *gdisp);
+					        GimpDisplay            *gdisp);
 static gdouble   gimp_transform_tool_cubic     (gdouble                 dx,
 					        gint                    jm1,
 					        gint                    j,
@@ -114,23 +114,23 @@ static void    gimp_transform_tool_finalize    (GObject                *object);
 
 static void   gimp_transform_tool_button_press (GimpTool               *tool,
                                                 GdkEventButton         *bevent,
-			                        GDisplay               *gdisp);
+			                        GimpDisplay            *gdisp);
 			          
 static void gimp_transform_tool_button_release (GimpTool               *tool,
 			                        GdkEventButton         *bevent,
-			                        GDisplay               *gdisp);
+			                        GimpDisplay            *gdisp);
 			                        
 static void    gimp_transform_tool_motion      (GimpTool               *tool,
 		                                GdkEventMotion         *mevent,
-		                                GDisplay               *gdisp);
+		                                GimpDisplay            *gdisp);
 		                                
 static void  gimp_transform_tool_cursor_update (GimpTool               *tool,
 	                 		        GdkEventMotion         *mevent,
-			                        GDisplay               *gdisp);
+			                        GimpDisplay            *gdisp);
 			                        
 static void    gimp_transform_tool_control     (GimpTool               *tool,
 			                        ToolAction              action,
-			                        GDisplay               *gdisp);
+			                        GimpDisplay            *gdisp);
 
 static void    gimp_transform_tool_draw        (GimpDrawTool           *draw_tool);
 
@@ -234,7 +234,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
 TileManager *
 gimp_transform_tool_transform (GimpTransformTool   *tool,
-                               GDisplay            *gdisp,
+                               GimpDisplay         *gdisp,
 			       TransformState       state)
 {
   TileManager *retval;
@@ -319,9 +319,9 @@ gimp_transform_tool_finalize (GObject *object)
 }
 
 static void
-gimp_transform_tool_control (GimpTool   *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+gimp_transform_tool_control (GimpTool    *tool,
+			     ToolAction   action,
+			     GimpDisplay *gdisp)
 {
   GimpDrawTool      *dr_tool;
   GimpTransformTool *tr_tool;
@@ -351,9 +351,9 @@ gimp_transform_tool_control (GimpTool   *tool,
 }
 
 static void
-gimp_transform_tool_button_press (GimpTool           *tool,
-                                  GdkEventButton     *bevent,
-			          GDisplay           *gdisp)
+gimp_transform_tool_button_press (GimpTool       *tool,
+                                  GdkEventButton *bevent,
+			          GimpDisplay    *gdisp)
 {
   GimpTransformTool  *gt_tool;
   GimpDrawable       *drawable;
@@ -529,9 +529,9 @@ gimp_transform_tool_button_press (GimpTool           *tool,
 }
 
 static void
-gimp_transform_tool_button_release (GimpTool         *tool,
-			            GdkEventButton   *bevent,
-			            GDisplay         *gdisp)
+gimp_transform_tool_button_release (GimpTool       *tool,
+			            GdkEventButton *bevent,
+			            GimpDisplay    *gdisp)
 {
   GimpTransformTool *gt_tool;
   gint               i;
@@ -590,7 +590,7 @@ gimp_transform_tool_button_release (GimpTool         *tool,
 
 static void
 gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
-		          GDisplay           *gdisp)
+		          GimpDisplay        *gdisp)
 {
   GimpTool      *tool;
   TileManager   *new_tiles;
@@ -710,9 +710,9 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 }
 
 static void
-gimp_transform_tool_motion (GimpTool          *tool,
-		            GdkEventMotion    *mevent,
-		            GDisplay          *gdisp)
+gimp_transform_tool_motion (GimpTool       *tool,
+		            GdkEventMotion *mevent,
+		            GimpDisplay    *gdisp)
 {
   GimpTransformTool *tr_tool;
 
@@ -747,9 +747,9 @@ gimp_transform_tool_motion (GimpTool          *tool,
 }
 
 static void
-gimp_transform_tool_cursor_update (GimpTool           *tool,
-			           GdkEventMotion     *mevent,
-			           GDisplay           *gdisp)
+gimp_transform_tool_cursor_update (GimpTool       *tool,
+			           GdkEventMotion *mevent,
+			           GimpDisplay    *gdisp)
 {
   GimpTransformTool  *tr_tool;
   GimpDrawable       *drawable;
@@ -790,7 +790,7 @@ gimp_transform_tool_cursor_update (GimpTool           *tool,
 static void
 gimp_transform_tool_draw (GimpDrawTool *dr_tool)
 {
-  GDisplay           *gdisp;
+  GimpDisplay        *gdisp;
   GimpTransformTool  *tr_tool;
   GimpTool           *tool;
   gint                x1, y1, x2, y2, x3, y3, x4, y4;
@@ -942,7 +942,7 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 
 void
 gimp_transform_tool_reset (GimpTransformTool *tr_tool,
-		           GDisplay          *gdisp)
+		           GimpDisplay       *gdisp)
 {
   GimpTool *tool;
 
@@ -966,11 +966,11 @@ gimp_transform_tool_reset (GimpTransformTool *tr_tool,
 
 static void
 gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
-		            GDisplay          *gdisp)
+		            GimpDisplay       *gdisp)
 {
-  TileManager   *tiles;
-  GimpDrawable  *drawable;
-  gint           offset_x, offset_y;
+  TileManager  *tiles;
+  GimpDrawable *drawable;
+  gint          offset_x, offset_y;
 
   tiles    = tr_tool->original;
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -1115,7 +1115,7 @@ gimp_transform_tool_setup_grid (GimpTransformTool *tr_tool)
 
 static void
 gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
-		            GDisplay          *gdisp)
+		            GimpDisplay       *gdisp)
 {
   gimp_transform_tool_bounds (tr_tool, gdisp);
 

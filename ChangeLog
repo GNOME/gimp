@@ -1,3 +1,97 @@
+2001-10-22  Michael Natterer  <mitch@gimp.org>
+
+	General cleanup of the selection tools and their PDB wrappers:
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-contiguous-region.[ch]
+	* app/core/gimpimage-mask-select.[ch]: new files providing a clean,
+	uniform API for the selection functionalities. Changed order of
+	parameters to be consistent, removed code duplication.
+
+	The region returned by the "by_color" function is not really
+	contiguous but the API is so similar to "by_seed" and it's used
+	in the same context so it's fair enough to put them together.
+
+	Also, I'm not sure if the two is_pixel_sufficiently_different()
+	I've optimized away were meant to do *exactly* the same. Added
+	a comment there to remember the former difference.
+
+	* app/core/gimpchannel.[ch] (gimp_channel_feather): removed the
+	"output" channel parameter and made it optionally push an undo
+	(like the other channel operations do).
+
+	* app/core/gimpimage-mask.c: call gimp_channel_feather() with
+	"push_undo == TRUE", removed some useless comments.
+
+	* app/tools/gimpbycolorselecttool.[ch]
+	* app/tools/gimpellipseselecttool.[ch]
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpfuzzyselecttool.[ch]
+	* app/tools/gimprectselecttool.[ch]: removed all the actual
+	selection functionality and call the new gimp_image_mask_select_*()
+	and gimp_image_contiguous_region_*() functions instead.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpiscissorstool.c: use new function
+	gimp_image_mask_select_channel() instead of doing the same manually.
+
+	* app/tools/gimpbucketfilltool.c: find_contiguous_region() ->
+	gimp_image_contiguous_region_by_seed().
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* tools/pdbgen/pdb/selection_tools.pdb: added new group "Selection
+	Tools" which depends only on "core/" stuff (not on "tools/" any
+	more, brrrr).
+
+	* tools/pdbgen/pdb/text_tool.pdb: don't include "appenv.h"
+
+	* tools/pdbgen/pdb/tools.pdb: removed the selection tools.
+
+	* app/pdb/Makefile.am
+	* app/pdb/selection_tools_cmds.c: new file.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c: regenerated.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpselectiontools_pdb.[ch]: new files.
+
+	* libgimp/gimptools_pdb.[ch]: regenerated
+
+	Misc cleanups:
+
+	* app/app_procs.c: call splash_create() with "no_splash_image"
+	as parameter.
+
+	* app/display/gimpdisplay-render.c
+	* app/display/gximage.c: don't include "appenv.h".
+
+	* app/gui/gui.c: call session_restore() only if "restore_session"
+	is TRUE.
+
+	* app/gui/session.c: don't "if(restore_session)" here and don't
+	include "appenv.h"
+
+	* app/gui/splash.[ch]: added "gboolean show_image" parameter to
+	splash_create(), don't include "appenv.h"
+
+	* app/tools/gimppainttool.[ch]: added a "GimpGradient" parameter
+	to gimp_paint_tool_get_color_from_gradient().
+
+	* app/tools/gimppaintbrushtool.c: pass the gradient.
+
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/tool_manager.c: s/GDisplay/GimpDisplay/.
+
+	* app/widgets/gimpcontainergridview.[ch]: removed the "white_style"
+	class variable and don't fiddle around with colors and styles...
+
+	* themes/Default/gtkrc: ...do the same here with a simple rc style.
+
 2001-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: link the app in a different order as some init

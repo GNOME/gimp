@@ -30,13 +30,13 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile.h"
-#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -93,26 +93,26 @@ static void   by_color_select_color_drop      (GtkWidget      *widget,
 /*  by_color select action functions  */
 
 static void   by_color_select_initialize      (GimpTool       *tool,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 
 static void   by_color_select_button_press    (GimpTool       *tool,
 					       GdkEventButton *bevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_button_release  (GimpTool       *tool,
 					       GdkEventButton *bevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_modifier_update (GimpTool       *tool,
 					       GdkEventKey    *kevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_cursor_update   (GimpTool       *tool,
 					       GdkEventMotion *mevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_oper_update     (GimpTool       *tool,
 					       GdkEventMotion *mevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_control         (GimpTool       *tool,
 					       ToolAction      action,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   by_color_select_mask_changed    (GimpImage      *gimage);
 
 static ByColorDialog * by_color_select_dialog_new  (void);
@@ -137,34 +137,20 @@ static void   by_color_select_close_callback       (GtkWidget      *,
 static void   by_color_select_preview_button_press (ByColorDialog  *,
 						    GdkEventButton *);
 
-static gint   is_pixel_sufficiently_different      (guchar         *,
-						    guchar         *,
-						    gint            ,
-						    gint            ,
-						    gint            ,
-						    gint            );
-static GimpChannel * by_color_select_color         (GimpImage      *,
-						    GimpDrawable   *,
-						    guchar         *,
-						    gint            ,
-						    gint            ,
-						    gint            );
 
-/* The parent class (duh!) */
 static GimpSelectionToolClass *parent_class = NULL;
+
 /*  the by color selection tool options  */
-static SelectionOptions * by_color_options = NULL;
+static SelectionOptions *by_color_options = NULL;
 
 /*  the by color selection dialog  */
-static ByColorDialog    * by_color_dialog = NULL;
+static ByColorDialog *by_color_dialog = NULL;
 
 /*  dnd stuff  */
 static GtkTargetEntry by_color_select_targets[] =
 {
   GIMP_TARGET_COLOR
 };
-static guint n_by_color_select_targets = (sizeof (by_color_select_targets) /
-					  sizeof (by_color_select_targets[0]));
 
 
 /* public functions */
@@ -212,56 +198,8 @@ gimp_by_color_select_tool_get_type (void)
 }
 
 void
-gimp_by_color_select_tool_select (GimpImage    *gimage,
-				  GimpDrawable *drawable,
-				  guchar       *color,
-				  gint          threshold,
-				  SelectOps     op,
-				  gboolean      antialias,
-				  gboolean      feather,
-				  gdouble       feather_radius,
-				  gboolean      sample_merged)
-{
-  GimpChannel *new_mask;
-  gint         off_x, off_y;
-
-  if (!drawable) 
-    return;
-
-  new_mask = by_color_select_color (gimage, drawable, color,
-				    antialias, threshold, sample_merged);
-
-  /*  if applicable, replace the current selection  */
-  if (op == SELECTION_REPLACE)
-    gimage_mask_clear (gimage);
-  else
-    gimage_mask_undo (gimage);
-
-  if (sample_merged)
-    {
-      off_x = 0; off_y = 0;
-    }
-  else
-    {
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
-    }
-
-  if (feather)
-    gimp_channel_feather (new_mask, gimp_image_get_mask (gimage),
-			  feather_radius,
-			  feather_radius,
-			  op, off_x, off_y);
-  else
-    gimp_channel_combine_mask (gimp_image_get_mask (gimage),
-			       new_mask, op, off_x, off_y);
-
-  g_object_unref (G_OBJECT (new_mask));
-}
-
-void
 gimp_by_color_select_tool_initialize_by_image (GimpImage *gimage)
 {
-
   /*  update the preview window  */
   if (by_color_dialog)
     {
@@ -315,175 +253,13 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   by_color_select->x = by_color_select->y = 0;
 }
 
-/*  by_color selection machinery  */
-
-static gint
-is_pixel_sufficiently_different (guchar *col1,
-				 guchar *col2,
-				 gint    antialias,
-				 gint    threshold,
-				 gint    bytes,
-				 gint    has_alpha)
-{
-  gint diff;
-  gint max;
-  gint b;
-  gint alpha;
-
-  max = 0;
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-
-  /*  if there is an alpha channel, never select transparent regions  */
-  if (has_alpha && col2[alpha] == 0)
-    return 0;
-
-  for (b = 0; b < alpha; b++)
-    {
-      diff = col1[b] - col2[b];
-      diff = abs (diff);
-      if (diff > max)
-	max = diff;
-    }
-
-  if (antialias && threshold > 0)
-    {
-      gfloat aa;
-
-      aa = 1.5 - ((gfloat) max / threshold);
-      if (aa <= 0)
-	return 0;
-      else if (aa < 0.5)
-	return (guchar) (aa * 512);
-      else
-	return 255;
-    }
-  else
-    {
-      if (max > threshold)
-	return 0;
-      else
-	return 255;
-    }
-}
-
-static GimpChannel *
-by_color_select_color (GimpImage    *gimage,
-		       GimpDrawable *drawable,
-		       guchar       *color,
-		       gboolean      antialias,
-		       gint          threshold,
-		       gboolean      sample_merged)
-{
-  /*  Scan over the gimage's active layer, finding pixels within the specified
-   *  threshold from the given R, G, & B values.  If antialiasing is on,
-   *  use the same antialiasing scheme as in fuzzy_select.  Modify the gimage's
-   *  mask to reflect the additional selection
-   */
-  GimpChannel *mask;
-  PixelRegion  imagePR, maskPR;
-  guchar      *image_data;
-  guchar      *mask_data;
-  guchar      *idata, *mdata;
-  guchar       rgb[MAX_CHANNELS];
-  gint         has_alpha, indexed;
-  gint         width, height;
-  gint         bytes, color_bytes, alpha;
-  gint         i, j;
-  gpointer     pr;
-  gint         d_type;
-
-  /*  Get the image information  */
-  if (sample_merged)
-    {
-      bytes  = gimp_image_composite_bytes (gimage);
-      d_type = gimp_image_composite_type (gimage);
-      has_alpha = (d_type == RGBA_GIMAGE ||
-		   d_type == GRAYA_GIMAGE ||
-		   d_type == INDEXEDA_GIMAGE);
-      indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
-      width = gimage->width;
-      height = gimage->height;
-      pixel_region_init (&imagePR, gimp_image_composite (gimage),
-			 0, 0, width, height, FALSE);
-    }
-  else
-    {
-      bytes     = gimp_drawable_bytes (drawable);
-      d_type    = gimp_drawable_type (drawable);
-      has_alpha = gimp_drawable_has_alpha (drawable);
-      indexed   = gimp_drawable_is_indexed (drawable);
-      width     = gimp_drawable_width (drawable);
-      height    = gimp_drawable_height (drawable);
-
-      pixel_region_init (&imagePR, gimp_drawable_data (drawable),
-			 0, 0, width, height, FALSE);
-    }
-
-  if (indexed)
-    {
-      /* indexed colors are always RGB or RGBA */
-      color_bytes = has_alpha ? 4 : 3;
-    }
-  else
-    {
-      /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
-      color_bytes = bytes;
-    }
-
-  alpha = bytes - 1;
-  mask = gimp_channel_new_mask (gimage, width, height);
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
-		     0, 0, width, height, TRUE);
-
-  /*  iterate over the entire image  */
-  for (pr = pixel_regions_register (2, &imagePR, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      image_data = imagePR.data;
-      mask_data = maskPR.data;
-
-      for (i = 0; i < imagePR.h; i++)
-	{
-	  idata = image_data;
-	  mdata = mask_data;
-	  for (j = 0; j < imagePR.w; j++)
-	    {
-	      /*  Get the rgb values for the color  */
-	      gimp_image_get_color (gimage, d_type, rgb, idata);
-
-	      /*  Plug the alpha channel in there  */
-	      if (has_alpha)
-		rgb[color_bytes - 1] = idata[alpha];
-
-	      /*  Find how closely the colors match  */
-	      *mdata++ = is_pixel_sufficiently_different (color,
-							  rgb,
-							  antialias,
-							  threshold,
-							  color_bytes,
-							  has_alpha);
-
-	      idata += bytes;
-	    }
-
-	  image_data += imagePR.rowstride;
-	  mask_data += maskPR.rowstride;
-	}
-    }
-
-  return mask;
-}
-
-/*  by_color select action functions  */
-
 static void
 by_color_select_button_press (GimpTool       *tool,
 			      GdkEventButton *bevent,
-			      GDisplay       *gdisp)
+			      GimpDisplay    *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
-  GimpDrawTool *draw_tool;
+  GimpDrawTool          *draw_tool;
 
   draw_tool    = GIMP_DRAW_TOOL (tool);
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
@@ -534,13 +310,14 @@ by_color_select_button_press (GimpTool       *tool,
 static void
 by_color_select_button_release (GimpTool       *tool,
 				GdkEventButton *bevent,
-				GDisplay       *gdisp)
+				GimpDisplay    *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
-  gint           x, y;
-  GimpDrawable  *drawable;
-  guchar        *color;
-  gint           use_offsets;
+  gint                   x, y;
+  GimpDrawable          *drawable;
+  guchar                *col;
+  GimpRGB                color;
+  gint                   use_offsets;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -562,25 +339,29 @@ by_color_select_button_release (GimpTool       *tool,
 	  /*  Get the start color  */
 	  if (by_color_options->sample_merged)
 	    {
-	      if (!(color = gimp_image_get_color_at (gdisp->gimage, x, y)))
+	      if (!(col = gimp_image_get_color_at (gdisp->gimage, x, y)))
 		return;
 	    }
 	  else
 	    {
-	      if (!(color = gimp_drawable_get_color_at (drawable, x, y)))
+	      if (!(col = gimp_drawable_get_color_at (drawable, x, y)))
 		return;
 	    }
 
-	  /*  select the area  */
-	  gimp_by_color_select_tool_select (gdisp->gimage, drawable, color,
-					    by_color_dialog->threshold,
-					    by_color_sel->operation,
-					    by_color_options->antialias,
-					    by_color_options->feather,
-					    by_color_options->feather_radius,
-					    by_color_options->sample_merged);
+          gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
 
-	  g_free (color);
+	  g_free (col);
+
+	  /*  select the area  */
+	  gimp_image_mask_select_by_color (gdisp->gimage, drawable,
+                                           by_color_options->sample_merged,
+                                           &color,
+                                           by_color_dialog->threshold,
+                                           by_color_sel->operation,
+                                           by_color_options->antialias,
+                                           by_color_options->feather,
+                                           by_color_options->feather_radius,
+                                           by_color_options->feather_radius);
 
 	  /*  show selection on all views  */
 	  gdisplays_flush ();
@@ -595,11 +376,11 @@ by_color_select_button_release (GimpTool       *tool,
 static void
 by_color_select_cursor_update (GimpTool       *tool,
 			       GdkEventMotion *mevent,
-			       GDisplay       *gdisp)
+			       GimpDisplay    *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
-  GimpLayer     *layer;
-  gint           x, y;
+  GimpLayer             *layer;
+  gint                   x, y;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
@@ -667,7 +448,7 @@ by_color_select_cursor_update (GimpTool       *tool,
 static void
 by_color_select_update_op_state (GimpByColorSelectTool *by_col_sel,
 				 gint                   state,  
-				 GDisplay              *gdisp)
+				 GimpDisplay           *gdisp)
 {
   if (tool_manager_get_active (gdisp->gimage->gimp)->state == ACTIVE)
     return;
@@ -696,10 +477,10 @@ by_color_select_update_op_state (GimpByColorSelectTool *by_col_sel,
 static void
 by_color_select_modifier_update (GimpTool    *tool,
 				 GdkEventKey *kevent,
-				 GDisplay    *gdisp)
+				 GimpDisplay *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
-  gint state;
+  gint                   state;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
@@ -735,7 +516,7 @@ by_color_select_modifier_update (GimpTool    *tool,
 static void
 by_color_select_oper_update (GimpTool       *tool,
 			     GdkEventMotion *mevent,
-			     GDisplay       *gdisp)
+			     GimpDisplay    *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
 
@@ -745,9 +526,9 @@ by_color_select_oper_update (GimpTool       *tool,
 }
 
 static void
-by_color_select_control (GimpTool   *tool,
-			 ToolAction  action,
-			 GDisplay   *gdisp)
+by_color_select_control (GimpTool    *tool,
+			 ToolAction   action,
+			 GimpDisplay *gdisp)
 {
   switch (action)
     {
@@ -768,8 +549,8 @@ by_color_select_control (GimpTool   *tool,
 }
 
 void
-by_color_select_initialize (GimpTool *tool,
-			    GDisplay *gdisp)
+by_color_select_initialize (GimpTool    *tool,
+			    GimpDisplay *gdisp)
 {
   /*  The "by color" dialog  */
   if (!by_color_dialog)
@@ -790,10 +571,11 @@ by_color_select_initialize (GimpTool *tool,
   gimp_by_color_select_tool_initialize_by_image (gdisp->gimage);
 }
 
-void by_color_select_mask_changed( GimpImage *gimage)
+void
+by_color_select_mask_changed (GimpImage *gimage)
 {
   if (by_color_dialog)
-    gimp_by_color_select_tool_initialize_by_image (gimage );
+    gimp_by_color_select_tool_initialize_by_image (gimage);
 }
 
 /****************************/
@@ -859,7 +641,7 @@ by_color_select_dialog_new (void)
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP, 
                      by_color_select_targets,
-                     n_by_color_select_targets,
+                     G_N_ELEMENTS (by_color_select_targets),
                      GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (bcd->preview, by_color_select_color_drop, bcd);
 
@@ -1231,8 +1013,8 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   gboolean      replace;
   SelectOps     operation;
   GimpDrawable *drawable;
-  Tile         *tile;
   guchar       *col;
+  GimpRGB       color;
 
   if (!bcd->gimage)
     return;
@@ -1265,39 +1047,46 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   /*  Get the start color  */
   if (by_color_options->sample_merged)
     {
-      x = bcd->gimage->width * bevent->x / bcd->preview->requisition.width;
+      x = bcd->gimage->width * bevent->x  / bcd->preview->requisition.width;
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
+
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimp_image_composite (bcd->gimage),
-				    x, y, TRUE, FALSE);
-      col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+
+      col = gimp_image_get_color_at (bcd->gimage, x, y);
     }
   else
     {
       gint offx, offy;
 
       gimp_drawable_offsets (drawable, &offx, &offy);
-      x = gimp_drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;
-      y = gimp_drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
+
+      x = (gimp_drawable_width (drawable) * bevent->x /
+           bcd->preview->requisition.width - offx);
+      y = (gimp_drawable_height (drawable) * bevent->y /
+           bcd->preview->requisition.height - offy);
+
       if (x < 0 || y < 0 ||
 	  x >= gimp_drawable_width (drawable) || y >= gimp_drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (gimp_drawable_data (drawable),
-				    x, y, TRUE, FALSE);
-      col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+
+      col = gimp_drawable_get_color_at (drawable, x, y);
     }
 
-  gimp_by_color_select_tool_select (bcd->gimage, drawable, col,
-				    bcd->threshold,
-				    operation,
-				    by_color_options->antialias,
-				    by_color_options->feather,
-				    by_color_options->feather_radius,
-				    by_color_options->sample_merged);
-  
-  tile_release (tile, FALSE);
+  gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
 
+  g_free (col);
+
+  gimp_image_mask_select_by_color (bcd->gimage, drawable,
+                                   by_color_options->sample_merged,
+                                   &color,
+                                   bcd->threshold,
+                                   operation,
+                                   by_color_options->antialias,
+                                   by_color_options->feather,
+                                   by_color_options->feather_radius,
+                                   by_color_options->feather_radius);
+  
   /*  show selection on all views  */
   gdisplays_flush ();
 
@@ -1314,22 +1103,19 @@ by_color_select_color_drop (GtkWidget     *widget,
 {
   GimpDrawable  *drawable;
   ByColorDialog *bcd;
-  guchar         col[3];
 
   bcd = (ByColorDialog*) data;
   drawable = gimp_image_active_drawable (bcd->gimage);
 
-  gimp_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
-
-  gimp_by_color_select_tool_select (bcd->gimage, 
-				    drawable, 
-				    col, 
-				    bcd->threshold,
-				    bcd->operation,
-				    by_color_options->antialias,
-				    by_color_options->feather,
-				    by_color_options->feather_radius,
-				    by_color_options->sample_merged);     
+  gimp_image_mask_select_by_color (bcd->gimage, drawable,
+                                   by_color_options->sample_merged,
+                                   color,
+                                   bcd->threshold,
+                                   bcd->operation,
+                                   by_color_options->antialias,
+                                   by_color_options->feather,
+                                   by_color_options->feather_radius,
+                                   by_color_options->feather_radius);
 
   /*  show selection on all views  */
   gdisplays_flush ();

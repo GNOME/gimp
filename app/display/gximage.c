@@ -22,7 +22,6 @@
 
 #include "core/core-types.h"
 
-#include "appenv.h"
 #include "colormaps.h"
 #include "gximage.h"
 

@@ -52,7 +52,6 @@
 #include "color-notebook.h"
 #include "session.h"
 
-#include "appenv.h"
 #include "gimprc.h"
 
 
@@ -79,8 +78,7 @@ session_init (void)
 void
 session_restore (void)
 {
-  if (restore_session)
-    gimp_dialog_factories_session_restore ();
+  gimp_dialog_factories_session_restore ();
 }
 
 void

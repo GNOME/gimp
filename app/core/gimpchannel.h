@@ -32,6 +32,7 @@
 #define GIMP_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
 #define GIMP_IS_CHANNEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL))
 #define GIMP_IS_CHANNEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
+#define GIMP_CHANNEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL, GimpChannelClass))
 
 
 typedef struct _GimpChannelClass GimpChannelClass;
@@ -162,13 +163,10 @@ void            gimp_channel_combine_mask      (GimpChannel       *mask,
 						ChannelOps         op,
 						gint               off_x,
 						gint               off_y);
-void            gimp_channel_feather           (GimpChannel       *input,
-						GimpChannel       *output,
+void            gimp_channel_feather           (GimpChannel       *mask,
 						gdouble            radius_x,
 						gdouble            radius_y,
-						ChannelOps         op,
-						gint               off_x,
-						gint               off_y);
+                                                gboolean           push_undo);
 
 void            gimp_channel_push_undo         (GimpChannel       *mask);
 void            gimp_channel_clear             (GimpChannel       *mask);

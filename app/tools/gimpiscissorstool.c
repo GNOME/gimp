@@ -56,6 +56,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpscanconvert.h"
 
 #include "display/gimpdisplay.h"
@@ -130,25 +131,25 @@ static void   gimp_iscissors_tool_finalize       (GObject           *object);
 
 static void   gimp_iscissors_tool_control        (GimpTool          *tool,
                                                   ToolAction         tool_action,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_button_press   (GimpTool          *tool,
                                                   GdkEventButton    *bevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_button_release (GimpTool          *tool,
                                                   GdkEventButton    *bevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_motion         (GimpTool          *tool,
                                                   GdkEventMotion    *mevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_oper_update    (GimpTool          *tool,
                                                   GdkEventMotion    *mevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_modifier_key   (GimpTool          *tool,
                                                   GdkEventKey       *kevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
                                                   GdkEventMotion    *mevent,
-                                                  GDisplay          *gdisp);
+                                                  GimpDisplay       *gdisp);
 
 static void   gimp_iscissors_tool_reset          (GimpIscissorsTool *iscissors);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
@@ -157,7 +158,7 @@ static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
 static IScissorsOptions * iscissors_options_new  (void);
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
-                                                GDisplay          *gdisp);
+                                                GimpDisplay       *gdisp);
 static TileManager * gradient_map_new          (GimpImage         *gimage);
 
 static void          find_optimal_path         (TileManager       *gradient_map,
@@ -174,7 +175,7 @@ static void          find_max_gradient         (GimpIscissorsTool *iscissors,
 						gint              *y);
 static void          calculate_curve           (GimpTool          *tool,
 						ICurve            *curve);
-static void          iscissors_draw_curve      (GDisplay          *gdisp,
+static void          iscissors_draw_curve      (GimpDisplay       *gdisp,
 						GimpDrawTool      *draw_tool,
 						ICurve            *curve);
 static void          iscissors_free_icurves    (GSList            *list);
@@ -395,9 +396,9 @@ iscissors_options_new (void)
 }
 
 static void
-gimp_iscissors_tool_control (GimpTool   *tool,
-                             ToolAction  action,
-                             GDisplay   *gdisp)
+gimp_iscissors_tool_control (GimpTool    *tool,
+                             ToolAction   action,
+                             GimpDisplay *gdisp)
 {
   GimpIscissorsTool *iscissors;
   Iscissors_draw     draw;
@@ -444,7 +445,7 @@ gimp_iscissors_tool_control (GimpTool   *tool,
 static void
 gimp_iscissors_tool_button_press (GimpTool       *tool,
                                   GdkEventButton *bevent,
-                                  GDisplay       *gdisp)
+                                  GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
   GimpDrawable      *drawable;
@@ -515,20 +516,13 @@ gimp_iscissors_tool_button_press (GimpTool       *tool,
 
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-	  if (iscissors->op == SELECTION_REPLACE)
-	    gimage_mask_clear (gdisp->gimage);
-	  else
-	    gimage_mask_undo (gdisp->gimage);
-
-	  if (((SelectionOptions *) iscissors_options)->feather)
-	    gimp_channel_feather (iscissors->mask,
-				  gimp_image_get_mask (gdisp->gimage),
-				  ((SelectionOptions *) iscissors_options)->feather_radius,
-				  ((SelectionOptions *) iscissors_options)->feather_radius,
-				  iscissors->op, 0, 0);
-	  else
-	    gimp_channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
-				       iscissors->mask, iscissors->op, 0, 0);
+          gimp_image_mask_select_channel (gdisp->gimage,
+                                          NULL, FALSE,
+                                          iscissors->mask,
+                                          iscissors->op,
+                                          ((SelectionOptions *) iscissors_options)->feather,
+                                          ((SelectionOptions *) iscissors_options)->feather_radius,
+                                          ((SelectionOptions *) iscissors_options)->feather_radius);
 
 	  gimp_iscissors_tool_reset (iscissors);
 
@@ -561,7 +555,7 @@ gimp_iscissors_tool_button_press (GimpTool       *tool,
 
 static void
 iscissors_convert (GimpIscissorsTool *iscissors,
-		   GDisplay          *gdisp)
+		   GimpDisplay       *gdisp)
 {
   GimpScanConvert *sc;
   GimpVector2     *points;
@@ -608,7 +602,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
 static void
 gimp_iscissors_tool_button_release (GimpTool       *tool,
                                     GdkEventButton *bevent,
-                                    GDisplay       *gdisp)
+                                    GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
   ICurve            *curve;
@@ -722,7 +716,7 @@ gimp_iscissors_tool_button_release (GimpTool       *tool,
 static void
 gimp_iscissors_tool_motion (GimpTool       *tool,
                             GdkEventMotion *mevent,
-                            GDisplay       *gdisp)
+                            GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
 
@@ -791,7 +785,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpTool          *tool;
   GimpIscissorsTool *iscissors;
-  GDisplay          *gdisp;
+  GimpDisplay       *gdisp;
   ICurve            *curve;
   GSList            *list;
   gint               tx1, ty1, tx2, ty2;
@@ -931,7 +925,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 
 
 static void
-iscissors_draw_curve (GDisplay     *gdisp,
+iscissors_draw_curve (GimpDisplay  *gdisp,
 		      GimpDrawTool *draw_tool,
 		      ICurve       *curve)
 {
@@ -976,7 +970,7 @@ iscissors_draw_curve (GDisplay     *gdisp,
 static void
 gimp_iscissors_tool_oper_update (GimpTool       *tool,
                                  GdkEventMotion *mevent,
-                                 GDisplay       *gdisp)
+                                 GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
   gint               x, y;
@@ -1028,7 +1022,7 @@ gimp_iscissors_tool_oper_update (GimpTool       *tool,
 static void
 gimp_iscissors_tool_modifier_key (GimpTool    *tool,
                                   GdkEventKey *kevent,
-                                  GDisplay    *gdisp)
+                                  GimpDisplay *gdisp)
 {
   GimpIscissorsTool *iscissors;
   SelectOps          op;
@@ -1071,7 +1065,7 @@ gimp_iscissors_tool_modifier_key (GimpTool    *tool,
 static void
 gimp_iscissors_tool_cursor_update (GimpTool       *tool,
                                    GdkEventMotion *mevent,
-                                   GDisplay       *gdisp)
+                                   GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
 
@@ -1421,7 +1415,7 @@ calculate_curve (GimpTool *tool,
 		 ICurve   *curve)
 {
   GimpIscissorsTool *iscissors;
-  GDisplay          *gdisp;
+  GimpDisplay       *gdisp;
   gint               x, y, dir;
   gint               xs, ys, xe, ye;
   gint               x1, y1, x2, y2;

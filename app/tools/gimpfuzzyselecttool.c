@@ -37,7 +37,9 @@
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -57,20 +59,22 @@
 static void   gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass);
 static void   gimp_fuzzy_select_tool_init       (GimpFuzzySelectTool      *fuzzy_select);
 
+static void   gimp_fuzzy_select_tool_finalize       (GObject        *object);
+
 static void   gimp_fuzzy_select_tool_button_press   (GimpTool       *tool,
                                                      GdkEventButton *bevent,
-                                                     GDisplay       *gdisp);
+                                                     GimpDisplay    *gdisp);
 static void   gimp_fuzzy_select_tool_button_release (GimpTool       *tool,
                                                      GdkEventButton *bevent,
-                                                     GDisplay       *gdisp);
+                                                     GimpDisplay    *gdisp);
 static void   gimp_fuzzy_select_tool_motion         (GimpTool       *tool,
                                                      GdkEventMotion *mevent,
-                                                     GDisplay       *gdisp);
+                                                     GimpDisplay    *gdisp);
 
 static void   gimp_fuzzy_select_tool_draw           (GimpDrawTool   *draw_tool);
 
 static GdkSegment * fuzzy_select_calculate     (GimpFuzzySelectTool *fuzzy_sel,
-                                                GDisplay            *gdisp,
+                                                GimpDisplay         *gdisp,
                                                 gint                *nsegs);
 
 
@@ -82,8 +86,6 @@ static SelectionOptions  *fuzzy_options = NULL;
 /*  XSegments which make up the fuzzy selection boundary  */
 static GdkSegment *segs     = NULL;
 static gint        num_segs = 0;
-
-GimpChannel * fuzzy_mask = NULL;
 
 
 /*  public functions  */
@@ -130,312 +132,23 @@ gimp_fuzzy_select_tool_get_type (void)
   return tool_type;
 }
 
-/*******************************/
-/*  Fuzzy selection apparatus  */
 
-static gint
-is_pixel_sufficiently_different (guchar   *col1, 
-				 guchar   *col2,
-				 gboolean  antialias, 
-				 gint      threshold, 
-				 gint      bytes,
-				 gboolean  has_alpha)
-{
-  gint diff;
-  gint max;
-  gint b;
-  gint alpha;
-
-  max = 0;
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-
-  /*  if there is an alpha channel, never select transparent regions  */
-  if (has_alpha && col2[alpha] == 0)
-    return 0;
-
-  for (b = 0; b < bytes; b++)
-    {
-      diff = col1[b] - col2[b];
-      diff = abs (diff);
-      if (diff > max)
-	max = diff;
-    }
-
-  if (antialias)
-    {
-      float aa;
-
-      aa = 1.5 - ((float) max / threshold);
-      if (aa <= 0)
-	return 0;
-      else if (aa < 0.5)
-	return (unsigned char) (aa * 512);
-      else
-	return 255;
-    }
-  else
-    {
-      if (max > threshold)
-	return 0;
-      else
-	return 255;
-    }
-}
-
-static void
-ref_tiles (TileManager  *src, 
-	   TileManager  *mask, 
-	   Tile        **s_tile, 
-	   Tile        **m_tile,
-	   gint          x, 
-	   gint          y, 
-	   guchar      **s, 
-	   guchar      **m)
-{
-  if (*s_tile != NULL)
-    tile_release (*s_tile, FALSE);
-  if (*m_tile != NULL)
-    tile_release (*m_tile, TRUE);
-
-  *s_tile = tile_manager_get_tile (src, x, y, TRUE, FALSE);
-  *m_tile = tile_manager_get_tile (mask, x, y, TRUE, TRUE);
-
-  *s = tile_data_pointer (*s_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  *m = tile_data_pointer (*m_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-}
-
-static int
-find_contiguous_segment (guchar      *col, 
-			 PixelRegion *src,
-			 PixelRegion *mask, 
-			 gint         width, 
-			 gint         bytes,
-			 gboolean     has_alpha, 
-			 gboolean     antialias, 
-			 gint         threshold,
-			 gint         initial, 
-			 gint        *start, 
-			 gint        *end)
-{
-  guchar *s;
-  guchar *m;
-  guchar  diff;
-  Tile   *s_tile = NULL;
-  Tile   *m_tile = NULL;
-
-  ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, src->x, src->y, &s, &m);
-
-  /* check the starting pixel */
-  if (! (diff = is_pixel_sufficiently_different (col, s, antialias,
-						 threshold, bytes, has_alpha)))
-    {
-      tile_release (s_tile, FALSE);
-      tile_release (m_tile, TRUE);
-      return FALSE;
-    }
-
-  *m-- = diff;
-  s -= bytes;
-  *start = initial - 1;
-
-  while (*start >= 0 && diff)
-    {
-      if (! ((*start + 1) % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *start, src->y, &s, &m);
-
-      diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
-      if ((*m-- = diff))
-	{
-	  s -= bytes;
-	  (*start)--;
-	}
-    }
-
-  diff = 1;
-  *end = initial + 1;
-  if (*end % TILE_WIDTH && *end < width)
-    ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
-
-  while (*end < width && diff)
-    {
-      if (! (*end % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
-
-      diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
-      if ((*m++ = diff))
-	{
-	  s += bytes;
-	  (*end)++;
-	}
-    }
-
-  tile_release (s_tile, FALSE);
-  tile_release (m_tile, TRUE);
-  return TRUE;
-}
-
-static void
-find_contiguous_region_helper (PixelRegion *mask, 
-			       PixelRegion *src,
-			       gboolean     has_alpha, 
-			       gboolean     antialias, 
-			       gint         threshold, 
-			       gboolean     indexed,
-			       gint         x, 
-			       gint         y, 
-			       guchar      *col)
-{
-  gint start, end, i;
-  gint val;
-  gint bytes;
-
-  Tile *tile;
-
-  if (threshold == 0) threshold = 1;
-  if (x < 0 || x >= src->w) return;
-  if (y < 0 || y >= src->h) return;
-
-  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-  val = *(guchar *)(tile_data_pointer (tile, 
-				       x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
-  if (val != 0)
-    return;
-
-  src->x = x;
-  src->y = y;
-
-  bytes = src->bytes;
-  if(indexed)
-    {
-      bytes = has_alpha ? 4 : 3;
-    }
-
-  if (! find_contiguous_segment (col, src, mask, src->w,
-				 src->bytes, has_alpha,
-				 antialias, threshold, x, &start, &end))
-    return;
-
-  for (i = start + 1; i < end; i++)
-    {
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, 
-				     threshold, indexed, i, y - 1, col);
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, 
-				     threshold, indexed, i, y + 1, col);
-    }
-}
-
-GimpChannel *
-find_contiguous_region (GimpImage    *gimage, 
-			GimpDrawable *drawable, 
-			gboolean      antialias,
-			gint          threshold, 
-			gint          x, 
-			gint          y, 
-			gboolean      sample_merged)
-{
-  PixelRegion  srcPR, maskPR;
-  GimpChannel *mask;
-  guchar      *start;
-  gboolean     has_alpha;
-  gboolean     indexed;
-  gint         type;
-  gint         bytes;
-  Tile        *tile;
-
-  if (sample_merged)
-    {
-      pixel_region_init (&srcPR, gimp_image_composite (gimage), 0, 0,
-			 gimage->width, gimage->height, FALSE);
-      type = gimp_image_composite_type (gimage);
-      has_alpha = (type == RGBA_GIMAGE ||
-		   type == GRAYA_GIMAGE ||
-		   type == INDEXEDA_GIMAGE);
-    }
-  else
-    {
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 0, 0,
-			 gimp_drawable_width (drawable),
-			 gimp_drawable_height (drawable),
-			 FALSE);
-      has_alpha = gimp_drawable_has_alpha (drawable);
-    }
-  indexed = gimp_drawable_is_indexed (drawable);
-  bytes   = gimp_drawable_bytes (drawable);
-  
-  if (indexed)
-    {
-      bytes = has_alpha ? 4 : 3;
-    }
-  mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
-		     0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE(mask)), 
-		     gimp_drawable_height (GIMP_DRAWABLE(mask)), 
-		     TRUE);
-
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
-  if (tile)
-    {
-      start = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
-
-      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, 
-				     threshold, bytes, x, y, start);
-
-      tile_release (tile, FALSE);
-    }
-
-  return mask;
-}
-
-void
-fuzzy_select (GimpImage    *gimage, 
-	      GimpDrawable *drawable, 
-	      gint          op, 
-	      gboolean      feather,
-	      gdouble       feather_radius)
-{
-  gint off_x, off_y;
-
-  /*  if applicable, replace the current selection  */
-  if (op == CHANNEL_OP_REPLACE)
-    gimage_mask_clear (gimage);
-  else
-    gimage_mask_undo (gimage);
-
-  if (drawable)     /* NULL if sample_merged is active */
-    gimp_drawable_offsets (drawable, &off_x, &off_y);
-  else
-    off_x = off_y = 0;
-  
-  if (feather)
-    gimp_channel_feather (fuzzy_mask, gimp_image_get_mask (gimage),
-			  feather_radius,
-			  feather_radius,
-			  op, off_x, off_y);
-  else
-    gimp_channel_combine_mask (gimp_image_get_mask (gimage),
-			       fuzzy_mask, op, off_x, off_y);
-
-  g_object_unref (G_OBJECT (fuzzy_mask));
-  fuzzy_mask = NULL;
-}
-
-/*  fuzzy select action functions  */
+/*  private functions  */
 
 static void
 gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
 {
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
+  object_class    = G_OBJECT_CLASS (klass);
   tool_class      = GIMP_TOOL_CLASS (klass);
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize     = gimp_fuzzy_select_tool_finalize;
 
   tool_class->button_press   = gimp_fuzzy_select_tool_button_press;
   tool_class->button_release = gimp_fuzzy_select_tool_button_release;
@@ -465,6 +178,7 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
   tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
   tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
 
+  fuzzy_select->fuzzy_mask      = NULL;
   fuzzy_select->x               = 0;
   fuzzy_select->y               = 0;
   fuzzy_select->first_x         = 0;
@@ -473,9 +187,23 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 }
 
 static void
+gimp_fuzzy_select_tool_finalize (GObject *object)
+{
+  GimpFuzzySelectTool *fuzzy_sel;
+
+  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (object);
+
+  if (fuzzy_sel->fuzzy_mask)
+    {
+      g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
+      fuzzy_sel->fuzzy_mask = NULL;
+    }
+}
+
+static void
 gimp_fuzzy_select_tool_button_press (GimpTool       *tool, 
                                      GdkEventButton *bevent,
-                                     GDisplay       *gdisp)
+                                     GimpDisplay    *gdisp)
 {
   GimpFuzzySelectTool *fuzzy_sel;
 
@@ -518,7 +246,7 @@ gimp_fuzzy_select_tool_button_press (GimpTool       *tool,
 static void
 gimp_fuzzy_select_tool_button_release (GimpTool       *tool, 
                                        GdkEventButton *bevent,
-                                       GDisplay       *gdisp)
+                                       GimpDisplay    *gdisp)
 {
   GimpFuzzySelectTool *fuzzy_sel;
   GimpDrawable        *drawable;
@@ -534,28 +262,35 @@ gimp_fuzzy_select_tool_button_release (GimpTool       *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      drawable = (fuzzy_options->sample_merged ?
-		  NULL : gimp_image_active_drawable (gdisp->gimage));
+      drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      fuzzy_select (gdisp->gimage,
-                    drawable,
-                    GIMP_SELECTION_TOOL (tool)->op,
-		    fuzzy_options->feather,
-		    fuzzy_options->feather_radius);
+      gimp_image_mask_select_channel (gdisp->gimage,
+                                      drawable,
+                                      fuzzy_options->sample_merged,
+                                      fuzzy_sel->fuzzy_mask,
+                                      GIMP_SELECTION_TOOL (tool)->op,
+                                      fuzzy_options->feather,
+                                      fuzzy_options->feather_radius,
+                                      fuzzy_options->feather_radius);
+
+      g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
+      fuzzy_sel->fuzzy_mask = NULL;
 
       gdisplays_flush ();
     }
 
   /*  If the segment array is allocated, free it  */
   if (segs)
-    g_free (segs);
-  segs = NULL;
+    {
+      g_free (segs);
+      segs = NULL;
+    }
 }
 
 static void
 gimp_fuzzy_select_tool_motion (GimpTool       *tool, 
                                GdkEventMotion *mevent, 
-                               GDisplay       *gdisp)
+                               GimpDisplay    *gdisp)
 {
   GimpFuzzySelectTool *fuzzy_sel;
   GimpSelectionTool   *sel_tool;
@@ -609,7 +344,7 @@ gimp_fuzzy_select_tool_motion (GimpTool       *tool,
 
 static GdkSegment *
 fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
-			GDisplay            *gdisp,
+			GimpDisplay         *gdisp,
 			gint                *nsegs)
 {
   PixelRegion   maskPR;
@@ -630,28 +365,30 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
   gdisplay_untransform_coords (gdisp, fuzzy_sel->x,
 			       fuzzy_sel->y, &x, &y, FALSE, use_offsets);
 
-  new = find_contiguous_region (gdisp->gimage, drawable, 
-				fuzzy_options->antialias,
-				fuzzy_options->threshold, x, y, 
-				fuzzy_options->sample_merged);
+  new = gimp_image_contiguous_region_by_seed (gdisp->gimage, drawable, 
+                                              fuzzy_options->sample_merged,
+                                              fuzzy_options->antialias,
+                                              fuzzy_options->threshold,
+                                              x, y);
 
-  if (fuzzy_mask)
-    g_object_unref (G_OBJECT (fuzzy_mask));
+  if (fuzzy_sel->fuzzy_mask)
+    g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
 
-  fuzzy_mask = new;
+  fuzzy_sel->fuzzy_mask = new;
 
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (fuzzy_mask)),
+  pixel_region_init (&maskPR,
+                     gimp_drawable_data (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
 		     0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE (fuzzy_mask)), 
-		     gimp_drawable_height (GIMP_DRAWABLE (fuzzy_mask)), 
+		     gimp_drawable_width (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)), 
+		     gimp_drawable_height (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)), 
 		     FALSE);
   bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
 			      0, 0,
-			      gimp_drawable_width (GIMP_DRAWABLE (fuzzy_mask)),
-			      gimp_drawable_height (GIMP_DRAWABLE (fuzzy_mask)));
+			      gimp_drawable_width (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
+			      gimp_drawable_height (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)));
 
   segs = g_new (GdkSegment, *nsegs);
 

@@ -38,10 +38,12 @@ struct _GimpFuzzySelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  gint      x, y;             /*  Point from which to execute seed fill   */
-  gint      first_x;          /*                                          */
-  gint      first_y;          /*  variables to keep track of sensitivity  */
-  gdouble   first_threshold;  /*  initial value of threshold slider       */
+  gint               x, y;             /*  Point from which to execute seed fill   */
+  gint               first_x;          /*                                          */
+  gint               first_y;          /*  variables to keep track of sensitivity  */
+  gdouble            first_threshold;  /*  initial value of threshold slider       */
+
+  GimpChannel       *fuzzy_mask;
 };
 
 struct _GimpFuzzySelectToolClass
@@ -50,26 +52,9 @@ struct _GimpFuzzySelectToolClass
 };
 
 
-void          gimp_fuzzy_select_tool_register (Gimp         *gimp);
+void    gimp_fuzzy_select_tool_register (Gimp *gimp);
 
-GType         gimp_fuzzy_select_tool_get_type (void);
-
-
-GimpChannel * find_contiguous_region          (GimpImage    *gimage,
-                                               GimpDrawable *drawable,
-                                               gboolean      antialias,
-                                               gint          threshold,
-                                               gint          x,
-                                               gint          y,
-                                               gboolean      sample_merged);
-void          fuzzy_select                    (GimpImage    *gimage,
-                                               GimpDrawable *drawable,
-                                               gint          op,
-                                               gboolean      feather,
-                                               gdouble       feather_radius);
-
-
-extern GimpChannel *fuzzy_mask;
+GType   gimp_fuzzy_select_tool_get_type (void);
 
 
 #endif  /* __GIMP_FUZZY_SELECT_TOOL_H__ */

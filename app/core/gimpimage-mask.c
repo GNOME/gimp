@@ -64,6 +64,12 @@ gimage_mask_boundary (GimpImage  *gimage,
   gint          x1, y1;
   gint          x2, y2;
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (segs_in != NULL, FALSE);
+  g_return_val_if_fail (segs_out != NULL, FALSE);
+  g_return_val_if_fail (num_segs_in != NULL, FALSE);
+  g_return_val_if_fail (num_segs_out != NULL, FALSE);
+
   if ((layer = gimp_image_floating_sel (gimage)))
     {
       /*  If there is a floating selection, then
@@ -458,17 +464,10 @@ gimage_mask_feather (GimpImage *gimage,
 		     gdouble    feather_radius_x,
 		     gdouble    feather_radius_y)
 {
-  /*  push the current mask onto the undo stack--need to do this here because
-   *  gimp_channel_feather doesn't do it
-   */
-  gimp_channel_push_undo (gimp_image_get_mask (gimage));
-
-  /*  feather the region  */
   gimp_channel_feather (gimp_image_get_mask (gimage),
-			gimp_image_get_mask (gimage),
 			feather_radius_x,
 			feather_radius_y,
-			CHANNEL_OP_REPLACE, 0, 0);
+                        TRUE /* push undo */);
 }
 
 
@@ -477,7 +476,6 @@ gimage_mask_border (GimpImage *gimage,
 		    gint       border_radius_x,
 		    gint       border_radius_y)
 {
-  /*  feather the region  */
   gimp_channel_border (gimp_image_get_mask (gimage),
 		       border_radius_x,
 		       border_radius_y);
@@ -489,7 +487,6 @@ gimage_mask_grow (GimpImage *gimage,
 		  int        grow_pixels_x,
 		  int        grow_pixels_y)
 {
-  /*  feather the region  */
   gimp_channel_grow (gimp_image_get_mask (gimage),
 		     grow_pixels_x,
 		     grow_pixels_y);
@@ -502,7 +499,6 @@ gimage_mask_shrink (GimpImage *gimage,
 		    gint       shrink_pixels_y,
 		    gboolean   edge_lock)
 {
-  /*  feather the region  */
   gimp_channel_shrink (gimp_image_get_mask (gimage),
 		       shrink_pixels_x,
 		       shrink_pixels_y,

@@ -30,8 +30,6 @@
 
 #include "splash.h"
 
-#include "appenv.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -74,7 +72,7 @@ static GtkWidget   *progress          = NULL;
 /*  public functions  */
 
 void
-splash_create (void)
+splash_create (gboolean show_image)
 {
   GtkWidget        *vbox;
   GtkWidget        *logo_hbox;
@@ -93,8 +91,7 @@ splash_create (void)
 
   gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
 
-  if (no_splash_image == FALSE &&
-      splash_logo_load_size (win_initstatus))
+  if (show_image && splash_logo_load_size (win_initstatus))
     {
       splash_show_logo = SPLASH_SHOW_LOGO_LATER;
     }

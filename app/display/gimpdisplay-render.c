@@ -34,7 +34,6 @@
 #include "gimpdisplay-render.h"
 #include "gximage.h"
 
-#include "appenv.h"
 #include "gimprc.h"
 
 

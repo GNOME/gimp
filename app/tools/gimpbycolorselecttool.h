@@ -51,20 +51,9 @@ struct _GimpByColorSelectToolClass
 };
 
 
+void    gimp_by_color_select_tool_register (Gimp *gimp);
 
-void    gimp_by_color_select_tool_register            (Gimp         *gimp);
-
-GType   gimp_by_color_select_tool_get_type            (void);
-
-void    gimp_by_color_select_tool_select              (GimpImage    *gimage,
-						       GimpDrawable *drawable,
-						       guchar       *color,
-						       gint          threshold,
-						       SelectOps     op,
-						       gboolean      antialias,
-						       gboolean      feather,
-						       gdouble       feather_radius,
-						       gboolean      sample_merged);
+GType   gimp_by_color_select_tool_get_type (void);
 
 
 #endif  /*  __GIMP_BY_COLOR_SELECT_TOOL_H__  */

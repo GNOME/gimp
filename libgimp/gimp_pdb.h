@@ -49,6 +49,7 @@
 #include <libgimp/gimpproceduraldb_pdb.h>
 #include <libgimp/gimpplugin_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
+#include <libgimp/gimpselectiontools_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
 #include <libgimp/gimptools_pdb.h>
 #include <libgimp/gimpundo_pdb.h>

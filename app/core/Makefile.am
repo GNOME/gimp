@@ -68,6 +68,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage.h			\
 	gimpimage-colorhash.c		\
 	gimpimage-colorhash.h		\
+	gimpimage-contiguous-region.c	\
+	gimpimage-contiguous-region.h	\
 	gimpimage-convert.c		\
 	gimpimage-convert.h		\
 	gimpimage-convert-fsdither.h	\
@@ -77,6 +79,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-duplicate.h		\
 	gimpimage-mask.c		\
 	gimpimage-mask.h		\
+	gimpimage-mask-select.c		\
+	gimpimage-mask-select.h		\
 	gimpimage-new.c			\
 	gimpimage-new.h			\
 	gimpimage-undo.c		\

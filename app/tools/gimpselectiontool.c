@@ -37,19 +37,19 @@ static void   gimp_selection_tool_init          (GimpSelectionTool      *selecti
 
 static void   gimp_selection_tool_cursor_update   (GimpTool          *tool,
                                                    GdkEventMotion    *mevent,
-                                                   GDisplay          *gdisp);
+                                                   GimpDisplay       *gdisp);
 static void   gimp_selection_tool_oper_update     (GimpTool          *tool,
                                                    GdkEventMotion    *mevent,
-                                                   GDisplay          *gdisp);
+                                                   GimpDisplay       *gdisp);
 static void   gimp_selection_tool_modifier_key    (GimpTool          *tool,
                                                    GdkEventKey       *kevent,
-                                                   GDisplay          *gdisp);
+                                                   GimpDisplay       *gdisp);
 
 static void   gimp_selection_tool_update_op_state (GimpSelectionTool *selection_tool,
                                                    gint               x,
                                                    gint               y,
                                                    gint               state,  
-                                                   GDisplay          *gdisp);
+                                                   GimpDisplay       *gdisp);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -112,9 +112,9 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 }
 
 static void
-gimp_selection_tool_cursor_update (GimpTool           *tool,
-                                   GdkEventMotion     *mevent,
-                                   GDisplay           *gdisp)
+gimp_selection_tool_cursor_update (GimpTool       *tool,
+                                   GdkEventMotion *mevent,
+                                   GimpDisplay    *gdisp)
 {
   GimpSelectionTool *selection_tool;
 
@@ -170,7 +170,7 @@ gimp_selection_tool_cursor_update (GimpTool           *tool,
 static void
 gimp_selection_tool_oper_update (GimpTool       *tool,
                                  GdkEventMotion *mevent,
-                                 GDisplay       *gdisp)
+                                 GimpDisplay    *gdisp)
 {
   GimpSelectionTool *selection_tool;
 
@@ -189,7 +189,7 @@ gimp_selection_tool_oper_update (GimpTool       *tool,
 static void
 gimp_selection_tool_modifier_key (GimpTool    *tool,
                                   GdkEventKey *kevent,
-                                  GDisplay    *gdisp)
+                                  GimpDisplay *gdisp)
 {
   GimpSelectionTool *selection_tool;
   gint               state;
@@ -233,7 +233,7 @@ gimp_selection_tool_update_op_state (GimpSelectionTool *selection_tool,
                                      gint               x,
                                      gint               y,
                                      gint               state,  
-                                     GDisplay          *gdisp)
+                                     GimpDisplay       *gdisp)
 {
   GimpLayer *layer;
   GimpLayer *floating_sel;

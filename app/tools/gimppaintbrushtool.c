@@ -301,14 +301,22 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 
       if (gradient_length)
 	{
-	  if (pressure_options->color)
-	    gimp_gradient_get_color_at (gimp_context_get_gradient (context),
-					paint_tool->curpressure, &color);
-	  else
-	    gimp_paint_tool_get_color_from_gradient (paint_tool, gradient_length,
-						     &color, mode);
+          GimpGradient *gradient;
 
-	  temp_blend =  (gint) ((color.a * local_blend));
+          gradient = gimp_context_get_gradient (context);
+
+	  if (pressure_options->color)
+	    gimp_gradient_get_color_at (gradient,
+					paint_tool->curpressure,
+                                        &color);
+	  else
+	    gimp_paint_tool_get_color_from_gradient (paint_tool,
+                                                     gradient,
+                                                     gradient_length,
+						     &color,
+                                                     mode);
+
+	  temp_blend = (gint) ((color.a * local_blend));
 
 	  gimp_rgb_get_uchar (&color,
 			      &col[RED_PIX],

@@ -20,7 +20,7 @@
 #define __SPLASH_H__
 
 
-void   splash_create    (void);
+void   splash_create    (gboolean show_image);
 void   splash_logo_load (void);
 void   splash_destroy   (void);
 

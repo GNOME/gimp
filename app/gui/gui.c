@@ -326,7 +326,9 @@ gui_restore (Gimp *gimp)
   color_select_init ();
 
   devices_restore ();
-  session_restore ();
+
+  if (restore_session)
+    session_restore ();
 }
 
 void

@@ -73,14 +73,4 @@ void    gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 					   gint                h);
 
 
-void    rect_select                       (GimpImage          *gimage,
-					   gint                x,
-					   gint                y,
-					   gint                w,
-					   gint                h,
-					   SelectOps           op,
-					   gboolean            feather,
-					   gdouble             feather_radius);
-
-
 #endif  /*  __GIMP_RECT_SELECT_TOOL_H__  */

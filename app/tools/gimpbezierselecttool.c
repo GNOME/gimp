@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -140,7 +141,7 @@ static BezierMatrix basis =
 /*  Global Static Variable to maintain informations about the "context"  */
 static GimpBezierSelectTool *curSel   = NULL;
 static GimpTool             *curTool  = NULL;
-static GDisplay             *curGdisp = NULL;
+static GimpDisplay          *curGdisp = NULL;
 static GimpDrawTool         *curCore  = NULL;
 static gint                  ModeEdit = EXTEND_NEW;
 
@@ -158,21 +159,21 @@ static guint bezier_select_signals[LAST_SIGNAL] = { 0 };
 static void  gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass);
 static void  gimp_bezier_select_tool_init       (GimpBezierSelectTool      *bezier_select);
 
-static void  gimp_bezier_select_tool_button_press (GimpTool         *tool,
-						   GdkEventButton   *bevent,
-						   GDisplay         *gdisp);
+static void  gimp_bezier_select_tool_button_press   (GimpTool          *tool,
+                                                     GdkEventButton    *bevent,
+                                                     GimpDisplay       *gdisp);
 static void  gimp_bezier_select_tool_button_release (GimpTool          *tool,
 						      GdkEventButton   *bevent,
-						      GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_motion        (GimpTool           *tool,
-						    GdkEventMotion   *mevent,
-						    GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_control       (GimpTool         *tool,
-						    ToolAction        action,
-						    GDisplay         *gdisp);
-static void  gimp_bezier_select_tool_cursor_update (GimpTool         *tool,
-						    GdkEventMotion   *mevent,
-						    GDisplay         *gdisp);
+						      GimpDisplay      *gdisp);
+static void  gimp_bezier_select_tool_motion          (GimpTool         *tool,
+                                                      GdkEventMotion   *mevent,
+                                                      GimpDisplay      *gdisp);
+static void  gimp_bezier_select_tool_control         (GimpTool         *tool,
+                                                      ToolAction        action,
+                                                      GimpDisplay      *gdisp);
+static void  gimp_bezier_select_tool_cursor_update   (GimpTool         *tool,
+                                                      GdkEventMotion   *mevent,
+                                                      GimpDisplay      *gdisp);
 static void       bezier_select_draw            (GimpDrawTool     *draw_tool);
 
 static void       bezier_offset_point           (GimpBezierSelectPoint      *pt,
@@ -206,7 +207,7 @@ static void       bezier_compose                (BezierMatrix      a,
 						 BezierMatrix      ab);
 
 static void       bezier_convert                (GimpBezierSelectTool     *bezier_sel,
-						 GDisplay         *gdisp,
+						 GimpDisplay         *gdisp,
 						 gint              subdivisions,
 						 gboolean          antialias);
 static void       bezier_convert_points         (GimpBezierSelectTool     *bezier_sel,
@@ -229,10 +230,9 @@ static gboolean   test_add_point_on_segment     (GimpBezierSelectTool     *bezie
 						 gint              ypos,
 						 gint              halfwidth);
 static void       bezier_to_sel_internal        (GimpBezierSelectTool     *bezier_sel,
-						 GimpTool             *tool,
-						 GDisplay         *gdisp,
-						 gint              op,
-						 gboolean          replace);
+						 GimpTool         *tool,
+						 GimpDisplay      *gdisp,
+						 ChannelOps        op);
 static void       bezier_stack_points_aux       (GdkPoint         *points,
 						 gint              start,
 						 gint              end,
@@ -251,14 +251,14 @@ static gint       count_points_on_curve         (GimpBezierSelectPoint      *poi
 static gboolean   bezier_edit_point_on_curve (gint            x,
 					      gint            y,
 					      gint            halfwidth,
-					      GDisplay       *gdisp,
+					      GimpDisplay    *gdisp,
 					      GimpBezierSelectTool   *bezier_sel,
 					      GimpTool           *tool,
 					      GdkEventButton *bevent);
 static gboolean bezier_add_point_on_segment  (gint          x,
 					      gint          y,
 					      gint          halfwidth,
-					      GDisplay     *gdisp,
+					      GimpDisplay  *gdisp,
 					      GimpBezierSelectTool *bezier_sel,
 					      GimpTool         *tool);
 static GimpBezierSelectPoint * find_start_open_curve  (GimpBezierSelectTool *bsel);
@@ -390,7 +390,7 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
 static void
 gimp_bezier_select_tool_button_press (GimpTool       *tool,
 				      GdkEventButton *bevent,
-				      GDisplay       *gdisp)
+				      GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool  *bezier_sel;
   GimpBezierSelectPoint *points;
@@ -422,7 +422,7 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 
   curTool  =  tool_manager_get_active (gdisp->gimage->gimp);
   curSel   =  bezier_sel;
-  curGdisp =  (GDisplay *) gdisp;
+  curGdisp =  (GimpDisplay *) gdisp;
   curCore  =  (GimpDrawTool *)bezier_sel;
 
   switch (bezier_sel->state)
@@ -654,8 +654,6 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 
       if (!grab_pointer && gimp_channel_value (bezier_sel->mask, x, y))
 	{
-	  gboolean replace = FALSE;
-
 	  if ((bevent->state & GDK_SHIFT_MASK) &&
 	      !(bevent->state & GDK_CONTROL_MASK))
 	    op = CHANNEL_OP_ADD;
@@ -666,12 +664,9 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 		   (bevent->state & GDK_SHIFT_MASK))
 	    op = CHANNEL_OP_INTERSECT;
 	  else
-	    {
-	      op = CHANNEL_OP_ADD;
-	      replace = TRUE;
-	    }
+            op = CHANNEL_OP_REPLACE;
 
-	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op, replace);
+	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op);
 	  gimp_draw_tool_resume ((GimpDrawTool *)bezier_sel);
 	}
       else
@@ -702,9 +697,9 @@ gimp_bezier_select_tool_button_press (GimpTool       *tool,
 }
 
 static void
-gimp_bezier_select_tool_button_release (GimpTool           *tool,
-			      GdkEventButton *bevent,
-			      GDisplay       *gdisp)
+gimp_bezier_select_tool_button_release (GimpTool       *tool,
+                                        GdkEventButton *bevent,
+                                        GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool *bezier_sel;
 
@@ -725,9 +720,9 @@ gimp_bezier_select_tool_button_release (GimpTool           *tool,
 
 
 static void
-gimp_bezier_select_tool_motion (GimpTool           *tool,
-		      GdkEventMotion *mevent,
-		      GDisplay       *gdisp)
+gimp_bezier_select_tool_motion (GimpTool       *tool,
+                                GdkEventMotion *mevent,
+                                GimpDisplay    *gdisp)
 {
   static gint lastx, lasty;
 
@@ -903,7 +898,7 @@ gimp_bezier_select_tool_motion (GimpTool           *tool,
 
 
 gint
-bezier_select_load (GDisplay              *gdisp,
+bezier_select_load (GimpDisplay           *gdisp,
 		    GimpBezierSelectPoint *pts,
 		    gint                   num_pts,
 		    gint                   closed)
@@ -1351,13 +1346,13 @@ delete_whole_curve (GimpBezierSelectTool *bezier_sel,
 }
 
 static gboolean
-bezier_edit_point_on_curve (gint            x,
-			    gint            y,
-			    gint            halfwidth,
-			    GDisplay       *gdisp,
-			    GimpBezierSelectTool   *bezier_sel,
-			    GimpTool           *tool,
-			    GdkEventButton *bevent)
+bezier_edit_point_on_curve (gint                  x,
+			    gint                  y,
+			    gint                  halfwidth,
+			    GimpDisplay          *gdisp,
+			    GimpBezierSelectTool *bezier_sel,
+			    GimpTool             *tool,
+			    GdkEventButton       *bevent)
 {
   gboolean     grab_pointer = FALSE;
   GimpBezierSelectPoint *next_curve;
@@ -1553,12 +1548,12 @@ bezier_edit_point_on_curve (gint            x,
 }
 
 static gboolean
-bezier_add_point_on_segment (gint          x,
-			     gint          y,
-			     gint          halfwidth,
-			     GDisplay     *gdisp,
+bezier_add_point_on_segment (gint                  x,
+			     gint                  y,
+			     gint                  halfwidth,
+			     GimpDisplay          *gdisp,
 			     GimpBezierSelectTool *bezier_sel,
-			     GimpTool         *tool)
+			     GimpTool             *tool)
 {
   GimpBezierSelectPoint *points   = bezier_sel->points;
   GimpBezierSelectPoint *start_pt = bezier_sel->points;
@@ -1619,9 +1614,9 @@ bezier_start_new_segment (GimpBezierSelectTool *bezier_sel,
 }
 
 static void
-bezier_select_button_press (GimpTool           *tool,
+bezier_select_button_press (GimpTool       *tool,
 			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
+			    GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool *bezier_sel;
   GimpBezierSelectPoint  *points;
@@ -1653,7 +1648,7 @@ bezier_select_button_press (GimpTool           *tool,
 
   curTool  = tool_manager_get_active (gdisp->gimage->gimp);
   curSel   = (GimpBezierSelectTool *) curTool;
-  curGdisp = (GDisplay *) gdisp;
+  curGdisp = (GimpDisplay *) gdisp;
 
   curTool->gdisp = gdisp;
   curCore        = (GimpDrawTool *) bezier_sel;
@@ -1899,8 +1894,6 @@ bezier_select_button_press (GimpTool           *tool,
 
       if (!grab_pointer && gimp_channel_value (bezier_sel->mask, x, y))
 	{
-	  gboolean replace = FALSE;
-
 	  if ((bevent->state & GDK_SHIFT_MASK) &&
 	      !(bevent->state & GDK_CONTROL_MASK))
 	    op = CHANNEL_OP_ADD;
@@ -1911,12 +1904,9 @@ bezier_select_button_press (GimpTool           *tool,
 		   (bevent->state & GDK_SHIFT_MASK))
 	    op = CHANNEL_OP_INTERSECT;
 	  else
-	    {
-	      op = CHANNEL_OP_ADD;
-	      replace = TRUE;
-	    }
+            op = CHANNEL_OP_REPLACE;
 
-	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op, replace);
+	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op);
 	  gimp_draw_tool_resume ( (GimpDrawTool *) bezier_sel);
 	}
       else
@@ -1949,14 +1939,14 @@ bezier_select_button_press (GimpTool           *tool,
 
 /* returns 0 if not on control point, else BEZIER_ANCHOR or BEZIER_CONTROL */
 static gint
-bezier_on_control_point (GDisplay     *gdisp,
+bezier_on_control_point (GimpDisplay          *gdisp,
 			 GimpBezierSelectTool *bezier_sel,
-			 gint          x,
-			 gint          y,
-			 gint          halfwidth)
+			 gint                  x,
+			 gint                  y,
+			 gint                  halfwidth)
 {
   GimpBezierSelectPoint *points;
-  gint         num_points;
+  gint                   num_points;
 
   /* transform the points from image space to screen space */
   points = bezier_sel->points;
@@ -2053,11 +2043,11 @@ points_in_box (GimpBezierSelectPoint *points,
 }
 
 static gint
-bezier_point_on_curve (GDisplay     *gdisp,
+bezier_point_on_curve (GimpDisplay          *gdisp,
 		       GimpBezierSelectTool *bezier_sel,
-		       gint          x,
-		       gint          y,
-		       gint          halfwidth)
+		       gint                  x,
+		       gint                  y,
+		       gint                  halfwidth)
 {
   BezierCheckPnts  chkpnts;
   GimpBezierSelectPoint     *points;
@@ -2114,9 +2104,9 @@ bezier_point_on_curve (GDisplay     *gdisp,
 }
 
 static void
-gimp_bezier_select_tool_cursor_update (GimpTool           *tool,
+gimp_bezier_select_tool_cursor_update (GimpTool       *tool,
 				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp)
+				       GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool *bezier_sel;
   GimpDrawTool *draw_tool;
@@ -2316,9 +2306,9 @@ gimp_bezier_select_tool_cursor_update (GimpTool           *tool,
 }
 
 static void
-gimp_bezier_select_tool_control (GimpTool       *tool,
-				 ToolAction  action,
-				 GDisplay   *gdisp)
+gimp_bezier_select_tool_control (GimpTool    *tool,
+				 ToolAction   action,
+				 GimpDisplay *gdisp)
 {
   GimpBezierSelectTool * bezier_sel;
 
@@ -2345,7 +2335,7 @@ gimp_bezier_select_tool_control (GimpTool       *tool,
 }
 
 void 
-bezier_draw (GDisplay     *gdisp,
+bezier_draw (GimpDisplay          *gdisp,
 	     GimpBezierSelectTool *bezier_sel)
 {
   GimpBezierSelectPoint *points;
@@ -2402,12 +2392,12 @@ bezier_draw (GDisplay     *gdisp,
 static void
 bezier_select_draw (GimpDrawTool *draw_tool)
 {
-  GDisplay     *gdisp;
-  GimpTool     *tool;
+  GimpDisplay          *gdisp;
+  GimpTool             *tool;
   GimpBezierSelectTool *bezier_sel;
 
-  bezier_sel = (GimpBezierSelectTool *)draw_tool;
-  tool       = GIMP_TOOL(bezier_sel);
+  bezier_sel = GIMP_BEZIER_SELECT_TOOL (draw_tool);
+  tool       = GIMP_TOOL (draw_tool);
   gdisp      = tool->gdisp;
 
   bezier_draw (gdisp, bezier_sel);
@@ -2846,9 +2836,9 @@ static int lasty;
 
 static void
 bezier_convert (GimpBezierSelectTool *bezier_sel,
-		GDisplay     *gdisp,
-		gint          subdivisions,
-		gboolean      antialias)
+		GimpDisplay          *gdisp,
+		gint                  subdivisions,
+		gboolean              antialias)
 {
   PixelRegion  maskPR;
   GimpBezierSelectPoint *points;
@@ -3289,31 +3279,23 @@ bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
 }
 
 static void
-bezier_to_sel_internal  (GimpBezierSelectTool  *bezier_sel,
-			 GimpTool          *tool,
-			 GDisplay      *gdisp,
-			 gint           op, 
-			 gint           replace)
+bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
+                        GimpTool             *tool,
+                        GDisplay             *gdisp,
+                        ChannelOps            op)
 {
   /*  If we're antialiased, then recompute the mask...
    */
   if (bezier_options->antialias)
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
 
-  if (replace)
-    gimage_mask_clear (gdisp->gimage);
-  else
-    gimage_mask_undo (gdisp->gimage);
-  
-  if (bezier_options->feather)
-    gimp_channel_feather (bezier_sel->mask,
-			  gimp_image_get_mask (gdisp->gimage),
-			  bezier_options->feather_radius, 
-			  bezier_options->feather_radius, 
-			  op, 0, 0);
-  else
-    gimp_channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
-			       bezier_sel->mask, op, 0, 0);
+  gimp_image_mask_select_channel (gdisp->gimage,
+                                  NULL, FALSE,
+                                  bezier_sel->mask,
+                                  op,
+                                  bezier_options->feather,
+                                  bezier_options->feather_radius, 
+                                  bezier_options->feather_radius);
   
   /*  show selection on all views  */
   gdisplays_flush ();
@@ -3570,7 +3552,7 @@ bezier_select_mode (gint mode)
 
 void
 bezier_to_selection (GimpBezierSelectTool *bezier_sel,
-		     GDisplay     *gdisp)
+		     GDisplay             *gdisp)
 {
   /* Call the internal function */
   if (!bezier_sel->closed)
@@ -3583,7 +3565,8 @@ bezier_to_selection (GimpBezierSelectTool *bezier_sel,
    * This loads it into curSel for this image
    */
   bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
-  bezier_to_sel_internal (curSel, (GimpTool *) curTool, gdisp, CHANNEL_OP_ADD, TRUE);
+  bezier_to_sel_internal (curSel, (GimpTool *) curTool, gdisp,
+                          CHANNEL_OP_REPLACE);
 }
 
 /* check whether vectors (offx, offy), (l_offx, l_offy) have the same angle. */
