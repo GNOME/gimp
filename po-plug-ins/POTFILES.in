@@ -1,6 +1,8 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+plug-ins/AlienMap/AlienMap.c
+plug-ins/AlienMap2/AlienMap2.c
 plug-ins/common/CEL.c
 plug-ins/common/CML_explorer.c
 plug-ins/Lighting/lighting_main.c

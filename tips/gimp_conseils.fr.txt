@@ -38,7 +38,7 @@ Lors de l'utilisation d'un outil de dessin (Pinceau, Aérographe
 ou Crayon), Shift+Click tracera une ligne droite depuis le dernier
 point de tracé jusqu'à la position du pointeur (souris).
 
-La plupart des modules plug-ins opèrent sur le calque courant
+La plupart des appendices opèrent sur le calque courant
 de l'image courante. Dans certains cas, vous devrez d'abord
 fusionner tous les calques (Calques->Aplatir image) si vous
 voulez que le module opère sur l'image entière.

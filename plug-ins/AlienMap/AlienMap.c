@@ -36,6 +36,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "logo.h"
+#include "libgimp/stdplugins-intl.h"
 
 /***** Macros *****/
 
@@ -181,13 +182,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_alienmap",
-        		  "AlienMap Color Transformation Plug-In",
-        		  "No help yet. Just try it and you'll see!",
+        		  _("AlienMap Color Transformation Plug-In"),
+        		  _("No help yet. Just try it and you'll see!"),
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
-        		  "1th May 1997",
-        		  "<Image>/Filters/Colors/Alien Map",
+        		  _("1th May 1997"),
+        		  N_("<Image>/Filters/Colors/Alien Map"),
         		  "RGB*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,
@@ -267,7 +270,8 @@ run (char    *name,
   double        xhsiz, yhsiz;
   int   	pwidth, pheight;
   GStatusType status = STATUS_SUCCESS;
-
+ 
+  INIT_I18N_UI ();
 
   run_mode = param[0].data.d_int32;
 
@@ -371,7 +375,7 @@ run (char    *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_color (drawable->id))
         {
-          gimp_progress_init ("AlienMap: Transforming ...");
+          gimp_progress_init (_("AlienMap: Transforming ..."));
 
         	/* Set the tile cache size */
 
@@ -658,7 +662,7 @@ alienmap_dialog(void)
 
         build_preview_source_image();
         dialog = maindlg = gtk_dialog_new();
-        gtk_window_set_title(GTK_WINDOW(dialog), "AlienMap");
+        gtk_window_set_title(GTK_WINDOW(dialog), _("AlienMap"));
         gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
         gtk_container_border_width(GTK_CONTAINER(dialog), 0);
         gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -702,7 +706,7 @@ alienmap_dialog(void)
         gtk_table_attach(GTK_TABLE(top_table), table, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table);
 
-        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redstretch,0,128.00000000000, "Change intensity of the red channel");
+        dialog_create_value("R", GTK_TABLE(table), 0, &wvals.redstretch,0,128.00000000000, _("Change intensity of the red channel"));
 
 
         table2 = gtk_table_new(1, 3, FALSE);
@@ -710,7 +714,7 @@ alienmap_dialog(void)
         gtk_table_attach(GTK_TABLE(top_table), table2, 0, 4, 2, 3, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table2);
 
-        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenstretch,0,128.0000000000000, "Change intensity of the green channel");
+        dialog_create_value("G", GTK_TABLE(table2), 0, &wvals.greenstretch,0,128.0000000000000, _("Change intensity of the green channel"));
 
 
         table3 = gtk_table_new(1, 3, FALSE);
@@ -718,17 +722,17 @@ alienmap_dialog(void)
         gtk_table_attach(GTK_TABLE(top_table), table3, 0, 4, 3, 4, GTK_EXPAND | GTK_FILL, 0, 0, 0);
         gtk_widget_show(table3);
 
-        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluestretch,0,128.00000000000000, "Change intensity of the blue channel");
+        dialog_create_value("B", GTK_TABLE(table3), 0, &wvals.bluestretch,0,128.00000000000000, _("Change intensity of the blue channel"));
 
 /*  Redmode toggle box  */
-    frame = gtk_frame_new ("Red:");
+    frame = gtk_frame_new (_("Red:"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
     toggle_vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (redmode_group, "Sine");
+    toggle = gtk_radio_button_new_with_label (redmode_group, _("Sine"));
     redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -737,9 +741,9 @@ alienmap_dialog(void)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redsinus);
     gtk_widget_show (toggle);
    
-    set_tooltip(tips,toggle,"Use sine-function for red component");
+    set_tooltip(tips,toggle,_("Use sine-function for red component"));
 
-    toggle = gtk_radio_button_new_with_label (redmode_group, "Cosine");
+    toggle = gtk_radio_button_new_with_label (redmode_group, _("Cosine"));
     redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -747,9 +751,9 @@ alienmap_dialog(void)
         		&do_redcosinus);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redcosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for red component");
+    set_tooltip(tips,toggle,_("Use cosine-function for red component"));
 
-    toggle = gtk_radio_button_new_with_label (redmode_group, "None");
+    toggle = gtk_radio_button_new_with_label (redmode_group, _("None"));
     redmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -757,21 +761,21 @@ alienmap_dialog(void)
         		&do_rednone);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_rednone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Red channel: use linear mapping instead of any trigonometrical function");
+    set_tooltip(tips,toggle,_("Red channel: use linear mapping instead of any trigonometrical function"));
 
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
 
 
 /*  Greenmode toggle box  */
-    frame = gtk_frame_new ("Green:");
+    frame = gtk_frame_new (_("Green:"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (top_table), frame, 2, 3, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
     toggle_vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (greenmode_group, "Sine");
+    toggle = gtk_radio_button_new_with_label (greenmode_group, _("Sine"));
     greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -779,9 +783,9 @@ alienmap_dialog(void)
         		&do_greensinus);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greensinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use sine-function for green component");
+    set_tooltip(tips,toggle,_("Use sine-function for green component"));
 
-    toggle = gtk_radio_button_new_with_label (greenmode_group, "Cosine");
+    toggle = gtk_radio_button_new_with_label (greenmode_group, _("Cosine"));
     greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -789,9 +793,9 @@ alienmap_dialog(void)
         		&do_greencosinus);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greencosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for green component");
+    set_tooltip(tips,toggle,_("Use cosine-function for green component"));
 
-    toggle = gtk_radio_button_new_with_label (greenmode_group, "None");
+    toggle = gtk_radio_button_new_with_label (greenmode_group, _("None"));
     greenmode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -799,21 +803,21 @@ alienmap_dialog(void)
         		&do_greennone);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greennone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Green channel: use linear mapping instead of any trigonometrical function");
+    set_tooltip(tips,toggle,_("Green channel: use linear mapping instead of any trigonometrical function"));
 
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
 
 
 /*  Bluemode toggle box  */
-    frame = gtk_frame_new ("Blue:");
+    frame = gtk_frame_new (_("Blue:"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach (GTK_TABLE (top_table), frame, 3, 4, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
     toggle_vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
     gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-    toggle = gtk_radio_button_new_with_label (bluemode_group, "Sine");
+    toggle = gtk_radio_button_new_with_label (bluemode_group, _("Sine"));
     bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -821,9 +825,9 @@ alienmap_dialog(void)
         		&do_bluesinus);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluesinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use sine-function for blue component");
+    set_tooltip(tips,toggle,_("Use sine-function for blue component"));
 
-    toggle = gtk_radio_button_new_with_label (bluemode_group, "Cosine");
+    toggle = gtk_radio_button_new_with_label (bluemode_group, _("Cosine"));
     bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -831,9 +835,9 @@ alienmap_dialog(void)
         		&do_bluecosinus);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluecosinus);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Use cosine-function for blue component");
+    set_tooltip(tips,toggle,_("Use cosine-function for blue component"));
 
-    toggle = gtk_radio_button_new_with_label (bluemode_group, "None");
+    toggle = gtk_radio_button_new_with_label (bluemode_group, _("None"));
     bluemode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -841,7 +845,7 @@ alienmap_dialog(void)
         		&do_bluenone);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluenone);
     gtk_widget_show (toggle);
-    set_tooltip(tips,toggle,"Blue channel: use linear mapping instead of any trigonometrical function");
+    set_tooltip(tips,toggle,_("Blue channel: use linear mapping instead of any trigonometrical function"));
 
     gtk_widget_show (toggle_vbox);
     gtk_widget_show (frame);
@@ -853,7 +857,7 @@ alienmap_dialog(void)
 
 gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 
-        button = gtk_button_new_with_label("OK");
+        button = gtk_button_new_with_label(_("OK"));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
         		   (GtkSignalFunc) dialog_ok_callback,
@@ -861,18 +865,18 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_grab_default(button);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Accept settings and apply filter on image");
+        set_tooltip(tips,button,_("Accept settings and apply filter on image"));
 
-        button = gtk_button_new_with_label("Cancel");
+        button = gtk_button_new_with_label(_("Cancel"));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
         		   (GtkSignalFunc) dialog_cancel_callback,
         		   dialog);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Reject any changes and close plug-in");
+        set_tooltip(tips,button,_("Reject any changes and close plug-in"));
 
-	button = gtk_button_new_with_label("About...");
+	button = gtk_button_new_with_label(_("About..."));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   GTK_SIGNAL_FUNC (alienmap_logo_dialog),
@@ -880,7 +884,7 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		     button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-	set_tooltip(tips,button,"Show information about this plug-in and the author");
+	set_tooltip(tips,button,_("Show information about this plug-in and the author"));
 
 
         /* Done */
@@ -1143,7 +1147,7 @@ alienmap_logo_dialog()
   if (!logodlg)
     {
       logodlg = gtk_dialog_new();
-      gtk_window_set_title(GTK_WINDOW(logodlg), "About Alien Map");
+      gtk_window_set_title(GTK_WINDOW(logodlg), _("About Alien Map"));
       gtk_window_position(GTK_WINDOW(logodlg), GTK_WIN_POS_MOUSE);
       gtk_signal_connect(GTK_OBJECT(logodlg),
 			 "destroy",
@@ -1155,7 +1159,7 @@ alienmap_logo_dialog()
 			 GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 			 &logodlg);
       
-      xbutton = gtk_button_new_with_label("OK");
+      xbutton = gtk_button_new_with_label(_("OK"));
       GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
       gtk_signal_connect_object (GTK_OBJECT(xbutton), "clicked",
 				 GTK_SIGNAL_FUNC (gtk_widget_hide),
@@ -1164,7 +1168,7 @@ alienmap_logo_dialog()
 			 xbutton, TRUE, TRUE, 0);
       gtk_widget_grab_default(xbutton);
       gtk_widget_show(xbutton);
-      set_tooltip(tips,xbutton,"This closes the information box");
+      set_tooltip(tips,xbutton,_("This closes the information box"));
       
       xframe = gtk_frame_new(NULL);
       gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
@@ -1206,13 +1210,13 @@ alienmap_logo_dialog()
       
       xhbox = gtk_hbox_new(FALSE, 5);
       gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = "\nCotting Software Productions\n"
+      text = _("\nCotting Software Productions\n"
 	"Bahnhofstrasse 31\n"
 	"CH-3066 Stettlen (Switzerland)\n\n"
 	"cotting@mygale.org\n"
 	"http://www.mygale.org/~cotting\n\n"
 	"AlienMap Plug-In for the GIMP\n"
-	"Version 1.01\n";
+	"Version 1.01\n");
       xlabel = gtk_label_new(text);
       gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
       gtk_widget_show(xlabel);

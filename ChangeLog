@@ -1,3 +1,13 @@
+Fri Oct  8 15:04:45 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimpintl.h
+	* libgimp/stdplugins-intl.h: use G_STMT_START and G_STMT_END for
+	multiline #defines
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap/AlienMap2.c
+	* tips/gimp_conseils.fr.txt: i18n stuff from David Monniaux
+
 Fri Oct  8 22:00:00 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpfeatures.h.in: #define GIMP_HAVE_EXPORT so that authors

@@ -1,18 +1,363 @@
-# gimp plug-in's fr.po
-# Copyright (C) 1998,1999 Free Software Foundation, Inc.
-# Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
-# David Monniaux <David.Monniaux@ens.fr>, 1999.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
 "POT-Creation-Date: 1999-10-04 09:28-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
-"Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
+"Last-Translator: David Monniaux <david.monniaux@ens.fr>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: plug-ins/AlienMap/AlienMap.c:188
+msgid "AlienMap Color Transformation Plug-In"
+msgstr "Transformation de couleurs « psychédélique »"
+
+#: plug-ins/AlienMap/AlienMap.c:189 plug-ins/AlienMap2/AlienMap2.c:211
+msgid "No help yet. Just try it and you'll see!"
+msgstr "Aide pas encore disponible. Essayez et vous verrez !"
+
+#: plug-ins/AlienMap/AlienMap.c:192
+msgid "1th May 1997"
+msgstr "1er mai 1997"
+
+#: plug-ins/AlienMap/AlienMap.c:193
+msgid "<Image>/Filters/Colors/Alien Map"
+msgstr "<Image>/Filtres/Couleurs/Psychédélique"
+
+#: plug-ins/AlienMap/AlienMap.c:378
+msgid "AlienMap: Transforming ..."
+msgstr "Psychédélique: transformation..."
+
+#: plug-ins/AlienMap/AlienMap.c:665
+msgid "AlienMap"
+msgstr "Psychédélique"
+
+#: plug-ins/AlienMap/AlienMap.c:709
+msgid "Change intensity of the red channel"
+msgstr "Changer l'intensité du canal rouge"
+
+#: plug-ins/AlienMap/AlienMap.c:717
+msgid "Change intensity of the green channel"
+msgstr "Changer l'intensité du canal vert"
+
+#: plug-ins/AlienMap/AlienMap.c:725
+msgid "Change intensity of the blue channel"
+msgstr "Changer l'intensité du canal bleu"
+
+#. Redmode toggle box
+#: plug-ins/AlienMap/AlienMap.c:728 plug-ins/common/compose.c:125
+#: plug-ins/common/compose.c:127
+msgid "Red:"
+msgstr "Rouge:"
+
+#: plug-ins/AlienMap/AlienMap.c:735 plug-ins/AlienMap/AlienMap.c:778
+#: plug-ins/AlienMap/AlienMap.c:820
+msgid "Sine"
+msgstr "Sinus"
+
+#: plug-ins/AlienMap/AlienMap.c:744
+msgid "Use sine-function for red component"
+msgstr "Utiliser la fonction sinus pour la composante rouge"
+
+#: plug-ins/AlienMap/AlienMap.c:746 plug-ins/AlienMap/AlienMap.c:788
+#: plug-ins/AlienMap/AlienMap.c:830
+msgid "Cosine"
+msgstr "Cosinus"
+
+#: plug-ins/AlienMap/AlienMap.c:754
+msgid "Use cosine-function for red component"
+msgstr "Utiliser la fonction cosinus pour la composante rouge"
+
+#: plug-ins/AlienMap/AlienMap.c:756 plug-ins/AlienMap/AlienMap.c:798
+#: plug-ins/AlienMap/AlienMap.c:840 plug-ins/common/CML_explorer.c:253
+#: plug-ins/gap/gap_mov_dialog.c:280
+msgid "None"
+msgstr "Aucun"
+
+#: plug-ins/AlienMap/AlienMap.c:764
+msgid "Red channel: use linear mapping instead of any trigonometrical function"
+msgstr "Composante rouge: fonction linéaire (et non pas trigonométrique)"
+
+#. Greenmode toggle box
+#: plug-ins/AlienMap/AlienMap.c:771
+msgid "Green:"
+msgstr "Vert:"
+
+#: plug-ins/AlienMap/AlienMap.c:786
+msgid "Use sine-function for green component"
+msgstr "Utiliser la fonction sinus pour la composante verte"
+
+#: plug-ins/AlienMap/AlienMap.c:796
+msgid "Use cosine-function for green component"
+msgstr "Utiliser la fonction cosinus pour la composante verte"
+
+#: plug-ins/AlienMap/AlienMap.c:806
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
+msgstr "Composante verte: fonction linéaire (et non pas trigonométrique)"
+
+#. Bluemode toggle box
+#: plug-ins/AlienMap/AlienMap.c:813 plug-ins/common/compose.c:125
+#: plug-ins/common/compose.c:127
+msgid "Blue:"
+msgstr "Bleu:"
+
+#: plug-ins/AlienMap/AlienMap.c:828
+msgid "Use sine-function for blue component"
+msgstr "Utiliser la fonction sinus pour la composante bleue"
+
+#: plug-ins/AlienMap/AlienMap.c:838
+msgid "Use cosine-function for blue component"
+msgstr "Utiliser la fonction cosinus pour la composante bleue"
+
+#: plug-ins/AlienMap/AlienMap.c:848
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Composante bleue: fonction linéaire (et non pas trigonométrique)"
+
+#. Action Area
+#: plug-ins/AlienMap/AlienMap.c:860 plug-ins/AlienMap/AlienMap.c:1162
+#: plug-ins/AlienMap2/AlienMap2.c:782 plug-ins/AlienMap2/AlienMap2.c:1066
+#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1818
+#: plug-ins/common/CML_explorer.c:2679 plug-ins/common/CML_explorer.c:2775
+#: plug-ins/common/apply_lens.c:416 plug-ins/common/blur.c:619
+#: plug-ins/common/bumpmap.c:965 plug-ins/common/checkerboard.c:381
+#: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
+#: plug-ins/common/cubism.c:329 plug-ins/common/decompose.c:914
+#: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
+#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1469
+#: plug-ins/common/lic.c:1246 plug-ins/common/mail.c:485
+#: plug-ins/common/oilify.c:460 plug-ins/common/png.c:843
+#: plug-ins/common/ps.c:2078 plug-ins/common/ps.c:2345
+#: plug-ins/common/rotate.c:605 plug-ins/common/threshold_alpha.c:467
+#: plug-ins/common/threshold_alpha.c:500 plug-ins/common/warp.c:508
+#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
+#: plug-ins/gap/gap_arr_dialog.c:947 plug-ins/gap/gap_arr_dialog.c:1171
+#: plug-ins/gap/gap_mod_layer.c:149 plug-ins/gap/gap_mov_dialog.c:461
+#: plug-ins/gap/gap_mpege.c:190 plug-ins/gap/gap_resi_dialog.c:136
+#: plug-ins/gimpressionist/gimpressionist.c:361
+#: plug-ins/gimpressionist/orientmap.c:626
+#: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
+#: plug-ins/mosaic/mosaic.c:564 plug-ins/print/print.c:1104
+#: plug-ins/script-fu/script-fu-scripts.c:1383
+#: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
+#: plug-ins/struc/struc.c:239
+msgid "OK"
+msgstr "OK"
+
+#: plug-ins/AlienMap/AlienMap.c:868 plug-ins/AlienMap2/AlienMap2.c:790
+#, fuzzy
+msgid "Accept settings and apply filter on image"
+msgstr "Accepter les réglages et appliquer le filtre"
+
+#. the 3 Action Buttons
+#: plug-ins/AlienMap/AlienMap.c:870 plug-ins/AlienMap2/AlienMap2.c:792
+#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
+#: plug-ins/common/CML_explorer.c:2688 plug-ins/common/apply_lens.c:426
+#: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:974
+#: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
+#: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
+#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:924
+#: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
+#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1478
+#: plug-ins/common/lic.c:1255 plug-ins/common/mail.c:496
+#: plug-ins/common/oilify.c:469 plug-ins/common/png.c:852
+#: plug-ins/common/ps.c:2088 plug-ins/common/ps.c:2355
+#: plug-ins/common/rotate.c:615 plug-ins/common/threshold_alpha.c:476
+#: plug-ins/common/warp.c:517 plug-ins/common/xbm.c:707
+#: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
+#: plug-ins/gap/gap_arr_dialog.c:1173 plug-ins/gap/gap_dbbrowser_utils.c:211
+#: plug-ins/gap/gap_filter_foreach.c:127 plug-ins/gap/gap_mod_layer.c:151
+#: plug-ins/gap/gap_mod_layer.c:265 plug-ins/gap/gap_mov_dialog.c:470
+#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_resi_dialog.c:145
+#: plug-ins/gimpressionist/orientmap.c:640
+#: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/mosaic/mosaic.c:573 plug-ins/print/print.c:991
+#: plug-ins/print/print.c:1097 plug-ins/script-fu/script-fu-scripts.c:1392
+#: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
+#: plug-ins/struc/struc.c:248
+msgid "Cancel"
+msgstr "Annuler"
+
+#: plug-ins/AlienMap/AlienMap.c:877 plug-ins/AlienMap2/AlienMap2.c:799
+msgid "Reject any changes and close plug-in"
+msgstr "Annuler les changements et fermer l'appendice"
+
+#: plug-ins/AlienMap/AlienMap.c:879 plug-ins/AlienMap2/AlienMap2.c:801
+msgid "About..."
+msgstr "À propos de..."
+
+#: plug-ins/AlienMap/AlienMap.c:887 plug-ins/AlienMap2/AlienMap2.c:809
+msgid "Show information about this plug-in and the author"
+msgstr "Montrer des informations sur cet appendice et son auteur"
+
+#: plug-ins/AlienMap/AlienMap.c:1150
+msgid "About Alien Map"
+msgstr "À propos de Psychédélique"
+
+#: plug-ins/AlienMap/AlienMap.c:1171 plug-ins/AlienMap2/AlienMap2.c:1075
+msgid "This closes the information box"
+msgstr "Ceci referme la fenêtre d'information"
+
+#: plug-ins/AlienMap/AlienMap.c:1213
+msgid ""
+"\n"
+"Cotting Software Productions\n"
+"Bahnhofstrasse 31\n"
+"CH-3066 Stettlen (Switzerland)\n"
+"\n"
+"cotting@mygale.org\n"
+"http://www.mygale.org/~cotting\n"
+"\n"
+"AlienMap Plug-In for the GIMP\n"
+"Version 1.01\n"
+msgstr ""
+"\n"
+"Cotting Software Productions\n"
+"Bahnhofstrasse 31\n"
+"CH-3066 Stettlen (Suisse)\n"
+"\n"
+"cotting@mygale.org\n"
+"http://www.mygale.org/~cotting\n"
+"\n"
+"Effet de couleurs « Psychédélique » pour Gimp\n"
+"Version 1.01\n"
+
+#: plug-ins/AlienMap2/AlienMap2.c:210
+msgid "AlienMap2 Color Transformation Plug-In"
+msgstr "Transformation de couleurs « Psychédélique 2 »"
+
+#: plug-ins/AlienMap2/AlienMap2.c:214
+msgid "24th April 1998"
+msgstr "24 avril 1998"
+
+#: plug-ins/AlienMap2/AlienMap2.c:215
+msgid "<Image>/Filters/Colors/Alien Map 2"
+msgstr "<Image>/Filtres/Couleurs/Psychédélique 2"
+
+#: plug-ins/AlienMap2/AlienMap2.c:390
+msgid "AlienMap2: Transforming ..."
+msgstr "Psychédélique 2: transformation..."
+
+#: plug-ins/AlienMap2/AlienMap2.c:656
+msgid "AlienMap2"
+msgstr "Psychédélique 2"
+
+#: plug-ins/AlienMap2/AlienMap2.c:701
+msgid "R/H-Frequency:"
+msgstr "Fréquence rouge/teinte:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:701
+msgid "Change frequency of the red/hue channel"
+msgstr "Changer la fréquence du canal rouge ou teinte"
+
+#: plug-ins/AlienMap2/AlienMap2.c:704
+msgid "R/H-Phaseshift:"
+msgstr "Déphasage rouge/teinte:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:704
+msgid "Change angle of the red/hue channel"
+msgstr "Changer l'angle de déphasage du canal rouge ou teinte"
+
+#: plug-ins/AlienMap2/AlienMap2.c:706
+msgid "G/S-Frequency:"
+msgstr "Fréquence vert/saturation:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:706
+msgid "Change frequeny of the green/saturation channel"
+msgstr "Changer la fréquence du canal vert ou saturation"
+
+#: plug-ins/AlienMap2/AlienMap2.c:708
+msgid "G/S-Phaseshift:"
+msgstr "Déphasage vert/saturation:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:708
+msgid "Change angle of the green/saturation channel"
+msgstr "Changer l'angle de déphasage du canal vert ou saturation"
+
+#: plug-ins/AlienMap2/AlienMap2.c:709
+msgid "B/L-Frequency:"
+msgstr "Fréquence bleu/luminance"
+
+#: plug-ins/AlienMap2/AlienMap2.c:709
+msgid "Change frequency of the blue/luminance channel"
+msgstr "Changer la fréquence du canal bleu ou luminance"
+
+#: plug-ins/AlienMap2/AlienMap2.c:711
+msgid "B/L-Phaseshift:"
+msgstr "Déphasage bleu/luminance:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:711
+msgid "Change angle of the blue/luminance channel"
+msgstr "Changer l'angle de déphasage du canal bleu ou luminance"
+
+#. Mode toggle box
+#: plug-ins/AlienMap2/AlienMap2.c:715 plug-ins/gap/gap_mov_dialog.c:1297
+msgid "Mode:"
+msgstr "Mode:"
+
+#: plug-ins/AlienMap2/AlienMap2.c:722
+msgid "RGB color model"
+msgstr "Modèle RVB"
+
+#: plug-ins/AlienMap2/AlienMap2.c:731
+msgid "Use RGB color model"
+msgstr "Utiliser le modèle de couleurs en canaux rouge-vert-bleu"
+
+#: plug-ins/AlienMap2/AlienMap2.c:733
+msgid "HSL color model"
+msgstr "Modèle TSL"
+
+#: plug-ins/AlienMap2/AlienMap2.c:741
+msgid "Use HSL color model"
+msgstr "Utiliser le modèle de couleurs par canaux teinte-saturation-luminance"
+
+#: plug-ins/AlienMap2/AlienMap2.c:743
+msgid "Modify red/hue channel"
+msgstr "Modifier le canal rouge/teinte"
+
+#: plug-ins/AlienMap2/AlienMap2.c:751
+msgid "Use function for red/hue component"
+msgstr "Appliquer une fonction au canal rouge ou teinte"
+
+#: plug-ins/AlienMap2/AlienMap2.c:753
+msgid "Modify green/saturation channel"
+msgstr "Modifier le canal vert/saturation"
+
+#: plug-ins/AlienMap2/AlienMap2.c:761
+msgid "Use function for green/saturation component"
+msgstr "Appliquer une fonction au canal vert ou saturation"
+
+#: plug-ins/AlienMap2/AlienMap2.c:763
+msgid "Modify blue/luminance channel"
+msgstr "Modifier le canal bleu/luminance"
+
+#: plug-ins/AlienMap2/AlienMap2.c:771
+msgid "Use function for blue/luminance component"
+msgstr "Appliquer une fonction au canal bleu ou luminance"
+
+#: plug-ins/AlienMap2/AlienMap2.c:1054
+msgid "About Alien Map 2"
+msgstr "À propos de Psychédélique 2"
+
+#: plug-ins/AlienMap2/AlienMap2.c:1117
+msgid ""
+"\n"
+"Martin Weber\n"
+"martin.weber@usa.net\n"
+"http://diverse.freepage.de/martin.weber\n"
+"\n"
+"AlienMap2 Plug-In for the GIMP\n"
+"Version 1.0\n"
+msgstr ""
+"\n"
+"Martin Weber\n"
+"martin.weber@usa.net\n"
+"http://diverse.freepage.de/martin.weber\n"
+"\n"
+"Effet de couleurs « Psychédélique 2 » pour Gimp\n"
+"Version 1.0\n"
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "Keep image's values"
@@ -916,64 +1261,57 @@ msgstr "Rapetisser"
 
 #: plug-ins/common/animationplay.c:247
 msgid "This plugin allows you to preview a GIMP layer-based animation."
-msgstr ""
+msgstr "Cet appendice vous permet de prévisualiser une animation GIMP (séquence de calques)."
 
 #: plug-ins/common/animationplay.c:252
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation Playback"
-msgstr "<Image>/Filtres/Artistique/Peinture à l'huile"
+msgstr "<Image>/Filtres/Artistique/Jouer une animation"
 
 #: plug-ins/common/animationplay.c:663 plug-ins/common/animationplay.c:664
 msgid "Animation Playback: "
-msgstr ""
+msgstr "Jouer une animation: "
 
 #. Action area - 'close' button only.
 #: plug-ins/common/animationplay.c:676
 #: plug-ins/script-fu/script-fu-console.c:205
 #: plug-ins/script-fu/script-fu-scripts.c:1903
-#, fuzzy
 msgid "Close"
-msgstr "Composer"
+msgstr "Fermer"
 
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:690 plug-ins/common/animationplay.c:693
-#, fuzzy
 msgid "Playback: "
-msgstr "Noir:"
+msgstr "Jouer: "
 
 #: plug-ins/common/animationplay.c:723
 msgid "Play/Stop"
-msgstr ""
+msgstr "Jouer/Stop"
 
 #: plug-ins/common/animationplay.c:729
-#, fuzzy
 msgid "Rewind"
-msgstr "Rouge"
+msgstr "Rembobiner"
 
 #: plug-ins/common/animationplay.c:735
-#, fuzzy
 msgid "Step"
-msgstr "Configuration"
+msgstr "Pas"
 
 #: plug-ins/common/animationplay.c:793
-#, fuzzy
 msgid "Frame %v of %u"
-msgstr "Image %d"
+msgstr "Image %v sur %u"
 
 #: plug-ins/common/animationplay.c:971
 #, c-format
 msgid "playback: Asked for frame number %d in a %d-frame animation!\n"
-msgstr ""
+msgstr "Animation: Dem1ande de l'image %d dans une animation à %d images !\n"
 
 #: plug-ins/common/animoptimize.c:130
 msgid ""
 "This plugin applies various optimizations to a GIMP layer-based animation."
-msgstr ""
+msgstr "Cet appendice applique diverses optimisations à une animation Gimp (séquence da calques)."
 
 #: plug-ins/common/animoptimize.c:136
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filtres/Artistique/Peinture à l'huile"
+msgstr "<Image>/Filtres/Animation/Optimiser l'animation"
 
 #: plug-ins/common/animoptimize.c:143
 msgid ""
@@ -981,6 +1319,9 @@ msgid ""
 "AnimationOptimized.  This makes the animation much easier to work with if, "
 "for example, the optimized version is all you have."
 msgstr ""
+"Cet appendice « simplifie » une animation Gimp (séquence de calques)\n"
+"qui a été optimisée. Cela rend le travail sur l'animation beaucoup plus\n"
+"simple, si, par exemple, vous ne disposez que de la version optimisée."
 
 #: plug-ins/common/animoptimize.c:152
 #, fuzzy
@@ -989,15 +1330,15 @@ msgstr "<Image>/Filtres/Artistique/Peinture à l'huile"
 
 #: plug-ins/common/animoptimize.c:296
 msgid "Optimizing Animation..."
-msgstr ""
+msgstr "Optimisation de l'animation..."
 
 #: plug-ins/common/animoptimize.c:298
 msgid "UnOptimizing Animation..."
-msgstr ""
+msgstr "Désoptimisation de l'animation..."
 
 #: plug-ins/common/animoptimize.c:327
 msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr ""
+msgstr "Pas assez de mémoire pour allouer des tempons pour l'optimisation.\n"
 
 #: plug-ins/common/apply_lens.c:132
 msgid "Apply a lens effect"
@@ -1532,16 +1873,8 @@ msgid "RGB"
 msgstr "RVB"
 
 #: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
-msgid "Red:"
-msgstr "Rouge:"
-
-#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Green:     "
 msgstr "Vert:      "
-
-#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
-msgid "Blue:"
-msgstr "Bleu:"
 
 #: plug-ins/common/compose.c:126
 msgid "rgb-compose"
@@ -2029,9 +2362,8 @@ msgstr "Largeur"
 
 #. Button  to invoke filebrowser
 #: plug-ins/gap/gap_arr_dialog.c:278
-#, fuzzy
 msgid "File-Browser"
-msgstr "Parcourir"
+msgstr "Sélecteur de fichiers"
 
 #: plug-ins/gap/gap_arr_dialog.c:666
 #, c-format
@@ -2046,13 +2378,12 @@ msgstr ""
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/gap/gap_arr_dialog.c:962
 msgid "CLOSE"
-msgstr ""
+msgstr "FERMER"
 
 #. parameter settings
 #: plug-ins/gap/gap_arr_dialog.c:973
-#, fuzzy
 msgid "Enter Values"
-msgstr "Autre valeur"
+msgstr "Entrer les valeurs"
 
 #: plug-ins/gap/gap_arr_dialog.c:990 plug-ins/gap/gap_arr_dialog.c:1050
 #, fuzzy
@@ -2067,108 +2398,104 @@ msgstr ""
 #: plug-ins/gap/gap_arr_dialog.c:1029
 #, c-format
 msgid "Unknown widget type %d ignored\n"
-msgstr ""
+msgstr "Type d'objet d'interface graphique %d inconnu, ignoré\n"
 
 #: plug-ins/gap/gap_arr_dialog.c:1202
 msgid "Press Button"
-msgstr ""
+msgstr "Bouton poussoir"
 
 #: plug-ins/gap/gap_arr_dialog.c:1203
-#, fuzzy
 msgid "Select"
-msgstr "Graine"
+msgstr "Sélectionner"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation (filtre GAP)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:86
 msgid "Animated Filter apply (init)"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation (initialiser)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search :"
-msgstr ""
+msgstr "Chercher :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:166
 msgid "Gen Code by name"
-msgstr ""
+msgstr "Gen Code par nom"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:175
 msgid "Search by name"
-msgstr ""
+msgstr "Rechercher par nom"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by blurb"
-msgstr ""
+msgstr "Rechercher par blurb"
 
 #. show the name
 #: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name :"
-msgstr ""
+msgstr "Nom :"
 
 #. show the description
 #: plug-ins/gap/gap_dbbrowser_utils.c:342
-#, fuzzy
 msgid "Blurb :"
-msgstr "Bleu:"
+msgstr "Blurb :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In :"
-msgstr ""
+msgstr "Entrée :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out :"
-msgstr ""
+msgstr "Sortie :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:459
-#, fuzzy
 msgid "Help :"
-msgstr "Aide"
+msgstr "Aide :"
 
 #. show the author & the copyright
 #: plug-ins/gap/gap_dbbrowser_utils.c:497
-#, fuzzy
 msgid "Author :"
-msgstr "Auto"
+msgstr "Auteur :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:512
 msgid "Date :"
-msgstr ""
+msgstr "Date :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright :"
-msgstr ""
+msgstr "Copyright :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:666
 msgid "Animated Filter apply (by name - please wait)"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation (par nom - veuillez patienter)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:690
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation (par « blurb » - veuillez patienter)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:698
 msgid "Animated Filter apply (please wait)"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation (veuillez patienter)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:745
 #: plug-ins/gap/gap_filter_foreach.c:156 plug-ins/gap/gap_mod_layer.c:288
 msgid "Animated Filter apply"
-msgstr ""
+msgstr "Appliquer un filtre sur une animation"
 
 #: plug-ins/gap/gap_filter_foreach.c:119
 msgid "backup to file"
-msgstr ""
+msgstr "copie de sauvegarde"
 
 #. pixel
 #: plug-ins/gap/gap_filter_foreach.c:121
 msgid "Make backup of the image after each step"
-msgstr ""
+msgstr "Fait une copie de sauvegarde dans le fichier après chaque étape"
 
 #: plug-ins/gap/gap_filter_foreach.c:125 plug-ins/gap/gap_mod_layer.c:263
 msgid "Continue"
-msgstr ""
+msgstr "Continuer"
 
 #: plug-ins/gap/gap_filter_foreach.c:148 plug-ins/gap/gap_mod_layer.c:282
 #, c-format
@@ -2176,6 +2503,8 @@ msgid ""
 "2.nd call of %s\n"
 "(define end-settings)"
 msgstr ""
+"Deuxième appel de %s\n"
+"(define end-settings)"
 
 #: plug-ins/gap/gap_filter_foreach.c:152
 #, c-format
@@ -2183,6 +2512,8 @@ msgid ""
 "Non-Interactive call of %s\n"
 "(for all layers inbetween)"
 msgstr ""
+"Appel non interactif de %s\n"
+"(pour tous les calques intermédiaires)"
 
 #: plug-ins/gap/gap_filter_foreach.c:186
 #, c-format
@@ -2190,10 +2521,12 @@ msgid ""
 "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
 "could not restore Layer visibilty.\n"
 msgstr ""
+"Erreur: l'appendice %s a fait passer le nombre de calques de %d à %d;\n"
+"je ne peux remettre la visibilité des calques.\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:202
 msgid "Warning: cant get layers (maybe the image was closed)\n"
-msgstr ""
+msgstr "Avertissement: je ne peux récupérer les calques (peut-être l'image a-t-elle été fermée)\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:207
 #, c-format
@@ -2201,28 +2534,2475 @@ msgid ""
 "Error: Plugin %s has changed Nr. of layers from %d to %d\n"
 "Anim Filter apply stopped.\n"
 msgstr ""
+"Erreur: l'appendice %s a fait passer le nombre de calques de %d à %d;\n"
+"l'application du filtre animé s'est arrêtée.\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:258
 #, c-format
 msgid "ERROR: Plugin not available or wrong type %s\n"
-msgstr ""
+msgstr "ERREUR: Appendice non disponible ou d'un mauvais type %s\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:269
 msgid "Applying Filter to all Layers .."
-msgstr ""
+msgstr "Application du filtre à tous les calques..."
 
 #: plug-ins/gap/gap_filter_foreach.c:277
 msgid "ERROR: need at 1 Layers to apply plugin !\n"
-msgstr ""
+msgstr "ERREUR: il faut au moins 1 calque pour appliquer l'appendice !\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:307
-#, fuzzy
 msgid "ERROR: fork failed !\n"
-msgstr "bz2: échec de fork(): %s\n"
+msgstr "ERREUR: échec de fork() !\n"
 
 #: plug-ins/gap/gap_filter_foreach.c:495
 #, c-format
 msgid "Saving image to backupfile:%s step = %d\n"
+msgstr "Sauvegarde de l'image dans le fichier de sauvegarde: %s, étape=%d\n"
+
+#: plug-ins/gap/gap_filter_foreach.c:543
+msgid "Select Filter for Animated apply"
+msgstr "Sélectionner le filtre à appliquer sur l'animation"
+
+#: plug-ins/gap/gap_filter_foreach.c:544 plug-ins/gap/gap_mod_layer.c:664
+msgid "Apply Constant"
+msgstr "Paramètres constants"
+
+#: plug-ins/gap/gap_filter_foreach.c:545 plug-ins/gap/gap_mod_layer.c:665
+msgid "Apply Varying"
+msgstr "Paramètres variables"
+
+#: plug-ins/gap/gap_filter_main.c:100
+msgid ""
+"This plugin calls another plugin for each layer of an image, varying its "
+"settings (to produce animated effects). The called plugin must work on a "
+"single drawable and must be able to RUN_WITH_LAST_VALS"
+msgstr "Cet appendice en appelle un autre pour chaque calque de l'image, en changeant ses réglages (pour produire des effets animés). L'appendice appelé doit travailler sur une seule feuille et doit accepter RUN_WITH_LAST_VALS."
+
+#: plug-ins/gap/gap_filter_main.c:105
+#, fuzzy
+msgid "<Image>/Filters/Animation/Filter all Layers"
+msgstr "<Image>/Filtres/Animation/Filtrer tous les calques"
+
+#: plug-ins/gap/gap_lib.c:852
+msgid ""
+"You are using a fileformat != xcf\n"
+"Save Operations may result\n"
+"in loss of layerinformation"
+msgstr ""
+"Vous utilisez un format de fichier autre que XCF.\n"
+"Les opérations de sauvegarde pourront perdre\n"
+"des informations de calque."
+
+#. no defined value found (this is the 1.st call for this image_id)
+#. * ask what to do with a 3 Button dialog
+#.
+#: plug-ins/gap/gap_lib.c:864 plug-ins/gap/gap_mpege.c:188
+#: plug-ins/gap/gap_range_ops.c:1029
+msgid "CANCEL"
+msgstr "ANNULER"
+
+#: plug-ins/gap/gap_lib.c:866
+msgid "SAVE Flattened"
+msgstr "SAUVER avec 1 seule calque"
+
+#: plug-ins/gap/gap_lib.c:868
+msgid "SAVE As Is"
+msgstr "SAUVER tel que"
+
+#: plug-ins/gap/gap_lib.c:872 plug-ins/gap/gap_range_ops.c:1032
+msgid "GAP Question"
+msgstr "Question GAP"
+
+#: plug-ins/gap/gap_lib.c:1439
+msgid "Duplicating frames .."
+msgstr "Duplication de calques..."
+
+#: plug-ins/gap/gap_lib.c:1607
+msgid "Renumber Framesequence .."
+msgstr "Renumérotation de la séquence de calques..."
+
+#: plug-ins/gap/gap_lib.c:1791
+#, c-format
+msgid "Goto Frame (%ld/%ld)"
+msgstr "Aller à l'image (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1794
+#, c-format
+msgid "Destination Frame Number (%ld  - %ld)"
+msgstr "Numéro de l'image de destination (%ld - %ld)"
+
+#: plug-ins/gap/gap_lib.c:1798 plug-ins/gap/gap_lib.c:1872
+#: plug-ins/gap/gap_lib.c:2052
+msgid "Number :"
+msgstr "Numéro :"
+
+#: plug-ins/gap/gap_lib.c:1856
+#, c-format
+msgid "Delete Frames (%ld/%ld)"
+msgstr "Supprimer des calques (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1859
+#, c-format
+msgid "Delete Frames from %ld to (Number)"
+msgstr "Supprimer les calques de %ld à (Numéro)c"
+
+#: plug-ins/gap/gap_lib.c:1919
+#, c-format
+msgid "Duplicate Frames (%ld/%ld)"
+msgstr "Dupliquer des calques (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:1924 plug-ins/gap/gap_lib.c:2097
+#: plug-ins/gap/gap_range_ops.c:232 plug-ins/gap/gap_range_ops.c:445
+msgid "From :"
+msgstr "Depuis :"
+
+#: plug-ins/gap/gap_lib.c:1929
+msgid "Source Range starts at this framenumber"
+msgstr "La séquence de calques commence à ce numéro"
+
+#: plug-ins/gap/gap_lib.c:1932 plug-ins/gap/gap_lib.c:2105
+#: plug-ins/gap/gap_range_ops.c:239 plug-ins/gap/gap_range_ops.c:453
+msgid "To :"
+msgstr "À :"
+
+#: plug-ins/gap/gap_lib.c:1937
+msgid "Source Range ends at this framenumber"
+msgstr "La séquence de calques s'arrête à ce numéro"
+
+#: plug-ins/gap/gap_lib.c:1940
+msgid "N-Times :"
+msgstr "Nombre de fois :"
+
+#: plug-ins/gap/gap_lib.c:1945
+msgid ""
+"Copy selected Range n-times  \n"
+"(you may type in Values > 99)"
+msgstr ""
+"Copier l'intervalle sélectionné n fois\n"
+"(vous pouvez entrer des valeurs > 99)"
+
+#: plug-ins/gap/gap_lib.c:1947
+msgid "Duplicate Framerange"
+msgstr "Dupliquer l'intervalle"
+
+#: plug-ins/gap/gap_lib.c:2048
+#, c-format
+msgid "Exchange current Frame (%ld)"
+msgstr "Échanger le calque courant (%ld)"
+
+#: plug-ins/gap/gap_lib.c:2050
+msgid "With Frame (Number)"
+msgstr "Avec calque (numéro)"
+
+#: plug-ins/gap/gap_lib.c:2092
+#, c-format
+msgid "Framesequence Shift (%ld/%ld)"
+msgstr "Décalage de séquence calques (%ld/%ld)"
+
+#: plug-ins/gap/gap_lib.c:2102
+msgid "Affected Range starts at this framenumber"
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:2110
+msgid "Affected Range ends at this framenumber"
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:2113
+msgid "N-Shift :"
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:2118
+msgid ""
+"Renumber the affected framesequence     \n"
+"(numbers are shifted in circle by N)"
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:2120
+msgid "Framesequence shift"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:323
+msgid ""
+"This plugin exchanges current image with (next nubered) image from disk."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:328
+msgid "<Image>/AnimFrames/Goto Next"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:335
+msgid ""
+"This plugin exchanges current image with (previous nubered) image from disk."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:340
+msgid "<Image>/AnimFrames/Goto Prev"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:347
+msgid ""
+"This plugin exchanges current image with (lowest nubered) image from disk."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:352
+msgid "<Image>/AnimFrames/Goto First"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:359
+msgid ""
+"This plugin exchanges current image with (highest nubered) image from disk."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:364
+#, fuzzy
+msgid "<Image>/AnimFrames/Goto Last"
+msgstr "<Image>/Image/Transformations/Rotation"
+
+#: plug-ins/gap/gap_main.c:371
+msgid ""
+"This plugin exchanges current image with requested image (nr) from disk."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:376
+msgid "<Image>/AnimFrames/Goto Any"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:383
+msgid ""
+"This plugin deletes the given number of frames from disk including the "
+"current frame."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:388
+msgid "<Image>/AnimFrames/Delete Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:395
+msgid "This plugin duplicates the current frames on disk n-times."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:400
+msgid "<Image>/AnimFrames/Duplicate Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:407
+msgid "This plugin exchanges content of the current with destination frame."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:412
+msgid "<Image>/AnimFrames/Exchange Frame"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:419
+msgid ""
+"This plugin copies layer(s) from one sourceimage to multiple frames on disk, "
+"varying position, size and opacity."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:424
+#, fuzzy
+msgid "<Image>/AnimFrames/Move Path"
+msgstr "<Image>/Sélection/Vers chemin"
+
+#: plug-ins/gap/gap_main.c:431
+msgid ""
+"This plugin creates a new image from the given range of frame-images. Each "
+"frame is converted to one layer in the new image, according to flatten_mode. "
+"(the frames on disk are not changed)."
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:436
+#, fuzzy
+msgid "<Image>/AnimFrames/Frames to Image"
+msgstr "<Image>/Image/Transformations/Image"
+
+#: plug-ins/gap/gap_main.c:443
+msgid "This plugin flattens the given range of frame-images (on disk)"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:448
+msgid "<Image>/AnimFrames/Frames Flatten"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:455
+msgid ""
+"This plugin deletes one layer in the given range of frame-images (on disk). "
+"exception: the last remaining layer of a frame is not deleted"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:460
+#, fuzzy
+msgid "<Image>/AnimFrames/Frames LayerDel"
+msgstr "<Image>/Image/Transformations/Calque"
+
+#: plug-ins/gap/gap_main.c:467
+msgid ""
+"This plugin converts the given range of frame-images to other fileformats "
+"(on disk) depending on extension"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:472
+msgid "<Image>/AnimFrames/Frames Convert"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:479
+msgid ""
+"This plugin resizes all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:484
+msgid "<Image>/AnimFrames/Frames Resize"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:491
+msgid ""
+"This plugin crops all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:496
+#, fuzzy
+msgid "<Image>/AnimFrames/Frames Crop"
+msgstr "<Image>/Image/Transformations/Découpage zélé"
+
+#: plug-ins/gap/gap_main.c:503
+msgid ""
+"This plugin scales all anim_frames (images on disk) to the given "
+"new_width/new_height"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:508
+msgid "<Image>/AnimFrames/Frames Scale"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:515
+msgid ""
+"This plugin splits the current image to anim frames (images on disk). Each "
+"layer is saved as one frame"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:520
+msgid "<Image>/AnimFrames/Split Img to Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:527
+msgid ""
+"This plugin calls mpeg_encode to convert anim frames to MPEG1, or just "
+"generates a param file for mpeg_encode. (mpeg_encode must be installed on "
+"your system)"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:532
+msgid "<Image>/AnimFrames/Frames MPEG1 encode"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:540
+msgid ""
+"This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or "
+"just generates a param file for mpeg2encode. (mpeg2encode must be installed "
+"on your system)"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:545
+msgid "<Image>/AnimFrames/Frames MPEG2 encode"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:553
+msgid ""
+"This plugin exchanges frame numbers in the given range. (discfile "
+"frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:558
+msgid "<Image>/AnimFrames/Framesequence Shift"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:565
+msgid ""
+"This plugin performs a modifying action on each selected layer in each "
+"selected framerange"
+msgstr ""
+
+#: plug-ins/gap/gap_main.c:570
+msgid "<Image>/AnimFrames/Frames Modify"
+msgstr ""
+
+#. Layer select modes
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:417
+msgid "Pattern is equal to LayerName"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:418
+msgid "Pattern is Start of LayerName"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:419
+msgid "Pattern is End of Layername"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:420
+msgid "Pattern is a Part of LayerName"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:421
+msgid "Pattern is LayerstackNumber List"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:422
+msgid "Pattern is REVERSE-stack List"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:423
+msgid "All Visible (ignore Pattern)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:92 plug-ins/gap/gap_range_ops.c:425
+msgid "select all Layers where Layername is equal to Pattern"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:93 plug-ins/gap/gap_range_ops.c:426
+msgid "select all Layers where Layername starts with Pattern"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:94 plug-ins/gap/gap_range_ops.c:427
+msgid "select all Layers where Layername ends up with Pattern"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:95 plug-ins/gap/gap_range_ops.c:428
+msgid "select all Layers where Layername contains Pattern"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:96 plug-ins/gap/gap_range_ops.c:429
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == Top-layer"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:97 plug-ins/gap/gap_range_ops.c:430
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == BG-layer"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:98 plug-ins/gap/gap_range_ops.c:431
+msgid "select all visible Layers"
+msgstr ""
+
+#. action items what to do with the selected layer(s)
+#: plug-ins/gap/gap_mod_layer.c:102
+msgid "set Layer(s) visible"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:103
+msgid "set Layer(s) invisible"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:104
+msgid "set Layer(s) linked"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:105
+msgid "set Layer(s) unlinked"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:106
+msgid "raise Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:107
+msgid "lower Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:108
+msgid "merge Layer(s) expand as necessary"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:109
+msgid "merge Layer(s) clipped to image"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:110
+msgid "merge Layer(s) clipped to bg-layer"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:111
+msgid "apply filter on Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:112
+msgid "duplicate Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:113
+msgid "delete Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:114
+msgid "rename Layer(s)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:146
+msgid ""
+"Perform function on one or more Layer(s)\n"
+"in all frames of the selected framerange\n"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:159 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_range_ops.c:293
+#, fuzzy
+msgid "From Frame:"
+msgstr "Depuis l'image"
+
+#: plug-ins/gap/gap_mod_layer.c:160 plug-ins/gap/gap_mov_dialog.c:594
+#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:294
+#: plug-ins/gap/gap_range_ops.c:446
+msgid "first handled frame"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:167 plug-ins/gap/gap_mpege.c:266
+#: plug-ins/gap/gap_range_ops.c:301
+msgid "To   Frame:"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:168 plug-ins/gap/gap_mov_dialog.c:598
+#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:302
+#: plug-ins/gap/gap_range_ops.c:454
+msgid "last handled frame"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:176 plug-ins/gap/gap_range_ops.c:493
+msgid "Select Layer(s):"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:185 plug-ins/gap/gap_range_ops.c:502
+msgid "Select Pattern:"
+msgstr ""
+
+#. pixel
+#: plug-ins/gap/gap_mod_layer.c:187 plug-ins/gap/gap_range_ops.c:504
+msgid ""
+"String to identify layer names    \n"
+"or layerstack position numbers\n"
+"0,3-5"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:510
+#, fuzzy
+msgid "Case sensitive"
+msgstr "Sensibilité du canal"
+
+#: plug-ins/gap/gap_mod_layer.c:194 plug-ins/gap/gap_range_ops.c:511
+msgid "Lowercase and UPPERCASE letters are considered as different"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:199 plug-ins/gap/gap_range_ops.c:516
+#, fuzzy
+msgid "Invert Selection"
+msgstr "Convertit une sélection en chemin"
+
+#: plug-ins/gap/gap_mod_layer.c:200
+msgid "Perform actions on all unselected Layers"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:205
+#, fuzzy
+msgid "Function :"
+msgstr "Type de fonction"
+
+#. argv[7].radio_help_argv = action_help
+#: plug-ins/gap/gap_mod_layer.c:209
+msgid "Function to be performed on all selected layers"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:215
+msgid "New Layername:"
+msgstr ""
+
+#. pixel
+#: plug-ins/gap/gap_mod_layer.c:217
+msgid ""
+"New Layername for all handled layers \n"
+"[####] is replaced by frame number\n"
+"(is used on function rename only)"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:222
+#, fuzzy
+msgid "Frames Modify"
+msgstr "Image %d"
+
+#: plug-ins/gap/gap_mod_layer.c:223
+#, fuzzy
+msgid "Settings"
+msgstr "Paramètres de teinte"
+
+#: plug-ins/gap/gap_mod_layer.c:286
+#, c-format
+msgid ""
+"Non-Interactive call of %s\n"
+"(for all selected layers)"
+msgstr ""
+
+#. GAP-PDB-Browser Dialog
+#. ----------------------
+#: plug-ins/gap/gap_mod_layer.c:663
+msgid "Select Filter for Animated frames-apply"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:805
+msgid "GAP Modify: No layer selected in last handled frame\n"
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:891
+msgid "Modifying Frames/Layer(s) .."
+msgstr ""
+
+#: plug-ins/gap/gap_mod_layer.c:972
+msgid "No selected Layer in start frame\n"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:243 plug-ins/gimpressionist/orientmap.c:590
+#, fuzzy
+msgid "Normal"
+msgstr "Normalisation..."
+
+#: plug-ins/gap/gap_mov_dialog.c:244
+msgid "Dissolve"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:245
+msgid "Multiply"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:246
+#, fuzzy
+msgid "Screen"
+msgstr "Vert"
+
+#: plug-ins/gap/gap_mov_dialog.c:247 plug-ins/gimpressionist/paper.c:155
+#, fuzzy
+msgid "Overlay"
+msgstr "Superposition"
+
+#: plug-ins/gap/gap_mov_dialog.c:248
+msgid "Difference"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:249
+#, fuzzy
+msgid "Addition"
+msgstr "Position"
+
+#: plug-ins/gap/gap_mov_dialog.c:250
+msgid "Subtract"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:251
+msgid "Darken Only"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:252
+msgid "Lighten Only"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:263
+msgid "Left  Top"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:264
+msgid "Left  Bottom"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:265
+msgid "Right Top"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:266
+msgid "Right Bottom"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:267
+#, fuzzy
+msgid "Center"
+msgstr "Lettre"
+
+#: plug-ins/gap/gap_mov_dialog.c:275
+msgid "Loop"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:276
+#, fuzzy
+msgid "Loop Reverse"
+msgstr "Boucle infinie"
+
+#: plug-ins/gap/gap_mov_dialog.c:277
+#, fuzzy
+msgid "Once"
+msgstr "Annuler"
+
+#: plug-ins/gap/gap_mov_dialog.c:278
+msgid "OnceReverse"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:279
+msgid "PingPong"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:440
+msgid "Move Path"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:478
+#, fuzzy
+msgid "UpdPreview"
+msgstr "Aperçu"
+
+#: plug-ins/gap/gap_mov_dialog.c:485
+msgid ""
+"Show PreviewFame with Selected       \n"
+"SrcLayer at current Controlpoint"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/gap/gap_mov_dialog.c:491
+msgid "Copy moving source-layer(s) into frames"
+msgstr ""
+
+#. Point Buttons
+#: plug-ins/gap/gap_mov_dialog.c:514
+#, fuzzy
+msgid "Load Points"
+msgstr "Charger PostScript"
+
+#: plug-ins/gap/gap_mov_dialog.c:522
+msgid "Load Controlpoints from file"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:526
+#, fuzzy
+msgid "Save Points"
+msgstr "Options d'enregistrement"
+
+#: plug-ins/gap/gap_mov_dialog.c:534
+msgid "Save Controlpoints to file"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:538
+msgid "Reset Points"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:546
+msgid ""
+"Reset Controlpoints  \n"
+"to one Defaultpoint"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:550
+msgid "Add Point"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:558
+msgid ""
+"Add Controlpoint at end        \n"
+"(the last Point is duplicated)"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:562
+#, fuzzy
+msgid "Prev Point"
+msgstr "Impression"
+
+#: plug-ins/gap/gap_mov_dialog.c:570
+msgid "Show Previous Controlpoint"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:574
+msgid "Next Point"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:582
+msgid "Show Next Controlpoint"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:592
+msgid "Start Frame:"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:596
+msgid "End Frame:"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:600
+#, fuzzy
+msgid "Preview Frame:"
+msgstr "Taille de la prévisualisation"
+
+#: plug-ins/gap/gap_mov_dialog.c:602
+msgid ""
+"frame to show when UpdPreview\n"
+"button is pressed"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:604
+msgid "Layerstack:"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:606
+msgid ""
+"How to insert SrcLayer into the\n"
+"Dst.Frame's Layerstack\n"
+"0 means on top i.e in front"
+msgstr ""
+
+#. toggle clip_to_image
+#: plug-ins/gap/gap_mov_dialog.c:609
+msgid "Clip To Frame"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:616
+msgid ""
+"Clip all copied Src-Layers\n"
+"at Frame Boundaries"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:660
+msgid ""
+"No Source Image was selected\n"
+"(Please open a 2nd Image of the same type before opening Move Path)\n"
+msgstr ""
+
+#. filesel is already open
+#: plug-ins/gap/gap_mov_dialog.c:824
+msgid "Load Path Points from file"
+msgstr ""
+
+#. filesel is already open
+#: plug-ins/gap/gap_mov_dialog.c:860
+msgid "Save Path Points to file"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1071
+#, c-format
+msgid "X [%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1072
+#, c-format
+msgid "Y [%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1073
+#, c-format
+msgid "Opacity [%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1074
+#, fuzzy, c-format
+msgid "Width [%d]: "
+msgstr "Largeur:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1075
+#, fuzzy, c-format
+msgid "Height [%d]: "
+msgstr "Hauteur:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1076
+#, c-format
+msgid "Rotate deg[%d]: "
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1255
+#, fuzzy
+msgid "Source Select"
+msgstr "Canal source"
+
+#. Source Layer menu
+#: plug-ins/gap/gap_mov_dialog.c:1272
+msgid "SourceImage/Layer:"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1282
+msgid "Source Object to insert into Framerange"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1306
+msgid "Paintmode"
+msgstr ""
+
+#. Loop Stepmode menu
+#: plug-ins/gap/gap_mov_dialog.c:1321
+msgid "Stepmode:"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1339
+msgid ""
+"How to fetch te next SrcLayer   \n"
+"at the next handled frame"
+msgstr ""
+
+#. Source Image Handle menu
+#: plug-ins/gap/gap_mov_dialog.c:1345
+#, fuzzy
+msgid "Handle:"
+msgstr "Valeur:"
+
+#: plug-ins/gap/gap_mov_dialog.c:1363
+msgid ""
+"How to place the SrcLayer at   \n"
+"Controlpoint Koordinates"
+msgstr ""
+
+#. to avoid side effects while initialization
+#: plug-ins/gap/gap_mov_dialog.c:1409
+#, fuzzy
+msgid "Move Path Preview"
+msgstr "  Aperçu!  "
+
+#: plug-ins/gap/gap_mov_dialog.c:1459
+msgid ""
+"Scale SrcLayer's Width\n"
+"in percent"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1465
+msgid ""
+"Scale SrcLayer's Height\n"
+"in percent"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1471
+msgid ""
+"SrcLayer's Opacity\n"
+"in percent"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:1480
+msgid "Rotate SrcLayer (in degree)"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_exec.c:217
+msgid ""
+"No Source Image was selected\n"
+"(Please open a 2nd Image of the same type before opening Move Path)"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_exec.c:225
+msgid "Copying Layers into Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:110
+msgid "Conditions to run mpeg_encode 1.5:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:113
+msgid "Conditions to run mpeg2encode 1.2:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:123
+msgid "1.) mpeg_encode 1.5 must be installed"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:126
+msgid "1.) mpeg2encode 1.2 must be installed"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:131
+msgid "    you can get mpeg_encode at"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:134
+msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:139
+msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:142
+msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:147
+msgid "2.) You need a series of single Images on disk (AnimFrames)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:151
+msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:154
+msgid "   all with fileformat PPM (or YUV)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:159
+msgid "    (use 'Frames Convert' from the AnimFrames Menu"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:163
+msgid "    or 'Split Img to Frames' from the AnimFrames Menu)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:167
+msgid "3.) All Images must have the same size,"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:174
+msgid "    width and height must be a multiple of 16"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:178
+msgid "    (use Scale or Crop from the AnimFrames Menu)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:193
+msgid "MPEG_ENCODE Information"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:231
+msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:232
+msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:242
+msgid "GenParams"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:273
+#, fuzzy
+msgid "Framerate :"
+msgstr "Paramètre k"
+
+#: plug-ins/gap/gap_mpege.c:274
+msgid "framerate in frames/second"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:281
+msgid "Bitrate:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:282
+msgid ""
+"used for constant bitrates (bit/sec)                  \n"
+"(low rate gives good compression + bad quality)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:293
+#, fuzzy
+msgid "Outputfile:"
+msgstr "Sortie"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:295
+msgid "Name of the resulting MPEG outputfile"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:301
+msgid "Paramfile:"
+msgstr ""
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:303
+msgid ""
+"Name of the Encoder-Parameterfile\n"
+"(is generated)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:309
+msgid "Startscript:"
+msgstr ""
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:311
+msgid ""
+"Name of the Startscript           \n"
+"(is generated/executed)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:318
+msgid ""
+"Generate parameterfile for mpeg_encode 1.5\n"
+"(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:322
+msgid "Constant Bitrate :"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:323
+msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:328
+#, fuzzy
+msgid "Pattern:"
+msgstr "Imprimante:"
+
+#. pixel
+#: plug-ins/gap/gap_mpege.c:330
+msgid "How to encode MPEG framesequence (I/P/B frames)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:336
+msgid "IQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:337
+msgid ""
+"Quality scale for I-Frames                       \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:344
+msgid "PQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:345
+msgid ""
+"Quality scale for P-Frames                  \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:352
+msgid "BQSCALE:"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:353
+msgid ""
+"Quality scale for B-Frames                  \n"
+"(1 = best quality, 31 = best comression)"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:360
+msgid "P-Search :"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:361
+msgid "Search Algorithmus used for P-frames"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:367
+msgid "B-Search :"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:368
+msgid "Search Algorithmus used for B-frames"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:373
+msgid "Gen MPEG_ENCODE Parameters"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:374 plug-ins/gap/gap_mpege.c:413
+msgid "Encode Values"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:391
+msgid ""
+"Generate parameterfile for mpeg2encode 1.2\n"
+"(MPEG-2 Video  Encoder.)\n"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:394
+msgid "MPEG-type :"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:403
+msgid "Videoformat :"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:404
+msgid "Videoformat"
+msgstr ""
+
+#. framerates above 30 ar not allowed in mpeg2encode
+#: plug-ins/gap/gap_mpege.c:412
+msgid "Gen MPEG2ENCODE Parameters"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:517
+#, fuzzy, c-format
+msgid "cant open MPEG Paramfile %s for write\n"
+msgstr "impossible d'ouvrir le fichier en écriture"
+
+#: plug-ins/gap/gap_mpege.c:976
+msgid ""
+"\n"
+"WARNING: mpeg_encode does not support Fileformat "
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:979
+msgid ""
+"\n"
+"ERROR: width not a multiple of 16"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:980
+msgid ""
+"\n"
+"ERROR: height not a multiple of 16"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:986
+msgid ""
+"\n"
+"WARNING: mpeg2encode does not support Fileformat "
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:991
+msgid ""
+"\n"
+"ERROR: invoked from a single image, animframe required"
+msgstr ""
+
+#: plug-ins/gap/gap_mpege.c:1009
+msgid "sorry folks, NON_INTERACTIVE call .. not implemented yet\n"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:108
+#, fuzzy
+msgid "New Width :"
+msgstr "Largeur:"
+
+#: plug-ins/gap/gap_range_ops.c:115
+#, fuzzy
+msgid "New Height :"
+msgstr "Hauteur:"
+
+#: plug-ins/gap/gap_range_ops.c:122
+#, fuzzy
+msgid "Offest X :"
+msgstr "Décalage"
+
+#: plug-ins/gap/gap_range_ops.c:129
+#, fuzzy
+msgid "Offest Y :"
+msgstr "Décalage"
+
+#: plug-ins/gap/gap_range_ops.c:138
+msgid "Crop AnimFrames (all)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:139
+#, c-format
+msgid "Crop (original %dx%d)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:149
+msgid "Resize AnimFrames (all)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:150
+#, c-format
+msgid "Resize (original %dx%d)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:156
+msgid "Scale AnimFrames (all)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:157
+#, c-format
+msgid "Scale (original %dx%d)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:246
+msgid "Layerstack :"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "KEEP_TYPE"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to RGB"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to GRAY"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:285
+msgid "Conv to INDEXED"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:308
+msgid ""
+"\n"
+"Select destination fileformat by extension\n"
+"optionally convert imagetype\n"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:311
+#, fuzzy
+msgid "Basename:"
+msgstr "Nom de Fichier:"
+
+#: plug-ins/gap/gap_range_ops.c:312
+msgid ""
+"basename of the resulting frames       \n"
+"(0001.ext is added)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:317 plug-ins/gap/gap_split.c:229
+#, fuzzy
+msgid "Extension:"
+msgstr "Étendre"
+
+#: plug-ins/gap/gap_range_ops.c:318 plug-ins/gap/gap_split.c:230
+msgid ""
+"extension of resulting frames       \n"
+"(is also used to define Fileformat)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:324
+msgid "Imagetype :"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:325
+msgid ""
+"Convert to, or keep imagetype           \n"
+"(most fileformats cant handle all types)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:331
+msgid "Flatten  :"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:332
+msgid ""
+"Flatten all resulting frames               \n"
+"(most fileformats need flattened frames)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:337
+#, fuzzy
+msgid "Colors  :"
+msgstr "Couleur"
+
+#: plug-ins/gap/gap_range_ops.c:338
+msgid ""
+"Number of resulting Colors               \n"
+"(ignored if not converted to indexed)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:344
+#, fuzzy
+msgid "Dither  :"
+msgstr "Pilote:"
+
+#: plug-ins/gap/gap_range_ops.c:345
+msgid ""
+"Enable Floyd-Steinberg dithering      \n"
+"(ignored if not converted to indexed)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:350
+msgid "Convert Frames to other Formats"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:351
+#, fuzzy
+msgid "Convert Settings :"
+msgstr "Réglages de la copie"
+
+#: plug-ins/gap/gap_range_ops.c:408
+msgid "Expand as necessary"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:409
+msgid "Clipped to image"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:410
+msgid "Clipped to bottom layer"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:411
+#, fuzzy
+msgid "Flattened image"
+msgstr "Créer une nouvelle image"
+
+#: plug-ins/gap/gap_range_ops.c:412
+msgid ""
+"Resulting Layer Size is made of the outline-rectangle \n"
+"of all visible layers (may differ from frame to frame)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:413
+msgid "Resulting Layer Size is the frame size"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:414
+msgid ""
+"Resulting Layer Size is the size of the bottom layer\n"
+"(may differ from frame to frame)"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:415
+msgid ""
+"Resulting Layer Size is the frame size     \n"
+"transparent parts are filled with BG color"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:460
+msgid "Layer Basename:"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:461
+msgid ""
+"Basename for all Layers    \n"
+"[####] is replaced by frame number"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:479
+msgid "Layer Mergemode :"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:486
+msgid "Exclude BG-Layer"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:487
+msgid ""
+"Exclude the BG-Layers    \n"
+"in all handled frames\n"
+"regardless to selection"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:517
+msgid "Use all unselected Layers"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:591
+msgid "Creating Layer-Animated Image .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:805
+#, fuzzy
+msgid "Frames to Image"
+msgstr "Depuis l'image"
+
+#: plug-ins/gap/gap_range_ops.c:806
+msgid "Create Multilayer-Image from Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:935
+msgid "Flattening Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:936
+msgid "Converting Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1025
+msgid "OVERWRITE frame"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1027
+msgid "OVERWRITE all"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1046
+msgid ""
+"Convert Frames: SAVE operation FAILED\n"
+"- desired save plugin cant handle type\n"
+"- or desired save plugin not available\n"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1152
+msgid "Cropping all Animation Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1155
+msgid "Resizing all Animation Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1158
+msgid "Scaling all Animation Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1244
+#, fuzzy
+msgid "Flatten Frames"
+msgstr "Nom de Fichier:"
+
+#: plug-ins/gap/gap_range_ops.c:1245
+msgid "Select Frame Range"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1300
+#, c-format
+msgid "Removing Layer (pos:%ld) from Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1423
+msgid "Delete Layers in Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_range_ops.c:1424
+msgid "Select Frame Range & Position"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:97
+msgid "Splitting into Frames .."
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:172
+msgid ""
+"Split Frames: SAVE operation FAILED\n"
+"- desired save plugin cant handle type\n"
+"- or desired save plugin not available\n"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:220
+#, c-format
+msgid ""
+"%s\n"
+"%s\n"
+"(%s_0001.%s)\n"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:221
+msgid "Make a frame (diskfile) from each Layer"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:222
+msgid "frames are named: base_nr.extension"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:235
+msgid "Inverse Order :"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:236
+msgid "Start frame 0001 at Top Layer"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:240
+msgid "Flatten :"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:241
+msgid ""
+"Remove Alpha Channel in resulting Frames,    \n"
+"transparent parts are filled with BG color"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:244
+msgid "Split Image into Frames"
+msgstr ""
+
+#: plug-ins/gap/gap_split.c:245
+#, fuzzy
+msgid "Split Settings :"
+msgstr "Paramètres de la lumière"
+
+#: plug-ins/gap/gap_split.c:290
+msgid ""
+"OPERATION CANCELLED\n"
+"This image is already an AnimFrame\n"
+"Try again on a Duplicate\n"
+"(image/channel ops/duplicate)"
+msgstr ""
+
+#: plug-ins/gap/resize.c:107
+#, fuzzy
+msgid "Scale"
+msgstr "Échelle 1"
+
+#: plug-ins/gap/resize.c:111
+msgid "Resize"
+msgstr ""
+
+#: plug-ins/gap/resize.c:127
+#, fuzzy
+msgid "New width:"
+msgstr "Largeur:"
+
+#: plug-ins/gap/resize.c:144
+#, fuzzy
+msgid "New height:"
+msgstr "Hauteur:"
+
+#: plug-ins/gap/resize.c:161
+#, fuzzy
+msgid "X ratio:"
+msgstr "Saturation:"
+
+#: plug-ins/gap/resize.c:178
+#, fuzzy
+msgid "Y ratio:"
+msgstr "Saturation:"
+
+#: plug-ins/gap/resize.c:197
+#, fuzzy
+msgid "X Offset:"
+msgstr "Décalage X"
+
+#: plug-ins/gap/resize.c:214
+#, fuzzy
+msgid "Y Offset:"
+msgstr "Décalage Y"
+
+#. the constrain toggle button
+#: plug-ins/gap/resize.c:231
+#, fuzzy
+msgid "Constrain Ratio"
+msgstr "Matrice de convolution"
+
+#: plug-ins/common/gif.c:408
+msgid "saves files in Compuserve GIF file format"
+msgstr "enregistre les fichiers au format Compuserve GIF"
+
+#: plug-ins/common/gif.c:682
+msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
+msgstr ""
+"GIF: Je n'ai pu assez réduire les couleurs, je dois donc sauver en image "
+"opaque. La transparence ne sera pas respectée.\n"
+
+#: plug-ins/common/gif.c:938
+msgid ""
+"GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
+"or GRAY first.\n"
+msgstr ""
+"GIF: Désolé, il est impossible de sauver des images\n"
+"en pleines couleurs RVB au format GIF.\n"
+"Veuillez d'abord convertir en couleurs indexées ou tons de gris.\n"
+
+#: plug-ins/common/gif.c:957
+#, c-format
+msgid "GIF: can't open %s\n"
+msgstr "GIF: impossible d'ouvrir %s\n"
+
+#: plug-ins/common/gif.c:1064
+msgid ""
+"Transparent colour *might* be incorrect on viewers which don't support "
+"transparency."
+msgstr ""
+"La couleur de transparence sera éventuellement incorrecte sur les "
+"visualisateurs ne gérant pas la transparence."
+
+#: plug-ins/common/gif.c:1196
+msgid ""
+"The image which you are trying to save as a GIF\n"
+"contains layers which extend beyond the actual\n"
+"borders of the image.  This isn't allowed in GIFs,\n"
+"I'm afraid.\n"
+"\n"
+"You may choose whether to crop all of the layers to\n"
+"the image borders, or cancel this save."
+msgstr ""
+"L'image que vous essayez de sauver au format GIF\n"
+"contient des calques qui s'étendent au delà des\n"
+"limites de l'image. Désolé, cela n'est pas permis\n"
+"dans les GIFs.\n"
+"\n"
+"Vous pouvez choisir soit de rogner tous les\n"
+"calques aux dimensions de l'image, soit d'annuler\n"
+"cette sauvegarde."
+
+#: plug-ins/common/gif.c:1252
+msgid "Save as GIF"
+msgstr "Enregistrer en GIF"
+
+#. regular gif parameter settings
+#: plug-ins/common/gif.c:1286
+msgid "GIF Options"
+msgstr "Options GIF"
+
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:872
+msgid "Interlace"
+msgstr "Entrelacement"
+
+#: plug-ins/common/gif.c:1306
+msgid "GIF Comment: "
+msgstr "Commentaire GIF: "
+
+#. additional animated gif parameter settings
+#: plug-ins/common/gif.c:1367
+msgid "Animated GIF Options"
+msgstr "Options d'animation GIF"
+
+#: plug-ins/common/gif.c:1375
+msgid "Loop forever"
+msgstr "Boucle infinie"
+
+#: plug-ins/common/gif.c:1388
+msgid "Delay between frames where unspecified: "
+msgstr "Délai par défaut entre les images :"
+
+#: plug-ins/common/gif.c:1402
+msgid " milliseconds"
+msgstr " millisecondes"
+
+#: plug-ins/common/gif.c:1413
+msgid "Frame disposal where unspecified: "
+msgstr "Disposition par défaut des images :"
+
+#: plug-ins/common/gif.c:1423
+msgid "I don't care"
+msgstr "Peu importe"
+
+#: plug-ins/common/gif.c:1429
+msgid "Cumulative layers (combine)"
+msgstr "Calques cumulatifs (combiner)"
+
+#: plug-ins/common/gif.c:1435
+msgid "One frame per layer (replace)"
+msgstr "Une image par calque (remplacer)"
+
+#: plug-ins/common/gif.c:1493
+#, c-format
+msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
+msgstr "GIF: colorstobpp - Hé ! Trop de couleurs : %d\n"
+
+#: plug-ins/common/gif.c:1509
+#, c-format
+msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
+msgstr "GIF: bpptocolors - Hé ! bpp=%d !\n"
+
+#: plug-ins/common/gifload.c:134
+msgid "loads files of Compuserve GIF file format"
+msgstr "charge un fichier enregistré au format Compuserve GIF"
+
+#: plug-ins/common/gifload.c:279
+#, c-format
+msgid "GIF: can't open \"%s\"\n"
+msgstr "GIF: impossible d' %s\"\n"
+
+#: plug-ins/common/gifload.c:294
+msgid "GIF: error reading magic number\n"
+msgstr "GIF: erreur lors de la lecture du magic number\n"
+
+#: plug-ins/common/gifload.c:300
+msgid "GIF: not a GIF file\n"
+msgstr "GIF: n'est pas un fichier GIF\n"
+
+#: plug-ins/common/gifload.c:309
+msgid "GIF: bad version number, not '87a' or '89a'\n"
+msgstr "GIF: mauvais numéro de version; pas '87a' ou '89a'\n"
+
+#: plug-ins/common/gifload.c:315
+msgid "GIF: failed to read screen descriptor\n"
+msgstr "GIF: impossible de lire le descripteur d'écran\n"
+
+#: plug-ins/common/gifload.c:331
+msgid "GIF: error reading global colormap\n"
+msgstr "GIF: erreur de lecture de la palette globale\n"
+
+#: plug-ins/common/gifload.c:338
+msgid "GIF: warning - non-square pixels\n"
+msgstr "GIF: avertissement -- pixels non carrés\n"
+
+#: plug-ins/common/gifload.c:349 plug-ins/common/gifload.c:803
+msgid "GIF: EOF / read error on image data\n"
+msgstr "GIF: EOF / erreur de lecture sur les données de l'image\n"
+
+#: plug-ins/common/gifload.c:364
+msgid "GIF: EOF / read error on extension function code\n"
+msgstr "GIF : EOF / erreur de lecture d'un code de fonction étendue\n"
+
+#. Not a valid start character
+#: plug-ins/common/gifload.c:374
+#, c-format
+msgid "GIF: bogus character 0x%02x, ignoring\n"
+msgstr "GIF: caractère incorrect 0x%02x, ignoré\n"
+
+#: plug-ins/common/gifload.c:382
+msgid "GIF: couldn't read left/top/width/height\n"
+msgstr "GIF: je n'ai pas pu lire gauche/haut/largeur/hauteur\n"
+
+#: plug-ins/common/gifload.c:394
+msgid "GIF: error reading local colormap\n"
+msgstr "GIF: erreur de lecture de palette locale\n"
+
+#: plug-ins/common/gifload.c:452
+msgid "GIF: bad colormap\n"
+msgstr "GIF: palette incorrecte\n"
+
+#: plug-ins/common/gifload.c:568
+msgid "GIF: error in getting DataBlock size\n"
+msgstr "GIF: erreur lors de l'obtention de la taille d'un bloc de données\n"
+
+#: plug-ins/common/gifload.c:576
+msgid "GIF: error in reading DataBlock\n"
+msgstr "GIF: erreur de lecture d'un bloc de données\n"
+
+#: plug-ins/common/gifload.c:607
+msgid "GIF: ran off the end of by bits\n"
+msgstr "GIF: lecture au delà de la fin de quelques bits\n"
+
+#: plug-ins/common/gifload.c:718
+msgid "GIF: missing EOD in data stream (common occurence)"
+msgstr "GIF: EOD manquant dans les données (problème fréquent)"
+
+#: plug-ins/common/gifload.c:735
+msgid "GIF: circular table entry BIG ERROR\n"
+msgstr "GIF: entrée circulaire dans une table (ERREUR GRAVE)\n"
+
+#: plug-ins/common/gifload.c:809
+msgid "GIF: error while reading\n"
+msgstr "GIF: erreur lors de la lecture\n"
+
+#: plug-ins/common/gifload.c:830
+#, c-format
+msgid "Background (%dms)"
+msgstr "Fond (%dms)"
+
+#: plug-ins/common/gifload.c:877
+#, c-format
+msgid "Frame %d"
+msgstr "Image %d"
+
+#: plug-ins/common/gifload.c:879
+#, c-format
+msgid "Frame %d (%dms)"
+msgstr "Image %d (%dms)"
+
+#. 'don't care'
+#: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
+msgid " (combine)"
+msgstr " (combiner)"
+
+#: plug-ins/common/gifload.c:886
+msgid " (replace)"
+msgstr " (remplacer)"
+
+#: plug-ins/common/gifload.c:892
+msgid " (unknown disposal)"
+msgstr " (disposition inconnue)"
+
+#: plug-ins/common/gifload.c:893
+msgid ""
+"GIF: Hmm... please forward this GIF to the GIF plugin author!\n"
+"  (adam@foxbox.org)\n"
+msgstr ""
+"GIF: Hum... pourriez-vous s'il vous plaît envoyer ce GIF à\n"
+"l'auteur de l'extension GIF ? (adam@foxbox.org)\n"
+
+#: plug-ins/common/gifload.c:896
+msgid "GIF: Something got corrupted.\n"
+msgstr "GIF: Quelque chose a été endommagé.\n"
+
+#: plug-ins/common/gifload.c:925
+#, c-format
+msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
+msgstr "GIF: lecture d'une image %d x %d, ncouls=%d\n"
+
+#: plug-ins/common/gifload.c:926
+msgid " interlaced"
+msgstr " entrelacé"
+
+#: plug-ins/common/gifload.c:930
+msgid ""
+"GIF: Ouchie!  Can't handle non-alpha RGB frames.\n"
+"     Please mail the plugin author.  (adam@gimp.org)\n"
+msgstr ""
+"GIF: Aïe ! Je ne peux gérer les images RVB non alpha.\n"
+"Veuillez prendre contact avec l'auteur de l'extension\n"
+"(adam@gimp.org).\n"
+
+#: plug-ins/common/gifload.c:1022
+msgid "GIF: too much input data, ignoring extra...\n"
+msgstr "GIF: fichier trop long, donnés en trop ignorées...\n"
+
+#: plug-ins/gimpressionist/brush.c:183
+msgid "GIMPressionist: Can only save drawables!\n"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:189
+msgid "Save brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:395
+#, fuzzy
+msgid "Brush Preview:"
+msgstr "Aperçu"
+
+#: plug-ins/gimpressionist/brush.c:404
+msgid "Gamma:"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:417
+msgid "Changes the gamma (brightness) of the selected brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:429
+msgid "Select:"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:434
+#, fuzzy
+msgid "Aspect ratio:"
+msgstr "conserver le rapport hauteur/largeur"
+
+#: plug-ins/gimpressionist/brush.c:438 plug-ins/gimpressionist/paper.c:176
+msgid "Relief:"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:453
+#, fuzzy
+msgid "(None)"
+msgstr "Aucun"
+
+#: plug-ins/gimpressionist/brush.c:466
+#, fuzzy
+msgid "Save..."
+msgstr "Enregistrer"
+
+#: plug-ins/gimpressionist/brush.c:480
+msgid "Specifies the aspect ratio of the brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/brush.c:491
+msgid "Specifies the amount of embossing to apply to each brush stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/color.c:79
+#, fuzzy
+msgid "Color:"
+msgstr "Couleur"
+
+#: plug-ins/gimpressionist/color.c:89
+msgid "Average under brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/color.c:95
+msgid "Color is computed from the average of all pixels under the brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/color.c:99
+msgid "Center of brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/color.c:105
+msgid "Samples the color from the pixel in the center of the brush"
+msgstr ""
+
+#: plug-ins/gimpressionist/color.c:114
+#, fuzzy
+msgid "Color noise:"
+msgstr "Coloriser"
+
+#: plug-ins/gimpressionist/color.c:125
+msgid "Adds random noise to the color"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:99
+msgid "Color Selection Dialog"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:134
+#, fuzzy
+msgid "General"
+msgstr "Options générales"
+
+#: plug-ins/gimpressionist/general.c:159
+msgid "Edge darken:"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:176
+msgid "How much to \"darken\" the edges of each brush stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:183
+#, fuzzy
+msgid "Background:"
+msgstr "Fond"
+
+#: plug-ins/gimpressionist/general.c:191
+#, fuzzy
+msgid "Keep original"
+msgstr "Garder ce qu'il y avait autour de la lentille"
+
+#: plug-ins/gimpressionist/general.c:197
+msgid "Preserve the original image as a background"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:201
+#, fuzzy
+msgid "From paper"
+msgstr "Depuis l'image"
+
+#: plug-ins/gimpressionist/general.c:207
+msgid "Copy the texture of the selected paper as a background"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:220
+msgid "Solid"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:226
+msgid "Solid colored background"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:243
+#, fuzzy
+msgid "Transparent"
+msgstr "Transparence"
+
+#: plug-ins/gimpressionist/general.c:249
+msgid "Use a transparent background; Only the strokes painted will be visible"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:264
+#, fuzzy
+msgid "Paint edges"
+msgstr "Entier rapide"
+
+#: plug-ins/gimpressionist/general.c:272
+msgid "Tileable"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:276
+msgid "Selects if the resulting image should be seamlessly tileable"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:284
+msgid "Drop Shadow"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:288
+msgid "Adds a shadow effect to each brush stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:299
+msgid "How much to \"darken\" the drop shadow"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:305
+msgid "Shadow depth:"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:316
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:322
+msgid "Shadow blur:"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:333
+msgid "How much to blur the drop shadow"
+msgstr ""
+
+#: plug-ins/gimpressionist/general.c:339
+#, fuzzy
+msgid "Deviation threshold:"
+msgstr "Seuil:"
+
+#: plug-ins/gimpressionist/general.c:350
+msgid "A bailout-value for adaptive selections"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
+#, fuzzy
+msgid "Performs various artistic operations on an image"
+msgstr "Appliquer divers jeux d'éclairage à l'image."
+
+#: plug-ins/gimpressionist/gimp.c:105
+#, fuzzy
+msgid "<Image>/Filters/Artistic/GIMPressionist"
+msgstr "<Image>/Filtres/Artistique/Cubisme"
+
+#: plug-ins/gimpressionist/gimp.c:294
+#, fuzzy
+msgid "Painting..."
+msgstr "Impression en cours..."
+
+#: plug-ins/gimpressionist/gimpressionist.c:83
+#, c-format
+msgid ""
+"*** Warning ***\n"
+"It is highly recommended to add\n"
+"  (gimpressionist-path \"%s\")\n"
+"(or similar) to your gimprc file.\n"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:100
+msgid ""
+"*** Warning ***\n"
+"No home directory!\n"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:351
+#: plug-ins/gimpressionist/gimpressionist.c:448
+msgid "The GIMPressionist!"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:483
+#, fuzzy
+msgid " OK "
+msgstr "OK"
+
+# bof
+#: plug-ins/gimpressionist/gimpressionist.c:490
+#, fuzzy
+msgid "Run with the selected settings"
+msgstr "Réglages du chargement sélectif"
+
+#: plug-ins/gimpressionist/gimpressionist.c:492
+#, fuzzy
+msgid " Cancel "
+msgstr "Annuler"
+
+#: plug-ins/gimpressionist/gimpressionist.c:497
+msgid "Quit the program"
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:499
+msgid " About... "
+msgstr ""
+
+#: plug-ins/gimpressionist/gimpressionist.c:504
+msgid "Show some information about program"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:52
+#, fuzzy
+msgid "Orientation"
+msgstr "Orientation:"
+
+#: plug-ins/gimpressionist/orientation.c:76
+#, fuzzy
+msgid "Directions:"
+msgstr "Vecteur de direction"
+
+#: plug-ins/gimpressionist/orientation.c:80
+msgid "Start angle:"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:84
+msgid "Angle span:"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:99 plug-ins/gimpressionist/size.c:98
+msgid "The number of directions (i.e. brushes) to use"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:108
+msgid "The angle of the first brush to create"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:117
+msgid "How large an angle-span to use (360 = full circle)"
+msgstr ""
+
+#.
+#. * Orientation option menu...
+#.
+#: plug-ins/gimpressionist/orientation.c:124 plug-ins/print/print.c:783
+msgid "Orientation:"
+msgstr "Orientation:"
+
+#: plug-ins/gimpressionist/orientation.c:140
+msgid ""
+"Let the value (brightness) of the region determine the direction of the "
+"stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:144
+#: plug-ins/gimpressionist/size.c:143
+msgid "Radius"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:150
+msgid ""
+"The distance from the center of the image determines the direction of the "
+"stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:154
+#: plug-ins/gimpressionist/size.c:153
+#, fuzzy
+msgid "Random"
+msgstr "Graine aléatoire"
+
+#: plug-ins/gimpressionist/orientation.c:160
+msgid "Selects a random direction of each stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:164
+#: plug-ins/gimpressionist/size.c:163
+msgid "Radial"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:170
+msgid "Let the direction from the center determine the direction of the stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:179
+#: plug-ins/gimpressionist/size.c:178
+#, fuzzy
+msgid "Flowing"
+msgstr "Coloration"
+
+#: plug-ins/gimpressionist/orientation.c:185
+#: plug-ins/gimpressionist/size.c:184
+msgid "The strokes follow a \"flowing\" pattern"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:197
+msgid "The hue of the region determines the direction of the stroke"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:201
+#: plug-ins/gimpressionist/size.c:199
+msgid "Adaptive"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:207
+msgid "The direction that matches the original image the closest is selected"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:216
+#: plug-ins/gimpressionist/size.c:213 plug-ins/print/print-pcl.c:248
+msgid "Manual"
+msgstr "Manuel"
+
+#: plug-ins/gimpressionist/orientation.c:222
+msgid "Manually specify the stroke orientation"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:226
+#: plug-ins/gimpressionist/size.c:223
+msgid "Edit..."
+msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:231
+msgid "Opens up the Orientation Map Editor"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:461
+#, fuzzy
+msgid "Orientation Map Editor"
+msgstr "Orientation:"
+
+#: plug-ins/gimpressionist/orientmap.c:469
+msgid "Vectors"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:479
+msgid ""
+"The vector-field. Left-click to move selected vector, Right-click to point "
+"it towards mouse, Middle-click to add a new vector."
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:500
+#: plug-ins/gimpressionist/sizemap.c:400
+msgid "Adjust the preview's brightness"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:522
+#, fuzzy
+msgid "Select previous vector"
+msgstr "Vecteur de direction"
+
+#: plug-ins/gimpressionist/orientmap.c:529
+#, fuzzy
+msgid "Select next vector"
+msgstr "Vecteur de direction"
+
+#: plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/sizemap.c:431
+msgid "Add"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:536
+msgid "Add new vector"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:538
+#: plug-ins/gimpressionist/sizemap.c:438
+msgid "Kill"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:543
+msgid "Delete selected vector"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:551
+msgid "Angle:"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:563
+msgid "Change the angle of the selected vector"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/gimpressionist/sizemap.c:465
+msgid "Strength:"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:577
+msgid "Change the strength of the selected vector"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:580
+#, fuzzy
+msgid "Type:"
+msgstr "Type de support:"
+
+#: plug-ins/gimpressionist/orientmap.c:596
+msgid "Vortex"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:608
+msgid "Vortex2"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:614
+msgid "Vortex3"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:631
+#: plug-ins/gimpressionist/sizemap.c:490
+msgid "Apply and exit the editor"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:638
+#: plug-ins/gimpressionist/sizemap.c:497
+msgid "Apply, but stay inside the editor"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:645
+#: plug-ins/gimpressionist/sizemap.c:504
+msgid "Cancel all changes and exit"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:653
+#: plug-ins/gimpressionist/sizemap.c:512
+msgid "Strength exp.:"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:665
+#: plug-ins/gimpressionist/sizemap.c:524
+msgid "Change the exponent of the strength"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:667
+#, fuzzy
+msgid "Angle offset:"
+msgstr "Décalage X"
+
+#: plug-ins/gimpressionist/orientmap.c:679
+msgid "Offset all vectors with a given angle"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:681
+#: plug-ins/gimpressionist/sizemap.c:527
+msgid "Voronoi"
+msgstr ""
+
+#: plug-ins/gimpressionist/orientmap.c:689
+msgid ""
+"Voronoi-mode makes only the vector closest to the given point have any "
+"influence"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:74
+#, c-format
+msgid "Paper/%s"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:89
+msgid "Paper"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:133
+#, fuzzy
+msgid "Paper Preview:"
+msgstr "Aperçu de l'image"
+
+#. updatepaperprev(NULL);
+#: plug-ins/gimpressionist/paper.c:144
+#, fuzzy
+msgid "Invert"
+msgstr "Entier"
+
+#: plug-ins/gimpressionist/paper.c:151
+msgid "Inverts the Papers texture"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:159
+msgid "Applies the paper as it is (without embossing it)"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:172
+#, fuzzy
+msgid "Scale:"
+msgstr "Échelle 1"
+
+#: plug-ins/gimpressionist/paper.c:191
+msgid "Specifies the scale of the texture (in percent of original file)"
+msgstr ""
+
+#: plug-ins/gimpressionist/paper.c:200
+msgid "Specifies the amount of embossing to apply to the image (in percent)"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:52
+#, fuzzy
+msgid "Placement"
+msgstr "Pourcent"
+
+#: plug-ins/gimpressionist/placement.c:80
+msgid "Placement:"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:90
+#, fuzzy
+msgid "Randomly"
+msgstr "Graine aléatoire"
+
+#: plug-ins/gimpressionist/placement.c:96
+msgid "Place strokes randomly around the image"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:100
+msgid "Evenly distributed"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:106
+msgid "The strokes are evenly distributed across the image"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:115
+msgid "Stroke density:"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:126
+msgid "The relative density of the brush strokes"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:128
+msgid "Centerize"
+msgstr ""
+
+#: plug-ins/gimpressionist/placement.c:132
+msgid "Focus the brush strokes around the center of the image"
+msgstr ""
+
+#: plug-ins/gimpressionist/ppmtool.c:41
+#, c-format
+msgid "(When allocating %u bytes.)\n"
+msgstr ""
+
+#: plug-ins/gimpressionist/ppmtool.c:42
+#, fuzzy
+msgid "Out of memory!\n"
+msgstr "decompose: plus de mémoire"
+
+#: plug-ins/gimpressionist/ppmtool.c:215
+#, c-format
+msgid "loadgbr: Unable to open file \"%s\"!\n"
 msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:543

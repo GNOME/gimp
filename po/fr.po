@@ -1545,7 +1545,6 @@ msgid "/Image/Colors"
 msgstr "/Image/Couleurs"
 
 #: app/gdisplay.c:1692
-#, fuzzy
 msgid "/Image/Channels"
 msgstr "/Image/Canaux"
 
@@ -1620,7 +1619,7 @@ msgstr "/Image/Alpha/Ajouter Canal Alpha"
 #: app/gdisplay.c:1718 app/menus.c:307
 #, fuzzy
 msgid "/Image/Transforms/Offset"
-msgstr "/Image/Transformations"
+msgstr "/Image/Transformations/Décalage"
 
 #: app/gdisplay.c:1721
 msgid "/Layers/Stack"
@@ -6217,23 +6216,137 @@ msgid "Factor"
 msgstr "Facteur"
 
 #: libgimp/gimpexport.c:89
-#, fuzzy
 msgid "can't handle layers"
-msgstr "Mettre calque à l'échelle"
+msgstr "je ne peux gérer les calques"
 
 #: libgimp/gimpexport.c:90 libgimp/gimpexport.c:99
-#, fuzzy
 msgid "Merge visible layers"
-msgstr "/Fusionner les calques visibles"
+msgstr "Fusionner les calques visibles"
 
 #: libgimp/gimpexport.c:98
 msgid "can only handle layers as animation frames"
-msgstr ""
+msgstr "je ne peux gérer les calques en tant qu'images d'une animation"
 
 #: libgimp/gimpexport.c:99
 #, fuzzy
 msgid "Save as animation"
 msgstr "Informations de Cisaillement"
+
+#: libgimp/gimpexport.c:107
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Gomme (met la couleur de fond ou rend transparent)"
+
+#: libgimp/gimpexport.c:108
+msgid "Flatten Image"
+msgstr "Aplatir l'image"
+
+#: libgimp/gimpexport.c:116
+msgid "can only handle RGB images"
+msgstr "Je ne gère que les images RVB."
+
+#: libgimp/gimpexport.c:117 libgimp/gimpexport.c:144 libgimp/gimpexport.c:153
+msgid "Convert to RGB"
+msgstr "Convertir en RVB"
+
+#: libgimp/gimpexport.c:125
+msgid "can only handle grayscale images"
+msgstr "Je ne gère que les images en niveaux de gris."
+
+#: libgimp/gimpexport.c:126 libgimp/gimpexport.c:144 libgimp/gimpexport.c:163
+msgid "Convert to grayscale"
+msgstr "Convertir en niveaux de gris."
+
+#: libgimp/gimpexport.c:134
+msgid "can only handle indexed images"
+msgstr "je ne gère que les images indexées"
+
+#: libgimp/gimpexport.c:135 libgimp/gimpexport.c:153 libgimp/gimpexport.c:162
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Convertir en couleurs indexées en utilisant\n"
+"les réglages par défaut (faites-le à la main\n"
+"pour régler le résultat)."
+
+#: libgimp/gimpexport.c:143
+msgid "can only handle RGB or grayscale images"
+msgstr "je ne gère que les images RVB ou en niveaux de gris"
+
+#: libgimp/gimpexport.c:152
+msgid "can only handle RGB or indexed images"
+msgstr "je ne gère que les images RVB ou indexées"
+
+#: libgimp/gimpexport.c:161
+msgid "can only handle grayscale or indexed images"
+msgstr "je ne gère que les images en tons de gris ou indexées"
+
+#: libgimp/gimpexport.c:233
+msgid "Export File"
+msgstr "Exporter fichier"
+
+#: libgimp/gimpexport.c:249
+msgid "Export"
+msgstr "Exporter"
+
+#: libgimp/gimpexport.c:274
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr "Votre image devrait être exportée avant d'être enregistrée pour les raison suivantes:"
+
+#. the footline
+#: libgimp/gimpexport.c:332
+msgid "The export conversion won't modify your original image."
+msgstr "La conversion de sortie ne modifiera pas votr image originale."
+
+#~ msgid "Cannot properly scanline convert polygon!\n"
+#~ msgstr ""
+#~ "Je n'arrive pas à convertir le polygone en lignes horizontales de trame.\n"
+
+#~ msgid "/Image/Channel Ops/Offset"
+#~ msgstr "/Image/Canaux/Décalage"
+
+#~ msgid "raise layer"
+#~ msgstr "élever calque"
+
+#~ msgid "lower layer"
+#~ msgstr "abaisser calque"
+
+#~ msgid "raise layer to top"
+#~ msgstr "élever le calque tout en haut"
+
+#~ msgid "lower layer to bottom"
+#~ msgstr "abaisser le calque tout en bas"
+
+#~ msgid "re-position layer"
+#~ msgstr "re-positionner le calque"
+
+#~ msgid "/File/Acquire"
+#~ msgstr "/Fichier/Acquisition"
+
+#~ msgid "/View/Window Info..."
+#~ msgstr "/Vue/Information sur la Fenêtre..."
+
+#~ msgid "/Script-Fu/"
+#~ msgstr "/Script-Fu/"
+
+#: libgimp/gimpexport.c:89
+msgid "can't handle layers"
+msgstr "Je ne peux gérer les calques."
+
+#: libgimp/gimpexport.c:90 libgimp/gimpexport.c:99
+msgid "Merge visible layers"
+msgstr "Fusionner les calques visibles"
+
+#: libgimp/gimpexport.c:98
+msgid "can only handle layers as animation frames"
+msgstr "Je ne gère les calques qu'en tant qu'images d'une animation."
+
+#: libgimp/gimpexport.c:99
+msgid "Save as animation"
+msgstr "Sauver comme annimation"
 
 #: libgimp/gimpexport.c:107
 #, fuzzy
@@ -6247,62 +6360,60 @@ msgstr "/Aplatir l'image"
 
 #: libgimp/gimpexport.c:116
 msgid "can only handle RGB images"
-msgstr ""
+msgstr "je ne gère que les images RVB"
 
 #: libgimp/gimpexport.c:117 libgimp/gimpexport.c:144 libgimp/gimpexport.c:153
-#, fuzzy
 msgid "Convert to RGB"
-msgstr "Convertir"
+msgstr "Convertir en RVB"
 
 #: libgimp/gimpexport.c:125
 msgid "can only handle grayscale images"
-msgstr ""
+msgstr "je ne gère que les images en tons de gris"
 
 #: libgimp/gimpexport.c:126 libgimp/gimpexport.c:144 libgimp/gimpexport.c:163
-#, fuzzy
 msgid "Convert to grayscale"
-msgstr "niveaux de gris"
+msgstr "Convertir en niveaux de gris"
 
 #: libgimp/gimpexport.c:134
 #, fuzzy
 msgid "can only handle indexed images"
-msgstr "Mélange: Non valide pour les images indexées."
+msgstr "je ne gère que les images indexées."
 
 #: libgimp/gimpexport.c:135 libgimp/gimpexport.c:153 libgimp/gimpexport.c:162
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Convertir en couleurs indexées avec les réglages par défaut\n"
+"(faites-le manuellement pour régler le résultat)"
 
 #: libgimp/gimpexport.c:143
 msgid "can only handle RGB or grayscale images"
-msgstr ""
+msgstr "je ne gère que les images RVB ou en tons de gris"
 
 #: libgimp/gimpexport.c:152
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "Mélange: Non valide pour les images indexées."
+msgstr "je ne gère que les images RVB ou indexées"
 
 #: libgimp/gimpexport.c:161
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr "Mélange: Non valide pour les images indexées."
+msgstr "je ne gère que les images en tons de gris ou indexées"
 
 #: libgimp/gimpexport.c:233
-#, fuzzy
 msgid "Export File"
-msgstr "/Exporter Chemin"
+msgstr "Exporter chemin"
 
 #: libgimp/gimpexport.c:249
-#, fuzzy
 msgid "Export"
-msgstr "Exposition:"
+msgstr "Exporter"
 
 #: libgimp/gimpexport.c:274
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
+"Votre image devrait être exportée avant d'être enregistrée pour les\n"
+"raison suivantes:"
 
 #. the footline
 #: libgimp/gimpexport.c:332

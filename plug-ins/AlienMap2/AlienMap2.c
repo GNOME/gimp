@@ -33,6 +33,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "logo.h"
+#include "libgimp/stdplugins-intl.h"
 
 /***** Macros *****/
 
@@ -52,8 +53,8 @@
 
 /***** Color model *****/
 
-#define RGB 0
-#define HSL 1 
+#define RGB_MODEL 0
+#define HSL_MODEL 1 
 
 /***** Types *****/
 typedef struct {
@@ -157,7 +158,7 @@ static alienmap2_vals_t wvals = {
         0.0,
         1.0,
         0.0,
-        RGB,
+        RGB_MODEL,
         TRUE,
         TRUE,
         TRUE,
@@ -195,7 +196,7 @@ query ()
     { PARAM_FLOAT,    "greenangle",     "Green/saturation component angle factor (0-360)" },
     { PARAM_FLOAT,    "bluefrequency",  "Blue/luminance component frequency factor" },
     { PARAM_FLOAT,    "blueangle",      "Blue/luminance component angle factor (0-360)" },
-    { PARAM_INT8,     "colormodel",     "Color model (0: RGB, 1: HSL)" },
+    { PARAM_INT8,     "colormodel",     "Color model (0: RGB_MODEL, 1: HSL_MODEL)" },
     { PARAM_INT8,     "redmode",        "Red/hue application mode (TRUE, FALSE)" },
     { PARAM_INT8,     "greenmode",      "Green/saturation application mode (TRUE, FALSE)" },
     { PARAM_INT8,     "bluemode",       "Blue/luminance application mode (TRUE, FALSE)" },
@@ -204,14 +205,16 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_alienmap2",
-        		  "AlienMap2 Color Transformation Plug-In",
-        		  "No help yet. Just try it and you'll see!",
+        		  _("AlienMap2 Color Transformation Plug-In"),
+        		  _("No help yet. Just try it and you'll see!"),
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber)",
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber",
-        		  "24th April 1998",
-        		  "<Image>/Filters/Colors/Alien Map 2",
-        		  "RGB*",
+        		  _("24th April 1998"),
+        		  _("<Image>/Filters/Colors/Alien Map 2"),
+        		  "RGB_MODEL*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,
         		  args, return_vals);
@@ -230,7 +233,7 @@ transform  (short int *r,
   green = *g;
   blue = *b;
   
-  if (wvals.colormodel == HSL)
+  if (wvals.colormodel == HSL_MODEL)
     {
       r1 = (gdouble) red / 255.0;
       g1 = (gdouble) green / 255.0;
@@ -247,7 +250,7 @@ transform  (short int *r,
       green = (gint) (255.0 * g1 + 0.5);
       blue = (gint) (255.0 * b1 + 0.5);
     }
-  else if (wvals.colormodel == RGB)
+  else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
           red    = (int) (127.5*(1.0+sin(((red/127.5-1.0)*wvals.redfrequency+wvals.redangle/180.0)*M_PI))+0.5);
@@ -278,6 +281,7 @@ run (char    *name,
   int   	pwidth, pheight;
   GStatusType status = STATUS_SUCCESS;
 
+  INIT_I18N_UI ();
 
   run_mode = param[0].data.d_int32;
 
@@ -381,10 +385,10 @@ run (char    *name,
 
   if (status == STATUS_SUCCESS)
     {
-      /*  Make sure that the drawable is indexed or RGB color  */
+      /*  Make sure that the drawable is indexed or RGB_MODEL color  */
       if (gimp_drawable_color (drawable->id))
         {
-          gimp_progress_init ("AlienMap2: Transforming ...");
+          gimp_progress_init (_("AlienMap2: Transforming ..."));
 
         	/* Set the tile cache size */
 
@@ -406,7 +410,7 @@ run (char    *name,
         }
       else
         {
-/*           gimp_message("This filter only applies on RGB-images"); */
+/*           gimp_message("This filter only applies on RGB_MODEL-images"); */
           status = STATUS_EXECUTION_ERROR;
         }
     }
@@ -630,8 +634,8 @@ alienmap2_dialog(void)
         guchar     *color_cube;
 
 
-        use_rgb = (wvals.colormodel == RGB);
-        use_hsl = (wvals.colormodel == HSL);
+        use_rgb = (wvals.colormodel == RGB_MODEL);
+        use_hsl = (wvals.colormodel == HSL_MODEL);
 
         argc    = 1;
         argv    = g_new(gchar *, 1);
@@ -650,7 +654,7 @@ alienmap2_dialog(void)
 
         build_preview_source_image();
         dialog = maindlg = gtk_dialog_new();
-        gtk_window_set_title(GTK_WINDOW(dialog), "AlienMap2");
+        gtk_window_set_title(GTK_WINDOW(dialog), _("AlienMap2"));
         gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
         gtk_container_border_width(GTK_CONTAINER(dialog), 0);
         gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -695,28 +699,28 @@ alienmap2_dialog(void)
         gtk_table_attach(GTK_TABLE(top_table), table, 0, 4, 1, 2, GTK_EXPAND | GTK_FILL, 0, 5, 5);
         gtk_widget_show(table);
 
-        dialog_create_value("R/H-Frequency:", GTK_TABLE(table), 1, &wvals.redfrequency,0,5.0000000000000, "Change frequency of the red/hue channel");
+        dialog_create_value(_("R/H-Frequency:"), GTK_TABLE(table), 1, &wvals.redfrequency,0,5.0000000000000, _("Change frequency of the red/hue channel"));
 if (wvals.redfrequency!=1.0) exit;
 
-        dialog_create_value("R/H-Phaseshift:", GTK_TABLE(table), 2, &wvals.redangle,0,360.00000000000000, "Change angle of the red/hue channel");
+        dialog_create_value(_("R/H-Phaseshift:"), GTK_TABLE(table), 2, &wvals.redangle,0,360.00000000000000, _("Change angle of the red/hue channel"));
 
-        dialog_create_value("G/S-Frequency:", GTK_TABLE(table), 3, &wvals.greenfrequency,0,5.00000000000, "Change frequeny of the green/saturation channel");
+        dialog_create_value(_("G/S-Frequency:"), GTK_TABLE(table), 3, &wvals.greenfrequency,0,5.00000000000, _("Change frequeny of the green/saturation channel"));
 
-        dialog_create_value("G/S-Phaseshift:", GTK_TABLE(table), 4, &wvals.greenangle,0,360.00000000000000, "Change angle of the green/saturation channel");
-        dialog_create_value("B/L-Frequency:", GTK_TABLE(table), 5, &wvals.bluefrequency,0,5.00000000000, "Change frequency of the blue/luminance channel");
+        dialog_create_value(_("G/S-Phaseshift:"), GTK_TABLE(table), 4, &wvals.greenangle,0,360.00000000000000, _("Change angle of the green/saturation channel"));
+        dialog_create_value(_("B/L-Frequency:"), GTK_TABLE(table), 5, &wvals.bluefrequency,0,5.00000000000, _("Change frequency of the blue/luminance channel"));
 
-        dialog_create_value("B/L-Phaseshift:", GTK_TABLE(table), 6, &wvals.blueangle,0,360.00000000000, "Change angle of the blue/luminance channel");
+        dialog_create_value(_("B/L-Phaseshift:"), GTK_TABLE(table), 6, &wvals.blueangle,0,360.00000000000, _("Change angle of the blue/luminance channel"));
 
 
 	/*  Mode toggle box  */
-        frame = gtk_frame_new ("Mode:");
+        frame = gtk_frame_new (_("Mode:"));
         gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 5, 5);
 	toggle_vbox = gtk_vbox_new (FALSE, 5);
         gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
         gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-        toggle = gtk_radio_button_new_with_label (mode_group, "RGB color model");
+        toggle = gtk_radio_button_new_with_label (mode_group, _("RGB_MODEL color model"));
         mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
         gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
         gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -725,9 +729,9 @@ if (wvals.redfrequency!=1.0) exit;
         gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_rgb);
         gtk_widget_show (toggle);
    
-        set_tooltip(tips,toggle,"Use RGB color model");
+        set_tooltip(tips,toggle,_("Use RGB_MODEL color model"));
 
-        toggle = gtk_radio_button_new_with_label (mode_group, "HSL color model");
+        toggle = gtk_radio_button_new_with_label (mode_group, _("HSL_MODEL color model"));
         mode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
         gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
         gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -735,9 +739,9 @@ if (wvals.redfrequency!=1.0) exit;
         		&use_hsl);
         gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_hsl);
         gtk_widget_show (toggle);
-        set_tooltip(tips,toggle,"Use HSL color model");
+        set_tooltip(tips,toggle,_("Use HSL_MODEL color model"));
 
-        toggle = gtk_check_button_new_with_label ("Modify red/hue channel");
+        toggle = gtk_check_button_new_with_label (_("Modify red/hue channel"));
         gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
         gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
            		(GtkSignalFunc) alienmap2_toggle_update,
@@ -745,9 +749,9 @@ if (wvals.redfrequency!=1.0) exit;
         gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
         gtk_widget_show (toggle);
    
-        set_tooltip(tips,toggle,"Use function for red/hue component");
+        set_tooltip(tips,toggle,_("Use function for red/hue component"));
 
-        toggle = gtk_check_button_new_with_label ("Modify green/saturation channel");
+        toggle = gtk_check_button_new_with_label (_("Modify green/saturation channel"));
         gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
         gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
            		(GtkSignalFunc) alienmap2_toggle_update,
@@ -755,9 +759,9 @@ if (wvals.redfrequency!=1.0) exit;
         gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
         gtk_widget_show (toggle);
    
-        set_tooltip(tips,toggle,"Use function for green/saturation component");
+        set_tooltip(tips,toggle,_("Use function for green/saturation component"));
 
-        toggle = gtk_check_button_new_with_label ("Modify blue/luminance channel");
+        toggle = gtk_check_button_new_with_label (_("Modify blue/luminance channel"));
         gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
         gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
            		(GtkSignalFunc) alienmap2_toggle_update,
@@ -765,7 +769,7 @@ if (wvals.redfrequency!=1.0) exit;
         gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
         gtk_widget_show (toggle);
    
-        set_tooltip(tips,toggle,"Use function for blue/luminance component");
+        set_tooltip(tips,toggle,_("Use function for blue/luminance component"));
 
         gtk_widget_show (toggle_vbox);
         gtk_widget_show (frame);
@@ -776,7 +780,7 @@ if (wvals.redfrequency!=1.0) exit;
 
 gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 
-        button = gtk_button_new_with_label("OK");
+        button = gtk_button_new_with_label(_("OK"));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
         		   (GtkSignalFunc) dialog_ok_callback,
@@ -784,18 +788,18 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_grab_default(button);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Accept settings and apply filter on image");
+        set_tooltip(tips,button,_("Accept settings and apply filter on image"));
 
-        button = gtk_button_new_with_label("Cancel");
+        button = gtk_button_new_with_label(_("Cancel"));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
         		   (GtkSignalFunc) dialog_cancel_callback,
         		   dialog);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-        set_tooltip(tips,button,"Reject any changes and close plug-in");
+        set_tooltip(tips,button,_("Reject any changes and close plug-in"));
 
-	button = gtk_button_new_with_label("About...");
+	button = gtk_button_new_with_label(_("About..."));
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   GTK_SIGNAL_FUNC (alienmap2_logo_dialog),
@@ -803,7 +807,7 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		     button, TRUE, TRUE, 0);
         gtk_widget_show(button);
-	set_tooltip(tips,button,"Show information about this plug-in and the author");
+	set_tooltip(tips,button,_("Show information about this plug-in and the author"));
 
 
 
@@ -1022,9 +1026,9 @@ alienmap2_toggle_update (GtkWidget *widget,
 
   /*  determine colormodel  */
   if (use_rgb)
-      wvals.colormodel = RGB;
+      wvals.colormodel = RGB_MODEL;
   else if (use_hsl)
-      wvals.colormodel = HSL;
+      wvals.colormodel = HSL_MODEL;
 
   dialog_update_preview();
 
@@ -1048,7 +1052,7 @@ alienmap2_logo_dialog()
   if (!logodlg)
     {
       logodlg = gtk_dialog_new();
-      gtk_window_set_title(GTK_WINDOW(logodlg), "About Alien Map 2");
+      gtk_window_set_title(GTK_WINDOW(logodlg), _("About Alien Map 2"));
       gtk_window_position(GTK_WINDOW(logodlg), GTK_WIN_POS_MOUSE);
       gtk_signal_connect(GTK_OBJECT(logodlg),
 			 "destroy",
@@ -1060,7 +1064,7 @@ alienmap2_logo_dialog()
 			 GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 			 &logodlg);
       
-      xbutton = gtk_button_new_with_label("OK");
+      xbutton = gtk_button_new_with_label(_("OK"));
       GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
       gtk_signal_connect_object (GTK_OBJECT(xbutton), "clicked",
 				 GTK_SIGNAL_FUNC (gtk_widget_hide),
@@ -1069,7 +1073,7 @@ alienmap2_logo_dialog()
 			 xbutton, TRUE, TRUE, 0);
       gtk_widget_grab_default(xbutton);
       gtk_widget_show(xbutton);
-      set_tooltip(tips,xbutton,"This closes the information box");
+      set_tooltip(tips,xbutton,_("This closes the information box"));
       
       xframe = gtk_frame_new(NULL);
       gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
@@ -1111,11 +1115,11 @@ alienmap2_logo_dialog()
       
       xhbox = gtk_hbox_new(FALSE, 5);
       gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = "\nMartin Weber\n"
+      text = _("\nMartin Weber\n"
 	"martin.weber@usa.net\n"
 	"http://diverse.freepage.de/martin.weber\n\n"
 	"AlienMap2 Plug-In for the GIMP\n"
-	"Version 1.0\n";
+	"Version 1.0\n");
       xlabel = gtk_label_new(text);
       gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
       gtk_widget_show(xlabel);
