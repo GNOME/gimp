@@ -1,3 +1,10 @@
+2004-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimpfontlist.c (gimp_font_list_add_font): validate the
+	font name. This should work around the crashes that Windows users
+	were experiencing on startup (bug #132366). The real problem needs
+	to be fixed elsewhere though.
+
 2004-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (undo_pop_layer): when re-adding

@@ -2,8 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpfontlist.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- *                    Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2003-2004  Michael Natterer <mitch@gimp.org>
+ *                          Sven Neumann <sven@gimp.org>
+ *                          Manish Singh <yosh@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,10 +154,16 @@ gimp_font_list_add_font (GimpFontList         *list,
   GimpFont *font;
   gchar    *name;
 
-  if (desc == NULL)
+  if (! desc)
     return;
 
   name = pango_font_description_to_string (desc);
+
+  if (! g_utf8_validate (name, -1, NULL))
+    {
+      g_free (name);
+      return;
+    }
 
   font = g_object_new (GIMP_TYPE_FONT,
                        "name",          name,
@@ -173,7 +180,8 @@ gimp_font_list_add_font (GimpFontList         *list,
 /* We're really chummy here with the implementation. Oh well. */
 
 /* This is copied straight from make_alias_description in pango, plus
- * the gimp_font_list_add_font bits. */
+ * the gimp_font_list_add_font bits.
+ */
 static void
 gimp_font_list_make_alias (GimpFontList *list,
                            PangoContext *context,
@@ -278,7 +286,7 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
     weight = PANGO_WEIGHT_NORMAL;
 
   pango_font_description_set_weight (desc, weight);
-  
+
   if (FcPatternGetInteger (pattern, FC_WIDTH, 0, &i) == FcResultMatch)
     {
       switch (i)
@@ -393,4 +401,5 @@ gimp_font_list_load_names (GimpFontList *list,
 
   g_free (families);
 }
+
 #endif
