@@ -1,3 +1,9 @@
+2004-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* menus/Makefile.am
+	* menus/image-menu.xml
+	* menus/tool-options-menu.xml: more menus.
+
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactiongroup.c

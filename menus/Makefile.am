@@ -13,6 +13,7 @@ menudata_DATA = \
 	fonts-menu.xml			\
 	gradient-editor-menu.xml	\
 	gradients-menu.xml		\
+	image-menu.xml			\
 	images-menu.xml			\
 	layers-menu.xml			\
 	palette-editor-menu.xml		\
@@ -20,6 +21,7 @@ menudata_DATA = \
 	patterns-menu.xml		\
 	qmask-menu.xml			\
 	templates-menu.xml		\
+	tool-options-menu.xml		\
 	toolbox-menu.xml		\
 	vectors-menu.xml
 

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <menubar>
+
+    <menu action="file-menu">
+      <menuitem action="file-new" />
+      <menuitem action="file-open" />
+      <menu action="file-open-recent-menu">
+        <menuitem action="file-open-recent-empty" />
+        <separator />
+        <menuitem action="dialogs-document-history" />
+      </menu>
+      <menu action="file-acquire-menu">
+      </menu>
+      <separator />
+      <menuitem action="file-save" />
+      <menuitem action="file-save-as" />
+      <menuitem action="file-save-a-copy" />
+      <menuitem action="file-save-as-template" />
+      <menuitem action="file-revert" />
+      <separator />
+      <menuitem action="file-close" />
+      <menuitem action="file-quit" />
+    </menu>
+
+    <menu action="edit-menu">
+      <menuitem action="edit-undo" />
+      <menuitem action="edit-redo" />
+      <menuitem action="dialogs-undo-history" />
+      <separator />
+      <menuitem action="edit-cut" />
+      <menuitem action="edit-copy" />
+      <menuitem action="edit-paste" />
+      <menuitem action="edit-paste-into" />
+      <menuitem action="edit-paste-as-new" />
+      <menu action="edit-buffer-menu">
+        <menuitem action="edit-named-cut" />
+	<menuitem action="edit-names-copy" />
+	<menuitem action="edit-paste-named" />
+      </menu>
+      <separator />
+      <menuitem action="edit-clear" />
+      <menuitem action="edit-fill-fg" />
+      <menuitem action="edit-fill-bg" />
+      <menuitem action="edit-fill-pattern" />
+      <menuitem action="edit-stroke" />
+      <menuitem action="vectors-stroke-vectors" />
+      <separator />
+    </menu>
+
+    <menu action="select-menu">
+      <menuitem action="select-all" />
+      <menuitem action="select-none" />
+      <menuitem action="select-invert" />
+      <menuitem action="select-from-vectors" />
+      <menuitem action="select-float" />
+      <menuitem action="select-by-color" />
+      <separator />
+      <menuitem action="select-feather" />
+      <menuitem action="select-sharpen" />
+      <menuitem action="select-shrink" />
+      <menuitem action="select-grow" />
+      <menuitem action="select-border" />
+      <separator />
+      <menuitem action="select-toggle-qmask" />
+      <menuitem action="select-save" />
+      <menuitem action="select-to-path" />
+    </menu>
+
+    <menu action="view-menu">
+      <menuitem action="view-new" />
+      <menuitem action="dot-for-dot" />
+      <menu action="view-zoom-menu">
+        <menuitem action="view-zoom-out" />
+        <menuitem action="view-zoom-in" />
+        <menuitem action="view-zoom-fit" />
+        <menuitem action="view-zoom-16-1" />
+        <menuitem action="view-zoom-8-1" />
+        <menuitem action="view-zoom-4-1" />
+        <menuitem action="view-zoom-2-1" />
+        <menuitem action="view-zoom-1-1" />
+        <menuitem action="view-zoom-1-2" />
+        <menuitem action="view-zoom-1-4" />
+        <menuitem action="view-zoom-1-8" />
+        <menuitem action="view-zoom-1-16" />
+	<separator />
+        <menuitem action="view-zoom-other" />
+      </menu>
+      <separator />
+      <menuitem action="view-info-window" />
+      <menuitem action="view-navigation" />
+      <menuitem action="view-display-filters" />
+      <separator />
+      <menuitem action="view-show-selection" />
+      <menuitem action="view-show-layer-boundary" />
+      <menuitem action="view-show-guides" />
+      <menuitem action="view-snap-to-guides" />
+      <menuitem action="view-show-grid" />
+      <menuitem action="view-snap-to-grid" />
+      <separator />
+      <menuitem action="view-show-menubar" />
+      <menuitem action="view-show-rulers" />
+      <menuitem action="view-show-scrollbars" />
+      <menuitem action="view-show-statusbar" />
+      <separator />
+      <menuitem action="view-shrink-wrap" />
+      <menuitem action="view-fullscreen" />
+      <menuitem action="view-move-to-screen" />
+    </menu>
+
+    <menu action="image-menu">
+      <menu action="image-mode-menu">
+        <menuitem action="image-convert-rgb" />
+        <menuitem action="image-convert-grayscale" />
+        <menuitem action="image-convert-indexed" />
+      </menu>
+      <menu action="image-transform-menu">
+        <menuitem action="image-flip-horizontal" />
+        <menuitem action="image-flip-vertical" />
+	<separator />
+        <menuitem action="image-rotate-90" />
+        <menuitem action="image-rotate-270" />
+        <menuitem action="image-rotate-180" />
+	<separator />
+      </menu>
+      <separator />
+      <menuitem action="image-resize" />
+      <menuitem action="image-scale" />
+      <menuitem action="image-crop" />
+      <menuitem action="image-duplicate" />
+      <separator />
+      <menuitem action="image-merge-layers" />
+      <menuitem action="image-flatten" />
+      <separator />
+      <menuitem action="image-configure-grid" />
+    </menu>
+
+    <menu action="layers-menu">
+      <menuitem action="layers-new" />
+      <menuitem action="layers-duplicate" />
+      <menuitem action="layers-anchor" />
+      <menuitem action="layers-merge-down" />
+      <menuitem action="layers-delete" />
+      <menuitem action="layers-text-discard" />
+      <separator />
+      <menu action="layers-stack-menu">
+        <menuitem action="layers-select-previous" />
+        <menuitem action="layers-select-next" />
+        <menuitem action="layers-select-top" />
+        <menuitem action="layers-select-bottom" />
+	<separator />
+        <menuitem action="layers-raise" />
+        <menuitem action="layers-lower" />
+        <menuitem action="layers-raise-to-top" />
+        <menuitem action="layers-lower-to-bottom" />
+      </menu>
+      <menu action="layers-colors-menu">
+        <menuitem action="tools-color-balance" />
+        <menuitem action="tools-hue-saturation" />
+        <menuitem action="tools-colorize" />
+        <menuitem action="tools-brightness-contrast" />
+        <menuitem action="tools-threshold" />
+        <menuitem action="tools-levels" />
+        <menuitem action="tools-curves" />
+        <menuitem action="tools-posterize" />
+	<separator />
+        <menuitem action="drawable-desaturate" />
+        <menuitem action="drawable-invert" />
+	<menu action="layers-colors-auto-menu">
+	  <menuitem action="drawable-equalize" />
+	</menu>
+	<separator />
+        <menuitem action="dialogs-histogram" />
+      </menu>
+      <menu action="layers-mask-menu">
+        <menuitem action="layers-mask-add" />
+        <menuitem action="layers-mask-apply" />
+        <menuitem action="layers-mask-delete" />
+	<separator />
+        <menuitem action="layers-mask-selection-replace" />
+        <menuitem action="layers-mask-selection-add" />
+        <menuitem action="layers-mask-selection-subtract" />
+        <menuitem action="layers-mask-selection-intersect" />
+      </menu>
+      <menu action="layers-transparency-menu">
+        <menuitem action="layers-alpha-add" />
+	<separator />
+	<menuitem action="layers-alpha-selection-replace" />
+	<menuitem action="layers-alpha-selection-add" />
+	<menuitem action="layers-alpha-selection-subtract" />
+	<menuitem action="layers-alpha-selection-intersect" />
+	<separator />
+      </menu>
+      <menu action="layers-transform-menu">
+        <menuitem action="drawable-flip-horizontal" />
+        <menuitem action="drawable-flip-vertical" />
+	<separator />
+        <menuitem action="drawable-rotate-90" />
+        <menuitem action="drawable-rotate-270" />
+        <menuitem action="drawable-rotate-180" />
+	<separator />
+        <menuitem action="drawable-offset" />
+      </menu>
+      <separator />
+      <menuitem action="layers-resize" />
+      <menuitem action="layers-resize-to-image" />
+      <menuitem action="layers-scale" />
+      <menuitem action="layers-crop" />
+      <separator />
+    </menu>
+
+    <menu action="tools-menu">
+    </menu>
+
+    <menu action="dialogs-menu">
+    </menu>
+
+    <menu action="plug-in-menu">
+    </menu>
+
+  </menubar>
+</ui>
