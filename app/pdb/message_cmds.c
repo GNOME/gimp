@@ -54,7 +54,17 @@ message_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    g_message ("%s", message);
+    {
+      if (! g_utf8_validate (message, -1, NULL))
+	{
+	   g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
+	   success = FALSE;
+	}
+      else
+	{
+	   g_message ("%s", message);
+	}
+    }
 
   return procedural_db_return_args (&message_proc, success);
 }
@@ -72,7 +82,7 @@ static ProcRecord message_proc =
 {
   "gimp_message",
   "Displays a dialog box with a message.",
-  "Displays a dialog box with a message. Useful for status or error reporting.",
+  "Displays a dialog box with a message. Useful for status or error reporting. The message must be in UTF-8 encoding.",
   "Manish Singh",
   "Manish Singh",
   "1998",

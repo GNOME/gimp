@@ -1,7 +1,15 @@
+2003-06-06  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/message.pdb: UTF-8 validate messages before
+	passing them to g_message().
+
+	* app/pdb/message_cmds.c
+	* libgimp/gimpmessage_pdb.c: regenerated.
+
 2003-06-06  Maurits Rijk <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/script-fu/scripts/addborder.scm: fix for #114495 (Script-Fu:
-	Add Border can't be (complete) undone.)
+	* plug-ins/script-fu/scripts/addborder.scm: fix for #114495
+	(Script-Fu: Add Border can't be (complete) undone.)
 
 2003-06-06  Sven Neumann  <sven@gimp.org>
 

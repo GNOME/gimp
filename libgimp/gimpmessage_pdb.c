@@ -32,7 +32,7 @@
  * Displays a dialog box with a message.
  *
  * Displays a dialog box with a message. Useful for status or error
- * reporting.
+ * reporting. The message must be in UTF-8 encoding.
  *
  * Returns: TRUE on success.
  */

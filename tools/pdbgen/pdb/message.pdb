@@ -27,6 +27,7 @@ sub message {
 
     $help = <<'HELP';
 Displays a dialog box with a message. Useful for status or error reporting.
+The message must be in UTF-8 encoding.
 HELP
 
     &pdb_misc;
@@ -36,7 +37,20 @@ HELP
 	  desc => 'Message to display in the dialog' }
     );
 
-    %invoke = ( code => 'g_message ("%s", message);' );
+    %invoke = ( code => <<CODE
+{
+  if (! g_utf8_validate (message, -1, NULL))
+    {
+       g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
+       success = FALSE;
+    }
+  else
+    {
+       g_message ("%s", message);
+    }
+}
+CODE
+    );
 }
 
 sub message_get_handler {
