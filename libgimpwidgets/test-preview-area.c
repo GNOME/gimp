@@ -59,7 +59,7 @@ test_run (GtkWidget *area,
 
   gtk_widget_realize (area);
 
-  g_print ("\nPerformance tests for GimpPreviewArea (%s, %d iterations):\n",
+  g_print ("\nPerformance tests for GimpPreviewArea (%s, %d iterations):\n\n",
            visible ? "visible" : "hidden", num_iters);
 
   buf = g_malloc (WIDTH * HEIGHT * 8);
@@ -111,8 +111,9 @@ test_run (GtkWidget *area,
 
       gdk_flush ();
       total_time = g_timer_elapsed (timer, NULL) - start_time;
+
       g_print ("%-16s "
-               "time elapsed for draw:  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               "draw  :  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
                enum_value->value_name,
                total_time,
                num_iters / total_time,
@@ -139,8 +140,9 @@ test_run (GtkWidget *area,
 
       gdk_flush ();
       total_time = g_timer_elapsed (timer, NULL) - start_time;
+
       g_print ("%-16s "
-               "time elapsed for blend: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               "blend :  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
                enum_value->value_name,
                total_time,
                num_iters / total_time,
@@ -169,12 +171,14 @@ test_run (GtkWidget *area,
 
       gdk_flush ();
       total_time = g_timer_elapsed (timer, NULL) - start_time;
+
       g_print ("%-16s "
-               "time elapsed for blend: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+               "mask  :  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
                enum_value->value_name,
                total_time,
                num_iters / total_time,
                num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
+      g_print ("\n");
     }
 
   start_time = g_timer_elapsed (timer, NULL);
@@ -195,7 +199,7 @@ test_run (GtkWidget *area,
   gdk_flush ();
   total_time = g_timer_elapsed (timer, NULL) - start_time;
   g_print ("%-16s "
-           "time elapsed: %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
+           "fill:  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",
            "Color fill",
            total_time,
            num_iters / total_time,
@@ -230,5 +234,5 @@ main (int argc, char **argv)
 
   test_preview_area ();
 
-  return 0;
+  return EXIT_SUCCESS;
 }
