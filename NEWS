@@ -9,8 +9,8 @@ will emerge out of this.
 Overview of Changes in GIMP 2.1.7
 =================================
 
-- Added even more plug-in previews (Value Propagate, Cubism) and
-  ported existing previews to the new widgets (AlienMap2, FlareFX,
+- Added even more plug-in previews (Value Propagate, Cubism, Colorify)
+  and ported existing previews to the new widgets (AlienMap2, FlareFX,
   Jigsaw, Waves).
 
 - More PDB API cleanups.

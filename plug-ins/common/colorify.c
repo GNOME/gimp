@@ -35,24 +35,27 @@
 
 static void      query (void);
 static void      run   (const gchar      *name,
-			gint              nparams,
-			const GimpParam  *param,
-			gint             *nreturn_vals,
-			GimpParam       **return_vals);
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static void      colorify                  (GimpDrawable *drawable);
-static gboolean  colorify_dialog           (GimpRGB      *color);
+static void      colorify                  (GimpDrawable *drawable,
+                                            GimpPreview  *preview);
+static gboolean  colorify_dialog           (GimpDrawable *drawable);
 static void      predefined_color_callback (GtkWidget    *widget,
-					    gpointer      data);
+                                            gpointer      data);
 
 typedef struct
 {
   GimpRGB  color;
+  gboolean preview;
 } ColorifyVals;
 
 static ColorifyVals cvals =
 {
-  { 1.0, 1.0, 1.0, 1.0 }
+  { 1.0, 1.0, 1.0, 1.0 },
+  TRUE
 };
 
 static GimpRGB button_color[] =
@@ -98,17 +101,17 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Similar to the \"Color\" mode for layers.",
-			  "Makes an average of the RGB channels and uses it "
-			  "to set the color",
-			  "Francisco Bustamante",
-			  "Francisco Bustamante",
+                          "Similar to the \"Color\" mode for layers.",
+                          "Makes an average of the RGB channels and uses it "
+                          "to set the color",
+                          "Francisco Bustamante",
+                          "Francisco Bustamante",
                           PLUG_IN_VERSION,
-			  N_("_Colorify..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("_Colorify..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Colors");
 }
@@ -142,16 +145,16 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &cvals);
-      if (!colorify_dialog (&cvals.color))
-	return;
+      if (!colorify_dialog (drawable))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	cvals.color = param[3].data.d_color;
+        cvals.color = param[3].data.d_color;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -167,10 +170,10 @@ run (const gchar      *name,
     {
       gimp_progress_init (_("Colorifying..."));
 
-      colorify (drawable);
+      colorify (drawable, NULL);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_NAME, &cvals, sizeof (ColorifyVals));
+        gimp_set_data (PLUG_IN_NAME, &cvals, sizeof (ColorifyVals));
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -189,8 +192,9 @@ colorify_func (const guchar *src,
 {
   gint lum;
 
-  lum = lum_red_lookup[src[0]] + lum_green_lookup[src[1]] +
-    lum_blue_lookup[src[2]];
+  lum = lum_red_lookup[src[0]]   +
+        lum_green_lookup[src[1]] +
+        lum_blue_lookup[src[2]];
 
   dest[0] = final_red_lookup[lum];
   dest[1] = final_green_lookup[lum];
@@ -201,7 +205,8 @@ colorify_func (const guchar *src,
 }
 
 static void
-colorify (GimpDrawable *drawable)
+colorify (GimpDrawable *drawable,
+          GimpPreview  *preview)
 {
   gint  i;
 
@@ -215,13 +220,32 @@ colorify (GimpDrawable *drawable)
       final_blue_lookup[i]  = i * cvals.color.b;
     }
 
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, colorify_func, NULL);
+  if (preview)
+    {
+      gint    width, height, bytes;
+      guchar *src;
+
+      gimp_preview_get_size (preview, &width, &height);
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bytes);
+      for (i = 0; i < width * height; i++)
+        colorify_func (src + i * bytes, src + i * bytes, bytes, NULL);
+
+      gimp_preview_draw_buffer (preview, src, width * bytes);
+      g_free (src);
+    }
+  else
+    {
+      gimp_rgn_iterate2 (drawable, 0 /* unused */, colorify_func, NULL);
+    }
 }
 
 static gboolean
-colorify_dialog (GimpRGB *color)
+colorify_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *label;
   GtkWidget *button;
   GtkWidget *table;
@@ -233,54 +257,67 @@ colorify_dialog (GimpRGB *color)
 
   dialog = gimp_dialog_new (_("Colorify"), "colorify",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_aspect_preview_new (drawable, &cvals.preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (colorify),
+                            drawable);
 
   table = gtk_table_new (2, 7, TRUE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   label = gtk_label_new (_("Custom Color:"));
   gtk_table_attach (GTK_TABLE (table), label, 4, 6, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   custom_color_button = gimp_color_button_new (_("Colorify Custom Color"),
-					       COLOR_SIZE, COLOR_SIZE,
-					       color,
-					       GIMP_COLOR_AREA_FLAT);
+                                               COLOR_SIZE, COLOR_SIZE,
+                                               &cvals.color,
+                                               GIMP_COLOR_AREA_FLAT);
   g_signal_connect (custom_color_button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
-                    color);
+                    &cvals.color);
+  g_signal_connect_swapped (custom_color_button, "color_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_table_attach (GTK_TABLE (table), custom_color_button, 6, 7, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (custom_color_button);
 
   for (i = 0; i < 7; i++)
     {
       button = gtk_button_new ();
       color_area = gimp_color_area_new (&button_color[i],
-					GIMP_COLOR_AREA_FLAT,
-					GDK_BUTTON2_MASK);
+                                        GIMP_COLOR_AREA_FLAT,
+                                        GDK_BUTTON2_MASK);
       gtk_widget_set_size_request (GTK_WIDGET (color_area),
-				   COLOR_SIZE, COLOR_SIZE);
+                                   COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);
       g_signal_connect (button, "clicked",
-			G_CALLBACK (predefined_color_callback),
+                        G_CALLBACK (predefined_color_callback),
                         &button_color[i]);
       gtk_widget_show (color_area);
 
       gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
-			GTK_FILL, GTK_FILL, 0, 0);
+                        GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (button);
     }
 
@@ -295,8 +332,8 @@ colorify_dialog (GimpRGB *color)
 
 static void
 predefined_color_callback (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (custom_color_button),
-			       (GimpRGB *) data);
+                               (GimpRGB *) data);
 }

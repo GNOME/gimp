@@ -1,3 +1,7 @@
+2004-10-13  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/colorify.c: Added a preview.
+
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.c: removed trailing whitespace.
