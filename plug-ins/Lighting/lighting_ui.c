@@ -43,30 +43,31 @@
 #include "specref2.xpm"
 #include "high1.xpm"
 #include "high2.xpm"
-
 /*
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
 */
-
 extern LightingValues mapvals;
 
 GckVisualInfo *visinfo = NULL;
 
 static GtkWidget   *appwin            = NULL;
 static GtkNotebook *options_note_book = NULL;
+
+/*
 static GtkWidget   *bump_page         = NULL;
 static GtkWidget   *env_page          = NULL;
+*/
 
 GdkGC     *gc          = NULL;
 GtkWidget *previewarea = NULL;
 
 static GtkWidget *pointlightwid = NULL;
 static GtkWidget *dirlightwid   = NULL;
-
+/*
 static gint bump_page_pos = -1;
 static gint env_page_pos  = -1;
-
+*/
 static guint left_button_pressed = FALSE;
 static guint light_hit           = FALSE;
 
@@ -84,11 +85,13 @@ static void xyzval_update             (GtkEntry *entry);
 
 static void toggle_update             (GtkWidget *widget,
 				       gpointer   data);
+/*
 static void togglebump_update         (GtkWidget *widget,
 				       gpointer   data);
 
 static void toggleenvironment_update  (GtkWidget *widget,
 				       gpointer   data);
+*/
 
 static void lightmenu_callback        (GtkWidget *widget,
 				       gpointer   data);
@@ -107,8 +110,11 @@ static gint envmap_constrain          (gint32   image_id,
 				       gpointer data);
 static void envmap_drawable_callback  (gint32   id,
 				       gpointer data);
+/*
 static GtkWidget *create_bump_page        (void);
+
 static GtkWidget *create_environment_page (void);
+*/
 
 #ifdef _LIGHTNING_UNUSED_CODE
 /**********************************************************/
@@ -143,7 +149,7 @@ toggle_update (GtkWidget *widget,
 /*****************************/
 /* Toggle bumpmapping update */
 /*****************************/
-
+/*
 static void
 togglebump_update (GtkWidget *widget,
 		   gpointer   data)
@@ -166,11 +172,11 @@ togglebump_update (GtkWidget *widget,
       bump_page_pos = 0;
     }
 }
-
+*/
 /*************************************/
 /* Toggle environment mapping update */
 /*************************************/
-
+/*
 static void
 toggleenvironment_update (GtkWidget *widget,
 			  gpointer   data)
@@ -193,7 +199,7 @@ toggleenvironment_update (GtkWidget *widget,
       env_page_pos = 0;
     }
 }
-
+*/
 /*****************************************/
 /* Main window light type menu callback. */
 /*****************************************/
@@ -394,7 +400,7 @@ create_options_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
-
+  /*
   toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bump_mapped);
@@ -407,7 +413,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable bump-mapping (image depth)"),
 			   NULL);
-
+  
   toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
@@ -420,7 +426,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable environment mapping (reflection)"),
 			   NULL);
-
+  */
   toggle = gtk_check_button_new_with_label (_("Transparent Background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
@@ -458,9 +464,6 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable high quality preview"), NULL);
 
-  gimp_help_set_help_data (toggle,
-			   _("Enable/disable tooltip messages"), NULL); 
-
   /* Antialiasing options */
 
   frame = gtk_frame_new (_("Antialiasing Options"));
@@ -496,12 +499,12 @@ create_options_page (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Depth:"), 0, 0,
-			      mapvals.max_depth, 1.0, 5.0, 1.0, 1.0,
-			      0, TRUE, 0, 0,
+			      mapvals.max_depth, 1.0, 5.0, 0.5, 1.0,
+			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
 				"but slower"), NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &mapvals.max_depth);
   
  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -875,10 +878,13 @@ create_material_page (void)
   return page;
 }
 
+/* Create Bump mapping page */
+
 static GtkWidget *
 create_bump_page (void)
 {
   GtkWidget *page;
+  GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
@@ -893,12 +899,32 @@ create_bump_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  toggle = gtk_check_button_new_with_label (_("Enable Bump Mapping"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				mapvals.bump_mapped);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &mapvals.bump_mapped);
+  gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+			   _("Enable/disable bump-mapping (image depth)"),
+			   NULL);
+
   table = gtk_table_new (6, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
+
+  gtk_widget_set_sensitive (table, mapvals.bump_mapped);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", table);
 
   optionmenu = gtk_option_menu_new ();
   menu = gimp_drawable_menu_new (bumpmap_constrain, bumpmap_drawable_callback,
@@ -923,25 +949,33 @@ create_bump_page (void)
 			     _("Curve:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmin,
-				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Minimum Height:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &mapvals.bumpmin);
-
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Maximum Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &mapvals.bumpmax);
 
- toggle = gtk_check_button_new_with_label (_("Autostretch to Fit Value Range"));
+  gimp_help_set_help_data (spinbutton,
+			   _("Maximum height for bumps"),
+			   NULL);
+
+  spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmin,
+				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+			     _("Minimum Height:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &mapvals.bumpmin);
+
+   gimp_help_set_help_data (spinbutton,
+			   _("Minimum height for bumps"),
+			   NULL);
+
+  toggle = gtk_check_button_new_with_label (_("Autostretch to Fit Value Range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bumpstretch);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
@@ -949,6 +983,10 @@ create_bump_page (void)
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &mapvals.bumpstretch);
   gtk_widget_show (toggle);
+ 
+  gimp_help_set_help_data (toggle,
+			   _("Fit into value range"),
+			   NULL);
   
   gtk_widget_show (page);
 
@@ -959,34 +997,57 @@ static GtkWidget *
 create_environment_page (void)
 {
   GtkWidget *page;
+  GtkWidget *toggle;
+  GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *label;
+  GtkWidget *vbox;
   GtkWidget *optionmenu;
   GtkWidget *menu;
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
-
   frame = gtk_frame_new (_("Environment Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  label = gtk_label_new (_("Environment Image:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  toggle = gtk_check_button_new_with_label (_("Enable Environment Mapping"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				mapvals.env_mapped);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &mapvals.env_mapped);
+  gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+			   _("Enable/disable environment-mapping (reflection)"),
+			   NULL);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  gtk_widget_set_sensitive (table, mapvals.env_mapped);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", table);
 
   optionmenu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   menu = gimp_drawable_menu_new (envmap_constrain, envmap_drawable_callback,
 				 NULL, mapvals.envmap_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Environment Image:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
+
+  gimp_help_set_help_data (optionmenu,
+			   _("Environment image to use"),
+			   NULL);
 
   gtk_widget_show (page);
 
@@ -1018,6 +1079,15 @@ create_main_notebook (GtkWidget *container)
   gtk_notebook_append_page (options_note_book, page,
 			    gtk_label_new (_("Material")));
 
+  page = create_bump_page ();
+  gtk_notebook_append_page (options_note_book, page,
+			    gtk_label_new (_("Bump Map")));
+
+  page = create_environment_page ();
+  gtk_notebook_append_page (options_note_book, page,
+			    gtk_label_new (_("Environment Map")));
+
+  /*
   if (mapvals.bump_mapped == TRUE)
     {
       bump_page = create_bump_page ();
@@ -1025,7 +1095,7 @@ create_main_notebook (GtkWidget *container)
       gtk_notebook_append_page (options_note_book, bump_page,
 				gtk_label_new (_("Bumpmap")));
     }
-
+  
   if (mapvals.env_mapped == TRUE)
     {
       env_page = create_environment_page ();
@@ -1033,7 +1103,7 @@ create_main_notebook (GtkWidget *container)
       gtk_notebook_append_page (options_note_book, env_page,
 				gtk_label_new (_("Environment")));
     }
-
+  */
   gtk_widget_show (GTK_WIDGET (options_note_book));
 }
 
@@ -1132,9 +1202,9 @@ main_dialog (GimpDrawable *drawable)
 		      NULL);
   gtk_widget_show (button);
 
-/*
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
-
+ 
+  /*
   button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -1152,7 +1222,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
-*/
+  */
 
   create_main_notebook (main_hbox);
 
