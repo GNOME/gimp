@@ -1,3 +1,15 @@
+1999-04-23  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brush_select.[ch]
+	* app/pattern_select.[ch]: made the previews change their size in
+	sync with resizing the dialog. The previews auto-resize with their
+	parent frame now. Connect to the preview's "size_allocate" signal,
+	not to the frame's, don't "signal_connect_after". Get the size of
+	the preview from it's allocation and not from it's requisition.
+	There's no need to remember width, height and the frame in the
+	structures anymore, so I kicked them out. Tweaked the code to look
+	more similar.
+
 Fri Apr 23 08:31:50 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/gimpbrushlist.c: <sys/types.h> before <sys/stat.h>

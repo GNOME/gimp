@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +24,6 @@
 #include "gimplist.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
-#include "brush_select.h"
 #include "brush_select.h"
 #include "colormaps.h"
 #include "disp_callbacks.h"
@@ -92,9 +90,6 @@ static void spacing_scale_update          (GtkAdjustment *, gpointer);
 
 /*  local variables  */
 
-/*  Brush editor dialog (main brush dialog only)  */
-static BrushEditGeneratedWindow *brush_edit_generated_dialog;
-
 /*  PDB interface data  */
 static int success;
 
@@ -104,8 +99,11 @@ static GSList *active_dialogs = NULL;
 /*  The main brush dialog  */
 extern BrushSelectP brush_select_dialog;
 
+/*  Brush editor dialog (main brush dialog only)  */
+static BrushEditGeneratedWindow *brush_edit_generated_dialog;
 
-/*  If title is null then it is the main brush dialog  */
+
+/*  If title == NULL then it is the main brush dialog  */
 BrushSelectP
 brush_select_new (gchar   *title,
 		  /*  These are the required initial vals
@@ -119,6 +117,7 @@ brush_select_new (gchar   *title,
   BrushSelectP bsp;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *frame;
   GtkWidget *sbar;
   GtkWidget *label;
   GtkWidget *sep;
@@ -172,7 +171,7 @@ brush_select_new (gchar   *title,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
 
-  /* handle the wm close signal */
+  /*  Handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (bsp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (brush_select_delete_callback),
 		      bsp);
@@ -189,9 +188,9 @@ brush_select_new (gchar   *title,
   bsp->brush_selection_box = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
 
-  bsp->frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (bsp->frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), bsp->frame,
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), frame,
 		      TRUE, TRUE, 0);
   bsp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT(bsp), 1, 1, MAX_WIN_HEIGHT(bsp)));
   sbar = gtk_vscrollbar_new (bsp->sbar_data);
@@ -201,33 +200,33 @@ brush_select_new (gchar   *title,
 
 
   /*  Create the brush preview window and the underlying image  */
-  /*  Get the maximum brush extents  */
 
+  /*  Get the maximum brush extents  */
   bsp->cell_width = STD_CELL_WIDTH;
   bsp->cell_height = STD_CELL_HEIGHT;
 
-  bsp->width = MAX_WIN_WIDTH(bsp);
-  bsp->height = MAX_WIN_HEIGHT(bsp);
-
   bsp->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (bsp->preview), bsp->width, bsp->height);
+  gtk_preview_size (GTK_PREVIEW (bsp->preview),
+		    MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
+  gtk_preview_set_expand (GTK_PREVIEW (bsp->preview), TRUE);
   gtk_widget_set_events (bsp->preview, BRUSH_EVENT_MASK);
+
   gtk_signal_connect (GTK_OBJECT (bsp->preview), "event",
 		      (GtkSignalFunc) brush_select_events,
 		      bsp);
-  gtk_signal_connect_after (GTK_OBJECT(bsp->frame), "size_allocate",
-		       (GtkSignalFunc) brush_select_resize,
-		       bsp);
+  gtk_signal_connect (GTK_OBJECT(bsp->preview), "size_allocate",
+		      (GtkSignalFunc) brush_select_resize,
+		      bsp);
 
-  gtk_container_add (GTK_CONTAINER (bsp->frame), bsp->preview);
+  gtk_container_add (GTK_CONTAINER (frame), bsp->preview);
   gtk_widget_show (bsp->preview);
 
   gtk_widget_show (sbar);
-  gtk_widget_show (bsp->frame);
+  gtk_widget_show (frame);
   gtk_widget_show (bsp->brush_selection_box);
   gtk_widget_show (bsp->left_box);
 
-  /*  options box  */
+  /*  Options box  */
   bsp->options_box = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), bsp->options_box, FALSE, FALSE, 0);
 
@@ -253,7 +252,7 @@ brush_select_new (gchar   *title,
   gtk_box_pack_start (GTK_BOX (bsp->right_box), bsp->paint_options_box,
 		      FALSE, FALSE, 0);
 
-  /*  a separator before the paint options  */
+  /*  A separator before the paint options  */
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
@@ -376,8 +375,9 @@ brush_select_new (gchar   *title,
   if(!title)
     {
       /*  add callbacks to keep the display area current  */
-      gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
-			bsp);
+      gimp_list_foreach (GIMP_LIST (brush_list),
+			 (GFunc) connect_signals_to_brush,
+			 bsp);
       gtk_signal_connect (GTK_OBJECT (brush_list), "add",
 			  (GtkSignalFunc) brush_added_callback,
 			  bsp);
@@ -429,7 +429,7 @@ brush_select_new (gchar   *title,
     {
       int old_value = bsp->redraw;
       bsp->redraw = FALSE;
-      if(!gotinitbrush)
+      if (!gotinitbrush)
 	{
 	  bsp->opacity_value = paint_options_get_opacity ();
 	  bsp->spacing_value = gimp_brush_get_spacing (active);
@@ -440,8 +440,8 @@ brush_select_new (gchar   *title,
 	  bsp->opacity_value = init_opacity;
 	  bsp->paint_mode = init_mode;
 	}
-      brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
-								active));
+      brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
+								 active));
 
       if(gotinitbrush && init_spacing >= 0)
 	{
@@ -481,13 +481,13 @@ brush_select_free (BrushSelectP bsp)
   if (bsp)
     {
       /* Only main one is saved */
-      if(bsp == brush_select_dialog)
+      if (bsp == brush_select_dialog)
 	session_get_window_info (bsp->shell, &brush_select_session_info);
       if (bsp->brush_popup != NULL)
 	gtk_widget_destroy (bsp->brush_popup);
 
-      if(bsp->callback_name)
-	g_free(bsp->callback_name);
+      if (bsp->callback_name)
+	g_free (bsp->callback_name);
 
       /* remove from active list */
 
@@ -498,7 +498,8 @@ brush_select_free (BrushSelectP bsp)
 }
 
 void
-brush_change_callbacks (BrushSelectP bsp, gint closing)
+brush_change_callbacks (BrushSelectP bsp,
+			gint         closing)
 {
   gchar * name;
   ProcRecord *prec = NULL;
@@ -508,8 +509,8 @@ brush_change_callbacks (BrushSelectP bsp, gint closing)
 
   /* Any procs registered to callback? */
   Argument *return_vals; 
-  
-  if(!bsp || !bsp->callback_name || busy != 0)
+
+  if (!bsp || !bsp->callback_name || busy != 0)
     return;
 
   busy = 1;
@@ -517,7 +518,7 @@ brush_change_callbacks (BrushSelectP bsp, gint closing)
   brush = bsp->brush;
 
   /* If its still registered run it */
-  prec = procedural_db_lookup(name);
+  prec = procedural_db_lookup (name);
 
   if(prec && brush)
     {
@@ -580,54 +581,60 @@ brush_select_show_paint_options (BrushSelectP  bsp,
 }
 
 static void
-brush_select_brush_changed(BrushSelectP bsp, GimpBrushP brush)
+brush_select_brush_changed (BrushSelectP bsp,
+			    GimpBrushP   brush)
 {
-/* TODO: be smarter here and only update the part of the preview
- *       that has changed */
+  /* TODO: be smarter here and only update the part of the preview
+   *       that has changed */
   if (bsp)
   {
-    display_brushes(bsp);
+    display_brushes (bsp);
     gtk_widget_draw (bsp->preview, NULL);
   }
 }
 
 static gint
-brush_select_brush_dirty_callback(GimpBrushP brush, BrushSelectP bsp)
+brush_select_brush_dirty_callback (GimpBrushP   brush,
+				   BrushSelectP bsp)
 {
-  brush_select_brush_changed(bsp, brush);
+  brush_select_brush_changed (bsp, brush);
   return TRUE;
 }
 
 static void
-connect_signals_to_brush(GimpBrushP brush, BrushSelectP bsp)
+connect_signals_to_brush (GimpBrushP   brush,
+			  BrushSelectP bsp)
 {
-  gtk_signal_connect(GTK_OBJECT (brush), "dirty",
-		     GTK_SIGNAL_FUNC(brush_select_brush_dirty_callback),
-		     bsp);
+  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
+		      bsp);
 }
 
 static void
-disconnect_signals_from_brush(GimpBrushP brush, BrushSelectP bsp)
+disconnect_signals_from_brush (GimpBrushP   brush,
+			       BrushSelectP bsp)
 {
-  if (!GTK_OBJECT_DESTROYED(brush))
-    gtk_signal_disconnect_by_data(GTK_OBJECT(brush), bsp);
+  if (!GTK_OBJECT_DESTROYED (brush))
+    gtk_signal_disconnect_by_data (GTK_OBJECT (brush), bsp);
 }
 
 static void
-brush_added_callback(GimpBrushList *list, GimpBrushP brush, 
-		     BrushSelectP bsp)
+brush_added_callback (GimpBrushList *list,
+		      GimpBrushP     brush, 
+		      BrushSelectP   bsp)
 {
-  connect_signals_to_brush(brush, bsp);
-  preview_calc_scrollbar(bsp);
-  brush_select_brush_changed(bsp, brush);
+  connect_signals_to_brush (brush, bsp);
+  preview_calc_scrollbar (bsp);
+  brush_select_brush_changed (bsp, brush);
 }
 
 static void
-brush_removed_callback(GimpBrushList *list, GimpBrushP brush,
-		       BrushSelectP bsp)
+brush_removed_callback (GimpBrushList *list,
+			GimpBrushP     brush,
+			BrushSelectP   bsp)
 {
-  disconnect_signals_from_brush(brush, bsp);
-  preview_calc_scrollbar(bsp);
+  disconnect_signals_from_brush (brush, bsp);
+  preview_calc_scrollbar (bsp);
 }
 
 
@@ -675,7 +682,8 @@ brush_popup_open (BrushSelectP bsp,
   y = (y < 0) ? 0 : y;
   x = (x + brush->mask->width > scr_w) ? scr_w - brush->mask->width : x;
   y = (y + brush->mask->height > scr_h) ? scr_h - brush->mask->height : y;
-  gtk_preview_size (GTK_PREVIEW (bsp->brush_preview), brush->mask->width, brush->mask->height);
+  gtk_preview_size (GTK_PREVIEW (bsp->brush_preview),
+		    brush->mask->width, brush->mask->height);
 
   gtk_widget_popup (bsp->brush_popup, x, y);
   
@@ -691,7 +699,8 @@ brush_popup_open (BrushSelectP bsp,
        */
       for (x = 0; x < brush->mask->width; x++)
 	buf[x] = 255 - src[x];
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)buf, 0, y, brush->mask->width);
+      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)buf,
+			    0, y, brush->mask->width);
       src += brush->mask->width;
     }
   g_free(buf);
@@ -710,7 +719,7 @@ brush_popup_close (BrushSelectP bsp)
 
 static void
 display_brush (BrushSelectP bsp,
-	       GimpBrushP    brush,
+	       GimpBrushP   brush,
 	       int          col,
 	       int          row)
 {
@@ -737,8 +746,8 @@ display_brush (BrushSelectP bsp,
   offset_y = row * bsp->cell_height + ((bsp->cell_height - height) >> 1)
     - bsp->scroll_offset;
 
-  ystart = BOUNDS (offset_y, 0, bsp->preview->requisition.height);
-  yend = BOUNDS (offset_y + height, 0, bsp->preview->requisition.height);
+  ystart = BOUNDS (offset_y, 0, bsp->preview->allocation.height);
+  yend = BOUNDS (offset_y + height, 0, bsp->preview->allocation.height);
 
   /*  Get the pointer into the brush mask data  */
   src = mask_buf_data (brush_buf) + (ystart - offset_y) * brush_buf->width;
@@ -770,21 +779,26 @@ display_setup (BrushSelectP bsp)
   unsigned char * buf;
   int i;
 
-  buf = (unsigned char *) g_malloc (sizeof (char) * bsp->preview->requisition.width);
+  buf =
+    (unsigned char *) g_malloc (sizeof (char) * bsp->preview->allocation.width);
 
   /*  Set the buffer to white  */
-  memset (buf, 255, bsp->preview->requisition.width);
+  memset (buf, 255, bsp->preview->allocation.width);
 
   /*  Set the image buffer to white  */
-  for (i = 0; i < bsp->preview->requisition.height; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, 0, i, bsp->preview->requisition.width);
+  for (i = 0; i < bsp->preview->allocation.height; i++)
+    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, 0, i,
+			  bsp->preview->allocation.width);
 
   g_free (buf);
 }
 
 
 static int brush_counter = 0;
-static void do_display_brush (GimpBrush *brush, BrushSelectP bsp)
+
+static void
+do_display_brush (GimpBrush    *brush,
+		  BrushSelectP  bsp)
 {
   display_brush (bsp, brush, brush_counter % (bsp->NUM_BRUSH_COLUMNS),
 		 brush_counter / (bsp->NUM_BRUSH_COLUMNS));
@@ -796,10 +810,10 @@ display_brushes (BrushSelectP bsp)
 {
   /*  If there are no brushes, insensitize widgets  */
   if (brush_list == NULL || gimp_brush_list_length(brush_list) == 0)
-  {
-    gtk_widget_set_sensitive (bsp->options_box, FALSE);
-    return;
-  }
+    {
+      gtk_widget_set_sensitive (bsp->options_box, FALSE);
+      return;
+    }
   /*  Else, sensitize widgets  */
   else
     gtk_widget_set_sensitive (bsp->options_box, TRUE);
@@ -807,7 +821,7 @@ display_brushes (BrushSelectP bsp)
   /*  setup the display area  */
   display_setup (bsp);
   brush_counter = 0;
-  gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)do_display_brush, bsp);
+  gimp_list_foreach (GIMP_LIST (brush_list), (GFunc) do_display_brush, bsp);
 }
 
 
@@ -831,8 +845,8 @@ brush_select_show_selected (BrushSelectP bsp,
       offset_x = bsp->old_col * bsp->cell_width;
       offset_y = bsp->old_row * bsp->cell_height - bsp->scroll_offset;
 
-      ystart = BOUNDS (offset_y , 0, bsp->preview->requisition.height);
-      yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->requisition.height);
+      ystart = BOUNDS (offset_y , 0, bsp->preview->allocation.height);
+      yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
       /*  set the buf to white  */
       memset (buf, 255, bsp->cell_width);
@@ -840,11 +854,14 @@ brush_select_show_selected (BrushSelectP bsp,
       for (i = ystart; i < yend; i++)
 	{
 	  if (i == offset_y || i == (offset_y + bsp->cell_height - 1))
-	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, bsp->cell_width);
+	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				  offset_x, i, bsp->cell_width);
 	  else
 	    {
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, 1);
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x + bsp->cell_width - 1, i, 1);
+	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				    offset_x, i, 1);
+	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				    offset_x + bsp->cell_width - 1, i, 1);
 	    }
 	}
 
@@ -862,8 +879,8 @@ brush_select_show_selected (BrushSelectP bsp,
   offset_x = col * bsp->cell_width;
   offset_y = row * bsp->cell_height - bsp->scroll_offset;
 
-  ystart = BOUNDS (offset_y , 0, bsp->preview->requisition.height);
-  yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->requisition.height);
+  ystart = BOUNDS (offset_y , 0, bsp->preview->allocation.height);
+  yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
   /*  set the buf to black  */
   memset (buf, 0, bsp->cell_width);
@@ -871,11 +888,14 @@ brush_select_show_selected (BrushSelectP bsp,
   for (i = ystart; i < yend; i++)
     {
       if (i == offset_y || i == (offset_y + bsp->cell_height - 1))
-	gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, bsp->cell_width);
+	gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
+			      buf, offset_x, i, bsp->cell_width);
       else
 	{
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, 1);
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x + bsp->cell_width - 1, i, 1);
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				offset_x, i, 1);
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				offset_x + bsp->cell_width - 1, i, 1);
 	}
     }
 
@@ -922,24 +942,22 @@ preview_calc_scrollbar (BrushSelectP bsp)
 }
 
 static gint 
-brush_select_resize (GtkWidget *widget, 
-		     GdkEvent *event, 
-		     BrushSelectP bsp)
+brush_select_resize (GtkWidget    *widget, 
+		     GdkEvent     *event, 
+		     BrushSelectP  bsp)
 {
-   bsp->NUM_BRUSH_COLUMNS = (gint)((widget->allocation.width - 4) / STD_CELL_WIDTH);
-   bsp->NUM_BRUSH_ROWS = (gimp_brush_list_length(brush_list) + bsp->NUM_BRUSH_COLUMNS - 1) / bsp->NUM_BRUSH_COLUMNS;
-   
-   bsp->width = widget->allocation.width - 4;
-   bsp->height = widget->allocation.height - 4;
- 
-   gtk_preview_size (GTK_PREVIEW (bsp->preview), bsp->width, bsp->height);
+   bsp->NUM_BRUSH_COLUMNS =
+     (gint) ((widget->allocation.width) / STD_CELL_WIDTH);
+   bsp->NUM_BRUSH_ROWS =
+     (gint) ((gimp_brush_list_length (brush_list) + bsp->NUM_BRUSH_COLUMNS - 1) /
+	     bsp->NUM_BRUSH_COLUMNS);
    
    /*  recalculate scrollbar extents  */
    preview_calc_scrollbar (bsp);
  
    /*  render the brush into the newly created image structure  */
    display_brushes (bsp);
- 
+
    /*  update the display  */   
    if (bsp->redraw)
      gtk_widget_draw (bsp->preview, NULL);
@@ -953,7 +971,7 @@ update_active_brush_field (BrushSelectP bsp)
   GimpBrushP brush;
   char buf[32];
 
-  if(bsp->brush)
+  if (bsp->brush)
     brush = bsp->brush;
   else
     brush = get_active_brush ();
@@ -969,7 +987,7 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
-  if(bsp == brush_select_dialog)
+  if (bsp == brush_select_dialog)
     bsp->spacing_data->value = gimp_brush_get_spacing (brush);
   else
     bsp->spacing_data->value = bsp->spacing_value = brush->spacing;
@@ -1013,30 +1031,30 @@ brush_select_events (GtkWidget    *widget,
 
 	      /*  Make this brush the active brush  */
 	      /* only if dialog is main one */
-	      if(bsp == brush_select_dialog)
+	      if (bsp == brush_select_dialog)
 		{
 		  select_brush (brush);
 		}
 	      else
 		{
 		  /* Keeping up appearances */
-		  if(bsp)
+		  if (bsp)
 		    {
 		      bsp->brush = brush;
 		      brush_select_select (bsp,
-			gimp_brush_list_get_brush_index(brush_list, brush));
+			gimp_brush_list_get_brush_index (brush_list, brush));
 		    }
 		}
 		
 
-	      if (GIMP_IS_BRUSH_GENERATED(brush) && bsp == brush_select_dialog)
+	      if (GIMP_IS_BRUSH_GENERATED (brush) && bsp == brush_select_dialog)
 		gtk_widget_set_sensitive (bsp->edit_button, 1);
 	      else
 		gtk_widget_set_sensitive (bsp->edit_button, 0);
 	      
 	      if (brush_edit_generated_dialog)
-		brush_edit_generated_set_brush(brush_edit_generated_dialog,
-					       get_active_brush());
+		brush_edit_generated_set_brush (brush_edit_generated_dialog,
+						get_active_brush ());
 	      
 	      /*  Show the brush popup window if the brush is too large  */
 	      if (brush->mask->width > bsp->cell_width ||
@@ -1058,7 +1076,7 @@ brush_select_events (GtkWidget    *widget,
 	  brush_popup_close (bsp);
 
 	  /* Call any callbacks registered */
-	  brush_change_callbacks(bsp,0);
+	  brush_change_callbacks (bsp, 0);
 	}
       break;
     case GDK_DELETE:
@@ -1073,16 +1091,18 @@ brush_select_events (GtkWidget    *widget,
 }
 
 static gint
-edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
+edit_brush_callback (GtkWidget *w,
+		     GdkEvent  *e,
+		     gpointer   data)
 {
-  if (GIMP_IS_BRUSH_GENERATED(get_active_brush()))
+  if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
   {
     if (!brush_edit_generated_dialog)
     {
       /*  Create the dialog...  */
-      brush_edit_generated_dialog = brush_edit_generated_new();
-      brush_edit_generated_set_brush(brush_edit_generated_dialog,
-				     get_active_brush());
+      brush_edit_generated_dialog = brush_edit_generated_new ();
+      brush_edit_generated_set_brush (brush_edit_generated_dialog,
+				      get_active_brush ());
     }
     else
     {
@@ -1090,31 +1110,35 @@ edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
       if (!GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
 	gtk_widget_show (brush_edit_generated_dialog->shell);
       else
-	gdk_window_raise(brush_edit_generated_dialog->shell->window);
+	gdk_window_raise (brush_edit_generated_dialog->shell->window);
     }
   }
   else
-    g_message(_("We are all fresh out of brush editors today,\n"
-	        "please write your own or try back tomorrow\n"));
+    g_message (_("We are all fresh out of brush editors today,\n"
+		 "please write your own or try back tomorrow\n"));
   return TRUE;
 }
 
 static gint
-new_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
+new_brush_callback (GtkWidget *w,
+		    GdkEvent  *e,
+		    gpointer   data)
 {
   GimpBrushGenerated *brush;
-  brush = gimp_brush_generated_new(10, .5, 0.0, 1.0);
-  gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
-  select_brush(GIMP_BRUSH(brush));
+  brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
+  gimp_brush_list_add(brush_list, GIMP_BRUSH (brush));
+  select_brush (GIMP_BRUSH (brush));
   if (brush_edit_generated_dialog)
-    brush_edit_generated_set_brush(brush_edit_generated_dialog,
-				   get_active_brush());
-  edit_brush_callback(w, e, data);
+    brush_edit_generated_set_brush (brush_edit_generated_dialog,
+				    get_active_brush());
+  edit_brush_callback (w, e, data);
   return TRUE;
 }
 
 static gint
-brush_select_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
+brush_select_delete_callback (GtkWidget *w,
+			      GdkEvent  *e,
+			      gpointer   data)
 {
   brush_select_close_callback (w, data);
 
@@ -1133,12 +1157,12 @@ brush_select_close_callback (GtkWidget *w, /* Unused so can be NULL */
     gtk_widget_hide (bsp->shell);
 
   /* Free memory if poping down dialog which is not the main one */
-  if(bsp != brush_select_dialog)
+  if (bsp != brush_select_dialog)
     {
       /* Send data back */
-      brush_change_callbacks(bsp,1);
-      gtk_widget_destroy(bsp->shell); 
-      brush_select_free(bsp); 
+      brush_change_callbacks (bsp,1);
+      gtk_widget_destroy (bsp->shell); 
+      brush_select_free (bsp); 
     }
 }
 
@@ -1153,13 +1177,13 @@ brush_select_refresh_callback (GtkWidget *w,
   bsp = (BrushSelectP) client_data;
 
   /*  re-init the brush list  */
-  brushes_init(FALSE);
+  brushes_init (FALSE);
 
   /*  update the active selection  */
   active = get_active_brush ();
   if (active)
-    brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
-							      active));
+    brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
+							       active));
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (bsp);
@@ -1214,14 +1238,14 @@ static void
 paint_mode_menu_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
-  BrushSelectP bsp = (BrushSelectP)gtk_object_get_user_data(GTK_OBJECT(w));
+  BrushSelectP bsp = (BrushSelectP) gtk_object_get_user_data (GTK_OBJECT (w));
   
-  if(bsp == brush_select_dialog)
+  if (bsp == brush_select_dialog)
     paint_options_set_paint_mode ((int) client_data);
   else
     {
       bsp->paint_mode = (int) client_data;
-      brush_change_callbacks(bsp,0);
+      brush_change_callbacks (bsp, 0);
     }
 }
 
@@ -1230,14 +1254,14 @@ static void
 opacity_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  BrushSelectP bsp = (BrushSelectP)data;
+  BrushSelectP bsp = (BrushSelectP) data;
   
   if(bsp == brush_select_dialog)
     paint_options_set_opacity (adjustment->value / 100.0);
   else
     {
       bsp->opacity_value = (adjustment->value / 100.0);
-      brush_change_callbacks(bsp,0); 
+      brush_change_callbacks (bsp, 0); 
     }
 }
 
@@ -1246,7 +1270,7 @@ static void
 spacing_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  BrushSelectP bsp = (BrushSelectP)data;
+  BrushSelectP bsp = (BrushSelectP) data;
   
   if(bsp == brush_select_dialog)
     gimp_brush_set_spacing (get_active_brush(), (int) adjustment->value);
@@ -1255,7 +1279,7 @@ spacing_scale_update (GtkAdjustment *adjustment,
       if(bsp->spacing_value != adjustment->value)
 	{
 	  bsp->spacing_value = adjustment->value;
-	  brush_change_callbacks(bsp,0);
+	  brush_change_callbacks (bsp, 0);
 	}
     }
 }
@@ -1272,7 +1296,7 @@ paint_options_toggle_callback (GtkWidget *widget,
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-brushes_check_dialogs()
+brushes_check_dialogs ()
 {
   GSList *list;
   BrushSelectP bsp;
@@ -1281,21 +1305,20 @@ brushes_check_dialogs()
 
   list = active_dialogs;
 
-
   while (list)
     {
       bsp = (BrushSelectP) list->data;
       list = list->next;
 
       name = bsp->callback_name;
-      prec = procedural_db_lookup(name);
+      prec = procedural_db_lookup (name);
       
       if(!prec)
 	{
-	  active_dialogs = g_slist_remove(active_dialogs,bsp);
+	  active_dialogs = g_slist_remove (active_dialogs,bsp);
 
 	  /* Can alter active_dialogs list*/
-	  brush_select_close_callback(NULL,bsp);
+	  brush_select_close_callback (NULL, bsp);
 	}
     }
 }
@@ -1322,7 +1345,7 @@ brushes_popup_invoker (Argument *args)
   initial_brush = (char *) args[2].value.pdb_pointer;
 
   /* If null just use the active brush */
-  if(initial_brush && strlen(initial_brush))
+  if (initial_brush && strlen (initial_brush))
     {
       initial_opacity = args[3].value.pdb_float;
       initial_spacing = args[4].value.pdb_int;
@@ -1330,28 +1353,28 @@ brushes_popup_invoker (Argument *args)
     }
   
   /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+  if (!success || (prec = procedural_db_lookup (name)) == NULL)
     {
       success = 0;
       return procedural_db_return_args (&brushes_popup_proc, success);
     }
 
   /*create_brush_dialog();*/
-  if(initial_brush && strlen(initial_brush))
-    newdialog = brush_select_new(title,
-				 initial_brush,
-				 initial_opacity,
-				 initial_spacing,
-				 initial_mode);
+  if (initial_brush && strlen (initial_brush))
+    newdialog = brush_select_new (title,
+				  initial_brush,
+				  initial_opacity,
+				  initial_spacing,
+				  initial_mode);
   else
     newdialog = brush_select_new(title,NULL,0.0,0,0);
 
   /* Add to list of proc to run when brush changes */
   /* change_callbacks = g_list_append(change_callbacks,g_strdup(name));*/
-  newdialog->callback_name = g_strdup(name);
+  newdialog->callback_name = g_strdup (name);
 
   /* Add to active brush dialogs list */
-  active_dialogs = g_slist_append(active_dialogs,newdialog);
+  active_dialogs = g_slist_append (active_dialogs,newdialog);
 
   return procedural_db_return_args (&brushes_popup_proc, success);
 }
@@ -1396,7 +1419,7 @@ ProcRecord brushes_popup_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  sizeof(brushes_popup_in_args) / sizeof(brushes_popup_in_args[0]),
+  sizeof (brushes_popup_in_args) / sizeof (brushes_popup_in_args[0]),
   brushes_popup_in_args,
 
   /*  Output arguments  */
@@ -1408,7 +1431,7 @@ ProcRecord brushes_popup_proc =
 };
 
 static BrushSelectP
-brush_get_brushselect(gchar *name)
+brush_get_brushselect (gchar *name)
 {
   GSList *list;
   BrushSelectP bsp;
@@ -1420,7 +1443,7 @@ brush_get_brushselect(gchar *name)
       bsp = (BrushSelectP) list->data;
       list = list->next;
       
-      if(strcmp(name,bsp->callback_name) == 0)
+      if (strcmp (name, bsp->callback_name) == 0)
 	{
 	  return bsp;
 	}
@@ -1439,13 +1462,13 @@ brush_close_popup_invoker (Argument *args)
   success = (name = (char *) args[0].value.pdb_pointer) != NULL;
 
   /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+  if(!success || (prec = procedural_db_lookup (name)) == NULL)
     {
       success = 0;
       return procedural_db_return_args (&brushes_close_popup_proc, success);
     }
 
-  bsp = brush_get_brushselect(name);
+  bsp = brush_get_brushselect (name);
 
   if(bsp)
     {
@@ -1455,10 +1478,10 @@ brush_close_popup_invoker (Argument *args)
 	gtk_widget_hide (bsp->shell);
 
       /* Free memory if poping down dialog which is not the main one */
-      if(bsp != brush_select_dialog)
+      if (bsp != brush_select_dialog)
 	{
-	  gtk_widget_destroy(bsp->shell); 
-	  brush_select_free(bsp); 
+	  gtk_widget_destroy (bsp->shell); 
+	  brush_select_free (bsp); 
 	}
     }
   else
@@ -1489,7 +1512,7 @@ ProcRecord brushes_close_popup_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  sizeof(brush_close_popup_in_args) / sizeof(brush_close_popup_in_args[0]),
+  sizeof (brush_close_popup_in_args) / sizeof (brush_close_popup_in_args[0]),
   brush_close_popup_in_args,
 
   /*  Output arguments  */
@@ -1512,25 +1535,25 @@ brush_set_popup_invoker (Argument *args)
   brush_name = (char *) args[1].value.pdb_pointer;
 
   /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(pdbname)) == NULL)
+  if(!success || (prec = procedural_db_lookup (pdbname)) == NULL)
     {
       success = 0;
       return procedural_db_return_args (&brushes_set_popup_proc, success);
     }
 
-  bsp = brush_get_brushselect(pdbname);
+  bsp = brush_get_brushselect (pdbname);
 
 
   if(bsp)
     {
-      GimpBrushP active = gimp_brush_list_get_brush(brush_list,brush_name);
+      GimpBrushP active = gimp_brush_list_get_brush (brush_list,brush_name);
 
       if(active)
 	{
 	  /* Must alter the wigdets on screen as well */
 
 	  bsp->brush = active;
-	  brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, active));
+	  brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, active));
 
 	  bsp->opacity_value = args[2].value.pdb_float;
 	  bsp->spacing_value = args[3].value.pdb_int;

@@ -28,41 +28,41 @@ typedef struct _BrushSelect _BrushSelect, *BrushSelectP;
 struct _BrushSelect {
   GtkWidget *shell;
 
-  /* Place holders which enable global<->per-tool paint options switching */
+  /*  Place holders which enable global<->per-tool paint options switching  */
   GtkWidget *left_box;
   GtkWidget *right_box;
   GtkWidget *brush_selection_box;
   GtkWidget *paint_options_box;
 
-  GtkWidget *frame;
+  /*  The preview and it's vscale data  */
   GtkWidget *preview;
+  GtkAdjustment *sbar_data;
+
+  GtkWidget *options_box;
   GtkWidget *brush_name;
   GtkWidget *brush_size;
-  GtkWidget *options_box;
 
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
-  GtkAdjustment *sbar_data;
   GtkWidget *edit_button;
   GtkWidget *option_menu;
 
-  /* Brush preview */
+  /*  Brush preview  */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
 
-  /* Call back function name */
+  /*  Call back function name  */
   gchar *callback_name;
 
-  /* Current brush */
+  /*  Current brush  */
   GimpBrushP brush; 
   gint       spacing_value;
 
-  /* Current paint options */
+  /*  Current paint options  */
   gdouble opacity_value;
   gint    paint_mode;
 
-  /* Some variables to keep the GUI consistent */
-  int  width, height;
+  /*  Some variables to keep the GUI consistent  */
   int  cell_width, cell_height;
   int  scroll_offset;
   int  redraw;

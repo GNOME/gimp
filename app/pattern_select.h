@@ -23,27 +23,32 @@
 typedef struct _PatternSelect _PatternSelect, *PatternSelectP;
 
 struct _PatternSelect {
-  GtkWidget         *shell;
-  GtkWidget         *frame;
-  GtkWidget         *preview;
-  GtkWidget         *pattern_name;
-  GtkWidget         *pattern_size;
-  GtkWidget         *options_box;
-  GdkGC             *gc;
-  GtkAdjustment     *sbar_data;
-  int                width, height;
-  int                cell_width, cell_height;
-  int                scroll_offset;
+  GtkWidget     *shell;
+
+  /*  The preview and it's vscale data  */
+  GtkWidget     *preview;
+  GdkGC         *gc;
+  GtkAdjustment *sbar_data;
+
+  GtkWidget *options_box;
+  GtkWidget *pattern_name;
+  GtkWidget *pattern_size;
+
   /*  Pattern popup  */
   GtkWidget *pattern_popup;
   GtkWidget *pattern_preview;
-  /* Call back function name */
+
+  /*  Call back function name  */
   gchar * callback_name;
+
+  /*  Current pattern  */
+  GPatternP pattern;
+
+  /*  Some variables to keep the GUI consistent  */
+  int  cell_width, cell_height;
+  int  scroll_offset;
   gint old_row;
   gint old_col;
-  /* Current pattern */
-  GPatternP pattern;
-  /* To calc column pos. */
   gint NUM_PATTERN_COLUMNS;
   gint NUM_PATTERN_ROWS;
   gint STD_CELL_SIZE;
