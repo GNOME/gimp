@@ -52,6 +52,7 @@ Utility functions provided and used by libgimpthumb
 @filename: 
 @mtime: 
 @size: 
+@err_no: 
 @Returns: 
 
 
