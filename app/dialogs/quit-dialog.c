@@ -65,6 +65,10 @@ quit_dialog_new (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
+#ifdef __GNUC__
+#warning FIXME: need container of dirty images
+#endif
+
   images = gimp_displays_get_dirty_images (gimp);
 
   g_return_val_if_fail (images != NULL, NULL);

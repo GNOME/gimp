@@ -65,7 +65,6 @@
 #include "menus/menus.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/quit-dialog.h"
 
 #include "color-history.h"
 #include "gui.h"
@@ -459,9 +458,9 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      GtkWidget *dialog = quit_dialog_new (gimp);
-
-      gtk_widget_show (dialog);
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+                                        gdk_screen_get_default (),
+                                        "gimp-quit-dialog", -1);
 
       return TRUE; /* stop exit for now */
     }

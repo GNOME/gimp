@@ -104,6 +104,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp-about-dialog",       dialogs_about_get,
     0, TRUE,  FALSE, FALSE, FALSE },
   { "gimp-error-dialog",       dialogs_error_get,
+    0, TRUE,  FALSE, FALSE, FALSE },
+  { "gimp-quit-dialog",        dialogs_quit_get,
     0, TRUE,  FALSE, FALSE, FALSE }
 };
 
