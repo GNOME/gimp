@@ -1,3 +1,11 @@
+2001-02-27  Jay Cox  <jaycox@gimp.org>
+
+	* app/appenums.h
+	* app/gimplayer.c
+	* app/layers_dialog.c: When adding a layer mask allow the option
+	of using the current selection (or it's inverse) to initialise
+	the mask.
+
 2001-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay.c

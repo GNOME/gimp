@@ -3856,12 +3856,15 @@ layers_dialog_add_mask_query (GimpLayer *layer)
 {
   AddMaskOptions *options;
   GtkWidget      *frame;
-
+  GimpImage      *gimage;
+  
   /*  The new options structure  */
   options = g_new (AddMaskOptions, 1);
   options->layer         = layer;
   options->add_mask_type = ADD_WHITE_MASK;
 
+  gimage = GIMP_DRAWABLE (layer)->gimage;
+  
   /*  The dialog  */
   options->query_box =
     gimp_dialog_new (_("Add Mask Options"), "add_mask_options",
@@ -3882,19 +3885,41 @@ layers_dialog_add_mask_query (GimpLayer *layer)
 			     (GtkObject *) options);
 
   /*  The radio frame and box  */
-  frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-				 gimp_radio_button_update,
-				 &options->add_mask_type,
-				 (gpointer) options->add_mask_type,
+  if (gimage->selection_mask)
+    {
+      options->add_mask_type = ADD_SELECTION_MASK;
+      frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
+				     gimp_radio_button_update,
+				     &options->add_mask_type,
+				     (gpointer) options->add_mask_type,
 
-				 _("White (Full Opacity)"),
-				 (gpointer) ADD_WHITE_MASK, NULL,
-				 _("Black (Full Transparency)"),
-				 (gpointer) ADD_BLACK_MASK, NULL,
-				 _("Layer's Alpha Channel"),
-				 (gpointer) ADD_ALPHA_MASK, NULL,
-				 NULL);
+				     _("Show Selection"),
+				     (gpointer) ADD_SELECTION_MASK, NULL,
+				     _("Hide Selection"),
+				     (gpointer) ADD_INV_SELECTION_MASK, NULL,
+				     _("White (Full Opacity)"),
+				     (gpointer) ADD_WHITE_MASK, NULL,
+				     _("Black (Full Transparency)"),
+				     (gpointer) ADD_BLACK_MASK, NULL,
+				     _("Layer's Alpha Channel"),
+				     (gpointer) ADD_ALPHA_MASK, NULL,
+				     NULL);
+    }
+  else
+    {
+      frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
+				     gimp_radio_button_update,
+				     &options->add_mask_type,
+				     (gpointer) options->add_mask_type,
 
+				     _("White (Full Opacity)"),
+				     (gpointer) ADD_WHITE_MASK, NULL,
+				     _("Black (Full Transparency)"),
+				     (gpointer) ADD_BLACK_MASK, NULL,
+				     _("Layer's Alpha Channel"),
+				     (gpointer) ADD_ALPHA_MASK, NULL,
+				     NULL);
+    }
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);

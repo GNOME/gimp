@@ -44,6 +44,7 @@
 #include "temp_buf.h"
 #include "tile_manager.h"
 #include "tile.h"
+#include "invert.h"
 
 #include "libgimp/gimpparasite.h"
 
@@ -450,15 +451,24 @@ gimp_layer_create_mask (GimpLayer   *layer,
   PixelRegion    maskPR;
   PixelRegion    layerPR;
   GimpLayerMask *mask;
+  GimpImage     *gimage;
+  GimpDrawable  *selection;
   gchar         *mask_name;
   GimpRGB        black = { 0.0, 0.0, 0.0, 1.0 };
   guchar         white_mask = OPAQUE_OPACITY;
   guchar         black_mask = TRANSPARENT_OPACITY;
 
+  gimage = GIMP_DRAWABLE (layer)->gimage;
+
+  selection = GIMP_DRAWABLE(gimage->selection_mask);
+
   mask_name = g_strdup_printf (_("%s mask"),
 			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
+  /* Start an undo group.  Needed if we are modifying the selection */
+  undo_push_group_start (gimage, LAYER_MASK_ADD_UNDO);
   /*  Create the layer mask  */
+
   mask = gimp_layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
 			      GIMP_DRAWABLE (layer)->width,
 			      GIMP_DRAWABLE (layer)->height,
@@ -491,7 +501,31 @@ gimp_layer_create_mask (GimpLayer   *layer,
 	  extract_alpha_region (&layerPR, NULL, &maskPR);
 	}
       break;
+     case ADD_SELECTION_MASK:
+       pixel_region_init (&layerPR, GIMP_DRAWABLE (selection)->tiles, 
+			  GIMP_DRAWABLE (layer)->offset_x,
+			  GIMP_DRAWABLE (layer)->offset_y, 
+			  GIMP_DRAWABLE (layer)->width, 
+			  GIMP_DRAWABLE (layer)->height, 
+			  FALSE);
+       copy_region (&layerPR, &maskPR);
+       gimage_mask_none (gimage);
+       break;
+     case ADD_INV_SELECTION_MASK:
+       pixel_region_init (&layerPR, GIMP_DRAWABLE (selection)->tiles, 
+			  GIMP_DRAWABLE (layer)->offset_x,
+			  GIMP_DRAWABLE (layer)->offset_y, 
+			  GIMP_DRAWABLE (layer)->width, 
+			  GIMP_DRAWABLE (layer)->height, 
+			  FALSE);
+       copy_region (&layerPR, &maskPR);
+       gimage_mask_none (gimage);
+       invert(GIMP_DRAWABLE(mask));
+       break;
     }
+
+  /* finish the undo group. */
+  undo_push_group_end (gimage);
 
   g_free (mask_name);
 

@@ -109,7 +109,9 @@ typedef enum  /*< chop=ADD_ >*/
 {
   ADD_WHITE_MASK,
   ADD_BLACK_MASK,
-  ADD_ALPHA_MASK
+  ADD_ALPHA_MASK,
+  ADD_SELECTION_MASK,
+  ADD_INV_SELECTION_MASK
 } AddMaskType;
 
 /* gradient paint modes */
