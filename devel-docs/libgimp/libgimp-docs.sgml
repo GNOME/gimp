@@ -28,6 +28,7 @@
     </partintro>
 
     <xi:include href="xml/gimp.xml" />
+    <xi:include href="xml/gimpenums.xml" />
     <xi:include href="xml/gimpbrushes.xml" />
     <xi:include href="xml/gimpchannel.xml" />
     <xi:include href="xml/gimpcolor.xml" />
@@ -47,6 +48,7 @@
     <xi:include href="xml/gimplayer.xml" />
     <xi:include href="xml/gimpmessage.xml" />
     <xi:include href="xml/gimppalette.xml" />
+    <xi:include href="xml/gimppaths.xml" />
     <xi:include href="xml/gimppatterns.xml" />
     <xi:include href="xml/gimppixelrgn.xml" />
     <xi:include href="xml/gimppixelfetcher.xml" />
