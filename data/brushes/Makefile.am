@@ -1,17 +1,6 @@
 brushdatadir = $(gimpdatadir)/brushes
 
-brushdata =
-gradientdata =
-palettedata =
-patterndata =
-
-brushdata_DATA = @brushdata@
-
-EXTRA_DIST = $(brushdata_DATA)
-
-.PHONY: files
-
-FILES = \
+brushdata = \
 	10x10square.gbr		\
 	10x10squareBlur.gbr	\
 	11circle.gbr		\
@@ -40,6 +29,9 @@ FILES = \
 	DStar11.gbr		\
 	DStar17.gbr		\
 	DStar25.gbr		\
+	SketchBrush-16.gih	\
+	SketchBrush-32.gih	\
+	SketchBrush-64.gih	\
 	callig1.gbr		\
 	callig2.gbr		\
 	callig3.gbr		\
@@ -55,11 +47,4 @@ FILES = \
 	pepper.gbr		\
 	pixel.gbr		\
 	thegimp.gbr		\
-	SketchBrush-16.gih	\
-	SketchBrush-32.gih	\
-	SketchBrush-64.gih	\
 	xcf.gbr
-
-install-data-local:
-	rm -f $(brushdatadir)/round1.vbr $(brushdatadir)/pepper.gpb
-

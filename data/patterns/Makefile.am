@@ -1,17 +1,6 @@
 patterndatadir = $(gimpdatadir)/patterns
 
-brushdata =
-gradientdata =
-palettedata =
-patterndata =
-
-patterndata_DATA = @patterndata@
-
-EXTRA_DIST = $(patterndata_DATA)
-
-.PHONY: files
-
-FILES = \
+patterndata_DATA = \
 	3dgreen.pat		\
 	Craters.pat		\
 	Moonfoot.pat		\

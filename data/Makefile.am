@@ -2,11 +2,6 @@
 
 SUBDIRS = brushes gradients palettes patterns
 
-brushdata=
-gradientdata=
-palettedata=
-patterndata=
-
 .PHONY: files
 
 files:

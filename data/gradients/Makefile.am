@@ -1,17 +1,6 @@
 gradientdatadir = $(gimpdatadir)/gradients
 
-brushdata =
-gradientdata =
-palettedata =
-patterndata =
-
-gradientdata_DATA = @gradientdata@
-
-EXTRA_DIST = $(gradientdata_DATA)
-
-.PHONY: files
-
-FILES = \
+gradientdata_DATA = \
 	Abstract_1.ggr				\
 	Abstract_2.ggr				\
 	Abstract_3.ggr				\

@@ -1,23 +1,13 @@
 palettedatadir = $(gimpdatadir)/palettes
 
-brushdata =
-gradientdata =
-palettedata =
-patterndata =
-
-palettedata_DATA = @palettedata@
-
-EXTRA_DIST = $(palettedata_DATA)
-
-.PHONY: files
-
-FILES = \
-	Blues.gpl		\
+palettedata_DATA = \
 	Bears.gpl		\
 	Bgold.gpl		\
+	Blues.gpl		\
 	Borders.gpl		\
 	Browns_And_Yellows.gpl	\
 	Caramel.gpl		\
+	Cascade.gpl		\
 	China.gpl		\
 	Coldfire.gpl		\
 	Cool_Colors.gpl		\
@@ -46,7 +36,7 @@ FILES = \
 	Royal.gpl		\
 	Topographic.gpl		\
 	Visibone.gpl		\
-	Visibone2.gpl		\
+	Visibone_2.gpl		\
 	Volcano.gpl		\
 	Warm_Colors.gpl		\
 	Web.gpl
