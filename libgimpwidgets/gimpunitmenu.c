@@ -628,9 +628,6 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
                     G_CALLBACK (gimp_unit_menu_selection_response),
                     menu);
 
-  g_signal_connect_object (menu, "destroy",
-                           G_CALLBACK (gtk_widget_destroy),
-                           menu->selection, G_CONNECT_SWAPPED);
   g_signal_connect_object (menu, "unmap",
                            G_CALLBACK (gtk_widget_destroy),
                            menu->selection, G_CONNECT_SWAPPED);

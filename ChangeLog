@@ -1,3 +1,9 @@
+2004-02-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpunitmenu.c (gimp_unit_menu_create_selection):
+	no need to connect to "destroy", GTK_DIALOG_DESTROY_WITH_PARENT
+	does this for us already.
+
 2004-02-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: removed the call to
