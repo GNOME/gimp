@@ -1056,7 +1056,7 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
 
       if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
         {
-          g_message (_("Failed to create thumbnail directory '%s'."), 
+          g_message (_("Failed to create thumbnail folder '%s'."), 
                      thumb_subdirs[i]);
           return NULL;
         }
