@@ -1,6 +1,11 @@
 2004-07-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml
+	* app/app-sections.txt: more updates.
+
+2004-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
 	* app/app-sections.txt
 	* app/app.types: updated and reviewed.
 

@@ -3980,7 +3980,6 @@ GIMP_CONTAINER_COMBO_BOX_GET_CLASS
 <SECTION>
 <FILE>gimpcontainerview</FILE>
 <TITLE>GimpContainerView</TITLE>
-GIMP_CONTAINER_VIEW_GET_INTERFACE
 GimpContainerView
 GimpContainerViewInterface
 gimp_container_view_get_container
@@ -4008,6 +4007,7 @@ GIMP_CONTAINER_VIEW
 GIMP_IS_CONTAINER_VIEW
 GIMP_TYPE_CONTAINER_VIEW
 gimp_container_view_interface_get_type
+GIMP_CONTAINER_VIEW_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -4237,7 +4237,6 @@ GIMP_DOCKABLE_GET_CLASS
 <SECTION>
 <FILE>gimpdocked</FILE>
 <TITLE>GimpDocked</TITLE>
-GIMP_DOCKED_GET_INTERFACE
 GimpDocked
 GimpDockedInterface
 gimp_docked_set_aux_info
@@ -4252,6 +4251,7 @@ GIMP_DOCKED
 GIMP_IS_DOCKED
 GIMP_TYPE_DOCKED
 gimp_docked_interface_get_type
+GIMP_DOCKED_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -5910,7 +5910,6 @@ gimp_config_file_backup_on_error
 <FILE>gimpconfig</FILE>
 GimpConfigForeachFunc
 <TITLE>GimpConfig</TITLE>
-GIMP_CONFIG_GET_INTERFACE
 GimpConfig
 GimpConfigInterface
 gimp_config_serialize_to_file
@@ -5930,6 +5929,7 @@ GIMP_CONFIG
 GIMP_IS_CONFIG
 GIMP_TYPE_CONFIG
 gimp_config_interface_get_type
+GIMP_CONFIG_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -6428,8 +6428,8 @@ gimp_pickable_pick_color
 GIMP_PICKABLE
 GIMP_IS_PICKABLE
 GIMP_TYPE_PICKABLE
-GIMP_PICKABLE_GET_INTERFACE
 gimp_pickable_interface_get_type
+GIMP_PICKABLE_GET_INTERFACE
 </SECTION>
 
 <SECTION>

@@ -18,6 +18,15 @@
 
   <part id="app-glue-part">
     <title>Application Glue</title>
+
+    <partintro>
+      <para>
+        The stuff in the toplevel source directory. Initializes and shuts
+        down the application, parses the command line. It's the "glue"
+        that holds together the various subsystems.
+      </para>
+    </partintro>
+
     <xi:include href="xml/app_procs.xml" />
     <xi:include href="xml/batch.xml" />
     <xi:include href="xml/errors.xml" />
