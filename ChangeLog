@@ -1,3 +1,13 @@
+2002-05-10  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/user-install-dialog.c
+	* plug-ins/common/gtm.c: use stock pixbufs instead of xpm pixmaps.
+
+	* pixmaps/Makefile.am
+	* pixmaps/eek.xpm
+	* pixmaps/folder.xpm
+	* pixmaps/wilber.xpm: removed now unused pixmaps.
+
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.c: added a read-only property for the

@@ -49,9 +49,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/folder.xpm"
-#include "pixmaps/new.xpm"
-
 
 #ifndef G_OS_WIN32
 #  ifndef __EMX__
@@ -800,8 +797,12 @@ user_install_dialog_create (Gimp *gimp)
 		      G_CALLBACK (user_install_sel_changed),
 		      notebook2);
 
-    file_pixbuf = gdk_pixbuf_new_from_xpm_data ((const char **) new_xpm);
-    folder_pixbuf = gdk_pixbuf_new_from_xpm_data ((const char **) folder_xpm);
+    file_pixbuf = gtk_widget_render_icon (tv,
+                                          GTK_STOCK_NEW, GTK_ICON_SIZE_MENU,
+                                          NULL);
+    folder_pixbuf = gtk_widget_render_icon (tv,
+                                            GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU,
+                                            NULL);
 
     gtk_tree_store_append (tree, &iter, NULL);
     gtk_tree_store_set (tree, &iter,

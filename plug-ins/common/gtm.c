@@ -61,8 +61,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "pixmaps/eek.xpm"
-
 
 /* Typedefs */
 
@@ -405,7 +403,8 @@ save_dialog (image_ID)
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
       
-      eek = gimp_pixmap_new (eek_xpm);
+      eek = gtk_image_new_from_stock (GIMP_STOCK_WILBER_EEK,
+                                      GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 4);
 
       label = gtk_label_new (_("Are you crazy?\n\n"

@@ -9,9 +9,7 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	toselection.xpm		\
 	\
 	default.xpm		\
-	eek.xpm			\
 	first.xpm		\
-	folder.xpm		\
 	last.xpm		\
 	locked.xbm		\
 	next.xpm		\
@@ -26,7 +24,6 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	question.xpm		\
 	swap.xpm		\
 	update.xpm      	\
-	wilber.xpm		\
 	wilber2.xpm		\
 	yes.xpm			\
 @STRIP_END@
