@@ -1071,11 +1071,11 @@ prefs_display_options_frame_add (Gimp         *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox));
 
   prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
-                            _("Canvas padding mode:"), GTK_TABLE (table), 0,
+                            _("Canvas _padding mode:"), GTK_TABLE (table), 0,
                             NULL);
 
   button = prefs_color_button_add (object, "padding-color",
-                                   _("Custom padding color:"),
+                                   _("Custom p_adding color:"),
                                    _("Select custom canvas padding color"),
                                    GTK_TABLE (table), 1, NULL);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
@@ -1512,7 +1512,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "help-browser", 0, 0,
-                            _("Help _browser to use:"),
+                            _("H_elp browser to use:"),
                             GTK_TABLE (table), 0, size_group);
 
   /*  Web Browser  (unused on win32)  */
@@ -1524,7 +1524,7 @@ prefs_dialog_new (Gimp       *gimp,
                                             _("Select web browser"),
                                             FALSE, FALSE);
 
-  prefs_widget_add_aligned (fileselection, _("Web browser to use:"),
+  prefs_widget_add_aligned (fileselection, _("_Web browser to use:"),
                             GTK_TABLE (table), 0, FALSE, size_group);
 #endif
 
@@ -1611,7 +1611,7 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "toolbox-color-area",
-                                    _("Show foreground & background _color"),
+                                    _("Show _foreground & background color"),
                                     GIMP_STOCK_DEFAULT_COLORS,
                                     GTK_BOX (vbox2));
   prefs_check_button_add_with_icon (object, "toolbox-foo-area",
@@ -1669,7 +1669,7 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
                                _("Fit to window"),
                                "1:1",
-                               _("Initial zoom ratio:"),
+                               _("Initial zoom _ratio:"),
                                GTK_TABLE (table), 0, size_group);
 
   /*  Mouse Cursors  */
@@ -1686,7 +1686,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
-                            _("Cursor m_ode:"),
+                            _("Cursor _mode:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "cursor-format", 0, 0,
                             _("Cursor re_ndering:"),
@@ -2282,21 +2282,21 @@ prefs_dialog_new (Gimp       *gimp,
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
-                         _("Minimal number of undo levels:"),
+                         _("Minimal number of _undo levels:"),
                          GTK_TABLE (table), 0, size_group);
   prefs_memsize_entry_add (object, "undo-size",
-                           _("Maximum undo memory:"),
+                           _("Maximum undo _memory:"),
                            GTK_TABLE (table), 1, size_group);
   prefs_memsize_entry_add (object, "tile-cache-size",
-                           _("Tile cache size:"),
+                           _("Tile cache _size:"),
                            GTK_TABLE (table), 2, size_group);
   prefs_memsize_entry_add (object, "max-new-image-size",
-                           _("Maximum new image size:"),
+                           _("Maximum _new image size:"),
                            GTK_TABLE (table), 3, size_group);
 
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
-                         _("Number of processors to use:"),
+                         _("Number of _processors to use:"),
                          GTK_TABLE (table), 4, size_group);
 #endif /* ENABLE_MP */
 
@@ -2306,18 +2306,18 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
-                            _("Size of thumbnails:"),
+                            _("Size of _thumbnails:"),
                             GTK_TABLE (table), 0, size_group);
 
   prefs_memsize_entry_add (object, "thumbnail-filesize-limit",
-                           _("Maximum filesize for thumbnailing:"),
+                           _("Maximum _filesize for thumbnailing:"),
                            GTK_TABLE (table), 1, size_group);
 
   /*  File Saving  */
   vbox2 = prefs_frame_new (_("Saving Images"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "confirm-on-close",
-                          _("Confirm closing of unsaved images"),
+                          _("Confirm closing of unsa_ved images"),
                           GTK_BOX (vbox2));
 
   g_object_unref (size_group);
