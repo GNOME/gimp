@@ -58,7 +58,6 @@ GimpAddMaskType
 GimpBlendMode
 GimpBrushApplicationMode
 GimpBucketFillMode
-GimpChannelLutType
 GimpChannelOps
 GimpChannelType
 GimpCloneType
@@ -68,6 +67,7 @@ GimpConvolutionType
 GimpConvolveType
 GimpDodgeBurnType
 GimpFillType
+GimpHistogramChannel
 GimpImageBaseType
 GimpImageType
 GimpOffsetType

@@ -1,3 +1,8 @@
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenums.sgml: updated.
+
 2004-01-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am: don't skip "gimpmisc.h", it's gone.
