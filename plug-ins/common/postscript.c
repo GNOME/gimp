@@ -132,13 +132,13 @@ typedef struct
 
 static PSLoadVals plvals =
 {
-  100,                  /* 100 dpi */
-  826, 1170,            /* default width/height (A4) */
-  1,                    /* try to use BoundingBox */
-  "1-99",               /* pages to load */
-  6,                    /* use ppm (colour) */
-  1,                    /* dont use text antialiasing */
-  1                     /* dont use graphics antialiasing */
+  100,         /* 100 dpi                        */
+  826, 1170,   /* default width/height (A4)      */
+  1,           /* try to use BoundingBox         */
+  "1",         /* pages to load                  */
+  6,           /* use ppm (colour)               */
+  1,           /* dont use text antialiasing     */
+  1            /* dont use graphics antialiasing */
 };
 
 
@@ -2898,7 +2898,7 @@ load_dialog (void)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *pages_entry;
+  GtkWidget *entry;
   GtkWidget *toggle;
   gboolean   run;
 
@@ -2964,15 +2964,17 @@ load_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
 
-  pages_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (pages_entry, 80, -1);
-  gtk_entry_set_text (GTK_ENTRY (pages_entry), plvals.pages);
+  entry = gtk_entry_new ();
+  gtk_widget_set_size_request (entry, 80, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Pages:"), 0.0, 0.5,
-			     pages_entry, 1, FALSE);
-  g_signal_connect (pages_entry, "changed",
+			     entry, 1, FALSE);
+  g_signal_connect (entry, "changed",
                     G_CALLBACK (load_pages_entry_callback),
                     NULL);
+  gimp_help_set_help_data (GTK_WIDGET (entry),
+                           _("Pages to load (e.g.: 1-4 or 1,3,5-7)"), NULL);
 
   toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -3041,7 +3043,7 @@ static void
 load_pages_entry_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gint nelem = sizeof (plvals.pages);
+  gsize nelem = sizeof (plvals.pages);
 
   strncpy (plvals.pages, gtk_entry_get_text (GTK_ENTRY (widget)), nelem);
   plvals.pages[nelem-1] = '\0';

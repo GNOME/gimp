@@ -1,5 +1,11 @@
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/postscript.c: changed the default to load only
+	the first page of the document and added a tooltip describing how
+	to specify what pages to get.
+
+2004-11-18  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c (file_open_thumbnail): fixed check for
 	number of return values.
 
