@@ -1,5 +1,10 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/resolution-calibrate-dialog.c: fix for setups with
+	multiple monitors on the same screen.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c: fixed gtk-doc comment.
 
 2005-02-14  Sven Neumann  <sven@gimp.org>

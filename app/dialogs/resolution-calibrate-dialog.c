@@ -49,15 +49,18 @@ void
 resolution_calibrate_dialog (GtkWidget  *resolution_entry,
                              GdkPixbuf  *pixbuf)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *ruler;
-  GtkWidget *label;
-  GdkScreen *screen;
+  GtkWidget    *dialog;
+  GtkWidget    *table;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *ruler;
+  GtkWidget    *label;
+  GdkScreen    *screen;
+  GdkRectangle  rect;
+  gint          monitor;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
+  g_return_if_fail (GTK_WIDGET_REALIZED (resolution_entry));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
 
   /*  this dialog can only exist once  */
@@ -81,12 +84,12 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
                                            -1);
 
   screen = gtk_widget_get_screen (dialog);
+  monitor = gdk_screen_get_monitor_at_window (screen,
+                                              resolution_entry->window);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  ruler_width  = gdk_screen_get_width (screen);
-  ruler_height = gdk_screen_get_height (screen);
-
-  ruler_width  = ruler_width  - 300 - (ruler_width  % 100);
-  ruler_height = ruler_height - 300 - (ruler_height % 100);
+  ruler_width  = rect.width  - 300 - (rect.width  % 100);
+  ruler_height = rect.height - 300 - (rect.height % 100);
 
   table = gtk_table_new (4, 4, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
