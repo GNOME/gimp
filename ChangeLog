@@ -1,3 +1,18 @@
+2002-11-03  Garry R. Osgood <grosgood@rcn.com>
+	
+	* configure.in defined GIMP_ENABLE_MMX. Current value 0; to disable
+	related MMX code in app/paint-funcs/paint-funcs.c and 
+	app/paint-funcs/paint-funcs-mmx.h
+	* app/paint-funcs/paint-funcs.c
+	* app/paint-funcs/paint-funcs-mmx.h MMX code bracketed by above
+	define Closes #86290 and #90969 by expediency: bugs were not in
+	MMX assembly, but in the revised wrapper introduced on 2001-11-19,
+	which does not accommodate correctly macros designed to run the
+	MMX code selectively. Rather than revert, discussion on bug report
+        thread opted to disable such 'MMX microoptimizations' for now, and 
+	get the design correct first in pure C. See bug report and caveats
+	in paint-funcs-mmx.h
+	
 2002-11-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorarea.[ch]: simplified the code and

@@ -377,6 +377,7 @@ EOF
       rm -f conftest.*
       AC_DEFINE(HAVE_ASM_MMX, 1,
                 [Define to 1 if MMX in assembly is supported.])
+      AC_DEFINE(GIMP_ENABLE_MMX, 0, [Define to 1 to compile MMX code into paint-funcs. But read report for Bug 86290 first] )
       have_asm_mmx=true
     else
       AC_MSG_RESULT(no)
