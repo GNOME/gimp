@@ -135,6 +135,22 @@ gboolean      undo_push_channel_reposition (GimpImage     *gimage,
                                             GimpChannel   *channel);
 
 
+/*  vectors undos  */
+
+gboolean      undo_push_vectors_add        (GimpImage     *gimage, 
+                                            GimpVectors   *vectors,
+                                            gint           prev_position,
+                                            GimpVectors   *prev_vectors);
+gboolean      undo_push_vectors_remove     (GimpImage     *gimage, 
+                                            GimpVectors   *channel,
+                                            gint           prev_position,
+                                            GimpVectors   *prev_vectors);
+gboolean      undo_push_vectors_mod        (GimpImage     *gimage, 
+                                            GimpVectors   *vectors);
+gboolean      undo_push_vectors_reposition (GimpImage     *gimage,
+                                            GimpVectors   *vectors);
+
+
 /*  floating selection undos  */
 
 gboolean      undo_push_fs_to_layer        (GimpImage     *gimage,

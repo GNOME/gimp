@@ -3050,10 +3050,6 @@ gimp_image_add_vectors (GimpImage   *gimage,
 			GimpVectors *vectors,
 			gint         position)
 {
-#if 0
-  VectorsUndo *vu;
-#endif
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
 
@@ -3074,14 +3070,10 @@ gimp_image_add_vectors (GimpImage   *gimage,
       return FALSE;
     }
 
-#if 0
-  /*  Push a vectors undo  */
-  vu = g_new (VectorsUndo, 1);
-  vu->vectors       = vectors;
-  vu->prev_position = 0;
-  vu->prev_vectors  = gimp_image_get_active_vectors (gimage);
-  undo_push_vectors (gimage, VECTORS_ADD_UNDO, vu);
-#endif
+  undo_push_vectors_add (gimage,
+                         vectors,
+                         0,
+                         gimp_image_get_active_vectors (gimage));
 
   /*  add the vectors to the list  */
   gimp_container_add (gimage->vectors, GIMP_OBJECT (vectors));
@@ -3097,25 +3089,17 @@ void
 gimp_image_remove_vectors (GimpImage   *gimage, 
 			   GimpVectors *vectors)
 {
-#if 0
-  VectorsUndo *vu;
-#endif
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
   g_return_if_fail (gimp_container_have (gimage->vectors,
 					 GIMP_OBJECT (vectors)));
 
-#if 0
-  /*  Prepare a channel undo--push it below  */
-  vu = g_new (VectorsUndo, 1);
-  vu->vectors       = vectors;
-  vu->prev_position = gimp_container_get_child_index (gimage->vectors,
-						      GIMP_OBJECT (vectors));
-  vu->prev_vectors  = gimp_image_get_active_vectors (gimage);
-  undo_push_vectors (gimage, VECTORS_REMOVE_UNDO, vu);
-#endif
+  undo_push_vectors_remove (gimage,
+                            vectors,
+                            gimp_container_get_child_index (gimage->vectors,
+                                                            GIMP_OBJECT (vectors)),
+                            gimp_image_get_active_vectors (gimage));
 
   g_object_ref (G_OBJECT (vectors));
 
@@ -3184,7 +3168,7 @@ gboolean
 gimp_image_position_vectors (GimpImage   *gimage, 
 			     GimpVectors *vectors,
 			     gint         new_index,
-                             gboolean     push_undo /* FIXME unused */)
+                             gboolean     push_undo)
 {
   gint index;
   gint num_vectors;
@@ -3203,6 +3187,9 @@ gimp_image_position_vectors (GimpImage   *gimage,
 
   if (new_index == index)
     return TRUE;
+
+  if (push_undo)
+    undo_push_vectors_reposition (gimage, vectors);
 
   gimp_container_reorder (gimage->vectors,
 			  GIMP_OBJECT (vectors), new_index);

@@ -2323,16 +2323,17 @@ static gboolean
 undo_pop_channel_mod (GimpImage *gimage,
 		      UndoState  state,
 		      UndoType   type,
-		      gpointer   data_ptr)
+		      gpointer   cmu_ptr)
 {
-  ChannelModUndo *data;
+  ChannelModUndo *cmu;
   TileManager    *tiles;
   TileManager    *temp;
   GimpChannel    *channel;
 
-  data = (ChannelModUndo *) data_ptr;
-  channel = data->channel;
-  tiles = data->tiles;
+  cmu = (ChannelModUndo *) cmu_ptr;
+
+  channel = cmu->channel;
+  tiles   = cmu->tiles;
 
   /*  Issue the first update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -2341,15 +2342,14 @@ undo_pop_channel_mod (GimpImage *gimage,
 			GIMP_DRAWABLE (channel)->height);
 
   temp = GIMP_DRAWABLE (channel)->tiles;
-  GIMP_DRAWABLE (channel)->tiles = tiles;
-  GIMP_DRAWABLE (channel)->width  = tile_manager_width (tiles);
-  GIMP_DRAWABLE (channel)->height = tile_manager_height (tiles);
+
+  GIMP_DRAWABLE (channel)->tiles       = tiles;
+  GIMP_DRAWABLE (channel)->width       = tile_manager_width (tiles);
+  GIMP_DRAWABLE (channel)->height      = tile_manager_height (tiles);
   GIMP_CHANNEL (channel)->bounds_known = FALSE; 
-                                /* #4840. set to FALSE because bounds 
-                                   reflect previous tile set */
 
   /*  Set the new buffer  */
-  data->tiles = temp;
+  cmu->tiles = temp;
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -2361,15 +2361,17 @@ undo_pop_channel_mod (GimpImage *gimage,
 }
 
 static void
-undo_free_channel_mod (UndoState  state,
-		       UndoType   type,
-		       gpointer   data_ptr)
+undo_free_channel_mod (UndoState state,
+		       UndoType  type,
+		       gpointer  cmu_ptr)
 {
-  gpointer *data;
+  ChannelModUndo *cmu;
 
-  data = (gpointer *) data_ptr;
-  tile_manager_destroy ((TileManager *) data[1]);
-  g_free (data);
+  cmu = (ChannelModUndo *) cmu_ptr;
+
+  tile_manager_destroy (cmu->tiles);
+
+  g_free (cmu);
 }
 
 
@@ -2418,16 +2420,18 @@ static gboolean
 undo_pop_channel_reposition (GimpImage *gimage,
                              UndoState  state,
                              UndoType   type,
-                             void      *data_ptr)
+                             gpointer   cru_ptr)
 {
-  ChannelRepositionUndo *data = data_ptr;
+  ChannelRepositionUndo *cru;
   gint                   pos;
 
-  /* what's the channel's current index? */
-  pos = gimp_image_get_channel_index (gimage, data->channel);
-  gimp_image_position_channel (gimage, data->channel, data->old_position, FALSE);
+  cru = (ChannelRepositionUndo *) cru_ptr;
 
-  data->old_position = pos;
+  /* what's the channel's current index? */
+  pos = gimp_image_get_channel_index (gimage, cru->channel);
+  gimp_image_position_channel (gimage, cru->channel, cru->old_position, FALSE);
+
+  cru->old_position = pos;
 
   return TRUE;
 }
@@ -2435,9 +2439,297 @@ undo_pop_channel_reposition (GimpImage *gimage,
 static void
 undo_free_channel_reposition (UndoState  state,
                               UndoType   type,
-                              void      *data_ptr)
+                              gpointer   cru_ptr)
 {
-  g_free (data_ptr);
+  g_free (cru_ptr);
+}
+
+
+/*****************************/
+/*  Add/Remove Vectors Undo  */
+
+typedef struct _VectorsUndo VectorsUndo;
+
+struct _VectorsUndo
+{
+  GimpVectors *vectors;         /*  the actual vectors          */
+  gint         prev_position;   /*  former position in list     */
+  GimpVectors *prev_vectors;    /*  previous active vectors     */
+};
+
+static gboolean undo_push_vectors (GimpImage   *gimage,
+                                   UndoType     type,
+                                   GimpVectors *vectors,
+                                   gint         prev_position,
+                                   GimpVectors *prev_vectors);
+static gboolean undo_pop_vectors  (GimpImage *,
+                                   UndoState, UndoType, gpointer);
+static void     undo_free_vectors (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_vectors_add (GimpImage   *gimage,
+                       GimpVectors *vectors,
+                       gint         prev_position,
+                       GimpVectors *prev_vectors)
+{
+  return undo_push_vectors (gimage, VECTORS_ADD_UNDO,
+                            vectors, prev_position, prev_vectors);
+}
+
+gboolean
+undo_push_vectors_remove (GimpImage   *gimage,
+                          GimpVectors *vectors,
+                          gint         prev_position,
+                          GimpVectors *prev_vectors)
+{
+  return undo_push_vectors (gimage, VECTORS_REMOVE_UNDO,
+                            vectors, prev_position, prev_vectors);
+}
+
+static gboolean
+undo_push_vectors (GimpImage   *gimage,
+		   UndoType     type,
+                   GimpVectors *vectors,
+                   gint         prev_position,
+                   GimpVectors *prev_vectors)
+{
+  Undo *new;
+  gint  size;
+
+  g_return_val_if_fail (type == VECTORS_ADD_UNDO ||
+			type == VECTORS_REMOVE_UNDO,
+			FALSE);
+
+  size = sizeof (VectorsUndo) + gimp_object_get_memsize (GIMP_OBJECT (vectors));
+
+  if ((new = undo_push (gimage, size, type, TRUE)))
+    {
+      VectorsUndo *vu;
+
+      vu = g_new0 (VectorsUndo, 1);
+
+      new->data      = vu;
+      new->pop_func  = undo_pop_vectors;
+      new->free_func = undo_free_vectors;
+
+      g_object_ref (G_OBJECT (vectors));
+
+      vu->vectors       = vectors;
+      vu->prev_position = prev_position;
+      vu->prev_vectors  = prev_vectors;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_vectors (GimpImage *gimage,
+		  UndoState  state,
+		  UndoType   type,
+		  gpointer   vu_ptr)
+{
+  VectorsUndo *vu;
+
+  vu = (VectorsUndo *) vu_ptr;
+
+  if ((state == UNDO && type == VECTORS_ADD_UNDO) ||
+      (state == REDO && type == VECTORS_REMOVE_UNDO))
+    {
+      /*  remove vectors  */
+
+      /*  record the current position  */
+      vu->prev_position = gimp_image_get_vectors_index (gimage, vu->vectors);
+
+      /*  remove the vectors  */
+      gimp_container_remove (gimage->vectors, GIMP_OBJECT (vu->vectors));
+
+      /*  set the previous vectors  */
+      gimp_image_set_active_vectors (gimage, vu->prev_vectors);
+    }
+  else
+    {
+      /*  restore vectors  */
+
+      /*  record the active vectors  */
+      vu->prev_vectors = gimp_image_get_active_vectors (gimage);
+
+      /*  add the new vectors  */
+      gimp_container_insert (gimage->vectors, 
+			     GIMP_OBJECT (vu->vectors),	vu->prev_position);
+ 
+      /*  set the new vectors  */
+      gimp_image_set_active_vectors (gimage, vu->vectors);
+    }
+
+  return TRUE;
+}
+
+static void
+undo_free_vectors (UndoState  state,
+		   UndoType   type,
+		   gpointer   vu_ptr)
+{
+  VectorsUndo *vu;
+
+  vu = (VectorsUndo *) vu_ptr;
+
+  g_object_unref (G_OBJECT (vu->vectors));
+
+  g_free (vu);
+}
+
+
+/**********************/
+/*  Vectors Mod Undo  */
+
+typedef struct _VectorsModUndo VectorsModUndo;
+
+struct _VectorsModUndo
+{
+  GimpVectors *vectors;
+  GimpVectors *undo_vectors;
+};
+
+static gboolean undo_pop_vectors_mod  (GimpImage *,
+                                       UndoState, UndoType, gpointer);
+static void     undo_free_vectors_mod (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_vectors_mod (GimpImage   *gimage,
+		       GimpVectors *vectors)
+{
+  Undo *new;
+  gint  size;
+
+  size = (sizeof (VectorsModUndo) +
+          gimp_object_get_memsize (GIMP_OBJECT (vectors)));
+
+  if ((new = undo_push (gimage, size,
+                        VECTORS_MOD_UNDO, TRUE)))
+    {
+      VectorsModUndo *vmu;
+
+      vmu = g_new0 (VectorsModUndo, 1);
+
+      new->data      = vmu;
+      new->pop_func  = undo_pop_vectors_mod;
+      new->free_func = undo_free_vectors_mod;
+
+      vmu->vectors      = vectors;
+      vmu->undo_vectors = NULL; /* gimp_vectors_duplicate (vectors); */
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_vectors_mod (GimpImage *gimage,
+		      UndoState  state,
+		      UndoType   type,
+		      gpointer   vmu_ptr)
+{
+  VectorsModUndo *vmu;
+  GimpVectors    *temp;
+
+  vmu = (VectorsModUndo *) vmu_ptr;
+
+  temp = vmu->undo_vectors;
+
+  vmu->undo_vectors = NULL; /* gimp_vectors_duplicate (vmu->vectors); */
+
+  /* gimp_vectors_copy_strokes (temp, vmu->vectors); */
+
+  /* g_object_unref (G_OBJECT (temp)); */
+
+  return TRUE;
+}
+
+static void
+undo_free_vectors_mod (UndoState state,
+		       UndoType  type,
+		       gpointer  vmu_ptr)
+{
+  VectorsModUndo *vmu;
+
+  vmu = (VectorsModUndo *) vmu_ptr;
+
+  /* g_object_unref (G_OBJECT (vmu->undo_vectors)); */
+
+  g_free (vmu);
+}
+
+
+/******************************/
+/*  Vectors re-position Undo  */
+
+typedef struct _VectorsRepositionUndo VectorsRepositionUndo;
+
+struct _VectorsRepositionUndo
+{
+  GimpVectors *vectors;
+  gint         old_position;
+};
+
+static gboolean undo_pop_vectors_reposition  (GimpImage *,
+                                              UndoState, UndoType, gpointer);
+static void     undo_free_vectors_reposition (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_vectors_reposition (GimpImage   *gimage, 
+                              GimpVectors *vectors)
+{
+  Undo *new;
+
+  if ((new = undo_push (gimage, sizeof (VectorsRepositionUndo),
+                        VECTORS_REPOSITION_UNDO, TRUE)))
+    {
+      VectorsRepositionUndo *vru;
+
+      vru = g_new0 (VectorsRepositionUndo, 1);
+
+      new->data      = vru;
+      new->pop_func  = undo_pop_vectors_reposition;
+      new->free_func = undo_free_vectors_reposition;
+
+      vru->vectors      = vectors;
+      vru->old_position = gimp_image_get_vectors_index (gimage, vectors);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_vectors_reposition (GimpImage *gimage,
+                             UndoState  state,
+                             UndoType   type,
+                             gpointer   vru_ptr)
+{
+  VectorsRepositionUndo *vru;
+  gint                   pos;
+
+  vru = (VectorsRepositionUndo *) vru_ptr;
+
+  /* what's the vectors's current index? */
+  pos = gimp_image_get_vectors_index (gimage, vru->vectors);
+  gimp_image_position_vectors (gimage, vru->vectors, vru->old_position, FALSE);
+
+  vru->old_position = pos;
+
+  return TRUE;
+}
+
+static void
+undo_free_vectors_reposition (UndoState  state,
+                              UndoType   type,
+                              gpointer   vru_ptr)
+{
+  g_free (vru_ptr);
 }
 
 
@@ -3262,6 +3554,10 @@ undo_name[] =
   { CHANNEL_REMOVE_UNDO,           N_("Delete Channel")            },
   { CHANNEL_MOD_UNDO,              N_("Channel Mod")               },
   { CHANNEL_REPOSITION_UNDO,       N_("Channel Reposition")        },
+  { VECTORS_ADD_UNDO,              N_("New Vectors")               },
+  { VECTORS_REMOVE_UNDO,           N_("Delete Vectors")            },
+  { VECTORS_MOD_UNDO,              N_("Vectors Mod")               },
+  { VECTORS_REPOSITION_UNDO,       N_("Vectors Reposition")        },
   { FS_TO_LAYER_UNDO,              N_("FS to Layer")               },
   { FS_RIGOR_UNDO,                 N_("FS Rigor")                  },
   { FS_RELAX_UNDO,                 N_("FS Relax")                  },
