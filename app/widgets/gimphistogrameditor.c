@@ -249,9 +249,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect_object (gimage, "active_layer_changed",
                                G_CALLBACK (gimp_histogram_editor_layer_changed),
                                editor, 0);
-
-      gimp_histogram_editor_layer_changed (gimage, editor);
     }
+
+  gimp_histogram_editor_layer_changed (gimage, editor);
 }
 
 GtkWidget *
@@ -303,7 +303,8 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
       editor->drawable = NULL;
     }
 
-  editor->drawable = (GimpDrawable *) gimp_image_get_active_layer (gimage);
+  if (gimage)
+    editor->drawable = (GimpDrawable *) gimp_image_get_active_layer (gimage);
 
   gimp_histogram_editor_menu_update (editor);
 
@@ -324,9 +325,12 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
     {
       name = _("(None)");
 
-      gimp_histogram_calculate (editor->histogram, NULL, NULL);
-      gtk_widget_queue_draw GTK_WIDGET (editor->box);
-      gimp_histogram_editor_info_update (editor);
+      if (editor->histogram)
+        {
+          gimp_histogram_calculate (editor->histogram, NULL, NULL);
+          gtk_widget_queue_draw GTK_WIDGET (editor->box);
+          gimp_histogram_editor_info_update (editor);
+        }
     }
 
   gtk_label_set_text (GTK_LABEL (editor->name), name);

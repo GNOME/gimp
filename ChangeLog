@@ -1,5 +1,9 @@
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogrameditor.c: (hopefully) fixed bug #126151.
+
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimpcolorspace.c
 	* libgimpcolor/gimpcmyk.c: fixed gtk-doc comments, removed
 	trailing whitespace.
