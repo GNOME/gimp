@@ -80,6 +80,7 @@ gimp_vectors_get_type (void)
   return vectors_type;
 }
 
+
 static void
 gimp_vectors_class_init (GimpVectorsClass *klass)
 {
@@ -121,11 +122,13 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   klass->make_bezier		  = NULL;
 }
 
+
 static void
 gimp_vectors_init (GimpVectors *vectors)
 {
   vectors->strokes = NULL;
 };
+
 
 static void
 gimp_vectors_finalize (GObject *object)
@@ -137,20 +140,23 @@ gimp_vectors_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+
 static gsize
 gimp_vectors_get_memsize (GimpObject *object)
 {
   GimpVectors *vectors;
-  GimpStroke  *stroke;
+  GList       *stroke;
   gsize        memsize = 0;
 
   vectors = GIMP_VECTORS (object);
 
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (stroke));
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (stroke->data))
+               + sizeof (GList);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
+
 
 static GimpItem *
 gimp_vectors_duplicate (GimpItem *item,
@@ -195,16 +201,25 @@ gimp_vectors_new (GimpImage   *gimage,
   return vectors;
 }
 
+
 void
 gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
                            GimpVectors       *dest_vectors)
 {
+  GList *current_lstroke;
+
   g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
   g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
+  g_return_if_fail (dest_vectors->strokes == NULL);
 
-#ifdef __GNUC__
-#warning FIXME: implement gimp_vectors_copy_strokes()
-#endif
+  dest_vectors->strokes = g_list_copy (src_vectors->strokes);
+  current_lstroke = dest_vectors->strokes;
+
+  while (current_lstroke)
+    {
+      current_lstroke->data = gimp_stroke_duplicate (current_lstroke->data);
+      current_lstroke = g_list_next (current_lstroke);
+    }
 }
 
 
@@ -226,14 +241,14 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
   else
     {
       gdouble     dx, dy, mindist;
-      GimpStroke *stroke;
+      GList      *stroke;
       GimpAnchor *anchor = NULL, *minanchor = NULL;
 
       mindist = -1;
 
-      for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+      for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
         {
-          anchor = gimp_stroke_anchor_get (stroke, coord);
+          anchor = gimp_stroke_anchor_get (GIMP_STROKE (stroke->data), coord);
           if (anchor)
             {
               dx = coord->x - anchor->position.x;
@@ -243,7 +258,7 @@ gimp_vectors_anchor_get (const GimpVectors *vectors,
                   mindist = dx * dx + dy * dy;
                   minanchor = anchor;
                   if (ret_stroke)
-                    *ret_stroke = stroke;
+                    *ret_stroke = stroke->data;
                 }
             }
         }
@@ -271,8 +286,7 @@ gimp_vectors_stroke_add (GimpVectors *vectors,
     }
   else
     {
-      stroke->next = vectors->strokes;
-      vectors->strokes = stroke;
+      vectors->strokes = g_list_prepend (vectors->strokes, stroke);
       g_object_ref (stroke);
     }
 }
@@ -293,16 +307,16 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
   else
     {
       gdouble     dx, dy, mindist;
-      GimpStroke *stroke;
+      GList      *stroke;
       GimpStroke *minstroke = NULL;
       GimpAnchor *anchor = NULL;
 
       mindist = -1;
-      stroke = GIMP_STROKE (vectors->strokes);
+      stroke = vectors->strokes;
 
       while (stroke)
         {
-          anchor = gimp_stroke_anchor_get (stroke, coord);
+          anchor = gimp_stroke_anchor_get (stroke->data, coord);
           if (anchor)
             {
               dx = coord->x - anchor->position.x;
@@ -310,10 +324,10 @@ gimp_vectors_stroke_get (const GimpVectors *vectors,
               if (mindist > dx * dx + dy * dy || mindist < 0)
                 {
                   mindist = dx * dx + dy * dy;
-                  minstroke = stroke;
+                  minstroke = GIMP_STROKE (stroke->data);
                 }
             }
-          stroke = stroke->next;
+          stroke = g_list_next (stroke);
         }
       return minstroke;
     }
@@ -338,12 +352,14 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
     {
       if (!prev)
         {
-          return vectors->strokes;
+          return vectors->strokes->data;
         }
       else
         {
-          g_return_val_if_fail (GIMP_IS_STROKE  (prev), NULL);
-          return prev->next;
+          GList *stroke;
+          stroke = g_list_find (vectors->strokes, prev);
+          g_return_val_if_fail (stroke != NULL, NULL);
+          return stroke->next ? GIMP_STROKE (stroke->next->data) : NULL;
         }
     }
 

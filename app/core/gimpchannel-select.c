@@ -191,9 +191,9 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
                                 gdouble         feather_radius_x,
                                 gdouble         feather_radius_y)
 {
-  GimpStroke *stroke;
-  GArray     *coords = NULL;
-  gboolean    closed;
+  GList    *stroke;
+  GArray   *coords = NULL;
+  gboolean  closed;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -202,8 +202,8 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
    */
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
-      coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
+      coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
+                                        1.0, &closed);
       if (coords)
         break;
     }

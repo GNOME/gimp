@@ -41,7 +41,7 @@ struct _GimpVectors
   gboolean          locked;             /* transformation locking         */
 
   /* Should the following be a GList of GimpStrokes? */
-  GimpStroke      * strokes;            /* The first stroke               */
+  GList           * strokes;            /* The List of GimpStrokes        */
 
   /* Stuff missing */
 };

@@ -36,13 +36,11 @@
 
 struct _GimpStroke
 {
-  GimpObject  parent_instance;
-           
-  GList      *anchors;
-
-  GimpStroke *next;
-
-  GimpAnchor *temp_anchor;
+  GimpObject   parent_instance;
+               
+  GList      * anchors;
+               
+  GimpAnchor * temp_anchor;
 
   /* Stuff missing? */
 };
@@ -101,9 +99,10 @@ struct _GimpStrokeClass
                                                           
   gboolean      (* temp_anchor_fix)      (GimpStroke        *stroke);
 
+  GimpStroke  * (* duplicate)            (const GimpStroke  *stroke);
+                                                          
   GimpStroke  * (* make_bezier)          (const GimpStroke  *stroke);
 
-                                                          
   GList       * (* get_draw_anchors)     (const GimpStroke  *stroke);
   
   GList       * (* get_draw_controls)    (const GimpStroke  *stroke);
@@ -176,17 +175,19 @@ GimpAnchor    * gimp_stroke_temp_anchor_set    (GimpStroke          *stroke,
 gboolean        gimp_stroke_temp_anchor_fix    (GimpStroke          *stroke);
 
 
+GimpStroke    * gimp_stroke_duplicate          (const GimpStroke    *stroke);
+
 /* usually overloaded */
 
 /* creates a bezier approximation. */
 
-GimpStroke   * gimp_stroke_make_bezier         (const GimpStroke     *stroke);
+GimpStroke   * gimp_stroke_make_bezier         (const GimpStroke    *stroke);
 
 
-GList        * gimp_stroke_get_draw_anchors    (const GimpStroke  *stroke);
-           
-GList        * gimp_stroke_get_draw_controls   (const GimpStroke  *stroke);
-           
-GArray       * gimp_stroke_get_draw_lines      (const GimpStroke  *stroke);
+GList        * gimp_stroke_get_draw_anchors    (const GimpStroke    *stroke);
+                                                                   
+GList        * gimp_stroke_get_draw_controls   (const GimpStroke    *stroke);
+                                                                   
+GArray       * gimp_stroke_get_draw_lines      (const GimpStroke    *stroke);
 
 #endif /* __GIMP_STROKE_H__ */

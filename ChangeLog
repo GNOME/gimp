@@ -1,3 +1,16 @@
+2003-04-14  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.[ch]: Changed vectors->strokes to a
+	GList and removed stroke->next. Implemented stuff for duplicating
+	strokes. Duplicating a vector works now.
+
+	* app/tools/gimpvectortool.c: added not-yet-used function to
+	determine where a click has been. Refcounting stuff changed.
+
+	* app/core/gimpimage-mask-select.c
+	* app/paint/gimppaintcore-stroke.c: Changed accordingly.
+
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainergridview.c: connect to "realize" of the

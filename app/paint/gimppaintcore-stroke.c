@@ -83,7 +83,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
                                 GimpPaintOptions *paint_options,
                                 GimpVectors      *vectors)
 {
-  GimpStroke *stroke;
+  GList      *stroke;
   GArray     *coords = NULL;
   gboolean    closed;
 
@@ -97,8 +97,8 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
    */
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {
-      coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
+      coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
+                                        1.0, &closed);
       if (coords)
         break;
     }
@@ -152,8 +152,8 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
           /*  see above  */
           for ( ; stroke; stroke = stroke->next)
             {
-              coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
+              coords = gimp_stroke_interpolate (GIMP_STROKE (stroke),
+                                                1.0, &closed);
               if (coords)
                 break;
             }

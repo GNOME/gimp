@@ -50,7 +50,7 @@ static void gimp_stroke_real_anchor_move_absolute (GimpStroke       *stroke,
                                                    GimpAnchor       *anchor,
                                                    const GimpCoords *deltacoord,
                                                    const GimpAnchorFeatureType feature);
-
+static GimpStroke * gimp_stroke_real_duplicate    (const GimpStroke *stroke);
 
 /*  private variables  */
 
@@ -118,6 +118,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->temp_anchor_set         = NULL;
   klass->temp_anchor_fix         = NULL;
 
+  klass->duplicate               = gimp_stroke_real_duplicate;
   klass->make_bezier             = NULL;
 
   klass->get_draw_anchors        = NULL;
@@ -128,8 +129,8 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 static void
 gimp_stroke_init (GimpStroke *stroke)
 {
-  stroke->anchors = NULL;
-  stroke->next    = NULL;
+  stroke->anchors     = NULL;
+  stroke->temp_anchor = NULL;
 };
 
 static void
@@ -193,6 +194,8 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
       list = list->next;
     }
 
+  g_list_free (list);
+
   list = gimp_stroke_get_draw_anchors (stroke);
 
   while (list)
@@ -206,6 +209,8 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
         }
       list = list->next;
     }
+
+  g_list_free (list);
 
   return anchor;
 }
@@ -497,6 +502,56 @@ gimp_stroke_temp_anchor_fix (GimpStroke *stroke)
     g_printerr ("gimp_stroke_temp_anchor_fix: default implementation\n");
 
   return FALSE;
+}
+
+
+GimpStroke *
+gimp_stroke_duplicate (const GimpStroke *stroke)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  return (GIMP_STROKE_GET_CLASS (stroke))->duplicate (stroke);
+}
+
+
+GimpStroke *
+gimp_stroke_real_duplicate (const GimpStroke *stroke)
+{
+  GimpStroke *new_stroke;
+  GimpObject *new_gimpobject;
+  GList      *anchorlist;
+  GimpAnchor *new_anchor;
+  GType       stroke_type = G_OBJECT_TYPE (stroke);
+
+  new_stroke = g_object_new (stroke_type, NULL);
+  new_gimpobject = GIMP_OBJECT (new_stroke);
+
+  gimp_object_set_name (new_gimpobject, GIMP_OBJECT (stroke)->name);
+
+  anchorlist = g_list_copy (stroke->anchors);
+
+  new_stroke->anchors = anchorlist;
+
+  while (anchorlist)
+    {
+      new_anchor = g_new0 (GimpAnchor, 1);
+      *new_anchor = *((GimpAnchor *) (anchorlist->data));
+
+      anchorlist->data = (gpointer) new_anchor;
+      anchorlist = g_list_next (anchorlist);
+    }
+
+  if (stroke->temp_anchor)
+    {
+      new_stroke->temp_anchor    = g_new0 (GimpAnchor, 1);
+      *(new_stroke->temp_anchor) = *(stroke->temp_anchor);
+    }
+  else
+    {
+      new_stroke->temp_anchor = NULL;
+    }
+
+  return new_stroke;
 }
 
 
