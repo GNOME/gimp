@@ -1,4 +1,5 @@
 2003-08-28  Ville Pätsi  <drc@gimp.org>
+
 	* Makefile.am: Add gimp.spec to EXTRA_DIST to add it to
 	the dist tarball.
 
