@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 1999-12-20 07:55+0900\n"
-"PO-Revision-Date: 1999-12-20 12:08+09:00\n"
+"POT-Creation-Date: 2000-01-01 00:09+0900\n"
+"PO-Revision-Date: 2000-01-01 00:11+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,12 +53,12 @@ msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:538 app/internal_procs.c:70 app/preferences_dialog.c:2227
+#: app/app_procs.c:538 app/internal_procs.c:71 app/preferences_dialog.c:2227
 msgid "Brushes"
 msgstr "ブラシ"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:540 app/internal_procs.c:139 app/preferences_dialog.c:2235
+#: app/app_procs.c:540 app/internal_procs.c:143 app/preferences_dialog.c:2235
 msgid "Patterns"
 msgstr "パターン"
 
@@ -68,7 +68,7 @@ msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:544 app/internal_procs.c:109 app/preferences_dialog.c:2243
+#: app/app_procs.c:544 app/internal_procs.c:113 app/preferences_dialog.c:2243
 msgid "Gradients"
 msgstr "グラデーション"
 
@@ -76,21 +76,22 @@ msgstr "グラデーション"
 msgid "Really Quit?"
 msgstr "終了しますか?"
 
-#: app/app_procs.c:746 app/install.c:259 app/install.c:405
+#: app/app_procs.c:746 app/install.c:272 app/install.c:418
 msgid "Quit"
 msgstr "終了"
 
 #: app/app_procs.c:748 app/brightness_contrast.c:217 app/channel_ops.c:94
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
 #: app/color_balance.c:273 app/color_notebook.c:115 app/convert.c:500
-#: app/curves.c:564 app/file_new_dialog.c:199 app/file_new_dialog.c:381
+#: app/curves.c:564 app/file_new_dialog.c:199 app/file_new_dialog.c:383
 #: app/gdisplay_color_ui.c:117 app/gdisplay_ops.c:356 app/gimpprogress.c:114
-#: app/global_edit.c:720 app/gradient.c:1896 app/gradient.c:4973
-#: app/gradient.c:5534 app/hue_saturation.c:375 app/interface.c:965
-#: app/layers_dialog.c:3354 app/layers_dialog.c:3560 app/layers_dialog.c:3685
-#: app/layers_dialog.c:3799 app/layers_dialog.c:4086 app/levels.c:368
-#: app/palette.c:1852 app/posterize.c:200 app/preferences_dialog.c:1266
-#: app/qmask.c:257 app/resize.c:193 app/threshold.c:274
+#: app/gimpui.c:485 app/global_edit.c:720 app/gradient.c:1791
+#: app/gradient.c:4873 app/gradient.c:5434 app/hue_saturation.c:375
+#: app/interface.c:965 app/layers_dialog.c:3351 app/layers_dialog.c:3557
+#: app/layers_dialog.c:3682 app/layers_dialog.c:3796 app/layers_dialog.c:4083
+#: app/levels.c:368 app/palette.c:1852 app/posterize.c:200
+#: app/preferences_dialog.c:1266 app/qmask.c:257 app/resize.c:193
+#: app/threshold.c:274
 msgid "Cancel"
 msgstr "取消"
 
@@ -136,7 +137,7 @@ msgstr "前景から透明に"
 msgid "Custom from Editor"
 msgstr "エディタから独自に"
 
-#: app/blend.c:271 app/gradient.c:620 app/preferences_dialog.c:1517
+#: app/blend.c:271 app/gradient.c:530 app/preferences_dialog.c:1517
 msgid "Linear"
 msgstr "線形"
 
@@ -248,26 +249,26 @@ msgstr "明るさ-コントラストオプション"
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 
-#: app/brightness_contrast.c:208 app/tools.c:631
+#: app/brightness_contrast.c:208 app/tools.c:599
 msgid "Brightness-Contrast"
 msgstr "明るさ-コントラスト"
 
 #: app/brightness_contrast.c:213 app/channel_ops.c:92
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
 #: app/color_balance.c:269 app/color_notebook.c:112 app/convert.c:498
-#: app/curves.c:560 app/file_new_dialog.c:197 app/file_new_dialog.c:377
-#: app/gdisplay_color_ui.c:115 app/hue_saturation.c:371
-#: app/layers_dialog.c:3352 app/layers_dialog.c:3558 app/layers_dialog.c:3683
-#: app/layers_dialog.c:4084 app/levels.c:364 app/module_db.c:277
-#: app/posterize.c:196 app/preferences_dialog.c:1262 app/qmask.c:255
-#: app/resize.c:191 app/threshold.c:270
+#: app/curves.c:560 app/file_new_dialog.c:197 app/file_new_dialog.c:379
+#: app/gdisplay_color_ui.c:115 app/gimpui.c:483 app/gimpui.c:863
+#: app/hue_saturation.c:371 app/layers_dialog.c:3349 app/layers_dialog.c:3555
+#: app/layers_dialog.c:3680 app/layers_dialog.c:4081 app/levels.c:364
+#: app/module_db.c:277 app/posterize.c:196 app/preferences_dialog.c:1262
+#: app/qmask.c:255 app/resize.c:191 app/threshold.c:270
 msgid "OK"
 msgstr "了解"
 
 #: app/brightness_contrast.c:215 app/by_color_select.c:589
-#: app/color_balance.c:271 app/curves.c:562 app/file_new_dialog.c:379
+#: app/color_balance.c:271 app/curves.c:562 app/file_new_dialog.c:381
 #: app/hue_saturation.c:373 app/levels.c:366 app/posterize.c:198
-#: app/threshold.c:272 app/tools.c:1023 app/transform_core.c:395
+#: app/threshold.c:272 app/tools.c:984 app/transform_core.c:395
 msgid "Reset"
 msgstr "リセット"
 
@@ -283,7 +284,7 @@ msgstr "コントラスト"
 
 #. The preview toggle
 #: app/brightness_contrast.c:299 app/color_balance.c:439 app/curves.c:671
-#: app/fileops.c:418 app/hue_saturation.c:563 app/levels.c:589
+#: app/fileops.c:416 app/hue_saturation.c:563 app/levels.c:589
 #: app/palette.c:3297 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
 msgstr "プレビュー"
@@ -296,12 +297,12 @@ msgstr "ブラシエディタ"
 #: app/brush_edit.c:215 app/brush_select.c:279 app/by_color_select.c:591
 #: app/color_notebook.c:112 app/color_picker.c:297 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1041 app/devices.c:755
-#: app/docindexif.c:104 app/errorconsole.c:277 app/gdisplay_ops.c:354
-#: app/gradient.c:894 app/gradient_select.c:152 app/histogram_tool.c:292
+#: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:354
+#: app/gradient.c:802 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:270
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
 #: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
-#: app/tips_dialog.c:171 app/tools.c:1025 app/undo_history.c:761
+#: app/tips_dialog.c:171 app/tools.c:986 app/undo_history.c:761
 msgid "Close"
 msgstr "閉じる"
 
@@ -327,7 +328,7 @@ msgstr "角度:"
 msgid "Brush Selection"
 msgstr "ブラシ選択"
 
-#: app/brush_select.c:277 app/gradient.c:892 app/module_db.c:316
+#: app/brush_select.c:277 app/gradient.c:800 app/module_db.c:316
 #: app/palette.c:2115 app/pattern_select.c:169
 msgid "Refresh"
 msgstr "再読み込み"
@@ -354,7 +355,7 @@ msgstr "新規"
 msgid "Edit"
 msgstr "編集"
 
-#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1894
+#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1789
 #: app/palette.c:1208 app/palette.c:1850 app/palette.c:2313
 msgid "Delete"
 msgstr "削除"
@@ -392,7 +393,7 @@ msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
 #. fill type
-#: app/bucket_fill.c:158 app/file_new_dialog.c:648
+#: app/bucket_fill.c:158 app/file_new_dialog.c:650
 msgid "Fill Type"
 msgstr "塗りつぶしの種類"
 
@@ -443,7 +444,7 @@ msgid "copy"
 msgstr "コピー"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1723 app/layer.c:318 app/layer.c:1546
+#: app/channel.c:195 app/gradient.c:1618 app/layer.c:318 app/layer.c:1546
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
@@ -461,9 +462,9 @@ msgstr "オフセット"
 msgid "Offset X:"
 msgstr "X オフセット:"
 
-#: app/channel_ops.c:116 app/crop.c:1050 app/file_new_dialog.c:552
+#: app/channel_ops.c:116 app/crop.c:1050 app/file_new_dialog.c:554
 #: app/resize.c:329 app/resize.c:414 app/resize.c:572 app/rotate_tool.c:107
-#: app/scale_tool.c:100 app/shear_tool.c:84
+#: app/scale_tool.c:100 app/shear_tool.c:83
 msgid "Y:"
 msgstr "Y:"
 
@@ -478,11 +479,11 @@ msgid "Fill Options"
 msgstr "塗りつぶしオプション"
 
 #: app/channel_ops.c:177 app/image_new.c:70 app/image_new.c:224
-#: app/layers_dialog.c:3333
+#: app/layers_dialog.c:3330
 msgid "Background"
 msgstr "背景"
 
-#: app/channel_ops.c:187 app/image_new.c:80 app/layers_dialog.c:3335
+#: app/channel_ops.c:187 app/image_new.c:80 app/layers_dialog.c:3332
 msgid "Transparent"
 msgstr "透明"
 
@@ -564,37 +565,37 @@ msgstr "塗り不透明度:"
 msgid "Edit Channel Attributes"
 msgstr "チャンネルの属性を変更"
 
-#: app/clone.c:141
+#: app/clone.c:140
 msgid "Image Source"
 msgstr "画像を入力"
 
-#: app/clone.c:142
+#: app/clone.c:141
 msgid "Pattern Source"
 msgstr "パターンを入力"
 
-#: app/clone.c:148
+#: app/clone.c:147
 msgid "Non Aligned"
 msgstr "揃えない"
 
-#: app/clone.c:149
+#: app/clone.c:148
 msgid "Aligned"
 msgstr "揃える"
 
-#: app/clone.c:150
+#: app/clone.c:149
 msgid "Registered"
 msgstr "登録されたもの"
 
 #. the radio frame and box
-#: app/clone.c:166
+#: app/clone.c:165
 msgid "Source"
 msgstr "画像源"
 
 #. the radio frame and box
-#: app/clone.c:191
+#: app/clone.c:190
 msgid "Alignment"
 msgstr "位置揃え"
 
-#: app/clone.c:321
+#: app/clone.c:322
 msgid "No patterns available for this operation."
 msgstr "有効なパターンがありません."
 
@@ -619,7 +620,7 @@ msgid "Highlights"
 msgstr "ハイライト"
 
 #. The shell and main vbox
-#: app/color_balance.c:264 app/tools.c:614
+#: app/color_balance.c:264 app/tools.c:583
 msgid "Color Balance"
 msgstr "カラーバランス"
 
@@ -667,7 +668,7 @@ msgstr "色を平均を取る"
 msgid "Update Active Color"
 msgstr "有効な色の更新"
 
-#: app/color_picker.c:248 app/tools.c:340
+#: app/color_picker.c:248 app/tools.c:325
 msgid "Color Picker"
 msgstr "スポイト"
 
@@ -907,13 +908,13 @@ msgid "Origin X:"
 msgstr "開始点 の X:"
 
 #. the pixel size labels
-#: app/crop.c:1063 app/file_new_dialog.c:413 app/file_new_dialog.c:431
+#: app/crop.c:1063 app/file_new_dialog.c:415 app/file_new_dialog.c:433
 #: app/tool_options.c:423
 msgid "Width:"
 msgstr "幅:"
 
-#: app/crop.c:1066 app/file_new_dialog.c:419 app/file_new_dialog.c:437
-#: app/layers_dialog.c:3391 app/resize.c:240 app/resize.c:265 app/resize.c:509
+#: app/crop.c:1066 app/file_new_dialog.c:421 app/file_new_dialog.c:439
+#: app/layers_dialog.c:3388 app/resize.c:240 app/resize.c:265 app/resize.c:509
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:439
 #: app/xinput_airbrush.c:479
 msgid "Height:"
@@ -953,7 +954,7 @@ msgid "Free"
 msgstr "自由曲線"
 
 #. The shell and main vbox
-#: app/curves.c:555 app/tools.c:699
+#: app/curves.c:555 app/tools.c:663
 msgid "Curves"
 msgstr "カーブ"
 
@@ -974,7 +975,7 @@ msgstr "脱色操作は RGB 描画対象にのみ有効です."
 msgid "Device Status"
 msgstr "デバイスの状態"
 
-#: app/devices.c:753 app/gradient.c:890 app/levels.c:627 app/palette.c:2113
+#: app/devices.c:753 app/levels.c:627 app/palette.c:2113
 #: app/preferences_dialog.c:1264
 msgid "Save"
 msgstr "保存"
@@ -1070,7 +1071,7 @@ msgstr "モード"
 msgid "Move: 0, 0"
 msgstr "移動: 0, 0"
 
-#: app/edit_selection.c:496 app/edit_selection.c:506
+#: app/edit_selection.c:393 app/edit_selection.c:403
 msgid "Move: "
 msgstr "移動: "
 
@@ -1101,19 +1102,19 @@ msgstr "何も選択されていないので保存できません!"
 msgid "Save error log to file..."
 msgstr "エラー記録をファイルに保存..."
 
-#: app/errorconsole.c:269
+#: app/errorconsole.c:273
 msgid "GIMP Error Console"
 msgstr "GIMP エラーコンソール"
 
-#: app/errorconsole.c:275
+#: app/errorconsole.c:279
 msgid "Clear"
 msgstr "消去"
 
-#: app/errorconsole.c:298
+#: app/errorconsole.c:302
 msgid "Write all errors to file..."
 msgstr "全てのエラーをファイルに記録..."
 
-#: app/errorconsole.c:305
+#: app/errorconsole.c:309
 msgid "Write selection to file..."
 msgstr "選択をファイルに記録..."
 
@@ -1121,8 +1122,8 @@ msgstr "選択をファイルに記録..."
 msgid "Confirm Image Size"
 msgstr "画像のサイズを確認"
 
-#: app/file_new_dialog.c:207
-#, c-format
+#: app/file_new_dialog.c:209
+#, no-c-format
 msgid ""
 "You are trying to create an image which\n"
 "has an initial size of %s.\n"
@@ -1147,47 +1148,43 @@ msgstr ""
 "には, 環境設定ダイアログ中の最大画像\n"
 "サイズ (現在 %s) を大きくしてください."
 
-#: app/file_new_dialog.c:313
+#: app/file_new_dialog.c:315
 #, c-format
 msgid "Image Size: %s"
 msgstr "画像のサイズ: %s"
 
-#: app/file_new_dialog.c:371
+#: app/file_new_dialog.c:373
 msgid "New Image"
 msgstr "新規画像"
 
-#: app/file_new_dialog.c:477 app/preferences_dialog.c:1337
+#: app/file_new_dialog.c:479 app/preferences_dialog.c:1337
 msgid "Pixels"
 msgstr "ピクセル"
 
 #. the resolution labels
-#: app/file_new_dialog.c:546 app/resize.c:566
+#: app/file_new_dialog.c:548 app/resize.c:566
 msgid "Resolution X:"
 msgstr "解像度 X:"
 
-#: app/file_new_dialog.c:567 app/resize.c:587
+#: app/file_new_dialog.c:569 app/resize.c:587
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
 
 #. frame for Image Type
-#: app/file_new_dialog.c:611
+#: app/file_new_dialog.c:613
 msgid "Image Type"
 msgstr "画像の種類"
 
-#: app/fileops.c:239 app/fileops.c:276
+#: app/fileops.c:238 app/fileops.c:278
 msgid "Load Image"
 msgstr "画像読み込み"
 
 #. format-chooser frame
-#: app/fileops.c:286
-msgid "Open Options"
-msgstr "読み込みオプション"
+#: app/fileops.c:288
+msgid "Determine file type"
+msgstr "ファイル形式の決定"
 
-#: app/fileops.c:301 app/fileops.c:516
-msgid "Determine file type:"
-msgstr "ファイル形式の決定:"
-
-#: app/fileops.c:384
+#: app/fileops.c:382
 msgid ""
 "generate\n"
 "preview"
@@ -1195,81 +1192,85 @@ msgstr ""
 "プレビュー\n"
 "作成"
 
-#: app/fileops.c:419
+#: app/fileops.c:417
 msgid "No selection."
 msgstr "選択なし."
 
-#: app/fileops.c:470 app/fileops.c:502
+#: app/fileops.c:468 app/fileops.c:504
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: app/fileops.c:507
+#: app/fileops.c:509
 msgid "Save Options"
 msgstr "保存オプション"
 
-#: app/fileops.c:569
+#: app/fileops.c:518
+msgid "Determine file type:"
+msgstr "ファイル形式の決定:"
+
+#: app/fileops.c:571
 msgid "Can't revert. No filename associated with this image"
 msgstr "復帰できません. この画像に対するファイル名がありません"
 
-#: app/fileops.c:583
+#: app/fileops.c:585
 msgid "Revert failed."
 msgstr "復帰失敗."
 
-#: app/fileops.c:1253
+#: app/fileops.c:1255
 msgid "(this thumbnail may be out of date)"
 msgstr "(この簡易表示はもう古い)"
 
-#: app/fileops.c:1254
+#: app/fileops.c:1256
 msgid "(no information)"
 msgstr "(情報なし)"
 
-#: app/fileops.c:1264
+#: app/fileops.c:1266
 msgid "(thumbnail saving is disabled)"
 msgstr "(簡易表示保存無効)"
 
-#: app/fileops.c:1268
+#: app/fileops.c:1270
 msgid "(could not write thumbnail file)"
 msgstr "(簡易表示ファイル書き出し失敗)"
 
-#: app/fileops.c:1272
+#: app/fileops.c:1274
 msgid "(thumbnail file not written)"
 msgstr "(簡易表示ファイルは書かれていない)"
 
-#: app/fileops.c:1289
+#: app/fileops.c:1291
 msgid "no preview available"
 msgstr "プレビュー無し"
 
-#: app/fileops.c:1403
+#: app/fileops.c:1405
 msgid "(could not make preview)"
 msgstr "(プレビュー作成失敗)"
 
-#: app/fileops.c:1475 app/fileops.c:1556
+#: app/fileops.c:1477 app/fileops.c:1558
 msgid "Open failed: "
 msgstr "読み込み失敗: "
 
-#: app/fileops.c:1616
+#: app/fileops.c:1618
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s は壊れています (%s)"
 
-#: app/fileops.c:1630 app/fileops.c:1732
+#: app/fileops.c:1632 app/fileops.c:1734
 msgid "Save failed: "
 msgstr "保存失敗: "
 
-#: app/fileops.c:1677
+#: app/fileops.c:1679
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s は存在します、上書きしますか?"
 
-#: app/fileops.c:1681
+#: app/fileops.c:1683
 msgid "File Exists!"
 msgstr "ファイルは存在します!"
 
-#: app/fileops.c:1687
+#: app/fileops.c:1689
 msgid "Yes"
 msgstr "はい"
 
-#: app/fileops.c:1689
+#: app/fileops.c:1691
 msgid "No"
 msgstr "いいえ"
 
@@ -1409,19 +1410,19 @@ msgstr "不明なブラシファイルのフォーマットバージョンです #%d \"%s\"\n"
 msgid "Can't fill unknown image type."
 msgstr "不明な画像タイプなので塗りつぶせません."
 
-#: app/gimpdrawable.c:480
+#: app/gimpdrawable.c:481
 msgid "parasite attach to drawable"
 msgstr "描画対象にパラサイトを付加"
 
-#: app/gimpdrawable.c:513
+#: app/gimpdrawable.c:514
 msgid "detach parasite from drawable"
 msgstr "描画対象からパラサイトを削除"
 
-#: app/gimpdrawable.c:705
+#: app/gimpdrawable.c:706
 msgid "unnamed"
 msgstr "名前なし"
 
-#: app/gimpdrawable.c:722
+#: app/gimpdrawable.c:723
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "レイヤータイプ %d には対応していません."
@@ -1549,11 +1550,6 @@ msgstr "  不明な識別子: %s\n"
 msgid "error parsing pluginrc"
 msgstr "pluginrc 読み込み中にエラー発生"
 
-#: app/gimprc.c:1780
-#, c-format
-msgid "transform_path(): gimprc token referenced but not defined: %s"
-msgstr "transform_path(): gimprc 未定義の識別子が参照されている: %s"
-
 #: app/gimprc.c:2778
 #, c-format
 msgid "Can't open %s; %s"
@@ -1574,12 +1570,16 @@ msgstr "%s を再オープンできません\n"
 msgid "Can't write to %s; %s"
 msgstr "%s に書き込めません; %s"
 
+#: app/gimpui.c:858
+msgid "GIMP Message"
+msgstr "GIMP メッセージ"
+
 #. pseudo unit
 #: app/gimpunit.c:58
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/gimpunit.c:58 app/measure.c:430 app/measure.c:434 app/paint_core.c:486
+#: app/gimpunit.c:58 app/measure.c:430 app/measure.c:434 app/paint_core.c:494
 msgid "pixels"
 msgstr "ピクセル"
 
@@ -1621,24 +1621,6 @@ msgstr "パイカ"
 msgid "percent"
 msgstr "パーセント:"
 
-#: app/gimpunit.c:299
-msgid ""
-"# GIMP unitrc\n"
-"# This file contains your user unit database. You can\n"
-"# modify this list with the unit editor. You are not\n"
-"# supposed to edit it manually, but of course you can do.\n"
-"# This file will be entirely rewritten every time you\n"
-"# quit the gimp.\n"
-"\n"
-msgstr ""
-"# GIMP unitrc\n"
-"# This file contains your user unit database. You can\n"
-"# modify this list with the unit editor. You are not\n"
-"# supposed to edit it manually, but of course you can do.\n"
-"# This file will be entirely rewritten every time you\n"
-"# quit the gimp.\n"
-"\n"
-
 #. Make a new floating layer
 #: app/global_edit.c:289 app/global_edit.c:344 app/global_edit.c:354
 msgid "Pasted Layer"
@@ -1676,120 +1658,120 @@ msgstr "このバッファに対する名前を入力して下さい"
 msgid "Copy Named"
 msgstr "名前を付けてコピー"
 
-#: app/gradient.c:621
+#: app/gradient.c:531
 msgid "Curved"
 msgstr "曲線"
 
-#: app/gradient.c:622
+#: app/gradient.c:532
 msgid "Sinusoidal"
 msgstr "波状"
 
-#: app/gradient.c:623
+#: app/gradient.c:533
 msgid "Spherical (increasing)"
 msgstr "球面 (増加)"
 
-#: app/gradient.c:624
+#: app/gradient.c:534
 msgid "Spherical (decreasing)"
 msgstr "球面 (減少)"
 
-#: app/gradient.c:629
+#: app/gradient.c:539
 msgid "Plain RGB"
 msgstr "単純 RGB"
 
-#: app/gradient.c:630
+#: app/gradient.c:540
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (色相反時計回り)"
 
-#: app/gradient.c:631
+#: app/gradient.c:541
 msgid "HSV (clockwise hue)"
 msgstr "HSV (色相時計回り)"
 
-#: app/gradient.c:884
+#: app/gradient.c:794
 msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
-#: app/gradient.c:917 app/gradient_select.c:206 app/paintbrush.c:286
+#: app/gradient.c:825 app/gradient_select.c:206 app/paintbrush.c:286
 #: app/palette.c:3235
 msgid "Gradient"
 msgstr "グラデーション"
 
-#: app/gradient.c:918 app/gradient_select.c:207 app/palette.c:2274
+#: app/gradient.c:826 app/gradient_select.c:207 app/palette.c:2274
 #: app/palette_select.c:82
 msgid "Name"
 msgstr "名前"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:963
+#: app/gradient.c:871
 msgid "Gradient Ops"
 msgstr "グラデーションオプション"
 
 #. Buttons for gradient functions
-#: app/gradient.c:971
+#: app/gradient.c:879
 msgid "New Gradient"
 msgstr "グラデーション作成"
 
-#: app/gradient.c:980
+#: app/gradient.c:887
 msgid "Copy Gradient"
 msgstr "グラデーション複製"
 
-#: app/gradient.c:989
+#: app/gradient.c:895
 msgid "Delete Gradient"
 msgstr "グラデーション削除"
 
-#: app/gradient.c:998
+#: app/gradient.c:903
 msgid "Rename Gradient"
 msgstr "グラデーション名変更"
 
-#: app/gradient.c:1007 app/gradient.c:1996
+#: app/gradient.c:911 app/gradient.c:1891
 msgid "Save as POV-Ray"
 msgstr "POV-Ray 形式で保存"
 
 #. Zoom all button
-#: app/gradient.c:1026
+#: app/gradient.c:929
 msgid "Zoom all"
 msgstr "全表示"
 
-#: app/gradient.c:1092
+#: app/gradient.c:995
 msgid "Instant update"
 msgstr "即時更新"
 
-#: app/gradient.c:1227 app/gradient.c:2116
+#: app/gradient.c:1130 app/gradient.c:2008
 msgid "Default"
 msgstr "初期値"
 
-#: app/gradient.c:1662
+#: app/gradient.c:1557
 msgid "New gradient"
 msgstr "グラデーション作成"
 
-#: app/gradient.c:1665
+#: app/gradient.c:1560
 msgid "Enter a name for the new gradient"
 msgstr "新しいグラデーションの名前を入力"
 
-#: app/gradient.c:1666
+#: app/gradient.c:1561
 msgid "untitled"
 msgstr "名称未設定"
 
-#: app/gradient.c:1725
+#: app/gradient.c:1620
 msgid "Copy gradient"
 msgstr "グラデーション複製"
 
-#: app/gradient.c:1728
+#: app/gradient.c:1623
 msgid "Enter a name for the copied gradient"
 msgstr "複写したグラデーションの名前を入力"
 
-#: app/gradient.c:1811
+#: app/gradient.c:1706
 msgid "Rename gradient"
 msgstr "グラデーションの名前を変更"
 
-#: app/gradient.c:1814
+#: app/gradient.c:1709
 msgid "Enter a new name for the gradient"
 msgstr "新しいグラデーションの名前を入力"
 
-#: app/gradient.c:1888
+#: app/gradient.c:1783
 msgid "Delete gradient"
 msgstr "グラデーション削除"
 
-#: app/gradient.c:1907 app/palette.c:1863
+#: app/gradient.c:1802 app/palette.c:1863
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -1798,17 +1780,12 @@ msgstr ""
 "\"%s\" を一覧とディスクから削除します\n"
 "よろしいですか?"
 
-#: app/gradient.c:2032
-#, c-format
-msgid "Could not open \"%s\""
-msgstr "\"%s\" を開けません"
-
-#: app/gradient.c:2154
+#: app/gradient.c:2046
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "拡大倍率: %d:1    表示 [%0.6f, %0.6f]"
 
-#: app/gradient.c:2396
+#: app/gradient.c:2296
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1817,29 +1794,29 @@ msgstr ""
 "位置: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "不透明度: %0.3f"
 
-#: app/gradient.c:2421
+#: app/gradient.c:2321
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "前景色を RGB (%d, %d, %d) に設定 <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2445
+#: app/gradient.c:2345
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "背景色を RGB (%d, %d, %d) に設定 <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2750
+#: app/gradient.c:2650
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "ドラッグ: 移動    Shift+ドラッグ: 移動 & 圧縮"
 
-#: app/gradient.c:2752 app/gradient.c:2755
+#: app/gradient.c:2652 app/gradient.c:2655
 msgid "Click: select    Shift+click: extend selection"
 msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大"
 
-#: app/gradient.c:2760
+#: app/gradient.c:2660
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動"
 
-#: app/gradient.c:2772
+#: app/gradient.c:2672
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1847,207 +1824,178 @@ msgstr ""
 "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    "
 "Shift+ドラッグ: 移動 & 圧縮"
 
-#: app/gradient.c:3014 app/gradient.c:3023
+#: app/gradient.c:2914 app/gradient.c:2923
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "制御点位置: %0.6f"
 
-#: app/gradient.c:3041
+#: app/gradient.c:2941
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "距離: %0.6f"
 
-#: app/gradient.c:3525 app/gradient.c:4582
+#: app/gradient.c:3425 app/gradient.c:4482
 msgid "Left endpoint's color"
 msgstr "左終端色"
 
-#: app/gradient.c:3536 app/gradient.c:3578
+#: app/gradient.c:3436 app/gradient.c:3478
 msgid "Load from"
 msgstr "〜から読み込み"
 
-#: app/gradient.c:3540
+#: app/gradient.c:3440
 msgid "Left neighbor's right endpoint"
 msgstr "左隣セグメントの右終端"
 
-#: app/gradient.c:3541
+#: app/gradient.c:3441
 msgid "Right endpoint"
 msgstr "右終端"
 
-#: app/gradient.c:3551 app/gradient.c:3593
+#: app/gradient.c:3451 app/gradient.c:3493
 msgid "Save to"
 msgstr "〜へ保存"
 
-#: app/gradient.c:3567 app/gradient.c:4660
+#: app/gradient.c:3467 app/gradient.c:4560
 msgid "Right endpoint's color"
 msgstr "右終端色"
 
-#: app/gradient.c:3582
+#: app/gradient.c:3482
 msgid "Right neighbor's left endpoint"
 msgstr "右隣セグメントの左終端"
 
-#: app/gradient.c:3583
+#: app/gradient.c:3483
 msgid "Left endpoint"
 msgstr "左終端"
 
-#: app/gradient.c:3694
+#: app/gradient.c:3594
 msgid "Selection operations"
 msgstr "選択領域に対する操作"
 
-#: app/gradient.c:3866
+#: app/gradient.c:3766
 msgid "Blending function for segment"
 msgstr "セグメントに対する混色関数"
 
-#: app/gradient.c:3868
+#: app/gradient.c:3768
 msgid "Coloring type for segment"
 msgstr "セグメントに対する色モデル"
 
-#: app/gradient.c:3870
+#: app/gradient.c:3770
 msgid "Split segment at midpoint"
 msgstr "セグメントを中間点で分割"
 
-#: app/gradient.c:3872 app/gradient.c:4963
+#: app/gradient.c:3772 app/gradient.c:4863
 msgid "Split segment uniformly"
 msgstr "セグメントを均等に分割"
 
-#: app/gradient.c:3874
+#: app/gradient.c:3774
 msgid "Delete segment"
 msgstr "セグメントを削除"
 
-#: app/gradient.c:3876
+#: app/gradient.c:3776
 msgid "Re-center segment's midpoint"
 msgstr "セグメントの中間点を中央に移動"
 
-#: app/gradient.c:3878
+#: app/gradient.c:3778
 msgid "Re-distribute handles in segment"
 msgstr "セグメント中の制御点を再分配"
 
-#: app/gradient.c:3880
+#: app/gradient.c:3780
 msgid "Flip segment"
 msgstr "セグメントの左右反転"
 
-#: app/gradient.c:3882 app/gradient.c:5524
+#: app/gradient.c:3782 app/gradient.c:5424
 msgid "Replicate segment"
 msgstr "セグメントの複製"
 
-#: app/gradient.c:3887
+#: app/gradient.c:3787
 msgid "Blending function for selection"
 msgstr "選択領域に対する混色関数"
 
-#: app/gradient.c:3889
+#: app/gradient.c:3789
 msgid "Coloring type for selection"
 msgstr "選択領域に対する色モデル"
 
-#: app/gradient.c:3891
+#: app/gradient.c:3791
 msgid "Split segments at midpoints"
 msgstr "セグメント群を中間点で分割"
 
-#: app/gradient.c:3893 app/gradient.c:4964
+#: app/gradient.c:3793 app/gradient.c:4864
 msgid "Split segments uniformly"
 msgstr "セグメント群を均等に分割"
 
-#: app/gradient.c:3895
+#: app/gradient.c:3795
 msgid "Delete selection"
 msgstr "選択領域を削除"
 
-#: app/gradient.c:3897
+#: app/gradient.c:3797
 msgid "Re-center midpoints in selection"
 msgstr "選択領域の中間点を中央に移動"
 
-#: app/gradient.c:3899
+#: app/gradient.c:3799
 msgid "Re-distribute handles in selection"
 msgstr "選択領域の制御点を再分配"
 
-#: app/gradient.c:3901
+#: app/gradient.c:3801
 msgid "Flip selection"
 msgstr "選択領域を左右反転"
 
-#: app/gradient.c:3903 app/gradient.c:5525
+#: app/gradient.c:3803 app/gradient.c:5425
 msgid "Replicate selection"
 msgstr "選択領域を複製"
 
-#: app/gradient.c:4187
+#: app/gradient.c:4087
 msgid "FG color"
 msgstr "前景色"
 
-#: app/gradient.c:4236
+#: app/gradient.c:4136
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4749 app/gradient.c:4819
+#: app/gradient.c:4649 app/gradient.c:4719
 msgid "(Varies)"
 msgstr "(変更)"
 
-#: app/gradient.c:4971
+#: app/gradient.c:4871
 msgid "Split"
 msgstr "分割"
 
 #. Instructions
-#: app/gradient.c:4985
+#: app/gradient.c:4885
 msgid "Please select the number of uniform parts"
 msgstr "選択中のセグメント(群)を"
 
-#: app/gradient.c:4991
+#: app/gradient.c:4891
 msgid "in which you want to split the selected segment"
 msgstr "いくつに分割するか選択して下さい"
 
-#: app/gradient.c:4992
+#: app/gradient.c:4892
 msgid "in which you want to split the segments in the selection"
 msgstr "いくつずつに分割するか選択して下さい"
 
-#: app/gradient.c:5352
+#: app/gradient.c:5252
 msgid "Blend endpoints' colors"
 msgstr "終端の色を混ぜる"
 
-#: app/gradient.c:5364
+#: app/gradient.c:5264
 msgid "Blend endpoints' opacity"
 msgstr "終端の不透明度を混ぜる"
 
-#: app/gradient.c:5532
+#: app/gradient.c:5432
 msgid "Replicate"
 msgstr "複製"
 
 #. Instructions
-#: app/gradient.c:5545
+#: app/gradient.c:5445
 msgid "Please select the number of times"
 msgstr "選択中のセグメント(群)を"
 
-#: app/gradient.c:5550
+#: app/gradient.c:5450
 msgid "you want to replicate the selected segment"
 msgstr "何回複製するか選択して下さい"
 
-#: app/gradient.c:5551
+#: app/gradient.c:5451
 msgid "you want to replicate the selection"
 msgstr "何回複製するか選択して下さい"
-
-#: app/gradient.c:5903
-#, c-format
-msgid "grad_load_gradient(): invalid number of segments in \"%s\""
-msgstr "grad_load_gradient(): 不正なセグメント数です \"%s\""
-
-#: app/gradient.c:5929
-#, c-format
-msgid ""
-"grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
-"things may happen soon"
-msgstr ""
-"grad_load_gradient(): 不正なフォーマットのグラデーションセグメント %d が "
-"\"%s\" 中にあります --- すぐさま不幸な事態になるでしょう"
-
-#: app/gradient.c:5961
-msgid "grad_save_gradient(): can not save gradient with NULL filename"
-msgstr ""
-"grad_save_gradient(): ファイル名が NULL ではグラデーションが保存できません"
-
-#: app/gradient.c:5969
-#, c-format
-msgid "grad_save_gradient(): can't open \"%s\""
-msgstr "grad_save_gradient(): \"%s\" が開けません"
-
-#: app/gradient.c:6179
-#, c-format
-msgid "seg_get_segment_at(): No matching segment for position %0.15f"
-msgstr "seg_get_segment_at(): %0.15f という位置に対応するセグメントが無い"
 
 #. The shell
 #: app/gradient_select.c:143
@@ -2087,7 +2035,7 @@ msgid "Percentile:"
 msgstr "パーセント:"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:287 app/tools.c:733
+#: app/histogram_tool.c:287 app/tools.c:695
 msgid "Histogram"
 msgstr "ヒストグラム"
 
@@ -2132,7 +2080,7 @@ msgid "M"
 msgstr "M"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:366 app/tools.c:648
+#: app/hue_saturation.c:366 app/tools.c:615
 msgid "Hue-Saturation"
 msgstr "色相-彩度"
 
@@ -2157,20 +2105,16 @@ msgstr "明度"
 msgid "Saturation"
 msgstr "彩度"
 
-#: app/image_map.c:283
-msgid "image depth change, unable to restore original image"
-msgstr "画像深度が変更されました, 元の画像は復元できません"
-
 #: app/image_new.c:59 app/info_window.c:65 app/info_window.c:603
 #: app/preferences_dialog.c:1432
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: app/image_new.c:65 app/layers_dialog.c:3332
+#: app/image_new.c:65 app/layers_dialog.c:3329
 msgid "Foreground"
 msgstr "前景"
 
-#: app/image_new.c:75 app/layers_dialog.c:3334
+#: app/image_new.c:75 app/layers_dialog.c:3331
 msgid "White"
 msgstr "白"
 
@@ -2452,46 +2396,20 @@ msgstr ""
 "subdirectory will contain a number of important files:\n"
 "\n"
 
-#: app/install.c:140
-msgid "gimprc\n"
-msgstr "gimprc\n"
-
 #: app/install.c:141
 msgid ""
 "\t\tThe gimprc is used to store personal preferences\n"
-"\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-"\t\tPaths to search for brushes, palettes, gradients\n"
-"\t\tpatterns, plug-ins and modules are also configured here.\n"
+"\t\tthat affect GIMP's default behavior.\n"
+"\t\tPaths to search for brushes, palettes, gradients,\n"
+"\t\tpatterns, plug-ins and modules can also configured here.\n"
 msgstr ""
 "\t\tThe gimprc is used to store personal preferences\n"
-"\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
+"\t\tthat affect GIMP's default behavior.\n"
 "\t\tPaths to search for brushes, palettes, gradients\n"
 "\t\tpatterns, plug-ins and modules are also configured here.\n"
-
-#: app/install.c:146
-msgid "unitrc\n"
-msgstr "unitrc\n"
 
 #: app/install.c:147
 msgid ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
-msgstr ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
-
-#: app/install.c:153
-msgid "pluginrc\n"
-msgstr "pluginrc\n"
-
-#: app/install.c:154
-msgid ""
 "\t\tPlug-ins and extensions are external programs run by\n"
 "\t\tthe GIMP which provide additional functionality.\n"
 "\t\tThese programs are searched for at run-time and\n"
@@ -2506,117 +2424,129 @@ msgstr ""
 "\t\tis cached in this file.  This file is intended to\n"
 "\t\tbe GIMP-readable only, and should not be edited.\n"
 
-#: app/install.c:161
-msgid "brushes\n"
-msgstr "brushes\n"
-
-#: app/install.c:162
+#: app/install.c:155
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined brushes.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp brushes installation when searching for\n"
-"\t\tbrushes.\n"
+"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
+"\t\tThe menurc is a dump of your configuration so it can.\n"
+"\t\tbe remembered for the next session. You may edit this\n"
+"\t\tfile if you wish, but it is much easier to define the\n"
+"\t\tkeys from within The GIMP. Deleting this file will\n"
+"\t\trestore the default shortcuts.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined brushes.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp brushes installation when searching for\n"
-"\t\tbrushes.\n"
+"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
+"\t\tThe menurc is a dump of your configuration so it can.\n"
+"\t\tbe remembered for the next session. You may edit this\n"
+"\t\tfile if you wish, but it is much easier to define the\n"
+"\t\tkeys from within The GIMP. Deleting this file will\n"
+"\t\trestore the default shortcuts.\n"
+
+#: app/install.c:163
+msgid ""
+"\t\tThe sessionrc is used to store what dialog windows were\n"
+"\t\topen the last time you quit The GIMP. You can configure\n"
+"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
+msgstr ""
+"\t\tThe sessionrc is used to store what dialog windows were\n"
+"\t\topen the last time you quit The GIMP. You can configure\n"
+"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
 
 #: app/install.c:168
-msgid "generated_brushes\n"
-msgstr "generated_brushes\n"
-
-#: app/install.c:169
 msgid ""
-"\t\tThis is a subdirectory which is used to store brushes\n"
-"\t\tthat are created with the brush editor.  The default\n"
-"\t\tgimprc file checks this subdirectory when searching for\n"
-"\t\tgenerated brushes.\n"
+"\t\tThe unitrc is used to store your user units database.\n"
+"\t\tYou can define additional units and use them just\n"
+"\t\tlike you use the built-in units inches, millimeters,\n"
+"\t\tpoints and picas. This file is overwritten each time\n"
+"\t\tyou quit the GIMP.\n"
 msgstr ""
-"\t\tThis is a subdirectory which is used to store brushes\n"
-"\t\tthat are created with the brush editor.  The default\n"
-"\t\tgimprc file checks this subdirectory when searching for\n"
-"\t\tgenerated brushes.\n"
-
-#: app/install.c:174
-msgid "gradients\n"
-msgstr "gradients\n"
+"\t\tThe unitrc is used to store your user units database.\n"
+"\t\tYou can define additional units and use them just\n"
+"\t\tlike you use the built-in units inches, millimeters,\n"
+"\t\tpoints and picas. This file is overwritten each time\n"
+"\t\tyou quit the GIMP.\n"
 
 #: app/install.c:175
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tuser defined brushes.  The default gimprc file\n"
 "\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp gradients installation when searching for\n"
-"\t\tgradients.\n"
+"\t\twide gimp brushes installation when searching for\n"
+"\t\tbrushes.\n"
 msgstr ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tuser defined brushes.  The default gimprc file\n"
 "\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp gradients installation when searching for\n"
-"\t\tgradients.\n"
-
-#: app/install.c:181
-msgid "gfig\n"
-msgstr "gfig\n"
+"\t\twide gimp brushes installation when searching for\n"
+"\t\tbrushes.\n"
 
 #: app/install.c:182
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined figures to be used by the gfig plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gfig installation\n"
-"\t\twhen searching for gfig figures.\n"
+"\t\tThis is a subdirectory which is used to store brushes\n"
+"\t\tthat are created with the brush editor.  The default\n"
+"\t\tgimprc file checks this subdirectory when searching for\n"
+"\t\tgenerated brushes.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined figures to be used by the gfig plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gfig installation\n"
-"\t\twhen searching for gfig figures.\n"
+"\t\tThis is a subdirectory which is used to store brushes\n"
+"\t\tthat are created with the brush editor.  The default\n"
+"\t\tgimprc file checks this subdirectory when searching for\n"
+"\t\tgenerated brushes.\n"
 
 #: app/install.c:188
-msgid "gflares\n"
-msgstr "gflares\n"
-
-#: app/install.c:189
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gflares to be used by the gflare plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gflares installation\n"
-"\t\twhen searching for gflares.\n"
+"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp gradients installation when searching for\n"
+"\t\tgradients.\n"
 msgstr ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gflares to be used by the gflare plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gflares installation\n"
-"\t\twhen searching for gflares.\n"
+"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp gradients installation when searching for\n"
+"\t\tgradients.\n"
 
 #: app/install.c:195
-msgid "fractalexplorer\n"
-msgstr "fractalexplorer\n"
-
-#: app/install.c:196
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined fractals to be used by the FractalExplorer\n"
-"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp FractalExplorer installation\n"
-"\t\twhen searching for fractals.\n"
+"\t\tuser defined figures to be used by the gfig plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gfig installation\n"
+"\t\twhen searching for gfig figures.\n"
 msgstr ""
 "\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined fractals to be used by the FractalExplorer\n"
-"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp FractalExplorer installation\n"
-"\t\twhen searching for fractals.\n"
+"\t\tuser defined figures to be used by the gfig plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gfig installation\n"
+"\t\twhen searching for gfig figures.\n"
 
 #: app/install.c:202
-msgid "palettes\n"
-msgstr "palettes\n"
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gflares to be used by the gflare plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gflares installation\n"
+"\t\twhen searching for gflares.\n"
+msgstr ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gflares to be used by the gflare plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gflares installation\n"
+"\t\twhen searching for gflares.\n"
 
-#: app/install.c:203
+#: app/install.c:209
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined fractals to be used by the FractalExplorer\n"
+"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp FractalExplorer installation\n"
+"\t\twhen searching for fractals.\n"
+msgstr ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined fractals to be used by the FractalExplorer\n"
+"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp FractalExplorer installation\n"
+"\t\twhen searching for fractals.\n"
+
+#: app/install.c:216
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined palettes.  The default gimprc file\n"
@@ -2636,11 +2566,7 @@ msgstr ""
 "\t\tpalettes during GIMP execution to persist across\n"
 "\t\tsessions.\n"
 
-#: app/install.c:212
-msgid "patterns\n"
-msgstr "patterns\n"
-
-#: app/install.c:213
+#: app/install.c:226
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser defined patterns.  The default gimprc file\n"
@@ -2654,11 +2580,7 @@ msgstr ""
 "\t\twide gimp patterns installation when searching for\n"
 "\t\tpatterns.\n"
 
-#: app/install.c:219
-msgid "plug-ins\n"
-msgstr "plug-ins\n"
-
-#: app/install.c:220
+#: app/install.c:233
 msgid ""
 "\t\tThis is a subdirectory which can be used to store\n"
 "\t\tuser created, temporary, or otherwise non-system-\n"
@@ -2673,47 +2595,35 @@ msgstr ""
 "\t\tchecks this subdirectory in addition to the system-\n"
 "\t\twide GIMP plug-in directories when searching for\n"
 "\t\tplug-ins.\n"
-
-#: app/install.c:227
-msgid "modules\n"
-msgstr "modules\n"
-
-#: app/install.c:228
-msgid ""
-"\t\tThis subdirectory can be used to store user created,\n"
-"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-"\t\tThe default gimprc file checks this subdirectory\n"
-"\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
-msgstr ""
-"\t\tThis subdirectory can be used to store user created,\n"
-"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-"\t\tThe default gimprc file checks this subdirectory\n"
-"\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
-
-#: app/install.c:234
-msgid "scripts\n"
-msgstr "scripts\n"
-
-#: app/install.c:235
-msgid ""
-"\t\tThis subdirectory is used by the GIMP to store \n"
-"\t\tuser created and installed scripts. The default gimprc\n"
-"\t\tfile checks this subdirectory in addition to the system\n"
-"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
-msgstr ""
-"\t\tThis subdirectory is used by the GIMP to store \n"
-"\t\tuser created and installed scripts. The default gimprc\n"
-"\t\tfile checks this subdirectory in addition to the system\n"
-"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
-
-#: app/install.c:240
-msgid "tmp\n"
-msgstr "tmp\n"
 
 #: app/install.c:241
 msgid ""
+"\t\tThis subdirectory can be used to store user created,\n"
+"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+"\t\tThe default gimprc file checks this subdirectory\n"
+"\t\tin addition to the system-wide GIMP module directory\n"
+"\t\twhen searching for modules to load when initialising.\n"
+msgstr ""
+"\t\tThis subdirectory can be used to store user created,\n"
+"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+"\t\tThe default gimprc file checks this subdirectory\n"
+"\t\tin addition to the system-wide GIMP module directory\n"
+"\t\twhen searching for modules to load when initialising.\n"
+
+#: app/install.c:248
+msgid ""
+"\t\tThis subdirectory is used by the GIMP to store \n"
+"\t\tuser created and installed scripts. The default gimprc\n"
+"\t\tfile checks this subdirectory in addition to the system\n"
+"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
+msgstr ""
+"\t\tThis subdirectory is used by the GIMP to store \n"
+"\t\tuser created and installed scripts. The default gimprc\n"
+"\t\tfile checks this subdirectory in addition to the system\n"
+"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
+
+#: app/install.c:254
+msgid ""
 "\t\tThis subdirectory is used by the GIMP to temporarily\n"
 "\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
 "\t\tunceremoniously killed, files may persist in this directory\n"
@@ -2726,27 +2636,27 @@ msgstr ""
 "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
 "\t\tGIMP sessions and can be destroyed with impunity.\n"
 
-#: app/install.c:250
+#: app/install.c:263
 msgid "GIMP Installation"
 msgstr "GIMP Installation"
 
-#: app/install.c:255
+#: app/install.c:268
 msgid "Install"
 msgstr "Install"
 
-#: app/install.c:257
+#: app/install.c:270
 msgid "Ignore"
 msgstr "Ignore"
 
-#: app/install.c:398
+#: app/install.c:411
 msgid "Installation Log"
 msgstr "Installation Log"
 
-#: app/install.c:403
+#: app/install.c:416
 msgid "Continue"
 msgstr "Continue"
 
-#: app/install.c:434
+#: app/install.c:447
 msgid ""
 "User Installation Log\n"
 "\n"
@@ -2754,11 +2664,11 @@ msgstr ""
 "User Installation Log\n"
 "\n"
 
-#: app/install.c:444
+#: app/install.c:457
 msgid " does not exist.  Cannot install.\n"
 msgstr " does not exist.  Cannot install.\n"
 
-#: app/install.c:452
+#: app/install.c:465
 msgid ""
 " has invalid permissions.\n"
 "Cannot install."
@@ -2766,7 +2676,7 @@ msgstr ""
 " has invalid permissions.\n"
 "Cannot install."
 
-#: app/install.c:486
+#: app/install.c:499
 msgid ""
 "Did you notice any error messages\n"
 "in the console window? If not, installation\n"
@@ -2778,7 +2688,7 @@ msgstr ""
 "was successful! Otherwise, quit and investigate\n"
 "the possible reason...\n"
 
-#: app/install.c:518
+#: app/install.c:531
 msgid ""
 "\n"
 "Installation successful!\n"
@@ -2786,7 +2696,7 @@ msgstr ""
 "\n"
 "Installation successful!\n"
 
-#: app/install.c:527
+#: app/install.c:540
 msgid ""
 "\n"
 "Installation failed.  Contact system administrator.\n"
@@ -2806,122 +2716,126 @@ msgstr ""
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#: app/internal_procs.c:67
+#: app/internal_procs.c:68
 msgid "Internal Procedures"
 msgstr "内部プロシージャ"
 
-#: app/internal_procs.c:67
+#: app/internal_procs.c:68
 msgid "Brush UI"
 msgstr "ブラシ UI"
 
-#: app/internal_procs.c:73
+#: app/internal_procs.c:74
 msgid "Channel"
 msgstr "チャンネル"
 
-#: app/internal_procs.c:76
+#: app/internal_procs.c:77
 msgid "Channel Ops"
 msgstr "チャンネル操作"
 
-#: app/internal_procs.c:79 app/layers_dialog.c:240 app/paint_funcs.c:95
+#: app/internal_procs.c:80 app/layers_dialog.c:240 app/paint_funcs.c:95
 #: app/tool_options.c:888 app/tool_options.c:1002
 msgid "Color"
 msgstr "色"
 
-#: app/internal_procs.c:82
+#: app/internal_procs.c:83
 msgid "Convert"
 msgstr "変換"
 
-#: app/internal_procs.c:85
+#: app/internal_procs.c:86
 msgid "Drawable procedures"
 msgstr "描画対象プロシージャ"
 
-#: app/internal_procs.c:88
+#: app/internal_procs.c:89
 msgid "Edit procedures"
 msgstr "プロシージャを編集"
 
-#: app/internal_procs.c:91
+#: app/internal_procs.c:92
 msgid "File Operations"
 msgstr "ファイル操作"
 
-#: app/internal_procs.c:94
+#: app/internal_procs.c:95
 msgid "Floating selections"
 msgstr "フローティング選択"
 
-#: app/internal_procs.c:97
+#: app/internal_procs.c:98
 msgid "GDisplay procedures"
 msgstr "GDisplay プロシージャ"
 
-#: app/internal_procs.c:100 app/palette.c:3243
+#: app/internal_procs.c:101 app/palette.c:3243
 msgid "Image"
 msgstr "画像"
 
-#: app/internal_procs.c:103
+#: app/internal_procs.c:104
 msgid "Image mask"
 msgstr "画像マスク"
 
-#: app/internal_procs.c:106
+#: app/internal_procs.c:107
 msgid "Gimprc procedures"
 msgstr "Gimprc プロシージャ"
 
-#: app/internal_procs.c:112
+#: app/internal_procs.c:110
+msgid "Help procedures"
+msgstr "ヘルププロシージャ"
+
+#: app/internal_procs.c:116
 msgid "Gradient UI"
 msgstr "グラデーション UI"
 
-#: app/internal_procs.c:115
+#: app/internal_procs.c:119
 msgid "Guide procedures"
 msgstr "ガイドプロシージャ"
 
-#: app/internal_procs.c:118 app/preferences_dialog.c:1530
+#: app/internal_procs.c:122 app/preferences_dialog.c:1530
 msgid "Interface"
 msgstr "インターフェイス"
 
 #. the layer name label
-#: app/internal_procs.c:121 app/layer_select.c:137
+#: app/internal_procs.c:125 app/layer_select.c:137
 msgid "Layer"
 msgstr "レイヤー"
 
-#: app/internal_procs.c:124
+#: app/internal_procs.c:128
 msgid "Miscellaneous"
 msgstr "その他"
 
-#: app/internal_procs.c:127 app/palette.c:2260 app/palette.c:2272
+#: app/internal_procs.c:131 app/palette.c:2260 app/palette.c:2272
 #: app/palette_select.c:80
 msgid "Palette"
 msgstr "パレット"
 
-#: app/internal_procs.c:130
+#: app/internal_procs.c:134
 msgid "Parasite procedures"
 msgstr "パラサイトプロシージャ"
 
-#: app/internal_procs.c:133 app/lc_dialog.c:180
+#: app/internal_procs.c:137 app/lc_dialog.c:180
 msgid "Paths"
 msgstr "パス"
 
-#: app/internal_procs.c:136
+#: app/internal_procs.c:140
 msgid "Pattern UI"
 msgstr "パターン UI"
 
-#: app/internal_procs.c:142
+#: app/internal_procs.c:146
 msgid "Plug-in"
 msgstr "プラグイン"
 
-#: app/internal_procs.c:145
+#: app/internal_procs.c:149
 msgid "Procedural database"
 msgstr "プロシージャデータベース"
 
-#: app/internal_procs.c:148
+#: app/internal_procs.c:152
 msgid "Text procedures"
 msgstr "文字プロシージャ"
 
-#: app/internal_procs.c:151
+#: app/internal_procs.c:155
 msgid "Tool procedures"
 msgstr "ツールプロシージャ"
 
-#: app/internal_procs.c:154 app/undo_history.c:872
+#: app/internal_procs.c:158 app/undo_history.c:872
 msgid "Undo"
 msgstr "アンドゥ"
 
-#: app/internal_procs.c:157
+#: app/internal_procs.c:161
 msgid "Units"
 msgstr "単位"
 
@@ -2936,14 +2850,6 @@ msgstr "反転操作失敗."
 #: app/layer.c:248
 msgid "Zero width or height layers not allowed."
 msgstr "レイヤーの幅もしくは高さが零であってはいけません."
-
-#: app/layer.c:349
-msgid "layer_copy: could not allocate new layer"
-msgstr "layer_copy: 新規レイヤーを割り当てられません"
-
-#: app/layer.c:427
-msgid "layer_from_tiles: could not allocate new layer"
-msgstr "layer_from_tiles: 新規レイヤーを割り当てられません"
 
 #: app/layer.c:480
 #, c-format
@@ -2994,7 +2900,7 @@ msgstr "比較(暗)"
 msgid "Lighten Only"
 msgstr "比較(明)"
 
-#: app/layers_dialog.c:261 app/layers_dialog.c:3381
+#: app/layers_dialog.c:261 app/layers_dialog.c:3378
 msgid "New Layer"
 msgstr "新規レイヤー"
 
@@ -3030,80 +2936,80 @@ msgstr "レイヤー削除"
 msgid "Keep Trans."
 msgstr "透明保護"
 
-#: app/layers_dialog.c:1811
+#: app/layers_dialog.c:1808
 msgid "Empty Layer Copy"
 msgstr "空レイヤーコピー"
 
-#: app/layers_dialog.c:2072 app/layers_dialog.c:3160 app/layers_dialog.c:3583
+#: app/layers_dialog.c:2069 app/layers_dialog.c:3157 app/layers_dialog.c:3580
 msgid "Floating Selection"
 msgstr "フローティング選択"
 
-#: app/layers_dialog.c:3346
+#: app/layers_dialog.c:3343
 msgid "New Layer Options"
 msgstr "新規レイヤーオプション"
 
 #. The name label and entry
-#: app/layers_dialog.c:3371
+#: app/layers_dialog.c:3368
 msgid "Layer Name:"
 msgstr "レイヤー名:"
 
 #. The size labels
-#: app/layers_dialog.c:3385
+#: app/layers_dialog.c:3382
 msgid "Layer Width:"
 msgstr "レイヤー幅:"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3444
+#: app/layers_dialog.c:3441
 msgid "Layer Fill Type"
 msgstr "レイヤー塗りつぶし種"
 
-#: app/layers_dialog.c:3552
+#: app/layers_dialog.c:3549
 msgid "Edit Layer Attributes"
 msgstr "レイヤーの属性を変更"
 
-#: app/layers_dialog.c:3575
+#: app/layers_dialog.c:3572
 msgid "Layer name:"
 msgstr "レイヤー名:"
 
-#: app/layers_dialog.c:3664
+#: app/layers_dialog.c:3661
 msgid "White (Full Opacity)"
 msgstr "白 (完全不透明)"
 
-#: app/layers_dialog.c:3665
+#: app/layers_dialog.c:3662
 msgid "Black (Full Transparency)"
 msgstr "黒 (完全透明)"
 
-#: app/layers_dialog.c:3666
+#: app/layers_dialog.c:3663
 msgid "Layer's Alpha Channel"
 msgstr "レイヤーのアルファチャンネル"
 
-#: app/layers_dialog.c:3677
+#: app/layers_dialog.c:3674
 msgid "Add Mask Options"
 msgstr "レイヤーマスク追加オプション"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3697
+#: app/layers_dialog.c:3694
 msgid "Initialize Layer Mask to:"
 msgstr "レイヤーマスクの初期化方法:"
 
-#: app/layers_dialog.c:3789
+#: app/layers_dialog.c:3786
 msgid "Layer Mask Options"
 msgstr "レイヤーマスクオプション"
 
-#: app/layers_dialog.c:3795
+#: app/layers_dialog.c:3792
 msgid "Apply"
 msgstr "適用"
 
-#: app/layers_dialog.c:3797
+#: app/layers_dialog.c:3794
 msgid "Discard"
 msgstr "破棄"
 
 #. The name entry hbox, label and entry
-#: app/layers_dialog.c:3811
+#: app/layers_dialog.c:3808
 msgid "Apply layer mask?"
 msgstr "レイヤーマスクを適用しますか?"
 
-#: app/layers_dialog.c:3865 app/layers_dialog.c:3953
+#: app/layers_dialog.c:3862 app/layers_dialog.c:3950
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3111,27 +3017,27 @@ msgstr ""
 "幅または高さが不正です.\n"
 "両方とも正数でなければいけません."
 
-#: app/layers_dialog.c:4064
+#: app/layers_dialog.c:4061
 msgid "Expanded as necessary"
 msgstr "必要に応じて拡大"
 
-#: app/layers_dialog.c:4065
+#: app/layers_dialog.c:4062
 msgid "Clipped to image"
 msgstr "画像サイズに切り取り"
 
-#: app/layers_dialog.c:4066
+#: app/layers_dialog.c:4063
 msgid "Clipped to bottom layer"
 msgstr "最背面レイヤーサイズに切り取り"
 
-#: app/layers_dialog.c:4078
+#: app/layers_dialog.c:4075
 msgid "Layer Merge Options"
 msgstr "レイヤー結合オプション"
 
-#: app/layers_dialog.c:4099
+#: app/layers_dialog.c:4096
 msgid "Final, Merged Layer should be:"
 msgstr "最終的に結合されたレイヤーは:"
 
-#: app/layers_dialog.c:4101
+#: app/layers_dialog.c:4098
 msgid "Final, Anchored Layer should be:"
 msgstr "最終的に固定されたレイヤーは:"
 
@@ -3161,7 +3067,7 @@ msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "インデックス描画対象に対してレベルは調整できません"
 
 #. The shell and main vbox
-#: app/levels.c:359 app/tools.c:716
+#: app/levels.c:359 app/tools.c:679
 msgid "Levels"
 msgstr "レベル"
 
@@ -3193,7 +3099,7 @@ msgstr "保存レベル"
 msgid "Load/Save Levels"
 msgstr "読み込み/保存レベル"
 
-#: app/levels.c:1504 app/levels.c:1522 app/paths_dialog.c:2214
+#: app/levels.c:1508 app/levels.c:1526 app/paths_dialog.c:2214
 #, c-format
 msgid "Unable to open file %s"
 msgstr "ファイル %s を開けません"
@@ -4142,162 +4048,154 @@ msgid "/Stack"
 msgstr "/重なり"
 
 #: app/menus.c:696
-msgid "/Stack/Previous Layer"
-msgstr "/重なり/前面のレイヤー"
-
-#: app/menus.c:698
-msgid "/Stack/Next Layer"
-msgstr "/重なり/背面のレイヤー"
-
-#: app/menus.c:700
 msgid "/Stack/Raise Layer"
 msgstr "/重なり/レイヤーを前面へ"
 
-#: app/menus.c:702
+#: app/menus.c:698
 msgid "/Stack/Lower Layer"
 msgstr "/重なり/レイヤーを背面へ"
 
-#: app/menus.c:704
+#: app/menus.c:700
 msgid "/Stack/Layer to Top"
 msgstr "/重なり/レイヤーを最前面へ"
 
-#: app/menus.c:706
+#: app/menus.c:702
 msgid "/Stack/Layer to Bottom"
 msgstr "/重なり/レイヤーを最背面へ"
 
-#: app/menus.c:709
+#: app/menus.c:705
 msgid "/Duplicate Layer"
 msgstr "/レイヤー複製"
 
-#: app/menus.c:711
+#: app/menus.c:707
 msgid "/Anchor Layer"
 msgstr "/レイヤー固定"
 
-#: app/menus.c:713
+#: app/menus.c:709
 msgid "/Delete Layer"
 msgstr "/レイヤー削除"
 
-#: app/menus.c:718
+#: app/menus.c:714
 msgid "/Layer Boundary Size..."
 msgstr "/レイヤー境界の大きさ..."
 
-#: app/menus.c:720
+#: app/menus.c:716
 msgid "/Layer to Imagesize"
 msgstr "/画像サイズに合わせる"
 
-#: app/menus.c:722
+#: app/menus.c:718
 msgid "/Scale Layer..."
 msgstr "/レイヤー拡大縮小..."
 
-#: app/menus.c:727
+#: app/menus.c:723
 msgid "/Merge Visible Layers..."
 msgstr "/可視レイヤーの統合..."
 
-#: app/menus.c:729
+#: app/menus.c:725
 msgid "/Merge Down"
 msgstr "/下のレイヤーと結合"
 
-#: app/menus.c:731
+#: app/menus.c:727
 msgid "/Flatten Image"
 msgstr "/画像の統合"
 
-#: app/menus.c:736
+#: app/menus.c:732
 msgid "/Add Layer Mask..."
 msgstr "/レイヤーマスク追加..."
 
-#: app/menus.c:738
+#: app/menus.c:734
 msgid "/Apply Layer Mask..."
 msgstr "/レイヤーマスク適用..."
 
-#: app/menus.c:740
+#: app/menus.c:736
 msgid "/Mask to Selection"
 msgstr "/レイヤーマスクを選択領域に"
 
-#: app/menus.c:745
+#: app/menus.c:741
 msgid "/Add Alpha Channel"
 msgstr "/アルファチャンネルを追加"
 
-#: app/menus.c:747
+#: app/menus.c:743
 msgid "/Alpha to Selection"
 msgstr "/不透明部分を選択領域に"
 
-#: app/menus.c:758
+#: app/menus.c:754
 msgid "/New Channel..."
 msgstr "/新規チャンネル..."
 
-#: app/menus.c:760
+#: app/menus.c:756
 msgid "/Raise Channel"
 msgstr "/チャンネル上昇"
 
-#: app/menus.c:762
+#: app/menus.c:758
 msgid "/Lower Channel"
 msgstr "/チャンネル下降"
 
-#: app/menus.c:764
+#: app/menus.c:760
 msgid "/Duplicate Channel"
 msgstr "/チャンネル複製"
 
-#: app/menus.c:769
+#: app/menus.c:765
 msgid "/Channel to Selection"
 msgstr "/チャンネルを選択領域へ"
 
-#: app/menus.c:771
+#: app/menus.c:767
 msgid "/Add to Selection"
 msgstr "/選択領域に加える"
 
-#: app/menus.c:773
+#: app/menus.c:769
 msgid "/Subtract from Selection"
 msgstr "/選択領域から引く"
 
-#: app/menus.c:775
+#: app/menus.c:771
 msgid "/Intersect with Selection"
 msgstr "/選択領域との交わり"
 
-#: app/menus.c:780
+#: app/menus.c:776
 msgid "/Delete Channel"
 msgstr "/チャンネル削除"
 
-#: app/menus.c:791
+#: app/menus.c:787
 msgid "/New Path"
 msgstr "/新規パス"
 
-#: app/menus.c:793
+#: app/menus.c:789
 msgid "/Duplicate Path"
 msgstr "/パス複製"
 
-#: app/menus.c:795
+#: app/menus.c:791
 msgid "/Path to Selection"
 msgstr "/パスを選択領域へ"
 
-#: app/menus.c:797
+#: app/menus.c:793
 msgid "/Selection to Path"
 msgstr "/選択領域をパスへ"
 
-#: app/menus.c:799
+#: app/menus.c:795
 msgid "/Stroke Path"
 msgstr "/パスをストローク描画"
 
-#: app/menus.c:801
+#: app/menus.c:797
 msgid "/Delete Path"
 msgstr "/パス削除"
 
-#: app/menus.c:806
+#: app/menus.c:802
 msgid "/Copy Path"
 msgstr "/パスをコピー"
 
-#: app/menus.c:808
+#: app/menus.c:804
 msgid "/Paste Path"
 msgstr "/パスをペースト"
 
-#: app/menus.c:810
+#: app/menus.c:806
 msgid "/Import Path..."
 msgstr "/パスをインポート..."
 
-#: app/menus.c:812
+#: app/menus.c:808
 msgid "/Export Path..."
 msgstr "/パスをエクスポート..."
 
-#: app/menus.c:1315
+#: app/menus.c:1311
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "ファイルを開けません: %s\n"
@@ -4407,7 +4305,7 @@ msgstr "なび: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "なび: 画像無し"
 
-#: app/paint_core.c:699
+#: app/paint_core.c:707
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
@@ -4701,11 +4599,11 @@ msgstr "ファイルを開けません %s: %s\n"
 msgid "Load/Store Bezier Curves"
 msgstr "ベジエ曲線の読み込み/保存"
 
-#: app/paths_dialog.c:2392
+#: app/paths_dialog.c:2396
 msgid "Load Path"
 msgstr "パス読み込み"
 
-#: app/paths_dialog.c:2414
+#: app/paths_dialog.c:2418
 msgid "Store Path"
 msgstr "パスを保存"
 
@@ -4778,7 +4676,7 @@ msgstr "プラグインが見つからない: \"%s\""
 msgid "Posterize does not operate on indexed drawables."
 msgstr "インデックス画像に対してはポスター化の操作はできません."
 
-#: app/posterize.c:191 app/tools.c:665
+#: app/posterize.c:191 app/tools.c:631
 msgid "Posterize"
 msgstr "ポスター化"
 
@@ -5089,7 +4987,7 @@ msgstr "カーソルの自動更新をしない"
 msgid "Tool Options Settings"
 msgstr "ツールオプション設定"
 
-#: app/preferences_dialog.c:1799 app/tools.c:1017
+#: app/preferences_dialog.c:1799 app/tools.c:978
 msgid "Tool Options"
 msgstr "ツールオプション"
 
@@ -5474,56 +5372,17 @@ msgstr "拡大率 X:"
 msgid "Scaling..."
 msgstr "拡大縮小..."
 
-#: app/session.c:138
-msgid ""
-"# GIMP sessionrc\n"
-"# This file takes session-specific info (that is info,\n"
-"# you want to keep between two gimp-sessions). You are\n"
-"# not supposed to edit it manually, but of course you\n"
-"# can do. This file will be entirely rewritten every time\n"
-"# you quit the gimp. If this file isn't found, defaults\n"
-"# are used.\n"
-"\n"
-msgstr ""
-"# GIMP sessionrc\n"
-"# This file takes session-specific info (that is info,\n"
-"# you want to keep between two gimp-sessions). You are\n"
-"# not supposed to edit it manually, but of course you\n"
-"# can do. This file will be entirely rewritten every time\n"
-"# you quit the gimp. If this file isn't found, defaults\n"
-"# are used.\n"
-"\n"
-
-#: app/shear_tool.c:74
+#: app/shear_tool.c:73
 msgid "Shear Information"
 msgstr "変形情報"
 
-#: app/shear_tool.c:78
+#: app/shear_tool.c:77
 msgid "Shear Magnitude X:"
 msgstr "変形率 X:"
 
-#: app/shear_tool.c:357
+#: app/shear_tool.c:353
 msgid "Shearing..."
 msgstr "剪断変形..."
-
-#: app/temp_buf.c:218
-msgid "Cannot convert from indexed color."
-msgstr "インデックスカラーからは変換できません."
-
-#: app/temp_buf.c:468
-#, c-format
-msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
-msgstr ""
-"temp buf キャッシュエラー: \"%s\" はディレクトリです (上書きできません)"
-
-#: app/temp_buf.c:485 app/temp_buf.c:494
-#, c-format
-msgid "Cannot write \"%s\""
-msgstr "\"%s\" に書き込めません"
-
-#: app/temp_buf.c:550
-msgid "Error in temp buf caching: information swapped to disk was lost!"
-msgstr "temp buf キャッシュエラー: ディスクにスワップした情報が失われました!"
 
 #: app/text_tool.c:153
 msgid "Text Tool Options"
@@ -5540,10 +5399,6 @@ msgstr "縁:"
 #: app/text_tool.c:204
 msgid "Use Dynamic Text"
 msgstr "ダイナミックテキストを使う"
-
-#: app/text_tool.c:274
-msgid "text_call_gdyntext: gDynText procedure lookup failed"
-msgstr "text_call_gdyntext: gDynText プロシージャ探索失敗"
 
 #. Create the shell
 #: app/text_tool.c:395
@@ -5569,10 +5424,6 @@ msgstr ""
 msgid "Text Layer"
 msgstr "文字レイヤー"
 
-#: app/text_tool.c:777
-msgid "text_render: could not allocate image"
-msgstr "text_render: 画像が割り当てられません"
-
 #: app/threshold.c:170
 msgid "Threshold Options"
 msgstr "閾値オプション"
@@ -5581,33 +5432,13 @@ msgstr "閾値オプション"
 msgid "Threshold does not operate on indexed drawables."
 msgstr "インデックス描画対象には閾値操作はできません."
 
-#: app/threshold.c:265 app/tools.c:682
+#: app/threshold.c:265 app/tools.c:647
 msgid "Threshold"
 msgstr "閾値"
 
 #: app/threshold.c:287
 msgid "Threshold Range:"
 msgstr "閾値範囲:"
-
-#: app/tile_swap.c:394
-msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
-msgstr "スワップファイルが開けません...すぐさま不幸な事態になるでしょう"
-
-#: app/tile_swap.c:514 app/tile_swap.c:577
-#, c-format
-msgid "unable to seek to tile location on disk: %d"
-msgstr "ディスク上のタイル位置に移動できません: %d"
-
-#: app/tile_swap.c:533
-#, c-format
-msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
-msgstr ""
-"ディスクからタイルデータが読み出せません: %d/%d ( %d ) bytes 読み込みました"
-
-#: app/tile_swap.c:591
-#, c-format
-msgid "unable to write tile data to disk: %d ( %d ) bytes written"
-msgstr "ディスクにタイルデータを書き込めません: %d ( %d ) bytes 書き込みました"
 
 #: app/tips_dialog.c:78
 msgid "gimp_tips.txt"
@@ -5752,389 +5583,389 @@ msgstr "割合"
 msgid "Rect Select"
 msgstr "矩形選択"
 
-#: app/tools.c:87
+#: app/tools.c:86
 msgid "/Tools/Rect Select"
 msgstr "/道具/矩形選択"
 
-#: app/tools.c:90
+#: app/tools.c:89
 msgid "Select rectangular regions"
 msgstr "矩形領域を選択する"
 
-#: app/tools.c:102
+#: app/tools.c:101
 msgid "Ellipse Select"
 msgstr "楕円選択"
 
-#: app/tools.c:104
+#: app/tools.c:102
 msgid "/Tools/Ellipse Select"
 msgstr "/道具/楕円選択"
 
-#: app/tools.c:107
+#: app/tools.c:105
 msgid "Select elliptical regions"
 msgstr "円形領域を選択する"
 
-#: app/tools.c:119
+#: app/tools.c:117
 msgid "Free Select"
 msgstr "自由選択"
 
-#: app/tools.c:121
+#: app/tools.c:118
 msgid "/Tools/Free Select"
 msgstr "/道具/自由選択"
 
-#: app/tools.c:124
+#: app/tools.c:121
 msgid "Select hand-drawn regions"
 msgstr "手書きで領域選択"
 
-#: app/tools.c:136
+#: app/tools.c:133
 msgid "Fuzzy Select"
 msgstr "ファジー選択"
 
-#: app/tools.c:138
+#: app/tools.c:134
 msgid "/Tools/Fuzzy Select"
 msgstr "/道具/ファジー選択"
 
-#: app/tools.c:141
+#: app/tools.c:137
 msgid "Select contiguous regions"
 msgstr "隣接(色)領域の選択"
 
-#: app/tools.c:153
+#: app/tools.c:149
 msgid "Bezier Select"
 msgstr "ベジエ選択"
 
-#: app/tools.c:155
+#: app/tools.c:150
 msgid "/Tools/Bezier Select"
 msgstr "/道具/ベジエ選択"
 
-#: app/tools.c:158
+#: app/tools.c:153
 msgid "Select regions using Bezier curves"
 msgstr "ベジエ曲線による領域選択"
 
-#: app/tools.c:170
+#: app/tools.c:165
 msgid "Intelligent Scissors"
 msgstr "電脳ばさみ"
 
-#: app/tools.c:172
+#: app/tools.c:166
 msgid "/Tools/Intelligent Scissors"
 msgstr "/道具/電脳ばさみ"
 
-#: app/tools.c:175
+#: app/tools.c:169
 msgid "Select shapes from image"
 msgstr "画像からの形状選択"
 
-#: app/tools.c:187
+#: app/tools.c:181
 msgid "Move"
 msgstr "移動"
 
-#: app/tools.c:189
+#: app/tools.c:182
 msgid "/Tools/Move"
 msgstr "/道具/移動"
 
-#: app/tools.c:192
+#: app/tools.c:185
 msgid "Move layers & selections"
 msgstr "レイヤーまたは選択領域の移動"
 
-#: app/tools.c:204
+#: app/tools.c:197
 msgid "Magnify"
 msgstr "虫めがね"
 
-#: app/tools.c:206
+#: app/tools.c:198
 msgid "/Tools/Magnify"
 msgstr "/道具/虫めがね"
 
-#: app/tools.c:209
+#: app/tools.c:201
 msgid "Zoom in & out"
 msgstr "ズームイン & ズームアウト"
 
-#: app/tools.c:221
+#: app/tools.c:213
 msgid "Crop & Resize"
 msgstr "切抜き & サイズ変更"
 
-#: app/tools.c:223
+#: app/tools.c:214
 msgid "/Tools/Crop & Resize"
 msgstr "/道具/切り抜き & サイズ変更"
 
-#: app/tools.c:226
+#: app/tools.c:217
 msgid "Crop or resize the image"
 msgstr "画像を切り抜いたり大きさを変えたりする"
 
 #. the transform type radio buttons
-#: app/tools.c:238 app/tools.c:255 app/tools.c:272 app/tools.c:289
+#: app/tools.c:229 app/tools.c:245 app/tools.c:261 app/tools.c:277
 #: app/transform_core.c:247 app/transform_tool.c:210
 msgid "Transform"
 msgstr "変換"
 
-#: app/tools.c:240
+#: app/tools.c:230
 msgid "/Tools/Transform"
 msgstr "/道具/変換"
 
-#: app/tools.c:243 app/tools.c:260 app/tools.c:277 app/tools.c:294
+#: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Transform the layer or selection"
 msgstr "レイヤーや選択領域を変形変換する"
 
-#: app/tools.c:306
+#: app/tools.c:293
 msgid "Flip"
 msgstr "反転"
 
-#: app/tools.c:308
+#: app/tools.c:294
 msgid "/Tools/Flip"
 msgstr "/道具/反転"
 
-#: app/tools.c:311
+#: app/tools.c:297
 msgid "Flip the layer or selection"
 msgstr "レイヤーや選択領域を反転させる"
 
-#: app/tools.c:323
+#: app/tools.c:309
 msgid "Text"
 msgstr "文字"
 
-#: app/tools.c:325
+#: app/tools.c:310
 msgid "/Tools/Text"
 msgstr "/道具/文字"
 
-#: app/tools.c:328
+#: app/tools.c:313
 msgid "Add text to the image"
 msgstr "画像に文字を追加"
 
-#: app/tools.c:342
+#: app/tools.c:326
 msgid "/Tools/Color Picker"
 msgstr "/道具/スポイト"
 
-#: app/tools.c:345
+#: app/tools.c:329
 msgid "Pick colors from the image"
 msgstr "画像から色を選び出す"
 
-#: app/tools.c:357
+#: app/tools.c:341
 msgid "Bucket Fill"
 msgstr "塗りつぶし"
 
-#: app/tools.c:359
+#: app/tools.c:342
 msgid "/Tools/Bucket Fill"
 msgstr "/道具/塗りつぶし"
 
-#: app/tools.c:362
+#: app/tools.c:345
 msgid "Fill with a color or pattern"
 msgstr "色やパターンで塗りつぶす"
 
-#: app/tools.c:374
+#: app/tools.c:357
 msgid "Blend"
 msgstr "ブレンド"
 
-#: app/tools.c:376
+#: app/tools.c:358
 msgid "/Tools/Blend"
 msgstr "/道具/ブレンド"
 
-#: app/tools.c:379
+#: app/tools.c:361
 msgid "Fill with a color gradient"
 msgstr "グラデーションを用いて塗りつぶす"
 
-#: app/tools.c:391
+#: app/tools.c:373
 msgid "Pencil"
 msgstr "鉛筆"
 
-#: app/tools.c:393
+#: app/tools.c:374
 msgid "/Tools/Pencil"
 msgstr "/道具/鉛筆"
 
-#: app/tools.c:396
+#: app/tools.c:377
 msgid "Draw sharp pencil strokes"
 msgstr "シャープペンシルで線を引く"
 
-#: app/tools.c:408
+#: app/tools.c:389
 msgid "Paintbrush"
 msgstr "絵筆"
 
-#: app/tools.c:410
+#: app/tools.c:390
 msgid "/Tools/Paintbrush"
 msgstr "/道具/絵筆"
 
-#: app/tools.c:413
+#: app/tools.c:393
 msgid "Paint fuzzy brush strokes"
 msgstr "絵筆で線を引く"
 
-#: app/tools.c:425
+#: app/tools.c:405
 msgid "Eraser"
 msgstr "消しゴム"
 
-#: app/tools.c:427
+#: app/tools.c:406
 msgid "/Tools/Eraser"
 msgstr "/道具/消しゴム"
 
-#: app/tools.c:430
+#: app/tools.c:409
 msgid "Erase to background or transparency"
 msgstr "消しゴムで背景色や透明に戻す"
 
-#: app/tools.c:442
+#: app/tools.c:421
 msgid "Airbrush"
 msgstr "エアブラシ"
 
-#: app/tools.c:444
+#: app/tools.c:422
 msgid "/Tools/Airbrush"
 msgstr "/道具/エアブラシ"
 
-#: app/tools.c:447
+#: app/tools.c:425
 msgid "Airbrush with variable pressure"
 msgstr "圧力調整可能なエアブラシ"
 
-#: app/tools.c:459
+#: app/tools.c:437
 msgid "Clone"
 msgstr "スタンプ"
 
-#: app/tools.c:461
+#: app/tools.c:438
 msgid "/Tools/Clone"
 msgstr "/道具/スタンプ"
 
-#: app/tools.c:464
+#: app/tools.c:441
 msgid "Paint using patterns or image regions"
 msgstr "パターンあるいは画像の一部で塗る"
 
-#: app/tools.c:476
+#: app/tools.c:453
 msgid "Convolve"
 msgstr "色混ぜ"
 
-#: app/tools.c:478
+#: app/tools.c:454
 msgid "/Tools/Convolve"
 msgstr "/道具/色混ぜ"
 
-#: app/tools.c:481
+#: app/tools.c:457
 msgid "Blur or sharpen"
 msgstr "ぼかす/シャープにする"
 
-#: app/tools.c:493
+#: app/tools.c:469
 msgid "Ink"
 msgstr "インク"
 
-#: app/tools.c:495
+#: app/tools.c:470
 msgid "/Tools/Ink"
 msgstr "/道具/インク"
 
-#: app/tools.c:498
+#: app/tools.c:473
 msgid "Draw in ink"
 msgstr "インクで描く"
 
-#: app/tools.c:510 app/tools.c:515
+#: app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
 msgstr "暗室"
 
-#: app/tools.c:512
+#: app/tools.c:486
 msgid "/Tools/DodgeBurn"
 msgstr "/道具/暗室"
 
-#: app/tools.c:527 app/tools.c:532
+#: app/tools.c:501 app/tools.c:505
 msgid "Smudge"
 msgstr "にじみ"
 
-#: app/tools.c:529
+#: app/tools.c:502
 msgid "/Tools/Smudge"
 msgstr "/道具/にじみ"
 
-#: app/tools.c:544
-msgid "Measure"
-msgstr "定規"
-
-#: app/tools.c:546
-msgid "/Tools/Measure"
-msgstr "/道具/定規"
-
-#: app/tools.c:549
-msgid "Measure distances and angles"
-msgstr "距離と角度をはかる"
-
-#: app/tools.c:561
+#: app/tools.c:517
 msgid "Xinput Airbrush"
 msgstr "Xinput エアブラシ"
 
-#: app/tools.c:563
+#: app/tools.c:518
 msgid "/Tools/XinputAirbrush"
 msgstr "/道具/Xinput エアブラシ"
 
-#: app/tools.c:566
+#: app/tools.c:521
 msgid "Natural Airbrush"
 msgstr "自然なエアブラシ"
 
-#: app/tools.c:578
+#: app/tools.c:533
+msgid "Measure"
+msgstr "定規"
+
+#: app/tools.c:534
+msgid "/Tools/Measure"
+msgstr "/道具/定規"
+
+#: app/tools.c:537
+msgid "Measure distances and angles"
+msgstr "距離と角度をはかる"
+
+#: app/tools.c:549
 msgid "Path"
 msgstr "パス"
 
-#: app/tools.c:580
+#: app/tools.c:550
 msgid "/Tools/Path"
 msgstr "/道具/パス"
 
-#: app/tools.c:583
+#: app/tools.c:553
 msgid "Manipulate paths"
 msgstr "パス操作"
 
-#: app/tools.c:597
+#: app/tools.c:567
 msgid "By Color Select"
 msgstr "色による選択"
 
-#: app/tools.c:599
+#: app/tools.c:568
 msgid "/Select/By Color..."
 msgstr "/選択/色による選択..."
 
-#: app/tools.c:602
+#: app/tools.c:571
 msgid "Select regions by color"
 msgstr "色による領域選択"
 
-#: app/tools.c:616
+#: app/tools.c:584
 msgid "/Image/Colors/Color Balance..."
 msgstr "/画像/色/バランス..."
 
-#: app/tools.c:619
+#: app/tools.c:587
 msgid "Adjust color balance"
 msgstr "カラーバランスの調整"
 
-#: app/tools.c:633
+#: app/tools.c:600
 msgid "/Image/Colors/Brightness-Contrast..."
 msgstr "/画像/色/明るさ-コントラスト..."
 
-#: app/tools.c:636
+#: app/tools.c:603
 msgid "Adjust brightness and contrast"
 msgstr "明るさとコントラストの調整"
 
-#: app/tools.c:650
+#: app/tools.c:616
 msgid "/Image/Colors/Hue-Saturation..."
 msgstr "/画像/色/色相-彩度..."
 
-#: app/tools.c:653
+#: app/tools.c:619
 msgid "Adjust hue and saturation"
 msgstr "色相と彩度の調整"
 
-#: app/tools.c:667
+#: app/tools.c:632
 msgid "/Image/Colors/Posterize..."
 msgstr "/画像/色/ポスター化..."
 
-#: app/tools.c:670
+#: app/tools.c:635
 msgid "Reduce image to a fixed numer of colors"
 msgstr "指定した色数への減色"
 
-#: app/tools.c:684
+#: app/tools.c:648
 msgid "/Image/Colors/Threshold..."
 msgstr "/画像/色/閾値..."
 
-#: app/tools.c:687
+#: app/tools.c:651
 msgid "Reduce image to two colors using a threshold"
 msgstr "閾値を用いた2色画像への減色"
 
-#: app/tools.c:701
+#: app/tools.c:664
 msgid "/Image/Colors/Curves..."
 msgstr "/画像/色/カーブ..."
 
-#: app/tools.c:704
+#: app/tools.c:667
 msgid "Adjust color curves"
 msgstr "色カーブの調整"
 
-#: app/tools.c:718
+#: app/tools.c:680
 msgid "/Image/Colors/Levels..."
 msgstr "/画像/色/レベル..."
 
-#: app/tools.c:721
+#: app/tools.c:683
 msgid "Adjust color levels"
 msgstr "色レベルの調整"
 
-#: app/tools.c:735
+#: app/tools.c:696
 msgid "/Image/Histogram..."
 msgstr "/画像/ヒストグラム..."
 
-#: app/tools.c:738
+#: app/tools.c:699
 msgid "View image histogram"
 msgstr "画像ヒストグラムを表示"
 
@@ -6205,19 +6036,19 @@ msgid "Density:"
 msgstr "密度:"
 
 #. the smoothing toggle button
-#: app/transform_tool.c:298
+#: app/transform_tool.c:294
 msgid "Smoothing"
 msgstr "スムージング"
 
-#. the clip resulting image toggle button
-#: app/transform_tool.c:306
-msgid "Clip Result"
-msgstr "結果をクリップ"
-
-#. the show_path toggle button
-#: app/transform_tool.c:320
+#. the showpath toggle button
+#: app/transform_tool.c:303
 msgid "Show Path"
 msgstr "パス表示"
+
+#. the clip resulting image toggle button
+#: app/transform_tool.c:314
+msgid "Clip Result"
+msgstr "結果をクリップ"
 
 #: app/undo_history.c:432 app/undo_history.c:753
 #, c-format
@@ -6425,19 +6256,6 @@ msgstr "その他"
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF エラー: XCF バージョン %d はサポートされていません"
 
-#: app/xcf.c:1477 app/xcf.c:2483
-msgid "xcf: zlib compression unimplemented"
-msgstr "xcf: zlib 圧縮は実装されていません"
-
-#: app/xcf.c:1480 app/xcf.c:2487
-msgid "xcf: fractal compression unimplemented"
-msgstr "xcf: フラクタル圧縮は実装されていません"
-
-#: app/xcf.c:1626
-#, c-format
-msgid "xcf: uh oh! xcf rle tile saving error: %d"
-msgstr "xcf: うぉう! xcf rle タイル保存エラー: %d"
-
 #: app/xcf.c:1776
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
@@ -6447,48 +6265,6 @@ msgstr ""
 "XCF 警告: バージョン 0 の XCF ファイル形式では\n"
 "インデックスカラーマップが正常に保存されていません.\n"
 "グレースケールマップを仮定します."
-
-#: app/xcf.c:1807
-#, c-format
-msgid "unknown compression type: %d"
-msgstr "不明な圧縮形式: %d"
-
-#: app/xcf.c:1848
-msgid "Warning, resolution out of range in XCF file"
-msgstr "警告, XCF ファイル中の解像度が範囲外です"
-
-#: app/xcf.c:1871
-msgid "Error detected while loading an image's parasites"
-msgstr "画像の付録を読み込み中にエラーが発生しました"
-
-#: app/xcf.c:1882
-msgid "Warning, unit out of range in XCF file, falling back to inches"
-msgstr "警告, XCF ファイル中の単位が範囲外です, inch に設定します"
-
-#: app/xcf.c:1946
-#, c-format
-msgid "unexpected/unknown image property: %d (skipping)"
-msgstr "予期せぬ/不明な 画像特性: %d (スキップ)"
-
-#: app/xcf.c:2038
-#, c-format
-msgid "unexpected/unknown layer property: %d (skipping)"
-msgstr "予期せぬ/不明な レイヤー特性: %d (スキップ)"
-
-#: app/xcf.c:2115
-#, c-format
-msgid "unexpected/unknown channel property: %d (skipping)"
-msgstr "予期せぬ/不明な チャンネル特性: %d (スキップ)"
-
-#: app/xcf.c:2446
-msgid "not enough tiles found in level"
-msgstr "十分なタイルが見つかりませんでした. レベルは"
-
-#: app/xcf.c:2716
-#, c-format
-msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
-msgstr ""
-"xcf file からタイルデータが読み出せません: %d ( %d ) bytes 読み込みました"
 
 #. flow slider
 #: app/xinput_airbrush.c:322
@@ -6524,6 +6300,202 @@ msgstr "最小高さ:"
 #: app/xinput_airbrush.c:458
 msgid "Max Height:"
 msgstr "最大高さ:"
+
+#~ msgid "Open Options"
+#~ msgstr "読み込みオプション"
+
+#~ msgid "/Stack/Previous Layer"
+#~ msgstr "/重なり/前面のレイヤー"
+
+#~ msgid "/Stack/Next Layer"
+#~ msgstr "/重なり/背面のレイヤー"
+
+#~ msgid "transform_path(): gimprc token referenced but not defined: %s"
+#~ msgstr "transform_path(): gimprc 未定義の識別子が参照されている: %s"
+
+#~ msgid ""
+#~ "# GIMP unitrc\n"
+#~ "# This file contains your user unit database. You can\n"
+#~ "# modify this list with the unit editor. You are not\n"
+#~ "# supposed to edit it manually, but of course you can do.\n"
+#~ "# This file will be entirely rewritten every time you\n"
+#~ "# quit the gimp.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "# GIMP unitrc\n"
+#~ "# This file contains your user unit database. You can\n"
+#~ "# modify this list with the unit editor. You are not\n"
+#~ "# supposed to edit it manually, but of course you can do.\n"
+#~ "# This file will be entirely rewritten every time you\n"
+#~ "# quit the gimp.\n"
+#~ "\n"
+
+#~ msgid "Could not open \"%s\""
+#~ msgstr "\"%s\" を開けません"
+
+#~ msgid "grad_load_gradient(): invalid number of segments in \"%s\""
+#~ msgstr "grad_load_gradient(): 不正なセグメント数です \"%s\""
+
+#~ msgid ""
+#~ "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
+#~ "things may happen soon"
+#~ msgstr ""
+#~ "grad_load_gradient(): 不正なフォーマットのグラデーションセグメント %d が "
+#~ "\"%s\" 中にあります --- すぐさま不幸な事態になるでしょう"
+
+#~ msgid "grad_save_gradient(): can not save gradient with NULL filename"
+#~ msgstr ""
+#~ "grad_save_gradient(): ファイル名が NULL ではグラデーションが保存できません"
+
+#~ msgid "grad_save_gradient(): can't open \"%s\""
+#~ msgstr "grad_save_gradient(): \"%s\" が開けません"
+
+#~ msgid "seg_get_segment_at(): No matching segment for position %0.15f"
+#~ msgstr "seg_get_segment_at(): %0.15f という位置に対応するセグメントが無い"
+
+#~ msgid "image depth change, unable to restore original image"
+#~ msgstr "画像深度が変更されました, 元の画像は復元できません"
+
+#~ msgid "gimprc\n"
+#~ msgstr "gimprc\n"
+
+#~ msgid "unitrc\n"
+#~ msgstr "unitrc\n"
+
+#~ msgid "pluginrc\n"
+#~ msgstr "pluginrc\n"
+
+#~ msgid "brushes\n"
+#~ msgstr "brushes\n"
+
+#~ msgid "generated_brushes\n"
+#~ msgstr "generated_brushes\n"
+
+#~ msgid "gradients\n"
+#~ msgstr "gradients\n"
+
+#~ msgid "gfig\n"
+#~ msgstr "gfig\n"
+
+#~ msgid "gflares\n"
+#~ msgstr "gflares\n"
+
+#~ msgid "fractalexplorer\n"
+#~ msgstr "fractalexplorer\n"
+
+#~ msgid "palettes\n"
+#~ msgstr "palettes\n"
+
+#~ msgid "patterns\n"
+#~ msgstr "patterns\n"
+
+#~ msgid "plug-ins\n"
+#~ msgstr "plug-ins\n"
+
+#~ msgid "modules\n"
+#~ msgstr "modules\n"
+
+#~ msgid "scripts\n"
+#~ msgstr "scripts\n"
+
+#~ msgid "tmp\n"
+#~ msgstr "tmp\n"
+
+#~ msgid "layer_copy: could not allocate new layer"
+#~ msgstr "layer_copy: 新規レイヤーを割り当てられません"
+
+#~ msgid "layer_from_tiles: could not allocate new layer"
+#~ msgstr "layer_from_tiles: 新規レイヤーを割り当てられません"
+
+#~ msgid ""
+#~ "# GIMP sessionrc\n"
+#~ "# This file takes session-specific info (that is info,\n"
+#~ "# you want to keep between two gimp-sessions). You are\n"
+#~ "# not supposed to edit it manually, but of course you\n"
+#~ "# can do. This file will be entirely rewritten every time\n"
+#~ "# you quit the gimp. If this file isn't found, defaults\n"
+#~ "# are used.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "# GIMP sessionrc\n"
+#~ "# This file takes session-specific info (that is info,\n"
+#~ "# you want to keep between two gimp-sessions). You are\n"
+#~ "# not supposed to edit it manually, but of course you\n"
+#~ "# can do. This file will be entirely rewritten every time\n"
+#~ "# you quit the gimp. If this file isn't found, defaults\n"
+#~ "# are used.\n"
+#~ "\n"
+
+#~ msgid "Cannot convert from indexed color."
+#~ msgstr "インデックスカラーからは変換できません."
+
+#~ msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
+#~ msgstr ""
+#~ "temp buf キャッシュエラー: \"%s\" はディレクトリです (上書きできません)"
+
+#~ msgid "Cannot write \"%s\""
+#~ msgstr "\"%s\" に書き込めません"
+
+#~ msgid "Error in temp buf caching: information swapped to disk was lost!"
+#~ msgstr ""
+#~ "temp buf キャッシュエラー: ディスクにスワップした情報が失われました!"
+
+#~ msgid "text_call_gdyntext: gDynText procedure lookup failed"
+#~ msgstr "text_call_gdyntext: gDynText プロシージャ探索失敗"
+
+#~ msgid "text_render: could not allocate image"
+#~ msgstr "text_render: 画像が割り当てられません"
+
+#~ msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
+#~ msgstr "スワップファイルが開けません...すぐさま不幸な事態になるでしょう"
+
+#~ msgid "unable to seek to tile location on disk: %d"
+#~ msgstr "ディスク上のタイル位置に移動できません: %d"
+
+#~ msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
+#~ msgstr ""
+#~ "ディスクからタイルデータが読み出せません: %d/%d ( %d ) bytes 読み込みました"
+
+#~ msgid "unable to write tile data to disk: %d ( %d ) bytes written"
+#~ msgstr ""
+#~ "ディスクにタイルデータを書き込めません: %d ( %d ) bytes 書き込みました"
+
+#~ msgid "xcf: zlib compression unimplemented"
+#~ msgstr "xcf: zlib 圧縮は実装されていません"
+
+#~ msgid "xcf: fractal compression unimplemented"
+#~ msgstr "xcf: フラクタル圧縮は実装されていません"
+
+#~ msgid "xcf: uh oh! xcf rle tile saving error: %d"
+#~ msgstr "xcf: うぉう! xcf rle タイル保存エラー: %d"
+
+#~ msgid "unknown compression type: %d"
+#~ msgstr "不明な圧縮形式: %d"
+
+#~ msgid "Warning, resolution out of range in XCF file"
+#~ msgstr "警告, XCF ファイル中の解像度が範囲外です"
+
+#~ msgid "Error detected while loading an image's parasites"
+#~ msgstr "画像の付録を読み込み中にエラーが発生しました"
+
+#~ msgid "Warning, unit out of range in XCF file, falling back to inches"
+#~ msgstr "警告, XCF ファイル中の単位が範囲外です, inch に設定します"
+
+#~ msgid "unexpected/unknown image property: %d (skipping)"
+#~ msgstr "予期せぬ/不明な 画像特性: %d (スキップ)"
+
+#~ msgid "unexpected/unknown layer property: %d (skipping)"
+#~ msgstr "予期せぬ/不明な レイヤー特性: %d (スキップ)"
+
+#~ msgid "unexpected/unknown channel property: %d (skipping)"
+#~ msgstr "予期せぬ/不明な チャンネル特性: %d (スキップ)"
+
+#~ msgid "not enough tiles found in level"
+#~ msgstr "十分なタイルが見つかりませんでした. レベルは"
+
+#~ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
+#~ msgstr ""
+#~ "xcf file からタイルデータが読み出せません: %d ( %d ) bytes 読み込みました"
 
 #~ msgid "/Script-Fu/Modify"
 #~ msgstr "/Script-Fu/変更"
@@ -6931,9 +6903,6 @@ msgstr "最大高さ:"
 
 #~ msgid "/View/Window Info..."
 #~ msgstr "/表示/ウィンドウ情報..."
-
-#~ msgid "GIMP Message"
-#~ msgstr "GIMP メッセージ"
 
 #~ msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 #~ msgstr "-Misc-Fixed-Medium-R-Normal--*-130-*-*-*-*-*-*"
