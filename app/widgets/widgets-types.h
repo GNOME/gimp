@@ -61,11 +61,6 @@ typedef struct _GimpPreviewRendererVectors   GimpPreviewRendererVectors;
 typedef struct _GimpPreview             GimpPreview;
 typedef struct _GimpNavigationPreview   GimpNavigationPreview;
 
-typedef struct _GimpContainerMenu       GimpContainerMenu;
-typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
-
-typedef struct _GimpMenuItem            GimpMenuItem;
-
 typedef struct _GimpEnumComboBox        GimpEnumComboBox;
 typedef struct _GimpUnitComboBox        GimpUnitComboBox;
 

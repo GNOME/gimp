@@ -57,10 +57,6 @@ libappwidgets_a_sources = \
 	gimpcontainereditor.h		\
 	gimpcontainergridview.c		\
 	gimpcontainergridview.h		\
-	gimpcontainermenu.c		\
-	gimpcontainermenu.h		\
-	gimpcontainermenuimpl.c		\
-	gimpcontainermenuimpl.h		\
 	gimpcontainerpopup.c		\
 	gimpcontainerpopup.h		\
 	gimpcontainertreeview.c		\
@@ -144,8 +140,6 @@ libappwidgets_a_sources = \
 	gimplayertreeview.h		\
 	gimpmenufactory.c		\
 	gimpmenufactory.h		\
-	gimpmenuitem.c			\
-	gimpmenuitem.h			\
 	gimpnavigationpreview.c		\
 	gimpnavigationpreview.h		\
 	gimppaletteeditor.c		\
