@@ -750,7 +750,7 @@ undo_history_new (GImage *gimage)
 
   /*  The shell and main vbox  */
   {
-    gchar *title = g_strdup_printf (_("%s: undo history"),
+    gchar *title = g_strdup_printf (_("Undo History: %s"),
 				    g_basename (gimage_filename (gimage)));
     st->shell = gimp_dialog_new (title, "undo_history",
 				 gimp_standard_help_func,

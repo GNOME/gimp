@@ -1549,7 +1549,7 @@ nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
 	      iwd->frozen = TRUE;
 	      nav_window_update_preview_blank(iwd); 
 	      gtk_window_set_title (GTK_WINDOW (nav_window_auto->shell), 
-				    _("No image: Window Navigation"));
+				    _("Navigation: No Image"));
 
 	      gtk_widget_set_sensitive(nav_window_auto->vbox,FALSE);
 	      iwd->gdisp_ptr = NULL;
