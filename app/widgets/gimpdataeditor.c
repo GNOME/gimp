@@ -222,7 +222,7 @@ gimp_data_editor_construct (GimpDataEditor  *editor,
     editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                        menu_identifier,
                                                        GTK_TYPE_MENU,
-                                                       gimp,
+                                                       editor,
                                                        FALSE);
 
   data = (GimpData *)

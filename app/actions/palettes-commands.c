@@ -33,7 +33,6 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "palette-import-dialog.h"
 #include "palettes-commands.h"
@@ -63,10 +62,7 @@ palettes_import_palette_cmd_callback (GtkWidget *widget,
 {
   GimpContainerEditor *editor;
 
-  editor = (GimpContainerEditor *)  gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   palette_import_dialog_show (editor->view->context->gimp);
 }
@@ -77,10 +73,7 @@ palettes_merge_palettes_cmd_callback (GtkWidget *widget,
 {
   GimpContainerEditor *editor;
 
-  editor = (GimpContainerEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   palettes_merge_palettes_query (editor);
 }

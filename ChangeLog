@@ -1,5 +1,26 @@
 2003-01-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdataeditor.c: pass the editor widget as
+	callback_data to GtkItemFactory callbacks, not a "Gimp" pointer.
+
+	* app/gui/buffers-commands.c
+	* app/gui/colormap-editor-commands.c
+	* app/gui/data-commands.c
+	* app/gui/documents-commands.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/images-commands.c
+	* app/gui/palette-editor-commands.c
+	* app/gui/palettes-commands.c
+
+	* app/gui/patterns-commands.c: simply cast the passed "data"
+	pointer instead of calling gimp_widget_get_callback_context().
+	Don't #include "widgets/gimpwidgets-utils.h".
+
+2003-01-10  Michael Natterer  <mitch@gimp.org>
+
 	Move away from creating all item_factories statically in
 	menus_init() but create a new one for each place where one is
 	needed:

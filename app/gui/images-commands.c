@@ -31,7 +31,6 @@
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpimageview.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "images-commands.h"
 
@@ -46,10 +45,7 @@ images_raise_displays_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view;
 
-  view = (GimpImageView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->raise_button));
 }
@@ -60,10 +56,7 @@ images_new_display_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view;
 
-  view = (GimpImageView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->new_button));
 }
@@ -74,10 +67,7 @@ images_delete_image_cmd_callback (GtkWidget *widget,
 {
   GimpImageView *view;
 
-  view = (GimpImageView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
 }

@@ -252,7 +252,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
   editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                      "<ColormapEditor>",
                                                      GTK_TYPE_MENU,
-                                                     menu_factory->gimp,
+                                                     editor,
                                                      FALSE);
 
   /*  The palette frame  */

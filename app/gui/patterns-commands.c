@@ -28,7 +28,6 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "patterns-commands.h"
 

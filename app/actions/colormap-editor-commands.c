@@ -32,7 +32,6 @@
 
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "color-notebook.h"
 #include "colormap-editor-commands.h"
@@ -58,10 +57,7 @@ colormap_editor_add_color_cmd_callback (GtkWidget *widget,
   GimpColormapEditor *editor;
   GimpImage          *gimage;
 
-  editor = (GimpColormapEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_COLORMAP_EDITOR (data);
 
   gimage = editor->gimage;
 
@@ -85,10 +81,7 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
   GimpImage          *gimage;
   GimpRGB             color;
 
-  editor = (GimpColormapEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_COLORMAP_EDITOR (data);
 
   gimage = editor->gimage;
 

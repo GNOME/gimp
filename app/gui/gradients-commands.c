@@ -32,7 +32,6 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gradients-commands.h"
 
@@ -54,10 +53,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
 {
   GimpContainerEditor *editor;
 
-  editor = (GimpContainerEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   gradients_save_as_pov_query (editor);
 }

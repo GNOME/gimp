@@ -30,7 +30,6 @@
 
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimptoolbox-color-area.h"
 
 #include "color-notebook.h"
@@ -59,10 +58,7 @@ palette_editor_new_color_cmd_callback (GtkWidget *widget,
   GimpContext       *user_context;
   GimpRGB            color;
 
-  editor = (GimpPaletteEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_PALETTE_EDITOR (data);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
@@ -87,10 +83,7 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
   GimpPaletteEditor *editor;
   GimpPalette       *palette;
 
-  editor = (GimpPaletteEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_PALETTE_EDITOR (data);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
@@ -133,10 +126,7 @@ palette_editor_delete_color_cmd_callback (GtkWidget *widget,
   GimpPaletteEditor *editor;
   GimpPalette       *palette;
 
-  editor = (GimpPaletteEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_PALETTE_EDITOR (data);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 

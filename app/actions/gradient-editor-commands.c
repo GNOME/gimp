@@ -31,7 +31,6 @@
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "color-notebook.h"
 #include "gradient-editor-commands.h"
@@ -73,10 +72,7 @@ gradient_editor_left_color_cmd_callback (GtkWidget *widget,
   GimpGradientEditor *editor;
   GimpGradient       *gradient;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -109,10 +105,7 @@ gradient_editor_load_left_cmd_callback (GtkWidget *widget,
   GimpRGB              color;
   gint                 i;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -184,10 +177,7 @@ gradient_editor_save_left_cmd_callback (GtkWidget *widget,
 {
   GimpGradientEditor *editor;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   editor->saved_colors[action] = editor->control_sel_l->left_color;
 }
@@ -200,10 +190,7 @@ gradient_editor_right_color_cmd_callback (GtkWidget *widget,
   GimpGradientEditor *editor;
   GimpGradient       *gradient;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -236,10 +223,7 @@ gradient_editor_load_right_cmd_callback (GtkWidget *widget,
   GimpRGB              color;
   gint                 i;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -311,10 +295,7 @@ gradient_editor_save_right_cmd_callback (GtkWidget *widget,
 {
   GimpGradientEditor *editor;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   editor->saved_colors[action] = editor->control_sel_l->left_color;
 }
@@ -324,7 +305,7 @@ gradient_editor_blending_func_cmd_callback (GtkWidget *widget,
                                             gpointer   data,
                                             guint      action)
 {
-  GimpGradientEditor          *editor;
+  GimpGradientEditor      *editor;
   GimpGradient            *gradient;
   GimpGradientSegmentType  type;
   GimpGradientSegment     *seg, *aseg;
@@ -332,10 +313,7 @@ gradient_editor_blending_func_cmd_callback (GtkWidget *widget,
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -362,7 +340,7 @@ gradient_editor_coloring_type_cmd_callback (GtkWidget *widget,
                                             gpointer   data,
                                             guint      action)
 {
-  GimpGradientEditor           *editor;
+  GimpGradientEditor       *editor;
   GimpGradient             *gradient;
   GimpGradientSegmentColor  color;
   GimpGradientSegment      *seg, *aseg;
@@ -370,10 +348,7 @@ gradient_editor_coloring_type_cmd_callback (GtkWidget *widget,
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     return;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -400,17 +375,14 @@ gradient_editor_flip_cmd_callback (GtkWidget *widget,
                                    gpointer   data,
                                    guint      action)
 {
-  GimpGradientEditor      *editor;
+  GimpGradientEditor  *editor;
   GimpGradient        *gradient;
   GimpGradientSegment *oseg, *oaseg;
   GimpGradientSegment *seg, *prev, *tmp;
   GimpGradientSegment *lseg, *rseg;
   gdouble              left, right;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -541,10 +513,7 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
   const gchar        *title;
   const gchar        *desc;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   if (editor->control_sel_l == editor->control_sel_r)
     {
@@ -617,10 +586,7 @@ gradient_editor_split_midpoint_cmd_callback (GtkWidget *widget,
   GimpGradient        *gradient;
   GimpGradientSegment *seg, *lseg, *rseg;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -655,10 +621,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
   const gchar        *title;
   const gchar        *desc;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   if (editor->control_sel_l == editor->control_sel_r)
     {
@@ -730,15 +693,12 @@ gradient_editor_delete_cmd_callback (GtkWidget *widget,
                                      gpointer   data,
                                      guint      action)
 {
-  GimpGradientEditor      *editor;
+  GimpGradientEditor  *editor;
   GimpGradient        *gradient;
   GimpGradientSegment *lseg, *rseg, *seg, *aseg, *next;
   gdouble              join;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -822,14 +782,11 @@ gradient_editor_recenter_cmd_callback (GtkWidget *widget,
                                        gpointer   data,
                                        guint      action)
 {
-  GimpGradientEditor      *editor;
+  GimpGradientEditor  *editor;
   GimpGradient        *gradient;
   GimpGradientSegment *seg, *aseg;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -855,17 +812,14 @@ gradient_editor_redistribute_cmd_callback (GtkWidget *widget,
                                            gpointer   data,
                                            guint      action)
 {
-  GimpGradientEditor      *editor;
+  GimpGradientEditor  *editor;
   GimpGradient        *gradient;
   GimpGradientSegment *seg, *aseg;
   gdouble              left, right, seg_len;
   gint                 num_segs;
   gint                 i;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -921,10 +875,7 @@ gradient_editor_blend_color_cmd_callback (GtkWidget *widget,
 {
   GimpGradientEditor *editor;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
                                           editor->control_sel_r,
@@ -944,10 +895,7 @@ gradient_editor_blend_opacity_cmd_callback (GtkWidget *widget,
 {
   GimpGradientEditor *editor;
 
-  editor = (GimpGradientEditor *) gimp_widget_get_callback_context (widget);
-
-  if (! editor)
-    return;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
   gimp_gradient_segments_blend_endpoints (editor->control_sel_l,
                                           editor->control_sel_r,

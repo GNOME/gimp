@@ -32,7 +32,6 @@
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "buffers-commands.h"
 
@@ -47,10 +46,7 @@ buffers_paste_buffer_cmd_callback (GtkWidget *widget,
 {
   GimpBufferView *view;
 
-  view = (GimpBufferView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_button));
 }
@@ -61,10 +57,7 @@ buffers_paste_buffer_into_cmd_callback (GtkWidget *widget,
 {
   GimpBufferView *view;
 
-  view = (GimpBufferView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_into_button));
 }
@@ -75,10 +68,7 @@ buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
 {
   GimpBufferView *view;
 
-  view = (GimpBufferView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->paste_as_new_button));
 }
@@ -89,10 +79,7 @@ buffers_delete_buffer_cmd_callback (GtkWidget *widget,
 {
   GimpBufferView *view;
 
-  view = (GimpBufferView *) gimp_widget_get_callback_context (widget);
-
-  if (! view)
-    return;
+  view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
 }

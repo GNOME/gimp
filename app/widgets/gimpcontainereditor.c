@@ -156,7 +156,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                      menu_identifier,
                                                      GTK_TYPE_MENU,
-                                                     context->gimp,
+                                                     editor,
                                                      FALSE);
 
   switch (view_type)
