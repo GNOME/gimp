@@ -43,9 +43,21 @@
 #include "gimprc.h"
 
 
-static gint    dump_system_gimprc   (gint         fd);
-static gint    dump_man_page        (gint         fd);
+typedef enum
+{
+  DUMP_NONE,
+  DUMP_DEFAULT,
+  DUMP_COMMENT,
+  DUMP_MANPAGE
+} DumpFormat;
 
+
+static gint    dump_gimprc          (DumpFormat   format,
+				     gint         fd);
+static void    dump_gimprc_system   (GObject     *rc,
+				     gint         fd);
+static void    dump_gimprc_manpage  (GObject     *rc,
+				     gint         fd);
 static gchar * dump_describe_param  (GParamSpec  *param_spec);
 static void    dump_with_linebreaks (gint         fd,
 				     const gchar *text);
@@ -55,19 +67,17 @@ int
 main (int   argc,
       char *argv[])
 {
-  GObject *rc;
+  DumpFormat  format = DUMP_DEFAULT;
   
-  g_type_init ();
-
   if (argc > 1)
     {
       if (strcmp (argv[1], "--system-gimprc") == 0)
 	{
-	  return dump_system_gimprc (1);
+	  format = DUMP_COMMENT;
 	}
       else if (strcmp (argv[1], "--man-page") == 0)
 	{
-	  return dump_man_page (1);
+	  format = DUMP_MANPAGE;
 	}
       else if (strcmp (argv[1], "--version") == 0)
 	{
@@ -92,13 +102,40 @@ main (int   argc,
 	}
     }
 
+  return dump_gimprc (format, 1);
+}
+
+static gint
+dump_gimprc (DumpFormat  format,
+	     gint        fd)
+{
+  GObject *rc;
+
+  if (format == DUMP_NONE)
+    return EXIT_SUCCESS;
+
+  g_type_init ();
+
   rc = g_object_new (GIMP_TYPE_RC,
                      "module-load-inhibit", "foo",  /* for completeness */
                      NULL);
 
-  g_print ("# Dump of the GIMP default configuration\n\n");
-  gimp_config_serialize_properties (rc, 1, 0);
-  g_print ("\n");
+  switch (format)
+    {
+    case DUMP_DEFAULT:
+      g_print ("# Dump of the GIMP default configuration\n\n");
+      gimp_config_serialize_properties (rc, 1, 0);
+      g_print ("\n");
+      break;
+    case DUMP_COMMENT:
+      dump_gimprc_system (rc, fd);
+      break;
+    case DUMP_MANPAGE:
+      dump_gimprc_manpage (rc, fd);
+      break;
+    default:
+      break;
+    }
 
   g_object_unref (rc);
 
@@ -122,26 +159,20 @@ static const gchar *system_gimprc_header =
 "# it is interpreted relative to your home directory.\n"
 "\n";
 
-static gint
-dump_system_gimprc (gint fd)
+static void
+dump_gimprc_system (GObject *rc,
+		    gint     fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GObject       *rc;
   GString       *str;
   guint          n_property_specs;
   guint          i;
 
   str = g_string_new (system_gimprc_header);
-
   write (fd, str->str, str->len);
 
-  rc = g_object_new (GIMP_TYPE_RC,
-                     "module-load-inhibit", "foo",  /* for completeness */
-                     NULL);
-
   klass = G_OBJECT_GET_CLASS (rc);
-
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   for (i = 0; i < n_property_specs; i++)
@@ -173,12 +204,7 @@ dump_system_gimprc (gint fd)
     }
 
   g_free (property_specs);
-
-  g_object_unref (rc);
-
   g_string_free (str, TRUE);
-
-  return EXIT_SUCCESS;
 }
 
 
@@ -268,24 +294,20 @@ static const gchar *man_page_footer =
 ".BR gimp-remote (1)\n";
 
 
-static gint
-dump_man_page (gint fd)
+static void
+dump_gimprc_manpage (GObject *rc,
+		     gint     fd)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GObject       *rc;
   GString       *str;
   guint          n_property_specs;
   guint          i;
 
+  str = g_string_new (man_page_header);
+  write (fd, str->str, str->len);
 
-  write (fd, man_page_header, strlen (man_page_header));
-
-  str = g_string_new (NULL);
-
-  rc = g_object_new (GIMP_TYPE_RC, NULL);
   klass = G_OBJECT_GET_CLASS (rc);
-
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   for (i = 0; i < n_property_specs; i++)
@@ -314,16 +336,37 @@ dump_man_page (gint fd)
     }
 
   g_free (property_specs);
-
-  g_object_unref (rc);
-
   g_string_free (str, TRUE);
 
   write (fd, man_page_path,   strlen (man_page_path));
   write (fd, man_page_footer, strlen (man_page_footer));
-
-  return EXIT_SUCCESS;
 }
+
+
+static const gchar * display_format_description = 
+"This is a format string; certain % character sequences are recognised and "
+"expanded as follows:\n"
+"\n"
+"%%  literal percent sign\n"
+"%f  bare filename, or \"Untitled\"\n"
+"%F  full path to file, or \"Untitled\"\n"
+"%p  PDB image id\n"
+"%i  view instance number\n"
+"%t  image type (RGB, grayscale, indexed)\n"
+"%z  zoom factor as a percentage\n"
+"%s  source scale factor\n"
+"%d  destination scale factor\n"
+"%Dx expands to x if the image is dirty, the empty string otherwise\n"
+"%Cx expands to x if the image is clean, the empty string otherwise\n"
+"%m  memory used by the image\n"
+"%l  the number of layers\n"
+"%L  the name of the active layer/channel\n"
+"%w  image width in pixels\n"
+"%W  image width in real-world units\n"
+"%h  image height in pixels\n"
+"%H  image height in real-world units\n"
+"%u  unit symbol\n"
+"%U  unit abbreviation\n\n";
 
 
 static gchar *
@@ -426,7 +469,17 @@ dump_describe_param (GParamSpec *param_spec)
 	  values = "This is a float value.";
 	  break;
 	case G_TYPE_STRING:
-	  values = "This is a string value.";
+	  /* eek */
+	  if (strcmp (g_param_spec_get_name (param_spec), "image-title-format")
+	      &&
+	      strcmp (g_param_spec_get_name (param_spec), "image-status-format"))
+	    {
+	      values = "This is a string value.";
+	    }
+	  else
+	    {
+	      values = display_format_description;
+	    }
 	  break;
 	case G_TYPE_ENUM:
 	  {
@@ -502,6 +555,9 @@ dump_with_linebreaks (gint         fd,
 
       write (fd, text, i);
       write (fd, "\n", 1);
+
+      if (*t == '\n')
+	write (fd, ".br\n", 4);
 
       i++;
 

@@ -275,7 +275,8 @@ gimp_config_deserialize_property (GObject    *object,
     }
   else
     {
-      token = gimp_config_deserialize_value (&value, object, prop_spec, scanner);
+      token = gimp_config_deserialize_value (&value,
+					     object, prop_spec, scanner);
     }
 
   if (token == G_TOKEN_RIGHT_PAREN &&
@@ -526,7 +527,7 @@ gimp_config_deserialize_path (GValue     *value,
   if (scanner->value.v_string)
     {
       /*  Check if the string can be expanded
-       *  and converted to thde filesystem encoding.
+       *  and converted to the filesystem encoding.
        */
       gchar *expand = gimp_config_path_expand (scanner->value.v_string,
                                                TRUE, &error);

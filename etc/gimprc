@@ -14,9 +14,8 @@
 
 # Sets the temporary storage directory. Files will appear here during the
 # course of running the GIMP.  Most files will disappear when the GIMP exits,
-# but some files are likely to remain, such as working palette files, so it
-# is best if this directory not be one that is shared by other users or is
-# cleared on machine reboot such as /tmp.  This is a single folder.
+# but some files are likely to remain, so it is best if this directory not be
+# one that is shared by other users.  This is a single folder.
 #
 # (temp-path "${gimp_dir}/tmp")
 
@@ -32,7 +31,7 @@
 
 # There is always a tradeoff between memory usage and speed.  In most cases,
 # the GIMP opts for speed over memory.  However, if memory is a big issue,
-# set stingy-memory-use to yes.  Possible values are yes and no.
+# try to enable this setting.  Possible values are yes and no.
 #
 # (stingy-memory-use no)
 
@@ -181,7 +180,8 @@
 #
 # (preview-size small)
 
-# Sets the thumbnail size.  Possible values are none, normal and large.
+# Sets the size of the thumbnail saved with each image.  Possible values are
+# none, normal and large.
 #
 # (thumbnail-size normal)
 
@@ -195,7 +195,7 @@
 # (install-colormap no)
 
 # Generally only a concern for 8-bit displays, this sets the minimum number
-# of colors.  This is an integer value.
+# of system colors allocated for the GIMP.  This is an integer value.
 #
 # (min-colors 144)
 
@@ -206,14 +206,13 @@
 # (marching-ants-speed 300)
 
 # Specify that marching ants for selected regions will be drawn with colormap
-# cycling as oposed to redrawing with different stipple masks. This color
-# cycling option works only with 8-bit displays.  Possible values are yes and
-# no.
+# cycling as opposed to be drawn as animated lines.  This color cycling
+# option works only with 8-bit displays.  Possible values are yes and no.
 #
 # (colormap-cycling no)
 
-# When zooming into and out of images, this setting this option to yes
-# enables the automatic resizing of windows.  Possible values are yes and no.
+# When zooming into and out of images, setting this option to yes enables the
+# automatic resizing of windows.  Possible values are yes and no.
 #
 # (resize-windows-on-zoom no)
 
@@ -246,8 +245,8 @@
 #
 # (cursor-updating yes)
 
-# Sets the text to appear in image window titles.  Certain % character
-# sequences are recognised and expanded as follows:
+# Sets the text to appear in image window titles.  This is a format string;
+# certain % character sequences are recognised and expanded as follows:
 # 
 # %%  literal percent sign
 # %f  bare filename, or "Untitled"
@@ -270,27 +269,50 @@
 # %u  unit symbol
 # %U  unit abbreviation
 # 
-#   This is a string value.
 #
 # (image-title-format "%f-%p.%i (%t)")
 
-# Sets the text to appear in image window status bars. See image-title-format
-# for the list of possible % sequences.  This is a string value.
+# Sets the text to appear in image window status bars.  This is a format
+# string; certain % character sequences are recognised and expanded as
+# follows:
+# 
+# %%  literal percent sign
+# %f  bare filename, or "Untitled"
+# %F  full path to file, or "Untitled"
+# %p  PDB image id
+# %i  view instance number
+# %t  image type (RGB, grayscale, indexed)
+# %z  zoom factor as a percentage
+# %s  source scale factor
+# %d  destination scale factor
+# %Dx expands to x if the image is dirty, the empty string otherwise
+# %Cx expands to x if the image is clean, the empty string otherwise
+# %m  memory used by the image
+# %l  the number of layers
+# %L  the name of the active layer/channel
+# %w  image width in pixels
+# %W  image width in real-world units
+# %h  image height in pixels
+# %H  image height in real-world units
+# %u  unit symbol
+# %U  unit abbreviation
+# 
 #
 # (image-status-format "%f-%p.%i (%t)")
 
-# Sets the menubar visibility. This can also be toggled with the View->Toggle
-# Menubar command.  Possible values are yes and no.
+# Sets the default menubar visibility. This can also be toggled with the
+# View->Toggle Menubar command.  Possible values are yes and no.
 #
 # (show-menubar no)
 
-# Sets the ruler visibility. This can also be toggled with the View->Toggle
-# Rulers command.  Possible values are yes and no.
+# Sets the default ruler visibility. This can also be toggled with the
+# View->Toggle Rulers command.  Possible values are yes and no.
 #
 # (show-rulers yes)
 
-# Set to yes to make the statusbar visible. This can also be toggled with the
-# View->Toggle Statusbar command.  Possible values are yes and no.
+# Set to yes to make the statusbar visible by default. This can also be
+# toggled with the View->Toggle Statusbar command.  Possible values are yes
+# and no.
 #
 # (show-statusbar yes)
 
@@ -316,20 +338,20 @@
 #
 # (monitor-resolution-from-windowing-system yes)
 
-# Sets the navigation preview size.  Possible values are none, tiny,
-# extra-small, small, medium, large, extra-large, huge, enormous and
-# gigantic.
+# Sets the size of the navigation preview available in the lower right corner
+# of the image window.  Possible values are none, tiny, extra-small, small,
+# medium, large, extra-large, huge, enormous and gigantic.
 #
 # (navigation-preview-size medium)
 
-# Sets the canvas padding mode.  Possible values are default, light-check,
-# dark-check and custom.
+# Specifies how the area around the image should be drawn.  Possible values
+# are default, light-check, dark-check and custom.
 #
 # (canvas-padding-mode default)
 
-# Sets the canvas padding color.  The color is specified in the form
-# (color-rgba red green blue alpha) with channel values as floats between 0.0
-# and 1.0.
+# Sets the canvas padding color used if the padding mode is set to custom
+# color.  The color is specified in the form (color-rgba red green blue
+# alpha) with channel values as floats between 0.0 and 1.0.
 #
 # (canvas-padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000))
 
@@ -367,14 +389,13 @@
 #
 # (save-device-status no)
 
-# Remember the positions and sizes of the main dialogs and asks your
-# window-manager to place them there again the next time you use the GIMP. 
+# Save the positions and sizes of the main dialogs when the GIMP exits. 
 # Possible values are yes and no.
 #
 # (save-session-info yes)
 
-# Let GIMP try to restore your last saved session.  Possible values are yes
-# and no.
+# Let GIMP try to restore your last saved session on each startup.  Possible
+# values are yes and no.
 #
 # (restore-session yes)
 
@@ -396,10 +417,11 @@
 #
 # (last-opened-size 4)
 
-# Sets the max-new-image-size limit.  The integer size can contain a suffix
-# of 'B', 'K', 'M' or 'G' which makes GIMP interpret the size as being
-# specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
-# specified the size defaults to being specified in kilobytes.
+# GIMP will warn the user if an attempt is made to create an image that would
+# take more memory than the size specified here.  The integer size can
+# contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP interpret the
+# size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
+# suffix is specified the size defaults to being specified in kilobytes.
 #
 # (max-new-image-size 32M)
 
@@ -417,7 +439,7 @@
 #
 # (use-help yes)
 
-# Sets the browser gimp-help will use.  Possible values are gimp and
+# Sets the browser used by the help system.  Possible values are gimp and
 # netscape.
 #
 # (help-browser gimp)

@@ -12,6 +12,7 @@ app/config/gimpconfig-deserialize.c
 app/config/gimpconfig-path.c
 app/config/gimpconfig.c
 app/config/gimprc.c
+app/config/gimprc-blurbs.h
 app/config/gimpscanner.c
 
 app/core/core-enums.c

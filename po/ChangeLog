@@ -1,3 +1,9 @@
+2003-01-26  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/config/gimprc-blurbs.h. This file
+	contains messages which are used for tooltips in the preferences
+	dialog.
+
 2003-01-25  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
