@@ -1,3 +1,12 @@
+2001-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]
+	* app/tools/tool_manager.[ch]: removed all *_get_PDB_string()
+	functions and GimpToolClass' "pdb_string" field as this info is
+	stored independent from a specific tool instance in GimpToolInfo
+
+	* app/tools/gimpbezierselecttool.c: use GimpToolInfo's "pdb_string".
+
 2001-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/interface.c

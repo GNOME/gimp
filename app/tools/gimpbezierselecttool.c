@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
 
@@ -3814,6 +3815,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
   gint              nreturn_vals;
   BezierRenderPnts *next_rpnts;
   BezierRenderPnts *rpnts;
+  const gchar      *pdb_string;
 
   rpnts = g_new0 (BezierRenderPnts, 1);
 
@@ -3821,6 +3823,8 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
   undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
 
   bezier_gen_points (bezier_sel,open_path,rpnts);
+
+  pdb_string = gimp_context_get_tool (gimp_get_current_context (gdisp->gimage->gimp))->pdb_string;
 
   do
     {
@@ -3844,7 +3848,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	  /* Stroke with the correct tool */
 	  return_vals =
 	    procedural_db_run_proc (gdisp->gimage->gimp,
-				    tool_manager_active_get_PDB_string (gdisp->gimage->gimp),
+				    pdb_string,
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				    GIMP_PDB_INT32, (gint32) rpnts->num_stroke_points * 2,

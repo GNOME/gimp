@@ -358,19 +358,6 @@ gimp_tool_oper_update (GimpTool       *tool,
 }
 
 
-const gchar *
-gimp_tool_get_PDB_string (GimpTool *tool)
-{
-  GimpToolClass *tool_class;
-
-  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
-  
-  tool_class = GIMP_TOOL_GET_CLASS (tool);
-
-  return tool_class->pdb_string;
-}
-
-
 /*  standard member functions  */
 
 static void

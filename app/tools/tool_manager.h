@@ -44,7 +44,6 @@ void           tool_manager_control_active        (Gimp             *gimp,
 						   ToolAction        action,
 						   GDisplay         *gdisp);
 
-const gchar  * tool_manager_active_get_PDB_string (Gimp             *gimp);
 const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
 

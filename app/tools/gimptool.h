@@ -70,11 +70,6 @@ struct _GimpToolClass
 {
   GimpObjectClass  parent_class;
 
-  /* stuff to be filled in by child classes */
-
-  /* FIXME: most of this stuff must go away */
-  gchar	      *pdb_string;
-
   void (* initialize)     (GimpTool       *tool,
 			   GDisplay       *gdisp);
   void (* control)        (GimpTool       *tool,
@@ -132,7 +127,6 @@ void          gimp_tool_cursor_update   (GimpTool       *tool,
 void          gimp_tool_oper_update     (GimpTool       *tool,
 					 GdkEventMotion *mevent,
 					 GDisplay       *gdisp);
-const gchar * gimp_tool_get_PDB_string  (GimpTool       *tool);
 
 
 #endif  /*  __GIMP_TOOL_H__  */
