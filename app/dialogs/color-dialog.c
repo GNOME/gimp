@@ -80,7 +80,8 @@ struct _ColorNotebook
   ColorNotebookCallback     callback;
   gpointer                  client_data;
 
-  gint                      wants_updates;
+  gboolean                  wants_updates;
+  gboolean                  show_alpha;
 
   ColorSelectorInstance    *selectors;
   ColorSelectorInstance    *cur_page;
@@ -245,6 +246,7 @@ color_notebook_new (gint                   red,
   cnp->callback      = callback;
   cnp->client_data   = client_data;
   cnp->wants_updates = wants_updates;
+  cnp->show_alpha    = show_alpha;
   cnp->selectors     = NULL;
   cnp->cur_page      = NULL;
 
@@ -405,25 +407,39 @@ color_notebook_new (gint                   red,
 			     cnp);
 
   /*  The color space sliders, toggle buttons and entries  */
-  table = gtk_table_new (7, 3, FALSE);
+  table = gtk_table_new (show_alpha ? 7 : 6, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   group = NULL;
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < (show_alpha ? 7 : 6); i++)
     {
-      cnp->toggles[i] =
-        gtk_radio_button_new_with_label (group, gettext (toggle_titles[i]));
-      gimp_help_set_help_data (cnp->toggles[i], gettext (slider_tips[i]), NULL);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (cnp->toggles[i]));
-      gtk_table_attach (GTK_TABLE (table), cnp->toggles[i],
-                        0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (cnp->toggles[i]), "toggled",
-                          GTK_SIGNAL_FUNC (color_notebook_toggle_update),
-                          cnp);
-      gtk_widget_show (cnp->toggles[i]);
+      if (i == 6)
+	{
+	  cnp->toggles[i] = NULL;
+
+	  label = gtk_label_new (toggle_titles[i]);
+	  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	  gtk_table_attach (GTK_TABLE (table), label,
+			    0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
+	}
+      else
+	{
+	  cnp->toggles[i] =
+	    gtk_radio_button_new_with_label (group, gettext (toggle_titles[i]));
+
+	  gimp_help_set_help_data (cnp->toggles[i],
+				   gettext (slider_tips[i]), NULL);
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (cnp->toggles[i]));
+	  gtk_table_attach (GTK_TABLE (table), cnp->toggles[i],
+			    0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
+	  gtk_signal_connect (GTK_OBJECT (cnp->toggles[i]), "toggled",
+			      GTK_SIGNAL_FUNC (color_notebook_toggle_update),
+			      cnp);
+	  gtk_widget_show (cnp->toggles[i]);
+	}
 
       cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 0, i,
                                                   NULL, 
@@ -910,7 +926,7 @@ color_notebook_update_scales (ColorNotebook *cnp,
   if (!cnp)
     return;
 
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < (cnp->show_alpha ? 7 : 6); i++)
     if (i != skip)
       {
 	gtk_signal_handler_block_by_data (GTK_OBJECT (cnp->slider_data[i]), cnp);
@@ -974,7 +990,7 @@ color_notebook_toggle_update (GtkWidget *widget,
   if (!cnp)
     return;
 
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < 6; i++)
     if (widget == cnp->toggles[i])
       cnp->active_channel = (GimpColorSelectorChannelType) i;
 
@@ -986,20 +1002,16 @@ color_notebook_scale_update (GtkAdjustment *adjustment,
 			     gpointer       data)
 {
   ColorNotebook *cnp;
-  gint           old_values[7];
-  gint           i, j;
+  gint           i;
 
   cnp = (ColorNotebook *) data;
 
   if (!cnp)
     return;
 
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < (cnp->show_alpha ? 7 : 6); i++)
     if (cnp->slider_data[i] == GTK_OBJECT (adjustment))
       break;
-
-  for (j = 0; j < 7; j++)
-    old_values[j] = cnp->values[j];
 
   cnp->values[i] = (gint) (GTK_ADJUSTMENT (adjustment)->value);
 

@@ -69,7 +69,7 @@ static void  gimp_color_area_drag_end           (GtkWidget        *widget,
 static void  gimp_color_area_drag_data_received (GtkWidget        *widget, 
 						 GdkDragContext   *context,
 						 gint              x,
-						  gint              y,
+						 gint              y,
 						 GtkSelectionData *selection_data,
 						 guint             info,
 						 guint             time);
@@ -121,8 +121,8 @@ gimp_color_area_class_init (GimpColorAreaClass *class)
 		    object_class->type,
 		    GTK_SIGNAL_OFFSET (GimpColorAreaClass,
 				       color_changed),
-		    gtk_marshal_NONE__POINTER , 
-		    GTK_TYPE_NONE, 
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE,
 		    1, GTK_TYPE_POINTER);
 
   gtk_object_class_add_signals (object_class, gimp_color_area_signals, 
@@ -219,20 +219,20 @@ gimp_color_area_set_color (GimpColorArea *gca,
   g_return_if_fail (GIMP_IS_COLOR_AREA (gca));
 
   g_return_if_fail (color != NULL);
- 
+
   if (gimp_rgba_distance (&gca->color, color) > 0.000001)
     {
       gca->color = *color;
-      
+
       gimp_color_area_paint (gca);
-      
+
       gtk_signal_emit (GTK_OBJECT (gca),
 		       gimp_color_area_signals[COLOR_CHANGED],
 		       &gca->color);
     }
 }
 
-static void  
+static void
 gimp_color_area_paint (GimpColorArea *gca)
 {
   gint     x, y;
@@ -246,7 +246,7 @@ gimp_color_area_paint (GimpColorArea *gca)
 
   if (! GTK_WIDGET_DRAWABLE (GTK_WIDGET (gca)))
     return;
-      
+
   gdk_window_get_size (GTK_WIDGET (gca)->window, &width, &height);
 
   if (!width || !height)
@@ -320,7 +320,7 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
   gtk_widget_set_usize (window, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
   gtk_widget_realize (window);
   gtk_object_set_data_full (GTK_OBJECT (widget),
-			    "gimp-color-button-drag-window",
+			    "gimp-color-area-drag-window",
 			    window,
 			    (GtkDestroyNotify) gtk_widget_destroy);
 
@@ -363,7 +363,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
   if ((selection_data->format != 16) || 
       (selection_data->length != 8))
     {
-      g_warning ("Received invalid color data\n");
+      g_warning ("Received invalid color data");
       return;
     }
 
@@ -374,7 +374,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
 		 (gdouble) vals[1] / 0xffff,
 		 (gdouble) vals[2] / 0xffff,
 		 (gdouble) vals[3] / 0xffff);
-		 
+
   gimp_color_area_set_color (gca, &color);
 }
 
@@ -399,5 +399,3 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
 			  gdk_atom_intern ("application/x-color", FALSE),
 			  16, (guchar *)vals, 8);
 }
-
-

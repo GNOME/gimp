@@ -28,6 +28,10 @@
 #ifndef __GIMP_COLOR_AREA_H__
 #define __GIMP_COLOR_AREA_H__
 
+
+#include <gtk/gtkpreview.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -38,6 +42,7 @@ extern "C" {
 #define GIMP_COLOR_AREA_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
 #define GIMP_IS_COLOR_AREA(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_AREA))
 #define GIMP_IS_COLOR_AREA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
+
 
 typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
@@ -53,7 +58,8 @@ struct _GimpColorAreaClass
 GtkType     gimp_color_area_get_type   (void);
 GtkWidget * gimp_color_area_new        (GimpRGB       *color,
 					gboolean       alpha);
-void        gimp_color_area_update     (GimpColorArea *gca);
+void        gimp_color_area_set_color  (GimpColorArea *gca,
+					GimpRGB       *color);
 
 
 #ifdef __cplusplus
