@@ -48,9 +48,6 @@ typedef struct _GimpPreviewRendererImage     GimpPreviewRendererImage;
 /*  widgets  */
 
 typedef struct _GimpPreview             GimpPreview;
-typedef struct _GimpBrushPreview        GimpBrushPreview;
-typedef struct _GimpDrawablePreview     GimpDrawablePreview;
-typedef struct _GimpImagePreview        GimpImagePreview;
 typedef struct _GimpNavigationPreview   GimpNavigationPreview;
 
 typedef struct _GimpContainerMenu       GimpContainerMenu;

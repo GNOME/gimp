@@ -1,3 +1,14 @@
+2003-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/display-types.h
+	* app/tools/tools-types.h
+	* app/vectors/vectors-types.h
+	* app/widgets/widgets-types.h: removed some forgotten cruft.
+
+	* app/vectors/gimpbezierstroke.h
+	* app/vectors/gimpstroke.h
+	* app/vectors/gimpvectors.h: added class struct typedefs here.
+
 2003-09-07  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]: redid the fix for the compiler

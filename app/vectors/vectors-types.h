@@ -4,7 +4,6 @@
  * vectors-types.h
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -25,7 +24,6 @@
 
 #include "core/core-types.h"
 
-typedef struct _GimpAnchor GimpAnchor;
 
 typedef enum
 {
@@ -47,14 +45,12 @@ typedef enum
   EXTEND_EDITABLE
 } GimpVectorExtendMode;
 
-typedef struct _GimpStroke            GimpStroke;
-typedef struct _GimpStrokeClass       GimpStrokeClass;
-typedef struct _GimpBezierStroke      GimpBezierStroke;
-typedef struct _GimpBezierStrokeClass GimpBezierStrokeClass;
 
-typedef struct _GimpBezier        GimpBezier;
-typedef struct _GimpBezierClass   GimpBezierClass;
-typedef struct _GimpVectors       GimpVectors;
-typedef struct _GimpVectorsClass  GimpVectorsClass;
+typedef struct _GimpAnchor       GimpAnchor;
+
+typedef struct _GimpVectors      GimpVectors;
+typedef struct _GimpStroke       GimpStroke;
+typedef struct _GimpBezierStroke GimpBezierStroke;
+
 
 #endif /* __VECTORS_TYPES_H__ */

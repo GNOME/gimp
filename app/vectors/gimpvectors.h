@@ -35,6 +35,8 @@
 #define GIMP_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS, GimpVectorsClass))
 
 
+typedef struct _GimpVectorsClass  GimpVectorsClass;
+
 struct _GimpVectors
 {
   GimpItem  parent_instance;
@@ -44,7 +46,6 @@ struct _GimpVectors
   gint      freeze_count;
   /* Stuff missing */
 };
-
 
 struct _GimpVectorsClass
 {

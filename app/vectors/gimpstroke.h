@@ -35,6 +35,8 @@
 #define GIMP_STROKE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STROKE, GimpStrokeClass))
 
 
+typedef struct _GimpStrokeClass GimpStrokeClass;
+
 struct _GimpStroke
 {
   GimpObject  parent_instance;
@@ -43,7 +45,6 @@ struct _GimpStroke
 
   gboolean    closed;
 };
-
 
 struct _GimpStrokeClass
 {
